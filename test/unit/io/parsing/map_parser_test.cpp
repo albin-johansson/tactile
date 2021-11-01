@@ -13,14 +13,14 @@ using namespace Tactile::IO;
 using PE = ParseError;
 using PathErrorPair = std::pair<CStr, PE>;
 
-#define JSON_INVALID "resources/json/invalid/"
-#define YAML_INVALID "resources/yaml/invalid/"
-#define TMX_INVALID "resources/xml/invalid/"
+#define JSON_INVALID "test-resources/json/invalid/"
+#define YAML_INVALID "test-resources/yaml/invalid/"
+#define TMX_INVALID "test-resources/xml/invalid/"
 
 // clang-format off
 inline const auto maps = testing::Values(
-    std::make_pair("resources/json/embedded.json", PE::None),
-    std::make_pair("resources/json/external.json", PE::None),
+    std::make_pair("test-resources/json/embedded.json", PE::None),
+    std::make_pair("test-resources/json/external.json", PE::None),
     std::make_pair("foo.json", PE::MapDoesNotExist),
     std::make_pair(JSON_INVALID "unsupported_extension.txt", PE::MapUnsupportedExtension),
     std::make_pair(JSON_INVALID "unsupported_orientation.json", PE::MapUnsupportedOrientation),
@@ -53,7 +53,7 @@ inline const auto maps = testing::Values(
     std::make_pair(JSON_INVALID "property_unknown_type.json", PE::PropertyUnknownType),
     std::make_pair(JSON_INVALID "external_tileset_does_not_exist.json", PE::ExternalTilesetDoesNotExist),
 
-    std::make_pair("resources/yaml/map.yaml", PE::None),
+    std::make_pair("test-resources/yaml/map.yaml", PE::None),
     std::make_pair(YAML_INVALID "foo.yaml", PE::MapDoesNotExist),
     std::make_pair(YAML_INVALID "no_next_layer_id.yaml", PE::MapMissingNextLayerId),
     std::make_pair(YAML_INVALID "no_next_object_id.yaml", PE::MapMissingNextObjectId),
@@ -90,8 +90,8 @@ inline const auto maps = testing::Values(
     std::make_pair(YAML_INVALID "animation_frame_no_id.yaml", PE::AnimationFrameNoTile),
     std::make_pair(YAML_INVALID "animation_frame_no_duration.yaml", PE::AnimationFrameNoDuration),
 
-    std::make_pair("resources/xml/embedded.tmx", PE::None),
-    std::make_pair("resources/xml/external.tmx", PE::None),
+    std::make_pair("test-resources/xml/embedded.tmx", PE::None),
+    std::make_pair("test-resources/xml/external.tmx", PE::None),
     std::make_pair("foo.tmx", PE::MapDoesNotExist),
     std::make_pair(TMX_INVALID "unsupported_extension.txt", PE::MapUnsupportedExtension),
     std::make_pair(TMX_INVALID "unsupported_orientation.tmx", PE::MapUnsupportedOrientation),

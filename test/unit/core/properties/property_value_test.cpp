@@ -86,7 +86,7 @@ TEST(PropertyValue, BoolProperty)
 
 TEST(PropertyValue, FileProperty)
 {
-  const std::filesystem::path file{"resources/foo.txt"};
+  const std::filesystem::path file{"test-resources/foo.txt"};
   const PropertyValue property{file};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsFile());

@@ -171,10 +171,10 @@ void VerifyMap(const std::filesystem::path& path)
 
 TEST(ParseMapEmbeddedTilesets, JSON)
 {
-  VerifyMap("resources/json/embedded.json");
+  VerifyMap("test-resources/json/embedded.json");
 }
 
 TEST(ParseMapEmbeddedTilesets, XML)
 {
-  VerifyMap("resources/xml/embedded.tmx");
+  VerifyMap("test-resources/xml/embedded.tmx");
 }

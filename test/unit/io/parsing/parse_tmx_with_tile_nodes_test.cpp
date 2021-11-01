@@ -8,7 +8,7 @@ using namespace Tactile;
 
 TEST(TmxTileNodes, Parse)
 {
-  MapParser parser{"resources/xml/embedded_with_tile_nodes.tmx"};
+  MapParser parser{"test-resources/xml/embedded_with_tile_nodes.tmx"};
   ASSERT_TRUE(parser);
   ASSERT_EQ(IO::ParseError::None, parser.GetError());
 

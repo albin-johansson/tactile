@@ -209,15 +209,15 @@ void VerifyMap(const std::filesystem::path& path)
 
 TEST(ParseMapExternalTilesets, JSON)
 {
-  VerifyMap("resources/json/external.json");
+  VerifyMap("test-resources/json/external.json");
 }
 
 TEST(ParseMapExternalTilesets, XML)
 {
-  VerifyMap("resources/xml/external.tmx");
+  VerifyMap("test-resources/xml/external.tmx");
 }
 
 TEST(ParseMapExternalTilesets, YAML)
 {
-  VerifyMap("resources/yaml/map.yaml");
+  VerifyMap("test-resources/yaml/map.yaml");
 }

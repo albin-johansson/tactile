@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(tactile-test CXX)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/test")
 
 enable_testing()
 
@@ -56,11 +55,11 @@ if (WIN32)
   copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
   add_custom_command(TARGET ${TACTILE_TEST} POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy
-      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/../TactileIO.dll
+      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/TactileIO.dll
       ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
       )
 endif ()
 
 copy_directory_post_build(${TACTILE_TEST}
-    ${CMAKE_CURRENT_SOURCE_DIR}/resources
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
+    ${CMAKE_CURRENT_SOURCE_DIR}/test-resources
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/test-resources)

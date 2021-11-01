@@ -19,7 +19,7 @@ using namespace Tactile;
 
 TEST(CreateDocumentFromIR, Test)
 {
-  MapParser parser{"resources/json/embedded.json"};
+  MapParser parser{"test-resources/json/embedded.json"};
   ASSERT_TRUE(parser);
 
   const auto document = CreateDocumentFromIR(parser.GetData());
@@ -33,7 +33,7 @@ TEST(CreateDocumentFromIR, Test)
 
   ASSERT_EQ("embedded.json", mapContext.name);
 
-  ASSERT_EQ(std::filesystem::absolute("resources/json/embedded.json"), document.path);
+  ASSERT_EQ(std::filesystem::absolute("test-resources/json/embedded.json"), document.path);
 
   ASSERT_EQ(5, map.row_count);
   ASSERT_EQ(7, map.column_count);
