@@ -16,6 +16,7 @@ set(TACTILE_IO_SOURCES
     include/tactile-io/emitter.hpp
     include/tactile-io/ir.hpp
     include/tactile-io/ir_common.hpp
+    include/tactile-io/ir_map.hpp
     include/tactile-io/parse_error.hpp
     include/tactile-io/parser.hpp
 
