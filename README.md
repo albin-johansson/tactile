@@ -71,10 +71,17 @@ ninja
 ### Linux (Ubuntu)
 
 Building the source code on Linux, in this case Ubuntu, should be relatively straightforward using
-your package manager.
+your package manager. At the time of writing, the packaged version of SDL2 is too old, so you'll have to build the core SDL2 library by yourself.
 
 ```bash
-sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libglew-dev libprotobuf-dev libprotoc-dev
+curl -L https://www.libsdl.org/release/SDL2-2.0.16.tar.gz | tar xz
+cd SDL2-2.0.16
+./configure
+make
+sudo make install
+cd ..
+
+sudo apt install libsdl2-ttf-dev libsdl2-image-dev libglew-dev libprotobuf-dev libprotoc-dev
 git clone https://github.com/albin-johansson/tactile
 cd tactile
 mkdir build && cd build
