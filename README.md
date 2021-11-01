@@ -78,8 +78,8 @@ sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libglew-dev libpr
 git clone https://github.com/albin-johansson/tactile
 cd tactile
 mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
-ninja
+cmake .. -DCMAKE_BUILD_TYPE=Debug
+make
 ```
 
 ## Dependencies
