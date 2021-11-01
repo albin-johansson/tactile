@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
-      - uses: seanmiddleditch/gha-setup-ninja@master
+      # - uses: seanmiddleditch/gha-setup-ninja@master
       - uses: lukka/get-cmake@latest
 
       - name: Update packages
@@ -68,7 +68,7 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build
         working-directory: ./build
@@ -76,10 +76,7 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: |
-          ninja TactileIO
-          ninja TactileCore
-          ninja TactileTests
+        run: make
 
       - name: Run tests
         working-directory: ./build/build/test
