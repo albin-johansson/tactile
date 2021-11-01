@@ -70,6 +70,6 @@ jobs:
           ninja
 
       - name: Run tests
-        working-directory: ./build/build/test
+        working-directory: ./build/build
         shell: cmd
         run: TactileTests.exe
