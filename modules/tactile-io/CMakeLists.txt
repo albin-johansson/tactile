@@ -10,6 +10,7 @@ set(TACTILE_IO_SOURCES
     ir.cpp
     ir_definitions.hpp
     ir_map.cpp
+    ir_tileset.cpp
     parse_error.cpp
 
     include/tactile-io/api.hpp
