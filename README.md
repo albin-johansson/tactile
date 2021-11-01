@@ -93,6 +93,7 @@ ninja
 * [JSON for Modern C++](https://github.com/nlohmann/json)
 * [Magic Enum C++](https://github.com/Neargye/magic_enum)
 * [Portable File Dialogs](https://github.com/samhocevar/portable-file-dialogs)
+* [Protocol Buffers](https://github.com/protocolbuffers/protobuf)
 * [pugixml](https://github.com/zeux/pugixml)
 * [SDL2](https://github.com/libsdl-org/SDL)
 * [SDL2_image](https://github.com/libsdl-org/SDL_image)
