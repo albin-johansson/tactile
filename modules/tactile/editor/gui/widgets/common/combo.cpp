@@ -25,7 +25,7 @@ auto Combo(const NotNull<CStr> label,
   const auto changed = ImGui::Combo("##TactileCombo", index, values);
 
   if (tooltip && ImGui::IsItemHovered()) {
-    ImGui::SetTooltip(tooltip);
+    ImGui::SetTooltip("%s", tooltip);
   }
 
   return changed;
