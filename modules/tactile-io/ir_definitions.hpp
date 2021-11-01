@@ -17,7 +17,7 @@
 /* This is a private header, and the following intermediate representation is subject to
    change at any point in time without any notice. The public APIs have been designed to
    provide a robust and stable ABI, but do not rely on the implementation details in any
-   way in client code. However, you have been warned... :) */
+   way in client code. You have been warned... :) */
 
 namespace Tactile::IO {
 
