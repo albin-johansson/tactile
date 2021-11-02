@@ -201,7 +201,7 @@ TACTILE_IO_API void ReserveProperties(Map& map, usize n);
  *
  * \param map the map that a tileset will be added to.
  *
- * \return a reference to the created tileset-
+ * \return a reference to the created tileset.
  *
  * \see `ReserveTilesets()`
  */
