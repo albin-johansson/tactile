@@ -23,6 +23,7 @@ set(SOURCE_FILES
     core/map.hpp
     core/mouse.hpp
     core/mouse_info.hpp
+    core/property_value.hpp
     core/region.hpp
     core/tool_type.hpp
     core/viewport.hpp

@@ -5,6 +5,8 @@ project(tactile-io CXX)
 set(TACTILE_IO_SOURCES
     ${PUGIXML_SOURCES}
 
+    common_parsing.cpp
+    common_parsing.hpp
     common_saving.cpp
     common_saving.hpp
     ir.cpp
@@ -147,24 +149,17 @@ target_include_directories(TactileIO
     ${PROJECT_SOURCE_DIR}/../tactile-base/include
 
     SYSTEM PRIVATE
-    ${SDL2_INCLUDE_DIR}
-    ${SDL2_IMAGE_INCLUDE_DIRS}
-    ${SDL2_TTF_INCLUDE_DIRS}
     ${LIBRARY_DIR}/entt
     ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/magic-enum
     ${LIBRARY_DIR}/json
     ${LIBRARY_DIR}/pugixml
-    ${LIBRARY_DIR}/centurion
     )
 
 target_link_libraries(TactileIO
     PRIVATE
     yaml-cpp
     fmt
-    ${SDL2_IMAGE_LIBRARIES}
-    ${SDL2_TTF_LIBRARIES}
-    ${SDL2_LIBRARY}
     )
 
 target_compile_definitions(TactileIO PRIVATE
@@ -190,7 +185,6 @@ endif ()
 
 target_precompile_headers(TactileIO PRIVATE
     <algorithm>
-    <functional>
     <string>
     <vector>
     <filesystem>
@@ -198,7 +192,8 @@ target_precompile_headers(TactileIO PRIVATE
     <memory>
     <optional>
 
-    <centurion.hpp>
-    <json.hpp>
     <magic_enum.hpp>
-    <yaml-cpp/yaml.h>)
+    <json.hpp>
+    <yaml-cpp/yaml.h>
+    <pugixml.hpp>
+    )

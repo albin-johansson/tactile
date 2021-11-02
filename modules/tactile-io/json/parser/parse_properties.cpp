@@ -3,7 +3,7 @@
 #include <filesystem>  // path
 #include <string>      // string
 
-#include <centurion.hpp>
+#include "common_parsing.hpp"
 
 namespace Tactile::IO {
 namespace {
@@ -33,12 +33,9 @@ namespace {
     AssignObject(property, value.get<int32>());
   }
   else if (type == "color") {
-    const auto string = value.get<std::string>();
-    const auto color = (string.size() == 9) ? cen::color::from_argb(string)
-                                            : cen::color::from_rgb(string);
-    if (color) {
-      AssignColor(property,
-                  {color->red(), color->green(), color->blue(), color->alpha()});
+    const auto hex = value.get<std::string>();
+    if (const auto color = (hex.size() == 9) ? ParseColorARGB(hex) : ParseColorRGB(hex)) {
+      AssignColor(property, *color);
     }
     else {
       return ParseError::CouldNotParseProperty;

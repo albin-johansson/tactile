@@ -70,7 +70,6 @@ void CreateExternalTilesetFile(const Tileset& tileset,
   const auto name = fmt::format("{}.json", GetName(tileset));
   const auto path = dir / name;
 
-  CENTURION_LOG_INFO("Saving external tileset in \"%s\"", path.string().c_str());
   SaveJson(json, path, indent);
 }
 

@@ -1,5 +1,4 @@
-#include <tactile-base/property_value.hpp>
-
+#include <core/property_value.hpp>
 #include <gtest/gtest.h>
 
 using namespace Tactile;

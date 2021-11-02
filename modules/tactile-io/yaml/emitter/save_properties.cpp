@@ -48,10 +48,7 @@ void SavePropertiesImpl(YAML::Emitter& emitter,
           break;
 
         case PropertyType::Color: {
-          const auto color = GetColor(property);
-          const auto rgba =
-              cen::color{color.red, color.green, color.blue, color.alpha}.as_rgba();
-          emitter << YAML::Value << rgba;
+          emitter << YAML::Value << AsRGBA(GetColor(property));
           break;
         }
 

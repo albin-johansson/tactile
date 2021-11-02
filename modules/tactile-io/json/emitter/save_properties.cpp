@@ -42,8 +42,7 @@ namespace {
       break;
     }
     case PropertyType::Color: {
-      const auto color = GetColor(property);
-      value = cen::color{color.red, color.green, color.blue, color.alpha}.as_argb();
+      value = AsARGB(GetColor(property));
       break;
     }
     case PropertyType::Object: {

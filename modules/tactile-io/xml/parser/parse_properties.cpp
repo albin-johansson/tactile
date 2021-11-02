@@ -5,8 +5,7 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include <centurion.hpp>
-
+#include "common_parsing.hpp"
 #include "xml_utils.hpp"
 
 namespace Tactile::IO {
@@ -36,12 +35,9 @@ namespace {
     IO::AssignObject(property, GetInt(node, "value").value());
   }
   else if (std::strcmp(type, "color") == 0) {
-    const auto string = GetString(node, "value").value();
-    const auto color = (string.size() == 9) ? cen::color::from_argb(string)
-                                            : cen::color::from_rgb(string);
-    if (color) {
-      IO::AssignColor(property,
-                      {color->red(), color->green(), color->blue(), color->alpha()});
+    const auto hex = GetString(node, "value").value();
+    if (const auto color = (hex.size() == 9) ? ParseColorARGB(hex) : ParseColorRGB(hex)) {
+      IO::AssignColor(property, *color);
     }
     else {
       return ParseError::CouldNotParseProperty;

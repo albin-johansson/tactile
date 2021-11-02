@@ -44,9 +44,7 @@ void AppendProperty(pugi::xml_node root,
       break;
 
     case PropertyType::Color: {
-      const auto color = GetColor(property);
-      const auto argb =
-          cen::color{color.red, color.green, color.blue, color.alpha}.as_argb();
+      const auto argb = AsARGB(GetColor(property));
       valueAttr.set_value(argb.c_str());
       break;
     }

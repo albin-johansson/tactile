@@ -14,9 +14,11 @@ template <std::integral T>
 {
   T value{};
 
-  const auto [ptr, error] =
-      std::from_chars(str.data(), str.data() + str.size(), value, base);
-  if (error == std::errc{}) {
+  const auto* begin = str.data();
+  const auto* end = str.data() + str.size();
+  const auto [ptr, err] = std::from_chars(begin, end, value, base);
+
+  if (err == std::errc{}) {
     return value;
   }
   else {
@@ -29,8 +31,8 @@ template <std::floating_point T>
 {
   T value{};
 
-  const auto [ptr, error] = std::from_chars(str.data(), str.data() + str.size(), value);
-  if (error == std::errc{}) {
+  const auto [ptr, err] = std::from_chars(str.data(), str.data() + str.size(), value);
+  if (err == std::errc{}) {
     return value;
   }
   else {

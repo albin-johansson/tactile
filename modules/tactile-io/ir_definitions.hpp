@@ -9,7 +9,6 @@
 #include <tactile-base/layer_type.hpp>
 #include <tactile-base/object_type.hpp>
 #include <tactile-base/property_type.hpp>
-#include <tactile-base/property_value.hpp>
 #include <tactile-base/tactile_std.hpp>
 
 #include "ir_common.hpp"
@@ -21,11 +20,18 @@
 
 namespace Tactile::IO {
 
+/* Simple strong integral type for use in property value variant */
+enum ObjectRef : int32
+{};
+
 /// \brief Intermediate representation of a property.
 struct Property final
 {
-  std::string name;     ///< The unique (within the context) property name
-  PropertyValue value;  ///< The property value.
+  using Value = std::
+      variant<std::string, int32, float, bool, Color, std::filesystem::path, ObjectRef>;
+
+  std::string name;  ///< The unique (within the context) property name
+  Value value;       ///< The property value.
 };
 
 /// \brief Intermediate representation of a map object.

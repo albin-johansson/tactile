@@ -4,10 +4,10 @@
 #include <string>      // string
 #include <variant>     // variant, monostate, get, get_if, holds_alternative
 
-#include <centurion.hpp>  // color
+#include <tactile-base/property_type.hpp>
+#include <tactile-base/tactile_std.hpp>
 
-#include "property_type.hpp"
-#include "tactile_std.hpp"
+#include <centurion.hpp>  // color
 
 namespace Tactile {
 

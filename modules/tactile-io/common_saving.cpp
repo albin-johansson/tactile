@@ -5,6 +5,8 @@
 #include <tactile-base/convert_to_forward_slashes.hpp>
 #include <tactile-base/tactile_error.hpp>
 
+#include <fmt/format.h>  // format
+
 namespace Tactile::IO {
 
 auto GetTilesetImagePath(const std::filesystem::path& image,
@@ -50,6 +52,29 @@ auto GetPropertyFileValue(const Property& file, const std::filesystem::path& dir
   const auto abs = std::filesystem::absolute(dir / path);
   const auto value = std::filesystem::relative(abs, dir);
   return ConvertToForwardSlashes(value);
+}
+
+auto AsRGB(const Color& color) -> std::string
+{
+  return fmt::format("#{:0<2X}{:0<2X}{:0<2X}", color.red, color.green, color.blue);
+}
+
+auto AsRGBA(const Color& color) -> std::string
+{
+  return fmt::format("#{:0<2X}{:0<2X}{:0<2X}{:0<2X}",
+                     color.red,
+                     color.green,
+                     color.blue,
+                     color.alpha);
+}
+
+auto AsARGB(const Color& color) -> std::string
+{
+  return fmt::format("#{:0<2X}{:0<2X}{:0<2X}{:0<2X}",
+                     color.alpha,
+                     color.red,
+                     color.green,
+                     color.blue);
 }
 
 }  // namespace Tactile::IO

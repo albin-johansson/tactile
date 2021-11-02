@@ -1,12 +1,8 @@
 #include "ir.hpp"
 
 #include <cassert>     // assert
-#include <filesystem>  // path, absolute
-#include <string>      // string
 #include <variant>     // variant, get, holds_alternative
-#include <vector>      // vector
 
-#include <tactile-base/property_value.hpp>
 #include <tactile-base/tactile_std.hpp>
 
 #include "ir_definitions.hpp"

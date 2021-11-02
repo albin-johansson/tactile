@@ -2,12 +2,13 @@
 
 #include <filesystem>  // path
 #include <string>      // string
-#include <utility>     // move
 
 #include <tactile-base/property_type.hpp>
 
 #include <magic_enum.hpp>  // enum_cast
 #include <yaml-cpp/yaml.h>
+
+#include "common_parsing.hpp"
 
 namespace Tactile::IO {
 namespace {
@@ -61,9 +62,8 @@ namespace {
 
         case PropertyType::Color: {
           const auto hex = value.as<std::string>();
-          if (const auto color = cen::color::from_rgba(hex)) {
-            AssignColor(property,
-                        {color->red(), color->green(), color->blue(), color->alpha()});
+          if (const auto color = ParseColorRGBA(hex)) {
+            AssignColor(property, *color);
           }
           else {
             return ParseError::CouldNotParseProperty;

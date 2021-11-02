@@ -4,7 +4,6 @@
 #include <string>      // string
 
 #include <tactile-base/property_type.hpp>
-#include <tactile-base/property_value.hpp>
 
 #include "ir.hpp"
 
@@ -21,5 +20,11 @@ constexpr auto tiled_json_version = "1.6";
 
 [[nodiscard]] auto GetPropertyFileValue(const Property& file,
                                         const std::filesystem::path& dir) -> std::string;
+
+[[nodiscard]] auto AsRGB(const Color& color) -> std::string;
+
+[[nodiscard]] auto AsRGBA(const Color& color) -> std::string;
+
+[[nodiscard]] auto AsARGB(const Color& color) -> std::string;
 
 }  // namespace Tactile::IO

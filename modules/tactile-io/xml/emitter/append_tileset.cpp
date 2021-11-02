@@ -56,8 +56,6 @@ void CreateExternalTilesetFile(const Tileset& tileset,
   AddCommon(root, tileset, dir);
 
   const auto path = dir / source;
-  CENTURION_LOG_INFO("Saving external tileset in \"%s\"", path.string().c_str());
-
   SaveXml(xml, path);
 }
 

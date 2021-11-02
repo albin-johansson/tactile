@@ -3,9 +3,10 @@
 #include <string>  // string
 
 #include <tactile-base/property_type.hpp>
-#include <tactile-base/property_value.hpp>
 
 #include <entt.hpp>  // entity, null
+
+#include "core/property_value.hpp"
 
 namespace Tactile {
 
