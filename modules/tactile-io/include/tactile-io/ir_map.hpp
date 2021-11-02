@@ -140,22 +140,18 @@ TACTILE_IO_API void SetTileHeight(Map& map, int32 height);
 /**
  * \brief Sets the amount of tile rows in a map.
  *
- * \pre The supplied row count must be greater than zero.
- *
  * \param map the map that will be affected.
  * \param rows the number of tile rows.
  */
-TACTILE_IO_API void SetRowCount(Map& map, int32 rows);
+TACTILE_IO_API void SetRowCount(Map& map, usize rows);
 
 /**
  * \brief Sets the amount of tile columns in a map.
  *
- * \pre The supplied column count must be greater than zero.
- *
  * \param map the map that will be affected.
  * \param columns the number of tile rows.
  */
-TACTILE_IO_API void SetColumnCount(Map& map, int32 columns);
+TACTILE_IO_API void SetColumnCount(Map& map, usize columns);
 
 /**
  * \brief Reserves enough space for the specified amount of tilesets in a map.

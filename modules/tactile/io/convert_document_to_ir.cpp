@@ -153,8 +153,8 @@ void ConvertLayer(IO::Layer& data,
                   const entt::registry& registry,
                   const entt::entity entity,
                   const LayerTreeNode& node,
-                  const int32 nRows,
-                  const int32 nCols)
+                  const usize nRows,
+                  const usize nCols)
 
 {
   const auto& layer = registry.get<Layer>(entity);

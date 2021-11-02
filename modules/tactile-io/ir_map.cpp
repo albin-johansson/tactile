@@ -45,15 +45,13 @@ void SetTileHeight(Map& map, const int32 height)
   map.tile_height = height;
 }
 
-void SetRowCount(Map& map, const int32 rows)
+void SetRowCount(Map& map, const usize rows)
 {
-  assert(rows > 0);
   map.row_count = rows;
 }
 
-void SetColumnCount(Map& map, const int32 columns)
+void SetColumnCount(Map& map, const usize columns)
 {
-  assert(columns > 0);
   map.column_count = columns;
 }
 
