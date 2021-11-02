@@ -64,14 +64,29 @@ auto GetPropertyCount(const Tile& tile) -> usize
   return tile.properties.size();
 }
 
+auto GetAnimationFrame(Tile& tile, const usize index) -> AnimationFrame&
+{
+  return tile.animation.at(index);
+}
+
 auto GetAnimationFrame(const Tile& tile, const usize index) -> const AnimationFrame&
 {
   return tile.animation.at(index);
 }
 
+auto GetObject(Tile& tile, const usize index) -> Object&
+{
+  return tile.objects.at(index);
+}
+
 auto GetObject(const Tile& tile, const usize index) -> const Object&
 {
   return tile.objects.at(index);
+}
+
+auto GetProperty(Tile& tile, const usize index) -> Property&
+{
+  return tile.properties.at(index);
 }
 
 auto GetProperty(const Tile& tile, const usize index) -> const Property&
