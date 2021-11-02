@@ -11,6 +11,7 @@
 #include "ir_common.hpp"
 #include "ir_map.hpp"
 #include "ir_object.hpp"
+#include "ir_property.hpp"
 #include "ir_tile.hpp"
 #include "ir_tileset.hpp"
 
