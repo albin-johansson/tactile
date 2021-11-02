@@ -103,30 +103,6 @@ TACTILE_IO_API_QUERY auto GetLayer(const GroupLayer& layer, usize index) -> cons
 
 /// \} End of group layer API
 
-/// \name Property API
-/// \{
-
-TACTILE_IO_API void SetName(Property& property, CStr name);
-TACTILE_IO_API void AssignInt(Property& property, int32 value);
-TACTILE_IO_API void AssignFloat(Property& property, float value);
-TACTILE_IO_API void AssignString(Property& property, CStr str);
-TACTILE_IO_API void AssignBool(Property& property, bool value);
-TACTILE_IO_API void AssignFile(Property& property, CPathStr path);
-TACTILE_IO_API void AssignObject(Property& property, int32 id);
-TACTILE_IO_API void AssignColor(Property& property, const Color& color);
-
-TACTILE_IO_API_QUERY auto GetName(const Property& property) -> CStr;
-TACTILE_IO_API_QUERY auto GetType(const Property& property) -> PropertyType;
-TACTILE_IO_API_QUERY auto GetInt(const Property& property) -> int32;
-TACTILE_IO_API_QUERY auto GetFloat(const Property& property) -> float;
-TACTILE_IO_API_QUERY auto GetString(const Property& property) -> CStr;
-TACTILE_IO_API_QUERY auto GetBool(const Property& property) -> bool;
-TACTILE_IO_API_QUERY auto GetFile(const Property& property) -> CPathStr;
-TACTILE_IO_API_QUERY auto GetObject(const Property& property) -> int32;
-TACTILE_IO_API_QUERY auto GetColor(const Property& property) -> Color;
-
-/// \} End of property API
-
 /**
  * \brief Calls the supplied callable for each tileset provided by the map.
  *

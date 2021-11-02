@@ -11,6 +11,7 @@ set(TACTILE_IO_SOURCES
     ir_definitions.hpp
     ir_map.cpp
     ir_object.cpp
+    ir_property.cpp
     ir_tile.cpp
     ir_tileset.cpp
     parse_error.cpp
@@ -21,6 +22,7 @@ set(TACTILE_IO_SOURCES
     include/tactile-io/ir_common.hpp
     include/tactile-io/ir_map.hpp
     include/tactile-io/ir_object.hpp
+    include/tactile-io/ir_property.hpp
     include/tactile-io/ir_tile.hpp
     include/tactile-io/ir_tileset.hpp
     include/tactile-io/parse_error.hpp
