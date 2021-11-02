@@ -2,7 +2,8 @@
 
 #include <tactile-base/from_string.hpp>
 #include <tactile-base/map_position.hpp>
-#include <tactile-base/string_utils.hpp>
+
+#include "string_utils.hpp"
 
 namespace Tactile::IO {
 

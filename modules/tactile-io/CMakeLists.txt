@@ -17,6 +17,7 @@ set(TACTILE_IO_SOURCES
     ir_tile.cpp
     ir_tileset.cpp
     parse_error.cpp
+    string_utils.hpp
 
     include/tactile_io.hpp
 

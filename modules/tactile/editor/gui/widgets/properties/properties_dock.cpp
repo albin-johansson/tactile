@@ -1,11 +1,10 @@
 #include "properties_dock.hpp"
 
-#include <tactile-base/formatted_string.hpp>
-
 #include <imgui.h>
 
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
+#include "core/utils/formatted_string.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widgets/alignment.hpp"
 #include "editor/gui/widgets/common/button.hpp"
