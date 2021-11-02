@@ -16,6 +16,8 @@ set(TACTILE_IO_SOURCES
     ir_tileset.cpp
     parse_error.cpp
 
+    include/tactile_io.hpp
+
     include/tactile-io/api.hpp
     include/tactile-io/emitter.hpp
     include/tactile-io/ir.hpp
