@@ -41,8 +41,8 @@ void AddCommonAttributes(JSON& json, const Layer& layer, const std::filesystem::
 
   auto data = JSON::array();
 
-  for (int32 row = 0; row < nRows; ++row) {
-    for (int32 col = 0; col < nCols; ++col) {
+  for (usize row = 0; row < nRows; ++row) {
+    for (usize col = 0; col < nCols; ++col) {
       data += GetTile(tileLayer, row, col);
     }
   }

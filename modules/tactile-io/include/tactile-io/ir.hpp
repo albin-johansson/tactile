@@ -71,12 +71,12 @@ TACTILE_IO_API_QUERY auto AddProperty(Layer& layer) -> Property&;
 /// \name Tile layer API
 /// \{
 
-TACTILE_IO_API void ReserveTiles(TileLayer& layer, int32 nRows, int32 nCols);
-TACTILE_IO_API void SetTile(TileLayer& layer, int32 row, int32 column, int32 tile);
+TACTILE_IO_API void ReserveTiles(TileLayer& layer, usize nRows, usize nCols);
+TACTILE_IO_API void SetTile(TileLayer& layer, usize row, usize column, int32 tile);
 
-TACTILE_IO_API_QUERY auto GetRowCount(const TileLayer& layer) -> int32;
-TACTILE_IO_API_QUERY auto GetColumnCount(const TileLayer& layer) -> int32;
-TACTILE_IO_API_QUERY auto GetTile(const TileLayer& layer, int32 row, int32 column)
+TACTILE_IO_API_QUERY auto GetRowCount(const TileLayer& layer) -> usize;
+TACTILE_IO_API_QUERY auto GetColumnCount(const TileLayer& layer) -> usize;
+TACTILE_IO_API_QUERY auto GetTile(const TileLayer& layer, usize row, usize column)
     -> int32;
 
 /// \} End of tile layer API

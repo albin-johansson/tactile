@@ -112,12 +112,12 @@ auto GetTileHeight(const Map& map) -> int32
   return map.tile_height;
 }
 
-auto GetRowCount(const Map& map) -> int32
+auto GetRowCount(const Map& map) -> usize
 {
   return map.row_count;
 }
 
-auto GetColumnCount(const Map& map) -> int32
+auto GetColumnCount(const Map& map) -> usize
 {
   return map.column_count;
 }

@@ -284,7 +284,7 @@ TACTILE_IO_API_QUERY auto GetTileHeight(const Map& map) -> int32;
  *
  * \return the amount of rows.
  */
-TACTILE_IO_API_QUERY auto GetRowCount(const Map& map) -> int32;
+TACTILE_IO_API_QUERY auto GetRowCount(const Map& map) -> usize;
 
 /**
  * \brief Returns the amount of tile columns in a map.
@@ -293,7 +293,7 @@ TACTILE_IO_API_QUERY auto GetRowCount(const Map& map) -> int32;
  *
  * \return the amount of columns.
  */
-TACTILE_IO_API_QUERY auto GetColumnCount(const Map& map) -> int32;
+TACTILE_IO_API_QUERY auto GetColumnCount(const Map& map) -> usize;
 
 /**
  * \brief Returns the amount of tilesets associated with a map.

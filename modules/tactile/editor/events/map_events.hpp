@@ -50,8 +50,8 @@ struct OpenResizeMapDialogEvent final
 
 struct ResizeMapEvent final
 {
-  int row_count;
-  int col_count;
+  usize row_count{};
+  usize col_count{};
 };
 
 /// \} End of group events

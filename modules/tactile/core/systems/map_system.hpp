@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tactile-base/map_position.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 #include <entt.hpp>  // registry
 
@@ -17,7 +18,7 @@ void RemoveRow(entt::registry& registry);
 
 void RemoveColumn(entt::registry& registry);
 
-void ResizeMap(entt::registry& registry, int nRows, int nCols);
+void ResizeMap(entt::registry& registry, usize nRows, usize nCols);
 
 [[nodiscard]] auto IsPositionInMap(const entt::registry& registry,
                                    const MapPosition& position) -> bool;

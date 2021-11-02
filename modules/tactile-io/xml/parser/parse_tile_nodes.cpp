@@ -13,8 +13,8 @@ auto ParseTileNodes(const pugi::xml_node& data, TileLayer& layer) -> ParseError
   for (const auto node : data.children("tile")) {
     const auto id = node.attribute("gid").as_int(empty_tile);
 
-    const auto pos = MapPosition::FromIndex(index, nCols);
-    IO::SetTile(layer, pos.GetRow(), pos.GetColumn(), id);
+    const auto pos = MapPosition::FromIndex(index, static_cast<int32>(nCols));
+    IO::SetTile(layer, pos.GetRowIndex(), pos.GetColumnIndex(), id);
 
     ++index;
   }

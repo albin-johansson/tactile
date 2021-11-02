@@ -22,8 +22,8 @@ void SaveTiles(YAML::Emitter& emitter, const Layer& layer, const bool fold)
   const auto nCols = GetColumnCount(tileLayer);
 
   std::stringstream stream;
-  for (int32 row = 0; row < nRows; ++row) {
-    for (int32 col = 0; col < nCols; ++col) {
+  for (usize row = 0; row < nRows; ++row) {
+    for (usize col = 0; col < nCols; ++col) {
       if ((fold && col != 0) || (!fold && (row != 0 || col != 0))) {
         stream << ' ';
       }

@@ -13,8 +13,8 @@ auto ParseCSV(const CStr csv, TileLayer& layer) -> ParseError
   int32 index{};
   for (const auto& token : Split(csv, ',')) {
     if (const auto id = FromString<int32>(token)) {
-      const auto pos = MapPosition::FromIndex(index, nCols);
-      IO::SetTile(layer, pos.GetRow(), pos.GetColumn(), *id);
+      const auto pos = MapPosition::FromIndex(index, static_cast<int32>(nCols));
+      IO::SetTile(layer, pos.GetRowIndex(), pos.GetColumnIndex(), *id);
 
       ++index;
     }

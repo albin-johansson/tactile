@@ -84,7 +84,7 @@ using TileMatrix = std::vector<TileRow>;
   return TilesetID{static_cast<TilesetID::value_type>(value)};
 }
 
-[[nodiscard]] inline auto MakeTileRow(const int32 nCols, const TileID value) -> TileRow
+[[nodiscard]] inline auto MakeTileRow(const usize nCols, const TileID value) -> TileRow
 {
   TileRow row;
   row.reserve(nCols);
@@ -92,7 +92,7 @@ using TileMatrix = std::vector<TileRow>;
   return row;
 }
 
-[[nodiscard]] inline auto MakeTileMatrix(const int32 nRows, const int32 nCols)
+[[nodiscard]] inline auto MakeTileMatrix(const usize nRows, const usize nCols)
     -> TileMatrix
 {
   TileMatrix tiles;

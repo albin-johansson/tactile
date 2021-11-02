@@ -7,6 +7,7 @@
 #include <vector>      // vector
 
 #include <tactile-base/property_value.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 #include "ir_definitions.hpp"
 
@@ -161,33 +162,29 @@ auto AddProperty(Layer& layer) -> Property&
   return layer.properties.emplace_back();
 }
 
-void ReserveTiles(TileLayer& layer, const int32 nRows, const int32 nCols)
+void ReserveTiles(TileLayer& layer, const usize nRows, const usize nCols)
 {
-  assert(nRows > 0);
-  assert(nCols > 0);
-
   layer.row_count = nRows;
   layer.col_count = nCols;
-
   layer.tiles = MakeTileMatrix(nRows, nCols);
 }
 
-void SetTile(TileLayer& layer, const int32 row, const int32 column, const int32 tile)
+void SetTile(TileLayer& layer, const usize row, const usize column, const int32 tile)
 {
   layer.tiles.at(row).at(column) = TileID{tile};
 }
 
-auto GetRowCount(const TileLayer& layer) -> int32
+auto GetRowCount(const TileLayer& layer) -> usize
 {
   return layer.row_count;
 }
 
-auto GetColumnCount(const TileLayer& layer) -> int32
+auto GetColumnCount(const TileLayer& layer) -> usize
 {
   return layer.col_count;
 }
 
-auto GetTile(const TileLayer& layer, const int32 row, const int32 column) -> int32
+auto GetTile(const TileLayer& layer, const usize row, const usize column) -> int32
 {
   return layer.tiles.at(row).at(column).get();
 }

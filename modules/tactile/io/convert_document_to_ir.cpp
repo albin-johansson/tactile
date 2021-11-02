@@ -175,8 +175,8 @@ void ConvertLayer(IO::Layer& data,
       IO::ReserveTiles(tileLayer, nRows, nCols);
 
       const auto matrix = registry.get<TileLayer>(entity).matrix;
-      for (int32 row = 0; row < nRows; ++row) {
-        for (int32 col = 0; col < nCols; ++col) {
+      for (usize row = 0; row < nRows; ++row) {
+        for (usize col = 0; col < nCols; ++col) {
           IO::SetTile(tileLayer, row, col, matrix.at(row).at(col));
         }
       }

@@ -78,8 +78,8 @@ struct Tileset final
 /// \brief Intermediate representation of tile layer data.
 struct TileLayer final
 {
-  int32 row_count{};  ///< Total amount of rows.
-  int32 col_count{};  ///< Total amount of columns.
+  usize row_count{};  ///< Total amount of rows.
+  usize col_count{};  ///< Total amount of columns.
   TileMatrix tiles;   ///< The associated tile data.
 };
 
@@ -120,8 +120,8 @@ struct Map final
   int32 next_object_id{};               ///< The next available object ID.
   int32 tile_width{};                   ///< The logical tile width.
   int32 tile_height{};                  ///< The logical tile height.
-  int32 row_count{};                    ///< The number of rows.
-  int32 column_count{};                 ///< The number of columns.
+  usize row_count{};                    ///< The number of rows.
+  usize column_count{};                 ///< The number of columns.
   std::vector<Tileset> tilesets;        ///< The associated tilesets.
   std::vector<Layer> layers;            ///< The associated layers.
   std::vector<Property> properties;     ///< The map properties.

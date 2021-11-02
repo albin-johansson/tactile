@@ -1,8 +1,7 @@
 #include "map_system.hpp"
 
-#include <cassert>   // assert
 #include <cmath>     // abs
-#include <concepts>  // invocable
+#include <concepts>  // invocable, unsigned_integral
 
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
@@ -12,6 +11,17 @@
 
 namespace Tactile::Sys {
 namespace {
+
+template <std::unsigned_integral T>
+[[nodiscard]] constexpr auto GetDiff(const T a, const T b) noexcept -> T
+{
+  if (a < b) {
+    return b - a;
+  }
+  else {
+    return a - b;
+  }
+}
 
 template <std::invocable<TileLayer&> T>
 void TileLayerQuery(entt::registry& registry, T&& invocable)
@@ -70,20 +80,18 @@ void RemoveColumn(entt::registry& registry)
   }
 }
 
-void ResizeMap(entt::registry& registry, const int nRows, const int nCols)
+void ResizeMap(entt::registry& registry, const usize nRows, const usize nCols)
 {
-  assert(nRows > 0);
-  assert(nCols > 0);
   auto& map = registry.ctx<Map>();
 
-  if (const auto diff = std::abs(map.row_count - nRows); map.row_count < nRows) {
+  if (const auto diff = GetDiff(map.row_count, nRows); map.row_count < nRows) {
     InvokeN(diff, [&] { AddRow(registry); });
   }
   else {
     InvokeN(diff, [&] { RemoveRow(registry); });
   }
 
-  if (const auto diff = std::abs(map.column_count - nCols); map.column_count < nCols) {
+  if (const auto diff = GetDiff(map.column_count, nCols); map.column_count < nCols) {
     InvokeN(diff, [&] { AddColumn(registry); });
   }
   else {

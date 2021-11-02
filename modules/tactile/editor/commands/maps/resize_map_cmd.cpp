@@ -5,7 +5,9 @@
 
 namespace Tactile {
 
-ResizeMapCmd::ResizeMapCmd(Ref<entt::registry> registry, const int nRows, const int nCols)
+ResizeMapCmd::ResizeMapCmd(Ref<entt::registry> registry,
+                           const usize nRows,
+                           const usize nCols)
     : ACommand{"Resize Map"}
     , mRegistry{registry}
     , mRows{nRows}
@@ -35,8 +37,8 @@ void ResizeMapCmd::Redo()
     const auto cols = map.column_count;
 
     mCache.Clear();
-    mCache.SaveTiles(registry, {rows - (mPrevRows.value() - mRows), 0}, {rows, cols});
-    mCache.SaveTiles(registry, {0, cols - (mPrevCols.value() - mCols)}, {rows, cols});
+    mCache.SaveTiles(registry, {rows - (mPrevRows.value() - mRows), 0u}, {rows, cols});
+    mCache.SaveTiles(registry, {0u, cols - (mPrevCols.value() - mCols)}, {rows, cols});
   }
 
   Sys::ResizeMap(registry, mRows, mCols);

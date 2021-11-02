@@ -230,8 +230,8 @@ auto MakeLayer(entt::registry& registry,
     auto& tileLayer = registry.emplace<TileLayer>(entity);
     tileLayer.matrix = MakeTileMatrix(nRows, nCols);
 
-    for (int32 row = 0; row < nRows; ++row) {
-      for (int32 col = 0; col < nCols; ++col) {
+    for (usize row = 0; row < nRows; ++row) {
+      for (usize col = 0; col < nCols; ++col) {
         tileLayer.matrix[row][col] = TileID{IO::GetTile(tileLayerData, row, col)};
       }
     }

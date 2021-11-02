@@ -28,7 +28,7 @@ auto ParseTileData(const JSON& json, TileLayer& layer) -> ParseError
 
     if (value.is_number_integer()) {
       const auto id = value.get<int32>();
-      const auto pos = MapPosition::FromIndex(index, nCols);
+      const auto pos = MapPosition::FromIndex(index, static_cast<int32>(nCols));
       SetTile(layer, pos.GetRow(), pos.GetColumn(), id);
     }
     else {

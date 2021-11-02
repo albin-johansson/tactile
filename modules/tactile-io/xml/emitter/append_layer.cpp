@@ -50,14 +50,14 @@ void AppendTileLayer(pugi::xml_node mapNode,
   std::stringstream stream;
   usize index = 0;
 
-  for (int32 row = 0; row < nRows; ++row) {
-    for (int32 col = 0; col < nCols; ++col) {
+  for (usize row = 0; row < nRows; ++row) {
+    for (usize col = 0; col < nCols; ++col) {
       if (humanReadableOutput && index == 0) {
         stream << '\n';
       }
 
       stream << GetTile(tileLayer, row, col);
-      if (index < static_cast<usize>(count - 1)) {
+      if (index < count - 1u) {
         stream << ',';
       }
 

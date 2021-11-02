@@ -13,7 +13,7 @@ namespace Tactile {
 class ResizeMapCmd final : public ACommand
 {
  public:
-  ResizeMapCmd(Ref<entt::registry> registry, int nRows, int nCols);
+  ResizeMapCmd(Ref<entt::registry> registry, usize nRows, usize nCols);
 
   void Undo() override;
 
@@ -26,11 +26,11 @@ class ResizeMapCmd final : public ACommand
 
  private:
   Ref<entt::registry> mRegistry;
-  int mRows{};
-  int mCols{};
+  usize mRows{};
+  usize mCols{};
   MapCommandCache mCache;
-  Maybe<int> mPrevRows{};
-  Maybe<int> mPrevCols{};
+  Maybe<usize> mPrevRows{};
+  Maybe<usize> mPrevCols{};
 
   [[nodiscard]] auto IsLossyResize() const -> bool;
 };
