@@ -3,6 +3,7 @@
 #include <ostream>  // ostream
 
 #include "api.hpp"
+#include "ir_common.hpp"
 
 namespace Tactile::IO {
 
@@ -12,8 +13,10 @@ namespace Tactile::IO {
 /**
  * \brief Provides various map parsing error codes.
  *
- * \see `MapParser`
- * \see `GetCause(ParseError)`
+ * \details Enumerators of this type can subsequently be converted into human-readable
+ * error descriptions for more information about possible causes of various errors.
+ *
+ * \see `GetCause()`
  */
 enum class ParseError
 {
@@ -84,7 +87,7 @@ enum class ParseError
  *
  * \return a short explanation of the potential cause of the error.
  */
-[[nodiscard]] TACTILE_IO_API auto GetCause(ParseError error) -> const char*;
+[[nodiscard]] TACTILE_IO_API auto GetCause(ParseError error) -> CStr;
 
 /**
  * \brief Prints a textual representation of a parse error enumerator.
