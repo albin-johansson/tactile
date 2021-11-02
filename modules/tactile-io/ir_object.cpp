@@ -2,6 +2,8 @@
 
 #include <cassert>  // assert
 
+#include "ir_definitions.hpp"
+
 namespace Tactile::IO {
 
 void SetName(Object& object, const CStr name)
