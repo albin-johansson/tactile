@@ -36,7 +36,7 @@ void AppendFancyTiles(pugi::xml_node node,
                       const std::filesystem::path& dir)
 {
   EachTileInfo(tileset, [&](const Tile& tile) {
-    if (IsTileWorthSaving(tile)) {
+    if (IsWorthSaving(tile)) {
       auto tileNode = node.append_child("tile");
       tileNode.append_attribute("id").set_value(GetId(tile));
 

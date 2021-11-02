@@ -71,7 +71,7 @@ auto SaveFancyTiles(const Tileset& tileset, const std::filesystem::path& dir) ->
   auto array = JSON::array();
 
   EachTileInfo(tileset, [&](const Tile& tile) {
-    if (IsTileWorthSaving(tile)) {
+    if (IsWorthSaving(tile)) {
       array += SaveFancyTile(tile, dir);
     }
   });

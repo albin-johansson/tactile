@@ -39,7 +39,7 @@ auto AddProperty(Tile& tile) -> Property&
   return tile.properties.emplace_back();
 }
 
-auto IsTileWorthSaving(const Tile& tile) -> bool
+auto IsWorthSaving(const Tile& tile) -> bool
 {
   return !tile.animation.empty() || !tile.properties.empty() || !tile.objects.empty();
 }

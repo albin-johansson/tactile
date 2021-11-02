@@ -19,7 +19,7 @@ TACTILE_IO_API_QUERY auto AddAnimationFrame(Tile& tile) -> AnimationFrame&;
 TACTILE_IO_API_QUERY auto AddObject(Tile& tile) -> Object&;
 TACTILE_IO_API_QUERY auto AddProperty(Tile& tile) -> Property&;
 
-TACTILE_IO_API_QUERY auto IsTileWorthSaving(const Tile& tile) -> bool;
+TACTILE_IO_API_QUERY auto IsWorthSaving(const Tile& tile) -> bool;
 TACTILE_IO_API_QUERY auto GetId(const Tile& tile) -> int32;
 
 TACTILE_IO_API_QUERY auto GetAnimationFrameCount(const Tile& tile) -> usize;

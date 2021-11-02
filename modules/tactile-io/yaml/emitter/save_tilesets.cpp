@@ -48,7 +48,7 @@ void SaveFancyTiles(YAML::Emitter& emitter,
     emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
     EachTileInfo(tileset, [&](const Tile& tile) {
-      if (IsTileWorthSaving(tile)) {
+      if (IsWorthSaving(tile)) {
         emitter << YAML::BeginMap;
         emitter << YAML::Key << "id" << YAML::Value << GetId(tile);
 
