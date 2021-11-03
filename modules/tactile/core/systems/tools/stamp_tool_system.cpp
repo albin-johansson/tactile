@@ -56,7 +56,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
         if (IsPositionInMap(registry, pos)) {
           old_state.try_emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
           sequence.emplace_or_replace(pos, tile);
-          Sys::SetTileInLayer(registry, layerEntity, pos, tile);
+          SetTileInLayer(registry, layerEntity, pos, tile);
         }
       }
     }

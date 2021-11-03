@@ -86,7 +86,7 @@ auto MakeTileset(entt::registry& registry,
   auto& cache = registry.emplace<TilesetCache>(entity);
   cache.source_rects = CreateSourceRectCache(tileset);
 
-  auto& context = Sys::AddPropertyContext(registry, entity);
+  auto& context = AddPropertyContext(registry, entity);
   context.name = texture.path.stem().string();
 
   registry.emplace<TilesetSelection>(entity);
