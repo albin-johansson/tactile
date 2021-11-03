@@ -138,10 +138,7 @@ set(TACTILE_IO_SOURCES
 
 add_library(TactileIO SHARED ${TACTILE_IO_SOURCES})
 
-set_target_properties(TactileIO PROPERTIES
-    OUTPUT_NAME TactileIO
-    PREFIX ""
-    )
+set_target_properties(TactileIO PROPERTIES PREFIX "")
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set_target_properties(yaml-cpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
