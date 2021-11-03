@@ -59,13 +59,26 @@ jobs:
         shell: bash
         run: sudo apt install libsdl2-ttf-dev
 
+      - name: Cache Protobuf
+        id: cache-protobuf
+        uses: actions/cache@main
+        with:
+          path: protobuf-${{env.PROTOBUF_VERSION}}
+          key: protobuf-${{env.PROTOBUF_VERSION}}
+
       - name: Build Protobuf
         shell: bash
+        if: steps.cache-protobuf.outputs.cache-hit != 'true'
         run: |
           curl -L https://github.com/protocolbuffers/protobuf/releases/download/v${{env.PROTOBUF_VERSION}}/protobuf-cpp-${{env.PROTOBUF_VERSION}}.tar.gz | tar xz
           cd protobuf-${{env.PROTOBUF_VERSION}}
           ./configure
           make -j 8
+          
+      - name: Install Protobuf
+        shell: bash
+        run: |
+          cd protobuf-${{env.PROTOBUF_VERSION}}
           sudo make install
           sudo ldconfig
 
