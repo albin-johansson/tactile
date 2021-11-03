@@ -4,13 +4,14 @@ on: [ push, pull_request ]
 
 env:
   SDL_VERSION: 2.0.16
+  PROTOBUF_VERSION: 3.18.1
 
 jobs:
   ubuntu-latest-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
-      # - uses: seanmiddleditch/gha-setup-ninja@master
+      - uses: seanmiddleditch/gha-setup-ninja@master
       - uses: lukka/get-cmake@latest
 
       - name: Update packages
@@ -42,7 +43,7 @@ jobs:
           curl -L https://www.libsdl.org/release/SDL2-${{env.SDL_VERSION}}.tar.gz | tar xz
           cd SDL2-${{env.SDL_VERSION}}
           ./configure
-          make
+          make -j 8
 
       - name: Install SDL2
         shell: bash
@@ -57,6 +58,16 @@ jobs:
       - name: Install SDL2_ttf
         shell: bash
         run: sudo apt install libsdl2-ttf-dev
+
+      - name: Build Protobuf
+        shell: bash
+        run: |
+          curl -L https://github.com/protocolbuffers/protobuf/releases/download/v${{env.PROTOBUF_VERSION}}/protobuf-cpp-${{env.PROTOBUF_VERSION}}.tar.gz | tar xz
+          cd protobuf-${{env.PROTOBUF_VERSION}}
+          ./configure
+          make -j 8
+          sudo make install
+          sudo ldconfig
 
       - name: Create build directory
         shell: bash
