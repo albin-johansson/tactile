@@ -134,16 +134,19 @@ set(TACTILE_IO_SOURCES
     yaml/parser/parse_yaml_map.cpp
     )
 
-add_library(TactileIO SHARED ${TACTILE_IO_SOURCES})
+add_library(${TACTILE_IO} SHARED ${TACTILE_IO_SOURCES})
 
-set_target_properties(TactileIO PROPERTIES PREFIX "")
+set_target_properties(${TACTILE_IO} PROPERTIES
+    PREFIX ""
+    OUTPUT_NAME TactileIO
+    )
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set_target_properties(yaml-cpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
   set_target_properties(fmt PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif ()
 
-target_include_directories(TactileIO
+target_include_directories(${TACTILE_IO}
     PRIVATE
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/include/tactile-io
@@ -157,19 +160,19 @@ target_include_directories(TactileIO
     ${LIBRARY_DIR}/pugixml
     )
 
-target_link_libraries(TactileIO
+target_link_libraries(${TACTILE_IO}
     PRIVATE
     fmt
     yaml-cpp
     PugiXML
     )
 
-target_compile_definitions(TactileIO PRIVATE
+target_compile_definitions(${TACTILE_IO} PRIVATE
     TACTILE_IO_EXPORT
     CENTURION_NO_SDL_MIXER)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  target_compile_options(TactileIO
+  target_compile_options(${TACTILE_IO}
       PRIVATE
       /EHsc
       /MP
@@ -178,14 +181,14 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
       /Zc:__cplusplus
       )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  target_compile_options(TactileIO
+  target_compile_options(${TACTILE_IO}
       PRIVATE
       -Wall
       -Wextra
       )
 endif ()
 
-target_precompile_headers(TactileIO PRIVATE
+target_precompile_headers(${TACTILE_IO} PRIVATE
     <algorithm>
     <string>
     <vector>

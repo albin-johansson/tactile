@@ -14,6 +14,7 @@ set(RESOURCE_DIR ${ROOT_DIR}/resources)
 
 # Target names
 set(TACTILE_PROTO TactileProto)
+set(TACTILE_IO TactileIO)
 set(TACTILE_LIB TactileCore)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)

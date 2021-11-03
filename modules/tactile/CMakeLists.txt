@@ -428,6 +428,9 @@ set(SOURCE_FILES
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 
+add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
+add_dependencies(${TACTILE_LIB} ${TACTILE_IO})
+
 target_include_directories(${TACTILE_LIB}
     PUBLIC
     ${PROJECT_SOURCE_DIR}
@@ -523,6 +526,8 @@ if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
 else ()
   add_executable(${TACTILE_EXE} ${SOURCE_FILES} main.cpp)
 endif ()
+
+add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
 
