@@ -144,6 +144,7 @@ set_target_properties(${TACTILE_IO} PROPERTIES
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set_target_properties(yaml-cpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
   set_target_properties(fmt PROPERTIES POSITION_INDEPENDENT_CODE ON)
+  set_target_properties(PugiXML PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif ()
 
 target_include_directories(${TACTILE_IO}
