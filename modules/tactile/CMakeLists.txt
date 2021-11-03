@@ -3,8 +3,6 @@ cmake_minimum_required(VERSION 3.16)
 project(tactile-app CXX)
 
 set(SOURCE_FILES
-    ${IMGUI_SOURCES}
-
     application.cpp
     application.hpp
     application_events.cpp
@@ -465,16 +463,13 @@ target_link_libraries(${TACTILE_LIB}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
     ${PROTOBUF_LIBRARIES}
+    ImGui
     fmt
     ${TACTILE_PROTO}
     ${TACTILE_IO_IMPORT_LIBRARY}
     )
 
-target_compile_definitions(${TACTILE_LIB}
-    PUBLIC
-    CENTURION_NO_SDL_MIXER
-    IMGUI_DISABLE_OBSOLETE_FUNCTIONS
-    IMGUI_DEFINE_MATH_OPERATORS)
+target_compile_definitions(${TACTILE_LIB} PUBLIC CENTURION_NO_SDL_MIXER)
 
 if (MSVC)
   target_compile_definitions(${TACTILE_LIB} PUBLIC _CRT_SECURE_NO_WARNINGS)

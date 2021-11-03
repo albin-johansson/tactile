@@ -3,8 +3,6 @@ cmake_minimum_required(VERSION 3.16)
 project(tactile-io CXX)
 
 set(TACTILE_IO_SOURCES
-    ${PUGIXML_SOURCES}
-
     common_parsing.cpp
     common_parsing.hpp
     common_saving.cpp
@@ -161,8 +159,9 @@ target_include_directories(TactileIO
 
 target_link_libraries(TactileIO
     PRIVATE
-    yaml-cpp
     fmt
+    yaml-cpp
+    PugiXML
     )
 
 target_compile_definitions(TactileIO PRIVATE

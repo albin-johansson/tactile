@@ -36,6 +36,15 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
+include(Utilities)
+include(TactileDependencies)
+
+set(PUGIXML_SOURCES
+    ${LIBRARY_DIR}/pugixml/pugiconfig.hpp
+    ${LIBRARY_DIR}/pugixml/pugixml.cpp
+    ${LIBRARY_DIR}/pugixml/pugixml.hpp)
+add_library(PugiXML ${PUGIXML_SOURCES})
+
 set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imconfig.h
     ${LIBRARY_DIR}/imgui/imgui.cpp
@@ -53,13 +62,14 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imstb_textedit.h
     ${LIBRARY_DIR}/imgui/imstb_truetype.h)
 
-set(PUGIXML_SOURCES
-    ${LIBRARY_DIR}/pugixml/pugiconfig.hpp
-    ${LIBRARY_DIR}/pugixml/pugixml.cpp
-    ${LIBRARY_DIR}/pugixml/pugixml.hpp)
+add_library(ImGui ${IMGUI_SOURCES})
 
-include(Utilities)
-include(TactileDependencies)
+target_include_directories(ImGui PRIVATE ${SDL2_INCLUDE_DIR})
+
+target_compile_definitions(ImGui PUBLIC
+    IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+    IMGUI_DEFINE_MATH_OPERATORS
+    )
 
 add_subdirectory(modules/tactile-proto)
 add_subdirectory(modules/tactile-io)
