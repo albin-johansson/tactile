@@ -1,19 +1,27 @@
 include(FetchContent)
 
 # Google Protocol Buffers
-FetchContent_Declare(protobuf
-    GIT_REPOSITORY "https://github.com/protocolbuffers/protobuf.git"
-    GIT_TAG "v3.18.1"
-    SOURCE_SUBDIR cmake)
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  FetchContent_Declare(protobuf
+      GIT_REPOSITORY "https://github.com/protocolbuffers/protobuf.git"
+      GIT_TAG "v3.18.1"
+      SOURCE_SUBDIR cmake)
 
-set(protobuf_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(protobuf_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-set(protobuf_WITH_ZLIB OFF CACHE BOOL "" FORCE)
+  set(protobuf_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+  set(protobuf_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+  set(protobuf_WITH_ZLIB OFF CACHE BOOL "" FORCE)
 
-FetchContent_MakeAvailable(protobuf)
+  FetchContent_MakeAvailable(protobuf)
 
-set(PROTOBUF_INCLUDE_DIRS "${protobuf_SOURCE_DIR}/src" CACHE INTERNAL "")
-set(PROTOBUF_LIBRARIES libprotobuf CACHE INTERNAL "")
+  set(PROTOBUF_INCLUDE_DIRS "${protobuf_SOURCE_DIR}/src" CACHE INTERNAL "")
+  set(PROTOBUF_LIBRARIES libprotobuf CACHE INTERNAL "")
+
+else ()
+  find_package(Protobuf REQUIRED)
+
+  set(PROTOBUF_INCLUDE_DIRS "${Protobuf_INCLUDE_DIRS}" CACHE INTERNAL "")
+  set(PROTOBUF_LIBRARIES "${Protobuf_LIBRARIES}" CACHE INTERNAL "")
+endif ()
 
 # Google Test
 FetchContent_Declare(googletest
