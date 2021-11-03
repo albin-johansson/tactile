@@ -62,7 +62,6 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imstb_rectpack.h
     ${LIBRARY_DIR}/imgui/imstb_textedit.h
     ${LIBRARY_DIR}/imgui/imstb_truetype.h)
-
 add_library(ImGui ${IMGUI_SOURCES})
 
 target_include_directories(ImGui PRIVATE ${SDL2_INCLUDE_DIR})
