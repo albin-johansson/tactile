@@ -1,10 +1,9 @@
 #include "edit_menu.hpp"
 
-#include <tactile-base/formatted_string.hpp>
-
 #include <imgui.h>
 
 #include "core/tool_type.hpp"
+#include "core/utils/formatted_string.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/tool_events.hpp"
