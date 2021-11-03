@@ -1,1 +1,1 @@
-protoc --cpp_out=generated *.proto
+protoc --cpp_out=generated --experimental_allow_proto3_optional *.proto
