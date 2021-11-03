@@ -18,7 +18,7 @@ set(TACTILE_LIB TactileCore)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
-if (CMAKE_SYSTEM_NAME STREQUAL  "Windows")
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
   set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO.lib")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO.so")
