@@ -58,7 +58,7 @@ void UpdateCreditsDialog()
       Row("JSON for Modern C++", "3.9.1", "MIT");
       Row("Magic Enum C++", "0.7.3", "MIT");
       Row("portable-file-dialogs", "0.1.0", "WTFPL");
-      Row("Protocol Buffers", "3.19.1", "BSD");
+      Row("Protocol Buffers", "3.18.1", "BSD");
       Row("pugixml", "1.11.4", "MIT");
       Row("SDL", "2.0.16", "Zlib");
       Row("SDL_image", "2.0.5", "Zlib");

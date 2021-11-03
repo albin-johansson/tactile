@@ -3,7 +3,7 @@ include(FetchContent)
 # Google Protocol Buffers
 FetchContent_Declare(protobuf
     GIT_REPOSITORY "https://github.com/protocolbuffers/protobuf.git"
-    GIT_TAG "v3.19.1"
+    GIT_TAG "v3.18.1"
     SOURCE_SUBDIR cmake)
 
 set(protobuf_BUILD_TESTS OFF CACHE BOOL "" FORCE)
