@@ -66,6 +66,8 @@ add_library(ImGui ${IMGUI_SOURCES})
 
 target_include_directories(ImGui PRIVATE ${SDL2_INCLUDE_DIR})
 
+target_link_libraries(ImGui PRIVATE ${CMAKE_DL_LIBS})
+
 target_compile_definitions(ImGui PUBLIC
     IMGUI_DISABLE_OBSOLETE_FUNCTIONS
     IMGUI_DEFINE_MATH_OPERATORS
