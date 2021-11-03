@@ -459,15 +459,16 @@ target_include_directories(${TACTILE_LIB}
 
 target_link_libraries(${TACTILE_LIB}
     PUBLIC
-    ${TACTILE_PROTO}
+    ${CMAKE_DL_LIBS}
     ${OPENGL_LIBRARIES}
     ${GLEW_LIBRARIES}
+    ${SDL2_LIBRARY}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
-    ${SDL2_LIBRARY}
-    ${TACTILE_IO_IMPORT_LIBRARY}
     ${PROTOBUF_LIBRARIES}
     fmt
+    ${TACTILE_PROTO}
+    ${TACTILE_IO_IMPORT_LIBRARY}
     )
 
 target_compile_definitions(${TACTILE_LIB}

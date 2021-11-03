@@ -18,7 +18,13 @@ set(TACTILE_LIB TactileCore)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
-set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO${CMAKE_IMPORT_LIBRARY_SUFFIX}")
+if (WIN32)
+  set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO.lib")
+elseif (LINUX)
+  set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO.so")
+else ()
+  message(FATAL_ERROR "Unsupported platform!")
+endif ()
 
 list(APPEND CMAKE_PREFIX_PATH
     "$ENV{GLEW_LIBRARIES}"
