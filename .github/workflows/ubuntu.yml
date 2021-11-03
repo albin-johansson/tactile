@@ -74,7 +74,7 @@ jobs:
           cd protobuf-${{env.PROTOBUF_VERSION}}
           ./configure
           make -j 8
-          
+
       - name: Install Protobuf
         shell: bash
         run: |
