@@ -18,12 +18,12 @@ set(TACTILE_LIB TactileCore)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
-if (WIN32)
+if (CMAKE_SYSTEM_NAME STREQUAL  "Windows")
   set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO.lib")
-elseif (LINUX)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO.so")
 else ()
-  message(FATAL_ERROR "Unsupported platform!")
+  message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
 endif ()
 
 list(APPEND CMAKE_PREFIX_PATH
