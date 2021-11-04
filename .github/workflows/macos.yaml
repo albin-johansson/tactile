@@ -7,12 +7,18 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@main
-      - uses: seanmiddleditch/gha-setup-ninja@master
-      - uses: lukka/get-cmake@latest
 
       - name: Update packages
         shell: bash
         run: brew update
+
+      - name: Install Ninja
+        shell: bash
+        run: brew install ninja
+
+      - name: Install CMake
+        shell: bash
+        run: brew install cmake
 
       - name: Install LLVM
         shell: bash
