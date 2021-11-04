@@ -115,7 +115,7 @@ jobs:
           CXX: g++-10
         run: ninja
 
-      #- name: Run tests
-      #  working-directory: ./build/build
-      #  shell: bash
-      #  run: ./TactileTests
+      - name: Run tests
+        working-directory: ./build/build
+        shell: bash
+        run: ./TactileTests
