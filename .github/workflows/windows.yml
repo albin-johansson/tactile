@@ -7,6 +7,7 @@ env:
   IMG_VERSION: 2.0.5
   TTF_VERSION: 2.0.15
   GLEW_VERSION: 2.2.0
+  GLEWDIR: ${{github.workspace}}/glew-2.2.0
 
 jobs:
   windows-latest-test:
@@ -52,10 +53,6 @@ jobs:
           del glew.zip
           Copy-Item -Path glew-${{env.GLEW_VERSION}}/bin/Release/x64/glew32.dll `
                     -Destination bin/glew32.dll
-
-      - name: Set GLEWDIR environment variable
-        shell: cmd
-        run: setx /m GLEWDIR %cd%\glew-${{env.GLEW_VERSION}}
 
       - name: Create build folder
         shell: cmd
