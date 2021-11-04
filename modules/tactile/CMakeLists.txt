@@ -441,7 +441,6 @@ target_include_directories(${TACTILE_LIB}
     ${LIBRARY_DIR}/entt
     ${LIBRARY_DIR}/imgui
     ${LIBRARY_DIR}/centurion
-    ${LIBRARY_DIR}/glew
     ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/rune
     ${LIBRARY_DIR}/json
@@ -449,6 +448,7 @@ target_include_directories(${TACTILE_LIB}
     ${LIBRARY_DIR}/fontawesome
     ${LIBRARY_DIR}/pfd
     ${LIBRARY_DIR}/magic-enum
+    ${GLEW_INCLUDE_DIRS}
     ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIRS}
     ${SDL2_TTF_INCLUDE_DIRS}

@@ -29,9 +29,10 @@ else ()
   message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
 endif ()
 
-list(APPEND CMAKE_PREFIX_PATH
-    "$ENV{GLEW_LIBRARIES}"
-    "${LIBRARY_DIR}/glew")
+if (WIN32)
+  # Should point to the root GLEW directory, e.g. "C:\dev\glew-2.2.0"
+  list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEWDIR}")
+endif ()
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
