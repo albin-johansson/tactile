@@ -71,7 +71,7 @@ inline Maybe<std::string> change_type_target;
   return BoolPropertyWidget(visible);
 }
 
-void NativeReadOnlyStringRow(const CStr label, const CStr value)
+void NativeReadOnlyRow(const CStr label, const CStr value)
 {
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
@@ -84,7 +84,7 @@ void NativeReadOnlyStringRow(const CStr label, const CStr value)
   ImGui::EndDisabled();
 }
 
-void NativeReadOnlyFloatRow(const CStr label, const float value)
+void NativeReadOnlyRow(const CStr label, const float value)
 {
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
@@ -97,7 +97,7 @@ void NativeReadOnlyFloatRow(const CStr label, const float value)
   ImGui::EndDisabled();
 }
 
-void NativeReadOnlyIntRow(const CStr label, const int32 value)
+void NativeReadOnlyRow(const CStr label, const int32 value)
 {
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
@@ -113,16 +113,16 @@ void NativeReadOnlyIntRow(const CStr label, const int32 value)
 void ShowNativeTilesetProperties(const Tileset& tileset, entt::dispatcher& dispatcher)
 {
   const ScopeID scope{"NativeTilesetProperties"};
-  NativeReadOnlyStringRow("Type", "Tileset");
+  NativeReadOnlyRow("Type", "Tileset");
 
-  NativeReadOnlyIntRow("First tile ID", tileset.first_id.get());
-  NativeReadOnlyIntRow("Last tile ID", tileset.last_id.get());
+  NativeReadOnlyRow("First tile ID", tileset.first_id.get());
+  NativeReadOnlyRow("Last tile ID", tileset.last_id.get());
 
-  NativeReadOnlyIntRow("Tile count", tileset.tile_count);
-  NativeReadOnlyIntRow("Column count", tileset.column_count);
+  NativeReadOnlyRow("Tile count", tileset.tile_count);
+  NativeReadOnlyRow("Column count", tileset.column_count);
 
-  NativeReadOnlyIntRow("Tile width", tileset.tile_width);
-  NativeReadOnlyIntRow("Tile height", tileset.tile_height);
+  NativeReadOnlyRow("Tile width", tileset.tile_width);
+  NativeReadOnlyRow("Tile height", tileset.tile_height);
 
   ImGui::Separator();
 }
@@ -133,15 +133,15 @@ void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
 
   switch (layer.type) {
     case LayerType::TileLayer:
-      NativeReadOnlyStringRow("Type", "Tile Layer");
+      NativeReadOnlyRow("Type", "Tile Layer");
       break;
 
     case LayerType::ObjectLayer:
-      NativeReadOnlyStringRow("Type", "Object Layer");
+      NativeReadOnlyRow("Type", "Object Layer");
       break;
 
     case LayerType::GroupLayer:
-      NativeReadOnlyStringRow("Type", "Group Layer");
+      NativeReadOnlyRow("Type", "Group Layer");
       break;
   }
 
@@ -175,22 +175,22 @@ void ShowNativeObjectProperties(const Object& object, entt::dispatcher& dispatch
 
   switch (object.type) {
     case ObjectType::Rectangle:
-      NativeReadOnlyStringRow("Type", "Rectangle");
+      NativeReadOnlyRow("Type", "Rectangle");
       break;
 
     case ObjectType::Point:
-      NativeReadOnlyStringRow("Type", "Point");
+      NativeReadOnlyRow("Type", "Point");
       break;
 
     case ObjectType::Ellipse:
-      NativeReadOnlyStringRow("Type", "Ellipse");
+      NativeReadOnlyRow("Type", "Ellipse");
       break;
   }
 
-  NativeReadOnlyFloatRow("X", object.x);
-  NativeReadOnlyFloatRow("Y", object.y);
-  NativeReadOnlyFloatRow("Width", object.width);
-  NativeReadOnlyFloatRow("Height", object.height);
+  NativeReadOnlyRow("X", object.x);
+  NativeReadOnlyRow("Y", object.y);
+  NativeReadOnlyRow("Width", object.width);
+  NativeReadOnlyRow("Height", object.height);
 
   if (const auto visible = NativeVisibilityRow(object.visible)) {
     // TODO
