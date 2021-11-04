@@ -158,11 +158,7 @@ void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
   }
 
   if constexpr (cen::is_debug_build()) {
-    ImGui::TableNextRow();
-    ImGui::TableNextColumn();
-
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("ID");
+    PrepareTableRow("ID");
 
     ImGui::TableNextColumn();
     ImGui::BeginDisabled();
