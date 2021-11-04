@@ -59,7 +59,7 @@ void Emit()
 
 void Parse()
 {
-  Tactile::IO::ParseError error{};
+  Tactile::IO::ParseError err{};
   if (const auto irMap = Tactile::IO::ParseMap("resources/foo.yaml", &err)) {
     const auto rows = Tactile::IO::GetRowCount(*irMap);
     const auto columns = Tactile::IO::GetColumnCount(*irMap);
@@ -67,7 +67,7 @@ void Parse()
     // ...
   }
   else {
-    std::cout << "Failed to parse map: " << Tactile::IO::GetCause(error) << '\n';
+    std::cout << "Failed to parse map: " << Tactile::IO::GetCause(err) << '\n';
   }
 }
 ```
