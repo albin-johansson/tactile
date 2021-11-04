@@ -1,11 +1,10 @@
 #pragma once
 
-#include <array>            // array
-#include <cstddef>          // byte
-#include <cstring>          // memset
-#include <memory_resource>  // monotonic_buffer_resource
-#include <string>           // string
-#include <string_view>      // string_view
+#include <array>        // array
+#include <cstddef>      // byte
+#include <cstring>      // memset
+#include <string>       // string
+#include <string_view>  // string_view
 
 #include <tactile-base/tactile_std.hpp>
 
@@ -13,19 +12,6 @@ namespace Tactile {
 
 /// \addtogroup utils
 /// \{
-
-/**
- * \brief Represents a stack buffer resource that can use heap memory as a fallback.
- *
- * \tparam T the type of the stored type.
- * \tparam Size the number of elements that the buffer can store.
- */
-template <typename T, usize Size>
-struct StackResource final
-{
-  std::array<std::byte, Size * sizeof(T)> buffer;
-  std::pmr::monotonic_buffer_resource resource{buffer.data(), sizeof buffer};
-};
 
 /**
  * \brief Zeroes the values of a buffer.
