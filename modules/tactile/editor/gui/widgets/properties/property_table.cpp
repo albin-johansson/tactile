@@ -10,6 +10,7 @@
 #include "core/components/object.hpp"
 #include "core/components/property.hpp"
 #include "core/components/tileset.hpp"
+#include "core/map.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/utils/scope_id.hpp"
 #include "dialogs/add_property_dialog.hpp"
@@ -107,6 +108,33 @@ void NativeReadOnlyRow(const CStr label, const int32 value)
   ImGui::BeginDisabled();
   ImGui::Text("%d", value);
   ImGui::EndDisabled();
+}
+
+void NativeReadOnlyRow(const CStr label, const usize value)
+{
+  ImGui::TableNextRow();
+  ImGui::TableNextColumn();
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted(label);
+
+  ImGui::TableNextColumn();
+  ImGui::BeginDisabled();
+  ImGui::Text("%llu", value);
+  ImGui::EndDisabled();
+}
+
+void ShowNativeMapProperties(const std::string& name, const Map& map)
+{
+  NativeReadOnlyRow("Type", "Map");
+  NativeReadOnlyRow("Name", name.c_str());
+
+  NativeReadOnlyRow("Tile width", map.tile_width);
+  NativeReadOnlyRow("Tile height", map.tile_height);
+
+  NativeReadOnlyRow("Row count", map.row_count);
+  NativeReadOnlyRow("Column count", map.column_count);
+
+  ImGui::Separator();
 }
 
 void ShowNativeTilesetProperties(const Tileset& tileset, entt::dispatcher& dispatcher)
@@ -292,7 +320,7 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
 
   if (ImGui::BeginTable("##PropertyTable", 2, flags)) {
     if (current.entity == entt::null) {
-      // TODO native map properties
+      ShowNativeMapProperties(context.name, registry.ctx<Map>());
     }
     else {
       if (const auto* tileset = registry.try_get<Tileset>(current.entity)) {

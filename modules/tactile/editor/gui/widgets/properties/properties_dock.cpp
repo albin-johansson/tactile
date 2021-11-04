@@ -3,13 +3,6 @@
 #include <imgui.h>
 
 #include "core/components/property_context.hpp"
-#include "core/systems/property_system.hpp"
-#include "core/utils/formatted_string.hpp"
-#include "editor/gui/icons.hpp"
-#include "editor/gui/widgets/alignment.hpp"
-#include "editor/gui/widgets/common/button.hpp"
-#include "editor/gui/widgets/common/centered_button.hpp"
-#include "editor/gui/widgets/common/centered_text.hpp"
 #include "editor/gui/widgets/common/window.hpp"
 #include "editor/gui/widgets/properties/dialogs/add_property_dialog.hpp"
 #include "editor/gui/widgets/properties/dialogs/change_property_type_dialog.hpp"
@@ -37,23 +30,7 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
   has_focus = dock.IsFocused();
 
   if (dock) {
-    const auto& context = Sys::GetCurrentContext(registry);
-
-    FormattedString contextName{"Context: {}", context.name};
-    ImGui::TextUnformatted(contextName.GetData());
-
-    if (context.properties.empty()) {
-      PrepareVerticalAlignmentCenter(2.5f);
-      CenteredText("Current context has no properties!");
-      ImGui::Spacing();
-      if (CenteredButton(TAC_ICON_PROPERTIES " Add property...")) {
-        OpenAddPropertyDialog();
-      }
-    }
-    else {
-      ImGui::Separator();
-      UpdatePropertyTable(registry, dispatcher);
-    }
+    UpdatePropertyTable(registry, dispatcher);
   }
 
   UpdateAddPropertyDialog(registry, dispatcher);
