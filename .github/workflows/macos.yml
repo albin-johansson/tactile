@@ -2,6 +2,10 @@ name: "CI: macOS"
 
 on: [ push, pull_request ]
 
+env:
+  CC: /usr/local/opt/llvm/bin/clang
+  CXX: /usr/local/opt/llvm/bin/clang++
+
 jobs:
   macos-latest-test:
     runs-on: macos-latest
@@ -59,13 +63,9 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: bash
-        run: |
-          export PATH=/usr/local/bin:$PATH
-          cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
 
       - name: Build
         working-directory: ./build
         shell: bash
-        run: |
-          export PATH=/usr/local/bin:$PATH
-          ninja
+        run: ninja
