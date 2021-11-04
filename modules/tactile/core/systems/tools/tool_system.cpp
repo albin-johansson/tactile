@@ -42,7 +42,7 @@ void ToolOnPressed(entt::registry& registry,
 }
 
 void ToolOnDragged(entt::registry& registry,
-                   entt::dispatcher& dispatcher,
+                   [[maybe_unused]] entt::dispatcher& dispatcher,
                    const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<ActiveTool>();
