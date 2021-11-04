@@ -22,7 +22,9 @@ jobs:
 
       - name: Install LLVM
         shell: bash
-        run: brew install llvm
+        run: |
+          brew install llvm
+          export PATH=/usr/local/opt/llvm/bin:$PATH
 
       - name: Install mpg123
         shell: bash
