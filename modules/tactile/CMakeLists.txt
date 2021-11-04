@@ -459,8 +459,8 @@ target_include_directories(${TACTILE_LIB}
 target_link_libraries(${TACTILE_LIB}
     PUBLIC
     ${CMAKE_DL_LIBS}
-    ${OPENGL_LIBRARIES}
-    ${GLEW_LIBRARIES}
+    OpenGL::GL
+    GLEW::GLEW
     ${SDL2_LIBRARY}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
