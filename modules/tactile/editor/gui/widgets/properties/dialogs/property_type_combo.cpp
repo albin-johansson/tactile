@@ -23,9 +23,10 @@ constexpr std::array items{std::make_pair("string", PropertyType::String),
 
 [[nodiscard]] auto GetIndexFromType(const PropertyType type) -> usize
 {
-  auto it = std::ranges::find_if(items, [=](const std::pair<CStr, PropertyType>& pair) {
-    return type == pair.second;
-  });
+  const auto it = std::find_if(
+      items.begin(),
+      items.end(),
+      [=](const std::pair<CStr, PropertyType>& pair) { return type == pair.second; });
 
   if (it != items.end()) {
     return it - items.begin();

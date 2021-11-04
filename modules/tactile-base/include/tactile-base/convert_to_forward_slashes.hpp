@@ -12,7 +12,7 @@ namespace Tactile {
   /* Here we make sure that the file path is portable, by using forward slashes that
      can be understood by pretty much all operating systems that we care about. */
   auto str = path.string();
-  std::ranges::replace(str, '\\', '/');
+  std::replace(str.begin(), str.end(), '\\', '/');
   return str;
 }
 

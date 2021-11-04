@@ -249,9 +249,11 @@ auto HasPropertyWithName(const entt::registry& registry, const std::string_view 
     -> bool
 {
   const auto& context = GetCurrentContext(registry);
-  return std::ranges::any_of(context.properties, [&, name](entt::entity entity) {
-    return registry.get<Property>(entity).name == name;
-  });
+  return std::any_of(context.properties.begin(),
+                     context.properties.end(),
+                     [&, name](entt::entity entity) {
+                       return registry.get<Property>(entity).name == name;
+                     });
 }
 
 }  // namespace Tactile::Sys

@@ -102,11 +102,13 @@ void SortNodes(entt::registry& registry)
 
   /* Ensure that nodes hold sorted child node lists */
   for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
-    std::ranges::sort(node.children, [&](const entt::entity a, const entt::entity b) {
-      const auto& fst = registry.get<LayerTreeNode>(a);
-      const auto& snd = registry.get<LayerTreeNode>(b);
-      return fst.index < snd.index;
-    });
+    std::sort(node.children.begin(),
+              node.children.end(),
+              [&](const entt::entity a, const entt::entity b) {
+                const auto& fst = registry.get<LayerTreeNode>(a);
+                const auto& snd = registry.get<LayerTreeNode>(b);
+                return fst.index < snd.index;
+              });
   }
 }
 

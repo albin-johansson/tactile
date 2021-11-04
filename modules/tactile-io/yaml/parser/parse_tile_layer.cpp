@@ -45,7 +45,7 @@ auto ParseTileLayer(const YAML::Node& node,
 
   if (auto tiles = node["data"]) {
     auto raw = tiles.as<std::string>();
-    std::ranges::replace(raw, '\n', ' ');
+    std::replace(raw.begin(), raw.end(), '\n', ' ');
 
     if (const auto err = ParseTiles(tileLayer, raw, nCols); err != ParseError::None) {
       return err;
