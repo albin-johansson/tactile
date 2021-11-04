@@ -23,6 +23,8 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
   set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO.lib")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/libTactileIO.so")
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin") # macOS
+  set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/libTactileIO.so")
 else ()
   message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
 endif ()
