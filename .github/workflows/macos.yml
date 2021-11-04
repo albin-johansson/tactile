@@ -78,7 +78,6 @@ jobs:
         run: |
           cd protobuf-osx-${{env.PROTOBUF_VERSION}}
           sudo make install
-          sudo ldconfig
 
       - name: Make build directory
         shell: bash
