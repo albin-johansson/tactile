@@ -57,8 +57,8 @@ jobs:
         id: cache-protobuf
         uses: actions/cache@main
         with:
-          path: protobuf-${{env.PROTOBUF_VERSION}}
-          key: protobuf-${{env.PROTOBUF_VERSION}}
+          path: protobuf-osx-${{env.PROTOBUF_VERSION}}
+          key: protobuf-osx-${{env.PROTOBUF_VERSION}}
 
       - name: Build Protobuf
         shell: bash
@@ -68,14 +68,15 @@ jobs:
           brew install automake
           brew install libtool
           curl -L https://github.com/protocolbuffers/protobuf/releases/download/v${{env.PROTOBUF_VERSION}}/protobuf-cpp-${{env.PROTOBUF_VERSION}}.tar.gz | tar xz
-          cd protobuf-${{env.PROTOBUF_VERSION}}
+          mv protobuf-${{env.PROTOBUF_VERSION}} protobuf-osx-${{env.PROTOBUF_VERSION}}
+          cd protobuf-osx-${{env.PROTOBUF_VERSION}}
           ./configure
           make -j 8
 
       - name: Install Protobuf
         shell: bash
         run: |
-          cd protobuf-${{env.PROTOBUF_VERSION}}
+          cd protobuf-osx-${{env.PROTOBUF_VERSION}}
           sudo make install
           sudo ldconfig
 
