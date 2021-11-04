@@ -8,14 +8,23 @@
 
 namespace Tactile {
 
-auto FloatPropertyWidget(const PropertyValue& property) -> Maybe<float>
+auto FloatPropertyWidget(const PropertyValue& property, const float min, const float max)
+    -> Maybe<float>
 {
   const ScopeID id{&property};
   auto value = property.AsFloat();
 
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
-  if (ImGui::DragFloat("##FloatPropertyInput", &value)) {
-    return value;
+
+  if (min != 0 || max != 0) {
+    if (ImGui::SliderFloat("##FloatPropertyInput", &value, min, max)) {
+      return value;
+    }
+  }
+  else {
+    if (ImGui::DragFloat("##FloatPropertyInput", &value)) {
+      return value;
+    }
   }
 
   if (ImGui::IsItemHovered()) {

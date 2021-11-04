@@ -6,6 +6,8 @@
 
 namespace Tactile {
 
-[[nodiscard]] auto FloatPropertyWidget(const PropertyValue& property) -> Maybe<float>;
+[[nodiscard]] auto FloatPropertyWidget(const PropertyValue& property,
+                                       float min = 0,
+                                       float max = 0) -> Maybe<float>;
 
 }  // namespace Tactile
