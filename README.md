@@ -60,10 +60,10 @@ SDL2_image. Subsequently, the directories where you have put the SDL libraries s
 through environment variables called `SDL2DIR`, `SDL2TTFDIR` and `SDL2IMAGEDIR`, respectively. For
 example, running `echo %SDL2DIR%` should result in something like `C:\dev\SDL2-2.0.16` being output.
 Then, put the runtime binaries (`.dll` files), in a folder called `bin` in the root directory of the
-repository. After you have done this, you also need to download the GLEW 2.2.0 DLL (`glew32.dll`),
-which should also be put in the `bin` directory. In addition to these dependencies, you'll need
-CMake and MSVC installed, the latter is achieved by simply installing Visual Studio. Ninja isn't
-actually required, but is highly recommended.
+repository. After you have done this, you will need to repeat this process for GLEW, where you
+define a `GLEWDIR` environment variable and copy the GLEW `.dll` to the `bin` directory. In addition
+to these dependencies, you'll need CMake and MSVC installed, the latter is achieved by simply
+installing Visual Studio. Ninja isn't actually required, but is highly recommended.
 
 ```cmd
 mkdir build && cd build
