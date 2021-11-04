@@ -1,7 +1,6 @@
 #include "property_table.hpp"
 
 #include <string>   // string
-#include <utility>  // move
 
 #include <tactile-base/tactile_std.hpp>
 
