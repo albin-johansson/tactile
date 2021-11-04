@@ -7,10 +7,10 @@ env:
   IMG_VERSION: 2.0.5
   TTF_VERSION: 2.0.15
   GLEW_VERSION: 2.2.0
-  SDL2DIR: ${{github.workspace}}/SDL2-${{env.SDL_VERSION}}
-  SDL2IMAGEDIR: ${{github.workspace}}/SDL2_image-${{env.SDL_VERSION}}
-  SDL2TTFDIR: ${{github.workspace}}/SDL2_ttf-${{env.SDL_VERSION}}
-  GLEWDIR: ${{github.workspace}}/glew-${{env.GLEW_VERSION}}
+  SDL2DIR: ${{github.workspace}}/SDL2-2.0.16
+  SDL2IMAGEDIR: ${{github.workspace}}/SDL2_image-2.0.5
+  SDL2TTFDIR: ${{github.workspace}}/SDL2_ttf-2.0.15
+  GLEWDIR: ${{github.workspace}}/glew-2.2.0
 
 jobs:
   windows-latest-test:
