@@ -35,13 +35,18 @@ constinit PropertyItemContextMenuState context_state;
 inline Maybe<std::string> rename_target;
 inline Maybe<std::string> change_type_target;
 
-[[nodiscard]] auto NativeNameRow(const std::string& name) -> Maybe<std::string>
+void PrepareTableRow(const CStr label)
 {
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Name");
+  ImGui::TextUnformatted(label);
+}
+
+[[nodiscard]] auto NativeNameRow(const std::string& name) -> Maybe<std::string>
+{
+  PrepareTableRow("Name");
 
   ImGui::TableNextColumn();
   return StringPropertyWidget(name);
@@ -49,11 +54,7 @@ inline Maybe<std::string> change_type_target;
 
 [[nodiscard]] auto NativeOpacityRow(const float opacity) -> Maybe<float>
 {
-  ImGui::TableNextRow();
-  ImGui::TableNextColumn();
-
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Opacity");
+  PrepareTableRow("Opacity");
 
   ImGui::TableNextColumn();
   return FloatPropertyWidget(opacity, 0.0f, 1.0f);
@@ -61,11 +62,7 @@ inline Maybe<std::string> change_type_target;
 
 [[nodiscard]] auto NativeVisibilityRow(const bool visible) -> Maybe<bool>
 {
-  ImGui::TableNextRow();
-  ImGui::TableNextColumn();
-
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Visible");
+  PrepareTableRow("Visible");
 
   ImGui::TableNextColumn();
   return BoolPropertyWidget(visible);
@@ -73,10 +70,7 @@ inline Maybe<std::string> change_type_target;
 
 void NativeReadOnlyRow(const CStr label, const CStr value)
 {
-  ImGui::TableNextRow();
-  ImGui::TableNextColumn();
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(label);
+  PrepareTableRow(label);
 
   ImGui::TableNextColumn();
   ImGui::BeginDisabled();
@@ -86,10 +80,7 @@ void NativeReadOnlyRow(const CStr label, const CStr value)
 
 void NativeReadOnlyRow(const CStr label, const float value)
 {
-  ImGui::TableNextRow();
-  ImGui::TableNextColumn();
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(label);
+  PrepareTableRow(label);
 
   ImGui::TableNextColumn();
   ImGui::BeginDisabled();
@@ -99,10 +90,7 @@ void NativeReadOnlyRow(const CStr label, const float value)
 
 void NativeReadOnlyRow(const CStr label, const int32 value)
 {
-  ImGui::TableNextRow();
-  ImGui::TableNextColumn();
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(label);
+  PrepareTableRow(label);
 
   ImGui::TableNextColumn();
   ImGui::BeginDisabled();
@@ -112,10 +100,7 @@ void NativeReadOnlyRow(const CStr label, const int32 value)
 
 void NativeReadOnlyRow(const CStr label, const usize value)
 {
-  ImGui::TableNextRow();
-  ImGui::TableNextColumn();
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(label);
+  PrepareTableRow(label);
 
   ImGui::TableNextColumn();
   ImGui::BeginDisabled();
@@ -226,10 +211,7 @@ void ShowNativeObjectProperties(const Object& object, entt::dispatcher& dispatch
     // TODO
   }
 
-  ImGui::TableNextRow();
-  ImGui::TableNextColumn();
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Tag");
+  PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
   if (const auto type = StringPropertyWidget(object.custom_type)) {
