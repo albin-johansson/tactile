@@ -242,7 +242,7 @@ class vector_map final
   template <transparent_to<key_type> T>
   [[nodiscard]] auto find(const T& key) -> iterator
   {
-    return std::ranges::find_if(m_data, [&](const value_type& pair) {
+    return std::find_if(m_data.begin(), m_data.end(), [&](const value_type& pair) {
       return pair.first == key;
     });
   }
@@ -251,7 +251,7 @@ class vector_map final
   template <transparent_to<key_type> T>
   [[nodiscard]] auto find(const T& key) const -> const_iterator
   {
-    return std::ranges::find_if(m_data, [&](const value_type& pair) {
+    return std::find_if(m_data.begin(), m_data.end(), [&](const value_type& pair) {
       return pair.first == key;
     });
   }
