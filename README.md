@@ -60,8 +60,10 @@ SDL2_image. Subsequently, the directories where you have put the SDL libraries s
 through environment variables called `SDL2DIR`, `SDL2TTFDIR` and `SDL2IMAGEDIR`, respectively. For
 example, running `echo %SDL2DIR%` should result in something like `C:\dev\SDL2-2.0.16` being output.
 Then, put the runtime binaries (`.dll` files), in a folder called `bin` in the root directory of the
-repository. After you have done this, you also need to download the GLEW 2.2.0 DLL (`glew32.dll`), which
-should also be put in the `bin` directory.
+repository. After you have done this, you also need to download the GLEW 2.2.0 DLL (`glew32.dll`),
+which should also be put in the `bin` directory. In addition to these dependencies, you'll need
+CMake and MSVC installed, the latter is achieved by simply installing Visual Studio. Ninja isn't
+actually required, but is highly recommended.
 
 ```cmd
 mkdir build && cd build
@@ -73,10 +75,11 @@ ninja
 
 Building the source code on Linux, in this case Ubuntu, should be relatively straightforward using
 your package manager. At the time of writing, the packaged versions of SDL2 and Protobuf are too
-old, so you'll have to build them by yourself.
+old, so you'll have to build them by yourself. The following assumes that you've got a C++ compiler
+installed such as GCC.
 
 ```bash
-sudo apt install libsdl2-ttf-dev libsdl2-image-dev libglew-dev
+sudo apt install cmake ninja-build libsdl2-ttf-dev libsdl2-image-dev libglew-dev
 
 curl -L https://www.libsdl.org/release/SDL2-2.0.16.tar.gz | tar xz
 cd SDL2-2.0.16
@@ -95,6 +98,29 @@ cd ..
 
 git clone https://github.com/albin-johansson/tactile
 cd tactile
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+ninja
+```
+
+### macOS
+
+The easiest platform to get everything configured correctly with is macOS using Brew.
+
+```bash
+brew update
+brew install llvm
+brew install cmake
+brew install ninja
+brew install mpg123
+brew install glfw
+brew install glew
+brew install protobuf
+brew install SDL2
+brew install SDL2_ttf
+brew install SDL2_image
+
+git clone https://github.com/albin-johansson/tactile
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
 ninja
