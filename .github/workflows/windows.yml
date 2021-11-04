@@ -50,7 +50,7 @@ jobs:
                             -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
           7z x -y glew.zip
           del glew.zip
-          [System.Environment]::SetEnvironmentVariable('GLEWDIR', 'glew-${{env.GLEW_VERSION}}')
+          [System.Environment]::SetEnvironmentVariable('GLEWDIR', '${{github.workspace}}/glew-${{env.GLEW_VERSION}}')
           Copy-Item -Path glew-${{env.GLEW_VERSION}}/bin/Release/x64/glew32.dll `
                     -Destination bin/glew32.dll
 
