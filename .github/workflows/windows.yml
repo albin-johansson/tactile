@@ -55,7 +55,7 @@ jobs:
 
       - name: Set GLEWDIR environment variable
         shell: cmd
-        run: setx GLEWDIR=%cd%\glew-${{env.GLEW_VERSION}}
+        run: setx /m GLEWDIR %cd%\glew-${{env.GLEW_VERSION}}
 
       - name: Create build folder
         shell: cmd
