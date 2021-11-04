@@ -106,7 +106,7 @@ void NativeReadOnlyRow(const CStr label, const int32 value)
 
   ImGui::TableNextColumn();
   ImGui::BeginDisabled();
-  ImGui::Text("%i", value);
+  ImGui::Text("%d", value);
   ImGui::EndDisabled();
 }
 
