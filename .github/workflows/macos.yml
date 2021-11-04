@@ -22,9 +22,7 @@ jobs:
 
       - name: Install LLVM
         shell: bash
-        run: |
-          brew install llvm
-          export PATH=/usr/local/opt/llvm/bin:$PATH
+        run: brew install llvm
 
       - name: Install mpg123
         shell: bash
@@ -61,9 +59,13 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: bash
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+        run: |
+          export PATH=/usr/local/opt/llvm/bin:$PATH
+          cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
 
       - name: Build
         working-directory: ./build
         shell: bash
-        run: ninja
+        run: |
+          export PATH=/usr/local/opt/llvm/bin:$PATH
+          ninja
