@@ -105,7 +105,8 @@ ninja
 
 ### macOS
 
-The easiest platform to get everything configured correctly with is macOS using Brew.
+The easiest platform to get everything configured correctly with is macOS using Brew. The only 
+package that doesn't match our needs is Protobuf.
 
 ```bash
 brew update
@@ -115,10 +116,18 @@ brew install ninja
 brew install mpg123
 brew install glfw
 brew install glew
-brew install protobuf
 brew install SDL2
 brew install SDL2_ttf
 brew install SDL2_image
+
+brew install autoconf
+brew install automake
+brew install libtool
+curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.18.1/protobuf-cpp-3.18.1.tar.gz | tar xz
+cd protobuf-3.18.1
+./configure
+make -j 8
+sudo make install
 
 git clone https://github.com/albin-johansson/tactile
 mkdir build && cd build
