@@ -60,12 +60,12 @@ jobs:
         working-directory: ./build
         shell: bash
         run: |
-          export PATH=/usr/local/opt/llvm/bin:$PATH
+          export PATH=/usr/local/bin:$PATH
           cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
 
       - name: Build
         working-directory: ./build
         shell: bash
         run: |
-          export PATH=/usr/local/opt/llvm/bin:$PATH
+          export PATH=/usr/local/bin:$PATH
           ninja
