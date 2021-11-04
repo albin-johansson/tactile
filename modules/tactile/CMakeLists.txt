@@ -444,7 +444,6 @@ target_include_directories(${TACTILE_LIB}
     ${LIBRARY_DIR}/glew
     ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/rune
-    ${LIBRARY_DIR}/init
     ${LIBRARY_DIR}/json
     ${LIBRARY_DIR}/stbimage
     ${LIBRARY_DIR}/fontawesome
