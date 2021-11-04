@@ -189,8 +189,11 @@ void ShowNativeObjectProperties(const Object& object, entt::dispatcher& dispatch
 
   NativeReadOnlyRow("X", object.x);
   NativeReadOnlyRow("Y", object.y);
-  NativeReadOnlyRow("Width", object.width);
-  NativeReadOnlyRow("Height", object.height);
+
+  if (object.type != ObjectType::Point) {
+    NativeReadOnlyRow("Width", object.width);
+    NativeReadOnlyRow("Height", object.height);
+  }
 
   if (const auto visible = NativeVisibilityRow(object.visible)) {
     // TODO
