@@ -296,10 +296,6 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
       // TODO native map properties
     }
     else {
-      if (auto updated = NativeNameRow(context.name)) {
-        // context.name = std::move(*updated);
-      }
-
       if (const auto* tileset = registry.try_get<Tileset>(current.entity)) {
         ShowNativeTilesetProperties(*tileset, dispatcher);
       }
