@@ -19,6 +19,11 @@ struct MoveObjectEvent final
   float new_y{};  ///< Updated y-coordinate of the object.
 };
 
+/// \brief Emitted when the visibility of an object should be changed.
+struct SetObjectVisibilityEvent final
+{
+  ObjectID id{};   ///< ID of target object.
+  bool visible{};  ///< New visibility state.
 };
 
 /// \brief Emitted when the tag of an object should be changed.

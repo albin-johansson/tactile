@@ -205,7 +205,7 @@ void ShowNativeObjectProperties(const Object& object, entt::dispatcher& dispatch
   }
 
   if (const auto visible = NativeVisibilityRow(object.visible)) {
-    // TODO
+    dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, *visible);
   }
 
   PrepareTableRow("Tag");

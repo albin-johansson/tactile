@@ -138,6 +138,8 @@ set(SOURCE_FILES
     editor/commands/objects/move_object_cmd.hpp
     editor/commands/objects/set_object_tag_cmd.cpp
     editor/commands/objects/set_object_tag_cmd.hpp
+    editor/commands/objects/set_object_visibility_cmd.cpp
+    editor/commands/objects/set_object_visibility_cmd.hpp
 
     editor/commands/properties/add_property_cmd.cpp
     editor/commands/properties/add_property_cmd.hpp
