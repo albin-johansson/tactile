@@ -4,14 +4,12 @@
 
 #include <entt.hpp>  // registry
 
-#include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include "object_cmd.hpp"
 
 namespace Tactile {
 
-struct Object;
-
-class SetObjectVisibilityCmd final : public ACommand
+class SetObjectVisibilityCmd final : public AObjectCmd
 {
  public:
   SetObjectVisibilityCmd(Ref<entt::registry> registry, ObjectID id, bool visible);
@@ -26,12 +24,8 @@ class SetObjectVisibilityCmd final : public ACommand
   }
 
  private:
-  Ref<entt::registry> mRegistry;
-  ObjectID mObjectId;
   bool mVisible;
   Maybe<bool> mPreviousVisibility;
-
-  [[nodiscard]] auto GetObject() -> Object&;
 };
 
 }  // namespace Tactile

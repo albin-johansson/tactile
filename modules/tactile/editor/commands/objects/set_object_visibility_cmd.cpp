@@ -3,40 +3,27 @@
 #include <cassert>  // assert
 
 #include "core/components/object.hpp"
-#include "core/systems/object_system.hpp"
 
 namespace Tactile {
 
 SetObjectVisibilityCmd::SetObjectVisibilityCmd(Ref<entt::registry> registry,
                                                const ObjectID id,
                                                const bool visible)
-    : ACommand{"Set Object Visibility"}
-    , mRegistry{registry}
-    , mObjectId{id}
+    : AObjectCmd{"Set Object Visibility", registry, id}
     , mVisible{visible}
 {}
 
 void SetObjectVisibilityCmd::Undo()
 {
-  auto& object = GetObject();
+  auto& object = GetTargetObject();
   object.visible = mPreviousVisibility.value();
 }
 
 void SetObjectVisibilityCmd::Redo()
 {
-  auto& object = GetObject();
+  auto& object = GetTargetObject();
   mPreviousVisibility = object.visible;
   object.visible = mVisible;
-}
-
-auto SetObjectVisibilityCmd::GetObject() -> Object&
-{
-  auto& registry = mRegistry.get();
-
-  const auto entity = Sys::FindObject(registry, mObjectId);
-  assert(entity != entt::null);
-
-  return registry.get<Object>(entity);
 }
 
 }  // namespace Tactile

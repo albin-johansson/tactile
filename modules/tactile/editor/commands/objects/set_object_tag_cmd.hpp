@@ -6,14 +6,12 @@
 
 #include <entt.hpp>  // registry
 
-#include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include "object_cmd.hpp"
 
 namespace Tactile {
 
-struct Object;
-
-class SetObjectTagCmd final : public ACommand
+class SetObjectTagCmd final : public AObjectCmd
 {
  public:
   SetObjectTagCmd(Ref<entt::registry> registry, ObjectID id, std::string tag);
@@ -30,12 +28,8 @@ class SetObjectTagCmd final : public ACommand
   }
 
  private:
-  Ref<entt::registry> mRegistry;
-  ObjectID mObjectId;
   std::string mNewTag;
   Maybe<std::string> mOldTag;
-
-  [[nodiscard]] auto GetObject() -> Object&;
 };
 
 }  // namespace Tactile
