@@ -117,7 +117,6 @@ void ShowNativeMapProperties(const std::string& name, const Map& map)
 
 void ShowNativeTilesetProperties(const Tileset& tileset, entt::dispatcher& dispatcher)
 {
-  const ScopeID scope{"NativeTilesetProperties"};
   NativeReadOnlyRow("Type", "Tileset");
 
   NativeReadOnlyRow("First tile ID", tileset.first_id.get());
@@ -134,8 +133,6 @@ void ShowNativeTilesetProperties(const Tileset& tileset, entt::dispatcher& dispa
 
 void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
 {
-  const ScopeID scope{"NativeLayerProperties"};
-
   switch (layer.type) {
     case LayerType::TileLayer:
       NativeReadOnlyRow("Type", "Tile Layer");
