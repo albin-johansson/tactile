@@ -164,8 +164,6 @@ void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
 
 void ShowNativeObjectProperties(const Object& object, entt::dispatcher& dispatcher)
 {
-  const ScopeID scope{"NativeObjectProperties"};
-
   switch (object.type) {
     case ObjectType::Rectangle:
       NativeReadOnlyRow("Type", "Rectangle");
