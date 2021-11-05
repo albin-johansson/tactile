@@ -104,9 +104,7 @@ void NativeReadOnlyRow(const CStr label, const usize value)
   PrepareTableRow(label);
 
   ImGui::TableNextColumn();
-  ImGui::BeginDisabled();
-  ImGui::Text("%llu", value);
-  ImGui::EndDisabled();
+  ImGui::Text("%llu", static_cast<uint64>(value)); /* Cast to avoid format warnings */
 }
 
 void ShowNativeMapProperties(const std::string& name, const Map& map)
