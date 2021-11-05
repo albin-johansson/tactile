@@ -72,11 +72,15 @@ void ObjectSelectionToolOnReleased(entt::registry& registry,
     if (active.entity != entt::null) {
       if (const auto* drag = registry.try_get<ObjectDragInfo>(active.entity)) {
         const auto& object = registry.get<Object>(active.entity);
-        dispatcher.enqueue<MoveObjectEvent>(object.id,
-                                            drag->origin_object_x,
-                                            drag->origin_object_y,
-                                            object.x,
-                                            object.y);
+
+        /* Only emit an event if the object has been moved along any axis */
+        if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
+          dispatcher.enqueue<MoveObjectEvent>(object.id,
+                                              drag->origin_object_x,
+                                              drag->origin_object_y,
+                                              object.x,
+                                              object.y);
+        }
       }
 
       registry.remove<ObjectDragInfo>(active.entity);
