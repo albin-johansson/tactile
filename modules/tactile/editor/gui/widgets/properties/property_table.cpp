@@ -74,9 +74,7 @@ void NativeReadOnlyRow(const CStr label, const CStr value)
   PrepareTableRow(label);
 
   ImGui::TableNextColumn();
-  ImGui::BeginDisabled();
   ImGui::TextUnformatted(value);
-  ImGui::EndDisabled();
 }
 
 void NativeReadOnlyRow(const CStr label, const float value)
@@ -84,9 +82,7 @@ void NativeReadOnlyRow(const CStr label, const float value)
   PrepareTableRow(label);
 
   ImGui::TableNextColumn();
-  ImGui::BeginDisabled();
   ImGui::Text("%.2f", value);
-  ImGui::EndDisabled();
 }
 
 void NativeReadOnlyRow(const CStr label, const int32 value)
@@ -94,9 +90,7 @@ void NativeReadOnlyRow(const CStr label, const int32 value)
   PrepareTableRow(label);
 
   ImGui::TableNextColumn();
-  ImGui::BeginDisabled();
   ImGui::Text("%d", value);
-  ImGui::EndDisabled();
 }
 
 void NativeReadOnlyRow(const CStr label, const usize value)
@@ -157,12 +151,7 @@ void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
   }
 
   if constexpr (cen::is_debug_build()) {
-    PrepareTableRow("ID");
-
-    ImGui::TableNextColumn();
-    ImGui::BeginDisabled();
-    ImGui::Text("%i", layer.id.get());
-    ImGui::EndDisabled();
+    NativeReadOnlyRow("ID", layer.id);
   }
 
   if (const auto value = NativeOpacityRow(layer.opacity)) {
