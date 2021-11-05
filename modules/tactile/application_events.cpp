@@ -69,6 +69,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<ShowLayerPropertiesEvent>().connect<&App::OnShowLayerProperties>(app);
 
   d.sink<MoveObjectEvent>().connect<&App::OnMoveObject>(app);
+  d.sink<SetObjectTagEvent>().connect<&App::OnSetObjectTag>(app);
 
   d.sink<AddPropertyEvent>().connect<&App::OnAddProperty>(app);
   d.sink<RemovePropertyEvent>().connect<&App::OnRemoveProperty>(app);

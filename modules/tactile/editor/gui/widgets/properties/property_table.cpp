@@ -17,6 +17,7 @@
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
 #include "editor/events/layer_events.hpp"
+#include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "items/bool_property_widget.hpp"
@@ -210,8 +211,8 @@ void ShowNativeObjectProperties(const Object& object, entt::dispatcher& dispatch
   PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
-  if (const auto type = StringPropertyWidget(object.custom_type)) {
-    // TODO
+  if (const auto tag = StringPropertyWidget(object.custom_type)) {
+    dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
   }
 
   ImGui::Separator();

@@ -100,6 +100,7 @@ class Application final
   void OnShowLayerProperties(const ShowLayerPropertiesEvent& event);
 
   void OnMoveObject(const MoveObjectEvent& event);
+  void OnSetObjectTag(const SetObjectTagEvent& event);
 
   void OnAddProperty(const AddPropertyEvent& event);
   void OnRemoveProperty(const RemovePropertyEvent& event);

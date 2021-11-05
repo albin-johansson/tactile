@@ -31,6 +31,7 @@
 #include "editor/commands/maps/remove_row_cmd.hpp"
 #include "editor/commands/maps/resize_map_cmd.hpp"
 #include "editor/commands/objects/move_object_cmd.hpp"
+#include "editor/commands/objects/set_object_tag_cmd.hpp"
 #include "editor/commands/properties/add_property_cmd.hpp"
 #include "editor/commands/properties/change_property_type_cmd.hpp"
 #include "editor/commands/properties/remove_property_cmd.hpp"
@@ -536,6 +537,11 @@ void Application::OnMoveObject(const MoveObjectEvent& event)
                           event.old_y,
                           event.new_x,
                           event.new_y);
+}
+
+void Application::OnSetObjectTag(const SetObjectTagEvent& event)
+{
+  Execute<SetObjectTagCmd>(mModel, event.id, event.tag);
 }
 
 void Application::OnAddProperty(const AddPropertyEvent& event)

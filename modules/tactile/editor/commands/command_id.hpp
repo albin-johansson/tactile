@@ -37,7 +37,8 @@ struct CommandId final
     AddTileset,
     RemoveTileset,
 
-    MoveObject
+    MoveObject,
+    SetObjectTag
   };
 };
 
