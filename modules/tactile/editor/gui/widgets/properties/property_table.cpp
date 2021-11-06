@@ -51,6 +51,8 @@ void PrepareTableRow(const CStr label)
                                  const bool validateAsFileName = false)
     -> Maybe<std::string>
 {
+  const ScopeID scope{"##NativeNameRow"};
+
   PrepareTableRow("Name");
 
   ImGui::TableNextColumn();
@@ -84,6 +86,7 @@ void PrepareTableRow(const CStr label)
 
 [[nodiscard]] auto NativeOpacityRow(const float opacity) -> Maybe<float>
 {
+  const ScopeID scope{"##NativeOpacityRow"};
   PrepareTableRow("Opacity");
 
   ImGui::TableNextColumn();
@@ -92,6 +95,7 @@ void PrepareTableRow(const CStr label)
 
 [[nodiscard]] auto NativeVisibilityRow(const bool visible) -> Maybe<bool>
 {
+  const ScopeID scope{"##NativeVisibilityRow"};
   PrepareTableRow("Visible");
 
   ImGui::TableNextColumn();
