@@ -17,6 +17,10 @@ void RenderObject(const entt::registry& registry,
 {
   const auto& object = registry.get<Object>(objectEntity);
 
+  if (!object.visible) {
+    return;
+  }
+
   const auto localPos = ImVec2{object.x, object.y};
   const auto absolutePos = info.map_position + (localPos * info.ratio);
 
