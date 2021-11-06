@@ -248,7 +248,7 @@ void ShowNativeObjectProperties(const std::string& name,
   PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
-  if (const auto tag = StringPropertyWidget(object.custom_type)) {
+  if (const auto tag = StringPropertyWidget(object.tag)) {
     dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
   }
 
