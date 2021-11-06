@@ -48,6 +48,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<SelectTilesetEvent>().connect<&App::OnSelectTileset>(app);
   d.sink<SetTilesetSelectionEvent>().connect<&App::OnSetTilesetSelection>(app);
   d.sink<ShowTilesetPropertiesEvent>().connect<&App::OnShowTilesetProperties>(app);
+  d.sink<SetTilesetNameEvent>().connect<&App::OnSetTilesetName>(app);
 
   d.sink<AddRowEvent>().connect<&App::OnAddRow>(app);
   d.sink<AddColumnEvent>().connect<&App::OnAddColumn>(app);
@@ -68,7 +69,10 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<RenameLayerEvent>().connect<&App::OnRenameLayer>(app);
   d.sink<ShowLayerPropertiesEvent>().connect<&App::OnShowLayerProperties>(app);
 
+  d.sink<SetObjectNameEvent>().connect<&App::OnSetObjectName>(app);
   d.sink<MoveObjectEvent>().connect<&App::OnMoveObject>(app);
+  d.sink<SetObjectVisibilityEvent>().connect<&App::OnSetObjectVisibility>(app);
+  d.sink<SetObjectTagEvent>().connect<&App::OnSetObjectTag>(app);
 
   d.sink<AddPropertyEvent>().connect<&App::OnAddProperty>(app);
   d.sink<RemovePropertyEvent>().connect<&App::OnRemoveProperty>(app);

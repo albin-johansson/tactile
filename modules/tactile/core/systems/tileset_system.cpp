@@ -152,6 +152,11 @@ void RemoveTileset(entt::registry& registry, const TilesetID id)
     activeTileset.entity = entt::null;
   }
 
+  auto& activeContext = registry.ctx<ActivePropertyContext>();
+  if (entity == activeContext.entity) {
+    activeContext.entity = entt::null;
+  }
+
   registry.destroy(entity);
 
   if (!registry.empty<Tileset>()) {

@@ -79,6 +79,7 @@ class Application final
   void OnSelectTileset(const SelectTilesetEvent& event);
   void OnSetTilesetSelection(const SetTilesetSelectionEvent& event);
   void OnShowTilesetProperties(const ShowTilesetPropertiesEvent& event);
+  void OnSetTilesetName(const SetTilesetNameEvent& event);
 
   void OnAddRow();
   void OnAddColumn();
@@ -99,7 +100,10 @@ class Application final
   void OnRenameLayer(const RenameLayerEvent& event);
   void OnShowLayerProperties(const ShowLayerPropertiesEvent& event);
 
+  void OnSetObjectName(const SetObjectNameEvent& event);
   void OnMoveObject(const MoveObjectEvent& event);
+  void OnSetObjectVisibility(const SetObjectVisibilityEvent& event);
+  void OnSetObjectTag(const SetObjectTagEvent& event);
 
   void OnAddProperty(const AddPropertyEvent& event);
   void OnRemoveProperty(const RemovePropertyEvent& event);

@@ -4,15 +4,15 @@
 
 #include <entt.hpp>  // registry
 
-#include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include "object_cmd.hpp"
 
 namespace Tactile {
 
 /// \addtogroup commands
 /// \{
 
-class MoveObjectCmd final : public ACommand
+class MoveObjectCmd final : public AObjectCmd
 {
  public:
   MoveObjectCmd(Ref<entt::registry> registry,
@@ -32,14 +32,10 @@ class MoveObjectCmd final : public ACommand
   }
 
  private:
-  Ref<entt::registry> mRegistry;
-  ObjectID mObject;
   float mOldX;
   float mOldY;
   float mNewX;
   float mNewY;
-
-  void SetObjectPosition(float x, float y);
 };
 
 /// \} End of group commands
