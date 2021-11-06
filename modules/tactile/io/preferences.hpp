@@ -46,7 +46,8 @@ struct Preferences final
   int preferred_tile_height;
   int viewport_overlay_pos;
   bool embed_tilesets;
-  bool human_readable_output;
+  bool indent_output;
+  bool fold_tile_data;
   bool show_grid;
   bool show_layer_dock;
   bool show_tileset_dock;
@@ -98,7 +99,8 @@ void ResetExportPreferences(Preferences& prefs);
 
 [[nodiscard]] auto GetPreferredFormat() -> const std::string&;
 [[nodiscard]] auto GetEmbedTilesets() noexcept -> bool;
-[[nodiscard]] auto GetHumanReadableOutput() noexcept -> bool;
+[[nodiscard]] auto GetFoldTileData() noexcept -> bool;
+[[nodiscard]] auto GetIndentOutput() noexcept -> bool;
 
 void ResetDockVisibilities() noexcept;
 void SetShowLayerDock(bool visible) noexcept;

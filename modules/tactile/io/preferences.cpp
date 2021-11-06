@@ -28,7 +28,8 @@ constexpr int def_preferred_tile_height = 32;
 constexpr int def_viewport_overlay_pos = cen::to_underlying(OverlayPos::BottomLeft);
 constexpr bool def_show_grid = true;
 constexpr bool def_embed_tilesets = false;
-constexpr bool def_human_readable_output = true;
+constexpr bool def_indent_output = true;
+constexpr bool def_fold_tile_data = false;
 constexpr bool def_show_layer_dock = true;
 constexpr bool def_show_tileset_dock = true;
 constexpr bool def_show_properties_dock = true;
@@ -47,7 +48,8 @@ constexpr bool def_restore_last_session = true;
           .preferred_tile_height = def_preferred_tile_height,
           .viewport_overlay_pos = def_viewport_overlay_pos,
           .embed_tilesets = def_embed_tilesets,
-          .human_readable_output = def_human_readable_output,
+          .indent_output = def_indent_output,
+          .fold_tile_data = def_fold_tile_data,
           .show_grid = def_show_grid,
           .show_layer_dock = def_show_layer_dock,
           .show_tileset_dock = def_show_tileset_dock,
@@ -115,8 +117,12 @@ void LoadPreferences()
         settings.embed_tilesets = cfg.embed_tilesets();
       }
 
-      if (cfg.has_human_readable_output()) {
-        settings.human_readable_output = cfg.human_readable_output();
+      if (cfg.has_indent_output()) {
+        settings.indent_output = cfg.indent_output();
+      }
+
+      if (cfg.has_fold_tile_data()) {
+        settings.fold_tile_data = cfg.fold_tile_data();
       }
 
       if (cfg.has_show_tileset_dock()) {
@@ -151,26 +157,27 @@ void LoadPreferences()
 
   // clang-format off
   CENTURION_LOG_INFO("Theme: %s", magic_enum::enum_name(settings.theme).data());
-  CENTURION_LOG_INFO("ViewportBackground: %s", settings.viewport_background.as_rgb().c_str());
-  CENTURION_LOG_INFO("ShowGrid: %i", settings.show_grid);
-  CENTURION_LOG_INFO("WindowBorder: %i", settings.window_border);
+  CENTURION_LOG_INFO("Viewport background: %s", settings.viewport_background.as_rgb().c_str());
+  CENTURION_LOG_INFO("Show grid: %i", settings.show_grid);
+  CENTURION_LOG_INFO("Window border: %i", settings.window_border);
 
-  CENTURION_LOG_INFO("CommandCapacity: %u", settings.command_capacity);
-  CENTURION_LOG_INFO("RestoreLastSession: %i", settings.restore_last_session);
-  CENTURION_LOG_INFO("PreferredTileWidth: %i", settings.preferred_tile_width);
-  CENTURION_LOG_INFO("PreferredTileHeight: %i", settings.preferred_tile_height);
+  CENTURION_LOG_INFO("Command capacity: %u", settings.command_capacity);
+  CENTURION_LOG_INFO("Restore last session: %i", settings.restore_last_session);
+  CENTURION_LOG_INFO("Preferred tile width: %i", settings.preferred_tile_width);
+  CENTURION_LOG_INFO("Preferred tile height: %i", settings.preferred_tile_height);
 
-  CENTURION_LOG_INFO("PreferredFormat: %s", settings.preferred_format.c_str());
-  CENTURION_LOG_INFO("EmbedTilesets: %i", settings.embed_tilesets);
-  CENTURION_LOG_INFO("HumanReadableOutput: %i", settings.human_readable_output);
+  CENTURION_LOG_INFO("Preferred format: %s", settings.preferred_format.c_str());
+  CENTURION_LOG_INFO("Embed tilesets: %i", settings.embed_tilesets);
+  CENTURION_LOG_INFO("Indent output: %i", settings.indent_output);
+  CENTURION_LOG_INFO("Fold tile data: %i", settings.fold_tile_data);
 
-  CENTURION_LOG_INFO("ShowLayerDock: %i", settings.show_layer_dock);
-  CENTURION_LOG_INFO("ShowLogDock: %i", settings.show_log_dock);
-  CENTURION_LOG_INFO("ShowTilesetDock: %i", settings.show_tileset_dock);
-  CENTURION_LOG_INFO("ShowPropertiesDock: %i", settings.show_properties_dock);
-  CENTURION_LOG_INFO("ShowLogDock: %i", settings.show_log_dock);
-  CENTURION_LOG_INFO("RestoreLayout: %i", settings.restore_layout);
-  CENTURION_LOG_INFO("ViewportOverlayPos: %i", settings.viewport_overlay_pos);
+  CENTURION_LOG_INFO("Show layer dock: %i", settings.show_layer_dock);
+  CENTURION_LOG_INFO("Show log dock: %i", settings.show_log_dock);
+  CENTURION_LOG_INFO("Show tileset dock: %i", settings.show_tileset_dock);
+  CENTURION_LOG_INFO("Show properties dock: %i", settings.show_properties_dock);
+  CENTURION_LOG_INFO("Show log dock: %i", settings.show_log_dock);
+  CENTURION_LOG_INFO("Restore layout: %i", settings.restore_layout);
+  CENTURION_LOG_INFO("Viewport overlay pos: %i", settings.viewport_overlay_pos);
   // clang-format on
 }
 
@@ -197,7 +204,8 @@ void SavePreferences()
 
   cfg.set_preferred_format(settings.preferred_format);
   cfg.set_embed_tilesets(settings.embed_tilesets);
-  cfg.set_human_readable_output(settings.human_readable_output);
+  cfg.set_indent_output(settings.indent_output);
+  cfg.set_fold_tile_data(settings.fold_tile_data);
 
   cfg.set_show_tileset_dock(settings.show_tileset_dock);
   cfg.set_show_layer_dock(settings.show_layer_dock);
@@ -252,7 +260,8 @@ void ResetExportPreferences(Preferences& prefs)
 {
   prefs.preferred_format = def_preferred_format;
   prefs.embed_tilesets = def_embed_tilesets;
-  prefs.human_readable_output = def_human_readable_output;
+  prefs.indent_output = def_indent_output;
+  prefs.fold_tile_data = def_fold_tile_data;
 }
 
 void ResetDockVisibilities() noexcept
@@ -303,9 +312,14 @@ auto GetEmbedTilesets() noexcept -> bool
   return settings.embed_tilesets;
 }
 
-auto GetHumanReadableOutput() noexcept -> bool
+auto GetFoldTileData() noexcept -> bool
 {
-  return settings.human_readable_output;
+  return settings.fold_tile_data;
+}
+
+auto GetIndentOutput() noexcept -> bool
+{
+  return settings.indent_output;
 }
 
 auto GetShowLayerDock() noexcept -> bool
