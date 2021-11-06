@@ -49,7 +49,7 @@ void ObjectSelectionToolOnDragged(entt::registry& registry, const MouseInfo& mou
     if (active.entity != entt::null && registry.all_of<ObjectDragInfo>(active.entity)) {
       auto& drag = registry.get<ObjectDragInfo>(active.entity);
 
-      const auto [xRatio, yRatio] = Sys::GetViewportScalingRatio(registry);
+      const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
       const auto dx = (mouse.x - drag.last_mouse_x) / xRatio;
       const auto dy = (mouse.y - drag.last_mouse_y) / yRatio;
 
