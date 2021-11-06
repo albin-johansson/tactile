@@ -26,6 +26,7 @@ constexpr std::nullopt_t nothing = std::nullopt;
 using CStr = const char*;
 
 using usize = std::size_t;
+using uchar = unsigned char;
 using uint = unsigned int;
 using ulonglong = unsigned long long;
 
