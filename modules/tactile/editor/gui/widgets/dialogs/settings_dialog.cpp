@@ -160,6 +160,7 @@ void ShowExportTab()
     }
     ImGui::Spacing();
 
+    ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Preferred format: ");
     ImGui::SameLine();
     if (ImGui::BeginCombo("##PreferredFormatCombo", settings.preferred_format.c_str())) {
