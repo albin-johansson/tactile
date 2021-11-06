@@ -7,5 +7,3 @@ column-count: 32
 image-path: ../outside.png
 image-width: 1024
 image-height: 1024
-tiles:
-  []
