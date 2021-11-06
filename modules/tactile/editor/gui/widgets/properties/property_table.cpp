@@ -225,6 +225,10 @@ void ShowNativeObjectProperties(const std::string& name,
       break;
   }
 
+  if constexpr (cen::is_debug_build()) {
+    NativeReadOnlyRow("ID", object.id);
+  }
+
   if (const auto updatedName = NativeNameRow(name)) {
     dispatcher.enqueue<SetObjectNameEvent>(object.id, *updatedName);
   }
