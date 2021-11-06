@@ -9,7 +9,7 @@
 
 #include "application_events.hpp"
 #include "core/components/property_context.hpp"
-#include "core/mouse.hpp"
+#include "core/mouse_pos.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
@@ -164,7 +164,7 @@ void Application::UpdateFrame()
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
     const auto position = ImGui::GetMousePos();
-    auto& mouse = registry->ctx<Mouse>();
+    auto& mouse = registry->ctx<MousePos>();
     mouse.x = position.x;
     mouse.y = position.y;
   }

@@ -17,7 +17,7 @@ namespace Tactile::Sys {
  * - `Viewport`
  * - `PropertyContext`
  * - `TilesetContext`
- * - `Mouse`
+ * - `MousePos`
  *
  * \return a registry.
  *

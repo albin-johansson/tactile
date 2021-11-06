@@ -2,7 +2,7 @@
 
 namespace Tactile {
 
-struct Mouse final
+struct MousePos final
 {
   float x{};
   float y{};

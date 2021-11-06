@@ -6,7 +6,7 @@
 #include <utility>    // pair
 
 #include "core/map.hpp"
-#include "core/mouse.hpp"
+#include "core/mouse_pos.hpp"
 #include "core/viewport.hpp"
 
 namespace Tactile::Sys {
@@ -69,7 +69,7 @@ void DecreaseViewportZoom(entt::registry& registry)
   assert(CanDecreaseViewportZoom(registry));
 
   auto& viewport = registry.ctx<Viewport>();
-  const auto& mouse = registry.ctx<Mouse>();
+  const auto& mouse = registry.ctx<MousePos>();
 
   // Percentages of map to the left of and above the cursor
   const auto px = (mouse.x - viewport.x_offset) / viewport.tile_width;
@@ -92,7 +92,7 @@ void DecreaseViewportZoom(entt::registry& registry)
 void IncreaseViewportZoom(entt::registry& registry)
 {
   auto& viewport = registry.ctx<Viewport>();
-  const auto& mouse = registry.ctx<Mouse>();
+  const auto& mouse = registry.ctx<MousePos>();
 
   // Percentages of map to the left of and above the cursor
   const auto px = (mouse.x - viewport.x_offset) / viewport.tile_width;

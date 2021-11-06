@@ -19,8 +19,8 @@ set(SOURCE_FILES
     common/tile_cache.hpp
 
     core/map.hpp
-    core/mouse.hpp
     core/mouse_info.hpp
+    core/mouse_pos.hpp
     core/property_value.hpp
     core/region.hpp
     core/tool_type.hpp
