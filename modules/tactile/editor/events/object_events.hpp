@@ -33,6 +33,13 @@ struct SetObjectTagEvent final
   std::string tag;  ///< The new object tag.
 };
 
+/// \brief Emitted when the name of an object should be changed.
+struct SetObjectNameEvent final
+{
+  ObjectID id{};     ///< ID of target object.
+  std::string name;  ///< The new object name.
+};
+
 /// \} End of group events
 
 }  // namespace Tactile

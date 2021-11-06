@@ -99,6 +99,7 @@ class Application final
   void OnRenameLayer(const RenameLayerEvent& event);
   void OnShowLayerProperties(const ShowLayerPropertiesEvent& event);
 
+  void OnSetObjectName(const SetObjectNameEvent& event);
   void OnMoveObject(const MoveObjectEvent& event);
   void OnSetObjectVisibility(const SetObjectVisibilityEvent& event);
   void OnSetObjectTag(const SetObjectTagEvent& event);

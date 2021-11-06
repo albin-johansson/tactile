@@ -162,7 +162,9 @@ void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
   ImGui::Separator();
 }
 
-void ShowNativeObjectProperties(const Object& object, entt::dispatcher& dispatcher)
+void ShowNativeObjectProperties(const std::string& name,
+                                const Object& object,
+                                entt::dispatcher& dispatcher)
 {
   switch (object.type) {
     case ObjectType::Rectangle:
@@ -176,6 +178,10 @@ void ShowNativeObjectProperties(const Object& object, entt::dispatcher& dispatch
     case ObjectType::Ellipse:
       NativeReadOnlyRow("Type", "Ellipse");
       break;
+  }
+
+  if (const auto updatedName = NativeNameRow(name)) {
+    dispatcher.enqueue<SetObjectNameEvent>(object.id, *updatedName);
   }
 
   NativeReadOnlyRow("X", object.x);
@@ -291,7 +297,7 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
         ShowNativeLayerProperties(*layer, dispatcher);
       }
       else if (const auto* object = registry.try_get<Object>(current.entity)) {
-        ShowNativeObjectProperties(*object, dispatcher);
+        ShowNativeObjectProperties(context.name, *object, dispatcher);
       }
     }
 

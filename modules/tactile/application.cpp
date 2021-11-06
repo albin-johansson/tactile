@@ -11,38 +11,11 @@
 #include "core/components/property_context.hpp"
 #include "core/mouse.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/map_system.hpp"
-#include "core/systems/property_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "core/utils/load_texture.hpp"
-#include "editor/commands/layers/add_layer_cmd.hpp"
-#include "editor/commands/layers/duplicate_layer_cmd.hpp"
-#include "editor/commands/layers/move_layer_down_cmd.hpp"
-#include "editor/commands/layers/move_layer_up_cmd.hpp"
-#include "editor/commands/layers/remove_layer_cmd.hpp"
-#include "editor/commands/layers/rename_layer_cmd.hpp"
-#include "editor/commands/layers/set_layer_opacity_cmd.hpp"
-#include "editor/commands/layers/set_layer_visibility_cmd.hpp"
-#include "editor/commands/maps/add_column_cmd.hpp"
-#include "editor/commands/maps/add_row_cmd.hpp"
-#include "editor/commands/maps/remove_column_cmd.hpp"
-#include "editor/commands/maps/remove_row_cmd.hpp"
-#include "editor/commands/maps/resize_map_cmd.hpp"
-#include "editor/commands/objects/move_object_cmd.hpp"
-#include "editor/commands/objects/set_object_tag_cmd.hpp"
-#include "editor/commands/objects/set_object_visibility_cmd.hpp"
-#include "editor/commands/properties/add_property_cmd.hpp"
-#include "editor/commands/properties/change_property_type_cmd.hpp"
-#include "editor/commands/properties/remove_property_cmd.hpp"
-#include "editor/commands/properties/rename_property_cmd.hpp"
-#include "editor/commands/properties/update_property_cmd.hpp"
-#include "editor/commands/tilesets/add_tileset_cmd.hpp"
-#include "editor/commands/tilesets/remove_tileset_cmd.hpp"
-#include "editor/commands/tools/bucket_cmd.hpp"
-#include "editor/commands/tools/eraser_sequence_cmd.hpp"
-#include "editor/commands/tools/stamp_sequence_cmd.hpp"
+#include "editor/commands/commands.hpp"
 #include "editor/gui/update_gui.hpp"
 #include "editor/gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "editor/gui/widgets/dialogs/resize_map_dialog.hpp"
@@ -528,6 +501,11 @@ void Application::OnShowLayerProperties(const ShowLayerPropertiesEvent& event)
     auto& current = registry->ctx<ActivePropertyContext>();
     current.entity = Sys::FindLayer(*registry, event.id);
   }
+}
+
+void Application::OnSetObjectName(const SetObjectNameEvent& event)
+{
+  Execute<SetObjectNameCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnMoveObject(const MoveObjectEvent& event)

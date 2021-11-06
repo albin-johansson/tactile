@@ -11,6 +11,7 @@
 namespace Tactile {
 
 struct Object;
+struct PropertyContext;
 
 class AObjectCmd : public ACommand
 {
@@ -19,6 +20,8 @@ class AObjectCmd : public ACommand
 
  protected:
   [[nodiscard]] auto GetTargetObject() -> Object&;
+
+  [[nodiscard]] auto GetTargetObjectContext() const -> PropertyContext&;
 
   [[nodiscard]] auto GetTargetObjectId() const noexcept -> ObjectID
   {

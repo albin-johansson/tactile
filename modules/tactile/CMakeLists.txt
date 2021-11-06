@@ -103,6 +103,7 @@ set(SOURCE_FILES
     editor/commands/command_id.hpp
     editor/commands/command_stack.cpp
     editor/commands/command_stack.hpp
+    editor/commands/commands.hpp
 
     editor/commands/layers/add_layer_cmd.cpp
     editor/commands/layers/add_layer_cmd.hpp
@@ -138,6 +139,8 @@ set(SOURCE_FILES
     editor/commands/objects/move_object_cmd.hpp
     editor/commands/objects/object_cmd.cpp
     editor/commands/objects/object_cmd.hpp
+    editor/commands/objects/set_object_name_cmd.cpp
+    editor/commands/objects/set_object_name_cmd.hpp
     editor/commands/objects/set_object_tag_cmd.cpp
     editor/commands/objects/set_object_tag_cmd.hpp
     editor/commands/objects/set_object_visibility_cmd.cpp
