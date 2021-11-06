@@ -11,7 +11,7 @@ auto BoolPropertyWidget(const PropertyValue& property) -> Maybe<bool>
   const ScopeID id{&property};
   auto value = property.AsBool();
 
-  if (ImGui::Checkbox("##asd", &value)) {
+  if (ImGui::Checkbox("##BoolPropertyWidget", &value)) {
     return value;
   }
 
