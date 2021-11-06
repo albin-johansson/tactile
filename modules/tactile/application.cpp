@@ -410,6 +410,11 @@ void Application::OnShowTilesetProperties(const ShowTilesetPropertiesEvent& even
   }
 }
 
+void Application::OnSetTilesetName(const SetTilesetNameEvent& event)
+{
+  Execute<SetTilesetNameCmd>(mModel, event.id, event.name);
+}
+
 void Application::OnAddRow()
 {
   Execute<AddRowCmd>(mModel);

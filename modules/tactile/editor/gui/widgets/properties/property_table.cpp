@@ -1,6 +1,7 @@
 #include "property_table.hpp"
 
-#include <string>   // string
+#include <locale>  // locale, isalpha, isdigit, isspace
+#include <string>  // string
 
 #include <tactile-base/tactile_std.hpp>
 
@@ -19,6 +20,7 @@
 #include "editor/events/layer_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
+#include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "items/bool_property_widget.hpp"
 #include "items/color_property_widget.hpp"
@@ -45,12 +47,39 @@ void PrepareTableRow(const CStr label)
   ImGui::TextUnformatted(label);
 }
 
-[[nodiscard]] auto NativeNameRow(const std::string& name) -> Maybe<std::string>
+[[nodiscard]] auto NativeNameRow(const std::string& name,
+                                 const bool validateAsFileName = false)
+    -> Maybe<std::string>
 {
   PrepareTableRow("Name");
 
   ImGui::TableNextColumn();
-  return StringPropertyWidget(name);
+
+  auto flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+  if (validateAsFileName) {
+    flags |= ImGuiInputTextFlags_CallbackCharFilter;
+
+    /* This is a basic filter for only allowing a basic subset of characters, in order to
+       guarantee that the user provides names that are usable as file names. */
+    const auto filter = [](ImGuiInputTextCallbackData* data) -> int {
+      const auto& locale = std::locale::classic();
+      const auto ch = data->EventChar;
+
+      if (std::isalpha(ch, locale) || std::isdigit(ch, locale) ||
+          std::isspace(ch, locale) || ch == '-' || ch == '_')
+      {
+        return 0;  // Accept the character
+      }
+      else {
+        return 1;  // Reject the character
+      }
+    };
+
+    return StringPropertyWidget(name, flags, filter);
+  }
+  else {
+    return StringPropertyWidget(name, flags);
+  }
 }
 
 [[nodiscard]] auto NativeOpacityRow(const float opacity) -> Maybe<float>
@@ -115,9 +144,21 @@ void ShowNativeMapProperties(const std::string& name, const Map& map)
   ImGui::Separator();
 }
 
-void ShowNativeTilesetProperties(const Tileset& tileset, entt::dispatcher& dispatcher)
+void ShowNativeTilesetProperties(const std::string& name,
+                                 const Tileset& tileset,
+                                 entt::dispatcher& dispatcher)
 {
   NativeReadOnlyRow("Type", "Tileset");
+
+  if constexpr (cen::is_debug_build()) {
+    NativeReadOnlyRow("ID", tileset.id);
+  }
+
+  if (const auto updatedName = NativeNameRow(name, true);
+      updatedName && !updatedName->empty())
+  {
+    dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
+  }
 
   NativeReadOnlyRow("First tile ID", tileset.first_id.get());
   NativeReadOnlyRow("Last tile ID", tileset.last_id.get());
@@ -291,7 +332,7 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
     }
     else {
       if (const auto* tileset = registry.try_get<Tileset>(current.entity)) {
-        ShowNativeTilesetProperties(*tileset, dispatcher);
+        ShowNativeTilesetProperties(context.name, *tileset, dispatcher);
       }
       else if (const auto* layer = registry.try_get<Layer>(current.entity)) {
         ShowNativeLayerProperties(*layer, dispatcher);

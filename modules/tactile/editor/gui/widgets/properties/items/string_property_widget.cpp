@@ -3,10 +3,6 @@
 #include <array>   // array
 #include <limits>  // numeric_limits
 
-#include <tactile-base/tactile_std.hpp>
-
-#include <imgui.h>
-
 #include "core/utils/buffer_utils.hpp"
 #include "core/utils/scope_id.hpp"
 
@@ -17,7 +13,9 @@ constexpr usize max_digits = 100;
 
 }  // namespace
 
-auto StringPropertyWidget(const PropertyValue& property) -> Maybe<std::string>
+auto StringPropertyWidget(const PropertyValue& property,
+                          const ImGuiInputTextFlags flags,
+                          ImGuiInputTextCallback filter) -> Maybe<std::string>
 {
   const ScopeID id{&property};
   const auto& str = property.AsString();
@@ -29,7 +27,9 @@ auto StringPropertyWidget(const PropertyValue& property) -> Maybe<std::string>
   if (ImGui::InputTextWithHint("##StringPropertyInput",
                                "N/A",
                                buffer.data(),
-                               sizeof buffer))
+                               sizeof buffer,
+                               flags,
+                               filter))
   {
     return CreateStringFromBuffer(buffer);
   }

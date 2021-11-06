@@ -161,6 +161,8 @@ set(SOURCE_FILES
     editor/commands/tilesets/add_tileset_cmd.hpp
     editor/commands/tilesets/remove_tileset_cmd.cpp
     editor/commands/tilesets/remove_tileset_cmd.hpp
+    editor/commands/tilesets/set_tileset_name_cmd.cpp
+    editor/commands/tilesets/set_tileset_name_cmd.hpp
 
     editor/commands/tools/bucket_cmd.cpp
     editor/commands/tools/bucket_cmd.hpp

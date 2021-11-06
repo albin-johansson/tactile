@@ -26,6 +26,7 @@
 #include "properties/update_property_cmd.hpp"
 #include "tilesets/add_tileset_cmd.hpp"
 #include "tilesets/remove_tileset_cmd.hpp"
+#include "tilesets/set_tileset_name_cmd.hpp"
 #include "tools/bucket_cmd.hpp"
 #include "tools/eraser_sequence_cmd.hpp"
 #include "tools/stamp_sequence_cmd.hpp"
