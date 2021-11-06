@@ -53,7 +53,8 @@ constexpr Settings::Settings(
   , show_tileset_dock_(false)
   , show_log_dock_(false)
   , embed_tilesets_(false)
-  , human_readable_output_(false){}
+  , indent_output_(false)
+  , fold_tile_data_(false){}
 struct SettingsDefaultTypeInternal {
   constexpr SettingsDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -105,7 +106,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_settings_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, show_tileset_dock_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, show_log_dock_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, embed_tilesets_),
-  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, human_readable_output_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, indent_output_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, fold_tile_data_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, viewport_overlay_pos_),
   2,
   3,
@@ -123,11 +125,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_settings_2eproto::offsets[] PR
   14,
   15,
   16,
+  17,
   10,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 10, -1, sizeof(::Tactile::Proto::Color)},
-  { 14, 37, -1, sizeof(::Tactile::Proto::Settings)},
+  { 14, 38, -1, sizeof(::Tactile::Proto::Settings)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -139,7 +142,7 @@ const char descriptor_table_protodef_settings_2eproto[] PROTOBUF_SECTION_VARIABL
   "\n\016settings.proto\022\rTactile.Proto\"y\n\005Color"
   "\022\020\n\003red\030\001 \001(\rH\000\210\001\001\022\022\n\005green\030\002 \001(\rH\001\210\001\001\022\021"
   "\n\004blue\030\003 \001(\rH\002\210\001\001\022\022\n\005alpha\030\004 \001(\rH\003\210\001\001B\006\n"
-  "\004_redB\010\n\006_greenB\007\n\005_blueB\010\n\006_alpha\"\307\007\n\010S"
+  "\004_redB\010\n\006_greenB\007\n\005_blueB\010\n\006_alpha\"\347\007\n\010S"
   "ettings\022(\n\005theme\030\001 \001(\0162\024.Tactile.Proto.T"
   "hemeH\000\210\001\001\022!\n\024preferred_tile_width\030\002 \001(\005H"
   "\001\210\001\001\022\"\n\025preferred_tile_height\030\003 \001(\005H\002\210\001\001"
@@ -152,28 +155,29 @@ const char descriptor_table_protodef_settings_2eproto[] PROTOBUF_SECTION_VARIABL
   "ow_layer_dock\030\026 \001(\010H\n\210\001\001\022!\n\024show_propert"
   "ies_dock\030\027 \001(\010H\013\210\001\001\022\036\n\021show_tileset_dock"
   "\030\030 \001(\010H\014\210\001\001\022\032\n\rshow_log_dock\030\036 \001(\010H\r\210\001\001\022"
-  "\033\n\016embed_tilesets\030\031 \001(\010H\016\210\001\001\022\"\n\025human_re"
-  "adable_output\030\032 \001(\010H\017\210\001\001\022<\n\024viewport_ove"
-  "rlay_pos\030\033 \001(\0162\031.Tactile.Proto.OverlayPo"
-  "sH\020\210\001\001B\010\n\006_themeB\027\n\025_preferred_tile_widt"
-  "hB\030\n\026_preferred_tile_heightB\026\n\024_viewport"
-  "_backgroundB\023\n\021_preferred_formatB\023\n\021_com"
-  "mand_capacityB\014\n\n_show_gridB\020\n\016_window_b"
-  "orderB\027\n\025_restore_last_sessionB\021\n\017_resto"
-  "re_layoutB\022\n\020_show_layer_dockB\027\n\025_show_p"
-  "roperties_dockB\024\n\022_show_tileset_dockB\020\n\016"
-  "_show_log_dockB\021\n\017_embed_tilesetsB\030\n\026_hu"
-  "man_readable_outputB\027\n\025_viewport_overlay"
-  "_pos*L\n\nOverlayPos\022\014\n\010TOP_LEFT\020\000\022\r\n\tTOP_"
-  "RIGHT\020\001\022\017\n\013BOTTOM_LEFT\020\002\022\020\n\014BOTTOM_RIGHT"
-  "\020\003*|\n\005Theme\022\r\n\tDEAR_DARK\020\000\022\016\n\nDEAR_LIGHT"
-  "\020\001\022\010\n\004RUBY\020\002\022\014\n\010SAPPHIRE\020\003\022\013\n\007EMERALD\020\004\022"
-  "\014\n\010AMETHYST\020\005\022\t\n\005AMBER\020\006\022\r\n\tNOCTURNAL\020\007\022"
-  "\007\n\003ASH\020\010b\006proto3"
+  "\033\n\016embed_tilesets\030\031 \001(\010H\016\210\001\001\022\032\n\rindent_o"
+  "utput\030\032 \001(\010H\017\210\001\001\022\033\n\016fold_tile_data\030\034 \001(\010"
+  "H\020\210\001\001\022<\n\024viewport_overlay_pos\030\033 \001(\0162\031.Ta"
+  "ctile.Proto.OverlayPosH\021\210\001\001B\010\n\006_themeB\027\n"
+  "\025_preferred_tile_widthB\030\n\026_preferred_til"
+  "e_heightB\026\n\024_viewport_backgroundB\023\n\021_pre"
+  "ferred_formatB\023\n\021_command_capacityB\014\n\n_s"
+  "how_gridB\020\n\016_window_borderB\027\n\025_restore_l"
+  "ast_sessionB\021\n\017_restore_layoutB\022\n\020_show_"
+  "layer_dockB\027\n\025_show_properties_dockB\024\n\022_"
+  "show_tileset_dockB\020\n\016_show_log_dockB\021\n\017_"
+  "embed_tilesetsB\020\n\016_indent_outputB\021\n\017_fol"
+  "d_tile_dataB\027\n\025_viewport_overlay_pos*L\n\n"
+  "OverlayPos\022\014\n\010TOP_LEFT\020\000\022\r\n\tTOP_RIGHT\020\001\022"
+  "\017\n\013BOTTOM_LEFT\020\002\022\020\n\014BOTTOM_RIGHT\020\003*|\n\005Th"
+  "eme\022\r\n\tDEAR_DARK\020\000\022\016\n\nDEAR_LIGHT\020\001\022\010\n\004RU"
+  "BY\020\002\022\014\n\010SAPPHIRE\020\003\022\013\n\007EMERALD\020\004\022\014\n\010AMETH"
+  "YST\020\005\022\t\n\005AMBER\020\006\022\r\n\tNOCTURNAL\020\007\022\007\n\003ASH\020\010"
+  "b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_settings_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_settings_2eproto = {
-  false, false, 1336, descriptor_table_protodef_settings_2eproto, "settings.proto", 
+  false, false, 1368, descriptor_table_protodef_settings_2eproto, "settings.proto", 
   &descriptor_table_settings_2eproto_once, nullptr, 0, 2,
   schemas, file_default_instances, TableStruct_settings_2eproto::offsets,
   file_level_metadata_settings_2eproto, file_level_enum_descriptors_settings_2eproto, file_level_service_descriptors_settings_2eproto,
@@ -563,8 +567,11 @@ class Settings::_Internal {
   static void set_has_embed_tilesets(HasBits* has_bits) {
     (*has_bits)[0] |= 32768u;
   }
-  static void set_has_human_readable_output(HasBits* has_bits) {
+  static void set_has_indent_output(HasBits* has_bits) {
     (*has_bits)[0] |= 65536u;
+  }
+  static void set_has_fold_tile_data(HasBits* has_bits) {
+    (*has_bits)[0] |= 131072u;
   }
   static void set_has_viewport_overlay_pos(HasBits* has_bits) {
     (*has_bits)[0] |= 1024u;
@@ -599,8 +606,8 @@ Settings::Settings(const Settings& from)
     viewport_background_ = nullptr;
   }
   ::memcpy(&theme_, &from.theme_,
-    static_cast<size_t>(reinterpret_cast<char*>(&human_readable_output_) -
-    reinterpret_cast<char*>(&theme_)) + sizeof(human_readable_output_));
+    static_cast<size_t>(reinterpret_cast<char*>(&fold_tile_data_) -
+    reinterpret_cast<char*>(&theme_)) + sizeof(fold_tile_data_));
   // @@protoc_insertion_point(copy_constructor:Tactile.Proto.Settings)
 }
 
@@ -608,8 +615,8 @@ void Settings::SharedCtor() {
 preferred_format_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&viewport_background_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&human_readable_output_) -
-    reinterpret_cast<char*>(&viewport_background_)) + sizeof(human_readable_output_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&fold_tile_data_) -
+    reinterpret_cast<char*>(&viewport_background_)) + sizeof(fold_tile_data_));
 }
 
 Settings::~Settings() {
@@ -661,7 +668,11 @@ void Settings::Clear() {
         reinterpret_cast<char*>(&embed_tilesets_) -
         reinterpret_cast<char*>(&restore_layout_)) + sizeof(embed_tilesets_));
   }
-  human_readable_output_ = false;
+  if (cached_has_bits & 0x00030000u) {
+    ::memset(&indent_output_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&fold_tile_data_) -
+        reinterpret_cast<char*>(&indent_output_)) + sizeof(fold_tile_data_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -799,11 +810,11 @@ const char* Settings::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
         } else
           goto handle_unusual;
         continue;
-      // optional bool human_readable_output = 26;
+      // optional bool indent_output = 26;
       case 26:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 208)) {
-          _Internal::set_has_human_readable_output(&has_bits);
-          human_readable_output_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _Internal::set_has_indent_output(&has_bits);
+          indent_output_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -814,6 +825,15 @@ const char* Settings::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_viewport_overlay_pos(static_cast<::Tactile::Proto::OverlayPos>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // optional bool fold_tile_data = 28;
+      case 28:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 224)) {
+          _Internal::set_has_fold_tile_data(&has_bits);
+          fold_tile_data_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -947,10 +967,10 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(25, this->_internal_embed_tilesets(), target);
   }
 
-  // optional bool human_readable_output = 26;
-  if (_internal_has_human_readable_output()) {
+  // optional bool indent_output = 26;
+  if (_internal_has_indent_output()) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(26, this->_internal_human_readable_output(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(26, this->_internal_indent_output(), target);
   }
 
   // optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;
@@ -958,6 +978,12 @@ failure:
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       27, this->_internal_viewport_overlay_pos(), target);
+  }
+
+  // optional bool fold_tile_data = 28;
+  if (_internal_has_fold_tile_data()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(28, this->_internal_fold_tile_data(), target);
   }
 
   // optional bool show_log_dock = 30;
@@ -1075,11 +1101,18 @@ size_t Settings::ByteSizeLong() const {
     }
 
   }
-  // optional bool human_readable_output = 26;
-  if (cached_has_bits & 0x00010000u) {
-    total_size += 2 + 1;
-  }
+  if (cached_has_bits & 0x00030000u) {
+    // optional bool indent_output = 26;
+    if (cached_has_bits & 0x00010000u) {
+      total_size += 2 + 1;
+    }
 
+    // optional bool fold_tile_data = 28;
+    if (cached_has_bits & 0x00020000u) {
+      total_size += 2 + 1;
+    }
+
+  }
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
@@ -1157,8 +1190,14 @@ void Settings::MergeFrom(const Settings& from) {
     }
     _has_bits_[0] |= cached_has_bits;
   }
-  if (cached_has_bits & 0x00010000u) {
-    _internal_set_human_readable_output(from._internal_human_readable_output());
+  if (cached_has_bits & 0x00030000u) {
+    if (cached_has_bits & 0x00010000u) {
+      indent_output_ = from.indent_output_;
+    }
+    if (cached_has_bits & 0x00020000u) {
+      fold_tile_data_ = from.fold_tile_data_;
+    }
+    _has_bits_[0] |= cached_has_bits;
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -1186,8 +1225,8 @@ void Settings::InternalSwap(Settings* other) {
       &other->preferred_format_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Settings, human_readable_output_)
-      + sizeof(Settings::human_readable_output_)
+      PROTOBUF_FIELD_OFFSET(Settings, fold_tile_data_)
+      + sizeof(Settings::fold_tile_data_)
       - PROTOBUF_FIELD_OFFSET(Settings, viewport_background_)>(
           reinterpret_cast<char*>(&viewport_background_),
           reinterpret_cast<char*>(&other->viewport_background_));

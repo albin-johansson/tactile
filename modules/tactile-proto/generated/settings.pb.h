@@ -460,7 +460,8 @@ class Settings final :
     kShowTilesetDockFieldNumber = 24,
     kShowLogDockFieldNumber = 30,
     kEmbedTilesetsFieldNumber = 25,
-    kHumanReadableOutputFieldNumber = 26,
+    kIndentOutputFieldNumber = 26,
+    kFoldTileDataFieldNumber = 28,
   };
   // optional string preferred_format = 16;
   bool has_preferred_format() const;
@@ -680,17 +681,30 @@ class Settings final :
   void _internal_set_embed_tilesets(bool value);
   public:
 
-  // optional bool human_readable_output = 26;
-  bool has_human_readable_output() const;
+  // optional bool indent_output = 26;
+  bool has_indent_output() const;
   private:
-  bool _internal_has_human_readable_output() const;
+  bool _internal_has_indent_output() const;
   public:
-  void clear_human_readable_output();
-  bool human_readable_output() const;
-  void set_human_readable_output(bool value);
+  void clear_indent_output();
+  bool indent_output() const;
+  void set_indent_output(bool value);
   private:
-  bool _internal_human_readable_output() const;
-  void _internal_set_human_readable_output(bool value);
+  bool _internal_indent_output() const;
+  void _internal_set_indent_output(bool value);
+  public:
+
+  // optional bool fold_tile_data = 28;
+  bool has_fold_tile_data() const;
+  private:
+  bool _internal_has_fold_tile_data() const;
+  public:
+  void clear_fold_tile_data();
+  bool fold_tile_data() const;
+  void set_fold_tile_data(bool value);
+  private:
+  bool _internal_fold_tile_data() const;
+  void _internal_set_fold_tile_data(bool value);
   public:
 
   // @@protoc_insertion_point(class_scope:Tactile.Proto.Settings)
@@ -718,7 +732,8 @@ class Settings final :
   bool show_tileset_dock_;
   bool show_log_dock_;
   bool embed_tilesets_;
-  bool human_readable_output_;
+  bool indent_output_;
+  bool fold_tile_data_;
   friend struct ::TableStruct_settings_2eproto;
 };
 // ===================================================================
@@ -1360,32 +1375,60 @@ inline void Settings::set_embed_tilesets(bool value) {
   // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.embed_tilesets)
 }
 
-// optional bool human_readable_output = 26;
-inline bool Settings::_internal_has_human_readable_output() const {
+// optional bool indent_output = 26;
+inline bool Settings::_internal_has_indent_output() const {
   bool value = (_has_bits_[0] & 0x00010000u) != 0;
   return value;
 }
-inline bool Settings::has_human_readable_output() const {
-  return _internal_has_human_readable_output();
+inline bool Settings::has_indent_output() const {
+  return _internal_has_indent_output();
 }
-inline void Settings::clear_human_readable_output() {
-  human_readable_output_ = false;
+inline void Settings::clear_indent_output() {
+  indent_output_ = false;
   _has_bits_[0] &= ~0x00010000u;
 }
-inline bool Settings::_internal_human_readable_output() const {
-  return human_readable_output_;
+inline bool Settings::_internal_indent_output() const {
+  return indent_output_;
 }
-inline bool Settings::human_readable_output() const {
-  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.human_readable_output)
-  return _internal_human_readable_output();
+inline bool Settings::indent_output() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.indent_output)
+  return _internal_indent_output();
 }
-inline void Settings::_internal_set_human_readable_output(bool value) {
+inline void Settings::_internal_set_indent_output(bool value) {
   _has_bits_[0] |= 0x00010000u;
-  human_readable_output_ = value;
+  indent_output_ = value;
 }
-inline void Settings::set_human_readable_output(bool value) {
-  _internal_set_human_readable_output(value);
-  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.human_readable_output)
+inline void Settings::set_indent_output(bool value) {
+  _internal_set_indent_output(value);
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.indent_output)
+}
+
+// optional bool fold_tile_data = 28;
+inline bool Settings::_internal_has_fold_tile_data() const {
+  bool value = (_has_bits_[0] & 0x00020000u) != 0;
+  return value;
+}
+inline bool Settings::has_fold_tile_data() const {
+  return _internal_has_fold_tile_data();
+}
+inline void Settings::clear_fold_tile_data() {
+  fold_tile_data_ = false;
+  _has_bits_[0] &= ~0x00020000u;
+}
+inline bool Settings::_internal_fold_tile_data() const {
+  return fold_tile_data_;
+}
+inline bool Settings::fold_tile_data() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.fold_tile_data)
+  return _internal_fold_tile_data();
+}
+inline void Settings::_internal_set_fold_tile_data(bool value) {
+  _has_bits_[0] |= 0x00020000u;
+  fold_tile_data_ = value;
+}
+inline void Settings::set_fold_tile_data(bool value) {
+  _internal_set_fold_tile_data(value);
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.fold_tile_data)
 }
 
 // optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;

@@ -189,12 +189,20 @@ void ShowExportTab()
       settings.embed_tilesets = embedTilesets;
     }
 
-    if (auto humanReadableOutput = settings.human_readable_output;
-        Checkbox("Human-readable output",
-                 &humanReadableOutput,
-                 "Make save files easier for humans to edit, at the expense of space"))
+    if (auto indentOutput = settings.indent_output;
+        Checkbox("Indent output",
+                 &indentOutput,
+                 "Controls whether or not save files are indented"))
     {
-      settings.human_readable_output = humanReadableOutput;
+      settings.indent_output = indentOutput;
+    }
+
+    if (auto foldTileData = settings.fold_tile_data; Checkbox(
+            "Fold tile data",
+            &foldTileData,
+            "Make tile layer data easier for humans to edit, at the expense of space"))
+    {
+      settings.fold_tile_data = foldTileData;
     }
 
     ImGui::EndTabItem();

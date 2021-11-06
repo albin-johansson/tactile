@@ -22,12 +22,13 @@ namespace {
     options |= IO::EmitterOptions_EmbedTilesets;
   }
 
-  if (Prefs::GetHumanReadableOutput()) {
+  if (Prefs::GetFoldTileData()) {
     options |= IO::EmitterOptions_FoldTileData;
   }
 
-  // TODO add different options "fold tile data" and "indent output"
-  options |= IO::EmitterOptions_IndentOutput;
+  if (Prefs::GetIndentOutput()) {
+    options |= IO::EmitterOptions_IndentOutput;
+  }
 
   return options;
 }
