@@ -3,14 +3,14 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
-#include <tactile-base/map_position.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <rune/containers/vector_map.hpp>  // vector_map
 
 #include "common/tile_cache.hpp"
 #include "core/components/tile_layer.hpp"
 #include "core/components/tileset.hpp"
+#include "core/map_position.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"

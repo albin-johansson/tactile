@@ -2,11 +2,11 @@
 
 #include <vector>  // vector
 
-#include <tactile-base/map_position.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <entt.hpp>  // registry
 
+#include "core/map_position.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 

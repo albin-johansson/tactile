@@ -1,7 +1,6 @@
 #include "parse_csv.hpp"
 
-#include <tactile-base/from_string.hpp>
-#include <tactile-base/map_position.hpp>
+#include <tactile_stdlib.hpp>
 
 #include "string_utils.hpp"
 
@@ -11,11 +10,11 @@ auto ParseCSV(const CStr csv, TileLayer& layer) -> ParseError
 {
   const auto nCols = IO::GetColumnCount(layer);
 
-  int32 index{};
+  usize index{};
   for (const auto& token : Split(csv, ',')) {
-    if (const auto id = FromString<int32>(token)) {
-      const auto pos = MapPosition::FromIndex(index, static_cast<int32>(nCols));
-      IO::SetTile(layer, pos.GetRowIndex(), pos.GetColumnIndex(), *id);
+    if (const auto id = FromString<int32>(token.c_str())) {
+      const auto [row, col] = ToMatrixCoords(index, nCols);
+      IO::SetTile(layer, row, col, *id);
 
       ++index;
     }

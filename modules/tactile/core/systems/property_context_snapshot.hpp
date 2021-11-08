@@ -4,7 +4,7 @@
 #include <map>         // map
 #include <string>      // string
 
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include "core/property_value.hpp"
 

@@ -146,7 +146,7 @@ target_include_directories(${TACTILE_IO}
     PRIVATE
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/include/tactile-io
-    ${PROJECT_SOURCE_DIR}/../tactile-base/include
+    ${PROJECT_SOURCE_DIR}/../tactile-base
 
     SYSTEM PRIVATE
     ${LIBRARY_DIR}/entt

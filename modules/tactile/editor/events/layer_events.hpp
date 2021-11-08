@@ -2,8 +2,7 @@
 
 #include <string>  // string
 
-#include <tactile-base/layer_type.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 namespace Tactile {
 

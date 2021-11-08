@@ -445,7 +445,7 @@ add_dependencies(${TACTILE_LIB} ${TACTILE_IO})
 target_include_directories(${TACTILE_LIB}
     PUBLIC
     ${PROJECT_SOURCE_DIR}
-    ${ROOT_DIR}/modules/tactile-base/include
+    ${ROOT_DIR}/modules/tactile-base
     ${ROOT_DIR}/modules/tactile-io/include
 
     SYSTEM PUBLIC

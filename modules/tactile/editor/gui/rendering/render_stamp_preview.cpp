@@ -2,8 +2,7 @@
 
 #include <cassert>  // assert
 
-#include <tactile-base/map_position.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -11,6 +10,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
+#include "core/map_position.hpp"
 #include "core/systems/map_system.hpp"
 #include "editor/gui/texture_utils.hpp"
 #include "render_info.hpp"

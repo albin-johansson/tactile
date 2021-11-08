@@ -1,9 +1,10 @@
 #include "ir.hpp"
 
-#include <cassert>     // assert
-#include <variant>     // variant, get, holds_alternative
+#include <cassert>  // assert
+#include <variant>  // variant, get, holds_alternative
 
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
+#include <tactile_stdlib.hpp>
 
 #include "ir_definitions.hpp"
 
@@ -167,7 +168,7 @@ void ReserveTiles(TileLayer& layer, const usize nRows, const usize nCols)
 
 void SetTile(TileLayer& layer, const usize row, const usize column, const int32 tile)
 {
-  layer.tiles.at(row).at(column) = TileID{tile};
+  layer.tiles.at(row).at(column) = tile;
 }
 
 auto GetRowCount(const TileLayer& layer) -> usize
@@ -182,7 +183,7 @@ auto GetColumnCount(const TileLayer& layer) -> usize
 
 auto GetTile(const TileLayer& layer, const usize row, const usize column) -> int32
 {
-  return layer.tiles.at(row).at(column).get();
+  return layer.tiles.at(row).at(column);
 }
 
 void ReserveObjects(ObjectLayer& layer, const usize n)

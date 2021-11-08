@@ -3,7 +3,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <tactile-base/property_type.hpp>
+#include <tactile_def.hpp>
 
 #include <entt.hpp>  // registry, entity
 

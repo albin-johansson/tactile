@@ -57,6 +57,10 @@ IncludeCategories:
   - Regex: '<([A-Za-z0-9\_\-]+)>'
     Priority: 10
 
+  # Tactile base headers, using the format <tactile_foo.hpp>
+  - Regex: '<tactile_([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
+    Priority: 12
+
   # Tactile IO or base headers
   - Regex: '<((tactile-io|tactile-base)\/)+([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
     Priority: 13

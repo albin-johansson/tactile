@@ -4,8 +4,7 @@
 #include <string>      // string
 #include <variant>     // variant, monostate, get, get_if, holds_alternative
 
-#include <tactile-base/property_type.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <centurion.hpp>  // color
 
@@ -13,6 +12,9 @@ namespace Tactile {
 
 /// \addtogroup core
 /// \{
+
+enum ObjectRef : int32
+{};
 
 // clang-format off
 

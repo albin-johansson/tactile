@@ -1,5 +1,3 @@
-#include <tactile-base/tactile_std.hpp>
-
 #include <gtest/gtest.h>
 
 #include "io/map_parser.hpp"

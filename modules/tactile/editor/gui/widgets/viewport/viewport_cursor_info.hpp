@@ -1,8 +1,8 @@
 #pragma once
 
-#include <tactile-base/map_position.hpp>
-
 #include <imgui.h>
+
+#include "core/map_position.hpp"
 
 namespace Tactile {
 

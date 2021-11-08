@@ -82,7 +82,7 @@ void UpdateMouseTileLabels(const entt::registry& registry,
       const auto global =
           Sys::GetTileFromLayer(registry, activeLayer.entity, cursor.map_position);
       if (cursor.is_within_map && global != empty_tile) {
-        ImGui::Text("Global ID: %i", global.get());
+        ImGui::Text("Global ID: %i", global);
       }
       else {
         ImGui::TextUnformatted("Global ID: [empty]");
@@ -91,7 +91,7 @@ void UpdateMouseTileLabels(const entt::registry& registry,
       if (global != empty_tile) {
         const auto local = Sys::ConvertToLocal(registry, global);
         if (cursor.is_within_map && local) {
-          ImGui::Text("Local ID: %i", local->get());
+          ImGui::Text("Local ID: %i", *local);
         }
         else {
           ImGui::TextUnformatted("Local ID: N/A");

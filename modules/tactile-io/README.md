@@ -36,7 +36,6 @@ Once you've managed to successfully install the library, you'll be able to parse
 the following example.
 
 ```C++
-#include <tactile-base/tactile_std.hpp> // Not necessary here, but a good installation check
 #include <tactile-io/tactile_io.hpp>    // Includes all public Tactile IO headers 
 
 #include <iostream>  // cout

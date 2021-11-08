@@ -6,8 +6,8 @@
 #include <ios>         // ios
 #include <utility>     // move
 
-#include <tactile-base/convert_to_forward_slashes.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
+#include <tactile_stdlib.hpp>
 
 #include "directories.hpp"
 

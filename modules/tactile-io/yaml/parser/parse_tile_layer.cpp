@@ -3,8 +3,7 @@
 #include <algorithm>  // replace
 #include <string>     // string
 
-#include <tactile-base/from_string.hpp>
-#include <tactile-base/map_position.hpp>
+#include <tactile_stdlib.hpp>
 
 #include <yaml-cpp/yaml.h>
 
@@ -15,19 +14,19 @@ namespace {
 
 [[nodiscard]] auto ParseTiles(TileLayer& layer,
                               const std::string& data,
-                              const int32 nCols) -> ParseError
+                              const usize nCols) -> ParseError
 {
-  int32 index = 0;
+  usize index = 0;
   for (const auto& token : Split(data.c_str(), ' ')) {
-    if (const auto id = FromString<TileID::value_type>(token)) {
-      const auto pos = MapPosition::FromIndex(index, nCols);
-      SetTile(layer, pos.GetRow(), pos.GetColumn(), *id);
+    if (const auto id = FromString<int32>(token.c_str())) {
+      const auto [row, col] = ToMatrixCoords(index, nCols);
+      SetTile(layer, row, col, *id);
+
+      ++index;
     }
     else {
       return ParseError::CouldNotParseTiles;
     }
-
-    ++index;
   }
 
   return ParseError::None;
@@ -37,8 +36,8 @@ namespace {
 
 auto ParseTileLayer(const YAML::Node& node,
                     Layer& layer,
-                    const int32 nRows,
-                    const int32 nCols) -> ParseError
+                    const usize nRows,
+                    const usize nCols) -> ParseError
 {
   auto& tileLayer = MarkAsTileLayer(layer);
   ReserveTiles(tileLayer, nRows, nCols);

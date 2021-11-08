@@ -1,9 +1,10 @@
 #pragma once
 
-#include <tactile-base/map_position.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <rune/containers/vector_map.hpp>  // vector_map
+
+#include "core/map_position.hpp"
 
 namespace Tactile {
 

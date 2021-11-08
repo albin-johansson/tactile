@@ -8,7 +8,7 @@ namespace Tactile::IO {
 
 [[nodiscard]] auto ParseTileLayer(const YAML::Node& node,
                                   Layer& layer,
-                                  int32 nRows,
-                                  int32 nCols) -> ParseError;
+                                  usize nRows,
+                                  usize nCols) -> ParseError;
 
 }  // namespace Tactile::IO

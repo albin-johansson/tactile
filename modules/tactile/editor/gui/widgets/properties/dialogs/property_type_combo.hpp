@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tactile-base/property_type.hpp>
+#include <tactile_def.hpp>
 
 namespace Tactile {
 

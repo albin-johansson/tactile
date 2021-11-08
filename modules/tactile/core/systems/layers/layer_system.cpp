@@ -5,6 +5,8 @@
 #include <utility>    // move, swap
 #include <vector>     // erase
 
+#include <tactile_stdlib.hpp>
+
 #include <fmt/format.h>  // format
 
 #include "core/components/group_layer.hpp"

@@ -3,9 +3,7 @@
 #include <concepts>  // invocable
 #include <memory>    // unique_ptr
 
-#include <tactile-base/layer_type.hpp>
-#include <tactile-base/object_type.hpp>
-#include <tactile-base/property_type.hpp>
+#include <tactile_def.hpp>
 
 #include "api.hpp"
 #include "ir_common.hpp"

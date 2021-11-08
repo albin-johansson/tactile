@@ -1,5 +1,5 @@
 
-#include <tactile-base/map_position.hpp>
+#include "core/map_position.hpp"
 
 #include <gtest/gtest.h>
 

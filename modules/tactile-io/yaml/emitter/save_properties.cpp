@@ -1,8 +1,5 @@
 #include "save_properties.hpp"
 
-#include <span>  // span
-
-#include <magic_enum.hpp>  // enum_name
 #include <yaml-cpp/yaml.h>
 
 #include "../../common_saving.hpp"
@@ -23,7 +20,7 @@ void SavePropertiesImpl(YAML::Emitter& emitter,
       emitter << YAML::Key << "name" << YAML::Value << GetName(property);
 
       const auto type = GetType(property);
-      emitter << YAML::Key << "type" << YAML::Value << magic_enum::enum_name(type).data();
+      emitter << YAML::Key << "type" << YAML::Value << GetPropertyTypeString(type);
 
       emitter << YAML::Key << "value";
       switch (type) {

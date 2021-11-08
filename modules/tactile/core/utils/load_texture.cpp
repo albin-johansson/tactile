@@ -5,7 +5,7 @@
 #include <memory>  // unique_ptr
 #include <vector>  // vector
 
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <GL/glew.h>
 #include <centurion.hpp>

@@ -4,6 +4,8 @@
 #include <cstring>    // strcmp
 #include <variant>    // get
 
+#include <tactile_stdlib.hpp>
+
 #include <tactile-io/ir.hpp>
 
 #include <entt.hpp>      // registry
@@ -167,7 +169,7 @@ void MakeFancyTiles(entt::registry& registry,
     }
 
     auto& context = Sys::AddPropertyContext(registry, tileEntity);
-    context.name = fmt::format("Tile {}", tile.id.get());
+    context.name = fmt::format("Tile {}", tile.id);
     AddProperties(registry, tileEntity, tileData);
   }
 }

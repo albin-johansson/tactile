@@ -3,7 +3,7 @@
 #include <filesystem>  // path
 #include <string>      // string
 
-#include <tactile-base/property_type.hpp>
+#include <tactile_def.hpp>
 
 #include "ir.hpp"
 

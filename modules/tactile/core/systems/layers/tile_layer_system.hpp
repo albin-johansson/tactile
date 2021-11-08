@@ -1,11 +1,11 @@
 #pragma once
 
-#include <tactile-base/map_position.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <entt.hpp>  // registry, entity
 
 #include "common/tile_cache.hpp"
+#include "core/map_position.hpp"
 
 namespace Tactile::Sys {
 

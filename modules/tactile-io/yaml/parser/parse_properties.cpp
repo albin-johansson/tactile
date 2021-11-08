@@ -1,11 +1,13 @@
 #include "parse_properties.hpp"
 
 #include <filesystem>  // path
-#include <string>      // string
+#include <iostream>
+#include <string>       // string
+#include <string_view>  // string_view
 
-#include <tactile-base/property_type.hpp>
+#include <tactile_def.hpp>
+#include <tactile_stdlib.hpp>
 
-#include <magic_enum.hpp>  // enum_cast
 #include <yaml-cpp/yaml.h>
 
 #include "common_parsing.hpp"
@@ -17,8 +19,27 @@ namespace {
 {
   if (auto propType = node["type"]) {
     const auto name = propType.as<std::string>();
-    if (const auto value = magic_enum::enum_cast<PropertyType>(name)) {
-      type = *value;
+
+    if (name == "string") {
+      type = PropertyType::String;
+    }
+    else if (name == "int") {
+      type = PropertyType::Integer;
+    }
+    else if (name == "float") {
+      type = PropertyType::Floating;
+    }
+    else if (name == "bool") {
+      type = PropertyType::Boolean;
+    }
+    else if (name == "color") {
+      type = PropertyType::Color;
+    }
+    else if (name == "object") {
+      type = PropertyType::Object;
+    }
+    else if (name == "file") {
+      type = PropertyType::File;
     }
     else {
       return ParseError::PropertyUnknownType;

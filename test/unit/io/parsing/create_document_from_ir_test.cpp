@@ -33,18 +33,19 @@ TEST(CreateDocumentFromIR, Test)
 
   ASSERT_EQ("embedded.json", mapContext.name);
 
-  ASSERT_EQ(std::filesystem::absolute("test-resources/json/embedded.json"), document.path);
+  ASSERT_EQ(std::filesystem::absolute("test-resources/json/embedded.json"),
+            document.path);
 
   ASSERT_EQ(5, map.row_count);
   ASSERT_EQ(7, map.column_count);
-  ASSERT_EQ(4_layer, map.next_layer_id);
-  ASSERT_EQ(3_obj, map.next_object_id);
-  ASSERT_EQ(1_layer, registry.get<Layer>(activeLayer.entity).id);
+  ASSERT_EQ(4, map.next_layer_id);
+  ASSERT_EQ(3, map.next_object_id);
+  ASSERT_EQ(1, registry.get<Layer>(activeLayer.entity).id);
 
   ASSERT_EQ(3, registry.view<Layer>().size());
 
   {
-    const auto entity = Sys::FindLayer(registry, 1_layer);
+    const auto entity = Sys::FindLayer(registry, 1);
     const auto& layer = registry.get<Layer>(entity);
     const auto& context = registry.get<PropertyContext>(entity);
 
@@ -61,7 +62,7 @@ TEST(CreateDocumentFromIR, Test)
   }
 
   {
-    const auto entity = Sys::FindLayer(registry, 2_layer);
+    const auto entity = Sys::FindLayer(registry, 2);
     const auto& layer = registry.get<Layer>(entity);
     const auto& context = registry.get<PropertyContext>(entity);
 
@@ -78,7 +79,7 @@ TEST(CreateDocumentFromIR, Test)
   }
 
   {
-    const auto entity = Sys::FindLayer(registry, 3_layer);
+    const auto entity = Sys::FindLayer(registry, 3);
     const auto& layer = registry.get<Layer>(entity);
     const auto& layerContext = registry.get<PropertyContext>(entity);
 
@@ -93,12 +94,12 @@ TEST(CreateDocumentFromIR, Test)
     const auto& objectLayer = registry.get<ObjectLayer>(entity);
     ASSERT_EQ(2, objectLayer.objects.size());
 
-    ASSERT_TRUE(Sys::HasObject(registry, entity, 1_obj));
-    ASSERT_TRUE(Sys::HasObject(registry, entity, 2_obj));
-    ASSERT_FALSE(Sys::HasObject(registry, entity, 42_obj));
+    ASSERT_TRUE(Sys::HasObject(registry, entity, 1));
+    ASSERT_TRUE(Sys::HasObject(registry, entity, 2));
+    ASSERT_FALSE(Sys::HasObject(registry, entity, 42));
 
     {
-      const auto rectEntity = Sys::FindObject(registry, entity, 1_obj);
+      const auto rectEntity = Sys::FindObject(registry, entity, 1);
       const auto& rect = registry.get<Object>(rectEntity);
       const auto& rectContext = registry.get<PropertyContext>(rectEntity);
 
@@ -114,7 +115,7 @@ TEST(CreateDocumentFromIR, Test)
     }
 
     {
-      const auto pointEntity = Sys::FindObject(registry, entity, 2_obj);
+      const auto pointEntity = Sys::FindObject(registry, entity, 2);
       const auto& point = registry.get<Object>(pointEntity);
       const auto& pointContext = registry.get<PropertyContext>(pointEntity);
 
@@ -138,7 +139,7 @@ TEST(CreateDocumentFromIR, Test)
     const auto& tilesetContext = registry.get<PropertyContext>(tilesetEntity);
 
     ASSERT_EQ("terrain", tilesetContext.name);
-    ASSERT_EQ(1_tile, tileset.first_id);
+    ASSERT_EQ(1, tileset.first_id);
     ASSERT_EQ(32, tileset.row_count);
     ASSERT_EQ(32, tileset.column_count);
     ASSERT_EQ(1024, tileset.tile_count);
@@ -184,7 +185,7 @@ TEST(CreateDocumentFromIR, Test)
       const auto propertyEntity = Sys::FindProperty(registry, "object ref");
       const auto& property = registry.get<Property>(propertyEntity);
       ASSERT_TRUE(property.value.IsObject());
-      ASSERT_EQ(1_obj, property.value.AsObject());
+      ASSERT_EQ(1, property.value.AsObject());
     }
 
     {

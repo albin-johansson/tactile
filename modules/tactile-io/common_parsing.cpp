@@ -1,6 +1,6 @@
 #include "common_parsing.hpp"
 
-#include <tactile-base/from_string.hpp>
+#include <tactile_stdlib.hpp>
 
 namespace Tactile::IO {
 
@@ -16,9 +16,9 @@ auto ParseColorRGB(const std::string_view rgb) -> std::optional<Color>
   const auto gg = noHash.substr(2, 2);
   const auto bb = noHash.substr(4, 2);
 
-  const auto red = FromString<uint8>(rr, 16);
-  const auto green = FromString<uint8>(gg, 16);
-  const auto blue = FromString<uint8>(bb, 16);
+  const auto red = FromString<uint8>(rr.data(), rr.size(), 16);
+  const auto green = FromString<uint8>(gg.data(), gg.size(), 16);
+  const auto blue = FromString<uint8>(bb.data(), bb.size(), 16);
 
   if (red && green && blue) {
     return Color{*red, *green, *blue, 0xFF};
@@ -41,10 +41,10 @@ auto ParseColorRGBA(const std::string_view rgba) -> std::optional<Color>
   const auto bb = noHash.substr(4, 2);
   const auto aa = noHash.substr(6, 2);
 
-  const auto red = FromString<uint8>(rr, 16);
-  const auto green = FromString<uint8>(gg, 16);
-  const auto blue = FromString<uint8>(bb, 16);
-  const auto alpha = FromString<uint8>(aa, 16);
+  const auto red = FromString<uint8>(rr.data(), rr.size(), 16);
+  const auto green = FromString<uint8>(gg.data(), gg.size(), 16);
+  const auto blue = FromString<uint8>(bb.data(), bb.size(), 16);
+  const auto alpha = FromString<uint8>(aa.data(), aa.size(), 16);
 
   if (red && green && blue && alpha) {
     return Color{*red, *green, *blue, *alpha};
@@ -67,10 +67,10 @@ auto ParseColorARGB(const std::string_view argb) -> std::optional<Color>
   const auto gg = noHash.substr(4, 2);
   const auto bb = noHash.substr(6, 2);
 
-  const auto red = FromString<uint8>(rr, 16);
-  const auto green = FromString<uint8>(gg, 16);
-  const auto blue = FromString<uint8>(bb, 16);
-  const auto alpha = FromString<uint8>(aa, 16);
+  const auto red = FromString<uint8>(rr.data(), rr.size(), 16);
+  const auto green = FromString<uint8>(gg.data(), gg.size(), 16);
+  const auto blue = FromString<uint8>(bb.data(), bb.size(), 16);
+  const auto alpha = FromString<uint8>(aa.data(), aa.size(), 16);
 
   if (red && green && blue && alpha) {
     return Color{*red, *green, *blue, *alpha};

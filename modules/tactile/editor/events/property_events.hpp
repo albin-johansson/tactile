@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include <tactile-base/property_type.hpp>
+#include <tactile_def.hpp>
 
 #include <entt.hpp>  // entity, null
 

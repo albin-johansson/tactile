@@ -2,7 +2,8 @@
 
 #include <utility>  // pair
 
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
+
 #include <tactile-io/parse_error.hpp>
 
 #include <gtest/gtest.h>

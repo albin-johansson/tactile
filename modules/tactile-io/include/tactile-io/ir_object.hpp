@@ -1,7 +1,7 @@
 #ifndef TACTILE_IO_IR_OBJECT_HPP_
 #define TACTILE_IO_IR_OBJECT_HPP_
 
-#include <tactile-base/object_type.hpp>
+#include <tactile_def.hpp>
 
 #include "api.hpp"
 #include "ir_common.hpp"

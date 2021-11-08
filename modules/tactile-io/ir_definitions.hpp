@@ -6,10 +6,7 @@
 #include <variant>     // variant
 #include <vector>      // vector
 
-#include <tactile-base/layer_type.hpp>
-#include <tactile-base/object_type.hpp>
-#include <tactile-base/property_type.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include "ir_common.hpp"
 

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <tactile-base/layer_type.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <entt.hpp>  // registry
 

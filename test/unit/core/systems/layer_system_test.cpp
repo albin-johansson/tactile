@@ -170,11 +170,11 @@ TEST(LayerSystem, DuplicateLayer)
 TEST(LayerSystem, FindLayer)
 {
   auto registry = Sys::MakeRegistry();
-  ASSERT_EQ(null_entity, Sys::FindLayer(registry, 1_layer));
+  ASSERT_EQ(null_entity, Sys::FindLayer(registry, 1));
 
   const auto a = Sys::AddTileLayer(registry);
   const auto b = Sys::AddObjectLayer(registry);
 
-  ASSERT_EQ(a, Sys::FindLayer(registry, 1_layer));
-  ASSERT_EQ(b, Sys::FindLayer(registry, 2_layer));
+  ASSERT_EQ(a, Sys::FindLayer(registry, 1));
+  ASSERT_EQ(b, Sys::FindLayer(registry, 2));
 }

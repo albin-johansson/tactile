@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <yaml-cpp/yaml.h>
 
@@ -16,13 +16,13 @@ namespace {
 [[nodiscard]] auto ParseLayer(const YAML::Node& node,
                               Layer& layer,
                               usize index,
-                              int32 nRows,
-                              int32 nCols) -> ParseError;
+                              usize nRows,
+                              usize nCols) -> ParseError;
 
 [[nodiscard]] auto ParseGroupLayer(const YAML::Node& node,
                                    Layer& layer,
-                                   const int32 nRows,
-                                   const int32 nCols) -> ParseError
+                                   const usize nRows,
+                                   const usize nCols) -> ParseError
 {
   auto& groupLayer = MarkAsGroupLayer(layer);
 
@@ -49,8 +49,8 @@ namespace {
 [[nodiscard]] auto ParseLayer(const YAML::Node& node,
                               Layer& layer,
                               const usize index,
-                              const int32 nRows,
-                              const int32 nCols) -> ParseError
+                              const usize nRows,
+                              const usize nCols) -> ParseError
 {
   SetIndex(layer, index);
 

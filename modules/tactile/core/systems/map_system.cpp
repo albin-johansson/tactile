@@ -3,6 +3,8 @@
 #include <cmath>     // abs
 #include <concepts>  // invocable, unsigned_integral
 
+#include <tactile_stdlib.hpp>
+
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/tile_layer.hpp"
@@ -41,7 +43,7 @@ void AddRow(entt::registry& registry)
   ++map.row_count;
 
   TileLayerQuery(registry, [nCols = map.column_count](TileLayer& layer) {
-    layer.matrix.push_back(MakeTileRow(nCols, empty_tile));
+    layer.matrix.push_back(MakeTileRow(nCols));
   });
 }
 

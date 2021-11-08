@@ -3,7 +3,7 @@
 #include <locale>  // locale, isalpha, isdigit, isspace
 #include <string>  // string
 
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <imgui.h>
 
@@ -164,8 +164,8 @@ void ShowNativeTilesetProperties(const std::string& name,
     dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
   }
 
-  NativeReadOnlyRow("First tile ID", tileset.first_id.get());
-  NativeReadOnlyRow("Last tile ID", tileset.last_id.get());
+  NativeReadOnlyRow("First tile ID", tileset.first_id);
+  NativeReadOnlyRow("Last tile ID", tileset.last_id);
 
   NativeReadOnlyRow("Tile count", tileset.tile_count);
   NativeReadOnlyRow("Column count", tileset.column_count);

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <tactile-base/map_position.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include <centurion.hpp>  // irect
 #include <entt.hpp>       // registry, entity
 
 #include "core/components/texture.hpp"
+#include "core/map_position.hpp"
 #include "core/region.hpp"
 #include "tileset_snapshot.hpp"
 
@@ -107,7 +107,8 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto FindTileset(const entt::registry& registry, TileID id) -> entt::entity;
+[[nodiscard]] auto FindTilesetWithTile(const entt::registry& registry, TileID id)
+    -> entt::entity;
 
 [[nodiscard]] auto GetActiveTileset(const entt::registry& registry) -> entt::entity;
 

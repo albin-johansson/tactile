@@ -4,6 +4,8 @@
 #include <unordered_map>  // unordered_map
 #include <utility>        // move
 
+#include <tactile_stdlib.hpp>
+
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"
@@ -20,14 +22,15 @@ namespace {
 {
   std::unordered_map<TileID, cen::irect> cache;
 
-  const auto amount = (tileset.last_id + 1_tile) - tileset.first_id;
-  cache.reserve(amount.get());
+  const auto amount = (tileset.last_id + 1) - tileset.first_id;
+  cache.reserve(amount);
 
   for (TileID id{tileset.first_id}; id <= tileset.last_id; ++id) {
     const auto index = id - tileset.first_id;
 
-    const auto x = (index.get() % tileset.column_count) * tileset.tile_width;
-    const auto y = (index.get() / tileset.column_count) * tileset.tile_height;
+    const auto [row, col] = ToMatrixCoords(index, tileset.column_count);
+    const auto x = col * tileset.tile_width;
+    const auto y = row * tileset.tile_height;
 
     cache.emplace(id, cen::irect{x, y, tileset.tile_width, tileset.tile_height});
   }
@@ -75,7 +78,7 @@ auto MakeTileset(entt::registry& registry,
 
   tileset.first_id = firstId;
   tileset.last_id = tileset.first_id + TileID{tileset.tile_count};
-  tilesets.next_tile_id += TileID{tileset.tile_count} + 1_tile;
+  tilesets.next_tile_id += tileset.tile_count + 1;
 
   registry.emplace<Texture>(entity, texture);
 
@@ -184,7 +187,7 @@ auto FindTileset(const entt::registry& registry, const TilesetID id) -> entt::en
   return entt::null;
 }
 
-auto FindTileset(const entt::registry& registry, const TileID id) -> entt::entity
+auto FindTilesetWithTile(const entt::registry& registry, const TileID id) -> entt::entity
 {
   for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
     if (id >= tileset.first_id && id <= tileset.last_id) {
@@ -275,7 +278,7 @@ auto GetTileFromTileset(const entt::registry& registry,
 
 auto ConvertToLocal(const entt::registry& registry, const TileID global) -> Maybe<TileID>
 {
-  const auto entity = FindTileset(registry, global);
+  const auto entity = FindTilesetWithTile(registry, global);
   if (entity != entt::null) {
     const auto& tileset = registry.get<Tileset>(entity);
     return global - tileset.first_id;

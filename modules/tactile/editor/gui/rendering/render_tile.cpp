@@ -17,7 +17,7 @@ void RenderTile(const TileID tile,
                 const ImVec2& gridSize,
                 const float opacity)
 {
-  const auto tilesetEntity = Sys::FindTileset(registry, tile);
+  const auto tilesetEntity = Sys::FindTilesetWithTile(registry, tile);
   if (tilesetEntity != entt::null) {
     const auto& texture = registry.get<Texture>(tilesetEntity);
 

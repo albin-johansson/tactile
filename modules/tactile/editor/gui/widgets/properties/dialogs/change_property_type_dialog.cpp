@@ -2,8 +2,8 @@
 
 #include <utility>  // move
 
-#include <tactile-base/tactile_error.hpp>
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
+#include <tactile_stdlib.hpp>
 
 #include <imgui.h>
 

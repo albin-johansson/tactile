@@ -2,7 +2,7 @@
 
 #include <utility>  // move
 
-#include <tactile-base/tactile_std.hpp>
+#include <tactile_def.hpp>
 
 #include "core/systems/property_system.hpp"
 #include "editor/events/property_events.hpp"

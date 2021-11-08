@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include <tactile-base/map_position.hpp>
+#include <tactile_stdlib.hpp>
 
 namespace Tactile::IO {
 
@@ -21,21 +21,21 @@ auto ParseTileData(const JSON& json, TileLayer& layer) -> ParseError
   }
 
   const auto nCols = GetColumnCount(layer);
-  int32 index = 0;
+  usize index = 0;
 
   for (const auto& elem : data.items()) {
     const auto& value = elem.value();
-
     if (value.is_number_integer()) {
       const auto id = value.get<int32>();
-      const auto pos = MapPosition::FromIndex(index, static_cast<int32>(nCols));
-      SetTile(layer, pos.GetRow(), pos.GetColumn(), id);
+
+      const auto [row, col] = ToMatrixCoords(index, nCols);
+      SetTile(layer, row, col, id);
+
+      ++index;
     }
     else {
       return ParseError::CouldNotParseTiles;
     }
-
-    ++index;
   }
 
   return ParseError::None;
