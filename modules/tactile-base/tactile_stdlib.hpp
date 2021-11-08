@@ -33,6 +33,17 @@ class TactileError final : public std::exception
   CStr mWhat{"N/A"};
 };
 
+/**
+ * \brief Converts a matrix index to the corresponding row/column pair.
+ *
+ * \details This function is useful when parsing tile streams from save files, where you
+ * are likely to want to convert the indices to more intuitive matrix coordinates.
+ *
+ * \param index the index of the cell to determine the coordinates of.
+ * \param nColumns the total number of columns in the matrix.
+ *
+ * \return a pair encoding the matrix coordinates as (row, column).
+ */
 template <std::integral T>
 [[nodiscard]] constexpr auto ToMatrixCoords(const T index, const T nColumns) noexcept
     -> std::pair<T, T>
@@ -40,6 +51,13 @@ template <std::integral T>
   return {index / nColumns, index % nColumns};
 }
 
+/**
+ * \brief Creates a row of tiles.
+ *
+ * \param nCols the number of columns.
+ *
+ * \return a row filled with empty tile identifiers.
+ */
 [[nodiscard]] inline auto MakeTileRow(const usize nCols) -> TileRow
 {
   TileRow row;
@@ -48,6 +66,14 @@ template <std::integral T>
   return row;
 }
 
+/**
+ * \brief Creates a tile matrix with the specified dimensions.
+ *
+ * \param nRows the number or rows.
+ * \param nCols the number of columns.
+ *
+ * \return a matrix with empty tile identifiers.
+ */
 [[nodiscard]] inline auto MakeTileMatrix(const usize nRows, const usize nCols)
     -> TileMatrix
 {
@@ -57,6 +83,19 @@ template <std::integral T>
   return tiles;
 }
 
+/**
+ * \brief Converts a string into an integer.
+ *
+ * \details This function is particularly useful for converting substrings into integers.
+ *
+ * \param str the string that will be converted to an integer, can safely be null.
+ * \param length the length of the section of the string that will be processed.
+ * \param base the base used by the parsed integer.
+ *
+ * \return an integer using the specified base; `nothing` if something goes wrong.
+ *
+ * \see `FromString(CStr, int)`
+ */
 template <std::integral T>
 [[nodiscard]] auto FromString(const CStr str, const usize length, const int base)
     -> Maybe<T>
@@ -79,6 +118,16 @@ template <std::integral T>
   }
 }
 
+/**
+ * \brief Converts a full string into an integer.
+ *
+ * \param str the string that will be converted to an integer, can safely be null.
+ * \param base the base used by the parsed integer.
+ *
+ * \return an integer using the specified base; `nothing` if something goes wrong.
+ *
+ * \see `FromString(CStr, usize, int)`
+ */
 template <std::integral T>
 [[nodiscard]] auto FromString(const CStr str, const int base = 10) -> Maybe<T>
 {
@@ -90,6 +139,13 @@ template <std::integral T>
   }
 }
 
+/**
+ * \brief Converts a string into a floating-point value.
+ *
+ * \param str the string that will be converted to a float, can safely be null.
+ *
+ * \return the corresponding floating-point value; `nothing` if something goes wrong.
+ */
 template <std::floating_point T>
 [[nodiscard]] auto FromString(const CStr str) -> Maybe<T>
 {
@@ -119,11 +175,20 @@ template <std::floating_point T>
 #endif  // __cpp_lib_to_chars >= 201611L
 }
 
+/**
+ * \brief Converts a path to a string that is guaranteed to use forward slashes.
+ *
+ * \details This function is useful when saving paths to files in a portable way. Since
+ * all relevant operating systems understand forward slashes, even if some operating
+ * systems prefer backslashes (such as Windows).
+ *
+ * \param path the file path that will be converted.
+ *
+ * \return a version of the path with forward slashes instead of backslashes.
+ */
 [[nodiscard]] inline auto ConvertToForwardSlashes(const std::filesystem::path& path)
     -> std::string
 {
-  /* Here we make sure that the file path is portable, by using forward slashes that
-     can be understood by pretty much all operating systems that we care about. */
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');
   return str;
