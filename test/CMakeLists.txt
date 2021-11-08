@@ -6,6 +6,7 @@ enable_testing()
 
 set(TEST_FILES
     unit/gtest_macros.hpp
+    unit/tactile_stdlib_test.cpp
     unit/test_main.cpp
 
     unit/core/commands/command_stack_test.cpp
@@ -26,7 +27,6 @@ set(TEST_FILES
 
     unit/utils/buffer_utils_test.cpp
     unit/utils/color_utils_test.cpp
-    unit/utils/from_string_test.cpp
     )
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})

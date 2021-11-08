@@ -1,7 +1,7 @@
 #ifndef TACTILE_TACTILE_STDLIB_HPP_
 #define TACTILE_TACTILE_STDLIB_HPP_
 
-#include <algorithm>     // replace
+#include <algorithm>     // replace, min
 #include <charconv>      // from_chars
 #include <concepts>      // integral, floating_point
 #include <cstring>       // strlen
@@ -58,7 +58,7 @@ template <std::integral T>
 }
 
 template <std::integral T>
-[[nodiscard]] auto FromString(const CStr str, const usize length, const int base = 10)
+[[nodiscard]] auto FromString(const CStr str, const usize length, const int base)
     -> Maybe<T>
 {
   if (!str) {
@@ -68,7 +68,7 @@ template <std::integral T>
   T value{};
 
   const auto* begin = str;
-  const auto* end = str + length;
+  const auto* end = str + std::min(length, std::strlen(str));
   const auto [ptr, err] = std::from_chars(begin, end, value, base);
 
   if (err == std::errc{}) {
