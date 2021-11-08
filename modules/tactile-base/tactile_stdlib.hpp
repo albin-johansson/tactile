@@ -45,7 +45,7 @@ class TactileError final : public std::exception
  * \return a pair encoding the matrix coordinates as (row, column).
  */
 template <std::integral T>
-[[nodiscard]] constexpr auto ToMatrixCoords(const T index, const T nColumns) noexcept
+[[nodiscard]] constexpr auto ToMatrixCoords(const T index, const T nColumns)
     -> std::pair<T, T>
 {
   return {index / nColumns, index % nColumns};
