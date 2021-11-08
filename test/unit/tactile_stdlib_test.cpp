@@ -4,6 +4,43 @@
 
 using namespace Tactile;
 
+TEST(TactileStdLib, ToMatrixCoords)
+{
+  ASSERT_EQ(0, ToMatrixCoords(0, 3).first);
+  ASSERT_EQ(0, ToMatrixCoords(0, 3).second);
+
+  ASSERT_EQ(0, ToMatrixCoords(1, 3).first);
+  ASSERT_EQ(1, ToMatrixCoords(1, 3).second);
+
+  ASSERT_EQ(0, ToMatrixCoords(2, 3).first);
+  ASSERT_EQ(2, ToMatrixCoords(2, 3).second);
+
+  ASSERT_EQ(1, ToMatrixCoords(3, 3).first);
+  ASSERT_EQ(0, ToMatrixCoords(3, 3).second);
+
+  ASSERT_EQ(1, ToMatrixCoords(4, 3).first);
+  ASSERT_EQ(1, ToMatrixCoords(4, 3).second);
+
+  ASSERT_EQ(1, ToMatrixCoords(5, 3).first);
+  ASSERT_EQ(2, ToMatrixCoords(5, 3).second);
+}
+
+TEST(TactileStdLib, MakeTileRow)
+{
+  const auto row = MakeTileRow(10);
+  ASSERT_EQ(10, row.capacity());
+  ASSERT_EQ(10, row.size());
+}
+
+TEST(TactileStdLib, MakeTileMatrix)
+{
+  const auto matrix = MakeTileMatrix(5, 7);
+  ASSERT_EQ(5, matrix.capacity());
+  ASSERT_EQ(5, matrix.size());
+  ASSERT_EQ(7, matrix.at(0).capacity());
+  ASSERT_EQ(7, matrix.at(0).size());
+}
+
 TEST(TactileStdLib, IntegerFromString)
 {
   ASSERT_FALSE(FromString<int>("ABC"));
@@ -34,4 +71,10 @@ TEST(TactileStdLib, FloatFromString)
 
   ASSERT_EQ(78.5, FromString<double>("78.5"));
   ASSERT_EQ(98.0, FromString<double>("98"));
+}
+
+TEST(TactileStdLib, ConvertToForwardSlashes)
+{
+  const std::filesystem::path source = R"(C:\foo\bar\abc.yaml)";
+  ASSERT_EQ("C:/foo/bar/abc.yaml", ConvertToForwardSlashes(source));
 }
