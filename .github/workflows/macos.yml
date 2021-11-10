@@ -50,7 +50,7 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: bash
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vckpg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile -GNinja
 
       - name: Build
         working-directory: ./build
