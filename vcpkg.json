@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "tactile",
+  "version-semver": "0.3.0",
+  "builtin-baseline": "70033dbb31527fb3e69654731f540f59c87787f9",
+  "dependencies": [
+    {
+      "name": "sdl2",
+      "version>=": "2.0.16",
+      "features": [
+        "vulkan"
+      ]
+    },
+    {
+      "name": "sdl2-image",
+      "features": [
+        "libjpeg-turbo"
+      ]
+    },
+    "sdl2-ttf",
+    {
+      "name": "imgui",
+      "features": [
+        "docking-experimental",
+        "sdl2-binding",
+        "opengl3-binding"
+      ]
+    },
+    "glew",
+    "protobuf",
+    "entt",
+    "fmt",
+    "nlohmann-json",
+    "yaml-cpp",
+    "pugixml",
+    "magic-enum",
+    "stb",
+    "gtest"
+  ],
+  "overrides": [
+    {
+      "name": "protobuf",
+      "version": "3.18.0"
+    }
+  ]
+}
