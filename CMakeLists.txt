@@ -29,11 +29,6 @@ else ()
   message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
 endif ()
 
-if (WIN32)
-  # Should point to the root GLEW directory, e.g. "C:\dev\glew-2.2.0"
-  list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEWDIR}")
-endif ()
-
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2-image CONFIG REQUIRED)
 find_package(SDL2-ttf CONFIG REQUIRED)
