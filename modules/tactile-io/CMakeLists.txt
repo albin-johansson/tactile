@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.16)
 
 project(tactile-io CXX)
 
+find_package(yaml-cpp CONFIG REQUIRED)
+find_package(pugixml CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
+
 set(TACTILE_IO_SOURCES
     common_parsing.cpp
     common_parsing.hpp
@@ -149,23 +154,22 @@ target_include_directories(${TACTILE_IO}
     ${PROJECT_SOURCE_DIR}/../tactile-base
 
     SYSTEM PRIVATE
-    ${LIBRARY_DIR}/entt
     ${LIBRARY_DIR}/nenya
-    ${LIBRARY_DIR}/magic-enum
-    ${LIBRARY_DIR}/json
-    ${LIBRARY_DIR}/pugixml
     )
 
 target_link_libraries(${TACTILE_IO}
     PRIVATE
-    fmt
+    fmt::fmt
+    magic_enum::magic_enum
     yaml-cpp
-    PugiXML
+    nlohmann_json::nlohmann_json
+    pugixml::pugixml
     )
 
 target_compile_definitions(${TACTILE_IO} PRIVATE
     TACTILE_IO_EXPORT
-    CENTURION_NO_SDL_MIXER)
+    CENTURION_NO_SDL_MIXER
+    )
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_IO}
@@ -194,7 +198,7 @@ target_precompile_headers(${TACTILE_IO} PRIVATE
     <optional>
 
     <magic_enum.hpp>
-    <json.hpp>
+    <nlohmann/json.hpp>
     <yaml-cpp/yaml.h>
     <pugixml.hpp>
     )
