@@ -4,6 +4,7 @@ on: [ push, pull_request ]
 
 env:
   VCPKG_COMMIT_ID: 70033dbb31527fb3e69654731f540f59c87787f9
+  VCPKG_DEFAULT_TRIPLET: x64-tactile
 
 jobs:
   windows-latest-test:
