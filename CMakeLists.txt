@@ -35,8 +35,6 @@ find_package(SDL2-ttf CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 
-find_path(STB_INCLUDE_DIRS "stb.h")
-
 include(Utilities)
 
 add_subdirectory(modules/tactile-proto)

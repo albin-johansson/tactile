@@ -3,9 +3,12 @@ cmake_minimum_required(VERSION 3.16)
 project(tactile-app CXX)
 
 find_package(OpenGL REQUIRED)  # Not acquired using vcpkg
+
 find_package(GLEW CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
+
+find_path(STB_INCLUDE_DIRS "stb.h")
 
 set(SOURCE_FILES
     application.cpp
