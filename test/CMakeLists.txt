@@ -4,6 +4,8 @@ project(tactile-test CXX)
 
 enable_testing()
 
+find_package(GTest CONFIG REQUIRED)
+
 set(TEST_FILES
     unit/gtest_macros.hpp
     unit/tactile_stdlib_test.cpp
@@ -31,28 +33,20 @@ set(TEST_FILES
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
 
-target_include_directories(${TACTILE_TEST}
-    PUBLIC
-    unit
-
-    SYSTEM PUBLIC
-    ${gtest_SOURCE_DIR}/include
-    ${gtest_SOURCE_DIR}
-    ${gmock_SOURCE_DIR}/include
-    ${gmock_SOURCE_DIR})
+target_include_directories(${TACTILE_TEST} PUBLIC unit)
 
 target_link_libraries(${TACTILE_TEST}
     PUBLIC
     ${TACTILE_LIB}
-    gtest
-    gmock)
+    SDL2::SDL2main
+    GTest::gtest
+    )
 
 target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
 
 add_test(NAME ${TACTILE_TEST} COMMAND ${TACTILE_TEST})
 
 if (WIN32)
-  copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
   add_custom_command(TARGET ${TACTILE_TEST} POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy
       ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/TactileIO.dll

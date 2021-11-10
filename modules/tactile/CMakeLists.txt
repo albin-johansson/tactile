@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.16)
 
 project(tactile-app CXX)
 
+find_package(OpenGL REQUIRED)  # Not acquired using vcpkg
+find_package(GLEW CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(EnTT CONFIG REQUIRED)
+
 set(SOURCE_FILES
     application.cpp
     application.hpp
@@ -449,21 +454,12 @@ target_include_directories(${TACTILE_LIB}
     ${ROOT_DIR}/modules/tactile-io/include
 
     SYSTEM PUBLIC
-    ${LIBRARY_DIR}/entt
-    ${LIBRARY_DIR}/imgui
     ${LIBRARY_DIR}/centurion
     ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/rune
-    ${LIBRARY_DIR}/json
-    ${LIBRARY_DIR}/stbimage
     ${LIBRARY_DIR}/fontawesome
     ${LIBRARY_DIR}/pfd
-    ${LIBRARY_DIR}/magic-enum
-    ${GLEW_INCLUDE_DIRS}
-    ${SDL2_INCLUDE_DIR}
-    ${SDL2_IMAGE_INCLUDE_DIRS}
-    ${SDL2_TTF_INCLUDE_DIRS}
-    ${PROTOBUF_INCLUDE_DIRS}
+    ${STB_INCLUDE_DIRS}
     ${TACTILE_PROTO_GENERATED_DIR}
     )
 
@@ -472,17 +468,24 @@ target_link_libraries(${TACTILE_LIB}
     ${CMAKE_DL_LIBS}
     OpenGL::GL
     GLEW::GLEW
-    ${SDL2_LIBRARY}
-    ${SDL2_IMAGE_LIBRARIES}
-    ${SDL2_TTF_LIBRARIES}
-    ${PROTOBUF_LIBRARIES}
-    ImGui
-    fmt
+    SDL2::SDL2
+    SDL2::SDL2main
+    SDL2::SDL2_image
+    SDL2::SDL2_ttf
+    imgui::imgui
+    EnTT::EnTT
+    fmt::fmt
+    protobuf::libprotobuf
+    protobuf::libprotobuf-lite
     ${TACTILE_PROTO}
     ${TACTILE_IO_IMPORT_LIBRARY}
     )
 
-target_compile_definitions(${TACTILE_LIB} PUBLIC CENTURION_NO_SDL_MIXER)
+target_compile_definitions(${TACTILE_LIB} PUBLIC
+    CENTURION_NO_SDL_MIXER
+    IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+    IMGUI_DEFINE_MATH_OPERATORS
+    )
 
 if (MSVC)
   target_compile_definitions(${TACTILE_LIB} PUBLIC _CRT_SECURE_NO_WARNINGS)
@@ -526,7 +529,7 @@ target_precompile_headers(${TACTILE_LIB}
     <optional>
 
     <centurion.hpp>
-    <entt.hpp>
+    <entt/entt.hpp>
     <nenya.hpp>
     <fmt/format.h>
     )
@@ -542,9 +545,5 @@ add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
 
 target_link_libraries(${TACTILE_EXE} PUBLIC ${TACTILE_LIB})
-
-if (WIN32)
-  copy_directory_post_build(${TACTILE_EXE} ${ROOT_DIR}/bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-endif ()
 
 copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)

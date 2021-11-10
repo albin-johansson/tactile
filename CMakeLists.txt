@@ -34,47 +34,15 @@ if (WIN32)
   list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEWDIR}")
 endif ()
 
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2-image CONFIG REQUIRED)
+find_package(SDL2-ttf CONFIG REQUIRED)
+find_package(Protobuf CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+
+find_path(STB_INCLUDE_DIRS "stb.h")
 
 include(Utilities)
-include(TactileDependencies)
-
-set(PUGIXML_SOURCES
-    ${LIBRARY_DIR}/pugixml/pugiconfig.hpp
-    ${LIBRARY_DIR}/pugixml/pugixml.cpp
-    ${LIBRARY_DIR}/pugixml/pugixml.hpp)
-add_library(PugiXML ${PUGIXML_SOURCES})
-
-set(IMGUI_SOURCES
-    ${LIBRARY_DIR}/imgui/imconfig.h
-    ${LIBRARY_DIR}/imgui/imgui.cpp
-    ${LIBRARY_DIR}/imgui/imgui.h
-    ${LIBRARY_DIR}/imgui/imgui_demo.cpp
-    ${LIBRARY_DIR}/imgui/imgui_draw.cpp
-    ${LIBRARY_DIR}/imgui/imgui_impl_opengl3.cpp
-    ${LIBRARY_DIR}/imgui/imgui_impl_opengl3.h
-    ${LIBRARY_DIR}/imgui/imgui_impl_sdl.cpp
-    ${LIBRARY_DIR}/imgui/imgui_impl_sdl.h
-    ${LIBRARY_DIR}/imgui/imgui_internal.h
-    ${LIBRARY_DIR}/imgui/imgui_tables.cpp
-    ${LIBRARY_DIR}/imgui/imgui_widgets.cpp
-    ${LIBRARY_DIR}/imgui/imstb_rectpack.h
-    ${LIBRARY_DIR}/imgui/imstb_textedit.h
-    ${LIBRARY_DIR}/imgui/imstb_truetype.h)
-add_library(ImGui ${IMGUI_SOURCES})
-
-target_include_directories(ImGui PRIVATE ${SDL2_INCLUDE_DIR})
-
-target_link_libraries(ImGui PRIVATE ${CMAKE_DL_LIBS})
-
-target_compile_definitions(ImGui PUBLIC
-    IMGUI_DISABLE_OBSOLETE_FUNCTIONS
-    IMGUI_DEFINE_MATH_OPERATORS
-    )
 
 add_subdirectory(modules/tactile-proto)
 add_subdirectory(modules/tactile-io)
