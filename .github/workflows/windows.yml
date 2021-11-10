@@ -18,12 +18,14 @@ jobs:
         uses: lukka/run-vcpkg@v10
         with:
           vcpkgGitCommitId: '${{env.VCPKG_COMMIT_ID}}'
+          configurePreset: 'ninja-multi-vcpkg'
+          buildPreset: 'ninja-multi-vcpkg'
 
       - name: Make Tactile triplet file available to Vcpkg
         shell: cmd
         run: copy "${{github.workspace}}\cmake\x64-tactile.cmake" "${{github.workspace}}\vcpkg\triplets\community\x64-tactile.cmake"
 
-      - name: Run CMake consuming CMakePreset.json and vcpkg.json by mean of vcpkg.
+      - name: Run CMake consuming vcpkg.json
         uses: lukka/run-cmake@v10
 
       - name: Create build folder
