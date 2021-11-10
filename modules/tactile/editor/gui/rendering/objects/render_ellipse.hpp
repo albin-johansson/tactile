@@ -4,7 +4,7 @@ struct ImVec2;
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry, entity
+#include <entt/entt.hpp>  // registry, entity
 
 #include "editor/gui/rendering/render_info.hpp"
 

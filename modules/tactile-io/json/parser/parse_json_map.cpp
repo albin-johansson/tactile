@@ -5,7 +5,7 @@
 
 #include <tactile_def.hpp>
 
-#include <json.hpp>  // json
+#include <nlohmann/json.hpp>  // json
 
 #include "../json_common.hpp"
 #include "parse_layers.hpp"

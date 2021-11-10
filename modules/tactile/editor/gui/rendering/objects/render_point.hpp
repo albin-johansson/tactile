@@ -3,7 +3,7 @@
 #include <tactile_def.hpp>
 
 #include <centurion.hpp>  // frect
-#include <entt.hpp>       // registry, entity
+#include <entt/entt.hpp>  // registry, entity
 
 #include "editor/gui/rendering/render_info.hpp"
 

@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry
+#include <entt/entt.hpp>  // registry
 
 #include "core/property_value.hpp"
 #include "editor/commands/command.hpp"

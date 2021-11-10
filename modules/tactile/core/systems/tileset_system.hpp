@@ -3,7 +3,7 @@
 #include <tactile_def.hpp>
 
 #include <centurion.hpp>  // irect
-#include <entt.hpp>       // registry, entity
+#include <entt/entt.hpp>  // registry, entity
 
 #include "core/components/texture.hpp"
 #include "core/map_position.hpp"

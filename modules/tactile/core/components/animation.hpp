@@ -5,7 +5,7 @@
 #include <tactile_def.hpp>
 
 #include <centurion.hpp>  // milliseconds
-#include <entt.hpp>       // entity
+#include <entt/entt.hpp>  // entity
 
 namespace Tactile {
 

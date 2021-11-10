@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry, entity, null
+#include <entt/entt.hpp>  // registry, entity, null
 
 #include "core/map.hpp"
 #include "layer_snapshot.hpp"

@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry
+#include <entt/entt.hpp>  // registry
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"

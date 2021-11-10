@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry, dispatcher
+#include <entt/entt.hpp>  // registry, dispatcher
 
 namespace Tactile {
 

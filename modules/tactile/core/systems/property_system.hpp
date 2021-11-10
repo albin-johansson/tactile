@@ -5,7 +5,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry, entity
+#include <entt/entt.hpp>  // registry, entity
 
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"

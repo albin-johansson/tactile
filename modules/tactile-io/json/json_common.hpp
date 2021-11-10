@@ -1,6 +1,6 @@
 #pragma once
 
-#include <json.hpp>  // json
+#include <nlohmann/json.hpp>  // json
 
 namespace Tactile::IO {
 

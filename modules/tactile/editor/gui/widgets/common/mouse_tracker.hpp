@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt/entt.hpp>  // dispatcher
 #include <imgui.h>
 
 namespace Tactile {

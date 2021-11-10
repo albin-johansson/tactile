@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // entity, null
+#include <entt/entt.hpp>  // entity, null
 
 #include "core/property_value.hpp"
 

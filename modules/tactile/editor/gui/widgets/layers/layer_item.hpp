@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry, entity, dispatcher
+#include <entt/entt.hpp>  // registry, entity, dispatcher
 
 #include "core/components/layer.hpp"
 

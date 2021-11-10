@@ -1,7 +1,7 @@
 #pragma once
 
 #include <centurion.hpp>  // scan_code, key_mod, keyboard_event
-#include <entt.hpp>       // dispatcher
+#include <entt/entt.hpp>  // dispatcher
 
 namespace Tactile {
 

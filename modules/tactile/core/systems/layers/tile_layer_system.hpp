@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry, entity
+#include <entt/entt.hpp>  // registry, entity
 
 #include "common/tile_cache.hpp"
 #include "core/map_position.hpp"

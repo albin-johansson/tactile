@@ -3,7 +3,7 @@
 #include <tactile_def.hpp>
 
 #include <centurion.hpp>  // window, keyboard
-#include <entt.hpp>       // dispatcher
+#include <entt/entt.hpp>  // dispatcher
 
 #include "editor/events/command_events.hpp"
 #include "editor/events/layer_events.hpp"

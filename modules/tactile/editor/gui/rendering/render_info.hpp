@@ -1,7 +1,7 @@
 #pragma once
 
 #include <centurion.hpp>  // frect
-#include <entt.hpp>       // registry
+#include <entt/entt.hpp>  // registry
 #include <imgui.h>
 
 #include "core/region.hpp"

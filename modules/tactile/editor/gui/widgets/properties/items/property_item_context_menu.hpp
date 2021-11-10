@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include <entt.hpp>  // dispatcher
+#include <entt/entt.hpp>  // dispatcher
 
 namespace Tactile {
 

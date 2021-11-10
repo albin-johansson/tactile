@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry
+#include <entt/entt.hpp>  // registry
 
 #include "core/components/texture.hpp"
 #include "core/systems/tileset_snapshot.hpp"

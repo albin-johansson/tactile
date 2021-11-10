@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt.hpp>  // registry, dispatcher
+#include <entt/entt.hpp>  // registry, dispatcher
 
 #include "core/mouse_info.hpp"
 

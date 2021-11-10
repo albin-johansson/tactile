@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry
+#include <entt/entt.hpp>  // registry
 
 #include "common/tile_cache.hpp"
 #include "editor/commands/command.hpp"

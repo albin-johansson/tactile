@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt.hpp>  // registry, entity
+#include <entt/entt.hpp>  // registry, entity
 
 #include "core/map_position.hpp"
 

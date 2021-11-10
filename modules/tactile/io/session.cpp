@@ -11,7 +11,6 @@
 #include "create_document_from_ir.hpp"
 #include "directories.hpp"
 #include "editor/model.hpp"
-#include "json.hpp"
 #include "map_parser.hpp"
 
 #include <session.pb.h>
