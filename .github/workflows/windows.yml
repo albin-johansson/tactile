@@ -19,6 +19,7 @@ jobs:
         uses: lukka/run-vcpkg@v10
         with:
           vcpkgGitCommitId: '${{env.VCPKG_COMMIT_ID}}'
+          appendedCacheKey: 1
 
       - name: Make Tactile triplet file available to Vcpkg
         shell: cmd
