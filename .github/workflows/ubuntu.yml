@@ -54,6 +54,11 @@ jobs:
           git clone https://github.com/microsoft/vcpkg
           ./vcpkg/bootstrap-vcpkg.sh
 
+      - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
+        shell: bash
+        run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+
       - name: Make Tactile triplet file available to Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         shell: bash
