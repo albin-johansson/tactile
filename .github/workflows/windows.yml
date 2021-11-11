@@ -36,7 +36,7 @@ jobs:
         working-directory: ./cmake
         shell: cmd
         run: |
-          dir %VCPKG_ROOT%
+          mkdir %VCPKG_ROOT%\triplets\community
           copy "x64-tactile.cmake" "%VCPKG_ROOT%\triplets\community\x64-tactile.cmake"
 
       - name: Create build directory
