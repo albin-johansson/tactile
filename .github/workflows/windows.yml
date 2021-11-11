@@ -46,7 +46,7 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: cmd
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -CMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake -GNinja
 
       - name: Build
         working-directory: ./build
