@@ -35,6 +35,7 @@ jobs:
           .\vcpkg\bootstrap-vcpkg.bat
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         shell: powershell
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
