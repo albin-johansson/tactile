@@ -7,6 +7,7 @@
 
 #include "append_object.hpp"
 #include "append_properties.hpp"
+#include "ir_helpers.hpp"
 
 namespace Tactile::IO {
 namespace {

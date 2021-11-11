@@ -7,6 +7,7 @@
 #include "append_properties.hpp"
 #include "append_tileset.hpp"
 #include "emitter.hpp"
+#include "ir_helpers.hpp"
 #include "save_xml.hpp"
 
 namespace Tactile::IO {

@@ -6,6 +6,7 @@
 
 #include "common_saving.hpp"
 #include "emitter.hpp"
+#include "ir_helpers.hpp"
 #include "save_fancy_tiles.hpp"
 #include "save_json.hpp"
 #include "save_properties.hpp"

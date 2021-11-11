@@ -3,6 +3,7 @@
 #include <tactile_stdlib.hpp>
 
 #include "../../common_saving.hpp"
+#include "ir_helpers.hpp"
 
 namespace Tactile::IO {
 namespace {

@@ -4,6 +4,7 @@
 #include <utility>  // move
 
 #include "common_saving.hpp"
+#include "ir_helpers.hpp"
 
 namespace Tactile::IO {
 namespace {

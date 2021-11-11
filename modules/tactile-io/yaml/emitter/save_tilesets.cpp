@@ -7,6 +7,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../../common_saving.hpp"
+#include "ir_helpers.hpp"
 #include "save_object.hpp"
 #include "save_properties.hpp"
 

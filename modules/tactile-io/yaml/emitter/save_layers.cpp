@@ -8,6 +8,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "emitter.hpp"
+#include "ir_helpers.hpp"
 #include "save_object.hpp"
 #include "save_properties.hpp"
 
