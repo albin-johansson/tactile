@@ -3,6 +3,8 @@ name: "CI: Windows"
 on: [ push, pull_request ]
 
 env:
+  VCPKG_ROOT: ${{github.workspace}}/vcpkg
+  VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_COMMIT_ID: 70033dbb31527fb3e69654731f540f59c87787f9
 
 jobs:
@@ -11,26 +13,44 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - uses: ilammy/msvc-dev-cmd@master
-      - uses: seanmiddleditch/gha-setup-ninja@master
       - uses: lukka/get-cmake@latest
 
-      - name: Configure Vcpkg
-        uses: lukka/run-vcpkg@v10
+      - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+        shell: cmd
+        run: mkdir ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+
+      - name: Cache Vcpkg
+        id: restore-vcpkg-and-artifacts
+        uses: actions/cache@v2
         with:
-          vcpkgGitCommitId: "${{env.VCPKG_COMMIT_ID}}"
+          path: |
+            ${{env.VCPKG_ROOT}}
+            !${{env.VCPKG_ROOT}}/buildtrees
+            !${{env.VCPKG_ROOT}}/packages
+            !${{env.VCPKG_ROOT}}/downloads
+            !${{env.VCPKG_ROOT}}/installed
+          key: ${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile
 
       - name: Make Tactile triplet file available to Vcpkg
+        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         shell: cmd
         run: copy "${{github.workspace}}\cmake\x64-tactile.cmake" "${{github.workspace}}\vcpkg\triplets\community\x64-tactile.cmake"
 
-      - name: Run CMake + vcpkg + Ninja + CTest to generate/build/test.
-        uses: lukka/run-cmake@v10
-        with:
-          configurePreset: "vcpkg-ninja"
-          buildPreset: "vcpkg-ninja-debug"
-          testPreset: "vcpkg-ninja-debug-test"
+      - name: Create build directory
+        shell: cmd
+        run: mkdir build
 
-#      - name: Run tests
-#        working-directory: ./build/build
-#        shell: cmd
-#        run: TactileTests.exe
+      - name: Generate build files
+        working-directory: ./build
+        shell: cmd
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -CMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -GNinja
+
+      - name: Build
+        working-directory: ./build
+        shell: cmd
+        run: ninja
+
+      - name: Run tests
+        working-directory: ./build/build
+        shell: cmd
+        run: TactileTests.exe
