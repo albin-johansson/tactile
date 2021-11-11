@@ -25,17 +25,19 @@ jobs:
         with:
           path: |
             ${{env.VCPKG_ROOT}}
-            !${{env.VCPKG_ROOT}}/buildtrees
-            !${{env.VCPKG_ROOT}}/packages
-            !${{env.VCPKG_ROOT}}/downloads
-            !${{env.VCPKG_ROOT}}/installed
+            !${{env.VCPKG_ROOT}}\buildtrees
+            !${{env.VCPKG_ROOT}}\packages
+            !${{env.VCPKG_ROOT}}\downloads
+            !${{env.VCPKG_ROOT}}\installed
           key: ${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile
 
       - name: Make Tactile triplet file available to Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         working-directory: ./cmake
         shell: cmd
-        run: copy "x64-tactile.cmake" "%VCPKG_ROOT%\triplets\community\x64-tactile.cmake"
+        run: |
+          dir %VCPKG_ROOT%
+          copy "x64-tactile.cmake" "%VCPKG_ROOT%\triplets\community\x64-tactile.cmake"
 
       - name: Create build directory
         shell: cmd
