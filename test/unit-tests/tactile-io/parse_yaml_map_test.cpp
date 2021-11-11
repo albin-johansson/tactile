@@ -1,10 +1,11 @@
 #include <filesystem>  // absolute
-#include <fstream>     // ofstream
 
 #include <tactile_def.hpp>
 #include <tactile_io.hpp>
 
 #include <gtest/gtest.h>
+
+#include "io_test_helpers.hpp"
 
 using namespace Tactile;
 
@@ -130,12 +131,6 @@ tilesets:
 )";
 
 // clang-format on
-
-void WriteToFile(const CStr name, const CStr data)
-{
-  std::ofstream stream{name, std::ios::out | std::ios::trunc};
-  stream << data;
-}
 
 void ValidateTilesets(const IO::Map& map)
 {
