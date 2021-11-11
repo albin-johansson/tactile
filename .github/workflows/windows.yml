@@ -3,8 +3,8 @@ name: "CI: Windows"
 on: [ push, pull_request ]
 
 env:
-  VCPKG_ROOT: ${{github.workspace}}/vcpkg
-  VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
+  VCPKG_ROOT: ${{github.workspace}}\vcpkg
+  VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg\bincache
   VCPKG_COMMIT_ID: 70033dbb31527fb3e69654731f540f59c87787f9
 
 jobs:
@@ -16,8 +16,8 @@ jobs:
       - uses: lukka/get-cmake@latest
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-        shell: cmd
-        run: mkdir ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+        shell: powershell
+        run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
@@ -43,7 +43,7 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: cmd
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -CMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -CMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake -GNinja
 
       - name: Build
         working-directory: ./build
