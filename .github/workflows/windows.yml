@@ -15,10 +15,6 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@master
       - uses: lukka/get-cmake@latest
 
-      - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-        shell: powershell
-        run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
         uses: actions/cache@v2
@@ -37,6 +33,10 @@ jobs:
         run: |
           git clone https://github.com/Microsoft/vcpkg
           .\vcpkg\bootstrap-vcpkg.bat
+
+      - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+        shell: powershell
+        run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
       - name: Make Tactile triplet file available to Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
