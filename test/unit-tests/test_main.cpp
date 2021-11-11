@@ -1,7 +1,7 @@
 #include <cstdlib>  // atexit
 
-#include <GL/glew.h>      // glewInit
 #include <centurion.hpp>  // library
+#include <gl/glew.h>      // glewInit
 #include <gtest/gtest.h>
 
 #include "cfg/gl_attributes.hpp"

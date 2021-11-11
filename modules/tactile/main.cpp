@@ -1,7 +1,7 @@
 #include <utility>  // move
 
-#include <GL/glew.h>      // glewInit
 #include <centurion.hpp>  // library, window, gl_context
+#include <gl/glew.h>      // glewInit
 
 #include "application.hpp"
 #include "cfg/gl_attributes.hpp"
