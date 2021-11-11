@@ -160,7 +160,8 @@ target_link_libraries(${TACTILE_IO}
     pugixml::pugixml
     )
 
-target_compile_definitions(${TACTILE_IO} PRIVATE
+target_compile_definitions(${TACTILE_IO}
+    PRIVATE
     TACTILE_IO_EXPORT
     CENTURION_NO_SDL_MIXER
     )
