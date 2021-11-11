@@ -45,7 +45,7 @@ jobs:
             !${{env.VCPKG_ROOT}}\packages
             !${{env.VCPKG_ROOT}}\downloads
             !${{env.VCPKG_ROOT}}\installed
-          key: ubuntu-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile
+          key: ubuntu-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile-linux
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
@@ -62,7 +62,7 @@ jobs:
       - name: Make Tactile triplet file available to Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         shell: bash
-        run: mv "${{github.workspace}}/cmake/x64-tactile.cmake" "${{env.VCPKG_ROOT}}/triplets/community/x64-tactile.cmake"
+        run: mv "${{github.workspace}}/cmake/x64-tactile-linux.cmake" "${{env.VCPKG_ROOT}}/triplets/community/x64-tactile-linux.cmake"
 
       - name: Create build directory
         shell: bash
@@ -74,7 +74,7 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-linux -GNinja
 
       - name: Build
         working-directory: ./build
