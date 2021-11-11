@@ -27,6 +27,8 @@ set(TEST_FILES
     unit-tests/io/parsing/parse_tmx_with_tile_nodes_test.cpp
     unit-tests/io/parsing/create_document_from_ir_test.cpp
 
+    unit-tests/tactile-io/parse_yaml_map_test.cpp
+
     unit-tests/utils/buffer_utils_test.cpp
     unit-tests/utils/color_utils_test.cpp
     )
