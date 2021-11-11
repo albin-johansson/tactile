@@ -31,7 +31,7 @@ jobs:
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         shell: cmd
         run: |
-          git clone https://github.com/Microsoft/vcpkg
+          git clone https://github.com/microsoft/vcpkg
           .\vcpkg\bootstrap-vcpkg.bat
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
