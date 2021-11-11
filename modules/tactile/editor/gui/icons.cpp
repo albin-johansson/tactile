@@ -4,7 +4,7 @@
 
 #include <tactile_stdlib.hpp>
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 
 #include "core/utils/load_texture.hpp"
 

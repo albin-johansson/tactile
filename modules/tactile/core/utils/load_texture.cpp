@@ -7,8 +7,8 @@
 
 #include <tactile_def.hpp>
 
+#include <GL/glew.h>
 #include <centurion.hpp>
-#include <gl/glew.h>
 #include <stb_image.h>
 
 namespace Tactile {
