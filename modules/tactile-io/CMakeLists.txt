@@ -28,6 +28,7 @@ set(TACTILE_IO_SOURCES
     include/tactile-io/emitter.hpp
     include/tactile-io/ir.hpp
     include/tactile-io/ir_common.hpp
+    include/tactile-io/ir_helpers.hpp
     include/tactile-io/ir_map.hpp
     include/tactile-io/ir_object.hpp
     include/tactile-io/ir_property.hpp
