@@ -4,7 +4,6 @@ on: [ push, pull_request ]
 
 env:
   VCPKG_COMMIT_ID: 70033dbb31527fb3e69654731f540f59c87787f9
-  VCPKG_DEFAULT_TRIPLET: x64-tactile
 
 jobs:
   windows-latest-test:
@@ -18,25 +17,20 @@ jobs:
       - name: Configure Vcpkg
         uses: lukka/run-vcpkg@v10
         with:
-          vcpkgGitCommitId: '${{env.VCPKG_COMMIT_ID}}'
-          appendedCacheKey: 1
+          vcpkgGitCommitId: "${{env.VCPKG_COMMIT_ID}}"
 
       - name: Make Tactile triplet file available to Vcpkg
         shell: cmd
         run: copy "${{github.workspace}}\cmake\x64-tactile.cmake" "${{github.workspace}}\vcpkg\triplets\community\x64-tactile.cmake"
 
-      - name: Create build folder
-        shell: cmd
-        run: cmake -E make_directory ./build
+      - name: Run CMake + vcpkg + Ninja + CTest to generate/build/test.
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: "vcpkg-ninja"
+          buildPreset: "vcpkg-ninja-debug"
+          testPreset: "vcpkg-ninja-debug-test"
 
-      - name: Build
-        working-directory: ./build
-        shell: cmd
-        run: |
-          cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile -GNinja
-          ninja
-
-      - name: Run tests
-        working-directory: ./build/build
-        shell: cmd
-        run: TactileTests.exe
+#      - name: Run tests
+#        working-directory: ./build/build
+#        shell: cmd
+#        run: TactileTests.exe

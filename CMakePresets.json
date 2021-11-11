@@ -1,0 +1,43 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "vcpkg-ninja",
+      "displayName": "Vcpkg with Ninja",
+      "description": "Uses Vcpkg toolchain and the Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_TARGET_TRIPLET": {
+          "type": "STRING",
+          "value": "x64-tactile"
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "vcpkg-ninja-debug",
+      "configurePreset": "vcpkg-ninja",
+      "displayName": "Vcpkg with Ninja (Debug)",
+      "configuration": "Debug"
+    },
+    {
+      "name": "vcpkg-ninja-release",
+      "configurePreset": "vcpkg-ninja",
+      "displayName": "Vcpkg with Ninja (Release)",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "vcpkg-ninja-debug-test",
+      "configurePreset": "vcpkg-ninja",
+      "configuration": "Debug"
+    }
+  ]
+}
