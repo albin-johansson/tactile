@@ -48,90 +48,55 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 
 ## Building
 
-This section provides a high-level description of how to manually build the Tactile editor. A few of
-the third-party libraries used in the code base must be separately installed on your system, but
-most of the dependencies are either bundled in the repository or downloaded at build-time through
-CMake.
+This section provides a high-level description of how to manually build the Tactile editor. The
+project makes use of [Vcpkg](https://github.com/microsft/vcpkg) for third-party dependency
+management. As a result, building the code base is really quite straightforward. The process is also
+basically the same on all platforms.
+
+You can install Vcpkg wherever you like, so it helps to set the environment variable `VCPKG_ROOT` to
+the path where you've installed Vcpkg.
 
 ### Windows
 
-Firstly, you will need to download the headers and development binaries SDL2, SDL2_ttf and
-SDL2_image. Subsequently, the directories where you have put the SDL libraries should be accessible
-through environment variables called `SDL2DIR`, `SDL2TTFDIR` and `SDL2IMAGEDIR`, respectively. For
-example, running `echo %SDL2DIR%` should result in something like `C:\dev\SDL2-2.0.16` being output.
-Then, put the runtime binaries (`.dll` files), in a folder called `bin` in the root directory of the
-repository. After you have done this, you will need to repeat this process for GLEW, where you
-define a `GLEWDIR` environment variable and copy the GLEW `.dll` to the `bin` directory. In addition
-to these dependencies, you'll need CMake and MSVC installed, the latter is achieved by simply
-installing Visual Studio. Ninja isn't actually required, but is highly recommended.
+```cmd
+git clone https://github.com/microsoft/vcpkg
+.\vcpkg\bootstrap-vcpkg.bat
+```
 
 ```cmd
-mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
-ninja
+copy "cmake\x64-tactile.cmake" "%VCPKG_ROOT%\triplets\community\x64-tactile.cmake"
+mkdir build
+cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile -GNinja
 ```
 
 ### Linux (Ubuntu)
 
-Building the source code on Linux, in this case Ubuntu, should be relatively straightforward using
-your package manager. At the time of writing, the packaged versions of SDL2 and Protobuf are too
-old, so you'll have to build them by yourself. The following assumes that you've got a C++ compiler
-installed such as GCC.
+```bash
+git clone https://github.com/microsoft/vcpkg
+./vcpkg/bootstrap-vcpkg.sh
+```
 
 ```bash
-sudo apt install cmake ninja-build libsdl2-ttf-dev libsdl2-image-dev libglew-dev
-
-curl -L https://www.libsdl.org/release/SDL2-2.0.16.tar.gz | tar xz
-cd SDL2-2.0.16
-./configure
-make -j 8
-sudo make install
-cd ..
-
-curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.18.1/protobuf-cpp-3.18.1.tar.gz | tar xz
-cd protobuf-3.18.1
-./configure
-make -j 8
-sudo make install
-sudo ldconfig
-cd ..
-
-git clone https://github.com/albin-johansson/tactile
-cd tactile
-mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+mv "cmake/x64-tactile-linux.cmake" "$VCPKG_ROOT/triplets/community/x64-tactile-linux.cmake"
+mkdir build
+cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-linux -GNinja
 ninja
 ```
 
 ### macOS
 
-The easiest platform to get everything configured correctly with is macOS using Brew. The only 
-package that doesn't match our needs is Protobuf.
+```bash
+git clone https://github.com/microsoft/vcpkg
+./vcpkg/bootstrap-vcpkg.sh
+```
 
 ```bash
-brew update
-brew install llvm
-brew install cmake
-brew install ninja
-brew install mpg123
-brew install glfw
-brew install glew
-brew install SDL2
-brew install SDL2_ttf
-brew install SDL2_image
-
-brew install autoconf
-brew install automake
-brew install libtool
-curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.18.1/protobuf-cpp-3.18.1.tar.gz | tar xz
-cd protobuf-3.18.1
-./configure
-make -j 8
-sudo make install
-
-git clone https://github.com/albin-johansson/tactile
-mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+mv "cmake/x64-tactile-osx.cmake" "$VCPKG_ROOT/triplets/community/x64-tactile-osx.cmake"
+mkdir build
+cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-osx -GNinja
 ninja
 ```
 
