@@ -514,27 +514,26 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       )
 endif ()
 
-target_precompile_headers(${TACTILE_LIB}
-    PRIVATE
+target_precompile_headers(${TACTILE_LIB} PRIVATE
+    <cstdint>
+    <cstddef>
+    <cassert>
+    <memory>
+    <utility>
     <array>
-    <algorithm>
+    <vector>
+    <map>
+    <unordered_map>
+    <variant>
     <string>
     <string_view>
-    <functional>
-    <filesystem>
-    <unordered_map>
-    <map>
-    <vector>
-    <variant>
-    <memory>
     <concepts>
-    <type_traits>
-    <optional>
+    <functional>
 
     <centurion.hpp>
     <entt/entt.hpp>
-    <nenya.hpp>
     <fmt/format.h>
+    <nenya.hpp>
     )
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")

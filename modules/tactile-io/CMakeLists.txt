@@ -189,16 +189,24 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif ()
 
 target_precompile_headers(${TACTILE_IO} PRIVATE
-    <algorithm>
-    <string>
-    <vector>
-    <filesystem>
-    <utility>
+    <cstdint>
+    <cstddef>
+    <cassert>
     <memory>
-    <optional>
+    <utility>
+    <array>
+    <vector>
+    <map>
+    <unordered_map>
+    <variant>
+    <string>
+    <string_view>
+    <concepts>
+    <functional>
 
     <magic_enum.hpp>
-    <nlohmann/json.hpp>
     <yaml-cpp/yaml.h>
+    <nlohmann/json.hpp>
     <pugixml.hpp>
+    <fmt/format.h>
     )
