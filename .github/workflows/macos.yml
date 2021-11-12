@@ -19,6 +19,10 @@ jobs:
         shell: bash
         run: brew update
 
+      - name: Ensure macOS developer tools are installed
+        shell: bash
+        run: xcode-select --install
+
       - uses: lukka/get-cmake@latest
 
       - name: Install LLVM
