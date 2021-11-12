@@ -14,6 +14,7 @@ set(TACTILE_IO_SOURCES
     common_saving.hpp
     ir.cpp
     ir_definitions.hpp
+    ir_layer.cpp
     ir_map.cpp
     ir_object.cpp
     ir_property.cpp
@@ -29,6 +30,7 @@ set(TACTILE_IO_SOURCES
     include/tactile-io/ir.hpp
     include/tactile-io/ir_common.hpp
     include/tactile-io/ir_helpers.hpp
+    include/tactile-io/ir_layer.hpp
     include/tactile-io/ir_map.hpp
     include/tactile-io/ir_object.hpp
     include/tactile-io/ir_property.hpp

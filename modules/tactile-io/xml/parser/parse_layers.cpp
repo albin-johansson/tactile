@@ -70,19 +70,16 @@ namespace {
   IO::SetVisible(layer, GetBool(node, "visible").value_or(true));
 
   if (std::strcmp(node.name(), "layer") == 0) {
-    IO::SetType(layer, LayerType::TileLayer);
     if (const auto err = ParseTileLayer(node, layer); err != ParseError::None) {
       return err;
     }
   }
   else if (std::strcmp(node.name(), "objectgroup") == 0) {
-    IO::SetType(layer, LayerType::ObjectLayer);
     if (const auto err = ParseObjectLayer(node, layer); err != ParseError::None) {
       return err;
     }
   }
   else if (std::strcmp(node.name(), "group") == 0) {
-    IO::SetType(layer, LayerType::GroupLayer);
     if (const auto err = ParseGroupLayer(node, layer); err != ParseError::None) {
       return err;
     }

@@ -86,20 +86,17 @@ namespace {
     const auto value = type.as<std::string>();
 
     if (value == "tile-layer") {
-      SetType(layer, LayerType::TileLayer);
       if (const auto err = ParseTileLayer(node, layer, nRows, nCols);
           err != ParseError::None) {
         return err;
       }
     }
     else if (value == "object-layer") {
-      SetType(layer, LayerType::ObjectLayer);
       if (const auto err = ParseObjectLayer(node, layer); err != ParseError::None) {
         return err;
       }
     }
     else if (value == "group-layer") {
-      SetType(layer, LayerType::GroupLayer);
       if (const auto err = ParseGroupLayer(node, layer, nRows, nCols);
           err != ParseError::None) {
         return err;

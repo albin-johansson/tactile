@@ -8,6 +8,7 @@
 #include "tactile-io/ir.hpp"
 #include "tactile-io/ir_common.hpp"
 #include "tactile-io/ir_helpers.hpp"
+#include "tactile-io/ir_layer.hpp"
 #include "tactile-io/ir_map.hpp"
 #include "tactile-io/ir_object.hpp"
 #include "tactile-io/ir_property.hpp"

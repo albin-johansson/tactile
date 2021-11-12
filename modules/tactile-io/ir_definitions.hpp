@@ -111,8 +111,8 @@ struct Layer final
   LayerContent data;                 ///< Type-specific data.
   std::string name;                  ///< The name of the layer.
   std::vector<Property> properties;  ///< The layer properties.
-  float opacity{};                   ///< Opacity of the layer, [0, 1].
-  bool is_visible{};                 ///< Is the layer visible?
+  float opacity{1.0f};               ///< Opacity of the layer, [0, 1].
+  bool is_visible{true};             ///< Is the layer visible?
 };
 
 /// \brief Intermediate representation of a map.

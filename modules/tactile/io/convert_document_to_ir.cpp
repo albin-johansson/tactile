@@ -162,7 +162,6 @@ void ConvertLayer(IO::Layer& data,
 
   IO::SetIndex(data, node.index);
   IO::SetId(data, layer.id);
-  IO::SetType(data, layer.type);
   IO::SetOpacity(data, layer.opacity);
   IO::SetVisible(data, layer.visible);
 

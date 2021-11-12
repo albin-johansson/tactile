@@ -70,19 +70,16 @@ namespace {
   if (const auto it = json.find("type"); it != json.end()) {
     const auto type = it->get<std::string>();
     if (type == "tilelayer") {
-      SetType(layer, LayerType::TileLayer);
       if (const auto err = ParseTileLayer(json, layer); err != ParseError::None) {
         return err;
       }
     }
     else if (type == "objectgroup") {
-      SetType(layer, LayerType::ObjectLayer);
       if (const auto err = ParseObjectLayer(json, layer); err != ParseError::None) {
         return err;
       }
     }
     else if (type == "group") {
-      SetType(layer, LayerType::GroupLayer);
       if (const auto err = ParseGroupLayer(json, layer); err != ParseError::None) {
         return err;
       }

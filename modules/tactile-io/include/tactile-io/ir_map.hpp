@@ -173,9 +173,9 @@ TACTILE_IO_API void ReserveTilesets(Map& map, usize n);
  * during consecutive calls to `AddLayer()`.
  *
  * \param map the map that will be affected.
- * \param n the number of layer to allocate enough space for.
+ * \param n the number of layers to allocate enough space for.
  *
- * \see `AddLayer()`
+ * \see `AddLayer(Map&)`
  */
 TACTILE_IO_API void ReserveLayers(Map& map, usize n);
 
