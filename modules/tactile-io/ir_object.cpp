@@ -68,6 +68,11 @@ auto GetPropertyCount(const Object& object) -> usize
   return object.properties.size();
 }
 
+auto GetProperty(Object& object, const usize index) -> Property&
+{
+  return object.properties.at(index);
+}
+
 auto GetProperty(const Object& object, const usize index) -> const Property&
 {
   return object.properties.at(index);

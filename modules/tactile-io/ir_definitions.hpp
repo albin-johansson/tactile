@@ -34,16 +34,16 @@ struct Property final
 /// \brief Intermediate representation of a map object.
 struct Object final
 {
-  int32 id{};                        ///< Unique object identifier.
-  float x{};                         ///< Logical x-coordinate.
-  float y{};                         ///< Logical y-coordinate.
-  float width{};                     ///< Logical width.
-  float height{};                    ///< Logical height.
-  ObjectType type{};                 ///< Specific object type.
-  std::string tag;                   ///< Optional user-defined type tag.
-  std::string name;                  ///< Object name.
-  std::vector<Property> properties;  ///< Object properties.
-  bool visible{};                    ///< Is the object visible?
+  int32 id{};                              ///< Unique object identifier.
+  float x{};                               ///< Logical x-coordinate.
+  float y{};                               ///< Logical y-coordinate.
+  float width{};                           ///< Logical width.
+  float height{};                          ///< Logical height.
+  ObjectType type{ObjectType::Rectangle};  ///< Specific object type.
+  std::string tag;                         ///< Optional user-defined type tag.
+  std::string name;                        ///< Object name.
+  std::vector<Property> properties;        ///< Object properties.
+  bool visible{true};                      ///< Is the object visible?
 };
 
 /// \brief Intermediate representation of a tile animation frame.
