@@ -53,50 +53,47 @@ project makes use of [Vcpkg](https://github.com/microsft/vcpkg) for third-party 
 management. As a result, building the code base is really quite straightforward. The process is also
 basically the same on all platforms.
 
+### Install Vcpkg
+
 You can install Vcpkg wherever you like, so it helps to set the environment variable `VCPKG_ROOT` to
-the path where you've installed Vcpkg.
+the path where you've installed Vcpkg. You can download Vcpkg through `git clone https://github.com/microsoft/vcpkg`. After you've downloaded Vcpkg, install it using the following command in the root of the downloaded repository.
 
-### Windows
+|   OS    | Command                       |
+| :-----: | :---------------------------- |
+| Windows | `.\vcpkg\bootstrap-vcpkg.bat` |
+|  Linux  | `./vcpkg/bootstrap-vcpkg.sh`  |
+|  macOS  | `./vcpkg/bootstrap-vcpkg.sh`  |
 
-```cmd
-git clone https://github.com/microsoft/vcpkg
-.\vcpkg\bootstrap-vcpkg.bat
-```
+### Install Tactile triplet files
 
-```cmd
-copy "cmake\x64-tactile.cmake" "%VCPKG_ROOT%\triplets\community\x64-tactile.cmake"
+Then we want to make the custom Tactile triplet files available for use by Vcpkg, the following shows how you can do this (you can of course copy the file by hand, but that's no fun). These commands assume that you are in the root of the Tactile repository.
+
+|   OS    | Command                                                                                       |
+| :-----: | :-------------------------------------------------------------------------------------------- |
+| Windows | `copy "cmake\x64-tactile.cmake" "%VCPKG_ROOT%\triplets\community\x64-tactile.cmake"`          |
+|  Linux  | `mv "cmake/x64-tactile-linux.cmake" "$VCPKG_ROOT/triplets/community/x64-tactile-linux.cmake"` |
+|  macOS  | `mv "cmake/x64-tactile-osx.cmake" "$VCPKG_ROOT/triplets/community/x64-tactile-osx.cmake"`     |
+
+### Build the project
+
+Now, we can generate the build files. You don't have to Ninja, but it is highly recommended. On all operating systems, you should create a separate build directory where all of our generated build files and (later) binaries will end up.
+
+```bash
 mkdir build
 cd build
-cmake .. -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile -GNinja
 ```
 
-### Linux (Ubuntu)
+Use the following commands to tell CMake to generate the build files. Note, if you are using an IDE, such as JetBrains CLion, you can specify these CMake parameters in your CMake profile settings so that you can just build the project as per usual. In CLion 2021.2, you'll access these settings in `View -> Tool Windows -> CMake`, and then selecting `CMake Settings`. You can also just search for `CMake Settings` with `Shift+Shift`. Subsequently, in the `CMake Settings` window, add the parameters to the `CMake options` field.
+
+|   OS    | Command                                                                                                                         |
+| :-----: | :------------------------------------------------------------------------------------------------------------------------------ |
+| Windows | `cmake .. -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile -GNinja`      |
+|  Linux  | `cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-linux -GNinja` |
+|  macOS  | `cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-osx -GNinja`   |
+
+Finally, all we need to build the entire project is then to invoke Ninja (or whatever generator you use).
 
 ```bash
-git clone https://github.com/microsoft/vcpkg
-./vcpkg/bootstrap-vcpkg.sh
-```
-
-```bash
-mv "cmake/x64-tactile-linux.cmake" "$VCPKG_ROOT/triplets/community/x64-tactile-linux.cmake"
-mkdir build
-cd build
-cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-linux -GNinja
-ninja
-```
-
-### macOS
-
-```bash
-git clone https://github.com/microsoft/vcpkg
-./vcpkg/bootstrap-vcpkg.sh
-```
-
-```bash
-mv "cmake/x64-tactile-osx.cmake" "$VCPKG_ROOT/triplets/community/x64-tactile-osx.cmake"
-mkdir build
-cd build
-cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-osx -GNinja
 ninja
 ```
 
