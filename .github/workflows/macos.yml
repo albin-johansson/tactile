@@ -19,7 +19,13 @@ jobs:
         shell: bash
         run: brew update
 
-      - uses: lukka/get-cmake@latest
+      - name: Install CMake
+        shell: bash
+        run: brew install cmake
+
+      - name: Install Ninja
+        shell: bash
+        run: brew install ninja
 
       - name: Install LLVM
         shell: bash
