@@ -36,11 +36,5 @@
     "magic-enum",
     "stb",
     "gtest"
-  ],
-  "overrides": [
-    {
-      "name": "protobuf",
-      "version": "3.18.0"
-    }
   ]
 }
