@@ -44,9 +44,8 @@ jobs:
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         working-directory: ./cmake
         shell: cmd
-        run: >
-          copy \"x64-tactile-windows.cmake\"
-                \"%VCPKG_ROOT%\triplets\community\x64-tactile-windows.cmake\"
+        run: copy "x64-tactile-windows.cmake" ^
+                  "%VCPKG_ROOT%\triplets\community\x64-tactile-windows.cmake"
 
       - name: Create build directory
         shell: cmd
@@ -55,11 +54,10 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: cmd
-        run: >
-          cmake .. -DCMAKE_BUILD_TYPE=Debug
-                    -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake
-                    -DVCPKG_TARGET_TRIPLET=x64-tactile-windows
-                    -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug ^
+                      -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake ^
+                      -DVCPKG_TARGET_TRIPLET=x64-tactile-windows ^
+                      -GNinja
 
       - name: Build
         working-directory: ./build
