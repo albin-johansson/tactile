@@ -180,7 +180,7 @@ TACTILE_IO_API void ReserveTilesets(Map& map, usize n);
 TACTILE_IO_API void ReserveLayers(Map& map, usize n);
 
 /**
- * \brief Reserves enough space for the specified amount of layers in a map.
+ * \brief Reserves enough space for the specified amount of properties in a map.
  *
  * \details This function can be used to reduce the amount of internal reallocations
  * during consecutive calls to `AddProperty()`.
