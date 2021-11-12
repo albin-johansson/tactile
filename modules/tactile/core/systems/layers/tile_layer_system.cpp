@@ -40,8 +40,8 @@ auto GetTileFromLayer(const entt::registry& registry,
   const auto& tileLayer = registry.get<TileLayer>(entity);
   const auto& matrix = tileLayer.matrix;
 
-  const auto row = position.GetRow();
-  const auto col = position.GetColumn();
+  const auto row = position.GetRowIndex();
+  const auto col = position.GetColumnIndex();
 
   if (row < matrix.size() && col < matrix.at(0).size()) {
     return matrix.at(row).at(col);
