@@ -1,8 +1,11 @@
 #include <filesystem>  // path
 
 #include <tactile_io.hpp>
+#include <tactile_stdlib.hpp>
 
 #include <gtest/gtest.h>
+
+#include "io_test_helpers.hpp"
 
 using namespace Tactile;
 
@@ -107,4 +110,72 @@ TEST(IrProperty, Assignment)
   ASSERT_FALSE(IO::IsColor(property));
   ASSERT_FALSE(IO::IsObject(property));
   ASSERT_EQ(file, IO::GetFile(property));
+}
+
+TEST(IrProperty, GetterExceptions)
+{
+  auto map = IO::CreateMap();
+  auto& property = IO::AddProperty(*map);
+
+  ASSERT_NO_THROW(IO::GetString(property));
+  ASSERT_THROW(IO::GetInt(property), TactileError);
+  ASSERT_THROW(IO::GetFloat(property), TactileError);
+  ASSERT_THROW(IO::GetBool(property), TactileError);
+  ASSERT_THROW(IO::GetColor(property), TactileError);
+  ASSERT_THROW(IO::GetObject(property), TactileError);
+  ASSERT_THROW(IO::GetFile(property), TactileError);
+
+  IO::AssignInt(property, 42);
+  ASSERT_NO_THROW(IO::GetInt(property));
+  ASSERT_THROW(IO::GetString(property), TactileError);
+  ASSERT_THROW(IO::GetFloat(property), TactileError);
+  ASSERT_THROW(IO::GetBool(property), TactileError);
+  ASSERT_THROW(IO::GetColor(property), TactileError);
+  ASSERT_THROW(IO::GetObject(property), TactileError);
+  ASSERT_THROW(IO::GetFile(property), TactileError);
+
+  IO::AssignFloat(property, 1.5f);
+  ASSERT_NO_THROW(IO::GetFloat(property));
+  ASSERT_THROW(IO::GetString(property), TactileError);
+  ASSERT_THROW(IO::GetInt(property), TactileError);
+  ASSERT_THROW(IO::GetBool(property), TactileError);
+  ASSERT_THROW(IO::GetColor(property), TactileError);
+  ASSERT_THROW(IO::GetObject(property), TactileError);
+  ASSERT_THROW(IO::GetFile(property), TactileError);
+
+  IO::AssignBool(property, true);
+  ASSERT_NO_THROW(IO::GetBool(property));
+  ASSERT_THROW(IO::GetString(property), TactileError);
+  ASSERT_THROW(IO::GetInt(property), TactileError);
+  ASSERT_THROW(IO::GetFloat(property), TactileError);
+  ASSERT_THROW(IO::GetColor(property), TactileError);
+  ASSERT_THROW(IO::GetObject(property), TactileError);
+  ASSERT_THROW(IO::GetFile(property), TactileError);
+
+  IO::AssignColor(property, {});
+  ASSERT_NO_THROW(IO::GetColor(property));
+  ASSERT_THROW(IO::GetString(property), TactileError);
+  ASSERT_THROW(IO::GetInt(property), TactileError);
+  ASSERT_THROW(IO::GetFloat(property), TactileError);
+  ASSERT_THROW(IO::GetBool(property), TactileError);
+  ASSERT_THROW(IO::GetObject(property), TactileError);
+  ASSERT_THROW(IO::GetFile(property), TactileError);
+
+  IO::AssignObject(property, 123);
+  ASSERT_NO_THROW(IO::GetObject(property));
+  ASSERT_THROW(IO::GetString(property), TactileError);
+  ASSERT_THROW(IO::GetInt(property), TactileError);
+  ASSERT_THROW(IO::GetFloat(property), TactileError);
+  ASSERT_THROW(IO::GetBool(property), TactileError);
+  ASSERT_THROW(IO::GetColor(property), TactileError);
+  ASSERT_THROW(IO::GetFile(property), TactileError);
+
+  IO::AssignFile(property, TACTILE_IO_PATH_STR("foo.txt"));
+  ASSERT_NO_THROW(IO::GetFile(property));
+  ASSERT_THROW(IO::GetString(property), TactileError);
+  ASSERT_THROW(IO::GetInt(property), TactileError);
+  ASSERT_THROW(IO::GetFloat(property), TactileError);
+  ASSERT_THROW(IO::GetBool(property), TactileError);
+  ASSERT_THROW(IO::GetColor(property), TactileError);
+  ASSERT_THROW(IO::GetObject(property), TactileError);
 }

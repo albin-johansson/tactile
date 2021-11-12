@@ -5,6 +5,14 @@
 
 #include <tactile_def.hpp>
 
+#include "build.hpp"
+
+#if TACTILE_COMPILER_MSVC
+#define TACTILE_IO_PATH_STR(str) L##str
+#else
+#define TACTILE_IO_PATH_STR(str) str
+#endif  // TACTILE_COMPILER_MSVC
+
 namespace Tactile {
 
 inline void WriteToFile(const CStr file, const CStr data)
