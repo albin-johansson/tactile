@@ -49,7 +49,7 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 ## Building
 
 This section provides a high-level description of how to manually build the Tactile editor. The
-project makes use of [Vcpkg](https://github.com/microsft/vcpkg) for third-party dependency
+project makes use of [Vcpkg](https://github.com/microsoft/vcpkg) for third-party dependency
 management. As a result, building the code base is really quite straightforward. The process is also
 basically the same on all platforms.
 
