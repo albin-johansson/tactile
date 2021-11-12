@@ -45,7 +45,7 @@ jobs:
             !${{env.VCPKG_ROOT}}\packages
             !${{env.VCPKG_ROOT}}\downloads
             !${{env.VCPKG_ROOT}}\installed
-          key: osx-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile-osx
+          key: ${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile-osx
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
