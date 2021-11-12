@@ -468,7 +468,6 @@ target_include_directories(${TACTILE_LIB}
 
 target_link_libraries(${TACTILE_LIB}
     PUBLIC
-    ${CMAKE_DL_LIBS}
     OpenGL::GL
     GLEW::GLEW
     SDL2::SDL2
@@ -482,6 +481,7 @@ target_link_libraries(${TACTILE_LIB}
     protobuf::libprotobuf-lite
     ${TACTILE_PROTO}
     ${TACTILE_IO_IMPORT_LIBRARY}
+    ${CMAKE_DL_LIBS}
     )
 
 target_compile_definitions(${TACTILE_LIB} PUBLIC
