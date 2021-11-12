@@ -28,14 +28,20 @@ jobs:
         shell: bash
         run: sudo apt install gcc-10 g++-10
 
+      - name: Install xvfb
+        shell: bash
+        run: sudo apt install xvfb
+
       - name: Emulate video device
         shell: bash
-        run: |
-          sudo apt install xvfb
-          /sbin/start-stop-daemon --start --pidfile /tmp/custom_xvfb_99.pid --make-pidfile \
-                                  --background --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24 \
+        run: >
+          /sbin/start-stop-daemon --start --pidfile /tmp/custom_xvfb_99.pid --make-pidfile
+                                  --background --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24
                                   -ac +extension GLX;
-          sleep 3
+
+      - name: Wait a bit for video device
+        shell: bash
+        run: sleep 3
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
@@ -64,8 +70,9 @@ jobs:
       - name: Make Tactile triplet file available to Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         shell: bash
-        run: mv "${{github.workspace}}/cmake/x64-tactile-linux.cmake" \
-                "${{env.VCPKG_ROOT}}/triplets/community/x64-tactile-linux.cmake"
+        run: >
+          mv "${{github.workspace}}/cmake/x64-tactile-linux.cmake"
+             "${{env.VCPKG_ROOT}}/triplets/community/x64-tactile-linux.cmake"
 
       - name: Create build directory
         shell: bash
@@ -77,10 +84,11 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug \
-                      -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake \
-                      -DVCPKG_TARGET_TRIPLET=x64-tactile-linux \
-                      -GNinja
+        run: >
+          cmake .. -DCMAKE_BUILD_TYPE=Debug
+                   -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake
+                   -DVCPKG_TARGET_TRIPLET=x64-tactile-linux
+                   -GNinja
 
       - name: Build
         working-directory: ./build
