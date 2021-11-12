@@ -33,7 +33,7 @@ jobs:
         shell: cmd
         run: |
           git clone https://github.com/microsoft/vcpkg
-          .\vcpkg\bootstrap-vcpkg.bat
+          .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
@@ -53,7 +53,10 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: cmd
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug ^
+                      -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake ^
+                      -DVCPKG_TARGET_TRIPLET=x64-tactile ^
+                      -GNinja
 
       - name: Build
         working-directory: ./build

@@ -52,7 +52,7 @@ jobs:
         shell: bash
         run: |
           git clone https://github.com/microsoft/vcpkg
-          ./vcpkg/bootstrap-vcpkg.sh
+          ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
@@ -62,7 +62,8 @@ jobs:
       - name: Make Tactile triplet file available to Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         shell: bash
-        run: mv "${{github.workspace}}/cmake/x64-tactile-osx.cmake" "${{env.VCPKG_ROOT}}/triplets/community/x64-tactile-osx.cmake"
+        run: mv "${{github.workspace}}/cmake/x64-tactile-osx.cmake" \
+                "${{env.VCPKG_ROOT}}/triplets/community/x64-tactile-osx.cmake"
 
       - name: Make build directory
         shell: bash
@@ -71,7 +72,10 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: bash
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-osx -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug \
+                      -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake \
+                      -DVCPKG_TARGET_TRIPLET=x64-tactile-osx \
+                      -GNinja
 
       - name: Build
         working-directory: ./build
