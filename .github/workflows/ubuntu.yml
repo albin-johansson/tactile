@@ -79,10 +79,7 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug \
-                      -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake \
-                      -DVCPKG_TARGET_TRIPLET=x64-tactile-linux \
-                      -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-linux -GNinja
 
       - name: Build
         working-directory: ./build
