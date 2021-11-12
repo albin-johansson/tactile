@@ -5,6 +5,8 @@
 #include <string>      // string
 #include <variant>     // get, holds_alternative
 
+#include <tactile_stdlib.hpp>
+
 #include "ir_definitions.hpp"
 
 namespace Tactile::IO {
@@ -59,62 +61,132 @@ auto GetName(const Property& property) -> CStr
 
 auto GetType(const Property& property) -> PropertyType
 {
-  if (std::holds_alternative<int32>(property.value)) {
+  if (IsInt(property)) {
     return PropertyType::Integer;
   }
-  else if (std::holds_alternative<float>(property.value)) {
+  else if (IsFloat(property)) {
     return PropertyType::Floating;
   }
-  else if (std::holds_alternative<bool>(property.value)) {
+  else if (IsBool(property)) {
     return PropertyType::Boolean;
   }
-  else if (std::holds_alternative<Color>(property.value)) {
+  else if (IsColor(property)) {
     return PropertyType::Color;
   }
-  else if (std::holds_alternative<ObjectRef>(property.value)) {
+  else if (IsObject(property)) {
     return PropertyType::Object;
   }
-  else if (std::holds_alternative<std::filesystem::path>(property.value)) {
+  else if (IsFile(property)) {
     return PropertyType::File;
   }
-  else /*if (std::holds_alternative<std::string>(property.value))*/ {
+  else /*if (IsString(property))*/ {
     return PropertyType::String;
   }
 }
 
 auto GetInt(const Property& property) -> int32
 {
-  return std::get<int32>(property.value);
+  try {
+    return std::get<int32>(property.value);
+  }
+  catch (...) {
+    throw TactileError{"Attempted to get integer value of non-integral property!"};
+  }
 }
 
 auto GetFloat(const Property& property) -> float
 {
-  return std::get<float>(property.value);
+  try {
+    return std::get<float>(property.value);
+  }
+  catch (...) {
+    throw TactileError{"Attempted to get float value of non-floating property!"};
+  }
 }
 
 auto GetString(const Property& property) -> CStr
 {
-  return std::get<std::string>(property.value).c_str();
+  try {
+    return std::get<std::string>(property.value).c_str();
+  }
+  catch (...) {
+    throw TactileError{"Attempted to get string value of non-string property!"};
+  }
 }
 
 auto GetBool(const Property& property) -> bool
 {
-  return std::get<bool>(property.value);
+  try {
+    return std::get<bool>(property.value);
+  }
+  catch (...) {
+    throw TactileError{"Attempted to get boolean value of non-boolean property!"};
+  }
 }
 
 auto GetFile(const Property& property) -> CPathStr
 {
-  return std::get<std::filesystem::path>(property.value).c_str();
+  try {
+    return std::get<std::filesystem::path>(property.value).c_str();
+  }
+  catch (...) {
+    throw TactileError{"Attempted to get file path value of non-file property!"};
+  }
 }
 
 auto GetObject(const Property& property) -> int32
 {
-  return std::get<ObjectRef>(property.value);
+  try {
+    return std::get<ObjectRef>(property.value);
+  }
+  catch (...) {
+    throw TactileError{"Attempted to get object value of non-object property!"};
+  }
 }
 
 auto GetColor(const Property& property) -> Color
 {
-  return std::get<Color>(property.value);
+  try {
+    return std::get<Color>(property.value);
+  }
+  catch (...) {
+    throw TactileError{"Attempted to get color value of non-color property!"};
+  }
+}
+
+auto IsInt(const Property& property) -> bool
+{
+  return std::holds_alternative<int32>(property.value);
+}
+
+auto IsFloat(const Property& property) -> bool
+{
+  return std::holds_alternative<float>(property.value);
+}
+
+auto IsString(const Property& property) -> bool
+{
+  return std::holds_alternative<std::string>(property.value);
+}
+
+auto IsBool(const Property& property) -> bool
+{
+  return std::holds_alternative<bool>(property.value);
+}
+
+auto IsFile(const Property& property) -> bool
+{
+  return std::holds_alternative<std::filesystem::path>(property.value);
+}
+
+auto IsObject(const Property& property) -> bool
+{
+  return std::holds_alternative<ObjectRef>(property.value);
+}
+
+auto IsColor(const Property& property) -> bool
+{
+  return std::holds_alternative<Color>(property.value);
 }
 
 }  // namespace Tactile::IO

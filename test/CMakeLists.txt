@@ -28,6 +28,7 @@ set(TEST_FILES
     unit-tests/io/parsing/create_document_from_ir_test.cpp
 
     unit-tests/tactile-io/io_test_helpers.hpp
+    unit-tests/tactile-io/ir_property_test.cpp
     unit-tests/tactile-io/parse_json_map_embedded_test.cpp
     unit-tests/tactile-io/parse_yaml_map_test.cpp
 
