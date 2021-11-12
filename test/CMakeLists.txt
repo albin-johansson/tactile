@@ -38,6 +38,19 @@ set(TEST_FILES
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  target_compile_options(${TACTILE_TEST}
+      PRIVATE
+      /wd4834  # "discarding return value of function with 'nodiscard' attribute"
+      )
+
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_compile_options(${TACTILE_TEST}
+      PRIVATE
+      -Wno-unused-result
+      )
+endif ()
+
 target_include_directories(${TACTILE_TEST} PUBLIC unit)
 
 target_link_libraries(${TACTILE_TEST}
