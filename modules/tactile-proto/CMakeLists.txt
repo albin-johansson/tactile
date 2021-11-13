@@ -11,7 +11,7 @@ protobuf_generate_cpp(PROTO_SOURCES PROTO_HEADERS ${PROTO_FILES})
 
 add_library(${TACTILE_PROTO} ${PROTO_HEADERS} ${PROTO_SOURCES})
 
-target_include_directories(${TACTILE_PROTO} PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(${TACTILE_PROTO} SYSTEM PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(${TACTILE_PROTO} PRIVATE
     protobuf::libprotobuf
