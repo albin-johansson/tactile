@@ -12,7 +12,7 @@ set(TACTILE_IO_SOURCES
     common_parsing.hpp
     common_saving.cpp
     common_saving.hpp
-    ir.cpp
+    ir_animation_frame.cpp
     ir_definitions.hpp
     ir_layer.cpp
     ir_map.cpp
@@ -27,7 +27,7 @@ set(TACTILE_IO_SOURCES
 
     include/tactile-io/api.hpp
     include/tactile-io/emitter.hpp
-    include/tactile-io/ir.hpp
+    include/tactile-io/ir_animation_frame.hpp
     include/tactile-io/ir_common.hpp
     include/tactile-io/ir_helpers.hpp
     include/tactile-io/ir_layer.hpp
@@ -147,6 +147,7 @@ add_library(${TACTILE_IO} SHARED ${TACTILE_IO_SOURCES})
 target_include_directories(${TACTILE_IO}
     PRIVATE
     ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/include
     ${PROJECT_SOURCE_DIR}/include/tactile-io
     ${PROJECT_SOURCE_DIR}/../tactile-base
 

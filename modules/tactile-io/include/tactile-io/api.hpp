@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TACTILE_IO_API_HPP_
+#define TACTILE_IO_API_HPP_
 
 #ifdef WIN32
 #ifdef TACTILE_IO_EXPORT
@@ -11,3 +12,5 @@
 #endif  // WIN32
 
 #define TACTILE_IO_API_QUERY [[nodiscard]] TACTILE_IO_API
+
+#endif  // TACTILE_IO_API_HPP_

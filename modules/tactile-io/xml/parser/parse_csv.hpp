@@ -2,8 +2,8 @@
 
 #include <tactile_def.hpp>
 
-#include "ir.hpp"
 #include "parse_error.hpp"
+#include "tactile_io.hpp"
 
 namespace Tactile::IO {
 

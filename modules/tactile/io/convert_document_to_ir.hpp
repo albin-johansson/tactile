@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tactile-io/ir.hpp>
+#include <tactile_io.hpp>
 
 namespace Tactile {
 

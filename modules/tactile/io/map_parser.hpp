@@ -3,8 +3,7 @@
 #include <cassert>     // assert
 #include <filesystem>  // path
 
-#include <tactile-io/ir.hpp>
-#include <tactile-io/parse_error.hpp>
+#include <tactile_io.hpp>
 
 namespace Tactile {
 

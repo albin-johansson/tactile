@@ -1,9 +1,10 @@
-#pragma once
+#ifndef TACTILE_IO_PARSER_HPP_
+#define TACTILE_IO_PARSER_HPP_
 
 #include <filesystem>  // path
 
 #include "api.hpp"
-#include "ir.hpp"
+#include "ir_animation_frame.hpp"
 #include "parse_error.hpp"
 
 namespace Tactile::IO {
@@ -106,3 +107,5 @@ auto ParseYamlMap(CPathStr path, ParseError* error = nullptr) -> Map*;
 }
 
 }  // namespace Tactile::IO
+
+#endif  // TACTILE_IO_PARSER_HPP_

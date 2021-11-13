@@ -4,7 +4,7 @@
 #include <vector>      // vector
 
 #include "../yaml_fwd.hpp"
-#include "ir.hpp"
+#include "tactile_io.hpp"
 
 namespace Tactile::IO {
 

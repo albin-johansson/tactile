@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../json_common.hpp"
-#include "ir.hpp"
 #include "parse_error.hpp"
+#include "tactile_io.hpp"
 
 namespace Tactile::IO {
 

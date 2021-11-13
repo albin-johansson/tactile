@@ -6,8 +6,6 @@
 
 #include <tactile_stdlib.hpp>
 
-#include <tactile-io/ir.hpp>
-
 #include <entt/entt.hpp>  // registry
 #include <fmt/format.h>   // format
 

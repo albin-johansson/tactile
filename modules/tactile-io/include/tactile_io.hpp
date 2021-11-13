@@ -5,7 +5,7 @@
 
 #include "tactile-io/api.hpp"
 #include "tactile-io/emitter.hpp"
-#include "tactile-io/ir.hpp"
+#include "tactile-io/ir_animation_frame.hpp"
 #include "tactile-io/ir_common.hpp"
 #include "tactile-io/ir_helpers.hpp"
 #include "tactile-io/ir_layer.hpp"

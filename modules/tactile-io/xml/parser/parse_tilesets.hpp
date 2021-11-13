@@ -4,8 +4,8 @@
 
 #include <pugixml.hpp>  // xml_node
 
-#include "ir.hpp"
 #include "parse_error.hpp"
+#include "tactile_io.hpp"
 
 namespace Tactile::IO {
 

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TACTILE_IO_IR_ANIMATION_FRAME_HPP_
+#define TACTILE_IO_IR_ANIMATION_FRAME_HPP_
 
 #include <concepts>  // invocable
 #include <memory>    // unique_ptr
@@ -39,3 +40,5 @@ auto GetDuration(const AnimationFrame& frame) -> int32;
 /// \} End of group io
 
 }  // namespace Tactile::IO
+
+#endif  // TACTILE_IO_IR_ANIMATION_FRAME_HPP_

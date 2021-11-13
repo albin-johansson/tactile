@@ -5,7 +5,7 @@
 
 #include <tactile_def.hpp>
 
-#include "ir.hpp"
+#include "ir_animation_frame.hpp"
 
 namespace Tactile::IO {
 

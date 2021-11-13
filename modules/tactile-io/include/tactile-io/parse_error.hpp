@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TACTILE_IO_PARSE_ERROR_HPP_
+#define TACTILE_IO_PARSE_ERROR_HPP_
 
 #include <ostream>  // ostream
 
@@ -87,7 +88,8 @@ enum class ParseError
  *
  * \return a short explanation of the potential cause of the error.
  */
-[[nodiscard]] TACTILE_IO_API auto GetCause(ParseError error) -> CStr;
+TACTILE_IO_API_QUERY
+auto GetCause(ParseError error) -> CStr;
 
 /**
  * \brief Prints a textual representation of a parse error enumerator.
@@ -97,8 +99,11 @@ enum class ParseError
  *
  * \return the used stream.
  */
-TACTILE_IO_API auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;
+TACTILE_IO_API
+auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;
 
 /// \} End of group io
 
 }  // namespace Tactile::IO
+
+#endif  // TACTILE_IO_PARSE_ERROR_HPP_
