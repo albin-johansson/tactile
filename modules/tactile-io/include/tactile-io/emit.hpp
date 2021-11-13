@@ -1,6 +1,8 @@
 #ifndef TACTILE_IO_EMIT_HPP_
 #define TACTILE_IO_EMIT_HPP_
 
+#include <tactile_def.hpp>
+
 #include "api.hpp"
 #include "ir_common.hpp"
 
