@@ -4,7 +4,7 @@
 #include <filesystem>  // path
 
 #include "api.hpp"
-#include "ir_animation_frame.hpp"
+#include "ir_common.hpp"
 #include "parse_error.hpp"
 
 namespace Tactile::IO {
