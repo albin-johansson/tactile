@@ -7,7 +7,6 @@ enable_testing()
 find_package(GTest CONFIG REQUIRED)
 
 set(TEST_FILES
-    unit-tests/gtest_macros.hpp
     unit-tests/tactile_stdlib_test.cpp
     unit-tests/test_main.cpp
 
