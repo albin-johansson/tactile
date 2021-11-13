@@ -14,7 +14,7 @@ constexpr int32 version = 1;
 
 }  // namespace
 
-void EmitYamlMap(const Map& map, const uint32 options)
+void EmitYamlMap(const Map& map, const EmitterOptions options)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);

@@ -1,14 +1,10 @@
-#pragma once
+#include "io_utils.hpp"
 
 #include <sstream>  // stringstream
-#include <string>   // string, erase, getline
-#include <vector>   // vector
 
-#include <tactile_def.hpp>
+namespace Tactile::IO {
 
-namespace Tactile {
-
-[[nodiscard]] inline auto Split(CStr str, char sep) -> std::vector<std::string>
+auto Split(const CStr str, const char sep) -> std::vector<std::string>
 {
   std::stringstream stream{str};
   std::vector<std::string> tokens;
@@ -23,4 +19,4 @@ namespace Tactile {
   return tokens;
 }
 
-}  // namespace Tactile
+}  // namespace Tactile::IO

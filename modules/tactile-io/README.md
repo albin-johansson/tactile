@@ -45,7 +45,7 @@ void Emit()
 
   // ...
 
-  Tactile::IO::EmitYamlMap(*irMap, Tactile::IO::EmitterOptions_FoldTileData);
+  Tactile::IO::EmitMap(*irMap);
 }
 
 void Parse()

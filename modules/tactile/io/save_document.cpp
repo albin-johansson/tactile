@@ -3,7 +3,7 @@
 #include <cassert>     // assert
 #include <filesystem>  // absolute
 
-#include <tactile-io/emit.hpp>
+#include <tactile_io.hpp>
 
 #include <centurion.hpp>  // CENTURION_LOG_{}
 
@@ -14,20 +14,20 @@
 namespace Tactile {
 namespace {
 
-[[nodiscard]] auto GetEmitterOptions() -> uint32
+[[nodiscard]] auto GetEmitterOptions() -> IO::EmitterOptions
 {
-  uint32 options = 0;
+  IO::EmitterOptions options = 0;
 
   if (Prefs::GetEmbedTilesets()) {
-    options |= IO::EmitterOptions_EmbedTilesets;
+    options |= IO::EmitterOption_EmbedTilesets;
   }
 
   if (Prefs::GetFoldTileData()) {
-    options |= IO::EmitterOptions_FoldTileData;
+    options |= IO::EmitterOption_FoldTileData;
   }
 
   if (Prefs::GetIndentOutput()) {
-    options |= IO::EmitterOptions_IndentOutput;
+    options |= IO::EmitterOption_IndentOutput;
   }
 
   return options;
@@ -41,23 +41,15 @@ void SaveDocument(const Document& document)
   TACTILE_PROFILE_START
 
   const auto path = std::filesystem::absolute(document.path);
-  cen::log::info("Saving map to %s", path.string().c_str());
+  cen::log::info("Trying to save map to %S", path.c_str());
 
-  const auto extension = path.extension();
-  if (extension == ".json") {
-    const auto data = ConvertDocumentToIR(document);
-    IO::EmitJsonMap(*data, GetEmitterOptions());
+  const auto data = ConvertDocumentToIR(document);
+  if (IO::EmitMap(*data, GetEmitterOptions())) {
+    TACTILE_PROFILE_END("Emitted document")
   }
-  else if (extension == ".tmx" || extension == ".xml") {
-    const auto data = ConvertDocumentToIR(document);
-    IO::EmitXmlMap(*data, GetEmitterOptions());
+  else {
+    cen::log::warn("Something went wrong when emitting the map!");
   }
-  else if (extension == ".yml" || extension == ".yaml") {
-    const auto data = ConvertDocumentToIR(document);
-    IO::EmitYamlMap(*data, GetEmitterOptions());
-  }
-
-  TACTILE_PROFILE_END("Emitted document")
 }
 
 }  // namespace Tactile

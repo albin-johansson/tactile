@@ -15,7 +15,7 @@ namespace Tactile::IO {
 void AppendMapChild(pugi::xml_document& xml,
                     const Map& map,
                     const std::filesystem::path& dir,
-                    const uint32 options)
+                    const EmitterOptions options)
 {
   auto node = xml.append_child("map");
   node.append_attribute("version").set_value(tiled_xml_version);
@@ -38,11 +38,11 @@ void AppendMapChild(pugi::xml_document& xml,
   });
 
   EachLayer(map, [&](const Layer& layer) {
-    AppendLayer(node, layer, dir, options & EmitterOptions_FoldTileData);
+    AppendLayer(node, layer, dir, options & EmitterOption_FoldTileData);
   });
 }
 
-void EmitXmlMap(const Map& data, const uint32 options)
+void EmitXmlMap(const Map& data, const EmitterOptions options)
 {
   pugi::xml_document xml;
 

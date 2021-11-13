@@ -1,7 +1,7 @@
 #ifndef TACTILE_IO_PARSER_HPP_
 #define TACTILE_IO_PARSER_HPP_
 
-#include <filesystem>  // path
+#include <filesystem>  // path, exists
 
 #include "api.hpp"
 #include "ir_common.hpp"
@@ -72,7 +72,7 @@ auto ParseYamlMap(CPathStr path, ParseError* error = nullptr) -> Map*;
  * files. However, certain Tiled constructs are not supported, such as infinite maps,
  * which would cause a parse error being reported.
  *
- * \details Supported file extensions include `.yaml`, `.yml`, `.json`, `.xml` and `.tmx`.
+ * \details Supported file extensions are `.yaml`, `.yml`, `.json`, `.xml`, and `.tmx`.
  *
  * \param path the path to the file that will be parsed.
  * \param[out] error optional pointer to which parse errors are reported.
@@ -87,22 +87,33 @@ auto ParseYamlMap(CPathStr path, ParseError* error = nullptr) -> Map*;
 [[nodiscard]] inline auto ParseMap(const std::filesystem::path& path,
                                    ParseError* error = nullptr) -> MapPtr
 {
-  const auto ext = path.extension();
-  if (ext == ".yaml" || ext == ".yml") {
-    return MapPtr{ParseYamlMap(path.c_str(), error)};
-  }
-  else if (ext == ".json") {
-    return MapPtr{ParseJsonMap(path.c_str(), error)};
-  }
-  else if (ext == ".xml" || ext == ".tmx") {
-    return MapPtr{ParseXmlMap(path.c_str(), error)};
-  }
-  else {
+  if (!std::filesystem::exists(path)) {
     if (error) {
-      *error = ParseError::MapUnsupportedExtension;
+      *error = ParseError::MapDoesNotExist;
     }
-
     return nullptr;
+  }
+
+  const auto format = DeduceFormat(path.c_str());
+  switch (format) {
+    case MapFormat::Yaml:
+      return MapPtr{ParseYamlMap(path.c_str(), error)};
+
+    case MapFormat::Json:
+      return MapPtr{ParseJsonMap(path.c_str(), error)};
+
+    case MapFormat::Xml:
+      return MapPtr{ParseXmlMap(path.c_str(), error)};
+
+    case MapFormat::Unsupported:
+      [[fallthrough]];
+
+    default: {
+      if (error) {
+        *error = ParseError::MapUnsupportedExtension;
+      }
+      return nullptr;
+    }
   }
 }
 

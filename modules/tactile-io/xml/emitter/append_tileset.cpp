@@ -73,9 +73,9 @@ void AppendExternalTileset(pugi::xml_node mapNode,
 void AppendTileset(pugi::xml_node mapNode,
                    const Tileset& tileset,
                    const std::filesystem::path& dir,
-                   const uint32 options)
+                   const EmitterOptions options)
 {
-  if (options & EmitterOptions_EmbedTilesets) {
+  if (options & EmitterOption_EmbedTilesets) {
     AppendEmbeddedTileset(mapNode, tileset, dir);
   }
   else {

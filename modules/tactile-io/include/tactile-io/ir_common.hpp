@@ -5,6 +5,8 @@
 #include <cstdint>     // uint8_t, int32_t
 #include <filesystem>  // path::value_type
 
+#include "api.hpp"
+
 namespace Tactile::IO {
 
 /* Forward declarations of IR types, which are not defined in client code. */
@@ -38,6 +40,28 @@ struct Color final
   uint8 blue{};
   uint8 alpha{};
 };
+
+enum class MapFormat
+{
+  Unsupported,
+  Yaml,
+  Json,
+  Xml
+};
+
+/**
+ * \brief Attempts to deduce the map format to be used based on a file path string.
+ *
+ * \details This function essentially checks the extension of the supplied string and
+ * tries to map the extension to one of the YAML, JSON or XML map formats.
+ *
+ * \param str the file path string that will be checked.
+ *
+ * \return the deduced map format; `MapFormat::Unsupported` is returned for either
+ * unsupported or unrecognized formats.
+ */
+TACTILE_IO_API_QUERY
+auto DeduceFormat(CPathStr str) -> MapFormat;
 
 }  // namespace Tactile::IO
 

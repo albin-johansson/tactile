@@ -76,21 +76,22 @@ void CreateExternalTilesetFile(const Tileset& tileset,
 
 [[nodiscard]] auto SaveTileset(const Tileset& tileset,
                                const std::filesystem::path& dir,
-                               const uint32 options) -> JSON
+                               const EmitterOptions options) -> JSON
 {
-  if (options & EmitterOptions_EmbedTilesets) {
+  if (options & EmitterOption_EmbedTilesets) {
     return SaveEmbeddedTileset(tileset, dir);
   }
   else {
-    CreateExternalTilesetFile(tileset, dir, options & EmitterOptions_IndentOutput);
+    CreateExternalTilesetFile(tileset, dir, options & EmitterOption_IndentOutput);
     return SaveExternalTileset(tileset);
   }
 }
 
 }  // namespace
 
-auto SaveTilesets(const Map& map, const std::filesystem::path& dir, const uint32 options)
-    -> JSON
+auto SaveTilesets(const Map& map,
+                  const std::filesystem::path& dir,
+                  const EmitterOptions options) -> JSON
 {
   auto json = JSON::array();
 

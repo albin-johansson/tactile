@@ -12,7 +12,11 @@ set(TACTILE_IO_SOURCES
     common_parsing.hpp
     common_saving.cpp
     common_saving.hpp
+    emit.cpp
+    io_utils.cpp
+    io_utils.hpp
     ir_animation_frame.cpp
+    ir_common.cpp
     ir_definitions.hpp
     ir_layer.cpp
     ir_map.cpp
@@ -21,7 +25,6 @@ set(TACTILE_IO_SOURCES
     ir_tile.cpp
     ir_tileset.cpp
     parse_error.cpp
-    string_utils.hpp
 
     include/tactile_io.hpp
 

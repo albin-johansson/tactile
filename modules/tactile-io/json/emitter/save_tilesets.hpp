@@ -9,6 +9,6 @@ namespace Tactile::IO {
 
 [[nodiscard]] auto SaveTilesets(const Map& map,
                                 const std::filesystem::path& dir,
-                                uint32 options) -> JSON;
+                                EmitterOptions options) -> JSON;
 
 }  // namespace Tactile::IO

@@ -2,7 +2,7 @@
 
 #include <tactile_stdlib.hpp>
 
-#include "string_utils.hpp"
+#include "io_utils.hpp"
 
 namespace Tactile::IO {
 

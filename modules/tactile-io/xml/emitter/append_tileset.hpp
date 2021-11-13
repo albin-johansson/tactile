@@ -11,6 +11,6 @@ namespace Tactile::IO {
 void AppendTileset(pugi::xml_node mapNode,
                    const Tileset& tileset,
                    const std::filesystem::path& dir,
-                   uint32 options);
+                   EmitterOptions options);
 
 }  // namespace Tactile::IO

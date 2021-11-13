@@ -7,7 +7,7 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "string_utils.hpp"
+#include "io_utils.hpp"
 
 namespace Tactile::IO {
 namespace {

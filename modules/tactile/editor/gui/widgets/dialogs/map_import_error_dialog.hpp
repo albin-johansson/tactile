@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tactile-io/parse_error.hpp>
+#include <tactile_io.hpp>
 
 namespace Tactile {
 
