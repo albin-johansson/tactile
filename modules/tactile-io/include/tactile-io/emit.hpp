@@ -32,7 +32,7 @@ namespace Tactile::IO {
 enum EmitterOption : uint32
 {
   EmitterOption_EmbedTilesets = 1u << 0u,  ///< Store tilesets in the main map file.
-  EmitterOption_FoldTileData = 1u << 1u,   ///< Make tile layer data to be more readable.
+  EmitterOption_FoldTileData = 1u << 1u,   ///< Make tile layer data more readable.
   EmitterOption_IndentOutput = 1u << 2u    ///< Make files human-readable.
 };
 
