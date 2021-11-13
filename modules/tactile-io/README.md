@@ -10,15 +10,7 @@ This library has been designed with ABI stability in mind, so the exported APIs 
 any STL types (except for inline convenience functions). Subsequently, the IR types are only
 forward-declared and only used by reference, to keep their definitions hidden in client code.
 Overall, this arguably has a negative effect on the elegance of the APIs, but it is unfortunately
-necessary to guarantee ABI stability. However, usage of the APIs can be made slightly less wordy by utilizing ADL (argument-dependent
-lookup), as shown in the following example.
-
-```C++
-auto irMap = Tactile::IO::CreateMap();
-
-auto& foo = Tactile::IO::AddLayer(*irMap); // Full function qualification 
-auto& bar = AddLayer(*irMap);              // Makes use of ADL
-```
+necessary to guarantee ABI stability.
 
 ## Installation
 
