@@ -22,11 +22,17 @@ namespace Tactile::IO {
 /// \name Animation API
 /// \{
 
-TACTILE_IO_API void SetTile(AnimationFrame& frame, int32 tile);
-TACTILE_IO_API void SetDuration(AnimationFrame& frame, int32 ms);
+TACTILE_IO_API
+void SetTile(AnimationFrame& frame, int32 tile);
 
-TACTILE_IO_API_QUERY auto GetTile(const AnimationFrame& frame) -> int32;
-TACTILE_IO_API_QUERY auto GetDuration(const AnimationFrame& frame) -> int32;
+TACTILE_IO_API
+void SetDuration(AnimationFrame& frame, int32 ms);
+
+TACTILE_IO_API_QUERY
+auto GetTile(const AnimationFrame& frame) -> int32;
+
+TACTILE_IO_API_QUERY
+auto GetDuration(const AnimationFrame& frame) -> int32;
 
 /// \} End of animation API
 

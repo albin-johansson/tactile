@@ -21,7 +21,8 @@ namespace Tactile::IO {
  * \param object the object that will be modified.
  * \param name the new object name.
  */
-TACTILE_IO_API void SetName(Object& object, CStr name);
+TACTILE_IO_API
+void SetName(Object& object, CStr name);
 
 /**
  * \brief Sets the unique ID associated with an object.
@@ -29,7 +30,8 @@ TACTILE_IO_API void SetName(Object& object, CStr name);
  * \param object the object that will be modified.
  * \param id the new ID of the object.
  */
-TACTILE_IO_API void SetId(Object& object, int32 id);
+TACTILE_IO_API
+void SetId(Object& object, int32 id);
 
 /**
  * \brief Sets the x-coordinate of an object.
@@ -39,7 +41,8 @@ TACTILE_IO_API void SetId(Object& object, int32 id);
  * \param object the object that will be modified.
  * \param x the new x-coordinate of the object.
  */
-TACTILE_IO_API void SetX(Object& object, float x);
+TACTILE_IO_API
+void SetX(Object& object, float x);
 
 /**
  * \brief Sets the y-coordinate of an object.
@@ -49,7 +52,8 @@ TACTILE_IO_API void SetX(Object& object, float x);
  * \param object the object that will be modified.
  * \param y the new y-coordinate of the object.
  */
-TACTILE_IO_API void SetY(Object& object, float y);
+TACTILE_IO_API
+void SetY(Object& object, float y);
 
 /**
  * \brief Sets the width of an object.
@@ -59,7 +63,8 @@ TACTILE_IO_API void SetY(Object& object, float y);
  * \param object the object that will be modified.
  * \param width the new width of the object.
  */
-TACTILE_IO_API void SetWidth(Object& object, float width);
+TACTILE_IO_API
+void SetWidth(Object& object, float width);
 
 /**
  * \brief Sets the height of an object.
@@ -69,7 +74,8 @@ TACTILE_IO_API void SetWidth(Object& object, float width);
  * \param object the object that will be modified.
  * \param height the new height of the object.
  */
-TACTILE_IO_API void SetHeight(Object& object, float height);
+TACTILE_IO_API
+void SetHeight(Object& object, float height);
 
 /**
  * \brief Sets the specific type of an object.
@@ -79,7 +85,8 @@ TACTILE_IO_API void SetHeight(Object& object, float height);
  * \param object the object that will be modified.
  * \param type the new type of the object.
  */
-TACTILE_IO_API void SetType(Object& object, ObjectType type);
+TACTILE_IO_API
+void SetType(Object& object, ObjectType type);
 
 /**
  * \brief Sets the tag of an object.
@@ -93,7 +100,8 @@ TACTILE_IO_API void SetType(Object& object, ObjectType type);
  * \param object the object that will be modified.
  * \param tag the new tag identifier.
  */
-TACTILE_IO_API void SetTag(Object& object, CStr tag);
+TACTILE_IO_API
+void SetTag(Object& object, CStr tag);
 
 /**
  * \brief Sets the visibility of an object.
@@ -101,7 +109,8 @@ TACTILE_IO_API void SetTag(Object& object, CStr tag);
  * \param object the object that will be modified.
  * \param visible `true` if the object should be visible; `false` otherwise.
  */
-TACTILE_IO_API void SetVisible(Object& object, bool visible);
+TACTILE_IO_API
+void SetVisible(Object& object, bool visible);
 
 /**
  * \brief Reserves enough space for the specified amount of properties in an object.
@@ -114,7 +123,8 @@ TACTILE_IO_API void SetVisible(Object& object, bool visible);
  *
  * \see `AddProperty(Object&)`
  */
-TACTILE_IO_API void ReserveProperties(Object& object, usize n);
+TACTILE_IO_API
+void ReserveProperties(Object& object, usize n);
 
 /**
  * \brief Adds a property to an object.
@@ -125,7 +135,8 @@ TACTILE_IO_API void ReserveProperties(Object& object, usize n);
  *
  * \see `ReserveProperties(Object&)`
  */
-TACTILE_IO_API_QUERY auto AddProperty(Object& object) -> Property&;
+TACTILE_IO_API_QUERY
+auto AddProperty(Object& object) -> Property&;
 
 /**
  * \brief Returns the amount of properties associated with an object.
@@ -134,7 +145,8 @@ TACTILE_IO_API_QUERY auto AddProperty(Object& object) -> Property&;
  *
  * \return the amount of properties.
  */
-TACTILE_IO_API_QUERY auto GetPropertyCount(const Object& object) -> usize;
+TACTILE_IO_API_QUERY
+auto GetPropertyCount(const Object& object) -> usize;
 
 /**
  * \brief Returns the property at the specified index in an object.
@@ -146,11 +158,12 @@ TACTILE_IO_API_QUERY auto GetPropertyCount(const Object& object) -> usize;
  *
  * \return a reference to the property at the specified index.
  */
-TACTILE_IO_API_QUERY auto GetProperty(Object& object, usize index) -> Property&;
+TACTILE_IO_API_QUERY
+auto GetProperty(Object& object, usize index) -> Property&;
 
 /// \copydoc GetProperty()
-TACTILE_IO_API_QUERY auto GetProperty(const Object& object, usize index)
-    -> const Property&;
+TACTILE_IO_API_QUERY
+auto GetProperty(const Object& object, usize index) -> const Property&;
 
 /**
  * \brief Returns the name of an object.
@@ -159,7 +172,8 @@ TACTILE_IO_API_QUERY auto GetProperty(const Object& object, usize index)
  *
  * \return the object name.
  */
-TACTILE_IO_API_QUERY auto GetName(const Object& object) -> CStr;
+TACTILE_IO_API_QUERY
+auto GetName(const Object& object) -> CStr;
 
 /**
  * \brief Returns the unique ID associated with an object.
@@ -168,7 +182,8 @@ TACTILE_IO_API_QUERY auto GetName(const Object& object) -> CStr;
  *
  * \return the object ID.
  */
-TACTILE_IO_API_QUERY auto GetId(const Object& object) -> int32;
+TACTILE_IO_API_QUERY
+auto GetId(const Object& object) -> int32;
 
 /**
  * \brief Returns the x-coordinate of an object.
@@ -177,7 +192,8 @@ TACTILE_IO_API_QUERY auto GetId(const Object& object) -> int32;
  *
  * \return an x-coordinate.
  */
-TACTILE_IO_API_QUERY auto GetX(const Object& object) -> float;
+TACTILE_IO_API_QUERY
+auto GetX(const Object& object) -> float;
 
 /**
  * \brief Returns the y-coordinate of an object.
@@ -186,7 +202,8 @@ TACTILE_IO_API_QUERY auto GetX(const Object& object) -> float;
  *
  * \return a y-coordinate.
  */
-TACTILE_IO_API_QUERY auto GetY(const Object& object) -> float;
+TACTILE_IO_API_QUERY
+auto GetY(const Object& object) -> float;
 
 /**
  * \brief Returns the width of an object.
@@ -195,7 +212,8 @@ TACTILE_IO_API_QUERY auto GetY(const Object& object) -> float;
  *
  * \return the object width.
  */
-TACTILE_IO_API_QUERY auto GetWidth(const Object& object) -> float;
+TACTILE_IO_API_QUERY
+auto GetWidth(const Object& object) -> float;
 
 /**
  * \brief Returns the height of an object.
@@ -204,7 +222,8 @@ TACTILE_IO_API_QUERY auto GetWidth(const Object& object) -> float;
  *
  * \return the object height.
  */
-TACTILE_IO_API_QUERY auto GetHeight(const Object& object) -> float;
+TACTILE_IO_API_QUERY
+auto GetHeight(const Object& object) -> float;
 
 /**
  * \brief Returns the type of an object.
@@ -213,7 +232,8 @@ TACTILE_IO_API_QUERY auto GetHeight(const Object& object) -> float;
  *
  * \return the object type.
  */
-TACTILE_IO_API_QUERY auto GetType(const Object& object) -> ObjectType;
+TACTILE_IO_API_QUERY
+auto GetType(const Object& object) -> ObjectType;
 
 /**
  * \brief Returns the user-defined tag of an object.
@@ -222,7 +242,8 @@ TACTILE_IO_API_QUERY auto GetType(const Object& object) -> ObjectType;
  *
  * \return the object tag string.
  */
-TACTILE_IO_API_QUERY auto GetTag(const Object& object) -> CStr;
+TACTILE_IO_API_QUERY
+auto GetTag(const Object& object) -> CStr;
 
 /**
  * \brief Indicates whether or not an object is visible.
@@ -231,7 +252,8 @@ TACTILE_IO_API_QUERY auto GetTag(const Object& object) -> CStr;
  *
  * \return `true` if the object is visible; `false` otherwise.
  */
-TACTILE_IO_API_QUERY auto IsVisible(const Object& object) -> bool;
+TACTILE_IO_API_QUERY
+auto IsVisible(const Object& object) -> bool;
 
 /// \} End of Object API
 

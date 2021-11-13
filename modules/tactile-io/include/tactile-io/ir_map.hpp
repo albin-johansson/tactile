@@ -23,7 +23,8 @@ namespace Tactile::IO {
  * \see `DeleteMap()`
  * \see `CreateMap()`
  */
-TACTILE_IO_API_QUERY auto NewMap() -> Map*;
+TACTILE_IO_API_QUERY
+auto NewMap() -> Map*;
 
 /**
  * \brief Destroys a `Map` instance allocated with `NewMap()`.
@@ -36,7 +37,8 @@ TACTILE_IO_API_QUERY auto NewMap() -> Map*;
  * \see `NewMap()`
  * \see `CreateMap()`
  */
-TACTILE_IO_API void DeleteMap(Map* map) noexcept;
+TACTILE_IO_API
+void DeleteMap(Map* map) noexcept;
 
 /**
  * \brief A simple custom `Map` deleter for use with `std::unique_ptr`.
@@ -99,7 +101,8 @@ inline auto CreateMap() -> MapPtr
  * \param map the map that will be affected.
  * \param path the file path of the map, i.e. where the map data is stored.
  */
-TACTILE_IO_API void SetPath(Map& map, CPathStr path);
+TACTILE_IO_API
+void SetPath(Map& map, CPathStr path);
 
 /**
  * \brief Sets the next available layer ID in a map.
@@ -107,7 +110,8 @@ TACTILE_IO_API void SetPath(Map& map, CPathStr path);
  * \param map the map that will be affected.
  * \param id the next available layer ID.
  */
-TACTILE_IO_API void SetNextLayerId(Map& map, int32 id);
+TACTILE_IO_API
+void SetNextLayerId(Map& map, int32 id);
 
 /**
  * \brief Sets the next available object ID in a map.
@@ -115,7 +119,8 @@ TACTILE_IO_API void SetNextLayerId(Map& map, int32 id);
  * \param map the map that will be affected.
  * \param id the next available object ID.
  */
-TACTILE_IO_API void SetNextObjectId(Map& map, int32 id);
+TACTILE_IO_API
+void SetNextObjectId(Map& map, int32 id);
 
 /**
  * \brief Sets the width of the tiles in a map.
@@ -125,7 +130,8 @@ TACTILE_IO_API void SetNextObjectId(Map& map, int32 id);
  * \param map the map that will be affected.
  * \param width the map tile width.
  */
-TACTILE_IO_API void SetTileWidth(Map& map, int32 width);
+TACTILE_IO_API
+void SetTileWidth(Map& map, int32 width);
 
 /**
  * \brief Sets the height of the tiles in a map.
@@ -135,7 +141,8 @@ TACTILE_IO_API void SetTileWidth(Map& map, int32 width);
  * \param map the map that will be affected.
  * \param height the map tile height.
  */
-TACTILE_IO_API void SetTileHeight(Map& map, int32 height);
+TACTILE_IO_API
+void SetTileHeight(Map& map, int32 height);
 
 /**
  * \brief Sets the amount of tile rows in a map.
@@ -143,7 +150,8 @@ TACTILE_IO_API void SetTileHeight(Map& map, int32 height);
  * \param map the map that will be affected.
  * \param rows the number of tile rows.
  */
-TACTILE_IO_API void SetRowCount(Map& map, usize rows);
+TACTILE_IO_API
+void SetRowCount(Map& map, usize rows);
 
 /**
  * \brief Sets the amount of tile columns in a map.
@@ -151,7 +159,8 @@ TACTILE_IO_API void SetRowCount(Map& map, usize rows);
  * \param map the map that will be affected.
  * \param columns the number of tile rows.
  */
-TACTILE_IO_API void SetColumnCount(Map& map, usize columns);
+TACTILE_IO_API
+void SetColumnCount(Map& map, usize columns);
 
 /**
  * \brief Reserves enough space for the specified amount of tilesets in a map.
@@ -164,7 +173,8 @@ TACTILE_IO_API void SetColumnCount(Map& map, usize columns);
  *
  * \see `AddTileset()`
  */
-TACTILE_IO_API void ReserveTilesets(Map& map, usize n);
+TACTILE_IO_API
+void ReserveTilesets(Map& map, usize n);
 
 /**
  * \brief Reserves enough space for the specified amount of layers in a map.
@@ -177,7 +187,8 @@ TACTILE_IO_API void ReserveTilesets(Map& map, usize n);
  *
  * \see `AddLayer(Map&)`
  */
-TACTILE_IO_API void ReserveLayers(Map& map, usize n);
+TACTILE_IO_API
+void ReserveLayers(Map& map, usize n);
 
 /**
  * \brief Reserves enough space for the specified amount of properties in a map.
@@ -190,7 +201,8 @@ TACTILE_IO_API void ReserveLayers(Map& map, usize n);
  *
  * \see `AddProperty(Map&)`
  */
-TACTILE_IO_API void ReserveProperties(Map& map, usize n);
+TACTILE_IO_API
+void ReserveProperties(Map& map, usize n);
 
 /**
  * \brief Adds a tileset to a map.
@@ -201,7 +213,8 @@ TACTILE_IO_API void ReserveProperties(Map& map, usize n);
  *
  * \see `ReserveTilesets()`
  */
-TACTILE_IO_API_QUERY auto AddTileset(Map& map) -> Tileset&;
+TACTILE_IO_API_QUERY
+auto AddTileset(Map& map) -> Tileset&;
 
 /**
  * \brief Adds a layer to a map.
@@ -212,7 +225,8 @@ TACTILE_IO_API_QUERY auto AddTileset(Map& map) -> Tileset&;
  *
  * \see `ReserveLayers()`
  */
-TACTILE_IO_API_QUERY auto AddLayer(Map& map) -> Layer&;
+TACTILE_IO_API_QUERY
+auto AddLayer(Map& map) -> Layer&;
 
 /**
  * \brief Adds a property to a map.
@@ -223,7 +237,8 @@ TACTILE_IO_API_QUERY auto AddLayer(Map& map) -> Layer&;
  *
  * \see `ReserveProperties(Map&)`
  */
-TACTILE_IO_API_QUERY auto AddProperty(Map& map) -> Property&;
+TACTILE_IO_API_QUERY
+auto AddProperty(Map& map) -> Property&;
 
 /**
  * \brief Returns the absolute file path associated with a map.
@@ -235,7 +250,8 @@ TACTILE_IO_API_QUERY auto AddProperty(Map& map) -> Property&;
  *
  * \return an absolute file path.
  */
-TACTILE_IO_API_QUERY auto GetPath(const Map& map) -> CPathStr;
+TACTILE_IO_API_QUERY
+auto GetPath(const Map& map) -> CPathStr;
 
 /**
  * \brief Returns the next available layer ID in a map.
@@ -244,7 +260,8 @@ TACTILE_IO_API_QUERY auto GetPath(const Map& map) -> CPathStr;
  *
  * \return the next available layer ID.
  */
-TACTILE_IO_API_QUERY auto GetNextLayerId(const Map& map) -> int32;
+TACTILE_IO_API_QUERY
+auto GetNextLayerId(const Map& map) -> int32;
 
 /**
  * \brief Returns the next available object ID in a map.
@@ -253,7 +270,8 @@ TACTILE_IO_API_QUERY auto GetNextLayerId(const Map& map) -> int32;
  *
  * \return the next available object ID.
  */
-TACTILE_IO_API_QUERY auto GetNextObjectId(const Map& map) -> int32;
+TACTILE_IO_API_QUERY
+auto GetNextObjectId(const Map& map) -> int32;
 
 /**
  * \brief Returns the tile width in a map.
@@ -262,7 +280,8 @@ TACTILE_IO_API_QUERY auto GetNextObjectId(const Map& map) -> int32;
  *
  * \return the map tile width.
  */
-TACTILE_IO_API_QUERY auto GetTileWidth(const Map& map) -> int32;
+TACTILE_IO_API_QUERY
+auto GetTileWidth(const Map& map) -> int32;
 
 /**
  * \brief Returns the tile height in a map.
@@ -271,7 +290,8 @@ TACTILE_IO_API_QUERY auto GetTileWidth(const Map& map) -> int32;
  *
  * \return the map tile height.
  */
-TACTILE_IO_API_QUERY auto GetTileHeight(const Map& map) -> int32;
+TACTILE_IO_API_QUERY
+auto GetTileHeight(const Map& map) -> int32;
 
 /**
  * \brief Returns the amount of tile rows in a map.
@@ -280,7 +300,8 @@ TACTILE_IO_API_QUERY auto GetTileHeight(const Map& map) -> int32;
  *
  * \return the amount of rows.
  */
-TACTILE_IO_API_QUERY auto GetRowCount(const Map& map) -> usize;
+TACTILE_IO_API_QUERY
+auto GetRowCount(const Map& map) -> usize;
 
 /**
  * \brief Returns the amount of tile columns in a map.
@@ -289,7 +310,8 @@ TACTILE_IO_API_QUERY auto GetRowCount(const Map& map) -> usize;
  *
  * \return the amount of columns.
  */
-TACTILE_IO_API_QUERY auto GetColumnCount(const Map& map) -> usize;
+TACTILE_IO_API_QUERY
+auto GetColumnCount(const Map& map) -> usize;
 
 /**
  * \brief Returns the amount of tilesets associated with a map.
@@ -308,7 +330,8 @@ TACTILE_IO_API_QUERY auto GetColumnCount(const Map& map) -> usize;
  *
  * \return the amount of tilesets.
  */
-TACTILE_IO_API_QUERY auto GetTilesetCount(const Map& map) -> usize;
+TACTILE_IO_API_QUERY
+auto GetTilesetCount(const Map& map) -> usize;
 
 /**
  * \brief Returns the amount of layers associated with a map.
@@ -327,7 +350,8 @@ TACTILE_IO_API_QUERY auto GetTilesetCount(const Map& map) -> usize;
  *
  * \return the amount of tilesets.
  */
-TACTILE_IO_API_QUERY auto GetLayerCount(const Map& map) -> usize;
+TACTILE_IO_API_QUERY
+auto GetLayerCount(const Map& map) -> usize;
 
 /**
  * \brief Returns the amount of properties associated with a map.
@@ -336,7 +360,8 @@ TACTILE_IO_API_QUERY auto GetLayerCount(const Map& map) -> usize;
  *
  * \return the amount of properties.
  */
-TACTILE_IO_API_QUERY auto GetPropertyCount(const Map& map) -> usize;
+TACTILE_IO_API_QUERY
+auto GetPropertyCount(const Map& map) -> usize;
 
 /**
  * \brief Returns the tileset at the specified index in a map.
@@ -348,10 +373,12 @@ TACTILE_IO_API_QUERY auto GetPropertyCount(const Map& map) -> usize;
  *
  * \return a reference to the tileset at the specified index.
  */
-TACTILE_IO_API_QUERY auto GetTileset(Map& map, usize index) -> Tileset&;
+TACTILE_IO_API_QUERY
+auto GetTileset(Map& map, usize index) -> Tileset&;
 
 /// \copydoc GetTileset()
-TACTILE_IO_API_QUERY auto GetTileset(const Map& map, usize index) -> const Tileset&;
+TACTILE_IO_API_QUERY
+auto GetTileset(const Map& map, usize index) -> const Tileset&;
 
 /**
  * \brief Returns the layer at the specified index in a map.
@@ -363,10 +390,12 @@ TACTILE_IO_API_QUERY auto GetTileset(const Map& map, usize index) -> const Tiles
  *
  * \return a reference to the layer at the specified index.
  */
-TACTILE_IO_API_QUERY auto GetLayer(Map& map, usize index) -> Layer&;
+TACTILE_IO_API_QUERY
+auto GetLayer(Map& map, usize index) -> Layer&;
 
 /// \copydoc GetLayer()
-TACTILE_IO_API_QUERY auto GetLayer(const Map& map, usize index) -> const Layer&;
+TACTILE_IO_API_QUERY
+auto GetLayer(const Map& map, usize index) -> const Layer&;
 
 /**
  * \brief Returns the property at the specified index in a map.
@@ -378,10 +407,12 @@ TACTILE_IO_API_QUERY auto GetLayer(const Map& map, usize index) -> const Layer&;
  *
  * \return a reference to the property at the specified index.
  */
-TACTILE_IO_API_QUERY auto GetProperty(Map& map, usize index) -> Property&;
+TACTILE_IO_API_QUERY
+auto GetProperty(Map& map, usize index) -> Property&;
 
 /// \copydoc GetProperty()
-TACTILE_IO_API_QUERY auto GetProperty(const Map& map, usize index) -> const Property&;
+TACTILE_IO_API_QUERY
+auto GetProperty(const Map& map, usize index) -> const Property&;
 
 /// \} End of map API
 

@@ -15,10 +15,13 @@ enum EmitterOptions : uint32
   EmitterOptions_IndentOutput = 1u << 2u
 };
 
-TACTILE_IO_API void EmitJsonMap(const Map& map, uint32 options);
+TACTILE_IO_API
+void EmitJsonMap(const Map& map, uint32 options);
 
-TACTILE_IO_API void EmitXmlMap(const Map& map, uint32 options);
+TACTILE_IO_API
+void EmitXmlMap(const Map& map, uint32 options);
 
-TACTILE_IO_API void EmitYamlMap(const Map& map, uint32 options);
+TACTILE_IO_API
+void EmitYamlMap(const Map& map, uint32 options);
 
 }  // namespace Tactile::IO

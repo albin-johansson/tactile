@@ -22,8 +22,8 @@ namespace Tactile::IO {
  *
  * \see `ParseMap()`
  */
-TACTILE_IO_API_QUERY auto ParseJsonMap(CPathStr path, ParseError* error = nullptr)
-    -> Map*;
+TACTILE_IO_API_QUERY
+auto ParseJsonMap(CPathStr path, ParseError* error = nullptr) -> Map*;
 
 /**
  * \brief Attempts to parse a Tiled XML (TMX) map at the specified file path.
@@ -39,7 +39,8 @@ TACTILE_IO_API_QUERY auto ParseJsonMap(CPathStr path, ParseError* error = nullpt
  *
  * \see `ParseMap()`
  */
-TACTILE_IO_API_QUERY auto ParseXmlMap(CPathStr path, ParseError* error = nullptr) -> Map*;
+TACTILE_IO_API_QUERY
+auto ParseXmlMap(CPathStr path, ParseError* error = nullptr) -> Map*;
 
 /**
  * \brief Attempts to parse a Tactile YAML map at the specified file path.
@@ -55,8 +56,8 @@ TACTILE_IO_API_QUERY auto ParseXmlMap(CPathStr path, ParseError* error = nullptr
  *
  * \see `ParseMap()`
  */
-TACTILE_IO_API_QUERY auto ParseYamlMap(CPathStr path, ParseError* error = nullptr)
-    -> Map*;
+TACTILE_IO_API_QUERY
+auto ParseYamlMap(CPathStr path, ParseError* error = nullptr) -> Map*;
 
 /**
  * \brief Attempts to parse a map at the specified file path.

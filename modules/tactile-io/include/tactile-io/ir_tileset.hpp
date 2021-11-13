@@ -17,7 +17,8 @@ namespace Tactile::IO {
  * \param tileset the tileset that will be affected.
  * \param name the name of the tileset.
  */
-TACTILE_IO_API void SetName(Tileset& tileset, CStr name);
+TACTILE_IO_API
+void SetName(Tileset& tileset, CStr name);
 
 /**
  * \brief Sets the first global tile ID associated with a tileset.
@@ -29,7 +30,8 @@ TACTILE_IO_API void SetName(Tileset& tileset, CStr name);
  * \param tileset the tileset that will be affected.
  * \param id the first associated global tile ID.
  */
-TACTILE_IO_API void SetFirstGlobalId(Tileset& tileset, int32 id);
+TACTILE_IO_API
+void SetFirstGlobalId(Tileset& tileset, int32 id);
 
 /**
  * \brief Sets the width of tiles in a tileset.
@@ -39,7 +41,8 @@ TACTILE_IO_API void SetFirstGlobalId(Tileset& tileset, int32 id);
  * \param tileset the tileset that will be affected.
  * \param width the width of the tileset tiles.
  */
-TACTILE_IO_API void SetTileWidth(Tileset& tileset, int32 width);
+TACTILE_IO_API
+void SetTileWidth(Tileset& tileset, int32 width);
 
 /**
  * \brief Sets the height of tiles in a tileset.
@@ -49,7 +52,8 @@ TACTILE_IO_API void SetTileWidth(Tileset& tileset, int32 width);
  * \param tileset the tileset that will be affected.
  * \param height the height of the tileset tiles.
  */
-TACTILE_IO_API void SetTileHeight(Tileset& tileset, int32 height);
+TACTILE_IO_API
+void SetTileHeight(Tileset& tileset, int32 height);
 
 /**
  * \brief Sets the total number of tiles in a tileset.
@@ -57,7 +61,8 @@ TACTILE_IO_API void SetTileHeight(Tileset& tileset, int32 height);
  * \param tileset the tileset that will be affected.
  * \param count the amount of tiles.
  */
-TACTILE_IO_API void SetTileCount(Tileset& tileset, int32 count);
+TACTILE_IO_API
+void SetTileCount(Tileset& tileset, int32 count);
 
 /**
  * \brief Sets the amount of columns in a tileset.
@@ -65,7 +70,8 @@ TACTILE_IO_API void SetTileCount(Tileset& tileset, int32 count);
  * \param tileset the tileset that will be affected.
  * \param columns the amount of tile columns.
  */
-TACTILE_IO_API void SetColumnCount(Tileset& tileset, int32 columns);
+TACTILE_IO_API
+void SetColumnCount(Tileset& tileset, int32 columns);
 
 /**
  * \brief Sets the associated image path of a tileset.
@@ -77,7 +83,8 @@ TACTILE_IO_API void SetColumnCount(Tileset& tileset, int32 columns);
  * \param tileset the tileset that will be affected.
  * \param path the file path to the associated image.
  */
-TACTILE_IO_API void SetImagePath(Tileset& tileset, CPathStr path);
+TACTILE_IO_API
+void SetImagePath(Tileset& tileset, CPathStr path);
 
 /**
  * \brief Sets the associated image width of a tileset.
@@ -87,7 +94,8 @@ TACTILE_IO_API void SetImagePath(Tileset& tileset, CPathStr path);
  * \param tileset the tileset that will be affected.
  * \param width the width of the image.
  */
-TACTILE_IO_API void SetImageWidth(Tileset& tileset, int32 width);
+TACTILE_IO_API
+void SetImageWidth(Tileset& tileset, int32 width);
 
 /**
  * \brief Sets the associated image height of a tileset.
@@ -97,7 +105,8 @@ TACTILE_IO_API void SetImageWidth(Tileset& tileset, int32 width);
  * \param tileset the tileset that will be affected.
  * \param height the height of the image.
  */
-TACTILE_IO_API void SetImageHeight(Tileset& tileset, int32 height);
+TACTILE_IO_API
+void SetImageHeight(Tileset& tileset, int32 height);
 
 /**
  * \brief Reserves enough space for the specified amount of tile info objects in a
@@ -111,7 +120,8 @@ TACTILE_IO_API void SetImageHeight(Tileset& tileset, int32 height);
  *
  * \see `AddTile()`
  */
-TACTILE_IO_API void ReserveTiles(Tileset& tileset, usize n);
+TACTILE_IO_API
+void ReserveTiles(Tileset& tileset, usize n);
 
 /**
  * \brief Reserves enough space for the specified amount of properties in a tileset.
@@ -124,7 +134,8 @@ TACTILE_IO_API void ReserveTiles(Tileset& tileset, usize n);
  *
  * \see `AddProperty(Tileset&)`
  */
-TACTILE_IO_API void ReserveProperties(Tileset& tileset, usize n);
+TACTILE_IO_API
+void ReserveProperties(Tileset& tileset, usize n);
 
 /**
  * \brief Adds a tile info object to a tileset.
@@ -135,7 +146,8 @@ TACTILE_IO_API void ReserveProperties(Tileset& tileset, usize n);
  *
  * \see `ReserveTiles()`
  */
-TACTILE_IO_API_QUERY auto AddTile(Tileset& tileset) -> Tile&;
+TACTILE_IO_API_QUERY
+auto AddTile(Tileset& tileset) -> Tile&;
 
 /**
  * \brief Adds a property to a tileset.
@@ -146,7 +158,8 @@ TACTILE_IO_API_QUERY auto AddTile(Tileset& tileset) -> Tile&;
  *
  * \see `ReserveTiles(Tileset&)`
  */
-TACTILE_IO_API_QUERY auto AddProperty(Tileset& tileset) -> Property&;
+TACTILE_IO_API_QUERY
+auto AddProperty(Tileset& tileset) -> Property&;
 
 /**
  * \brief Returns the name of a tileset.
@@ -158,7 +171,8 @@ TACTILE_IO_API_QUERY auto AddProperty(Tileset& tileset) -> Property&;
  *
  * \return the tileset name.
  */
-TACTILE_IO_API_QUERY auto GetName(const Tileset& tileset) -> CStr;
+TACTILE_IO_API_QUERY
+auto GetName(const Tileset& tileset) -> CStr;
 
 /**
  * \brief Returns the first global tile ID associated with a tileset.
@@ -167,7 +181,8 @@ TACTILE_IO_API_QUERY auto GetName(const Tileset& tileset) -> CStr;
  *
  * \return the first global tile ID.
  */
-TACTILE_IO_API_QUERY auto GetFirstGlobalId(const Tileset& tileset) -> int32;
+TACTILE_IO_API_QUERY
+auto GetFirstGlobalId(const Tileset& tileset) -> int32;
 
 /**
  * \brief Returns the width of tiles in a tileset.
@@ -176,7 +191,8 @@ TACTILE_IO_API_QUERY auto GetFirstGlobalId(const Tileset& tileset) -> int32;
  *
  * \return the tileset tile width.
  */
-TACTILE_IO_API_QUERY auto GetTileWidth(const Tileset& tileset) -> int32;
+TACTILE_IO_API_QUERY
+auto GetTileWidth(const Tileset& tileset) -> int32;
 
 /**
  * \brief Returns the height of tiles in a tileset.
@@ -185,7 +201,8 @@ TACTILE_IO_API_QUERY auto GetTileWidth(const Tileset& tileset) -> int32;
  *
  * \return the tileset tile height.
  */
-TACTILE_IO_API_QUERY auto GetTileHeight(const Tileset& tileset) -> int32;
+TACTILE_IO_API_QUERY
+auto GetTileHeight(const Tileset& tileset) -> int32;
 
 /**
  * \brief Returns the total amount of tiles in a tileset.
@@ -194,7 +211,8 @@ TACTILE_IO_API_QUERY auto GetTileHeight(const Tileset& tileset) -> int32;
  *
  * \return the amount of tiles in the tileset.
  */
-TACTILE_IO_API_QUERY auto GetTileCount(const Tileset& tileset) -> int32;
+TACTILE_IO_API_QUERY
+auto GetTileCount(const Tileset& tileset) -> int32;
 
 /**
  * \brief Returns the amount of tile columns in a tileset.
@@ -203,7 +221,8 @@ TACTILE_IO_API_QUERY auto GetTileCount(const Tileset& tileset) -> int32;
  *
  * \return the amount of tile columns in the tileset.
  */
-TACTILE_IO_API_QUERY auto GetColumnCount(const Tileset& tileset) -> int32;
+TACTILE_IO_API_QUERY
+auto GetColumnCount(const Tileset& tileset) -> int32;
 
 /**
  * \brief Returns the path to the associated image of a tileset.
@@ -215,7 +234,8 @@ TACTILE_IO_API_QUERY auto GetColumnCount(const Tileset& tileset) -> int32;
  *
  * \return an absolute path to the associated image.
  */
-TACTILE_IO_API_QUERY auto GetImagePath(const Tileset& tileset) -> CPathStr;
+TACTILE_IO_API_QUERY
+auto GetImagePath(const Tileset& tileset) -> CPathStr;
 
 /**
  * \brief Returns the width of the image associated with a tileset.
@@ -224,7 +244,8 @@ TACTILE_IO_API_QUERY auto GetImagePath(const Tileset& tileset) -> CPathStr;
  *
  * \return the tileset image width.
  */
-TACTILE_IO_API_QUERY auto GetImageWidth(const Tileset& tileset) -> int32;
+TACTILE_IO_API_QUERY
+auto GetImageWidth(const Tileset& tileset) -> int32;
 
 /**
  * \brief Returns the height of the image associated with a tileset.
@@ -233,7 +254,8 @@ TACTILE_IO_API_QUERY auto GetImageWidth(const Tileset& tileset) -> int32;
  *
  * \return the tileset image height.
  */
-TACTILE_IO_API_QUERY auto GetImageHeight(const Tileset& tileset) -> int32;
+TACTILE_IO_API_QUERY
+auto GetImageHeight(const Tileset& tileset) -> int32;
 
 /**
  * \brief Returns the total amount of tile info objects in a tileset.
@@ -244,7 +266,8 @@ TACTILE_IO_API_QUERY auto GetImageHeight(const Tileset& tileset) -> int32;
  *
  * \see `GetTileInfo()`
  */
-TACTILE_IO_API_QUERY auto GetTileInfoCount(const Tileset& tileset) -> usize;
+TACTILE_IO_API_QUERY
+auto GetTileInfoCount(const Tileset& tileset) -> usize;
 
 /**
  * \brief Returns the tile info object at the specified index in a tileset.
@@ -257,10 +280,12 @@ TACTILE_IO_API_QUERY auto GetTileInfoCount(const Tileset& tileset) -> usize;
  *
  * \return a reference to the tile info object at the specified index.
  */
-TACTILE_IO_API_QUERY auto GetTileInfo(Tileset& tileset, usize index) -> Tile&;
+TACTILE_IO_API_QUERY
+auto GetTileInfo(Tileset& tileset, usize index) -> Tile&;
 
 /// \copydoc GetTileInfo()
-TACTILE_IO_API_QUERY auto GetTileInfo(const Tileset& tileset, usize index) -> const Tile&;
+TACTILE_IO_API_QUERY
+auto GetTileInfo(const Tileset& tileset, usize index) -> const Tile&;
 
 /**
  * \brief Returns the total amount of properties in a tileset.
@@ -271,7 +296,8 @@ TACTILE_IO_API_QUERY auto GetTileInfo(const Tileset& tileset, usize index) -> co
  *
  * \see `GetProperty()`
  */
-TACTILE_IO_API_QUERY auto GetPropertyCount(const Tileset& tileset) -> usize;
+TACTILE_IO_API_QUERY
+auto GetPropertyCount(const Tileset& tileset) -> usize;
 
 /**
  * \brief Returns the property at the specified index in a tileset.
@@ -283,11 +309,12 @@ TACTILE_IO_API_QUERY auto GetPropertyCount(const Tileset& tileset) -> usize;
  *
  * \return a reference to the property at the specified index.
  */
-TACTILE_IO_API_QUERY auto GetProperty(Tileset& tileset, usize index) -> Property&;
+TACTILE_IO_API_QUERY
+auto GetProperty(Tileset& tileset, usize index) -> Property&;
 
 /// \copydoc GetPropertyCount()
-TACTILE_IO_API_QUERY auto GetProperty(const Tileset& tileset, usize index)
-    -> const Property&;
+TACTILE_IO_API_QUERY
+auto GetProperty(const Tileset& tileset, usize index) -> const Property&;
 
 /// \} End of tileset API
 

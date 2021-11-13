@@ -21,7 +21,8 @@ namespace Tactile::IO {
  * \param property the property that will be modified.
  * \param name the new property name.
  */
-TACTILE_IO_API void SetName(Property& property, CStr name);
+TACTILE_IO_API
+void SetName(Property& property, CStr name);
 
 /**
  * \brief Sets the value of a property to an integer.
@@ -29,7 +30,8 @@ TACTILE_IO_API void SetName(Property& property, CStr name);
  * \param property the property that will be modified.
  * \param value the new value of the property.
  */
-TACTILE_IO_API void AssignInt(Property& property, int32 value);
+TACTILE_IO_API
+void AssignInt(Property& property, int32 value);
 
 /**
  * \brief Sets the value of a property to a float.
@@ -37,7 +39,8 @@ TACTILE_IO_API void AssignInt(Property& property, int32 value);
  * \param property the property that will be modified.
  * \param value the new value of the property.
  */
-TACTILE_IO_API void AssignFloat(Property& property, float value);
+TACTILE_IO_API
+void AssignFloat(Property& property, float value);
 
 /**
  * \brief Sets the value of a property to a string.
@@ -49,7 +52,8 @@ TACTILE_IO_API void AssignFloat(Property& property, float value);
  * \param property the property that will be modified.
  * \param value the new value of the property.
  */
-TACTILE_IO_API void AssignString(Property& property, CStr str);
+TACTILE_IO_API
+void AssignString(Property& property, CStr str);
 
 /**
  * \brief Sets the value of a property to a boolean.
@@ -57,7 +61,8 @@ TACTILE_IO_API void AssignString(Property& property, CStr str);
  * \param property the property that will be modified.
  * \param value the new value of the property.
  */
-TACTILE_IO_API void AssignBool(Property& property, bool value);
+TACTILE_IO_API
+void AssignBool(Property& property, bool value);
 
 /**
  * \brief Sets the value of a property to a file path.
@@ -69,7 +74,8 @@ TACTILE_IO_API void AssignBool(Property& property, bool value);
  * \param property the property that will be modified.
  * \param value the new value of the property.
  */
-TACTILE_IO_API void AssignFile(Property& property, CPathStr path);
+TACTILE_IO_API
+void AssignFile(Property& property, CPathStr path);
 
 /**
  * \brief Sets the value of a property to an object reference.
@@ -77,7 +83,8 @@ TACTILE_IO_API void AssignFile(Property& property, CPathStr path);
  * \param property the property that will be modified.
  * \param value the new value of the property.
  */
-TACTILE_IO_API void AssignObject(Property& property, int32 id);
+TACTILE_IO_API
+void AssignObject(Property& property, int32 id);
 
 /**
  * \brief Sets the value of a property to a color.
@@ -85,7 +92,8 @@ TACTILE_IO_API void AssignObject(Property& property, int32 id);
  * \param property the property that will be modified.
  * \param value the new value of the property.
  */
-TACTILE_IO_API void AssignColor(Property& property, const Color& color);
+TACTILE_IO_API
+void AssignColor(Property& property, const Color& color);
 
 /**
  * \brief Returns the name of a property.
@@ -98,7 +106,8 @@ TACTILE_IO_API void AssignColor(Property& property, const Color& color);
  *
  * \return the current property name.
  */
-TACTILE_IO_API_QUERY auto GetName(const Property& property) -> CStr;
+TACTILE_IO_API_QUERY
+auto GetName(const Property& property) -> CStr;
 
 /**
  * \brief Returns the type of a property.
@@ -109,7 +118,8 @@ TACTILE_IO_API_QUERY auto GetName(const Property& property) -> CStr;
  *
  * \return the type of the property.
  */
-TACTILE_IO_API_QUERY auto GetType(const Property& property) -> PropertyType;
+TACTILE_IO_API_QUERY
+auto GetType(const Property& property) -> PropertyType;
 
 /**
  * \brief Returns the integer value of a property.
@@ -120,7 +130,8 @@ TACTILE_IO_API_QUERY auto GetType(const Property& property) -> PropertyType;
  *
  * \throws TactileError if the property did not hold an integer value.
  */
-TACTILE_IO_API_QUERY auto GetInt(const Property& property) -> int32;
+TACTILE_IO_API_QUERY
+auto GetInt(const Property& property) -> int32;
 
 /**
  * \brief Returns the float value of a property.
@@ -131,7 +142,8 @@ TACTILE_IO_API_QUERY auto GetInt(const Property& property) -> int32;
  *
  * \throws TactileError if the property did not hold a float value.
  */
-TACTILE_IO_API_QUERY auto GetFloat(const Property& property) -> float;
+TACTILE_IO_API_QUERY
+auto GetFloat(const Property& property) -> float;
 
 /**
  * \brief Returns the string value of a property.
@@ -142,7 +154,8 @@ TACTILE_IO_API_QUERY auto GetFloat(const Property& property) -> float;
  *
  * \throws TactileError if the property did not hold a string value.
  */
-TACTILE_IO_API_QUERY auto GetString(const Property& property) -> CStr;
+TACTILE_IO_API_QUERY
+auto GetString(const Property& property) -> CStr;
 
 /**
  * \brief Returns the boolean value of a property.
@@ -153,7 +166,8 @@ TACTILE_IO_API_QUERY auto GetString(const Property& property) -> CStr;
  *
  * \throws TactileError if the property did not hold a boolean value.
  */
-TACTILE_IO_API_QUERY auto GetBool(const Property& property) -> bool;
+TACTILE_IO_API_QUERY
+auto GetBool(const Property& property) -> bool;
 
 /**
  * \brief Returns the file path value of a property.
@@ -164,7 +178,8 @@ TACTILE_IO_API_QUERY auto GetBool(const Property& property) -> bool;
  *
  * \throws TactileError if the property did not hold a file path value.
  */
-TACTILE_IO_API_QUERY auto GetFile(const Property& property) -> CPathStr;
+TACTILE_IO_API_QUERY
+auto GetFile(const Property& property) -> CPathStr;
 
 /**
  * \brief Returns the object reference value of a property.
@@ -175,7 +190,8 @@ TACTILE_IO_API_QUERY auto GetFile(const Property& property) -> CPathStr;
  *
  * \throws TactileError if the property did not hold an object reference value.
  */
-TACTILE_IO_API_QUERY auto GetObject(const Property& property) -> int32;
+TACTILE_IO_API_QUERY
+auto GetObject(const Property& property) -> int32;
 
 /**
  * \brief Returns the color value of a property.
@@ -186,7 +202,8 @@ TACTILE_IO_API_QUERY auto GetObject(const Property& property) -> int32;
  *
  * \throws TactileError if the property did not hold a color value.
  */
-TACTILE_IO_API_QUERY auto GetColor(const Property& property) -> Color;
+TACTILE_IO_API_QUERY
+auto GetColor(const Property& property) -> Color;
 
 /**
  * \brief Indicates whether or not a property holds an integer value.
@@ -195,7 +212,8 @@ TACTILE_IO_API_QUERY auto GetColor(const Property& property) -> Color;
  *
  * \return `true` if the property holds an integer value; `false` otherwise.
  */
-TACTILE_IO_API_QUERY auto IsInt(const Property& property) -> bool;
+TACTILE_IO_API_QUERY
+auto IsInt(const Property& property) -> bool;
 
 /**
  * \brief Indicates whether or not a property holds a float value.
@@ -204,7 +222,8 @@ TACTILE_IO_API_QUERY auto IsInt(const Property& property) -> bool;
  *
  * \return `true` if the property holds a float value; `false` otherwise.
  */
-TACTILE_IO_API_QUERY auto IsFloat(const Property& property) -> bool;
+TACTILE_IO_API_QUERY
+auto IsFloat(const Property& property) -> bool;
 
 /**
  * \brief Indicates whether or not a property holds a string value.
@@ -213,7 +232,8 @@ TACTILE_IO_API_QUERY auto IsFloat(const Property& property) -> bool;
  *
  * \return `true` if the property holds a string value; `false` otherwise.
  */
-TACTILE_IO_API_QUERY auto IsString(const Property& property) -> bool;
+TACTILE_IO_API_QUERY
+auto IsString(const Property& property) -> bool;
 
 /**
  * \brief Indicates whether or not a property holds a boolean value.
@@ -222,7 +242,8 @@ TACTILE_IO_API_QUERY auto IsString(const Property& property) -> bool;
  *
  * \return `true` if the property holds a boolean value; `false` otherwise.
  */
-TACTILE_IO_API_QUERY auto IsBool(const Property& property) -> bool;
+TACTILE_IO_API_QUERY
+auto IsBool(const Property& property) -> bool;
 
 /**
  * \brief Indicates whether or not a property holds a file path value.
@@ -231,7 +252,8 @@ TACTILE_IO_API_QUERY auto IsBool(const Property& property) -> bool;
  *
  * \return `true` if the property holds a file path value; `false` otherwise.
  */
-TACTILE_IO_API_QUERY auto IsFile(const Property& property) -> bool;
+TACTILE_IO_API_QUERY
+auto IsFile(const Property& property) -> bool;
 
 /**
  * \brief Indicates whether or not a property holds an object reference value.
@@ -240,7 +262,8 @@ TACTILE_IO_API_QUERY auto IsFile(const Property& property) -> bool;
  *
  * \return `true` if the property holds an object reference value; `false` otherwise.
  */
-TACTILE_IO_API_QUERY auto IsObject(const Property& property) -> bool;
+TACTILE_IO_API_QUERY
+auto IsObject(const Property& property) -> bool;
 
 /**
  * \brief Indicates whether or not a property holds a color value.
@@ -249,7 +272,8 @@ TACTILE_IO_API_QUERY auto IsObject(const Property& property) -> bool;
  *
  * \return `true` if the property holds a color value; `false` otherwise.
  */
-TACTILE_IO_API_QUERY auto IsColor(const Property& property) -> bool;
+TACTILE_IO_API_QUERY
+auto IsColor(const Property& property) -> bool;
 
 /// \} End of property API
 
