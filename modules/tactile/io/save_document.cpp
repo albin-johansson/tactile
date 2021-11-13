@@ -3,7 +3,7 @@
 #include <cassert>     // assert
 #include <filesystem>  // absolute
 
-#include <tactile-io/emitter.hpp>
+#include <tactile-io/emit.hpp>
 
 #include <centurion.hpp>  // CENTURION_LOG_{}
 

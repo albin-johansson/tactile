@@ -5,7 +5,7 @@
 #include "../../common_saving.hpp"
 #include "append_fancy_tiles.hpp"
 #include "append_properties.hpp"
-#include "emitter.hpp"
+#include "emit.hpp"
 #include "save_xml.hpp"
 
 namespace Tactile::IO {

@@ -2,7 +2,7 @@
 
 #include "../json_common.hpp"
 #include "common_saving.hpp"
-#include "emitter.hpp"
+#include "emit.hpp"
 #include "save_json.hpp"
 #include "save_layers.hpp"
 #include "save_properties.hpp"

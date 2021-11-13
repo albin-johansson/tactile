@@ -2,7 +2,7 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "emitter.hpp"
+#include "emit.hpp"
 #include "save_layers.hpp"
 #include "save_properties.hpp"
 #include "save_tilesets.hpp"

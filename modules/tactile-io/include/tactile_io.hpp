@@ -4,7 +4,7 @@
 /* This convenience header includes every public header of the TactileIO library  */
 
 #include "tactile-io/api.hpp"
-#include "tactile-io/emitter.hpp"
+#include "tactile-io/emit.hpp"
 #include "tactile-io/ir_animation_frame.hpp"
 #include "tactile-io/ir_common.hpp"
 #include "tactile-io/ir_helpers.hpp"

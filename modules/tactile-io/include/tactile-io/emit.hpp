@@ -1,5 +1,5 @@
-#ifndef TACTILE_IO_EMITTER_HPP_
-#define TACTILE_IO_EMITTER_HPP_
+#ifndef TACTILE_IO_EMIT_HPP_
+#define TACTILE_IO_EMIT_HPP_
 
 #include "api.hpp"
 #include "ir_animation_frame.hpp"
@@ -27,4 +27,4 @@ void EmitYamlMap(const Map& map, uint32 options);
 
 }  // namespace Tactile::IO
 
-#endif  // TACTILE_IO_EMITTER_HPP_
+#endif  // TACTILE_IO_EMIT_HPP_

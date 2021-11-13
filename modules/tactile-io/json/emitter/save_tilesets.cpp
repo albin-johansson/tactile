@@ -5,7 +5,7 @@
 #include <fmt/format.h>  // format
 
 #include "common_saving.hpp"
-#include "emitter.hpp"
+#include "emit.hpp"
 #include "ir_helpers.hpp"
 #include "save_fancy_tiles.hpp"
 #include "save_json.hpp"
