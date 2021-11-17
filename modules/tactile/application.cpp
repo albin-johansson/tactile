@@ -77,6 +77,7 @@ auto Application::Run() -> int
 
   LoadFileHistory();
 
+  mWindow.show();
   while (!mQuit) {
     mKeyboard.update();
     PollEvents();
