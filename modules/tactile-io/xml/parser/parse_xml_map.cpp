@@ -32,7 +32,7 @@ namespace {
     return ParseError::MapDoesNotExist;
   }
 
-  IO::SetPath(map, absolute.c_str());
+  SetPath(map, absolute.c_str());
 
   pugi::xml_document document;
   if (!document.load_file(path.c_str())) {
@@ -50,42 +50,42 @@ namespace {
   }
 
   if (const auto value = GetInt(root, "nextlayerid")) {
-    IO::SetNextLayerId(map, *value);
+    SetNextLayerId(map, *value);
   }
   else {
     return ParseError::MapMissingNextLayerId;
   }
 
   if (const auto value = GetInt(root, "nextobjectid")) {
-    IO::SetNextObjectId(map, *value);
+    SetNextObjectId(map, *value);
   }
   else {
     return ParseError::MapMissingNextObjectId;
   }
 
   if (const auto value = GetInt(root, "tilewidth")) {
-    IO::SetTileWidth(map, *value);
+    SetTileWidth(map, *value);
   }
   else {
     return ParseError::MapMissingTileWidth;
   }
 
   if (const auto value = GetInt(root, "tileheight")) {
-    IO::SetTileHeight(map, *value);
+    SetTileHeight(map, *value);
   }
   else {
     return ParseError::MapMissingTileHeight;
   }
 
   if (const auto value = GetInt(root, "height")) {
-    IO::SetRowCount(map, *value);
+    SetRowCount(map, *value);
   }
   else {
     return ParseError::MapMissingHeight;
   }
 
   if (const auto value = GetInt(root, "width")) {
-    IO::SetColumnCount(map, *value);
+    SetColumnCount(map, *value);
   }
   else {
     return ParseError::MapMissingWidth;

@@ -7,10 +7,10 @@ namespace Tactile::IO {
 
 auto ParseObjectLayer(const pugi::xml_node node, Layer& layer) -> ParseError
 {
-  auto& objectLayer = IO::MarkAsObjectLayer(layer);
+  auto& objectLayer = MarkAsObjectLayer(layer);
 
   for (const auto objectNode : node.children("object")) {
-    auto& object = IO::AddObject(objectLayer);
+    auto& object = AddObject(objectLayer);
     if (const auto err = ParseObject(objectNode, object); err != ParseError::None) {
       return err;
     }

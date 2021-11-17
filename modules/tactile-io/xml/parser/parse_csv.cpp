@@ -8,13 +8,13 @@ namespace Tactile::IO {
 
 auto ParseCSV(const CStr csv, TileLayer& layer) -> ParseError
 {
-  const auto nCols = IO::GetColumnCount(layer);
+  const auto nCols = GetColumnCount(layer);
 
   usize index{};
   for (const auto& token : Split(csv, ',')) {
     if (const auto id = FromString<int32>(token.c_str())) {
       const auto [row, col] = ToMatrixCoords(index, nCols);
-      IO::SetTile(layer, row, col, *id);
+      SetTile(layer, row, col, *id);
 
       ++index;
     }

@@ -39,28 +39,28 @@ namespace {
                                const std::filesystem::path& dir) -> ParseError
 {
   if (const auto tileWidth = GetInt(node, "tilewidth")) {
-    IO::SetTileWidth(tileset, *tileWidth);
+    SetTileWidth(tileset, *tileWidth);
   }
   else {
     return ParseError::TilesetMissingTileWidth;
   }
 
   if (const auto tileHeight = GetInt(node, "tileheight")) {
-    IO::SetTileHeight(tileset, *tileHeight);
+    SetTileHeight(tileset, *tileHeight);
   }
   else {
     return ParseError::TilesetMissingTileHeight;
   }
 
   if (const auto count = GetInt(node, "tilecount")) {
-    IO::SetTileCount(tileset, *count);
+    SetTileCount(tileset, *count);
   }
   else {
     return ParseError::TilesetMissingTileCount;
   }
 
   if (const auto count = GetInt(node, "columns")) {
-    IO::SetColumnCount(tileset, *count);
+    SetColumnCount(tileset, *count);
   }
   else {
     return ParseError::TilesetMissingColumnCount;
@@ -69,14 +69,14 @@ namespace {
   const auto imageNode = GetImageNode(node);
 
   if (const auto imageWidth = GetInt(imageNode, "width")) {
-    IO::SetImageWidth(tileset, *imageWidth);
+    SetImageWidth(tileset, *imageWidth);
   }
   else {
     return ParseError::TilesetMissingImageWidth;
   }
 
   if (const auto imageHeight = GetInt(imageNode, "height")) {
-    IO::SetImageHeight(tileset, *imageHeight);
+    SetImageHeight(tileset, *imageHeight);
   }
   else {
     return ParseError::TilesetMissingImageHeight;
@@ -89,14 +89,14 @@ namespace {
 
   const auto absoluteImagePath = std::filesystem::weakly_canonical(dir / *relImagePath);
   if (std::filesystem::exists(absoluteImagePath)) {
-    IO::SetImagePath(tileset, absoluteImagePath.c_str());
+    SetImagePath(tileset, absoluteImagePath.c_str());
   }
   else {
     return ParseError::TilesetImageDoesNotExist;
   }
 
   if (auto name = GetString(node, "name")) {
-    IO::SetName(tileset, name->c_str());
+    SetName(tileset, name->c_str());
   }
   else {
     return ParseError::TilesetMissingName;
@@ -138,7 +138,7 @@ namespace {
                                 const std::filesystem::path& dir) -> ParseError
 {
   if (const auto id = GetInt(node, "firstgid")) {
-    IO::SetFirstGlobalId(tileset, *id);
+    SetFirstGlobalId(tileset, *id);
   }
   else {
     return ParseError::TilesetMissingFirstGid;
@@ -158,7 +158,7 @@ auto ParseTilesets(const pugi::xml_node root, Map& map, const std::filesystem::p
     -> ParseError
 {
   for (const auto tilesetNode : root.children("tileset")) {
-    auto& tileset = IO::AddTileset(map);
+    auto& tileset = AddTileset(map);
     if (const auto err = ParseTileset(tilesetNode, tileset, dir); err != ParseError::None)
     {
       return err;

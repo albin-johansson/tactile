@@ -16,28 +16,28 @@ namespace {
                               Property& property) -> ParseError
 {
   if (std::strcmp(type, "string") == 0) {
-    IO::AssignString(property, node.attribute("value").as_string());
+    AssignString(property, node.attribute("value").as_string());
   }
   else if (std::strcmp(type, "int") == 0) {
-    IO::AssignInt(property, GetInt(node, "value").value());
+    AssignInt(property, GetInt(node, "value").value());
   }
   else if (std::strcmp(type, "float") == 0) {
-    IO::AssignFloat(property, GetFloat(node, "value").value());
+    AssignFloat(property, GetFloat(node, "value").value());
   }
   else if (std::strcmp(type, "bool") == 0) {
-    IO::AssignBool(property, node.attribute("value").as_bool());
+    AssignBool(property, node.attribute("value").as_bool());
   }
   else if (std::strcmp(type, "file") == 0) {
     const std::filesystem::path file = node.attribute("value").as_string();
-    IO::AssignFile(property, file.c_str());
+    AssignFile(property, file.c_str());
   }
   else if (std::strcmp(type, "object") == 0) {
-    IO::AssignObject(property, GetInt(node, "value").value());
+    AssignObject(property, GetInt(node, "value").value());
   }
   else if (std::strcmp(type, "color") == 0) {
     const auto hex = GetString(node, "value").value();
     if (const auto color = (hex.size() == 9) ? ParseColorARGB(hex) : ParseColorRGB(hex)) {
-      IO::AssignColor(property, *color);
+      AssignColor(property, *color);
     }
     else {
       return ParseError::CouldNotParseProperty;
@@ -54,7 +54,7 @@ namespace {
     -> ParseError
 {
   if (const auto* name = node.attribute("name").as_string(nullptr)) {
-    IO::SetName(property, name);
+    SetName(property, name);
   }
   else {
     return ParseError::PropertyMissingName;
@@ -78,7 +78,7 @@ template <typename T>
 [[nodiscard]] auto ParsePropertiesImpl(const pugi::xml_node node, T& target) -> ParseError
 {
   for (const auto propertyNode : node.child("properties").children("property")) {
-    auto& property = IO::AddProperty(target);
+    auto& property = AddProperty(target);
     if (const auto err = ParseProperty(propertyNode, property); err != ParseError::None) {
       return err;
     }
