@@ -486,6 +486,7 @@ target_compile_definitions(${TACTILE_LIB}
                            PUBLIC
                            CENTURION_NO_SDL_IMAGE
                            CENTURION_NO_SDL_MIXER
+                           CENTURION_NO_SDL_TTF
                            IMGUI_DISABLE_OBSOLETE_FUNCTIONS
                            IMGUI_DEFINE_MATH_OPERATORS
                            GLEW_NO_GLU
