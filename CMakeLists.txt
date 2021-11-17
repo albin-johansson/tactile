@@ -26,7 +26,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin") # macOS
   set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/libTactileIO.dylib")
 else ()
-  message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
+  message(FATAL_ERROR "[Tactile]: Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
 endif ()
 
 find_package(SDL2 CONFIG REQUIRED)
