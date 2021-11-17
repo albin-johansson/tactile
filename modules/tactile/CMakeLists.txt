@@ -458,7 +458,6 @@ target_include_directories(${TACTILE_LIB}
 
                            SYSTEM PUBLIC
                            ${LIBRARY_DIR}/centurion
-                           ${LIBRARY_DIR}/nenya
                            ${LIBRARY_DIR}/rune
                            ${LIBRARY_DIR}/fontawesome
                            ${LIBRARY_DIR}/pfd
@@ -535,7 +534,6 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <centurion.hpp>
                           <entt/entt.hpp>
                           <fmt/format.h>
-                          <nenya.hpp>
                           )
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
