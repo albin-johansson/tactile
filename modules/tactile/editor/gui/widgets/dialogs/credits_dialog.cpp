@@ -61,8 +61,6 @@ void UpdateCreditsDialog()
       Row("Protocol Buffers", "3.18.1", "BSD");
       Row("pugixml", "1.11.4", "MIT");
       Row("SDL", "2.0.16", "Zlib");
-      Row("SDL_image", "2.0.5", "Zlib");
-      Row("SDL_ttf", "2.0.15", "Zlib");
       Row("stb_image", "2.26", "MIT");
       Row("yaml-cpp", "0.7.0", "MIT");
 

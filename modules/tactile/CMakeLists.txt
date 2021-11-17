@@ -472,8 +472,6 @@ target_link_libraries(${TACTILE_LIB}
                       GLEW::GLEW
                       SDL2::SDL2
                       SDL2::SDL2main
-                      SDL2::SDL2_image
-                      SDL2::SDL2_ttf
                       imgui::imgui
                       EnTT::EnTT
                       fmt::fmt
@@ -486,6 +484,7 @@ target_link_libraries(${TACTILE_LIB}
 
 target_compile_definitions(${TACTILE_LIB}
                            PUBLIC
+                           CENTURION_NO_SDL_IMAGE
                            CENTURION_NO_SDL_MIXER
                            IMGUI_DISABLE_OBSOLETE_FUNCTIONS
                            IMGUI_DEFINE_MATH_OPERATORS

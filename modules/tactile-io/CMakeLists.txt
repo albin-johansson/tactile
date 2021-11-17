@@ -167,11 +167,7 @@ target_link_libraries(${TACTILE_IO}
                       pugixml::pugixml
                       )
 
-target_compile_definitions(${TACTILE_IO}
-                           PRIVATE
-                           TACTILE_IO_EXPORT
-                           CENTURION_NO_SDL_MIXER
-                           )
+target_compile_definitions(${TACTILE_IO} PRIVATE TACTILE_IO_EXPORT)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_IO}
