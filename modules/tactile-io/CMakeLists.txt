@@ -148,67 +148,68 @@ set(TACTILE_IO_SOURCES
 add_library(${TACTILE_IO} SHARED ${TACTILE_IO_SOURCES})
 
 target_include_directories(${TACTILE_IO}
-    PRIVATE
-    ${PROJECT_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/include
-    ${PROJECT_SOURCE_DIR}/include/tactile-io
-    ${PROJECT_SOURCE_DIR}/../tactile-base
+                           PRIVATE
+                           ${PROJECT_SOURCE_DIR}
+                           ${PROJECT_SOURCE_DIR}/include
+                           ${PROJECT_SOURCE_DIR}/include/tactile-io
+                           ${PROJECT_SOURCE_DIR}/../tactile-base
 
-    SYSTEM PRIVATE
-    ${LIBRARY_DIR}/nenya
-    )
+                           SYSTEM PRIVATE
+                           ${LIBRARY_DIR}/nenya
+                           )
 
 target_link_libraries(${TACTILE_IO}
-    PRIVATE
-    fmt::fmt
-    magic_enum::magic_enum
-    yaml-cpp
-    nlohmann_json::nlohmann_json
-    pugixml::pugixml
-    )
+                      PRIVATE
+                      fmt::fmt
+                      magic_enum::magic_enum
+                      yaml-cpp
+                      nlohmann_json::nlohmann_json
+                      pugixml::pugixml
+                      )
 
 target_compile_definitions(${TACTILE_IO}
-    PRIVATE
-    TACTILE_IO_EXPORT
-    CENTURION_NO_SDL_MIXER
-    )
+                           PRIVATE
+                           TACTILE_IO_EXPORT
+                           CENTURION_NO_SDL_MIXER
+                           )
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_IO}
-      PRIVATE
-      /EHsc
-      /MP
-      /W4
-      /Zc:preprocessor
-      /Zc:__cplusplus
-      )
+                         PRIVATE
+                         /EHsc
+                         /MP
+                         /W4
+                         /Zc:preprocessor
+                         /Zc:__cplusplus
+                         )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(${TACTILE_IO}
-      PRIVATE
-      -Wall
-      -Wextra
-      )
+                         PRIVATE
+                         -Wall
+                         -Wextra
+                         )
 endif ()
 
-target_precompile_headers(${TACTILE_IO} PRIVATE
-    <cstdint>
-    <cstddef>
-    <cassert>
-    <memory>
-    <utility>
-    <array>
-    <vector>
-    <map>
-    <unordered_map>
-    <variant>
-    <string>
-    <string_view>
-    <concepts>
-    <functional>
+target_precompile_headers(${TACTILE_IO}
+                          PRIVATE
+                          <cstdint>
+                          <cstddef>
+                          <cassert>
+                          <memory>
+                          <utility>
+                          <array>
+                          <vector>
+                          <map>
+                          <unordered_map>
+                          <variant>
+                          <string>
+                          <string_view>
+                          <concepts>
+                          <functional>
 
-    <magic_enum.hpp>
-    <yaml-cpp/yaml.h>
-    <nlohmann/json.hpp>
-    <pugixml.hpp>
-    <fmt/format.h>
-    )
+                          <magic_enum.hpp>
+                          <yaml-cpp/yaml.h>
+                          <nlohmann/json.hpp>
+                          <pugixml.hpp>
+                          <fmt/format.h>
+                          )
