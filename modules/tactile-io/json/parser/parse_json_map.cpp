@@ -17,7 +17,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseOrientation(const JSON& json) -> ParseError
+[[nodiscard]] auto CheckOrientation(const JSON& json) -> ParseError
 {
   const auto it = json.find("orientation");
   if (it != json.end() && it->get<std::string>() == "orthogonal") {
@@ -28,7 +28,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseInfinite(const JSON& json) -> ParseError
+[[nodiscard]] auto CheckInfinite(const JSON& json) -> ParseError
 {
   const auto it = json.find("infinite");
   if (it != json.end() && it->get<bool>()) {
@@ -121,11 +121,11 @@ namespace {
     return ParseError::CouldNotReadFile;
   }
 
-  if (const auto err = ParseOrientation(*json); err != ParseError::None) {
+  if (const auto err = CheckOrientation(*json); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseInfinite(*json); err != ParseError::None) {
+  if (const auto err = CheckInfinite(*json); err != ParseError::None) {
     return err;
   }
 
