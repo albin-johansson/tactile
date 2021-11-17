@@ -35,12 +35,13 @@ struct Color final
   uint8 alpha{};
 };
 
+/// \brief Represents different map formats.
 enum class MapFormat
 {
-  Unsupported,
-  Yaml,
-  Json,
-  Xml
+  Unsupported,  ///< Unsupported/invalid/unknown map format.
+  Yaml,         ///< Tactile YAML map format.
+  Json,         ///< Tiled JSON map format.
+  Xml           ///< Tiled XML (TMX) map format.
 };
 
 /**
