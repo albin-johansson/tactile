@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
+if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+  set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+endif ()
+
+message("[Tactile]: CMake toolchain file is... ${CMAKE_TOOLCHAIN_FILE}")
+message("[Tactile]: Vcpkg target triplet is... ${VCPKG_TARGET_TRIPLET}")
+
 project(tactile CXX)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
