@@ -1,5 +1,7 @@
 #pragma once
 
+#include <compare>
+
 #include <tactile_def.hpp>
 
 namespace Tactile {
