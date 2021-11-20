@@ -1,7 +1,6 @@
 #ifndef TACTILE_IO_IR_HELPERS_HPP_
 #define TACTILE_IO_IR_HELPERS_HPP_
 
-#include <concepts>  // invocable
 #include <cstring>   // strcmp
 
 #include <tactile_stdlib.hpp>
@@ -235,7 +234,7 @@ template <typename T>
  * \param map the map that provides the layers to be visited.
  * \param callable the function object that is invoked for each layer.
  */
-template <std::invocable<const Tileset&> U>
+template <typename U>
 void EachTileset(const Map& map, U&& callable)
 {
   const auto count = GetTilesetCount(map);
@@ -256,7 +255,7 @@ void EachTileset(const Map& map, U&& callable)
  * \param tileset the tileset that provides the tile info objects to be visited.
  * \param callable the function object that is invoked for each tile info.
  */
-template <std::invocable<const Tile&> U>
+template <typename U>
 void EachTileInfo(const Tileset& tileset, U&& callable)
 {
   const auto count = GetTileInfoCount(tileset);
@@ -266,7 +265,7 @@ void EachTileInfo(const Tileset& tileset, U&& callable)
   }
 }
 
-template <std::invocable<const AnimationFrame&> U>
+template <typename U>
 void EachAnimationFrame(const Tile& tile, U&& callable)
 {
   const auto count = GetAnimationFrameCount(tile);
@@ -285,7 +284,7 @@ void EachAnimationFrame(const Tile& tile, U&& callable)
  * \param source the source object that provides the layers to be visited.
  * \param callable the function object that is invoked for each layer.
  */
-template <typename T, std::invocable<const Layer&> U>
+template <typename T, typename U>
 void EachLayer(const T& source, U&& callable)
 {
   const auto count = GetLayerCount(source);
@@ -304,7 +303,7 @@ void EachLayer(const T& source, U&& callable)
  * \param source the source object that provides the map objects to be visited.
  * \param callable the function object that is invoked for each map object.
  */
-template <typename T, std::invocable<const Object&> U>
+template <typename T, typename U>
 void EachObject(const T& source, U&& callable)
 {
   const auto count = GetObjectCount(source);
@@ -323,7 +322,7 @@ void EachObject(const T& source, U&& callable)
  * \param source the source object that provides the properties to be visited.
  * \param callable the function object that is invoked for each property.
  */
-template <typename T, std::invocable<const Property&> U>
+template <typename T, typename U>
 void EachProperty(const T& source, U&& callable)
 {
   const auto count = GetPropertyCount(source);

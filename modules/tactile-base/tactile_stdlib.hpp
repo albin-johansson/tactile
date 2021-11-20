@@ -3,18 +3,24 @@
 
 #include <algorithm>     // replace, min
 #include <charconv>      // from_chars
-#include <concepts>      // integral, floating_point
 #include <cstring>       // strlen
 #include <exception>     // exception
 #include <filesystem>    // path
 #include <string>        // string, stof
 #include <system_error>  // errc
+#include <type_traits>   // enable_if_t, is_integral_v, is_floating_point_v
 #include <utility>       // pair
 #include <vector>        // vector
 
 #include "tactile_def.hpp"
 
 namespace Tactile {
+
+template <typename T>
+using Integral = std::enable_if_t<std::is_integral_v<T>, int>;
+
+template <typename T>
+using Floating = std::enable_if_t<std::is_floating_point_v<T>, int>;
 
 class TactileError final : public std::exception
 {
@@ -44,7 +50,7 @@ class TactileError final : public std::exception
  *
  * \return a pair encoding the matrix coordinates as (row, column).
  */
-template <std::integral T>
+template <typename T, Integral<T> = 0>
 [[nodiscard]] constexpr auto ToMatrixCoords(const T index, const T nColumns)
     -> std::pair<T, T>
 {
@@ -96,7 +102,7 @@ template <std::integral T>
  *
  * \see `FromString(CStr, int)`
  */
-template <std::integral T>
+template <typename T, Integral<T> = 0>
 [[nodiscard]] auto FromString(const CStr str, const usize length, const int base)
     -> Maybe<T>
 {
@@ -128,7 +134,7 @@ template <std::integral T>
  *
  * \see `FromString(CStr, usize, int)`
  */
-template <std::integral T>
+template <typename T, Integral<T> = 0>
 [[nodiscard]] auto FromString(const CStr str, const int base = 10) -> Maybe<T>
 {
   if (!str) {
@@ -146,7 +152,7 @@ template <std::integral T>
  *
  * \return the corresponding floating-point value; `nothing` if something goes wrong.
  */
-template <std::floating_point T>
+template <typename T, Floating<T> = 0>
 [[nodiscard]] auto FromString(const CStr str) -> Maybe<T>
 {
   if (!str) {

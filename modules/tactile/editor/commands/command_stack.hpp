@@ -1,10 +1,11 @@
 #pragma once
 
-#include <concepts>  // derived_from
-#include <deque>     // deque
-#include <memory>    // unique_ptr
-#include <string>    // string
-#include <utility>   // move
+#include <concepts>     // derived_from
+#include <deque>        // deque
+#include <memory>       // unique_ptr
+#include <string>       // string
+#include <type_traits>  // enable_if_t, is_base_of_v
+#include <utility>      // move
 
 #include <tactile_def.hpp>
 
@@ -14,6 +15,9 @@ namespace Tactile {
 
 /// \addtogroup commands
 /// \{
+
+template <typename Base, typename Derived>
+using DerivedFrom = std::enable_if_t<std::is_base_of_v<Base, Derived>, int>;
 
 class CommandStack final
 {
@@ -51,7 +55,7 @@ class CommandStack final
    */
   void Redo();
 
-  template <std::derived_from<ACommand> T, typename... Args>
+  template <typename T, typename... Args, DerivedFrom<ACommand, T> = 0>
   void PushWithoutRedo(Args&&... args)
   {
     if (GetSize() == GetCapacity()) {
@@ -77,7 +81,7 @@ class CommandStack final
    * \param args the arguments that will be forwarded to the command
    * constructor.
    */
-  template <std::derived_from<ACommand> T, typename... Args>
+  template <typename T, typename... Args, DerivedFrom<ACommand, T> = 0>
   void Push(Args&&... args)
   {
     if (GetSize() == GetCapacity()) {

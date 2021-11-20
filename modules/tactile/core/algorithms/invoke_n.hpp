@@ -1,7 +1,5 @@
 #pragma once
 
-#include <concepts>  // integral, invocable
-
 namespace Tactile {
 
 /// \addtogroup core
@@ -16,7 +14,7 @@ namespace Tactile {
  * \param n the amount of times the callable should be invoked.
  * \param callable the callable that will be invoked.
  */
-template <std::integral Integer, std::invocable T>
+template <typename Integer, typename T>
 constexpr void InvokeN(const Integer n, T&& callable) noexcept(noexcept(callable()))
 {
   for (Integer i = 0; i < n; ++i) {

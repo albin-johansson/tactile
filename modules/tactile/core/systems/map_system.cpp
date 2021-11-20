@@ -1,7 +1,6 @@
 #include "map_system.hpp"
 
-#include <cmath>     // abs
-#include <concepts>  // invocable, unsigned_integral
+#include <type_traits>  // enable_if_t, is_unsigned_v
 
 #include <tactile_stdlib.hpp>
 
@@ -14,7 +13,10 @@
 namespace Tactile::Sys {
 namespace {
 
-template <std::unsigned_integral T>
+template <typename T>
+using Unsigned = std::enable_if_t<std::is_unsigned_v<T>, int>;
+
+template <typename T, Unsigned<T> = 0>
 [[nodiscard]] constexpr auto GetDiff(const T a, const T b) noexcept -> T
 {
   if (a < b) {
@@ -25,7 +27,7 @@ template <std::unsigned_integral T>
   }
 }
 
-template <std::invocable<TileLayer&> T>
+template <typename T>
 void TileLayerQuery(entt::registry& registry, T&& invocable)
 {
   for (auto&& [entity, layer] : registry.view<Layer>().each()) {
