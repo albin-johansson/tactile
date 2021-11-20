@@ -29,3 +29,21 @@
 #else
 #define TACTILE_COMPILER_CLANG 0
 #endif  // __clang__
+
+#ifdef WIN32
+#define TACTILE_PLATFORM_WINDOWS 1
+#else
+#define TACTILE_PLATFORM_WINDOWS 0
+#endif  // WIN32
+
+#ifdef __linux__
+#define TACTILE_PLATFORM_LINUX 1
+#else
+#define TACTILE_PLATFORM_LINUX 0
+#endif  // __linux__
+
+#ifdef __APPLE__
+#define TACTILE_PLATFORM_OSX 1
+#else
+#define TACTILE_PLATFORM_OSX 0
+#endif  // __APPLE__
