@@ -41,7 +41,7 @@ auto main(int, char**) -> int
   }
 
   cen::window window{"Tactile", cen::window::default_size(), flags};
-  window.set_icon(cen::surface{"resources/icon.png"});
+  //  window.set_icon(cen::surface{"resources/icon.png"});
 
   cen::gl_context glContext{window};
   glContext.make_current(window);
