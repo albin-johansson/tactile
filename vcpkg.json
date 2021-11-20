@@ -6,10 +6,7 @@
   "dependencies": [
     {
       "name": "sdl2",
-      "version>=": "2.0.16",
-      "features": [
-        "vulkan"
-      ]
+      "version>=": "2.0.16"
     },
     {
       "name": "imgui",
