@@ -298,6 +298,13 @@ void SetTile(TileLayer& layer, usize row, usize column, int32 tile);
 TACTILE_IO_API_QUERY
 auto GetRowCount(const TileLayer& layer) -> usize;
 
+/**
+ * \brief Returns the amount of columns in a tile layer.
+ *
+ * \param layer the tile layer that will be queried.
+ *
+ * \return the amount of columns.
+ */
 TACTILE_IO_API_QUERY
 auto GetColumnCount(const TileLayer& layer) -> usize;
 
