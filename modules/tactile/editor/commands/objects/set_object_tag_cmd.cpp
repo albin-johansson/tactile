@@ -16,14 +16,14 @@ SetObjectTagCmd::SetObjectTagCmd(Ref<entt::registry> registry,
 void SetObjectTagCmd::Undo()
 {
   auto& object = GetTargetObject();
-  object.custom_type = mOldTag.value();
+  object.tag = mOldTag.value();
 }
 
 void SetObjectTagCmd::Redo()
 {
   auto& object = GetTargetObject();
-  mOldTag = object.custom_type;
-  object.custom_type = mNewTag;
+  mOldTag = object.tag;
+  object.tag = mNewTag;
 }
 
 auto SetObjectTagCmd::MergeWith(const ACommand& cmd) -> bool

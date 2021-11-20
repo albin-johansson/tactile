@@ -71,6 +71,14 @@ class Model final
 
   [[nodiscard]] auto IsObjectSelectionActive() const -> bool;
 
+  [[nodiscard]] auto IsStampPossible() const -> bool;
+
+  [[nodiscard]] auto IsEraserPossible() const -> bool;
+
+  [[nodiscard]] auto IsBucketPossible() const -> bool;
+
+  [[nodiscard]] auto IsObjectSelectionPossible() const -> bool;
+
   [[nodiscard]] auto IsClean() const -> bool;
 
   [[nodiscard]] auto CanUndo() const -> bool;

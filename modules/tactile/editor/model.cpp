@@ -5,7 +5,9 @@
 
 #include "core/map.hpp"
 #include "core/systems/animation_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_factory_system.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
 
@@ -216,6 +218,47 @@ auto Model::IsObjectSelectionActive() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
     return Sys::IsObjectSelectionEnabled(*registry);
+  }
+  else {
+    return false;
+  }
+}
+
+auto Model::IsStampPossible() const -> bool
+{
+  if (const auto* registry = GetActiveRegistry()) {
+    return Sys::IsTileLayerActive(*registry);
+  }
+  else {
+    return false;
+  }
+}
+
+auto Model::IsEraserPossible() const -> bool
+{
+  if (const auto* registry = GetActiveRegistry()) {
+    return Sys::IsTileLayerActive(*registry);
+  }
+  else {
+    return false;
+  }
+}
+
+auto Model::IsBucketPossible() const -> bool
+{
+  if (const auto* registry = GetActiveRegistry()) {
+    return Sys::IsTileLayerActive(*registry) &&
+           Sys::IsSingleTileSelectedInTileset(*registry);
+  }
+  else {
+    return false;
+  }
+}
+
+auto Model::IsObjectSelectionPossible() const -> bool
+{
+  if (const auto* registry = GetActiveRegistry()) {
+    return Sys::IsObjectLayerActive(*registry);
   }
   else {
     return false;

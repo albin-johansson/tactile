@@ -85,7 +85,7 @@ void ConvertObject(IO::Object& data,
   IO::SetWidth(data, object.width);
   IO::SetHeight(data, object.height);
   IO::SetType(data, object.type);
-  IO::SetTag(data, object.custom_type.c_str());
+  IO::SetTag(data, object.tag.c_str());
   IO::SetVisible(data, object.visible);
 
   const auto& context = registry.get<PropertyContext>(entity);

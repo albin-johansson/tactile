@@ -65,7 +65,7 @@ void PrepareTableRow(const CStr label)
        guarantee that the user provides names that are usable as file names. */
     const auto filter = [](ImGuiInputTextCallbackData* data) -> int {
       const auto& locale = std::locale::classic();
-      const auto ch = data->EventChar;
+      const auto ch = static_cast<wchar_t>(data->EventChar);
 
       if (std::isalpha(ch, locale) || std::isdigit(ch, locale) ||
           std::isspace(ch, locale) || ch == '-' || ch == '_')
@@ -248,7 +248,7 @@ void ShowNativeObjectProperties(const std::string& name,
   PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
-  if (const auto tag = StringPropertyWidget(object.custom_type)) {
+  if (const auto tag = StringPropertyWidget(object.tag)) {
     dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
   }
 

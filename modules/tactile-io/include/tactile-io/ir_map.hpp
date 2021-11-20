@@ -17,7 +17,7 @@ namespace Tactile::IO {
  * \note This function is not intended to be called explicitly in client code, use
  * `CreateMap()` instead in order to avoid having to manually manage memory.
  *
- * \return a pointer to the created `Map`, it is your responsible to free the associated
+ * \return a pointer to the created `Map`, it is your responsibility to free the associated
  * memory if you call this function.
  *
  * \see `DeleteMap()`

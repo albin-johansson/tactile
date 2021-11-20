@@ -97,7 +97,7 @@ auto AddObject(entt::registry& registry, const IO::Object& data) -> entt::entity
   object.visible = IO::IsVisible(data);
 
   if (const auto tag = IO::GetTag(data); std::strcmp(tag, "") != 0) {
-    object.custom_type = tag;
+    object.tag = tag;
   }
 
   auto& context = Sys::AddPropertyContext(registry, objectEntity);
