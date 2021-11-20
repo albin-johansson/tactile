@@ -31,12 +31,24 @@
 *.out
 *.app
 
-compile_commands.json
+# macOS folder settings
+.DS_Store
 
+# Visual Studio files
 .vs
+
+# Visual Studio Code files
 .vscode
+
+# JetBrains files
 .idea
+
+# Generated Doxygen output
 doxygen-out
+
+# Build output
 build
 cmake-build-*
+
+# Installer data
 installer/packages/com.albinjohansson.tactile/data/*

@@ -23,15 +23,41 @@ namespace Tactile::IO {
 /// \name Animation API
 /// \{
 
+/**
+ * \brief Sets the tile associated with an animation frame.
+ *
+ * \param frame the frame that will be modified.
+ * \param tile the _local_ ID of the tile to show during the frame.
+ */
 TACTILE_IO_API
 void SetTile(AnimationFrame& frame, int32 tile);
 
+/**
+ * \brief Sets the duration of an animation frame.
+ *
+ * \param frame the frame that will be modified.
+ * \param ms the duration of the frame, in milliseconds.
+ */
 TACTILE_IO_API
 void SetDuration(AnimationFrame& frame, int32 ms);
 
+/**
+ * \brief Returns the identifier of the tile shown during an animation frame.
+ *
+ * \param frame the animation frame that will be queried.
+ *
+ * \return the local ID of the associated tile.
+ */
 TACTILE_IO_API_QUERY
 auto GetTile(const AnimationFrame& frame) -> int32;
 
+/**
+ * \brief Returns the duration of an animation frame.
+ *
+ * \param frame the animation frame that will be queried.
+ *
+ * \return the duration of the frame, in milliseconds.
+ */
 TACTILE_IO_API_QUERY
 auto GetDuration(const AnimationFrame& frame) -> int32;
 

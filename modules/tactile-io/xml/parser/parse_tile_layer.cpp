@@ -7,7 +7,7 @@ namespace Tactile::IO {
 
 auto ParseTileLayer(const pugi::xml_node node, Layer& layer) -> ParseError
 {
-  auto& tileLayer = IO::MarkAsTileLayer(layer);
+  auto& tileLayer = MarkAsTileLayer(layer);
 
   const auto width = GetInt(node, "width");
   const auto height = GetInt(node, "height");
@@ -20,7 +20,7 @@ auto ParseTileLayer(const pugi::xml_node node, Layer& layer) -> ParseError
     return ParseError::LayerMissingHeight;
   }
 
-  IO::ReserveTiles(tileLayer, *height, *width);
+  ReserveTiles(tileLayer, *height, *width);
   if (const auto err = ParseTileData(node, tileLayer); err != ParseError::None) {
     return err;
   }

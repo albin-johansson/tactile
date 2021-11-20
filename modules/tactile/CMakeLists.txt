@@ -451,45 +451,45 @@ add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 add_dependencies(${TACTILE_LIB} ${TACTILE_IO})
 
 target_include_directories(${TACTILE_LIB}
-    PUBLIC
-    ${PROJECT_SOURCE_DIR}
-    ${ROOT_DIR}/modules/tactile-base
-    ${ROOT_DIR}/modules/tactile-io/include
+                           PUBLIC
+                           ${PROJECT_SOURCE_DIR}
+                           ${ROOT_DIR}/modules/tactile-base
+                           ${ROOT_DIR}/modules/tactile-io/include
 
-    SYSTEM PUBLIC
-    ${LIBRARY_DIR}/centurion
-    ${LIBRARY_DIR}/nenya
-    ${LIBRARY_DIR}/rune
-    ${LIBRARY_DIR}/fontawesome
-    ${LIBRARY_DIR}/pfd
-    ${STB_INCLUDE_DIRS}
-    ${TACTILE_PROTO_GENERATED_DIR}
-    )
+                           SYSTEM PUBLIC
+                           ${LIBRARY_DIR}/centurion
+                           ${LIBRARY_DIR}/rune
+                           ${LIBRARY_DIR}/fontawesome
+                           ${LIBRARY_DIR}/pfd
+                           ${STB_INCLUDE_DIRS}
+                           ${TACTILE_PROTO_GENERATED_DIR}
+                           )
 
 target_link_libraries(${TACTILE_LIB}
-    PUBLIC
-    OpenGL::GL
-    GLEW::GLEW
-    SDL2::SDL2
-    SDL2::SDL2main
-    SDL2::SDL2_image
-    SDL2::SDL2_ttf
-    imgui::imgui
-    EnTT::EnTT
-    fmt::fmt
-    protobuf::libprotobuf
-    protobuf::libprotobuf-lite
-    ${TACTILE_PROTO}
-    ${TACTILE_IO_IMPORT_LIBRARY}
-    ${CMAKE_DL_LIBS}
-    )
+                      PUBLIC
+                      OpenGL::GL
+                      GLEW::GLEW
+                      SDL2::SDL2
+                      SDL2::SDL2main
+                      imgui::imgui
+                      EnTT::EnTT
+                      fmt::fmt
+                      protobuf::libprotobuf
+                      protobuf::libprotobuf-lite
+                      ${TACTILE_PROTO}
+                      ${TACTILE_IO_IMPORT_LIBRARY}
+                      ${CMAKE_DL_LIBS}
+                      )
 
-target_compile_definitions(${TACTILE_LIB} PUBLIC
-    CENTURION_NO_SDL_MIXER
-    IMGUI_DISABLE_OBSOLETE_FUNCTIONS
-    IMGUI_DEFINE_MATH_OPERATORS
-    GLEW_NO_GLU
-    )
+target_compile_definitions(${TACTILE_LIB}
+                           PUBLIC
+                           CENTURION_NO_SDL_IMAGE
+                           CENTURION_NO_SDL_MIXER
+                           CENTURION_NO_SDL_TTF
+                           IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+                           IMGUI_DEFINE_MATH_OPERATORS
+                           GLEW_NO_GLU
+                           )
 
 if (MSVC)
   target_compile_definitions(${TACTILE_LIB} PUBLIC _CRT_SECURE_NO_WARNINGS)
@@ -497,45 +497,44 @@ endif ()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_LIB}
-      PUBLIC
-      /EHsc
-      /MP
-      /W4
-      /Zc:preprocessor
-      /Zc:__cplusplus
-      /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
-      )
+                         PUBLIC
+                         /EHsc
+                         /MP
+                         /W4
+                         /Zc:preprocessor
+                         /Zc:__cplusplus
+                         /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
+                         )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(${TACTILE_LIB}
-      PUBLIC
-      -Wall
-      -Wextra
-      -Wpedantic
-      -Wconversion
-      )
+                         PUBLIC
+                         -Wall
+                         -Wextra
+                         -Wpedantic
+                         -Wconversion
+                         )
 endif ()
 
 target_precompile_headers(${TACTILE_LIB} PRIVATE
-    <cstdint>
-    <cstddef>
-    <cassert>
-    <memory>
-    <utility>
-    <array>
-    <vector>
-    <map>
-    <unordered_map>
-    <variant>
-    <string>
-    <string_view>
-    <concepts>
-    <functional>
+                          <cstdint>
+                          <cstddef>
+                          <cassert>
+                          <memory>
+                          <utility>
+                          <array>
+                          <vector>
+                          <map>
+                          <unordered_map>
+                          <variant>
+                          <string>
+                          <string_view>
+                          <concepts>
+                          <functional>
 
-    <centurion.hpp>
-    <entt/entt.hpp>
-    <fmt/format.h>
-    <nenya.hpp>
-    )
+                          <centurion.hpp>
+                          <entt/entt.hpp>
+                          <fmt/format.h>
+                          )
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
   add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)

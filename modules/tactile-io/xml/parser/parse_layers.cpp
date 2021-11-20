@@ -35,11 +35,11 @@ namespace {
 
 [[nodiscard]] auto ParseGroupLayer(const pugi::xml_node node, Layer& layer) -> ParseError
 {
-  auto& groupLayer = IO::MarkAsGroupLayer(layer);
+  auto& groupLayer = MarkAsGroupLayer(layer);
 
   usize childIndex = 0;
   for (const auto layerNode : GetLayerNodes(node)) {
-    auto& childLayer = IO::AddLayer(groupLayer);
+    auto& childLayer = AddLayer(groupLayer);
 
     if (const auto err = ParseLayer(layerNode, childLayer, childIndex);
         err != ParseError::None)
@@ -56,18 +56,18 @@ namespace {
 [[nodiscard]] auto ParseLayer(const pugi::xml_node node, Layer& layer, const usize index)
     -> ParseError
 {
-  IO::SetIndex(layer, index);
+  SetIndex(layer, index);
 
   if (const auto id = GetInt(node, "id")) {
-    IO::SetId(layer, *id);
+    SetId(layer, *id);
   }
   else {
     return ParseError::LayerMissingId;
   }
 
-  IO::SetName(layer, node.attribute("name").as_string("Layer"));
-  IO::SetOpacity(layer, GetFloat(node, "opacity").value_or(1.0f));
-  IO::SetVisible(layer, GetBool(node, "visible").value_or(true));
+  SetName(layer, node.attribute("name").as_string("Layer"));
+  SetOpacity(layer, GetFloat(node, "opacity").value_or(1.0f));
+  SetVisible(layer, GetBool(node, "visible").value_or(true));
 
   if (std::strcmp(node.name(), "layer") == 0) {
     if (const auto err = ParseTileLayer(node, layer); err != ParseError::None) {
@@ -101,7 +101,7 @@ auto ParseLayers(const pugi::xml_node root, Map& map) -> ParseError
 {
   usize index = 0;
   for (const auto node : GetLayerNodes(root)) {
-    auto& layer = IO::AddLayer(map);
+    auto& layer = AddLayer(map);
 
     if (const auto err = ParseLayer(node, layer, index); err != ParseError::None) {
       return err;

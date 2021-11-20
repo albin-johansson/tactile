@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
+if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+  set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+endif ()
+
+message("[Tactile]: CMake toolchain file is... ${CMAKE_TOOLCHAIN_FILE}")
+message("[Tactile]: Vcpkg target triplet is... ${VCPKG_TARGET_TRIPLET}")
+
 project(tactile CXX)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
@@ -26,12 +33,10 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin") # macOS
   set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/libTactileIO.dylib")
 else ()
-  message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
+  message(FATAL_ERROR "[Tactile]: Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
 endif ()
 
 find_package(SDL2 CONFIG REQUIRED)
-find_package(SDL2-image CONFIG REQUIRED)
-find_package(SDL2-ttf CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 
