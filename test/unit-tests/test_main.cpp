@@ -14,14 +14,19 @@ auto main(int argc, char** argv) -> int
 
   const cen::library centurion;
 
-  constexpr auto flags = cen::window::default_flags() | cen::window::opengl |
-                         cen::window::resizable | cen::window::high_dpi;
+  Tactile::InitOpenGLAttributes();
+
+  auto flags = cen::window::opengl | cen::window::hidden | cen::window::resizable;
+  if constexpr (cen::ifdef_apple()) {
+    flags |= cen::window::high_dpi;
+  }
+
   cen::window window{"Tactile tests", cen::window::default_size(), flags};
 
   cen::gl_context context{window};
   context.make_current(window);
 
-  Tactile::InitOpenGLAttributes();
+  cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 
   if (glewInit() != GLEW_OK) {
     cen::log::error("Failed to initialize GLEW!");

@@ -32,15 +32,21 @@ auto main(int, char**) -> int
     cen::log::set_priority(cen::log_priority::info);
   }
 
-  constexpr auto flags =
-      cen::window::hidden | cen::window::opengl | cen::window::resizable;
+  Tactile::InitOpenGLAttributes();
+
+  auto flags = cen::window::hidden | cen::window::resizable | cen::window::opengl;
+
+  if constexpr (cen::ifdef_apple()) {
+    flags |= cen::window::high_dpi;
+  }
+
   cen::window window{"Tactile", cen::window::default_size(), flags};
   window.set_icon(cen::surface{"resources/icon.png"});
 
   cen::gl_context glContext{window};
   glContext.make_current(window);
 
-  Tactile::InitOpenGLAttributes();
+  cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 
   if (glewInit() != GLEW_OK) {
     cen::log::error("Failed to initialize GLEW!");
