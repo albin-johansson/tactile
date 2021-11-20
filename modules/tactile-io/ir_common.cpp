@@ -1,6 +1,6 @@
 #include "ir_common.hpp"
 
-#include <filesystem>  // path, is_regular_file
+#include <filesystem>  // exists, path, is_regular_file
 
 namespace Tactile::IO {
 
@@ -11,7 +11,9 @@ auto DeduceFormat(const CPathStr str) -> MapFormat
   }
 
   const std::filesystem::path path = str;
-  if (path.empty() || !std::filesystem::is_regular_file(path)) {
+  if (path.empty() ||
+      (std::filesystem::exists(path) && !std::filesystem::is_regular_file(path)))
+  {
     return MapFormat::Unsupported;
   }
 
