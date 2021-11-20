@@ -17,17 +17,6 @@ namespace rune {
 /// \addtogroup containers
 /// \{
 
-// clang-format off
-
-template <typename T, typename U>
-concept transparent_to = requires (T key, U actual)
-{
-  { key == actual } -> std::convertible_to<bool>;
-  { actual == key } -> std::convertible_to<bool>;
-};
-
-// clang-format on
-
 /**
  * \class vector_map
  *
@@ -133,7 +122,7 @@ class vector_map final
    *
    * \return a reference to the added or existing key/value pair.
    */
-  template <transparent_to<key_type> T, typename... Args>
+  template <typename T, typename... Args>
   auto try_emplace(const T& key, Args&&... args) -> value_type&
   {
     if (const auto it = find(key); it != m_data.end())
@@ -199,7 +188,7 @@ class vector_map final
    *
    * \param key the key associated with the entry that will be removed.
    */
-  template <transparent_to<key_type> T>
+  template <typename T>
   void erase(const T& key)
   {
     std::erase_if(m_data, [&](const value_type& pair) { return pair.first == key; });
@@ -211,7 +200,7 @@ class vector_map final
    *
    * \param key the key/value pair that will be moved in the underlying vector.
    */
-  template <transparent_to<key_type> T>
+  template <typename T>
   void move_forward(const T& key)
   {
     move_element<true>(key);
@@ -223,7 +212,7 @@ class vector_map final
    *
    * \param key the key/value pair that will be moved in the underlying vector.
    */
-  template <transparent_to<key_type> T>
+  template <typename T>
   void move_backward(const T& key)
   {
     move_element<false>(key);
@@ -239,7 +228,7 @@ class vector_map final
    * \return an iterator to the found element; `end()` is returned if the element wasn't
    * found.
    */
-  template <transparent_to<key_type> T>
+  template <typename T>
   [[nodiscard]] auto find(const T& key) -> iterator
   {
     return std::find_if(m_data.begin(), m_data.end(), [&](const value_type& pair) {
@@ -248,7 +237,7 @@ class vector_map final
   }
 
   /// \copydoc find()
-  template <transparent_to<key_type> T>
+  template <typename T>
   [[nodiscard]] auto find(const T& key) const -> const_iterator
   {
     return std::find_if(m_data.begin(), m_data.end(), [&](const value_type& pair) {
@@ -289,7 +278,7 @@ class vector_map final
    *
    * \since 0.1.0
    */
-  template <transparent_to<key_type> T>
+  template <typename T>
   [[nodiscard]] auto at(const T& key) -> mapped_type&
   {
     if (auto it = find(key); it != end())
@@ -303,7 +292,7 @@ class vector_map final
   }
 
   /// \copydoc at()
-  template <transparent_to<key_type> T>
+  template <typename T>
   [[nodiscard]] auto at(const T& key) const -> const mapped_type&
   {
     if (const auto it = find(key); it != end())
@@ -326,7 +315,7 @@ class vector_map final
    *
    * \return a reference to the existing or created value.
    */
-  template <transparent_to<key_type> T>
+  template <typename T>
   [[nodiscard]] auto operator[](const T& key) -> mapped_type&
   {
     return try_emplace(key).second;
@@ -340,7 +329,7 @@ class vector_map final
    * \return the index of the specified entry in the underlying vector; `nothing` if
    * the key is unused.
    */
-  template <transparent_to<key_type> T>
+  template <typename T>
   [[nodiscard]] auto index_of(const T& key) const -> maybe<size_type>
   {
     if (const auto it = find(key); it != end())
@@ -360,7 +349,7 @@ class vector_map final
    *
    * \return `true` if the map contains the supplied key; `false` otherwise.
    */
-  template <transparent_to<key_type> T>
+  template <typename T>
   [[nodiscard]] auto contains(const T& key) const -> bool
   {
     return find(key) != end();
@@ -415,7 +404,7 @@ class vector_map final
  private:
   std::vector<value_type> m_data;
 
-  template <bool MoveForward, transparent_to<key_type> T>
+  template <bool MoveForward, typename T>
   void move_element(const T& key)
   {
     if (const auto it = find(key); it != end())
