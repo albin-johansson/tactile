@@ -15,6 +15,11 @@ class ImGuiContext final
   ImGuiContext(cen::window& window, cen::gl_context& context);
 
   ~ImGuiContext();
+
+ private:
+  static void LoadFonts();
+
+  static void LoadIconFont(float size);
 };
 
 }  // namespace Tactile

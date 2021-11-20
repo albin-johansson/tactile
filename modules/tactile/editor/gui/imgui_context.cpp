@@ -12,32 +12,6 @@
 #include "themes.hpp"
 
 namespace Tactile {
-namespace {
-
-constexpr auto glsl_version = "#version 130";
-
-void LoadFonts()
-{
-  auto& io = ImGui::GetIO();
-
-  ImFontConfig defaultConfig{};
-  defaultConfig.SizePixels = 13;
-  io.Fonts->AddFontDefault(&defaultConfig);
-
-  // Merge in icons from Font Awesome
-  static const std::array<ImWchar, 3> range = {ICON_MIN_FA, ICON_MAX_FA, 0};
-  ImFontConfig iconConfig{};
-  iconConfig.MergeMode = true;
-  iconConfig.PixelSnapH = true;
-  iconConfig.GlyphOffset = {0, 2};
-
-  io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
-                               13,
-                               &iconConfig,
-                               range.data());
-}
-
-}  // namespace
 
 ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 {
@@ -46,7 +20,6 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 
   auto& io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;  // NOLINT
-
   io.WantCaptureKeyboard = true;
 
   LoadFonts();
@@ -58,10 +31,14 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   ApplyTheme(style, Prefs::GetTheme());
 
   style.WindowBorderSize = Prefs::GetWindowBorder() ? 1.0f : 0.0f;
-  style.ScaleAllSizes(1);
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
-  ImGui_ImplOpenGL3_Init(glsl_version);
+  if constexpr (cen::ifdef_apple()) {
+    ImGui_ImplOpenGL3_Init("#version 150");
+  }
+  else {
+    ImGui_ImplOpenGL3_Init("#version 130");
+  }
 }
 
 ImGuiContext::~ImGuiContext()
@@ -69,6 +46,41 @@ ImGuiContext::~ImGuiContext()
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplSDL2_Shutdown();
   ImGui::DestroyContext();
+}
+
+void ImGuiContext::LoadFonts()
+{
+  auto& io = ImGui::GetIO();
+
+  if constexpr (cen::ifdef_apple()) {
+    constexpr auto fontSize = 9.0f;
+
+    const auto dpi = cen::screen::dpi().value();
+    const auto scaling = dpi.diagonal / 72.0f;
+
+    io.FontGlobalScale = 0.5f;
+    io.Fonts->AddFontFromFileTTF("resources/fonts/roboto/Roboto-Regular.ttf",
+                                 scaling * fontSize);
+    LoadIconFont(scaling * fontSize);
+  }
+  else {
+    io.Fonts->AddFontDefault();
+    LoadIconFont(13.0f);
+  }
+}
+
+void ImGuiContext::LoadIconFont(const float size)
+{
+  static constexpr std::array<ImWchar, 3> range = {ICON_MIN_FA, ICON_MAX_FA, 0};
+  ImFontConfig config{};
+  config.MergeMode = true;
+  config.PixelSnapH = true;
+
+  auto& io = ImGui::GetIO();
+  io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
+                               size,
+                               &config,
+                               range.data());
 }
 
 }  // namespace Tactile
