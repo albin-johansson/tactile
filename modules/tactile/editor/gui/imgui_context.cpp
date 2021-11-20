@@ -75,6 +75,7 @@ void ImGuiContext::LoadIconFont(const float size)
   ImFontConfig config{};
   config.MergeMode = true;
   config.PixelSnapH = true;
+  config.GlyphOffset = {0, 1};
 
   auto& io = ImGui::GetIO();
   io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
