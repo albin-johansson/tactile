@@ -261,6 +261,7 @@ auto GetTileFromTileset(const entt::registry& registry,
                         const MapPosition& position) -> TileID
 {
   assert(entity != entt::null);
+  assert(registry.all_of<Tileset>(entity));
   const auto& tileset = registry.get<Tileset>(entity);
 
   const auto row = position.GetRow();
