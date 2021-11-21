@@ -48,8 +48,28 @@ auto MakeTileset(entt::registry& registry,
                  int tileWidth,
                  int tileHeight) -> entt::entity;
 
+/**
+ * \brief Restores a tileset from a snapshot.
+ *
+ * \param registry the registry that will host the restored tileset.
+ * \param snapshot the snapshot of the tileset that will be restored.
+ *
+ * \return the entity identifier of the restored tileset.
+ *
+ * \see CopyTileset()
+ */
 auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity;
 
+/**
+ * \brief Creates a snapshot of a tileset.
+ *
+ * \param registry the registry that hosts the tileset.
+ * \param source the source tileset entity to create a snapshot of.
+ *
+ * \return a snapshot of the tileset.
+ *
+ * \see RestoreTileset()
+ */
 [[nodiscard]] auto CopyTileset(const entt::registry& registry, entt::entity source)
     -> TilesetSnapshot;
 
@@ -61,8 +81,6 @@ auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt:
  * \param registry the associated registry.
  *
  * \param id the ID associated with the tileset that will be selected.
- *
- * \since 0.2.0
  */
 void SelectTileset(entt::registry& registry, TilesetID id);
 
@@ -71,17 +89,23 @@ void SelectTileset(entt::registry& registry, TilesetID id);
  *
  * \pre `id` must be associated with an existing tileset.
  *
- * \details The active tileset is either reset or changed to another available
- * tileset if the specified tileset is active at the time of invocation.
+ * \details The active tileset is either reset or changed to another available tileset if
+ * the specified tileset is active at the time of invocation.
  *
  * \param registry the associated registry.
  *
  * \param id the ID associated with the tileset that will be removed.
- *
- * \since 0.2.0
  */
 void RemoveTileset(entt::registry& registry, TilesetID id);
 
+/**
+ * \brief Sets the region of the active tileset that is selected.
+ *
+ * \pre There must be an active tileset when this function is invoked.
+ *
+ * \param registry the registry that will be modified.
+ * \param region the region of the tileset that will be selected.
+ */
 void UpdateTilesetSelection(entt::registry& registry, const Region& region);
 
 /**
@@ -91,8 +115,6 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  * \param id the ID associated with the desired tileset.
  *
  * \return the associated tileset entity; a null entity is returned if there is none.
- *
- * \since 0.2.0
  */
 [[nodiscard]] auto FindTileset(const entt::registry& registry, TilesetID id)
     -> entt::entity;
@@ -104,25 +126,50 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  * \param id the tile ID located in the tileset to find.
  *
  * \return the found tileset entity; a null entity is returned otherwise.
- *
- * \since 0.2.0
  */
 [[nodiscard]] auto FindTilesetWithTile(const entt::registry& registry, TileID id)
     -> entt::entity;
 
+/**
+ * \brief Returns the active tileset entity, if there is one.
+ *
+ * \param registry the registry that will be queried.
+ *
+ * \return the active tileset entity; the null entity is returned if there is none.
+ */
 [[nodiscard]] auto GetActiveTileset(const entt::registry& registry) -> entt::entity;
 
+/**
+ * \brief Indicates whether or not the active tileset has a non-empty tile selection.
+ *
+ * \param registry the registry that will be queried.
+ *
+ * \return `true` if there is an active tileset with a non-empty selection; `false`
+ * otherwise.
+ *
+ * \see IsSingleTileSelectedInTileset()
+ */
 [[nodiscard]] auto HasNonEmptyTilesetSelection(const entt::registry& registry) -> bool;
 
+/**
+ * \brief Indicates whether or not the active tileset has a _single_ tile selected.
+ *
+ * \param registry the registry that will be queried.
+ *
+ * \return `true` if there is an active tileset with a single tile selected; `false`
+ * otherwise.
+ *
+ * \see HasNonEmptyTilesetSelection()
+ */
 [[nodiscard]] auto IsSingleTileSelectedInTileset(const entt::registry& registry) -> bool;
 
 /**
- * \brief Returns the ID of the tile that should be rendered when the specified tile
- * is encountered.
+ * \brief Returns the ID of the tile that should be rendered when the specified tile is
+ * encountered.
  *
- * \details This function is used to determine the correct tile to render with
- * animated tiles. In other words, this function will simply return the supplied ID
- * for non-animated tiles.
+ * \details This function is used to determine the correct tile to render with animated
+ * tiles. In other words, this function will simply return the supplied ID for
+ * non-animated tiles.
  *
  * \param registry the associated registry.
  * \param tilesetEntity the parent tileset entity.
@@ -130,8 +177,6 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  *
  * \return the ID of the tile that should be rendered when the specified tile is
  * encountered.
- *
- * \since 0.2.0
  */
 [[nodiscard]] auto GetTileToRender(const entt::registry& registry,
                                    entt::entity tilesetEntity,
@@ -141,8 +186,8 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  * \brief Returns the region out of the tileset texture that should be rendered when
  * rendering the specified tile.
  *
- * \note You should use the identifier returned by `GetTileToRender()` when
- * calling this function.
+ * \note You should use the identifier returned by `GetTileToRender()` when calling this
+ * function.
  *
  * \param registry the associated registry.
  * \param tilesetEntity the parent tileset entity.
@@ -151,13 +196,20 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  * \return the region of the tileset texture that should be rendered for the tile.
  *
  * \see `GetTileToRender()`
- *
- * \since 0.2.0
  */
 [[nodiscard]] auto GetSourceRect(const entt::registry& registry,
                                  entt::entity tilesetEntity,
                                  TileID id) -> const cen::irect&;
 
+/**
+ * \brief Returns the identifier of a tile at a certain position in a tileset.
+ *
+ * \param registry the registry that will be queried.
+ * \param entity the tileset entity.
+ * \param position the position of the tile in the tileset.
+ *
+ * \return the identifier of the found tile; the empty tile is returned otherwise.
+ */
 [[nodiscard]] auto GetTileFromTileset(const entt::registry& registry,
                                       entt::entity entity,
                                       const MapPosition& position) -> TileID;
@@ -171,10 +223,7 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  * \param registry the associated registry.
  * \param global a global tile identifier that will be converted.
  *
- * \return the corresponding local tile identifier; `nothing` if something went
- * wrong.
- *
- * \since 0.2.0
+ * \return the corresponding local tile identifier; `nothing` if something went wrong.
  */
 [[nodiscard]] auto ConvertToLocal(const entt::registry& registry, TileID global)
     -> Maybe<TileID>;
