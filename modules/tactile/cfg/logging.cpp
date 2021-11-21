@@ -9,7 +9,6 @@
 #include <fmt/core.h>    // print
 #include <fmt/format.h>  // format
 
-#include "build.hpp"
 #include "editor/gui/widgets/log/log_dock.hpp"
 
 namespace Tactile {
@@ -54,12 +53,9 @@ void LogMessage(const cen::log_priority priority, const CStr msg)
                                msg);
   AddLogEntry(str);
 
-#if TACTILE_COMPILER_MSVC
-  /* MSVC has better support for constexpr-strings */
   if constexpr (cen::is_debug_build()) {
-    fmt::print(str);
+    fmt::print(fmt::runtime(str));
   }
-#endif  // TACTILE_COMPILER_MSVC
 }
 
 }  // namespace Tactile
