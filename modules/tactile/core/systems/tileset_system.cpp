@@ -57,8 +57,8 @@ void RefreshTilesetCache(entt::registry& registry, const entt::entity entity)
 auto MakeTileset(entt::registry& registry,
                  const TileID firstId,
                  const Texture& texture,
-                 const int tileWidth,
-                 const int tileHeight) -> entt::entity
+                 const int32 tileWidth,
+                 const int32 tileHeight) -> entt::entity
 {
   auto& tilesets = registry.ctx<TilesetContext>();
 
@@ -99,8 +99,8 @@ auto MakeTileset(entt::registry& registry,
 
 auto MakeTileset(entt::registry& registry,
                  const Texture& texture,
-                 const int tileWidth,
-                 const int tileHeight) -> entt::entity
+                 const int32 tileWidth,
+                 const int32 tileHeight) -> entt::entity
 {
   auto& context = registry.ctx<TilesetContext>();
   return MakeTileset(registry, context.next_tile_id, texture, tileWidth, tileHeight);

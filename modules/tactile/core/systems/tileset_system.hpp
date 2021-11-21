@@ -39,14 +39,14 @@ namespace Tactile::Sys {
 auto MakeTileset(entt::registry& registry,
                  TileID firstId,
                  const Texture& texture,
-                 int tileWidth,
-                 int tileHeight) -> entt::entity;
+                 int32 tileWidth,
+                 int32 tileHeight) -> entt::entity;
 
 // This overload should be used when the user adds new tilesets (i.e. not from parsing)
 auto MakeTileset(entt::registry& registry,
                  const Texture& texture,
-                 int tileWidth,
-                 int tileHeight) -> entt::entity;
+                 int32 tileWidth,
+                 int32 tileHeight) -> entt::entity;
 
 /**
  * \brief Restores a tileset from a snapshot.
