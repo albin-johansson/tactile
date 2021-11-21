@@ -9,15 +9,11 @@
 
 #include <fmt/format.h>  // format
 
-#include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
-#include "core/components/layer_tree_node.hpp"
 #include "core/components/object.hpp"
-#include "core/components/object_layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
-#include "core/components/tile_layer.hpp"
 #include "core/map.hpp"
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/property_system.hpp"

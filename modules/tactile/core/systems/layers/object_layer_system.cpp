@@ -2,8 +2,8 @@
 
 #include <cassert>  // assert
 
+#include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/object_layer.hpp"
 #include "core/map.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "core/viewport.hpp"

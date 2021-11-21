@@ -4,7 +4,6 @@
 #include <imgui_internal.h>
 
 #include "core/components/layer.hpp"
-#include "core/components/tile_layer.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "render_info.hpp"
 #include "render_tile.hpp"

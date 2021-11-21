@@ -5,7 +5,6 @@
 
 #include "common_rendering.hpp"
 #include "core/components/layer.hpp"
-#include "core/components/object_layer.hpp"
 #include "objects/render_object.hpp"
 
 namespace Tactile {

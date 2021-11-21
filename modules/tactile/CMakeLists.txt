@@ -40,16 +40,12 @@ set(SOURCE_FILES
 
     core/components/animation.hpp
     core/components/fancy_tile.hpp
-    core/components/group_layer.hpp
     core/components/layer.hpp
-    core/components/layer_tree_node.hpp
     core/components/object.hpp
-    core/components/object_layer.hpp
     core/components/parent.hpp
     core/components/property.hpp
     core/components/property_context.hpp
     core/components/texture.hpp
-    core/components/tile_layer.hpp
     core/components/tileset.hpp
     core/components/tool.hpp
     core/components/uv_tile_size.hpp

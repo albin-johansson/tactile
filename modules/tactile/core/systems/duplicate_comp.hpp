@@ -2,10 +2,8 @@
 
 #include <entt/entt.hpp>  // registry, entity
 
-#include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/object_layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"

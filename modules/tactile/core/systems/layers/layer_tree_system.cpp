@@ -3,7 +3,7 @@
 #include <cassert>  // assert
 #include <utility>  // swap
 
-#include "core/components/layer_tree_node.hpp"
+#include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 
 namespace Tactile::Sys::LayerTree {

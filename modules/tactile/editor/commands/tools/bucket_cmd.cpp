@@ -3,7 +3,7 @@
 #include <cassert>  // assert
 
 #include "core/algorithms/flood_fill.hpp"
-#include "core/components/tile_layer.hpp"
+#include "core/components/layer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 

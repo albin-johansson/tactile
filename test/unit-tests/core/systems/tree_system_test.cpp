@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/components/layer_tree_node.hpp"
+#include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/registry_factory_system.hpp"

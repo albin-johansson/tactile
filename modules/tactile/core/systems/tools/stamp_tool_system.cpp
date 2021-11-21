@@ -8,7 +8,7 @@
 #include <rune/containers/vector_map.hpp>  // vector_map
 
 #include "common/tile_cache.hpp"
-#include "core/components/tile_layer.hpp"
+#include "core/components/layer.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map_position.hpp"
 #include "core/systems/layers/layer_system.hpp"

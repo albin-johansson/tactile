@@ -4,7 +4,6 @@
 #include <imgui_internal.h>
 
 #include "core/components/layer.hpp"
-#include "core/components/layer_tree_node.hpp"
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "io/preferences.hpp"

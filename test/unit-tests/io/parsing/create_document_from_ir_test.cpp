@@ -4,10 +4,8 @@
 
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/object_layer.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/texture.hpp"
-#include "core/components/tile_layer.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/layers/layer_system.hpp"

@@ -9,7 +9,6 @@
 
 #include "add_layer_popup.hpp"
 #include "core/components/layer.hpp"
-#include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/layers/layer_system.hpp"
