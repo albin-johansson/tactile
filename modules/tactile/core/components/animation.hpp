@@ -9,17 +9,27 @@
 
 namespace Tactile {
 
+/**
+ * \brief Component that represents a single frame in an animation.
+ *
+ * \see Animation
+ */
 struct AnimationFrame final
 {
-  TileID tile;
+  TileID tile{};
   cen::milliseconds<uint32> duration{};
 };
 
+/**
+ * \brief Component that represents an animation.
+ *
+ * \see AnimationFrame
+ */
 struct Animation final
 {
-  usize index{};
-  cen::milliseconds<uint32> last_update_time{};
-  std::vector<entt::entity> frames;
+  usize index{};                                 ///< Index of the current frame.
+  cen::milliseconds<uint32> last_update_time{};  ///< When a frame was last changed.
+  std::vector<entt::entity> frames;              ///< The associated frames.
 };
 
 }  // namespace Tactile
