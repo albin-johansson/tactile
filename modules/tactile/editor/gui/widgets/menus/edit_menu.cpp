@@ -67,7 +67,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     }
 
     if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection",
-                        GetObjectSelectionToolShortcutLabel(),
+                        "Q",
                         model.IsObjectSelectionActive(),
                         model.IsObjectSelectionPossible()))
     {
