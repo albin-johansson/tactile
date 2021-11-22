@@ -45,7 +45,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp",
                         "S",
                         model.IsStampActive(),
-                        hasActiveDocument))
+                        model.IsStampPossible()))
     {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
     }
@@ -53,7 +53,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket",
                         "B",
                         model.IsBucketActive(),
-                        hasActiveDocument))
+                        model.IsBucketPossible()))
     {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
     }
@@ -61,7 +61,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser",
                         "E",
                         model.IsEraserActive(),
-                        hasActiveDocument))
+                        model.IsEraserPossible()))
     {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
     }
