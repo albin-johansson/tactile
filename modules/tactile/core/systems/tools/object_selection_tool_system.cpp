@@ -10,16 +10,16 @@
 namespace Tactile::Sys {
 namespace {
 
-[[nodiscard]] auto IsUsable(const entt::registry& registry, const MouseInfo& mouse)
+[[nodiscard]] auto IsUsable(const entt::registry& registry)
     -> bool
 {
-  return IsObjectLayerActive(registry) && mouse.button == cen::mouse_button::left;
+  return IsObjectLayerActive(registry);
 }
 
 [[nodiscard]] auto GetTargetObject(const entt::registry& registry, const MouseInfo& mouse)
     -> entt::entity
 {
-  if (IsUsable(registry, mouse)) {
+  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     return registry.ctx<ActiveObject>().entity;
   }
   else {
@@ -33,23 +33,37 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
                                   entt::dispatcher& dispatcher,
                                   const MouseInfo& mouse)
 {
-  if (IsUsable(registry, mouse)) {
-    auto& active = registry.ctx<ActiveObject>();
-    active.entity = entt::null;
+  if (IsUsable(registry)) {
+    if (mouse.button == cen::mouse_button::left) {
+      auto& active = registry.ctx<ActiveObject>();
+      active.entity = entt::null;
 
-    const auto layerEntity = Sys::GetActiveLayer(registry);
-    const auto objectEntity = FindObject(registry, layerEntity, mouse.x, mouse.y);
-    if (objectEntity != entt::null) {
-      const auto& object = registry.get<Object>(objectEntity);
+      const auto layerEntity = GetActiveLayer(registry);
+      const auto objectEntity = FindObject(registry, layerEntity, mouse.x, mouse.y);
+      if (objectEntity != entt::null) {
+        const auto& object = registry.get<Object>(objectEntity);
 
-      auto& drag = registry.emplace<ObjectDragInfo>(objectEntity);
-      drag.origin_object_x = object.x;
-      drag.origin_object_y = object.y;
-      drag.last_mouse_x = mouse.x;
-      drag.last_mouse_y = mouse.y;
+        auto& drag = registry.emplace<ObjectDragInfo>(objectEntity);
+        drag.origin_object_x = object.x;
+        drag.origin_object_y = object.y;
+        drag.last_mouse_x = mouse.x;
+        drag.last_mouse_y = mouse.y;
 
-      active.entity = objectEntity;
-      dispatcher.enqueue<SetPropertyContextEvent>(objectEntity);
+        active.entity = objectEntity;
+        dispatcher.enqueue<SetPropertyContextEvent>(objectEntity);
+      }
+    }
+    else if (mouse.button == cen::mouse_button::right) {
+      auto& active = registry.ctx<ActiveObject>();
+      active.entity = entt::null;
+
+      const auto layerEntity = GetActiveLayer(registry);
+      const auto objectEntity = FindObject(registry, layerEntity, mouse.x, mouse.y);
+
+      if (objectEntity != entt::null) {
+        active.entity = objectEntity;
+        dispatcher.enqueue<SpawnObjectContextMenuEvent>(objectEntity);
+      }
     }
   }
 }

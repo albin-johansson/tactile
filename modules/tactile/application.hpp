@@ -104,6 +104,7 @@ class Application final
   void OnMoveObject(const MoveObjectEvent& event);
   void OnSetObjectVisibility(const SetObjectVisibilityEvent& event);
   void OnSetObjectTag(const SetObjectTagEvent& event);
+  void OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent& event);
 
   void OnAddProperty(const AddPropertyEvent& event);
   void OnRemoveProperty(const RemovePropertyEvent& event);

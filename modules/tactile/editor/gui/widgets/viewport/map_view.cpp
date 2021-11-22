@@ -11,6 +11,8 @@
 #include "core/systems/tools/tool_system.hpp"
 #include "core/viewport.hpp"
 #include "editor/events/map_events.hpp"
+#include "editor/events/object_events.hpp"
+#include "editor/events/property_events.hpp"
 #include "editor/events/tool_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
@@ -112,9 +114,14 @@ void UpdateCursorGizmos(const entt::registry& registry,
   }
 }
 
-void UpdateContextMenu(entt::dispatcher& dispatcher)
+void UpdateContextMenu(const entt::registry& registry,
+                       entt::dispatcher& dispatcher,
+                       const ViewportCursorInfo& cursor)
 {
-  if (ImGui::BeginPopupContextItem()) {
+  if (ImGui::BeginPopupContextItem(
+          "##MapViewContextMenu",
+          ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup))
+  {
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Map Properties")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
@@ -152,12 +159,59 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 
   drawList->PopClipRect();
   UpdateViewportOverlay(registry, cursor);
-  UpdateContextMenu(dispatcher);
+  UpdateContextMenu(registry, dispatcher, cursor);
 }
 
+void UpdateMapViewObjectContextMenu(const entt::registry& registry,
+                                    entt::dispatcher& dispatcher)
+{
+  if (ImGui::BeginPopup("##MapViewObjectContextMenu")) {
+    const auto active = registry.ctx<ActiveObject>();
+
+    assert(active.entity != entt::null);
+    const auto& object = registry.get<Object>(active.entity);
+
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Object Properties")) {
+      dispatcher.enqueue<SetPropertyContextEvent>(active.entity);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Object Visibility",
+                        nullptr,
+                        object.visible))
+    {
+      dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, !object.visible);
+    }
+
+    // TODO implement
+    ImGui::BeginDisabled();
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
+      dispatcher.enqueue<DuplicateObjectEvent>(object.id);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
+      dispatcher.enqueue<RemoveObjectEvent>(object.id);
+    }
+
+    ImGui::EndDisabled();
+
+    ImGui::EndPopup();
+  }
+}
+
+// TODO the declaration of this function isn't in map_view.hpp
 void CenterMapViewport()
 {
   center_viewport = true;
+}
+
+void OpenObjectContextMenu(const entt::entity objectEntity)
+{
+  ImGui::OpenPopup("##MapViewObjectContextMenu",
+                   ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
 }
 
 }  // namespace Tactile

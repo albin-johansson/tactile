@@ -152,9 +152,10 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(ICON_FA_OBJECT_GROUP,
+  if (ToolButton(TAC_ICON_OBJECT_SELECTION,
                  "Object selection tool",
                  model.IsObjectSelectionActive(),
+                 model.IsObjectSelectionPossible(),
                  bw,
                  bh))
   {

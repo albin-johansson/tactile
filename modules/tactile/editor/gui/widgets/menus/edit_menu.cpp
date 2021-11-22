@@ -66,6 +66,14 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
     }
 
+    if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection",
+                        GetObjectSelectionToolShortcutLabel(),
+                        model.IsObjectSelectionActive(),
+                        model.IsObjectSelectionPossible()))
+    {
+      dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
+    }
+
     ImGui::Separator();
 
     show_settings_window =

@@ -22,6 +22,7 @@
 #include "editor/gui/widgets/dialogs/save_as_dialog.hpp"
 #include "editor/gui/widgets/layers/layer_dock.hpp"
 #include "editor/gui/widgets/toolbar/toolbar.hpp"
+#include "editor/gui/widgets/viewport/map_view.hpp"
 #include "editor/gui/widgets/viewport/viewport_widget.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/create_document_from_ir.hpp"
@@ -532,6 +533,11 @@ void Application::OnSetObjectVisibility(const SetObjectVisibilityEvent& event)
 void Application::OnSetObjectTag(const SetObjectTagEvent& event)
 {
   Execute<SetObjectTagCmd>(mModel, event.id, event.tag);
+}
+
+void Application::OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent& event)
+{
+  OpenObjectContextMenu(event.object_entity);
 }
 
 void Application::OnAddProperty(const AddPropertyEvent& event)

@@ -4,6 +4,8 @@
 
 #include <tactile_def.hpp>
 
+#include <entt/entt.hpp>  // entity, null
+
 namespace Tactile {
 
 /// \addtogroup events
@@ -38,6 +40,21 @@ struct SetObjectNameEvent final
 {
   ObjectID id{};     ///< ID of target object.
   std::string name;  ///< The new object name.
+};
+
+struct DuplicateObjectEvent final
+{
+  ObjectID id{};  ///< ID of the target object.
+};
+
+struct RemoveObjectEvent final
+{
+  ObjectID id{};  ///< ID of the target object.
+};
+
+struct SpawnObjectContextMenuEvent final
+{
+  entt::entity object_entity{entt::null};
 };
 
 /// \} End of group events

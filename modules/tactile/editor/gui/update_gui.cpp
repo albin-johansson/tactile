@@ -13,8 +13,10 @@
 #include "editor/gui/widgets/properties/properties_dock.hpp"
 #include "editor/gui/widgets/tilesets/tileset_dock.hpp"
 #include "editor/gui/widgets/toolbar/toolbar.hpp"
+#include "editor/gui/widgets/viewport/map_view.hpp"
 #include "editor/gui/widgets/viewport/viewport_widget.hpp"
 #include "editor/model.hpp"
+#include "icons.hpp"
 
 namespace Tactile {
 
@@ -30,6 +32,8 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
   UpdateViewportWidget(model, dispatcher);
 
   if (const auto* registry = model.GetActiveRegistry()) {
+    UpdateMapViewObjectContextMenu(*registry, dispatcher);
+
     UpdateLayerDock(*registry, dispatcher);
     UpdatePropertiesDock(*registry, dispatcher);
     UpdateTilesetDock(*registry, dispatcher);

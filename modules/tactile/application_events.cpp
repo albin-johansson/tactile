@@ -73,6 +73,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<MoveObjectEvent>().connect<&App::OnMoveObject>(app);
   d.sink<SetObjectVisibilityEvent>().connect<&App::OnSetObjectVisibility>(app);
   d.sink<SetObjectTagEvent>().connect<&App::OnSetObjectTag>(app);
+  d.sink<SpawnObjectContextMenuEvent>().connect<&App::OnSpawnObjectContextMenu>(app);
 
   d.sink<AddPropertyEvent>().connect<&App::OnAddProperty>(app);
   d.sink<RemovePropertyEvent>().connect<&App::OnRemoveProperty>(app);
