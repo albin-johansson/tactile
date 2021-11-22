@@ -126,7 +126,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_STAMP, "Stamp tool", model.IsStampActive(), bw, bh)) {
+  if (ToolButton(TAC_ICON_STAMP,
+                 "Stamp tool",
+                 model.IsStampActive(),
+                 model.IsStampPossible(),
+                 bw,
+                 bh))
+  {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
   }
 
@@ -134,7 +140,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_BUCKET, "Bucket tool", model.IsBucketActive(), bw, bh)) {
+  if (ToolButton(TAC_ICON_BUCKET,
+                 "Bucket tool",
+                 model.IsBucketActive(),
+                 model.IsBucketPossible(),
+                 bw,
+                 bh))
+  {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
   }
 
@@ -142,7 +154,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_ERASER, "Eraser tool", model.IsEraserActive(), bw, bh)) {
+  if (ToolButton(TAC_ICON_ERASER,
+                 "Eraser tool",
+                 model.IsEraserActive(),
+                 model.IsEraserPossible(),
+                 bw,
+                 bh))
+  {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
   }
 
