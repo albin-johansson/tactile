@@ -22,7 +22,7 @@
 #include "core/systems/property_system.hpp"
 #include "core/systems/registry_factory_system.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "core/utils/load_texture.hpp"
+#include "core/utils/texture_manager.hpp"
 
 namespace Tactile {
 namespace {
@@ -168,9 +168,11 @@ void MakeFancyTiles(entt::registry& registry,
   }
 }
 
-void MakeTileset(entt::registry& registry, const IO::Tileset& data)
+void MakeTileset(entt::registry& registry,
+                 TextureManager& textures,
+                 const IO::Tileset& data)
 {
-  const auto info = LoadTexture(IO::GetImagePath(data)).value();
+  const auto info = textures.Load(IO::GetImagePath(data)).value();
   const auto entity = Sys::MakeTileset(registry,
                                        TileID{IO::GetFirstGlobalId(data)},
                                        info,
@@ -255,7 +257,7 @@ auto MakeLayer(entt::registry& registry,
 
 }  // namespace
 
-auto CreateDocumentFromIR(const IO::Map& data) -> Document
+auto CreateDocumentFromIR(const IO::Map& data, TextureManager& textures) -> Document
 {
   Document document;
   document.path = IO::GetPath(data);
@@ -281,7 +283,7 @@ auto CreateDocumentFromIR(const IO::Map& data) -> Document
   const auto nTilesets = IO::GetTilesetCount(data);
   for (usize index = 0; index < nTilesets; ++index) {
     const auto& tilesetData = IO::GetTileset(data, index);
-    MakeTileset(document.registry, tilesetData);
+    MakeTileset(document.registry, textures, tilesetData);
   }
 
   if (nTilesets != 0) {

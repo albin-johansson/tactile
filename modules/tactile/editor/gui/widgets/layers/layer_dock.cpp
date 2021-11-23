@@ -77,7 +77,9 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
 
 }  // namespace
 
-void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatcher)
+void UpdateLayerDock(const entt::registry& registry,
+                     const Icons& icons,
+                     entt::dispatcher& dispatcher)
 {
   if (!Prefs::GetShowLayerDock()) {
     return;
@@ -105,7 +107,7 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
           const auto& layer = registry.get<Layer>(entity);
           const auto& parent = registry.get<Parent>(entity);
           if (parent.entity == entt::null) {
-            LayerItem(registry, dispatcher, entity, layer);
+            LayerItem(registry, icons, dispatcher, entity, layer);
           }
         }
 

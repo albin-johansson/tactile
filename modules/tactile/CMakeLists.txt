@@ -93,8 +93,8 @@ set(SOURCE_FILES
     core/utils/buffer_utils.hpp
     core/utils/color_utils.hpp
     core/utils/formatted_string.hpp
-    core/utils/load_texture.cpp
-    core/utils/load_texture.hpp
+    core/utils/texture_manager.cpp
+    core/utils/texture_manager.hpp
     core/utils/profile.hpp
     core/utils/scope_id.hpp
     core/utils/vector_map.hpp

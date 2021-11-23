@@ -24,7 +24,7 @@ inline const auto file_path = GetPersistentFileDir() / "session.bin";
 
 }  // namespace
 
-void RestoreLastSession(Model& model)
+void RestoreLastSession(Model& model, TextureManager& textures)
 {
   Proto::Session session;
 
@@ -33,7 +33,7 @@ void RestoreLastSession(Model& model)
     for (const auto& file : session.files()) {
       MapParser parser{file};
       if (parser) {
-        model.AddMap(CreateDocumentFromIR(parser.GetData()));
+        model.AddMap(CreateDocumentFromIR(parser.GetData(), textures));
       }
       else {
         cen::log::warn("Failed to restore a map from previous session!");

@@ -20,7 +20,7 @@
 
 namespace Tactile {
 
-void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
+void UpdateGui(const Model& model, const Icons& icons, entt::dispatcher& dispatcher)
 {
   UpdateMenuBar(model, dispatcher);
   UpdateDockSpace();
@@ -29,12 +29,12 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
     UpdateToolbarWidget(model, dispatcher);
   }
 
-  UpdateViewportWidget(model, dispatcher);
+  UpdateViewportWidget(model, icons, dispatcher);
 
   if (const auto* registry = model.GetActiveRegistry()) {
     UpdateMapViewObjectContextMenu(*registry, dispatcher);
 
-    UpdateLayerDock(*registry, dispatcher);
+    UpdateLayerDock(*registry, icons, dispatcher);
     UpdatePropertiesDock(*registry, dispatcher);
     UpdateTilesetDock(*registry, dispatcher);
     UpdateLogDock();

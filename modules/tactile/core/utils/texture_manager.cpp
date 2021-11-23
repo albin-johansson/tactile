@@ -1,11 +1,8 @@
-#include "load_texture.hpp"
+#include "texture_manager.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 
 #include <memory>  // unique_ptr
-#include <vector>  // vector
-
-#include <tactile_def.hpp>
 
 #include <GL/glew.h>
 #include <centurion.hpp>
@@ -24,26 +21,19 @@ struct TextureDataDeleter final
 
 using TextureDataPtr = std::unique_ptr<unsigned char, TextureDataDeleter>;
 
-inline std::vector<uint> textures;
-
 }  // namespace
 
-void UnloadTextures()
+TextureManager::~TextureManager()
 {
-  for (const auto texture : textures) {
+  for (const auto texture : mTextures) {
     CENTURION_LOG_DEBUG("Deleting texture %u...", texture);
     glDeleteTextures(1, &texture);
   }
 
-  textures.clear();
+  mTextures.clear();
 }
 
-/**
- * The LoadTexture function was based on an example from the Dear ImGui wiki,
- * see:
- * https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples#Example-for-OpenGL-users
- */
-auto LoadTexture(const std::filesystem::path& path) -> Maybe<Texture>
+auto TextureManager::Load(const std::filesystem::path& path) -> Maybe<Texture>
 {
   Texture texture;
   texture.path = path;
@@ -83,7 +73,7 @@ auto LoadTexture(const std::filesystem::path& path) -> Maybe<Texture>
                data.get());
 
   CENTURION_LOG_DEBUG("Loaded texture with ID: %u", texture.id);
-  textures.push_back(texture.id);
+  mTextures.push_back(texture.id);
 
   return texture;
 }

@@ -12,14 +12,14 @@
 
 namespace Tactile {
 
-void UpdateHomePageContent()
+void UpdateHomePageContent(const Icons& icons)
 {
   PrepareVerticalAlignmentCenter(4);
 
   ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2{0, 64});
 
   AlignNextItemCenteredHorizontally(128);
-  ImGui::Image(ToTextureID(GetTactileIcon()), {128, 128});
+  ImGui::Image(ToTextureID(icons.GetTactileIcon()), {128, 128});
 
   CenteredText("No active map");
 

@@ -22,7 +22,9 @@ void RemoveTabBarFromNextWindow()
 
 }  // namespace
 
-void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
+void UpdateViewportWidget(const Model& model,
+                          const Icons& icons,
+                          entt::dispatcher& dispatcher)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
 
@@ -35,7 +37,7 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
       UpdateDocumentTabs(model, dispatcher);
     }
     else {
-      UpdateHomePageContent();
+      UpdateHomePageContent(icons);
     }
   }
   else {

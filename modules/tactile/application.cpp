@@ -14,7 +14,6 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "core/utils/load_texture.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/update_gui.hpp"
 #include "editor/gui/widgets/dialogs/map_import_error_dialog.hpp"
@@ -62,7 +61,9 @@ constinit bool prev_show_toolbar{true};
 
 }  // namespace
 
-Application::Application(cen::window&& window) : mWindow{std::move(window)}
+Application::Application(cen::window&& window)
+    : mWindow{std::move(window)}
+    , mIcons{mTextures}
 {
   SubscribeToEvents(this, mDispatcher);
   LoadDefaultShortcuts();
@@ -73,7 +74,7 @@ auto Application::Run() -> int
   const auto& io = ImGui::GetIO();
 
   if (Prefs::GetRestoreLastSession()) {
-    RestoreLastSession(mModel);
+    RestoreLastSession(mModel, mTextures);
   }
 
   LoadFileHistory();
@@ -116,7 +117,6 @@ void Application::OnAboutToExit()
   SavePreferences();
   SaveSession(mModel);
   SaveFileHistory();
-  UnloadTextures();
 }
 
 void Application::SaveCurrentFilesToHistory()
@@ -173,7 +173,7 @@ void Application::UpdateFrame()
 
   mDispatcher.update();
   mModel.Update();
-  UpdateGui(mModel, mDispatcher);
+  UpdateGui(mModel, mIcons, mDispatcher);
 }
 
 void Application::OnUndo()
@@ -256,7 +256,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
 
   MapParser parser{event.path};
   if (parser) {
-    mModel.AddMap(CreateDocumentFromIR(parser.GetData()));
+    mModel.AddMap(CreateDocumentFromIR(parser.GetData(), mTextures));
     AddFileToHistory(event.path);
   }
   else {
@@ -377,7 +377,7 @@ void Application::OnResetZoom()
 
 void Application::OnAddTileset(const AddTilesetEvent& event)
 {
-  if (auto info = LoadTexture(event.path)) {
+  if (auto info = mTextures.Load(event.path)) {
     Execute<AddTilesetCmd>(mModel, std::move(*info), event.tile_width, event.tile_height);
   }
   else {

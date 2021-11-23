@@ -4,6 +4,8 @@
 
 #include <IconsFontAwesome5.h>
 
+#include "core/utils/texture_manager.hpp"
+
 /// \addtogroup gui
 /// \{
 
@@ -78,39 +80,34 @@ namespace Tactile {
 /// \name Icon API
 /// \{
 
-/**
- * \brief Returns the texture identifier for the Tactile icon.
- *
- * \return the OpenGL texture ID for the Tactile icon.
- */
-[[nodiscard]] auto GetTactileIcon() noexcept -> uint;
-
-/**
- * \brief Returns the icon string literal for the specified layer type.
- *
- * \param type the layer type to obtain the icon for.
- *
- * \return an icon literal for the specified layer type.
- *
- * \throws TactileError if the layer type isn't recognized.
- */
-[[nodiscard]] auto GetIcon(LayerType type) -> CStr;
-
-/**
- * \brief Simple RAII wrapper for loading and unloading icons.
- */
 class Icons final
 {
  public:
-  /**
-   * \brief Loads all icons.
-   *
-   * \throws TactileError if any of the icons couldn't be loaded.
-   */
-  Icons();
+  explicit Icons(TextureManager& textures);
 
-  /// Unloads all icons.
-  ~Icons();
+  /**
+   * \brief Returns the icon string literal for the specified layer type.
+   *
+   * \param type the layer type to obtain the icon for.
+   *
+   * \return an icon literal for the specified layer type.
+   *
+   * \throws TactileError if the layer type isn't recognized.
+   */
+  [[nodiscard]] auto GetIcon(LayerType type) const -> CStr;
+
+  /**
+   * \brief Returns the texture identifier for the Tactile icon.
+   *
+   * \return the OpenGL texture ID for the Tactile icon.
+   */
+  [[nodiscard]] auto GetTactileIcon() const noexcept -> uint
+  {
+    return mTactileIcon;
+  }
+
+ private:
+  uint mTactileIcon{};
 };
 
 /// \} End of icon API

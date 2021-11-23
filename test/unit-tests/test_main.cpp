@@ -1,17 +1,13 @@
-#include <cstdlib>  // atexit
-
-#include <centurion.hpp>  // library
 #include <GL/glew.h>      // glewInit
+#include <centurion.hpp>  // library
 #include <gtest/gtest.h>
 
 #include "cfg/gl_attributes.hpp"
-#include "core/utils/load_texture.hpp"
+#include "core/utils/texture_manager.hpp"
 #include "io/preferences.hpp"
 
 auto main(int argc, char** argv) -> int
 {
-  std::atexit(Tactile::UnloadTextures);
-
   const cen::library centurion;
 
   Tactile::InitOpenGLAttributes();

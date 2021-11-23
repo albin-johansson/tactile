@@ -11,16 +11,19 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/property_system.hpp"
+#include "core/utils/texture_manager.hpp"
 #include "io/map_parser.hpp"
 
 using namespace Tactile;
 
 TEST(CreateDocumentFromIR, Test)
 {
+  TextureManager textures;
+
   MapParser parser{"test-resources/json/embedded.json"};
   ASSERT_TRUE(parser);
 
-  const auto document = CreateDocumentFromIR(parser.GetData());
+  const auto document = CreateDocumentFromIR(parser.GetData(), textures);
   ASSERT_FALSE(document.commands.CanUndo());
   ASSERT_FALSE(document.commands.CanRedo());
 

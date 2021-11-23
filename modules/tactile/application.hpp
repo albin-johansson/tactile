@@ -5,6 +5,7 @@
 #include <centurion.hpp>  // window, keyboard
 #include <entt/entt.hpp>  // dispatcher
 
+#include "core/utils/texture_manager.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/map_events.hpp"
@@ -34,7 +35,8 @@ class Application final
   cen::keyboard mKeyboard;
   entt::dispatcher mDispatcher;
   Model mModel;
-  [[no_unique_address]] Icons mIcons;
+  TextureManager mTextures;
+  Icons mIcons;
   bool mQuit{};
 
   void OnAboutToExit();

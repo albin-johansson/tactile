@@ -18,6 +18,7 @@ namespace Tactile {
 namespace {
 
 void GroupLayerItem(const entt::registry& registry,
+                    const Icons& icons,
                     entt::dispatcher& dispatcher,
                     const entt::entity layerEntity,
                     const Layer& layer,
@@ -39,7 +40,7 @@ void GroupLayerItem(const entt::registry& registry,
     const auto& node = registry.get<LayerTreeNode>(layerEntity);
     for (const auto child : node.children) {
       const auto& childLayer = registry.get<Layer>(child);
-      LayerItem(registry, dispatcher, child, childLayer);
+      LayerItem(registry, icons, dispatcher, child, childLayer);
     }
 
     ImGui::TreePop();
@@ -60,6 +61,7 @@ void GroupLayerItem(const entt::registry& registry,
 }  // namespace
 
 void LayerItem(const entt::registry& registry,
+               const Icons& icons,
                entt::dispatcher& dispatcher,
                const entt::entity layerEntity,
                const Layer& layer)
@@ -77,7 +79,7 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<PropertyContext>(layerEntity);
-  FormattedString name{"{} {}", GetIcon(layer.type), context.name};
+  FormattedString name{"{} {}", icons.GetIcon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {
     if (ImGui::Selectable(name.GetData(), isActiveLayer)) {
@@ -92,7 +94,13 @@ void LayerItem(const entt::registry& registry,
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
   }
   else {
-    GroupLayerItem(registry, dispatcher, layerEntity, layer, flags, name.GetData());
+    GroupLayerItem(registry,
+                   icons,
+                   dispatcher,
+                   layerEntity,
+                   layer,
+                   flags,
+                   name.GetData());
   }
 }
 

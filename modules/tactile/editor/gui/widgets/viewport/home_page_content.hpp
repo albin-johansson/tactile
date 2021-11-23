@@ -2,6 +2,8 @@
 
 namespace Tactile {
 
-void UpdateHomePageContent();
+class Icons;
+
+void UpdateHomePageContent(const Icons& icons);
 
 }  // namespace Tactile

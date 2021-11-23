@@ -6,31 +6,13 @@
 
 #include <GL/glew.h>
 
-#include "core/utils/load_texture.hpp"
-
 namespace Tactile {
-namespace {
 
-constinit uint icon_tactile{};
+Icons::Icons(TextureManager& textures)
+    : mTactileIcon{textures.Load("resources/icon.png").value().id}
+{}
 
-[[nodiscard]] auto LoadIcon(const std::filesystem::path& path) -> uint
-{
-  if (const auto info = LoadTexture(path)) {
-    return info->id;
-  }
-  else {
-    throw TactileError{"Failed to load icon!"};
-  }
-}
-
-}  // namespace
-
-auto GetTactileIcon() noexcept -> uint
-{
-  return icon_tactile;
-}
-
-auto GetIcon(const LayerType type) -> CStr
+auto Icons::GetIcon(const LayerType type) const -> CStr
 {
   switch (type) {
     case LayerType::TileLayer:
@@ -45,16 +27,6 @@ auto GetIcon(const LayerType type) -> CStr
     default:
       throw TactileError{"Failed to recognize layer type!"};
   }
-}
-
-Icons::Icons()
-{
-  icon_tactile = LoadIcon("resources/icon.png");
-}
-
-Icons::~Icons()
-{
-  glDeleteTextures(1, &icon_tactile);
 }
 
 }  // namespace Tactile
