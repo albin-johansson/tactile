@@ -3,9 +3,9 @@
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
 
-#include <entt/entt.hpp>                   // registry
-#include <rune/containers/vector_map.hpp>  // vector_map
+#include <entt/entt.hpp>  // registry
 
+#include "core/utils/vector_map.hpp"
 #include "document.hpp"
 #include "events/command_events.hpp"
 #include "events/tool_events.hpp"
@@ -19,7 +19,7 @@ class Model final
 {
  public:
   // Store documents on the heap to ensure stability, which is important for commands
-  using document_map = rune::vector_map<MapID, std::unique_ptr<Document>>;
+  using document_map = VectorMap<MapID, std::unique_ptr<Document>>;
   using const_iterator = document_map::const_iterator;
 
   void Update();

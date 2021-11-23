@@ -2,12 +2,11 @@
 
 #include <tactile_def.hpp>
 
-#include <rune/containers/vector_map.hpp>  // vector_map
-
 #include "core/map_position.hpp"
+#include "core/utils/vector_map.hpp"
 
 namespace Tactile {
 
-using TileCache = rune::vector_map<MapPosition, TileID>;
+using TileCache = VectorMap<MapPosition, TileID>;
 
 }  // namespace Tactile

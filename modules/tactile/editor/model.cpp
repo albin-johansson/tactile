@@ -29,35 +29,35 @@ void Model::OnCommandCapacityChanged(const SetCommandCapacityEvent& event)
 
 auto Model::IsClean() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.IsClean();
+  return mActiveMap && mDocuments.At(*mActiveMap)->commands.IsClean();
 }
 
 auto Model::CanUndo() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.CanUndo();
+  return mActiveMap && mDocuments.At(*mActiveMap)->commands.CanUndo();
 }
 
 auto Model::CanRedo() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.CanRedo();
+  return mActiveMap && mDocuments.At(*mActiveMap)->commands.CanRedo();
 }
 
 auto Model::GetUndoText() const -> const std::string&
 {
   assert(CanUndo());
-  return mDocuments.at(mActiveMap.value())->commands.GetUndoText();
+  return mDocuments.At(mActiveMap.value())->commands.GetUndoText();
 }
 
 auto Model::GetRedoText() const -> const std::string&
 {
   assert(CanRedo());
-  return mDocuments.at(mActiveMap.value())->commands.GetRedoText();
+  return mDocuments.At(mActiveMap.value())->commands.GetRedoText();
 }
 
 auto Model::CanSaveDocument() const -> bool
 {
   if (mActiveMap) {
-    const auto& document = mDocuments.at(*mActiveMap);
+    const auto& document = mDocuments.At(*mActiveMap);
     return !document->commands.IsClean();
   }
   else {
@@ -68,7 +68,7 @@ auto Model::CanSaveDocument() const -> bool
 auto Model::CanDecreaseViewportTileSize() const -> bool
 {
   if (HasActiveDocument()) {
-    const auto& document = mDocuments.at(*mActiveMap);
+    const auto& document = mDocuments.At(*mActiveMap);
     return Sys::CanDecreaseViewportZoom(document->registry);
   }
 
@@ -79,7 +79,7 @@ auto Model::AddMap(Document document) -> MapID
 {
   const auto id = mNextId;
 
-  mDocuments.emplace(id, std::make_unique<Document>(std::move(document)));
+  mDocuments.Emplace(id, std::make_unique<Document>(std::move(document)));
   mActiveMap = id;
 
   ++mNextId;
@@ -103,18 +103,19 @@ auto Model::AddMap(const int tileWidth, const int tileHeight) -> MapID
 
 void Model::SelectMap(const MapID id)
 {
-  assert(mDocuments.contains(id));
+  assert(mDocuments.Contains(id));
   mActiveMap = id;
 }
 
 void Model::RemoveMap(const MapID id)
 {
-  assert(mDocuments.contains(id));
-  mDocuments.erase(id);
+  assert(mDocuments.Contains(id));
+  mDocuments.Erase(id);
 
   if (mActiveMap == id) {
-    if (!mDocuments.empty()) {
-      mActiveMap = mDocuments.at_index(0).first;
+    if (!mDocuments.IsEmpty()) {
+      const auto& [mapId, map] = mDocuments.AtIndex(0);
+      mActiveMap = mapId;
     }
     else {
       mActiveMap.reset();
@@ -124,8 +125,8 @@ void Model::RemoveMap(const MapID id)
 
 auto Model::GetPath(const MapID id) const -> const std::filesystem::path&
 {
-  assert(mDocuments.contains(id));
-  return mDocuments.at(id)->path;
+  assert(mDocuments.Contains(id));
+  return mDocuments.At(id)->path;
 }
 
 auto Model::HasDocumentWithPath(const std::filesystem::path& path) const -> bool
@@ -147,7 +148,7 @@ auto Model::HasActiveDocument() const -> bool
 auto Model::GetActiveDocument() -> Document*
 {
   if (mActiveMap) {
-    return mDocuments.at(*mActiveMap).get();
+    return mDocuments.At(*mActiveMap).get();
   }
   else {
     return nullptr;
@@ -157,7 +158,7 @@ auto Model::GetActiveDocument() -> Document*
 auto Model::GetActiveDocument() const -> const Document*
 {
   if (mActiveMap) {
-    return mDocuments.at(*mActiveMap).get();
+    return mDocuments.At(*mActiveMap).get();
   }
   else {
     return nullptr;
@@ -167,7 +168,7 @@ auto Model::GetActiveDocument() const -> const Document*
 auto Model::GetActiveRegistry() -> entt::registry*
 {
   if (mActiveMap) {
-    return &mDocuments.at(*mActiveMap)->registry;
+    return &mDocuments.At(*mActiveMap)->registry;
   }
   else {
     return nullptr;
@@ -177,7 +178,7 @@ auto Model::GetActiveRegistry() -> entt::registry*
 auto Model::GetActiveRegistry() const -> const entt::registry*
 {
   if (mActiveMap) {
-    return &mDocuments.at(*mActiveMap)->registry;
+    return &mDocuments.At(*mActiveMap)->registry;
   }
   else {
     return nullptr;

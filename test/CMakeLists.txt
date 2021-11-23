@@ -20,6 +20,8 @@ set(TEST_FILES
     unit-tests/core/systems/registry_factory_system_test.cpp
     unit-tests/core/systems/tree_system_test.cpp
 
+    unit-tests/core/utils/vector_map_test.cpp
+
     unit-tests/io/parsing/map_parser_test.cpp
     unit-tests/io/parsing/parse_map_with_embedded_tilesets_test.cpp
     unit-tests/io/parsing/parse_map_with_external_tilesets_test.cpp

@@ -5,8 +5,6 @@
 
 #include <tactile_def.hpp>
 
-#include <rune/containers/vector_map.hpp>  // vector_map
-
 #include "common/tile_cache.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/tileset.hpp"
@@ -54,8 +52,10 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
       if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
         if (IsPositionInMap(registry, pos)) {
-          old_state.try_emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
-          sequence.emplace_or_replace(pos, tile);
+          if (!old_state.Contains(pos)) {
+            old_state.Emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
+          }
+          sequence.EmplaceOrReplace(pos, tile);
           SetTileInLayer(registry, layerEntity, pos, tile);
         }
       }
@@ -68,8 +68,8 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    old_state.clear();
-    sequence.clear();
+    old_state.Clear();
+    sequence.Clear();
 
     UpdateSequence(registry, mouse.position_in_map);
   }

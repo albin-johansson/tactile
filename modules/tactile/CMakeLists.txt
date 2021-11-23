@@ -97,6 +97,7 @@ set(SOURCE_FILES
     core/utils/load_texture.hpp
     core/utils/profile.hpp
     core/utils/scope_id.hpp
+    core/utils/vector_map.hpp
 
     editor/document.hpp
     editor/model.cpp
@@ -454,7 +455,6 @@ target_include_directories(${TACTILE_LIB}
 
                            SYSTEM PUBLIC
                            ${LIBRARY_DIR}/centurion
-                           ${LIBRARY_DIR}/rune
                            ${LIBRARY_DIR}/fontawesome
                            ${LIBRARY_DIR}/pfd
                            ${STB_INCLUDE_DIRS}
