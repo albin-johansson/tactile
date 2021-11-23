@@ -25,7 +25,8 @@ inline Preferences settings;  // The value of the settings in the GUI
 void UpdatePreviewSettings(const Preferences& prefs)
 {
   ApplyTheme(ImGui::GetStyle(), prefs.theme);
-  ImGui::GetStyle().WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
+  ImGui::GetStyle().WindowBorderSize =
+      (prefs.flags & Preferences::window_border) ? 1.0f : 0.0f;
 }
 
 void ShowBehaviorTab()
@@ -38,10 +39,10 @@ void ShowBehaviorTab()
     }
     ImGui::Spacing();
 
-    if (auto restore = settings.restore_last_session;
+    if (bool restore = settings.flags & Preferences::restore_last_session;
         Checkbox("Restore last session on startup", &restore))
     {
-      settings.restore_last_session = restore;
+      settings.SetFlag(Preferences::restore_last_session, restore);
     }
 
     ImGui::AlignTextToFramePadding();
@@ -132,18 +133,19 @@ void ShowAppearanceBar()
           cen::color::from_norm(array.at(0), array.at(1), array.at(2));
     }
 
-    if (auto enabled = settings.window_border; ImGui::Checkbox("Window border", &enabled))
+    if (bool enabled = settings.flags & Preferences::window_border;
+        ImGui::Checkbox("Window border", &enabled))
     {
-      settings.window_border = enabled;
+      settings.SetFlag(Preferences::window_border, enabled);
       ImGui::GetStyle().WindowBorderSize = enabled ? 1.0f : 0.0f;
     }
 
-    if (auto restoreLayout = settings.restore_layout;
+    if (bool restoreLayout = settings.flags & Preferences::restore_layout;
         Checkbox("Restore layout",
                  &restoreLayout,
                  "Restore the previous layout of widgets at startup"))
     {
-      settings.restore_layout = restoreLayout;
+      settings.SetFlag(Preferences::restore_layout, restoreLayout);
     }
 
     ImGui::EndTabItem();
@@ -184,26 +186,26 @@ void ShowExportTab()
           "The save file format used if no file extension is specified when saving maps");
     }
 
-    if (auto embedTilesets = settings.embed_tilesets;
+    if (bool embedTilesets = settings.flags & Preferences::embed_tilesets;
         Checkbox("Embed tilesets", &embedTilesets, "Embed tileset data in map files"))
     {
-      settings.embed_tilesets = embedTilesets;
+      settings.SetFlag(Preferences::embed_tilesets, embedTilesets);
     }
 
-    if (auto indentOutput = settings.indent_output;
+    if (bool indentOutput = settings.flags & Preferences::indent_output;
         Checkbox("Indent output",
                  &indentOutput,
                  "Controls whether or not save files are indented"))
     {
-      settings.indent_output = indentOutput;
+      settings.SetFlag(Preferences::indent_output, indentOutput);
     }
 
-    if (auto foldTileData = settings.fold_tile_data; Checkbox(
+    if (bool foldTileData = settings.flags & Preferences::fold_tile_data; Checkbox(
             "Fold tile data",
             &foldTileData,
             "Make tile layer data easier for humans to edit, at the expense of space"))
     {
-      settings.fold_tile_data = foldTileData;
+      settings.SetFlag(Preferences::fold_tile_data, foldTileData);
     }
 
     ImGui::EndTabItem();

@@ -38,6 +38,18 @@ enum class Theme
 
 struct Preferences final
 {
+  inline static constexpr uint64 embed_tilesets = 1u << 0u;
+  inline static constexpr uint64 indent_output = 1u << 1u;
+  inline static constexpr uint64 fold_tile_data = 1u << 2u;
+  inline static constexpr uint64 show_grid = 1u << 3u;
+  inline static constexpr uint64 show_layer_dock = 1u << 4u;
+  inline static constexpr uint64 show_tileset_dock = 1u << 5u;
+  inline static constexpr uint64 show_properties_dock = 1u << 6u;
+  inline static constexpr uint64 show_log_dock = 1u << 7u;
+  inline static constexpr uint64 window_border = 1u << 8u;
+  inline static constexpr uint64 restore_layout = 1u << 9u;
+  inline static constexpr uint64 restore_last_session = 1u << 10u;
+
   std::string preferred_format;
   Theme theme;
   cen::color viewport_background;
@@ -45,17 +57,11 @@ struct Preferences final
   int preferred_tile_width;
   int preferred_tile_height;
   int viewport_overlay_pos;
-  bool embed_tilesets;
-  bool indent_output;
-  bool fold_tile_data;
-  bool show_grid;
-  bool show_layer_dock;
-  bool show_tileset_dock;
-  bool show_properties_dock;
-  bool show_log_dock;
-  bool window_border;
-  bool restore_layout;
-  bool restore_last_session;
+  uint64 flags;
+
+  void SetFlag(uint64 flag, bool value) noexcept;
+
+  void ResetFlag(uint64 flag) noexcept;
 };
 
 /// Loads existing persistent preferences or loads the default preferences.

@@ -19,24 +19,22 @@ namespace {
 
 inline const auto settings_path = GetPersistentFileDir() / "settings.bin";
 
-constexpr CStr def_preferred_format = "YAML";
 constexpr Theme def_theme = Theme::Nocturnal;
-constexpr cen::color def_viewport_background{60, 60, 60};
+
+constexpr CStr def_preferred_format = "YAML";
+
 constexpr usize def_command_capacity = 100;
+
 constexpr int def_preferred_tile_width = 32;
 constexpr int def_preferred_tile_height = 32;
+
+constexpr cen::color def_viewport_background{60, 60, 60};
 constexpr int def_viewport_overlay_pos = cen::to_underlying(OverlayPos::BottomLeft);
-constexpr bool def_show_grid = true;
-constexpr bool def_embed_tilesets = false;
-constexpr bool def_indent_output = true;
-constexpr bool def_fold_tile_data = false;
-constexpr bool def_show_layer_dock = true;
-constexpr bool def_show_tileset_dock = true;
-constexpr bool def_show_properties_dock = true;
-constexpr bool def_show_log_dock = false;
-constexpr bool def_window_border = false;
-constexpr bool def_restore_layout = true;
-constexpr bool def_restore_last_session = true;
+
+constexpr uint64 def_flags =
+    Preferences::show_grid | Preferences::indent_output | Preferences::show_layer_dock |
+    Preferences::show_tileset_dock | Preferences::show_properties_dock |
+    Preferences::restore_layout | Preferences::restore_last_session;
 
 [[nodiscard]] auto MakeDefaultPreferences() -> Preferences
 {
@@ -47,22 +45,27 @@ constexpr bool def_restore_last_session = true;
           .preferred_tile_width = def_preferred_tile_width,
           .preferred_tile_height = def_preferred_tile_height,
           .viewport_overlay_pos = def_viewport_overlay_pos,
-          .embed_tilesets = def_embed_tilesets,
-          .indent_output = def_indent_output,
-          .fold_tile_data = def_fold_tile_data,
-          .show_grid = def_show_grid,
-          .show_layer_dock = def_show_layer_dock,
-          .show_tileset_dock = def_show_tileset_dock,
-          .show_properties_dock = def_show_properties_dock,
-          .show_log_dock = def_show_log_dock,
-          .window_border = def_window_border,
-          .restore_layout = def_restore_layout,
-          .restore_last_session = def_restore_last_session};
+          .flags = def_flags};
 }
 
 inline Preferences settings = MakeDefaultPreferences();
 
 }  // namespace
+
+void Preferences::SetFlag(const uint64 flag, const bool value) noexcept
+{
+  if (value) {
+    flags |= flag;
+  }
+  else {
+    flags &= ~flag;
+  }
+}
+
+void Preferences::ResetFlag(const uint64 flag) noexcept
+{
+  SetFlag(flag, def_flags & flag);
+}
 
 void LoadPreferences()
 {
@@ -86,11 +89,11 @@ void LoadPreferences()
       }
 
       if (cfg.has_show_grid()) {
-        settings.show_grid = cfg.show_grid();
+        settings.SetFlag(Preferences::show_grid, cfg.show_grid());
       }
 
       if (cfg.has_window_border()) {
-        settings.window_border = cfg.window_border();
+        settings.SetFlag(Preferences::window_border, cfg.window_border());
       }
 
       if (cfg.has_command_capacity()) {
@@ -98,7 +101,7 @@ void LoadPreferences()
       }
 
       if (cfg.has_restore_last_session()) {
-        settings.restore_last_session = cfg.restore_last_session();
+        settings.SetFlag(Preferences::restore_last_session, cfg.restore_last_session());
       }
 
       if (cfg.has_preferred_tile_width()) {
@@ -114,35 +117,35 @@ void LoadPreferences()
       }
 
       if (cfg.has_embed_tilesets()) {
-        settings.embed_tilesets = cfg.embed_tilesets();
+        settings.SetFlag(Preferences::embed_tilesets, cfg.embed_tilesets());
       }
 
       if (cfg.has_indent_output()) {
-        settings.indent_output = cfg.indent_output();
+        settings.SetFlag(Preferences::indent_output, cfg.indent_output());
       }
 
       if (cfg.has_fold_tile_data()) {
-        settings.fold_tile_data = cfg.fold_tile_data();
+        settings.SetFlag(Preferences::fold_tile_data, cfg.fold_tile_data());
       }
 
       if (cfg.has_show_tileset_dock()) {
-        settings.show_tileset_dock = cfg.show_tileset_dock();
+        settings.SetFlag(Preferences::show_tileset_dock, cfg.show_tileset_dock());
       }
 
       if (cfg.has_show_layer_dock()) {
-        settings.show_layer_dock = cfg.show_layer_dock();
+        settings.SetFlag(Preferences::show_layer_dock, cfg.show_layer_dock());
       }
 
       if (cfg.has_show_properties_dock()) {
-        settings.show_properties_dock = cfg.show_properties_dock();
+        settings.SetFlag(Preferences::show_properties_dock, cfg.show_properties_dock());
       }
 
       if (cfg.has_show_log_dock()) {
-        settings.show_log_dock = cfg.show_log_dock();
+        settings.SetFlag(Preferences::show_log_dock, cfg.show_log_dock());
       }
 
       if (cfg.has_restore_layout()) {
-        settings.restore_layout = cfg.restore_layout();
+        settings.SetFlag(Preferences::restore_layout, cfg.restore_layout());
       }
 
       if (cfg.has_viewport_overlay_pos()) {
@@ -236,60 +239,61 @@ void ResetAppearancePreferences(Preferences& prefs)
 {
   prefs.theme = def_theme;
   prefs.viewport_background = def_viewport_background;
-  prefs.window_border = def_window_border;
-  prefs.show_grid = def_show_grid;
+
+  prefs.ResetFlag(Preferences::window_border);
+  prefs.ResetFlag(Preferences::show_grid);
 
   // Note, not technically an "appearance" setting, but it is to the user
-  prefs.restore_layout = def_restore_layout;
+  prefs.ResetFlag(Preferences::restore_layout);
 }
 
 void SetShowGrid(const bool show) noexcept
 {
-  settings.show_grid = show;
+  settings.SetFlag(Preferences::show_grid, show);
 }
 
 void ResetBehaviorPreferences(Preferences& prefs)
 {
   prefs.command_capacity = def_command_capacity;
-  prefs.restore_last_session = def_restore_last_session;
   prefs.preferred_tile_width = def_preferred_tile_width;
   prefs.preferred_tile_height = def_preferred_tile_height;
+  prefs.ResetFlag(Preferences::restore_last_session);
 }
 
 void ResetExportPreferences(Preferences& prefs)
 {
   prefs.preferred_format = def_preferred_format;
-  prefs.embed_tilesets = def_embed_tilesets;
-  prefs.indent_output = def_indent_output;
-  prefs.fold_tile_data = def_fold_tile_data;
+  prefs.ResetFlag(Preferences::embed_tilesets);
+  prefs.ResetFlag(Preferences::indent_output);
+  prefs.ResetFlag(Preferences::fold_tile_data);
 }
 
 void ResetDockVisibilities() noexcept
 {
-  settings.show_layer_dock = def_show_layer_dock;
-  settings.show_tileset_dock = def_show_tileset_dock;
-  settings.show_properties_dock = def_show_properties_dock;
-  settings.show_log_dock = def_show_log_dock;
+  settings.ResetFlag(Preferences::show_layer_dock);
+  settings.ResetFlag(Preferences::show_tileset_dock);
+  settings.ResetFlag(Preferences::show_properties_dock);
+  settings.ResetFlag(Preferences::show_log_dock);
 }
 
 void SetShowLayerDock(const bool visible) noexcept
 {
-  settings.show_layer_dock = visible;
+  settings.SetFlag(Preferences::show_layer_dock, visible);
 }
 
 void SetShowTilesetDock(const bool visible) noexcept
 {
-  settings.show_tileset_dock = visible;
+  settings.SetFlag(Preferences::show_tileset_dock, visible);
 }
 
 void SetShowPropertiesDock(const bool visible) noexcept
 {
-  settings.show_properties_dock = visible;
+  settings.SetFlag(Preferences::show_properties_dock, visible);
 }
 
 void SetShowLogDock(const bool visible) noexcept
 {
-  settings.show_log_dock = visible;
+  settings.SetFlag(Preferences::show_log_dock, visible);
 }
 
 void SetViewportOverlayPos(const OverlayPos pos) noexcept
@@ -304,42 +308,42 @@ auto GetPreferredFormat() -> const std::string&
 
 auto GetShowGrid() noexcept -> bool
 {
-  return settings.show_grid;
+  return settings.flags & Preferences::show_grid;
 }
 
 auto GetEmbedTilesets() noexcept -> bool
 {
-  return settings.embed_tilesets;
+  return settings.flags & Preferences::embed_tilesets;
 }
 
 auto GetFoldTileData() noexcept -> bool
 {
-  return settings.fold_tile_data;
+  return settings.flags & Preferences::fold_tile_data;
 }
 
 auto GetIndentOutput() noexcept -> bool
 {
-  return settings.indent_output;
+  return settings.flags & Preferences::indent_output;
 }
 
 auto GetShowLayerDock() noexcept -> bool
 {
-  return settings.show_layer_dock;
+  return settings.flags & Preferences::show_layer_dock;
 }
 
 auto GetShowTilesetDock() noexcept -> bool
 {
-  return settings.show_tileset_dock;
+  return settings.flags & Preferences::show_tileset_dock;
 }
 
 auto GetShowPropertiesDock() noexcept -> bool
 {
-  return settings.show_properties_dock;
+  return settings.flags & Preferences::show_properties_dock;
 }
 
 auto GetShowLogDock() noexcept -> bool
 {
-  return settings.show_log_dock;
+  return settings.flags & Preferences::show_log_dock;
 }
 
 auto GetTheme() noexcept -> Theme
@@ -354,12 +358,12 @@ auto GetViewportBackground() noexcept -> const cen::color&
 
 auto GetWindowBorder() noexcept -> bool
 {
-  return settings.window_border;
+  return settings.flags & Preferences::window_border;
 }
 
 auto GetRestoreLayout() noexcept -> bool
 {
-  return settings.restore_layout;
+  return settings.flags & Preferences::restore_layout;
 }
 
 auto GetViewportOverlayPos() noexcept -> OverlayPos
@@ -384,7 +388,7 @@ auto GetPreferredTileHeight() noexcept -> int
 
 auto GetRestoreLastSession() noexcept -> bool
 {
-  return settings.restore_last_session;
+  return settings.flags & Preferences::restore_last_session;
 }
 
 }  // namespace Prefs
