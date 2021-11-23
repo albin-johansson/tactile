@@ -111,7 +111,5 @@ ninja
 * [Protocol Buffers](https://github.com/protocolbuffers/protobuf)
 * [pugixml](https://github.com/zeux/pugixml)
 * [SDL2](https://github.com/libsdl-org/SDL)
-* [SDL2_image](https://github.com/libsdl-org/SDL_image)
-* [SDL2_ttf](https://github.com/libsdl-org/SDL_ttf)
 * [stb_image](https://github.com/nothings/stb)
 * [yaml-cpp](https://github.com/jbeder/yaml-cpp)
