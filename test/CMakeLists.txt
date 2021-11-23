@@ -10,33 +10,31 @@ set(TEST_FILES
     unit-tests/tactile_stdlib_test.cpp
     unit-tests/test_main.cpp
 
-    unit-tests/core/commands/command_stack_test.cpp
-
-    unit-tests/core/map/map_position_test.cpp
-
-    unit-tests/core/properties/property_value_test.cpp
+    unit-tests/core/map_position_test.cpp
+    unit-tests/core/property_value_test.cpp
 
     unit-tests/core/systems/layer_system_test.cpp
     unit-tests/core/systems/registry_factory_system_test.cpp
     unit-tests/core/systems/tree_system_test.cpp
 
+    unit-tests/core/utils/buffer_utils_test.cpp
+    unit-tests/core/utils/color_utils_test.cpp
     unit-tests/core/utils/vector_map_test.cpp
 
-    unit-tests/io/parsing/map_parser_test.cpp
-    unit-tests/io/parsing/parse_map_with_embedded_tilesets_test.cpp
-    unit-tests/io/parsing/parse_map_with_external_tilesets_test.cpp
-    unit-tests/io/parsing/parse_tmx_with_tile_nodes_test.cpp
+    unit-tests/editor/commands/command_stack_test.cpp
+
     unit-tests/io/parsing/create_document_from_ir_test.cpp
 
     unit-tests/tactile-io/io_test_helpers.hpp
     unit-tests/tactile-io/ir_layer_test.cpp
     unit-tests/tactile-io/ir_object_test.cpp
     unit-tests/tactile-io/ir_property_test.cpp
+    unit-tests/tactile-io/map_parser_test.cpp
     unit-tests/tactile-io/parse_json_map_embedded_test.cpp
+    unit-tests/tactile-io/parse_map_with_embedded_tilesets_test.cpp
+    unit-tests/tactile-io/parse_map_with_external_tilesets_test.cpp
+    unit-tests/tactile-io/parse_tmx_with_tile_nodes_test.cpp
     unit-tests/tactile-io/parse_yaml_map_test.cpp
-
-    unit-tests/utils/buffer_utils_test.cpp
-    unit-tests/utils/color_utils_test.cpp
     )
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
