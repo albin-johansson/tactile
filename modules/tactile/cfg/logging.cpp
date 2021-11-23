@@ -47,7 +47,7 @@ void LogMessage(const cen::log_priority priority, const CStr msg)
 {
   auto time = std::time(nullptr);
 
-  const auto str = fmt::format("({:%H:%M:%S}) [{}] > {}\n",
+  const auto str = fmt::format("{:%H:%M:%S} [{}]: {}\n",
                                fmt::localtime(time),
                                ConvertPriority(priority),
                                msg);
