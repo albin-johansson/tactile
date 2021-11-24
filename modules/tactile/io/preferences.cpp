@@ -14,6 +14,9 @@
 
 #include <settings.pb.h>
 
+#define PRINT_FLAG(Name, Mask) \
+  CENTURION_LOG_INFO(Name ": %s", (prefs.flags & (Mask)) ? "yes" : "no")
+
 namespace Tactile {
 namespace {
 
@@ -49,6 +52,34 @@ constexpr uint64 def_flags =
 }
 
 inline Preferences settings = MakeDefaultPreferences();
+
+void PrintPreferences(Preferences& prefs)
+{
+  CENTURION_LOG_INFO("Theme: %s", magic_enum::enum_name(prefs.theme).data());
+  CENTURION_LOG_INFO("Viewport background: %s",
+                     prefs.viewport_background.as_rgb().c_str());
+
+  CENTURION_LOG_INFO("Command capacity: %u", prefs.command_capacity);
+  CENTURION_LOG_INFO("Preferred tile width: %i", prefs.preferred_tile_width);
+  CENTURION_LOG_INFO("Preferred tile height: %i", prefs.preferred_tile_height);
+
+  CENTURION_LOG_INFO("Preferred format: %s", prefs.preferred_format.c_str());
+  CENTURION_LOG_INFO("Viewport overlay pos: %i", prefs.viewport_overlay_pos);
+
+  PRINT_FLAG("Embed tilesets", Preferences::embed_tilesets);
+  PRINT_FLAG("Indent output", Preferences::indent_output);
+  PRINT_FLAG("Fold tile data", Preferences::fold_tile_data);
+
+  PRINT_FLAG("Show grid", Preferences::show_grid);
+  PRINT_FLAG("Show layer dock", Preferences::show_layer_dock);
+  PRINT_FLAG("Show log dock", Preferences::show_log_dock);
+  PRINT_FLAG("Show tileset dock", Preferences::show_tileset_dock);
+  PRINT_FLAG("Show properties dock", Preferences::show_properties_dock);
+
+  PRINT_FLAG("Window border", Preferences::window_border);
+  PRINT_FLAG("Restore layout", Preferences::restore_layout);
+  PRINT_FLAG("Restore last session", Preferences::restore_last_session);
+}
 
 }  // namespace
 
@@ -158,30 +189,7 @@ void LoadPreferences()
     SavePreferences();
   }
 
-  // clang-format off
-  CENTURION_LOG_INFO("Theme: %s", magic_enum::enum_name(settings.theme).data());
-  CENTURION_LOG_INFO("Viewport background: %s", settings.viewport_background.as_rgb().c_str());
-  CENTURION_LOG_INFO("Show grid: %i", settings.show_grid);
-  CENTURION_LOG_INFO("Window border: %i", settings.window_border);
-
-  CENTURION_LOG_INFO("Command capacity: %u", settings.command_capacity);
-  CENTURION_LOG_INFO("Restore last session: %i", settings.restore_last_session);
-  CENTURION_LOG_INFO("Preferred tile width: %i", settings.preferred_tile_width);
-  CENTURION_LOG_INFO("Preferred tile height: %i", settings.preferred_tile_height);
-
-  CENTURION_LOG_INFO("Preferred format: %s", settings.preferred_format.c_str());
-  CENTURION_LOG_INFO("Embed tilesets: %i", settings.embed_tilesets);
-  CENTURION_LOG_INFO("Indent output: %i", settings.indent_output);
-  CENTURION_LOG_INFO("Fold tile data: %i", settings.fold_tile_data);
-
-  CENTURION_LOG_INFO("Show layer dock: %i", settings.show_layer_dock);
-  CENTURION_LOG_INFO("Show log dock: %i", settings.show_log_dock);
-  CENTURION_LOG_INFO("Show tileset dock: %i", settings.show_tileset_dock);
-  CENTURION_LOG_INFO("Show properties dock: %i", settings.show_properties_dock);
-  CENTURION_LOG_INFO("Show log dock: %i", settings.show_log_dock);
-  CENTURION_LOG_INFO("Restore layout: %i", settings.restore_layout);
-  CENTURION_LOG_INFO("Viewport overlay pos: %i", settings.viewport_overlay_pos);
-  // clang-format on
+  PrintPreferences(settings);
 }
 
 void SavePreferences()
@@ -189,8 +197,8 @@ void SavePreferences()
   Proto::Settings cfg;
 
   cfg.set_theme(static_cast<Proto::Theme>(settings.theme));
-  cfg.set_show_grid(settings.show_grid);
-  cfg.set_window_border(settings.window_border);
+  cfg.set_show_grid(Prefs::GetShowGrid());
+  cfg.set_window_border(Prefs::GetWindowBorder());
 
   {
     auto* background = cfg.mutable_viewport_background();
@@ -201,20 +209,20 @@ void SavePreferences()
   }
 
   cfg.set_command_capacity(settings.command_capacity);
-  cfg.set_restore_last_session(settings.restore_last_session);
+  cfg.set_restore_last_session(Prefs::GetRestoreLastSession());
   cfg.set_preferred_tile_width(settings.preferred_tile_width);
   cfg.set_preferred_tile_height(settings.preferred_tile_height);
 
   cfg.set_preferred_format(settings.preferred_format);
-  cfg.set_embed_tilesets(settings.embed_tilesets);
-  cfg.set_indent_output(settings.indent_output);
-  cfg.set_fold_tile_data(settings.fold_tile_data);
+  cfg.set_embed_tilesets(Prefs::GetEmbedTilesets());
+  cfg.set_indent_output(Prefs::GetIndentOutput());
+  cfg.set_fold_tile_data(Prefs::GetFoldTileData());
 
-  cfg.set_show_tileset_dock(settings.show_tileset_dock);
-  cfg.set_show_layer_dock(settings.show_layer_dock);
-  cfg.set_show_properties_dock(settings.show_properties_dock);
-  cfg.set_show_log_dock(settings.show_log_dock);
-  cfg.set_restore_layout(settings.restore_layout);
+  cfg.set_show_tileset_dock(Prefs::GetShowTilesetDock());
+  cfg.set_show_layer_dock(Prefs::GetShowLayerDock());
+  cfg.set_show_properties_dock(Prefs::GetShowPropertiesDock());
+  cfg.set_show_log_dock(Prefs::GetShowLogDock());
+  cfg.set_restore_layout(Prefs::GetRestoreLayout());
   cfg.set_viewport_overlay_pos(Proto::OverlayPos{settings.viewport_overlay_pos});
 
   std::ofstream stream{settings_path, std::ios::out | std::ios::trunc | std::ios::binary};
