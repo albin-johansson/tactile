@@ -53,10 +53,10 @@ void ImGuiContext::LoadFonts()
   auto& io = ImGui::GetIO();
 
   if constexpr (cen::ifdef_apple()) {
-    constexpr auto fontSize = 9.0f;
+    constexpr auto fontSize = 11.0f;
 
     const auto dpi = cen::screen::dpi().value();
-    const auto scaling = dpi.diagonal / 72.0f;
+    const auto scaling = dpi.diagonal / 96.0f;
 
     io.FontGlobalScale = 0.5f;
     io.Fonts->AddFontFromFileTTF("resources/fonts/roboto/Roboto-Regular.ttf",
