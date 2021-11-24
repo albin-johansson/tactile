@@ -14,7 +14,7 @@ set(TEST_FILES
     unit-tests/core/property_value_test.cpp
 
     unit-tests/core/systems/layer_system_test.cpp
-    unit-tests/core/systems/registry_factory_system_test.cpp
+    unit-tests/core/systems/registry_system_test.cpp
     unit-tests/core/systems/tree_system_test.cpp
 
     unit-tests/core/utils/buffer_utils_test.cpp
