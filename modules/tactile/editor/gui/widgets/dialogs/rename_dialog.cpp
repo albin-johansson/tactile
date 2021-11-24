@@ -27,6 +27,7 @@ void ResetState()
 
 }  // namespace
 
+// FIXME the rename dialog does not respond to user input
 void UpdateRenameDialog(const NotNull<CStr> title,
                         const entt::registry& registry,
                         entt::dispatcher& dispatcher,
