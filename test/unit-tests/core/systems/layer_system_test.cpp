@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "core/components/layer.hpp"
-#include "core/systems/registry_factory_system.hpp"
+#include "core/systems/registry_system.hpp"
 
 using namespace Tactile;
 

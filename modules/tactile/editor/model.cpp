@@ -6,7 +6,7 @@
 #include "core/map.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/registry_factory_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"

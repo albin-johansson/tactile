@@ -20,7 +20,7 @@
 #include "core/map.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/property_system.hpp"
-#include "core/systems/registry_factory_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/utils/texture_manager.hpp"
 

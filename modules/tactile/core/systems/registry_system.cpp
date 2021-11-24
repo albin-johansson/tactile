@@ -1,4 +1,4 @@
-#include "registry_factory_system.hpp"
+#include "registry_system.hpp"
 
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"

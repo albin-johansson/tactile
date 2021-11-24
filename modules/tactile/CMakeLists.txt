@@ -59,8 +59,8 @@ set(SOURCE_FILES
     core/systems/object_system.hpp
     core/systems/property_system.cpp
     core/systems/property_system.hpp
-    core/systems/registry_factory_system.cpp
-    core/systems/registry_factory_system.hpp
+    core/systems/registry_system.cpp
+    core/systems/registry_system.hpp
     core/systems/snapshot.hpp
     core/systems/tileset_system.cpp
     core/systems/tileset_system.hpp
