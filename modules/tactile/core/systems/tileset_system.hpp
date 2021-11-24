@@ -8,7 +8,7 @@
 #include "core/components/texture.hpp"
 #include "core/map_position.hpp"
 #include "core/region.hpp"
-#include "tileset_snapshot.hpp"
+#include "snapshot.hpp"
 
 namespace Tactile::Sys {
 

@@ -7,7 +7,7 @@
 #include <entt/entt.hpp>  // registry, entity, null
 
 #include "core/map.hpp"
-#include "layer_snapshot.hpp"
+#include "core/systems/snapshot.hpp"
 
 namespace Tactile::Sys {
 

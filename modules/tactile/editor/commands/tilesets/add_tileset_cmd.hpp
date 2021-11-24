@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // registry
 
 #include "core/components/texture.hpp"
-#include "core/systems/tileset_snapshot.hpp"
+#include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 

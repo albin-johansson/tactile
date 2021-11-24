@@ -57,12 +57,11 @@ set(SOURCE_FILES
     core/systems/map_system.hpp
     core/systems/object_system.cpp
     core/systems/object_system.hpp
-    core/systems/property_context_snapshot.hpp
     core/systems/property_system.cpp
     core/systems/property_system.hpp
     core/systems/registry_factory_system.cpp
     core/systems/registry_factory_system.hpp
-    core/systems/tileset_snapshot.hpp
+    core/systems/snapshot.hpp
     core/systems/tileset_system.cpp
     core/systems/tileset_system.hpp
     core/systems/viewport_system.cpp
@@ -75,7 +74,6 @@ set(SOURCE_FILES
     core/systems/layers/layer_tree_system.hpp
     core/systems/layers/object_layer_system.cpp
     core/systems/layers/object_layer_system.hpp
-    core/systems/layers/object_snapshot.hpp
     core/systems/layers/tile_layer_system.cpp
     core/systems/layers/tile_layer_system.hpp
 
