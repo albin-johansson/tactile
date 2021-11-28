@@ -2,7 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
   "name": "tactile",
   "version-semver": "0.3.0",
-  "builtin-baseline": "70033dbb31527fb3e69654731f540f59c87787f9",
   "dependencies": [
     "sdl2",
     {
