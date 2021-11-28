@@ -192,6 +192,8 @@ set(SOURCE_FILES
     editor/shortcuts/shortcut.hpp
     editor/shortcuts/shortcuts.cpp
     editor/shortcuts/shortcuts.hpp
+    editor/shortcuts/view_shortcuts.cpp
+    editor/shortcuts/view_shortcuts.hpp
 
     editor/shortcuts/file/new_map_shortcut.cpp
     editor/shortcuts/file/new_map_shortcut.hpp
@@ -203,25 +205,6 @@ set(SOURCE_FILES
     editor/shortcuts/file/save_as_shortcut.hpp
     editor/shortcuts/file/save_shortcut.cpp
     editor/shortcuts/file/save_shortcut.hpp
-
-    editor/shortcuts/view/center_viewport_shortcut.cpp
-    editor/shortcuts/view/center_viewport_shortcut.hpp
-    editor/shortcuts/view/decrease_viewport_zoom_shortcut.cpp
-    editor/shortcuts/view/decrease_viewport_zoom_shortcut.hpp
-    editor/shortcuts/view/increase_viewport_zoom_shortcut.cpp
-    editor/shortcuts/view/increase_viewport_zoom_shortcut.hpp
-    editor/shortcuts/view/pan_down_shortcut.cpp
-    editor/shortcuts/view/pan_down_shortcut.hpp
-    editor/shortcuts/view/pan_left_shortcut.cpp
-    editor/shortcuts/view/pan_left_shortcut.hpp
-    editor/shortcuts/view/pan_right_shortcut.cpp
-    editor/shortcuts/view/pan_right_shortcut.hpp
-    editor/shortcuts/view/pan_up_shortcut.cpp
-    editor/shortcuts/view/pan_up_shortcut.hpp
-    editor/shortcuts/view/toggle_grid_shortcut.cpp
-    editor/shortcuts/view/toggle_grid_shortcut.hpp
-    editor/shortcuts/view/toggle_ui_shortcut.cpp
-    editor/shortcuts/view/toggle_ui_shortcut.hpp
 
     editor/gui/icons.cpp
     editor/gui/icons.hpp
@@ -419,7 +402,7 @@ set(SOURCE_FILES
     io/session.hpp
     io/create_document_from_ir.cpp
     io/create_document_from_ir.hpp
-    )
+    editor/shortcuts/view_shortcuts.cpp editor/shortcuts/view_shortcuts.hpp)
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 

@@ -10,15 +10,7 @@
 #include "editor/shortcuts/file/open_settings_shortcut.hpp"
 #include "editor/shortcuts/file/save_as_shortcut.hpp"
 #include "editor/shortcuts/file/save_shortcut.hpp"
-#include "editor/shortcuts/view/center_viewport_shortcut.hpp"
-#include "editor/shortcuts/view/decrease_viewport_zoom_shortcut.hpp"
-#include "editor/shortcuts/view/increase_viewport_zoom_shortcut.hpp"
-#include "editor/shortcuts/view/pan_down_shortcut.hpp"
-#include "editor/shortcuts/view/pan_left_shortcut.hpp"
-#include "editor/shortcuts/view/pan_right_shortcut.hpp"
-#include "editor/shortcuts/view/pan_up_shortcut.hpp"
-#include "editor/shortcuts/view/toggle_grid_shortcut.hpp"
-#include "editor/shortcuts/view/toggle_ui_shortcut.hpp"
+#include "editor/shortcuts/view_shortcuts.hpp"
 
 namespace Tactile {
 namespace {
