@@ -402,7 +402,7 @@ set(SOURCE_FILES
     io/session.hpp
     io/create_document_from_ir.cpp
     io/create_document_from_ir.hpp
-    editor/shortcuts/view_shortcuts.cpp editor/shortcuts/view_shortcuts.hpp)
+    )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 
