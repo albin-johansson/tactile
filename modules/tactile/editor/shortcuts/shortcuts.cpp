@@ -5,11 +5,7 @@
 
 #include "editor/gui/widgets/menus/edit_menu.hpp"
 #include "editor/shortcuts/edit_shortcuts.hpp"
-#include "editor/shortcuts/file/new_map_shortcut.hpp"
-#include "editor/shortcuts/file/open_map_shortcut.hpp"
-#include "editor/shortcuts/file/open_settings_shortcut.hpp"
-#include "editor/shortcuts/file/save_as_shortcut.hpp"
-#include "editor/shortcuts/file/save_shortcut.hpp"
+#include "editor/shortcuts/file_shortcuts.hpp"
 #include "editor/shortcuts/view_shortcuts.hpp"
 
 namespace Tactile {

@@ -188,23 +188,14 @@ set(SOURCE_FILES
 
     editor/shortcuts/edit_shortcuts.cpp
     editor/shortcuts/edit_shortcuts.hpp
+    editor/shortcuts/file_shortcuts.cpp
+    editor/shortcuts/file_shortcuts.hpp
     editor/shortcuts/shortcut.cpp
     editor/shortcuts/shortcut.hpp
     editor/shortcuts/shortcuts.cpp
     editor/shortcuts/shortcuts.hpp
     editor/shortcuts/view_shortcuts.cpp
     editor/shortcuts/view_shortcuts.hpp
-
-    editor/shortcuts/file/new_map_shortcut.cpp
-    editor/shortcuts/file/new_map_shortcut.hpp
-    editor/shortcuts/file/open_map_shortcut.cpp
-    editor/shortcuts/file/open_map_shortcut.hpp
-    editor/shortcuts/file/open_settings_shortcut.cpp
-    editor/shortcuts/file/open_settings_shortcut.hpp
-    editor/shortcuts/file/save_as_shortcut.cpp
-    editor/shortcuts/file/save_as_shortcut.hpp
-    editor/shortcuts/file/save_shortcut.cpp
-    editor/shortcuts/file/save_shortcut.hpp
 
     editor/gui/icons.cpp
     editor/gui/icons.hpp
