@@ -4,10 +4,7 @@
   "version-semver": "0.3.0",
   "builtin-baseline": "70033dbb31527fb3e69654731f540f59c87787f9",
   "dependencies": [
-    {
-      "name": "sdl2",
-      "version>=": "2.0.16"
-    },
+    "sdl2",
     {
       "name": "imgui",
       "features": [
