@@ -469,9 +469,8 @@ target_link_libraries(${TACTILE_LIB}
                       EnTT::EnTT
                       fmt::fmt
                       protobuf::libprotobuf
-                      protobuf::libprotobuf-lite
                       ${TACTILE_PROTO}
-                      ${TACTILE_IO_IMPORT_LIBRARY}
+                      ${TACTILE_IO}
                       ${CMAKE_DL_LIBS}
                       )
 
