@@ -50,6 +50,7 @@ void PreparePositionAndPivot()
 void UpdateMouseCoordinateLabels(const ViewportCursorInfo& cursor)
 {
   if (ImGui::IsMousePosValid()) {
+    // FIXME incorrect when zoomed in
     ImGui::Text("X/Y: (%.0f, %.0f)", cursor.raw_position.x, cursor.raw_position.y);
   }
   else {
