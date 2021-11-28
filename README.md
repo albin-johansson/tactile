@@ -61,18 +61,13 @@ the path where you've installed Vcpkg. You can download Vcpkg through `git clone
 |   OS    | Command                       |
 | :-----: | :---------------------------- |
 | Windows | `.\vcpkg\bootstrap-vcpkg.bat` |
-|  Linux  | `./vcpkg/bootstrap-vcpkg.sh`  |
-|  macOS  | `./vcpkg/bootstrap-vcpkg.sh`  |
+|  Unix   | `./vcpkg/bootstrap-vcpkg.sh`  |
 
 ### Install Tactile triplet files
 
-Then we want to make the custom Tactile triplet files available for use by Vcpkg, the following shows how you can do this (you can of course copy the file by hand, but that's no fun). These commands assume that you are in the root of the Tactile repository.
-
-|   OS    | Command                                                                                              |
-| :-----: | :--------------------------------------------------------------------------------------------------- |
-| Windows | `copy "cmake\x64-tactile-windows.cmake" "%VCPKG_ROOT%\triplets\community\x64-tactile-windows.cmake"` |
-|  Linux  | `mv "cmake/x64-tactile-linux.cmake" "$VCPKG_ROOT/triplets/community/x64-tactile-linux.cmake"`        |
-|  macOS  | `mv "cmake/x64-tactile-osx.cmake" "$VCPKG_ROOT/triplets/community/x64-tactile-osx.cmake"`            |
+Then we want to make the custom Tactile triplet files available for use by Vcpkg. All we need to do for this is to copy
+one of the triplet files in the `cmake` folder to `$VCPKG_ROOT/triplets/community`. Which triplet file you should copy
+depends on your operating system and architecture.
 
 ### Build the project
 
@@ -85,11 +80,11 @@ cd build
 
 Use the following commands to tell CMake to generate the build files. Note, if you are using an IDE, such as JetBrains CLion, you can specify these CMake parameters in your CMake profile settings so that you can just build the project as per usual. In CLion 2021.2, you'll access these settings in `View -> Tool Windows -> CMake`, and then selecting `CMake Settings`. You can also just search for `CMake Settings` with `Shift+Shift`. Subsequently, in the `CMake Settings` window, add the parameters to the `CMake options` field.
 
-|   OS    | Command                                                                                                                            |
-| :-----: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| Windows | `cmake .. -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-windows -GNinja` |
-|  Linux  | `cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-linux -GNinja`    |
-|  macOS  | `cmake .. -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-osx -GNinja`      |
+|     OS     | Command                                                       |
+| :--------: | :------------------------------------------------------------ |
+|  Windows   | `cmake .. -DVCPKG_TARGET_TRIPLET=x64-tactile-windows -GNinja` |
+|   Linux    | `cmake .. -DVCPKG_TARGET_TRIPLET=x64-tactile-linux -GNinja`   |
+| macOS (M1) | `cmake .. -DVCPKG_TARGET_TRIPLET=arm64-tactile-osx -GNinja`   |
 
 Finally, all we need to build the entire project is then to invoke Ninja (or whatever generator you use).
 
