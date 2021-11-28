@@ -126,6 +126,18 @@ void UpdateContextMenu(const entt::registry& registry,
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
 
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_CENTER " Center Viewport")) {
+      dispatcher.enqueue<CenterViewportEvent>();
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset Viewport Zoom")) {
+      dispatcher.enqueue<ResetZoomEvent>();
+    }
+
     ImGui::EndPopup();
   }
 }
