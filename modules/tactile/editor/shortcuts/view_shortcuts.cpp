@@ -5,11 +5,12 @@
 #include "editor/gui/widgets/focus.hpp"
 #include "editor/model.hpp"
 #include "io/preferences.hpp"
+#include "mappings.hpp"
 
 namespace Tactile {
 
 CenterViewportShortcut::CenterViewportShortcut()
-    : AShortcut{cen::scancodes::space, KMOD_LCTRL}
+    : AShortcut{cen::scancodes::space, KMOD_LSHIFT}
 {}
 
 void CenterViewportShortcut::Activate(entt::dispatcher& dispatcher)
@@ -23,7 +24,7 @@ auto CenterViewportShortcut::IsEnabled(const Model& model) const -> bool
 }
 
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_MINUS}, KMOD_LCTRL}
+    : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier}
 {}
 
 void DecreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
@@ -37,7 +38,7 @@ auto DecreaseViewportZoomShortcut::IsEnabled(const Model& model) const -> bool
 }
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_PLUS}, KMOD_LCTRL}
+    : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier}
 {}
 
 void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
@@ -50,7 +51,8 @@ auto IncreaseViewportZoomShortcut::IsEnabled(const Model& model) const -> bool
   return model.HasActiveDocument();
 }
 
-PanUpShortcut::PanUpShortcut() : AShortcut{cen::scancodes::up, KMOD_LCTRL}
+PanUpShortcut::PanUpShortcut()
+    : AShortcut{cen::scancodes::up, primary_modifier | KMOD_LSHIFT}
 {}
 
 void PanUpShortcut::Activate(entt::dispatcher& dispatcher)
@@ -63,7 +65,8 @@ auto PanUpShortcut::IsEnabled(const Model& model) const -> bool
   return model.HasActiveDocument();
 }
 
-PanDownShortcut::PanDownShortcut() : AShortcut{cen::scancodes::down, KMOD_LCTRL}
+PanDownShortcut::PanDownShortcut()
+    : AShortcut{cen::scancodes::down, primary_modifier | KMOD_LSHIFT}
 {}
 
 void PanDownShortcut::Activate(entt::dispatcher& dispatcher)
@@ -76,7 +79,8 @@ auto PanDownShortcut::IsEnabled(const Model& model) const -> bool
   return model.HasActiveDocument();
 }
 
-PanLeftShortcut::PanLeftShortcut() : AShortcut{cen::scancodes::left, KMOD_LCTRL}
+PanLeftShortcut::PanLeftShortcut()
+    : AShortcut{cen::scancodes::left, primary_modifier | KMOD_LSHIFT}
 {}
 
 void PanLeftShortcut::Activate(entt::dispatcher& dispatcher)
@@ -89,7 +93,8 @@ auto PanLeftShortcut::IsEnabled(const Model& model) const -> bool
   return model.HasActiveDocument();
 }
 
-PanRightShortcut::PanRightShortcut() : AShortcut{cen::scancodes::right, KMOD_LCTRL}
+PanRightShortcut::PanRightShortcut()
+    : AShortcut{cen::scancodes::right, primary_modifier | KMOD_LSHIFT}
 {}
 
 void PanRightShortcut::Activate(entt::dispatcher& dispatcher)
@@ -102,7 +107,7 @@ auto PanRightShortcut::IsEnabled(const Model& model) const -> bool
   return model.HasActiveDocument();
 }
 
-ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, KMOD_LCTRL}
+ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, primary_modifier}
 {}
 
 void ToggleGridShortcut::Activate(entt::dispatcher&)

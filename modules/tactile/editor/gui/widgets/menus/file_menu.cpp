@@ -12,6 +12,7 @@
 #include "editor/gui/widgets/common/menu.hpp"
 #include "editor/gui/widgets/dialogs/add_map_dialog.hpp"
 #include "editor/model.hpp"
+#include "editor/shortcuts/mappings.hpp"
 #include "io/history.hpp"
 
 namespace Tactile {
@@ -78,20 +79,25 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
   if (auto menu = Menu{"File"}) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
-    show_add_map_dialog = ImGui::MenuItem(TAC_ICON_FILE " New Map...", "Ctrl+N");
-    show_open_map_dialog = ImGui::MenuItem(TAC_ICON_OPEN " Open Map...", "Ctrl+O");
+    show_add_map_dialog =
+        ImGui::MenuItem(TAC_ICON_FILE " New Map...", TACTILE_PRIMARY_MOD "+N");
+    show_open_map_dialog =
+        ImGui::MenuItem(TAC_ICON_OPEN " Open Map...", TACTILE_PRIMARY_MOD "+O");
 
     UpdateRecentFilesMenu(dispatcher);
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_SAVE " Save", "Ctrl+S", false, model.CanSaveDocument()))
+    if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
+                        TACTILE_PRIMARY_MOD "+S",
+                        false,
+                        model.CanSaveDocument()))
     {
       dispatcher.enqueue<SaveEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save As...",
-                        "Ctrl+Shift+S",
+                        TACTILE_PRIMARY_MOD "+Shift+S",
                         false,
                         hasActiveDocument))
     {

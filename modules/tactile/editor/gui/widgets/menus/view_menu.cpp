@@ -8,6 +8,7 @@
 #include "editor/gui/layout/dock_space.hpp"
 #include "editor/gui/widgets/common/menu.hpp"
 #include "editor/model.hpp"
+#include "editor/shortcuts/mappings.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -51,7 +52,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_CENTER " Center Viewport",
-                        "Ctrl+Space",
+                        "Shift+Space",
                         false,
                         hasActiveDocument))
     {
@@ -61,7 +62,9 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (bool showGrid = Prefs::GetShowGrid();
-        ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid", "Ctrl+G", &showGrid))
+        ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid",
+                        TACTILE_PRIMARY_MOD "+G",
+                        &showGrid))
     {
       Prefs::SetShowGrid(showGrid);
     }
@@ -69,7 +72,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_ZOOM_IN " Increase Zoom",
-                        "Ctrl+Plus",
+                        TACTILE_PRIMARY_MOD "+Plus",
                         false,
                         hasActiveDocument))
     {
@@ -77,7 +80,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     }
 
     if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease Zoom",
-                        "Ctrl+Minus",
+                        TACTILE_PRIMARY_MOD "+Minus",
                         false,
                         model.CanDecreaseViewportTileSize()))
     {
@@ -93,13 +96,16 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan Up", "Ctrl+Up", false, hasActiveDocument))
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan Up",
+                        TACTILE_PRIMARY_MOD "+Shift+Up",
+                        false,
+                        hasActiveDocument))
     {
       dispatcher.enqueue<PanUpEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Pan Down",
-                        "Ctrl+Down",
+                        TACTILE_PRIMARY_MOD "+Shift+Down",
                         false,
                         hasActiveDocument))
     {
@@ -107,7 +113,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_RIGHT " Pan Right",
-                        "Ctrl+Right",
+                        TACTILE_PRIMARY_MOD "+Shift+Right",
                         false,
                         hasActiveDocument))
     {
@@ -115,7 +121,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_LEFT " Pan Left",
-                        "Ctrl+Left",
+                        TACTILE_PRIMARY_MOD "+Shift+Left",
                         false,
                         hasActiveDocument))
     {

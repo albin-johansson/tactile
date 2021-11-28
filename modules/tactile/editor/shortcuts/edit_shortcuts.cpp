@@ -7,10 +7,11 @@
 #include "editor/gui/widgets/focus.hpp"
 #include "editor/gui/widgets/menus/map_menu.hpp"
 #include "editor/model.hpp"
+#include "mappings.hpp"
 
 namespace Tactile {
 
-UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, KMOD_LCTRL}
+UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, primary_modifier}
 {}
 
 void UndoShortcut::Activate(entt::dispatcher& dispatcher)
@@ -23,7 +24,7 @@ auto UndoShortcut::IsEnabled(const Model& model) const -> bool
   return model.CanUndo();
 }
 
-RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, KMOD_LCTRL}
+RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, primary_modifier}
 {}
 
 void RedoShortcut::Activate(entt::dispatcher& dispatcher)
@@ -36,7 +37,7 @@ auto RedoShortcut::IsEnabled(const Model& model) const -> bool
   return model.CanRedo();
 }
 
-AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, KMOD_LALT}
+AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, secondary_modifier}
 {}
 
 void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
@@ -49,7 +50,7 @@ auto AddRowShortcut::IsEnabled(const Model& model) const -> bool
   return model.HasActiveDocument();
 }
 
-AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, KMOD_LALT}
+AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, secondary_modifier}
 {}
 
 void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
@@ -63,7 +64,7 @@ auto AddColumnShortcut::IsEnabled(const Model& model) const -> bool
 }
 
 RemoveRowShortcut::RemoveRowShortcut()
-    : AShortcut{cen::scancodes::r, KMOD_LALT | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::r, secondary_modifier | KMOD_LSHIFT}
 {}
 
 void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
@@ -83,7 +84,7 @@ auto RemoveRowShortcut::IsEnabled(const Model& model) const -> bool
 }
 
 RemoveColumnShortcut::RemoveColumnShortcut()
-    : AShortcut{cen::scancodes::c, KMOD_LSHIFT | KMOD_LALT}
+    : AShortcut{cen::scancodes::c, secondary_modifier | KMOD_LSHIFT}
 {}
 
 void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
@@ -102,7 +103,7 @@ auto RemoveColumnShortcut::IsEnabled(const Model& model) const -> bool
   }
 }
 
-AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, KMOD_LCTRL}
+AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, primary_modifier}
 {}
 
 void AddTilesetShortcut::Activate(entt::dispatcher&)

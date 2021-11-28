@@ -4,10 +4,11 @@
 #include "editor/gui/widgets/menus/edit_menu.hpp"
 #include "editor/gui/widgets/menus/file_menu.hpp"
 #include "editor/model.hpp"
+#include "mappings.hpp"
 
 namespace Tactile {
 
-NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, KMOD_LCTRL}
+NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, primary_modifier}
 {}
 
 void NewMapShortcut::Activate(entt::dispatcher&)
@@ -15,7 +16,7 @@ void NewMapShortcut::Activate(entt::dispatcher&)
   ShowAddMapDialog();
 }
 
-OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, KMOD_LCTRL}
+OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, primary_modifier}
 {}
 
 void OpenMapShortcut::Activate(entt::dispatcher&)
@@ -24,7 +25,7 @@ void OpenMapShortcut::Activate(entt::dispatcher&)
 }
 
 OpenSettingsShortcut::OpenSettingsShortcut()
-    : AShortcut{cen::scancodes::s, KMOD_LCTRL | KMOD_LALT}
+    : AShortcut{SDL_SCANCODE_COMMA, primary_modifier}
 {}
 
 void OpenSettingsShortcut::Activate(entt::dispatcher&)
@@ -32,7 +33,7 @@ void OpenSettingsShortcut::Activate(entt::dispatcher&)
   ShowSettingsDialog();
 }
 
-SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, KMOD_LCTRL}
+SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, primary_modifier}
 {}
 
 void SaveShortcut::Activate(entt::dispatcher& dispatcher)
@@ -45,7 +46,8 @@ auto SaveShortcut::IsEnabled(const Model& model) const -> bool
   return model.CanSaveDocument();
 }
 
-SaveAsShortcut::SaveAsShortcut() : AShortcut{cen::scancodes::s, KMOD_LCTRL | KMOD_LSHIFT}
+SaveAsShortcut::SaveAsShortcut()
+    : AShortcut{cen::scancodes::s, primary_modifier | KMOD_LSHIFT}
 {}
 
 void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)

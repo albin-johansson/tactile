@@ -190,6 +190,7 @@ set(SOURCE_FILES
     editor/shortcuts/edit_shortcuts.hpp
     editor/shortcuts/file_shortcuts.cpp
     editor/shortcuts/file_shortcuts.hpp
+    editor/shortcuts/mappings.hpp
     editor/shortcuts/shortcut.cpp
     editor/shortcuts/shortcut.hpp
     editor/shortcuts/shortcuts.cpp

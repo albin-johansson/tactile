@@ -7,6 +7,7 @@
 #include "editor/gui/widgets/common/menu.hpp"
 #include "editor/gui/widgets/tilesets/dialogs/tileset_dialog.hpp"
 #include "editor/model.hpp"
+#include "editor/shortcuts/mappings.hpp"
 
 namespace Tactile {
 namespace {
@@ -26,23 +27,24 @@ void UpdateMapMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    show_tileset_dialog = ImGui::MenuItem(TAC_ICON_TILESET " Add Tileset...", "Ctrl+T");
+    show_tileset_dialog =
+        ImGui::MenuItem(TAC_ICON_TILESET " Add Tileset...", TACTILE_PRIMARY_MOD "+T");
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Add Row", "Alt+R")) {
+    if (ImGui::MenuItem("Add Row", TACTILE_SECONDARY_MOD "+R")) {
       dispatcher.enqueue<AddRowEvent>();
     }
 
-    if (ImGui::MenuItem("Add Column", "Alt+C")) {
+    if (ImGui::MenuItem("Add Column", TACTILE_SECONDARY_MOD "+C")) {
       dispatcher.enqueue<AddColumnEvent>();
     }
 
-    if (ImGui::MenuItem("Remove Row", "Alt+Shift+R")) {
+    if (ImGui::MenuItem("Remove Row", TACTILE_SECONDARY_MOD "+Shift+R")) {
       dispatcher.enqueue<RemoveRowEvent>();
     }
 
-    if (ImGui::MenuItem("Remove Column", "Alt+Shift+C")) {
+    if (ImGui::MenuItem("Remove Column", TACTILE_SECONDARY_MOD "+Shift+C")) {
       dispatcher.enqueue<RemoveColumnEvent>();
     }
 

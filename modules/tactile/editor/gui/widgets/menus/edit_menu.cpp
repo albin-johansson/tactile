@@ -11,6 +11,7 @@
 #include "editor/gui/widgets/common/menu.hpp"
 #include "editor/gui/widgets/dialogs/settings_dialog.hpp"
 #include "editor/model.hpp"
+#include "editor/shortcuts/mappings.hpp"
 
 namespace Tactile {
 namespace {
@@ -32,11 +33,11 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     const FormattedString redoText{TAC_ICON_REDO " Redo {}",
                                    canRedo ? model.GetRedoText() : ""};
 
-    if (ImGui::MenuItem(undoText.GetData(), "Ctrl+Z", false, canUndo)) {
+    if (ImGui::MenuItem(undoText.GetData(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (ImGui::MenuItem(redoText.GetData(), "Ctrl+Y", false, canRedo)) {
+    if (ImGui::MenuItem(redoText.GetData(), TACTILE_PRIMARY_MOD "+Y", false, canRedo)) {
       dispatcher.enqueue<RedoEvent>();
     }
 
@@ -77,7 +78,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     show_settings_window =
-        ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", "Ctrl+Alt+S");
+        ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,");
   }
 }
 
