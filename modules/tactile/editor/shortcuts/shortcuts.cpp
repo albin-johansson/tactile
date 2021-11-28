@@ -4,16 +4,7 @@
 #include <vector>  // vector
 
 #include "editor/gui/widgets/menus/edit_menu.hpp"
-#include "editor/shortcuts/edit/add_column_shortcut.hpp"
-#include "editor/shortcuts/edit/add_row_shortcut.hpp"
-#include "editor/shortcuts/edit/add_tileset_shortcut.hpp"
-#include "editor/shortcuts/edit/enable_bucket_tool.hpp"
-#include "editor/shortcuts/edit/enable_eraser_shortcut.hpp"
-#include "editor/shortcuts/edit/enable_stamp_shortcut.hpp"
-#include "editor/shortcuts/edit/redo_shortcut.hpp"
-#include "editor/shortcuts/edit/remove_column_shortcut.hpp"
-#include "editor/shortcuts/edit/remove_row_shortcut.hpp"
-#include "editor/shortcuts/edit/undo_shortcut.hpp"
+#include "editor/shortcuts/edit_shortcuts.hpp"
 #include "editor/shortcuts/file/new_map_shortcut.hpp"
 #include "editor/shortcuts/file/open_map_shortcut.hpp"
 #include "editor/shortcuts/file/open_settings_shortcut.hpp"

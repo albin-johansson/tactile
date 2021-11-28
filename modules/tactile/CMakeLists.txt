@@ -186,31 +186,12 @@ set(SOURCE_FILES
     editor/events/view_events.hpp
     editor/events/viewport_events.hpp
 
+    editor/shortcuts/edit_shortcuts.cpp
+    editor/shortcuts/edit_shortcuts.hpp
     editor/shortcuts/shortcut.cpp
     editor/shortcuts/shortcut.hpp
     editor/shortcuts/shortcuts.cpp
     editor/shortcuts/shortcuts.hpp
-
-    editor/shortcuts/edit/add_column_shortcut.cpp
-    editor/shortcuts/edit/add_column_shortcut.hpp
-    editor/shortcuts/edit/add_row_shortcut.cpp
-    editor/shortcuts/edit/add_row_shortcut.hpp
-    editor/shortcuts/edit/add_tileset_shortcut.cpp
-    editor/shortcuts/edit/add_tileset_shortcut.hpp
-    editor/shortcuts/edit/enable_bucket_tool.cpp
-    editor/shortcuts/edit/enable_bucket_tool.hpp
-    editor/shortcuts/edit/enable_eraser_shortcut.cpp
-    editor/shortcuts/edit/enable_eraser_shortcut.hpp
-    editor/shortcuts/edit/enable_stamp_shortcut.cpp
-    editor/shortcuts/edit/enable_stamp_shortcut.hpp
-    editor/shortcuts/edit/redo_shortcut.cpp
-    editor/shortcuts/edit/redo_shortcut.hpp
-    editor/shortcuts/edit/remove_column_shortcut.cpp
-    editor/shortcuts/edit/remove_column_shortcut.hpp
-    editor/shortcuts/edit/remove_row_shortcut.cpp
-    editor/shortcuts/edit/remove_row_shortcut.hpp
-    editor/shortcuts/edit/undo_shortcut.cpp
-    editor/shortcuts/edit/undo_shortcut.hpp
 
     editor/shortcuts/file/new_map_shortcut.cpp
     editor/shortcuts/file/new_map_shortcut.hpp
