@@ -14,11 +14,13 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/update_gui.hpp"
 #include "editor/gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "editor/gui/widgets/dialogs/resize_map_dialog.hpp"
 #include "editor/gui/widgets/dialogs/save_as_dialog.hpp"
+#include "editor/gui/widgets/focus.hpp"
 #include "editor/gui/widgets/layers/layer_dock.hpp"
 #include "editor/gui/widgets/toolbar/toolbar.hpp"
 #include "editor/gui/widgets/viewport/map_view.hpp"
@@ -159,10 +161,14 @@ void Application::OnKeyboardEvent(SDL_KeyboardEvent event)
 
 void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
 {
-  if (mModel.HasActiveDocument()) {
-    const auto dx = -event.x * 16;  // TODO use half viewport tile size
-    const auto dy = event.y * 16;
-    mDispatcher.enqueue<OffsetViewportEvent>(dx, dy);
+  // TODO track when mouse exits the viewport
+  if (IsViewportFocused() && mModel.HasActiveDocument()) {
+    if (const auto* registry = mModel.GetActiveRegistry()) {
+      const auto& viewport = registry->ctx<Viewport>();
+      const auto dx = static_cast<float>(event.x) * (viewport.tile_width / 3.0f);
+      const auto dy = static_cast<float>(event.y) * (viewport.tile_height / 3.0f);
+      mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+    }
   }
 }
 
