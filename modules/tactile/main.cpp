@@ -14,6 +14,8 @@ auto main(int, char**) -> int
 {
   Tactile::ProtobufContext protobuf;
 
+  /* Ensure nearest pixel sampling */
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
   cen::library centurion;
 
   SDL_LogSetOutputFunction(

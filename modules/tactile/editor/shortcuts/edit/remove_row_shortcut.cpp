@@ -7,7 +7,7 @@
 namespace Tactile {
 
 RemoveRowShortcut::RemoveRowShortcut()
-    : AShortcut{cen::scancodes::r, cen::key_mod::left_alt | cen::key_mod::left_shift}
+    : AShortcut{cen::scancodes::r, KMOD_LALT | KMOD_LSHIFT}
 {}
 
 void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)

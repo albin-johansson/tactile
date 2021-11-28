@@ -81,7 +81,7 @@ void LoadDefaultShortcuts()
 }
 
 void UpdateShortcuts(const Model& model,
-                     const cen::keyboard_event& event,
+                     const SDL_KeyboardEvent& event,
                      entt::dispatcher& dispatcher)
 {
   for (const auto& shortcut : shortcuts) {

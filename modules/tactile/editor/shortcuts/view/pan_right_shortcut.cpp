@@ -5,8 +5,7 @@
 
 namespace Tactile {
 
-PanRightShortcut::PanRightShortcut()
-    : AShortcut{cen::scancodes::right, cen::key_mod::left_ctrl}
+PanRightShortcut::PanRightShortcut() : AShortcut{cen::scancodes::right, KMOD_LCTRL}
 {}
 
 void PanRightShortcut::Activate(entt::dispatcher& dispatcher)

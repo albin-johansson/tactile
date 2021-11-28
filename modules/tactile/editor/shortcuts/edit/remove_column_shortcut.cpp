@@ -7,7 +7,7 @@
 namespace Tactile {
 
 RemoveColumnShortcut::RemoveColumnShortcut()
-    : AShortcut{cen::scancodes::c, cen::key_mod::left_shift | cen::key_mod::left_alt}
+    : AShortcut{cen::scancodes::c, KMOD_LSHIFT | KMOD_LALT}
 {}
 
 void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)

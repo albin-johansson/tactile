@@ -5,8 +5,7 @@
 
 namespace Tactile {
 
-AddColumnShortcut::AddColumnShortcut()
-    : AShortcut{cen::scancodes::c, cen::key_mod::left_alt}
+AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, KMOD_LALT}
 {}
 
 void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)

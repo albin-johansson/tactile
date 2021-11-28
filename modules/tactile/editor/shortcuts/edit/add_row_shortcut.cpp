@@ -5,7 +5,7 @@
 
 namespace Tactile {
 
-AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, cen::key_mod::left_alt}
+AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, KMOD_LALT}
 {}
 
 void AddRowShortcut::Activate(entt::dispatcher& dispatcher)

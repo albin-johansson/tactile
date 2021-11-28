@@ -6,7 +6,7 @@
 namespace Tactile {
 
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_MINUS}, cen::key_mod::left_ctrl}
+    : AShortcut{cen::scan_code{SDLK_MINUS}, KMOD_LCTRL}
 {}
 
 void DecreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)

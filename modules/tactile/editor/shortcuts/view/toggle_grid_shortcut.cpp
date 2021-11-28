@@ -4,8 +4,7 @@
 
 namespace Tactile {
 
-ToggleGridShortcut::ToggleGridShortcut()
-    : AShortcut{cen::scancodes::g, cen::key_mod::left_ctrl}
+ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, KMOD_LCTRL}
 {}
 
 void ToggleGridShortcut::Activate(entt::dispatcher&)

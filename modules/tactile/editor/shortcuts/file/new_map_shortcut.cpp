@@ -4,7 +4,7 @@
 
 namespace Tactile {
 
-NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, cen::key_mod::left_ctrl}
+NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, KMOD_LCTRL}
 {}
 
 void NewMapShortcut::Activate(entt::dispatcher&)

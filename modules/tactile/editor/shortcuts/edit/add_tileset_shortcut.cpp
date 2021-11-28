@@ -5,8 +5,7 @@
 
 namespace Tactile {
 
-AddTilesetShortcut::AddTilesetShortcut()
-    : AShortcut{cen::scancodes::t, cen::key_mod::left_ctrl}
+AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, KMOD_LCTRL}
 {}
 
 void AddTilesetShortcut::Activate(entt::dispatcher&)

@@ -6,7 +6,7 @@
 namespace Tactile {
 
 CenterViewportShortcut::CenterViewportShortcut()
-    : AShortcut{cen::scancodes::space, cen::key_mod::left_ctrl}
+    : AShortcut{cen::scancodes::space, KMOD_LCTRL}
 {}
 
 void CenterViewportShortcut::Activate(entt::dispatcher& dispatcher)

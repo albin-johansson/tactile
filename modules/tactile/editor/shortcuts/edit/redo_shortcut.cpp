@@ -5,7 +5,7 @@
 
 namespace Tactile {
 
-RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, cen::key_mod::left_ctrl}
+RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, KMOD_LCTRL}
 {}
 
 void RedoShortcut::Activate(entt::dispatcher& dispatcher)

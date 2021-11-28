@@ -5,7 +5,7 @@
 namespace Tactile {
 
 OpenSettingsShortcut::OpenSettingsShortcut()
-    : AShortcut{cen::scancodes::s, cen::key_mod::left_ctrl | cen::key_mod::left_alt}
+    : AShortcut{cen::scancodes::s, KMOD_LCTRL | KMOD_LALT}
 {}
 
 void OpenSettingsShortcut::Activate(entt::dispatcher&)

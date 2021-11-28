@@ -6,7 +6,7 @@
 namespace Tactile {
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_PLUS}, cen::key_mod::left_ctrl}
+    : AShortcut{cen::scan_code{SDLK_PLUS}, KMOD_LCTRL}
 {}
 
 void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)

@@ -71,22 +71,20 @@ Application::Application(cen::window&& window)
 
 auto Application::Run() -> int
 {
-  const auto& io = ImGui::GetIO();
-
   if (Prefs::GetRestoreLastSession()) {
     RestoreLastSession(mModel, mTextures);
   }
 
   LoadFileHistory();
-
   mWindow.show();
+
+  const auto& io = ImGui::GetIO();
   while (!mQuit) {
     mKeyboard.update();
     PollEvents();
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
-
     ImGui::NewFrame();
     UpdateFrame();
     ImGui::EndFrame();
@@ -130,35 +128,41 @@ void Application::SaveCurrentFilesToHistory()
 
 void Application::PollEvents()
 {
-  cen::event event;
-  while (event.poll()) {
-    ImGui_ImplSDL2_ProcessEvent(event.data());
+  SDL_Event event{};
+  while (SDL_PollEvent(&event)) {
+    ImGui_ImplSDL2_ProcessEvent(&event);
 
-    if (event.is<cen::quit_event>()) {
-      mQuit = true;
-      break;
-    }
-    else if (auto* keyEvent = event.try_get<cen::keyboard_event>()) {
-      // We don't care about these modifiers, they are just noise
-      keyEvent->set_modifier(cen::key_mod::caps, false);
-      keyEvent->set_modifier(cen::key_mod::num, false);
-      keyEvent->set_modifier(cen::key_mod::mode, false);
+    switch (event.type) {
+      case SDL_QUIT:
+        mQuit = true;
+        break;
 
-      UpdateShortcuts(mModel, *keyEvent, mDispatcher);
-    }
-    else if (const auto* wheelEvent = event.try_get<cen::mouse_wheel_event>()) {
-      // TODO support zooming in tilesets
+      case SDL_KEYUP:
+        [[fallthrough]];
+      case SDL_KEYDOWN:
+        OnKeyboardEvent(event.key);
+        break;
 
-      if (mModel.HasActiveDocument() && mKeyboard.is_pressed(cen::scancodes::left_ctrl)) {
-        const auto dy = wheelEvent->y_scroll();
-        if (dy > 0) {
-          mDispatcher.enqueue<IncreaseZoomEvent>();
-        }
-        else if (dy < 0 && mModel.CanDecreaseViewportTileSize()) {
-          mDispatcher.enqueue<DecreaseZoomEvent>();
-        }
-      }
+      case SDL_MOUSEWHEEL:
+        OnMouseWheelEvent(event.wheel);
+        break;
     }
+  }
+}
+
+void Application::OnKeyboardEvent(SDL_KeyboardEvent event)
+{
+  /* We don't care about these modifiers, they are just noise */
+  event.keysym.mod &= ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE);
+  UpdateShortcuts(mModel, event, mDispatcher);
+}
+
+void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
+{
+  if (mModel.HasActiveDocument()) {
+    const auto dx = -event.x * 16;  // TODO use half viewport tile size
+    const auto dy = event.y * 16;
+    mDispatcher.enqueue<OffsetViewportEvent>(dx, dy);
   }
 }
 

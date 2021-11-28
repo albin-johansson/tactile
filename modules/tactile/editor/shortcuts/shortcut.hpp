@@ -1,5 +1,8 @@
 #pragma once
 
+#include <tactile_def.hpp>
+
+#include <SDL.h>
 #include <centurion.hpp>  // scan_code, key_mod, keyboard_event
 #include <entt/entt.hpp>  // dispatcher
 
@@ -10,7 +13,7 @@ class Model;
 class AShortcut
 {
  public:
-  AShortcut(const cen::scan_code key, const cen::key_mod modifiers = cen::key_mod::none)
+  explicit AShortcut(const cen::scan_code key, const uint16 modifiers = KMOD_NONE)
       : mKey{key}
       , mModifiers{modifiers}
   {}
@@ -18,7 +21,7 @@ class AShortcut
   virtual ~AShortcut() noexcept = default;
 
   void Poll(const Model& model,
-            const cen::keyboard_event& event,
+            const SDL_KeyboardEvent& event,
             entt::dispatcher& dispatcher);
 
   virtual void Activate(entt::dispatcher& dispatcher) = 0;
@@ -30,7 +33,7 @@ class AShortcut
 
  private:
   cen::scan_code mKey;
-  cen::key_mod mModifiers;
+  uint16 mModifiers{KMOD_NONE};
 };
 
 }  // namespace Tactile

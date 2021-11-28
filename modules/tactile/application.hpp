@@ -41,7 +41,11 @@ class Application final
 
   void OnAboutToExit();
   void SaveCurrentFilesToHistory();
+
   void PollEvents();
+  void OnKeyboardEvent(SDL_KeyboardEvent event);
+  void OnMouseWheelEvent(const SDL_MouseWheelEvent& event);
+
   void UpdateFrame();
 
   void OnUndo();
