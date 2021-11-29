@@ -15,7 +15,7 @@
 #include <settings.pb.h>
 
 #define PRINT_FLAG(Name, Mask) \
-  CENTURION_LOG_INFO(Name ": %s", (prefs.flags & (Mask)) ? "yes" : "no")
+  CENTURION_LOG_INFO(Name "... %s", (prefs.flags & (Mask)) ? "yes" : "no")
 
 namespace Tactile {
 namespace {
@@ -55,16 +55,16 @@ inline Preferences settings = MakeDefaultPreferences();
 
 void PrintPreferences(Preferences& prefs)
 {
-  CENTURION_LOG_INFO("Theme: %s", magic_enum::enum_name(prefs.theme).data());
-  CENTURION_LOG_INFO("Viewport background: %s",
+  CENTURION_LOG_INFO("Theme... %s", magic_enum::enum_name(prefs.theme).data());
+  CENTURION_LOG_INFO("Viewport background... %s",
                      prefs.viewport_background.as_rgb().c_str());
 
-  CENTURION_LOG_INFO("Command capacity: %u", prefs.command_capacity);
-  CENTURION_LOG_INFO("Preferred tile width: %i", prefs.preferred_tile_width);
-  CENTURION_LOG_INFO("Preferred tile height: %i", prefs.preferred_tile_height);
+  CENTURION_LOG_INFO("Command capacity... %u", prefs.command_capacity);
+  CENTURION_LOG_INFO("Preferred tile width... %i", prefs.preferred_tile_width);
+  CENTURION_LOG_INFO("Preferred tile height... %i", prefs.preferred_tile_height);
 
-  CENTURION_LOG_INFO("Preferred format: %s", prefs.preferred_format.c_str());
-  CENTURION_LOG_INFO("Viewport overlay pos: %i", prefs.viewport_overlay_pos);
+  CENTURION_LOG_INFO("Preferred format... %s", prefs.preferred_format.c_str());
+  CENTURION_LOG_INFO("Viewport overlay pos... %i", prefs.viewport_overlay_pos);
 
   PRINT_FLAG("Embed tilesets", Preferences::embed_tilesets);
   PRINT_FLAG("Indent output", Preferences::indent_output);
