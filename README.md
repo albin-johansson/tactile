@@ -29,22 +29,9 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * Supports an intuitive and human-readable YAML map format
 * Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
 * Intuitive mouse tools
-  * Tile stamp
-  * Eraser
-  * Bucket fill
-* Display tile animations
+* Tile animations
 * Various editor themes
 * Insightful and helpful error messages when things go wrong, e.g. when parsing corrupted maps
-
-## Coming features
-
-* Object layer tools
-* Active layer highlighting
-* Stamp tool randomizer
-* Tile animation editor
-* Minimap dock
-* Components
-* Tileset editor
 
 ## Building
 
@@ -91,20 +78,3 @@ Finally, all we need to build the entire project is then to invoke Ninja (or wha
 ```bash
 ninja
 ```
-
-## Dependencies
-
-* [Centurion](https://github.com/albin-johansson/centurion)
-* [Dear ImGui](https://github.com/ocornut/imgui)
-* [EnTT](https://github.com/skypjack/entt)
-* [fmt](https://github.com/fmtlib/fmt)
-* [GLEW](https://github.com/nigels-com/glew)
-* [IconFontCppHeaders](https://github.com/juliettef/IconFontCppHeaders)
-* [JSON for Modern C++](https://github.com/nlohmann/json)
-* [Magic Enum C++](https://github.com/Neargye/magic_enum)
-* [Portable File Dialogs](https://github.com/samhocevar/portable-file-dialogs)
-* [Protocol Buffers](https://github.com/protocolbuffers/protobuf)
-* [pugixml](https://github.com/zeux/pugixml)
-* [SDL2](https://github.com/libsdl-org/SDL)
-* [stb_image](https://github.com/nothings/stb)
-* [yaml-cpp](https://github.com/jbeder/yaml-cpp)
