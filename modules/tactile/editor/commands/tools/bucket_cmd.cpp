@@ -46,7 +46,7 @@ void BucketCmd::Redo()
   assert(registry.all_of<TileLayer>(entity));
 
   mTarget = Sys::GetTileFromLayer(registry, entity, mOrigin);
-  FloodFill(registry, entity, mOrigin, mReplacement, mPositions);
+  Flood(registry, entity, mOrigin, mReplacement, mPositions);
 }
 
 }  // namespace Tactile
