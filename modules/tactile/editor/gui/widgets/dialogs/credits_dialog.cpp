@@ -19,15 +19,12 @@ constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
 
 constinit bool is_visible = false;
 
-void Row(const CStr lib, const CStr version, const CStr license)
+void Row(const CStr lib, const CStr license)
 {
   ImGui::TableNextRow();
 
   ImGui::TableNextColumn();
   ImGui::TextUnformatted(lib);
-
-  ImGui::TableNextColumn();
-  ImGui::TextUnformatted(version);
 
   ImGui::TableNextColumn();
   ImGui::TextUnformatted(license);
@@ -43,26 +40,26 @@ void UpdateCreditsDialog()
         "Tactile is developed using the following open-source libraries.");
     ImGui::Spacing();
 
-    if (ImGui::BeginTable("##CreditsTable", 3, table_flags)) {
+    if (ImGui::BeginTable("##CreditsTable", 2, table_flags)) {
       ImGui::TableSetupColumn("Library");
-      ImGui::TableSetupColumn("Version");
       ImGui::TableSetupColumn("License");
       ImGui::TableHeadersRow();
 
-      Row("Centurion", "6.3.0", "MIT");
-      Row("Dear ImGui", "1.84.1", "MIT");
-      Row("EnTT", "3.8.1", "MIT");
-      Row("fmt", "8.1.0", "MIT");
-      Row("GLEW", "2.2.0", "BSD/MIT");
-      Row("IconFontCppHeaders", "N/A", "Zlib");
-      Row("JSON for Modern C++", "3.9.1", "MIT");
-      Row("Magic Enum C++", "0.7.3", "MIT");
-      Row("portable-file-dialogs", "0.1.0", "WTFPL");
-      Row("Protocol Buffers", "3.18.1", "BSD");
-      Row("pugixml", "1.11.4", "MIT");
-      Row("SDL", "2.0.16", "Zlib");
-      Row("stb_image", "2.26", "MIT");
-      Row("yaml-cpp", "0.7.0", "MIT");
+      Row("Centurion", "MIT");
+      Row("Dear ImGui", "MIT");
+      Row("EnTT", "MIT");
+      Row("fmt", "MIT");
+      Row("GLEW", "BSD/MIT");
+      Row("IconFontCppHeaders", "Zlib");
+      Row("JSON for Modern C++", "MIT");
+      Row("Magic Enum C++", "MIT");
+      Row("portable-file-dialogs", "WTFPL");
+      Row("Protocol Buffers", "BSD");
+      Row("pugixml", "MIT");
+      Row("SDL", "Zlib");
+      Row("stb_image", "MIT");
+      Row("yaml-cpp", "MIT");
+      Row("googletest", "BSD");
 
       ImGui::EndTable();
     }
