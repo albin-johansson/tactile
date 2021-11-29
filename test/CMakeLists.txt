@@ -7,23 +7,24 @@ enable_testing()
 find_package(GTest CONFIG REQUIRED)
 
 set(TEST_FILES
-    unit-tests/tactile_stdlib_test.cpp
     unit-tests/test_main.cpp
 
-    unit-tests/core/map_position_test.cpp
-    unit-tests/core/property_value_test.cpp
+    unit-tests/tactile/core/map_position_test.cpp
+    unit-tests/tactile/core/property_value_test.cpp
 
-    unit-tests/core/systems/layer_system_test.cpp
-    unit-tests/core/systems/registry_system_test.cpp
-    unit-tests/core/systems/tree_system_test.cpp
+    unit-tests/tactile/core/systems/layer_system_test.cpp
+    unit-tests/tactile/core/systems/registry_system_test.cpp
+    unit-tests/tactile/core/systems/tree_system_test.cpp
 
-    unit-tests/core/utils/buffer_utils_test.cpp
-    unit-tests/core/utils/color_utils_test.cpp
-    unit-tests/core/utils/vector_map_test.cpp
+    unit-tests/tactile/core/utils/buffer_utils_test.cpp
+    unit-tests/tactile/core/utils/color_utils_test.cpp
+    unit-tests/tactile/core/utils/vector_map_test.cpp
 
-    unit-tests/editor/commands/command_stack_test.cpp
+    unit-tests/tactile/editor/commands/command_stack_test.cpp
 
-    unit-tests/io/parsing/create_document_from_ir_test.cpp
+    unit-tests/tactile/parsing/create_document_from_ir_test.cpp
+
+    unit-tests/tactile-base/tactile_stdlib_test.cpp
 
     unit-tests/tactile-io/io_test_helpers.hpp
     unit-tests/tactile-io/ir_layer_test.cpp
