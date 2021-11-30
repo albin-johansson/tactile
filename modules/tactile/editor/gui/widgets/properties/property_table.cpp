@@ -376,7 +376,7 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
 
   if (context_state.show_change_type_dialog) {
     const auto& name = change_type_target.value();
-    const auto type = Sys::GetPropertyType(registry, context.id, name);
+    const auto type = Sys::GetProperty(registry, context, name).value.GetType().value();
     OpenChangePropertyTypeDialog(name, type);
     change_type_target.reset();
     context_state.show_change_type_dialog = false;

@@ -19,7 +19,8 @@ void UpdateRenamePropertyDialog(const entt::registry& registry,
                                 entt::dispatcher& dispatcher)
 {
   auto validator = [](const entt::registry& registry, const std::string_view name) {
-    return !name.empty() && !Sys::HasPropertyWithName(registry, name);
+    const auto& context = Sys::GetCurrentContext(registry);
+    return !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
   };
 
   auto callback = [](entt::dispatcher& dispatcher, std::string name) {

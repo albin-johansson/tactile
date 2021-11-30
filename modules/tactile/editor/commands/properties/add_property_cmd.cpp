@@ -12,19 +12,21 @@ AddPropertyCmd::AddPropertyCmd(Ref<entt::registry> registry,
                                const PropertyType type)
     : ACommand{"Add Property"}
     , mRegistry{registry}
-    , mContextId{Sys::GetCurrentContext(mRegistry).id}
+    , mContextId{Sys::GetCurrentContextId(mRegistry)}
     , mName{std::move(name)}
     , mType{type}
 {}
 
 void AddPropertyCmd::Undo()
 {
-  Sys::RemoveProperty(mRegistry, mContextId, mName);
+  auto& context = Sys::GetContext(mRegistry, mContextId);
+  Sys::RemoveProperty(mRegistry, context, mName);
 }
 
 void AddPropertyCmd::Redo()
 {
-  Sys::AddProperty(mRegistry, mContextId, mName, mType);
+  auto& context = Sys::GetContext(mRegistry, mContextId);
+  Sys::AddProperty(mRegistry, context, mName, mType);
 }
 
 }  // namespace Tactile

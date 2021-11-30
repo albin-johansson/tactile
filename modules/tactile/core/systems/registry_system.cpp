@@ -8,6 +8,7 @@
 #include "core/map.hpp"
 #include "core/mouse_pos.hpp"
 #include "core/viewport.hpp"
+#include "property_system.hpp"
 
 namespace Tactile::Sys {
 
@@ -33,6 +34,7 @@ auto MakeRegistry() -> entt::registry
   viewport.y_offset = 0;
 
   auto& context = registry.set<PropertyContext>();
+  context.id = GetAndUpdateNextContextId();
   context.name = "Map";
 
   auto& tilesets = registry.set<TilesetContext>();

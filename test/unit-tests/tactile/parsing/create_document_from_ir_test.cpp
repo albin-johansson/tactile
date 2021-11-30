@@ -155,42 +155,42 @@ TEST(CreateDocumentFromIR, Test)
     ASSERT_EQ(7, mapContext.properties.size());
 
     {
-      const auto propertyEntity = Sys::FindProperty(registry, "boolean");
+      const auto propertyEntity = Sys::FindProperty(registry, mapContext, "boolean");
       const auto& property = registry.get<Property>(propertyEntity);
       ASSERT_TRUE(property.value.IsBool());
       ASSERT_TRUE(property.value.AsBool());
     }
 
     {
-      const auto propertyEntity = Sys::FindProperty(registry, "cool color");
+      const auto propertyEntity = Sys::FindProperty(registry, mapContext, "cool color");
       const auto& property = registry.get<Property>(propertyEntity);
       ASSERT_TRUE(property.value.IsColor());
       ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), property.value.AsColor());
     }
 
     {
-      const auto propertyEntity = Sys::FindProperty(registry, "floating");
+      const auto propertyEntity = Sys::FindProperty(registry, mapContext, "floating");
       const auto& property = registry.get<Property>(propertyEntity);
       ASSERT_TRUE(property.value.IsFloat());
       ASSERT_FLOAT_EQ(12.3f, property.value.AsFloat());
     }
 
     {
-      const auto propertyEntity = Sys::FindProperty(registry, "integer");
+      const auto propertyEntity = Sys::FindProperty(registry, mapContext, "integer");
       const auto& property = registry.get<Property>(propertyEntity);
       ASSERT_TRUE(property.value.IsInt());
       ASSERT_EQ(42, property.value.AsInt());
     }
 
     {
-      const auto propertyEntity = Sys::FindProperty(registry, "object ref");
+      const auto propertyEntity = Sys::FindProperty(registry, mapContext, "object ref");
       const auto& property = registry.get<Property>(propertyEntity);
       ASSERT_TRUE(property.value.IsObject());
       ASSERT_EQ(1, property.value.AsObject());
     }
 
     {
-      const auto propertyEntity = Sys::FindProperty(registry, "path");
+      const auto propertyEntity = Sys::FindProperty(registry, mapContext, "path");
       const auto& property = registry.get<Property>(propertyEntity);
       ASSERT_TRUE(property.value.IsFile());
       ASSERT_EQ(std::filesystem::path{"foo.bar"}, property.value.AsFile());

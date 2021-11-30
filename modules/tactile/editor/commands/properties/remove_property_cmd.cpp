@@ -9,20 +9,22 @@ namespace Tactile {
 RemovePropertyCmd::RemovePropertyCmd(Ref<entt::registry> registry, std::string name)
     : ACommand{"Remove Property"}
     , mRegistry{registry}
-    , mContextId{Sys::GetCurrentContext(mRegistry).id}
+    , mContextId{Sys::GetCurrentContextId(mRegistry)}
     , mName{std::move(name)}
 {}
 
 void RemovePropertyCmd::Undo()
 {
-  Sys::AddProperty(mRegistry, mContextId, mName, mPreviousValue.value());
+  auto& context = Sys::GetContext(mRegistry, mContextId);
+  Sys::AddProperty(mRegistry, context, mName, mPreviousValue.value());
   mPreviousValue.reset();
 }
 
 void RemovePropertyCmd::Redo()
 {
-  mPreviousValue = Sys::GetPropertyValue(mRegistry, mContextId, mName);
-  Sys::RemoveProperty(mRegistry, mContextId, mName);
+  auto& context = Sys::GetContext(mRegistry, mContextId);
+  mPreviousValue = Sys::GetProperty(mRegistry, context, mName).value;
+  Sys::RemoveProperty(mRegistry, context, mName);
 }
 
 }  // namespace Tactile

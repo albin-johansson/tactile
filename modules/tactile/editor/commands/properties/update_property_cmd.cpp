@@ -11,21 +11,23 @@ UpdatePropertyCmd::UpdatePropertyCmd(Ref<entt::registry> registry,
                                      PropertyValue value)
     : ACommand{"Update Property"}
     , mRegistry{registry}
-    , mContextId{Sys::GetCurrentContext(mRegistry).id}
+    , mContextId{Sys::GetCurrentContextId(mRegistry)}
     , mName{std::move(name)}
     , mNewValue{std::move(value)}
 {}
 
 void UpdatePropertyCmd::Undo()
 {
-  Sys::UpdateProperty(mRegistry, mContextId, mName, mOldValue.value());
+  auto& context = Sys::GetContext(mRegistry, mContextId);
+  Sys::UpdateProperty(mRegistry, context, mName, mOldValue.value());
   mOldValue.reset();
 }
 
 void UpdatePropertyCmd::Redo()
 {
-  mOldValue = Sys::GetPropertyValue(mRegistry, mContextId, mName);
-  Sys::UpdateProperty(mRegistry, mContextId, mName, mNewValue);
+  auto& context = Sys::GetContext(mRegistry, mContextId);
+  mOldValue = Sys::GetProperty(mRegistry, context, mName).value;
+  Sys::UpdateProperty(mRegistry, context, mName, mNewValue);
 }
 
 auto UpdatePropertyCmd::MergeWith(const ACommand& cmd) -> bool

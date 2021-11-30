@@ -1,49 +1,37 @@
 #include "property_system.hpp"
 
-#include <algorithm>  // any_of
-#include <cassert>    // assert
-#include <utility>    // move
-#include <vector>     // erase
+#include <cassert>  // assert
+#include <utility>  // move
+#include <vector>   // erase
+
+#include <tactile_stdlib.hpp>
 
 namespace Tactile::Sys {
 namespace {
 
 /* Identifier used to distinguish property contexts, generated on a
    session-by-session basis and not stored anywhere in save files. */
-inline ContextID next_context_id{1};
+inline ContextID gNextContextId{1};
 
 }  // namespace
 
 auto AddPropertyContext(entt::registry& registry, const entt::entity entity)
     -> PropertyContext&
 {
+  assert(entity != entt::null);
   auto& context = registry.emplace<PropertyContext>(entity);
 
-  context.id = next_context_id;
-  ++next_context_id;
+  context.id = gNextContextId;
+  ++gNextContextId;
 
   return context;
-}
-
-void RestorePropertyContext(entt::registry& registry,
-                            const entt::entity source,
-                            PropertyContextSnapshot snapshot)
-{
-  auto& context = registry.get_or_emplace<PropertyContext>(source);
-  context.id = snapshot.id;
-  context.name = std::move(snapshot.name);
-
-  for (auto [propertyName, propertyValue] : snapshot.properties) {
-    const auto propertyEntity = registry.create();
-    auto& property = registry.emplace<Property>(propertyEntity);
-    property.name = propertyName;
-    property.value = std::move(propertyValue);
-  }
 }
 
 auto CopyPropertyContext(const entt::registry& registry, const entt::entity source)
     -> PropertyContextSnapshot
 {
+  assert(source != entt::null);
+  assert(registry.all_of<PropertyContext>(source));
   const auto& context = registry.get<PropertyContext>(source);
 
   PropertyContextSnapshot snapshot;
@@ -58,12 +46,27 @@ auto CopyPropertyContext(const entt::registry& registry, const entt::entity sour
   return snapshot;
 }
 
+void RestorePropertyContext(entt::registry& registry,
+                            const entt::entity entity,
+                            PropertyContextSnapshot snapshot)
+{
+  assert(entity != entt::null);
+
+  auto& context = registry.get_or_emplace<PropertyContext>(entity);
+  context.id = snapshot.id;
+  context.name = std::move(snapshot.name);
+
+  for (auto&& [propertyName, propertyValue] : snapshot.properties) {
+    AddProperty(registry, context, propertyName, propertyValue);
+  }
+}
+
 void AddProperty(entt::registry& registry,
-                 const ContextID id,
+                 PropertyContext& context,
                  std::string name,
                  const PropertyType type)
 {
-  auto& context = GetContext(registry, id);
+  assert(!HasPropertyWithName(registry, context, name));
 
   const auto entity = registry.create();
   auto& property = registry.emplace<Property>(entity);
@@ -74,11 +77,11 @@ void AddProperty(entt::registry& registry,
 }
 
 void AddProperty(entt::registry& registry,
-                 const ContextID id,
+                 PropertyContext& context,
                  std::string name,
                  PropertyValue value)
 {
-  auto& context = GetContext(registry, id);
+  assert(!HasPropertyWithName(registry, context, name));
 
   const auto entity = registry.create();
   auto& property = registry.emplace<Property>(entity);
@@ -89,11 +92,9 @@ void AddProperty(entt::registry& registry,
 }
 
 void RemoveProperty(entt::registry& registry,
-                    const ContextID id,
+                    PropertyContext& context,
                     const std::string_view name)
 {
-  auto& context = GetContext(registry, id);
-
   const auto entity = FindProperty(registry, context, name);
   assert(entity != entt::null);
 
@@ -102,40 +103,23 @@ void RemoveProperty(entt::registry& registry,
 }
 
 void RenameProperty(entt::registry& registry,
-                    std::string_view oldName,
-                    std::string newName)
-{
-  assert(HasPropertyWithName(registry, oldName));
-
-  const auto entity = FindProperty(registry, oldName);
-  if (entity != entt::null) {
-    auto& property = registry.get<Property>(entity);
-    property.name = std::move(newName);
-  }
-}
-
-void RenameProperty(entt::registry& registry,
-                    const ContextID id,
+                    PropertyContext& context,
                     const std::string_view oldName,
                     std::string newName)
 {
-  auto& context = GetContext(registry, id);
-  assert(FindProperty(registry, context, newName) == entt::null);
+  assert(HasPropertyWithName(registry, context, oldName));
+  assert(!HasPropertyWithName(registry, context, newName));
 
   const auto entity = FindProperty(registry, context, oldName);
-  assert(entity != entt::null);
-
   auto& property = registry.get<Property>(entity);
   property.name = std::move(newName);
 }
 
 void UpdateProperty(entt::registry& registry,
-                    const ContextID id,
+                    PropertyContext& context,
                     const std::string_view name,
                     PropertyValue value)
 {
-  auto& context = GetContext(registry, id);
-
   const auto entity = FindProperty(registry, context, name);
   assert(entity != entt::null);
 
@@ -144,12 +128,10 @@ void UpdateProperty(entt::registry& registry,
 }
 
 void ChangePropertyType(entt::registry& registry,
-                        const ContextID id,
+                        PropertyContext& context,
                         const std::string_view name,
                         const PropertyType type)
 {
-  auto& context = GetContext(registry, id);
-
   const auto entity = FindProperty(registry, context, name);
   assert(entity != entt::null);
 
@@ -171,64 +153,56 @@ auto GetCurrentContext(const entt::registry& registry) -> const PropertyContext&
                                         : registry.ctx<PropertyContext>();
 }
 
+auto HasContext(const entt::registry& registry, const ContextID id) -> bool
+{
+  if (registry.ctx<PropertyContext>().id == id) {
+    return true;
+  }
+
+  for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
+    if (context.id == id) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 auto GetContext(entt::registry& registry, const ContextID id) -> PropertyContext&
 {
+  if (auto& context = registry.ctx<PropertyContext>(); context.id == id) {
+    return context;
+  }
+
   for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
     if (context.id == id) {
       return context;
     }
   }
 
-  assert(registry.ctx<PropertyContext>().id == id);
-  return registry.ctx<PropertyContext>();
+  throw TactileError{"No matching property context!"};
 }
 
 auto GetContext(const entt::registry& registry, const ContextID id)
     -> const PropertyContext&
 {
+  if (const auto& context = registry.ctx<PropertyContext>(); context.id == id) {
+    return context;
+  }
+
   for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
     if (context.id == id) {
       return context;
     }
   }
 
-  assert(registry.ctx<PropertyContext>().id == id);
-  return registry.ctx<PropertyContext>();
+  throw TactileError{"No matching property context!"};
 }
 
-auto GetPropertyValue(const entt::registry& registry,
-                      const ContextID id,
-                      const std::string_view name) -> const PropertyValue&
-{
-  const auto& context = GetContext(registry, id);
-
-  const auto entity = FindProperty(registry, context, name);
-  assert(entity != entt::null);
-
-  const auto& property = registry.get<Property>(entity);
-  return property.value;
-}
-
-auto GetPropertyType(const entt::registry& registry,
-                     const ContextID id,
-                     const std::string_view name) -> PropertyType
-{
-  const auto& value = GetPropertyValue(registry, id, name);
-  return value.GetType().value();
-}
-
-auto FindProperty(const entt::registry& registry, const std::string_view name)
-    -> entt::entity
+auto GetCurrentContextId(const entt::registry& registry) -> ContextID
 {
   const auto& context = GetCurrentContext(registry);
-  for (const auto propertyEntity : context.properties) {
-    const auto& property = registry.get<Property>(propertyEntity);
-    if (name == property.name) {
-      return propertyEntity;
-    }
-  }
-
-  return entt::null;
+  return context.id;
 }
 
 auto FindProperty(const entt::registry& registry,
@@ -245,15 +219,39 @@ auto FindProperty(const entt::registry& registry,
   return entt::null;
 }
 
-auto HasPropertyWithName(const entt::registry& registry, const std::string_view name)
-    -> bool
+auto GetProperty(const entt::registry& registry,
+                 const PropertyContext& context,
+                 const std::string_view name) -> const Property&
 {
-  const auto& context = GetCurrentContext(registry);
-  return std::any_of(context.properties.begin(),
-                     context.properties.end(),
-                     [&, name](entt::entity entity) {
-                       return registry.get<Property>(entity).name == name;
-                     });
+  const auto entity = FindProperty(registry, context, name);
+  if (entity != entt::null) {
+    return registry.get<Property>(entity);
+  }
+  else {
+    throw TactileError{"Found no property with the specified name!"};
+  }
+}
+
+auto HasPropertyWithName(const entt::registry& registry,
+                         const PropertyContext& context,
+                         const std::string_view name) -> bool
+{
+  return FindProperty(registry, context, name) != entt::null;
+}
+
+void ResetNextContextId() noexcept
+{
+  gNextContextId = 1;
+}
+
+auto GetAndUpdateNextContextId() noexcept -> ContextID
+{
+  return gNextContextId++;
+}
+
+auto GetNextContextId() noexcept -> ContextID
+{
+  return gNextContextId;
 }
 
 }  // namespace Tactile::Sys

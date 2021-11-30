@@ -48,7 +48,9 @@ void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& d
                                  sizeof name_buffer))
     {
       const auto name = CreateStringFromBuffer(name_buffer);
-      is_input_valid = !name.empty() && !Sys::HasPropertyWithName(registry, name);
+      const auto& context = Sys::GetCurrentContext(registry);
+      is_input_valid =
+          !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
     }
 
     ImGui::AlignTextToFramePadding();
