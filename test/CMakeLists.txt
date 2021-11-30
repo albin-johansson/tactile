@@ -49,13 +49,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                          /wd4834  # "discarding return value of function with 'nodiscard' attribute"
                          )
 
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-  target_compile_options(${TACTILE_TEST}
-                         PRIVATE
-                         -Wno-unused-result
-                         )
-
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")
   target_compile_options(${TACTILE_TEST}
                          PRIVATE
                          -Wno-unused-result
