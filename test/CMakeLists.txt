@@ -47,6 +47,11 @@ add_executable(${TACTILE_TEST} ${TEST_FILES})
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_TEST}
                          PRIVATE
+                         /EHsc
+                         /MP
+                         /W4
+                         /Zc:preprocessor
+                         /Zc:__cplusplus
                          /wd4834  # "discarding return value of function with 'nodiscard' attribute"
                          )
 
@@ -57,10 +62,10 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")
                          )
 endif ()
 
-target_include_directories(${TACTILE_TEST} PUBLIC unit)
+target_include_directories(${TACTILE_TEST} PRIVATE unit)
 
 target_link_libraries(${TACTILE_TEST}
-                      PUBLIC
+                      PRIVATE
                       ${TACTILE_LIB}
                       SDL2::SDL2main
                       GTest::gtest

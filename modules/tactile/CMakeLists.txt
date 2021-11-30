@@ -441,12 +441,12 @@ target_compile_definitions(${TACTILE_LIB}
                            )
 
 if (MSVC)
-  target_compile_definitions(${TACTILE_LIB} PUBLIC _CRT_SECURE_NO_WARNINGS)
+  target_compile_definitions(${TACTILE_LIB} PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif ()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_LIB}
-                         PUBLIC
+                         PRIVATE
                          /EHsc
                          /MP
                          /W4
@@ -457,7 +457,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")
   target_compile_options(${TACTILE_LIB}
-                         PUBLIC
+                         PRIVATE
                          -Wall
                          -Wextra
                          -Wpedantic
