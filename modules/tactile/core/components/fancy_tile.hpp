@@ -16,7 +16,7 @@ namespace Tactile {
  */
 struct FancyTile final
 {
-  TileID id;                          ///< The ID of the associated tile.
+  TileID id{};                        ///< The ID of the associated tile.
   std::vector<entt::entity> objects;  ///< Associated object entities.
 };
 
