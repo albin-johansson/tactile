@@ -11,7 +11,7 @@
 namespace Tactile {
 namespace {
 
-inline Maybe<std::string> old_name;
+inline Maybe<std::string> gOldName;
 
 }  // namespace
 
@@ -24,7 +24,7 @@ void UpdateRenamePropertyDialog(const entt::registry& registry,
   };
 
   auto callback = [](entt::dispatcher& dispatcher, std::string name) {
-    dispatcher.enqueue<RenamePropertyEvent>(old_name.value(), std::move(name));
+    dispatcher.enqueue<RenamePropertyEvent>(gOldName.value(), std::move(name));
   };
 
   UpdateRenameDialog("Rename property", registry, dispatcher, validator, callback);
@@ -32,8 +32,8 @@ void UpdateRenamePropertyDialog(const entt::registry& registry,
 
 void OpenRenamePropertyDialog(std::string name)
 {
-  old_name = std::move(name);
-  OpenRenameDialog("Rename property", *old_name);
+  gOldName = std::move(name);
+  OpenRenameDialog("Rename property", *gOldName);
 }
 
 }  // namespace Tactile

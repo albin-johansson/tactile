@@ -5,9 +5,9 @@
 namespace Tactile {
 namespace {
 
-constexpr float accent_opacity = 0.65f;
-constexpr float bg_opacity = 0.15f;
-constexpr float area_opacity = 0.40f;
+constexpr float gAccentOpacity = 0.65f;
+constexpr float gBgOpacity = 0.15f;
+constexpr float gAreaOpacity = 0.40f;
 
 struct ThemeCfg final
 {
@@ -22,9 +22,9 @@ struct ThemeCfg final
   ThemeCfg cfg;
 
   // clang-format off
-  cfg.accent  = ImColor::HSV(hue / 255.0f, 0.70f, accent_opacity);
-  cfg.bg      = ImColor::HSV(hue / 255.0f, 0.25f, bg_opacity);
-  cfg.area    = ImColor::HSV(hue / 255.0f, 0.50f, area_opacity);
+  cfg.accent  = ImColor::HSV(hue / 255.0f, 0.70f, gAccentOpacity);
+  cfg.bg      = ImColor::HSV(hue / 255.0f, 0.25f, gBgOpacity);
+  cfg.area    = ImColor::HSV(hue / 255.0f, 0.50f, gAreaOpacity);
   cfg.text    = ImColor::HSV(hue / 255.0f, 0.10f, 1.00f);
   // clang-format on
 
@@ -143,17 +143,17 @@ void ApplyTheme(ImGuiStyle& style, const Theme theme)
 
     case Theme::Nocturnal:
       ApplyThemeFromConfig(style,
-                           {.accent = {0.0f, 0.5f, 0.5f, accent_opacity},
-                            .bg = {0.04f, 0.04f, 0.04f, bg_opacity},
-                            .area = {0.15f, 0.15f, 0.15f, area_opacity},
+                           {.accent = {0.0f, 0.5f, 0.5f, gAccentOpacity},
+                            .bg = {0.04f, 0.04f, 0.04f, gBgOpacity},
+                            .area = {0.15f, 0.15f, 0.15f, gAreaOpacity},
                             .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
     case Theme::Ash:
       ApplyThemeFromConfig(style,
-                           {.accent = {0.4f, 0.4f, 0.4f, accent_opacity},
-                            .bg = {0.04f, 0.04f, 0.04f, bg_opacity},
-                            .area = {0.15f, 0.15f, 0.15f, area_opacity},
+                           {.accent = {0.4f, 0.4f, 0.4f, gAccentOpacity},
+                            .bg = {0.04f, 0.04f, 0.04f, gBgOpacity},
+                            .area = {0.15f, 0.15f, 0.15f, gAreaOpacity},
                             .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
   }

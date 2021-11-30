@@ -16,30 +16,30 @@
 namespace Tactile {
 namespace {
 
-constexpr int format_version = 1;
-constexpr usize max_size = 10;
+constexpr int gFormatVersion = 1;
+constexpr usize gMaxSize = 10;
 
-inline const auto file_path = GetPersistentFileDir() / "history.bin";
+inline const auto gFilePath = GetPersistentFileDir() / "history.bin";
 
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
-inline Maybe<std::string> last_closed_file;
-inline std::deque<std::string> history;
+inline Maybe<std::string> gLastClosedFile;
+inline std::deque<std::string> gHistory;
 
 }  // namespace
 
 void LoadFileHistory()
 {
-  std::ifstream stream{file_path, std::ios::in | std::ios::binary};
+  std::ifstream stream{gFilePath, std::ios::in | std::ios::binary};
 
   Proto::History h;
   if (h.ParseFromIstream(&stream)) {
     if (h.has_last_opened_file()) {
-      last_closed_file = h.last_opened_file();
+      gLastClosedFile = h.last_opened_file();
     }
 
     for (auto file : h.files()) {
-      history.push_back(std::move(file));
+      gHistory.push_back(std::move(file));
     }
   }
   else {
@@ -51,16 +51,16 @@ void SaveFileHistory()
 {
   Proto::History h;
 
-  if (last_closed_file) {
-    h.set_last_opened_file(*last_closed_file);
+  if (gLastClosedFile) {
+    h.set_last_opened_file(*gLastClosedFile);
   }
 
-  for (const auto& path : history) {
+  for (const auto& path : gHistory) {
     h.add_files(path);
   }
 
   {
-    std::ofstream stream{file_path, std::ios::out | std::ios::trunc | std::ios::binary};
+    std::ofstream stream{gFilePath, std::ios::out | std::ios::trunc | std::ios::binary};
     if (!h.SerializeToOstream(&stream)) {
       cen::log::error("Failed to save file history!");
     }
@@ -69,43 +69,43 @@ void SaveFileHistory()
 
 void ClearFileHistory()
 {
-  history.clear();
+  gHistory.clear();
 }
 
 void AddFileToHistory(const std::filesystem::path& path)
 {
-  const auto it = std::find_if(history.begin(),
-                               history.end(),
+  const auto it = std::find_if(gHistory.begin(),
+                               gHistory.end(),
                                [&](const std::string& str) { return str == path; });
 
-  if (it == history.end()) {
-    history.push_back(ConvertToForwardSlashes(path));
+  if (it == gHistory.end()) {
+    gHistory.push_back(ConvertToForwardSlashes(path));
 
-    if (history.size() > max_size) {
-      history.pop_front();
+    if (gHistory.size() > gMaxSize) {
+      gHistory.pop_front();
     }
   }
 }
 
 void SetLastClosedFile(const std::filesystem::path& path)
 {
-  last_closed_file = ConvertToForwardSlashes(path);
+  gLastClosedFile = ConvertToForwardSlashes(path);
   AddFileToHistory(path);
 }
 
 auto GetFileHistory() -> const std::deque<std::string>&
 {
-  return history;
+  return gHistory;
 }
 
 auto HasValidLastClosedFile() -> bool
 {
-  return last_closed_file && std::filesystem::exists(*last_closed_file);
+  return gLastClosedFile && std::filesystem::exists(*gLastClosedFile);
 }
 
 auto GetLastClosedFile() -> const std::string&
 {
-  return last_closed_file.value();
+  return gLastClosedFile.value();
 }
 
 }  // namespace Tactile

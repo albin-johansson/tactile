@@ -16,8 +16,8 @@
 namespace Tactile {
 namespace {
 
-constexpr auto out_border_color = IM_COL32(0xFF, 0xFF, 0xFF, 0xFF);
-constexpr auto in_border_color = IM_COL32(0xFF, 0xFF, 0xFF, 20);
+constexpr auto gOutBorderColor = IM_COL32(0xFF, 0xFF, 0xFF, 0xFF);
+constexpr auto gInBorderColor = IM_COL32(0xFF, 0xFF, 0xFF, 20);
 
 void RenderOutline(const RenderInfo& info)
 {
@@ -25,7 +25,7 @@ void RenderOutline(const RenderInfo& info)
   const auto height = info.row_count * info.grid_size.y;
   ImGui::GetWindowDrawList()->AddRect(info.map_position,
                                       info.map_position + ImVec2{width, height},
-                                      out_border_color);
+                                      gOutBorderColor);
 }
 
 void RenderGrid(const RenderInfo& info)
@@ -40,7 +40,7 @@ void RenderGrid(const RenderInfo& info)
       const ImVec2 pos = {
           info.map_position.x + (info.grid_size.x * static_cast<float>(col)),
           info.map_position.y + (info.grid_size.y * static_cast<float>(row))};
-      drawList->AddRect(pos, pos + info.grid_size, in_border_color);
+      drawList->AddRect(pos, pos + info.grid_size, gInBorderColor);
     }
   }
 }

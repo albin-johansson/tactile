@@ -14,7 +14,7 @@
 namespace Tactile {
 namespace {
 
-constexpr auto source_code = "Source code: " TACTILE_URL;
+constexpr auto gSourceCode = "Source code: " TACTILE_URL;
 
 }  // namespace
 
@@ -30,7 +30,7 @@ void UpdateAboutDialog(bool* open)
         "This tool is open-source software, using the GPL v3.0 license.");
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(source_code);
+    ImGui::TextUnformatted(gSourceCode);
     ImGui::SameLine();
     if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser")) {
       cen::open_url(TACTILE_URL);

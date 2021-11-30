@@ -10,7 +10,7 @@
 namespace Tactile {
 namespace {
 
-constexpr uint32 border_color = IM_COL32(255, 255, 255, 100);
+constexpr uint32 gBorderColor = IM_COL32(255, 255, 255, 100);
 
 }  // namespace
 
@@ -20,7 +20,7 @@ void ClearBackground(const CanvasInfo& canvas)
   drawList->AddRectFilled(canvas.tl,
                           canvas.br,
                           ColorToU32(Prefs::GetViewportBackground()));
-  drawList->AddRect(canvas.tl, canvas.br, border_color);
+  drawList->AddRect(canvas.tl, canvas.br, gBorderColor);
 }
 
 auto GetCanvasInfo() -> CanvasInfo

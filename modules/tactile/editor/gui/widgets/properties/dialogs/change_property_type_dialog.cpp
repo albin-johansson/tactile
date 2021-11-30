@@ -16,17 +16,17 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
-constinit PropertyType current_type = PropertyType::String;
-inline Maybe<std::string> property_name;
-inline Maybe<PropertyType> previous_type;
+constinit PropertyType gCurrentType = PropertyType::String;
+inline Maybe<std::string> gPropertyName;
+inline Maybe<PropertyType> gPreviousType;
 
 void ResetState()
 {
-  current_type = PropertyType::String;
-  property_name.reset();
-  previous_type.reset();
+  gCurrentType = PropertyType::String;
+  gPropertyName.reset();
+  gPreviousType.reset();
 }
 
 }  // namespace
@@ -34,17 +34,17 @@ void ResetState()
 void UpdateChangePropertyTypeDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Change property type", flags}) {
+  if (auto modal = Modal{"Change property type", gFlags}) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Type: ");
 
     ImGui::SameLine();
-    PropertyTypeCombo(previous_type.value(), current_type);
+    PropertyTypeCombo(gPreviousType.value(), gCurrentType);
 
     ImGui::Spacing();
 
-    if (Button("OK", nullptr, current_type != previous_type.value())) {
-      dispatcher.enqueue<ChangePropertyTypeEvent>(property_name.value(), current_type);
+    if (Button("OK", nullptr, gCurrentType != gPreviousType.value())) {
+      dispatcher.enqueue<ChangePropertyTypeEvent>(gPropertyName.value(), gCurrentType);
 
       ResetState();
       ImGui::CloseCurrentPopup();
@@ -60,9 +60,9 @@ void UpdateChangePropertyTypeDialog(entt::dispatcher& dispatcher)
 
 void OpenChangePropertyTypeDialog(std::string name, const PropertyType type)
 {
-  property_name = std::move(name);
-  current_type = type;
-  previous_type = type;
+  gPropertyName = std::move(name);
+  gCurrentType = type;
+  gPreviousType = type;
   ImGui::OpenPopup("Change property type");
 }
 

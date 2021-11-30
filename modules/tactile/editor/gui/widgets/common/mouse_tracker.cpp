@@ -6,7 +6,7 @@
 namespace Tactile {
 namespace {
 
-constexpr auto button_flags = ImGuiButtonFlags_MouseButtonLeft |
+constexpr auto gButtonFlags = ImGuiButtonFlags_MouseButtonLeft |
                               ImGuiButtonFlags_MouseButtonMiddle |
                               ImGuiButtonFlags_MouseButtonRight;
 
@@ -14,7 +14,7 @@ constexpr auto button_flags = ImGuiButtonFlags_MouseButtonLeft |
 
 auto TrackScrollOffset(const CanvasInfo& canvas, ImVec2 scrollOffset) -> ImVec2
 {
-  ImGui::InvisibleButton("TrackScrollOffset", canvas.size, button_flags);
+  ImGui::InvisibleButton("TrackScrollOffset", canvas.size, gButtonFlags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
     scrollOffset.x += io.MouseDelta.x;
@@ -28,7 +28,7 @@ auto TrackScrollOffset(const CanvasInfo& canvas, ImVec2 scrollOffset) -> ImVec2
 
 void UpdateViewportOffset(const CanvasInfo& canvas, entt::dispatcher& dispatcher)
 {
-  ImGui::InvisibleButton("UpdateViewportOffset", canvas.size, button_flags);
+  ImGui::InvisibleButton("UpdateViewportOffset", canvas.size, gButtonFlags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
     dispatcher.enqueue<OffsetViewportEvent>(io.MouseDelta.x, io.MouseDelta.y);

@@ -20,35 +20,34 @@
 namespace Tactile {
 namespace {
 
-inline const auto settings_path = GetPersistentFileDir() / "settings.bin";
+inline const auto gSettingsPath = GetPersistentFileDir() / "settings.bin";
 
-constexpr Theme def_theme = Theme::Nocturnal;
+constexpr Theme gThemeDef = Theme::Nocturnal;
+constexpr cen::color gViewportBackgroundDef{60, 60, 60};
 
-constexpr CStr def_preferred_format = "YAML";
+constexpr CStr gPreferredFormatDef = "YAML";
 
-constexpr usize def_command_capacity = 100;
+constexpr usize gCommandCapacityDef = 100;
 
-constexpr int def_preferred_tile_width = 32;
-constexpr int def_preferred_tile_height = 32;
+constexpr int gPreferredTileWidthDef = 32;
+constexpr int gPreferredTileHeightDef = 32;
+constexpr int gViewportOverlayPosDef = cen::to_underlying(OverlayPos::BottomLeft);
 
-constexpr cen::color def_viewport_background{60, 60, 60};
-constexpr int def_viewport_overlay_pos = cen::to_underlying(OverlayPos::BottomLeft);
-
-constexpr uint64 def_flags =
+constexpr uint64 gFlagsDef =
     Preferences::show_grid | Preferences::indent_output | Preferences::show_layer_dock |
     Preferences::show_tileset_dock | Preferences::show_properties_dock |
     Preferences::restore_layout | Preferences::restore_last_session;
 
 [[nodiscard]] auto MakeDefaultPreferences() -> Preferences
 {
-  return {.preferred_format = def_preferred_format,
-          .theme = def_theme,
-          .viewport_background = def_viewport_background,
-          .command_capacity = def_command_capacity,
-          .preferred_tile_width = def_preferred_tile_width,
-          .preferred_tile_height = def_preferred_tile_height,
-          .viewport_overlay_pos = def_viewport_overlay_pos,
-          .flags = def_flags};
+  return {.preferred_format = gPreferredFormatDef,
+          .theme = gThemeDef,
+          .viewport_background = gViewportBackgroundDef,
+          .command_capacity = gCommandCapacityDef,
+          .preferred_tile_width = gPreferredTileWidthDef,
+          .preferred_tile_height = gPreferredTileHeightDef,
+          .viewport_overlay_pos = gViewportOverlayPosDef,
+          .flags = gFlagsDef};
 }
 
 inline Preferences settings = MakeDefaultPreferences();
@@ -95,15 +94,15 @@ void Preferences::SetFlag(const uint64 flag, const bool value) noexcept
 
 void Preferences::ResetFlag(const uint64 flag) noexcept
 {
-  SetFlag(flag, def_flags & flag);
+  SetFlag(flag, gFlagsDef & flag);
 }
 
 void LoadPreferences()
 {
   settings = MakeDefaultPreferences();
 
-  if (std::filesystem::exists(settings_path)) {
-    std::ifstream stream{settings_path, std::ios::in | std::ios::binary};
+  if (std::filesystem::exists(gSettingsPath)) {
+    std::ifstream stream{gSettingsPath, std::ios::in | std::ios::binary};
 
     Proto::Settings cfg;
     if (cfg.ParseFromIstream(&stream)) {
@@ -225,7 +224,7 @@ void SavePreferences()
   cfg.set_restore_layout(Prefs::GetRestoreLayout());
   cfg.set_viewport_overlay_pos(Proto::OverlayPos{settings.viewport_overlay_pos});
 
-  std::ofstream stream{settings_path, std::ios::out | std::ios::trunc | std::ios::binary};
+  std::ofstream stream{gSettingsPath, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
     cen::log::error("Failed to save settings!");
   }
@@ -245,8 +244,8 @@ namespace Prefs {
 
 void ResetAppearancePreferences(Preferences& prefs)
 {
-  prefs.theme = def_theme;
-  prefs.viewport_background = def_viewport_background;
+  prefs.theme = gThemeDef;
+  prefs.viewport_background = gViewportBackgroundDef;
 
   prefs.ResetFlag(Preferences::window_border);
   prefs.ResetFlag(Preferences::show_grid);
@@ -262,15 +261,15 @@ void SetShowGrid(const bool show) noexcept
 
 void ResetBehaviorPreferences(Preferences& prefs)
 {
-  prefs.command_capacity = def_command_capacity;
-  prefs.preferred_tile_width = def_preferred_tile_width;
-  prefs.preferred_tile_height = def_preferred_tile_height;
+  prefs.command_capacity = gCommandCapacityDef;
+  prefs.preferred_tile_width = gPreferredTileWidthDef;
+  prefs.preferred_tile_height = gPreferredTileHeightDef;
   prefs.ResetFlag(Preferences::restore_last_session);
 }
 
 void ResetExportPreferences(Preferences& prefs)
 {
-  prefs.preferred_format = def_preferred_format;
+  prefs.preferred_format = gPreferredFormatDef;
   prefs.ResetFlag(Preferences::embed_tilesets);
   prefs.ResetFlag(Preferences::indent_output);
   prefs.ResetFlag(Preferences::fold_tile_data);

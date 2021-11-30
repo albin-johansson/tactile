@@ -13,23 +13,23 @@
 namespace Tactile {
 namespace {
 
-constexpr std::array items{std::make_pair("string", PropertyType::String),
-                           std::make_pair("int", PropertyType::Integer),
-                           std::make_pair("float", PropertyType::Floating),
-                           std::make_pair("bool", PropertyType::Boolean),
-                           std::make_pair("color", PropertyType::Color),
-                           std::make_pair("object", PropertyType::Object),
-                           std::make_pair("file", PropertyType::File)};
+constexpr std::array gItems{std::make_pair("string", PropertyType::String),
+                            std::make_pair("int", PropertyType::Integer),
+                            std::make_pair("float", PropertyType::Floating),
+                            std::make_pair("bool", PropertyType::Boolean),
+                            std::make_pair("color", PropertyType::Color),
+                            std::make_pair("object", PropertyType::Object),
+                            std::make_pair("file", PropertyType::File)};
 
 [[nodiscard]] auto GetIndexFromType(const PropertyType type) -> usize
 {
   const auto it = std::find_if(
-      items.begin(),
-      items.end(),
+      gItems.begin(),
+      gItems.end(),
       [=](const std::pair<CStr, PropertyType>& pair) { return type == pair.second; });
 
-  if (it != items.end()) {
-    return static_cast<usize>(it - items.begin());
+  if (it != gItems.end()) {
+    return static_cast<usize>(it - gItems.begin());
   }
   else {
     throw TactileError{"Invalid property type!"};
@@ -39,10 +39,10 @@ constexpr std::array items{std::make_pair("string", PropertyType::String),
 void PropertyTypeComboImpl(PropertyType& out, Maybe<PropertyType> previous)
 {
   const auto currentIndex = GetIndexFromType(out);
-  auto&& [currentName, currentType] = items.at(currentIndex);
+  auto&& [currentName, currentType] = gItems.at(currentIndex);
 
   if (ImGui::BeginCombo("##PropertyTypeComboImpl", currentName)) {
-    for (auto&& [name, type] : items) {
+    for (auto&& [name, type] : gItems) {
       if (previous) {
         ImGui::BeginDisabled(type == previous);
       }

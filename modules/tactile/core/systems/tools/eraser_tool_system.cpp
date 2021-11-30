@@ -14,7 +14,7 @@
 namespace Tactile::Sys {
 namespace {
 
-inline TileCache old_state;
+inline TileCache gOldState;
 
 [[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
 {
@@ -26,8 +26,8 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
   const auto entity = GetActiveLayer(registry);
   assert(entity != entt::null);
 
-  if (!old_state.Contains(cursor)) {
-    old_state.Emplace(cursor, GetTileFromLayer(registry, entity, cursor));
+  if (!gOldState.Contains(cursor)) {
+    gOldState.Emplace(cursor, GetTileFromLayer(registry, entity, cursor));
   }
 
   SetTileInLayer(registry, entity, cursor, empty_tile);
@@ -38,7 +38,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 void EraserToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    old_state.Clear();
+    gOldState.Clear();
     UpdateSequence(registry, mouse.position_in_map);
   }
 }
@@ -55,7 +55,7 @@ void EraserToolOnReleased(entt::registry& registry,
                           const MouseInfo& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    dispatcher.enqueue<EraserSequenceEvent>(std::move(old_state));
+    dispatcher.enqueue<EraserSequenceEvent>(std::move(gOldState));
   }
 }
 

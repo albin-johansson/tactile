@@ -14,8 +14,8 @@
 namespace Tactile {
 namespace {
 
-constinit bool has_focus = false;
-constexpr auto window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+constinit bool gHasFocus = false;
+constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
 }  // namespace
 
@@ -26,8 +26,8 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
   }
 
   bool visible = Prefs::GetShowTilesetDock();
-  if (ImGui::Begin("Tilesets", &visible, window_flags)) {
-    has_focus = ImGui::IsWindowFocused();
+  if (ImGui::Begin("Tilesets", &visible, gWindowFlags)) {
+    gHasFocus = ImGui::IsWindowFocused();
 
     if (!registry.empty<Tileset>()) {
       UpdateTilesetTabs(registry, dispatcher);
@@ -42,7 +42,7 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
     }
   }
   else {
-    has_focus = false;
+    gHasFocus = false;
   }
 
   Prefs::SetShowTilesetDock(visible);
@@ -51,7 +51,7 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
 
 auto IsTilesetDockFocused() noexcept -> bool
 {
-  return has_focus;
+  return gHasFocus;
 }
 
 }  // namespace Tactile

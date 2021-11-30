@@ -18,13 +18,13 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking |
-                       ImGuiWindowFlags_NoCollapse;
+constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking |
+                        ImGuiWindowFlags_NoCollapse;
 
-inline std::filesystem::path full_image_path;
-constinit std::array<char, 100> path_preview_buffer{};
-constinit int tile_width = 32;
-constinit int tile_height = 32;
+inline std::filesystem::path gFullImagePath;
+constinit std::array<char, 100> gPathPreviewBuffer{};
+constinit int gTileWidth = 32;
+constinit int gTileHeight = 32;
 
 void ShowImageFileDialog()
 {
@@ -35,29 +35,29 @@ void ShowImageFileDialog()
     return;
   }
 
-  full_image_path = files.front();
-  const auto pathStr = full_image_path.string();
+  gFullImagePath = files.front();
+  const auto pathStr = gFullImagePath.string();
 
-  if (pathStr.size() > path_preview_buffer.size()) {
-    const auto name = full_image_path.filename();
-    CopyStringIntoBuffer(path_preview_buffer, name.string());
+  if (pathStr.size() > gPathPreviewBuffer.size()) {
+    const auto name = gFullImagePath.filename();
+    CopyStringIntoBuffer(gPathPreviewBuffer, name.string());
   }
   else {
-    CopyStringIntoBuffer(path_preview_buffer, pathStr);
+    CopyStringIntoBuffer(gPathPreviewBuffer, pathStr);
   }
 }
 
 [[nodiscard]] auto IsInputValid() -> bool
 {
-  return path_preview_buffer.front() != '\0' && tile_width > 0 && tile_height > 0;
+  return gPathPreviewBuffer.front() != '\0' && gTileWidth > 0 && gTileHeight > 0;
 }
 
 void ResetInputs()
 {
-  ZeroBuffer(path_preview_buffer);
-  full_image_path.clear();
-  tile_width = Prefs::GetPreferredTileWidth();
-  tile_height = Prefs::GetPreferredTileHeight();
+  ZeroBuffer(gPathPreviewBuffer);
+  gFullImagePath.clear();
+  gTileWidth = Prefs::GetPreferredTileWidth();
+  gTileHeight = Prefs::GetPreferredTileHeight();
 }
 
 }  // namespace
@@ -65,7 +65,7 @@ void ResetInputs()
 void UpdateTilesetDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Create tileset", flags}) {
+  if (auto modal = Modal{"Create tileset", gFlags}) {
     ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
     ImGui::Spacing();
 
@@ -76,17 +76,17 @@ void UpdateTilesetDialog(entt::dispatcher& dispatcher)
     ImGui::SameLine();
     ImGui::InputTextWithHint("##Source",
                              "Source image path",
-                             path_preview_buffer.data(),
-                             path_preview_buffer.size(),
+                             gPathPreviewBuffer.data(),
+                             gPathPreviewBuffer.size(),
                              ImGuiInputTextFlags_ReadOnly);
-    ImGui::DragInt("Tile width", &tile_width, 1.0f, 1, 10'000);
-    ImGui::DragInt("Tile height", &tile_height, 1.0f, 1, 10'000);
+    ImGui::DragInt("Tile width", &gTileWidth, 1.0f, 1, 10'000);
+    ImGui::DragInt("Tile height", &gTileHeight, 1.0f, 1, 10'000);
 
     ImGui::Spacing();
     ImGui::Separator();
 
     if (Button("OK", nullptr, IsInputValid())) {
-      dispatcher.enqueue<AddTilesetEvent>(full_image_path, tile_width, tile_height);
+      dispatcher.enqueue<AddTilesetEvent>(gFullImagePath, gTileWidth, gTileHeight);
 
       ResetInputs();
       ImGui::CloseCurrentPopup();

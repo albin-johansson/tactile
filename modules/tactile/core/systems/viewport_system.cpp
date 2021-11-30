@@ -12,7 +12,7 @@
 namespace Tactile::Sys {
 namespace {
 
-constexpr float min_tile_height = 4;
+constexpr float gMinTileHeight = 4;
 
 [[nodiscard]] auto GetViewportOffsetDelta(const float tileWidth, const float ratio)
     -> std::pair<float, float>
@@ -81,8 +81,8 @@ void DecreaseViewportZoom(entt::registry& registry)
     viewport.tile_width -= dx;
     viewport.tile_height -= dy;
 
-    viewport.tile_width = std::max(min_tile_height * ratio, viewport.tile_width);
-    viewport.tile_height = std::max(min_tile_height, viewport.tile_height);
+    viewport.tile_width = std::max(gMinTileHeight * ratio, viewport.tile_width);
+    viewport.tile_height = std::max(gMinTileHeight, viewport.tile_height);
   }
 
   viewport.x_offset = mouse.x - (px * viewport.tile_width);
@@ -112,7 +112,7 @@ void IncreaseViewportZoom(entt::registry& registry)
 auto CanDecreaseViewportZoom(const entt::registry& registry) -> bool
 {
   const auto& viewport = registry.ctx<Viewport>();
-  return viewport.tile_height > min_tile_height;
+  return viewport.tile_height > gMinTileHeight;
 }
 
 auto GetViewportScalingRatio(const entt::registry& registry) -> ViewportScalingRatio

@@ -13,7 +13,7 @@
 namespace Tactile {
 namespace {
 
-constexpr auto tab_bar_flags =
+constexpr auto gTabBarFlags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
 void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
@@ -49,7 +49,7 @@ void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
 
 void UpdateTilesetTabs(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginTabBar("TilesetTabBar", tab_bar_flags)) {
+  if (ImGui::BeginTabBar("TilesetTabBar", gTabBarFlags)) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       ShowTilesetDialog();

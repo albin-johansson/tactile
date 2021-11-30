@@ -18,9 +18,9 @@
 namespace Tactile {
 namespace {
 
-constexpr int format_version = 1;
+constexpr int gFormatVersion = 1;
 
-inline const auto file_path = GetPersistentFileDir() / "session.bin";
+inline const auto gFilePath = GetPersistentFileDir() / "session.bin";
 
 }  // namespace
 
@@ -28,7 +28,7 @@ void RestoreLastSession(Model& model, TextureManager& textures)
 {
   Proto::Session session;
 
-  std::ifstream stream{file_path, std::ios::in | std::ios::binary};
+  std::ifstream stream{gFilePath, std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
       MapParser parser{file};
@@ -55,7 +55,7 @@ void SaveSession(const Model& model)
     }
   }
 
-  std::ofstream stream{file_path, std::ios::out | std::ios::trunc | std::ios::binary};
+  std::ofstream stream{gFilePath, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!session.SerializeToOstream(&stream)) {
     cen::log::error("Failed to save session binary file!");
   }

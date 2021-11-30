@@ -13,7 +13,7 @@
 namespace Tactile {
 namespace {
 
-constinit bool has_focus = false;
+constinit bool gHasFocus = false;
 
 }  // namespace
 
@@ -27,7 +27,7 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
   bool isVisible = Prefs::GetShowPropertiesDock();
 
   Window dock{"Properties", flags, &isVisible};
-  has_focus = dock.IsFocused();
+  gHasFocus = dock.IsFocused();
 
   if (dock) {
     UpdatePropertyTable(registry, dispatcher);
@@ -42,7 +42,7 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
 
 auto IsPropertyDockFocused() noexcept -> bool
 {
-  return has_focus;
+  return gHasFocus;
 }
 
 }  // namespace Tactile

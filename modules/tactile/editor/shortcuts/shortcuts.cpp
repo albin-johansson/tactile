@@ -11,12 +11,12 @@
 namespace Tactile {
 namespace {
 
-inline std::vector<std::unique_ptr<AShortcut>> shortcuts;
+inline std::vector<std::unique_ptr<AShortcut>> gShortcuts;
 
 template <typename T>
 void LoadShortcut()
 {
-  shortcuts.push_back(std::make_unique<T>());
+  gShortcuts.push_back(std::make_unique<T>());
 }
 
 }  // namespace
@@ -63,7 +63,7 @@ void UpdateShortcuts(const Model& model,
                      const SDL_KeyboardEvent& event,
                      entt::dispatcher& dispatcher)
 {
-  for (const auto& shortcut : shortcuts) {
+  for (const auto& shortcut : gShortcuts) {
     shortcut->Poll(model, event, dispatcher);
   }
 }

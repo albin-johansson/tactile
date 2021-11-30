@@ -14,15 +14,15 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
-constinit std::array<char, 100> name_buffer{};
-constinit bool is_input_valid = false;
+constinit std::array<char, 100> gNameBuffer{};
+constinit bool gIsInputValid = false;
 
 void ResetState()
 {
-  ZeroBuffer(name_buffer);
-  is_input_valid = false;
+  ZeroBuffer(gNameBuffer);
+  gIsInputValid = false;
 }
 
 }  // namespace
@@ -39,7 +39,7 @@ void UpdateRenameDialog(const NotNull<CStr> title,
   assert(callback);
 
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{title, flags}) {
+  if (auto modal = Modal{title, gFlags}) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Name: ");
 
@@ -49,14 +49,14 @@ void UpdateRenameDialog(const NotNull<CStr> title,
       ImGui::SetKeyboardFocusHere();
     }
 
-    if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer)) {
-      const auto name = CreateStringFromBuffer(name_buffer);
-      is_input_valid = validator(registry, name);
+    if (ImGui::InputText("##NameInput", gNameBuffer.data(), sizeof gNameBuffer)) {
+      const auto name = CreateStringFromBuffer(gNameBuffer);
+      gIsInputValid = validator(registry, name);
     }
 
     ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid)) {
-      auto name = CreateStringFromBuffer(name_buffer);
+    if (Button("OK", nullptr, gIsInputValid)) {
+      auto name = CreateStringFromBuffer(gNameBuffer);
       callback(dispatcher, std::move(name));
       ResetState();
       ImGui::CloseCurrentPopup();
@@ -73,7 +73,7 @@ void UpdateRenameDialog(const NotNull<CStr> title,
 void OpenRenameDialog(const NotNull<CStr> title, const std::string_view oldName)
 {
   assert(title);
-  CopyStringIntoBuffer(name_buffer, oldName);
+  CopyStringIntoBuffer(gNameBuffer, oldName);
   ImGui::OpenPopup(title);
 }
 

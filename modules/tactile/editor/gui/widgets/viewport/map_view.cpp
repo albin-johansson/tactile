@@ -28,9 +28,9 @@
 namespace Tactile {
 namespace {
 
-constexpr auto tile_highlight_color = IM_COL32(0, 255, 0, 200);
+constexpr auto gTileHighlightColor = IM_COL32(0, 255, 0, 200);
 
-constinit bool center_viewport = false;
+constinit bool gCenterViewport = false;
 
 template <typename Event, typename T>
 void CheckFor(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
@@ -87,7 +87,7 @@ void UpdateCursorGizmos(const entt::registry& registry,
   if (Sys::IsTileLayerActive(registry)) {
     ImGui::GetWindowDrawList()->AddRect(cursor.clamped_position,
                                         cursor.clamped_position + info.grid_size,
-                                        tile_highlight_color,
+                                        gTileHighlightColor,
                                         0,
                                         0,
                                         2);
@@ -157,9 +157,9 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
   const auto info = GetRenderInfo(registry, canvas);
 
   // TODO viewport should be centered by default
-  if (center_viewport) {
+  if (gCenterViewport) {
     CenterViewport(dispatcher, viewport, canvas.size, info.row_count, info.col_count);
-    center_viewport = false;
+    gCenterViewport = false;
   }
 
   RenderMap(registry, info);
@@ -217,7 +217,7 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
 // TODO the declaration of this function isn't in map_view.hpp
 void CenterMapViewport()
 {
-  center_viewport = true;
+  gCenterViewport = true;
 }
 
 void OpenObjectContextMenu(const entt::entity objectEntity)

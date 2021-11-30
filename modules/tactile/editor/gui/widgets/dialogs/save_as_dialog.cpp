@@ -12,13 +12,13 @@
 namespace Tactile {
 namespace {
 
-constinit bool show = false;
+constinit bool gShow = false;
 
 }  // namespace
 
 void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
 {
-  if (show) {
+  if (gShow) {
     auto path =
         pfd::save_file{"Save as...", "", {"Map File", "*.json *.tmx *.xml *.yml *.yaml"}}
             .result();
@@ -42,13 +42,13 @@ void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
       dispatcher.enqueue<SaveAsEvent>(std::move(path));
     }
 
-    show = false;
+    gShow = false;
   }
 }
 
 void OpenSaveAsDialog()
 {
-  show = true;
+  gShow = true;
 }
 
 }  // namespace Tactile

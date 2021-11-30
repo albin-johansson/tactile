@@ -10,14 +10,14 @@
 namespace Tactile {
 namespace {
 
-constexpr auto window_flags =
+constexpr auto gWindowFlags =
     ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
-constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
+constexpr auto gTableFlags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
                              ImGuiTableFlags_Resizable |
                              ImGuiTableFlags_SizingStretchProp;
 
-constinit bool is_visible = false;
+constinit bool gIsVisible = false;
 
 void Row(const CStr lib, const CStr license)
 {
@@ -35,12 +35,12 @@ void Row(const CStr lib, const CStr license)
 void UpdateCreditsDialog()
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Credits", window_flags, &is_visible}) {
+  if (auto modal = Modal{"Credits", gWindowFlags, &gIsVisible}) {
     ImGui::TextUnformatted(
         "Tactile is developed using the following open-source libraries.");
     ImGui::Spacing();
 
-    if (ImGui::BeginTable("##CreditsTable", 2, table_flags)) {
+    if (ImGui::BeginTable("##CreditsTable", 2, gTableFlags)) {
       ImGui::TableSetupColumn("Library");
       ImGui::TableSetupColumn("License");
       ImGui::TableHeadersRow();
@@ -68,7 +68,7 @@ void UpdateCreditsDialog()
 
 void OpenCreditsDialog()
 {
-  is_visible = true;
+  gIsVisible = true;
   ImGui::OpenPopup("Credits");
 }
 

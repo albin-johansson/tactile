@@ -34,9 +34,9 @@
 namespace Tactile {
 namespace {
 
-constinit PropertyItemContextMenuState context_state;
-inline Maybe<std::string> rename_target;
-inline Maybe<std::string> change_type_target;
+constinit PropertyItemContextMenuState gContextState;
+inline Maybe<std::string> gRenameTarget;
+inline Maybe<std::string> gChangeTypeTarget;
 
 void PrepareTableRow(const CStr label)
 {
@@ -274,15 +274,15 @@ void ShowCustomProperties(const entt::registry& registry,
     ImGui::Selectable(name.c_str());
 
     if (!isItemContextOpen) {
-      isItemContextOpen = PropertyItemContextMenu(dispatcher, name, context_state);
+      isItemContextOpen = PropertyItemContextMenu(dispatcher, name, gContextState);
     }
 
-    if (context_state.show_rename_dialog && !rename_target) {
-      rename_target = name;
+    if (gContextState.show_rename_dialog && !gRenameTarget) {
+      gRenameTarget = name;
     }
 
-    if (context_state.show_change_type_dialog && !change_type_target) {
-      change_type_target = name;
+    if (gContextState.show_change_type_dialog && !gChangeTypeTarget) {
+      gChangeTypeTarget = name;
     }
 
     ImGui::TableNextColumn();
@@ -354,7 +354,7 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
     ShowCustomProperties(registry, dispatcher, context, isItemContextOpen);
 
     if (!isItemContextOpen && ImGui::BeginPopupContextWindow("##PropertyTableContext")) {
-      context_state.show_add_dialog =
+      gContextState.show_add_dialog =
           ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
 
       ImGui::EndPopup();
@@ -363,23 +363,23 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
     ImGui::EndTable();
   }
 
-  if (context_state.show_add_dialog) {
+  if (gContextState.show_add_dialog) {
     OpenAddPropertyDialog();
-    context_state.show_add_dialog = false;
+    gContextState.show_add_dialog = false;
   }
 
-  if (context_state.show_rename_dialog) {
-    OpenRenamePropertyDialog(rename_target.value());
-    rename_target.reset();
-    context_state.show_rename_dialog = false;
+  if (gContextState.show_rename_dialog) {
+    OpenRenamePropertyDialog(gRenameTarget.value());
+    gRenameTarget.reset();
+    gContextState.show_rename_dialog = false;
   }
 
-  if (context_state.show_change_type_dialog) {
-    const auto& name = change_type_target.value();
+  if (gContextState.show_change_type_dialog) {
+    const auto& name = gChangeTypeTarget.value();
     const auto type = Sys::GetProperty(registry, context, name).value.GetType().value();
     OpenChangePropertyTypeDialog(name, type);
-    change_type_target.reset();
-    context_state.show_change_type_dialog = false;
+    gChangeTypeTarget.reset();
+    gContextState.show_change_type_dialog = false;
   }
 }
 

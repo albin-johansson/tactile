@@ -18,7 +18,7 @@
 namespace Tactile {
 namespace {
 
-constexpr uint32 preview_opacity = 100;  // [0, 255]
+constexpr uint32 gPreviewOpacity = 100;  // [0, 255]
 
 struct PreviewInfo final
 {
@@ -51,7 +51,7 @@ void RenderPreviewTile(const PreviewInfo& info,
                      realPos + info.grid_size,
                      uvMin,
                      uvMax,
-                     IM_COL32(0xFF, 0xFF, 0xFF, preview_opacity));
+                     IM_COL32(0xFF, 0xFF, 0xFF, gPreviewOpacity));
 }
 
 void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)

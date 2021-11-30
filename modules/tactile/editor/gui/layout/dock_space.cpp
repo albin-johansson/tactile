@@ -12,28 +12,28 @@
 namespace Tactile {
 namespace {
 
-constinit bool initialized = false;
-constinit Maybe<ImGuiID> root_id;
+constinit bool gInitialized = false;
+constinit Maybe<ImGuiID> gRootId;
 
 }  // namespace
 
 void UpdateDockSpace()
 {
-  root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-  if (!initialized) {
+  gRootId = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+  if (!gInitialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
       if (!Prefs::GetRestoreLayout() || !std::filesystem::exists("imgui.ini")) {
-        LoadDefaultLayout(root_id.value(), false);
+        LoadDefaultLayout(gRootId.value(), false);
       }
-      initialized = true;
+      gInitialized = true;
     }
   }
 }
 
 void ResetLayout()
 {
-  LoadDefaultLayout(root_id.value(), true);
+  LoadDefaultLayout(gRootId.value(), true);
 }
 
 }  // namespace Tactile

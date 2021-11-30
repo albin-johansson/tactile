@@ -11,17 +11,17 @@
 namespace Tactile {
 namespace {
 
-constinit bool show_about_tactile = false;
-constinit bool show_about_imgui = false;
-constinit bool show_credits = false;
+constinit bool gShowAboutTactile = false;
+constinit bool gShowAboutImgui = false;
+constinit bool gShowCredits = false;
 
 }  // namespace
 
 void UpdateHelpMenu()
 {
   if (ImGui::BeginMenu("Help")) {
-    show_about_tactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
-    show_about_imgui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
+    gShowAboutTactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
+    gShowAboutImgui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_BUG " Report Issue...")) {
@@ -29,7 +29,7 @@ void UpdateHelpMenu()
     }
 
     ImGui::Separator();
-    show_credits = ImGui::MenuItem("Credits...");
+    gShowCredits = ImGui::MenuItem("Credits...");
 
     ImGui::EndMenu();
   }
@@ -37,18 +37,18 @@ void UpdateHelpMenu()
 
 void UpdateHelpMenuWindows()
 {
-  if (show_about_tactile) {
-    UpdateAboutDialog(&show_about_tactile);
+  if (gShowAboutTactile) {
+    UpdateAboutDialog(&gShowAboutTactile);
   }
 
-  if (show_about_imgui) {
+  if (gShowAboutImgui) {
     CenterNextWindowOnAppearance();
-    ImGui::ShowAboutWindow(&show_about_imgui);
+    ImGui::ShowAboutWindow(&gShowAboutImgui);
   }
 
-  if (show_credits) {
+  if (gShowCredits) {
     OpenCreditsDialog();
-    show_credits = false;
+    gShowCredits = false;
   }
 
   UpdateCreditsDialog();

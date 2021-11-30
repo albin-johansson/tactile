@@ -18,17 +18,17 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
-constinit std::array<char, 100> name_buffer{};
-constinit PropertyType property_type = PropertyType::String;
-constinit bool is_input_valid = false;
+constinit std::array<char, 100> gNameBuffer{};
+constinit PropertyType gPropertyType = PropertyType::String;
+constinit bool gIsInputValid = false;
 
 void ResetState()
 {
-  ZeroBuffer(name_buffer);
-  property_type = PropertyType::String;
-  is_input_valid = false;
+  ZeroBuffer(gNameBuffer);
+  gPropertyType = PropertyType::String;
+  gIsInputValid = false;
 }
 
 }  // namespace
@@ -36,7 +36,7 @@ void ResetState()
 void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Add property", flags}) {
+  if (auto modal = Modal{"Add property", gFlags}) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Name: ");
 
@@ -44,25 +44,24 @@ void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& d
 
     if (ImGui::InputTextWithHint("##NameInput",
                                  "Unique property name...",
-                                 name_buffer.data(),
-                                 sizeof name_buffer))
+                                 gNameBuffer.data(),
+                                 sizeof gNameBuffer))
     {
-      const auto name = CreateStringFromBuffer(name_buffer);
+      const auto name = CreateStringFromBuffer(gNameBuffer);
       const auto& context = Sys::GetCurrentContext(registry);
-      is_input_valid =
-          !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
+      gIsInputValid = !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
     }
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Type: ");
     ImGui::SameLine();
 
-    PropertyTypeCombo(property_type);
+    PropertyTypeCombo(gPropertyType);
 
     ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid)) {
-      dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(name_buffer),
-                                           property_type);
+    if (Button("OK", nullptr, gIsInputValid)) {
+      dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(gNameBuffer),
+                                           gPropertyType);
       ResetState();
       ImGui::CloseCurrentPopup();
     }

@@ -25,9 +25,9 @@
 namespace Tactile {
 namespace {
 
-constinit bool show_rename_dialog = false;
-constinit bool has_focus = false;
-inline Maybe<LayerID> rename_target;
+constinit bool gShowRenameDialog = false;
+constinit bool gHasFocus = false;
+inline Maybe<LayerID> gRenameTarget;
 
 void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
@@ -87,7 +87,7 @@ void UpdateLayerDock(const entt::registry& registry,
 
   bool isVisible = Prefs::GetShowLayerDock();
   auto dock = Window{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
-  has_focus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
+  gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock) {
     UpdateLayerDockButtons(registry, dispatcher);
@@ -118,17 +118,17 @@ void UpdateLayerDock(const entt::registry& registry,
 
   Prefs::SetShowLayerDock(isVisible);
 
-  if (show_rename_dialog) {
-    const auto target = rename_target.value();
+  if (gShowRenameDialog) {
+    const auto target = gRenameTarget.value();
 
     const auto entity = Sys::FindLayer(registry, target);
     assert(entity != entt::null);
 
     const auto& context = registry.get<PropertyContext>(entity);
 
-    OpenRenameLayerDialog(rename_target.value(), context.name);
-    rename_target.reset();
-    show_rename_dialog = false;
+    OpenRenameLayerDialog(gRenameTarget.value(), context.name);
+    gRenameTarget.reset();
+    gShowRenameDialog = false;
   }
 
   UpdateRenameLayerDialog(registry, dispatcher);
@@ -136,13 +136,13 @@ void UpdateLayerDock(const entt::registry& registry,
 
 void OpenRenameLayerDialog(const LayerID id)
 {
-  rename_target = id;
-  show_rename_dialog = true;
+  gRenameTarget = id;
+  gShowRenameDialog = true;
 }
 
 auto IsLayerDockFocused() noexcept -> bool
 {
-  return has_focus;
+  return gHasFocus;
 }
 
 }  // namespace Tactile

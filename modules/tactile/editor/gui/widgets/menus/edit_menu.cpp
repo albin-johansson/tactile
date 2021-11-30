@@ -16,7 +16,7 @@
 namespace Tactile {
 namespace {
 
-constinit bool show_settings_window = false;
+constinit bool gShowSettingsWindow = false;
 
 }  // namespace
 
@@ -77,16 +77,16 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    show_settings_window =
+    gShowSettingsWindow =
         ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,");
   }
 }
 
 void UpdateEditMenuWindows(entt::dispatcher& dispatcher)
 {
-  if (show_settings_window) {
+  if (gShowSettingsWindow) {
     OpenSettingsDialog();
-    show_settings_window = false;
+    gShowSettingsWindow = false;
   }
 
   UpdateSettingsDialog(dispatcher);
@@ -94,7 +94,7 @@ void UpdateEditMenuWindows(entt::dispatcher& dispatcher)
 
 void ShowSettingsDialog() noexcept
 {
-  show_settings_window = true;
+  gShowSettingsWindow = true;
 }
 
 }  // namespace Tactile

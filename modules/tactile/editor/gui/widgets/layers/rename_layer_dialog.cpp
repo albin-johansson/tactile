@@ -12,19 +12,19 @@
 namespace Tactile {
 namespace {
 
-inline Maybe<LayerID> target_id;
-inline Maybe<std::string> old_name;
+inline Maybe<LayerID> gTargetId;
+inline Maybe<std::string> gOldName;
 
 }  // namespace
 
 void UpdateRenameLayerDialog(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   auto validator = [](const entt::registry&, const std::string_view name) {
-    return !name.empty() && old_name != name;
+    return !name.empty() && gOldName != name;
   };
 
   auto callback = [](entt::dispatcher& dispatcher, std::string name) {
-    dispatcher.enqueue<RenameLayerEvent>(target_id.value(), std::move(name));
+    dispatcher.enqueue<RenameLayerEvent>(gTargetId.value(), std::move(name));
   };
 
   UpdateRenameDialog("Rename layer", registry, dispatcher, validator, callback);
@@ -32,9 +32,9 @@ void UpdateRenameLayerDialog(const entt::registry& registry, entt::dispatcher& d
 
 void OpenRenameLayerDialog(const LayerID id, std::string oldName)
 {
-  target_id = id;
-  old_name = std::move(oldName);
-  OpenRenameDialog("Rename layer", *old_name);
+  gTargetId = id;
+  gOldName = std::move(oldName);
+  OpenRenameDialog("Rename layer", *gOldName);
 }
 
 }  // namespace Tactile

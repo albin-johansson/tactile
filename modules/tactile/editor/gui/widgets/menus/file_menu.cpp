@@ -18,8 +18,8 @@
 namespace Tactile {
 namespace {
 
-constinit bool show_add_map_dialog = false;
-constinit bool show_open_map_dialog = false;
+constinit bool gShowAddMapDialog = false;
+constinit bool gShowOpenMapDialog = false;
 
 void ShowMapFileDialog(entt::dispatcher& dispatcher)
 {
@@ -32,7 +32,7 @@ void ShowMapFileDialog(entt::dispatcher& dispatcher)
     dispatcher.enqueue<OpenMapEvent>(std::move(path.front()));
   }
 
-  show_open_map_dialog = false;
+  gShowOpenMapDialog = false;
 }
 
 void UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
@@ -79,9 +79,9 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
   if (auto menu = Menu{"File"}) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
-    show_add_map_dialog =
+    gShowAddMapDialog =
         ImGui::MenuItem(TAC_ICON_FILE " New Map...", TACTILE_PRIMARY_MOD "+N");
-    show_open_map_dialog =
+    gShowOpenMapDialog =
         ImGui::MenuItem(TAC_ICON_OPEN " Open Map...", TACTILE_PRIMARY_MOD "+O");
 
     UpdateRecentFilesMenu(dispatcher);
@@ -120,26 +120,26 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 
 void UpdateFileMenuWindows(entt::dispatcher& dispatcher)
 {
-  if (show_add_map_dialog) {
+  if (gShowAddMapDialog) {
     OpenAddMapDialog();
-    show_add_map_dialog = false;
+    gShowAddMapDialog = false;
   }
 
   UpdateAddMapDialog(dispatcher);
 
-  if (show_open_map_dialog) {
+  if (gShowOpenMapDialog) {
     ShowMapFileDialog(dispatcher);
   }
 }
 
 void ShowAddMapDialog() noexcept
 {
-  show_add_map_dialog = true;
+  gShowAddMapDialog = true;
 }
 
 void ShowOpenMapDialog() noexcept
 {
-  show_open_map_dialog = true;
+  gShowOpenMapDialog = true;
 }
 
 }  // namespace Tactile

@@ -12,7 +12,7 @@
 namespace Tactile {
 namespace {
 
-constinit bool show_tileset_dialog = false;
+constinit bool gShowTilesetDialog = false;
 
 }  // namespace
 
@@ -27,7 +27,7 @@ void UpdateMapMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    show_tileset_dialog =
+    gShowTilesetDialog =
         ImGui::MenuItem(TAC_ICON_TILESET " Add Tileset...", TACTILE_PRIMARY_MOD "+T");
 
     ImGui::Separator();
@@ -60,9 +60,9 @@ void UpdateMapMenu(const Model& model, entt::dispatcher& dispatcher)
 
 void UpdateMapMenuWindows(entt::dispatcher& dispatcher)
 {
-  if (show_tileset_dialog) {
+  if (gShowTilesetDialog) {
     OpenTilesetDialog();
-    show_tileset_dialog = false;
+    gShowTilesetDialog = false;
   }
 
   UpdateTilesetDialog(dispatcher);
@@ -70,7 +70,7 @@ void UpdateMapMenuWindows(entt::dispatcher& dispatcher)
 
 void ShowTilesetDialog() noexcept
 {
-  show_tileset_dialog = true;
+  gShowTilesetDialog = true;
 }
 
 }  // namespace Tactile

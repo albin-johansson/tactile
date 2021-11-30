@@ -11,38 +11,38 @@
 namespace Tactile {
 namespace {
 
-constinit bool show_metrics = false;
-constinit bool show_demo = false;
-constinit bool show_style_editor = false;
+constinit bool gShowMetrics = false;
+constinit bool gShowDemo = false;
+constinit bool gShowStyleEditor = false;
 
 }  // namespace
 
 void UpdateDebugMenu()
 {
   if (auto menu = Menu{"Debug"}) {
-    show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
+    gShowMetrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
     if constexpr (cen::is_debug_build()) {
       ImGui::Separator();
-      show_demo = ImGui::MenuItem("Show Demo Window...");
-      show_style_editor = ImGui::MenuItem("Show Style Editor...");
+      gShowDemo = ImGui::MenuItem("Show Demo Window...");
+      gShowStyleEditor = ImGui::MenuItem("Show Style Editor...");
     }
   }
 }
 
 void UpdateDebugMenuWindows()
 {
-  if (show_metrics) {
+  if (gShowMetrics) {
     CenterNextWindowOnAppearance();
-    ImGui::ShowMetricsWindow(&show_metrics);
+    ImGui::ShowMetricsWindow(&gShowMetrics);
   }
 
   if constexpr (cen::is_debug_build()) {
-    if (show_demo) {
-      ImGui::ShowDemoWindow(&show_demo);
+    if (gShowDemo) {
+      ImGui::ShowDemoWindow(&gShowDemo);
     }
 
-    if (show_style_editor) {
+    if (gShowStyleEditor) {
       auto editor = Window{"Style Editor"};
       ImGui::ShowStyleEditor();
     }

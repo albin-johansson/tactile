@@ -9,7 +9,7 @@
 namespace Tactile {
 namespace {
 
-constexpr usize max_digits = 100;
+constexpr usize gMaxDigits = 100;
 
 }  // namespace
 
@@ -20,7 +20,7 @@ auto StringPropertyWidget(const PropertyValue& property,
   const ScopeID id{&property};
   const auto& str = property.AsString();
 
-  std::array<char, max_digits> buffer;  // NOLINT safely uninitialized
+  std::array<char, gMaxDigits> buffer;  // NOLINT safely uninitialized
   CopyStringIntoBuffer(buffer, str);
 
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());

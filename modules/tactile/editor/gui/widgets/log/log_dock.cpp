@@ -14,14 +14,14 @@
 namespace Tactile {
 namespace {
 
-constinit bool has_focus = false;
-constexpr auto window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-constexpr auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
+constinit bool gHasFocus = false;
+constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                              ImGuiWindowFlags_HorizontalScrollbar |
                              ImGuiWindowFlags_AlwaysAutoResize;
 
-constexpr usize log_capacity = 256;
-inline std::deque<std::string> log_output;
+constexpr usize gLogCapacity = 256;
+inline std::deque<std::string> gLogOutput;
 
 }  // namespace
 
@@ -33,16 +33,16 @@ void UpdateLogDock()
 
   bool visible = Prefs::GetShowLogDock();
 
-  auto dock = Window{"Log", window_flags, &visible};
-  has_focus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
+  auto dock = Window{"Log", gWindowFlags, &visible};
+  gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock) {
-    if (ImGui::BeginChild("##LogPane", ImVec2{}, true, child_flags)) {
+    if (ImGui::BeginChild("##LogPane", ImVec2{}, true, gChildFlags)) {
       ImGuiListClipper clipper;
-      clipper.Begin(static_cast<int>(log_output.size()));
+      clipper.Begin(static_cast<int>(gLogOutput.size()));
       while (clipper.Step()) {
         for (auto i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {
-          const auto& msg = log_output.at(static_cast<usize>(i));
+          const auto& msg = gLogOutput.at(static_cast<usize>(i));
           ImGui::TextUnformatted(msg.c_str());
         }
       }
@@ -64,21 +64,21 @@ void UpdateLogDock()
 
 void AddLogEntry(std::string msg)
 {
-  if (log_output.size() >= log_capacity - 1) {
-    log_output.pop_back();
+  if (gLogOutput.size() >= gLogCapacity - 1) {
+    gLogOutput.pop_back();
   }
 
-  log_output.push_back(std::move(msg));
+  gLogOutput.push_back(std::move(msg));
 }
 
 void ClearLogEntries()
 {
-  log_output.clear();
+  gLogOutput.clear();
 }
 
 auto IsLogDockFocused() noexcept -> bool
 {
-  return has_focus;
+  return gHasFocus;
 }
 
 }  // namespace Tactile

@@ -5,8 +5,8 @@
 namespace Tactile {
 namespace {
 
-constexpr int major_version = 3;
-constexpr int minor_version = 0;
+constexpr int gMajorVersion = 3;
+constexpr int gMinorVersion = 0;
 
 }  // namespace
 

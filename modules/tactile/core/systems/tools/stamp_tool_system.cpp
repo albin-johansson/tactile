@@ -18,8 +18,8 @@
 namespace Tactile::Sys {
 namespace {
 
-inline TileCache old_state;
-inline TileCache sequence;
+inline TileCache gOldState;
+inline TileCache gSequence;
 
 [[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
 {
@@ -52,10 +52,10 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
       if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
         if (IsPositionInMap(registry, pos)) {
-          if (!old_state.Contains(pos)) {
-            old_state.Emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
+          if (!gOldState.Contains(pos)) {
+            gOldState.Emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
           }
-          sequence.EmplaceOrReplace(pos, tile);
+          gSequence.EmplaceOrReplace(pos, tile);
           SetTileInLayer(registry, layerEntity, pos, tile);
         }
       }
@@ -68,8 +68,8 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    old_state.Clear();
-    sequence.Clear();
+    gOldState.Clear();
+    gSequence.Clear();
 
     UpdateSequence(registry, mouse.position_in_map);
   }
@@ -87,7 +87,7 @@ void StampToolOnReleased(entt::registry& registry,
                          const MouseInfo& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    dispatcher.enqueue<StampSequenceEvent>(std::move(old_state), std::move(sequence));
+    dispatcher.enqueue<StampSequenceEvent>(std::move(gOldState), std::move(gSequence));
   }
 }
 

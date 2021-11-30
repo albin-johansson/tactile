@@ -13,13 +13,13 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
-                       ImGuiWindowFlags_AlwaysAutoResize |
-                       ImGuiWindowFlags_NoSavedSettings |
-                       ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
-                       ImGuiWindowFlags_NoMove;
+constexpr auto gFlags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
+                        ImGuiWindowFlags_AlwaysAutoResize |
+                        ImGuiWindowFlags_NoSavedSettings |
+                        ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
+                        ImGuiWindowFlags_NoMove;
 
-constexpr float opacity = 0.35f;
+constexpr float gOpacity = 0.35f;
 
 void PreparePositionAndPivot()
 {
@@ -133,8 +133,8 @@ void UpdateViewportOverlay(const entt::registry& registry,
 {
   PreparePositionAndPivot();
 
-  ImGui::SetNextWindowBgAlpha(opacity);
-  if (ImGui::Begin("##ViewportOverlay", nullptr, flags)) {
+  ImGui::SetNextWindowBgAlpha(gOpacity);
+  if (ImGui::Begin("##ViewportOverlay", nullptr, gFlags)) {
     UpdateMouseCoordinateLabels(cursor);
     UpdateMouseRowColumnLabels(cursor);
     UpdateMouseTileLabels(registry, cursor);

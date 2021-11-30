@@ -10,14 +10,14 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
-constinit usize row_count = 0;
-constinit usize col_count = 0;
+constinit usize gRowCount = 0;
+constinit usize gColCount = 0;
 
 [[nodiscard]] auto IsInputValid() noexcept -> bool
 {
-  return row_count > 0u && col_count > 0u;
+  return gRowCount > 0u && gColCount > 0u;
 }
 
 }  // namespace
@@ -25,26 +25,26 @@ constinit usize col_count = 0;
 void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Resize Map", flags}) {
+  if (auto modal = Modal{"Resize Map", gFlags}) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Rows:     ");
     ImGui::SameLine();
 
-    auto rows = static_cast<int>(row_count);
+    auto rows = static_cast<int>(gRowCount);
     ImGui::DragInt("##RowCountInput", &rows, 1.0f, 1, 10'000);
-    row_count = static_cast<usize>(rows);
+    gRowCount = static_cast<usize>(rows);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Columns:  ");
     ImGui::SameLine();
 
-    auto cols = static_cast<int>(col_count);
+    auto cols = static_cast<int>(gColCount);
     ImGui::DragInt("##ColumnCountInput", &cols, 1.0f, 1, 10'000);
-    col_count = static_cast<usize>(cols);
+    gColCount = static_cast<usize>(cols);
 
     ImGui::Spacing();
     if (Button("OK", nullptr, IsInputValid())) {
-      dispatcher.enqueue<ResizeMapEvent>(row_count, col_count);
+      dispatcher.enqueue<ResizeMapEvent>(gRowCount, gColCount);
       ImGui::CloseCurrentPopup();
     }
 
@@ -57,8 +57,8 @@ void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
 
 void OpenResizeMapDialog(const usize currentRows, const usize currentColumns)
 {
-  row_count = currentRows;
-  col_count = currentColumns;
+  gRowCount = currentRows;
+  gColCount = currentColumns;
   ImGui::OpenPopup("Resize Map");
 }
 
