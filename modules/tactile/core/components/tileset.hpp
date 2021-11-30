@@ -14,15 +14,15 @@ namespace Tactile {
 
 struct TilesetContext final
 {
-  TilesetID next_id;    ///< Next available tileset ID.
-  TileID next_tile_id;  ///< Next available global tile ID.
+  TilesetID next_id{};    ///< Next available tileset ID.
+  TileID next_tile_id{};  ///< Next available global tile ID.
 };
 
 struct Tileset final
 {
-  TilesetID id;          ///< Unique ID associated with the tileset.
-  TileID first_id;       ///< First associated global tile ID.
-  TileID last_id;        ///< Last associated global tile ID (inclusive).
+  TilesetID id{};        ///< Unique ID associated with the tileset.
+  TileID first_id{};     ///< First associated global tile ID.
+  TileID last_id{};      ///< Last associated global tile ID (inclusive).
   int32 tile_width{};    ///< Width of tiles in the tileset.
   int32 tile_height{};   ///< Height of tiles in the tileset.
   int32 tile_count{};    ///< Number of tiles associated with the tileset.
