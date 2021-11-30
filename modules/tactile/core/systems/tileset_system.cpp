@@ -23,7 +23,7 @@ namespace {
   std::unordered_map<TileID, cen::irect> cache;
 
   const auto amount = (tileset.last_id + 1) - tileset.first_id;
-  cache.reserve(amount);
+  cache.reserve(static_cast<usize>(amount));
 
   for (TileID id{tileset.first_id}; id <= tileset.last_id; ++id) {
     const auto index = id - tileset.first_id;
