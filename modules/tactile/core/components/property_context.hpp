@@ -11,7 +11,7 @@ namespace Tactile {
 
 struct PropertyContext final
 {
-  ContextID id;
+  ContextID id{};
   std::string name;
   std::vector<entt::entity> properties;
 };
