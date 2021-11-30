@@ -29,7 +29,7 @@ constexpr std::array items{std::make_pair("string", PropertyType::String),
       [=](const std::pair<CStr, PropertyType>& pair) { return type == pair.second; });
 
   if (it != items.end()) {
-    return it - items.begin();
+    return static_cast<usize>(it - items.begin());
   }
   else {
     throw TactileError{"Invalid property type!"};
