@@ -13,13 +13,13 @@ namespace {
 
 struct TextureDataDeleter final
 {
-  void operator()(unsigned char* data) noexcept
+  void operator()(uchar* data) noexcept
   {
     stbi_image_free(data);
   }
 };
 
-using TextureDataPtr = std::unique_ptr<unsigned char, TextureDataDeleter>;
+using TextureDataPtr = std::unique_ptr<uchar, TextureDataDeleter>;
 
 }  // namespace
 
