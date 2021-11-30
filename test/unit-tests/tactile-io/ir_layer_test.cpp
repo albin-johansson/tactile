@@ -67,7 +67,7 @@ TEST(IrLayer, ObjectLayer)
   IO::ReserveObjects(objectLayer, 3u);
   ASSERT_EQ(0u, IO::GetObjectCount(objectLayer));
 
-  auto& object = IO::AddObject(objectLayer);
+  auto& object [[maybe_unused]] = IO::AddObject(objectLayer);
   ASSERT_EQ(1u, IO::GetObjectCount(objectLayer));
 }
 
@@ -80,7 +80,7 @@ TEST(IrLayer, GroupLayer)
   IO::ReserveLayers(groupLayer, 6u);
   ASSERT_EQ(0u, IO::GetLayerCount(groupLayer));
 
-  auto& childLayer = IO::AddLayer(groupLayer);
+  auto& childLayer [[maybe_unused]] = IO::AddLayer(groupLayer);
   ASSERT_EQ(1u, IO::GetLayerCount(groupLayer));
   ASSERT_NO_THROW(IO::GetLayer(groupLayer, 0u));
 }
