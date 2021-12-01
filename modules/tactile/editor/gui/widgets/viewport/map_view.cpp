@@ -114,9 +114,9 @@ void UpdateCursorGizmos(const entt::registry& registry,
   }
 }
 
-void UpdateContextMenu(const entt::registry& registry,
+void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
                        entt::dispatcher& dispatcher,
-                       const ViewportCursorInfo& cursor)
+                       [[maybe_unused]] const ViewportCursorInfo& cursor)
 {
   if (ImGui::BeginPopupContextItem(
           "##MapViewContextMenu",
