@@ -545,9 +545,9 @@ void Application::OnSetObjectTag(const SetObjectTagEvent& event)
   Execute<SetObjectTagCmd>(mModel, event.id, event.tag);
 }
 
-void Application::OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent& event)
+void Application::OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent&)
 {
-  OpenObjectContextMenu(event.object_entity);
+  OpenObjectContextMenu();
 }
 
 void Application::OnAddProperty(const AddPropertyEvent& event)

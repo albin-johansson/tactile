@@ -220,7 +220,7 @@ void CenterMapViewport()
   gCenterViewport = true;
 }
 
-void OpenObjectContextMenu(const entt::entity objectEntity)
+void OpenObjectContextMenu()
 {
   ImGui::OpenPopup("##MapViewObjectContextMenu",
                    ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);

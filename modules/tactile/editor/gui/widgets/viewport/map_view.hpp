@@ -9,6 +9,6 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 void UpdateMapViewObjectContextMenu(const entt::registry& registry,
                                     entt::dispatcher& dispatcher);
 
-void OpenObjectContextMenu(entt::entity objectEntity);
+void OpenObjectContextMenu();
 
 }  // namespace Tactile
