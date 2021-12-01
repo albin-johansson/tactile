@@ -28,9 +28,9 @@ void OffsetIndicesOfSiblingsBelow(entt::registry& registry,
   auto sibling = GetSiblingBelow(registry, entity);
   while (sibling != entt::null) {
     auto& siblingNode = registry.get<LayerTreeNode>(sibling);
-    const auto newIndex = siblingNode.index + offset;
+    const auto newIndex = static_cast<int64>(siblingNode.index) + offset;
     sibling = GetSiblingBelow(registry, sibling);
-    siblingNode.index = newIndex;
+    siblingNode.index = static_cast<usize>(newIndex);
   }
 }
 
