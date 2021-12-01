@@ -4,7 +4,7 @@
 
 #include <entt/entt.hpp>  // registry
 
-#include "common/tile_cache.hpp"
+#include "core/tile_cache.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 

@@ -4,8 +4,8 @@
 
 #include <entt/entt.hpp>  // registry, entity
 
-#include "common/tile_cache.hpp"
 #include "core/map_position.hpp"
+#include "core/tile_cache.hpp"
 
 namespace Tactile::Sys {
 

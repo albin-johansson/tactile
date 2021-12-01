@@ -2,9 +2,9 @@
 
 #include <tactile_def.hpp>
 
-#include "common/tile_cache.hpp"
 #include "core/map_position.hpp"
 #include "core/mouse_info.hpp"
+#include "core/tile_cache.hpp"
 #include "core/tool_type.hpp"
 
 namespace Tactile {
