@@ -23,8 +23,6 @@ constinit bool gShowSettingsWindow = false;
 void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 {
   if (auto menu = Menu{"Edit"}) {
-    const auto hasActiveDocument = model.HasActiveDocument();
-
     const auto canUndo = model.CanUndo();
     const auto canRedo = model.CanRedo();
 
