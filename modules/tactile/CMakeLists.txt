@@ -443,6 +443,14 @@ if (MSVC)
   target_compile_definitions(${TACTILE_LIB} PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif ()
 
+if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
+  add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
+else ()
+  add_executable(${TACTILE_EXE} ${SOURCE_FILES} main.cpp)
+endif ()
+
+add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
+
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_LIB}
                          PRIVATE
@@ -454,8 +462,26 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                          /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
                          )
 
+  target_compile_options(${TACTILE_EXE}
+                         PRIVATE
+                         /EHsc
+                         /MP
+                         /W4
+                         /Zc:preprocessor
+                         /Zc:__cplusplus
+                         /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
+                         )
+
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")
   target_compile_options(${TACTILE_LIB}
+                         PRIVATE
+                         -Wall
+                         -Wextra
+                         -Wpedantic
+                         -Wconversion
+                         )
+
+  target_compile_options(${TACTILE_EXE}
                          PRIVATE
                          -Wall
                          -Wextra
@@ -484,14 +510,6 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <entt/entt.hpp>
                           <fmt/format.h>
                           )
-
-if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
-  add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
-else ()
-  add_executable(${TACTILE_EXE} ${SOURCE_FILES} main.cpp)
-endif ()
-
-add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
 
