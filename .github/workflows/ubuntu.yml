@@ -22,7 +22,7 @@ jobs:
 
       - name: Install graphics drivers
         shell: bash
-        run: sudo apt-get install libegl1-mesa-dev libgles2-mesa-dev libasound2-dev libpulse-dev
+        run: sudo apt-get install libegl1-mesa-dev libgles2-mesa-dev libasound2-dev libpulse-dev libxmu-dev libxi-dev libgl-dev
 
       - name: Install GCC 10
         shell: bash
