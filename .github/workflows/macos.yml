@@ -71,7 +71,7 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: bash
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-tactile-osx -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=x64-tactile-osx -GNinja
 
       - name: Build
         working-directory: ./build
