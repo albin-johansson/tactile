@@ -23,6 +23,13 @@ class Window final
     return mOpen && ImGui::IsWindowFocused(flags);
   }
 
+  [[nodiscard]] static auto CurrentWindowContainsMouse() -> bool
+  {
+    const auto min = ImGui::GetWindowContentRegionMin();
+    const auto max = ImGui::GetWindowContentRegionMax();
+    return ImGui::IsMouseHoveringRect(min, max);
+  }
+
   explicit operator bool() const noexcept
   {
     return mOpen;

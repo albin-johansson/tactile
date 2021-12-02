@@ -4,6 +4,7 @@
 #include <imgui_internal.h>
 
 #include "document_tabs.hpp"
+#include "editor/gui/widgets/common/window.hpp"
 #include "editor/model.hpp"
 #include "home_page_content.hpp"
 
@@ -12,6 +13,7 @@ namespace {
 
 constexpr auto gWindowFlags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
 constinit bool gHasFocus = false;
+constinit bool gMouseWithinWindow = false;
 
 void RemoveTabBarFromNextWindow()
 {
@@ -29,9 +31,10 @@ void UpdateViewportWidget(const Model& model,
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
 
   RemoveTabBarFromNextWindow();
-  if (ImGui::Begin("Viewport", nullptr, gWindowFlags)) {
+  if (auto window = Window{"Viewport", gWindowFlags}) {
     ImGui::PopStyleVar();
     gHasFocus = ImGui::IsWindowFocused();
+    gMouseWithinWindow = Window::CurrentWindowContainsMouse();
 
     if (model.HasActiveDocument()) {
       UpdateDocumentTabs(model, dispatcher);
@@ -43,9 +46,8 @@ void UpdateViewportWidget(const Model& model,
   else {
     ImGui::PopStyleVar();
     gHasFocus = false;
+    gMouseWithinWindow = false;
   }
-
-  ImGui::End();
 }
 
 void CenterViewport()
@@ -56,6 +58,11 @@ void CenterViewport()
 auto IsViewportFocused() noexcept -> bool
 {
   return gHasFocus;
+}
+
+auto IsMouseWithinViewport() noexcept -> bool
+{
+  return gMouseWithinWindow;
 }
 
 }  // namespace Tactile

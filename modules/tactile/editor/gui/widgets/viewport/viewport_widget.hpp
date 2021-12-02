@@ -15,4 +15,6 @@ void CenterViewport();
 
 [[nodiscard]] auto IsViewportFocused() noexcept -> bool;
 
+[[nodiscard]] auto IsMouseWithinViewport() noexcept -> bool;
+
 }  // namespace Tactile

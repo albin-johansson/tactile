@@ -164,8 +164,7 @@ void Application::OnKeyboardEvent(SDL_KeyboardEvent event)
 
 void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
 {
-  // TODO track when mouse exits the viewport
-  if (IsViewportFocused() && mModel.HasActiveDocument()) {
+  if (IsViewportFocused() && IsMouseWithinViewport() && mModel.HasActiveDocument()) {
     if (const auto* registry = mModel.GetActiveRegistry()) {
       const auto& viewport = registry->ctx<Viewport>();
       const auto dx = static_cast<float>(event.x) * (viewport.tile_width / 3.0f);
