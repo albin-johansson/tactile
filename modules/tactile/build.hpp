@@ -47,3 +47,39 @@
 #else
 #define TACTILE_PLATFORM_OSX 0
 #endif  // __APPLE__
+
+namespace Tactile {
+
+[[nodiscard]] constexpr auto IsDebugBuild() noexcept -> bool
+{
+#if TACTILE_DEBUG
+  return true;
+#else
+  return false;
+#endif  // TACTILE_DEBUG
+}
+
+[[nodiscard]] constexpr auto IsReleaseBuild() noexcept -> bool
+{
+  return !IsDebugBuild();
+}
+
+[[nodiscard]] constexpr auto IsPlatformWindows() noexcept -> bool
+{
+#if TACTILE_PLATFORM_WINDOWS
+  return true;
+#else
+  return false;
+#endif  // TACTILE_PLATFORM_WINDOWS
+}
+
+[[nodiscard]] constexpr auto IsPlatformOSX() noexcept -> bool
+{
+#if TACTILE_PLATFORM_OSX
+  return true;
+#else
+  return false;
+#endif  // TACTILE_PLATFORM_OSX
+}
+
+}  // namespace Tactile

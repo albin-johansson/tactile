@@ -2,6 +2,6 @@
 
 namespace Tactile {
 
-void InitOpenGLAttributes();
+void InitAttributes();
 
 }  // namespace Tactile

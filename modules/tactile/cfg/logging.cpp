@@ -9,6 +9,7 @@
 #include <fmt/core.h>    // print
 #include <fmt/format.h>  // format
 
+#include "build.hpp"
 #include "editor/gui/widgets/log/log_dock.hpp"
 
 namespace Tactile {
@@ -43,6 +44,23 @@ namespace {
 
 }  // namespace
 
+void InitLogger()
+{
+  SDL_LogSetOutputFunction(
+      [](void* /*data*/,
+         int /*category*/,
+         const SDL_LogPriority priority,
+         const char* msg) { LogMessage(static_cast<cen::log_priority>(priority), msg); },
+      nullptr);
+
+  if constexpr (IsDebugBuild()) {
+    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
+  }
+  else {
+    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_INFO);
+  }
+}
+
 void LogMessage(const cen::log_priority priority, const CStr msg)
 {
   auto time = std::time(nullptr);
@@ -53,7 +71,7 @@ void LogMessage(const cen::log_priority priority, const CStr msg)
                                msg);
   AddLogEntry(str);
 
-  if constexpr (cen::is_debug_build()) {
+  if constexpr (IsDebugBuild()) {
     fmt::print(fmt::runtime(str));
   }
 }

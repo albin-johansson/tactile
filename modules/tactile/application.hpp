@@ -2,8 +2,8 @@
 
 #include <tactile_def.hpp>
 
-#include <centurion.hpp>  // window, keyboard
-#include <entt/entt.hpp>  // dispatcher
+#include <centurion.hpp>
+#include <entt/entt.hpp>
 
 #include "core/utils/texture_manager.hpp"
 #include "editor/events/command_events.hpp"
@@ -21,17 +21,19 @@
 
 namespace Tactile {
 
+class ApplicationConfiguration;
+
 class Application final
 {
   friend void SubscribeToEvents(Application*, entt::dispatcher&);
 
  public:
-  Application(cen::window&& window);
+  explicit Application(ApplicationConfiguration* configuration);
 
   auto Run() -> int;
 
  private:
-  cen::window mWindow;
+  ApplicationConfiguration* mConfiguration{}; /* Non-owning */
   cen::keyboard mKeyboard;
   entt::dispatcher mDispatcher;
   Model mModel;

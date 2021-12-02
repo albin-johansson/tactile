@@ -17,8 +17,10 @@ set(SOURCE_FILES
     application_events.hpp
     build.hpp
 
-    cfg/gl_attributes.cpp
-    cfg/gl_attributes.hpp
+    cfg/attributes.cpp
+    cfg/attributes.hpp
+    cfg/configuration.cpp
+    cfg/configuration.hpp
     cfg/logging.cpp
     cfg/logging.hpp
     cfg/protobuf_context.cpp

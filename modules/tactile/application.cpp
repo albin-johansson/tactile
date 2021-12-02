@@ -8,6 +8,7 @@
 #include <imgui_impl_sdl.h>
 
 #include "application_events.hpp"
+#include "cfg/configuration.hpp"
 #include "core/components/property_context.hpp"
 #include "core/mouse_pos.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -63,8 +64,8 @@ constinit bool gPrevShowToolbar{true};
 
 }  // namespace
 
-Application::Application(cen::window&& window)
-    : mWindow{std::move(window)}
+Application::Application(ApplicationConfiguration* configuration)
+    : mConfiguration{configuration}
     , mIcons{mTextures}
 {
   SubscribeToEvents(this, mDispatcher);
@@ -73,12 +74,14 @@ Application::Application(cen::window&& window)
 
 auto Application::Run() -> int
 {
+  auto* window = mConfiguration->GetWindow();
+
   if (Prefs::GetRestoreLastSession()) {
     RestoreLastSession(mModel, mTextures);
   }
 
   LoadFileHistory();
-  mWindow.show();
+  SDL_ShowWindow(window);
 
   const auto& io = ImGui::GetIO();
   while (!mQuit) {
@@ -102,12 +105,12 @@ auto Application::Run() -> int
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    cen::gl::swap(mWindow);
+    SDL_GL_SwapWindow(window);
   }
 
   OnAboutToExit();
+  SDL_HideWindow(window);
 
-  mWindow.hide();
   return 0;
 }
 
