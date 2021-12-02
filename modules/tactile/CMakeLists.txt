@@ -421,7 +421,6 @@ target_link_libraries(${TACTILE_LIB}
                       OpenGL::GL
                       GLEW::GLEW
                       SDL2::SDL2
-                      SDL2::SDL2main
                       imgui::imgui
                       EnTT::EnTT
                       fmt::fmt
@@ -515,6 +514,10 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
 
-target_link_libraries(${TACTILE_EXE} PUBLIC ${TACTILE_LIB})
+target_link_libraries(${TACTILE_EXE}
+                      PRIVATE
+                      ${TACTILE_LIB}
+                      SDL2::SDL2main
+                      )
 
 copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
