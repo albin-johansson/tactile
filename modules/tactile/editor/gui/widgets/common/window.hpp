@@ -9,7 +9,9 @@ namespace Tactile {
 class Window final
 {
  public:
-  explicit Window(const CStr label, ImGuiWindowFlags flags = 0, bool* open = nullptr)
+  explicit Window(const CStr label,
+                  const ImGuiWindowFlags flags = 0,
+                  bool* open = nullptr)
       : mOpen{ImGui::Begin(label, open, flags)}
   {}
 
@@ -18,9 +20,19 @@ class Window final
     ImGui::End();
   }
 
-  [[nodiscard]] auto IsFocused(ImGuiFocusedFlags flags = 0) const -> bool
+  [[nodiscard]] auto IsFocused(const ImGuiFocusedFlags flags = 0) const -> bool
   {
     return mOpen && ImGui::IsWindowFocused(flags);
+  }
+
+  [[nodiscard]] auto IsOpen() const noexcept -> bool
+  {
+    return mOpen;
+  }
+
+  explicit operator bool() const noexcept
+  {
+    return mOpen;
   }
 
   [[nodiscard]] static auto CurrentWindowContainsMouse() -> bool
@@ -28,11 +40,6 @@ class Window final
     const auto min = ImGui::GetWindowContentRegionMin();
     const auto max = ImGui::GetWindowContentRegionMax();
     return ImGui::IsMouseHoveringRect(min, max);
-  }
-
-  explicit operator bool() const noexcept
-  {
-    return mOpen;
   }
 
  private:

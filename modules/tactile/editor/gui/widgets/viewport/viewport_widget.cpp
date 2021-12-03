@@ -29,9 +29,10 @@ void UpdateViewportWidget(const Model& model,
                           entt::dispatcher& dispatcher)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
-
   RemoveTabBarFromNextWindow();
-  if (auto window = Window{"Viewport", gWindowFlags}) {
+
+  auto window = Window{"Viewport", gWindowFlags};
+  if (window.IsOpen()) {
     ImGui::PopStyleVar();
     gHasFocus = ImGui::IsWindowFocused();
     gMouseWithinWindow = Window::CurrentWindowContainsMouse();
