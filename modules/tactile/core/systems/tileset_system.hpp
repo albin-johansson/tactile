@@ -25,6 +25,7 @@ namespace Tactile::Sys {
  * - `TilesetSelection`
  * - `UvTileSize`
  * - `PropertyContext`
+ * - `Viewport`
  *
  * \param registry the associated registry.
  * \param firstId the first global tile ID associated with the tileset.
@@ -33,8 +34,6 @@ namespace Tactile::Sys {
  * \param tileHeight the height of tiles in the tileset.
  *
  * \return the created tileset entity.
- *
- * \since 0.2.0
  */
 auto MakeTileset(entt::registry& registry,
                  TileID firstId,

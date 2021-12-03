@@ -12,6 +12,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
+#include "core/viewport.hpp"
 #include "property_system.hpp"
 
 namespace Tactile::Sys {
@@ -93,6 +94,12 @@ auto MakeTileset(entt::registry& registry,
   context.name = texture.path.stem().string();
 
   registry.emplace<TilesetSelection>(entity);
+
+  auto& viewport = registry.emplace<Viewport>(entity);
+  viewport.x_offset = 0;
+  viewport.y_offset = 0;
+  viewport.tile_width = tileset.tile_width;
+  viewport.tile_height = tileset.tile_height;
 
   return entity;
 }
