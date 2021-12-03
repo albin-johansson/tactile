@@ -89,7 +89,7 @@ void UpdateLayerDock(const entt::registry& registry,
   auto dock = Window{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
   gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
-  if (dock) {
+  if (dock.IsOpen()) {
     UpdateLayerDockButtons(registry, dispatcher);
     if (registry.empty<Layer>()) {
       PrepareVerticalAlignmentCenter(1);

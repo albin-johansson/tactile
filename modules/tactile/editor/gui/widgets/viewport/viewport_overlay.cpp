@@ -7,6 +7,7 @@
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/gui/rendering/canvas.hpp"
+#include "editor/gui/widgets/common/window.hpp"
 #include "io/preferences.hpp"
 #include "viewport_cursor_info.hpp"
 
@@ -134,15 +135,15 @@ void UpdateViewportOverlay(const entt::registry& registry,
   PreparePositionAndPivot();
 
   ImGui::SetNextWindowBgAlpha(gOpacity);
-  if (ImGui::Begin("##ViewportOverlay", nullptr, gFlags)) {
+  auto window = Window{"##ViewportOverlay", gFlags};
+
+  if (window.IsOpen()) {
     UpdateMouseCoordinateLabels(cursor);
     UpdateMouseRowColumnLabels(cursor);
     UpdateMouseTileLabels(registry, cursor);
 
     UpdateOverlayContextMenu();
   }
-
-  ImGui::End();
 }
 
 }  // namespace Tactile

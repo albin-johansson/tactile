@@ -36,7 +36,7 @@ void UpdateLogDock()
   auto dock = Window{"Log", gWindowFlags, &visible};
   gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
-  if (dock) {
+  if (dock.IsOpen()) {
     if (ImGui::BeginChild("##LogPane", ImVec2{}, true, gChildFlags)) {
       ImGuiListClipper clipper;
       clipper.Begin(static_cast<int>(gLogOutput.size()));

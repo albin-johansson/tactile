@@ -22,7 +22,7 @@ void UpdateAboutDialog(bool* open)
 {
   CenterNextWindowOnAppearance();
   auto window = Window{"About Tactile", ImGuiWindowFlags_AlwaysAutoResize, open};
-  if (window) {
+  if (window.IsOpen()) {
     ImGui::TextUnformatted("Tactile " TACTILE_VER " (C) Albin Johansson 2020-2021");
     ImGui::Separator();
 

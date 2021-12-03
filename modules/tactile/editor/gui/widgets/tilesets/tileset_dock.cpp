@@ -7,6 +7,7 @@
 #include "editor/gui/widgets/alignment.hpp"
 #include "editor/gui/widgets/common/centered_button.hpp"
 #include "editor/gui/widgets/common/centered_text.hpp"
+#include "editor/gui/widgets/common/window.hpp"
 #include "editor/gui/widgets/menus/map_menu.hpp"
 #include "io/preferences.hpp"
 #include "tileset_tabs.hpp"
@@ -26,7 +27,8 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
   }
 
   bool visible = Prefs::GetShowTilesetDock();
-  if (ImGui::Begin("Tilesets", &visible, gWindowFlags)) {
+  auto window = Window{"Tilesets", gWindowFlags, &visible};
+  if (window.IsOpen()) {
     gHasFocus = ImGui::IsWindowFocused();
 
     if (!registry.empty<Tileset>()) {
@@ -46,7 +48,6 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
   }
 
   Prefs::SetShowTilesetDock(visible);
-  ImGui::End();
 }
 
 auto IsTilesetDockFocused() noexcept -> bool

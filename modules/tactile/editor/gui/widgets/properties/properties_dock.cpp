@@ -29,7 +29,7 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
   Window dock{"Properties", flags, &isVisible};
   gHasFocus = dock.IsFocused();
 
-  if (dock) {
+  if (dock.IsOpen()) {
     UpdatePropertyTable(registry, dispatcher);
   }
 

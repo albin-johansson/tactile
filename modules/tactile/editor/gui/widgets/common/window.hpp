@@ -30,11 +30,6 @@ class Window final
     return mOpen;
   }
 
-  explicit operator bool() const noexcept
-  {
-    return mOpen;
-  }
-
   [[nodiscard]] static auto CurrentWindowContainsMouse() -> bool
   {
     const auto min = ImGui::GetWindowContentRegionMin();
