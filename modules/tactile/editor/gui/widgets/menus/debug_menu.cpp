@@ -3,47 +3,42 @@
 #include <centurion.hpp>
 #include <imgui.h>
 
+#include "build.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widgets/alignment.hpp"
 #include "editor/gui/widgets/common/menu.hpp"
 #include "editor/gui/widgets/common/window.hpp"
 
 namespace Tactile {
-namespace {
 
-constinit bool gShowMetrics = false;
-constinit bool gShowDemo = false;
-constinit bool gShowStyleEditor = false;
-
-}  // namespace
-
-void UpdateDebugMenu()
+void DebugMenu::Update()
 {
-  if (auto menu = Menu{"Debug"}) {
-    gShowMetrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
+  Menu menu{"Debug"};
+  if (menu) {
+    mShowMetrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
-    if constexpr (cen::is_debug_build()) {
+    if constexpr (IsDebugBuild()) {
       ImGui::Separator();
-      gShowDemo = ImGui::MenuItem("Show Demo Window...");
-      gShowStyleEditor = ImGui::MenuItem("Show Style Editor...");
+      mShowDemo = ImGui::MenuItem("Show Demo Window...");
+      mShowStyleEditor = ImGui::MenuItem("Show Style Editor...");
     }
   }
 }
 
-void UpdateDebugMenuWindows()
+void DebugMenu::UpdateWindows()
 {
-  if (gShowMetrics) {
+  if (mShowMetrics) {
     CenterNextWindowOnAppearance();
-    ImGui::ShowMetricsWindow(&gShowMetrics);
+    ImGui::ShowMetricsWindow(&mShowMetrics);
   }
 
-  if constexpr (cen::is_debug_build()) {
-    if (gShowDemo) {
-      ImGui::ShowDemoWindow(&gShowDemo);
+  if constexpr (IsDebugBuild()) {
+    if (mShowDemo) {
+      ImGui::ShowDemoWindow(&mShowDemo);
     }
 
-    if (gShowStyleEditor) {
-      auto editor = Window{"Style Editor"};
+    if (mShowStyleEditor) {
+      Window editor{"Style Editor"};
       ImGui::ShowStyleEditor();
     }
   }

@@ -2,13 +2,13 @@
 
 #include <imgui.h>
 
-#include "core/utils/scope_id.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 
 namespace Tactile {
 
 auto ObjectPropertyWidget(const PropertyValue& property) -> Maybe<ObjectRef>
 {
-  const ScopeID id{&property};
+  const Scoped::ID scope{&property};
 
   // TODO
   const auto object = property.AsObject();

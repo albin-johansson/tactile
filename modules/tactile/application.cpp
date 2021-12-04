@@ -253,6 +253,21 @@ void Application::OnOpenSaveAsDialog()
   }
 }
 
+void Application::OnShowSettings()
+{
+  mWidgets.ShowSettings();
+}
+
+void Application::OnShowNewMapDialog()
+{
+  mWidgets.ShowNewMapDialog();
+}
+
+void Application::OnShowOpenMapDialog()
+{
+  mWidgets.ShowOpenMapDialog();
+}
+
 void Application::OnShowMapProperties()
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
@@ -412,6 +427,11 @@ void Application::OnResetZoom()
   if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::ResetViewportZoom(*registry);
   }
+}
+
+void Application::OnShowAddTilesetDialog()
+{
+  mWidgets.ShowAddTilesetDialog();
 }
 
 void Application::OnAddTileset(const AddTilesetEvent& event)

@@ -3,16 +3,16 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "editor/events/map_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/texture_utils.hpp"
 #include "editor/gui/widgets/alignment.hpp"
 #include "editor/gui/widgets/common/centered_button.hpp"
 #include "editor/gui/widgets/common/centered_text.hpp"
-#include "editor/gui/widgets/menus/file_menu.hpp"
 
 namespace Tactile {
 
-void UpdateHomePageContent(const Icons& icons)
+void UpdateHomePageContent(const Icons& icons, entt::dispatcher& dispatcher)
 {
   PrepareVerticalAlignmentCenter(4);
 
@@ -25,12 +25,12 @@ void UpdateHomePageContent(const Icons& icons)
 
   ImGui::Spacing();
   if (CenteredButton("Create new map")) {
-    ShowAddMapDialog();
+    dispatcher.enqueue<ShowNewMapDialogEvent>();
   }
 
   ImGui::Spacing();
   if (CenteredButton("Open existing map")) {
-    ShowOpenMapDialog();
+    dispatcher.enqueue<ShowOpenMapDialogEvent>();
   }
 }
 

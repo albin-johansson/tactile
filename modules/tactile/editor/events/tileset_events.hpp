@@ -12,6 +12,8 @@ namespace Tactile {
 /// \addtogroup events
 /// \{
 
+struct ShowAddTilesetDialogEvent final {};
+
 struct AddTilesetEvent final {
   std::filesystem::path path;
   int tile_width{};

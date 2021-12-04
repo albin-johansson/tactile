@@ -1,8 +1,9 @@
 #include "file_shortcuts.hpp"
 
+#include "editor/events/edit_events.hpp"
+#include "editor/events/map_events.hpp"
 #include "editor/events/save_events.hpp"
 #include "editor/gui/widgets/menus/edit_menu.hpp"
-#include "editor/gui/widgets/menus/file_menu.hpp"
 #include "editor/gui/widgets/widget_manager.hpp"
 #include "editor/model.hpp"
 #include "mappings.hpp"
@@ -11,25 +12,25 @@ namespace Tactile {
 
 NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, primary_modifier} {}
 
-void NewMapShortcut::Activate(entt::dispatcher&)
+void NewMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  ShowAddMapDialog();
+  dispatcher.enqueue<ShowNewMapDialogEvent>();
 }
 
 OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, primary_modifier} {}
 
-void OpenMapShortcut::Activate(entt::dispatcher&)
+void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  ShowOpenMapDialog();
+  dispatcher.enqueue<ShowOpenMapDialogEvent>();
 }
 
 OpenSettingsShortcut::OpenSettingsShortcut()
     : AShortcut{SDL_SCANCODE_COMMA, primary_modifier}
 {}
 
-void OpenSettingsShortcut::Activate(entt::dispatcher&)
+void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  ShowSettingsDialog();
+  dispatcher.enqueue<ShowSettingsEvent>();
 }
 
 SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, primary_modifier} {}

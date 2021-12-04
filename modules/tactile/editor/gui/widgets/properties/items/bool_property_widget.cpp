@@ -2,13 +2,13 @@
 
 #include <imgui.h>
 
-#include "core/utils/scope_id.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 
 namespace Tactile {
 
 auto BoolPropertyWidget(const PropertyValue& property) -> Maybe<bool>
 {
-  const ScopeID id{&property};
+  const Scoped::ID scope{&property};
   auto value = property.AsBool();
 
   if (ImGui::Checkbox("##BoolPropertyWidget", &value)) {

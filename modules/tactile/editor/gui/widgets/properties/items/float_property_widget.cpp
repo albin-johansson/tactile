@@ -4,14 +4,14 @@
 
 #include <imgui.h>
 
-#include "core/utils/scope_id.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 
 namespace Tactile {
 
 auto FloatPropertyWidget(const PropertyValue& property, const float min, const float max)
     -> Maybe<float>
 {
-  const ScopeID id{&property};
+  const Scoped::ID scope{&property};
   auto value = property.AsFloat();
 
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());

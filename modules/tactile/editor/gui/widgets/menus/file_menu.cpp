@@ -16,72 +16,16 @@
 #include "io/history.hpp"
 
 namespace Tactile {
-namespace {
 
-constinit bool gShowAddMapDialog = false;
-constinit bool gShowOpenMapDialog = false;
-
-void ShowMapFileDialog(entt::dispatcher& dispatcher)
+void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  auto path = pfd::open_file{"Open Map...",  //
-                             "",
-                             {"Map Files", "*.json *.tmx *.xml *.yaml *.yml"}}
-                  .result();
-
-  if (!path.empty()) {
-    dispatcher.enqueue<OpenMapEvent>(std::move(path.front()));
-  }
-
-  gShowOpenMapDialog = false;
-}
-
-void UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
-{
-  if (auto menu = Menu{TAC_ICON_HISTORY " Recent Files"}) {
-    if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
-                        nullptr,
-                        false,
-                        HasValidLastClosedFile()))
-    {
-      // TODO this will need to be tweaked if tileset documents viewing will be supported
-      dispatcher.enqueue<OpenMapEvent>(GetLastClosedFile());
-    }
-
-    const auto& history = GetFileHistory();
-
-    if (!history.empty()) {
-      ImGui::Separator();
-    }
-
-    for (const auto& path : history) {
-      if (ImGui::MenuItem(path.c_str())) {
-        /* It's fine if the file doesn't exist anymore, the parser handles that */
-        dispatcher.enqueue<OpenMapEvent>(path);
-      }
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear File History",
-                        nullptr,
-                        false,
-                        !history.empty()))
-    {
-      ClearFileHistory();
-    }
-  }
-}
-
-}  // namespace
-
-void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
-{
-  if (auto menu = Menu{"File"}) {
+  Menu menu{"File"};
+  if (menu) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
-    gShowAddMapDialog =
+    mShowNewMapDialog =
         ImGui::MenuItem(TAC_ICON_FILE " New Map...", TACTILE_PRIMARY_MOD "+N");
-    gShowOpenMapDialog =
+    mShowOpenMapDialog =
         ImGui::MenuItem(TAC_ICON_OPEN " Open Map...", TACTILE_PRIMARY_MOD "+O");
 
     UpdateRecentFilesMenu(dispatcher);
@@ -118,28 +62,80 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
   }
 }
 
-void UpdateFileMenuWindows(entt::dispatcher& dispatcher)
+void FileMenu::UpdateWindows(entt::dispatcher& dispatcher)
 {
-  if (gShowAddMapDialog) {
+  if (mShowNewMapDialog) {
     OpenAddMapDialog();
-    gShowAddMapDialog = false;
+    mShowNewMapDialog = false;
   }
 
   UpdateAddMapDialog(dispatcher);
 
-  if (gShowOpenMapDialog) {
-    ShowMapFileDialog(dispatcher);
+  if (mShowOpenMapDialog) {
+    UpdateMapFileDialog(dispatcher);
   }
 }
 
-void ShowAddMapDialog() noexcept
+void FileMenu::ShowNewMapDialog()
 {
-  gShowAddMapDialog = true;
+  mShowNewMapDialog = true;
 }
 
-void ShowOpenMapDialog() noexcept
+void FileMenu::ShowOpenMapDialog()
 {
-  gShowOpenMapDialog = true;
+  mShowOpenMapDialog = true;
+}
+
+void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
+{
+  Menu menu{TAC_ICON_HISTORY " Recent Files"};
+  if (menu) {
+    if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
+                        nullptr,
+                        false,
+                        HasValidLastClosedFile()))
+    {
+      // TODO this will need to be tweaked if tileset documents viewing will be supported
+      dispatcher.enqueue<OpenMapEvent>(GetLastClosedFile());
+    }
+
+    const auto& history = GetFileHistory();
+
+    if (!history.empty()) {
+      ImGui::Separator();
+    }
+
+    for (const auto& path : history) {
+      if (ImGui::MenuItem(path.c_str())) {
+        /* It's fine if the file doesn't exist anymore, the parser handles that */
+        dispatcher.enqueue<OpenMapEvent>(path);
+      }
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear File History",
+                        nullptr,
+                        false,
+                        !history.empty()))
+    {
+      ClearFileHistory();
+    }
+  }
+}
+
+void FileMenu::UpdateMapFileDialog(entt::dispatcher& dispatcher)
+{
+  auto path = pfd::open_file{"Open Map...",  //
+                             "",
+                             {"Map Files", "*.json *.tmx *.xml *.yaml *.yml"}}
+                  .result();
+
+  if (!path.empty()) {
+    dispatcher.enqueue<OpenMapEvent>(std::move(path.front()));
+  }
+
+  mShowOpenMapDialog = false;
 }
 
 }  // namespace Tactile

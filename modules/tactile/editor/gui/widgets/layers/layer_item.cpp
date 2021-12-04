@@ -9,9 +9,9 @@
 #include "core/components/property_context.hpp"
 #include "core/map.hpp"
 #include "core/utils/formatted_string.hpp"
-#include "core/utils/scope_id.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 #include "layer_item_popup.hpp"
 
 namespace Tactile {
@@ -66,7 +66,7 @@ void LayerItem(const entt::registry& registry,
                const entt::entity layerEntity,
                const Layer& layer)
 {
-  const ScopeID uid{layer.id};
+  const Scoped::ID scope{layer.id};
 
   const auto& activeLayer = registry.ctx<ActiveLayer>();
   const auto isActiveLayer = layerEntity == activeLayer.entity;

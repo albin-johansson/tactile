@@ -4,6 +4,7 @@
 
 #include <entt/entt.hpp>
 
+#include "menus/menu_bar.hpp"
 #include "tilesets/tileset_dock.hpp"
 #include "toolbar/toolbar.hpp"
 
@@ -15,6 +16,14 @@ class Icons;
 class WidgetManager final {
  public:
   void Update(const Model& model, const Icons& icons, entt::dispatcher& dispatcher);
+
+  void ShowSettings();
+
+  void ShowNewMapDialog();
+
+  void ShowOpenMapDialog();
+
+  void ShowAddTilesetDialog();
 
   void SetToolbarVisible(bool visible);
 
@@ -34,6 +43,7 @@ class WidgetManager final {
   [[nodiscard]] auto GetTilesetViewHeight() const -> Maybe<float>;
 
  private:
+  MenuBar mMenuBar;
   Toolbar mToolbar;
   TilesetDock mTilesetDock;
 };

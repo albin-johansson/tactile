@@ -4,7 +4,7 @@
 #include <limits>  // numeric_limits
 
 #include "core/utils/buffer_utils.hpp"
-#include "core/utils/scope_id.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 
 namespace Tactile {
 namespace {
@@ -17,7 +17,7 @@ auto StringPropertyWidget(const PropertyValue& property,
                           const ImGuiInputTextFlags flags,
                           ImGuiInputTextCallback filter) -> Maybe<std::string>
 {
-  const ScopeID id{&property};
+  const Scoped::ID scope{&property};
   const auto& str = property.AsString();
 
   std::array<char, gMaxDigits> buffer;  // NOLINT safely uninitialized

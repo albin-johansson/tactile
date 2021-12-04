@@ -41,7 +41,7 @@ void UpdateViewportWidget(const Model& model,
       UpdateDocumentTabs(model, dispatcher);
     }
     else {
-      UpdateHomePageContent(icons);
+      UpdateHomePageContent(icons, dispatcher);
     }
   }
   else {

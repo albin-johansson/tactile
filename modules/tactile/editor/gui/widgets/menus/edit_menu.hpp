@@ -9,24 +9,18 @@ class Model;
 /// \addtogroup gui
 /// \{
 
-/**
- * \brief Updates the "Edit" menu.
- *
- * \param model the associated model.
- * \param dispatcher the event dispatcher that will be used.
- *
- * \see `UpdateEditMenuWindows()`
- */
-void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher);
+class EditMenu final {
+ public:
+  void Update(const Model& model, entt::dispatcher& dispatcher);
 
-/**
- * \brief Updates the windows associated with the "Edit" menu.
- *
- * \param dispatcher the event dispatcher that will be used.
- */
-void UpdateEditMenuWindows(entt::dispatcher& dispatcher);
+  /* Updates all associated windows. */
+  void UpdateWindows(entt::dispatcher& dispatcher);
 
-void ShowSettingsDialog() noexcept;
+  void OpenSettingsModal();
+
+ private:
+  bool mOpenSettings{};
+};
 
 /// \} End of group gui
 

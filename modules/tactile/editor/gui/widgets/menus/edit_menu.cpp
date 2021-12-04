@@ -14,15 +14,11 @@
 #include "editor/shortcuts/mappings.hpp"
 
 namespace Tactile {
-namespace {
 
-constinit bool gShowSettingsWindow = false;
-
-}  // namespace
-
-void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
+void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (auto menu = Menu{"Edit"}) {
+  Menu menu{"Edit"};
+  if (menu) {
     const auto canUndo = model.CanUndo();
     const auto canRedo = model.CanRedo();
 
@@ -75,24 +71,24 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    gShowSettingsWindow =
+    mOpenSettings =
         ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,");
   }
 }
 
-void UpdateEditMenuWindows(entt::dispatcher& dispatcher)
+void EditMenu::UpdateWindows(entt::dispatcher& dispatcher)
 {
-  if (gShowSettingsWindow) {
+  if (mOpenSettings) {
     OpenSettingsDialog();
-    gShowSettingsWindow = false;
+    mOpenSettings = false;
   }
 
   UpdateSettingsDialog(dispatcher);
 }
 
-void ShowSettingsDialog() noexcept
+void EditMenu::OpenSettingsModal()
 {
-  gShowSettingsWindow = true;
+  mOpenSettings = true;
 }
 
 }  // namespace Tactile

@@ -1,15 +1,21 @@
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/entt.hpp>
 
 namespace Tactile {
 
 class Model;
 
-void UpdateMapMenu(const Model& model, entt::dispatcher& dispatcher);
+class MapMenu final {
+ public:
+  void Update(const Model& model, entt::dispatcher& dispatcher);
 
-void UpdateMapMenuWindows(entt::dispatcher& dispatcher);
+  void UpdateWindows(entt::dispatcher& dispatcher);
 
-void ShowTilesetDialog() noexcept;
+  void ShowAddTilesetDialog();
+
+ private:
+  bool mShowTilesetDialog{};
+};
 
 }  // namespace Tactile

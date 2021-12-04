@@ -3,6 +3,7 @@
 #include "core/map.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/map_events.hpp"
+#include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
 #include "editor/gui/widgets/menus/map_menu.hpp"
 #include "editor/gui/widgets/widget_manager.hpp"
@@ -104,9 +105,9 @@ auto RemoveColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) c
 AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, primary_modifier}
 {}
 
-void AddTilesetShortcut::Activate(entt::dispatcher&)
+void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  ShowTilesetDialog();
+  dispatcher.enqueue<ShowAddTilesetDialogEvent>();
 }
 
 auto AddTilesetShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool

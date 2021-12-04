@@ -5,29 +5,26 @@
 #include "editor/events/map_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widgets/common/menu.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 #include "editor/gui/widgets/tilesets/dialogs/tileset_dialog.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
 namespace Tactile {
-namespace {
 
-constinit bool gShowTilesetDialog = false;
-
-}  // namespace
-
-void UpdateMapMenu(const Model& model, entt::dispatcher& dispatcher)
+void MapMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  ImGui::BeginDisabled(!model.HasActiveDocument());
+  Scoped::Disable disable{!model.HasActiveDocument()};
 
-  if (auto menu = Menu{"Map"}) {
+  Menu menu{"Map"};
+  if (menu) {
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Map Properties")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
 
     ImGui::Separator();
 
-    gShowTilesetDialog =
+    mShowTilesetDialog =
         ImGui::MenuItem(TAC_ICON_TILESET " Add Tileset...", TACTILE_PRIMARY_MOD "+T");
 
     ImGui::Separator();
@@ -54,23 +51,21 @@ void UpdateMapMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<OpenResizeMapDialogEvent>();
     }
   }
-
-  ImGui::EndDisabled();
 }
 
-void UpdateMapMenuWindows(entt::dispatcher& dispatcher)
+void MapMenu::UpdateWindows(entt::dispatcher& dispatcher)
 {
-  if (gShowTilesetDialog) {
+  if (mShowTilesetDialog) {
     OpenTilesetDialog();
-    gShowTilesetDialog = false;
+    mShowTilesetDialog = false;
   }
 
   UpdateTilesetDialog(dispatcher);
 }
 
-void ShowTilesetDialog() noexcept
+void MapMenu::ShowAddTilesetDialog()
 {
-  gShowTilesetDialog = true;
+  mShowTilesetDialog = true;
 }
 
 }  // namespace Tactile

@@ -3,8 +3,8 @@
 #include <imgui.h>
 
 #include "core/components/property_context.hpp"
-#include "core/utils/scope_id.hpp"
 #include "editor/events/map_events.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 #include "editor/model.hpp"
 #include "map_view.hpp"
 
@@ -14,7 +14,7 @@ void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginTabBar("MapViewportTabBar", ImGuiTabBarFlags_Reorderable)) {
     for (const auto& [id, document] : model) {
-      const ScopeID uid{id};
+      const Scoped::ID scope{id};
 
       ImGuiTabItemFlags flags = 0;
       const auto isActive = model.GetActiveMapId() == id;

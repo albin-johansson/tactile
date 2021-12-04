@@ -7,12 +7,12 @@
 #include "editor/events/command_events.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/save_events.hpp"
+#include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widgets/common/button.hpp"
 #include "editor/gui/widgets/common/docking_toolbar.hpp"
-#include "editor/gui/widgets/menus/file_menu.hpp"
 #include "editor/gui/widgets/menus/map_menu.hpp"
 #include "editor/model.hpp"
 #include "tool_button.hpp"
@@ -43,7 +43,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   };
 
   if (Button(TAC_ICON_FILE, "Create new map", bw, bh)) {
-    ShowAddMapDialog();
+    dispatcher.enqueue<ShowNewMapDialogEvent>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -51,7 +51,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   if (Button(TAC_ICON_OPEN, "Open map", bw, bh)) {
-    ShowOpenMapDialog();
+    dispatcher.enqueue<ShowOpenMapDialogEvent>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -109,7 +109,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   if (Button(TAC_ICON_TILESET, "Create tileset", true, bw, bh)) {
-    ShowTilesetDialog();
+    dispatcher.enqueue<ShowAddTilesetDialogEvent>();
   }
 
   separate();

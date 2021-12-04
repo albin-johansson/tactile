@@ -7,13 +7,13 @@
 #include <imgui.h>
 
 #include "core/utils/color_utils.hpp"
-#include "core/utils/scope_id.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 
 namespace Tactile {
 
 auto ColorPropertyWidget(const PropertyValue& property) -> Maybe<cen::color>
 {
-  const ScopeID id{&property};
+  const Scoped::ID scope{&property};
 
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;

@@ -9,19 +9,12 @@
 #include "editor/gui/widgets/dialogs/credits_dialog.hpp"
 
 namespace Tactile {
-namespace {
 
-constinit bool gShowAboutTactile = false;
-constinit bool gShowAboutImgui = false;
-constinit bool gShowCredits = false;
-
-}  // namespace
-
-void UpdateHelpMenu()
+void HelpMenu::Update()
 {
   if (ImGui::BeginMenu("Help")) {
-    gShowAboutTactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
-    gShowAboutImgui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
+    mShowAboutTactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
+    mShowAboutImGui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_BUG " Report Issue...")) {
@@ -29,26 +22,26 @@ void UpdateHelpMenu()
     }
 
     ImGui::Separator();
-    gShowCredits = ImGui::MenuItem("Credits...");
+    mShowCredits = ImGui::MenuItem("Credits...");
 
     ImGui::EndMenu();
   }
 }
 
-void UpdateHelpMenuWindows()
+void HelpMenu::UpdateWindows()
 {
-  if (gShowAboutTactile) {
-    UpdateAboutDialog(&gShowAboutTactile);
+  if (mShowAboutTactile) {
+    UpdateAboutDialog(&mShowAboutTactile);
   }
 
-  if (gShowAboutImgui) {
+  if (mShowAboutImGui) {
     CenterNextWindowOnAppearance();
-    ImGui::ShowAboutWindow(&gShowAboutImgui);
+    ImGui::ShowAboutWindow(&mShowAboutImGui);
   }
 
-  if (gShowCredits) {
+  if (mShowCredits) {
     OpenCreditsDialog();
-    gShowCredits = false;
+    mShowCredits = false;
   }
 
   UpdateCreditsDialog();

@@ -58,7 +58,10 @@ class Application final {
   void OnSave();
   void OnSaveAs(const SaveAsEvent& event);
   void OnOpenSaveAsDialog();
+  void OnShowSettings();
 
+  void OnShowNewMapDialog();
+  void OnShowOpenMapDialog();
   void OnShowMapProperties();
   void OnAddMap(const AddMapEvent& event);
   void OnCloseMap(const CloseMapEvent& event);
@@ -84,6 +87,7 @@ class Application final {
   void OnDecreaseZoom();
   void OnResetZoom();
 
+  void OnShowAddTilesetDialog();
   void OnAddTileset(const AddTilesetEvent& event);
   void OnRemoveTileset(const RemoveTilesetEvent& event);
   void OnSelectTileset(const SelectTilesetEvent& event);

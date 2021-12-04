@@ -2,33 +2,48 @@
 
 #include <imgui.h>
 
-#include "debug_menu.hpp"
-#include "edit_menu.hpp"
-#include "file_menu.hpp"
-#include "help_menu.hpp"
 #include "map_menu.hpp"
-#include "view_menu.hpp"
 
 namespace Tactile {
 
-void UpdateMenuBar(const Model& model, entt::dispatcher& dispatcher)
+void MenuBar::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar()) {
-    UpdateFileMenu(model, dispatcher);
-    UpdateEditMenu(model, dispatcher);
-    UpdateViewMenu(model, dispatcher);
-    UpdateMapMenu(model, dispatcher);
-    UpdateHelpMenu();
-    UpdateDebugMenu();
+    mFileMenu.Update(model, dispatcher);
+    mEditMenu.Update(model, dispatcher);
+    mViewMenu.Update(model, dispatcher);
+    mMapMenu.Update(model, dispatcher);
+    mHelpMenu.Update();
+    mDebugMenu.Update();
 
     ImGui::EndMainMenuBar();
   }
 
-  UpdateFileMenuWindows(dispatcher);
-  UpdateEditMenuWindows(dispatcher);
-  UpdateMapMenuWindows(dispatcher);
-  UpdateHelpMenuWindows();
-  UpdateDebugMenuWindows();
+  mFileMenu.UpdateWindows(dispatcher);
+  mEditMenu.UpdateWindows(dispatcher);
+  mMapMenu.UpdateWindows(dispatcher);
+  mHelpMenu.UpdateWindows();
+  mDebugMenu.UpdateWindows();
+}
+
+void MenuBar::ShowSettings()
+{
+  mEditMenu.OpenSettingsModal();
+}
+
+void MenuBar::ShowNewMapDialog()
+{
+  mFileMenu.ShowNewMapDialog();
+}
+
+void MenuBar::ShowOpenMapDialog()
+{
+  mFileMenu.ShowOpenMapDialog();
+}
+
+void MenuBar::ShowAddTilesetDialog()
+{
+  mMapMenu.ShowAddTilesetDialog();
 }
 
 }  // namespace Tactile

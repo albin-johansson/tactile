@@ -5,6 +5,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "editor/gui/widgets/scoped.hpp"
+
 namespace Tactile {
 
 auto Button(const NotNull<CStr> text,
@@ -15,9 +17,7 @@ auto Button(const NotNull<CStr> text,
 {
   assert(text);
 
-  if (!enabled) {
-    ImGui::BeginDisabled();
-  }
+  const Scoped::Disable disable{!enabled};
 
   ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !enabled);
 
@@ -31,10 +31,6 @@ auto Button(const NotNull<CStr> text,
   }
 
   ImGui::PopItemFlag();
-
-  if (!enabled) {
-    ImGui::EndDisabled();
-  }
 
   return result;
 }

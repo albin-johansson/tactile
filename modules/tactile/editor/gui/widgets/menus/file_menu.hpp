@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/entt.hpp>
 
 namespace Tactile {
 
@@ -9,32 +9,24 @@ class Model;
 /// \addtogroup gui
 /// \{
 
-/**
- * \brief Updates the "File" menu.
- *
- * \param model the associated model.
- * \param dispatcher the event dispatcher that will be used.
- *
- * \see `UpdateFileMenuWindows()`
- */
-void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher);
+class FileMenu final {
+ public:
+  void Update(const Model& model, entt::dispatcher& dispatcher);
 
-/**
- * \brief Updates the windows associated with the "File" menu.
- *
- * \param dispatcher the event dispatcher that will be used.
- */
-void UpdateFileMenuWindows(entt::dispatcher& dispatcher);
+  /* Updates all associated windows. */
+  void UpdateWindows(entt::dispatcher& dispatcher);
 
-/**
- * \brief Opens the map creation dialog.
- */
-void ShowAddMapDialog() noexcept;
+  void ShowNewMapDialog();
 
-/**
- * \brief Opens the map import dialog.
- */
-void ShowOpenMapDialog() noexcept;
+  void ShowOpenMapDialog();
+
+ private:
+  bool mShowNewMapDialog{};
+  bool mShowOpenMapDialog{};
+
+  void UpdateRecentFilesMenu(entt::dispatcher& dispatcher);
+  void UpdateMapFileDialog(entt::dispatcher& dispatcher);
+};
 
 /// \} End of group gui
 

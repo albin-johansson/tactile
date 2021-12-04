@@ -13,7 +13,6 @@
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/property_system.hpp"
-#include "core/utils/scope_id.hpp"
 #include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
@@ -22,6 +21,7 @@
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 #include "items/bool_property_widget.hpp"
 #include "items/color_property_widget.hpp"
 #include "items/file_property_widget.hpp"
@@ -51,7 +51,7 @@ void PrepareTableRow(const CStr label)
                                  const bool validateAsFileName = false)
     -> Maybe<std::string>
 {
-  const ScopeID scope{"##NativeNameRow"};
+  const Scoped::ID scope{"##NativeNameRow"};
 
   PrepareTableRow("Name");
 
@@ -86,7 +86,7 @@ void PrepareTableRow(const CStr label)
 
 [[nodiscard]] auto NativeOpacityRow(const float opacity) -> Maybe<float>
 {
-  const ScopeID scope{"##NativeOpacityRow"};
+  const Scoped::ID scope{"##NativeOpacityRow"};
   PrepareTableRow("Opacity");
 
   ImGui::TableNextColumn();
@@ -95,7 +95,7 @@ void PrepareTableRow(const CStr label)
 
 [[nodiscard]] auto NativeVisibilityRow(const bool visible) -> Maybe<bool>
 {
-  const ScopeID scope{"##NativeVisibilityRow"};
+  const Scoped::ID scope{"##NativeVisibilityRow"};
   PrepareTableRow("Visible");
 
   ImGui::TableNextColumn();
@@ -266,7 +266,7 @@ void ShowCustomProperties(const entt::registry& registry,
     const auto& name = property.name;
     const auto& value = property.value;
 
-    const ScopeID scope{name.c_str()};
+    const Scoped::ID scope{name.c_str()};
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();

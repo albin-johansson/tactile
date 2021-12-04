@@ -2,8 +2,16 @@
 
 namespace Tactile {
 
-void UpdateDebugMenu();
+class DebugMenu final {
+ public:
+  void Update();
 
-void UpdateDebugMenuWindows();
+  void UpdateWindows();
+
+ private:
+  bool mShowMetrics{};
+  bool mShowDemo{};
+  bool mShowStyleEditor{};
+};
 
 }  // namespace Tactile

@@ -1,19 +1,17 @@
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/entt.hpp>
 
 namespace Tactile {
 
 class Model;
 
-/**
- * \brief Updates the "View" menu.
- *
- * \ingroup gui
- *
- * \param model the associated model.
- * \param dispatcher the event dispatcher that will be used.
- */
-void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher);
+class ViewMenu final {
+ public:
+  void Update(const Model& model, entt::dispatcher& dispatcher);
+
+ private:
+  void UpdateWidgetsMenu(bool hasActiveMap);
+};
 
 }  // namespace Tactile

@@ -20,7 +20,7 @@ void WidgetManager::Update(const Model& model,
                            const Icons& icons,
                            entt::dispatcher& dispatcher)
 {
-  UpdateMenuBar(model, dispatcher);
+  mMenuBar.Update(model, dispatcher);
   UpdateDockSpace();
 
   if (model.HasActiveDocument()) { mToolbar.Update(model, dispatcher); }
@@ -39,6 +39,26 @@ void WidgetManager::Update(const Model& model,
   UpdateMapImportErrorDialog();
   UpdateResizeMapDialog(dispatcher);
   UpdateSaveAsDialog(dispatcher);
+}
+
+void WidgetManager::ShowSettings()
+{
+  mMenuBar.ShowSettings();
+}
+
+void WidgetManager::ShowNewMapDialog()
+{
+  mMenuBar.ShowNewMapDialog();
+}
+
+void WidgetManager::ShowOpenMapDialog()
+{
+  mMenuBar.ShowOpenMapDialog();
+}
+
+void WidgetManager::ShowAddTilesetDialog()
+{
+  mMenuBar.ShowAddTilesetDialog();
 }
 
 void WidgetManager::SetToolbarVisible(const bool visible)

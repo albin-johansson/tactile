@@ -95,7 +95,6 @@ set(SOURCE_FILES
     core/utils/texture_manager.cpp
     core/utils/texture_manager.hpp
     core/utils/profile.hpp
-    core/utils/scope_id.hpp
     core/utils/vector_map.hpp
 
     editor/document.hpp
@@ -176,6 +175,7 @@ set(SOURCE_FILES
     editor/commands/tools/stamp_sequence_cmd.hpp
 
     editor/events/command_events.hpp
+    editor/events/edit_events.hpp
     editor/events/layer_events.hpp
     editor/events/map_events.hpp
     editor/events/object_events.hpp
@@ -247,6 +247,7 @@ set(SOURCE_FILES
 
     editor/gui/widgets/alignment.cpp
     editor/gui/widgets/alignment.hpp
+    editor/gui/widgets/scoped.hpp
     editor/gui/widgets/widget_manager.cpp
     editor/gui/widgets/widget_manager.hpp
 

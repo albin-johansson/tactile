@@ -7,14 +7,14 @@
 #include <imgui.h>
 #include <portable-file-dialogs.h>
 
-#include "core/utils/scope_id.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 
 namespace Tactile {
 
 auto FilePropertyWidget(const PropertyValue& property) -> Maybe<std::filesystem::path>
 {
-  const ScopeID id{&property};
+  const Scoped::ID scope{&property};
 
   if (ImGui::Button(TAC_ICON_SELECT_FILE)) {
     auto files = pfd::open_file{"Select File..."}.result();

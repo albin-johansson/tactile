@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-#include "core/utils/scope_id.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 
 namespace Tactile {
 
@@ -21,7 +21,7 @@ auto Combo(const NotNull<CStr> label,
   ImGui::TextUnformatted(label);
   ImGui::SameLine();
 
-  const ScopeID uid{label};
+  const Scoped::ID scope{label};
   const auto changed = ImGui::Combo("##TactileCombo", index, values);
 
   if (tooltip && ImGui::IsItemHovered()) {

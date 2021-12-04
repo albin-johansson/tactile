@@ -1,7 +1,9 @@
 #include "application_events.hpp"
 
 #include "application.hpp"
+#include "editor/events/edit_events.hpp"
 #include "editor/events/map_events.hpp"
+#include "editor/events/tileset_events.hpp"
 #include "editor/events/view_events.hpp"
 #include "editor/events/viewport_events.hpp"
 
@@ -18,7 +20,10 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<SaveEvent>().connect<&App::OnSave>(app);
   d.sink<SaveAsEvent>().connect<&App::OnSaveAs>(app);
   d.sink<OpenSaveAsDialogEvent>().connect<&App::OnOpenSaveAsDialog>(app);
+  d.sink<ShowSettingsEvent>().connect<&App::OnShowSettings>(app);
 
+  d.sink<ShowNewMapDialogEvent>().connect<&App::OnShowNewMapDialog>(app);
+  d.sink<ShowOpenMapDialogEvent>().connect<&App::OnShowOpenMapDialog>(app);
   d.sink<ShowMapPropertiesEvent>().connect<&App::OnShowMapProperties>(app);
   d.sink<AddMapEvent>().connect<&App::OnAddMap>(app);
   d.sink<CloseMapEvent>().connect<&App::OnCloseMap>(app);
@@ -44,6 +49,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<DecreaseZoomEvent>().connect<&App::OnDecreaseZoom>(app);
   d.sink<ResetZoomEvent>().connect<&App::OnResetZoom>(app);
 
+  d.sink<ShowAddTilesetDialogEvent>().connect<&App::OnShowAddTilesetDialog>(app);
   d.sink<AddTilesetEvent>().connect<&App::OnAddTileset>(app);
   d.sink<RemoveTilesetEvent>().connect<&App::OnRemoveTileset>(app);
   d.sink<SelectTilesetEvent>().connect<&App::OnSelectTileset>(app);

@@ -12,42 +12,13 @@
 #include "io/preferences.hpp"
 
 namespace Tactile {
-namespace {
 
-void UpdateWidgetsSubmenu(const bool hasActiveMap)
+void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (auto menu = Menu{"Widgets", hasActiveMap}) {
-    if (ImGui::MenuItem("Reset Layout")) {
-      ResetLayout();
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem("Properties", nullptr, Prefs::GetShowPropertiesDock())) {
-      Prefs::SetShowPropertiesDock(!Prefs::GetShowPropertiesDock());
-    }
-
-    if (ImGui::MenuItem("Layers", nullptr, Prefs::GetShowLayerDock())) {
-      Prefs::SetShowLayerDock(!Prefs::GetShowLayerDock());
-    }
-
-    if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock())) {
-      Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
-    }
-
-    if (ImGui::MenuItem("Log", nullptr, Prefs::GetShowLogDock())) {
-      Prefs::SetShowLogDock(!Prefs::GetShowLogDock());
-    }
-  }
-}
-
-}  // namespace
-
-void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
-{
-  if (auto menu = Menu{"View"}) {
+  Menu menu{"View"};
+  if (menu) {
     const auto hasActiveDocument = model.HasActiveDocument();
-    UpdateWidgetsSubmenu(hasActiveDocument);
+    UpdateWidgetsMenu(hasActiveDocument);
 
     ImGui::Separator();
 
@@ -132,6 +103,34 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument)) {
       dispatcher.enqueue<ToggleUiEvent>();
+    }
+  }
+}
+
+void ViewMenu::UpdateWidgetsMenu(const bool hasActiveMap)
+{
+  Menu menu{"Widgets", hasActiveMap};
+  if (menu) {
+    if (ImGui::MenuItem("Reset Layout")) {
+      ResetLayout();
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem("Properties", nullptr, Prefs::GetShowPropertiesDock())) {
+      Prefs::SetShowPropertiesDock(!Prefs::GetShowPropertiesDock());
+    }
+
+    if (ImGui::MenuItem("Layers", nullptr, Prefs::GetShowLayerDock())) {
+      Prefs::SetShowLayerDock(!Prefs::GetShowLayerDock());
+    }
+
+    if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock())) {
+      Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
+    }
+
+    if (ImGui::MenuItem("Log", nullptr, Prefs::GetShowLogDock())) {
+      Prefs::SetShowLogDock(!Prefs::GetShowLogDock());
     }
   }
 }

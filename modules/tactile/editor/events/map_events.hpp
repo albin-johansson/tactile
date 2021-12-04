@@ -9,6 +9,10 @@ namespace Tactile {
 /// \addtogroup events
 /// \{
 
+struct ShowNewMapDialogEvent final {};
+
+struct ShowOpenMapDialogEvent final {};
+
 struct AddRowEvent final {};
 
 struct AddColumnEvent final {};

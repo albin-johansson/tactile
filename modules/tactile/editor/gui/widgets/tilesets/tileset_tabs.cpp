@@ -4,10 +4,10 @@
 
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
-#include "core/utils/scope_id.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widgets/menus/map_menu.hpp"
+#include "editor/gui/widgets/scoped.hpp"
 #include "tileset_view.hpp"
 
 namespace Tactile {
@@ -20,7 +20,7 @@ void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginPopupContextItem("##TilesetTabContext")) {
     if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
-      ShowTilesetDialog();
+      dispatcher.enqueue<ShowAddTilesetDialogEvent>();
     }
 
     ImGui::Separator();
@@ -53,12 +53,12 @@ void TilesetTabWidget::Update(const entt::registry& registry,
   if (ImGui::BeginTabBar("TilesetTabBar", gTabBarFlags)) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
-      ShowTilesetDialog();
+      dispatcher.enqueue<ShowAddTilesetDialogEvent>();
     }
 
     const auto& activeTileset = registry.ctx<ActiveTileset>();
     for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
-      const ScopeID uid{tileset.id};
+      const Scoped::ID scope{tileset.id};
 
       const auto isActive = activeTileset.entity == entity;
       const auto& context = registry.get<PropertyContext>(entity);
