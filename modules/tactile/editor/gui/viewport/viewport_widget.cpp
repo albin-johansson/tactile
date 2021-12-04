@@ -28,12 +28,12 @@ void UpdateViewportWidget(const Model& model,
                           const Icons& icons,
                           entt::dispatcher& dispatcher)
 {
-  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
+  Scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {4, 4}};
   RemoveTabBarFromNextWindow();
 
   Scoped::Window window{"Viewport", gWindowFlags};
   if (window.IsOpen()) {
-    ImGui::PopStyleVar();
+    padding.Pop();
     gHasFocus = ImGui::IsWindowFocused();
     gMouseWithinWindow = Scoped::Window::CurrentWindowContainsMouse();
 
@@ -45,7 +45,6 @@ void UpdateViewportWidget(const Model& model,
     }
   }
   else {
-    ImGui::PopStyleVar();
     gHasFocus = false;
     gMouseWithinWindow = false;
   }

@@ -24,6 +24,32 @@ struct Disable final {
   ~Disable() { ImGui::EndDisabled(); }
 };
 
+class StyleVar final {
+ public:
+  StyleVar(const ImGuiStyleVar index, const ImVec2& value)
+  {
+    ImGui::PushStyleVar(index, value);
+  }
+
+  StyleVar(const ImGuiStyleVar index, const float value)
+  {
+    ImGui::PushStyleVar(index, value);
+  }
+
+  ~StyleVar() { Pop(); }
+
+  void Pop()
+  {
+    if (!mPopped) {
+      ImGui::PopStyleVar();
+      mPopped = true;
+    }
+  }
+
+ private:
+  bool mPopped{};
+};
+
 class Child final {
  public:
   explicit Child(const CStr id,
