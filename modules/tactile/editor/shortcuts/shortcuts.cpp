@@ -4,7 +4,7 @@
 #include <vector>  // vector
 
 #include "edit_shortcuts.hpp"
-#include "editor/gui/widgets/menus/edit_menu.hpp"
+#include "editor/gui/menus/edit_menu.hpp"
 #include "file_shortcuts.hpp"
 #include "view_shortcuts.hpp"
 

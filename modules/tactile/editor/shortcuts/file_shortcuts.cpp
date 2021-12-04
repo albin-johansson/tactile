@@ -3,8 +3,8 @@
 #include "editor/events/edit_events.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/save_events.hpp"
+#include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/widget_manager.hpp"
-#include "editor/gui/widgets/menus/edit_menu.hpp"
 #include "editor/model.hpp"
 #include "mappings.hpp"
 

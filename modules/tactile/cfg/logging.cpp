@@ -10,7 +10,7 @@
 #include <fmt/format.h>  // format
 
 #include "build.hpp"
-#include "editor/gui/widgets/log/log_dock.hpp"
+#include "editor/gui/log/log_dock.hpp"
 
 namespace Tactile {
 namespace {

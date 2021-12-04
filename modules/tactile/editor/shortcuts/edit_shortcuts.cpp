@@ -5,8 +5,8 @@
 #include "editor/events/map_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
+#include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/widget_manager.hpp"
-#include "editor/gui/widgets/menus/map_menu.hpp"
 #include "editor/model.hpp"
 #include "mappings.hpp"
 
