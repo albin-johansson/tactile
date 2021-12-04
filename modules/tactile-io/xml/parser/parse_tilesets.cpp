@@ -159,8 +159,8 @@ auto ParseTilesets(const pugi::xml_node root, Map& map, const std::filesystem::p
 {
   for (const auto tilesetNode : root.children("tileset")) {
     auto& tileset = AddTileset(map);
-    if (const auto err = ParseTileset(tilesetNode, tileset, dir); err != ParseError::None)
-    {
+    if (const auto err = ParseTileset(tilesetNode, tileset, dir);
+        err != ParseError::None) {
       return err;
     }
   }

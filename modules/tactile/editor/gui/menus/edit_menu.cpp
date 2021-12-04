@@ -40,32 +40,28 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp",
                         "S",
                         model.IsStampActive(),
-                        model.IsStampPossible()))
-    {
+                        model.IsStampPossible())) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
     }
 
     if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket",
                         "B",
                         model.IsBucketActive(),
-                        model.IsBucketPossible()))
-    {
+                        model.IsBucketPossible())) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser",
                         "E",
                         model.IsEraserActive(),
-                        model.IsEraserPossible()))
-    {
+                        model.IsEraserPossible())) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
     }
 
     if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection",
                         "Q",
                         model.IsObjectSelectionActive(),
-                        model.IsObjectSelectionPossible()))
-    {
+                        model.IsObjectSelectionPossible())) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
     }
 

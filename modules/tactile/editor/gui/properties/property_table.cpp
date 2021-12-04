@@ -68,8 +68,7 @@ void PrepareTableRow(const CStr label)
       const auto ch = static_cast<wchar_t>(data->EventChar);
 
       if (std::isalpha(ch, locale) || std::isdigit(ch, locale) ||
-          std::isspace(ch, locale) || ch == '-' || ch == '_')
-      {
+          std::isspace(ch, locale) || ch == '-' || ch == '_') {
         return 0;  // Accept the character
       }
       else {
@@ -159,8 +158,7 @@ void ShowNativeTilesetProperties(const std::string& name,
   }
 
   if (const auto updatedName = NativeNameRow(name, true);
-      updatedName && !updatedName->empty())
-  {
+      updatedName && !updatedName->empty()) {
     dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
   }
 

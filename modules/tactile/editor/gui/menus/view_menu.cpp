@@ -25,8 +25,7 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_CENTER " Center Viewport",
                         "Shift+Space",
                         false,
-                        hasActiveDocument))
-    {
+                        hasActiveDocument)) {
       dispatcher.enqueue<CenterViewportEvent>();
     }
 
@@ -35,8 +34,7 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (bool showGrid = Prefs::GetShowGrid();
         ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid",
                         TACTILE_PRIMARY_MOD "+G",
-                        &showGrid))
-    {
+                        &showGrid)) {
       Prefs::SetShowGrid(showGrid);
     }
 
@@ -45,16 +43,14 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_ZOOM_IN " Increase Zoom",
                         TACTILE_PRIMARY_MOD "+Plus",
                         false,
-                        hasActiveDocument))
-    {
+                        hasActiveDocument)) {
       dispatcher.enqueue<IncreaseZoomEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease Zoom",
                         TACTILE_PRIMARY_MOD "+Minus",
                         false,
-                        model.CanDecreaseViewportTileSize()))
-    {
+                        model.CanDecreaseViewportTileSize())) {
       dispatcher.enqueue<DecreaseZoomEvent>();
     }
 
@@ -70,32 +66,28 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan Up",
                         TACTILE_PRIMARY_MOD "+Shift+Up",
                         false,
-                        hasActiveDocument))
-    {
+                        hasActiveDocument)) {
       dispatcher.enqueue<PanUpEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Pan Down",
                         TACTILE_PRIMARY_MOD "+Shift+Down",
                         false,
-                        hasActiveDocument))
-    {
+                        hasActiveDocument)) {
       dispatcher.enqueue<PanDownEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_RIGHT " Pan Right",
                         TACTILE_PRIMARY_MOD "+Shift+Right",
                         false,
-                        hasActiveDocument))
-    {
+                        hasActiveDocument)) {
       dispatcher.enqueue<PanRightEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_LEFT " Pan Left",
                         TACTILE_PRIMARY_MOD "+Shift+Left",
                         false,
-                        hasActiveDocument))
-    {
+                        hasActiveDocument)) {
       dispatcher.enqueue<PanLeftEvent>();
     }
 

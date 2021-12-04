@@ -14,8 +14,7 @@ void BucketToolOnPressed(entt::registry& registry,
                          const MouseInfo& mouse)
 {
   if (IsTileLayerActive(registry) && IsSingleTileSelectedInTileset(registry) &&
-      mouse.button == cen::mouse_button::left)
-  {
+      mouse.button == cen::mouse_button::left) {
     const auto entity = GetActiveTileset(registry);
     assert(entity != entt::null);
 

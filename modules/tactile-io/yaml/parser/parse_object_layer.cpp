@@ -14,8 +14,8 @@ auto ParseObjectLayer(const YAML::Node& node, Layer& layer) -> ParseError
     ReserveObjects(objectLayer, seq.size());
 
     for (const auto& objectNode : seq) {
-      if (const auto err = ParseObject(objectNode, objectLayer); err != ParseError::None)
-      {
+      if (const auto err = ParseObject(objectNode, objectLayer);
+          err != ParseError::None) {
         return err;
       }
     }

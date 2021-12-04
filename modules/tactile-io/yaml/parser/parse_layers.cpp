@@ -34,8 +34,7 @@ namespace {
       auto& child = AddLayer(groupLayer);
 
       if (const auto err = ParseLayer(layerNode, child, index, nRows, nCols);
-          err != ParseError::None)
-      {
+          err != ParseError::None) {
         return err;
       }
 
@@ -130,8 +129,7 @@ auto ParseLayers(const YAML::Node& seq, Map& map) -> ParseError
   for (const auto& layerNode : seq) {
     auto& layer = AddLayer(map);
     if (const auto err = ParseLayer(layerNode, layer, index, nRows, nCols);
-        err != ParseError::None)
-    {
+        err != ParseError::None) {
       return err;
     }
 

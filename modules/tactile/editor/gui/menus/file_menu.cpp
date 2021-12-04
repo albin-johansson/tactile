@@ -35,16 +35,14 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
                         TACTILE_PRIMARY_MOD "+S",
                         false,
-                        model.CanSaveDocument()))
-    {
+                        model.CanSaveDocument())) {
       dispatcher.enqueue<SaveEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save As...",
                         TACTILE_PRIMARY_MOD "+Shift+S",
                         false,
-                        hasActiveDocument))
-    {
+                        hasActiveDocument)) {
       dispatcher.enqueue<OpenSaveAsDialogEvent>();
     }
 
@@ -93,8 +91,7 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
                         nullptr,
                         false,
-                        HasValidLastClosedFile()))
-    {
+                        HasValidLastClosedFile())) {
       // TODO this will need to be tweaked if tileset documents viewing will be supported
       dispatcher.enqueue<OpenMapEvent>(GetLastClosedFile());
     }
@@ -117,8 +114,7 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear File History",
                         nullptr,
                         false,
-                        !history.empty()))
-    {
+                        !history.empty())) {
       ClearFileHistory();
     }
   }

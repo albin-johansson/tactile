@@ -29,8 +29,7 @@ auto StringPropertyWidget(const PropertyValue& property,
                                buffer.data(),
                                sizeof buffer,
                                flags,
-                               filter))
-  {
+                               filter)) {
     return CreateStringFromBuffer(buffer);
   }
 

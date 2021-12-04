@@ -135,8 +135,7 @@ auto ParseTilesets(const YAML::Node& seq, Map& map) -> ParseError
 
     if (std::filesystem::exists(definition)) {
       if (const auto err = ParseTileset(map, first.as<int32>(), definition);
-          err != ParseError::None)
-      {
+          err != ParseError::None) {
         return err;
       }
     }

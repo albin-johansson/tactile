@@ -30,8 +30,7 @@ void AShortcut::Poll(const Model& model,
 {
   if (IsEnabled(model, widgets)) {
     if (event.type == SDL_KEYDOWN && event.keysym.scancode == mKey &&
-        IsOnlyActive(mModifiers, event.keysym.mod))
-    {
+        IsOnlyActive(mModifiers, event.keysym.mod)) {
       Activate(dispatcher);
     }
   }

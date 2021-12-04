@@ -24,8 +24,7 @@ namespace {
   for (const auto node : root.children()) {
     if (std::strcmp(node.name(), "layer") == 0 ||
         std::strcmp(node.name(), "objectgroup") == 0 ||
-        std::strcmp(node.name(), "group") == 0)
-    {
+        std::strcmp(node.name(), "group") == 0) {
       nodes.push_back(node);
     }
   }
@@ -42,8 +41,7 @@ namespace {
     auto& childLayer = AddLayer(groupLayer);
 
     if (const auto err = ParseLayer(layerNode, childLayer, childIndex);
-        err != ParseError::None)
-    {
+        err != ParseError::None) {
       return err;
     }
 

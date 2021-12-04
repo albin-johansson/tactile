@@ -43,8 +43,8 @@ namespace {
   if (auto seq = node["animation"]) {
     ReserveAnimationFrames(tile, seq.size());
     for (const auto& frameNode : seq) {
-      if (const auto err = ParseAnimationFrame(frameNode, tile); err != ParseError::None)
-      {
+      if (const auto err = ParseAnimationFrame(frameNode, tile);
+          err != ParseError::None) {
         return err;
       }
     }

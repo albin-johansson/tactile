@@ -21,7 +21,9 @@ namespace Tactile {
 
 void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!mVisible) { return; }
+  if (!mVisible) {
+    return;
+  }
 
   static int axis = ImGuiAxis_X;
   constexpr auto bw = 24;
@@ -123,8 +125,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsStampActive(),
                  model.IsStampPossible(),
                  bw,
-                 bh))
-  {
+                 bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
   }
 
@@ -137,8 +138,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsBucketActive(),
                  model.IsBucketPossible(),
                  bw,
-                 bh))
-  {
+                 bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
   }
 
@@ -151,8 +151,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsEraserActive(),
                  model.IsEraserPossible(),
                  bw,
-                 bh))
-  {
+                 bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
   }
 

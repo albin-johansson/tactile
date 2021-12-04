@@ -95,8 +95,7 @@ void UpdateCursorGizmos(const entt::registry& registry,
   }
 
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(),
-                                 ImGui::GetWindowPos() + ImGui::GetWindowSize()))
-  {
+                                 ImGui::GetWindowPos() + ImGui::GetWindowSize())) {
     CheckFor<MousePressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseClicked(button);
     });

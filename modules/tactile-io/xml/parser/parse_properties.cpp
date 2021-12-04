@@ -66,8 +66,8 @@ namespace {
       return err;
     }
   }
-  else if (const auto err = ParseValue(node, "string", property); err != ParseError::None)
-  {
+  else if (const auto err = ParseValue(node, "string", property);
+           err != ParseError::None) {
     return err;
   }
 

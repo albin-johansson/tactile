@@ -57,8 +57,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move Layer Down",
                         nullptr,
                         false,
-                        Sys::CanMoveLayerDown(registry, id)))
-    {
+                        Sys::CanMoveLayerDown(registry, id))) {
       dispatcher.enqueue<MoveLayerDownEvent>(id);
     }
   }

@@ -22,7 +22,9 @@ void WidgetManager::Update(const Model& model,
   mMenuBar.Update(model, dispatcher);
   UpdateDockSpace();
 
-  if (model.HasActiveDocument()) { mToolbar.Update(model, dispatcher); }
+  if (model.HasActiveDocument()) {
+    mToolbar.Update(model, dispatcher);
+  }
 
   UpdateViewportWidget(model, icons, dispatcher);
 

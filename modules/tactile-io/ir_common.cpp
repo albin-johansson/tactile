@@ -12,8 +12,7 @@ auto DeduceFormat(const CPathStr str) -> MapFormat
 
   const std::filesystem::path path = str;
   if (path.empty() ||
-      (std::filesystem::exists(path) && !std::filesystem::is_regular_file(path)))
-  {
+      (std::filesystem::exists(path) && !std::filesystem::is_regular_file(path))) {
     return MapFormat::Unsupported;
   }
 

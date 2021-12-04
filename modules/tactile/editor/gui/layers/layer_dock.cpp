@@ -61,8 +61,7 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
 
   if (Button(TAC_ICON_MOVE_UP,
              "Move layer up",
-             activeLayerId && Sys::CanMoveLayerUp(registry, *activeLayerId)))
-  {
+             activeLayerId && Sys::CanMoveLayerUp(registry, *activeLayerId))) {
     dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
   }
 
@@ -70,8 +69,7 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
 
   if (Button(TAC_ICON_MOVE_DOWN,
              "Move layer down",
-             activeLayerId && Sys::CanMoveLayerDown(registry, *activeLayerId)))
-  {
+             activeLayerId && Sys::CanMoveLayerDown(registry, *activeLayerId))) {
     dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
   }
 }

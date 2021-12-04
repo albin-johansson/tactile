@@ -45,8 +45,7 @@ void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& d
     if (ImGui::InputTextWithHint("##NameInput",
                                  "Unique property name...",
                                  gNameBuffer.data(),
-                                 sizeof gNameBuffer))
-    {
+                                 sizeof gNameBuffer)) {
       const auto name = CreateStringFromBuffer(gNameBuffer);
       const auto& context = Sys::GetCurrentContext(registry);
       gIsInputValid = !name.empty() && !Sys::HasPropertyWithName(registry, context, name);

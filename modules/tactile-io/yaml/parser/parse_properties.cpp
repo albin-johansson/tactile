@@ -137,8 +137,8 @@ auto ParsePropertiesImpl(const YAML::Node& node, T& obj) -> ParseError
 
     for (const auto& propertyNode : propertySeq) {
       auto& property = AddProperty(obj);
-      if (const auto err = ParseProperty(propertyNode, property); err != ParseError::None)
-      {
+      if (const auto err = ParseProperty(propertyNode, property);
+          err != ParseError::None) {
         return err;
       }
     }

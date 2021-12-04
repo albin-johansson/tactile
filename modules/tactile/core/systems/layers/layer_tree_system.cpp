@@ -61,8 +61,7 @@ void DestroyChildNodes(entt::registry& registry, const entt::entity entity)
   }
   else {
     for (auto&& [otherEntity, otherNode, otherParent] :
-         registry.view<LayerTreeNode, Parent>().each())
-    {
+         registry.view<LayerTreeNode, Parent>().each()) {
       if (otherParent.entity == entt::null && otherNode.index == targetIndex) {
         return otherEntity;
       }
@@ -245,8 +244,7 @@ auto GetSiblingCount(const entt::registry& registry, const entt::entity entity) 
     usize count = 0;
 
     for (auto&& [otherEntity, otherNode, otherParent] :
-         registry.view<LayerTreeNode, Parent>().each())
-    {
+         registry.view<LayerTreeNode, Parent>().each()) {
       if (otherEntity != entity && otherParent.entity == entt::null) {
         ++count;
       }

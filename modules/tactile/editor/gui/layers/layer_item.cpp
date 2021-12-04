@@ -30,8 +30,7 @@ void GroupLayerItem(const entt::registry& registry,
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
     if (ImGui::IsItemActivated() ||
-        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
-    {
+        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
@@ -49,8 +48,7 @@ void GroupLayerItem(const entt::registry& registry,
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
     if (ImGui::IsItemActivated() ||
-        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
-    {
+        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
