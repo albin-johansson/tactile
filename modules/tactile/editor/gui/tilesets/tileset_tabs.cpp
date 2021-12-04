@@ -18,7 +18,7 @@ constexpr auto gTabBarFlags =
 
 void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginPopupContextItem("##TilesetTabContext")) {
+  if (auto popup = Scoped::Popup::ForItem("##TilesetTabContext"); popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
       dispatcher.enqueue<ShowAddTilesetDialogEvent>();
     }
@@ -40,8 +40,6 @@ void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Tileset")) {
       dispatcher.enqueue<RemoveTilesetEvent>(id);
     }
-
-    ImGui::EndPopup();
   }
 }
 
@@ -50,7 +48,7 @@ void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
 void TilesetTabWidget::Update(const entt::registry& registry,
                               entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginTabBar("TilesetTabBar", gTabBarFlags)) {
+  if (Scoped::TabBar bar{"TilesetTabBar", gTabBarFlags}; bar.IsOpen()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       dispatcher.enqueue<ShowAddTilesetDialogEvent>();
@@ -64,12 +62,11 @@ void TilesetTabWidget::Update(const entt::registry& registry,
       const auto& context = registry.get<PropertyContext>(entity);
 
       bool opened = true;
-      if (ImGui::BeginTabItem(context.name.c_str(),
-                              &opened,
-                              isActive ? ImGuiTabItemFlags_SetSelected : 0))
-      {
+      if (Scoped::TabItem item{context.name.c_str(),
+                               &opened,
+                               isActive ? ImGuiTabItemFlags_SetSelected : 0};
+          item.IsOpen()) {
         mTilesetView.Update(registry, entity, dispatcher);
-        ImGui::EndTabItem();
       }
 
       if (!opened) {
@@ -82,8 +79,6 @@ void TilesetTabWidget::Update(const entt::registry& registry,
         UpdateContextMenu(tileset.id, dispatcher);
       }
     }
-
-    ImGui::EndTabBar();
   }
 }
 

@@ -6,6 +6,7 @@
 
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/modal.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 namespace {
@@ -35,12 +36,12 @@ void Row(const CStr lib, const CStr license)
 void UpdateCreditsDialog()
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Credits", gWindowFlags, &gIsVisible}) {
+  if (Modal modal{"Credits", gWindowFlags, &gIsVisible}; modal.IsOpen()) {
     ImGui::TextUnformatted(
         "Tactile is developed using the following open-source libraries.");
     ImGui::Spacing();
 
-    if (ImGui::BeginTable("##CreditsTable", 2, gTableFlags)) {
+    if (Scoped::Table table{"##CreditsTable", 2, gTableFlags}; table.IsOpen()) {
       ImGui::TableSetupColumn("Library");
       ImGui::TableSetupColumn("License");
       ImGui::TableHeadersRow();
@@ -60,8 +61,6 @@ void UpdateCreditsDialog()
       Row("stb_image", "MIT");
       Row("yaml-cpp", "MIT");
       Row("googletest", "BSD");
-
-      ImGui::EndTable();
     }
   }
 }

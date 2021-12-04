@@ -10,6 +10,8 @@
 
 #include <imgui.h>
 
+#include "editor/gui/scoped.hpp"
+
 namespace Tactile {
 namespace {
 
@@ -36,32 +38,24 @@ constexpr std::array gItems{std::make_pair("string", PropertyType::String),
   }
 }
 
-void PropertyTypeComboImpl(PropertyType& out, Maybe<PropertyType> previous)
+void PropertyTypeComboImpl(PropertyType& out, Maybe<PropertyType> previousType)
 {
   const auto currentIndex = GetIndexFromType(out);
   auto&& [currentName, currentType] = gItems.at(currentIndex);
 
-  if (ImGui::BeginCombo("##PropertyTypeComboImpl", currentName)) {
+  if (Scoped::Combo combo{"##PropertyTypeComboImpl", currentName}; combo.IsOpen()) {
     for (auto&& [name, type] : gItems) {
-      if (previous) {
-        ImGui::BeginDisabled(type == previous);
-      }
+      Scoped::Disable disable{previousType == type};
 
       const auto selected = std::strcmp(currentName, name) == 0;
       if (ImGui::Selectable(name, selected)) {
         out = type;
       }
 
-      if (previous) {
-        ImGui::EndDisabled();
-      }
-
       if (selected) {
         ImGui::SetItemDefaultFocus();
       }
     }
-
-    ImGui::EndCombo();
   }
 }
 

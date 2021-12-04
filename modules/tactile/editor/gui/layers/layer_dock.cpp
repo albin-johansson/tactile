@@ -18,6 +18,7 @@
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/common/window.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
 #include "rename_layer_dialog.hpp"
@@ -100,7 +101,7 @@ void UpdateLayerDock(const entt::registry& registry,
       const auto size = ImVec2{std::numeric_limits<float>::min(),
                                ImGui::GetWindowHeight() - (4 * textLineHeight)};
 
-      if (ImGui::BeginListBox("##LayerTreeNode", size)) {
+      if (Scoped::ListBox list{"##LayerTreeNode", size}; list.IsOpen()) {
         for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
              other components in the view query directly. */
@@ -110,8 +111,6 @@ void UpdateLayerDock(const entt::registry& registry,
             LayerItem(registry, icons, dispatcher, entity, layer);
           }
         }
-
-        ImGui::EndListBox();
       }
     }
   }

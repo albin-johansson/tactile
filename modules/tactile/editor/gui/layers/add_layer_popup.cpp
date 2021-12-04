@@ -4,12 +4,13 @@
 
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 
 void UpdateAddLayerPopup(entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginPopup("AddLayerPopup")) {
+  if (Scoped::Popup popup{"AddLayerPopup"}; popup.IsOpen()) {
     if (ImGui::Selectable(TAC_ICON_TILE_LAYER " Tile layer")) {
       dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
     }
@@ -21,8 +22,6 @@ void UpdateAddLayerPopup(entt::dispatcher& dispatcher)
     if (ImGui::Selectable(TAC_ICON_GROUP_LAYER " Group layer")) {
       dispatcher.enqueue<AddLayerEvent>(LayerType::GroupLayer);
     }
-
-    ImGui::EndPopup();
   }
 }
 

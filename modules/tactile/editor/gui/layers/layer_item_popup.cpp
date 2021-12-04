@@ -5,6 +5,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 
@@ -12,7 +13,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           const LayerID id)
 {
-  if (ImGui::BeginPopupContextItem("##LayerItemPopup")) {
+  if (auto popup = Scoped::Popup::ForItem("##LayerItemPopup"); popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Layer Properties")) {
       dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
     }
@@ -36,16 +37,12 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     if (const auto isLayerVisible = Sys::IsLayerVisible(registry, id);
         ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Layer Visibility",
                         nullptr,
-                        isLayerVisible))
-    {
+                        isLayerVisible)) {
       dispatcher.enqueue<SetLayerVisibleEvent>(id, !isLayerVisible);
     }
 
-    auto opacity = Sys::GetLayerOpacity(registry, id);
-    ImGui::AlignTextToFramePadding();
-    ImGui::Text(TAC_ICON_OPACITY " Opacity");
-    ImGui::SameLine();
-    if (ImGui::SliderFloat("##OpacitySlider", &opacity, 0, 1.0f)) {
+    if (auto opacity = Sys::GetLayerOpacity(registry, id);
+        ImGui::SliderFloat("Opacity", &opacity, 0, 1.0f)) {
       dispatcher.enqueue<SetLayerOpacityEvent>(id, opacity);
     }
 
@@ -53,8 +50,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move Layer Up",
                         nullptr,
                         false,
-                        Sys::CanMoveLayerUp(registry, id)))
-    {
+                        Sys::CanMoveLayerUp(registry, id))) {
       dispatcher.enqueue<MoveLayerUpEvent>(id);
     }
 
@@ -65,8 +61,6 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     {
       dispatcher.enqueue<MoveLayerDownEvent>(id);
     }
-
-    ImGui::EndPopup();
   }
 }
 

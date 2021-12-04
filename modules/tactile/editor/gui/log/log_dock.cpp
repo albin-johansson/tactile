@@ -9,6 +9,7 @@
 
 #include "editor/gui/common/window.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -37,7 +38,8 @@ void UpdateLogDock()
   gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.IsOpen()) {
-    if (ImGui::BeginChild("##LogPane", ImVec2{}, true, gChildFlags)) {
+    Scoped::Child pane{"##LogPane", ImVec2{}, true, gChildFlags};
+    if (pane.IsOpen()) {
       ImGuiListClipper clipper;
       clipper.Begin(static_cast<int>(gLogOutput.size()));
       while (clipper.Step()) {
@@ -48,15 +50,11 @@ void UpdateLogDock()
       }
     }
 
-    if (ImGui::BeginPopupContextWindow("#LogDockContext")) {
+    if (auto popup = Scoped::Popup::ForWindow("##LogDockContext"); popup.IsOpen()) {
       if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
         ClearLogEntries();
       }
-
-      ImGui::EndPopup();
     }
-
-    ImGui::EndChild();
   }
 
   Prefs::SetShowLogDock(visible);

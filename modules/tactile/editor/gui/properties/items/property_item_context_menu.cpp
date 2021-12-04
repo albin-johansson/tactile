@@ -4,6 +4,7 @@
 
 #include "editor/events/property_events.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 
@@ -11,8 +12,7 @@ auto PropertyItemContextMenu(entt::dispatcher& dispatcher,
                              const std::string& name,
                              PropertyItemContextMenuState& state) -> bool
 {
-  const auto isOpen = ImGui::BeginPopupContextItem("##PropertyItemContext");
-  if (isOpen) {
+  if (auto popup = Scoped::Popup::ForItem("##PropertyItemContext"); popup.IsOpen()) {
     state.show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename Property...");
     state.show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change Type...");
 
@@ -22,10 +22,11 @@ auto PropertyItemContextMenu(entt::dispatcher& dispatcher,
       dispatcher.enqueue<RemovePropertyEvent>(name);
     }
 
-    ImGui::EndPopup();
+    return true;
   }
-
-  return isOpen;
+  else {
+    return false;
+  }
 }
 
 }  // namespace Tactile

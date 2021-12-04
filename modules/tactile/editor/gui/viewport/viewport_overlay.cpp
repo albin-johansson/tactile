@@ -7,7 +7,7 @@
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/gui/common/window.hpp"
-#include "editor/gui/rendering/canvas.hpp"
+#include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 #include "viewport_cursor_info.hpp"
 
@@ -104,7 +104,7 @@ void UpdateMouseTileLabels(const entt::registry& registry,
 
 void UpdateOverlayContextMenu()
 {
-  if (ImGui::BeginPopupContextWindow()) {
+  if (auto popup = Scoped::Popup::ForWindow("##ViewportOverlayPopup"); popup.IsOpen()) {
     const auto corner = Prefs::GetViewportOverlayPos();
 
     if (ImGui::MenuItem("Top-left", nullptr, corner == OverlayPos::TopLeft)) {
@@ -122,8 +122,6 @@ void UpdateOverlayContextMenu()
     if (ImGui::MenuItem("Bottom-right", nullptr, corner == OverlayPos::BottomRight)) {
       Prefs::SetViewportOverlayPos(OverlayPos::BottomRight);
     }
-
-    ImGui::EndPopup();
   }
 }
 

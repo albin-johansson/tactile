@@ -4,6 +4,7 @@
 #include <imgui.h>
 
 #include "editor/gui/alignment.hpp"
+#include "editor/gui/common/menu.hpp"
 #include "editor/gui/dialogs/about_dialog.hpp"
 #include "editor/gui/dialogs/credits_dialog.hpp"
 #include "editor/gui/icons.hpp"
@@ -12,7 +13,8 @@ namespace Tactile {
 
 void HelpMenu::Update()
 {
-  if (ImGui::BeginMenu("Help")) {
+  Menu menu{"Help"};
+  if (menu) {
     mShowAboutTactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
     mShowAboutImGui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
 
@@ -23,8 +25,6 @@ void HelpMenu::Update()
 
     ImGui::Separator();
     mShowCredits = ImGui::MenuItem("Credits...");
-
-    ImGui::EndMenu();
   }
 }
 

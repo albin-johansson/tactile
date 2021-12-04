@@ -22,6 +22,7 @@
 #include "editor/gui/rendering/render_info.hpp"
 #include "editor/gui/rendering/render_map.hpp"
 #include "editor/gui/rendering/render_stamp_preview.hpp"
+#include "editor/gui/scoped.hpp"
 #include "viewport_cursor_info.hpp"
 #include "viewport_overlay.hpp"
 
@@ -118,10 +119,11 @@ void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
                        entt::dispatcher& dispatcher,
                        [[maybe_unused]] const ViewportCursorInfo& cursor)
 {
-  if (ImGui::BeginPopupContextItem(
-          "##MapViewContextMenu",
-          ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup))
-  {
+  constexpr auto flags =
+      ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
+
+  if (const auto popup = Scoped::Popup::ForItem("##MapViewContextMenu", flags);
+      popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Map Properties")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
@@ -137,8 +139,6 @@ void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
     if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset Viewport Zoom")) {
       dispatcher.enqueue<ResetZoomEvent>();
     }
-
-    ImGui::EndPopup();
   }
 }
 
@@ -177,7 +177,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 void UpdateMapViewObjectContextMenu(const entt::registry& registry,
                                     entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginPopup("##MapViewObjectContextMenu")) {
+  if (Scoped::Popup popup{"##MapViewObjectContextMenu"}; popup.IsOpen()) {
     const auto active = registry.ctx<ActiveObject>();
 
     assert(active.entity != entt::null);
@@ -190,27 +190,24 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Object Visibility",
                         nullptr,
-                        object.visible))
-    {
+                        object.visible)) {
       dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, !object.visible);
     }
 
-    // TODO implement
-    ImGui::BeginDisabled();
+    // TODO implement the object actions
+    Scoped::Disable disable;
 
     ImGui::Separator();
+
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
       dispatcher.enqueue<DuplicateObjectEvent>(object.id);
     }
 
     ImGui::Separator();
+
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
       dispatcher.enqueue<RemoveObjectEvent>(object.id);
     }
-
-    ImGui::EndDisabled();
-
-    ImGui::EndPopup();
   }
 }
 
