@@ -440,7 +440,7 @@ target_compile_definitions(${TACTILE_LIB}
                            )
 
 if (MSVC)
-  target_compile_definitions(${TACTILE_LIB} PRIVATE _CRT_SECURE_NO_WARNINGS)
+  target_compile_definitions(${TACTILE_LIB} PUBLIC _CRT_SECURE_NO_WARNINGS)
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -508,6 +508,7 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
 
                           <centurion.hpp>
                           <entt/entt.hpp>
+                          <imgui.h>
                           <fmt/format.h>
                           )
 
