@@ -259,8 +259,6 @@ set(SOURCE_FILES
     editor/gui/common/centered_text.hpp
     editor/gui/common/checkbox.cpp
     editor/gui/common/checkbox.hpp
-    editor/gui/common/combo.cpp
-    editor/gui/common/combo.hpp
     editor/gui/common/docking_toolbar.cpp
     editor/gui/common/docking_toolbar.hpp
     editor/gui/common/help_marker.cpp

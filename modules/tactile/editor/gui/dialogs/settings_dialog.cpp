@@ -7,7 +7,6 @@
 #include "editor/events/command_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/checkbox.hpp"
-#include "editor/gui/common/combo.hpp"
 #include "editor/gui/common/modal.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/themes.hpp"
