@@ -6,12 +6,19 @@ namespace Tactile {
 
 class Model;
 
-void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher);
+class Toolbar final {
+ public:
+  void Update(const Model& model, entt::dispatcher& dispatcher);
 
-void SetToolbarVisible(bool visible) noexcept;
+  void SetVisible(bool visible);
 
-[[nodiscard]] auto IsToolbarVisible() noexcept -> bool;
+  [[nodiscard]] auto IsVisible() const noexcept -> bool { return mVisible; }
 
-[[nodiscard]] auto IsToolbarFocused() noexcept -> bool;
+  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+
+ private:
+  bool mVisible{true};
+  bool mHasFocus{};
+};
 
 }  // namespace Tactile

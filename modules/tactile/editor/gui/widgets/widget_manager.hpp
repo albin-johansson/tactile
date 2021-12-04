@@ -5,16 +5,18 @@
 #include <entt/entt.hpp>
 
 #include "tilesets/tileset_dock.hpp"
+#include "toolbar/toolbar.hpp"
 
 namespace Tactile {
 
 class Model;
 class Icons;
 
-class WidgetManager final
-{
+class WidgetManager final {
  public:
   void Update(const Model& model, const Icons& icons, entt::dispatcher& dispatcher);
+
+  void SetToolbarVisible(bool visible);
 
   [[nodiscard]] auto IsEditorFocused() const -> bool;
   [[nodiscard]] auto IsToolbarFocused() const -> bool;
@@ -26,12 +28,13 @@ class WidgetManager final
 
   [[nodiscard]] auto IsTilesetDockHovered() const -> bool;
 
-  [[nodiscard]] auto GetTilesetDock() const -> const TilesetDock&;
+  [[nodiscard]] auto IsToolbarVisible() const -> bool;
 
   [[nodiscard]] auto GetTilesetViewWidth() const -> Maybe<float>;
   [[nodiscard]] auto GetTilesetViewHeight() const -> Maybe<float>;
 
  private:
+  Toolbar mToolbar;
   TilesetDock mTilesetDock;
 };
 

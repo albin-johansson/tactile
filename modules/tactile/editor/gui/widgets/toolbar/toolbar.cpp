@@ -18,25 +18,17 @@
 #include "tool_button.hpp"
 
 namespace Tactile {
-namespace {
 
-constinit bool gIsVisible = true;
-constinit bool gHasFocus = false;
-
-}  // namespace
-
-void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
+void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!gIsVisible) {
-    return;
-  }
+  if (!mVisible) { return; }
 
   static int axis = ImGuiAxis_X;
   constexpr auto bw = 24;
   constexpr auto bh = 24;
 
   BeginDockingToolbar("Toolbar", axis);
-  gHasFocus = ImGui::IsWindowFocused();
+  mHasFocus = ImGui::IsWindowFocused();
 
   auto separate = [] {
     if (axis == ImGuiAxis_X) {
@@ -175,26 +167,16 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
                  model.IsObjectSelectionActive(),
                  model.IsObjectSelectionPossible(),
                  bw,
-                 bh))
-  {
+                 bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
   }
+
   EndDockingToolbar();
 }
 
-void SetToolbarVisible(const bool visible) noexcept
+void Toolbar::SetVisible(const bool visible)
 {
-  gIsVisible = visible;
-}
-
-auto IsToolbarVisible() noexcept -> bool
-{
-  return gIsVisible;
-}
-
-auto IsToolbarFocused() noexcept -> bool
-{
-  return gHasFocus;
+  mVisible = visible;
 }
 
 }  // namespace Tactile

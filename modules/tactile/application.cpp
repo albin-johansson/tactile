@@ -622,21 +622,21 @@ void Application::OnToggleUi()
     gPrevShowTilesetDock = Prefs::GetShowTilesetDock();
     gPrevShowPropertiesDock = Prefs::GetShowPropertiesDock();
     gPrevShowLogDock = Prefs::GetShowLogDock();
-    gPrevShowToolbar = IsToolbarVisible();
+    gPrevShowToolbar = mWidgets.IsToolbarVisible();
   }
 
   Prefs::SetShowLayerDock(show);
   Prefs::SetShowTilesetDock(show);
   Prefs::SetShowPropertiesDock(show);
   Prefs::SetShowLogDock(show);
-  SetToolbarVisible(show);
+  mWidgets.SetToolbarVisible(show);
 
   if (show) {
     Prefs::SetShowLayerDock(gPrevShowLayerDock);
     Prefs::SetShowTilesetDock(gPrevShowTilesetDock);
     Prefs::SetShowPropertiesDock(gPrevShowPropertiesDock);
     Prefs::SetShowLogDock(gPrevShowLogDock);
-    SetToolbarVisible(gPrevShowToolbar);
+    mWidgets.SetToolbarVisible(gPrevShowToolbar);
   }
 
   show = !show;

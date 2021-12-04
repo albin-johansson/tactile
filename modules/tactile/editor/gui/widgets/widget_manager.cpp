@@ -10,7 +10,6 @@
 #include "log/log_dock.hpp"
 #include "menus/menu_bar.hpp"
 #include "properties/properties_dock.hpp"
-#include "tilesets/tileset_dock.hpp"
 #include "toolbar/toolbar.hpp"
 #include "viewport/map_view.hpp"
 #include "viewport/viewport_widget.hpp"
@@ -24,9 +23,7 @@ void WidgetManager::Update(const Model& model,
   UpdateMenuBar(model, dispatcher);
   UpdateDockSpace();
 
-  if (model.HasActiveDocument()) {
-    UpdateToolbarWidget(model, dispatcher);
-  }
+  if (model.HasActiveDocument()) { mToolbar.Update(model, dispatcher); }
 
   UpdateViewportWidget(model, icons, dispatcher);
 
@@ -44,6 +41,11 @@ void WidgetManager::Update(const Model& model,
   UpdateSaveAsDialog(dispatcher);
 }
 
+void WidgetManager::SetToolbarVisible(const bool visible)
+{
+  mToolbar.SetVisible(visible);
+}
+
 auto WidgetManager::IsEditorFocused() const -> bool
 {
   return IsToolbarFocused() || IsViewportFocused() || IsLayerDockFocused() ||
@@ -52,7 +54,7 @@ auto WidgetManager::IsEditorFocused() const -> bool
 
 auto WidgetManager::IsToolbarFocused() const -> bool
 {
-  return Tactile::IsToolbarFocused();
+  return mToolbar.IsFocused();
 }
 
 auto WidgetManager::IsViewportFocused() const -> bool
@@ -85,9 +87,9 @@ auto WidgetManager::IsTilesetDockHovered() const -> bool
   return mTilesetDock.IsHovered();
 }
 
-auto WidgetManager::GetTilesetDock() const -> const TilesetDock&
+auto WidgetManager::IsToolbarVisible() const -> bool
 {
-  return mTilesetDock;
+  return mToolbar.IsVisible();
 }
 
 auto WidgetManager::GetTilesetViewWidth() const -> Maybe<float>
