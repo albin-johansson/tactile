@@ -9,6 +9,7 @@
 namespace Tactile {
 
 class Model;
+class WidgetManager;
 
 class AShortcut
 {
@@ -21,12 +22,15 @@ class AShortcut
   virtual ~AShortcut() noexcept = default;
 
   void Poll(const Model& model,
+            const WidgetManager& widgets,
             const SDL_KeyboardEvent& event,
             entt::dispatcher& dispatcher);
 
   virtual void Activate(entt::dispatcher& dispatcher) = 0;
 
-  [[nodiscard]] virtual auto IsEnabled([[maybe_unused]] const Model& model) const -> bool
+  [[nodiscard]] virtual auto IsEnabled(
+      [[maybe_unused]] const Model& model,
+      [[maybe_unused]] const WidgetManager& widgets) const -> bool
   {
     return true;
   }

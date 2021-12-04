@@ -1,10 +1,11 @@
 #include "viewport_system.hpp"
 
-#include <algorithm>  // max
+#include <algorithm>  // min, max
 #include <cassert>    // assert
 #include <cmath>      // round
 #include <utility>    // pair
 
+#include "core/components/texture.hpp"
 #include "core/map.hpp"
 #include "core/mouse_pos.hpp"
 #include "core/viewport.hpp"
@@ -25,11 +26,37 @@ constexpr float gMinTileHeight = 4;
 
 }  // namespace
 
-void OffsetViewport(entt::registry& registry, float dx, float dy)
+void OffsetViewport(entt::registry& registry, const float dx, const float dy)
 {
   auto& viewport = registry.ctx<Viewport>();
   viewport.x_offset += dx;
   viewport.y_offset += dy;
+}
+
+void OffsetBoundViewport(entt::registry& registry,
+                         const entt::entity entity,
+                         const float dx,
+                         const float dy,
+                         const float viewWidth,
+                         const float viewHeight)
+{
+  assert(entity != entt::null);
+  assert(registry.all_of<Viewport>(entity));
+  assert(registry.all_of<Texture>(entity));
+
+  auto& viewport = registry.get<Viewport>(entity);
+  viewport.x_offset += dx;
+  viewport.y_offset += dy;
+
+  viewport.x_offset = std::min(0.0f, viewport.x_offset);
+  viewport.y_offset = std::min(0.0f, viewport.y_offset);
+
+  const auto& texture = registry.get<Texture>(entity);
+  const auto textureWidth = static_cast<float>(texture.width);
+  const auto textureHeight = static_cast<float>(texture.height);
+
+  viewport.x_offset = std::max(-textureWidth + viewWidth, viewport.x_offset);
+  viewport.y_offset = std::max(-textureHeight + viewHeight, viewport.y_offset);
 }
 
 void PanViewportLeft(entt::registry& registry)

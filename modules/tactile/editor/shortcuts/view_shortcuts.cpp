@@ -2,7 +2,7 @@
 
 #include "editor/events/view_events.hpp"
 #include "editor/events/viewport_events.hpp"
-#include "editor/gui/widgets/focus.hpp"
+#include "editor/gui/widgets/widget_manager.hpp"
 #include "editor/model.hpp"
 #include "io/preferences.hpp"
 #include "mappings.hpp"
@@ -18,7 +18,8 @@ void CenterViewportShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<CenterViewportEvent>();
 }
 
-auto CenterViewportShortcut::IsEnabled(const Model& model) const -> bool
+auto CenterViewportShortcut::IsEnabled(const Model& model, const WidgetManager&) const
+    -> bool
 {
   return model.HasActiveDocument();
 }
@@ -32,7 +33,8 @@ void DecreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<DecreaseZoomEvent>();
 }
 
-auto DecreaseViewportZoomShortcut::IsEnabled(const Model& model) const -> bool
+auto DecreaseViewportZoomShortcut::IsEnabled(const Model& model,
+                                             const WidgetManager&) const -> bool
 {
   return model.CanDecreaseViewportTileSize();
 }
@@ -46,7 +48,8 @@ void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<IncreaseZoomEvent>();
 }
 
-auto IncreaseViewportZoomShortcut::IsEnabled(const Model& model) const -> bool
+auto IncreaseViewportZoomShortcut::IsEnabled(const Model& model,
+                                             const WidgetManager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -60,7 +63,7 @@ void PanUpShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanUpEvent>();
 }
 
-auto PanUpShortcut::IsEnabled(const Model& model) const -> bool
+auto PanUpShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -74,7 +77,7 @@ void PanDownShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanDownEvent>();
 }
 
-auto PanDownShortcut::IsEnabled(const Model& model) const -> bool
+auto PanDownShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -88,7 +91,7 @@ void PanLeftShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanLeftEvent>();
 }
 
-auto PanLeftShortcut::IsEnabled(const Model& model) const -> bool
+auto PanLeftShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -102,7 +105,7 @@ void PanRightShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanRightEvent>();
 }
 
-auto PanRightShortcut::IsEnabled(const Model& model) const -> bool
+auto PanRightShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -123,9 +126,10 @@ void ToggleUiShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ToggleUiEvent>();
 }
 
-auto ToggleUiShortcut::IsEnabled(const Model& model) const -> bool
+auto ToggleUiShortcut::IsEnabled(const Model& model, const WidgetManager& widgets) const
+    -> bool
 {
-  return model.HasActiveDocument() && IsEditorFocused();
+  return model.HasActiveDocument() && widgets.IsEditorFocused();
 }
 
 }  // namespace Tactile

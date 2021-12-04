@@ -1,11 +1,36 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry, dispatcher
+#include <tactile_def.hpp>
+
+#include <entt/entt.hpp>
+
+#include "tileset_tabs.hpp"
 
 namespace Tactile {
 
-void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatcher);
+class TilesetDock final
+{
+ public:
+  void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
 
-[[nodiscard]] auto IsTilesetDockFocused() noexcept -> bool;
+  [[nodiscard]] auto IsFocused() const noexcept -> bool
+  {
+    return mHasFocus;
+  }
+
+  [[nodiscard]] auto IsHovered() const noexcept -> bool
+  {
+    return mWindowContainsMouse;
+  }
+
+  [[nodiscard]] auto GetTilesetView() const -> const TilesetView&;
+
+ private:
+  TilesetTabWidget mTabWidget;
+  bool mHasFocus{};
+  bool mWindowContainsMouse{};
+
+  void ResetState();
+};
 
 }  // namespace Tactile

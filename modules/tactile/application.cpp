@@ -6,6 +6,7 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
+#include <imgui_internal.h>
 
 #include "application_events.hpp"
 #include "cfg/configuration.hpp"
@@ -21,8 +22,8 @@
 #include "editor/gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "editor/gui/widgets/dialogs/resize_map_dialog.hpp"
 #include "editor/gui/widgets/dialogs/save_as_dialog.hpp"
-#include "editor/gui/widgets/focus.hpp"
 #include "editor/gui/widgets/layers/layer_dock.hpp"
+#include "editor/gui/widgets/tilesets/tileset_dock.hpp"
 #include "editor/gui/widgets/toolbar/toolbar.hpp"
 #include "editor/gui/widgets/viewport/map_view.hpp"
 #include "editor/gui/widgets/viewport/viewport_widget.hpp"
@@ -159,17 +160,32 @@ void Application::OnKeyboardEvent(SDL_KeyboardEvent event)
 {
   /* We don't care about these modifiers, they are just noise */
   event.keysym.mod &= ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE);
-  UpdateShortcuts(mModel, event, mDispatcher);
+  UpdateShortcuts(mModel, mWidgets, event, mDispatcher);
 }
 
 void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
 {
-  if (IsViewportFocused() && IsMouseWithinViewport() && mModel.HasActiveDocument()) {
-    if (const auto* registry = mModel.GetActiveRegistry()) {
+  constexpr float scaling = 4.0f;
+
+  const auto* registry = mModel.GetActiveRegistry();
+  if (registry && !ImGui::GetTopMostPopupModal()) {
+    if (IsMouseWithinViewport()) {
       const auto& viewport = registry->ctx<Viewport>();
-      const auto dx = static_cast<float>(event.x) * (viewport.tile_width / 3.0f);
-      const auto dy = static_cast<float>(event.y) * (viewport.tile_height / 3.0f);
+      const auto dx = static_cast<float>(event.x) * (viewport.tile_width / scaling);
+      const auto dy = static_cast<float>(event.y) * (viewport.tile_height / scaling);
       mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+    }
+    else if (mWidgets.IsTilesetDockHovered()) {
+      const auto width = mWidgets.GetTilesetViewWidth();
+      const auto height = mWidgets.GetTilesetViewHeight();
+      if (width && height) {
+        const auto entity = Sys::GetActiveTileset(*registry);
+        const auto& viewport = registry->get<Viewport>(entity);
+
+        const auto dx = static_cast<float>(event.x) * (viewport.tile_width / scaling);
+        const auto dy = static_cast<float>(event.y) * (viewport.tile_height / scaling);
+        mDispatcher.enqueue<OffsetBoundViewportEvent>(entity, -dx, dy, *width, *height);
+      }
     }
   }
 }
@@ -185,7 +201,7 @@ void Application::UpdateFrame()
 
   mDispatcher.update();
   mModel.Update();
-  UpdateGui(mModel, mIcons, mDispatcher);
+  mWidgets.Update(mModel, mIcons, mDispatcher);
 }
 
 void Application::OnUndo()
@@ -335,6 +351,18 @@ void Application::OnOffsetViewport(const OffsetViewportEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::OffsetViewport(*registry, event.dx, event.dy);
+  }
+}
+
+void Application::OnOffsetBoundViewport(const OffsetBoundViewportEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::OffsetBoundViewport(*registry,
+                             event.entity,
+                             event.dx,
+                             event.dy,
+                             event.view_width,
+                             event.view_height);
   }
 }
 

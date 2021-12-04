@@ -1,5 +1,7 @@
 #pragma once
 
+#include <entt/entt.hpp>
+
 namespace Tactile {
 
 /// \addtogroup events
@@ -21,6 +23,16 @@ struct OffsetViewportEvent final
 {
   float dx{};
   float dy{};
+};
+
+/* Offset a viewport that cannot exceed the bounds of the shown content */
+struct OffsetBoundViewportEvent final
+{
+  entt::entity entity{entt::null};
+  float dx{};
+  float dy{};
+  float view_width{};
+  float view_height{};
 };
 
 struct PanUpEvent final

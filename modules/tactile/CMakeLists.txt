@@ -249,8 +249,8 @@ set(SOURCE_FILES
 
     editor/gui/widgets/alignment.cpp
     editor/gui/widgets/alignment.hpp
-    editor/gui/widgets/focus.cpp
-    editor/gui/widgets/focus.hpp
+    editor/gui/widgets/widget_manager.cpp
+    editor/gui/widgets/widget_manager.hpp
 
     editor/gui/widgets/common/button.cpp
     editor/gui/widgets/common/button.hpp

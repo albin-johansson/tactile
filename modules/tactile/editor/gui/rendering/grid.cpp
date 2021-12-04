@@ -1,13 +1,18 @@
 #include "grid.hpp"
 
+#include "canvas.hpp"
+
 namespace Tactile {
 
-void ShowGrid(const GridState& state, const CanvasInfo& canvas, const uint32 lineColor)
+void RenderGrid(const ImVec2& offset,
+                const ImVec2& gridSize,
+                const CanvasInfo& canvas,
+                const uint32 lineColor)
 {
-  const auto iGridWidth = static_cast<int>(state.grid_size.x);
-  const auto iGridHeight = static_cast<int>(state.grid_size.y);
-  const auto startX = static_cast<int>(state.scroll_offset.x) % iGridWidth;
-  const auto startY = static_cast<int>(state.scroll_offset.y) % iGridHeight;
+  const auto iGridWidth = static_cast<int>(gridSize.x);
+  const auto iGridHeight = static_cast<int>(gridSize.y);
+  const auto startX = static_cast<int>(offset.x) % iGridWidth;
+  const auto startY = static_cast<int>(offset.y) % iGridHeight;
 
   auto* drawList = ImGui::GetWindowDrawList();
 

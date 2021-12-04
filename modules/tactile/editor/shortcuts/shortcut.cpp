@@ -24,10 +24,11 @@ namespace {
 }  // namespace
 
 void AShortcut::Poll(const Model& model,
+                     const WidgetManager& widgets,
                      const SDL_KeyboardEvent& event,
                      entt::dispatcher& dispatcher)
 {
-  if (IsEnabled(model)) {
+  if (IsEnabled(model, widgets)) {
     if (event.type == SDL_KEYDOWN && event.keysym.scancode == mKey &&
         IsOnlyActive(mModifiers, event.keysym.mod))
     {

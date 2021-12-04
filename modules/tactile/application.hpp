@@ -17,6 +17,7 @@
 #include "editor/events/tool_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/widget_manager.hpp"
 #include "editor/model.hpp"
 
 namespace Tactile {
@@ -39,6 +40,7 @@ class Application final
   Model mModel;
   TextureManager mTextures;
   Icons mIcons;
+  WidgetManager mWidgets;
   bool mQuit{};
 
   void OnAboutToExit();
@@ -74,6 +76,7 @@ class Application final
 
   void OnCenterViewport();
   void OnOffsetViewport(const OffsetViewportEvent& event);
+  void OnOffsetBoundViewport(const OffsetBoundViewportEvent& event);
   void OnPanLeft();
   void OnPanRight();
   void OnPanUp();

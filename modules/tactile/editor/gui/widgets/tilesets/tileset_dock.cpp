@@ -15,24 +15,26 @@
 namespace Tactile {
 namespace {
 
-constinit bool gHasFocus = false;
 constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
 }  // namespace
 
-void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatcher)
+void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
+  ResetState();
+
   if (!Prefs::GetShowTilesetDock()) {
     return;
   }
 
   bool visible = Prefs::GetShowTilesetDock();
-  auto window = Window{"Tilesets", gWindowFlags, &visible};
+  Window window{"Tilesets", gWindowFlags, &visible};
   if (window.IsOpen()) {
-    gHasFocus = ImGui::IsWindowFocused();
+    mHasFocus = ImGui::IsWindowFocused();
+    mWindowContainsMouse = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
     if (!registry.empty<Tileset>()) {
-      UpdateTilesetTabs(registry, dispatcher);
+      mTabWidget.Update(registry, dispatcher);
     }
     else {
       PrepareVerticalAlignmentCenter(2);
@@ -43,16 +45,19 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
       }
     }
   }
-  else {
-    gHasFocus = false;
-  }
 
   Prefs::SetShowTilesetDock(visible);
 }
 
-auto IsTilesetDockFocused() noexcept -> bool
+auto TilesetDock::GetTilesetView() const -> const TilesetView&
 {
-  return gHasFocus;
+  return mTabWidget.GetTilesetView();
+}
+
+void TilesetDock::ResetState()
+{
+  mHasFocus = false;
+  mWindowContainsMouse = false;
 }
 
 }  // namespace Tactile

@@ -3,6 +3,7 @@
 #include "editor/events/save_events.hpp"
 #include "editor/gui/widgets/menus/edit_menu.hpp"
 #include "editor/gui/widgets/menus/file_menu.hpp"
+#include "editor/gui/widgets/widget_manager.hpp"
 #include "editor/model.hpp"
 #include "mappings.hpp"
 
@@ -41,7 +42,7 @@ void SaveShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SaveEvent>();
 }
 
-auto SaveShortcut::IsEnabled(const Model& model) const -> bool
+auto SaveShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.CanSaveDocument();
 }
@@ -55,7 +56,7 @@ void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<OpenSaveAsDialogEvent>();
 }
 
-auto SaveAsShortcut::IsEnabled(const Model& model) const -> bool
+auto SaveAsShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.CanSaveDocument();
 }

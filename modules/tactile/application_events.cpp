@@ -35,6 +35,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
 
   d.sink<CenterViewportEvent>().connect<&App::OnCenterViewport>(app);
   d.sink<OffsetViewportEvent>().connect<&App::OnOffsetViewport>(app);
+  d.sink<OffsetBoundViewportEvent>().connect<&App::OnOffsetBoundViewport>(app);
   d.sink<PanLeftEvent>().connect<&App::OnPanLeft>(app);
   d.sink<PanRightEvent>().connect<&App::OnPanRight>(app);
   d.sink<PanUpEvent>().connect<&App::OnPanUp>(app);

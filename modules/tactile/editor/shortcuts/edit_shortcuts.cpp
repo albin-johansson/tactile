@@ -4,8 +4,8 @@
 #include "editor/events/command_events.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/tool_events.hpp"
-#include "editor/gui/widgets/focus.hpp"
 #include "editor/gui/widgets/menus/map_menu.hpp"
+#include "editor/gui/widgets/widget_manager.hpp"
 #include "editor/model.hpp"
 #include "mappings.hpp"
 
@@ -19,7 +19,7 @@ void UndoShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<UndoEvent>();
 }
 
-auto UndoShortcut::IsEnabled(const Model& model) const -> bool
+auto UndoShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.CanUndo();
 }
@@ -32,7 +32,7 @@ void RedoShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RedoEvent>();
 }
 
-auto RedoShortcut::IsEnabled(const Model& model) const -> bool
+auto RedoShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.CanRedo();
 }
@@ -45,7 +45,7 @@ void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<AddRowEvent>();
 }
 
-auto AddRowShortcut::IsEnabled(const Model& model) const -> bool
+auto AddRowShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -58,7 +58,7 @@ void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<AddColumnEvent>();
 }
 
-auto AddColumnShortcut::IsEnabled(const Model& model) const -> bool
+auto AddColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -72,7 +72,7 @@ void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RemoveRowEvent>();
 }
 
-auto RemoveRowShortcut::IsEnabled(const Model& model) const -> bool
+auto RemoveRowShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   if (const auto* registry = model.GetActiveRegistry()) {
     const auto& map = registry->ctx<Map>();
@@ -92,7 +92,8 @@ void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RemoveColumnEvent>();
 }
 
-auto RemoveColumnShortcut::IsEnabled(const Model& model) const -> bool
+auto RemoveColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) const
+    -> bool
 {
   if (const auto* registry = model.GetActiveRegistry()) {
     const auto& map = registry->ctx<Map>();
@@ -111,7 +112,7 @@ void AddTilesetShortcut::Activate(entt::dispatcher&)
   ShowTilesetDialog();
 }
 
-auto AddTilesetShortcut::IsEnabled(const Model& model) const -> bool
+auto AddTilesetShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -124,9 +125,10 @@ void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
 }
 
-auto EnableBucketShortcut::IsEnabled(const Model& model) const -> bool
+auto EnableBucketShortcut::IsEnabled(const Model& model,
+                                     const WidgetManager& widgets) const -> bool
 {
-  return model.HasActiveDocument() && IsEditorFocused();
+  return model.HasActiveDocument() && widgets.IsEditorFocused();
 }
 
 EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e}
@@ -137,9 +139,10 @@ void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
 }
 
-auto EnableEraserShortcut::IsEnabled(const Model& model) const -> bool
+auto EnableEraserShortcut::IsEnabled(const Model& model,
+                                     const WidgetManager& widgets) const -> bool
 {
-  return model.HasActiveDocument() && IsEditorFocused();
+  return model.HasActiveDocument() && widgets.IsEditorFocused();
 }
 
 EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s}
@@ -150,9 +153,10 @@ void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
 }
 
-auto EnableStampShortcut::IsEnabled(const Model& model) const -> bool
+auto EnableStampShortcut::IsEnabled(const Model& model,
+                                    const WidgetManager& widgets) const -> bool
 {
-  return model.HasActiveDocument() && IsEditorFocused();
+  return model.HasActiveDocument() && widgets.IsEditorFocused();
 }
 
 }  // namespace Tactile

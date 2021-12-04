@@ -7,6 +7,7 @@
 
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
+#include "core/viewport.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/rendering/canvas.hpp"
 #include "editor/gui/rendering/grid.hpp"
@@ -17,8 +18,6 @@ namespace Tactile {
 namespace {
 
 constexpr auto gRubberBandColor = IM_COL32(0, 0x44, 0xCC, 100);
-
-inline GridState gState;
 
 [[nodiscard]] auto TrackScrollOffset(const CanvasInfo& canvas, ImVec2 offset) -> ImVec2
 {
@@ -35,19 +34,6 @@ inline GridState gState;
   else {
     return offset;
   }
-}
-
-void UpdateOffsets(const CanvasInfo& canvas, const ImVec2& textureSize)
-{
-  gState.scroll_offset = TrackScrollOffset(canvas, gState.scroll_offset);
-
-  gState.scroll_offset.x = std::min(0.0f, gState.scroll_offset.x);
-  gState.scroll_offset.y = std::min(0.0f, gState.scroll_offset.y);
-
-  gState.scroll_offset.x =
-      std::max(-textureSize.x + canvas.size.x, gState.scroll_offset.x);
-  gState.scroll_offset.y =
-      std::max(-textureSize.y + canvas.size.y, gState.scroll_offset.y);
 }
 
 void RenderSelection(const Region& selection, const ImVec2& min, const ImVec2& tileSize)
@@ -67,14 +53,19 @@ void RenderSelection(const Region& selection, const ImVec2& min, const ImVec2& t
 
 }  // namespace
 
-void UpdateTilesetView(const entt::registry& registry,
-                       const entt::entity entity,
-                       entt::dispatcher& dispatcher)
+void TilesetView::Update(const entt::registry& registry,
+                         const entt::entity entity,
+                         entt::dispatcher& dispatcher)
 {
+  const auto region = ImGui::GetContentRegionAvail();
+  mWidth = region.x;
+  mHeight = region.y;
+
   const auto& tileset = registry.get<Tileset>(entity);
+  const auto& viewport = registry.get<Viewport>(entity);
+
   const ImVec2 tileSize = {static_cast<float>(tileset.tile_width),
                            static_cast<float>(tileset.tile_height)};
-  gState.grid_size = tileSize;
 
   const auto& texture = registry.get<Texture>(entity);
   const ImVec2 textureSize = {static_cast<float>(texture.width),
@@ -82,24 +73,36 @@ void UpdateTilesetView(const entt::registry& registry,
 
   const auto canvas = GetCanvasInfo();
   ClearBackground(canvas);
-  UpdateOffsets(canvas, textureSize);
 
-  if (const auto selection = RubberBand(gState.scroll_offset, tileSize)) {
+  const auto offset = ImVec2{viewport.x_offset, viewport.y_offset};
+  const auto scroll = TrackScrollOffset(canvas, offset);
+
+  if (const auto selection = RubberBand(scroll, tileSize)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
   auto* drawList = ImGui::GetWindowDrawList();
   drawList->PushClipRect(canvas.tl, canvas.br, true);
 
-  const auto min = drawList->GetClipRectMin() + gState.scroll_offset;
+  const auto min = drawList->GetClipRectMin() + offset;
   drawList->AddImage(ToTextureID(texture.id), min, min + textureSize);
 
   if (const auto& selection = registry.get<TilesetSelection>(entity); selection.region) {
     RenderSelection(*selection.region, min, tileSize);
   }
 
-  ShowGrid(gState, canvas);
+  RenderGrid(offset, {viewport.tile_width, viewport.tile_height}, canvas);
   drawList->PopClipRect();
+}
+
+auto TilesetView::GetWidth() const -> Maybe<float>
+{
+  return mWidth;
+}
+
+auto TilesetView::GetHeight() const -> Maybe<float>
+{
+  return mHeight;
 }
 
 }  // namespace Tactile

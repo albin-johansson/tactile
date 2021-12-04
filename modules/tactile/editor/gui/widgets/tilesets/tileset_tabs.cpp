@@ -47,7 +47,8 @@ void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
 
 }  // namespace
 
-void UpdateTilesetTabs(const entt::registry& registry, entt::dispatcher& dispatcher)
+void TilesetTabWidget::Update(const entt::registry& registry,
+                              entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginTabBar("TilesetTabBar", gTabBarFlags)) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
@@ -67,7 +68,7 @@ void UpdateTilesetTabs(const entt::registry& registry, entt::dispatcher& dispatc
                               &opened,
                               isActive ? ImGuiTabItemFlags_SetSelected : 0))
       {
-        UpdateTilesetView(registry, entity, dispatcher);
+        mTilesetView.Update(registry, entity, dispatcher);
         ImGui::EndTabItem();
       }
 
@@ -84,6 +85,11 @@ void UpdateTilesetTabs(const entt::registry& registry, entt::dispatcher& dispatc
 
     ImGui::EndTabBar();
   }
+}
+
+auto TilesetTabWidget::GetTilesetView() const -> const TilesetView&
+{
+  return mTilesetView;
 }
 
 }  // namespace Tactile

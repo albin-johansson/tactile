@@ -60,11 +60,12 @@ void LoadDefaultShortcuts()
 }
 
 void UpdateShortcuts(const Model& model,
+                     const WidgetManager& widgets,
                      const SDL_KeyboardEvent& event,
                      entt::dispatcher& dispatcher)
 {
   for (const auto& shortcut : gShortcuts) {
-    shortcut->Poll(model, event, dispatcher);
+    shortcut->Poll(model, widgets, event, dispatcher);
   }
 }
 

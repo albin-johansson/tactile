@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
+#include <entt/entt.hpp>  // registry, entity
 
 namespace Tactile::Sys {
 
@@ -23,6 +23,26 @@ struct ViewportScalingRatio final
  * \since 0.2.0
  */
 void OffsetViewport(entt::registry& registry, float dx, float dy);
+
+/**
+ * \brief Offsets a viewport that is bound to the size of an underlying texture.
+ *
+ * \pre The entity must feature a viewport component.
+ * \pre The entity must feature a texture component.
+ *
+ * \param registry the source registry.
+ * \param entity the entity that provides the viewport and texture components.
+ * \param dx the x-axis offset.
+ * \param dy the y-axis offset.
+ * \param viewWidth the width of the viewport.
+ * \param viewHeight the height of the viewport.
+ */
+void OffsetBoundViewport(entt::registry& registry,
+                         entt::entity entity,
+                         float dx,
+                         float dy,
+                         float viewWidth,
+                         float viewHeight);
 
 /**
  * \brief Pans the viewport to the left.

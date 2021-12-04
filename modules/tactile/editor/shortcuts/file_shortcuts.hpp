@@ -31,7 +31,8 @@ struct SaveShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model) const -> bool override;
+  [[nodiscard]] auto IsEnabled(const Model& model, const WidgetManager& widgets) const
+      -> bool override;
 };
 
 struct SaveAsShortcut final : AShortcut
@@ -40,7 +41,8 @@ struct SaveAsShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model) const -> bool override;
+  [[nodiscard]] auto IsEnabled(const Model& model, const WidgetManager& widgets) const
+      -> bool override;
 };
 
 }  // namespace Tactile
