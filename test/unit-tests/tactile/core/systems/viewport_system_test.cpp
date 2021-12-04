@@ -9,10 +9,7 @@ using namespace Tactile;
 
 class ViewportSystemTest : public testing::Test {
  protected:
-  void SetUp() override
-  {
-    mRegistry = Sys::MakeRegistry();
-  }
+  void SetUp() override { mRegistry = Sys::MakeRegistry(); }
 
   entt::registry mRegistry;
 };
