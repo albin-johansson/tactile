@@ -22,7 +22,6 @@
 #include "editor/gui/dialogs/resize_map_dialog.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
 #include "editor/gui/layers/layer_dock.hpp"
-#include "editor/gui/tilesets/tileset_dock.hpp"
 #include "editor/gui/toolbar/toolbar.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
