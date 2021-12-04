@@ -24,10 +24,7 @@ class Foo : public ACommand {
     // std::cout << "Foo::Redo\n";
   }
 
-  [[nodiscard]] auto GetId() const -> int override
-  {
-    return 0;
-  }
+  [[nodiscard]] auto GetId() const -> int override { return 0; }
 };
 
 class Bar : public ACommand {
@@ -44,10 +41,7 @@ class Bar : public ACommand {
     // std::cout << "Bar::Redo\n";
   }
 
-  [[nodiscard]] auto GetId() const -> int override
-  {
-    return 1;
-  }
+  [[nodiscard]] auto GetId() const -> int override { return 1; }
 };
 
 }  // namespace
