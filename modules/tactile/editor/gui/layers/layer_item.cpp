@@ -7,7 +7,6 @@
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
-#include "core/map.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/icons.hpp"
