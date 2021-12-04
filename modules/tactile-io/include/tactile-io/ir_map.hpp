@@ -49,10 +49,7 @@ void DeleteMap(Map* map) noexcept;
  * \see `MapPtr`
  */
 struct TACTILE_IO_API MapDeleter final {
-  void operator()(Map* map) noexcept
-  {
-    DeleteMap(map);
-  }
+  void operator()(Map* map) noexcept { DeleteMap(map); }
 };
 
 /// \brief Alias for a unique pointer to a `Map` instance.

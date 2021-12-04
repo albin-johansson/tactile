@@ -5,8 +5,8 @@
 #include <imgui.h>
 
 #include "editor/gui/alignment.hpp"
-#include "editor/gui/common/modal.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 namespace {
@@ -20,7 +20,7 @@ inline Maybe<IO::ParseError> gCurrentError;
 void UpdateMapImportErrorDialog()
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{TAC_ICON_ERROR " Map import error", gFlags}) {
+  if (Scoped::Modal modal{TAC_ICON_ERROR " Map import error", gFlags}; modal.IsOpen()) {
     ImGui::TextUnformatted("Oops, failed to open the specified map!");
     ImGui::Text("Cause: %s", IO::GetCause(gCurrentError.value()));
 

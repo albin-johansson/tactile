@@ -263,13 +263,10 @@ set(SOURCE_FILES
     editor/gui/common/docking_toolbar.hpp
     editor/gui/common/help_marker.cpp
     editor/gui/common/help_marker.hpp
-    editor/gui/common/menu.hpp
-    editor/gui/common/modal.hpp
     editor/gui/common/mouse_tracker.cpp
     editor/gui/common/mouse_tracker.hpp
     editor/gui/common/rubber_band.cpp
     editor/gui/common/rubber_band.hpp
-    editor/gui/common/window.hpp
 
     editor/gui/dialogs/about_dialog.cpp
     editor/gui/dialogs/about_dialog.hpp

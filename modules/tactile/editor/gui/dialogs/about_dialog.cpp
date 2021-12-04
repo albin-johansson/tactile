@@ -5,8 +5,8 @@
 
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/common/window.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 
 #define TACTILE_VER "0.3.0"
 #define TACTILE_URL "https://www.github.com/albin-johansson/tactile"
@@ -21,7 +21,7 @@ constexpr auto gSourceCode = "Source code: " TACTILE_URL;
 void UpdateAboutDialog(bool* open)
 {
   CenterNextWindowOnAppearance();
-  auto window = Window{"About Tactile", ImGuiWindowFlags_AlwaysAutoResize, open};
+  Scoped::Window window{"About Tactile", ImGuiWindowFlags_AlwaysAutoResize, open};
   if (window.IsOpen()) {
     ImGui::TextUnformatted("Tactile " TACTILE_VER " (C) Albin Johansson 2020-2021");
     ImGui::Separator();

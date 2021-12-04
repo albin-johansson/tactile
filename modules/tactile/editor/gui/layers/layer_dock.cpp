@@ -16,7 +16,6 @@
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
-#include "editor/gui/common/window.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
@@ -85,7 +84,7 @@ void UpdateLayerDock(const entt::registry& registry,
   }
 
   bool isVisible = Prefs::GetShowLayerDock();
-  auto dock = Window{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
+  Scoped::Window dock{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
   gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.IsOpen()) {

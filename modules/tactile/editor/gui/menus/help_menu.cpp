@@ -4,17 +4,16 @@
 #include <imgui.h>
 
 #include "editor/gui/alignment.hpp"
-#include "editor/gui/common/menu.hpp"
 #include "editor/gui/dialogs/about_dialog.hpp"
 #include "editor/gui/dialogs/credits_dialog.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 
 void HelpMenu::Update()
 {
-  Menu menu{"Help"};
-  if (menu) {
+  if (Scoped::Menu menu{"Help"}; menu.IsOpen()) {
     mShowAboutTactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
     mShowAboutImGui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
 

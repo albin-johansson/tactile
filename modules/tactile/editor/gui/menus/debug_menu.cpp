@@ -5,16 +5,14 @@
 
 #include "build.hpp"
 #include "editor/gui/alignment.hpp"
-#include "editor/gui/common/menu.hpp"
-#include "editor/gui/common/window.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 
 void DebugMenu::Update()
 {
-  Menu menu{"Debug"};
-  if (menu) {
+  if (Scoped::Menu menu{"Debug"}; menu.IsOpen()) {
     mShowMetrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
     if constexpr (IsDebugBuild()) {
@@ -38,7 +36,7 @@ void DebugMenu::UpdateWindows()
     }
 
     if (mShowStyleEditor) {
-      Window editor{"Style Editor"};
+      Scoped::Window editor{"Style Editor"};
       ImGui::ShowStyleEditor();
     }
   }

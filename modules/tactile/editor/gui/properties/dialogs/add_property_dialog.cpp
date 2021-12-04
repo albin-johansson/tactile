@@ -12,7 +12,7 @@
 #include "editor/events/property_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/common/modal.hpp"
+#include "editor/gui/scoped.hpp"
 #include "property_type_combo.hpp"
 
 namespace Tactile {
@@ -36,7 +36,7 @@ void ResetState()
 void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Add property", gFlags}) {
+  if (Scoped::Modal modal{"Add property", gFlags}; modal.IsOpen()) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Name: ");
 

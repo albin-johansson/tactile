@@ -3,10 +3,10 @@
 #include <imgui.h>
 
 #include "core/components/property_context.hpp"
-#include "editor/gui/common/window.hpp"
 #include "editor/gui/properties/dialogs/add_property_dialog.hpp"
 #include "editor/gui/properties/dialogs/change_property_type_dialog.hpp"
 #include "editor/gui/properties/dialogs/rename_property_dialog.hpp"
+#include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 #include "property_table.hpp"
 
@@ -26,7 +26,7 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
   bool isVisible = Prefs::GetShowPropertiesDock();
 
-  Window dock{"Properties", flags, &isVisible};
+  Scoped::Window dock{"Properties", flags, &isVisible};
   gHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {

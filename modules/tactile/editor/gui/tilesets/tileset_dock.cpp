@@ -7,9 +7,9 @@
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/centered_button.hpp"
 #include "editor/gui/common/centered_text.hpp"
-#include "editor/gui/common/window.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/menus/map_menu.hpp"
+#include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 #include "tileset_tabs.hpp"
 
@@ -29,7 +29,7 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
   }
 
   bool visible = Prefs::GetShowTilesetDock();
-  Window window{"Tilesets", gWindowFlags, &visible};
+  Scoped::Window window{"Tilesets", gWindowFlags, &visible};
   if (window.IsOpen()) {
     mHasFocus = ImGui::IsWindowFocused();
     mWindowContainsMouse = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);

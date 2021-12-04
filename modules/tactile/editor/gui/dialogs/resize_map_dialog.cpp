@@ -5,7 +5,7 @@
 #include "editor/events/map_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/common/modal.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 namespace {
@@ -25,7 +25,7 @@ constinit usize gColCount = 0;
 void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Resize Map", gFlags}) {
+  if (Scoped::Modal modal{"Resize Map", gFlags}; modal.IsOpen()) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Rows:     ");
     ImGui::SameLine();

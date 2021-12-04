@@ -7,7 +7,6 @@
 #include "editor/events/command_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/checkbox.hpp"
-#include "editor/gui/common/modal.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/themes.hpp"
 #include "io/preferences.hpp"
@@ -187,7 +186,7 @@ void ApplySettings(entt::dispatcher& dispatcher)
 void UpdateSettingsDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  Modal modal{"Settings", gFlags, &gIsVisible};
+  Scoped::Modal modal{"Settings", gFlags, &gIsVisible};
   if (modal.IsOpen()) {
     if (Scoped::TabBar bar{"SettingsTabBar"}; bar.IsOpen()) {
       ShowBehaviorTab();

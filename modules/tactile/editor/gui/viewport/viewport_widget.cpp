@@ -4,7 +4,7 @@
 #include <imgui_internal.h>
 
 #include "document_tabs.hpp"
-#include "editor/gui/common/window.hpp"
+#include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "home_page_content.hpp"
 
@@ -31,11 +31,11 @@ void UpdateViewportWidget(const Model& model,
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
   RemoveTabBarFromNextWindow();
 
-  auto window = Window{"Viewport", gWindowFlags};
+  Scoped::Window window{"Viewport", gWindowFlags};
   if (window.IsOpen()) {
     ImGui::PopStyleVar();
     gHasFocus = ImGui::IsWindowFocused();
-    gMouseWithinWindow = Window::CurrentWindowContainsMouse();
+    gMouseWithinWindow = Scoped::Window::CurrentWindowContainsMouse();
 
     if (model.HasActiveDocument()) {
       UpdateDocumentTabs(model, dispatcher);

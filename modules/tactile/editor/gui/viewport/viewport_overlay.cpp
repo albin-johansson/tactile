@@ -6,7 +6,6 @@
 #include "core/components/layer.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "editor/gui/common/window.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 #include "viewport_cursor_info.hpp"
@@ -133,7 +132,7 @@ void UpdateViewportOverlay(const entt::registry& registry,
   PreparePositionAndPivot();
 
   ImGui::SetNextWindowBgAlpha(gOpacity);
-  auto window = Window{"##ViewportOverlay", gFlags};
+  Scoped::Window window{"##ViewportOverlay", gFlags};
 
   if (window.IsOpen()) {
     UpdateMouseCoordinateLabels(cursor);

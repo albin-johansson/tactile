@@ -4,9 +4,9 @@
 
 #include "editor/events/view_events.hpp"
 #include "editor/events/viewport_events.hpp"
-#include "editor/gui/common/menu.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/layout/dock_space.hpp"
+#include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "io/preferences.hpp"
@@ -15,8 +15,7 @@ namespace Tactile {
 
 void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  Menu menu{"View"};
-  if (menu) {
+  if (Scoped::Menu menu{"View"}; menu.IsOpen()) {
     const auto hasActiveDocument = model.HasActiveDocument();
     UpdateWidgetsMenu(hasActiveDocument);
 
@@ -101,8 +100,7 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
 void ViewMenu::UpdateWidgetsMenu(const bool hasActiveMap)
 {
-  Menu menu{"Widgets", hasActiveMap};
-  if (menu) {
+  if (Scoped::Menu menu{"Widgets", hasActiveMap}; menu.IsOpen()) {
     if (ImGui::MenuItem("Reset Layout")) {
       ResetLayout();
     }

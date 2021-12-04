@@ -5,7 +5,7 @@
 #include "editor/events/map_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/common/modal.hpp"
+#include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -32,7 +32,7 @@ void ResetState()
 void UpdateAddMapDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Add map", gFlags}) {
+  if (Scoped::Modal modal{"Add map", gFlags}; modal.IsOpen()) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Tile width:  ");
     ImGui::SameLine();

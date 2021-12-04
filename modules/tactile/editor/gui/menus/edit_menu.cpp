@@ -7,9 +7,9 @@
 #include "editor/events/command_events.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/tool_events.hpp"
-#include "editor/gui/common/menu.hpp"
 #include "editor/gui/dialogs/settings_dialog.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
@@ -17,8 +17,7 @@ namespace Tactile {
 
 void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  Menu menu{"Edit"};
-  if (menu) {
+  if (Scoped::Menu menu{"Edit"}; menu.IsOpen()) {
     const auto canUndo = model.CanUndo();
     const auto canRedo = model.CanRedo();
 

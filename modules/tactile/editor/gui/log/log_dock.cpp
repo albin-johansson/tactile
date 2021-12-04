@@ -7,7 +7,6 @@
 
 #include <imgui.h>
 
-#include "editor/gui/common/window.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
@@ -34,7 +33,7 @@ void UpdateLogDock()
 
   bool visible = Prefs::GetShowLogDock();
 
-  auto dock = Window{"Log", gWindowFlags, &visible};
+  Scoped::Window dock{"Log", gWindowFlags, &visible};
   gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.IsOpen()) {

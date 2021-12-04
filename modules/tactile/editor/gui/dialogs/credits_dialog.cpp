@@ -5,7 +5,6 @@
 #include <imgui.h>
 
 #include "editor/gui/alignment.hpp"
-#include "editor/gui/common/modal.hpp"
 #include "editor/gui/scoped.hpp"
 
 namespace Tactile {
@@ -36,7 +35,7 @@ void Row(const CStr lib, const CStr license)
 void UpdateCreditsDialog()
 {
   CenterNextWindowOnAppearance();
-  if (Modal modal{"Credits", gWindowFlags, &gIsVisible}; modal.IsOpen()) {
+  if (Scoped::Modal modal{"Credits", gWindowFlags, &gIsVisible}; modal.IsOpen()) {
     ImGui::TextUnformatted(
         "Tactile is developed using the following open-source libraries.");
     ImGui::Spacing();

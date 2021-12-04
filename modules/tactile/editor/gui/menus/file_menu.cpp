@@ -8,9 +8,9 @@
 #include "editor/events/map_events.hpp"
 #include "editor/events/quit_event.hpp"
 #include "editor/events/save_events.hpp"
-#include "editor/gui/common/menu.hpp"
 #include "editor/gui/dialogs/add_map_dialog.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "io/history.hpp"
@@ -19,8 +19,7 @@ namespace Tactile {
 
 void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  Menu menu{"File"};
-  if (menu) {
+  if (Scoped::Menu menu{"File"}; menu.IsOpen()) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
     mShowNewMapDialog =
@@ -86,8 +85,7 @@ void FileMenu::ShowOpenMapDialog()
 
 void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 {
-  Menu menu{TAC_ICON_HISTORY " Recent Files"};
-  if (menu) {
+  if (Scoped::Menu menu{TAC_ICON_HISTORY " Recent Files"}; menu.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
                         nullptr,
                         false,

@@ -3,7 +3,6 @@
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"
-#include "editor/gui/common/menu.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/tilesets/dialogs/tileset_dialog.hpp"
@@ -15,9 +14,8 @@ namespace Tactile {
 void MapMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   Scoped::Disable disable{!model.HasActiveDocument()};
-
-  Menu menu{"Map"};
-  if (menu) {
+  Scoped::Menu menu{"Map"};
+  if (menu.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Map Properties")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }

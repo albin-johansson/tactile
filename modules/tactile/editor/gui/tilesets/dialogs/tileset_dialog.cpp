@@ -12,7 +12,7 @@
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/common/modal.hpp"
+#include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -65,7 +65,7 @@ void ResetInputs()
 void UpdateTilesetDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{"Create tileset", gFlags}) {
+  if (Scoped::Modal modal{"Create tileset", gFlags}; modal.IsOpen()) {
     ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
     ImGui::Spacing();
 

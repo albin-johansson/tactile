@@ -9,7 +9,7 @@
 #include "core/utils/buffer_utils.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/common/modal.hpp"
+#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 namespace {
@@ -39,7 +39,7 @@ void UpdateRenameDialog(const NotNull<CStr> title,
   assert(callback);
 
   CenterNextWindowOnAppearance();
-  if (auto modal = Modal{title, gFlags}) {
+  if (Scoped::Modal modal{title, gFlags}; modal.IsOpen()) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Name: ");
 

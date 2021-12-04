@@ -167,4 +167,70 @@ class ListBox final {
   bool mOpen{};
 };
 
+class Menu final {
+ public:
+  explicit Menu(const CStr name, const bool enabled = true)
+      : mOpen{ImGui::BeginMenu(name, enabled)}
+  {}
+
+  ~Menu()
+  {
+    if (mOpen) {
+      ImGui::EndMenu();
+    }
+  }
+
+  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+
+ private:
+  bool mOpen{};
+};
+
+class Modal final {
+ public:
+  explicit Modal(const CStr name, const ImGuiWindowFlags flags = 0, bool* open = nullptr)
+      : mOpen{ImGui::BeginPopupModal(name, open, flags)}
+  {}
+
+  ~Modal()
+  {
+    if (mOpen) {
+      ImGui::EndPopup();
+    }
+  }
+
+  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+
+ private:
+  bool mOpen{};
+};
+
+class Window final {
+ public:
+  explicit Window(const CStr label,
+                  const ImGuiWindowFlags flags = 0,
+                  bool* open = nullptr)
+      : mOpen{ImGui::Begin(label, open, flags)}
+  {}
+
+  ~Window() { ImGui::End(); }
+
+  [[nodiscard]] auto IsFocused(const ImGuiFocusedFlags flags = 0) const -> bool
+  {
+    return mOpen && ImGui::IsWindowFocused(flags);
+  }
+
+  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+
+  [[nodiscard]] static auto CurrentWindowContainsMouse() -> bool
+  {
+    const auto min = ImGui::GetWindowContentRegionMin();
+    const auto max = ImGui::GetWindowContentRegionMax();
+    return ImGui::IsMouseHoveringRect(min, max);
+  }
+
+ private:
+  bool mOpen{};
+};
+
 }  // namespace Tactile::Scoped
