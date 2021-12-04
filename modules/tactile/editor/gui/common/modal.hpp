@@ -19,10 +19,9 @@ class Modal final {
     }
   }
 
-  explicit operator bool() const noexcept
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+
+  explicit operator bool() const noexcept { return mOpen; }
 
  private:
   bool mOpen{};
