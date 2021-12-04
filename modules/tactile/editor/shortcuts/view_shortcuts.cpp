@@ -25,7 +25,7 @@ auto CenterViewportShortcut::IsEnabled(const Model& model, const WidgetManager&)
 }
 
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier}
+    : AShortcut{cen::scan_code{SDLK_MINUS}, gPrimaryModifier}
 {}
 
 void DecreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
@@ -40,7 +40,7 @@ auto DecreaseViewportZoomShortcut::IsEnabled(const Model& model,
 }
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier}
+    : AShortcut{cen::scan_code{SDLK_PLUS}, gPrimaryModifier}
 {}
 
 void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
@@ -55,7 +55,7 @@ auto IncreaseViewportZoomShortcut::IsEnabled(const Model& model,
 }
 
 PanUpShortcut::PanUpShortcut()
-    : AShortcut{cen::scancodes::up, primary_modifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::up, gPrimaryModifier | KMOD_LSHIFT}
 {}
 
 void PanUpShortcut::Activate(entt::dispatcher& dispatcher)
@@ -69,7 +69,7 @@ auto PanUpShortcut::IsEnabled(const Model& model, const WidgetManager&) const ->
 }
 
 PanDownShortcut::PanDownShortcut()
-    : AShortcut{cen::scancodes::down, primary_modifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::down, gPrimaryModifier | KMOD_LSHIFT}
 {}
 
 void PanDownShortcut::Activate(entt::dispatcher& dispatcher)
@@ -83,7 +83,7 @@ auto PanDownShortcut::IsEnabled(const Model& model, const WidgetManager&) const 
 }
 
 PanLeftShortcut::PanLeftShortcut()
-    : AShortcut{cen::scancodes::left, primary_modifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::left, gPrimaryModifier | KMOD_LSHIFT}
 {}
 
 void PanLeftShortcut::Activate(entt::dispatcher& dispatcher)
@@ -97,7 +97,7 @@ auto PanLeftShortcut::IsEnabled(const Model& model, const WidgetManager&) const 
 }
 
 PanRightShortcut::PanRightShortcut()
-    : AShortcut{cen::scancodes::right, primary_modifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::right, gPrimaryModifier | KMOD_LSHIFT}
 {}
 
 void PanRightShortcut::Activate(entt::dispatcher& dispatcher)
@@ -110,7 +110,7 @@ auto PanRightShortcut::IsEnabled(const Model& model, const WidgetManager&) const
   return model.HasActiveDocument();
 }
 
-ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, primary_modifier}
+ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, gPrimaryModifier}
 {}
 
 void ToggleGridShortcut::Activate(entt::dispatcher&)

@@ -12,7 +12,7 @@
 
 namespace Tactile {
 
-UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, primary_modifier} {}
+UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, gPrimaryModifier} {}
 
 void UndoShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -24,7 +24,7 @@ auto UndoShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> 
   return model.CanUndo();
 }
 
-RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, primary_modifier} {}
+RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, gPrimaryModifier} {}
 
 void RedoShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -36,7 +36,7 @@ auto RedoShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> 
   return model.CanRedo();
 }
 
-AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, secondary_modifier} {}
+AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, gSecondaryModifier} {}
 
 void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -48,7 +48,7 @@ auto AddRowShortcut::IsEnabled(const Model& model, const WidgetManager&) const -
   return model.HasActiveDocument();
 }
 
-AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, secondary_modifier}
+AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, gSecondaryModifier}
 {}
 
 void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
@@ -62,7 +62,7 @@ auto AddColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) cons
 }
 
 RemoveRowShortcut::RemoveRowShortcut()
-    : AShortcut{cen::scancodes::r, secondary_modifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::r, gSecondaryModifier | KMOD_LSHIFT}
 {}
 
 void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
@@ -82,7 +82,7 @@ auto RemoveRowShortcut::IsEnabled(const Model& model, const WidgetManager&) cons
 }
 
 RemoveColumnShortcut::RemoveColumnShortcut()
-    : AShortcut{cen::scancodes::c, secondary_modifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::c, gSecondaryModifier | KMOD_LSHIFT}
 {}
 
 void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
@@ -102,7 +102,7 @@ auto RemoveColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) c
   }
 }
 
-AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, primary_modifier}
+AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, gPrimaryModifier}
 {}
 
 void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)

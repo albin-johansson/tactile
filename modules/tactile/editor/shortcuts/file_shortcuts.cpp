@@ -10,14 +10,14 @@
 
 namespace Tactile {
 
-NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, primary_modifier} {}
+NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, gPrimaryModifier} {}
 
 void NewMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ShowNewMapDialogEvent>();
 }
 
-OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, primary_modifier} {}
+OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, gPrimaryModifier} {}
 
 void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -25,7 +25,7 @@ void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
 }
 
 OpenSettingsShortcut::OpenSettingsShortcut()
-    : AShortcut{SDL_SCANCODE_COMMA, primary_modifier}
+    : AShortcut{SDL_SCANCODE_COMMA, gPrimaryModifier}
 {}
 
 void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
@@ -33,7 +33,7 @@ void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ShowSettingsEvent>();
 }
 
-SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, primary_modifier} {}
+SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, gPrimaryModifier} {}
 
 void SaveShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -46,7 +46,7 @@ auto SaveShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> 
 }
 
 SaveAsShortcut::SaveAsShortcut()
-    : AShortcut{cen::scancodes::s, primary_modifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::s, gPrimaryModifier | KMOD_LSHIFT}
 {}
 
 void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
