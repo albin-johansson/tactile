@@ -9,7 +9,6 @@
 #include "layout/dock_space.hpp"
 #include "log/log_dock.hpp"
 #include "properties/properties_dock.hpp"
-#include "toolbar/toolbar.hpp"
 #include "viewport/map_view.hpp"
 #include "viewport/viewport_widget.hpp"
 
