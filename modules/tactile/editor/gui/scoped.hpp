@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>  // forward
+
 #include <tactile_def.hpp>
 
 #include <imgui.h>
@@ -228,6 +230,33 @@ class Window final {
     const auto max = ImGui::GetWindowContentRegionMax();
     return ImGui::IsMouseHoveringRect(min, max);
   }
+
+ private:
+  bool mOpen{};
+};
+
+class TreeNode final {
+ public:
+  explicit TreeNode(const CStr id, const ImGuiTreeNodeFlags flags = 0)
+      : mOpen{ImGui::TreeNodeEx(id, flags)}
+  {}
+
+  template <typename... Args>
+  explicit TreeNode(const CStr id,
+                    const ImGuiTreeNodeFlags flags,
+                    const CStr fmt,
+                    Args&&... args)
+      : mOpen{ImGui::TreeNodeEx(id, flags, fmt, std::forward<Args>(args)...)}
+  {}
+
+  ~TreeNode()
+  {
+    if (mOpen) {
+      ImGui::TreePop();
+    }
+  }
+
+  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};

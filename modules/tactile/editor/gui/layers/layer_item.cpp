@@ -26,7 +26,8 @@ void GroupLayerItem(const entt::registry& registry,
                     const CStr name)
 {
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-  if (ImGui::TreeNodeEx("##GroupLayerTreeNode", flags, "%s", name)) {
+  if (Scoped::TreeNode treeNode{"##GroupLayerTreeNode", flags, "%s", name};
+      treeNode.IsOpen()) {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
     if (ImGui::IsItemActivated() ||
@@ -41,8 +42,6 @@ void GroupLayerItem(const entt::registry& registry,
       const auto& childLayer = registry.get<Layer>(child);
       LayerItem(registry, icons, dispatcher, child, childLayer);
     }
-
-    ImGui::TreePop();
   }
   else {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
