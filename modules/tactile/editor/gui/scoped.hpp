@@ -6,8 +6,6 @@
 
 namespace Tactile::Scoped {
 
-// TODO PushItemFlag/PopItemFlag()
-
 struct ID final {
   explicit ID(const void* ptr)
   {
