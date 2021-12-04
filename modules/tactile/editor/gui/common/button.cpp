@@ -3,7 +3,6 @@
 #include <cassert>  // assert
 
 #include <imgui.h>
-#include <imgui_internal.h>
 
 #include "editor/gui/scoped.hpp"
 
@@ -19,8 +18,6 @@ auto Button(const NotNull<CStr> text,
 
   const Scoped::Disable disable{!enabled};
 
-  ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !enabled);
-
   const auto result = ImGui::Button(text, {width, height});
 
   if (tooltip) {
@@ -29,8 +26,6 @@ auto Button(const NotNull<CStr> text,
       ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
     }
   }
-
-  ImGui::PopItemFlag();
 
   return result;
 }
