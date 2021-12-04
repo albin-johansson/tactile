@@ -15,8 +15,7 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-class BucketCmd final : public ACommand
-{
+class BucketCmd final : public ACommand {
  public:
   BucketCmd(Ref<entt::registry> registry, MapPosition origin, TileID replacement);
 

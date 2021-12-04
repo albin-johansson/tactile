@@ -11,8 +11,7 @@
 
 namespace Tactile {
 
-class SetObjectTagCmd final : public AObjectCmd
-{
+class SetObjectTagCmd final : public AObjectCmd {
  public:
   SetObjectTagCmd(Ref<entt::registry> registry, ObjectID id, std::string tag);
 

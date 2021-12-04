@@ -9,16 +9,14 @@
 
 namespace Tactile {
 
-NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, primary_modifier}
-{}
+NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, primary_modifier} {}
 
 void NewMapShortcut::Activate(entt::dispatcher&)
 {
   ShowAddMapDialog();
 }
 
-OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, primary_modifier}
-{}
+OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, primary_modifier} {}
 
 void OpenMapShortcut::Activate(entt::dispatcher&)
 {
@@ -34,8 +32,7 @@ void OpenSettingsShortcut::Activate(entt::dispatcher&)
   ShowSettingsDialog();
 }
 
-SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, primary_modifier}
-{}
+SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, primary_modifier} {}
 
 void SaveShortcut::Activate(entt::dispatcher& dispatcher)
 {

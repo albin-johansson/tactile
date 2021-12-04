@@ -20,8 +20,7 @@ namespace {
 
 constexpr uint32 gPreviewOpacity = 100;  // [0, 255]
 
-struct PreviewInfo final
-{
+struct PreviewInfo final {
   ImTextureID texture_id{};
 
   ImVec2 map_pos{};

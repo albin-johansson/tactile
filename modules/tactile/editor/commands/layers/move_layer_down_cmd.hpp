@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-class MoveLayerDownCmd final : public ACommand
-{
+class MoveLayerDownCmd final : public ACommand {
  public:
   MoveLayerDownCmd(Ref<entt::registry> registry, LayerID id);
 

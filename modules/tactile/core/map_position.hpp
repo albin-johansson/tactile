@@ -16,8 +16,7 @@ namespace Tactile {
  *
  * \headerfile map_position.hpp
  */
-class MapPosition final
-{
+class MapPosition final {
  public:
   /// Creates a map position that represents (0, 0).
   constexpr MapPosition() noexcept = default;

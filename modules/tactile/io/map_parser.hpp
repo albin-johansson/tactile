@@ -17,8 +17,7 @@ namespace Tactile {
  * \see `CreateDocumentFromIR()`
  * \see `GetCause(ParseError)`
  */
-class MapParser final
-{
+class MapParser final {
  public:
   /**
    * \brief Parsers the map file at the specified path.

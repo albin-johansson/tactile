@@ -13,8 +13,7 @@ namespace Tactile {
 struct Object;
 struct PropertyContext;
 
-class AObjectCmd : public ACommand
-{
+class AObjectCmd : public ACommand {
  public:
   AObjectCmd(std::string name, Ref<entt::registry> registry, ObjectID id);
 

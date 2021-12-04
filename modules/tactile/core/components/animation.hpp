@@ -14,8 +14,7 @@ namespace Tactile {
  *
  * \see Animation
  */
-struct AnimationFrame final
-{
+struct AnimationFrame final {
   TileID tile{};
   cen::milliseconds<uint32> duration{};
 };
@@ -25,8 +24,7 @@ struct AnimationFrame final
  *
  * \see AnimationFrame
  */
-struct Animation final
-{
+struct Animation final {
   usize index{};                                 ///< Index of the current frame.
   cen::milliseconds<uint32> last_update_time{};  ///< When a frame was last changed.
   std::vector<entt::entity> frames;              ///< The associated frames.

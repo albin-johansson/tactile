@@ -11,8 +11,7 @@
 
 namespace Tactile {
 
-class RenameLayerCmd final : public ACommand
-{
+class RenameLayerCmd final : public ACommand {
  public:
   RenameLayerCmd(Ref<entt::registry> registry, LayerID id, std::string name);
 

@@ -36,8 +36,7 @@ enum class Theme
   Ash = 8
 };
 
-struct Preferences final
-{
+struct Preferences final {
   inline static constexpr uint64 embed_tilesets = 1u << 0u;
   inline static constexpr uint64 indent_output = 1u << 1u;
   inline static constexpr uint64 fold_tile_data = 1u << 2u;

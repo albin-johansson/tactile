@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-class AddRowCmd final : public ACommand
-{
+class AddRowCmd final : public ACommand {
  public:
   explicit AddRowCmd(Ref<entt::registry> registry);
 

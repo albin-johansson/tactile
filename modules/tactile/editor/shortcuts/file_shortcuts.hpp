@@ -4,29 +4,25 @@
 
 namespace Tactile {
 
-struct NewMapShortcut final : AShortcut
-{
+struct NewMapShortcut final : AShortcut {
   NewMapShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
 };
 
-struct OpenMapShortcut final : AShortcut
-{
+struct OpenMapShortcut final : AShortcut {
   OpenMapShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
 };
 
-struct OpenSettingsShortcut final : AShortcut
-{
+struct OpenSettingsShortcut final : AShortcut {
   OpenSettingsShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
 };
 
-struct SaveShortcut final : AShortcut
-{
+struct SaveShortcut final : AShortcut {
   SaveShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -35,8 +31,7 @@ struct SaveShortcut final : AShortcut
       -> bool override;
 };
 
-struct SaveAsShortcut final : AShortcut
-{
+struct SaveAsShortcut final : AShortcut {
   SaveAsShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;

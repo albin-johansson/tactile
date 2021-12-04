@@ -17,8 +17,8 @@ namespace Tactile::IO {
  * \note This function is not intended to be called explicitly in client code, use
  * `CreateMap()` instead in order to avoid having to manually manage memory.
  *
- * \return a pointer to the created `Map`, it is your responsibility to free the associated
- * memory if you call this function.
+ * \return a pointer to the created `Map`, it is your responsibility to free the
+ * associated memory if you call this function.
  *
  * \see `DeleteMap()`
  * \see `CreateMap()`
@@ -48,8 +48,7 @@ void DeleteMap(Map* map) noexcept;
  *
  * \see `MapPtr`
  */
-struct TACTILE_IO_API MapDeleter final
-{
+struct TACTILE_IO_API MapDeleter final {
   void operator()(Map* map) noexcept
   {
     DeleteMap(map);

@@ -6,8 +6,7 @@
 
 namespace Tactile {
 
-class Menu final
-{
+class Menu final {
  public:
   explicit Menu(const CStr name, const bool enabled = true)
       : mOpen{ImGui::BeginMenu(name, enabled)}

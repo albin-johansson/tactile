@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-class SetLayerOpacityCmd final : public ACommand
-{
+class SetLayerOpacityCmd final : public ACommand {
  public:
   SetLayerOpacityCmd(Ref<entt::registry> registry, LayerID id, float opacity);
 

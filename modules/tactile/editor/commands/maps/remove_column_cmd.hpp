@@ -10,8 +10,7 @@
 
 namespace Tactile {
 
-class RemoveColumnCmd final : public ACommand
-{
+class RemoveColumnCmd final : public ACommand {
  public:
   explicit RemoveColumnCmd(Ref<entt::registry> registry);
 

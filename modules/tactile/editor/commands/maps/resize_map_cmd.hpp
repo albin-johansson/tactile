@@ -10,8 +10,7 @@
 
 namespace Tactile {
 
-class ResizeMapCmd final : public ACommand
-{
+class ResizeMapCmd final : public ACommand {
  public:
   ResizeMapCmd(Ref<entt::registry> registry, usize nRows, usize nCols);
 

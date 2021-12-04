@@ -10,8 +10,7 @@
 namespace Tactile {
 
 /* This class handles the configuration of aspects such as windows and OpenGL contexts */
-class ApplicationConfiguration final
-{
+class ApplicationConfiguration final {
  public:
   ApplicationConfiguration();
 

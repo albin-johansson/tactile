@@ -12,8 +12,7 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-class MoveObjectCmd final : public AObjectCmd
-{
+class MoveObjectCmd final : public AObjectCmd {
  public:
   MoveObjectCmd(Ref<entt::registry> registry,
                 ObjectID id,

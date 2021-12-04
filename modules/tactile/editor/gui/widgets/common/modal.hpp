@@ -6,8 +6,7 @@
 
 namespace Tactile {
 
-class Modal final
-{
+class Modal final {
  public:
   explicit Modal(const CStr name, const ImGuiWindowFlags flags = 0, bool* open = nullptr)
       : mOpen{ImGui::BeginPopupModal(name, open, flags)}

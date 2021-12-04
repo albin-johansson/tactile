@@ -6,8 +6,7 @@ namespace Tactile {
 
 /// \brief Represents a region of a grid.
 /// \ingroup core
-struct Region final
-{
+struct Region final {
   MapPosition begin;  ///< The top-left position.
   MapPosition end;    ///< The bottom-right position.
 

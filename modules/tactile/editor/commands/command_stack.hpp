@@ -19,8 +19,7 @@ namespace Tactile {
 template <typename Base, typename Derived>
 using DerivedFrom = std::enable_if_t<std::is_base_of_v<Base, Derived>, int>;
 
-class CommandStack final
-{
+class CommandStack final {
  public:
   CommandStack();
 

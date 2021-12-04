@@ -11,8 +11,7 @@
 
 namespace Tactile {
 
-UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, primary_modifier}
-{}
+UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, primary_modifier} {}
 
 void UndoShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -24,8 +23,7 @@ auto UndoShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> 
   return model.CanUndo();
 }
 
-RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, primary_modifier}
-{}
+RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, primary_modifier} {}
 
 void RedoShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -37,8 +35,7 @@ auto RedoShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> 
   return model.CanRedo();
 }
 
-AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, secondary_modifier}
-{}
+AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, secondary_modifier} {}
 
 void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -117,8 +114,7 @@ auto AddTilesetShortcut::IsEnabled(const Model& model, const WidgetManager&) con
   return model.HasActiveDocument();
 }
 
-EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b}
-{}
+EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}
 
 void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -131,8 +127,7 @@ auto EnableBucketShortcut::IsEnabled(const Model& model,
   return model.HasActiveDocument() && widgets.IsEditorFocused();
 }
 
-EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e}
-{}
+EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
 
 void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 {
@@ -145,8 +140,7 @@ auto EnableEraserShortcut::IsEnabled(const Model& model,
   return model.HasActiveDocument() && widgets.IsEditorFocused();
 }
 
-EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s}
-{}
+EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
 
 void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
 {

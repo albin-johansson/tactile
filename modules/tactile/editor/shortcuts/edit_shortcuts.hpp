@@ -4,8 +4,7 @@
 
 namespace Tactile {
 
-struct UndoShortcut final : AShortcut
-{
+struct UndoShortcut final : AShortcut {
   UndoShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -14,8 +13,7 @@ struct UndoShortcut final : AShortcut
       -> bool override;
 };
 
-struct RedoShortcut final : AShortcut
-{
+struct RedoShortcut final : AShortcut {
   RedoShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -24,8 +22,7 @@ struct RedoShortcut final : AShortcut
       -> bool override;
 };
 
-struct AddRowShortcut final : AShortcut
-{
+struct AddRowShortcut final : AShortcut {
   AddRowShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -34,8 +31,7 @@ struct AddRowShortcut final : AShortcut
       -> bool override;
 };
 
-struct AddColumnShortcut final : AShortcut
-{
+struct AddColumnShortcut final : AShortcut {
   AddColumnShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -44,8 +40,7 @@ struct AddColumnShortcut final : AShortcut
       -> bool override;
 };
 
-struct RemoveRowShortcut final : AShortcut
-{
+struct RemoveRowShortcut final : AShortcut {
   RemoveRowShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -54,8 +49,7 @@ struct RemoveRowShortcut final : AShortcut
       -> bool override;
 };
 
-struct RemoveColumnShortcut final : AShortcut
-{
+struct RemoveColumnShortcut final : AShortcut {
   RemoveColumnShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -64,8 +58,7 @@ struct RemoveColumnShortcut final : AShortcut
       -> bool override;
 };
 
-struct AddTilesetShortcut final : AShortcut
-{
+struct AddTilesetShortcut final : AShortcut {
   AddTilesetShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -74,8 +67,7 @@ struct AddTilesetShortcut final : AShortcut
       -> bool override;
 };
 
-struct EnableBucketShortcut final : AShortcut
-{
+struct EnableBucketShortcut final : AShortcut {
   EnableBucketShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -84,8 +76,7 @@ struct EnableBucketShortcut final : AShortcut
       -> bool override;
 };
 
-struct EnableEraserShortcut final : AShortcut
-{
+struct EnableEraserShortcut final : AShortcut {
   EnableEraserShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -94,8 +85,7 @@ struct EnableEraserShortcut final : AShortcut
       -> bool override;
 };
 
-struct EnableStampShortcut final : AShortcut
-{
+struct EnableStampShortcut final : AShortcut {
   EnableStampShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;

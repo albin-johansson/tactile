@@ -11,8 +11,7 @@
 
 namespace Tactile {
 
-class RenamePropertyCmd final : public ACommand
-{
+class RenamePropertyCmd final : public ACommand {
  public:
   RenamePropertyCmd(Ref<entt::registry> registry,
                     std::string oldName,

@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-class SetObjectVisibilityCmd final : public AObjectCmd
-{
+class SetObjectVisibilityCmd final : public AObjectCmd {
  public:
   SetObjectVisibilityCmd(Ref<entt::registry> registry, ObjectID id, bool visible);
 

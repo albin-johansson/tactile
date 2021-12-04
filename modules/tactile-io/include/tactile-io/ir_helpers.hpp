@@ -1,7 +1,7 @@
 #ifndef TACTILE_IO_IR_HELPERS_HPP_
 #define TACTILE_IO_IR_HELPERS_HPP_
 
-#include <cstring>   // strcmp
+#include <cstring>  // strcmp
 
 #include <tactile_stdlib.hpp>
 

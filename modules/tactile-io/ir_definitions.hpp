@@ -22,8 +22,7 @@ enum ObjectRef : int32
 {};
 
 /// \brief Intermediate representation of a property.
-struct Property final
-{
+struct Property final {
   using Value = std::
       variant<std::string, int32, float, bool, Color, std::filesystem::path, ObjectRef>;
 
@@ -32,8 +31,7 @@ struct Property final
 };
 
 /// \brief Intermediate representation of a map object.
-struct Object final
-{
+struct Object final {
   int32 id{};                              ///< Unique object identifier.
   float x{};                               ///< Logical x-coordinate.
   float y{};                               ///< Logical y-coordinate.
@@ -47,15 +45,13 @@ struct Object final
 };
 
 /// \brief Intermediate representation of a tile animation frame.
-struct AnimationFrame final
-{
+struct AnimationFrame final {
   int32 tile{};      ///< Local ID of the tile that should be displayed during the frame.
   int32 duration{};  ///< Frame duration in milliseconds.
 };
 
 /// \brief Intermediate representation of tile data.
-struct Tile final
-{
+struct Tile final {
   int32 id{};                             ///< Local ID of the associated tile.
   std::vector<AnimationFrame> animation;  ///< Optional animation frames.
   std::vector<Object> objects;            ///< Optional collection of contained objects.
@@ -63,8 +59,7 @@ struct Tile final
 };
 
 /// \brief Intermediate representation of a tileset.
-struct Tileset final
-{
+struct Tileset final {
   int32 first_id{};                           ///< The first global tile ID.
   int32 tile_width{};                         ///< Logical tile width.
   int32 tile_height{};                        ///< Logical tile height.
@@ -79,30 +74,26 @@ struct Tileset final
 };
 
 /// \brief Intermediate representation of tile layer data.
-struct TileLayer final
-{
+struct TileLayer final {
   usize row_count{};  ///< Total amount of rows.
   usize col_count{};  ///< Total amount of columns.
   TileMatrix tiles;   ///< The associated tile data.
 };
 
 /// \brief Intermediate representation of object layer data.
-struct ObjectLayer final
-{
+struct ObjectLayer final {
   std::vector<Object> objects;  ///< The associated objects.
 };
 
 struct Layer;
 
 /// \brief Intermediate representation of group layer data.
-struct GroupLayer final
-{
+struct GroupLayer final {
   std::vector<std::unique_ptr<Layer>> layers;  ///< Child layers in the group.
 };
 
 /// \brief Intermediate representation of a layer.
-struct Layer final
-{
+struct Layer final {
   using LayerContent = std::variant<TileLayer, ObjectLayer, GroupLayer>;
 
   int32 id{};                        ///< Unique layer identifier.
@@ -116,8 +107,7 @@ struct Layer final
 };
 
 /// \brief Intermediate representation of a map.
-struct Map final
-{
+struct Map final {
   std::filesystem::path absolute_path;  ///< Absolute path of the map file.
   int32 next_layer_id{};                ///< The next available layer ID.
   int32 next_object_id{};               ///< The next available object ID.

@@ -6,8 +6,7 @@
 
 namespace Tactile {
 
-struct Parent final
-{
+struct Parent final {
   entt::entity entity{entt::null};
 };
 

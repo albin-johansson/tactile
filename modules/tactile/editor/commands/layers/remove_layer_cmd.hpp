@@ -13,8 +13,7 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-class RemoveLayerCmd final : public ACommand
-{
+class RemoveLayerCmd final : public ACommand {
  public:
   RemoveLayerCmd(Ref<entt::registry> registry, LayerID id);
 

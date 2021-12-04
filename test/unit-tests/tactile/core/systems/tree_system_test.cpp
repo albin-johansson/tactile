@@ -17,8 +17,7 @@ constexpr entt::entity null_entity = entt::null;
 //   |__c
 //   |__f
 // > e
-struct SimpleTreeConfig final
-{
+struct SimpleTreeConfig final {
   entt::registry registry;
   entt::entity a{entt::null};
   entt::entity b{entt::null};

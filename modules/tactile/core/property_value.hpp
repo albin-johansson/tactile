@@ -29,8 +29,7 @@ concept IsPropertyType = std::same_as<T, std::string> ||
 
 // clang-format on
 
-class PropertyValue final
-{
+class PropertyValue final {
  public:
   using string_type = std::string;
   using integer_type = int;

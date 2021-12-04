@@ -27,8 +27,7 @@ struct Map;
 using CPathStr = const std::filesystem::path::value_type*;
 
 /// \brief A simple representation of an 8-bit RGBA color.
-struct Color final
-{
+struct Color final {
   uint8 red{};
   uint8 green{};
   uint8 blue{};

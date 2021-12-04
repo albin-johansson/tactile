@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-class TextureManager final
-{
+class TextureManager final {
  public:
   ~TextureManager();
 

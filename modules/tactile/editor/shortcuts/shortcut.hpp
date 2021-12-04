@@ -11,8 +11,7 @@ namespace Tactile {
 class Model;
 class WidgetManager;
 
-class AShortcut
-{
+class AShortcut {
  public:
   explicit AShortcut(const cen::scan_code key, const uint16 modifiers = KMOD_NONE)
       : mKey{key}

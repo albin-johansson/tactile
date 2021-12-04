@@ -15,8 +15,7 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
-class Model final
-{
+class Model final {
  public:
   // Store documents on the heap to ensure stability, which is important for commands
   using document_map = VectorMap<MapID, std::unique_ptr<Document>>;

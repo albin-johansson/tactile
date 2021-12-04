@@ -11,8 +11,7 @@
 
 namespace Tactile {
 
-class AddTilesetCmd final : public ACommand
-{
+class AddTilesetCmd final : public ACommand {
  public:
   AddTilesetCmd(Ref<entt::registry> registry,
                 Texture texture,

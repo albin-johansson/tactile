@@ -12,8 +12,7 @@
 
 namespace Tactile {
 
-class ChangePropertyTypeCmd final : public ACommand
-{
+class ChangePropertyTypeCmd final : public ACommand {
  public:
   ChangePropertyTypeCmd(Ref<entt::registry> registry,
                         std::string name,

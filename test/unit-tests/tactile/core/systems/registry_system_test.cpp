@@ -1,3 +1,5 @@
+#include "core/systems/registry_system.hpp"
+
 #include <gtest/gtest.h>
 
 #include "core/components/layer.hpp"
@@ -7,7 +9,6 @@
 #include "core/components/tool.hpp"
 #include "core/map.hpp"
 #include "core/mouse_pos.hpp"
-#include "core/systems/registry_system.hpp"
 #include "core/viewport.hpp"
 
 using namespace Tactile;

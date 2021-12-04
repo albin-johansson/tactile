@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-class SetLayerVisibilityCmd final : public ACommand
-{
+class SetLayerVisibilityCmd final : public ACommand {
  public:
   SetLayerVisibilityCmd(Ref<entt::registry> registry, LayerID id, bool visible);
 

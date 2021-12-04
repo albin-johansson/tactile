@@ -10,11 +10,9 @@ using namespace Tactile;
 
 namespace {
 
-class Foo : public ACommand
-{
+class Foo : public ACommand {
  public:
-  Foo() : ACommand{"Foo"}
-  {}
+  Foo() : ACommand{"Foo"} {}
 
   void Undo() override
   {
@@ -32,11 +30,9 @@ class Foo : public ACommand
   }
 };
 
-class Bar : public ACommand
-{
+class Bar : public ACommand {
  public:
-  Bar() : ACommand{"Bar"}
-  {}
+  Bar() : ACommand{"Bar"} {}
 
   void Undo() override
   {

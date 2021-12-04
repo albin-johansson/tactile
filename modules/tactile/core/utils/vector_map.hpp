@@ -12,8 +12,7 @@
 namespace Tactile {
 
 template <typename K, typename V>
-class VectorMap final
-{
+class VectorMap final {
  public:
   using key_type = K;
   using mapped_type = V;

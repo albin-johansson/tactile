@@ -2,8 +2,7 @@
 
 namespace Tactile {
 
-struct UvTileSize final
-{
+struct UvTileSize final {
   float width{};
   float height{};
 };

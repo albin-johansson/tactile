@@ -7,8 +7,7 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-class ACommand
-{
+class ACommand {
  public:
   ACommand() = default;
 

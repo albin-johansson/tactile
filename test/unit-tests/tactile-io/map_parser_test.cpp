@@ -122,8 +122,7 @@ inline const auto maps = testing::Values(
 );
 // clang-format on
 
-class MapParserTest : public testing::TestWithParam<PathErrorPair>
-{};
+class MapParserTest : public testing::TestWithParam<PathErrorPair> {};
 
 TEST_P(MapParserTest, MapParser)
 {

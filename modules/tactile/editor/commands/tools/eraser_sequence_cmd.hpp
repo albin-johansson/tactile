@@ -13,8 +13,7 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-class EraserSequenceCmd final : public ACommand
-{
+class EraserSequenceCmd final : public ACommand {
  public:
   EraserSequenceCmd(Ref<entt::registry> registry, TileCache&& oldState);
 

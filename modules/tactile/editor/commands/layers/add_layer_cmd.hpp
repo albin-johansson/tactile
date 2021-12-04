@@ -13,8 +13,7 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-class AddLayerCmd final : public ACommand
-{
+class AddLayerCmd final : public ACommand {
  public:
   AddLayerCmd(Ref<entt::registry> registry, LayerType type);
 

@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-class DuplicateLayerCmd final : public ACommand
-{
+class DuplicateLayerCmd final : public ACommand {
  public:
   DuplicateLayerCmd(Ref<entt::registry> registry, LayerID id);
 

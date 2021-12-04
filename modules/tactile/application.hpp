@@ -24,8 +24,7 @@ namespace Tactile {
 
 class ApplicationConfiguration;
 
-class Application final
-{
+class Application final {
   friend void SubscribeToEvents(Application*, entt::dispatcher&);
 
  public:

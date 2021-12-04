@@ -4,8 +4,7 @@
 
 namespace Tactile {
 
-struct ActiveTool final
-{
+struct ActiveTool final {
   ToolType tool{ToolType::None};
 };
 

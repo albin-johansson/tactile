@@ -80,8 +80,7 @@ namespace Tactile {
 /// \name Icon API
 /// \{
 
-class Icons final
-{
+class Icons final {
  public:
   explicit Icons(TextureManager& textures);
 

@@ -10,8 +10,7 @@
 
 namespace Tactile {
 
-class RemoveTilesetCmd final : public ACommand
-{
+class RemoveTilesetCmd final : public ACommand {
  public:
   RemoveTilesetCmd(Ref<entt::registry> registry, TilesetID id);
 

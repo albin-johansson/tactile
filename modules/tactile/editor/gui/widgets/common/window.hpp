@@ -6,8 +6,7 @@
 
 namespace Tactile {
 
-class Window final
-{
+class Window final {
  public:
   explicit Window(const CStr label,
                   const ImGuiWindowFlags flags = 0,

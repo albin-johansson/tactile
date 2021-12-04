@@ -10,8 +10,7 @@
 namespace Tactile::Sys {
 namespace {
 
-[[nodiscard]] auto IsUsable(const entt::registry& registry)
-    -> bool
+[[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
 {
   return IsObjectLayerActive(registry);
 }

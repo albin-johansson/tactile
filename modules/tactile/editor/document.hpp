@@ -8,8 +8,7 @@
 
 namespace Tactile {
 
-struct Document final
-{
+struct Document final {
   entt::registry registry;
   CommandStack commands;
   std::filesystem::path path;

@@ -10,8 +10,7 @@
 namespace Tactile {
 
 template <usize Capacity = 128>
-class FormattedString final
-{
+class FormattedString final {
  public:
   template <typename... Args>
   explicit FormattedString(const std::string_view fmt, const Args&... args)

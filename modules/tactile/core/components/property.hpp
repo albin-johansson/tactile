@@ -6,8 +6,7 @@
 
 namespace Tactile {
 
-struct Property final
-{
+struct Property final {
   std::string name;
   PropertyValue value;
 };

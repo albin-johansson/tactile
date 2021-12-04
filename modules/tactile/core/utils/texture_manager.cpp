@@ -11,8 +11,7 @@
 namespace Tactile {
 namespace {
 
-struct TextureDataDeleter final
-{
+struct TextureDataDeleter final {
   void operator()(uchar* data) noexcept
   {
     stbi_image_free(data);

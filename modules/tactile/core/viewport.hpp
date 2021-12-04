@@ -2,8 +2,7 @@
 
 namespace Tactile {
 
-struct Viewport final
-{
+struct Viewport final {
   float x_offset{};
   float y_offset{};
   float tile_width{};

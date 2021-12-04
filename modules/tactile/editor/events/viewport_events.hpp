@@ -7,27 +7,21 @@ namespace Tactile {
 /// \addtogroup events
 /// \{
 
-struct CenterViewportEvent final
-{};
+struct CenterViewportEvent final {};
 
-struct ResetZoomEvent final
-{};
+struct ResetZoomEvent final {};
 
-struct DecreaseZoomEvent final
-{};
+struct DecreaseZoomEvent final {};
 
-struct IncreaseZoomEvent final
-{};
+struct IncreaseZoomEvent final {};
 
-struct OffsetViewportEvent final
-{
+struct OffsetViewportEvent final {
   float dx{};
   float dy{};
 };
 
 /* Offset a viewport that cannot exceed the bounds of the shown content */
-struct OffsetBoundViewportEvent final
-{
+struct OffsetBoundViewportEvent final {
   entt::entity entity{entt::null};
   float dx{};
   float dy{};
@@ -35,17 +29,13 @@ struct OffsetBoundViewportEvent final
   float view_height{};
 };
 
-struct PanUpEvent final
-{};
+struct PanUpEvent final {};
 
-struct PanDownEvent final
-{};
+struct PanDownEvent final {};
 
-struct PanLeftEvent final
-{};
+struct PanLeftEvent final {};
 
-struct PanRightEvent final
-{};
+struct PanRightEvent final {};
 
 /// \} End of group events
 

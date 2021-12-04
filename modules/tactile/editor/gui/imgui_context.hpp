@@ -9,8 +9,7 @@ namespace Tactile {
  *
  * \ingroup gui
  */
-class ImGuiContext final
-{
+class ImGuiContext final {
  public:
   ImGuiContext(cen::window& window, cen::gl_context& context);
 

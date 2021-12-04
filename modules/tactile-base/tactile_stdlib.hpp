@@ -22,13 +22,11 @@ using Integral = std::enable_if_t<std::is_integral_v<T>, int>;
 template <typename T>
 using Floating = std::enable_if_t<std::is_floating_point_v<T>, int>;
 
-class TactileError final : public std::exception
-{
+class TactileError final : public std::exception {
  public:
   TactileError() noexcept = default;
 
-  explicit TactileError(const CStr what) : mWhat{what ? what : "N/A"}
-  {}
+  explicit TactileError(const CStr what) : mWhat{what ? what : "N/A"} {}
 
   [[nodiscard]] auto what() const noexcept -> CStr override
   {

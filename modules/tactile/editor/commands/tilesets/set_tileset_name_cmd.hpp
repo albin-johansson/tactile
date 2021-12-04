@@ -11,8 +11,7 @@
 
 namespace Tactile {
 
-class SetTilesetNameCmd final : public ACommand
-{
+class SetTilesetNameCmd final : public ACommand {
  public:
   SetTilesetNameCmd(Ref<entt::registry> registry, TilesetID id, std::string name);
 

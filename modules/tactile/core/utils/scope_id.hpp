@@ -6,8 +6,7 @@
 
 namespace Tactile {
 
-struct ScopeID final
-{
+struct ScopeID final {
   explicit ScopeID(const void* ptr)
   {
     ImGui::PushID(ptr);

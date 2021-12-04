@@ -2,8 +2,7 @@
 
 namespace Tactile {
 
-class ProtobufContext final
-{
+class ProtobufContext final {
  public:
   ProtobufContext();
 

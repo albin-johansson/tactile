@@ -13,8 +13,7 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-class StampSequenceCmd final : public ACommand
-{
+class StampSequenceCmd final : public ACommand {
  public:
   StampSequenceCmd(Ref<entt::registry> registry,
                    TileCache&& oldState,
