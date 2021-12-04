@@ -67,10 +67,7 @@ class PropertyValue final {
    *
    * \post `HasValue()` will return `false` after this function is invoked.
    */
-  void Reset()
-  {
-    mValue.emplace<std::monostate>();
-  }
+  void Reset() { mValue.emplace<std::monostate>(); }
 
   void ResetToDefault(PropertyType type)
   {
@@ -127,10 +124,7 @@ class PropertyValue final {
    *
    * \return the stored color.
    */
-  [[nodiscard]] auto AsString() const -> const string_type&
-  {
-    return As<string_type>();
-  }
+  [[nodiscard]] auto AsString() const -> const string_type& { return As<string_type>(); }
 
   /**
    * \brief Returns the stored integer value.
@@ -139,10 +133,7 @@ class PropertyValue final {
    *
    * \return the stored integer.
    */
-  [[nodiscard]] auto AsInt() const -> integer_type
-  {
-    return As<integer_type>();
-  }
+  [[nodiscard]] auto AsInt() const -> integer_type { return As<integer_type>(); }
 
   /**
    * \brief Returns the stored float value.
@@ -151,10 +142,7 @@ class PropertyValue final {
    *
    * \return the stored floating-point value.
    */
-  [[nodiscard]] auto AsFloat() const -> float_type
-  {
-    return As<float_type>();
-  }
+  [[nodiscard]] auto AsFloat() const -> float_type { return As<float_type>(); }
 
   /**
    * \brief Returns the stored boolean value.
@@ -163,10 +151,7 @@ class PropertyValue final {
    *
    * \return the stored boolean value.
    */
-  [[nodiscard]] auto AsBool() const -> bool
-  {
-    return As<bool>();
-  }
+  [[nodiscard]] auto AsBool() const -> bool { return As<bool>(); }
 
   /**
    * \brief Returns the stored file path value.
@@ -175,10 +160,7 @@ class PropertyValue final {
    *
    * \return the stored file path value.
    */
-  [[nodiscard]] auto AsFile() const -> const file_type&
-  {
-    return As<file_type>();
-  }
+  [[nodiscard]] auto AsFile() const -> const file_type& { return As<file_type>(); }
 
   /**
    * \brief Returns the stored object ID value.
@@ -187,10 +169,7 @@ class PropertyValue final {
    *
    * \return the stored object ID value.
    */
-  [[nodiscard]] auto AsObject() const -> ObjectRef
-  {
-    return As<ObjectRef>();
-  }
+  [[nodiscard]] auto AsObject() const -> ObjectRef { return As<ObjectRef>(); }
 
   /**
    * \brief Returns the stored color value.
@@ -199,10 +178,7 @@ class PropertyValue final {
    *
    * \return the stored color value.
    */
-  [[nodiscard]] auto AsColor() const -> const color_type&
-  {
-    return As<color_type>();
-  }
+  [[nodiscard]] auto AsColor() const -> const color_type& { return As<color_type>(); }
 
   [[nodiscard]] auto TryAsString() const noexcept -> const string_type*
   {
@@ -219,10 +195,7 @@ class PropertyValue final {
     return TryAs<float_type>();
   }
 
-  [[nodiscard]] auto TryAsBool() const noexcept -> const bool*
-  {
-    return TryAs<bool>();
-  }
+  [[nodiscard]] auto TryAsBool() const noexcept -> const bool* { return TryAs<bool>(); }
 
   [[nodiscard]] auto TryAsFile() const noexcept -> const file_type*
   {

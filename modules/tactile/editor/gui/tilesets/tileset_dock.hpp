@@ -12,15 +12,9 @@ class TilesetDock final {
  public:
   void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
 
-  [[nodiscard]] auto IsFocused() const noexcept -> bool
-  {
-    return mHasFocus;
-  }
+  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
 
-  [[nodiscard]] auto IsHovered() const noexcept -> bool
-  {
-    return mWindowContainsMouse;
-  }
+  [[nodiscard]] auto IsHovered() const noexcept -> bool { return mWindowContainsMouse; }
 
   [[nodiscard]] auto GetTilesetView() const -> const TilesetView&;
 

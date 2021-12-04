@@ -23,10 +23,7 @@ class BucketCmd final : public ACommand {
 
   void Redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
-  {
-    return CommandId::Bucket;
-  }
+  [[nodiscard]] auto GetId() const noexcept -> int override { return CommandId::Bucket; }
 
  private:
   Ref<entt::registry> mRegistry;

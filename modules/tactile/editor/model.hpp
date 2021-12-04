@@ -37,10 +37,7 @@ class Model final {
 
   [[nodiscard]] auto HasDocumentWithPath(const std::filesystem::path& path) const -> bool;
 
-  [[nodiscard]] auto GetActiveMapId() const -> Maybe<MapID>
-  {
-    return mActiveMap;
-  }
+  [[nodiscard]] auto GetActiveMapId() const -> Maybe<MapID> { return mActiveMap; }
 
   [[nodiscard]] auto HasActiveDocument() const -> bool;
 
@@ -57,10 +54,7 @@ class Model final {
     return mDocuments.begin();
   }
 
-  [[nodiscard]] auto end() const noexcept -> const_iterator
-  {
-    return mDocuments.end();
-  }
+  [[nodiscard]] auto end() const noexcept -> const_iterator { return mDocuments.end(); }
 
   [[nodiscard]] auto IsStampActive() const -> bool;
 

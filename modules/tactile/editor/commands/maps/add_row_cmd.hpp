@@ -19,10 +19,7 @@ class AddRowCmd final : public ACommand {
 
   [[nodiscard]] auto MergeWith(const ACommand& cmd) -> bool override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
-  {
-    return CommandId::AddRow;
-  }
+  [[nodiscard]] auto GetId() const noexcept -> int override { return CommandId::AddRow; }
 
  private:
   Ref<entt::registry> mRegistry;

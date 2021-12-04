@@ -54,18 +54,12 @@ class MapPosition final {
   /**
    * \brief Sets the row index associated with the position.
    */
-  constexpr void SetRow(const int32 row)
-  {
-    mRow = row;
-  }
+  constexpr void SetRow(const int32 row) { mRow = row; }
 
   /**
    * \brief Sets the column index associated with the position.
    */
-  constexpr void SetColumn(const int32 column)
-  {
-    mCol = column;
-  }
+  constexpr void SetColumn(const int32 column) { mCol = column; }
 
   /**
    * \brief Creates and position that is offset from this position.
@@ -86,20 +80,14 @@ class MapPosition final {
    *
    * \return a position one step to the "north".
    */
-  [[nodiscard]] constexpr auto North() const -> MapPosition
-  {
-    return {mRow - 1, mCol};
-  }
+  [[nodiscard]] constexpr auto North() const -> MapPosition { return {mRow - 1, mCol}; }
 
   /**
    * \brief Returns a map position that is one step south of this map position.
    *
    * \return a position one step to the "south".
    */
-  [[nodiscard]] constexpr auto South() const -> MapPosition
-  {
-    return {mRow + 1, mCol};
-  }
+  [[nodiscard]] constexpr auto South() const -> MapPosition { return {mRow + 1, mCol}; }
 
   /**
    * \brief Returns a map position that is one step to the west of this map
@@ -107,10 +95,7 @@ class MapPosition final {
    *
    * a position one step to the "west".
    */
-  [[nodiscard]] constexpr auto West() const -> MapPosition
-  {
-    return {mRow, mCol - 1};
-  }
+  [[nodiscard]] constexpr auto West() const -> MapPosition { return {mRow, mCol - 1}; }
 
   /**
    * \brief Returns a map position that is one step to the east of this map
@@ -118,30 +103,21 @@ class MapPosition final {
    *
    * \return a position one step to the "east".
    */
-  [[nodiscard]] constexpr auto East() const -> MapPosition
-  {
-    return {mRow, mCol + 1};
-  }
+  [[nodiscard]] constexpr auto East() const -> MapPosition { return {mRow, mCol + 1}; }
 
   /**
    * \brief Returns the row index of the map position.
    *
    * \return the associated row index.
    */
-  [[nodiscard]] constexpr auto GetRow() const -> int32
-  {
-    return mRow;
-  }
+  [[nodiscard]] constexpr auto GetRow() const -> int32 { return mRow; }
 
   /**
    * \brief Returns the column index of the map position.
    *
    * \return the associated column index.
    */
-  [[nodiscard]] constexpr auto GetColumn() const -> int32
-  {
-    return mCol;
-  }
+  [[nodiscard]] constexpr auto GetColumn() const -> int32 { return mCol; }
 
   /**
    * \brief Returns the raw row index associated with the map position.

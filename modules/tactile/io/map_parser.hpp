@@ -43,10 +43,7 @@ class MapParser final {
    *
    * \return the error code.
    */
-  [[nodiscard]] auto GetError() const noexcept -> IO::ParseError
-  {
-    return mError;
-  }
+  [[nodiscard]] auto GetError() const noexcept -> IO::ParseError { return mError; }
 
   /**
    * \brief Returns the intermediate representation of the parsed map.

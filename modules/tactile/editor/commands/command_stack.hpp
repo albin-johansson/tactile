@@ -155,16 +155,10 @@ class CommandStack final {
   [[nodiscard]] auto GetRedoText() const -> const std::string&;
 
   /// Returns the number of commands in the stack.
-  [[nodiscard]] auto GetSize() const noexcept -> usize
-  {
-    return mStack.size();
-  }
+  [[nodiscard]] auto GetSize() const noexcept -> usize { return mStack.size(); }
 
   /// Returns the current command index.
-  [[nodiscard]] auto GetIndex() const noexcept -> Maybe<usize>
-  {
-    return mIndex;
-  }
+  [[nodiscard]] auto GetIndex() const noexcept -> Maybe<usize> { return mIndex; }
 
   /// Returns the clean index, if there is one.
   [[nodiscard]] auto GetCleanIndex() const noexcept -> Maybe<usize>
@@ -179,10 +173,7 @@ class CommandStack final {
    *
    * \return the stack capacity.
    */
-  [[nodiscard]] auto GetCapacity() const noexcept -> usize
-  {
-    return mCapacity;
-  }
+  [[nodiscard]] auto GetCapacity() const noexcept -> usize { return mCapacity; }
 
  private:
   std::deque<std::unique_ptr<ACommand>> mStack;

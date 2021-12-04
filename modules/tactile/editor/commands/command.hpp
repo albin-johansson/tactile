@@ -80,10 +80,7 @@ class ACommand {
    *
    * \return the name of the command.
    */
-  [[nodiscard]] auto GetText() const -> const std::string&
-  {
-    return mText;
-  }
+  [[nodiscard]] auto GetText() const -> const std::string& { return mText; }
 
  private:
   std::string mText;

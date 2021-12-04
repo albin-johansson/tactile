@@ -22,10 +22,7 @@ class AObjectCmd : public ACommand {
 
   [[nodiscard]] auto GetTargetObjectContext() const -> PropertyContext&;
 
-  [[nodiscard]] auto GetTargetObjectId() const noexcept -> ObjectID
-  {
-    return mObjectId;
-  }
+  [[nodiscard]] auto GetTargetObjectId() const noexcept -> ObjectID { return mObjectId; }
 
  private:
   Ref<entt::registry> mRegistry;

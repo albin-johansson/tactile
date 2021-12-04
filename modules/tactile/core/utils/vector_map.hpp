@@ -22,10 +22,7 @@ class VectorMap final {
   using const_iterator = typename storage_type::const_iterator;
   using size_type = usize;
 
-  explicit VectorMap(const size_type n)
-  {
-    Reserve(n);
-  }
+  explicit VectorMap(const size_type n) { Reserve(n); }
 
   VectorMap() = default;
 
@@ -35,15 +32,9 @@ class VectorMap final {
   VectorMap& operator=(const VectorMap&) = default;
   VectorMap& operator=(VectorMap&&) noexcept = default;
 
-  void Clear()
-  {
-    mData.clear();
-  }
+  void Clear() { mData.clear(); }
 
-  void Reserve(const size_type n)
-  {
-    mData.reserve(n);
-  }
+  void Reserve(const size_type n) { mData.reserve(n); }
 
   template <typename... Args>
   auto Emplace(key_type key, Args&&... args) -> value_type&
@@ -179,40 +170,22 @@ class VectorMap final {
     }
   }
 
-  [[nodiscard]] auto GetSize() const noexcept -> size_type
-  {
-    return mData.size();
-  }
+  [[nodiscard]] auto GetSize() const noexcept -> size_type { return mData.size(); }
 
   [[nodiscard]] auto GetCapacity() const noexcept -> size_type
   {
     return mData.capacity();
   }
 
-  [[nodiscard]] auto IsEmpty() const noexcept -> bool
-  {
-    return mData.empty();
-  }
+  [[nodiscard]] auto IsEmpty() const noexcept -> bool { return mData.empty(); }
 
-  [[nodiscard]] auto begin() noexcept -> iterator
-  {
-    return mData.begin();
-  }
+  [[nodiscard]] auto begin() noexcept -> iterator { return mData.begin(); }
 
-  [[nodiscard]] auto end() noexcept -> iterator
-  {
-    return mData.end();
-  }
+  [[nodiscard]] auto end() noexcept -> iterator { return mData.end(); }
 
-  [[nodiscard]] auto begin() const noexcept -> const_iterator
-  {
-    return mData.begin();
-  }
+  [[nodiscard]] auto begin() const noexcept -> const_iterator { return mData.begin(); }
 
-  [[nodiscard]] auto end() const noexcept -> const_iterator
-  {
-    return mData.end();
-  }
+  [[nodiscard]] auto end() const noexcept -> const_iterator { return mData.end(); }
 
  private:
   storage_type mData;

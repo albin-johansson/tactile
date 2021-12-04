@@ -21,25 +21,16 @@ class FormattedString final {
     mSize = result.size;
   }
 
-  [[nodiscard]] auto GetData() const noexcept -> CStr
-  {
-    return mBuffer.data();
-  }
+  [[nodiscard]] auto GetData() const noexcept -> CStr { return mBuffer.data(); }
 
   [[nodiscard]] auto GetView() const noexcept -> std::string_view
   {
     return std::string_view{mBuffer.data(), mSize};
   }
 
-  [[nodiscard]] auto GetSize() const noexcept -> usize
-  {
-    return mBuffer.size();
-  }
+  [[nodiscard]] auto GetSize() const noexcept -> usize { return mBuffer.size(); }
 
-  [[nodiscard]] constexpr auto GetCapacity() const noexcept -> usize
-  {
-    return Capacity;
-  }
+  [[nodiscard]] constexpr auto GetCapacity() const noexcept -> usize { return Capacity; }
 
  private:
   std::array<char, Capacity + 1> mBuffer;  // NOLINT

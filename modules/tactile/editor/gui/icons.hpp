@@ -100,10 +100,7 @@ class Icons final {
    *
    * \return the OpenGL texture ID for the Tactile icon.
    */
-  [[nodiscard]] auto GetTactileIcon() const noexcept -> uint
-  {
-    return mTactileIcon;
-  }
+  [[nodiscard]] auto GetTactileIcon() const noexcept -> uint { return mTactileIcon; }
 
  private:
   uint mTactileIcon{};
