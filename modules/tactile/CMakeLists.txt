@@ -209,8 +209,6 @@ set(SOURCE_FILES
     editor/gui/texture_utils.hpp
     editor/gui/themes.cpp
     editor/gui/themes.hpp
-    editor/gui/update_gui.cpp
-    editor/gui/update_gui.hpp
 
     editor/gui/layout/dock_space.cpp
     editor/gui/layout/dock_space.hpp
