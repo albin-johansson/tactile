@@ -5,6 +5,7 @@
 #include <entt/entt.hpp>
 
 #include "dialogs/rename_property_dialog.hpp"
+#include "property_table.hpp"
 
 namespace Tactile {
 
@@ -17,6 +18,7 @@ class PropertiesDock final {
   [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
 
  private:
+  PropertyTable mPropertyTable;
   RenamePropertyDialog mRenameDialog;
   bool mHasFocus{};
 };

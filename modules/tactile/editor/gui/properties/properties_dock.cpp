@@ -2,11 +2,10 @@
 
 #include <imgui.h>
 
-#include "editor/gui/properties/dialogs/add_property_dialog.hpp"
-#include "editor/gui/properties/dialogs/change_property_type_dialog.hpp"
+#include "dialogs/add_property_dialog.hpp"
+#include "dialogs/change_property_type_dialog.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
-#include "property_table.hpp"
 
 namespace Tactile {
 
@@ -23,7 +22,7 @@ void PropertiesDock::Update(const entt::registry& registry, entt::dispatcher& di
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
-    UpdatePropertyTable(registry, dispatcher);
+    mPropertyTable.Update(registry, dispatcher);
   }
 
   UpdateAddPropertyDialog(registry, dispatcher);

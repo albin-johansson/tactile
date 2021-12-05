@@ -1,7 +1,6 @@
 #include "property_table.hpp"
 
 #include <locale>  // locale, isalpha, isdigit, isspace
-#include <string>  // string
 
 #include <tactile_def.hpp>
 
@@ -10,6 +9,7 @@
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property.hpp"
+#include "build.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/property_system.hpp"
@@ -18,25 +18,19 @@
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/properties/dialogs/add_property_dialog.hpp"
-#include "editor/gui/properties/dialogs/change_property_type_dialog.hpp"
-#include "editor/gui/properties/dialogs/rename_property_dialog.hpp"
-#include "editor/gui/properties/items/bool_property_widget.hpp"
-#include "editor/gui/properties/items/color_property_widget.hpp"
-#include "editor/gui/properties/items/file_property_widget.hpp"
-#include "editor/gui/properties/items/float_property_widget.hpp"
-#include "editor/gui/properties/items/int_property_widget.hpp"
-#include "editor/gui/properties/items/object_property_widget.hpp"
-#include "editor/gui/properties/items/property_item_context_menu.hpp"
-#include "editor/gui/properties/items/string_property_widget.hpp"
+#include "dialogs/add_property_dialog.hpp"
+#include "dialogs/change_property_type_dialog.hpp"
+#include "items/bool_property_widget.hpp"
+#include "items/color_property_widget.hpp"
+#include "items/file_property_widget.hpp"
+#include "items/float_property_widget.hpp"
+#include "items/int_property_widget.hpp"
+#include "items/object_property_widget.hpp"
+#include "items/string_property_widget.hpp"
 #include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 namespace {
-
-constinit PropertyItemContextMenuState gContextState;
-inline Maybe<std::string> gRenameTarget;
-inline Maybe<std::string> gChangeTypeTarget;
 
 void PrepareTableRow(const CStr label)
 {
@@ -153,7 +147,7 @@ void ShowNativeTilesetProperties(const std::string& name,
 {
   NativeReadOnlyRow("Type", "Tileset");
 
-  if constexpr (cen::is_debug_build()) {
+  if constexpr (IsDebugBuild()) {
     NativeReadOnlyRow("ID", tileset.id);
   }
 
@@ -190,7 +184,7 @@ void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
       break;
   }
 
-  if constexpr (cen::is_debug_build()) {
+  if constexpr (IsDebugBuild()) {
     NativeReadOnlyRow("ID", layer.id);
   }
 
@@ -223,7 +217,7 @@ void ShowNativeObjectProperties(const std::string& name,
       break;
   }
 
-  if constexpr (cen::is_debug_build()) {
+  if constexpr (IsDebugBuild()) {
     NativeReadOnlyRow("ID", object.id);
   }
 
@@ -253,10 +247,68 @@ void ShowNativeObjectProperties(const std::string& name,
   ImGui::Separator();
 }
 
-void ShowCustomProperties(const entt::registry& registry,
-                          entt::dispatcher& dispatcher,
-                          const PropertyContext& context,
-                          bool& isItemContextOpen)
+}  // namespace
+
+void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
+{
+  constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
+                         ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
+
+  const auto& current = registry.ctx<ActivePropertyContext>();
+  const auto& context = Sys::GetCurrentContext(registry);
+
+  if (Scoped::Table table{"##PropertyTable", 2, flags}; table.IsOpen()) {
+    if (current.entity == entt::null) {
+      ShowNativeMapProperties(context.name, registry.ctx<Map>());
+    }
+    else {
+      if (const auto* tileset = registry.try_get<Tileset>(current.entity)) {
+        ShowNativeTilesetProperties(context.name, *tileset, dispatcher);
+      }
+      else if (const auto* layer = registry.try_get<Layer>(current.entity)) {
+        ShowNativeLayerProperties(*layer, dispatcher);
+      }
+      else if (const auto* object = registry.try_get<Object>(current.entity)) {
+        ShowNativeObjectProperties(context.name, *object, dispatcher);
+      }
+    }
+
+    bool isItemContextOpen = false;
+    ShowCustomProperties(registry, dispatcher, context, isItemContextOpen);
+
+    if (!isItemContextOpen) {
+      if (auto popup = Scoped::Popup::ForWindow("##PropertyTableContext");
+          popup.IsOpen()) {
+        mContextState.show_add_dialog =
+            ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
+      }
+    }
+  }
+
+  if (mContextState.show_add_dialog) {
+    OpenAddPropertyDialog();
+    mContextState.show_add_dialog = false;
+  }
+
+  if (mContextState.show_rename_dialog) {
+    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(mRenameTarget.value());
+    mRenameTarget.reset();
+    mContextState.show_rename_dialog = false;
+  }
+
+  if (mContextState.show_change_type_dialog) {
+    const auto& name = mChangeTypeTarget.value();
+    const auto type = Sys::GetProperty(registry, context, name).value.GetType().value();
+    OpenChangePropertyTypeDialog(name, type);
+    mChangeTypeTarget.reset();
+    mContextState.show_change_type_dialog = false;
+  }
+}
+
+void PropertyTable::ShowCustomProperties(const entt::registry& registry,
+                                         entt::dispatcher& dispatcher,
+                                         const PropertyContext& context,
+                                         bool& isItemContextOpen)
 {
   for (const auto entity : context.properties) {
     const auto& property = registry.get<Property>(entity);
@@ -272,15 +324,15 @@ void ShowCustomProperties(const entt::registry& registry,
     ImGui::Selectable(name.c_str());
 
     if (!isItemContextOpen) {
-      isItemContextOpen = PropertyItemContextMenu(dispatcher, name, gContextState);
+      isItemContextOpen = PropertyItemContextMenu(dispatcher, name, mContextState);
     }
 
-    if (gContextState.show_rename_dialog && !gRenameTarget) {
-      gRenameTarget = name;
+    if (mContextState.show_rename_dialog && !mRenameTarget) {
+      mRenameTarget = name;
     }
 
-    if (gContextState.show_change_type_dialog && !gChangeTypeTarget) {
-      gChangeTypeTarget = name;
+    if (mContextState.show_change_type_dialog && !mChangeTypeTarget) {
+      mChangeTypeTarget = name;
     }
 
     ImGui::TableNextColumn();
@@ -319,64 +371,6 @@ void ShowCustomProperties(const entt::registry& registry,
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
-  }
-}
-
-}  // namespace
-
-void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispatcher)
-{
-  constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
-                         ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
-
-  const auto& current = registry.ctx<ActivePropertyContext>();
-  const auto& context = Sys::GetCurrentContext(registry);
-
-  if (Scoped::Table table{"##PropertyTable", 2, flags}; table.IsOpen()) {
-    if (current.entity == entt::null) {
-      ShowNativeMapProperties(context.name, registry.ctx<Map>());
-    }
-    else {
-      if (const auto* tileset = registry.try_get<Tileset>(current.entity)) {
-        ShowNativeTilesetProperties(context.name, *tileset, dispatcher);
-      }
-      else if (const auto* layer = registry.try_get<Layer>(current.entity)) {
-        ShowNativeLayerProperties(*layer, dispatcher);
-      }
-      else if (const auto* object = registry.try_get<Object>(current.entity)) {
-        ShowNativeObjectProperties(context.name, *object, dispatcher);
-      }
-    }
-
-    bool isItemContextOpen = false;
-    ShowCustomProperties(registry, dispatcher, context, isItemContextOpen);
-
-    if (!isItemContextOpen) {
-      if (auto popup = Scoped::Popup::ForWindow("##PropertyTableContext");
-          popup.IsOpen()) {
-        gContextState.show_add_dialog =
-            ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
-      }
-    }
-  }
-
-  if (gContextState.show_add_dialog) {
-    OpenAddPropertyDialog();
-    gContextState.show_add_dialog = false;
-  }
-
-  if (gContextState.show_rename_dialog) {
-    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(gRenameTarget.value());
-    gRenameTarget.reset();
-    gContextState.show_rename_dialog = false;
-  }
-
-  if (gContextState.show_change_type_dialog) {
-    const auto& name = gChangeTypeTarget.value();
-    const auto type = Sys::GetProperty(registry, context, name).value.GetType().value();
-    OpenChangePropertyTypeDialog(name, type);
-    gChangeTypeTarget.reset();
-    gContextState.show_change_type_dialog = false;
   }
 }
 
