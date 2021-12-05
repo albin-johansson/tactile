@@ -633,6 +633,10 @@ void Application::OnSetPropertyContext(const SetPropertyContextEvent& event)
 
 void Application::OnToggleUi()
 {
+  if (ImGui::GetTopMostPopupModal()) {
+    return;
+  }
+
   static bool show = false;
 
   if (!show) {
