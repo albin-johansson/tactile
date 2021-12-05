@@ -9,6 +9,7 @@
 #include "imgui_impl_sdl.h"
 #include "io/preferences.hpp"
 #include "style.hpp"
+#include "build.hpp"
 #include "themes.hpp"
 
 namespace Tactile {
@@ -19,7 +20,8 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   ImGui::CreateContext();
 
   auto& io = ImGui::GetIO();
-  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;  // NOLINT
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;      // NOLINT
+  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // NOLINT
   io.WantCaptureKeyboard = true;
 
   LoadFonts();
@@ -33,7 +35,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   style.WindowBorderSize = Prefs::GetWindowBorder() ? 1.0f : 0.0f;
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
-  if constexpr (cen::ifdef_apple()) {
+  if constexpr (IsPlatformOSX()) {
     ImGui_ImplOpenGL3_Init("#version 150");
   }
   else {
@@ -52,7 +54,7 @@ void ImGuiContext::LoadFonts()
 {
   auto& io = ImGui::GetIO();
 
-  if constexpr (cen::ifdef_apple()) {
+  if constexpr (IsPlatformOSX()) {
     constexpr auto fontSize = 11.0f;
 
     const auto dpi = cen::screen::dpi().value();
