@@ -366,7 +366,7 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
   }
 
   if (gContextState.show_rename_dialog) {
-    OpenRenamePropertyDialog(gRenameTarget.value());
+    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(gRenameTarget.value());
     gRenameTarget.reset();
     gContextState.show_rename_dialog = false;
   }

@@ -53,3 +53,12 @@ TEST(BufferUtils, CreateStringFromBuffer)
 
   ASSERT_EQ("abcdef", str);
 }
+
+TEST(BufferUtils, CreateStringViewFromBuffer)
+{
+  const std::array buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
+  const auto str = CreateStringViewFromBuffer(buffer);
+
+  ASSERT_EQ(6, str.size());
+  ASSERT_EQ("abcdef", str);
+}

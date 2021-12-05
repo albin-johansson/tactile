@@ -1,11 +1,24 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry, dispatcher
+#include <string>  // string
+
+#include <entt/entt.hpp>
+
+#include "dialogs/rename_property_dialog.hpp"
 
 namespace Tactile {
 
-void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& dispatcher);
+class PropertiesDock final {
+ public:
+  void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
 
-[[nodiscard]] auto IsPropertyDockFocused() noexcept -> bool;
+  void ShowRenamePropertyDialog(const std::string& name);
+
+  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+
+ private:
+  RenamePropertyDialog mRenameDialog;
+  bool mHasFocus{};
+};
 
 }  // namespace Tactile

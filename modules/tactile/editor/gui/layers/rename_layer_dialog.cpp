@@ -1,40 +1,31 @@
 #include "rename_layer_dialog.hpp"
 
-#include <string>   // string
 #include <utility>  // move
 
 #include <tactile_def.hpp>
 
 #include "editor/events/layer_events.hpp"
-#include "editor/gui/common/button.hpp"
-#include "editor/gui/dialogs/rename_dialog.hpp"
 
 namespace Tactile {
-namespace {
 
-inline Maybe<LayerID> gTargetId;
-inline Maybe<std::string> gOldName;
+RenameLayerDialog::RenameLayerDialog() : ARenameDialog{"Rename Layer"} {}
 
-}  // namespace
-
-void UpdateRenameLayerDialog(const entt::registry& registry, entt::dispatcher& dispatcher)
+void RenameLayerDialog::Show(const LayerID id, std::string oldName)
 {
-  auto validator = [](const entt::registry&, const std::string_view name) {
-    return !name.empty() && gOldName != name;
-  };
-
-  auto callback = [](entt::dispatcher& dispatcher, std::string name) {
-    dispatcher.enqueue<RenameLayerEvent>(gTargetId.value(), std::move(name));
-  };
-
-  UpdateRenameDialog("Rename layer", registry, dispatcher, validator, callback);
+  mTargetId = id;
+  mOldName = std::move(oldName);
+  ARenameDialog::Show(*mOldName);
 }
 
-void OpenRenameLayerDialog(const LayerID id, std::string oldName)
+void RenameLayerDialog::OnAccept(entt::dispatcher& dispatcher, const std::string& input)
 {
-  gTargetId = id;
-  gOldName = std::move(oldName);
-  OpenRenameDialog("Rename layer", *gOldName);
+  dispatcher.enqueue<RenameLayerEvent>(mTargetId.value(), input);
+}
+
+auto RenameLayerDialog::IsInputValid(const entt::registry&, const std::string_view input)
+    -> bool
+{
+  return !input.empty() && mOldName != input;
 }
 
 }  // namespace Tactile

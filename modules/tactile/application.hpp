@@ -120,6 +120,7 @@ class Application final {
   void OnSetObjectTag(const SetObjectTagEvent& event);
   void OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent& event);
 
+  void OnShowRenamePropertyDialog(const ShowRenamePropertyDialogEvent& event);
   void OnAddProperty(const AddPropertyEvent& event);
   void OnRemoveProperty(const RemovePropertyEvent& event);
   void OnRenameProperty(const RenamePropertyEvent& event);

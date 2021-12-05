@@ -552,7 +552,7 @@ void Application::OnSetLayerVisible(const SetLayerVisibleEvent& event)
 
 void Application::OnOpenRenameLayerDialog(const OpenRenameLayerDialogEvent& event)
 {
-  OpenRenameLayerDialog(event.id);
+  mWidgets.ShowRenameLayerDialog(event.id);
 }
 
 void Application::OnRenameLayer(const RenameLayerEvent& event)
@@ -596,6 +596,11 @@ void Application::OnSetObjectTag(const SetObjectTagEvent& event)
 void Application::OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent&)
 {
   OpenObjectContextMenu();
+}
+
+void Application::OnShowRenamePropertyDialog(const ShowRenamePropertyDialogEvent& event)
+{
+  mWidgets.ShowRenamePropertyDialog(event.name);
 }
 
 void Application::OnAddProperty(const AddPropertyEvent& event)

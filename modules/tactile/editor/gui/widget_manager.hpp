@@ -7,6 +7,8 @@
 #include "menus/menu_bar.hpp"
 #include "tilesets/tileset_dock.hpp"
 #include "toolbar/toolbar.hpp"
+#include "properties/properties_dock.hpp"
+#include "layers/layer_dock.hpp"
 
 namespace Tactile {
 
@@ -24,6 +26,10 @@ class WidgetManager final {
   void ShowOpenMapDialog();
 
   void ShowAddTilesetDialog();
+
+  void ShowRenameLayerDialog(LayerID id);
+
+  void ShowRenamePropertyDialog(const std::string& name);
 
   void SetToolbarVisible(bool visible);
 
@@ -46,6 +52,8 @@ class WidgetManager final {
   MenuBar mMenuBar;
   Toolbar mToolbar;
   TilesetDock mTilesetDock;
+  LayerDock mLayerDock;
+  PropertiesDock mPropertiesDock;
 };
 
 }  // namespace Tactile

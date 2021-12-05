@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-#include <entt/entt.hpp>  // entity, null
+#include <entt/entt.hpp>
 
 #include "core/property_value.hpp"
 
@@ -12,6 +12,10 @@ namespace Tactile {
 
 /// \addtogroup events
 /// \{
+
+struct ShowRenamePropertyDialogEvent final {
+  std::string name;
+};
 
 struct AddPropertyEvent final {
   std::string name;   ///< The chosen name.

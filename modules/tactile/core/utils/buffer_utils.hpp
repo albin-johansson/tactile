@@ -84,6 +84,19 @@ template <usize Size>
   return std::string{buffer.data(), buffer.data() + index};
 }
 
+template <usize Size>
+[[nodiscard]] auto CreateStringViewFromBuffer(const std::array<char, Size>& buffer)
+    -> std::string_view
+{
+  usize index = 0;
+
+  while (index < buffer.size() && buffer.at(index) != '\0') {
+    ++index;
+  }
+
+  return std::string_view{buffer.data(), index};
+}
+
 /// \} End of group utils
 
 }  // namespace Tactile

@@ -1,14 +1,20 @@
 #pragma once
 
-#include <string>  // string
-
-#include <entt/entt.hpp>  // registry, dispatcher
+#include "editor/gui/dialogs/rename_dialog.hpp"
 
 namespace Tactile {
 
-void UpdateRenamePropertyDialog(const entt::registry& registry,
-                                entt::dispatcher& dispatcher);
+class RenamePropertyDialog final : public ARenameDialog {
+ public:
+  RenamePropertyDialog();
 
-void OpenRenamePropertyDialog(std::string name);
+  ~RenamePropertyDialog() override = default;
+
+ protected:
+  void OnAccept(entt::dispatcher& dispatcher, const std::string& input) override;
+
+  [[nodiscard]] auto IsInputValid(const entt::registry& registry, std::string_view input)
+      -> bool override;
+};
 
 }  // namespace Tactile

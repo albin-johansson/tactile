@@ -5,10 +5,8 @@
 #include "dialogs/save_as_dialog.hpp"
 #include "editor/model.hpp"
 #include "icons.hpp"
-#include "layers/layer_dock.hpp"
 #include "layout/dock_space.hpp"
 #include "log/log_dock.hpp"
-#include "properties/properties_dock.hpp"
 #include "viewport/map_view.hpp"
 #include "viewport/viewport_widget.hpp"
 
@@ -30,8 +28,8 @@ void WidgetManager::Update(const Model& model,
   if (const auto* registry = model.GetActiveRegistry()) {
     UpdateMapViewObjectContextMenu(*registry, dispatcher);
 
-    UpdateLayerDock(*registry, icons, dispatcher);
-    UpdatePropertiesDock(*registry, dispatcher);
+    mLayerDock.Update(*registry, icons, dispatcher);
+    mPropertiesDock.Update(*registry, dispatcher);
     mTilesetDock.Update(*registry, dispatcher);
     UpdateLogDock();
   }
@@ -61,6 +59,16 @@ void WidgetManager::ShowAddTilesetDialog()
   mMenuBar.ShowAddTilesetDialog();
 }
 
+void WidgetManager::ShowRenameLayerDialog(const LayerID id)
+{
+  mLayerDock.ShowRenameLayerDialog(id);
+}
+
+void WidgetManager::ShowRenamePropertyDialog(const std::string& name)
+{
+  mPropertiesDock.ShowRenamePropertyDialog(name);
+}
+
 void WidgetManager::SetToolbarVisible(const bool visible)
 {
   mToolbar.SetVisible(visible);
@@ -84,7 +92,7 @@ auto WidgetManager::IsViewportFocused() const -> bool
 
 auto WidgetManager::IsLayerDockFocused() const -> bool
 {
-  return Tactile::IsLayerDockFocused();
+  return mLayerDock.IsFocused();
 }
 
 auto WidgetManager::IsTilesetDockFocused() const -> bool
@@ -94,7 +102,7 @@ auto WidgetManager::IsTilesetDockFocused() const -> bool
 
 auto WidgetManager::IsPropertiesDockFocused() const -> bool
 {
-  return Tactile::IsPropertyDockFocused();
+  return mPropertiesDock.IsFocused();
 }
 
 auto WidgetManager::IsLogDockFocused() const -> bool

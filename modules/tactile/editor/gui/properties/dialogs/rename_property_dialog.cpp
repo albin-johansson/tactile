@@ -1,39 +1,23 @@
 #include "rename_property_dialog.hpp"
 
-#include <utility>  // move
-
-#include <tactile_def.hpp>
-
 #include "core/systems/property_system.hpp"
 #include "editor/events/property_events.hpp"
-#include "editor/gui/dialogs/rename_dialog.hpp"
 
 namespace Tactile {
-namespace {
 
-inline Maybe<std::string> gOldName;
+RenamePropertyDialog::RenamePropertyDialog() : ARenameDialog{"Rename Property"} {}
 
-}  // namespace
-
-void UpdateRenamePropertyDialog(const entt::registry& registry,
-                                entt::dispatcher& dispatcher)
+void RenamePropertyDialog::OnAccept(entt::dispatcher& dispatcher,
+                                    const std::string& input)
 {
-  auto validator = [](const entt::registry& registry, const std::string_view name) {
-    const auto& context = Sys::GetCurrentContext(registry);
-    return !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
-  };
-
-  auto callback = [](entt::dispatcher& dispatcher, std::string name) {
-    dispatcher.enqueue<RenamePropertyEvent>(gOldName.value(), std::move(name));
-  };
-
-  UpdateRenameDialog("Rename property", registry, dispatcher, validator, callback);
+  dispatcher.enqueue<RenamePropertyEvent>(GetPreviousName(), input);
 }
 
-void OpenRenamePropertyDialog(std::string name)
+auto RenamePropertyDialog::IsInputValid(const entt::registry& registry,
+                                        std::string_view input) -> bool
 {
-  gOldName = std::move(name);
-  OpenRenameDialog("Rename property", *gOldName);
+  const auto& context = Sys::GetCurrentContext(registry);
+  return !input.empty() && !Sys::HasPropertyWithName(registry, context, input);
 }
 
 }  // namespace Tactile

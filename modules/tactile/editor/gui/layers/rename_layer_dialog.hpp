@@ -1,16 +1,30 @@
 #pragma once
 
-#include <string>  // string
-
 #include <tactile_def.hpp>
 
-#include <entt/entt.hpp>  // registry, dispatcher
+#include <entt/entt.hpp>
+
+#include "editor/gui/dialogs/rename_dialog.hpp"
 
 namespace Tactile {
 
-void UpdateRenameLayerDialog(const entt::registry& registry,
-                             entt::dispatcher& dispatcher);
+class RenameLayerDialog final : public ARenameDialog {
+ public:
+  RenameLayerDialog();
 
-void OpenRenameLayerDialog(LayerID id, std::string oldName);
+  ~RenameLayerDialog() override = default;
+
+  void Show(LayerID id, std::string oldName);
+
+ protected:
+  void OnAccept(entt::dispatcher& dispatcher, const std::string& input) override;
+
+  [[nodiscard]] auto IsInputValid(const entt::registry& registry, std::string_view input)
+      -> bool override;
+
+ private:
+  Maybe<LayerID> mTargetId;
+  Maybe<std::string> mOldName;
+};
 
 }  // namespace Tactile

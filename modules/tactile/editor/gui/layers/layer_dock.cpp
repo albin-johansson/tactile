@@ -20,14 +20,9 @@
 #include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
-#include "rename_layer_dialog.hpp"
 
 namespace Tactile {
 namespace {
-
-constinit bool gShowRenameDialog = false;
-constinit bool gHasFocus = false;
-inline Maybe<LayerID> gRenameTarget;
 
 void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
@@ -75,9 +70,9 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
 
 }  // namespace
 
-void UpdateLayerDock(const entt::registry& registry,
-                     const Icons& icons,
-                     entt::dispatcher& dispatcher)
+void LayerDock::Update(const entt::registry& registry,
+                       const Icons& icons,
+                       entt::dispatcher& dispatcher)
 {
   if (!Prefs::GetShowLayerDock()) {
     return;
@@ -85,7 +80,7 @@ void UpdateLayerDock(const entt::registry& registry,
 
   bool isVisible = Prefs::GetShowLayerDock();
   Scoped::Window dock{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
-  gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
+  mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.IsOpen()) {
     UpdateLayerDockButtons(registry, dispatcher);
@@ -114,31 +109,24 @@ void UpdateLayerDock(const entt::registry& registry,
 
   Prefs::SetShowLayerDock(isVisible);
 
-  if (gShowRenameDialog) {
-    const auto target = gRenameTarget.value();
+  if (mRenameTarget.has_value()) {
+    const auto target = *mRenameTarget;
 
     const auto entity = Sys::FindLayer(registry, target);
     assert(entity != entt::null);
 
     const auto& context = registry.get<PropertyContext>(entity);
 
-    OpenRenameLayerDialog(gRenameTarget.value(), context.name);
-    gRenameTarget.reset();
-    gShowRenameDialog = false;
+    mRenameLayerDialog.Show(target, context.name);
+    mRenameTarget.reset();
   }
 
-  UpdateRenameLayerDialog(registry, dispatcher);
+  mRenameLayerDialog.Update(registry, dispatcher);
 }
 
-void OpenRenameLayerDialog(const LayerID id)
+void LayerDock::ShowRenameLayerDialog(const LayerID id)
 {
-  gRenameTarget = id;
-  gShowRenameDialog = true;
-}
-
-auto IsLayerDockFocused() noexcept -> bool
-{
-  return gHasFocus;
+  mRenameTarget = id;
 }
 
 }  // namespace Tactile

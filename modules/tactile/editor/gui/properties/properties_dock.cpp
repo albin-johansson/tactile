@@ -2,22 +2,15 @@
 
 #include <imgui.h>
 
-#include "core/components/property_context.hpp"
 #include "editor/gui/properties/dialogs/add_property_dialog.hpp"
 #include "editor/gui/properties/dialogs/change_property_type_dialog.hpp"
-#include "editor/gui/properties/dialogs/rename_property_dialog.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 #include "property_table.hpp"
 
 namespace Tactile {
-namespace {
 
-constinit bool gHasFocus = false;
-
-}  // namespace
-
-void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& dispatcher)
+void PropertiesDock::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   if (!Prefs::GetShowPropertiesDock()) {
     return;
@@ -27,22 +20,22 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
   bool isVisible = Prefs::GetShowPropertiesDock();
 
   Scoped::Window dock{"Properties", flags, &isVisible};
-  gHasFocus = dock.IsFocused();
+  mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
     UpdatePropertyTable(registry, dispatcher);
   }
 
   UpdateAddPropertyDialog(registry, dispatcher);
-  UpdateRenamePropertyDialog(registry, dispatcher);
+  mRenameDialog.Update(registry, dispatcher);
   UpdateChangePropertyTypeDialog(dispatcher);
 
   Prefs::SetShowPropertiesDock(isVisible);
 }
 
-auto IsPropertyDockFocused() noexcept -> bool
+void PropertiesDock::ShowRenamePropertyDialog(const std::string& name)
 {
-  return gHasFocus;
+  mRenameDialog.Show(name);
 }
 
 }  // namespace Tactile
