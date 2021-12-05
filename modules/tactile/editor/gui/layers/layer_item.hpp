@@ -8,7 +8,6 @@
 
 namespace Tactile {
 
-class MapDocument;
 class Icons;
 
 /**
