@@ -6,8 +6,6 @@
 
 namespace Tactile {
 
-class MapDocument;
-
 /**
  * \brief Updates the state of the layer item popup.
  *
