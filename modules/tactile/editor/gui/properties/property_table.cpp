@@ -18,7 +18,6 @@
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
-#include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
 #include "items/bool_property_widget.hpp"
 #include "items/color_property_widget.hpp"
@@ -286,7 +285,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   }
 
   if (mContextState.show_add_dialog) {
-    OpenAddPropertyDialog();
+    dispatcher.enqueue<ShowAddPropertyDialogEvent>();
     mContextState.show_add_dialog = false;
   }
 
@@ -299,7 +298,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   if (mContextState.show_change_type_dialog) {
     const auto& name = mChangeTypeTarget.value();
     const auto type = Sys::GetProperty(registry, context, name).value.GetType().value();
-    OpenChangePropertyTypeDialog(name, type);
+    dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(name, type);
     mChangeTypeTarget.reset();
     mContextState.show_change_type_dialog = false;
   }

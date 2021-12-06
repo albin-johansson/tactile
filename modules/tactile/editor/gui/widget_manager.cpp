@@ -1,5 +1,7 @@
 #include "widget_manager.hpp"
 
+#include <utility>  // move
+
 #include "dialogs/map_import_error_dialog.hpp"
 #include "dialogs/resize_map_dialog.hpp"
 #include "dialogs/save_as_dialog.hpp"
@@ -64,9 +66,20 @@ void WidgetManager::ShowRenameLayerDialog(const LayerID id)
   mLayerDock.ShowRenameLayerDialog(id);
 }
 
+void WidgetManager::ShowAddPropertyDialog()
+{
+  mPropertiesDock.ShowAddPropertyDialog();
+}
+
 void WidgetManager::ShowRenamePropertyDialog(const std::string& name)
 {
   mPropertiesDock.ShowRenamePropertyDialog(name);
+}
+
+void WidgetManager::ShowChangePropertyTypeDialog(std::string name,
+                                                 const PropertyType type)
+{
+  mPropertiesDock.ShowChangePropertyTypeDialog(std::move(name), type);
 }
 
 void WidgetManager::SetToolbarVisible(const bool visible)

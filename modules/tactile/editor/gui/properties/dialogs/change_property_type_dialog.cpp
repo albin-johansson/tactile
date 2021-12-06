@@ -2,68 +2,44 @@
 
 #include <utility>  // move
 
-#include <tactile_def.hpp>
-#include <tactile_stdlib.hpp>
-
 #include <imgui.h>
 
 #include "editor/events/property_events.hpp"
-#include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/scoped.hpp"
 #include "property_type_combo.hpp"
 
 namespace Tactile {
-namespace {
 
-constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-
-constinit PropertyType gCurrentType = PropertyType::String;
-inline Maybe<std::string> gPropertyName;
-inline Maybe<PropertyType> gPreviousType;
-
-void ResetState()
+ChangePropertyTypeDialog::ChangePropertyTypeDialog() : ADialog{"Change Property Type"}
 {
-  gCurrentType = PropertyType::String;
-  gPropertyName.reset();
-  gPreviousType.reset();
+  SetAcceptButtonLabel("Change");
 }
 
-}  // namespace
-
-void UpdateChangePropertyTypeDialog(entt::dispatcher& dispatcher)
+void ChangePropertyTypeDialog::Show(std::string name, const PropertyType type)
 {
-  CenterNextWindowOnAppearance();
-  if (Scoped::Modal modal{"Change property type", gFlags}; modal.IsOpen()) {
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Type: ");
-
-    ImGui::SameLine();
-    PropertyTypeCombo(gPreviousType.value(), gCurrentType);
-
-    ImGui::Spacing();
-
-    if (Button("OK", nullptr, gCurrentType != gPreviousType.value())) {
-      dispatcher.enqueue<ChangePropertyTypeEvent>(gPropertyName.value(), gCurrentType);
-
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::SameLine();
-    if (ImGui::Button("Cancel")) {
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-  }
+  mPropertyName = std::move(name);
+  mCurrentType = type;
+  mPreviousType = type;
+  ADialog::Show();
 }
 
-void OpenChangePropertyTypeDialog(std::string name, const PropertyType type)
+void ChangePropertyTypeDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
 {
-  gPropertyName = std::move(name);
-  gCurrentType = type;
-  gPreviousType = type;
-  ImGui::OpenPopup("Change property type");
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted("Type: ");
+
+  ImGui::SameLine();
+  PropertyTypeCombo(mPreviousType.value(), mCurrentType);
+}
+
+void ChangePropertyTypeDialog::OnAccept(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<ChangePropertyTypeEvent>(mPropertyName.value(), mCurrentType);
+}
+
+auto ChangePropertyTypeDialog::IsCurrentInputValid(const entt::registry&) const -> bool
+{
+  return mCurrentType != mPreviousType.value();
 }
 
 }  // namespace Tactile

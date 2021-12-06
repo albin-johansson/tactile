@@ -274,6 +274,8 @@ set(SOURCE_FILES
     editor/gui/dialogs/add_map_dialog.hpp
     editor/gui/dialogs/credits_dialog.cpp
     editor/gui/dialogs/credits_dialog.hpp
+    editor/gui/dialogs/dialog.cpp
+    editor/gui/dialogs/dialog.hpp
     editor/gui/dialogs/map_import_error_dialog.cpp
     editor/gui/dialogs/map_import_error_dialog.hpp
     editor/gui/dialogs/rename_dialog.cpp

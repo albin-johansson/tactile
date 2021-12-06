@@ -598,9 +598,20 @@ void Application::OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent&)
   OpenObjectContextMenu();
 }
 
+void Application::OnShowAddPropertyDialog()
+{
+  mWidgets.ShowAddPropertyDialog();
+}
+
 void Application::OnShowRenamePropertyDialog(const ShowRenamePropertyDialogEvent& event)
 {
   mWidgets.ShowRenamePropertyDialog(event.name);
+}
+
+void Application::OnShowChangePropertyTypeDialog(
+    const ShowChangePropertyTypeDialogEvent& event)
+{
+  mWidgets.ShowChangePropertyTypeDialog(event.name, event.current_type);
 }
 
 void Application::OnAddProperty(const AddPropertyEvent& event)

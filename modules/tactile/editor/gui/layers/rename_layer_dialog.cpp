@@ -17,13 +17,13 @@ void RenameLayerDialog::Show(const LayerID id, std::string oldName)
   ARenameDialog::Show(*mOldName);
 }
 
-void RenameLayerDialog::OnAccept(entt::dispatcher& dispatcher, const std::string& input)
+void RenameLayerDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RenameLayerEvent>(mTargetId.value(), input);
+  dispatcher.enqueue<RenameLayerEvent>(mTargetId.value(), std::string{GetCurrentInput()});
 }
 
-auto RenameLayerDialog::IsInputValid(const entt::registry&, const std::string_view input)
-    -> bool
+auto RenameLayerDialog::Validate(const entt::registry&,
+                                 const std::string_view input) const -> bool
 {
   return !input.empty() && mOldName != input;
 }

@@ -82,7 +82,10 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<SetObjectTagEvent>().connect<&App::OnSetObjectTag>(app);
   d.sink<SpawnObjectContextMenuEvent>().connect<&App::OnSpawnObjectContextMenu>(app);
 
+  d.sink<ShowAddPropertyDialogEvent>().connect<&App::OnShowAddPropertyDialog>(app);
   d.sink<ShowRenamePropertyDialogEvent>().connect<&App::OnShowRenamePropertyDialog>(app);
+  d.sink<ShowChangePropertyTypeDialogEvent>()
+      .connect<&App::OnShowChangePropertyTypeDialog>(app);
   d.sink<AddPropertyEvent>().connect<&App::OnAddProperty>(app);
   d.sink<RemovePropertyEvent>().connect<&App::OnRemoveProperty>(app);
   d.sink<RenamePropertyEvent>().connect<&App::OnRenameProperty>(app);

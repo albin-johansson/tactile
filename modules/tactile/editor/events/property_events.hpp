@@ -13,6 +13,13 @@ namespace Tactile {
 /// \addtogroup events
 /// \{
 
+struct ShowAddPropertyDialogEvent final {};
+
+struct ShowChangePropertyTypeDialogEvent final {
+  std::string name;
+  PropertyType current_type;
+};
+
 struct ShowRenamePropertyDialogEvent final {
   std::string name;
 };

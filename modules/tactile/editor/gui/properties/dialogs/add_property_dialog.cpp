@@ -1,82 +1,39 @@
 #include "add_property_dialog.hpp"
 
-#include <array>  // array
-
-#include <tactile_stdlib.hpp>
-
 #include <imgui.h>
 
-#include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/utils/buffer_utils.hpp"
 #include "editor/events/property_events.hpp"
-#include "editor/gui/alignment.hpp"
-#include "editor/gui/common/button.hpp"
-#include "editor/gui/scoped.hpp"
 #include "property_type_combo.hpp"
 
 namespace Tactile {
-namespace {
 
-constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-
-constinit std::array<char, 100> gNameBuffer{};
-constinit PropertyType gPropertyType = PropertyType::String;
-constinit bool gIsInputValid = false;
-
-void ResetState()
+AddPropertyDialog::AddPropertyDialog() : ADialog{"Add Property"}
 {
-  ZeroBuffer(gNameBuffer);
-  gPropertyType = PropertyType::String;
-  gIsInputValid = false;
+  SetAcceptButtonLabel("Add");
 }
 
-}  // namespace
-
-void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& dispatcher)
+void AddPropertyDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
 {
-  CenterNextWindowOnAppearance();
-  if (Scoped::Modal modal{"Add property", gFlags}; modal.IsOpen()) {
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Name: ");
-
-    ImGui::SameLine();
-
-    if (ImGui::InputTextWithHint("##NameInput",
-                                 "Unique property name...",
-                                 gNameBuffer.data(),
-                                 sizeof gNameBuffer)) {
-      const auto name = CreateStringFromBuffer(gNameBuffer);
-      const auto& context = Sys::GetCurrentContext(registry);
-      gIsInputValid = !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
-    }
-
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Type: ");
-    ImGui::SameLine();
-
-    PropertyTypeCombo(gPropertyType);
-
-    ImGui::Spacing();
-    if (Button("OK", nullptr, gIsInputValid)) {
-      dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(gNameBuffer),
-                                           gPropertyType);
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::SameLine();
-    if (ImGui::Button("Cancel")) {
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-  }
+  ImGui::InputTextWithHint("##Name",
+                           "Unique property name...",
+                           mNameBuffer.data(),
+                           sizeof mNameBuffer);
+  PropertyTypeCombo(mPropertyType);
 }
 
-void OpenAddPropertyDialog()
+void AddPropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  ResetState();
-  ImGui::OpenPopup("Add property");
+  dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(mNameBuffer),
+                                       mPropertyType);
+}
+
+auto AddPropertyDialog::IsCurrentInputValid(const entt::registry& registry) const -> bool
+{
+  const auto name = CreateStringViewFromBuffer(mNameBuffer);
+  const auto& context = Sys::GetCurrentContext(registry);
+  return !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
 }
 
 }  // namespace Tactile

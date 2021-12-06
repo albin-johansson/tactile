@@ -4,11 +4,11 @@
 
 #include <entt/entt.hpp>
 
+#include "layers/layer_dock.hpp"
 #include "menus/menu_bar.hpp"
+#include "properties/properties_dock.hpp"
 #include "tilesets/tileset_dock.hpp"
 #include "toolbar/toolbar.hpp"
-#include "properties/properties_dock.hpp"
-#include "layers/layer_dock.hpp"
 
 namespace Tactile {
 
@@ -29,7 +29,11 @@ class WidgetManager final {
 
   void ShowRenameLayerDialog(LayerID id);
 
+  void ShowAddPropertyDialog();
+
   void ShowRenamePropertyDialog(const std::string& name);
+
+  void ShowChangePropertyTypeDialog(std::string name, PropertyType type);
 
   void SetToolbarVisible(bool visible);
 

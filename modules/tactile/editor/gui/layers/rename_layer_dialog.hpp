@@ -17,10 +17,10 @@ class RenameLayerDialog final : public ARenameDialog {
   void Show(LayerID id, std::string oldName);
 
  protected:
-  void OnAccept(entt::dispatcher& dispatcher, const std::string& input) override;
+  void OnAccept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsInputValid(const entt::registry& registry, std::string_view input)
-      -> bool override;
+  [[nodiscard]] auto Validate(const entt::registry& registry,
+                              std::string_view input) const -> bool override;
 
  private:
   Maybe<LayerID> mTargetId;
