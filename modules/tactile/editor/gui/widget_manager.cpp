@@ -33,11 +33,12 @@ void WidgetManager::Update(const Model& model,
     mLayerDock.Update(*registry, icons, dispatcher);
     mPropertiesDock.Update(*registry, dispatcher);
     mTilesetDock.Update(*registry, dispatcher);
+    mResizeMapDialog.Update(*registry, dispatcher);
+
     UpdateLogDock();
   }
 
   UpdateMapImportErrorDialog();
-  UpdateResizeMapDialog(dispatcher);
   UpdateSaveAsDialog(dispatcher);
 }
 
@@ -80,6 +81,12 @@ void WidgetManager::ShowChangePropertyTypeDialog(std::string name,
                                                  const PropertyType type)
 {
   mPropertiesDock.ShowChangePropertyTypeDialog(std::move(name), type);
+}
+
+void WidgetManager::ShowResizeMapDialog(const usize currentRows,
+                                        const usize currentColumns)
+{
+  mResizeMapDialog.Show(currentRows, currentColumns);
 }
 
 void WidgetManager::SetToolbarVisible(const bool visible)

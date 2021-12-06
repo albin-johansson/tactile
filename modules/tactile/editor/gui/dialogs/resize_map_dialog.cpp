@@ -3,63 +3,38 @@
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"
-#include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
-namespace {
 
-constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+ResizeMapDialog::ResizeMapDialog() : ADialog{"Resize Map"} {}
 
-constinit usize gRowCount = 0;
-constinit usize gColCount = 0;
-
-[[nodiscard]] auto IsInputValid() noexcept -> bool
+void ResizeMapDialog::Show(const usize nCurrentRows, const usize nCurrentColumns)
 {
-  return gRowCount > 0u && gColCount > 0u;
+  mRows = nCurrentRows;
+  mColumns = nCurrentColumns;
+  ADialog::Show();
 }
 
-}  // namespace
-
-void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
+void ResizeMapDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
 {
-  CenterNextWindowOnAppearance();
-  if (Scoped::Modal modal{"Resize Map", gFlags}; modal.IsOpen()) {
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Rows:     ");
-    ImGui::SameLine();
+  auto rows = static_cast<int>(mRows);
+  ImGui::DragInt("Rows", &rows, 1.0f, 1, 10'000);
+  mRows = static_cast<usize>(rows);
 
-    auto rows = static_cast<int>(gRowCount);
-    ImGui::DragInt("##RowCountInput", &rows, 1.0f, 1, 10'000);
-    gRowCount = static_cast<usize>(rows);
-
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Columns:  ");
-    ImGui::SameLine();
-
-    auto cols = static_cast<int>(gColCount);
-    ImGui::DragInt("##ColumnCountInput", &cols, 1.0f, 1, 10'000);
-    gColCount = static_cast<usize>(cols);
-
-    ImGui::Spacing();
-    if (Button("OK", nullptr, IsInputValid())) {
-      dispatcher.enqueue<ResizeMapEvent>(gRowCount, gColCount);
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::SameLine();
-    if (Button("Cancel")) {
-      ImGui::CloseCurrentPopup();
-    }
-  }
+  auto cols = static_cast<int>(mColumns);
+  ImGui::DragInt("Columns", &cols, 1.0f, 1, 10'000);
+  mColumns = static_cast<usize>(cols);
 }
 
-void OpenResizeMapDialog(const usize currentRows, const usize currentColumns)
+void ResizeMapDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  gRowCount = currentRows;
-  gColCount = currentColumns;
-  ImGui::OpenPopup("Resize Map");
+  dispatcher.enqueue<ResizeMapEvent>(mRows, mColumns);
+}
+
+auto ResizeMapDialog::IsCurrentInputValid(const entt::registry&) const -> bool
+{
+  return mRows > 0u && mColumns > 0u;
 }
 
 }  // namespace Tactile

@@ -504,7 +504,7 @@ void Application::OnOpenResizeMapDialog()
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
     const auto& map = registry->ctx<Map>();
-    OpenResizeMapDialog(map.row_count, map.column_count);
+    mWidgets.ShowResizeMapDialog(map.row_count, map.column_count);
   }
 }
 

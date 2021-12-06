@@ -2,12 +2,32 @@
 
 #include <tactile_def.hpp>
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/entt.hpp>
+
+#include "dialog.hpp"
 
 namespace Tactile {
 
-void UpdateResizeMapDialog(entt::dispatcher& dispatcher);
+class ResizeMapDialog final : public ADialog {
+ public:
+  ResizeMapDialog();
 
-void OpenResizeMapDialog(usize currentRows, usize currentColumns);
+  ~ResizeMapDialog() override = default;
+
+  void Show(usize nCurrentRows, usize nCurrentColumns);
+
+ protected:
+  void UpdateContents(const entt::registry& registry,
+                      entt::dispatcher& dispatcher) override;
+
+  void OnAccept(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto IsCurrentInputValid(const entt::registry& registry) const
+      -> bool override;
+
+ private:
+  usize mRows{};
+  usize mColumns{};
+};
 
 }  // namespace Tactile

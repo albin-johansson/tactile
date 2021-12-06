@@ -4,6 +4,7 @@
 
 #include <entt/entt.hpp>
 
+#include "dialogs/resize_map_dialog.hpp"
 #include "layers/layer_dock.hpp"
 #include "menus/menu_bar.hpp"
 #include "properties/properties_dock.hpp"
@@ -35,6 +36,8 @@ class WidgetManager final {
 
   void ShowChangePropertyTypeDialog(std::string name, PropertyType type);
 
+  void ShowResizeMapDialog(usize currentRows, usize currentColumns);
+
   void SetToolbarVisible(bool visible);
 
   [[nodiscard]] auto IsEditorFocused() const -> bool;
@@ -58,6 +61,7 @@ class WidgetManager final {
   TilesetDock mTilesetDock;
   LayerDock mLayerDock;
   PropertiesDock mPropertiesDock;
+  ResizeMapDialog mResizeMapDialog;
 };
 
 }  // namespace Tactile
