@@ -32,9 +32,4 @@ void ResizeMapDialog::OnAccept(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ResizeMapEvent>(mRows, mColumns);
 }
 
-auto ResizeMapDialog::IsCurrentInputValid(const entt::registry&) const -> bool
-{
-  return mRows > 0u && mColumns > 0u;
-}
-
 }  // namespace Tactile
