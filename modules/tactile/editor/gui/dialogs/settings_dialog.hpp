@@ -1,27 +1,43 @@
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include "dialog.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 
 /// \addtogroup gui
 /// \{
 
-/**
- * \brief Updates the settings dialog.
- *
- * \param dispatcher the event dispatcher that will be used.
- *
- * \see `OpenSettingsDialog()`
- */
-void UpdateSettingsDialog(entt::dispatcher& dispatcher);
+class SettingsDialog final : public ADialog {
+ public:
+  SettingsDialog();
 
-/**
- * \brief Opens the settings dialog.
- *
- * \see `UpdateSettingsDialog()`
- */
-void OpenSettingsDialog();
+  ~SettingsDialog() override = default;
+
+  void Open();
+
+ protected:
+  void UpdateContents(const entt::registry& registry,
+                      entt::dispatcher& dispatcher) override;
+
+  void OnCancel() override;
+
+  void OnAccept(entt::dispatcher& dispatcher) override;
+
+  void OnApply(entt::dispatcher& dispatcher) override;
+
+ private:
+  Preferences mSnapshot; /* The original settings when the dialog was opened */
+  Preferences mSettings; /* The value of the settings in the GUI */
+
+  void ApplySettings(entt::dispatcher& dispatcher);
+
+  void UpdateBehaviorTab();
+
+  void UpdateAppearanceTab();
+
+  void UpdateExportTab();
+};
 
 /// \} End of group gui
 

@@ -66,24 +66,20 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    mOpenSettings =
-        ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,");
+    if (ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,")) {
+      mSettingsDialog.Open();
+    }
   }
 }
 
-void EditMenu::UpdateWindows(entt::dispatcher& dispatcher)
+void EditMenu::UpdateWindows(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (mOpenSettings) {
-    OpenSettingsDialog();
-    mOpenSettings = false;
-  }
-
-  UpdateSettingsDialog(dispatcher);
+  mSettingsDialog.Update(registry, dispatcher);
 }
 
 void EditMenu::OpenSettingsModal()
 {
-  mOpenSettings = true;
+  mSettingsDialog.Open();
 }
 
 }  // namespace Tactile

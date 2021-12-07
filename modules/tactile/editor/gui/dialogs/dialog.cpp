@@ -24,14 +24,24 @@ void ADialog::Update(const entt::registry& registry, entt::dispatcher& dispatche
 
     ImGui::Spacing();
 
-    if (Button(mAcceptButtonLabel, nullptr, IsCurrentInputValid(registry))) {
+    if (ImGui::Button("Cancel")) {
+      OnCancel();
+      ImGui::CloseCurrentPopup();
+    }
+
+    const auto valid = IsCurrentInputValid(registry);
+
+    ImGui::SameLine();
+
+    if (Button(mAcceptButtonLabel, nullptr, valid)) {
       OnAccept(dispatcher);
       ImGui::CloseCurrentPopup();
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Cancel")) {
-      ImGui::CloseCurrentPopup();
+
+    if (mApplyButtonLabel && Button(mApplyButtonLabel, nullptr, valid)) {
+      OnApply(dispatcher);
     }
   }
 }
@@ -44,6 +54,11 @@ void ADialog::Show()
 void ADialog::SetAcceptButtonLabel(const CStr label)
 {
   mAcceptButtonLabel = label;
+}
+
+void ADialog::SetApplyButtonLabel(const CStr label)
+{
+  mApplyButtonLabel = label;
 }
 
 }  // namespace Tactile

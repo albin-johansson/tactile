@@ -19,8 +19,14 @@ class ADialog {
   virtual void UpdateContents(const entt::registry& registry,
                               entt::dispatcher& dispatcher) = 0;
 
+  /* Invoked when the "Cancel" button is pressed */
+  virtual void OnCancel() {}
+
   /* Invoked when the "OK" (accept) button is pressed */
   virtual void OnAccept([[maybe_unused]] entt::dispatcher& dispatcher) {}
+
+  /* Invoked when the "Apply" (secondary accept) button is pressed */
+  virtual void OnApply([[maybe_unused]] entt::dispatcher& dispatcher) {}
 
   /* Indicates whether the current input state is acceptable */
   [[nodiscard]] virtual auto IsCurrentInputValid(
@@ -33,9 +39,12 @@ class ADialog {
 
   void SetAcceptButtonLabel(CStr label);
 
+  void SetApplyButtonLabel(CStr label);
+
  private:
   CStr mTitle;
   CStr mAcceptButtonLabel{"OK"};
+  CStr mApplyButtonLabel{}; /* By default, not shown (when null) */
   bool mShow{};
 };
 

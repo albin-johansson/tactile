@@ -1,6 +1,8 @@
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/entt.hpp>
+
+#include "editor/gui/dialogs/settings_dialog.hpp"
 
 namespace Tactile {
 
@@ -14,12 +16,12 @@ class EditMenu final {
   void Update(const Model& model, entt::dispatcher& dispatcher);
 
   /* Updates all associated windows. */
-  void UpdateWindows(entt::dispatcher& dispatcher);
+  void UpdateWindows(const entt::registry& registry, entt::dispatcher& dispatcher);
 
   void OpenSettingsModal();
 
  private:
-  bool mOpenSettings{};
+  SettingsDialog mSettingsDialog;
 };
 
 /// \} End of group gui

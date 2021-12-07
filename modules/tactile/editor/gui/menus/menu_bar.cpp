@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-#include "map_menu.hpp"
 #include "editor/model.hpp"
+#include "map_menu.hpp"
 
 namespace Tactile {
 
@@ -22,9 +22,9 @@ void MenuBar::Update(const Model& model, entt::dispatcher& dispatcher)
 
   if (const auto* registry = model.GetActiveRegistry()) {
     mFileMenu.UpdateWindows(*registry, dispatcher);
+    mEditMenu.UpdateWindows(*registry, dispatcher);
   }
 
-  mEditMenu.UpdateWindows(dispatcher);
   mMapMenu.UpdateWindows(dispatcher);
   mHelpMenu.UpdateWindows();
   mDebugMenu.UpdateWindows();
