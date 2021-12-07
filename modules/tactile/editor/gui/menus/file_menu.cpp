@@ -22,8 +22,10 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
   if (Scoped::Menu menu{"File"}; menu.IsOpen()) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
-    mShowNewMapDialog =
-        ImGui::MenuItem(TAC_ICON_FILE " New Map...", TACTILE_PRIMARY_MOD "+N");
+    if (ImGui::MenuItem(TAC_ICON_FILE " New Map...", TACTILE_PRIMARY_MOD "+N")) {
+      mAddMapDialog.Open();
+    }
+
     mShowOpenMapDialog =
         ImGui::MenuItem(TAC_ICON_OPEN " Open Map...", TACTILE_PRIMARY_MOD "+O");
 
@@ -59,14 +61,9 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 }
 
-void FileMenu::UpdateWindows(entt::dispatcher& dispatcher)
+void FileMenu::UpdateWindows(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (mShowNewMapDialog) {
-    OpenAddMapDialog();
-    mShowNewMapDialog = false;
-  }
-
-  UpdateAddMapDialog(dispatcher);
+  mAddMapDialog.Update(registry, dispatcher);
 
   if (mShowOpenMapDialog) {
     UpdateMapFileDialog(dispatcher);
@@ -75,7 +72,7 @@ void FileMenu::UpdateWindows(entt::dispatcher& dispatcher)
 
 void FileMenu::ShowNewMapDialog()
 {
-  mShowNewMapDialog = true;
+  mAddMapDialog.Open();
 }
 
 void FileMenu::ShowOpenMapDialog()

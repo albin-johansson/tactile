@@ -1,68 +1,39 @@
 #include "add_map_dialog.hpp"
 
+#include <cassert>  // assert
+
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"
-#include "editor/gui/alignment.hpp"
-#include "editor/gui/common/button.hpp"
-#include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
-namespace {
 
-constexpr auto gFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-
-constinit int gTileWidth = 32;
-constinit int gTileHeight = 32;
-
-void ResetState()
+AddMapDialog::AddMapDialog() : ADialog{"Create New Map"}
 {
-  gTileWidth = Prefs::GetPreferredTileWidth();
-  gTileHeight = Prefs::GetPreferredTileHeight();
+  SetAcceptButtonLabel("Create");
 }
 
-[[nodiscard]] auto IsInputValid() noexcept -> bool
+void AddMapDialog::Open()
 {
-  return gTileWidth > 0 && gTileHeight > 0;
+  ADialog::Show();
+  mTileWidth = Prefs::GetPreferredTileWidth();
+  mTileHeight = Prefs::GetPreferredTileHeight();
 }
 
-}  // namespace
-
-void UpdateAddMapDialog(entt::dispatcher& dispatcher)
+void AddMapDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
 {
-  CenterNextWindowOnAppearance();
-  if (Scoped::Modal modal{"Add map", gFlags}; modal.IsOpen()) {
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Tile width:  ");
-    ImGui::SameLine();
-    ImGui::DragInt("##TileWidthInput", &gTileWidth, 1.0f, 1, 10'000);
+  ImGui::DragInt("Tile width", &mTileWidth, 1.0f, 1, 10'000);
+  ImGui::DragInt("Tile height", &mTileHeight, 1.0f, 1, 10'000);
 
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Tile height: ");
-    ImGui::SameLine();
-    ImGui::DragInt("##TileHeightInput", &gTileHeight, 1.0f, 1, 10'000);
-
-    ImGui::Spacing();
-    if (Button("OK", nullptr, IsInputValid())) {
-      dispatcher.enqueue<AddMapEvent>(gTileWidth, gTileHeight);
-
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::SameLine();
-    if (Button("Cancel")) {
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-  }
+  // TODO include map size
 }
 
-void OpenAddMapDialog()
+void AddMapDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  ResetState();
-  ImGui::OpenPopup("Add map");
+  assert(mTileWidth > 0);
+  assert(mTileHeight > 0);
+  dispatcher.enqueue<AddMapEvent>(mTileWidth, mTileHeight);
 }
 
 }  // namespace Tactile

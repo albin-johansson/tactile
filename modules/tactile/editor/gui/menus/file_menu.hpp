@@ -2,6 +2,8 @@
 
 #include <entt/entt.hpp>
 
+#include "editor/gui/dialogs/add_map_dialog.hpp"
+
 namespace Tactile {
 
 class Model;
@@ -14,14 +16,14 @@ class FileMenu final {
   void Update(const Model& model, entt::dispatcher& dispatcher);
 
   /* Updates all associated windows. */
-  void UpdateWindows(entt::dispatcher& dispatcher);
+  void UpdateWindows(const entt::registry& registry, entt::dispatcher& dispatcher);
 
   void ShowNewMapDialog();
 
   void ShowOpenMapDialog();
 
  private:
-  bool mShowNewMapDialog{};
+  AddMapDialog mAddMapDialog;
   bool mShowOpenMapDialog{};
 
   void UpdateRecentFilesMenu(entt::dispatcher& dispatcher);

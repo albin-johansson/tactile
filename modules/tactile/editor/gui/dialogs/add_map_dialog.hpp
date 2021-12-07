@@ -1,27 +1,30 @@
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include "dialog.hpp"
 
 namespace Tactile {
 
 /// \addtogroup gui
 /// \{
 
-/**
- * \brief Updates the dialog for creating tilemaps.
- *
- * \param dispatcher the event dispatcher that will be used.
- *
- * \see `OpenAddMapDialog()`
- */
-void UpdateAddMapDialog(entt::dispatcher& dispatcher);
+class AddMapDialog final : public ADialog {
+ public:
+  AddMapDialog();
 
-/**
- * \brief Opens the dialog for creating new tilemaps.
- *
- * \see `UpdateAddMapDialog()`
- */
-void OpenAddMapDialog();
+  ~AddMapDialog() override = default;
+
+  void Open();
+
+ protected:
+  void UpdateContents(const entt::registry& registry,
+                      entt::dispatcher& dispatcher) override;
+
+  void OnAccept(entt::dispatcher& dispatcher) override;
+
+ private:
+  int mTileWidth{};
+  int mTileHeight{};
+};
 
 /// \} End of group gui
 
