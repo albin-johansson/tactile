@@ -18,8 +18,7 @@
 namespace Tactile::IO {
 
 /* Simple strong integral type for use in property value variant */
-enum ObjectRef : int32
-{};
+enum ObjectRef : int32 {};
 
 /// \brief Intermediate representation of a property.
 struct Property final {

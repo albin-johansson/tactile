@@ -5,11 +5,11 @@
 #include <IconsFontAwesome5.h>
 #include <imgui.h>
 
+#include "build.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "io/preferences.hpp"
 #include "style.hpp"
-#include "build.hpp"
 #include "themes.hpp"
 
 namespace Tactile {

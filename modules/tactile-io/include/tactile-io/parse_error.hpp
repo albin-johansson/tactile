@@ -19,8 +19,7 @@ namespace Tactile::IO {
  *
  * \see `GetCause()`
  */
-enum class ParseError
-{
+enum class ParseError {
   None,
   Unknown,
   CouldNotReadFile,

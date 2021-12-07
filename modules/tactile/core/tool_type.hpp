@@ -5,8 +5,7 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
-enum class ToolType
-{
+enum class ToolType {
   None,
   Stamp,
   Eraser,

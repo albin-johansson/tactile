@@ -53,8 +53,7 @@ using Maybe = std::optional<T>;
 constexpr std::nullopt_t nothing = std::nullopt;
 
 /// \brief Provides values for all different possible property types.
-enum class PropertyType
-{
+enum class PropertyType {
   String,    ///< A string property.
   Integer,   ///< An integer property.
   Floating,  ///< A floating-point property.
@@ -65,16 +64,14 @@ enum class PropertyType
 };
 
 /// \brief Represents the different available map object types.
-enum class ObjectType
-{
+enum class ObjectType {
   Point,
   Rectangle,
   Ellipse
 };
 
 /// \brief Represents all different layer types.
-enum class LayerType
-{
+enum class LayerType {
   TileLayer,
   ObjectLayer,
   GroupLayer

@@ -31,8 +31,7 @@ namespace Tactile::IO {
  * space, but it will make the save files completely unreadable by humans. It's probably
  * wise to keep this option enabled.
  */
-enum EmitterOption : uint32
-{
+enum EmitterOption : uint32 {
   EmitterOption_EmbedTilesets = 1u << 0u,  ///< Store tilesets in the main map file.
   EmitterOption_FoldTileData = 1u << 1u,   ///< Make tile layer data more readable.
   EmitterOption_IndentOutput = 1u << 2u    ///< Make files human-readable.

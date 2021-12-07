@@ -14,8 +14,7 @@ namespace Tactile {
 /// \{
 
 /* Do not change the values of this enum! */
-enum class OverlayPos
-{
+enum class OverlayPos {
   TopLeft = 0,
   TopRight = 1,
   BottomLeft = 2,
@@ -23,8 +22,7 @@ enum class OverlayPos
 };
 
 /// \brief Represents the different available themes.
-enum class Theme
-{
+enum class Theme {
   DearDark = 0,   ///< The standard Dear ImGui dark theme.
   DearLight = 1,  ///< The standard Dear ImGui light theme.
   Ruby = 2,

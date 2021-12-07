@@ -35,8 +35,7 @@ struct Color final {
 };
 
 /// \brief Represents different map formats.
-enum class MapFormat
-{
+enum class MapFormat {
   Unsupported,  ///< Unsupported/invalid/unknown map format.
   Yaml,         ///< Tactile YAML map format.
   Json,         ///< Tiled JSON map format.

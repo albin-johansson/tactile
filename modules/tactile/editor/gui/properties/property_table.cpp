@@ -6,19 +6,20 @@
 
 #include <imgui.h>
 
+#include "build.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property.hpp"
-#include "build.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/property_system.hpp"
+#include "dialogs/change_property_type_dialog.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
-#include "dialogs/change_property_type_dialog.hpp"
+#include "editor/gui/scoped.hpp"
 #include "items/bool_property_widget.hpp"
 #include "items/color_property_widget.hpp"
 #include "items/file_property_widget.hpp"
@@ -26,7 +27,6 @@
 #include "items/int_property_widget.hpp"
 #include "items/object_property_widget.hpp"
 #include "items/string_property_widget.hpp"
-#include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 namespace {

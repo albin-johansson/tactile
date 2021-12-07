@@ -13,8 +13,7 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
-enum ObjectRef : int32
-{};
+enum ObjectRef : int32 {};
 
 // clang-format off
 

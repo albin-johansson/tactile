@@ -1,8 +1,8 @@
 #pragma once
 
+#include <array>        // array
 #include <string>       // string
 #include <string_view>  // string_view
-#include <array>        // array
 
 #include <tactile_def.hpp>
 

@@ -2,13 +2,13 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
-
 #include <tactile_def.hpp>
 
+#include <entt/entt.hpp>
+
 #include "dialogs/add_property_dialog.hpp"
-#include "dialogs/rename_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
+#include "dialogs/rename_property_dialog.hpp"
 #include "property_table.hpp"
 
 namespace Tactile {

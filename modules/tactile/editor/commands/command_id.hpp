@@ -6,8 +6,7 @@ namespace Tactile {
 /// \{
 
 struct CommandId final {
-  enum Value
-  {
+  enum Value {
     AddRow,
     AddColumn,
     RemoveRow,
