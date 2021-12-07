@@ -1,4 +1,4 @@
-#include "add_map_dialog.hpp"
+#include "create_map_dialog.hpp"
 
 #include <cassert>  // assert
 
@@ -12,12 +12,12 @@
 
 namespace Tactile {
 
-AddMapDialog::AddMapDialog() : ADialog{"Create New Map"}
+CreateMapDialog::CreateMapDialog() : ADialog{"Create New Map"}
 {
   SetAcceptButtonLabel("Create");
 }
 
-void AddMapDialog::Open()
+void CreateMapDialog::Open()
 {
   ADialog::Show();
   mTileWidth = Prefs::GetPreferredTileWidth();
@@ -26,7 +26,7 @@ void AddMapDialog::Open()
   mColumns = 5;
 }
 
-void AddMapDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
+void CreateMapDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
 {
   {
     CStr rowsLabel = "Rows:";
@@ -63,19 +63,19 @@ void AddMapDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
   }
 }
 
-void AddMapDialog::OnAccept(entt::dispatcher& dispatcher)
+void CreateMapDialog::OnAccept(entt::dispatcher& dispatcher)
 {
   assert(mTileWidth > 0);
   assert(mTileHeight > 0);
   assert(mRows > 0);
   assert(mColumns > 0);
-  dispatcher.enqueue<AddMapEvent>(mTileWidth,
-                                  mTileHeight,
-                                  static_cast<usize>(mRows),
-                                  static_cast<usize>(mColumns));
+  dispatcher.enqueue<CreateMapEvent>(mTileWidth,
+                                     mTileHeight,
+                                     static_cast<usize>(mRows),
+                                     static_cast<usize>(mColumns));
 }
 
-auto AddMapDialog::IsCurrentInputValid(const entt::registry&) const -> bool
+auto CreateMapDialog::IsCurrentInputValid(const entt::registry&) const -> bool
 {
   return (mTileWidth > 0) && (mTileHeight > 0) && (mRows > 0) && (mColumns > 0);
 }

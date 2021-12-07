@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-#include "editor/gui/dialogs/add_map_dialog.hpp"
+#include "editor/gui/dialogs/create_map_dialog.hpp"
 
 namespace Tactile {
 
@@ -23,7 +23,7 @@ class FileMenu final {
   void ShowOpenMapDialog();
 
  private:
-  AddMapDialog mAddMapDialog;
+  CreateMapDialog mCreateMapDialog;
   bool mShowOpenMapDialog{};
 
   void UpdateRecentFilesMenu(entt::dispatcher& dispatcher);

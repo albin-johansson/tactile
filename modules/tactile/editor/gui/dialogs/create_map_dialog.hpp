@@ -7,11 +7,11 @@ namespace Tactile {
 /// \addtogroup gui
 /// \{
 
-class AddMapDialog final : public ADialog {
+class CreateMapDialog final : public ADialog {
  public:
-  AddMapDialog();
+  CreateMapDialog();
 
-  ~AddMapDialog() override = default;
+  ~CreateMapDialog() override = default;
 
   void Open();
 

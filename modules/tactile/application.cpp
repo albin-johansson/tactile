@@ -275,7 +275,7 @@ void Application::OnShowMapProperties()
   }
 }
 
-void Application::OnAddMap(const AddMapEvent& event)
+void Application::OnCreateMap(const CreateMapEvent& event)
 {
   const auto id = mModel.AddMap(event.tile_width,
                                 event.tile_height,

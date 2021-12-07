@@ -8,7 +8,6 @@
 #include "editor/events/map_events.hpp"
 #include "editor/events/quit_event.hpp"
 #include "editor/events/save_events.hpp"
-#include "editor/gui/dialogs/add_map_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -22,8 +21,8 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
   if (Scoped::Menu menu{"File"}; menu.IsOpen()) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
-    if (ImGui::MenuItem(TAC_ICON_FILE " New Map...", TACTILE_PRIMARY_MOD "+N")) {
-      mAddMapDialog.Open();
+    if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
+      mCreateMapDialog.Open();
     }
 
     mShowOpenMapDialog =
@@ -63,7 +62,7 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
 void FileMenu::UpdateWindows(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  mAddMapDialog.Update(registry, dispatcher);
+  mCreateMapDialog.Update(registry, dispatcher);
 
   if (mShowOpenMapDialog) {
     UpdateMapFileDialog(dispatcher);
@@ -72,7 +71,7 @@ void FileMenu::UpdateWindows(const entt::registry& registry, entt::dispatcher& d
 
 void FileMenu::ShowNewMapDialog()
 {
-  mAddMapDialog.Open();
+  mCreateMapDialog.Open();
 }
 
 void FileMenu::ShowOpenMapDialog()

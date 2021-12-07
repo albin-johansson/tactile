@@ -25,7 +25,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<ShowNewMapDialogEvent>().connect<&App::OnShowNewMapDialog>(app);
   d.sink<ShowOpenMapDialogEvent>().connect<&App::OnShowOpenMapDialog>(app);
   d.sink<ShowMapPropertiesEvent>().connect<&App::OnShowMapProperties>(app);
-  d.sink<AddMapEvent>().connect<&App::OnAddMap>(app);
+  d.sink<CreateMapEvent>().connect<&App::OnCreateMap>(app);
   d.sink<CloseMapEvent>().connect<&App::OnCloseMap>(app);
   d.sink<OpenMapEvent>().connect<&App::OnOpenMap>(app);
   d.sink<SelectMapEvent>().connect<&App::OnSelectMap>(app);

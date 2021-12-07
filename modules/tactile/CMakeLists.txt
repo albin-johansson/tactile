@@ -270,8 +270,8 @@ set(SOURCE_FILES
 
     editor/gui/dialogs/about_dialog.cpp
     editor/gui/dialogs/about_dialog.hpp
-    editor/gui/dialogs/add_map_dialog.cpp
-    editor/gui/dialogs/add_map_dialog.hpp
+    editor/gui/dialogs/create_map_dialog.cpp
+    editor/gui/dialogs/create_map_dialog.hpp
     editor/gui/dialogs/credits_dialog.cpp
     editor/gui/dialogs/credits_dialog.hpp
     editor/gui/dialogs/dialog.cpp

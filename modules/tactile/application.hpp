@@ -63,7 +63,7 @@ class Application final {
   void OnShowNewMapDialog();
   void OnShowOpenMapDialog();
   void OnShowMapProperties();
-  void OnAddMap(const AddMapEvent& event);
+  void OnCreateMap(const CreateMapEvent& event);
   void OnCloseMap(const CloseMapEvent& event);
   void OnOpenMap(const OpenMapEvent& event);
   void OnSelectMap(const SelectMapEvent& event);

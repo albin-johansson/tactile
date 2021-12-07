@@ -21,7 +21,7 @@ struct RemoveRowEvent final {};
 
 struct RemoveColumnEvent final {};
 
-struct AddMapEvent final {
+struct CreateMapEvent final {
   int32 tile_width{};
   int32 tile_height{};
   usize row_count{};
