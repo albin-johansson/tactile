@@ -3,6 +3,8 @@
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
 
+#include <tactile_def.hpp>
+
 #include <entt/entt.hpp>  // registry
 
 #include "core/utils/vector_map.hpp"
@@ -27,7 +29,7 @@ class Model final {
 
   auto AddMap(Document document) -> MapID;
 
-  auto AddMap(int tileWidth, int tileHeight) -> MapID;
+  auto AddMap(int tileWidth, int tileHeight, usize rows, usize columns) -> MapID;
 
   void SelectMap(MapID id);
 

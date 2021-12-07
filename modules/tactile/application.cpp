@@ -277,7 +277,10 @@ void Application::OnShowMapProperties()
 
 void Application::OnAddMap(const AddMapEvent& event)
 {
-  const auto id = mModel.AddMap(event.tile_width, event.tile_height);
+  const auto id = mModel.AddMap(event.tile_width,
+                                event.tile_height,
+                                event.row_count,
+                                event.column_count);
   mModel.SelectMap(id);
 }
 

@@ -86,7 +86,10 @@ auto Model::AddMap(Document document) -> MapID
   return id;
 }
 
-auto Model::AddMap(const int tileWidth, const int tileHeight) -> MapID
+auto Model::AddMap(const int tileWidth,
+                   const int tileHeight,
+                   const usize rows,
+                   const usize columns) -> MapID
 {
   assert(tileWidth > 0);
   assert(tileHeight > 0);
@@ -97,6 +100,8 @@ auto Model::AddMap(const int tileWidth, const int tileHeight) -> MapID
   auto& map = document.registry.ctx<Map>();
   map.tile_width = tileWidth;
   map.tile_height = tileHeight;
+  map.row_count = rows;
+  map.column_count = columns;
 
   return AddMap(std::move(document));
 }

@@ -21,9 +21,14 @@ class AddMapDialog final : public ADialog {
 
   void OnAccept(entt::dispatcher& dispatcher) override;
 
+  [[nodiscard]] auto IsCurrentInputValid(const entt::registry& registry) const
+      -> bool override;
+
  private:
   int mTileWidth{};
   int mTileHeight{};
+  int mRows{};
+  int mColumns{};
 };
 
 /// \} End of group gui
