@@ -47,10 +47,9 @@ namespace {
 void InitLogger()
 {
   SDL_LogSetOutputFunction(
-      [](void* /*data*/,
-         int /*category*/,
-         const SDL_LogPriority priority,
-         const char* msg) { LogMessage(static_cast<cen::log_priority>(priority), msg); },
+      [](void*, int, const SDL_LogPriority priority, const CStr msg) {
+        LogMessage(static_cast<cen::log_priority>(priority), msg);
+      },
       nullptr);
 
   if constexpr (IsDebugBuild()) {
@@ -65,7 +64,7 @@ void LogMessage(const cen::log_priority priority, const CStr msg)
 {
   auto time = std::time(nullptr);
 
-  const auto str = fmt::format("{:%H:%M:%S} [{}]: {}\n",
+  const auto str = fmt::format("{:%H:%M:%S} [{}] > {}\n",
                                fmt::localtime(time),
                                ConvertPriority(priority),
                                msg);
