@@ -46,6 +46,9 @@ ApplicationConfiguration::ApplicationConfiguration()
     throw TactileError{"Failed to initialize GLEW!"};
   }
 
+  SDL_Log("OpenGL version... %s", glGetString(GL_VERSION));
+  SDL_Log("OpenGL renderer... %s", glGetString(GL_RENDERER));
+
   LoadPreferences();
 
   assert(mOpenGL.has_value());
