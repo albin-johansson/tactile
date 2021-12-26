@@ -7,7 +7,7 @@ env:
   SDL_VIDEODRIVER: x11
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
-  VCPKG_COMMIT_ID: 70033dbb31527fb3e69654731f540f59c87787f9
+  VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
 
 jobs:
   ubuntu-latest-test:
