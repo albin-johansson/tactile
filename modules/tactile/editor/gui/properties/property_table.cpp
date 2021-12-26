@@ -136,8 +136,6 @@ void ShowNativeMapProperties(const std::string& name, const Map& map)
 
   NativeReadOnlyRow("Row count", map.row_count);
   NativeReadOnlyRow("Column count", map.column_count);
-
-  ImGui::Separator();
 }
 
 void ShowNativeTilesetProperties(const std::string& name,
@@ -163,8 +161,6 @@ void ShowNativeTilesetProperties(const std::string& name,
 
   NativeReadOnlyRow("Tile width", tileset.tile_width);
   NativeReadOnlyRow("Tile height", tileset.tile_height);
-
-  ImGui::Separator();
 }
 
 void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
@@ -194,8 +190,6 @@ void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
   if (const auto value = NativeVisibilityRow(layer.visible)) {
     dispatcher.enqueue<SetLayerVisibleEvent>(layer.id, *value);
   }
-
-  ImGui::Separator();
 }
 
 void ShowNativeObjectProperties(const std::string& name,
@@ -242,8 +236,6 @@ void ShowNativeObjectProperties(const std::string& name,
   if (const auto tag = StringPropertyWidget(object.tag)) {
     dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
   }
-
-  ImGui::Separator();
 }
 
 }  // namespace
