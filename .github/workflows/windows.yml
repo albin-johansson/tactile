@@ -4,6 +4,7 @@ on: [ push, pull_request ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}\vcpkg
+  VCPKG_TARGET_TRIPLET: x64-windows-static
   VCPKG_DEFAULT_TRIPLET: x64-windows-static
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg\bincache
   VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
@@ -40,13 +41,6 @@ jobs:
         shell: powershell
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
-      - name: Make Tactile triplet file available to Vcpkg
-        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        working-directory: ./cmake
-        shell: cmd
-        run: copy "x64-tactile-windows.cmake" ^
-                  "%VCPKG_ROOT%\triplets\community\x64-tactile-windows.cmake"
-
       - name: Create build directory
         shell: cmd
         run: mkdir build
@@ -54,7 +48,7 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: cmd
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=x64-tactile-windows -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} -GNinja
 
       - name: Build
         working-directory: ./build
