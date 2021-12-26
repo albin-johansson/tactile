@@ -131,7 +131,7 @@ TEST(LayerSystem, RemoveLayer)
 
   Sys::RemoveLayer(registry, b);
   ASSERT_EQ(0, Sys::GetLayerIndex(registry, h));
-  ASSERT_EQ(1, registry.size<Layer>());
+  ASSERT_EQ(1, registry.storage<Layer>().size());
 
   // Make sure all child layers were destroyed
   ASSERT_FALSE(registry.valid(a));
