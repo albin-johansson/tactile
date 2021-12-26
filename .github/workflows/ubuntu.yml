@@ -6,6 +6,7 @@ env:
   DISPLAY: :99.0
   SDL_VIDEODRIVER: x11
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
+  VCPKG_TARGET_TRIPLET: x64-linux
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
 
@@ -64,11 +65,6 @@ jobs:
         shell: bash
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
-      - name: Make Tactile triplet file available to Vcpkg
-        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        shell: bash
-        run: mv "${{github.workspace}}/cmake/x64-tactile-linux.cmake" "${{env.VCPKG_ROOT}}/triplets/community/x64-tactile-linux.cmake"
-
       - name: Create build directory
         shell: bash
         run: mkdir -p build
@@ -79,7 +75,7 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} -GNinja
 
       - name: Build
         working-directory: ./build
