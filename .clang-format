@@ -10,6 +10,10 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 
 IndentRequires: true
+IndentCaseLabels: true
+IndentAccessModifiers: true
+
+AccessModifierOffset: 1
 
 NamespaceIndentation: None
 FixNamespaceComments: true
@@ -65,20 +69,12 @@ IncludeBlocks: Regroup
 IncludeCategories:
   # Standard headers, located in <> with no extension.
   - Regex: '<([A-Za-z0-9\_\-]+)>'
-    Priority: 10
-
-  # Tactile base headers, using the format <tactile_foo.hpp>
-  - Regex: '<tactile_([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
-    Priority: 12
-
-  # Tactile IO or base headers
-  - Regex: '<((tactile-io|tactile-base)\/)+([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
-    Priority: 13
+    SortPriority: 1
 
   # Headers in <> with extension and optional prefix.
   - Regex: '<([A-Za-z0-9\_\-]+\/)*(\.\.)*([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
-    Priority: 15
+    SortPriority: 2
 
   # Headers in "" with extension.
   - Regex: '"([A-Za-z0-9.\Q/-_\E])+"'
-    Priority: 40
+    SortPriority: 3
