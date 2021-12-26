@@ -84,7 +84,7 @@ void LayerDock::Update(const entt::registry& registry,
 
   if (dock.IsOpen()) {
     UpdateLayerDockButtons(registry, dispatcher);
-    if (registry.empty<Layer>()) {
+    if (registry.view<Layer>().empty()) {
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available layers!");
     }

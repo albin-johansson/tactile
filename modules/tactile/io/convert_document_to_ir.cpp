@@ -229,13 +229,13 @@ auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr
   IO::SetRowCount(*data, map.row_count);
   IO::SetColumnCount(*data, map.column_count);
 
-  IO::ReserveTilesets(*data, registry.size<Tileset>());
+  IO::ReserveTilesets(*data, registry.storage<Tileset>().size());
   for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
     auto& tilesetData = IO::AddTileset(*data);
     ConvertTileset(tilesetData, registry, entity, tileset);
   }
 
-  IO::ReserveLayers(*data, registry.size<LayerTreeNode>());  // Will overestimate, oh well
+  IO::ReserveLayers(*data, registry.storage<LayerTreeNode>().size());
   for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
     const auto& parent = registry.get<Parent>(entity);
     if (parent.entity == entt::null) {

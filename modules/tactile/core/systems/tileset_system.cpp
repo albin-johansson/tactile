@@ -169,7 +169,7 @@ void RemoveTileset(entt::registry& registry, const TilesetID id)
 
   registry.destroy(entity);
 
-  if (!registry.empty<Tileset>()) {
+  if (!registry.view<Tileset>().empty()) {
     activeTileset.entity = registry.view<Tileset>().front();
   }
 }
