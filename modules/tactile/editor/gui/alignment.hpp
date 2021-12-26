@@ -17,7 +17,7 @@ template <typename... Strings>
 [[nodiscard]] auto GetMinimumOffsetToAlign(Strings&&... strings) -> float
 {
   const auto spacing = ImGui::GetStyle().ItemSpacing.x * 2.0f;
-  return spacing + std::max({ImGui::CalcTextSize(strings).x...});
+  return spacing + (std::max)({ImGui::CalcTextSize(strings).x...});
 }
 
 }  // namespace Tactile
