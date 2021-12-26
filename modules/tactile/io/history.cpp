@@ -1,6 +1,6 @@
 #include "history.hpp"
 
-#include <algorithm>   // find_if
+#include <algorithm>   // find, find_if
 #include <filesystem>  // exists
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
@@ -10,6 +10,7 @@
 #include <tactile_stdlib.hpp>
 
 #include "directories.hpp"
+#include "logging.hpp"
 
 #include <history.pb.h>
 
@@ -39,11 +40,13 @@ void LoadFileHistory()
     }
 
     for (auto file : h.files()) {
-      gHistory.push_back(std::move(file));
+      if (std::find(gHistory.begin(), gHistory.end(), file) != gHistory.end()) {
+        gHistory.push_back(std::move(file));
+      }
     }
   }
   else {
-    cen::log::warn("Failed to parse history file!");
+    LogWarning("Failed to read history file!");
   }
 }
 
@@ -62,7 +65,7 @@ void SaveFileHistory()
   {
     std::ofstream stream{gFilePath, std::ios::out | std::ios::trunc | std::ios::binary};
     if (!h.SerializeToOstream(&stream)) {
-      cen::log::error("Failed to save file history!");
+      LogError("Failed to save file history!");
     }
   }
 }
@@ -74,16 +77,16 @@ void ClearFileHistory()
 
 void AddFileToHistory(const std::filesystem::path& path)
 {
-  const auto it = std::find_if(gHistory.begin(),
-                               gHistory.end(),
-                               [&](const std::string& str) { return str == path; });
-
-  if (it == gHistory.end()) {
-    gHistory.push_back(ConvertToForwardSlashes(path));
+  auto converted = ConvertToForwardSlashes(path);
+  if (std::find(gHistory.begin(), gHistory.end(), converted) == gHistory.end()) {
+    gHistory.push_back(std::move(converted));
 
     if (gHistory.size() > gMaxSize) {
       gHistory.pop_front();
     }
+  }
+  else {
+    LogInfo("Did not store already present \"{}\" in file history", converted);
   }
 }
 

@@ -5,8 +5,6 @@
 
 #include <tactile_io.hpp>
 
-#include <centurion.hpp>  // CENTURION_LOG_{}
-
 #include "convert_document_to_ir.hpp"
 #include "core/utils/profile.hpp"
 #include "io/preferences.hpp"
@@ -41,14 +39,14 @@ void SaveDocument(const Document& document)
   TACTILE_PROFILE_START
 
   const auto path = std::filesystem::absolute(document.path);
-  cen::log::info("Trying to save map to %S", path.c_str());
+  LogInfo("Trying to save map to {}", path.c_str());
 
   const auto data = ConvertDocumentToIR(document);
   if (IO::EmitMap(*data, GetEmitterOptions())) {
     TACTILE_PROFILE_END("Emitted document")
   }
   else {
-    cen::log::warn("Something went wrong when emitting the map!");
+    LogWarning("Failed to emit map!");
   }
 }
 

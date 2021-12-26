@@ -5,8 +5,9 @@
 #include <memory>  // unique_ptr
 
 #include <GL/glew.h>
-#include <centurion.hpp>
 #include <stb_image.h>
+
+#include "logging.hpp"
 
 namespace Tactile {
 namespace {
@@ -22,7 +23,7 @@ using TextureDataPtr = std::unique_ptr<uchar, TextureDataDeleter>;
 TextureManager::~TextureManager()
 {
   for (const auto texture : mTextures) {
-    CENTURION_LOG_DEBUG("Deleting texture %u...", texture);
+    LogDebug("Deleting texture {}", texture);
     glDeleteTextures(1, &texture);
   }
 
@@ -68,7 +69,7 @@ auto TextureManager::Load(const std::filesystem::path& path) -> Maybe<Texture>
                GL_UNSIGNED_BYTE,
                data.get());
 
-  CENTURION_LOG_DEBUG("Loaded texture with ID: %u", texture.id);
+  LogDebug("Loaded texture with ID {}", texture.id);
   mTextures.push_back(texture.id);
 
   return texture;

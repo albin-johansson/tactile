@@ -50,7 +50,7 @@
 
 namespace Tactile {
 
-[[nodiscard]] constexpr auto IsDebugBuild() noexcept -> bool
+[[nodiscard]] consteval auto IsDebugBuild() noexcept -> bool
 {
 #if TACTILE_DEBUG
   return true;
@@ -59,12 +59,12 @@ namespace Tactile {
 #endif  // TACTILE_DEBUG
 }
 
-[[nodiscard]] constexpr auto IsReleaseBuild() noexcept -> bool
+[[nodiscard]] consteval auto IsReleaseBuild() noexcept -> bool
 {
   return !IsDebugBuild();
 }
 
-[[nodiscard]] constexpr auto IsPlatformWindows() noexcept -> bool
+[[nodiscard]] consteval auto IsPlatformWindows() noexcept -> bool
 {
 #if TACTILE_PLATFORM_WINDOWS
   return true;
@@ -73,7 +73,7 @@ namespace Tactile {
 #endif  // TACTILE_PLATFORM_WINDOWS
 }
 
-[[nodiscard]] constexpr auto IsPlatformOSX() noexcept -> bool
+[[nodiscard]] consteval auto IsPlatformOSX() noexcept -> bool
 {
 #if TACTILE_PLATFORM_OSX
   return true;

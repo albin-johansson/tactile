@@ -8,6 +8,7 @@
 
 #include "editor/events/save_events.hpp"
 #include "io/preferences.hpp"
+#include "logging.hpp"
 
 namespace Tactile {
 namespace {
@@ -27,8 +28,10 @@ void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
       if (!path.ends_with(".json") && !path.ends_with(".tmx") &&
           !path.ends_with(".xml") && !path.ends_with(".yml") &&
           !path.ends_with(".yaml")) {
-        cen::log::info("No suffix in specified file path, assuming preferred format");
-        if (const auto& format = Prefs::GetPreferredFormat(); format == "YAML") {
+        const auto& format = Prefs::GetPreferredFormat();
+        LogInfo("No suffix provided in requested file path, using preferred format ({})",
+                format);
+        if (format == "YAML") {
           path += ".yaml";
         }
         else if (format == "JSON") {

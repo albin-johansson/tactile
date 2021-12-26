@@ -16,13 +16,13 @@ set(SOURCE_FILES
     application_events.cpp
     application_events.hpp
     build.hpp
+    logging.cpp
+    logging.hpp
 
     cfg/attributes.cpp
     cfg/attributes.hpp
     cfg/configuration.cpp
     cfg/configuration.hpp
-    cfg/logging.cpp
-    cfg/logging.hpp
     cfg/protobuf_context.cpp
     cfg/protobuf_context.hpp
 

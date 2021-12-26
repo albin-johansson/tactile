@@ -12,6 +12,7 @@
 #include "directories.hpp"
 #include "editor/model.hpp"
 #include "map_parser.hpp"
+#include "logging.hpp"
 
 #include <session.pb.h>
 
@@ -36,12 +37,12 @@ void RestoreLastSession(Model& model, TextureManager& textures)
         model.AddMap(CreateDocumentFromIR(parser.GetData(), textures));
       }
       else {
-        cen::log::warn("Failed to restore a map from previous session!");
+        LogWarning("Failed to restore map from last session!");
       }
     }
   }
   else {
-    cen::log::warn("Failed to parse binary session file!");
+    LogWarning("Failed to parse binary session file!");
   }
 }
 
@@ -57,7 +58,7 @@ void SaveSession(const Model& model)
 
   std::ofstream stream{gFilePath, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!session.SerializeToOstream(&stream)) {
-    cen::log::error("Failed to save session binary file!");
+    LogError("Failed to save session file!");
   }
 }
 

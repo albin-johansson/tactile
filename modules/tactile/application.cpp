@@ -32,6 +32,7 @@
 #include "io/preferences.hpp"
 #include "io/save_document.hpp"
 #include "io/session.hpp"
+#include "logging.hpp"
 
 namespace Tactile {
 namespace {
@@ -294,7 +295,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
 {
   /* Just silently ignore the request if the map is already open */
   if (mModel.HasDocumentWithPath(event.path)) {
-    cen::log::warn("Tried to open map that was already open!");
+    LogWarning("Tried to open map that was already open!");
     return;
   }
 
@@ -442,7 +443,7 @@ void Application::OnAddTileset(const AddTilesetEvent& event)
     Execute<AddTilesetCmd>(mModel, std::move(*info), event.tile_width, event.tile_height);
   }
   else {
-    cen::log::error("Failed to load tileset texture!");
+    LogError("Failed to load tileset texture!");
   }
 }
 

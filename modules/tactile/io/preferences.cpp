@@ -11,11 +11,12 @@
 #include <magic_enum.hpp>  // enum_name
 
 #include "directories.hpp"
+#include "logging.hpp"
 
 #include <settings.pb.h>
 
 #define PRINT_FLAG(Name, Mask) \
-  CENTURION_LOG_INFO(Name "... %s", (prefs.flags & (Mask)) ? "yes" : "no")
+  LogInfo(Name "... {}", (prefs.flags & (Mask)) ? "yes" : "no")
 
 namespace Tactile {
 namespace {
@@ -54,16 +55,15 @@ inline Preferences settings = MakeDefaultPreferences();
 
 void PrintPreferences(Preferences& prefs)
 {
-  CENTURION_LOG_INFO("Theme... %s", magic_enum::enum_name(prefs.theme).data());
-  CENTURION_LOG_INFO("Viewport background... %s",
-                     prefs.viewport_background.as_rgb().c_str());
+  LogInfo("Theme... {}", magic_enum::enum_name(prefs.theme));
+  LogInfo("Viewport background... {}", prefs.viewport_background.as_rgb());
 
-  CENTURION_LOG_INFO("Command capacity... %u", prefs.command_capacity);
-  CENTURION_LOG_INFO("Preferred tile width... %i", prefs.preferred_tile_width);
-  CENTURION_LOG_INFO("Preferred tile height... %i", prefs.preferred_tile_height);
+  LogInfo("Command capacity... {}", prefs.command_capacity);
+  LogInfo("Preferred tile width... {}", prefs.preferred_tile_width);
+  LogInfo("Preferred tile height... {}", prefs.preferred_tile_height);
 
-  CENTURION_LOG_INFO("Preferred format... %s", prefs.preferred_format.c_str());
-  CENTURION_LOG_INFO("Viewport overlay pos... %i", prefs.viewport_overlay_pos);
+  LogInfo("Preferred format... {}", prefs.preferred_format.c_str());
+  LogInfo("Viewport overlay pos... {}", prefs.viewport_overlay_pos);
 
   PRINT_FLAG("Embed tilesets", Preferences::embed_tilesets);
   PRINT_FLAG("Indent output", Preferences::indent_output);
@@ -184,7 +184,7 @@ void LoadPreferences()
     }
   }
   else {
-    cen::log::info("Settings file not found, using default preferences");
+    LogInfo("Did not find preferences file, assuming defaults");
     SavePreferences();
   }
 
@@ -226,7 +226,7 @@ void SavePreferences()
 
   std::ofstream stream{gSettingsPath, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
-    cen::log::error("Failed to save settings!");
+    LogError("Failed to save preferences!");
   }
 }
 

@@ -39,15 +39,14 @@ ApplicationConfiguration::ApplicationConfiguration()
   mOpenGL->make_current(*mWindow);
 
   SDL_GL_SetSwapInterval(1); /* Enables VSync */
-  InitLogger();
 
   if (glewInit() != GLEW_OK) {
-    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to initialize GLEW!");
+    LogError("Failed to initialize GLEW!");
     throw TactileError{"Failed to initialize GLEW!"};
   }
 
-  SDL_Log("OpenGL version... %s", glGetString(GL_VERSION));
-  SDL_Log("OpenGL renderer... %s", glGetString(GL_RENDERER));
+  LogDebug("OpenGL version... {}", glGetString(GL_VERSION));
+  LogDebug("OpenGL renderer... {}", glGetString(GL_RENDERER));
 
   LoadPreferences();
 

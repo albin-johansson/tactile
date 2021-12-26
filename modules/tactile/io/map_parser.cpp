@@ -5,12 +5,13 @@
 #include <tactile_io.hpp>
 
 #include "core/utils/profile.hpp"
+#include "logging.hpp"
 
 namespace Tactile {
 
 MapParser::MapParser(const std::filesystem::path& path)
 {
-  cen::log::info("Parsing map %s", path.string().c_str());
+  LogInfo("Parsing map {}", path.c_str());
   try {
     TACTILE_PROFILE_START;
     mData = IO::ParseMap(path, &mError);
