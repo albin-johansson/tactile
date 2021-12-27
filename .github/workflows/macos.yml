@@ -6,6 +6,7 @@ env:
   CC: /usr/local/opt/llvm/bin/clang
   CXX: /usr/local/opt/llvm/bin/clang++
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
+  VCPKG_TARGET_TRIPLET: x64-osx
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
 
@@ -59,11 +60,6 @@ jobs:
         shell: bash
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
-      - name: Make Tactile triplet file available to Vcpkg
-        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        shell: bash
-        run: mv "${{github.workspace}}/cmake/x64-tactile-osx.cmake" "${{env.VCPKG_ROOT}}/triplets/community/x64-tactile-osx.cmake"
-
       - name: Make build directory
         shell: bash
         run: mkdir build
@@ -71,7 +67,7 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: bash
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=x64-tactile-osx -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} -GNinja
 
       - name: Build
         working-directory: ./build
