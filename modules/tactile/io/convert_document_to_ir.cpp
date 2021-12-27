@@ -15,8 +15,8 @@
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "core/utils/profile.hpp"
 #include "editor/document.hpp"
+#include "profile.hpp"
 
 namespace Tactile {
 namespace {

@@ -4,8 +4,8 @@
 
 #include <tactile_io.hpp>
 
-#include "core/utils/profile.hpp"
 #include "logging.hpp"
+#include "profile.hpp"
 
 namespace Tactile {
 

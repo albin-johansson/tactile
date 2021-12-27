@@ -18,6 +18,7 @@ set(SOURCE_FILES
     build.hpp
     logging.cpp
     logging.hpp
+    profile.hpp
 
     cfg/attributes.cpp
     cfg/attributes.hpp
@@ -96,7 +97,6 @@ set(SOURCE_FILES
     core/utils/formatted_string.hpp
     core/utils/texture_manager.cpp
     core/utils/texture_manager.hpp
-    core/utils/profile.hpp
     core/utils/vector_map.hpp
 
     editor/document.hpp

@@ -6,8 +6,8 @@
 #include <tactile_io.hpp>
 
 #include "convert_document_to_ir.hpp"
-#include "core/utils/profile.hpp"
 #include "io/preferences.hpp"
+#include "profile.hpp"
 
 namespace Tactile {
 namespace {
