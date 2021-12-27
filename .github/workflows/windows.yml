@@ -35,11 +35,7 @@ jobs:
         run: |
           git clone https://github.com/microsoft/vcpkg
           .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
-
-      - name: Update Vcpkg
-        run: |
-          .\vcpkg\vcpkg update
-          .\vcpkg\vcpkg upgrade --no-dry-run
+          .\vcpkg\vcpkg integrate install
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
