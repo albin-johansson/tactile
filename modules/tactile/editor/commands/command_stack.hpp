@@ -177,7 +177,7 @@ class CommandStack final {
 
  private:
   std::deque<std::unique_ptr<ACommand>> mStack;
-  Maybe<usize> mIndex{};
+  Maybe<usize> mIndex;
   Maybe<usize> mCleanIndex;
   usize mCapacity;
 
