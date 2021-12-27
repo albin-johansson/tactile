@@ -11,7 +11,7 @@ namespace Tactile {
 
 MapParser::MapParser(const std::filesystem::path& path)
 {
-  LogInfo("Parsing map {}", path.c_str());
+  LogInfo("Parsing map {}", path);
   try {
     TACTILE_PROFILE_START;
     mData = IO::ParseMap(path, &mError);

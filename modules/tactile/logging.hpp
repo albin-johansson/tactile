@@ -4,6 +4,7 @@
 #include <string_view>  // string_view
 
 #include <fmt/format.h>
+#include <fmt/ostream.h>  // included so that formatting types like std::filesystem::path works
 #include <tactile_def.hpp>
 
 namespace Tactile {

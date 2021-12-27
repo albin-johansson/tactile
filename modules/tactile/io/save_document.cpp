@@ -39,7 +39,7 @@ void SaveDocument(const Document& document)
   TACTILE_PROFILE_START
 
   const auto path = std::filesystem::absolute(document.path);
-  LogInfo("Trying to save map to {}", path.c_str());
+  LogInfo("Trying to save map to {}", path);
 
   const auto data = ConvertDocumentToIR(document);
   if (IO::EmitMap(*data, GetEmitterOptions())) {

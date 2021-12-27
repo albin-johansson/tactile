@@ -62,7 +62,7 @@ void PrintPreferences(Preferences& prefs)
   LogInfo("Preferred tile width... {}", prefs.preferred_tile_width);
   LogInfo("Preferred tile height... {}", prefs.preferred_tile_height);
 
-  LogInfo("Preferred format... {}", prefs.preferred_format.c_str());
+  LogInfo("Preferred format... {}", prefs.preferred_format);
   LogInfo("Viewport overlay pos... {}", prefs.viewport_overlay_pos);
 
   PRINT_FLAG("Embed tilesets", Preferences::embed_tilesets);
