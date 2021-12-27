@@ -58,11 +58,7 @@ jobs:
         run: |
           git clone https://github.com/microsoft/vcpkg
           ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
-
-      - name: Update Vcpkg
-        run: |
-          ./vcpkg/vcpkg update
-          ./vcpkg/vcpkg upgrade --no-dry-run
+          sudo ./vcpkg/vcpkg integrate install
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
