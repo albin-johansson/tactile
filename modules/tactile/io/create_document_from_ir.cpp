@@ -2,7 +2,6 @@
 
 #include <algorithm>  // sort
 #include <cstring>    // strcmp
-#include <variant>    // get
 
 #include <tactile_stdlib.hpp>
 
@@ -13,7 +12,6 @@
 #include "core/components/fancy_tile.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/parent.hpp"
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
