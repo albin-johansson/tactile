@@ -23,6 +23,8 @@ set(SOURCE_FILES
     cfg/attributes.hpp
     cfg/configuration.cpp
     cfg/configuration.hpp
+    cfg/imgui_context.cpp
+    cfg/imgui_context.hpp
     cfg/protobuf_context.cpp
     cfg/protobuf_context.hpp
 
@@ -201,8 +203,6 @@ set(SOURCE_FILES
 
     editor/gui/icons.cpp
     editor/gui/icons.hpp
-    editor/gui/imgui_context.cpp
-    editor/gui/imgui_context.hpp
     editor/gui/style.cpp
     editor/gui/style.hpp
     editor/gui/texture_utils.cpp

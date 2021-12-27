@@ -4,7 +4,7 @@
 
 #include <centurion.hpp>
 
-#include "editor/gui/imgui_context.hpp"
+#include "imgui_context.hpp"
 #include "protobuf_context.hpp"
 
 namespace Tactile {

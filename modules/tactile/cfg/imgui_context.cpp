@@ -9,10 +9,49 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "io/preferences.hpp"
-#include "style.hpp"
-#include "themes.hpp"
+#include "editor/gui/style.hpp"
+#include "editor/gui/themes.hpp"
 
 namespace Tactile {
+namespace {
+
+void LoadIconFont(const float size)
+{
+  static constexpr std::array<ImWchar, 3> range = {ICON_MIN_FA, ICON_MAX_FA, 0};
+  ImFontConfig config{};
+  config.MergeMode = true;
+  config.PixelSnapH = true;
+  config.GlyphOffset = {0, 1};
+
+  auto& io = ImGui::GetIO();
+  io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
+                               size,
+                               &config,
+                               range.data());
+}
+
+void LoadFonts()
+{
+  auto& io = ImGui::GetIO();
+
+  if constexpr (IsPlatformOSX()) {
+    constexpr auto fontSize = 11.0f;
+
+    const auto dpi = cen::screen::dpi().value();
+    const auto scaling = dpi.diagonal / 96.0f;
+
+    io.FontGlobalScale = 0.5f;
+    io.Fonts->AddFontFromFileTTF("resources/fonts/roboto/Roboto-Regular.ttf",
+                                 scaling * fontSize);
+    LoadIconFont(scaling * fontSize);
+  }
+  else {
+    io.Fonts->AddFontDefault();
+    LoadIconFont(13.0f);
+  }
+}
+
+}  // namespace
 
 ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 {
@@ -50,40 +89,5 @@ ImGuiContext::~ImGuiContext()
   ImGui::DestroyContext();
 }
 
-void ImGuiContext::LoadFonts()
-{
-  auto& io = ImGui::GetIO();
-
-  if constexpr (IsPlatformOSX()) {
-    constexpr auto fontSize = 11.0f;
-
-    const auto dpi = cen::screen::dpi().value();
-    const auto scaling = dpi.diagonal / 96.0f;
-
-    io.FontGlobalScale = 0.5f;
-    io.Fonts->AddFontFromFileTTF("resources/fonts/roboto/Roboto-Regular.ttf",
-                                 scaling * fontSize);
-    LoadIconFont(scaling * fontSize);
-  }
-  else {
-    io.Fonts->AddFontDefault();
-    LoadIconFont(13.0f);
-  }
-}
-
-void ImGuiContext::LoadIconFont(const float size)
-{
-  static constexpr std::array<ImWchar, 3> range = {ICON_MIN_FA, ICON_MAX_FA, 0};
-  ImFontConfig config{};
-  config.MergeMode = true;
-  config.PixelSnapH = true;
-  config.GlyphOffset = {0, 1};
-
-  auto& io = ImGui::GetIO();
-  io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
-                               size,
-                               &config,
-                               range.data());
-}
 
 }  // namespace Tactile
