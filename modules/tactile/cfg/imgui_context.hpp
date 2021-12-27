@@ -10,6 +10,10 @@ class ImGuiContext final {
   ImGuiContext(cen::Window& window, cen::GLContext& context);
 
   ~ImGuiContext();
+
+ private:
+  /* This is used as a workaround to annoying unit test issues for Windows CI builds */
+  bool mInitializedBackend{};
 };
 
 }  // namespace Tactile

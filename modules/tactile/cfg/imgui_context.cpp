@@ -6,11 +6,12 @@
 #include <imgui.h>
 
 #include "build.hpp"
+#include "editor/gui/style.hpp"
+#include "editor/gui/themes.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "io/preferences.hpp"
-#include "editor/gui/style.hpp"
-#include "editor/gui/themes.hpp"
+#include "logging.hpp"
 
 namespace Tactile {
 namespace {
@@ -75,19 +76,22 @@ ImGuiContext::ImGuiContext(cen::Window& window, cen::GLContext& context)
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
   if constexpr (IsPlatformOSX()) {
-    ImGui_ImplOpenGL3_Init("#version 150");
+    mInitializedBackend = ImGui_ImplOpenGL3_Init("#version 150");
   }
   else {
-    ImGui_ImplOpenGL3_Init("#version 130");
+    mInitializedBackend = ImGui_ImplOpenGL3_Init("#version 130");
   }
+
+  LogDebug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
 }
 
 ImGuiContext::~ImGuiContext()
 {
-  ImGui_ImplOpenGL3_Shutdown();
+  if (mInitializedBackend) {
+    ImGui_ImplOpenGL3_Shutdown();
+  }
   ImGui_ImplSDL2_Shutdown();
   ImGui::DestroyContext();
 }
-
 
 }  // namespace Tactile
