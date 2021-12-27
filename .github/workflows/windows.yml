@@ -4,8 +4,8 @@ on: [ push, pull_request ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}\vcpkg
-  VCPKG_TARGET_TRIPLET: x64-windows-static
-  VCPKG_DEFAULT_TRIPLET: x64-windows-static
+  VCPKG_TARGET_TRIPLET: x64-windows-static-md
+  VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg\bincache
   VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
 
