@@ -1,7 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
   "name": "tactile",
+  "license": "GPL-3.0"
   "version-semver": "0.3.0",
+  "maintainers": [
+    "albin-johansson"
+  ],
   "dependencies": [
     "sdl2",
     {
