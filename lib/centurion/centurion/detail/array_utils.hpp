@@ -1,25 +1,26 @@
 #ifndef CENTURION_DETAIL_ARRAY_UTILS_HEADER
 #define CENTURION_DETAIL_ARRAY_UTILS_HEADER
 
-#include <array>  // array, to_array
+#include <array>    // array, to_array
+#include <cstddef>  // size_t
 
-#include "../compiler/features.hpp"
-#include "../core/integers.hpp"
+#include "../common.hpp"
+#include "../features.hpp"
 
 /// \cond FALSE
 namespace cen::detail {
 
-template <typename T, usize Size>
+template <typename T, std::size_t Size>
 constexpr void assign(const std::array<T, Size>& array, T (&out)[Size])
 {
-  usize index = 0;
+  std::size_t index = 0;
   for (auto&& value : array) {
     out[index] = value;
     ++index;
   }
 }
 
-template <typename T, usize Size>
+template <typename T, std::size_t Size>
 [[nodiscard]] constexpr auto to_array(const T (&data)[Size]) -> std::array<T, Size>
 {
 #if CENTURION_HAS_FEATURE_TO_ARRAY
@@ -27,7 +28,7 @@ template <typename T, usize Size>
 #else
   std::array<T, Size> array;  // NOLINT
 
-  for (usize i = 0; i < Size; ++i) {
+  for (std::size_t i = 0; i < Size; ++i) {
     array[i] = data[i];
   }
 

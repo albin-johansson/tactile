@@ -19,7 +19,7 @@ void HelpMenu::Update()
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_BUG " Report Issue...")) {
-      cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
+      cen::OpenURL("https://github.com/albin-johansson/tactile/issues/new");
     }
 
     ImGui::Separator();

@@ -37,7 +37,7 @@ void LoadFonts()
   if constexpr (IsPlatformOSX()) {
     constexpr auto fontSize = 11.0f;
 
-    const auto dpi = cen::screen::dpi().value();
+    const auto dpi = cen::GetDisplayDPI().value();
     const auto scaling = dpi.diagonal / 96.0f;
 
     io.FontGlobalScale = 0.5f;
@@ -53,7 +53,7 @@ void LoadFonts()
 
 }  // namespace
 
-ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
+ImGuiContext::ImGuiContext(cen::Window& window, cen::GLContext& context)
 {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();

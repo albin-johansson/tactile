@@ -22,7 +22,7 @@ concept IsPropertyType = std::same_as<T, std::string> ||
                          std::same_as<T, int> ||
                          std::same_as<T, float> ||
                          std::same_as<T, bool> ||
-                         std::same_as<T, cen::color> ||
+                         std::same_as<T, cen::Color> ||
                          std::same_as<T, std::filesystem::path> ||
                          std::same_as<T, ObjectRef>;
 
@@ -33,7 +33,7 @@ class PropertyValue final {
   using string_type = std::string;
   using integer_type = int;
   using float_type = float;
-  using color_type = cen::color;
+  using color_type = cen::Color;
   using file_type = std::filesystem::path;
 
   using value_type = std::variant<std::monostate,

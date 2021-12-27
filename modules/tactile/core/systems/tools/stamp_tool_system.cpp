@@ -67,7 +67,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 
 void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+  if (IsUsable(registry) && mouse.button == cen::MouseButton::Left) {
     gOldState.Clear();
     gSequence.Clear();
 
@@ -77,7 +77,7 @@ void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 
 void StampToolOnDragged(entt::registry& registry, const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+  if (IsUsable(registry) && mouse.button == cen::MouseButton::Left) {
     UpdateSequence(registry, mouse.position_in_map);
   }
 }
@@ -86,7 +86,7 @@ void StampToolOnReleased(entt::registry& registry,
                          entt::dispatcher& dispatcher,
                          const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+  if (IsUsable(registry) && mouse.button == cen::MouseButton::Left) {
     dispatcher.enqueue<StampSequenceEvent>(std::move(gOldState), std::move(gSequence));
   }
 }

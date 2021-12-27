@@ -1,9 +1,9 @@
-#ifndef CENTURION_HAPTIC_RAMP_HEADER
-#define CENTURION_HAPTIC_RAMP_HEADER
+#ifndef CENTURION_INPUT_HAPTIC_RAMP_HPP_
+#define CENTURION_INPUT_HAPTIC_RAMP_HPP_
 
 #include <SDL.h>
 
-#include "../core/integers.hpp"
+#include "../common.hpp"
 #include "haptic_effect.hpp"
 
 namespace cen {
@@ -22,8 +22,7 @@ namespace cen {
  *
  * \since 5.2.0
  */
-class haptic_ramp final : public haptic_effect<haptic_ramp>
-{
+class haptic_ramp final : public haptic_effect<haptic_ramp> {
  public:
   inline constexpr static bool hasDirection = true;
   inline constexpr static bool hasEnvelope = true;
@@ -48,10 +47,7 @@ class haptic_ramp final : public haptic_effect<haptic_ramp>
    *
    * \since 5.2.0
    */
-  void set_start_strength(const i16 start) noexcept
-  {
-    representation().start = start;
-  }
+  void set_start_strength(const Sint16 start) noexcept { representation().start = start; }
 
   /**
    * \brief Sets the strength level at the end of the effect.
@@ -60,10 +56,7 @@ class haptic_ramp final : public haptic_effect<haptic_ramp>
    *
    * \since 5.2.0
    */
-  void set_end_strength(const i16 end) noexcept
-  {
-    representation().end = end;
-  }
+  void set_end_strength(const Sint16 end) noexcept { representation().end = end; }
 
   /**
    * \brief Returns the initial strength level.
@@ -72,7 +65,7 @@ class haptic_ramp final : public haptic_effect<haptic_ramp>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto start_strength() const noexcept -> i16
+  [[nodiscard]] auto start_strength() const noexcept -> Sint16
   {
     return representation().start;
   }
@@ -84,10 +77,7 @@ class haptic_ramp final : public haptic_effect<haptic_ramp>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto end_strength() const noexcept -> i16
-  {
-    return representation().end;
-  }
+  [[nodiscard]] auto end_strength() const noexcept -> Sint16 { return representation().end; }
 
   /**
    * \brief Returns the internal representation.
@@ -96,10 +86,7 @@ class haptic_ramp final : public haptic_effect<haptic_ramp>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto representation() noexcept -> SDL_HapticRamp&
-  {
-    return m_effect.ramp;
-  }
+  [[nodiscard]] auto representation() noexcept -> SDL_HapticRamp& { return m_effect.ramp; }
 
   /// \copydoc representation();
   [[nodiscard]] auto representation() const noexcept -> const SDL_HapticRamp&
@@ -112,4 +99,4 @@ class haptic_ramp final : public haptic_effect<haptic_ramp>
 
 }  // namespace cen
 
-#endif  // CENTURION_HAPTIC_RAMP_HEADER
+#endif  // CENTURION_INPUT_HAPTIC_RAMP_HPP_

@@ -5,10 +5,9 @@
 #include <ios>         // ios
 #include <utility>     // move
 
+#include <centurion.hpp>
+#include <magic_enum.hpp>
 #include <tactile_def.hpp>
-
-#include <centurion.hpp>   // ...
-#include <magic_enum.hpp>  // enum_name
 
 #include "directories.hpp"
 #include "logging.hpp"
@@ -24,7 +23,7 @@ namespace {
 inline const auto gSettingsPath = GetPersistentFileDir() / "settings.bin";
 
 constexpr Theme gThemeDef = Theme::Nocturnal;
-constexpr cen::color gViewportBackgroundDef{60, 60, 60};
+constexpr cen::Color gViewportBackgroundDef{60, 60, 60};
 
 constexpr CStr gPreferredFormatDef = "YAML";
 
@@ -32,7 +31,7 @@ constexpr usize gCommandCapacityDef = 100;
 
 constexpr int gPreferredTileWidthDef = 32;
 constexpr int gPreferredTileHeightDef = 32;
-constexpr int gViewportOverlayPosDef = cen::to_underlying(OverlayPos::BottomLeft);
+constexpr int gViewportOverlayPosDef = cen::ToUnderlying(OverlayPos::BottomLeft);
 
 constexpr uint64 gFlagsDef =
     Preferences::show_grid | Preferences::indent_output | Preferences::show_layer_dock |
@@ -56,7 +55,7 @@ inline Preferences settings = MakeDefaultPreferences();
 void PrintPreferences(Preferences& prefs)
 {
   LogInfo("Theme... {}", magic_enum::enum_name(prefs.theme));
-  LogInfo("Viewport background... {}", prefs.viewport_background.as_rgb());
+  LogInfo("Viewport background... {}", prefs.viewport_background.AsRGB());
 
   LogInfo("Command capacity... {}", prefs.command_capacity);
   LogInfo("Preferred tile width... {}", prefs.preferred_tile_width);
@@ -112,10 +111,10 @@ void LoadPreferences()
 
       if (cfg.has_viewport_background()) {
         const auto& color = cfg.viewport_background();
-        settings.viewport_background.set_red(static_cast<uint8>(color.red()));
-        settings.viewport_background.set_green(static_cast<uint8>(color.green()));
-        settings.viewport_background.set_blue(static_cast<uint8>(color.blue()));
-        settings.viewport_background.set_alpha(static_cast<uint8>(color.alpha()));
+        settings.viewport_background.SetRed(static_cast<uint8>(color.red()));
+        settings.viewport_background.SetGreen(static_cast<uint8>(color.green()));
+        settings.viewport_background.SetBlue(static_cast<uint8>(color.blue()));
+        settings.viewport_background.SetAlpha(static_cast<uint8>(color.alpha()));
       }
 
       if (cfg.has_show_grid()) {
@@ -201,10 +200,10 @@ void SavePreferences()
 
   {
     auto* background = cfg.mutable_viewport_background();
-    background->set_red(settings.viewport_background.red());
-    background->set_green(settings.viewport_background.green());
-    background->set_blue(settings.viewport_background.blue());
-    background->set_alpha(settings.viewport_background.alpha());
+    background->set_red(settings.viewport_background.GetRed());
+    background->set_green(settings.viewport_background.GetGreen());
+    background->set_blue(settings.viewport_background.GetBlue());
+    background->set_alpha(settings.viewport_background.GetAlpha());
   }
 
   cfg.set_command_capacity(settings.command_capacity);
@@ -305,7 +304,7 @@ void SetShowLogDock(const bool visible) noexcept
 
 void SetViewportOverlayPos(const OverlayPos pos) noexcept
 {
-  settings.viewport_overlay_pos = cen::to_underlying(pos);
+  settings.viewport_overlay_pos = cen::ToUnderlying(pos);
 }
 
 auto GetPreferredFormat() -> const std::string&
@@ -358,7 +357,7 @@ auto GetTheme() noexcept -> Theme
   return settings.theme;
 }
 
-auto GetViewportBackground() noexcept -> const cen::color&
+auto GetViewportBackground() noexcept -> const cen::Color&
 {
   return settings.viewport_background;
 }

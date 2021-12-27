@@ -13,7 +13,7 @@ class WidgetManager;
 
 class AShortcut {
  public:
-  explicit AShortcut(const cen::scan_code key, const uint16 modifiers = KMOD_NONE)
+  explicit AShortcut(const cen::ScanCode key, const uint16 modifiers = KMOD_NONE)
       : mKey{key}
       , mModifiers{modifiers}
   {}
@@ -35,7 +35,7 @@ class AShortcut {
   }
 
  private:
-  cen::scan_code mKey;
+  cen::ScanCode mKey;
   uint16 mModifiers{KMOD_NONE};
 };
 

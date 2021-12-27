@@ -1,9 +1,9 @@
-#ifndef CENTURION_HAPTIC_LEFT_RIGHT_HEADER
-#define CENTURION_HAPTIC_LEFT_RIGHT_HEADER
+#ifndef CENTURION_INPUT_HAPTIC_LEFT_RIGHT_HPP_
+#define CENTURION_INPUT_HAPTIC_LEFT_RIGHT_HPP_
 
 #include <SDL.h>
 
-#include "../core/integers.hpp"
+#include "../common.hpp"
 #include "haptic_effect.hpp"
 
 namespace cen {
@@ -23,8 +23,7 @@ namespace cen {
  *
  * \since 5.2.0
  */
-class haptic_left_right final : public haptic_effect<haptic_left_right>
-{
+class haptic_left_right final : public haptic_effect<haptic_left_right> {
  public:
   inline constexpr static bool hasDirection = false;
   inline constexpr static bool hasEnvelope = false;
@@ -49,7 +48,7 @@ class haptic_left_right final : public haptic_effect<haptic_left_right>
    *
    * \since 5.2.0
    */
-  void set_large_magnitude(const u16 magnitude) noexcept
+  void set_large_magnitude(const Uint16 magnitude) noexcept
   {
     representation().large_magnitude = magnitude;
   }
@@ -61,7 +60,7 @@ class haptic_left_right final : public haptic_effect<haptic_left_right>
    *
    * \since 5.2.0
    */
-  void set_small_magnitude(const u16 magnitude) noexcept
+  void set_small_magnitude(const Uint16 magnitude) noexcept
   {
     representation().small_magnitude = magnitude;
   }
@@ -73,7 +72,7 @@ class haptic_left_right final : public haptic_effect<haptic_left_right>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto large_magnitude() const noexcept -> u16
+  [[nodiscard]] auto large_magnitude() const noexcept -> Uint16
   {
     return representation().large_magnitude;
   }
@@ -86,7 +85,7 @@ class haptic_left_right final : public haptic_effect<haptic_left_right>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto small_magnitude() const noexcept -> u16
+  [[nodiscard]] auto small_magnitude() const noexcept -> Uint16
   {
     return representation().small_magnitude;
   }
@@ -116,4 +115,4 @@ class haptic_left_right final : public haptic_effect<haptic_left_right>
 
 }  // namespace cen
 
-#endif  // CENTURION_HAPTIC_LEFT_RIGHT_HEADER
+#endif  // CENTURION_INPUT_HAPTIC_LEFT_RIGHT_HPP_

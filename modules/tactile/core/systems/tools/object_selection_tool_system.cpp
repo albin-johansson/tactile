@@ -18,7 +18,7 @@ namespace {
 [[nodiscard]] auto GetTargetObject(const entt::registry& registry, const MouseInfo& mouse)
     -> entt::entity
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+  if (IsUsable(registry) && mouse.button == cen::MouseButton::Left) {
     return registry.ctx<ActiveObject>().entity;
   }
   else {
@@ -33,7 +33,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
                                   const MouseInfo& mouse)
 {
   if (IsUsable(registry)) {
-    if (mouse.button == cen::mouse_button::left) {
+    if (mouse.button == cen::MouseButton::Left) {
       auto& active = registry.ctx<ActiveObject>();
       active.entity = entt::null;
 
@@ -52,7 +52,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
         dispatcher.enqueue<SetPropertyContextEvent>(objectEntity);
       }
     }
-    else if (mouse.button == cen::mouse_button::right) {
+    else if (mouse.button == cen::MouseButton::Right) {
       auto& active = registry.ctx<ActiveObject>();
       active.entity = entt::null;
 

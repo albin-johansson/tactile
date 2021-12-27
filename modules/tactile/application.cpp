@@ -85,7 +85,7 @@ auto Application::Run() -> int
 
   const auto& io = ImGui::GetIO();
   while (!mQuit) {
-    mKeyboard.update();
+    mKeyboard.Update();
     PollEvents();
 
     ImGui_ImplOpenGL3_NewFrame();

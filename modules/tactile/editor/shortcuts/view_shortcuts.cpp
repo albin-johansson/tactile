@@ -25,7 +25,7 @@ auto CenterViewportShortcut::IsEnabled(const Model& model, const WidgetManager&)
 }
 
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_MINUS}, gPrimaryModifier}
+    : AShortcut{cen::ScanCode{SDLK_MINUS}, gPrimaryModifier}
 {}
 
 void DecreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
@@ -40,7 +40,7 @@ auto DecreaseViewportZoomShortcut::IsEnabled(const Model& model,
 }
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_PLUS}, gPrimaryModifier}
+    : AShortcut{cen::ScanCode{SDLK_PLUS}, gPrimaryModifier}
 {}
 
 void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)

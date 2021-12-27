@@ -143,7 +143,7 @@ void SettingsDialog::UpdateAppearanceTab()
                           arr.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
       mSettings.viewport_background =
-          cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2));
+          cen::Color::FromNorm(arr.at(0), arr.at(1), arr.at(2));
     }
 
     if (bool enabled = mSettings.flags & Preferences::window_border;

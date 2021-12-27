@@ -11,7 +11,7 @@
 
 namespace Tactile {
 
-auto ColorPropertyWidget(const PropertyValue& property) -> Maybe<cen::color>
+auto ColorPropertyWidget(const PropertyValue& property) -> Maybe<cen::Color>
 {
   const Scoped::ID scope{&property};
 
@@ -22,7 +22,7 @@ auto ColorPropertyWidget(const PropertyValue& property) -> Maybe<cen::color>
   auto array = ColorToArray(color);
 
   if (ImGui::ColorEdit4("##ColorPropertyEdit", array.data(), flags)) {
-    return cen::color::from_norm(array.at(0), array.at(1), array.at(2), array.at(3));
+    return cen::Color::FromNorm(array.at(0), array.at(1), array.at(2), array.at(3));
   }
 
   if (ImGui::IsItemHovered()) {

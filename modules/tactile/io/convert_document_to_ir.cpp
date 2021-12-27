@@ -54,7 +54,9 @@ void ConvertProperties(T& source,
 
       case PropertyType::Color: {
         const auto& color = property.value.AsColor();
-        IO::AssignColor(data, {color.red(), color.green(), color.blue(), color.alpha()});
+        IO::AssignColor(
+            data,
+            {color.GetRed(), color.GetGreen(), color.GetBlue(), color.GetAlpha()});
         break;
       }
 

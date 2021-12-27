@@ -40,8 +40,8 @@ void RenderRect(const entt::registry& registry,
   assert(object.type == ObjectType::Rectangle);
 
   const auto size = ImVec2{object.width, object.height} * info.ratio;
-  const auto rect = cen::frect{position.x, position.y, size.x, size.y};
-  if (cen::intersects(info.bounds_rect, rect)) {
+  const auto rect = cen::FRect{position.x, position.y, size.x, size.y};
+  if (cen::Intersects(info.bounds_rect, rect)) {
     RenderShadowedRect(position, size, color, 2);
 
     const auto& context = registry.get<PropertyContext>(entity);

@@ -46,13 +46,13 @@ void CheckFor(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&
     info.position_in_map = cursor.map_position;
 
     if (left) {
-      info.button = cen::mouse_button::left;
+      info.button = cen::MouseButton::Left;
     }
     else if (mid) {
-      info.button = cen::mouse_button::middle;
+      info.button = cen::MouseButton::Middle;
     }
     else /*if (right)*/ {
-      info.button = cen::mouse_button::right;
+      info.button = cen::MouseButton::Right;
     }
 
     dispatcher.enqueue<Event>(info);

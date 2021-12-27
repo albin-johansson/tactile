@@ -9,6 +9,6 @@
 namespace Tactile {
 
 [[nodiscard]] auto ColorPropertyWidget(const PropertyValue& property)
-    -> Maybe<cen::color>;
+    -> Maybe<cen::Color>;
 
 }  // namespace Tactile

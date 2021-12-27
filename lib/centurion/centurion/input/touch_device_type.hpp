@@ -1,12 +1,12 @@
-#ifndef CENTURION_TOUCH_DEVICE_TYPE_HEADER
-#define CENTURION_TOUCH_DEVICE_TYPE_HEADER
+#ifndef CENTURION_INPUT_TOUCH_DEVICE_TYPE_HPP_
+#define CENTURION_INPUT_TOUCH_DEVICE_TYPE_HPP_
 
 #include <SDL.h>
 
 #include <ostream>      // ostream
 #include <string_view>  // string_view
 
-#include "../core/exception.hpp"
+#include "../common.hpp"
 
 namespace cen {
 
@@ -26,8 +26,7 @@ namespace touch {
  *
  * \since 4.3.0
  */
-enum class device_type
-{
+enum class device_type {
   // clang-format off
   invalid = SDL_TOUCH_DEVICE_INVALID,                      ///< Invalid touch device.
   direct = SDL_TOUCH_DEVICE_DIRECT,                        ///< Touch screen with window-relative coordinates.
@@ -158,7 +157,7 @@ inline auto operator<<(std::ostream& stream, const touch_device_type type) -> st
       return "indirect_relative";
 
     default:
-      throw cen_error{"Did not recognize touch device type!"};
+      throw Error{"Did not recognize touch device type!"};
   }
 }
 
@@ -168,4 +167,4 @@ inline auto operator<<(std::ostream& stream, const touch_device_type type) -> st
 
 }  // namespace cen
 
-#endif  // CENTURION_TOUCH_DEVICE_TYPE_HEADER
+#endif  // CENTURION_INPUT_TOUCH_DEVICE_TYPE_HPP_

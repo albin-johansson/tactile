@@ -19,9 +19,9 @@ namespace Tactile::Sys {
 namespace {
 
 [[nodiscard]] auto CreateSourceRectCache(const Tileset& tileset)
-    -> std::unordered_map<TileID, cen::irect>
+    -> std::unordered_map<TileID, cen::Rect>
 {
-  std::unordered_map<TileID, cen::irect> cache;
+  std::unordered_map<TileID, cen::Rect> cache;
 
   const auto amount = (tileset.last_id + 1) - tileset.first_id;
   cache.reserve(static_cast<usize>(amount));
@@ -33,7 +33,7 @@ namespace {
     const auto x = col * tileset.tile_width;
     const auto y = row * tileset.tile_height;
 
-    cache.emplace(id, cen::irect{x, y, tileset.tile_width, tileset.tile_height});
+    cache.emplace(id, cen::Rect{x, y, tileset.tile_width, tileset.tile_height});
   }
 
   return cache;
@@ -257,7 +257,7 @@ auto GetTileToRender(const entt::registry& registry,
 
 auto GetSourceRect(const entt::registry& registry,
                    const entt::entity tilesetEntity,
-                   const TileID id) -> const cen::irect&
+                   const TileID id) -> const cen::Rect&
 {
   const auto& cache = registry.get<TilesetCache>(tilesetEntity);
   return cache.source_rects.at(id);

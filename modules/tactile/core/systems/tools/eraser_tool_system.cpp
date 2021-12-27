@@ -37,7 +37,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 
 void EraserToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+  if (IsUsable(registry) && mouse.button == cen::MouseButton::Left) {
     gOldState.Clear();
     UpdateSequence(registry, mouse.position_in_map);
   }
@@ -45,7 +45,7 @@ void EraserToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 
 void EraserToolOnDragged(entt::registry& registry, const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+  if (IsUsable(registry) && mouse.button == cen::MouseButton::Left) {
     UpdateSequence(registry, mouse.position_in_map);
   }
 }
@@ -54,7 +54,7 @@ void EraserToolOnReleased(entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+  if (IsUsable(registry) && mouse.button == cen::MouseButton::Left) {
     dispatcher.enqueue<EraserSequenceEvent>(std::move(gOldState));
   }
 }

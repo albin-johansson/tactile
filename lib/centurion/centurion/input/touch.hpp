@@ -1,11 +1,11 @@
-#ifndef CENTURION_TOUCH_HEADER
-#define CENTURION_TOUCH_HEADER
+#ifndef CENTURION_INPUT_TOUCH_HPP_
+#define CENTURION_INPUT_TOUCH_HPP_
 
 #include <SDL.h>
 
 #include <optional>  // optional
 
-#include "../core/integers.hpp"
+#include "../common.hpp"
 #include "button_state.hpp"
 #include "touch_device_type.hpp"
 
@@ -32,12 +32,11 @@ namespace cen::touch {
  *
  * \since 5.2.0
  */
-struct finger_state final
-{
-  button_state state;  ///< Whether or not the finger is pressed or release.
-  float x;             ///< The current x-coordinate.
-  float y;             ///< The current y-coordinate.
-  float pressure;      ///< The current applied pressure.
+struct finger_state final {
+  ButtonState state;  ///< Whether or not the finger is pressed or release.
+  float x;            ///< The current x-coordinate.
+  float y;            ///< The current y-coordinate.
+  float pressure;     ///< The current applied pressure.
 };
 
 /**
@@ -129,7 +128,7 @@ struct finger_state final
  *
  * \since 4.3.0
  */
-[[nodiscard]] constexpr auto touch_mouse_id() noexcept -> u32
+[[nodiscard]] constexpr auto touch_mouse_id() noexcept -> Uint32
 {
   return SDL_TOUCH_MOUSEID;
 }
@@ -162,4 +161,4 @@ using touch_finger_state = touch::finger_state;
 
 }  // namespace cen
 
-#endif  // CENTURION_TOUCH_HEADER
+#endif  // CENTURION_INPUT_TOUCH_HPP_

@@ -33,7 +33,7 @@ void UpdateAboutDialog(bool* open)
     ImGui::TextUnformatted(gSourceCode);
     ImGui::SameLine();
     if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser")) {
-      cen::open_url(TACTILE_URL);
+      cen::OpenURL(TACTILE_URL);
     }
 
     ImGui::Spacing();

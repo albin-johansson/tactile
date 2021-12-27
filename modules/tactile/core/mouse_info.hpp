@@ -13,7 +13,7 @@ struct MouseInfo final {
   float x{};
   float y{};
   MapPosition position_in_map;
-  cen::mouse_button button;
+  cen::MouseButton button{};
 };
 
 /// \} End of group core

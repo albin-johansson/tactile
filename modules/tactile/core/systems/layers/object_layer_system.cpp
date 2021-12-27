@@ -15,7 +15,7 @@ namespace {
                                          const float mapTileWidth,
                                          const float mapTileHeight,
                                          const float xRatio,
-                                         const float yRatio) -> cen::frect
+                                         const float yRatio) -> cen::FRect
 {
   /* Points have no width or height, so we have to create a hitbox large enough to be easy
      for the user to click */
@@ -23,16 +23,16 @@ namespace {
     const auto width = static_cast<float>(mapTileWidth) / 2.0f;
     const auto height = static_cast<float>(mapTileHeight) / 2.0f;
 
-    return cen::rect((object.x - (width / 2.0f)) * xRatio,
-                     (object.y - (height / 2.0f)) * yRatio,
-                     width * xRatio,
-                     height * yRatio);
+    return {(object.x - (width / 2.0f)) * xRatio,
+            (object.y - (height / 2.0f)) * yRatio,
+            width * xRatio,
+            height * yRatio};
   }
   else {
-    return cen::rect(object.x * xRatio,
-                     object.y * yRatio,
-                     object.width * xRatio,
-                     object.height * yRatio);
+    return {object.x * xRatio,
+            object.y * yRatio,
+            object.width * xRatio,
+            object.height * yRatio};
   }
 }
 
@@ -80,7 +80,7 @@ auto FindObject(const entt::registry& registry,
                                               static_cast<float>(map.tile_height),
                                               xRatio,
                                               yRatio);
-    if (bounds.contains({x, y})) {
+    if (bounds.Contains({x, y})) {
       return objectEntity;
     }
   }

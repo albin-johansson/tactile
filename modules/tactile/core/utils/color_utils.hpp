@@ -20,19 +20,19 @@ namespace Tactile {
  *
  * \return an array of normalized color components.
  */
-[[nodiscard]] constexpr auto ColorToArray(const cen::color& color) noexcept
+[[nodiscard]] constexpr auto ColorToArray(const cen::Color& color) noexcept
     -> std::array<float, 4>
 {
-  const auto r = color.red_norm();
-  const auto g = color.green_norm();
-  const auto b = color.blue_norm();
-  const auto a = color.alpha_norm();
+  const auto r = color.GetRedNorm();
+  const auto g = color.GetGreenNorm();
+  const auto b = color.GetBlueNorm();
+  const auto a = color.GetAlphaNorm();
   return {r, g, b, a};
 }
 
-[[nodiscard]] constexpr auto ColorToU32(const cen::color& color) -> uint32
+[[nodiscard]] constexpr auto ColorToU32(const cen::Color& color) -> uint32
 {
-  return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
+  return IM_COL32(color.GetRed(), color.GetGreen(), color.GetBlue(), color.GetAlpha());
 }
 
 }  // namespace Tactile

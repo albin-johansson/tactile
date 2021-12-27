@@ -1,13 +1,12 @@
-#ifndef CENTURION_HAPTIC_FEATURE_HEADER
-#define CENTURION_HAPTIC_FEATURE_HEADER
+#ifndef CENTURION_INPUT_HAPTIC_FEATURE_HPP_
+#define CENTURION_INPUT_HAPTIC_FEATURE_HPP_
 
 #include <SDL.h>
 
 #include <ostream>      // ostream
 #include <string_view>  // string_view
 
-#include "../core/exception.hpp"
-#include "../core/integers.hpp"
+#include "../common.hpp"
 
 namespace cen {
 
@@ -21,8 +20,7 @@ namespace cen {
  *
  * \since 5.2.0
  */
-enum class haptic_feature : uint
-{
+enum class haptic_feature : uint {
   constant = SDL_HAPTIC_CONSTANT,
   sine = SDL_HAPTIC_SINE,
   left_right = SDL_HAPTIC_LEFTRIGHT,
@@ -110,7 +108,7 @@ enum class haptic_feature : uint
       return "pause";
 
     default:
-      throw cen_error{"Did not recognize haptic feature!"};
+      throw Error{"Did not recognize haptic feature!"};
   }
 }
 
@@ -142,4 +140,4 @@ inline auto operator<<(std::ostream& stream, const haptic_feature feature) -> st
 
 }  // namespace cen
 
-#endif  // CENTURION_HAPTIC_FEATURE_HEADER
+#endif  // CENTURION_INPUT_HAPTIC_FEATURE_HPP_

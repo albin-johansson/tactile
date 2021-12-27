@@ -19,11 +19,11 @@ class ApplicationConfiguration final {
 
  private:
   ProtobufContext mProtobuf;
-  cen::library mCenturion;
+  cen::SDL mSDL;
 
   /* Initialization of these members need to be deferred */
-  Maybe<cen::window> mWindow;
-  Maybe<cen::gl_context> mOpenGL;
+  Maybe<cen::Window> mWindow;
+  Maybe<cen::GLContext> mOpenGL;
   Maybe<ImGuiContext> mImGui;
 };
 

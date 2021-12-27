@@ -1,5 +1,5 @@
-#ifndef CENTURION_HAPTIC_CONSTANT_HEADER
-#define CENTURION_HAPTIC_CONSTANT_HEADER
+#ifndef CENTURION_INPUT_HAPTIC_CONSTANT_HPP_
+#define CENTURION_INPUT_HAPTIC_CONSTANT_HPP_
 
 #include <SDL.h>
 
@@ -22,8 +22,7 @@ namespace cen {
  *
  * \since 5.2.0
  */
-class haptic_constant final : public haptic_effect<haptic_constant>
-{
+class haptic_constant final : public haptic_effect<haptic_constant> {
  public:
   inline constexpr static bool hasDirection = true;
   inline constexpr static bool hasEnvelope = true;
@@ -66,4 +65,4 @@ class haptic_constant final : public haptic_effect<haptic_constant>
 
 }  // namespace cen
 
-#endif  // CENTURION_HAPTIC_CONSTANT_HEADER
+#endif  // CENTURION_INPUT_HAPTIC_CONSTANT_HPP_

@@ -25,8 +25,10 @@ void RenderTile(const TileID tile,
     const auto tileToRender = Sys::GetTileToRender(registry, tilesetEntity, tile);
     const auto& source = Sys::GetSourceRect(registry, tilesetEntity, tileToRender);
 
-    const auto row = static_cast<float>(source.y()) / static_cast<float>(source.height());
-    const auto col = static_cast<float>(source.x()) / static_cast<float>(source.width());
+    const auto row =
+        static_cast<float>(source.GetY()) / static_cast<float>(source.GetHeight());
+    const auto col =
+        static_cast<float>(source.GetX()) / static_cast<float>(source.GetWidth());
 
     const auto uv = registry.get<UvTileSize>(tilesetEntity);
     const auto uvMin = ImVec2{col * uv.width, row * uv.height};

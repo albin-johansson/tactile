@@ -1,14 +1,18 @@
-#ifndef CENTURION_SENSOR_HEADER
-#define CENTURION_SENSOR_HEADER
+#ifndef CENTURION_INPUT_SENSOR_HPP_
+#define CENTURION_INPUT_SENSOR_HPP_
 
 #include <SDL.h>
 
 #include <array>     // array
+#include <cstddef>   // size_t
 #include <optional>  // optional
 #include <ostream>   // ostream
 #include <string>    // string, to_string
 
-#include "../compiler/features.hpp"
+#include "../common.hpp"
+#include "../detail/owner_handle_api.hpp"
+#include "../detail/stdlib.hpp"
+#include "../features.hpp"
 
 #if CENTURION_HAS_FEATURE_FORMAT
 
@@ -16,53 +20,41 @@
 
 #endif  // CENTURION_HAS_FEATURE_FORMAT
 
-#include "../core/exception.hpp"
-#include "../core/integers.hpp"
-#include "../core/owner.hpp"
-#include "../core/str.hpp"
-#include "../core/str_or_na.hpp"
-#include "../detail/address_of.hpp"
-#include "../detail/owner_handle_api.hpp"
-#include "sensor_type.hpp"
-
 namespace cen {
 
 /// \addtogroup input
 /// \{
 
 /**
- * \typedef sensor_id
+ * \brief Provides values that represent different sensor types.
  *
- * \brief Used for unique sensor instance identifiers.
+ * \see SDL_SensorType
  *
  * \since 5.2.0
  */
+enum class sensor_type {
+  invalid = SDL_SENSOR_INVALID,      ///< Invalid sensor
+  unknown = SDL_SENSOR_UNKNOWN,      ///< Unknown sensor
+  accelerometer = SDL_SENSOR_ACCEL,  ///< Accelerometer
+  gyroscope = SDL_SENSOR_GYRO        ///< Gyroscope
+};
+
+/// \brief Used for unique sensor instance identifiers.
+/// \since 5.2.0
 using sensor_id = SDL_SensorID;
 
 template <typename T>
 class basic_sensor;
 
-/**
- * \typedef sensor
- *
- * \brief Represents an owning sensor device.
- *
- * \since 5.2.0
- */
-using sensor = basic_sensor<detail::owning_type>;
+/// \brief Represents an owning sensor device.
+/// \since 5.2.0
+using sensor = basic_sensor<detail::OwnerTag>;
+
+/// \brief Represents a non-owning sensor device.
+/// \since 5.2.0
+using sensor_handle = basic_sensor<detail::HandleTag>;
 
 /**
- * \typedef sensor_handle
- *
- * \brief Represents a non-owning sensor device.
- *
- * \since 5.2.0
- */
-using sensor_handle = basic_sensor<detail::handle_type>;
-
-/**
- * \class basic_sensor
- *
  * \brief Represents a sensor device.
  *
  * \ownerhandle `sensor`/`sensor_handle`
@@ -73,8 +65,7 @@ using sensor_handle = basic_sensor<detail::handle_type>;
  * \since 5.2.0
  */
 template <typename T>
-class basic_sensor final
-{
+class basic_sensor final {
  public:
   /// \name Construction
   /// \{
@@ -91,12 +82,12 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  explicit basic_sensor(maybe_owner<SDL_Sensor*> sensor) noexcept(!detail::is_owning<T>())
+  explicit basic_sensor(MaybeOwner<SDL_Sensor*> sensor) noexcept(detail::is_handle<T>)
       : m_sensor{sensor}
   {
-    if constexpr (detail::is_owning<T>()) {
+    if constexpr (detail::is_owner<T>) {
       if (!m_sensor) {
-        throw cen_error{"Null sensor pointer!"};
+        throw Error{"Null sensor pointer!"};
       }
     }
   }
@@ -110,11 +101,11 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  template <typename TT = T, detail::is_owner<TT> = 0>
+  template <typename TT = T, detail::EnableOwner<TT> = 0>
   explicit basic_sensor(const int index = 0) : m_sensor{SDL_SensorOpen(index)}
   {
     if (!m_sensor) {
-      throw sdl_error{};
+      throw SDLError{};
     }
   }
 
@@ -125,7 +116,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  template <typename TT = T, detail::is_handle<TT> = 0>
+  template <typename TT = T, detail::EnableHandle<TT> = 0>
   explicit basic_sensor(const sensor& owner) noexcept : m_sensor{owner.get()}
   {}
 
@@ -138,10 +129,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  static void update() noexcept
-  {
-    SDL_SensorUpdate();
-  }
+  static void update() noexcept { SDL_SensorUpdate(); }
 
 #if SDL_VERSION_ATLEAST(2, 0, 14)
 
@@ -154,10 +142,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  static void lock() noexcept
-  {
-    SDL_LockSensors();
-  }
+  static void lock() noexcept { SDL_LockSensors(); }
 
   /**
    * \brief Unlocks access to the sensors.
@@ -168,10 +153,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  static void unlock() noexcept
-  {
-    SDL_UnlockSensors();
-  }
+  static void unlock() noexcept { SDL_UnlockSensors(); }
 
 #endif  // SDL_VERSION_ATLEAST(2, 0, 14)
 
@@ -182,10 +164,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  [[nodiscard]] static auto count() noexcept -> int
-  {
-    return SDL_NumSensors();
-  }
+  [[nodiscard]] static auto count() noexcept -> int { return SDL_NumSensors(); }
 
   /// \name Instance-based queries
   /// \{
@@ -210,7 +189,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto name() const noexcept -> str
+  [[nodiscard]] auto name() const noexcept -> const char*
   {
     return SDL_SensorGetName(m_sensor);
   }
@@ -248,7 +227,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  template <usize Size>
+  template <std::size_t Size>
   [[nodiscard]] auto data() const noexcept -> std::optional<std::array<float, Size>>
   {
     std::array<float, Size> array{};
@@ -269,10 +248,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto get() const noexcept -> SDL_Sensor*
-  {
-    return m_sensor.get();
-  }
+  [[nodiscard]] auto get() const noexcept -> SDL_Sensor* { return m_sensor.get(); }
 
   /// \} End of instance-based queries
 
@@ -310,7 +286,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  [[nodiscard]] static auto name(const int index) noexcept -> str
+  [[nodiscard]] static auto name(const int index) noexcept -> const char*
   {
     return SDL_SensorGetDeviceName(index);
   }
@@ -361,7 +337,7 @@ class basic_sensor final
    *
    * \since 5.2.0
    */
-  template <typename TT = T, detail::is_handle<TT> = 0>
+  template <typename TT = T, detail::EnableHandle<TT> = 0>
   explicit operator bool() const noexcept
   {
     return m_sensor != nullptr;
@@ -370,18 +346,45 @@ class basic_sensor final
   /// \} End of conversions
 
  private:
-  struct deleter final
-  {
-    void operator()(SDL_Sensor* sensor) noexcept
-    {
-      SDL_SensorClose(sensor);
-    }
-  };
-  detail::pointer_manager<T, SDL_Sensor, deleter> m_sensor;
+  detail::Pointer<T, SDL_Sensor> m_sensor;
 };
 
 /// \name String conversions
 /// \{
+
+/**
+ * \brief Returns a textual version of the supplied sensor type.
+ *
+ * \details This function returns a string that mirrors the name of the enumerator, e.g.
+ * `to_string(sensor_type::gyroscope) == "gyroscope"`.
+ *
+ * \param type the enumerator that will be converted.
+ *
+ * \return a string that mirrors the name of the enumerator.
+ *
+ * \throws cen_error if the enumerator is not recognized.
+ *
+ * \since 6.2.0
+ */
+[[nodiscard]] constexpr auto to_string(const sensor_type type) -> std::string_view
+{
+  switch (type) {
+    case sensor_type::invalid:
+      return "invalid";
+
+    case sensor_type::unknown:
+      return "unknown";
+
+    case sensor_type::accelerometer:
+      return "accelerometer";
+
+    case sensor_type::gyroscope:
+      return "gyroscope";
+
+    default:
+      throw Error{"Did not recognize sensor type!"};
+  }
+}
 
 /**
  * \brief Returns a textual representation of a sensor instance.
@@ -410,6 +413,23 @@ template <typename T>
 
 /// \name Streaming
 /// \{
+
+/**
+ * \brief Prints a textual representation of a sensor type enumerator.
+ *
+ * \param stream the output stream that will be used.
+ * \param type the enumerator that will be printed.
+ *
+ * \see `to_string(sensor_type)`
+ *
+ * \return the used stream.
+ *
+ * \since 6.2.0
+ */
+inline auto operator<<(std::ostream& stream, const sensor_type type) -> std::ostream&
+{
+  return stream << to_string(type);
+}
 
 /**
  * \brief Prints a textual representation of a sensor instance using a stream.
@@ -445,4 +465,4 @@ auto operator<<(std::ostream& stream, const basic_sensor<T>& sensor) -> std::ost
 
 }  // namespace cen
 
-#endif  // CENTURION_SENSOR_HEADER
+#endif  // CENTURION_INPUT_SENSOR_HPP_

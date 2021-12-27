@@ -33,7 +33,7 @@ class Application final {
 
  private:
   ApplicationConfiguration* mConfiguration{}; /* Non-owning */
-  cen::keyboard mKeyboard;
+  cen::Keyboard mKeyboard;
   entt::dispatcher mDispatcher;
   Model mModel;
   TextureManager mTextures;

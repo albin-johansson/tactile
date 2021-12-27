@@ -1,11 +1,10 @@
-#ifndef CENTURION_HAPTIC_DIRECTION_HEADER
-#define CENTURION_HAPTIC_DIRECTION_HEADER
+#ifndef CENTURION_INPUT_HAPTIC_DIRECTION_HPP_
+#define CENTURION_INPUT_HAPTIC_DIRECTION_HPP_
 
 #include <SDL.h>
 
-#include "../core/integers.hpp"
-#include "../core/to_underlying.hpp"
-#include "../math/vector3.hpp"
+#include "../common.hpp"
+#include "../math.hpp"
 #include "haptic_direction_type.hpp"
 
 namespace cen {
@@ -20,10 +19,9 @@ namespace cen {
  *
  * \since 5.2.0
  */
-class haptic_direction final
-{
+class haptic_direction final {
  public:
-  using direction_type = vector3<i32>;
+  using direction_type = BasicVector3<Sint32>;
 
   /**
    * \brief Creates a haptic direction of the specified type.
@@ -32,10 +30,7 @@ class haptic_direction final
    *
    * \since 5.2.0
    */
-  explicit haptic_direction(const haptic_direction_type type) noexcept
-  {
-    set_type(type);
-  }
+  explicit haptic_direction(const haptic_direction_type type) noexcept { set_type(type); }
 
   /**
    * \brief Creates a haptic direction based on an `SDL_HapticDirection` instance.
@@ -57,7 +52,7 @@ class haptic_direction final
    */
   void set_type(const haptic_direction_type type) noexcept
   {
-    m_direction.type = to_underlying(type);
+    m_direction.type = ToUnderlying(type);
   }
 
   /**
@@ -105,10 +100,7 @@ class haptic_direction final
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto get() const noexcept -> const SDL_HapticDirection&
-  {
-    return m_direction;
-  }
+  [[nodiscard]] auto get() const noexcept -> const SDL_HapticDirection& { return m_direction; }
 
  private:
   SDL_HapticDirection m_direction{};
@@ -118,4 +110,4 @@ class haptic_direction final
 
 }  // namespace cen
 
-#endif  // CENTURION_HAPTIC_DIRECTION_HEADER
+#endif  // CENTURION_INPUT_HAPTIC_DIRECTION_HPP_

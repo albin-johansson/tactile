@@ -9,7 +9,7 @@ namespace Tactile::Sys {
 void UpdateAnimations(entt::registry& registry)
 {
   for (auto&& [entity, animation] : registry.view<Animation>().each()) {
-    const auto now = cen::counter::ticks();
+    const auto now = cen::GetTicks();
 
     const auto frameEntity = animation.frames.at(animation.index);
     const auto& currentFrame = registry.get<AnimationFrame>(frameEntity);

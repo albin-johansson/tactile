@@ -43,7 +43,7 @@ void RenderPoint(const entt::registry& registry,
   const auto& object = registry.get<Object>(entity);
   assert(object.type == ObjectType::Point);
 
-  if (info.bounds_rect.contains(cen::fpoint{position.x, position.y})) {
+  if (info.bounds_rect.Contains(cen::FPoint{position.x, position.y})) {
     RenderShadowedCircle(position, radius, color, thickness);
 
     const auto& context = registry.get<PropertyContext>(entity);

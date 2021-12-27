@@ -1,13 +1,12 @@
-#ifndef CENTURION_HAPTIC_CUSTOM_HEADER
-#define CENTURION_HAPTIC_CUSTOM_HEADER
+#ifndef CENTURION_INPUT_HAPTIC_CUSTOM_HPP_
+#define CENTURION_INPUT_HAPTIC_CUSTOM_HPP_
 
 #include <SDL.h>
 
 #include <cassert>  // assert
 
-#include "../core/integers.hpp"
-#include "../core/time.hpp"
-#include "../detail/max.hpp"
+#include "../common.hpp"
+#include "../detail/stdlib.hpp"
 #include "haptic_effect.hpp"
 
 namespace cen {
@@ -26,8 +25,7 @@ namespace cen {
  *
  * \since 5.2.0
  */
-class haptic_custom final : public haptic_effect<haptic_custom>
-{
+class haptic_custom final : public haptic_effect<haptic_custom> {
  public:
   inline constexpr static bool hasDirection = true;
   inline constexpr static bool hasEnvelope = true;
@@ -54,10 +52,10 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  void set_axis_count(const u8 count) noexcept
+  void set_axis_count(const Uint8 count) noexcept
   {
     assert(count > 0);
-    representation().channels = detail::max(u8{1}, count);
+    representation().channels = detail::max(Uint8{1}, count);
   }
 
   // clang-format off
@@ -69,7 +67,7 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  void set_sample_period(const milliseconds<u16> period) noexcept(noexcept(period.count()))
+  void set_sample_period(const U16_Millis period) noexcept(noexcept(period.count()))
   {
     representation().period = period.count();
   }
@@ -83,10 +81,7 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  void set_sample_count(const u16 count) noexcept
-  {
-    representation().samples = count;
-  }
+  void set_sample_count(const Uint16 count) noexcept { representation().samples = count; }
 
   /**
    * \brief Sets the associated custom data.
@@ -99,10 +94,7 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  void set_data(u16* data) noexcept
-  {
-    representation().data = data;
-  }
+  void set_data(Uint16* data) noexcept { representation().data = data; }
 
   /**
    * \brief Returns the number of axes that are used.
@@ -111,10 +103,7 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto axis_count() const noexcept -> u8
-  {
-    return representation().channels;
-  }
+  [[nodiscard]] auto axis_count() const noexcept -> Uint8 { return representation().channels; }
 
   /**
    * \brief Returns the duration of samples.
@@ -123,9 +112,9 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto sample_period() const -> milliseconds<u16>
+  [[nodiscard]] auto sample_period() const -> U16_Millis
   {
-    return milliseconds<u16>{representation().period};
+    return U16_Millis{representation().period};
   }
 
   /**
@@ -135,7 +124,7 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto sample_count() const noexcept -> u16
+  [[nodiscard]] auto sample_count() const noexcept -> Uint16
   {
     return representation().samples;
   }
@@ -147,10 +136,7 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto data() const noexcept -> u16*
-  {
-    return representation().data;
-  }
+  [[nodiscard]] auto data() const noexcept -> Uint16* { return representation().data; }
 
   /**
    * \brief Returns the internal representation.
@@ -159,10 +145,7 @@ class haptic_custom final : public haptic_effect<haptic_custom>
    *
    * \since 5.2.0
    */
-  [[nodiscard]] auto representation() noexcept -> SDL_HapticCustom&
-  {
-    return m_effect.custom;
-  }
+  [[nodiscard]] auto representation() noexcept -> SDL_HapticCustom& { return m_effect.custom; }
 
   /// \copydoc representation()
   [[nodiscard]] auto representation() const noexcept -> const SDL_HapticCustom&
@@ -175,4 +158,4 @@ class haptic_custom final : public haptic_effect<haptic_custom>
 
 }  // namespace cen
 
-#endif  // CENTURION_HAPTIC_CUSTOM_HEADER
+#endif  // CENTURION_INPUT_HAPTIC_CUSTOM_HPP_
