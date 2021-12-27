@@ -253,54 +253,67 @@ auto MakeLayer(entt::registry& registry,
   return entity;
 }
 
-}  // namespace
-
-auto CreateDocumentFromIR(const IO::Map& data, TextureManager& textures) -> Document
+void CreateLayers(Document& document, const IO::Map& ir)
 {
-  Document document;
-  document.path = IO::GetPath(data);
-  document.registry = Sys::MakeRegistry();
-
-  {
-    auto& map = document.registry.ctx<Map>();
-    map.next_layer_id = LayerID{IO::GetNextLayerId(data)};
-    map.next_object_id = ObjectID{IO::GetNextObjectId(data)};
-    map.tile_width = IO::GetTileWidth(data);
-    map.tile_height = IO::GetTileHeight(data);
-    map.row_count = IO::GetRowCount(data);
-    map.column_count = IO::GetColumnCount(data);
-  }
-
-  {
-    auto& context = document.registry.ctx<PropertyContext>();
-    context.name = document.path.filename().string();
-  }
-
-  AddProperties(document.registry, entt::null, data);
-
-  const auto nTilesets = IO::GetTilesetCount(data);
-  for (usize index = 0; index < nTilesets; ++index) {
-    const auto& tilesetData = IO::GetTileset(data, index);
-    MakeTileset(document.registry, textures, tilesetData);
-  }
-
-  if (nTilesets != 0) {
-    auto& activeTileset = document.registry.ctx<ActiveTileset>();
-    activeTileset.entity = document.registry.view<Tileset>().front();
-  }
-
-  const auto nLayers = IO::GetLayerCount(data);
-  for (usize index = 0; index < nLayers; ++index) {
-    const auto& layerData = IO::GetLayer(data, index);
-    MakeLayer(document.registry, layerData);
+  const auto count = IO::GetLayerCount(ir);
+  for (usize index = 0; index < count; ++index) {
+    MakeLayer(document.registry, IO::GetLayer(ir, index));
   }
 
   Sys::SortLayers(document.registry);
 
-  if (nLayers != 0) {
+  if (count != 0) {
     auto& activeLayer = document.registry.ctx<ActiveLayer>();
     activeLayer.entity = document.registry.view<LayerTreeNode>().front();
   }
+}
+
+void CreateTilesets(Document& document, TextureManager& textures, const IO::Map& ir)
+{
+  const auto count = IO::GetTilesetCount(ir);
+  for (usize index = 0; index < count; ++index) {
+    MakeTileset(document.registry, textures, IO::GetTileset(ir, index));
+  }
+
+  if (count != 0) {
+    auto& activeTileset = document.registry.ctx<ActiveTileset>();
+    activeTileset.entity = document.registry.view<Tileset>().front();
+  }
+}
+
+void InitRootPropertyContext(Document& document)
+{
+  auto& context = document.registry.ctx<PropertyContext>();
+  context.name = document.path.filename().string();
+}
+
+void InitMapContext(Map& map, const IO::Map& ir)
+{
+  map.next_layer_id = LayerID{IO::GetNextLayerId(ir)};
+  map.next_object_id = ObjectID{IO::GetNextObjectId(ir)};
+
+  map.tile_width = IO::GetTileWidth(ir);
+  map.tile_height = IO::GetTileHeight(ir);
+
+  map.row_count = IO::GetRowCount(ir);
+  map.column_count = IO::GetColumnCount(ir);
+}
+
+}  // namespace
+
+auto CreateDocumentFromIR(const IO::Map& ir, TextureManager& textures) -> Document
+{
+  Document document;
+  document.path = IO::GetPath(ir);
+  document.registry = Sys::MakeRegistry();
+
+  InitMapContext(document.registry.ctx<Map>(), ir);
+  InitRootPropertyContext(document);
+
+  AddProperties(document.registry, entt::null, ir);
+
+  CreateTilesets(document, textures, ir);
+  CreateLayers(document, ir);
 
   return document;
 }

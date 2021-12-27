@@ -11,12 +11,12 @@ class TextureManager;
 /**
  * \brief Creates a map document from an intermediate map representation.
  *
- * \param data the intermediate representation of the map data.
+ * \param ir the intermediate representation of the map data.
  * \param textures the texture manager that will be used.
  *
  * \return a document based on the intermediate representation.
  */
-[[nodiscard]] auto CreateDocumentFromIR(const IO::Map& data, TextureManager& textures)
+[[nodiscard]] auto CreateDocumentFromIR(const IO::Map& ir, TextureManager& textures)
     -> Document;
 
 }  // namespace Tactile
