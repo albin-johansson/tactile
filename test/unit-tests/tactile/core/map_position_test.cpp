@@ -12,7 +12,7 @@ TEST(MapPosition, Defaults)
   ASSERT_EQ(0, position.GetColumn());
 }
 
-TEST(Position, RowColConstructor)
+TEST(MapPosition, RowColConstructor)
 {
   const MapPosition a{123, 557};
   ASSERT_EQ(123, a.GetRow());
@@ -25,7 +25,14 @@ TEST(Position, RowColConstructor)
   ASSERT_EQ(-1, c.GetColumn());
 }
 
-TEST(Position, SetRow)
+TEST(MapPosition, From)
+{
+  const auto position = MapPosition::From(42u, 849u);
+  ASSERT_EQ(42, position.GetRow());
+  ASSERT_EQ(849, position.GetColumn());
+}
+
+TEST(MapPosition, SetRow)
 {
   MapPosition position;
 
@@ -35,7 +42,7 @@ TEST(Position, SetRow)
   ASSERT_EQ(row, position.GetRow());
 }
 
-TEST(Position, SetColumn)
+TEST(MapPosition, SetColumn)
 {
   MapPosition position;
 
@@ -45,7 +52,7 @@ TEST(Position, SetColumn)
   ASSERT_EQ(column, position.GetColumn());
 }
 
-TEST(Position, OffsetBy)
+TEST(MapPosition, OffsetBy)
 {
   const MapPosition position{3, 4};
   const auto result = position.OffsetBy(4, 6);
@@ -53,45 +60,45 @@ TEST(Position, OffsetBy)
   ASSERT_EQ(10, result.GetColumn());
 }
 
-TEST(Position, GetRow)
+TEST(MapPosition, GetRow)
 {
   const MapPosition position{8'324, 0};
   ASSERT_EQ(8'324, position.GetRow());
 }
 
-TEST(Position, GetColumn)
+TEST(MapPosition, GetColumn)
 {
   const MapPosition position{0, 493};
   ASSERT_EQ(493, position.GetColumn());
 }
 
-TEST(Position, GetRowIndex)
+TEST(MapPosition, GetRowIndex)
 {
   const MapPosition position{6'532, 0};
   ASSERT_EQ(6'532u, position.GetRowIndex());
 }
 
-TEST(Position, GetColIndex)
+TEST(MapPosition, GetColIndex)
 {
   const MapPosition position{0, 18'343};
   ASSERT_EQ(18'343u, position.GetColumnIndex());
 }
 
-TEST(Position, RowToY)
+TEST(MapPosition, RowToY)
 {
   const auto tileSize = 134;
   const MapPosition position{12, 34};
   ASSERT_EQ(12 * tileSize, position.RowToY(tileSize));
 }
 
-TEST(Position, ColToX)
+TEST(MapPosition, ColToX)
 {
   const auto tileSize = 68;
   const MapPosition position{12, 34};
   ASSERT_EQ(34 * tileSize, position.ColumnToX(tileSize));
 }
 
-TEST(Position, North)
+TEST(MapPosition, North)
 {
   const MapPosition source{7, 15};
   const MapPosition moved = source.North();
@@ -100,7 +107,7 @@ TEST(Position, North)
   ASSERT_EQ(source.GetColumn(), moved.GetColumn());
 }
 
-TEST(Position, East)
+TEST(MapPosition, East)
 {
   const MapPosition source{52, 77};
   const MapPosition moved = source.East();
@@ -109,7 +116,7 @@ TEST(Position, East)
   ASSERT_EQ(source.GetColumn() + 1, moved.GetColumn());
 }
 
-TEST(Position, South)
+TEST(MapPosition, South)
 {
   const MapPosition source{33, 6};
   const MapPosition moved = source.South();
@@ -118,7 +125,7 @@ TEST(Position, South)
   ASSERT_EQ(source.GetColumn(), moved.GetColumn());
 }
 
-TEST(Position, West)
+TEST(MapPosition, West)
 {
   const MapPosition source{62, 39};
   const MapPosition moved = source.West();
@@ -127,7 +134,7 @@ TEST(Position, West)
   ASSERT_EQ(source.GetColumn() - 1, moved.GetColumn());
 }
 
-TEST(Position, Addition)
+TEST(MapPosition, Addition)
 {
   const MapPosition a{2, 3};
   const MapPosition b{6, 4};
@@ -137,7 +144,7 @@ TEST(Position, Addition)
   ASSERT_EQ(a.GetColumn() + b.GetColumn(), sum.GetColumn());
 }
 
-TEST(Position, Subtraction)
+TEST(MapPosition, Subtraction)
 {
   const MapPosition a{13, 7};
   const MapPosition b{4, 2};
@@ -147,7 +154,7 @@ TEST(Position, Subtraction)
   ASSERT_EQ(a.GetColumn() - b.GetColumn(), diff.GetColumn());
 }
 
-TEST(Position, EqualityOperator)
+TEST(MapPosition, EqualityOperator)
 {
   const MapPosition pos{45, 23};
   ASSERT_EQ(pos, pos);
@@ -161,7 +168,7 @@ TEST(Position, EqualityOperator)
   ASSERT_FALSE(diff == pos);
 }
 
-TEST(Position, InequalityOperator)
+TEST(MapPosition, InequalityOperator)
 {
   const MapPosition pos{45, 23};
   ASSERT_FALSE(pos != pos);

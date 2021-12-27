@@ -22,8 +22,8 @@ void RemoveRowCmd::Redo()
   auto& registry = mRegistry.get();
 
   const auto& map = registry.ctx<Map>();
-  const MapPosition begin{map.row_count - mRows - 1u, 0u};
-  const MapPosition end{map.row_count, map.column_count};
+  const auto begin = MapPosition::From(map.row_count - mRows - 1u, 0u);
+  const auto end = MapPosition::From(map.row_count, map.column_count);
 
   mCache.Clear();
   mCache.SaveTiles(mRegistry, begin, end);

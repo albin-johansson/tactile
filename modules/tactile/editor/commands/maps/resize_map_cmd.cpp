@@ -37,8 +37,12 @@ void ResizeMapCmd::Redo()
     const auto cols = map.column_count;
 
     mCache.Clear();
-    mCache.SaveTiles(registry, {rows - (mPrevRows.value() - mRows), 0u}, {rows, cols});
-    mCache.SaveTiles(registry, {0u, cols - (mPrevCols.value() - mCols)}, {rows, cols});
+    mCache.SaveTiles(registry,
+                     MapPosition::From(rows - (mPrevRows.value() - mRows), 0u),
+                     MapPosition::From(rows, cols));
+    mCache.SaveTiles(registry,
+                     MapPosition::From(0u, cols - (mPrevCols.value() - mCols)),
+                     MapPosition::From(rows, cols));
   }
 
   Sys::ResizeMap(registry, mRows, mCols);

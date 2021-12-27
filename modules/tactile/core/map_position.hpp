@@ -32,10 +32,11 @@ class MapPosition final {
       , mCol{column}
   {}
 
-  constexpr MapPosition(const usize row, const usize column) noexcept
-      : mRow{static_cast<int32>(row)}
-      , mCol{static_cast<int32>(column)}
-  {}
+  [[nodiscard]] constexpr static auto From(const usize row, const usize column) noexcept
+      -> MapPosition
+  {
+    return {static_cast<int32>(row), static_cast<int32>(column)};
+  }
 
   /**
    * \brief Creates a position based on an index and the total number of columns.
