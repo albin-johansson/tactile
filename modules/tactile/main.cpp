@@ -1,7 +1,7 @@
 #include "application.hpp"
 #include "cfg/configuration.hpp"
 
-auto main(int, char**) -> int
+int main(int, char**)
 {
   Tactile::ApplicationConfiguration configuration;
   Tactile::Application app{&configuration};
