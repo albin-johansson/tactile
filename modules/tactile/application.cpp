@@ -68,7 +68,7 @@ Application::Application(ApplicationConfiguration* configuration)
     : mConfiguration{configuration}
     , mIcons{mTextures}
 {
-  SubscribeToEvents(this, mDispatcher);
+  SubscribeToEvents(*this);
   LoadDefaultShortcuts();
 }
 

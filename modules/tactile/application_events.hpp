@@ -1,11 +1,14 @@
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
-
 namespace Tactile {
 
 class Application;
 
-void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher);
+/**
+ * \brief Subscribes all events to an application instance.
+ *
+ * \param app the application to connect the events to.
+ */
+void SubscribeToEvents(Application& app);
 
 }  // namespace Tactile

@@ -11,90 +11,89 @@ namespace Tactile {
 
 using App = Application;
 
-void SubscribeToEvents(Application* app, entt::dispatcher& d)
+void SubscribeToEvents(App& app)
 {
-  d.sink<UndoEvent>().connect<&App::OnUndo>(app);
-  d.sink<RedoEvent>().connect<&App::OnRedo>(app);
-  d.sink<SetCommandCapacityEvent>().connect<&App::OnSetCommandCapacity>(app);
+  app.Connect<UndoEvent, &App::OnUndo>();
+  app.Connect<RedoEvent, &App::OnRedo>();
+  app.Connect<SetCommandCapacityEvent, &App::OnSetCommandCapacity>();
 
-  d.sink<SaveEvent>().connect<&App::OnSave>(app);
-  d.sink<SaveAsEvent>().connect<&App::OnSaveAs>(app);
-  d.sink<OpenSaveAsDialogEvent>().connect<&App::OnOpenSaveAsDialog>(app);
-  d.sink<ShowSettingsEvent>().connect<&App::OnShowSettings>(app);
+  app.Connect<SaveEvent, &App::OnSave>();
+  app.Connect<SaveAsEvent, &App::OnSaveAs>();
+  app.Connect<OpenSaveAsDialogEvent, &App::OnOpenSaveAsDialog>();
+  app.Connect<ShowSettingsEvent, &App::OnShowSettings>();
 
-  d.sink<ShowNewMapDialogEvent>().connect<&App::OnShowNewMapDialog>(app);
-  d.sink<ShowOpenMapDialogEvent>().connect<&App::OnShowOpenMapDialog>(app);
-  d.sink<ShowMapPropertiesEvent>().connect<&App::OnShowMapProperties>(app);
-  d.sink<CreateMapEvent>().connect<&App::OnCreateMap>(app);
-  d.sink<CloseMapEvent>().connect<&App::OnCloseMap>(app);
-  d.sink<OpenMapEvent>().connect<&App::OnOpenMap>(app);
-  d.sink<SelectMapEvent>().connect<&App::OnSelectMap>(app);
+  app.Connect<ShowNewMapDialogEvent, &App::OnShowNewMapDialog>();
+  app.Connect<ShowOpenMapDialogEvent, &App::OnShowOpenMapDialog>();
+  app.Connect<ShowMapPropertiesEvent, &App::OnShowMapProperties>();
+  app.Connect<CreateMapEvent, &App::OnCreateMap>();
+  app.Connect<CloseMapEvent, &App::OnCloseMap>();
+  app.Connect<OpenMapEvent, &App::OnOpenMap>();
+  app.Connect<SelectMapEvent, &App::OnSelectMap>();
 
-  d.sink<SelectToolEvent>().connect<&App::OnSelectTool>(app);
-  d.sink<MousePressedEvent>().connect<&App::OnMousePressed>(app);
-  d.sink<MouseDragEvent>().connect<&App::OnMouseDrag>(app);
-  d.sink<MouseReleasedEvent>().connect<&App::OnMouseReleased>(app);
-  d.sink<StampSequenceEvent>().connect<&App::OnStampSequence>(app);
-  d.sink<EraserSequenceEvent>().connect<&App::OnEraserSequence>(app);
-  d.sink<FloodEvent>().connect<&App::OnFlood>(app);
+  app.Connect<SelectToolEvent, &App::OnSelectTool>();
+  app.Connect<MousePressedEvent, &App::OnMousePressed>();
+  app.Connect<MouseDragEvent, &App::OnMouseDrag>();
+  app.Connect<MouseReleasedEvent, &App::OnMouseReleased>();
+  app.Connect<StampSequenceEvent, &App::OnStampSequence>();
+  app.Connect<EraserSequenceEvent, &App::OnEraserSequence>();
+  app.Connect<FloodEvent, &App::OnFlood>();
 
-  d.sink<CenterViewportEvent>().connect<&App::OnCenterViewport>(app);
-  d.sink<OffsetViewportEvent>().connect<&App::OnOffsetViewport>(app);
-  d.sink<OffsetBoundViewportEvent>().connect<&App::OnOffsetBoundViewport>(app);
-  d.sink<PanLeftEvent>().connect<&App::OnPanLeft>(app);
-  d.sink<PanRightEvent>().connect<&App::OnPanRight>(app);
-  d.sink<PanUpEvent>().connect<&App::OnPanUp>(app);
-  d.sink<PanDownEvent>().connect<&App::OnPanDown>(app);
-  d.sink<IncreaseZoomEvent>().connect<&App::OnIncreaseZoom>(app);
-  d.sink<DecreaseZoomEvent>().connect<&App::OnDecreaseZoom>(app);
-  d.sink<ResetZoomEvent>().connect<&App::OnResetZoom>(app);
+  app.Connect<CenterViewportEvent, &App::OnCenterViewport>();
+  app.Connect<OffsetViewportEvent, &App::OnOffsetViewport>();
+  app.Connect<OffsetBoundViewportEvent, &App::OnOffsetBoundViewport>();
+  app.Connect<PanLeftEvent, &App::OnPanLeft>();
+  app.Connect<PanRightEvent, &App::OnPanRight>();
+  app.Connect<PanUpEvent, &App::OnPanUp>();
+  app.Connect<PanDownEvent, &App::OnPanDown>();
+  app.Connect<IncreaseZoomEvent, &App::OnIncreaseZoom>();
+  app.Connect<DecreaseZoomEvent, &App::OnDecreaseZoom>();
+  app.Connect<ResetZoomEvent, &App::OnResetZoom>();
 
-  d.sink<ShowAddTilesetDialogEvent>().connect<&App::OnShowAddTilesetDialog>(app);
-  d.sink<AddTilesetEvent>().connect<&App::OnAddTileset>(app);
-  d.sink<RemoveTilesetEvent>().connect<&App::OnRemoveTileset>(app);
-  d.sink<SelectTilesetEvent>().connect<&App::OnSelectTileset>(app);
-  d.sink<SetTilesetSelectionEvent>().connect<&App::OnSetTilesetSelection>(app);
-  d.sink<ShowTilesetPropertiesEvent>().connect<&App::OnShowTilesetProperties>(app);
-  d.sink<SetTilesetNameEvent>().connect<&App::OnSetTilesetName>(app);
+  app.Connect<ShowAddTilesetDialogEvent, &App::OnShowAddTilesetDialog>();
+  app.Connect<AddTilesetEvent, &App::OnAddTileset>();
+  app.Connect<RemoveTilesetEvent, &App::OnRemoveTileset>();
+  app.Connect<SelectTilesetEvent, &App::OnSelectTileset>();
+  app.Connect<SetTilesetSelectionEvent, &App::OnSetTilesetSelection>();
+  app.Connect<ShowTilesetPropertiesEvent, &App::OnShowTilesetProperties>();
+  app.Connect<SetTilesetNameEvent, &App::OnSetTilesetName>();
 
-  d.sink<AddRowEvent>().connect<&App::OnAddRow>(app);
-  d.sink<AddColumnEvent>().connect<&App::OnAddColumn>(app);
-  d.sink<RemoveRowEvent>().connect<&App::OnRemoveRow>(app);
-  d.sink<RemoveColumnEvent>().connect<&App::OnRemoveColumn>(app);
-  d.sink<ResizeMapEvent>().connect<&App::OnResizeMap>(app);
-  d.sink<OpenResizeMapDialogEvent>().connect<&App::OnOpenResizeMapDialog>(app);
+  app.Connect<AddRowEvent, &App::OnAddRow>();
+  app.Connect<AddColumnEvent, &App::OnAddColumn>();
+  app.Connect<RemoveRowEvent, &App::OnRemoveRow>();
+  app.Connect<RemoveColumnEvent, &App::OnRemoveColumn>();
+  app.Connect<ResizeMapEvent, &App::OnResizeMap>();
+  app.Connect<OpenResizeMapDialogEvent, &App::OnOpenResizeMapDialog>();
 
-  d.sink<AddLayerEvent>().connect<&App::OnAddLayer>(app);
-  d.sink<RemoveLayerEvent>().connect<&App::OnRemoveLayer>(app);
-  d.sink<SelectLayerEvent>().connect<&App::OnSelectLayer>(app);
-  d.sink<MoveLayerUpEvent>().connect<&App::OnMoveLayerUp>(app);
-  d.sink<MoveLayerDownEvent>().connect<&App::OnMoveLayerDown>(app);
-  d.sink<DuplicateLayerEvent>().connect<&App::OnDuplicateLayer>(app);
-  d.sink<SetLayerOpacityEvent>().connect<&App::OnSetLayerOpacity>(app);
-  d.sink<SetLayerVisibleEvent>().connect<&App::OnSetLayerVisible>(app);
-  d.sink<OpenRenameLayerDialogEvent>().connect<&App::OnOpenRenameLayerDialog>(app);
-  d.sink<RenameLayerEvent>().connect<&App::OnRenameLayer>(app);
-  d.sink<ShowLayerPropertiesEvent>().connect<&App::OnShowLayerProperties>(app);
+  app.Connect<AddLayerEvent, &App::OnAddLayer>();
+  app.Connect<RemoveLayerEvent, &App::OnRemoveLayer>();
+  app.Connect<SelectLayerEvent, &App::OnSelectLayer>();
+  app.Connect<MoveLayerUpEvent, &App::OnMoveLayerUp>();
+  app.Connect<MoveLayerDownEvent, &App::OnMoveLayerDown>();
+  app.Connect<DuplicateLayerEvent, &App::OnDuplicateLayer>();
+  app.Connect<SetLayerOpacityEvent, &App::OnSetLayerOpacity>();
+  app.Connect<SetLayerVisibleEvent, &App::OnSetLayerVisible>();
+  app.Connect<OpenRenameLayerDialogEvent, &App::OnOpenRenameLayerDialog>();
+  app.Connect<RenameLayerEvent, &App::OnRenameLayer>();
+  app.Connect<ShowLayerPropertiesEvent, &App::OnShowLayerProperties>();
 
-  d.sink<SetObjectNameEvent>().connect<&App::OnSetObjectName>(app);
-  d.sink<MoveObjectEvent>().connect<&App::OnMoveObject>(app);
-  d.sink<SetObjectVisibilityEvent>().connect<&App::OnSetObjectVisibility>(app);
-  d.sink<SetObjectTagEvent>().connect<&App::OnSetObjectTag>(app);
-  d.sink<SpawnObjectContextMenuEvent>().connect<&App::OnSpawnObjectContextMenu>(app);
+  app.Connect<SetObjectNameEvent, &App::OnSetObjectName>();
+  app.Connect<MoveObjectEvent, &App::OnMoveObject>();
+  app.Connect<SetObjectVisibilityEvent, &App::OnSetObjectVisibility>();
+  app.Connect<SetObjectTagEvent, &App::OnSetObjectTag>();
+  app.Connect<SpawnObjectContextMenuEvent, &App::OnSpawnObjectContextMenu>();
 
-  d.sink<ShowAddPropertyDialogEvent>().connect<&App::OnShowAddPropertyDialog>(app);
-  d.sink<ShowRenamePropertyDialogEvent>().connect<&App::OnShowRenamePropertyDialog>(app);
-  d.sink<ShowChangePropertyTypeDialogEvent>()
-      .connect<&App::OnShowChangePropertyTypeDialog>(app);
-  d.sink<AddPropertyEvent>().connect<&App::OnAddProperty>(app);
-  d.sink<RemovePropertyEvent>().connect<&App::OnRemoveProperty>(app);
-  d.sink<RenamePropertyEvent>().connect<&App::OnRenameProperty>(app);
-  d.sink<UpdatePropertyEvent>().connect<&App::OnUpdateProperty>(app);
-  d.sink<ChangePropertyTypeEvent>().connect<&App::OnChangePropertyType>(app);
-  d.sink<SetPropertyContextEvent>().connect<&App::OnSetPropertyContext>(app);
+  app.Connect<ShowAddPropertyDialogEvent, &App::OnShowAddPropertyDialog>();
+  app.Connect<ShowRenamePropertyDialogEvent, &App::OnShowRenamePropertyDialog>();
+  app.Connect<ShowChangePropertyTypeDialogEvent, &App::OnShowChangePropertyTypeDialog>();
+  app.Connect<AddPropertyEvent, &App::OnAddProperty>();
+  app.Connect<RemovePropertyEvent, &App::OnRemoveProperty>();
+  app.Connect<RenamePropertyEvent, &App::OnRenameProperty>();
+  app.Connect<UpdatePropertyEvent, &App::OnUpdateProperty>();
+  app.Connect<ChangePropertyTypeEvent, &App::OnChangePropertyType>();
+  app.Connect<SetPropertyContextEvent, &App::OnSetPropertyContext>();
 
-  d.sink<ToggleUiEvent>().connect<&App::OnToggleUi>(app);
-  d.sink<QuitEvent>().connect<&App::OnQuit>(app);
+  app.Connect<ToggleUiEvent, &App::OnToggleUi>();
+  app.Connect<QuitEvent, &App::OnQuit>();
 }
 
 }  // namespace Tactile

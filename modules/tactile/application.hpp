@@ -1,9 +1,8 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <centurion.hpp>
 #include <entt/entt.hpp>
+#include <tactile_def.hpp>
 
 #include "core/utils/texture_manager.hpp"
 #include "editor/events/command_events.hpp"
@@ -25,7 +24,7 @@ namespace Tactile {
 class ApplicationConfiguration;
 
 class Application final {
-  friend void SubscribeToEvents(Application*, entt::dispatcher&);
+  friend void SubscribeToEvents(Application&);
 
  public:
   explicit Application(ApplicationConfiguration* configuration);
@@ -41,6 +40,12 @@ class Application final {
   Icons mIcons;
   WidgetManager mWidgets;
   bool mQuit{};
+
+  template <typename Event, auto Slot>
+  void Connect()
+  {
+    mDispatcher.sink<Event>().template connect<Slot>(this);
+  }
 
   void OnAboutToExit();
   void SaveCurrentFilesToHistory();
