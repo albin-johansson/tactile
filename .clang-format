@@ -11,9 +11,9 @@ PointerAlignment: Left
 
 IndentRequires: true
 IndentCaseLabels: true
-IndentAccessModifiers: true
 
-AccessModifierOffset: 1
+IndentAccessModifiers: false
+AccessModifierOffset: -1
 
 NamespaceIndentation: None
 FixNamespaceComments: true
