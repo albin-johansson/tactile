@@ -6,7 +6,6 @@ env:
   DISPLAY: :99.0
   SDL_VIDEODRIVER: x11
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
-  VCPKG_TARGET_TRIPLET: x64-linux
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
 
@@ -75,7 +74,7 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} -GNinja
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
 
       - name: Build
         working-directory: ./build
