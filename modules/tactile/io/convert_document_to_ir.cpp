@@ -1,8 +1,6 @@
 #include "convert_document_to_ir.hpp"
 
 #include <filesystem>  // absolute
-#include <memory>      // make_unique
-#include <vector>      // vector
 
 #include <tactile_def.hpp>
 
@@ -71,33 +69,33 @@ void ConvertProperties(T& source,
   }
 }
 
-void ConvertObject(IO::Object& data,
+void ConvertObject(IO::Object& ir,
                    const entt::registry& registry,
                    const entt::entity entity)
 {
   const auto& object = registry.get<Object>(entity);
-  IO::SetId(data, object.id);
-  IO::SetX(data, object.x);
-  IO::SetY(data, object.y);
-  IO::SetWidth(data, object.width);
-  IO::SetHeight(data, object.height);
-  IO::SetType(data, object.type);
-  IO::SetTag(data, object.tag.c_str());
-  IO::SetVisible(data, object.visible);
+  IO::SetId(ir, object.id);
+  IO::SetX(ir, object.x);
+  IO::SetY(ir, object.y);
+  IO::SetWidth(ir, object.width);
+  IO::SetHeight(ir, object.height);
+  IO::SetType(ir, object.type);
+  IO::SetTag(ir, object.tag.c_str());
+  IO::SetVisible(ir, object.visible);
 
   const auto& context = registry.get<PropertyContext>(entity);
-  IO::SetName(data, context.name.c_str());
-  ConvertProperties(data, registry, context);
+  IO::SetName(ir, context.name.c_str());
+  ConvertProperties(ir, registry, context);
 }
 
-void ConvertFancyTiles(IO::Tileset& data,
+void ConvertFancyTiles(IO::Tileset& ir,
                        const entt::registry& registry,
                        const Tileset& tileset)
 
 {
   for (auto&& [entity, tile, ctx] : registry.view<FancyTile, PropertyContext>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
-      auto& tileData = IO::AddTile(data);
+      auto& tileData = IO::AddTile(ir);
       IO::SetId(tileData, Sys::ConvertToLocal(registry, tile.id).value());
 
       if (const auto* animation = registry.try_get<Animation>(entity)) {
@@ -123,30 +121,30 @@ void ConvertFancyTiles(IO::Tileset& data,
   }
 }
 
-void ConvertTileset(IO::Tileset& data,
+void ConvertTileset(IO::Tileset& ir,
                     const entt::registry& registry,
                     const entt::entity entity,
                     const Tileset& tileset)
 {
-  IO::SetFirstGlobalId(data, tileset.first_id);
-  IO::SetTileWidth(data, tileset.tile_width);
-  IO::SetTileHeight(data, tileset.tile_height);
-  IO::SetTileCount(data, tileset.tile_count);
-  IO::SetColumnCount(data, tileset.column_count);
+  IO::SetFirstGlobalId(ir, tileset.first_id);
+  IO::SetTileWidth(ir, tileset.tile_width);
+  IO::SetTileHeight(ir, tileset.tile_height);
+  IO::SetTileCount(ir, tileset.tile_count);
+  IO::SetColumnCount(ir, tileset.column_count);
 
   const auto& texture = registry.get<Texture>(entity);
-  IO::SetImagePath(data, std::filesystem::absolute(texture.path).c_str());
-  IO::SetImageWidth(data, texture.width);
-  IO::SetImageHeight(data, texture.height);
+  IO::SetImagePath(ir, std::filesystem::absolute(texture.path).c_str());
+  IO::SetImageWidth(ir, texture.width);
+  IO::SetImageHeight(ir, texture.height);
 
   const auto& ctx = registry.get<PropertyContext>(entity);
-  IO::SetName(data, ctx.name.c_str());
+  IO::SetName(ir, ctx.name.c_str());
 
-  ConvertProperties(data, registry, ctx);
-  ConvertFancyTiles(data, registry, tileset);
+  ConvertProperties(ir, registry, ctx);
+  ConvertFancyTiles(ir, registry, tileset);
 }
 
-void ConvertLayer(IO::Layer& data,
+void ConvertLayer(IO::Layer& ir,
                   const entt::registry& registry,
                   const entt::entity entity,
                   const LayerTreeNode& node,
@@ -156,17 +154,17 @@ void ConvertLayer(IO::Layer& data,
   const auto& layer = registry.get<Layer>(entity);
   const auto& context = registry.get<PropertyContext>(entity);
 
-  IO::SetIndex(data, node.index);
-  IO::SetId(data, layer.id);
-  IO::SetOpacity(data, layer.opacity);
-  IO::SetVisible(data, layer.visible);
+  IO::SetIndex(ir, node.index);
+  IO::SetId(ir, layer.id);
+  IO::SetOpacity(ir, layer.opacity);
+  IO::SetVisible(ir, layer.visible);
 
-  IO::SetName(data, context.name.c_str());
-  ConvertProperties(data, registry, context);
+  IO::SetName(ir, context.name.c_str());
+  ConvertProperties(ir, registry, context);
 
   switch (layer.type) {
     case LayerType::TileLayer: {
-      auto& tileLayer = IO::MarkAsTileLayer(data);
+      auto& tileLayer = IO::MarkAsTileLayer(ir);
       IO::ReserveTiles(tileLayer, nRows, nCols);
 
       const auto matrix = registry.get<TileLayer>(entity).matrix;
@@ -182,7 +180,7 @@ void ConvertLayer(IO::Layer& data,
     case LayerType::ObjectLayer: {
       const auto& objectLayer = registry.get<ObjectLayer>(entity);
 
-      auto& objectLayerData = IO::MarkAsObjectLayer(data);
+      auto& objectLayerData = IO::MarkAsObjectLayer(ir);
       IO::ReserveObjects(objectLayerData, objectLayer.objects.size());
 
       for (const auto objectEntity : objectLayer.objects) {
@@ -194,7 +192,7 @@ void ConvertLayer(IO::Layer& data,
     }
 
     case LayerType::GroupLayer: {
-      auto& groupLayer = IO::MarkAsGroupLayer(data);
+      auto& groupLayer = IO::MarkAsGroupLayer(ir);
       IO::ReserveLayers(groupLayer, node.children.size());
 
       for (const auto child : node.children) {
@@ -208,6 +206,44 @@ void ConvertLayer(IO::Layer& data,
   }
 }
 
+void ConvertLayers(IO::Map& ir, const entt::registry& registry)
+{
+  const auto& map = registry.ctx<Map>();
+
+  IO::ReserveLayers(ir, registry.storage<LayerTreeNode>().size());
+  for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
+    const auto& parent = registry.get<Parent>(entity);
+    if (parent.entity == entt::null) {
+      auto& layerData = IO::AddLayer(ir);
+      ConvertLayer(layerData, registry, entity, node, map.row_count, map.column_count);
+    }
+  }
+}
+
+void ConvertTilesets(IO::Map& ir, const entt::registry& registry)
+{
+  IO::ReserveTilesets(ir, registry.storage<Tileset>().size());
+  for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
+    auto& tilesetData = IO::AddTileset(ir);
+    ConvertTileset(tilesetData, registry, entity, tileset);
+  }
+}
+
+void ConvertMapAttributes(IO::Map& ir, const Document& document)
+{
+  const auto& map = document.registry.ctx<Map>();
+  IO::SetPath(ir, std::filesystem::absolute(document.path).c_str());
+
+  IO::SetNextLayerId(ir, map.next_layer_id);
+  IO::SetNextObjectId(ir, map.next_object_id);
+
+  IO::SetTileWidth(ir, map.tile_width);
+  IO::SetTileHeight(ir, map.tile_height);
+
+  IO::SetRowCount(ir, map.row_count);
+  IO::SetColumnCount(ir, map.column_count);
+}
+
 }  // namespace
 
 auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr
@@ -215,39 +251,17 @@ auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr
   TACTILE_PROFILE_START;
 
   const auto& registry = document.registry;
-  const auto& map = registry.ctx<Map>();
 
-  auto data = IO::CreateMap();
-  IO::SetPath(*data, std::filesystem::absolute(document.path).c_str());
+  auto ir = IO::CreateMap();
+  ConvertMapAttributes(*ir, document);
 
-  IO::SetNextLayerId(*data, map.next_layer_id);
-  IO::SetNextObjectId(*data, map.next_object_id);
+  ConvertTilesets(*ir, registry);
+  ConvertLayers(*ir, registry);
 
-  IO::SetTileWidth(*data, map.tile_width);
-  IO::SetTileHeight(*data, map.tile_height);
+  ConvertProperties(*ir, registry, registry.ctx<PropertyContext>());
 
-  IO::SetRowCount(*data, map.row_count);
-  IO::SetColumnCount(*data, map.column_count);
-
-  IO::ReserveTilesets(*data, registry.storage<Tileset>().size());
-  for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
-    auto& tilesetData = IO::AddTileset(*data);
-    ConvertTileset(tilesetData, registry, entity, tileset);
-  }
-
-  IO::ReserveLayers(*data, registry.storage<LayerTreeNode>().size());
-  for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
-    const auto& parent = registry.get<Parent>(entity);
-    if (parent.entity == entt::null) {
-      auto& layerData = IO::AddLayer(*data);
-      ConvertLayer(layerData, registry, entity, node, map.row_count, map.column_count);
-    }
-  }
-
-  ConvertProperties(*data, registry, registry.ctx<PropertyContext>());
-
-  TACTILE_PROFILE_END("Converted document to IR");
-  return data;
+  TACTILE_PROFILE_END("Converted document to intermediate representation");
+  return ir;
 }
 
 }  // namespace Tactile
