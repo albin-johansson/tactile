@@ -6,10 +6,8 @@
 #include <fmt/chrono.h>
 #include <fmt/color.h>
 #include <fmt/core.h>
-#include <tactile_stdlib.hpp>
 
 #include "build.hpp"
-#include "editor/gui/log/log_dock.hpp"
 
 namespace Tactile {
 namespace {
