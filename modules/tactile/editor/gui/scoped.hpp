@@ -126,7 +126,7 @@ class TabItem final {
 
 class Table final {
  public:
-  Table(const CStr name, const int nColumns, const ImGuiTableFlags flags)
+  Table(const CStr name, const int nColumns, const ImGuiTableFlags flags = 0)
       : mOpen{ImGui::BeginTable(name, nColumns, flags)}
   {}
 
