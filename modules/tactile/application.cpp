@@ -19,9 +19,7 @@
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/map_import_error_dialog.hpp"
-#include "editor/gui/dialogs/resize_map_dialog.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
-#include "editor/gui/layers/layer_dock.hpp"
 #include "editor/gui/toolbar/toolbar.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
@@ -54,13 +52,6 @@ void Register(Model& model, Args&&... args)
     commands.PushWithoutRedo<Command>(document->registry, std::forward<Args>(args)...);
   }
 }
-
-/* These variables are used by the "Toggle UI" feature */
-constinit bool gPrevShowLayerDock{true};
-constinit bool gPrevShowTilesetDock{true};
-constinit bool gPrevShowPropertiesDock{true};
-constinit bool gPrevShowLogDock{false};
-constinit bool gPrevShowToolbar{true};
 
 }  // namespace
 
@@ -660,11 +651,11 @@ void Application::OnToggleUi()
   static bool show = false;
 
   if (!show) {
-    gPrevShowLayerDock = Prefs::GetShowLayerDock();
-    gPrevShowTilesetDock = Prefs::GetShowTilesetDock();
-    gPrevShowPropertiesDock = Prefs::GetShowPropertiesDock();
-    gPrevShowLogDock = Prefs::GetShowLogDock();
-    gPrevShowToolbar = mWidgets.IsToolbarVisible();
+    mWidgetShowState.prev_show_layer_dock = Prefs::GetShowLayerDock();
+    mWidgetShowState.prev_show_tileset_dock = Prefs::GetShowTilesetDock();
+    mWidgetShowState.prev_show_properties_dock = Prefs::GetShowPropertiesDock();
+    mWidgetShowState.prev_show_log_dock = Prefs::GetShowLogDock();
+    mWidgetShowState.prev_show_toolbar = mWidgets.IsToolbarVisible();
   }
 
   Prefs::SetShowLayerDock(show);
@@ -674,11 +665,11 @@ void Application::OnToggleUi()
   mWidgets.SetToolbarVisible(show);
 
   if (show) {
-    Prefs::SetShowLayerDock(gPrevShowLayerDock);
-    Prefs::SetShowTilesetDock(gPrevShowTilesetDock);
-    Prefs::SetShowPropertiesDock(gPrevShowPropertiesDock);
-    Prefs::SetShowLogDock(gPrevShowLogDock);
-    mWidgets.SetToolbarVisible(gPrevShowToolbar);
+    Prefs::SetShowLayerDock(mWidgetShowState.prev_show_layer_dock);
+    Prefs::SetShowTilesetDock(mWidgetShowState.prev_show_tileset_dock);
+    Prefs::SetShowPropertiesDock(mWidgetShowState.prev_show_properties_dock);
+    Prefs::SetShowLogDock(mWidgetShowState.prev_show_log_dock);
+    mWidgets.SetToolbarVisible(mWidgetShowState.prev_show_toolbar);
   }
 
   show = !show;
