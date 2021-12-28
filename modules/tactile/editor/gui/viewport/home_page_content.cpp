@@ -6,7 +6,6 @@
 #include "editor/events/map_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/centered_button.hpp"
-#include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/texture_utils.hpp"
 
@@ -21,9 +20,9 @@ void UpdateHomePageContent(const Icons& icons, entt::dispatcher& dispatcher)
   AlignNextItemCenteredHorizontally(128);
   ImGui::Image(ToTextureID(icons.GetTactileIcon()), {128, 128});
 
-  CenteredText("No active map");
-
   ImGui::Spacing();
+  ImGui::Spacing();
+
   if (CenteredButton("Create new map")) {
     dispatcher.enqueue<ShowNewMapDialogEvent>();
   }
