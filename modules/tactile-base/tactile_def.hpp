@@ -7,6 +7,22 @@
 #include <optional>     // optional, nullopt_t, nullopt
 #include <type_traits>  // is_pointer_v
 
+#define TACTILE_DEFAULT_COPY(Class) \
+  Class(const Class&) = default;    \
+  auto operator=(const Class&)->Class& = default;
+
+#define TACTILE_DELETE_COPY(Class) \
+  Class(const Class&) = delete;    \
+  auto operator=(const Class&)->Class& = delete;
+
+#define TACTILE_DEFAULT_MOVE(Class)  \
+  Class(Class&&) noexcept = default; \
+  auto operator=(Class&&) noexcept->Class& = default;
+
+#define TACTILE_DELETE_MOVE(Class)  \
+  Class(Class&&) noexcept = delete; \
+  auto operator=(Class&&) noexcept->Class& = delete;
+
 namespace Tactile {
 
 using CStr = const char*;
