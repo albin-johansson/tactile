@@ -2,6 +2,8 @@
 
 #include <string>  // string
 
+#include <tactile_def.hpp>
+
 namespace Tactile {
 
 /// \addtogroup commands
@@ -9,6 +11,9 @@ namespace Tactile {
 
 class ACommand {
  public:
+  TACTILE_DELETE_COPY(ACommand)
+  TACTILE_DEFAULT_MOVE(ACommand)
+
   ACommand() = default;
 
   /**
