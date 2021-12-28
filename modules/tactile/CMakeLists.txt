@@ -417,6 +417,8 @@ target_link_libraries(${TACTILE_LIB}
                       OpenGL::GL
                       GLEW::GLEW
                       SDL2::SDL2
+                      SDL2::SDL2-static
+                      SDL2::SDL2_image
                       imgui::imgui
                       EnTT::EnTT
                       fmt::fmt
@@ -428,7 +430,6 @@ target_link_libraries(${TACTILE_LIB}
 
 target_compile_definitions(${TACTILE_LIB}
                            PUBLIC
-                           CENTURION_NO_SDL_IMAGE
                            CENTURION_NO_SDL_MIXER
                            CENTURION_NO_SDL_TTF
                            IMGUI_DISABLE_OBSOLETE_FUNCTIONS

@@ -20,6 +20,7 @@ class ApplicationConfiguration final {
  private:
   ProtobufContext mProtobuf;
   cen::SDL mSDL;
+  cen::IMG mIMG;
 
   /* Initialization of these members need to be deferred */
   Maybe<cen::Window> mWindow;
