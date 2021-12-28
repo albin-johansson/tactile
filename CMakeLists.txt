@@ -38,6 +38,7 @@ else ()
 endif ()
 
 find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2-image CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 

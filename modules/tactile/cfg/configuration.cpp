@@ -32,7 +32,7 @@ ApplicationConfiguration::ApplicationConfiguration()
   InitAttributes();
 
   mWindow.emplace("Tactile", cen::Window::GetDefaultSize(), GetWindowFlags());
-  // TODO set_icon(cen::surface{"resources/icon.png"});
+  mWindow->SetIcon(cen::Surface{"resources/icon.png"});
 
   assert(mWindow.has_value());
   mOpenGL.emplace(*mWindow);
