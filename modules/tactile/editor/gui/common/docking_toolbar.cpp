@@ -45,7 +45,9 @@ void BeginDockingToolbar(NotNull<CStr> name, int& toolbarAxis)
 
   if (auto* node = ImGui::GetWindowDockNode()) {
     auto& style = ImGui::GetStyle();
-    const auto toolbarAxisPerp = static_cast<ImGuiAxis>(toolbarAxis ^ 1);
+
+    assert((toolbarAxis ^ 1) >= 0);
+    const auto toolbarAxisPerp = static_cast<usize>(toolbarAxis ^ 1);
     const auto windowPadding = style.WindowPadding[toolbarAxisPerp];
     const auto sizeWhenDocked = windowPadding * 2.0f + iconSize[toolbarAxisPerp];
 
