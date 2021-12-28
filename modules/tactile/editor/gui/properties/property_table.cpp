@@ -13,7 +13,6 @@
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/property_system.hpp"
-#include "dialogs/change_property_type_dialog.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
