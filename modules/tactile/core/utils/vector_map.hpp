@@ -27,10 +27,12 @@ class VectorMap final {
   VectorMap() = default;
 
   VectorMap(const VectorMap&) = default;
-  VectorMap(VectorMap&&) noexcept = default;
+  auto operator=(const VectorMap&) -> VectorMap& = default;
 
-  VectorMap& operator=(const VectorMap&) = default;
-  VectorMap& operator=(VectorMap&&) noexcept = default;
+  VectorMap(VectorMap&&) noexcept = default;
+  auto operator=(VectorMap&&) noexcept -> VectorMap& = default;
+
+  ~VectorMap() noexcept = default;
 
   void Clear() { mData.clear(); }
 
