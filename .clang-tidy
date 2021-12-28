@@ -1,0 +1,24 @@
+FormatStyle: google
+Checks: "-*,
+         performance-*,
+
+         bugprone-*,
+         -bugprone-easily-swappable-parameters,
+         
+         readability-*,
+         -readability-identifier-length,
+         -readability-uppercase-literal-suffix,
+         -readability-magic-numbers,
+         -readability-implicit-bool-conversion,
+         -readability-else-after-return,
+         -readability-named-parameter,
+
+         modernize-*,
+         misc-*,
+         clang-analyzer-*,
+         
+         cppcoreguidelines-*,
+         -cppcoreguidelines-avoid-magic-numbers,
+         -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+         -cppcoreguidelines-pro-type-vararg,
+         "
