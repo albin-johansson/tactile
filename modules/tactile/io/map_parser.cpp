@@ -13,9 +13,9 @@ MapParser::MapParser(const std::filesystem::path& path)
 {
   LogInfo("Parsing map {}", path);
   try {
-    TACTILE_PROFILE_START;
+    TACTILE_PROFILE_START
     mData = IO::ParseMap(path, &mError);
-    TACTILE_PROFILE_END("Parsed map");
+    TACTILE_PROFILE_END("Parsed map")
   }
   catch (...) {
     mError = IO::ParseError::Unknown;
