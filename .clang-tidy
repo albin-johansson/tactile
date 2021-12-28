@@ -14,8 +14,10 @@ Checks: "-*,
          -readability-named-parameter,
 
          modernize-*,
-         misc-*,
          clang-analyzer-*,
+         
+         misc-*,
+         -misc-non-private-member-variables-in-classes,
          
          cppcoreguidelines-*,
          -cppcoreguidelines-avoid-magic-numbers,
