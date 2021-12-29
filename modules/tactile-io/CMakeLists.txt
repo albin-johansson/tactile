@@ -164,7 +164,7 @@ target_link_libraries(${TACTILE_IO}
                       magic_enum::magic_enum
                       yaml-cpp
                       nlohmann_json::nlohmann_json
-                      pugixml::pugixml
+                      pugixml::static
                       )
 
 target_compile_definitions(${TACTILE_IO} PRIVATE TACTILE_IO_EXPORT)
