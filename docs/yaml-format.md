@@ -9,7 +9,7 @@ differences is that the Tactile YAML format doesn't support embedded tilesets. A
 The root node in the Tactile YAML format provides general information about the tilemap.
 
 |        Attribute |   Type   | Required | Description                           |
-| ---------------: | :------: | :------: | :------------------------------------ |
+|-----------------:|:--------:|:--------:|:--------------------------------------|
 |        `version` |  `int`   |   Yes    | The version of the YAML map format.   |
 |      `row-count` |  `int`   |   Yes    | The number of rows in the tilemap.    |
 |   `column-count` |  `int`   |   Yes    | The number of columns in the tilemap. |
@@ -26,7 +26,7 @@ The root node in the Tactile YAML format provides general information about the 
 ## `Layer`
 
 |    Attribute |   Type   | Required | Default | Description                                          |
-| -----------: | :------: | :------: | :-----: | :--------------------------------------------------- |
+|-------------:|:--------:|:--------:|:-------:|:-----------------------------------------------------|
 |       `name` | `string` |   Yes    |   N/A   | The name associated with the layer.                  |
 |         `id` |  `int`   |   Yes    |   N/A   | The unique identifier associated with the layer.     |
 |       `type` | `string` |   Yes    |   N/A   | One of `tile-layer`, `object-layer` or `group-layer` |
@@ -51,19 +51,19 @@ additional attributes.
 ### `TileLayer`
 
 | Attribute |   Type   | Required | Description                                               |
-| --------: | :------: | :------: | :-------------------------------------------------------- |
+|----------:|:--------:|:--------:|:----------------------------------------------------------|
 |    `data` | `string` |   Yes    | A string of global tile identifiers, separated by spaces. |
 
 ### `ObjectLayer`
 
 | Attribute |   Type   | Required | Description                   |
-| --------: | :------: | :------: | :---------------------------- |
+|----------:|:--------:|:--------:|:------------------------------|
 | `objects` | Sequence |   Yes    | A sequence of `Object` nodes. |
 
 ### `GroupLayer`
 
 | Attribute |   Type   | Required | Description                  |
-| --------: | :------: | :------: | :--------------------------- |
+|----------:|:--------:|:--------:|:-----------------------------|
 |  `layers` | Sequence |   Yes    | A sequence of `Layer` nodes. |
 
 ---
@@ -71,7 +71,7 @@ additional attributes.
 ## `Object`
 
 |    Attribute |   Type   | Required | Default | Description                          |
-| -----------: | :------: | :------: | :-----: | :----------------------------------- |
+|-------------:|:--------:|:--------:|:-------:|:-------------------------------------|
 |         `id` |  `int`   |   Yes    |   N/A   |                                      |
 |       `type` | `string` |   Yes    |   N/A   | One of `point`, `rect` or `ellipse`. |
 |       `name` | `string` |    No    |  `""`   |                                      |
@@ -101,7 +101,7 @@ y: 456
 The `TilesetRef` node provides information about an external tileset definition, and are always stored in the main tilemap file.
 
 |         Attribute |   Type   | Required | Description                                           |
-| ----------------: | :------: | :------: | :---------------------------------------------------- |
+|------------------:|:--------:|:--------:|:------------------------------------------------------|
 | `first-global-id` |  `int`   |   Yes    | The first global tile ID associated with the tileset. |
 |            `path` | `string` |   Yes    | Relative path to the tileset definition file.         |
 
@@ -122,7 +122,7 @@ editor will be stored next to the main map file. Note, the `tiles` node only con
 feature additional data, such as properties and animations.
 
 |      Attribute |   Type   | Required | Description                                |
-| -------------: | :------: | :------: | :----------------------------------------- |
+|---------------:|:--------:|:--------:|:-------------------------------------------|
 |      `version` |  `int`   |   Yes    |                                            |
 |         `name` | `string` |   Yes    | The name of the tileset.                   |
 |   `tile-count` |  `int`   |   Yes    | The total amount of tiles in the tileset.  |
@@ -154,7 +154,7 @@ image-height: 1024
 The `Tile` node provides additional information about tiles in a tileset.
 
 |    Attribute |   Type   | Required | Description                      |
-| -----------: | :------: | :------: | :------------------------------- |
+|-------------:|:--------:|:--------:|:---------------------------------|
 |         `id` |  `int`   |   Yes    | Local ID of the associated tile. |
 |  `animation` | Sequence |    No    | A sequence of `Frame` nodes.     |
 |    `objects` | Sequence |    No    | A sequence of `Object` nodes.    |
@@ -176,7 +176,7 @@ animation:
 The `Frame` node represents a frame in an animation.
 
 |  Attribute | Type  | Required | Description                                                    |
-| ---------: | :---: | :------: | :------------------------------------------------------------- |
+|-----------:|:-----:|:--------:|:---------------------------------------------------------------|
 |     `tile` | `int` |   Yes    | Local ID of the tile that should be rendered during the frame. |
 | `duration` | `int` |   Yes    | Duration of the frame, in milliseconds.                        |
 
@@ -185,7 +185,7 @@ The `Frame` node represents a frame in an animation.
 ### `ComponentTemplate` (Not implemented)
 
 |    Attribute |   Type   | Required | Description                               |
-| -----------: | :------: | :------: | :---------------------------------------- |
+|-------------:|:--------:|:--------:|:------------------------------------------|
 |       `name` | `string` |   Yes    | The name of the component template.       |
 | `attributes` | Sequence |    No    | A sequence of `ComponentAttribute` nodes. |
 
@@ -214,7 +214,7 @@ attributes:
 ### `ComponentAttribute` (Not implemented)
 
 | Attribute |   Type   | Required | Description                                                     |
-| --------: | :------: | :------: | :-------------------------------------------------------------- |
+|----------:|:--------:|:--------:|:----------------------------------------------------------------|
 |    `name` | `string` |   Yes    | The name of the attribute.                                      |
 |    `type` | `string` |   Yes    | The name of a `ComponentTemplate` or any of the property types. |
 
@@ -228,7 +228,7 @@ type: float
 ## `Property`
 
 | Attribute |   Type    | Required | Description                                                          |
-| --------: | :-------: | :------: | :------------------------------------------------------------------- |
+|----------:|:---------:|:--------:|:---------------------------------------------------------------------|
 |    `name` | `string`  |   Yes    | Name that is unique in the scope of "sibling" properties.            |
 |    `type` | `string`  |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
 |   `value` | `variant` |   Yes    | The value of the property.                                           |
