@@ -2,9 +2,8 @@
 
 #include <locale>  // locale, isalpha, isdigit, isspace
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 #include "build.hpp"
 #include "core/components/layer.hpp"
@@ -17,15 +16,9 @@
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
+#include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "items/bool_property_widget.hpp"
-#include "items/color_property_widget.hpp"
-#include "items/file_property_widget.hpp"
-#include "items/float_property_widget.hpp"
-#include "items/int_property_widget.hpp"
-#include "items/object_property_widget.hpp"
-#include "items/string_property_widget.hpp"
 
 namespace Tactile {
 namespace {
@@ -43,8 +36,6 @@ void PrepareTableRow(const CStr label)
                                  const bool validateAsFileName = false)
     -> Maybe<std::string>
 {
-  const Scoped::ID scope{"##NativeNameRow"};
-
   PrepareTableRow("Name");
 
   ImGui::TableNextColumn();
@@ -68,29 +59,27 @@ void PrepareTableRow(const CStr label)
       }
     };
 
-    return StringPropertyWidget(name, flags, filter);
+    return InputWidget("##NativeNameRowInput", name, flags, filter);
   }
   else {
-    return StringPropertyWidget(name, flags);
+    return InputWidget("##NativeNameRowInput", name, flags);
   }
 }
 
 [[nodiscard]] auto NativeOpacityRow(const float opacity) -> Maybe<float>
 {
-  const Scoped::ID scope{"##NativeOpacityRow"};
   PrepareTableRow("Opacity");
 
   ImGui::TableNextColumn();
-  return FloatPropertyWidget(opacity, 0.0f, 1.0f);
+  return InputWidget("##NativeOpacityRow", opacity, 0.0f, 1.0f);
 }
 
 [[nodiscard]] auto NativeVisibilityRow(const bool visible) -> Maybe<bool>
 {
-  const Scoped::ID scope{"##NativeVisibilityRow"};
   PrepareTableRow("Visible");
 
   ImGui::TableNextColumn();
-  return BoolPropertyWidget(visible);
+  return InputWidget("##NativeVisibilityRow", visible);
 }
 
 void NativeReadOnlyRow(const CStr label, const CStr value)
@@ -232,7 +221,7 @@ void ShowNativeObjectProperties(const std::string& name,
   PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
-  if (const auto tag = StringPropertyWidget(object.tag)) {
+  if (const auto tag = InputWidget("##NativeObjectTagInput", object.tag)) {
     dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
   }
 }
@@ -327,37 +316,37 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
 
     ImGui::TableNextColumn();
     if (value.IsString()) {
-      if (const auto updated = StringPropertyWidget(value)) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsString())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.IsInt()) {
-      if (const auto updated = IntPropertyWidget(value)) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsInt())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.IsFloat()) {
-      if (const auto updated = FloatPropertyWidget(value)) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsFloat())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.IsBool()) {
-      if (const auto updated = BoolPropertyWidget(value)) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsBool())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.IsColor()) {
-      if (const auto updated = ColorPropertyWidget(value)) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsColor())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.IsObject()) {
-      if (const auto updated = ObjectPropertyWidget(value)) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsObject())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.IsFile()) {
-      if (const auto updated = FilePropertyWidget(value)) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsFile())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }

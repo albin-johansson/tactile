@@ -263,6 +263,8 @@ set(SOURCE_FILES
     editor/gui/common/docking_toolbar.hpp
     editor/gui/common/help_marker.cpp
     editor/gui/common/help_marker.hpp
+    editor/gui/common/input_widgets.cpp
+    editor/gui/common/input_widgets.hpp
     editor/gui/common/mouse_tracker.cpp
     editor/gui/common/mouse_tracker.hpp
     editor/gui/common/rubber_band.cpp
@@ -321,22 +323,8 @@ set(SOURCE_FILES
     editor/gui/properties/property_table.cpp
     editor/gui/properties/property_table.hpp
 
-    editor/gui/properties/items/bool_property_widget.cpp
-    editor/gui/properties/items/bool_property_widget.hpp
-    editor/gui/properties/items/color_property_widget.cpp
-    editor/gui/properties/items/color_property_widget.hpp
-    editor/gui/properties/items/file_property_widget.hpp
-    editor/gui/properties/items/file_property_widget.cpp
-    editor/gui/properties/items/float_property_widget.cpp
-    editor/gui/properties/items/float_property_widget.hpp
-    editor/gui/properties/items/int_property_widget.cpp
-    editor/gui/properties/items/int_property_widget.hpp
-    editor/gui/properties/items/object_property_widget.cpp
-    editor/gui/properties/items/object_property_widget.hpp
     editor/gui/properties/items/property_item_context_menu.cpp
     editor/gui/properties/items/property_item_context_menu.hpp
-    editor/gui/properties/items/string_property_widget.cpp
-    editor/gui/properties/items/string_property_widget.hpp
 
     editor/gui/properties/dialogs/add_property_dialog.cpp
     editor/gui/properties/dialogs/add_property_dialog.hpp
