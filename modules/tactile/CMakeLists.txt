@@ -416,7 +416,6 @@ target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       OpenGL::GL
                       GLEW::GLEW
-                      SDL2::SDL2
                       SDL2::SDL2-static
                       SDL2::SDL2_image
                       imgui::imgui

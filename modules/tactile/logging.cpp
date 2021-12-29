@@ -26,7 +26,12 @@ void Log(const fmt::color color,
   gHistory.push_back(full);
 
   if constexpr (IsDebugBuild()) {
-    fmt::print(fmt::fg(color), "{:>9} {}", priority, full);
+    if constexpr (IsPlatformWindows()) {
+      fmt::print("{:>9} {}", priority, full);
+    }
+    else {
+      fmt::print(fmt::fg(color), "{:>9} {}", priority, full);
+    }
   }
 }
 
