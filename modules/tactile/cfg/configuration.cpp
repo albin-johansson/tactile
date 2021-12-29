@@ -29,6 +29,13 @@ namespace {
 
 ApplicationConfiguration::ApplicationConfiguration()
 {
+  if constexpr (IsDebugBuild()) {
+    SetLogLevel(LogLevel::Verbose);
+  }
+  else {
+    SetLogLevel(LogLevel::Info);
+  }
+
   InitAttributes();
 
   mWindow.emplace("Tactile", cen::Window::GetDefaultSize(), GetWindowFlags());
