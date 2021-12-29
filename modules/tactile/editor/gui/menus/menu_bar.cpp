@@ -20,11 +20,8 @@ void MenuBar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::EndMainMenuBar();
   }
 
-  if (const auto* registry = model.GetActiveRegistry()) {
-    mFileMenu.UpdateWindows(*registry, dispatcher);
-    mEditMenu.UpdateWindows(*registry, dispatcher);
-  }
-
+  mFileMenu.UpdateWindows(model, dispatcher);
+  mEditMenu.UpdateWindows(model, dispatcher);
   mMapMenu.UpdateWindows(dispatcher);
   mHelpMenu.UpdateWindows();
   mDebugMenu.UpdateWindows();

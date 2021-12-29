@@ -23,6 +23,8 @@ void WidgetManager::Update(const Model& model,
 
   if (model.HasActiveDocument()) {
     mToolbar.Update(model, dispatcher);
+    mLayerDock.Update(model, icons, dispatcher);
+    mPropertiesDock.Update(model, dispatcher);
   }
 
   UpdateViewportWidget(model, icons, dispatcher);
@@ -30,13 +32,12 @@ void WidgetManager::Update(const Model& model,
   if (const auto* registry = model.GetActiveRegistry()) {
     UpdateMapViewObjectContextMenu(*registry, dispatcher);
 
-    mLayerDock.Update(*registry, icons, dispatcher);
-    mPropertiesDock.Update(*registry, dispatcher);
     mTilesetDock.Update(*registry, dispatcher);
-    mResizeMapDialog.Update(*registry, dispatcher);
 
     UpdateLogDock();
   }
+
+  mResizeMapDialog.Update(model, dispatcher);
 
   UpdateMapImportErrorDialog();
   UpdateSaveAsDialog(dispatcher);

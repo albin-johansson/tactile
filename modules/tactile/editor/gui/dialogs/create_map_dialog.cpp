@@ -26,7 +26,7 @@ void CreateMapDialog::Open()
   mColumns = 5;
 }
 
-void CreateMapDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
+void CreateMapDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
   {
     CStr rowsLabel = "Rows:";
@@ -75,7 +75,7 @@ void CreateMapDialog::OnAccept(entt::dispatcher& dispatcher)
                                      static_cast<usize>(mColumns));
 }
 
-auto CreateMapDialog::IsCurrentInputValid(const entt::registry&) const -> bool
+auto CreateMapDialog::IsCurrentInputValid(const Model&) const -> bool
 {
   return (mTileWidth > 0) && (mTileHeight > 0) && (mRows > 0) && (mColumns > 0);
 }

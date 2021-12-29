@@ -1,11 +1,11 @@
 #include "layer_dock.hpp"
 
 #include <cassert>  // assert
+#include <cassert>  // assert
 #include <limits>   // numeric_limits
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 #include "add_layer_popup.hpp"
 #include "core/components/layer.hpp"
@@ -18,6 +18,7 @@
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/model.hpp"
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
 
@@ -70,7 +71,7 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
 
 }  // namespace
 
-void LayerDock::Update(const entt::registry& registry,
+void LayerDock::Update(const Model& model,
                        const Icons& icons,
                        entt::dispatcher& dispatcher)
 {
@@ -82,9 +83,12 @@ void LayerDock::Update(const entt::registry& registry,
   Scoped::Window dock{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
   mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
+  const auto* registry = model.GetActiveRegistry();
+  assert(registry);
+
   if (dock.IsOpen()) {
-    UpdateLayerDockButtons(registry, dispatcher);
-    if (registry.view<Layer>().empty()) {
+    UpdateLayerDockButtons(*registry, dispatcher);
+    if (registry->view<Layer>().empty()) {
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available layers!");
     }
@@ -94,13 +98,13 @@ void LayerDock::Update(const entt::registry& registry,
                                ImGui::GetWindowHeight() - (4 * textLineHeight)};
 
       if (Scoped::ListBox list{"##LayerTreeNode", size}; list.IsOpen()) {
-        for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
+        for (auto&& [entity, node] : registry->view<LayerTreeNode>().each()) {
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
              other components in the view query directly. */
-          const auto& layer = registry.get<Layer>(entity);
-          const auto& parent = registry.get<Parent>(entity);
+          const auto& layer = registry->get<Layer>(entity);
+          const auto& parent = registry->get<Parent>(entity);
           if (parent.entity == entt::null) {
-            LayerItem(registry, icons, dispatcher, entity, layer);
+            LayerItem(*registry, icons, dispatcher, entity, layer);
           }
         }
       }
@@ -112,16 +116,16 @@ void LayerDock::Update(const entt::registry& registry,
   if (mRenameTarget.has_value()) {
     const auto target = *mRenameTarget;
 
-    const auto entity = Sys::FindLayer(registry, target);
+    const auto entity = Sys::FindLayer(*registry, target);
     assert(entity != entt::null);
 
-    const auto& context = registry.get<PropertyContext>(entity);
+    const auto& context = registry->get<PropertyContext>(entity);
 
     mRenameLayerDialog.Show(target, context.name);
     mRenameTarget.reset();
   }
 
-  mRenameLayerDialog.Update(registry, dispatcher);
+  mRenameLayerDialog.Update(model, dispatcher);
 }
 
 void LayerDock::ShowRenameLayerDialog(const LayerID id)

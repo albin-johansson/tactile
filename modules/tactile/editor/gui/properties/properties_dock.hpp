@@ -13,9 +13,11 @@
 
 namespace Tactile {
 
+class Model;
+
 class PropertiesDock final {
  public:
-  void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
+  void Update(const Model& model, entt::dispatcher& dispatcher);
 
   void ShowAddPropertyDialog();
 

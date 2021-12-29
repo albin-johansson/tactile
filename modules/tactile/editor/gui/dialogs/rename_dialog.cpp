@@ -14,15 +14,15 @@ ARenameDialog::ARenameDialog(const CStr title) : ADialog{title}
   SetAcceptButtonLabel("Rename");
 }
 
-void ARenameDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
+void ARenameDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
   ImGui::InputText("##NameInput", mNameBuffer.data(), sizeof mNameBuffer);
   ImGui::SetItemDefaultFocus();
 }
 
-auto ARenameDialog::IsCurrentInputValid(const entt::registry& registry) const -> bool
+auto ARenameDialog::IsCurrentInputValid(const Model& model) const -> bool
 {
-  return Validate(registry, GetCurrentInput());
+  return Validate(model, GetCurrentInput());
 }
 
 void ARenameDialog::Show(std::string oldName)

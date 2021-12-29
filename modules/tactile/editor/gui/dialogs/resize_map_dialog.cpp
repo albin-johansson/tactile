@@ -16,7 +16,7 @@ void ResizeMapDialog::Show(const usize nCurrentRows, const usize nCurrentColumns
   ADialog::Show();
 }
 
-void ResizeMapDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
+void ResizeMapDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
   auto rows = static_cast<int>(mRows);
   ImGui::DragInt("Rows", &rows, 1.0f, 1, 10'000);

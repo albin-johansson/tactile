@@ -34,7 +34,7 @@ void SettingsDialog::Open()
   Show();
 }
 
-void SettingsDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
+void SettingsDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
   Scoped::TabBar bar{"##SettingsTabBar"};
   if (bar.IsOpen()) {

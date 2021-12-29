@@ -1,16 +1,18 @@
 #include "properties_dock.hpp"
 
 #include <utility>  // move
+#include <cassert>  // assert
 
 #include <imgui.h>
 
 #include "dialogs/add_property_dialog.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/model.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
 
-void PropertiesDock::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
+void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   if (!Prefs::GetShowPropertiesDock()) {
     return;
@@ -23,12 +25,15 @@ void PropertiesDock::Update(const entt::registry& registry, entt::dispatcher& di
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
-    mPropertyTable.Update(registry, dispatcher);
+    const auto* registry = model.GetActiveRegistry();
+    assert(registry);
+
+    mPropertyTable.Update(*registry, dispatcher);
   }
 
-  mAddDialog.Update(registry, dispatcher);
-  mRenameDialog.Update(registry, dispatcher);
-  mChangeTypeDialog.Update(registry, dispatcher);
+  mAddDialog.Update(model, dispatcher);
+  mRenameDialog.Update(model, dispatcher);
+  mChangeTypeDialog.Update(model, dispatcher);
 
   Prefs::SetShowPropertiesDock(isVisible);
 }

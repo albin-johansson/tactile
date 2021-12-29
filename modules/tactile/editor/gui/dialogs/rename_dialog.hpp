@@ -19,13 +19,12 @@ class ARenameDialog : public ADialog {
   void Show(std::string oldName);
 
  protected:
-  void UpdateContents(const entt::registry& registry, entt::dispatcher& dispatcher) final;
+  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) final;
 
-  [[nodiscard]] auto IsCurrentInputValid(const entt::registry& registry) const
-      -> bool final;
+  [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool final;
 
-  [[nodiscard]] virtual auto Validate(const entt::registry& registry,
-                                      std::string_view input) const -> bool = 0;
+  [[nodiscard]] virtual auto Validate(const Model& model, std::string_view input) const
+      -> bool = 0;
 
   [[nodiscard]] auto GetCurrentInput() const -> std::string_view;
 
