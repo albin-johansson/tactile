@@ -40,9 +40,8 @@ void LoadFileHistory()
     }
 
     for (auto file : h.files()) {
-      if (std::find(gHistory.begin(), gHistory.end(), file) != gHistory.end()) {
-        gHistory.push_back(std::move(file));
-      }
+      LogDebug("Loaded {} from binary file history file", file);
+      gHistory.push_back(std::move(file));
     }
   }
   else {
@@ -59,6 +58,7 @@ void SaveFileHistory()
   }
 
   for (const auto& path : gHistory) {
+    LogDebug("Saving path to recent files history: {}", path);
     h.add_files(path);
   }
 

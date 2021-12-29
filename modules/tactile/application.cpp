@@ -67,11 +67,12 @@ auto Application::Run() -> int
 {
   auto* window = mConfiguration->GetWindow();
 
+  LoadFileHistory();
+
   if (Prefs::GetRestoreLastSession()) {
     RestoreLastSession(mModel, mTextures);
   }
 
-  LoadFileHistory();
   SDL_ShowWindow(window);
 
   const auto& io = ImGui::GetIO();
