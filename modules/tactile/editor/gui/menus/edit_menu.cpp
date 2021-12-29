@@ -72,9 +72,9 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 }
 
-void EditMenu::UpdateWindows(const entt::registry& registry, entt::dispatcher& dispatcher)
+void EditMenu::UpdateWindows(const Model& model, entt::dispatcher& dispatcher)
 {
-  mSettingsDialog.Update(registry, dispatcher);
+  mSettingsDialog.Update(model, dispatcher);
 }
 
 void EditMenu::OpenSettingsModal()

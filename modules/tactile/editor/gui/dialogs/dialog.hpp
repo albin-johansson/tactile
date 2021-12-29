@@ -6,18 +6,19 @@
 
 namespace Tactile {
 
+class Model;
+
 class ADialog {
  public:
   explicit ADialog(CStr title);
 
   virtual ~ADialog() = default;
 
-  void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
+  void Update(const Model& model, entt::dispatcher& dispatcher);
 
  protected:
   /* Dialog specific GUI code is implemented with this function */
-  virtual void UpdateContents(const entt::registry& registry,
-                              entt::dispatcher& dispatcher) = 0;
+  virtual void UpdateContents(const Model& model, entt::dispatcher& dispatcher) = 0;
 
   /* Invoked when the "Cancel" button is pressed */
   virtual void OnCancel() {}
@@ -30,7 +31,7 @@ class ADialog {
 
   /* Indicates whether the current input state is acceptable */
   [[nodiscard]] virtual auto IsCurrentInputValid(
-      [[maybe_unused]] const entt::registry& registry) const -> bool
+      [[maybe_unused]] const Model& model) const -> bool
   {
     return true;
   }

@@ -16,7 +16,7 @@ class EditMenu final {
   void Update(const Model& model, entt::dispatcher& dispatcher);
 
   /* Updates all associated windows. */
-  void UpdateWindows(const entt::registry& registry, entt::dispatcher& dispatcher);
+  void UpdateWindows(const Model& model, entt::dispatcher& dispatcher);
 
   void OpenSettingsModal();
 

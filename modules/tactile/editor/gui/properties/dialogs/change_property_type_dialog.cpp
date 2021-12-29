@@ -23,7 +23,7 @@ void ChangePropertyTypeDialog::Show(std::string name, const PropertyType type)
   ADialog::Show();
 }
 
-void ChangePropertyTypeDialog::UpdateContents(const entt::registry&, entt::dispatcher&)
+void ChangePropertyTypeDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted("Type: ");
@@ -37,7 +37,7 @@ void ChangePropertyTypeDialog::OnAccept(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ChangePropertyTypeEvent>(mPropertyName.value(), mCurrentType);
 }
 
-auto ChangePropertyTypeDialog::IsCurrentInputValid(const entt::registry&) const -> bool
+auto ChangePropertyTypeDialog::IsCurrentInputValid(const Model&) const -> bool
 {
   return mCurrentType != mPreviousType.value();
 }

@@ -17,8 +17,7 @@ class ResizeMapDialog final : public ADialog {
   void Show(usize nCurrentRows, usize nCurrentColumns);
 
  protected:
-  void UpdateContents(const entt::registry& registry,
-                      entt::dispatcher& dispatcher) override;
+  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
 
   void OnAccept(entt::dispatcher& dispatcher) override;
 

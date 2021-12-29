@@ -17,13 +17,11 @@ class AddPropertyDialog final : public ADialog {
   using ADialog::Show;
 
  protected:
-  void UpdateContents(const entt::registry& registry,
-                      entt::dispatcher& dispatcher) override;
+  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
 
   void OnAccept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsCurrentInputValid(const entt::registry& registry) const
-      -> bool override;
+  [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool override;
 
  private:
   std::array<char, 128> mNameBuffer{};

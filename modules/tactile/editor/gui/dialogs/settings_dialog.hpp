@@ -17,8 +17,7 @@ class SettingsDialog final : public ADialog {
   void Open();
 
  protected:
-  void UpdateContents(const entt::registry& registry,
-                      entt::dispatcher& dispatcher) override;
+  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
 
   void OnCancel() override;
 

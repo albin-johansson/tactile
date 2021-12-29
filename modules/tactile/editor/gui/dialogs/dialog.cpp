@@ -8,7 +8,7 @@ namespace Tactile {
 
 ADialog::ADialog(const CStr title) : mTitle{title} {}
 
-void ADialog::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
+void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   if (mShow) {
     ImGui::OpenPopup(mTitle);
@@ -20,7 +20,7 @@ void ADialog::Update(const entt::registry& registry, entt::dispatcher& dispatche
   constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
   Scoped::Modal modal{mTitle, flags};
   if (modal.IsOpen()) {
-    UpdateContents(registry, dispatcher);
+    UpdateContents(model, dispatcher);
 
     ImGui::Spacing();
 
@@ -29,7 +29,7 @@ void ADialog::Update(const entt::registry& registry, entt::dispatcher& dispatche
       ImGui::CloseCurrentPopup();
     }
 
-    const auto valid = IsCurrentInputValid(registry);
+    const auto valid = IsCurrentInputValid(model);
 
     ImGui::SameLine();
 

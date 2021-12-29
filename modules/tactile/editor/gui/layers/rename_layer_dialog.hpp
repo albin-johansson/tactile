@@ -19,8 +19,8 @@ class RenameLayerDialog final : public ARenameDialog {
  protected:
   void OnAccept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto Validate(const entt::registry& registry,
-                              std::string_view input) const -> bool override;
+  [[nodiscard]] auto Validate(const Model& model, std::string_view input) const
+      -> bool override;
 
  private:
   Maybe<LayerID> mTargetId;
