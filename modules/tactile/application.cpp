@@ -278,7 +278,9 @@ void Application::OnCreateMap(const CreateMapEvent& event)
 
 void Application::OnCloseMap(const CloseMapEvent& event)
 {
-  SetLastClosedFile(mModel.GetPath(event.id));
+  if (mModel.HasPath(event.id)) {
+    SetLastClosedFile(mModel.GetPath(event.id));
+  }
   mModel.RemoveMap(event.id);
 }
 

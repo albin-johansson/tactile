@@ -35,6 +35,8 @@ class Model final {
 
   void RemoveMap(MapID id);
 
+  [[nodiscard]] auto HasPath(MapID id) const -> bool;
+
   [[nodiscard]] auto GetPath(MapID id) const -> const std::filesystem::path&;
 
   [[nodiscard]] auto HasDocumentWithPath(const std::filesystem::path& path) const -> bool;

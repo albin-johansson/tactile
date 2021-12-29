@@ -128,6 +128,12 @@ void Model::RemoveMap(const MapID id)
   }
 }
 
+auto Model::HasPath(const MapID id) const -> bool
+{
+  assert(mDocuments.Contains(id));
+  return !mDocuments.At(id)->path.empty();
+}
+
 auto Model::GetPath(const MapID id) const -> const std::filesystem::path&
 {
   assert(mDocuments.Contains(id));
