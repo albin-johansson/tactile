@@ -70,11 +70,14 @@ IncludeCategories:
   # Standard headers, located in <> with no extension.
   - Regex: '<([A-Za-z0-9\_\-]+)>'
     SortPriority: 1
+    Priority: 1
 
   # Headers in <> with extension and optional prefix.
   - Regex: '<([A-Za-z0-9\_\-]+\/)*(\.\.)*([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
     SortPriority: 2
+    Priority: 2
 
   # Headers in "" with extension.
   - Regex: '"([A-Za-z0-9.\Q/-_\E])+"'
     SortPriority: 3
+    Priority: 3
