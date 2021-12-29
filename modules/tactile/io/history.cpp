@@ -31,6 +31,7 @@ inline std::deque<std::string> gHistory;
 
 void LoadFileHistory()
 {
+  LogVerbose("Loading file history...");
   std::ifstream stream{gFilePath, std::ios::in | std::ios::binary};
 
   Proto::History h;
@@ -45,7 +46,7 @@ void LoadFileHistory()
     }
   }
   else {
-    LogWarning("Failed to read history file!");
+    LogWarning("Failed to read history file (this is expected for first time runs)");
   }
 }
 
@@ -72,6 +73,7 @@ void SaveFileHistory()
 
 void ClearFileHistory()
 {
+  LogVerbose("Clearing file history...");
   gHistory.clear();
 }
 
@@ -79,6 +81,7 @@ void AddFileToHistory(const std::filesystem::path& path)
 {
   auto converted = ConvertToForwardSlashes(path);
   if (std::find(gHistory.begin(), gHistory.end(), converted) == gHistory.end()) {
+    LogDebug("Adding {} to file history...", converted);
     gHistory.push_back(std::move(converted));
 
     if (gHistory.size() > gMaxSize) {
@@ -86,13 +89,15 @@ void AddFileToHistory(const std::filesystem::path& path)
     }
   }
   else {
-    LogInfo("Did not store already present \"{}\" in file history", converted);
+    LogDebug("Skipping adding already present {} in file history", converted);
   }
 }
 
 void SetLastClosedFile(const std::filesystem::path& path)
 {
   gLastClosedFile = ConvertToForwardSlashes(path);
+  LogVerbose("Updated the last closed file: {}", *gLastClosedFile);
+
   AddFileToHistory(path);
 }
 
