@@ -68,6 +68,9 @@
 #define TAC_ICON_HISTORY ICON_FA_HISTORY
 #define TAC_ICON_CLEAR_HISTORY ICON_FA_TRASH_ALT
 
+#define TAC_ICON_RESET ICON_FA_SLIDERS_H
+#define TAC_ICON_THREE_DOTS ICON_FA_ELLIPSIS_V
+
 /// \} End of icon literals
 
 /// \} End of group gui
