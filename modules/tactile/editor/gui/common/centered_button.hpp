@@ -10,9 +10,10 @@ namespace Tactile {
  * \ingroup gui
  *
  * \param label the button label.
+ * \param tooltip optional tooltip for the button.
  *
  * \return `true` if the button was pressed; `false` otherwise.
  */
-auto CenteredButton(NotNull<CStr> label) -> bool;
+auto CenteredButton(NotNull<CStr> label, CStr tooltip = nullptr) -> bool;
 
 }  // namespace Tactile
