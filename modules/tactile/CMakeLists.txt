@@ -15,6 +15,8 @@ set(SOURCE_FILES
     application.hpp
     application_events.cpp
     application_events.hpp
+    assert.cpp
+    assert.hpp
     build.hpp
     logging.cpp
     logging.hpp
@@ -399,6 +401,7 @@ target_include_directories(${TACTILE_LIB}
                            ${LIBRARY_DIR}/fontawesome
                            ${LIBRARY_DIR}/pfd
                            ${STB_INCLUDE_DIRS}
+                           ${Boost_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
                            )
 
@@ -412,6 +415,7 @@ target_link_libraries(${TACTILE_LIB}
                       EnTT::EnTT
                       fmt::fmt
                       protobuf::libprotobuf
+                      ${Boost_LIBRARIES}
                       ${TACTILE_PROTO}
                       ${TACTILE_IO}
                       ${CMAKE_DL_LIBS}
@@ -424,6 +428,8 @@ target_compile_definitions(${TACTILE_LIB}
                            IMGUI_DISABLE_OBSOLETE_FUNCTIONS
                            IMGUI_DEFINE_MATH_OPERATORS
                            GLEW_NO_GLU
+                           BOOST_ENABLE_ASSERT_DEBUG_HANDLER
+                           BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
                            )
 
 if (MSVC)
