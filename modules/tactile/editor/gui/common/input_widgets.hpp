@@ -16,8 +16,17 @@ namespace Tactile {
 [[nodiscard]] auto InputWidget(CStr id, float value, float min = 0, float max = 0)
     -> Maybe<float>;
 
-[[nodiscard]] auto InputWidget(CStr id,
+[[nodiscard]] auto InputStringWithHint(CStr id,
+                                       CStr hint,
+                                       const std::string& value,
+                                       CStr label = nullptr,
+                                       ImGuiInputTextFlags flags = 0,
+                                       ImGuiInputTextCallback filter = nullptr)
+    -> Maybe<std::string>;
+
+[[nodiscard]] auto InputString(CStr id,
                                const std::string& value,
+                               CStr label = nullptr,
                                ImGuiInputTextFlags flags = 0,
                                ImGuiInputTextCallback filter = nullptr)
     -> Maybe<std::string>;

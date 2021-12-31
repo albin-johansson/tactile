@@ -59,10 +59,10 @@ void PrepareTableRow(const CStr label)
       }
     };
 
-    return InputWidget("##NativeNameRowInput", name, flags, filter);
+    return InputString("##NativeNameRowInput", name, nullptr, flags, filter);
   }
   else {
-    return InputWidget("##NativeNameRowInput", name, flags);
+    return InputString("##NativeNameRowInput", name, nullptr, flags);
   }
 }
 
@@ -221,7 +221,7 @@ void ShowNativeObjectProperties(const std::string& name,
   PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
-  if (const auto tag = InputWidget("##NativeObjectTagInput", object.tag)) {
+  if (const auto tag = InputString("##NativeObjectTagInput", object.tag)) {
     dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
   }
 }
@@ -316,7 +316,7 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
 
     ImGui::TableNextColumn();
     if (value.IsString()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsString())) {
+      if (const auto updated = InputString("##CustomPropertyInput", value.AsString())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
