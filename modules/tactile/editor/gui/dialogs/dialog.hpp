@@ -42,10 +42,13 @@ class ADialog {
 
   void SetApplyButtonLabel(CStr label);
 
+  void SetCloseButtonLabel(CStr label);
+
  private:
   CStr mTitle;
   CStr mAcceptButtonLabel{"OK"};
   CStr mApplyButtonLabel{}; /* By default, not shown (when null) */
+  CStr mCloseButtonLabel{"Cancel"};
   bool mShow{};
 };
 

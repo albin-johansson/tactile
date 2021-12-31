@@ -24,7 +24,7 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Spacing();
 
-    if (ImGui::Button("Cancel")) {
+    if (ImGui::Button(mCloseButtonLabel)) {
       OnCancel();
       ImGui::CloseCurrentPopup();
     }
@@ -33,7 +33,7 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::SameLine();
 
-    if (Button(mAcceptButtonLabel, nullptr, valid)) {
+    if (mAcceptButtonLabel && Button(mAcceptButtonLabel, nullptr, valid)) {
       OnAccept(dispatcher);
       ImGui::CloseCurrentPopup();
     }
@@ -59,6 +59,11 @@ void ADialog::SetAcceptButtonLabel(const CStr label)
 void ADialog::SetApplyButtonLabel(const CStr label)
 {
   mApplyButtonLabel = label;
+}
+
+void ADialog::SetCloseButtonLabel(const CStr label)
+{
+  mCloseButtonLabel = label ? label : "Cancel";
 }
 
 }  // namespace Tactile
