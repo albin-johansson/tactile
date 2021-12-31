@@ -178,6 +178,7 @@ set(SOURCE_FILES
     editor/commands/tools/stamp_sequence_cmd.hpp
 
     editor/events/command_events.hpp
+    editor/events/component_events.hpp
     editor/events/edit_events.hpp
     editor/events/layer_events.hpp
     editor/events/map_events.hpp
