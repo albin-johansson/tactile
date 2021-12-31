@@ -38,8 +38,6 @@ message Settings {
 
   optional Color viewport_background = 4;
 
-  /* Reserve use of most tags in range 1-15 for "high-priority" values */
-
   optional string preferred_format = 16;
   optional uint64 command_capacity = 17;
 
