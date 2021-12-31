@@ -15,6 +15,8 @@ set(SOURCE_FILES
     application.hpp
     application_events.cpp
     application_events.hpp
+    assert.cpp
+    assert.hpp
     build.hpp
     logging.cpp
     logging.hpp
@@ -436,6 +438,8 @@ target_compile_definitions(${TACTILE_LIB}
                            IMGUI_DISABLE_OBSOLETE_FUNCTIONS
                            IMGUI_DEFINE_MATH_OPERATORS
                            GLEW_NO_GLU
+                           BOOST_ENABLE_ASSERT_DEBUG_HANDLER
+                           BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
                            )
 
 if (MSVC)
