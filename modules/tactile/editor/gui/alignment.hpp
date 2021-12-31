@@ -3,15 +3,23 @@
 #include <algorithm>  // algorithm
 
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 namespace Tactile {
+
+void CenterNextWindowOnAppearance();
 
 // Ensures that the specified amount of items are centered in the window
 void PrepareVerticalAlignmentCenter(float count = 1);
 
 void AlignNextItemCenteredHorizontally(float width);
 
-void CenterNextWindowOnAppearance();
+// Adjusts the cursor for a right-aligned component, returning the new cursor x-coordinate
+auto AlignNextItemToTheRight(float width) -> float;
+
+auto AlignNextItemToTheRight(CStr text) -> float;
+
+[[nodiscard]] auto GetStandardComponentWidth(const char* text) -> float;
 
 template <typename... Strings>
 [[nodiscard]] auto GetMinimumOffsetToAlign(Strings&&... strings) -> float

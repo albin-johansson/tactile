@@ -1,8 +1,22 @@
 #include "alignment.hpp"
 
+#include <cassert>  // assert
+
 #include <imgui_internal.h>
 
 namespace Tactile {
+
+void CenterNextWindowOnAppearance()
+{
+  const auto* viewport = ImGui::GetMainViewport();
+  const auto pos = viewport->WorkPos;
+  const auto size = viewport->WorkSize;
+
+  const ImVec2 next_pos = pos + (size / ImVec2{2, 2});
+  const ImVec2 next_pivot{0.5f, 0.5f};
+
+  ImGui::SetNextWindowPos(next_pos, ImGuiCond_Appearing, next_pivot);
+}
 
 void PrepareVerticalAlignmentCenter(const float count)
 {
@@ -25,16 +39,22 @@ void AlignNextItemCenteredHorizontally(const float width)
   ImGui::SetCursorPos(ImGui::GetCursorPos() + ImVec2{halfRegion.x - (width / 2.0f), 0});
 }
 
-void CenterNextWindowOnAppearance()
+auto AlignNextItemToTheRight(const float width) -> float
 {
-  const auto* viewport = ImGui::GetMainViewport();
-  const auto pos = viewport->WorkPos;
-  const auto size = viewport->WorkSize;
+  const auto x = ImGui::GetCursorPosX() + (ImGui::GetContentRegionAvail().x - width);
+  ImGui::SetCursorPosX(x);
+  return x;
+}
 
-  const ImVec2 next_pos = pos + (size / ImVec2{2, 2});
-  const ImVec2 next_pivot{0.5f, 0.5f};
+auto AlignNextItemToTheRight(const CStr text) -> float
+{
+  return AlignNextItemToTheRight(GetStandardComponentWidth(text));
+}
 
-  ImGui::SetNextWindowPos(next_pos, ImGuiCond_Appearing, next_pivot);
+auto GetStandardComponentWidth(const char* text) -> float
+{
+  assert(text);
+  return ImGui::CalcTextSize(text).x + (ImGui::GetStyle().FramePadding.x * 2.0f);
 }
 
 }  // namespace Tactile
