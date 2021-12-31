@@ -71,6 +71,8 @@
 #define TAC_ICON_RESET ICON_FA_SLIDERS_H
 #define TAC_ICON_THREE_DOTS ICON_FA_ELLIPSIS_V
 
+#define TAC_ICON_COMPONENT ICON_FA_CUBES
+
 /// \} End of icon literals
 
 /// \} End of group gui
