@@ -281,14 +281,14 @@ set(SOURCE_FILES
     editor/gui/dialogs/dialog.hpp
     editor/gui/dialogs/map_import_error_dialog.cpp
     editor/gui/dialogs/map_import_error_dialog.hpp
-    editor/gui/dialogs/rename_dialog.cpp
-    editor/gui/dialogs/rename_dialog.hpp
     editor/gui/dialogs/resize_map_dialog.cpp
     editor/gui/dialogs/resize_map_dialog.hpp
     editor/gui/dialogs/save_as_dialog.cpp
     editor/gui/dialogs/save_as_dialog.hpp
     editor/gui/dialogs/settings_dialog.cpp
     editor/gui/dialogs/settings_dialog.hpp
+    editor/gui/dialogs/string_input_dialog.cpp
+    editor/gui/dialogs/string_input_dialog.hpp
 
     editor/gui/layers/add_layer_popup.cpp
     editor/gui/layers/add_layer_popup.hpp

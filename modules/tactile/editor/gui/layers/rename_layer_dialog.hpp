@@ -4,11 +4,11 @@
 
 #include <entt/entt.hpp>
 
-#include "editor/gui/dialogs/rename_dialog.hpp"
+#include "editor/gui/dialogs/string_input_dialog.hpp"
 
 namespace Tactile {
 
-class RenameLayerDialog final : public ARenameDialog {
+class RenameLayerDialog final : public AStringInputDialog {
  public:
   RenameLayerDialog();
 

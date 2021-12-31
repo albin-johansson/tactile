@@ -12,11 +12,11 @@
 
 namespace Tactile {
 
-class ARenameDialog : public ADialog {
+class AStringInputDialog : public ADialog {
  public:
-  explicit ARenameDialog(CStr title);
+  explicit AStringInputDialog(CStr title);
 
-  void Show(std::string oldName);
+  void Show(std::string previous);
 
  protected:
   void UpdateContents(const Model& model, entt::dispatcher& dispatcher) final;
@@ -28,11 +28,11 @@ class ARenameDialog : public ADialog {
 
   [[nodiscard]] auto GetCurrentInput() const -> std::string_view;
 
-  [[nodiscard]] auto GetPreviousName() const -> const std::string&;
+  [[nodiscard]] auto GetPreviousString() const -> const std::string&;
 
  private:
-  std::string mOldName;
-  std::array<char, 128> mNameBuffer{};
+  std::string mPrevious;
+  std::array<char, 128> mBuffer{};
 };
 
 }  // namespace Tactile

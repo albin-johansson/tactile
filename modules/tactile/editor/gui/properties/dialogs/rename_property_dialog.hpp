@@ -1,10 +1,10 @@
 #pragma once
 
-#include "editor/gui/dialogs/rename_dialog.hpp"
+#include "editor/gui/dialogs/string_input_dialog.hpp"
 
 namespace Tactile {
 
-class RenamePropertyDialog final : public ARenameDialog {
+class RenamePropertyDialog final : public AStringInputDialog {
  public:
   RenamePropertyDialog();
 

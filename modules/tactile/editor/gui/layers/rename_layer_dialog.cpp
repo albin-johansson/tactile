@@ -8,13 +8,16 @@
 
 namespace Tactile {
 
-RenameLayerDialog::RenameLayerDialog() : ARenameDialog{"Rename Layer"} {}
+RenameLayerDialog::RenameLayerDialog() : AStringInputDialog{"Rename Layer"}
+{
+  SetAcceptButtonLabel("Rename");
+}
 
 void RenameLayerDialog::Show(const LayerID id, std::string oldName)
 {
   mTargetId = id;
   mOldName = std::move(oldName);
-  ARenameDialog::Show(*mOldName);
+  AStringInputDialog::Show(*mOldName);
 }
 
 void RenameLayerDialog::OnAccept(entt::dispatcher& dispatcher)
