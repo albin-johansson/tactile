@@ -43,6 +43,7 @@ set(SOURCE_FILES
     core/algorithms/invoke_n.hpp
 
     core/components/animation.hpp
+    core/components/component.hpp
     core/components/fancy_tile.hpp
     core/components/layer.hpp
     core/components/object.hpp
