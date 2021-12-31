@@ -3,7 +3,7 @@ name: "CI: Windows"
 on: [ push, pull_request ]
 
 env:
-  BOOST_ROOT: ${{github.workspace}}\boost\boost
+  BOOST_ROOT: ${{github.workspace}}\boost\boost_1_78_0
   VCPKG_ROOT: ${{github.workspace}}\vcpkg
   VCPKG_TARGET_TRIPLET: x64-windows-static-md
   VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
@@ -43,12 +43,21 @@ jobs:
         shell: powershell
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
+      - name: Cache Boost
+        id: restore-boost
+        uses: actions/cache@v2
+        with:
+          path: ${{env.BOOST_ROOT}}
+          key: boost-1.78.0-x64-tactile-windows
+
       - name: Install Boost
+        if: steps.restore-boost.outputs.cache-hit != 'true'
         shell: powershell
         run: |
+          mkdir boost
+          cd boost
           Invoke-WebRequest -Uri "https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.zip" `
                             -OutFile boost.zip
-          mkdir boost
           7z x -y boost.zip
 
       - name: Create build directory
