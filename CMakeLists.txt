@@ -42,6 +42,8 @@ find_package(SDL2-image CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 
+find_package(Boost REQUIRED)
+
 include(Utilities)
 
 add_subdirectory(modules/tactile-proto)

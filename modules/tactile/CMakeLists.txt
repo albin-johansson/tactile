@@ -409,6 +409,7 @@ target_include_directories(${TACTILE_LIB}
                            ${LIBRARY_DIR}/fontawesome
                            ${LIBRARY_DIR}/pfd
                            ${STB_INCLUDE_DIRS}
+                           ${Boost_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
                            )
 
@@ -422,6 +423,7 @@ target_link_libraries(${TACTILE_LIB}
                       EnTT::EnTT
                       fmt::fmt
                       protobuf::libprotobuf
+                      ${Boost_LIBRARIES}
                       ${TACTILE_PROTO}
                       ${TACTILE_IO}
                       ${CMAKE_DL_LIBS}
