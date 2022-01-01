@@ -21,6 +21,8 @@ class AStringInputDialog : public ADialog {
  protected:
   void UpdateContents(const Model& model, entt::dispatcher& dispatcher) final;
 
+  void SetInputHint(CStr hint);
+
   [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool final;
 
   [[nodiscard]] virtual auto Validate(const Model& model, std::string_view input) const
@@ -31,6 +33,7 @@ class AStringInputDialog : public ADialog {
   [[nodiscard]] auto GetPreviousString() const -> const std::string&;
 
  private:
+  CStr mHint{};
   std::string mPrevious;
   std::array<char, 128> mBuffer{};
 };

@@ -12,6 +12,7 @@ CreateComponentAttributeDialog::CreateComponentAttributeDialog()
     : AStringInputDialog{"Create Attribute"}
 {
   SetAcceptButtonLabel("Create");
+  SetInputHint("Attribute name");
 }
 
 void CreateComponentAttributeDialog::Open(const ComponentID id)

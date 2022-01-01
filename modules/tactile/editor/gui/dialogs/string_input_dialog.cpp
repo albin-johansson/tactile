@@ -13,8 +13,16 @@ AStringInputDialog::AStringInputDialog(const CStr title) : ADialog{title} {}
 
 void AStringInputDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
-  ImGui::InputText("##AStringInputDialogInput", mBuffer.data(), sizeof mBuffer);
+  ImGui::InputTextWithHint("##AStringInputDialogInput",
+                           mHint ? mHint : "",
+                           mBuffer.data(),
+                           sizeof mBuffer);
   ImGui::SetItemDefaultFocus();
+}
+
+void AStringInputDialog::SetInputHint(const CStr hint)
+{
+  mHint = hint;
 }
 
 auto AStringInputDialog::IsCurrentInputValid(const Model& model) const -> bool
