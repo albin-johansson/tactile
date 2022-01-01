@@ -41,7 +41,7 @@ void LoadFileHistory()
     }
 
     for (auto file : h.files()) {
-      LogDebug("Loaded {} from binary file history file", file);
+      LogDebug("Loaded '{}' from file history", file);
       gHistory.push_back(std::move(file));
     }
   }
@@ -59,7 +59,7 @@ void SaveFileHistory()
   }
 
   for (const auto& path : gHistory) {
-    LogDebug("Saving path to recent files history: {}", path);
+    LogDebug("Saving '{}' to file history", path);
     h.add_files(path);
   }
 
@@ -81,7 +81,7 @@ void AddFileToHistory(const std::filesystem::path& path)
 {
   auto converted = ConvertToForwardSlashes(path);
   if (std::find(gHistory.begin(), gHistory.end(), converted) == gHistory.end()) {
-    LogDebug("Adding {} to file history...", converted);
+    LogDebug("Adding '{}' to history...", converted);
     gHistory.push_back(std::move(converted));
 
     if (gHistory.size() > gMaxSize) {
@@ -89,14 +89,14 @@ void AddFileToHistory(const std::filesystem::path& path)
     }
   }
   else {
-    LogDebug("Skipping adding already present {} in file history", converted);
+    LogDebug("Did not add existing entry '{}' to file history", converted);
   }
 }
 
 void SetLastClosedFile(const std::filesystem::path& path)
 {
   gLastClosedFile = ConvertToForwardSlashes(path);
-  LogVerbose("Updated the last closed file: {}", *gLastClosedFile);
+  LogVerbose("Last closed file is now '{}'", *gLastClosedFile);
 
   AddFileToHistory(path);
 }

@@ -11,6 +11,7 @@ namespace Tactile {
 CreateComponentDialog::CreateComponentDialog() : AComponentNameDialog{"Create Component"}
 {
   SetAcceptButtonLabel("Create");
+  SetInputHint("Component name");
 }
 
 void CreateComponentDialog::Open()
