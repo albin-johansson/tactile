@@ -419,18 +419,17 @@ target_include_directories(${TACTILE_LIB}
 
 target_link_libraries(${TACTILE_LIB}
                       PUBLIC
-                      OpenGL::GL
-                      GLEW::GLEW
+                      ${TACTILE_PROTO}
+                      ${TACTILE_IO}
                       SDL2::SDL2-static
                       SDL2::SDL2_image
                       imgui::imgui
                       EnTT::EnTT
                       fmt::fmt
                       protobuf::libprotobuf
+                      GLEW::GLEW
+                      OpenGL::GL
                       ${Boost_LIBRARIES}
-                      ${TACTILE_PROTO}
-                      ${TACTILE_IO}
-                      ${CMAKE_DL_LIBS}
                       )
 
 target_compile_definitions(${TACTILE_LIB}
