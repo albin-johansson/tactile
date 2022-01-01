@@ -17,7 +17,7 @@ struct RenameComponentDefEvent final {
   std::string name;
 };
 
-struct DeleteComponentDefEvent final {
+struct RemoveComponentDefEvent final {
   ComponentID id{};
 };
 
