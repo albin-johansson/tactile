@@ -1,10 +1,11 @@
 #include "configuration.hpp"
 
-#include <cassert>  // assert
+#include <cassert>    // assert
+#include <cstdlib>    // abort
+#include <exception>  // set_terminate
 
+#include <GL/glew.h>
 #include <tactile_stdlib.hpp>
-
-#include <GL/glew.h>  // glewInit
 
 #include "attributes.hpp"
 #include "build.hpp"
@@ -29,6 +30,9 @@ namespace {
 
 ApplicationConfiguration::ApplicationConfiguration()
 {
+  /* Use terminate handler that doesn't do anything fancy, e.g. no logging */
+  std::set_terminate([] { std::abort(); });
+
   if constexpr (IsDebugBuild()) {
     SetLogLevel(LogLevel::Verbose);
   }
