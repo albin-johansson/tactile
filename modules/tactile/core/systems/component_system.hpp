@@ -36,6 +36,18 @@ auto CreateComponentDef(entt::registry& registry, std::string name) -> Component
  */
 void RemoveComponentDef(entt::registry& registry, ComponentID id);
 
+/**
+ * \brief Changes the name of a component definition.
+ *
+ * \pre the component ID must be valid.
+ * \pre the name must not be used by any other components.
+ *
+ * \param registry the current document registry.
+ * \param id the ID of the component that will be renamed.
+ * \param name the new component name.
+ */
+void RenameComponentDef(entt::registry& registry, ComponentID id, std::string name);
+
 [[nodiscard]] auto FindComponentDef(const entt::registry& registry, ComponentID id)
     -> entt::entity;
 

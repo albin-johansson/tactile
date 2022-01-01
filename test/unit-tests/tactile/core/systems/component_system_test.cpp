@@ -80,6 +80,17 @@ TEST(ComponentSystem, RemoveComponentDef)
   ASSERT_FALSE(Sys::HasComponent(registry, c, def));
 }
 
+TEST(ComponentSystem, RenameComponentDef)
+{
+  auto registry = Sys::MakeRegistry();
+
+  const auto def = Sys::CreateComponentDef(registry, "Foo");
+  ASSERT_EQ("Foo", Sys::GetComponentDefName(registry, def));
+
+  Sys::RenameComponentDef(registry, def, "Bar");
+  ASSERT_EQ("Bar", Sys::GetComponentDefName(registry, def));
+}
+
 TEST(ComponentSystem, FindComponentDef)
 {
   auto registry = Sys::MakeRegistry();

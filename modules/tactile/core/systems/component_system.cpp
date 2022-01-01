@@ -31,7 +31,6 @@ void RemoveComponentDef(entt::registry& registry, const ComponentID id)
   LogDebug("Deleting component definition '{}'", id);
 
   const auto [defEntity, def] = GetComponentDef(registry, id);
-  TACTILE_ASSERT(defEntity != entt::null);
 
   /* Removes component entities of the specified type from all component bundles */
   for (auto&& [entity, bundle] : registry.view<ComponentBundle>().each()) {
@@ -49,6 +48,16 @@ void RemoveComponentDef(entt::registry& registry, const ComponentID id)
   }
 
   registry.destroy(defEntity);
+}
+
+void RenameComponentDef(entt::registry& registry, const ComponentID id, std::string name)
+{
+  TACTILE_ASSERT(!Sys::IsComponentNameTaken(registry, name));
+
+  LogDebug("Renaming component definition '{}' to '{}'", id, name);
+
+  auto [entity, def] = GetComponentDef(registry, id);
+  def.name = std::move(name);
 }
 
 auto FindComponentDef(const entt::registry& registry, const ComponentID id)
