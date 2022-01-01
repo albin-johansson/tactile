@@ -4,10 +4,7 @@
 #include <deque>  // deque
 
 #include <fmt/chrono.h>
-#include <fmt/color.h>
 #include <fmt/core.h>
-
-#include "build.hpp"
 
 namespace Tactile {
 namespace {

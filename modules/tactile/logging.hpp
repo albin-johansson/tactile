@@ -3,9 +3,12 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
+#include <fmt/color.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>  // included so that formatting types like std::filesystem::path works
 #include <tactile_def.hpp>
+
+#include "build.hpp"
 
 namespace Tactile {
 namespace LoggerImpl {
@@ -25,6 +28,17 @@ enum class LogLevel {
   Warning,  ///< Only emit warnings and errors.
   Error     ///< Only emit errors.
 };
+
+template <typename... Args>
+void Print(const fmt::color color, const std::string_view fmt, const Args&... args)
+{
+  if constexpr (IsPlatformWindows()) {
+    fmt::print(fmt::fg(color), fmt, args...);
+  }
+  else {
+    fmt::print(fmt::fg(color), fmt, args...);
+  }
+}
 
 template <typename... Args>
 void LogVerbose(const std::string_view fmt, const Args&... args)
