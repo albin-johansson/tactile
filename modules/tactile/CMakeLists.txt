@@ -21,6 +21,7 @@ set(SOURCE_FILES
     logging.cpp
     logging.hpp
     profile.hpp
+    throw.hpp
 
     cfg/attributes.cpp
     cfg/attributes.hpp
