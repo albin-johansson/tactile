@@ -14,6 +14,7 @@ set(TEST_FILES
 
     unit-tests/tactile/core/algorithms/flood_fill_test.cpp
 
+    unit-tests/tactile/core/systems/component_system_test.cpp
     unit-tests/tactile/core/systems/layer_system_test.cpp
     unit-tests/tactile/core/systems/map_system_test.cpp
     unit-tests/tactile/core/systems/property_system_test.cpp

@@ -60,6 +60,8 @@ set(SOURCE_FILES
 
     core/systems/animation_system.cpp
     core/systems/animation_system.hpp
+    core/systems/component_system.cpp
+    core/systems/component_system.hpp
     core/systems/duplicate_comp.hpp
     core/systems/map_system.cpp
     core/systems/map_system.hpp
