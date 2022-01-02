@@ -42,12 +42,12 @@ BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
+  AfterStruct: true
   AfterControlStatement: Never
   AfterEnum: false
   AfterFunction: true
   AfterNamespace: false
   AfterObjCDeclaration: false
-  AfterStruct: false
   AfterUnion: false
   AfterExternBlock: false
   BeforeCatch: true
