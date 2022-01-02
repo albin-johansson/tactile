@@ -46,6 +46,7 @@ struct Preferences final {
   inline static constexpr uint64 window_border = 1u << 8u;
   inline static constexpr uint64 restore_layout = 1u << 9u;
   inline static constexpr uint64 restore_last_session = 1u << 10u;
+  inline static constexpr uint64 show_component_dock = 1u << 11u;
 
   std::string preferred_format;
   Theme theme;
@@ -110,12 +111,14 @@ void SetShowLayerDock(bool visible) noexcept;
 void SetShowTilesetDock(bool visible) noexcept;
 void SetShowPropertiesDock(bool visible) noexcept;
 void SetShowLogDock(bool visible) noexcept;
+void SetShowComponentDock(bool visible) noexcept;
 void SetViewportOverlayPos(OverlayPos pos) noexcept;
 
 [[nodiscard]] auto GetShowLayerDock() noexcept -> bool;
 [[nodiscard]] auto GetShowTilesetDock() noexcept -> bool;
 [[nodiscard]] auto GetShowPropertiesDock() noexcept -> bool;
 [[nodiscard]] auto GetShowLogDock() noexcept -> bool;
+[[nodiscard]] auto GetShowComponentDock() noexcept -> bool;
 [[nodiscard]] auto GetRestoreLayout() noexcept -> bool;
 [[nodiscard]] auto GetViewportOverlayPos() noexcept -> OverlayPos;
 

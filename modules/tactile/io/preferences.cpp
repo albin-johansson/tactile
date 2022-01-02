@@ -36,7 +36,8 @@ constexpr int gViewportOverlayPosDef = cen::ToUnderlying(OverlayPos::BottomLeft)
 constexpr uint64 gFlagsDef =
     Preferences::show_grid | Preferences::indent_output | Preferences::show_layer_dock |
     Preferences::show_tileset_dock | Preferences::show_properties_dock |
-    Preferences::restore_layout | Preferences::restore_last_session;
+    Preferences::show_component_dock | Preferences::restore_layout |
+    Preferences::restore_last_session;
 
 [[nodiscard]] auto MakeDefaultPreferences() -> Preferences
 {
@@ -73,6 +74,7 @@ void PrintPreferences(Preferences& prefs)
   PRINT_FLAG("Show log dock", Preferences::show_log_dock);
   PRINT_FLAG("Show tileset dock", Preferences::show_tileset_dock);
   PRINT_FLAG("Show properties dock", Preferences::show_properties_dock);
+  PRINT_FLAG("Show component dock", Preferences::show_component_dock);
 
   PRINT_FLAG("Window border", Preferences::window_border);
   PRINT_FLAG("Restore layout", Preferences::restore_layout);
@@ -173,6 +175,10 @@ void LoadPreferences()
         settings.SetFlag(Preferences::show_log_dock, cfg.show_log_dock());
       }
 
+      if (cfg.has_show_component_dock()) {
+        settings.SetFlag(Preferences::show_component_dock, cfg.show_component_dock());
+      }
+
       if (cfg.has_restore_layout()) {
         settings.SetFlag(Preferences::restore_layout, cfg.restore_layout());
       }
@@ -220,6 +226,7 @@ void SavePreferences()
   cfg.set_show_layer_dock(Prefs::GetShowLayerDock());
   cfg.set_show_properties_dock(Prefs::GetShowPropertiesDock());
   cfg.set_show_log_dock(Prefs::GetShowLogDock());
+  cfg.set_show_component_dock(Prefs::GetShowComponentDock());
   cfg.set_restore_layout(Prefs::GetRestoreLayout());
   cfg.set_viewport_overlay_pos(Proto::OverlayPos{settings.viewport_overlay_pos});
 
@@ -302,6 +309,11 @@ void SetShowLogDock(const bool visible) noexcept
   settings.SetFlag(Preferences::show_log_dock, visible);
 }
 
+void SetShowComponentDock(const bool visible) noexcept
+{
+  settings.SetFlag(Preferences::show_component_dock, visible);
+}
+
 void SetViewportOverlayPos(const OverlayPos pos) noexcept
 {
   settings.viewport_overlay_pos = cen::ToUnderlying(pos);
@@ -350,6 +362,11 @@ auto GetShowPropertiesDock() noexcept -> bool
 auto GetShowLogDock() noexcept -> bool
 {
   return settings.flags & Preferences::show_log_dock;
+}
+
+auto GetShowComponentDock() noexcept -> bool
+{
+  return settings.flags & Preferences::show_component_dock;
 }
 
 auto GetTheme() noexcept -> Theme
