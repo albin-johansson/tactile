@@ -92,6 +92,15 @@ void SubscribeToEvents(App& app)
   app.Connect<ChangePropertyTypeEvent, &App::OnChangePropertyType>();
   app.Connect<SetPropertyContextEvent, &App::OnSetPropertyContext>();
 
+  app.Connect<CreateComponentDefEvent, &App::OnCreateComponentDef>();
+  app.Connect<RemoveComponentDefEvent, &App::OnRemoveComponentDef>();
+  app.Connect<RenameComponentDefEvent, &App::OnRenameComponentDef>();
+  app.Connect<CreateComponentAttributeEvent, &App::OnCreateComponentAttribute>();
+  app.Connect<RemoveComponentAttributeEvent, &App::OnRemoveComponentAttribute>();
+  app.Connect<RenameComponentAttributeEvent, &App::OnRenameComponentAttribute>();
+  app.Connect<SetComponentAttributeTypeEvent, &App::OnSetComponentAttributeType>();
+  app.Connect<UpdateComponentAttributeEvent, &App::OnUpdateComponentAttribute>();
+
   app.Connect<ToggleUiEvent, &App::OnToggleUi>();
   app.Connect<QuitEvent, &App::OnQuit>();
 }

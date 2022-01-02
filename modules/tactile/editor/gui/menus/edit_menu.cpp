@@ -66,6 +66,15 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
+    if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...",
+                        nullptr,
+                        false,
+                        model.HasActiveDocument())) {
+      mComponentEditor.Open(model);
+    }
+
+    ImGui::Separator();
+
     if (ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,")) {
       mSettingsDialog.Open();
     }
@@ -75,6 +84,7 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 void EditMenu::UpdateWindows(const Model& model, entt::dispatcher& dispatcher)
 {
   mSettingsDialog.Update(model, dispatcher);
+  mComponentEditor.Update(model, dispatcher);
 }
 
 void EditMenu::OpenSettingsModal()

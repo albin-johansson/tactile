@@ -277,12 +277,18 @@ set(SOURCE_FILES
     editor/gui/common/rubber_band.cpp
     editor/gui/common/rubber_band.hpp
 
+    editor/gui/components/component_editor.cpp
+    editor/gui/components/component_editor.hpp
     editor/gui/components/component_name_dialog.cpp
     editor/gui/components/component_name_dialog.hpp
+    editor/gui/components/component_widget.cpp
+    editor/gui/components/component_widget.hpp
     editor/gui/components/create_component_attribute_dialog.cpp
     editor/gui/components/create_component_attribute_dialog.hpp
     editor/gui/components/create_component_dialog.cpp
     editor/gui/components/create_component_dialog.hpp
+    editor/gui/components/rename_component_attribute_dialog.cpp
+    editor/gui/components/rename_component_attribute_dialog.hpp
     editor/gui/components/rename_component_dialog.cpp
     editor/gui/components/rename_component_dialog.hpp
 

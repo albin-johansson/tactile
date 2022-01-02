@@ -14,6 +14,7 @@
 #include "editor/events/save_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
+#include "editor/events/component_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -148,6 +149,15 @@ class Application final {
   void OnUpdateProperty(const UpdatePropertyEvent& event);
   void OnChangePropertyType(const ChangePropertyTypeEvent& event);
   void OnSetPropertyContext(const SetPropertyContextEvent& event);
+
+  void OnCreateComponentDef(const CreateComponentDefEvent& event);
+  void OnRemoveComponentDef(const RemoveComponentDefEvent& event);
+  void OnRenameComponentDef(const RenameComponentDefEvent& event);
+  void OnCreateComponentAttribute(const CreateComponentAttributeEvent& event);
+  void OnRemoveComponentAttribute(const RemoveComponentAttributeEvent& event);
+  void OnRenameComponentAttribute(const RenameComponentAttributeEvent& event);
+  void OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event);
+  void OnUpdateComponentAttribute(const UpdateComponentAttributeEvent& event);
 
   void OnToggleUi();
   void OnQuit();

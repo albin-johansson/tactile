@@ -15,6 +15,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
+#include "core/systems/component_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
@@ -642,6 +643,62 @@ void Application::OnSetPropertyContext(const SetPropertyContextEvent& event)
   if (auto* registry = mModel.GetActiveRegistry()) {
     auto& current = registry->ctx<ActivePropertyContext>();
     current.entity = event.entity;
+  }
+}
+
+void Application::OnCreateComponentDef(const CreateComponentDefEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::CreateComponentDef(*registry, event.name);
+  }
+}
+
+void Application::OnRemoveComponentDef(const RemoveComponentDefEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::RemoveComponentDef(*registry, event.id);
+  }
+}
+
+void Application::OnRenameComponentDef(const RenameComponentDefEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::RenameComponentDef(*registry, event.id, event.name);
+  }
+}
+
+void Application::OnCreateComponentAttribute(const CreateComponentAttributeEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::CreateComponentAttribute(*registry, event.id, event.name);
+  }
+}
+
+void Application::OnRemoveComponentAttribute(const RemoveComponentAttributeEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::RemoveComponentAttribute(*registry, event.id, event.name);
+  }
+}
+
+void Application::OnRenameComponentAttribute(const RenameComponentAttributeEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::RenameComponentAttribute(*registry, event.id, event.previous, event.updated);
+  }
+}
+
+void Application::OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::SetComponentAttributeType(*registry, event.id, event.attribute, event.type);
+  }
+}
+
+void Application::OnUpdateComponentAttribute(const UpdateComponentAttributeEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::SetComponentAttributeValue(*registry, event.id, event.attribute, event.value);
   }
 }
 

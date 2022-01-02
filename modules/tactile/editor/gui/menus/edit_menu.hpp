@@ -3,6 +3,7 @@
 #include <entt/entt.hpp>
 
 #include "editor/gui/dialogs/settings_dialog.hpp"
+#include "editor/gui/components/component_editor.hpp"
 
 namespace Tactile {
 
@@ -22,6 +23,7 @@ class EditMenu final {
 
  private:
   SettingsDialog mSettingsDialog;
+  ComponentEditor mComponentEditor;
 };
 
 /// \} End of group gui
