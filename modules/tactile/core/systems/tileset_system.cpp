@@ -98,8 +98,8 @@ auto MakeTileset(entt::registry& registry,
   auto& viewport = registry.emplace<Viewport>(entity);
   viewport.x_offset = 0;
   viewport.y_offset = 0;
-  viewport.tile_width = tileset.tile_width;
-  viewport.tile_height = tileset.tile_height;
+  viewport.tile_width = static_cast<float>(tileset.tile_width);
+  viewport.tile_height = static_cast<float>(tileset.tile_height);
 
   return entity;
 }
