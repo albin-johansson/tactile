@@ -467,6 +467,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                          /EHsc
                          /MP
                          /W4
+                         /bigobj
                          /Zc:preprocessor
                          /Zc:__cplusplus
                          /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
@@ -477,6 +478,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                          /EHsc
                          /MP
                          /W4
+                         /bigobj
                          /Zc:preprocessor
                          /Zc:__cplusplus
                          /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"

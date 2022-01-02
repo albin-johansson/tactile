@@ -52,6 +52,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                          /EHsc
                          /MP
                          /W4
+                         /bigobj
                          /Zc:preprocessor
                          /Zc:__cplusplus
                          /wd4834  # "discarding return value of function with 'nodiscard' attribute"
