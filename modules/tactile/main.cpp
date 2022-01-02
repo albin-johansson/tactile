@@ -1,3 +1,4 @@
+#include <cstdlib>    // abort
 #include <exception>  // exception
 
 #include "application.hpp"
@@ -19,6 +20,6 @@ auto main(int, char**) -> int
       Tactile::Print(fmt::color::hot_pink, "{}\n", *stacktrace);
     }
 
-    throw;
+    std::abort();
   }
 }
