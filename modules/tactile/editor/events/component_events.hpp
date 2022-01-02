@@ -43,6 +43,12 @@ struct RenameComponentAttributeEvent final
   std::string updated;
 };
 
+struct DuplicateComponentAttributeEvent final
+{
+  ComponentID id{};
+  std::string attribute;
+};
+
 struct SetComponentAttributeTypeEvent final
 {
   ComponentID id{};

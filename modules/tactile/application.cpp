@@ -688,6 +688,14 @@ void Application::OnRenameComponentAttribute(const RenameComponentAttributeEvent
   }
 }
 
+void Application::OnDuplicateComponentAttribute(
+    const DuplicateComponentAttributeEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::DuplicateComponentAttribute(*registry, event.id, event.attribute);
+  }
+}
+
 void Application::OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry()) {

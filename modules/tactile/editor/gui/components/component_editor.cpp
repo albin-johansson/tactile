@@ -168,7 +168,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Attribute")) {
-      // TODO
+      dispatcher.enqueue<DuplicateComponentAttributeEvent>(id, name);
     }
 
     ImGui::Separator();

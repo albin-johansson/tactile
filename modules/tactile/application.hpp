@@ -156,6 +156,7 @@ class Application final {
   void OnCreateComponentAttribute(const CreateComponentAttributeEvent& event);
   void OnRemoveComponentAttribute(const RemoveComponentAttributeEvent& event);
   void OnRenameComponentAttribute(const RenameComponentAttributeEvent& event);
+  void OnDuplicateComponentAttribute(const DuplicateComponentAttributeEvent& event);
   void OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event);
   void OnUpdateComponentAttribute(const UpdateComponentAttributeEvent& event);
 
