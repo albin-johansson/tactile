@@ -346,7 +346,7 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
       }
     }
     else if (value.IsFile()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsFile())) {
+      if (const auto updated = InputFile("##CustomPropertyInput", value.AsFile())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }

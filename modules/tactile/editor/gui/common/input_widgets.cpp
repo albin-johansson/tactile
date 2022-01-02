@@ -150,21 +150,22 @@ auto InputWidget(const CStr id, const cen::Color value) -> Maybe<cen::Color>
   return nothing;
 }
 
-auto InputWidget(const CStr id, const std::filesystem::path& value)
+auto InputFile(const CStr id, const std::filesystem::path& value)
     -> Maybe<std::filesystem::path>
 {
   const Scoped::ID scope{id};
 
-  if (ImGui::Button(TAC_ICON_SELECT_FILE)) {
+  if (ImGui::Button(TAC_ICON_THREE_DOTS)) {
     auto files = pfd::open_file{"Select File..."}.result();
     if (!files.empty()) {
       return files.front();
     }
   }
 
+  ImGui::SameLine();
+
   auto str = value.filename().string();
 
-  ImGui::SameLine();
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
   ImGui::InputTextWithHint("##InputString[file]",
                            "N/A",

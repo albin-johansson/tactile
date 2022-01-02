@@ -37,7 +37,7 @@ namespace Tactile {
 
 [[nodiscard]] auto InputWidget(CStr id, cen::Color value) -> Maybe<cen::Color>;
 
-[[nodiscard]] auto InputWidget(CStr id, const std::filesystem::path& value)
+[[nodiscard]] auto InputFile(CStr id, const std::filesystem::path& value)
     -> Maybe<std::filesystem::path>;
 
 }  // namespace Tactile
