@@ -45,7 +45,6 @@ TEST(ComponentSystem, CreateComponentDef)
   ASSERT_EQ(foo, def.id);
   ASSERT_EQ("Foo", def.name);
   ASSERT_TRUE(def.attributes.empty());
-  ASSERT_TRUE(def.defaults.empty());
 }
 
 TEST(ComponentSystem, RemoveComponentDef)
@@ -172,6 +171,56 @@ TEST(ComponentSystem, RemoveComponentAttribute)
   ASSERT_EQ(1u, Sys::GetComponent(registry, a, def).values.size());
 }
 
+TEST(ComponentSystem, RenameComponentAttribute)
+{
+  auto registry = Sys::MakeRegistry();
+  const auto def = Sys::CreateComponentDef(registry, "Def");
+
+  Sys::CreateComponentAttribute(registry, def, "A");
+
+  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "B"));
+
+  Sys::RenameComponentAttribute(registry, def, "A", "B");
+
+  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "B"));
+}
+
+TEST(ComponentSystem, SetComponentAttributeType)
+{
+  auto registry = Sys::MakeRegistry();
+  const auto def = Sys::CreateComponentDef(registry, "Def");
+
+  Sys::CreateComponentAttribute(registry, def, "A");
+  ASSERT_EQ(PropertyType::String, Sys::GetComponentAttributeType(registry, def, "A"));
+
+  Sys::SetComponentAttributeType(registry, def, "A", PropertyType::Integer);
+  ASSERT_EQ(PropertyType::Integer, Sys::GetComponentAttributeType(registry, def, "A"));
+
+  ASSERT_THROW(Sys::GetComponentAttributeType(registry, def, "B"), TactileError);
+}
+
+TEST(ComponentSystem, SetComponentAttributeValue)
+{
+  using namespace std::string_literals;
+
+  auto registry = Sys::MakeRegistry();
+  const auto def = Sys::CreateComponentDef(registry, "Def");
+
+  ASSERT_THROW(Sys::SetComponentAttributeValue(registry, def, "ABC", 42), TactileError);
+
+  Sys::CreateComponentAttribute(registry, def, "Foo");
+  Sys::SetComponentAttributeValue(registry, def, "Foo", "Bar"s);
+
+  ASSERT_EQ("Bar", Sys::GetComponentAttributeValue(registry, def, "Foo").AsString());
+
+  Sys::SetComponentAttributeType(registry, def, "Foo", PropertyType::Boolean);
+  Sys::SetComponentAttributeValue(registry, def, "Foo", true);
+
+  ASSERT_TRUE(Sys::GetComponentAttributeValue(registry, def, "Foo").AsBool());
+}
+
 TEST(ComponentSystem, IsComponentAttributeNameTaken)
 {
   auto registry = Sys::MakeRegistry();
@@ -190,8 +239,11 @@ TEST(ComponentSystem, AddComponent)
   Sys::CreateComponentAttribute(registry, def, "X");
   Sys::CreateComponentAttribute(registry, def, "Y");
 
-  Sys::SetComponentAttributeDefault(registry, def, "X", 42);
-  Sys::SetComponentAttributeDefault(registry, def, "Y", -3.5f);
+  Sys::SetComponentAttributeType(registry, def, "X", PropertyType::Integer);
+  Sys::SetComponentAttributeValue(registry, def, "X", 42);
+
+  Sys::SetComponentAttributeType(registry, def, "Y", PropertyType::Floating);
+  Sys::SetComponentAttributeValue(registry, def, "Y", -3.5f);
 
   const auto entity = CreateEntityWithBundle(registry);
   auto& component = Sys::AddComponent(registry, entity, def);

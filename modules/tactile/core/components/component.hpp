@@ -28,9 +28,7 @@ using ComponentID = int32;
 struct ComponentDef final {
   ComponentID id{};  ///< Unique ID for the component definition.
   std::string name;  ///< The human-readable component name, also unique.
-
-  std::map<std::string, PropertyType, std::less<>> attributes;  ///< Attribute types.
-  std::map<std::string, PropertyValue, std::less<>> defaults;   ///< Default values.
+  std::map<std::string, PropertyValue, std::less<>> attributes;
 };
 
 /**

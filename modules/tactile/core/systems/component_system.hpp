@@ -8,6 +8,7 @@
 #include <tactile_def.hpp>
 
 #include "core/components/component.hpp"
+#include "core/property_value.hpp"
 
 namespace Tactile::Sys {
 
@@ -103,15 +104,74 @@ void RemoveComponentAttribute(entt::registry& registry,
                               ComponentID id,
                               std::string_view name);
 
-void SetComponentAttributeDefault(entt::registry& registry,
-                                  ComponentID id,
-                                  const std::string& attribute,
-                                  PropertyValue value);
+/**
+ * \brief Changes the name of a component attribute.
+ *
+ * \pre the component ID must be valid.
+ * \pre `current` must be associated with an existing attribute.
+ * \pre `updated` must not be used by any other attributes.
+ *
+ * \param registry the current document registry.
+ * \param id the ID of the parent component.
+ * \param current the current name of the attribute.
+ * \param updated the new name of the attribute.
+ */
+void RenameComponentAttribute(entt::registry& registry,
+                              ComponentID id,
+                              const std::string& current,
+                              std::string updated);
 
-[[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
-                                         entt::entity entity,
-                                         ComponentID id,
-                                         std::string_view attribute)
+/**
+ * \brief Sets the type of a component attribute.
+ *
+ * \pre the component ID must be valid.
+ * \pre the attribute name must be valid.
+ *
+ * \details It is required to call this function to update the underlying type before
+ * updating the attribute value using `SetComponentAttributeValue()`.
+ *
+ * \param registry the current document registry.
+ * \param id the ID of the parent component.
+ * \param attribute the name of the attribute that will be modified.
+ * \param type the new type of the attribute.
+ *
+ * \throws TactileError if the attribute name is invalid.
+ *
+ * \see SetComponentAttributeValue()
+ */
+void SetComponentAttributeType(entt::registry& registry,
+                               ComponentID id,
+                               std::string_view attribute,
+                               PropertyType type);
+
+/**
+ * \brief Sets the default value of a component attribute.
+ *
+ * \pre the component ID must be valid.
+ * \pre the attribute name must be valid.
+ * \pre the type of the attribute value must be the same as the previous value.
+ *
+ * \param registry the current document registry.
+ * \param id the ID of the parent component.
+ * \param attribute the name of the attribute that will be updated-
+ * \param value the new value of the attribute.
+ *
+ * \throws TactileError if the attribute name is invalid.
+ *
+ * \see SetComponentAttributeType()
+ */
+void SetComponentAttributeValue(entt::registry& registry,
+                                ComponentID id,
+                                std::string_view attribute,
+                                PropertyValue value);
+
+[[nodiscard]] auto GetComponentAttributeType(const entt::registry& registry,
+                                             ComponentID id,
+                                             std::string_view attribute) -> PropertyType;
+
+[[nodiscard]] auto GetComponentAttributeValue(const entt::registry& registry,
+                                              ComponentID id,
+                                              std::string_view attribute)
     -> const PropertyValue&;
 
 [[nodiscard]] auto IsComponentAttributeNameTaken(const entt::registry& registry,
@@ -189,6 +249,12 @@ void RemoveComponent(entt::registry& registry, entt::entity entity, ComponentID 
 [[nodiscard]] auto GetComponent(const entt::registry& registry,
                                 entt::entity entity,
                                 ComponentID id) -> const Component&;
+
+[[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
+                                         entt::entity entity,
+                                         ComponentID id,
+                                         std::string_view attribute)
+    -> const PropertyValue&;
 
 [[nodiscard]] auto GetComponentCount(const entt::registry& registry, entt::entity entity)
     -> usize;

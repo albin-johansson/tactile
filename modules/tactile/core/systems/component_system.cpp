@@ -9,6 +9,37 @@
 #include "throw.hpp"
 
 namespace Tactile::Sys {
+namespace {
+
+[[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
+                                         const ComponentID id,
+                                         const std::string_view attribute)
+    -> decltype(ComponentDef::attributes)::const_iterator
+{
+  const auto [defEntity, def] = GetComponentDef(registry, id);
+  if (const auto it = def.attributes.find(attribute); it != def.attributes.end()) {
+    return it;
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid component attribute name!"});
+  }
+}
+
+[[nodiscard]] auto GetComponentAttribute(entt::registry& registry,
+                                         const ComponentID id,
+                                         const std::string_view attribute)
+    -> decltype(ComponentDef::attributes)::iterator
+{
+  const auto [defEntity, def] = GetComponentDef(registry, id);
+  if (const auto it = def.attributes.find(attribute); it != def.attributes.end()) {
+    return it;
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid component attribute name!"});
+  }
+}
+
+}  // namespace
 
 auto CreateComponentDef(entt::registry& registry, std::string name) -> ComponentID
 {
@@ -122,8 +153,7 @@ void CreateComponentAttribute(entt::registry& registry,
   LogDebug("Adding attribute '{}' to component '{}'", name, id);
 
   auto [defEntity, def] = GetComponentDef(registry, id);
-  def.attributes[name] = PropertyType::String;
-  def.defaults[name] = std::string{};
+  def.attributes[name] = std::string{};
 
   /* Updates existing components of the affected type to feature the new attribute */
   for (auto&& [entity, component] : registry.view<Component>().each()) {
@@ -148,7 +178,6 @@ void RemoveComponentAttribute(entt::registry& registry,
 
   auto [defEntity, def] = GetComponentDef(registry, id);
   removeAttributeFrom(def.attributes);
-  removeAttributeFrom(def.defaults);
 
   for (auto&& [entity, component] : registry.view<Component>().each()) {
     if (component.type == id) {
@@ -157,35 +186,64 @@ void RemoveComponentAttribute(entt::registry& registry,
   }
 }
 
-void SetComponentAttributeDefault(entt::registry& registry,
-                                  const ComponentID id,
-                                  const std::string& attribute,
-                                  PropertyValue value)
+void RenameComponentAttribute(entt::registry& registry,
+                              const ComponentID id,
+                              const std::string& current,
+                              std::string updated)
 {
-  const auto [defEntity, def] = GetComponentDef(registry, id);
-  def.defaults.at(attribute) = std::move(value);
+  TACTILE_ASSERT(!IsComponentAttributeNameTaken(registry, id, updated));
+
+  LogDebug("Renaming attribute '{}' in component '{}' to '{}'", current, id, updated);
+
+  auto [defEntity, def] = GetComponentDef(registry, id);
+
+  TACTILE_ASSERT(def.attributes.contains(current));
+  auto value = def.attributes.at(current);
+
+  def.attributes.erase(current);
+  def.attributes[std::move(updated)] = std::move(value);
 }
 
-auto GetComponentAttribute(const entt::registry& registry,
-                           const entt::entity entity,
-                           const ComponentID id,
-                           const std::string_view attribute) -> const PropertyValue&
+void SetComponentAttributeType(entt::registry& registry,
+                               const ComponentID id,
+                               const std::string_view attribute,
+                               const PropertyType type)
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<ComponentBundle>(entity));
+  LogVerbose("Setting type of attribute '{}' in component '{}' to '{}'",
+             attribute,
+             id,
+             type);
 
-  const auto& bundle = registry.get<ComponentBundle>(entity);
-  for (const auto componentEntity : bundle.components) {
-    const auto& component = registry.get<Component>(componentEntity);
-    if (component.type == id) {
-      if (const auto it = component.values.find(attribute);
-          it != component.values.end()) {
-        return it->second;
-      }
-    }
-  }
+  auto iter = GetComponentAttribute(registry, id, attribute);
+  iter->second.ResetToDefault(type);
+}
 
-  ThrowTraced(TactileError{"Did not find component attribute!"});
+void SetComponentAttributeValue(entt::registry& registry,
+                                const ComponentID id,
+                                const std::string_view attribute,
+                                PropertyValue value)
+{
+  auto iter = GetComponentAttribute(registry, id, attribute);
+
+  TACTILE_ASSERT_MSG(iter->second.GetType() == value.GetType(),
+                     "Requested default value had wrong type!");
+  iter->second = std::move(value);
+}
+
+auto GetComponentAttributeType(const entt::registry& registry,
+                               const ComponentID id,
+                               const std::string_view attribute) -> PropertyType
+{
+  const auto iter = GetComponentAttribute(registry, id, attribute);
+  return iter->second.GetType().value();
+}
+
+auto GetComponentAttributeValue(const entt::registry& registry,
+                                const ComponentID id,
+                                const std::string_view attribute) -> const PropertyValue&
+{
+  const auto iter = GetComponentAttribute(registry, id, attribute);
+  return iter->second;
 }
 
 auto IsComponentAttributeNameTaken(const entt::registry& registry,
@@ -222,7 +280,7 @@ auto AddComponent(entt::registry& registry,
   const auto [defEntity, def] = GetComponentDef(registry, id);
   auto& component = registry.emplace<Component>(componentEntity);
   component.type = id;
-  component.values = def.defaults;
+  component.values = def.attributes;
 
   return component;
 }
@@ -289,6 +347,28 @@ auto GetComponent(const entt::registry& registry,
   }
 
   ThrowTraced(TactileError{"Entity did not feature requested component!"});
+}
+
+auto GetComponentAttribute(const entt::registry& registry,
+                           const entt::entity entity,
+                           const ComponentID id,
+                           const std::string_view attribute) -> const PropertyValue&
+{
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<ComponentBundle>(entity));
+
+  const auto& bundle = registry.get<ComponentBundle>(entity);
+  for (const auto componentEntity : bundle.components) {
+    const auto& component = registry.get<Component>(componentEntity);
+    if (component.type == id) {
+      if (const auto it = component.values.find(attribute);
+          it != component.values.end()) {
+        return it->second;
+      }
+    }
+  }
+
+  ThrowTraced(TactileError{"Did not find component attribute!"});
 }
 
 auto GetComponentCount(const entt::registry& registry, const entt::entity entity) -> usize
