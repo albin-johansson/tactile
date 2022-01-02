@@ -2,6 +2,7 @@
 
 #include <utility>  // move
 
+#include <fmt/format.h>
 #include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
@@ -204,6 +205,25 @@ void RenameComponentAttribute(entt::registry& registry,
   def.attributes[std::move(updated)] = std::move(value);
 }
 
+void DuplicateComponentAttribute(entt::registry& registry,
+                                 const ComponentID id,
+                                 const std::string_view attribute)
+{
+  LogDebug("Duplicating attribute '{}' in component '{}'", attribute, id);
+
+  auto [defEntity, def] = GetComponentDef(registry, id);
+  auto iter = GetComponentAttribute(registry, id, attribute);
+
+  int suffix = 1;
+  std::string candidateName;
+  do {
+    candidateName = fmt::format("{} ({})", attribute, suffix);
+    ++suffix;
+  } while (IsComponentAttributeNameTaken(registry, id, candidateName));
+
+  def.attributes[std::move(candidateName)] = iter->second;
+}
+
 void SetComponentAttributeType(entt::registry& registry,
                                const ComponentID id,
                                const std::string_view attribute,
@@ -259,6 +279,13 @@ auto IsComponentAttributeNameTaken(const entt::registry& registry,
   }
 
   return false;
+}
+
+auto GetComponentAttributeCount(const entt::registry& registry, const ComponentID id)
+    -> usize
+{
+  const auto [entity, def] = GetComponentDef(registry, id);
+  return def.attributes.size();
 }
 
 auto AddComponent(entt::registry& registry,

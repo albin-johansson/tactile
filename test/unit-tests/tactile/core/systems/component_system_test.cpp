@@ -187,6 +187,31 @@ TEST(ComponentSystem, RenameComponentAttribute)
   ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "B"));
 }
 
+TEST(ComponentSystem, DuplicateComponentAttribute)
+{
+  auto registry = Sys::MakeRegistry();
+  const auto def = Sys::CreateComponentDef(registry, "Def");
+
+  Sys::CreateComponentAttribute(registry, def, "A");
+  ASSERT_EQ(1u, Sys::GetComponentAttributeCount(registry, def));
+  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "A (1)"));
+
+  Sys::DuplicateComponentAttribute(registry, def, "A");
+  ASSERT_EQ(2u, Sys::GetComponentAttributeCount(registry, def));
+  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A (1)"));
+
+  Sys::CreateComponentAttribute(registry, def, "B");
+  Sys::CreateComponentAttribute(registry, def, "B (1)");
+  ASSERT_EQ(4u, Sys::GetComponentAttributeCount(registry, def));
+  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "B (2)"));
+
+  Sys::DuplicateComponentAttribute(registry, def, "B");
+  ASSERT_EQ(5u, Sys::GetComponentAttributeCount(registry, def));
+  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "B (2)"));
+}
+
 TEST(ComponentSystem, SetComponentAttributeType)
 {
   auto registry = Sys::MakeRegistry();

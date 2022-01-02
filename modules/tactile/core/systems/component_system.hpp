@@ -121,6 +121,10 @@ void RenameComponentAttribute(entt::registry& registry,
                               const std::string& current,
                               std::string updated);
 
+void DuplicateComponentAttribute(entt::registry& registry,
+                                 ComponentID id,
+                                 std::string_view attribute);
+
 /**
  * \brief Sets the type of a component attribute.
  *
@@ -177,6 +181,9 @@ void SetComponentAttributeValue(entt::registry& registry,
 [[nodiscard]] auto IsComponentAttributeNameTaken(const entt::registry& registry,
                                                  ComponentID id,
                                                  std::string_view name) -> bool;
+
+[[nodiscard]] auto GetComponentAttributeCount(const entt::registry& registry,
+                                              ComponentID id) -> usize;
 
 /// \} End of component attribute functions
 
