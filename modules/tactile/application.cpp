@@ -679,9 +679,7 @@ void Application::OnRemoveComponentAttribute(const RemoveComponentAttributeEvent
 
 void Application::OnRenameComponentAttribute(const RenameComponentAttributeEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::RenameComponentAttribute(*registry, event.id, event.previous, event.updated);
-  }
+  Execute<RenameComponentAttributeCmd>(mModel, event.id, event.previous, event.updated);
 }
 
 void Application::OnDuplicateComponentAttribute(
