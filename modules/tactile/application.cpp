@@ -694,9 +694,7 @@ void Application::OnDuplicateComponentAttribute(
 
 void Application::OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::SetComponentAttributeType(*registry, event.id, event.attribute, event.type);
-  }
+  Execute<SetComponentAttributeTypeCmd>(mModel, event.id, event.attribute, event.type);
 }
 
 void Application::OnUpdateComponentAttribute(const UpdateComponentAttributeEvent& event)
