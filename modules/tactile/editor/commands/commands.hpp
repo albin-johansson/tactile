@@ -5,6 +5,7 @@
 #include "components/create_component_attribute_cmd.hpp"
 #include "components/create_component_def_cmd.hpp"
 #include "components/rename_component_attribute_cmd.hpp"
+#include "components/rename_component_cmd.hpp"
 #include "components/set_component_attribute_type_cmd.hpp"
 #include "layers/add_layer_cmd.hpp"
 #include "layers/duplicate_layer_cmd.hpp"
