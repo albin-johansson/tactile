@@ -9,6 +9,8 @@
 #include "logging.hpp"
 #include "throw.hpp"
 
+#include "core/components/property_context.hpp"
+
 namespace Tactile::Sys {
 namespace {
 
@@ -84,11 +86,18 @@ void RemoveComponentDef(entt::registry& registry, const ComponentID id)
   const auto [defEntity, def] = GetComponentDef(registry, id);
 
   /* Removes component entities of the specified type from all component bundles */
-  for (auto&& [entity, bundle] : registry.view<ComponentBundle>().each()) {
-    std::erase_if(bundle.components, [&](const entt::entity componentEntity) {
+  auto removeComponentsFrom = [&, id](std::vector<entt::entity>& components) {
+    std::erase_if(components, [&](const entt::entity componentEntity) {
       const auto& component = registry.get<Component>(componentEntity);
       return component.type == id;
     });
+  };
+
+  auto& root = registry.ctx<PropertyContext>();
+  removeComponentsFrom(root.components);
+
+  for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
+    removeComponentsFrom(context.components);
   }
 
   /* Removes the affected components from the pool */
@@ -181,15 +190,23 @@ void CreateComponentAttribute(entt::registry& registry,
                               const ComponentID id,
                               const std::string& name)
 {
+  CreateComponentAttribute(registry, id, name, std::string{});
+}
+
+void CreateComponentAttribute(entt::registry& registry,
+                              const ComponentID id,
+                              const std::string& name,
+                              const PropertyValue& value)
+{
   LogDebug("Adding attribute '{}' to component '{}'", name, id);
 
   auto [defEntity, def] = GetComponentDef(registry, id);
-  def.attributes[name] = std::string{};
+  def.attributes[name] = value;
 
   /* Updates existing components of the affected type to feature the new attribute */
   for (auto&& [entity, component] : registry.view<Component>().each()) {
     if (component.type == id) {
-      component.values[name] = std::string{};
+      component.values[name] = value;
     }
   }
 }
@@ -322,17 +339,16 @@ auto AddComponent(entt::registry& registry,
                   const entt::entity entity,
                   const ComponentID id) -> Component&
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<ComponentBundle>(entity));  // TODO auto add bundle?
   TACTILE_ASSERT(FindComponentDef(registry, id) != entt::null);
   TACTILE_ASSERT(!HasComponent(registry, entity, id));
 
   LogDebug("Adding component '{}' to entity '{}'", id, entity);
 
-  auto& bundle = registry.get<ComponentBundle>(entity);
+  auto& context = entity != entt::null ? registry.get<PropertyContext>(entity)
+                                       : registry.ctx<PropertyContext>();
 
   const auto componentEntity = registry.create();
-  bundle.components.push_back(componentEntity);
+  context.components.push_back(componentEntity);
 
   const auto [defEntity, def] = GetComponentDef(registry, id);
   auto& component = registry.emplace<Component>(componentEntity);
@@ -346,17 +362,16 @@ void RemoveComponent(entt::registry& registry,
                      const entt::entity entity,
                      const ComponentID id)
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<ComponentBundle>(entity));
   TACTILE_ASSERT(FindComponentDef(registry, id) != entt::null);
   TACTILE_ASSERT(HasComponent(registry, entity, id));
 
   LogDebug("Removing component '{}' from entity '{}'", id, entity);
 
-  auto& bundle = registry.get<ComponentBundle>(entity);
+  auto& context = entity != entt::null ? registry.get<PropertyContext>(entity)
+                                       : registry.ctx<PropertyContext>();
   entt::entity match = entt::null;
 
-  for (const auto componentEntity : bundle.components) {
+  for (const auto componentEntity : context.components) {
     const auto& component = registry.get<Component>(componentEntity);
     if (component.type == id) {
       match = componentEntity;
@@ -365,7 +380,7 @@ void RemoveComponent(entt::registry& registry,
   }
 
   TACTILE_ASSERT(match != entt::null);
-  std::erase_if(bundle.components, [match](const entt::entity componentEntity) {
+  std::erase_if(context.components, [match](const entt::entity componentEntity) {
     return componentEntity == match;
   });
 }
@@ -374,11 +389,9 @@ auto HasComponent(entt::registry& registry,
                   const entt::entity entity,
                   const ComponentID id) -> bool
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<ComponentBundle>(entity));
-
-  const auto& bundle = registry.get<ComponentBundle>(entity);
-  for (const auto componentEntity : bundle.components) {
+  const auto& context = entity != entt::null ? registry.get<PropertyContext>(entity)
+                                             : registry.ctx<PropertyContext>();
+  for (const auto componentEntity : context.components) {
     const auto& component = registry.get<Component>(componentEntity);
     if (component.type == id) {
       return true;
@@ -392,11 +405,9 @@ auto GetComponent(const entt::registry& registry,
                   const entt::entity entity,
                   const ComponentID id) -> const Component&
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<ComponentBundle>(entity));
-
-  const auto& bundle = registry.get<ComponentBundle>(entity);
-  for (const auto componentEntity : bundle.components) {
+  const auto& context = entity != entt::null ? registry.get<PropertyContext>(entity)
+                                             : registry.ctx<PropertyContext>();
+  for (const auto componentEntity : context.components) {
     const auto& component = registry.get<Component>(componentEntity);
     if (component.type == id) {
       return component;
@@ -411,11 +422,10 @@ auto GetComponentAttribute(const entt::registry& registry,
                            const ComponentID id,
                            const std::string_view attribute) -> const PropertyValue&
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<ComponentBundle>(entity));
+  const auto& context = entity != entt::null ? registry.get<PropertyContext>(entity)
+                                             : registry.ctx<PropertyContext>();
 
-  const auto& bundle = registry.get<ComponentBundle>(entity);
-  for (const auto componentEntity : bundle.components) {
+  for (const auto componentEntity : context.components) {
     const auto& component = registry.get<Component>(componentEntity);
     if (component.type == id) {
       if (const auto it = component.values.find(attribute);
@@ -430,11 +440,9 @@ auto GetComponentAttribute(const entt::registry& registry,
 
 auto GetComponentCount(const entt::registry& registry, const entt::entity entity) -> usize
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<ComponentBundle>(entity));
-
-  const auto& bundle = registry.get<ComponentBundle>(entity);
-  return bundle.components.size();
+  const auto& context = entity != entt::null ? registry.get<PropertyContext>(entity)
+                                             : registry.ctx<PropertyContext>();
+  return context.components.size();
 }
 
 auto IsComponentNameTaken(const entt::registry& registry, const std::string_view name)

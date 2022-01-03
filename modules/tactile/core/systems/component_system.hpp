@@ -114,6 +114,11 @@ void CreateComponentAttribute(entt::registry& registry,
                               ComponentID id,
                               const std::string& name);
 
+void CreateComponentAttribute(entt::registry& registry,
+                              ComponentID id,
+                              const std::string& name,
+                              const PropertyValue& value);
+
 /**
  * \brief Removes an attribute from a component definition.
  *
@@ -220,7 +225,6 @@ void SetComponentAttributeValue(entt::registry& registry,
 /**
  * \brief Adds a component to an entity.
  *
- * \pre the entity cannot be null.
  * \pre the entity must be a valid component context.
  * \pre the component ID must be valid.
  * \pre the entity must not already feature the specified component.
@@ -239,7 +243,6 @@ auto AddComponent(entt::registry& registry, entt::entity entity, ComponentID id)
 /**
  * \brief Removes a component from an entity.
  *
- * \pre the entity cannot be null.
  * \pre the component ID must be valid.
  * \pre the entity must feature the component.
  *
@@ -254,8 +257,6 @@ void RemoveComponent(entt::registry& registry, entt::entity entity, ComponentID 
 /**
  * \brief Indicates whether an entity holds a specific component.
  *
- * \pre the entity cannot be null.
- *
  * \param registry the current document registry.
  * \param entity the entity that will be checked.
  * \param id the ID of the component type to check for.
@@ -269,7 +270,6 @@ void RemoveComponent(entt::registry& registry, entt::entity entity, ComponentID 
 /**
  * \brief Returns a component from an entity.
  *
- * \pre the entity cannot be null.
  * \pre the entity must feature a component bundle.
  *
  * \param registry the current document registry.

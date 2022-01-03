@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 #include <tactile_stdlib.hpp>
 
+#include "core/components/property_context.hpp"
 #include "core/systems/registry_system.hpp"
 
 using namespace Tactile;
@@ -16,7 +17,7 @@ constexpr entt::entity null_entity = entt::null;
 [[nodiscard]] auto CreateEntityWithBundle(entt::registry& registry) -> entt::entity
 {
   const auto entity = registry.create();
-  registry.emplace<ComponentBundle>(entity);
+  registry.emplace<PropertyContext>(entity);
   return entity;
 }
 

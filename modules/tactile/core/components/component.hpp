@@ -15,6 +15,8 @@ namespace Tactile {
 /// Identifier for component definition types (not persistent).
 using ComponentID = int32;
 
+using ComponentAttributeMap = std::map<std::string, PropertyValue, std::less<>>;
+
 /**
  * Describes the structure of a component.
  *
@@ -28,22 +30,16 @@ using ComponentID = int32;
 struct ComponentDef final {
   ComponentID id{};  ///< Unique ID for the component definition.
   std::string name;  ///< The human-readable component name, also unique.
-  std::map<std::string, PropertyValue, std::less<>> attributes;
+  ComponentAttributeMap attributes;
 };
 
 /**
  * Represents a user-defined component that can be attached to property context entities.
  */
-struct Component final {
-  ComponentID type;  ///< The ID of the component definition type.
-  std::map<std::string, PropertyValue, std::less<>> values;  ///< Current values.
-};
-
-/**
- * This component tracks all of the components attached to an entity.
- */
-struct ComponentBundle final {
-  std::vector<entt::entity> components;
+struct Component final
+{
+  ComponentID type;              ///< The ID of the component definition type.
+  ComponentAttributeMap values;  ///< Current values.
 };
 
 }  // namespace Tactile
