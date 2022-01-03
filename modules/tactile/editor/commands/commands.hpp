@@ -2,6 +2,7 @@
 
 /* Convenience header that includes all other command headers */
 
+#include "components/create_component_def_cmd.hpp"
 #include "layers/add_layer_cmd.hpp"
 #include "layers/duplicate_layer_cmd.hpp"
 #include "layers/move_layer_down_cmd.hpp"

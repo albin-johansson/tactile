@@ -39,7 +39,9 @@ struct CommandId final {
     SetObjectName,
     MoveObject,
     SetObjectTag,
-    SetObjectVisibility
+    SetObjectVisibility,
+
+    CreateComponentDef
   };
 };
 

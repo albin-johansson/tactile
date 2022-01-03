@@ -648,9 +648,7 @@ void Application::OnSetPropertyContext(const SetPropertyContextEvent& event)
 
 void Application::OnCreateComponentDef(const CreateComponentDefEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::CreateComponentDef(*registry, event.name);
-  }
+  Execute<CreateComponentDefCmd>(mModel, event.name);
 }
 
 void Application::OnRemoveComponentDef(const RemoveComponentDefEvent& event)

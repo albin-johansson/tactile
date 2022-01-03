@@ -116,6 +116,9 @@ set(SOURCE_FILES
     editor/commands/command_stack.hpp
     editor/commands/commands.hpp
 
+    editor/commands/components/create_component_def_cmd.cpp
+    editor/commands/components/create_component_def_cmd.hpp
+
     editor/commands/layers/add_layer_cmd.cpp
     editor/commands/layers/add_layer_cmd.hpp
     editor/commands/layers/duplicate_layer_cmd.cpp
