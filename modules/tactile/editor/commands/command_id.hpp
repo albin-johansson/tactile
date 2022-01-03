@@ -45,7 +45,8 @@ struct CommandId final {
     RenameComponent,
     CreateComponentDefAttribute,
     SetComponentAttributeType,
-    RenameComponentAttribute
+    RenameComponentAttribute,
+    UpdateComponentAttribute
   };
 };
 

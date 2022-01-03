@@ -695,9 +695,7 @@ void Application::OnSetComponentAttributeType(const SetComponentAttributeTypeEve
 
 void Application::OnUpdateComponentAttribute(const UpdateComponentAttributeEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::SetComponentAttributeValue(*registry, event.id, event.attribute, event.value);
-  }
+  Execute<UpdateComponentAttributeCmd>(mModel, event.id, event.attribute, event.value);
 }
 
 void Application::OnToggleUi()

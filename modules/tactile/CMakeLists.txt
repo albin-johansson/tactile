@@ -126,6 +126,8 @@ set(SOURCE_FILES
     editor/commands/components/rename_component_cmd.hpp
     editor/commands/components/set_component_attribute_type_cmd.cpp
     editor/commands/components/set_component_attribute_type_cmd.hpp
+    editor/commands/components/update_component_attribute_cmd.cpp
+    editor/commands/components/update_component_attribute_cmd.hpp
 
     editor/commands/layers/add_layer_cmd.cpp
     editor/commands/layers/add_layer_cmd.hpp
