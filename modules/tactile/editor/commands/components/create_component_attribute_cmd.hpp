@@ -8,9 +8,9 @@
 
 namespace Tactile {
 
-class CreateComponentDefAttributeCmd final : public ACommand {
+class CreateComponentAttributeCmd final : public ACommand {
  public:
-  CreateComponentDefAttributeCmd(RegistryRef registry, ComponentID id, std::string name);
+  CreateComponentAttributeCmd(RegistryRef registry, ComponentID id, std::string name);
 
   void Undo() override;
 

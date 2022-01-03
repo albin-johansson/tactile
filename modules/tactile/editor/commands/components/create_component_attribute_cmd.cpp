@@ -1,4 +1,4 @@
-#include "create_component_def_attribute_cmd.hpp"
+#include "create_component_attribute_cmd.hpp"
 
 #include <utility>  // move
 
@@ -6,22 +6,22 @@
 
 namespace Tactile {
 
-CreateComponentDefAttributeCmd::CreateComponentDefAttributeCmd(RegistryRef registry,
-                                                               const ComponentID id,
-                                                               std::string name)
+CreateComponentAttributeCmd::CreateComponentAttributeCmd(RegistryRef registry,
+                                                         const ComponentID id,
+                                                         std::string name)
     : ACommand{"Create Component Attribute"}
     , mRegistry{registry}
     , mComponentId{id}
     , mName{std::move(name)}
 {}
 
-void CreateComponentDefAttributeCmd::Undo()
+void CreateComponentAttributeCmd::Undo()
 {
   auto& registry = mRegistry.get();
   Sys::RemoveComponentAttribute(registry, mComponentId, mName);
 }
 
-void CreateComponentDefAttributeCmd::Redo()
+void CreateComponentAttributeCmd::Redo()
 {
   auto& registry = mRegistry.get();
   Sys::CreateComponentAttribute(registry, mComponentId, mName);

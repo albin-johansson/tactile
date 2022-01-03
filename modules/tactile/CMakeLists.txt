@@ -116,8 +116,8 @@ set(SOURCE_FILES
     editor/commands/command_stack.hpp
     editor/commands/commands.hpp
 
-    editor/commands/components/create_component_def_attribute_cmd.cpp
-    editor/commands/components/create_component_def_attribute_cmd.hpp
+    editor/commands/components/create_component_attribute_cmd.cpp
+    editor/commands/components/create_component_attribute_cmd.hpp
     editor/commands/components/create_component_def_cmd.cpp
     editor/commands/components/create_component_def_cmd.hpp
     editor/commands/components/set_component_attribute_type_cmd.cpp

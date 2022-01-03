@@ -667,7 +667,7 @@ void Application::OnRenameComponentDef(const RenameComponentDefEvent& event)
 
 void Application::OnCreateComponentAttribute(const CreateComponentAttributeEvent& event)
 {
-  Execute<CreateComponentDefAttributeCmd>(mModel, event.id, event.name);
+  Execute<CreateComponentAttributeCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnRemoveComponentAttribute(const RemoveComponentAttributeEvent& event)
