@@ -6,8 +6,7 @@
 
 namespace Tactile {
 
-CreateComponentDefCmd::CreateComponentDefCmd(Ref<entt::registry> registry,
-                                             std::string name)
+CreateComponentDefCmd::CreateComponentDefCmd(RegistryRef registry, std::string name)
     : ACommand{"Create Component Definition"}
     , mRegistry{registry}
     , mName{std::move(name)}

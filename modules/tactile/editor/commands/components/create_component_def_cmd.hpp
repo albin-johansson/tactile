@@ -2,7 +2,6 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 #include "core/components/component.hpp"
@@ -13,7 +12,7 @@ namespace Tactile {
 
 class CreateComponentDefCmd final : public ACommand {
  public:
-  CreateComponentDefCmd(Ref<entt::registry> registry, std::string name);
+  CreateComponentDefCmd(RegistryRef registry, std::string name);
 
   void Undo() override;
 
@@ -25,7 +24,7 @@ class CreateComponentDefCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   std::string mName;
   Maybe<ComponentID> mComponentId;
 };
