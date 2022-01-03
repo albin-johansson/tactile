@@ -2,18 +2,15 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
-#include <tactile_def.hpp>
-
 #include "core/components/component.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
 namespace Tactile {
 
-class CreateComponentDefCmd final : public ACommand {
+class CreateComponentDefAttributeCmd final : public ACommand {
  public:
-  CreateComponentDefCmd(Ref<entt::registry> registry, std::string name);
+  CreateComponentDefAttributeCmd(RegistryRef registry, ComponentID id, std::string name);
 
   void Undo() override;
 
@@ -21,13 +18,13 @@ class CreateComponentDefCmd final : public ACommand {
 
   [[nodiscard]] auto GetId() const noexcept -> int override
   {
-    return CommandId::CreateComponentDef;
+    return CommandId::CreateComponentDefAttribute;
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
+  ComponentID mComponentId{};
   std::string mName;
-  Maybe<ComponentID> mComponentId;
 };
 
 }  // namespace Tactile

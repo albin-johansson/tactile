@@ -667,9 +667,7 @@ void Application::OnRenameComponentDef(const RenameComponentDefEvent& event)
 
 void Application::OnCreateComponentAttribute(const CreateComponentAttributeEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::CreateComponentAttribute(*registry, event.id, event.name);
-  }
+  Execute<CreateComponentDefAttributeCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnRemoveComponentAttribute(const RemoveComponentAttributeEvent& event)

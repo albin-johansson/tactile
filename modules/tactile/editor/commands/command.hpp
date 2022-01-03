@@ -2,12 +2,15 @@
 
 #include <string>  // string
 
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 namespace Tactile {
 
 /// \addtogroup commands
 /// \{
+
+using RegistryRef = Ref<entt::registry>;
 
 class ACommand {
  public:

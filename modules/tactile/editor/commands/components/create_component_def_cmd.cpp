@@ -22,7 +22,12 @@ void CreateComponentDefCmd::Undo()
 void CreateComponentDefCmd::Redo()
 {
   auto& registry = mRegistry.get();
-  mComponentId = Sys::CreateComponentDef(registry, mName);
+  if (!mComponentId) {
+    mComponentId = Sys::CreateComponentDef(registry, mName);
+  }
+  else {
+    Sys::CreateComponentDef(mRegistry, *mComponentId, mName);
+  }
 }
 
 }  // namespace Tactile

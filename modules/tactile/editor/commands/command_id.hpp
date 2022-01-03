@@ -41,7 +41,8 @@ struct CommandId final {
     SetObjectTag,
     SetObjectVisibility,
 
-    CreateComponentDef
+    CreateComponentDef,
+    CreateComponentDefAttribute
   };
 };
 

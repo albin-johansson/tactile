@@ -42,9 +42,28 @@ namespace {
 
 }  // namespace
 
+void CreateComponentDef(entt::registry& registry, const ComponentID id, std::string name)
+{
+  TACTILE_ASSERT(!IsComponentValid(registry, id));
+  TACTILE_ASSERT(!IsComponentNameTaken(registry, name));
+
+  LogDebug("Creating component definition with explicit ID '{}'", id);
+
+  const auto entity = registry.create();
+
+  auto& def = registry.emplace<ComponentDef>(entity);
+  def.id = id;
+  def.name = std::move(name);
+}
+
 auto CreateComponentDef(entt::registry& registry, std::string name) -> ComponentID
 {
   static ComponentID next_id = 1;
+
+  TACTILE_ASSERT(!IsComponentNameTaken(registry, name));
+  TACTILE_ASSERT_MSG(!IsComponentValid(registry, next_id),
+                     "Verify use of use explicit component identifiers!");
+
   LogDebug("Creating component definition '{}' (ID '{}')", name, next_id);
 
   const auto entity = registry.create();

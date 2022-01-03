@@ -16,6 +16,22 @@ namespace Tactile::Sys {
 /// \{
 
 /**
+ * \brief Creates a new component definition with a specific identifier.
+ *
+ * \details This function is intended to be used when restoring a previously created
+ * component definition, allowing the previously assigned identifier to be safely reused.
+ * This makes it much easier to implement command classes related to components.
+ *
+ * \pre the component ID must be unused.
+ * \pre the component name must be unique.
+ *
+ * \param registry the current document registry.
+ * \param id the requested component identifier.
+ * \param name the name of the component.
+ */
+void CreateComponentDef(entt::registry& registry, ComponentID id, std::string name);
+
+/**
  * \brief Creates a new component definition with the specified name, and returns the ID.
  *
  * \pre the supplied component name must be unique.
