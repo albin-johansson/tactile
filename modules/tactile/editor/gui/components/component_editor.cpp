@@ -43,6 +43,11 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
   const auto* registry = model.GetActiveRegistry();
   TACTILE_ASSERT(registry);
 
+  /* Ensure that the active component ID hasn't been invalidated */
+  if (mActiveComponent && !Sys::IsComponentValid(*registry, *mActiveComponent)) {
+    mActiveComponent.reset();
+  }
+
   if (registry->storage<ComponentDef>().empty()) {
     ImGui::TextUnformatted("There are no available components for the current map.");
 

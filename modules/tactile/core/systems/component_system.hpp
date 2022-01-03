@@ -64,6 +64,17 @@ void RenameComponentDef(entt::registry& registry, ComponentID id, std::string na
 [[nodiscard]] auto GetFirstAvailableComponentDef(const entt::registry& registry)
     -> Maybe<ComponentID>;
 
+/**
+ * \brief Indicates whether a component ID is valid, i.e. currently in use.
+ *
+ * \param registry the current document registry.
+ * \param id the component ID that will be checked.
+ *
+ * \return `true` if the component ID is valid; `false` otherwise.
+ */
+[[nodiscard]] auto IsComponentValid(const entt::registry& registry, ComponentID id)
+    -> bool;
+
 /// \} End of component definition functions
 
 /// \name Component attribute functions

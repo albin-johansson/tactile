@@ -147,6 +147,17 @@ auto GetFirstAvailableComponentDef(const entt::registry& registry) -> Maybe<Comp
   }
 }
 
+auto IsComponentValid(const entt::registry& registry, const ComponentID id) -> bool
+{
+  for (auto [entity, def] : registry.view<ComponentDef>().each()) {
+    if (def.id == id) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 void CreateComponentAttribute(entt::registry& registry,
                               const ComponentID id,
                               const std::string& name)
