@@ -31,6 +31,7 @@ struct WidgetShowState final {
   bool prev_show_properties_dock{};
   bool prev_show_log_dock{};
   bool prev_show_toolbar{};
+  bool prev_show_component_dock{};
 };
 
 class Application final {

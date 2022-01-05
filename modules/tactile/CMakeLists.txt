@@ -292,6 +292,8 @@ set(SOURCE_FILES
     editor/gui/common/rubber_band.cpp
     editor/gui/common/rubber_band.hpp
 
+    editor/gui/components/component_dock.cpp
+    editor/gui/components/component_dock.hpp
     editor/gui/components/component_editor.cpp
     editor/gui/components/component_editor.hpp
     editor/gui/components/component_name_dialog.cpp

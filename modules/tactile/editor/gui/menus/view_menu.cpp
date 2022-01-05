@@ -122,6 +122,10 @@ void ViewMenu::UpdateWidgetsMenu(const bool hasActiveMap)
     if (ImGui::MenuItem("Log", nullptr, Prefs::GetShowLogDock())) {
       Prefs::SetShowLogDock(!Prefs::GetShowLogDock());
     }
+
+    if (ImGui::MenuItem("Components", nullptr, Prefs::GetShowComponentDock())) {
+      Prefs::SetShowComponentDock(!Prefs::GetShowComponentDock());
+    }
   }
 }
 

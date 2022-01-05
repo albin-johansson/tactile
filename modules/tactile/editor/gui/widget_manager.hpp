@@ -3,6 +3,7 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
+#include "components/component_dock.hpp"
 #include "dialogs/resize_map_dialog.hpp"
 #include "layers/layer_dock.hpp"
 #include "menus/menu_bar.hpp"
@@ -62,6 +63,8 @@ class WidgetManager final {
   TilesetDock mTilesetDock;
   LayerDock mLayerDock;
   PropertiesDock mPropertiesDock;
+  ComponentDock mComponentDock;
+
   ResizeMapDialog mResizeMapDialog;
 };
 

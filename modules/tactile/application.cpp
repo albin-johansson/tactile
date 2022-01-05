@@ -12,10 +12,10 @@
 #include "cfg/configuration.hpp"
 #include "core/components/property_context.hpp"
 #include "core/mouse_pos.hpp"
+#include "core/systems/component_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
-#include "core/systems/component_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
@@ -733,7 +733,7 @@ void Application::OnUpdateComponent(const UpdateComponentEvent& event)
 
 void Application::OnToggleUi()
 {
-  if (ImGui::GetTopMostPopupModal()) {
+  if (ImGui::GetTopMostPopupModal() != nullptr) {
     return;
   }
 
@@ -744,6 +744,7 @@ void Application::OnToggleUi()
     mWidgetShowState.prev_show_tileset_dock = Prefs::GetShowTilesetDock();
     mWidgetShowState.prev_show_properties_dock = Prefs::GetShowPropertiesDock();
     mWidgetShowState.prev_show_log_dock = Prefs::GetShowLogDock();
+    mWidgetShowState.prev_show_component_dock = Prefs::GetShowComponentDock();
     mWidgetShowState.prev_show_toolbar = mWidgets.IsToolbarVisible();
   }
 
@@ -751,6 +752,7 @@ void Application::OnToggleUi()
   Prefs::SetShowTilesetDock(show);
   Prefs::SetShowPropertiesDock(show);
   Prefs::SetShowLogDock(show);
+  Prefs::SetShowComponentDock(show);
   mWidgets.SetToolbarVisible(show);
 
   if (show) {
@@ -758,6 +760,7 @@ void Application::OnToggleUi()
     Prefs::SetShowTilesetDock(mWidgetShowState.prev_show_tileset_dock);
     Prefs::SetShowPropertiesDock(mWidgetShowState.prev_show_properties_dock);
     Prefs::SetShowLogDock(mWidgetShowState.prev_show_log_dock);
+    Prefs::SetShowComponentDock(mWidgetShowState.prev_show_component_dock);
     mWidgets.SetToolbarVisible(mWidgetShowState.prev_show_toolbar);
   }
 

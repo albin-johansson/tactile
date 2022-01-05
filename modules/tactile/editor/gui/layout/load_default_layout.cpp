@@ -23,6 +23,7 @@ void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
   ImGui::DockBuilderDockWindow("Toolbar", left);
   ImGui::DockBuilderDockWindow("Tilesets", right);
   ImGui::DockBuilderDockWindow("Properties", right);
+  ImGui::DockBuilderDockWindow("Components", right);
   ImGui::DockBuilderDockWindow("Layers", rightBottom);
   ImGui::DockBuilderDockWindow("Log", bottom);
 

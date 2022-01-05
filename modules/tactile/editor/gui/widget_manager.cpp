@@ -32,6 +32,7 @@ void WidgetManager::Update(const Model& model,
   if (const auto* registry = model.GetActiveRegistry()) {
     UpdateMapViewObjectContextMenu(*registry, dispatcher);
 
+    mComponentDock.Update(*registry, dispatcher);
     mTilesetDock.Update(*registry, dispatcher);
 
     UpdateLogDock();
