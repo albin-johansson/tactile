@@ -12,69 +12,74 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 
 ## Aim
 
-* Must be easy to learn
-* Must be easy to use
-* Keep things simple, hide advanced options that are rarely used
+* Easy to learn *and* easy to use
+* Workflow optimized for common actions
 * Well documented and high-quality source code
-* Be lightweight and performant
+* Lightweight feel and scalable performance
 
 ## Features
 
 * Great performance thanks to ECS architecture
-* Extensive and intelligent undo/redo support
-* Tile layers
-* Object layers
-* Group layers
-* Embedded and external tilesets
+* Extensive and intuitive undo & redo support
+* Various layer types
+    * Tile layers
+    * Object layers
+    * Group layers
 * Supports an intuitive and human-readable YAML map format
 * Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
+    * Note that not all Tiled features are supported by Tactile
 * Intuitive mouse tools
+    * Tile stamp tool
+    * Eraser tool
+    * Bucket fill tool
+    * ...
 * Tile animations
 * Various editor themes
 * Insightful and helpful error messages when things go wrong, e.g. when parsing corrupted maps
 
 ## Building
 
-This section provides a high-level description of how to manually build the Tactile editor. The
-project makes use of [Vcpkg](https://github.com/microsoft/vcpkg) for third-party dependency
-management. As a result, building the code base is really quite straightforward. The process is also
-basically the same on all platforms.
+This section provides a high-level description of how to manually build the Tactile editor. The project makes use
+of [Vcpkg](https://github.com/microsoft/vcpkg) for third-party dependency management. As a result, building the code
+base is really quite straightforward. The process is also basically the same on all platforms.
 
 ### Install Vcpkg
 
-You can install Vcpkg wherever you like, so it helps to set the environment variable `VCPKG_ROOT` to
-the path where you've installed Vcpkg. You can download Vcpkg through `git clone https://github.com/microsoft/vcpkg`. After you've downloaded Vcpkg, install it using the following command in the root of the downloaded repository.
+You can install Vcpkg wherever you like, so it helps to set the environment variable `VCPKG_ROOT` to the path where
+you've installed Vcpkg. You can download Vcpkg through `git clone https://github.com/microsoft/vcpkg`. After you've
+downloaded Vcpkg, install it using the following command in the root of the downloaded repository.
 
 |   OS    | Command                       |
 | :-----: | :---------------------------- |
 | Windows | `.\vcpkg\bootstrap-vcpkg.bat` |
 |  Unix   | `./vcpkg/bootstrap-vcpkg.sh`  |
 
-### Install Tactile triplet files
+### Install Tactile triplet files (Optional)
 
-Then we want to make the custom Tactile triplet files available for use by Vcpkg. All we need to do for this is to copy
-one of the triplet files in the `cmake` folder to `$VCPKG_ROOT/triplets/community`. Which triplet file you should copy
-depends on your operating system and architecture.
+It is not necessary to use the custom Tactile triplet files, but they are available if you'd like to use them. However,
+if you use the triplet files you should be familiar with Vcpkg, and this little tutorial should be unnecessary for you.
+Basically, copy one of the triplet files in the `cmake` folder to `$VCPKG_ROOT/triplets/community`. Which triplet file
+you should copy depends on your operating system and architecture.
 
 ### Build the project
 
-Now, we can generate the build files. You don't have to Ninja, but it is highly recommended. On all operating systems, you should create a separate build directory where all of our generated build files and (later) binaries will end up.
+Now, we can generate the build files. You don't have to use Ninja, but it is highly recommended. On all operating
+systems, you should use a separate build directory where all of our generated build files and (later) binaries will end
+up.
 
 ```bash
 mkdir build
 cd build
 ```
 
-Use the following commands to tell CMake to generate the build files. Note, if you are using an IDE, such as JetBrains CLion, you can specify these CMake parameters in your CMake profile settings so that you can just build the project as per usual. In CLion 2021.2, you'll access these settings in `View -> Tool Windows -> CMake`, and then selecting `CMake Settings`. You can also just search for `CMake Settings` with `Shift+Shift`. Subsequently, in the `CMake Settings` window, add the parameters to the `CMake options` field.
-
-|     OS     | Command                                                       |
-| :--------: | :------------------------------------------------------------ |
-|  Windows   | `cmake .. -DVCPKG_TARGET_TRIPLET=x64-tactile-windows -GNinja` |
-|   Linux    | `cmake .. -DVCPKG_TARGET_TRIPLET=x64-tactile-linux -GNinja`   |
-| macOS (M1) | `cmake .. -DVCPKG_TARGET_TRIPLET=arm64-tactile-osx -GNinja`   |
-
-Finally, all we need to build the entire project is then to invoke Ninja (or whatever generator you use).
+Use the following commands to tell CMake to generate the build files and subsequently build the project. Note, if you
+are using an IDE, such as JetBrains CLion, you can specify CMake parameters in your CMake profile settings so that you
+can just build the project as per usual. In CLion 2021.2, you'll access these settings
+in `View -> Tool Windows -> CMake`, and then selecting `CMake Settings`. You can also just search for `CMake Settings`
+with `Shift+Shift`. Subsequently, in the `CMake Settings` window, add the parameters to the `CMake options` field.
+Specify a custom Vcpkg triplet by providing a `VCPKG_TARGET_TRIPLET` CMake parameter.
 
 ```bash
+cmake .. -GNinja
 ninja
 ```
