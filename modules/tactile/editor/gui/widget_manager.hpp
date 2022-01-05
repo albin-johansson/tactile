@@ -1,8 +1,7 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>
+#include <tactile_def.hpp>
 
 #include "dialogs/resize_map_dialog.hpp"
 #include "layers/layer_dock.hpp"
@@ -37,6 +36,8 @@ class WidgetManager final {
   void ShowChangePropertyTypeDialog(std::string name, PropertyType type);
 
   void ShowResizeMapDialog(usize currentRows, usize currentColumns);
+
+  void ShowComponentEditor(const Model& model);
 
   void SetToolbarVisible(bool visible);
 

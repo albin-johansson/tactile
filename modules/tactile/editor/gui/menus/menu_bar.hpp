@@ -31,6 +31,8 @@ class MenuBar final {
 
   void ShowAddTilesetDialog();
 
+  void ShowComponentEditor(const Model& model);
+
  private:
   FileMenu mFileMenu;
   EditMenu mEditMenu;

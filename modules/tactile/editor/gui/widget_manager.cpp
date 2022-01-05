@@ -90,6 +90,11 @@ void WidgetManager::ShowResizeMapDialog(const usize currentRows,
   mResizeMapDialog.Show(currentRows, currentColumns);
 }
 
+void WidgetManager::ShowComponentEditor(const Model& model)
+{
+  mMenuBar.ShowComponentEditor(model);
+}
+
 void WidgetManager::SetToolbarVisible(const bool visible)
 {
   mToolbar.SetVisible(visible);

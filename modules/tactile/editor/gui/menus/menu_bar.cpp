@@ -47,4 +47,9 @@ void MenuBar::ShowAddTilesetDialog()
   mMapMenu.ShowAddTilesetDialog();
 }
 
+void MenuBar::ShowComponentEditor(const Model& model)
+{
+  mEditMenu.ShowComponentEditor(model);
+}
+
 }  // namespace Tactile

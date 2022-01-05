@@ -92,4 +92,9 @@ void EditMenu::OpenSettingsModal()
   mSettingsDialog.Open();
 }
 
+void EditMenu::ShowComponentEditor(const Model& model)
+{
+  mComponentEditor.Open(model);
+}
+
 }  // namespace Tactile
