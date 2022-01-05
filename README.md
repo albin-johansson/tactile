@@ -33,6 +33,7 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
     * Eraser tool
     * Bucket fill tool
     * ...
+* Components (attachable bundles of attributes, otherwise commonly found in game engines)
 * Tile animations
 * Various editor themes
 * Insightful and helpful error messages when things go wrong, e.g. when parsing corrupted maps
