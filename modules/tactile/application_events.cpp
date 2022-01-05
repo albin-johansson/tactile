@@ -101,7 +101,7 @@ void SubscribeToEvents(App& app)
   app.Connect<RenameComponentAttributeEvent, &App::OnRenameComponentAttribute>();
   app.Connect<DuplicateComponentAttributeEvent, &App::OnDuplicateComponentAttribute>();
   app.Connect<SetComponentAttributeTypeEvent, &App::OnSetComponentAttributeType>();
-  app.Connect<UpdateComponentAttributeEvent, &App::OnUpdateComponentAttribute>();
+  app.Connect<UpdateComponentDefAttributeEvent, &App::OnUpdateComponentDefAttribute>();
   app.Connect<AddComponentEvent, &App::OnAddComponent>();
   app.Connect<UpdateComponentEvent, &App::OnUpdateComponent>();
 

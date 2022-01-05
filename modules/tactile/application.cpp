@@ -706,7 +706,8 @@ void Application::OnSetComponentAttributeType(const SetComponentAttributeTypeEve
   }
 }
 
-void Application::OnUpdateComponentAttribute(const UpdateComponentAttributeEvent& event)
+void Application::OnUpdateComponentDefAttribute(
+    const UpdateComponentDefAttributeEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::SetComponentAttributeValue(*registry, event.id, event.attribute, event.value);

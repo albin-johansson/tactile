@@ -60,7 +60,7 @@ struct SetComponentAttributeTypeEvent final
   PropertyType type{};
 };
 
-struct UpdateComponentAttributeEvent final
+struct UpdateComponentDefAttributeEvent final
 {
   ComponentID id{};
   std::string attribute;

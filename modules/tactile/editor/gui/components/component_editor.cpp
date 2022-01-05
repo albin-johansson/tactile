@@ -199,45 +199,45 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
     case PropertyType::String:
       if (auto updated =
               InputStringWithHint("##DefaultValue", "Empty", value.AsString())) {
-        dispatcher.enqueue<UpdateComponentAttributeEvent>(id, name, std::move(*updated));
+        dispatcher.enqueue<UpdateComponentDefAttributeEvent>(id, name, std::move(*updated));
       }
       break;
 
     case PropertyType::Integer:
       if (auto updated = InputWidget("##DefaultValue", value.AsInt())) {
-        dispatcher.enqueue<UpdateComponentAttributeEvent>(id, name, *updated);
+        dispatcher.enqueue<UpdateComponentDefAttributeEvent>(id, name, *updated);
       }
       break;
 
     case PropertyType::Floating:
       if (auto updated = InputWidget("##DefaultValue", value.AsFloat())) {
-        dispatcher.enqueue<UpdateComponentAttributeEvent>(id, name, *updated);
+        dispatcher.enqueue<UpdateComponentDefAttributeEvent>(id, name, *updated);
       }
       break;
 
     case PropertyType::Boolean: {
       auto checked = value.AsBool();
       if (ImGui::Checkbox("##DefaultValue", &checked)) {
-        dispatcher.enqueue<UpdateComponentAttributeEvent>(id, name, checked);
+        dispatcher.enqueue<UpdateComponentDefAttributeEvent>(id, name, checked);
       }
       break;
     }
     case PropertyType::File:
       if (auto updated = InputFile("##DefaultValue", value.AsFile())) {
-        dispatcher.enqueue<UpdateComponentAttributeEvent>(id, name, std::move(*updated));
+        dispatcher.enqueue<UpdateComponentDefAttributeEvent>(id, name, std::move(*updated));
       }
       break;
 
     case PropertyType::Color:
       if (auto updated = InputWidget("##DefaultValue", value.AsColor())) {
-        dispatcher.enqueue<UpdateComponentAttributeEvent>(id, name, *updated);
+        dispatcher.enqueue<UpdateComponentDefAttributeEvent>(id, name, *updated);
       }
       break;
 
     case PropertyType::Object:
       // TODO
       if (auto updated = InputWidget("##DefaultValue", value.AsObject())) {
-        dispatcher.enqueue<UpdateComponentAttributeEvent>(id, name, *updated);
+        dispatcher.enqueue<UpdateComponentDefAttributeEvent>(id, name, *updated);
       }
       break;
   }
