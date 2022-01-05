@@ -12,6 +12,40 @@
 #include "io/preferences.hpp"
 
 namespace Tactile {
+namespace {
+
+void UpdateWidgetsMenu(const bool hasActiveMap)
+{
+  if (Scoped::Menu menu{"Widgets", hasActiveMap}; menu.IsOpen()) {
+    if (ImGui::MenuItem("Reset Layout")) {
+      ResetLayout();
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem("Properties", nullptr, Prefs::GetShowPropertiesDock())) {
+      Prefs::SetShowPropertiesDock(!Prefs::GetShowPropertiesDock());
+    }
+
+    if (ImGui::MenuItem("Layers", nullptr, Prefs::GetShowLayerDock())) {
+      Prefs::SetShowLayerDock(!Prefs::GetShowLayerDock());
+    }
+
+    if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock())) {
+      Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
+    }
+
+    if (ImGui::MenuItem("Log", nullptr, Prefs::GetShowLogDock())) {
+      Prefs::SetShowLogDock(!Prefs::GetShowLogDock());
+    }
+
+    if (ImGui::MenuItem("Components", nullptr, Prefs::GetShowComponentDock())) {
+      Prefs::SetShowComponentDock(!Prefs::GetShowComponentDock());
+    }
+  }
+}
+
+}  // namespace
 
 void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -94,37 +128,6 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
     if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument)) {
       dispatcher.enqueue<ToggleUiEvent>();
-    }
-  }
-}
-
-void ViewMenu::UpdateWidgetsMenu(const bool hasActiveMap)
-{
-  if (Scoped::Menu menu{"Widgets", hasActiveMap}; menu.IsOpen()) {
-    if (ImGui::MenuItem("Reset Layout")) {
-      ResetLayout();
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem("Properties", nullptr, Prefs::GetShowPropertiesDock())) {
-      Prefs::SetShowPropertiesDock(!Prefs::GetShowPropertiesDock());
-    }
-
-    if (ImGui::MenuItem("Layers", nullptr, Prefs::GetShowLayerDock())) {
-      Prefs::SetShowLayerDock(!Prefs::GetShowLayerDock());
-    }
-
-    if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock())) {
-      Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
-    }
-
-    if (ImGui::MenuItem("Log", nullptr, Prefs::GetShowLogDock())) {
-      Prefs::SetShowLogDock(!Prefs::GetShowLogDock());
-    }
-
-    if (ImGui::MenuItem("Components", nullptr, Prefs::GetShowComponentDock())) {
-      Prefs::SetShowComponentDock(!Prefs::GetShowComponentDock());
     }
   }
 }
