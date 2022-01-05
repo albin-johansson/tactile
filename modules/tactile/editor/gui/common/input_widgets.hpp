@@ -11,6 +11,9 @@
 
 namespace Tactile {
 
+/// General purpose property value input component.
+[[nodiscard]] auto Input(CStr id, const PropertyValue& value) -> Maybe<PropertyValue>;
+
 [[nodiscard]] auto InputWidget(CStr id, int value) -> Maybe<int>;
 
 [[nodiscard]] auto InputWidget(CStr id, float value, float min = 0, float max = 0)

@@ -4,6 +4,7 @@
 
 #include <array>   // array
 #include <limits>  // numeric_limits
+#include <utility>  // move
 
 #include <portable-file-dialogs.h>
 
@@ -13,6 +14,56 @@
 #include "editor/gui/scoped.hpp"
 
 namespace Tactile {
+
+auto Input(const CStr id, const PropertyValue& value) -> Maybe<PropertyValue>
+{
+  switch (value.GetType().value()) {
+    case PropertyType::String: {
+      if (auto updated = InputString(id, value.AsString())) {
+        return std::move(updated);
+      }
+      break;
+    }
+    case PropertyType::Integer: {
+      if (const auto updated = InputWidget(id, value.AsInt())) {
+        return updated;
+      }
+      break;
+    }
+    case PropertyType::Floating: {
+      if (const auto updated = InputWidget(id, value.AsFloat())) {
+        return updated;
+      }
+      break;
+    }
+    case PropertyType::Boolean: {
+      if (const auto updated = InputWidget(id, value.AsBool())) {
+        return updated;
+      }
+      break;
+    }
+    case PropertyType::File: {
+      if (auto updated = InputFile(id, value.AsFile())) {
+        return std::move(updated);
+      }
+      break;
+    }
+    case PropertyType::Color: {
+      if (const auto updated = InputWidget(id, value.AsColor())) {
+        return updated;
+      }
+      break;
+    }
+    case PropertyType::Object: {
+      if (const auto updated = InputWidget(id, value.AsObject())) {
+        return updated;
+      }
+      break;
+    }
+  }
+
+  return nothing;
+}
 
 auto InputWidget(const CStr id, int value) -> Maybe<int>
 {
