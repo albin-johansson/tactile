@@ -3,6 +3,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // pair
+#include <map>          // map
 
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
@@ -43,6 +44,14 @@ void CreateComponentDef(entt::registry& registry, ComponentID id, std::string na
  */
 auto CreateComponentDef(entt::registry& registry, std::string name) -> ComponentID;
 
+struct RemoveComponentDefResult final
+{
+  ComponentID id{};                                   ///< Previous component ID.
+  std::string name;                                   ///< Previous component name.
+  ComponentAttributeMap attributes;                   ///< Removed component attributes.
+  std::map<ContextID, ComponentAttributeMap> values;  ///< Removed context attributes.
+};
+
 /**
  * \brief Deletes a component definition, removing it from all contexts.
  *
@@ -50,8 +59,25 @@ auto CreateComponentDef(entt::registry& registry, std::string name) -> Component
  *
  * \param registry the current document registry.
  * \param id the ID of the component definition that will be deleted.
+ *
+ * \return a snapshot of the removed attributes.
+ *
+ * \see RestoreComponentDef()
  */
-void RemoveComponentDef(entt::registry& registry, ComponentID id);
+auto RemoveComponentDef(entt::registry& registry, ComponentID id)
+    -> RemoveComponentDefResult;
+
+/**
+ * \brief Restores a previously removed component definition.
+ *
+ * \details This function restores a component definition and adds the component to all
+ * contexts that featured the component at the time of removal, with the correct attribute
+ * values.
+ *
+ * \param registry the current document registry.
+ * \param snapshot the cached result of the removal of the component definition.
+ */
+void RestoreComponentDef(entt::registry& registry, RemoveComponentDefResult snapshot);
 
 /**
  * \brief Changes the name of a component definition.
@@ -223,74 +249,84 @@ void SetComponentAttributeValue(entt::registry& registry,
 /// \{
 
 /**
- * \brief Adds a component to an entity.
+ * \brief Adds a component to a context.
  *
- * \pre the entity must be a valid component context.
+ * \pre the context ID must be valid.
  * \pre the component ID must be valid.
- * \pre the entity must not already feature the specified component.
+ * \pre the context must not already feature the component.
  *
  * \param registry the current document registry.
- * \param entity the entity to which the component will be added.
- * \param id the ID of the component type that will be added to the entity.
+ * \param contextId the ID of the context to which the component will be added.
+ * \param componentId the ID of the component type that will be added.
  *
  * \return the created component.
  *
  * \see HasComponent()
  */
-auto AddComponent(entt::registry& registry, entt::entity entity, ComponentID id)
+auto AddComponent(entt::registry& registry, ContextID contextId, ComponentID componentId)
     -> Component&;
 
 /**
- * \brief Removes a component from an entity.
+ * \brief Removes a component from a context.
  *
+ * \pre the context ID must be valid.
  * \pre the component ID must be valid.
- * \pre the entity must feature the component.
+ * \pre the context must feature the component.
  *
  * \param registry the current document registry.
- * \param entity the entity that will have the component removed.
- * \param id the ID of the component that will be removed.
+ * \param contextId the ID of the context that will have the component removed.
+ * \param componentId the ID of the component that will be removed.
  *
  * \see HasComponent()
  */
-void RemoveComponent(entt::registry& registry, entt::entity entity, ComponentID id);
+void RemoveComponent(entt::registry& registry,
+                     ContextID contextId,
+                     ComponentID componentId);
+
+void UpdateComponent(entt::registry& registry,
+                     ContextID contextId,
+                     ComponentID componentId,
+                     std::string_view attribute,
+                     PropertyValue value);
 
 /**
- * \brief Indicates whether an entity holds a specific component.
+ * \brief Indicates whether a context holds a specific component.
  *
  * \param registry the current document registry.
- * \param entity the entity that will be checked.
- * \param id the ID of the component type to check for.
+ * \param contextId the context that will be checked.
+ * \param componentId the ID of the component type to check for.
  *
- * \return `true` if the entity has the component; `false` otherwise.
+ * \return `true` if the context has the component; `false` otherwise.
  */
-[[nodiscard]] auto HasComponent(entt::registry& registry,
-                                entt::entity entity,
-                                ComponentID id) -> bool;
+[[nodiscard]] auto HasComponent(const entt::registry& registry,
+                                ContextID contextId,
+                                ComponentID componentId) -> bool;
 
 /**
- * \brief Returns a component from an entity.
- *
- * \pre the entity must feature a component bundle.
+ * \brief Returns a component from a context.
  *
  * \param registry the current document registry.
- * \param entity the entity that will be queried.
- * \param id the ID of the component type that will be retrieved.
+ * \param contextId the ID of the context that will be queried.
+ * \param componentId the ID of the component type that will be retrieved.
  *
  * \return a reference to the found component.
  *
  * \throws TactileError if there is no match.
  */
 [[nodiscard]] auto GetComponent(const entt::registry& registry,
-                                entt::entity entity,
-                                ComponentID id) -> const Component&;
+                                ContextID contextId,
+                                ComponentID componentId) -> const Component&;
+
+[[nodiscard]] auto GetAttribute(const Component& component, std::string_view attribute)
+    -> const PropertyValue&;
 
 [[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
-                                         entt::entity entity,
-                                         ComponentID id,
+                                         ContextID contextId,
+                                         ComponentID componentId,
                                          std::string_view attribute)
     -> const PropertyValue&;
 
-[[nodiscard]] auto GetComponentCount(const entt::registry& registry, entt::entity entity)
+[[nodiscard]] auto GetComponentCount(const entt::registry& registry, ContextID contextId)
     -> usize;
 
 [[nodiscard]] auto IsComponentNameTaken(const entt::registry& registry,

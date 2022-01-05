@@ -7,6 +7,7 @@
 
 #include "core/components/property_context.hpp"
 #include "core/systems/registry_system.hpp"
+#include "core/systems/property_system.hpp"
 
 using namespace Tactile;
 
@@ -14,11 +15,11 @@ namespace {
 
 constexpr entt::entity null_entity = entt::null;
 
-[[nodiscard]] auto CreateEntityWithBundle(entt::registry& registry) -> entt::entity
+[[nodiscard]] auto CreateContext(entt::registry& registry) -> ContextID
 {
   const auto entity = registry.create();
-  registry.emplace<PropertyContext>(entity);
-  return entity;
+  const auto& context = Sys::AddPropertyContext(registry, entity);
+  return context.id;
 }
 
 }  // namespace
@@ -58,9 +59,9 @@ TEST(ComponentSystem, RemoveComponentDef)
   ASSERT_TRUE(Sys::IsComponentNameTaken(registry, name));
   ASSERT_NE(null_entity, Sys::FindComponentDef(registry, def));
 
-  const auto a = CreateEntityWithBundle(registry);
-  const auto b = CreateEntityWithBundle(registry);
-  const auto c = CreateEntityWithBundle(registry);
+  const auto a = CreateContext(registry);
+  const auto b = CreateContext(registry);
+  const auto c = CreateContext(registry);
 
   Sys::AddComponent(registry, a, def);
   Sys::AddComponent(registry, b, def);
@@ -144,8 +145,8 @@ TEST(ComponentSystem, RemoveComponentAttribute)
   auto registry = Sys::MakeRegistry();
   const auto def = Sys::CreateComponentDef(registry, "Def");
 
-  const auto a = CreateEntityWithBundle(registry);
-  const auto b = CreateEntityWithBundle(registry);
+  const auto a = CreateContext(registry);
+  const auto b = CreateContext(registry);
 
   Sys::AddComponent(registry, a, def);
   Sys::AddComponent(registry, b, def);
@@ -271,7 +272,7 @@ TEST(ComponentSystem, AddComponent)
   Sys::SetComponentAttributeType(registry, def, "Y", PropertyType::Floating);
   Sys::SetComponentAttributeValue(registry, def, "Y", -3.5f);
 
-  const auto entity = CreateEntityWithBundle(registry);
+  const auto entity = CreateContext(registry);
   auto& component = Sys::AddComponent(registry, entity, def);
   ASSERT_EQ(def, component.type);
   ASSERT_EQ(2u, component.values.size());
@@ -286,8 +287,8 @@ TEST(ComponentSystem, HasComponent)
 {
   auto registry = Sys::MakeRegistry();
 
-  const auto a = CreateEntityWithBundle(registry);
-  const auto b = CreateEntityWithBundle(registry);
+  const auto a = CreateContext(registry);
+  const auto b = CreateContext(registry);
 
   const auto def = Sys::CreateComponentDef(registry, "def");
 
@@ -312,7 +313,7 @@ TEST(ComponentSystem, RemoveComponent)
   const auto a = Sys::CreateComponentDef(registry, "A");
   const auto b = Sys::CreateComponentDef(registry, "B");
 
-  const auto entity = CreateEntityWithBundle(registry);
+  const auto entity = CreateContext(registry);
   Sys::AddComponent(registry, entity, a);
   Sys::AddComponent(registry, entity, b);
 
@@ -338,7 +339,7 @@ TEST(ComponentSystem, GetComponent)
   const auto a = Sys::CreateComponentDef(registry, "A");
   const auto b = Sys::CreateComponentDef(registry, "B");
 
-  const auto entity = CreateEntityWithBundle(registry);
+  const auto entity = CreateContext(registry);
   ASSERT_THROW(Sys::GetComponent(registry, entity, a), TactileError);
   ASSERT_THROW(Sys::GetComponent(registry, entity, b), TactileError);
 
