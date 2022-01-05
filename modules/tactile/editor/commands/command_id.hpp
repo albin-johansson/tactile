@@ -42,6 +42,7 @@ struct CommandId final {
     SetObjectVisibility,
 
     CreateComponentDef,
+    RemoveComponentDef,
     RenameComponent,
     CreateComponentDefAttribute,
     SetComponentAttributeType,
