@@ -150,6 +150,7 @@ class Application final {
   void OnChangePropertyType(const ChangePropertyTypeEvent& event);
   void OnSetPropertyContext(const SetPropertyContextEvent& event);
 
+  void OnOpenComponentEditor();
   void OnCreateComponentDef(const CreateComponentDefEvent& event);
   void OnRemoveComponentDef(const RemoveComponentDefEvent& event);
   void OnRenameComponentDef(const RenameComponentDefEvent& event);
@@ -159,6 +160,8 @@ class Application final {
   void OnDuplicateComponentAttribute(const DuplicateComponentAttributeEvent& event);
   void OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event);
   void OnUpdateComponentAttribute(const UpdateComponentAttributeEvent& event);
+  void OnAddComponent(const AddComponentEvent& event);
+  void OnUpdateComponent(const UpdateComponentEvent& event);
 
   void OnToggleUi();
   void OnQuit();

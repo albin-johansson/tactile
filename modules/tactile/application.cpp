@@ -646,26 +646,35 @@ void Application::OnSetPropertyContext(const SetPropertyContextEvent& event)
   }
 }
 
+void Application::OnOpenComponentEditor()
+{
+  mWidgets.ShowComponentEditor(mModel);
+}
+
 void Application::OnCreateComponentDef(const CreateComponentDefEvent& event)
 {
-  Execute<CreateComponentDefCmd>(mModel, event.name);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::CreateComponentDef(*registry, event.name);
+  }
 }
 
 void Application::OnRemoveComponentDef(const RemoveComponentDefEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::RemoveComponentDef(*registry, event.id);
-  }
+  Execute<RemoveComponentDefCmd>(mModel, event.id);
 }
 
 void Application::OnRenameComponentDef(const RenameComponentDefEvent& event)
 {
-  Execute<RenameComponentCmd>(mModel, event.id, event.name);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::RenameComponentDef(*registry, event.id, event.name);
+  }
 }
 
 void Application::OnCreateComponentAttribute(const CreateComponentAttributeEvent& event)
 {
-  Execute<CreateComponentAttributeCmd>(mModel, event.id, event.name);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::CreateComponentAttribute(*registry, event.id, event.name);
+  }
 }
 
 void Application::OnRemoveComponentAttribute(const RemoveComponentAttributeEvent& event)
@@ -677,7 +686,9 @@ void Application::OnRemoveComponentAttribute(const RemoveComponentAttributeEvent
 
 void Application::OnRenameComponentAttribute(const RenameComponentAttributeEvent& event)
 {
-  Execute<RenameComponentAttributeCmd>(mModel, event.id, event.previous, event.updated);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::RenameComponentAttribute(*registry, event.id, event.previous, event.updated);
+  }
 }
 
 void Application::OnDuplicateComponentAttribute(
@@ -690,12 +701,34 @@ void Application::OnDuplicateComponentAttribute(
 
 void Application::OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event)
 {
-  Execute<SetComponentAttributeTypeCmd>(mModel, event.id, event.attribute, event.type);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::SetComponentAttributeType(*registry, event.id, event.attribute, event.type);
+  }
 }
 
 void Application::OnUpdateComponentAttribute(const UpdateComponentAttributeEvent& event)
 {
-  Execute<UpdateComponentAttributeCmd>(mModel, event.id, event.attribute, event.value);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::SetComponentAttributeValue(*registry, event.id, event.attribute, event.value);
+  }
+}
+
+void Application::OnAddComponent(const AddComponentEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::AddComponent(*registry, event.context, event.component);
+  }
+}
+
+void Application::OnUpdateComponent(const UpdateComponentEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::UpdateComponent(*registry,
+                         event.context,
+                         event.component,
+                         event.attribute,
+                         event.value);
+  }
 }
 
 void Application::OnToggleUi()
