@@ -678,9 +678,7 @@ void Application::OnRemoveComponentAttribute(const RemoveComponentAttributeEvent
 
 void Application::OnRenameComponentAttribute(const RenameComponentAttributeEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::RenameComponentAttribute(*registry, event.id, event.previous, event.updated);
-  }
+  Execute<RenameComponentAttributeCmd>(mModel, event.id, event.previous, event.updated);
 }
 
 void Application::OnDuplicateComponentAttribute(
@@ -693,17 +691,13 @@ void Application::OnDuplicateComponentAttribute(
 
 void Application::OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::SetComponentAttributeType(*registry, event.id, event.attribute, event.type);
-  }
+  Execute<SetComponentAttributeTypeCmd>(mModel, event.id, event.attribute, event.type);
 }
 
 void Application::OnUpdateComponentDefAttribute(
     const UpdateComponentDefAttributeEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::SetComponentAttributeValue(*registry, event.id, event.attribute, event.value);
-  }
+  Execute<UpdateComponentAttributeCmd>(mModel, event.id, event.attribute, event.value);
 }
 
 void Application::OnAddComponent(const AddComponentEvent& event)
