@@ -716,9 +716,7 @@ void Application::OnUpdateComponentDefAttribute(
 
 void Application::OnAddComponent(const AddComponentEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::AddComponent(*registry, event.context, event.component);
-  }
+  Execute<AddComponentCmd>(mModel, event.context, event.component);
 }
 
 void Application::OnUpdateComponent(const UpdateComponentEvent& event)

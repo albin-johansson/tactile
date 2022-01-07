@@ -2,6 +2,7 @@
 
 /* Convenience header that includes all other command headers */
 
+#include "components/add_component_cmd.hpp"
 #include "components/create_component_attribute_cmd.hpp"
 #include "components/create_component_def_cmd.hpp"
 #include "components/remove_component_def_cmd.hpp"
