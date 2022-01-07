@@ -454,6 +454,26 @@ void UpdateComponent(entt::registry& registry,
   iter->second = std::move(value);
 }
 
+auto ResetComponent(entt::registry& registry,
+                    const ContextID contextId,
+                    const ComponentID componentId) -> ResetComponentResult
+{
+  TACTILE_ASSERT(HasComponent(registry, contextId, componentId));
+
+  LogDebug("Resetting component '{}' in context '{}'", componentId, contextId);
+
+  const auto& [defEntity, def] = GetComponentDef(registry, componentId);
+  auto& component = GetComponent(registry, contextId, componentId);
+
+  ResetComponentResult result;
+  for (auto& [name, value] : component.values) {
+    result.values[name] = value;
+    value = def.attributes.at(name);
+  }
+
+  return result;
+}
+
 auto HasComponent(const entt::registry& registry,
                   const ContextID contextId,
                   const ComponentID componentId) -> bool

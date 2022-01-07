@@ -102,8 +102,10 @@ void SubscribeToEvents(App& app)
   app.Connect<DuplicateComponentAttributeEvent, &App::OnDuplicateComponentAttribute>();
   app.Connect<SetComponentAttributeTypeEvent, &App::OnSetComponentAttributeType>();
   app.Connect<UpdateComponentDefAttributeEvent, &App::OnUpdateComponentDefAttribute>();
+
   app.Connect<AddComponentEvent, &App::OnAddComponent>();
   app.Connect<UpdateComponentEvent, &App::OnUpdateComponent>();
+  app.Connect<ResetComponentValuesEvent, &App::OnResetComponentValues>();
 
   app.Connect<ToggleUiEvent, &App::OnToggleUi>();
   app.Connect<QuitEvent, &App::OnQuit>();

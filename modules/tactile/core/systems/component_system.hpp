@@ -1,9 +1,9 @@
 #pragma once
 
+#include <map>          // map
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // pair
-#include <map>          // map
 
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
@@ -288,6 +288,27 @@ void UpdateComponent(entt::registry& registry,
                      ComponentID componentId,
                      std::string_view attribute,
                      PropertyValue value);
+
+struct ResetComponentResult final
+{
+  ComponentAttributeMap values;  ///< Previous component values.
+};
+
+/**
+ * \brief Resets the attributes of an attached component to their default values.
+ *
+ * \pre the context ID must be valid.
+ * \pre the component ID must be valid.
+ *
+ * \param registry the current document registry.
+ * \param contextId the context that will be affected.
+ * \param componentId the ID of the component that will be reset.
+ *
+ * \return a snapshot of the previous values of the reset attributes.
+ */
+auto ResetComponent(entt::registry& registry,
+                    ContextID contextId,
+                    ComponentID componentId) -> ResetComponentResult;
 
 /**
  * \brief Indicates whether a context holds a specific component.

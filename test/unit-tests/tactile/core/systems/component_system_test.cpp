@@ -283,6 +283,54 @@ TEST(ComponentSystem, AddComponent)
   ASSERT_THROW(Sys::GetComponentAttribute(registry, entity, def, "foo"), TactileError);
 }
 
+TEST(ComponentSystem, ResetComponent)
+{
+  using namespace std::string_literals;
+
+  auto registry = Sys::MakeRegistry();
+  const auto def = Sys::CreateComponentDef(registry, "Foo");
+
+  Sys::CreateComponentAttribute(registry, def, "A", 42);
+  Sys::CreateComponentAttribute(registry, def, "B", "Boo"s);
+  Sys::CreateComponentAttribute(registry, def, "C", 1.5f);
+
+  const auto a = CreateContext(registry);
+  const auto b = CreateContext(registry);
+
+  Sys::AddComponent(registry, a, def);
+  Sys::AddComponent(registry, b, def);
+
+  Sys::UpdateComponent(registry, b, def, "A", 123);
+  Sys::UpdateComponent(registry, b, def, "B", "Coo"s);
+  Sys::UpdateComponent(registry, b, def, "C", 2.0f);
+
+  ASSERT_TRUE(Sys::HasComponent(registry, a, def));
+  ASSERT_TRUE(Sys::HasComponent(registry, b, def));
+
+  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, a, def, "A").AsInt());
+  ASSERT_EQ(123, Sys::GetComponentAttribute(registry, b, def, "A").AsInt());
+
+  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, a, def, "B").AsString());
+  ASSERT_EQ("Coo", Sys::GetComponentAttribute(registry, b, def, "B").AsString());
+
+  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, a, def, "C").AsFloat());
+  ASSERT_EQ(2.0f, Sys::GetComponentAttribute(registry, b, def, "C").AsFloat());
+
+  Sys::ResetComponent(registry, b, def);
+
+  ASSERT_TRUE(Sys::HasComponent(registry, a, def));
+  ASSERT_TRUE(Sys::HasComponent(registry, b, def));
+
+  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, a, def, "A").AsInt());
+  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, b, def, "A").AsInt());
+
+  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, a, def, "B").AsString());
+  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, b, def, "B").AsString());
+
+  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, a, def, "C").AsFloat());
+  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, b, def, "C").AsFloat());
+}
+
 TEST(ComponentSystem, HasComponent)
 {
   auto registry = Sys::MakeRegistry();

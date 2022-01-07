@@ -732,6 +732,13 @@ void Application::OnUpdateComponent(const UpdateComponentEvent& event)
   }
 }
 
+void Application::OnResetComponentValues(const ResetComponentValuesEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    Sys::ResetComponent(*registry, event.context, event.component);
+  }
+}
+
 void Application::OnToggleUi()
 {
   if (ImGui::GetTopMostPopupModal() != nullptr) {

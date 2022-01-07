@@ -6,6 +6,7 @@
 
 #include "core/utils/texture_manager.hpp"
 #include "editor/events/command_events.hpp"
+#include "editor/events/component_events.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/object_events.hpp"
@@ -14,7 +15,6 @@
 #include "editor/events/save_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
-#include "editor/events/component_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -25,7 +25,8 @@ namespace Tactile {
 class ApplicationConfiguration;
 
 /// Tracks visibility of widgets for the "Toggle UI" feature.
-struct WidgetShowState final {
+struct WidgetShowState final
+{
   bool prev_show_layer_dock{};
   bool prev_show_tileset_dock{};
   bool prev_show_properties_dock{};
@@ -161,8 +162,10 @@ class Application final {
   void OnDuplicateComponentAttribute(const DuplicateComponentAttributeEvent& event);
   void OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event);
   void OnUpdateComponentDefAttribute(const UpdateComponentDefAttributeEvent& event);
+
   void OnAddComponent(const AddComponentEvent& event);
   void OnUpdateComponent(const UpdateComponentEvent& event);
+  void OnResetComponentValues(const ResetComponentValuesEvent& event);
 
   void OnToggleUi();
   void OnQuit();
