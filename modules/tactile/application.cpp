@@ -723,13 +723,11 @@ void Application::OnAddComponent(const AddComponentEvent& event)
 
 void Application::OnUpdateComponent(const UpdateComponentEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::UpdateComponent(*registry,
-                         event.context,
-                         event.component,
-                         event.attribute,
-                         event.value);
-  }
+  Execute<UpdateComponentCmd>(mModel,
+                              event.context,
+                              event.component,
+                              event.attribute,
+                              event.value);
 }
 
 void Application::OnResetComponentValues(const ResetComponentValuesEvent& event)

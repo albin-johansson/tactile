@@ -10,6 +10,7 @@
 #include "components/reset_component_cmd.hpp"
 #include "components/set_component_attribute_type_cmd.hpp"
 #include "components/update_component_attribute_cmd.hpp"
+#include "components/update_component_cmd.hpp"
 #include "layers/add_layer_cmd.hpp"
 #include "layers/duplicate_layer_cmd.hpp"
 #include "layers/move_layer_down_cmd.hpp"
