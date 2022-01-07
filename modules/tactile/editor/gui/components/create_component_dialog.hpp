@@ -12,9 +12,6 @@ class CreateComponentDialog final : public AComponentNameDialog {
 
  protected:
   void OnAccept(entt::dispatcher& dispatcher) override;
-
- private:
-  int mSuffix{1};
 };
 
 }  // namespace Tactile

@@ -2,8 +2,6 @@
 
 #include <string>  // string
 
-#include <fmt/format.h>
-
 #include "editor/events/component_events.hpp"
 
 namespace Tactile {
@@ -16,13 +14,12 @@ CreateComponentDialog::CreateComponentDialog() : AComponentNameDialog{"Create Co
 
 void CreateComponentDialog::Open()
 {
-  Show(fmt::format("Component {}", mSuffix));
+  Show("");
 }
 
 void CreateComponentDialog::OnAccept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<CreateComponentDefEvent>(std::string{GetCurrentInput()});
-  ++mSuffix;
 }
 
 }  // namespace Tactile
