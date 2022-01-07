@@ -36,6 +36,7 @@ class AStringInputDialog : public ADialog {
   CStr mHint{};
   std::string mPrevious;
   std::array<char, 128> mBuffer{};
+  bool mShouldAcquireFocus{};
 };
 
 }  // namespace Tactile

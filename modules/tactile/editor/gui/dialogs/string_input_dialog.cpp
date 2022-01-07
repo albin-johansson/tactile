@@ -13,11 +13,14 @@ AStringInputDialog::AStringInputDialog(const CStr title) : ADialog{title} {}
 
 void AStringInputDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
+  if (mShouldAcquireFocus) {
+    ImGui::SetKeyboardFocusHere();
+    mShouldAcquireFocus = false;
+  }
   ImGui::InputTextWithHint("##AStringInputDialogInput",
                            mHint ? mHint : "",
                            mBuffer.data(),
                            sizeof mBuffer);
-  ImGui::SetItemDefaultFocus();
 }
 
 void AStringInputDialog::SetInputHint(const CStr hint)
@@ -32,6 +35,7 @@ auto AStringInputDialog::IsCurrentInputValid(const Model& model) const -> bool
 
 void AStringInputDialog::Show(std::string previous)
 {
+  mShouldAcquireFocus = true;
   mPrevious = std::move(previous);
   CopyStringIntoBuffer(mBuffer, mPrevious);
   ADialog::Show();
