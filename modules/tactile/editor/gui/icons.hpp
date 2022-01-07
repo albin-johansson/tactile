@@ -1,8 +1,7 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <IconsFontAwesome5.h>
+#include <tactile_def.hpp>
 
 #include "core/utils/texture_manager.hpp"
 

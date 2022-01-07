@@ -3,9 +3,8 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // registry, entity
+#include <tactile_def.hpp>
 
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"

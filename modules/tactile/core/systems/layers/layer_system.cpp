@@ -5,9 +5,8 @@
 #include <utility>    // move, swap
 #include <vector>     // erase
 
-#include <tactile_stdlib.hpp>
-
 #include <fmt/format.h>  // format
+#include <tactile_stdlib.hpp>
 
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"

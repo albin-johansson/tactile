@@ -1,7 +1,6 @@
 #include "layer_dock.hpp"
 
 #include <cassert>  // assert
-#include <cassert>  // assert
 #include <limits>   // numeric_limits
 
 #include <imgui.h>

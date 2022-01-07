@@ -1,8 +1,7 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <SDL.h>
+#include <tactile_def.hpp>
 
 #include "build.hpp"
 

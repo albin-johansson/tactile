@@ -2,8 +2,8 @@
 
 #include <cassert>  // assert
 
-#include "editor/gui/alignment.hpp"
 #include "button.hpp"
+#include "editor/gui/alignment.hpp"
 
 namespace Tactile {
 

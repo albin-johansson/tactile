@@ -1,8 +1,7 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <centurion.hpp>
+#include <tactile_def.hpp>
 
 #include "imgui_context.hpp"
 #include "protobuf_context.hpp"

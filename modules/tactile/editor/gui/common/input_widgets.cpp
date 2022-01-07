@@ -2,8 +2,8 @@
 
 #define NOMINMAX
 
-#include <array>   // array
-#include <limits>  // numeric_limits
+#include <array>    // array
+#include <limits>   // numeric_limits
 #include <utility>  // move
 
 #include <portable-file-dialogs.h>

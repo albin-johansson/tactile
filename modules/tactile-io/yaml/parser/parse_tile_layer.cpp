@@ -4,7 +4,6 @@
 #include <string>     // string
 
 #include <tactile_stdlib.hpp>
-
 #include <yaml-cpp/yaml.h>
 
 #include "io_utils.hpp"

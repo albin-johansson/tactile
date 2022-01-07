@@ -1,12 +1,12 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // entity
+#include <tactile_def.hpp>
 
 namespace Tactile {
 
-struct Map final {
+struct Map final
+{
   usize row_count{};     ///< Total amount of rows.
   usize column_count{};  ///< Total amount of columns.
   int32 tile_width{};    ///< Logical width of all tiles.

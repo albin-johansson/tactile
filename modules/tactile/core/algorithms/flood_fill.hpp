@@ -2,9 +2,8 @@
 
 #include <vector>  // vector
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // registry, entity
+#include <tactile_def.hpp>
 
 #include "core/map_position.hpp"
 

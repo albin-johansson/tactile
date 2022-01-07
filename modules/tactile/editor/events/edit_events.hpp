@@ -2,6 +2,7 @@
 
 namespace Tactile {
 
-struct ShowSettingsEvent final {};
+struct ShowSettingsEvent final
+{};
 
 }  // namespace Tactile

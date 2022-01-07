@@ -2,9 +2,8 @@
 
 #include <filesystem>  // exists
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 #include "io/preferences.hpp"
 #include "load_default_layout.hpp"

@@ -2,9 +2,8 @@
 
 #include <string>  // string
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>
+#include <tactile_def.hpp>
 
 #include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"

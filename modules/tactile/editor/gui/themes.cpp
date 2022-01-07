@@ -9,7 +9,8 @@ constexpr float gAccentOpacity = 0.65f;
 constexpr float gBgOpacity = 0.15f;
 constexpr float gAreaOpacity = 0.40f;
 
-struct ThemeCfg final {
+struct ThemeCfg final
+{
   ImVec4 accent{};
   ImVec4 bg{};
   ImVec4 area{};

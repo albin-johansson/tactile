@@ -18,7 +18,8 @@ struct CanvasInfo;
  *
  * \see `GetRenderInfo()`
  */
-struct RenderInfo final {
+struct RenderInfo final
+{
   Region bounds;           ///< The area of the map that should be rendered.
   cen::FRect bounds_rect;  ///< Same as bounds but as a rectangle.
 

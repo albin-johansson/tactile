@@ -3,9 +3,8 @@
 #include <string>      // string
 #include <utility>     // move
 
-#include <tactile_def.hpp>
-
 #include <nlohmann/json.hpp>  // json
+#include <tactile_def.hpp>
 
 #include "../json_common.hpp"
 #include "parse_layers.hpp"

@@ -2,8 +2,8 @@
 
 #include <entt/entt.hpp>
 
-#include "editor/gui/dialogs/settings_dialog.hpp"
 #include "editor/gui/components/component_editor.hpp"
+#include "editor/gui/dialogs/settings_dialog.hpp"
 
 namespace Tactile {
 

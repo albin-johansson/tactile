@@ -6,7 +6,8 @@
 
 namespace Tactile {
 
-struct Texture final {
+struct Texture final
+{
   uint id{};
   int width{};
   int height{};

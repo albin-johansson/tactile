@@ -3,9 +3,8 @@
 #include <functional>  // less
 #include <map>         // map
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // registry
+#include <tactile_def.hpp>
 
 #include "core/map_position.hpp"
 

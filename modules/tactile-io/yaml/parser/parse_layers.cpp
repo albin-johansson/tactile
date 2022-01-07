@@ -3,7 +3,6 @@
 #include <string>  // string
 
 #include <tactile_def.hpp>
-
 #include <yaml-cpp/yaml.h>
 
 #include "parse_object_layer.hpp"

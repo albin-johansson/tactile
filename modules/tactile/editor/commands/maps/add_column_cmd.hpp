@@ -1,8 +1,7 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // registry
+#include <tactile_def.hpp>
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"

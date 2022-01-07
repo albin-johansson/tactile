@@ -9,7 +9,8 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
-struct MouseInfo final {
+struct MouseInfo final
+{
   float x{};
   float y{};
   MapPosition position_in_map;

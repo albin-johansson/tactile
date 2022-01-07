@@ -3,9 +3,8 @@
 #include <array>        // array
 #include <string_view>  // string_view
 
-#include <tactile_def.hpp>
-
 #include <fmt/format.h>  // format_to_n
+#include <tactile_def.hpp>
 
 namespace Tactile {
 

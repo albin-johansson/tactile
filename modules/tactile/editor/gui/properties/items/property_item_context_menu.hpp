@@ -6,7 +6,8 @@
 
 namespace Tactile {
 
-struct PropertyItemContextMenuState final {
+struct PropertyItemContextMenuState final
+{
   bool show_add_dialog{};
   bool show_rename_dialog{};
   bool show_change_type_dialog{};

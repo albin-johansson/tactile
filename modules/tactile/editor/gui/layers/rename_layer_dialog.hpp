@@ -1,8 +1,7 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>
+#include <tactile_def.hpp>
 
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 

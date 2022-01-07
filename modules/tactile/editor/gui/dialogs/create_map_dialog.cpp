@@ -2,9 +2,8 @@
 
 #include <cassert>  // assert
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 #include "editor/events/map_events.hpp"
 #include "editor/gui/alignment.hpp"

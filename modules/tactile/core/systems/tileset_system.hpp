@@ -1,9 +1,8 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <centurion.hpp>  // irect
 #include <entt/entt.hpp>  // registry, entity
+#include <tactile_def.hpp>
 
 #include "core/components/texture.hpp"
 #include "core/map_position.hpp"

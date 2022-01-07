@@ -2,10 +2,9 @@
 
 #include <array>  // array
 
-#include <tactile_def.hpp>
-
 #include <centurion.hpp>  // color
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 namespace Tactile {
 

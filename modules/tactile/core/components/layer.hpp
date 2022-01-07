@@ -2,23 +2,24 @@
 
 #include <vector>  // vector
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // entity, null
+#include <tactile_def.hpp>
 
 namespace Tactile {
 
 /**
  * \brief Context component that keeps track of the selected layer.
  */
-struct ActiveLayer final {
+struct ActiveLayer final
+{
   entt::entity entity{entt::null};  ///< The currently active layer, can be null.
 };
 
 /**
  * \brief Component used to represent the layer hierarchy.
  */
-struct LayerTreeNode final {
+struct LayerTreeNode final
+{
   usize index{};                       ///< Local index, i.e. relative to tree siblings.
   std::vector<entt::entity> children;  ///< All associated child nodes.
 };
@@ -33,7 +34,8 @@ struct LayerTreeNode final {
  * \see GroupLayer
  * \see ActiveLayer
  */
-struct Layer final {
+struct Layer final
+{
   LayerID id{};         ///< Unique layer ID.
   LayerType type{};     ///< The specific layer type.
   float opacity{1.0f};  ///< Opacity of the layer, in the range [0, 1].
@@ -43,7 +45,8 @@ struct Layer final {
 /**
  * \brief Component that represents plain tile layers.
  */
-struct TileLayer final {
+struct TileLayer final
+{
   TileMatrix matrix;  ///< The associated matrix of tile identifiers.
 };
 
@@ -52,11 +55,13 @@ struct TileLayer final {
  *
  * \see Object
  */
-struct ObjectLayer final {
+struct ObjectLayer final
+{
   std::vector<entt::entity> objects;  ///< The associated object entities.
 };
 
 /// \brief Tag component used to denote group layers.
-struct GroupLayer final {};
+struct GroupLayer final
+{};
 
 }  // namespace Tactile

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>
+#include <tactile_def.hpp>
 
 #include "tileset_tabs.hpp"
 

@@ -2,9 +2,8 @@
 
 struct ImVec2;
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // registry, entity
+#include <tactile_def.hpp>
 
 #include "editor/gui/rendering/render_info.hpp"
 

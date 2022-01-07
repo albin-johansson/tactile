@@ -2,13 +2,13 @@
 
 #include <utility>  // forward
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 namespace Tactile::Scoped {
 
-struct ID final {
+struct ID final
+{
   explicit ID(const void* ptr) { ImGui::PushID(ptr); }
 
   explicit ID(const CStr str) { ImGui::PushID(str); }
@@ -18,7 +18,8 @@ struct ID final {
   ~ID() { ImGui::PopID(); }
 };
 
-struct Disable final {
+struct Disable final
+{
   explicit Disable(const bool disable = true) { ImGui::BeginDisabled(disable); }
 
   ~Disable() { ImGui::EndDisabled(); }

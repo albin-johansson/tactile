@@ -2,10 +2,9 @@
 
 #include <vector>  // vector
 
-#include <tactile_def.hpp>
-
 #include <centurion.hpp>  // milliseconds
 #include <entt/entt.hpp>  // entity
+#include <tactile_def.hpp>
 
 namespace Tactile {
 
@@ -14,7 +13,8 @@ namespace Tactile {
  *
  * \see Animation
  */
-struct AnimationFrame final {
+struct AnimationFrame final
+{
   TileID tile{};
   cen::U32_Millis duration{};
 };
@@ -24,7 +24,8 @@ struct AnimationFrame final {
  *
  * \see AnimationFrame
  */
-struct Animation final {
+struct Animation final
+{
   usize index{};                       ///< Index of the current frame.
   cen::U32_Millis last_update_time{};  ///< When a frame was last changed.
   std::vector<entt::entity> frames;    ///< The associated frames.

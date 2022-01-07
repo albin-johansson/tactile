@@ -2,10 +2,9 @@
 
 #include <cassert>  // assert
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <tactile_def.hpp>
 
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
@@ -20,7 +19,8 @@ namespace {
 
 constexpr uint32 gPreviewOpacity = 100;  // [0, 255]
 
-struct PreviewInfo final {
+struct PreviewInfo final
+{
   ImTextureID texture_id{};
 
   ImVec2 map_pos{};

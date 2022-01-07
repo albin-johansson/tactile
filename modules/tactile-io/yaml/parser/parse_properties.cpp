@@ -7,7 +7,6 @@
 
 #include <tactile_def.hpp>
 #include <tactile_stdlib.hpp>
-
 #include <yaml-cpp/yaml.h>
 
 #include "common_parsing.hpp"

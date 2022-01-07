@@ -1,7 +1,7 @@
 #include "properties_dock.hpp"
 
-#include <utility>  // move
 #include <cassert>  // assert
+#include <utility>  // move
 
 #include <imgui.h>
 

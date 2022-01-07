@@ -11,7 +11,6 @@
 
 #include "directories.hpp"
 #include "logging.hpp"
-
 #include <settings.pb.h>
 
 #define PRINT_FLAG(Name, Mask) \

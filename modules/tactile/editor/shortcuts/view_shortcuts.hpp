@@ -4,7 +4,8 @@
 
 namespace Tactile {
 
-struct CenterViewportShortcut final : AShortcut {
+struct CenterViewportShortcut final : AShortcut
+{
   CenterViewportShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -13,7 +14,8 @@ struct CenterViewportShortcut final : AShortcut {
       -> bool override;
 };
 
-struct DecreaseViewportZoomShortcut final : AShortcut {
+struct DecreaseViewportZoomShortcut final : AShortcut
+{
   DecreaseViewportZoomShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -22,7 +24,8 @@ struct DecreaseViewportZoomShortcut final : AShortcut {
       -> bool override;
 };
 
-struct IncreaseViewportZoomShortcut final : AShortcut {
+struct IncreaseViewportZoomShortcut final : AShortcut
+{
   IncreaseViewportZoomShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -31,7 +34,8 @@ struct IncreaseViewportZoomShortcut final : AShortcut {
       -> bool override;
 };
 
-struct PanUpShortcut final : AShortcut {
+struct PanUpShortcut final : AShortcut
+{
   PanUpShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -40,7 +44,8 @@ struct PanUpShortcut final : AShortcut {
       -> bool override;
 };
 
-struct PanDownShortcut final : AShortcut {
+struct PanDownShortcut final : AShortcut
+{
   PanDownShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -49,7 +54,8 @@ struct PanDownShortcut final : AShortcut {
       -> bool override;
 };
 
-struct PanLeftShortcut final : AShortcut {
+struct PanLeftShortcut final : AShortcut
+{
   PanLeftShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -58,7 +64,8 @@ struct PanLeftShortcut final : AShortcut {
       -> bool override;
 };
 
-struct PanRightShortcut final : AShortcut {
+struct PanRightShortcut final : AShortcut
+{
   PanRightShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
@@ -67,13 +74,15 @@ struct PanRightShortcut final : AShortcut {
       -> bool override;
 };
 
-struct ToggleGridShortcut final : AShortcut {
+struct ToggleGridShortcut final : AShortcut
+{
   ToggleGridShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
 };
 
-struct ToggleUiShortcut final : AShortcut {
+struct ToggleUiShortcut final : AShortcut
+{
   ToggleUiShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;

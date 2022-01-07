@@ -5,10 +5,9 @@
 #include <cstring>    // strcmp
 #include <utility>    // pair, make_pair
 
+#include <imgui.h>
 #include <tactile_def.hpp>
 #include <tactile_stdlib.hpp>
-
-#include <imgui.h>
 
 #include "editor/gui/scoped.hpp"
 

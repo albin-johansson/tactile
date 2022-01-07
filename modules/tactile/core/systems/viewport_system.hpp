@@ -7,7 +7,8 @@ namespace Tactile::Sys {
 /// \name Viewport system
 /// \{
 
-struct ViewportScalingRatio final {
+struct ViewportScalingRatio final
+{
   float x{};
   float y{};
 };

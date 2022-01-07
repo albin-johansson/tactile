@@ -1,31 +1,29 @@
 # Tactile IO
 
-This module contains the source code for the Tactile "IO" framework, which is built as a standalone
-shared library. The idea is that this library can be used by applications that want to either parse
-or emit Tactile (or Tiled) map files.
+This module contains the source code for the Tactile "IO" framework, which is built as a standalone shared library. The
+idea is that this library can be used by applications that want to either parse or emit Tactile (or Tiled) map files.
 
 ## Design
 
-This library has been designed with ABI stability in mind, so the exported APIs do not make use of
-any STL types (except for inline convenience functions). Subsequently, the IR types are only
-forward-declared and only used by reference, to keep their definitions hidden in client code.
-Overall, this arguably has a negative effect on the elegance of the APIs, but it is unfortunately
-necessary to guarantee ABI stability.
+This library has been designed with ABI stability in mind, so the exported APIs do not make use of any STL types (except
+for inline convenience functions). Subsequently, the IR types are only forward-declared and only used by reference, to
+keep their definitions hidden in client code. Overall, this arguably has a negative effect on the elegance of the APIs,
+but it is unfortunately necessary to guarantee ABI stability.
 
 ## Installation
 
-In order to make use of this library in an external application, you will need to include the public
-headers, located in the `include` folder. Furthermore, you will need to include the Tactile base
-headers, which are provided in the `tactile-base` "module".
+In order to make use of this library in an external application, you will need to include the public headers, located in
+the `include` folder. Furthermore, you will need to include the Tactile base headers, which are provided in
+the `tactile-base` "module".
 
-After you've copied the public headers, you'll need to download the runtime binaries, which are
-included in official Tactile releases. You can find the latest release
+After you've copied the public headers, you'll need to download the runtime binaries, which are included in official
+Tactile releases. You can find the latest release
 [here](https://github.com/albin-johansson/tactile/releases).
 
 ## Usage
 
-Once you've managed to successfully install the library, you'll be able to parse and emit maps as in
-the following example.
+Once you've managed to successfully install the library, you'll be able to parse and emit maps as in the following
+example.
 
 ```C++
 #include <tactile-io/tactile_io.hpp>    // Includes all public Tactile IO headers 

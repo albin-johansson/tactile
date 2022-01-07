@@ -16,13 +16,15 @@
 
 namespace Tactile::Sys {
 
-struct PropertyContextSnapshot final {
+struct PropertyContextSnapshot final
+{
   ContextID id;
   std::string name;
   std::map<std::string, PropertyValue, std::less<>> properties;
 };
 
-struct TilesetSnapshot final {
+struct TilesetSnapshot final
+{
   Tileset core;
   TilesetSelection selection;
   Texture texture;
@@ -30,12 +32,14 @@ struct TilesetSnapshot final {
   PropertyContextSnapshot context;
 };
 
-struct ObjectSnapshot final {
+struct ObjectSnapshot final
+{
   Object core;
   PropertyContextSnapshot context;
 };
 
-struct LayerSnapshot final {
+struct LayerSnapshot final
+{
   usize index{};
   Layer core;
   PropertyContextSnapshot context;

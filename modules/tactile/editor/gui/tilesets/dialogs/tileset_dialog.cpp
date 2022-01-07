@@ -3,10 +3,9 @@
 #include <array>       // array
 #include <filesystem>  // path
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
 #include <portable-file-dialogs.h>
+#include <tactile_def.hpp>
 
 #include "core/utils/buffer_utils.hpp"
 #include "editor/events/tileset_events.hpp"

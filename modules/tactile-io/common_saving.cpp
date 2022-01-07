@@ -2,9 +2,8 @@
 
 #include <filesystem>  // relative
 
-#include <tactile_stdlib.hpp>
-
 #include <fmt/format.h>  // format
+#include <tactile_stdlib.hpp>
 
 namespace Tactile::IO {
 

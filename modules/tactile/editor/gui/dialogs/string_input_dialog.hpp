@@ -4,9 +4,8 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>
+#include <tactile_def.hpp>
 
 #include "dialog.hpp"
 

@@ -4,7 +4,6 @@
 #include <variant>  // get
 
 #include <tactile_def.hpp>
-
 #include <yaml-cpp/yaml.h>
 
 #include "emit.hpp"

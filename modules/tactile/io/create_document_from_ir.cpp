@@ -3,10 +3,9 @@
 #include <algorithm>  // sort
 #include <cstring>    // strcmp
 
-#include <tactile_stdlib.hpp>
-
 #include <entt/entt.hpp>  // registry
 #include <fmt/format.h>   // format
+#include <tactile_stdlib.hpp>
 
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"

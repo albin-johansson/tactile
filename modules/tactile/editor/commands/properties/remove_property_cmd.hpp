@@ -2,9 +2,8 @@
 
 #include <string>  // string
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // registry
+#include <tactile_def.hpp>
 
 #include "core/property_value.hpp"
 #include "editor/commands/command.hpp"

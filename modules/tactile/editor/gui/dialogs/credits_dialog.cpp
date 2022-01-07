@@ -1,8 +1,7 @@
 #include "credits_dialog.hpp"
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/scoped.hpp"

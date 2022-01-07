@@ -1,10 +1,9 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include <SDL.h>
 #include <centurion.hpp>  // scan_code, key_mod, keyboard_event
 #include <entt/entt.hpp>  // dispatcher
+#include <tactile_def.hpp>
 
 namespace Tactile {
 

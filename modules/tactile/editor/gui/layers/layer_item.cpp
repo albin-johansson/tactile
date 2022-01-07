@@ -1,8 +1,7 @@
 #include "layer_item.hpp"
 
-#include <tactile_def.hpp>
-
 #include <imgui.h>
+#include <tactile_def.hpp>
 
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"

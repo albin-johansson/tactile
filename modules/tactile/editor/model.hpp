@@ -3,9 +3,8 @@
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // registry
+#include <tactile_def.hpp>
 
 #include "core/utils/vector_map.hpp"
 #include "document.hpp"

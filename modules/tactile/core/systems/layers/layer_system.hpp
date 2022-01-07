@@ -2,9 +2,8 @@
 
 #include <string>  // string
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // registry, entity, null
+#include <tactile_def.hpp>
 
 #include "core/map.hpp"
 #include "core/systems/snapshot.hpp"

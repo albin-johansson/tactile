@@ -2,6 +2,7 @@
 
 namespace Tactile {
 
-struct ToggleUiEvent final {};
+struct ToggleUiEvent final
+{};
 
 }  // namespace Tactile

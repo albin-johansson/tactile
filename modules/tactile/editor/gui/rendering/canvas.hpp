@@ -13,7 +13,8 @@ namespace Tactile {
  * \see `GetCanvasInfo()`
  * \see `ClearBackground()`
  */
-struct CanvasInfo final {
+struct CanvasInfo final
+{
   ImVec2 size{};
   ImVec2 tl{};  /// Top-left
   ImVec2 br{};  /// Bottom-right

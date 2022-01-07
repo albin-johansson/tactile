@@ -48,7 +48,8 @@ void DeleteMap(Map* map) noexcept;
  *
  * \see `MapPtr`
  */
-struct TACTILE_IO_API MapDeleter final {
+struct TACTILE_IO_API MapDeleter final
+{
   void operator()(Map* map) noexcept { DeleteMap(map); }
 };
 

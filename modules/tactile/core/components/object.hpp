@@ -2,9 +2,8 @@
 
 #include <string>  // string
 
-#include <tactile_def.hpp>
-
 #include <entt/entt.hpp>  // entity, null
+#include <tactile_def.hpp>
 
 namespace Tactile {
 
@@ -14,7 +13,8 @@ namespace Tactile {
  * \see ActiveObject
  * \see ObjectDragInfo
  */
-struct Object final {
+struct Object final
+{
   ObjectID id{};      ///< Unique object identifier.
   float x{};          ///< X-coordinate.
   float y{};          ///< Y-coordinate.
@@ -28,7 +28,8 @@ struct Object final {
 /**
  * \brief Context component pointing to the currently active object entity.
  */
-struct ActiveObject final {
+struct ActiveObject final
+{
   entt::entity entity{entt::null};  ///< The currently active object (possibly null).
 };
 
@@ -37,7 +38,8 @@ struct ActiveObject final {
  *
  * \see Object
  */
-struct ObjectDragInfo final {
+struct ObjectDragInfo final
+{
   float origin_object_x{};  ///< Object X-coordinate at the drag start.
   float origin_object_y{};  ///< Object Y-coordinate at the drag start.
   float last_mouse_x{};     ///< Mouse viewport x-coordinate at last update.

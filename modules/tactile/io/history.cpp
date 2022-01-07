@@ -11,7 +11,6 @@
 
 #include "directories.hpp"
 #include "logging.hpp"
-
 #include <history.pb.h>
 
 namespace Tactile {

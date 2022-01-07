@@ -2,9 +2,8 @@
 
 #include <filesystem>  // path
 
-#include <tactile_stdlib.hpp>
-
 #include <GL/glew.h>
+#include <tactile_stdlib.hpp>
 
 namespace Tactile {
 

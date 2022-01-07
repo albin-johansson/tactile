@@ -9,49 +9,60 @@ namespace Tactile {
 /// \addtogroup events
 /// \{
 
-struct AddLayerEvent final {
+struct AddLayerEvent final
+{
   LayerType type;
 };
 
-struct RemoveLayerEvent final {
+struct RemoveLayerEvent final
+{
   LayerID id;
 };
 
-struct DuplicateLayerEvent final {
+struct DuplicateLayerEvent final
+{
   LayerID id;
 };
 
-struct SelectLayerEvent final {
+struct SelectLayerEvent final
+{
   LayerID id;
 };
 
-struct MoveLayerUpEvent final {
+struct MoveLayerUpEvent final
+{
   LayerID id;
 };
 
-struct MoveLayerDownEvent final {
+struct MoveLayerDownEvent final
+{
   LayerID id;
 };
 
-struct SetLayerOpacityEvent final {
+struct SetLayerOpacityEvent final
+{
   LayerID id;
   float opacity{};
 };
 
-struct SetLayerVisibleEvent final {
+struct SetLayerVisibleEvent final
+{
   LayerID id;
   bool visible{};
 };
 
-struct ShowLayerPropertiesEvent final {
+struct ShowLayerPropertiesEvent final
+{
   LayerID id;
 };
 
-struct OpenRenameLayerDialogEvent final {
+struct OpenRenameLayerDialogEvent final
+{
   LayerID id;
 };
 
-struct RenameLayerEvent final {
+struct RenameLayerEvent final
+{
   LayerID id;
   std::string name;
 };
