@@ -19,7 +19,7 @@ auto Input(const CStr id, const PropertyValue& value) -> Maybe<PropertyValue>
 {
   switch (value.GetType().value()) {
     case PropertyType::String: {
-      if (auto updated = InputString(id, value.AsString())) {
+      if (auto updated = InputStringWithHint(id, "Empty", value.AsString())) {
         return std::move(updated);
       }
       break;
