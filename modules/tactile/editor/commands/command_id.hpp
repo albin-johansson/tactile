@@ -5,7 +5,8 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-struct CommandId final {
+struct CommandId final
+{
   enum Value {
     AddRow,
     AddColumn,
@@ -44,9 +45,11 @@ struct CommandId final {
     CreateComponentDef,
     RemoveComponentDef,
     RenameComponent,
+
     CreateComponentDefAttribute,
-    SetComponentAttributeType,
+    RemoveComponentAttribute,
     RenameComponentAttribute,
+    SetComponentAttributeType,
     UpdateComponentAttribute,
 
     AddComponent,
