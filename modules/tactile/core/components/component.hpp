@@ -12,9 +12,6 @@
 
 namespace Tactile {
 
-/// Identifier for component definition types (not persistent).
-using ComponentID = int32;
-
 using ComponentAttributeMap = std::map<std::string, PropertyValue, std::less<>>;
 
 /**
@@ -27,7 +24,8 @@ using ComponentAttributeMap = std::map<std::string, PropertyValue, std::less<>>;
  *
  * \todo Should it be possible to import component definitions from existing maps?
  */
-struct ComponentDef final {
+struct ComponentDef final
+{
   ComponentID id{};  ///< Unique ID for the component definition.
   std::string name;  ///< The human-readable component name, also unique.
   ComponentAttributeMap attributes;

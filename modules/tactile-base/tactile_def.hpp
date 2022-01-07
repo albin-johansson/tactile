@@ -42,8 +42,11 @@ using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
 
-// General ID used to identify different property contexts (not persistent)
+/// Identifier for property contexts (not persistent).
 using ContextID = int32;
+
+/// Identifier for component definition types (not persistent).
+using ComponentID = int32;
 
 using MapID = int32;
 using TilesetID = int32;
