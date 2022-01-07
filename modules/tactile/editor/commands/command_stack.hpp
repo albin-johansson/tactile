@@ -89,15 +89,15 @@ class CommandStack final {
 
     RemoveCommandsAfterCurrentIndex();
 
-    auto cmd = std::make_unique<T>(std::forward<Args>(args)...);
-    cmd->Redo();
+    T cmd{std::forward<Args>(args)...};
+    cmd.Redo();
 
     /* If the stack is empty, we simply push the command to the stack. However,
        if there are commands on the stack, we try to merge the command into the
        top of the stack and if that succeeds we discard the command. */
-    if (mStack.empty() || !mStack.back()->MergeWith(*cmd)) {
+    if (mStack.empty() || !mStack.back()->MergeWith(cmd)) {
       mIndex = mIndex ? *mIndex + 1 : 0;
-      mStack.push_back(std::move(cmd));
+      mStack.push_back(std::make_unique<T>(std::move(cmd)));
     }
     else if (!mStack.empty()) {
       /* If we get here, the command was merged into the top-most command */
