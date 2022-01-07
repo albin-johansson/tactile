@@ -17,10 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
-      - name: Update packages
-        shell: bash
-        run: brew update
-
       - name: Install CMake
         shell: bash
         run: brew install cmake
