@@ -51,6 +51,7 @@ struct CommandId final
     RenameComponentAttribute,
     SetComponentAttributeType,
     UpdateComponentAttribute,
+    DuplicateComponentAttribute,
 
     AddComponent,
     UpdateComponent,

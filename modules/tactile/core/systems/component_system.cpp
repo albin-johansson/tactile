@@ -6,11 +6,10 @@
 #include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
-#include "logging.hpp"
-#include "throw.hpp"
-
 #include "core/components/property_context.hpp"
+#include "logging.hpp"
 #include "property_system.hpp"
+#include "throw.hpp"
 
 namespace Tactile::Sys {
 namespace {
@@ -316,9 +315,9 @@ void RenameComponentAttribute(entt::registry& registry,
   def.attributes[std::move(updated)] = std::move(value);
 }
 
-void DuplicateComponentAttribute(entt::registry& registry,
+auto DuplicateComponentAttribute(entt::registry& registry,
                                  const ComponentID id,
-                                 const std::string_view attribute)
+                                 const std::string_view attribute) -> std::string
 {
   LogDebug("Duplicating attribute '{}' in component '{}'", attribute, id);
 
@@ -332,7 +331,9 @@ void DuplicateComponentAttribute(entt::registry& registry,
     ++suffix;
   } while (IsComponentAttributeNameTaken(registry, id, candidateName));
 
-  def.attributes[std::move(candidateName)] = iter->second;
+  def.attributes[candidateName] = iter->second;
+
+  return candidateName;
 }
 
 void SetComponentAttributeType(entt::registry& registry,

@@ -122,6 +122,8 @@ set(SOURCE_FILES
     editor/commands/components/create_component_attribute_cmd.hpp
     editor/commands/components/create_component_def_cmd.cpp
     editor/commands/components/create_component_def_cmd.hpp
+    editor/commands/components/duplicate_component_attribute_cmd.cpp
+    editor/commands/components/duplicate_component_attribute_cmd.hpp
     editor/commands/components/remove_component_attribute_cmd.cpp
     editor/commands/components/remove_component_attribute_cmd.hpp
     editor/commands/components/remove_component_def_cmd.cpp

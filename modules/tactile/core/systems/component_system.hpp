@@ -179,9 +179,9 @@ void RenameComponentAttribute(entt::registry& registry,
                               const std::string& current,
                               std::string updated);
 
-void DuplicateComponentAttribute(entt::registry& registry,
+auto DuplicateComponentAttribute(entt::registry& registry,
                                  ComponentID id,
-                                 std::string_view attribute);
+                                 std::string_view attribute) -> std::string;
 
 /**
  * \brief Sets the type of a component attribute.
