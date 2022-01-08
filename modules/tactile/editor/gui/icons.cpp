@@ -5,6 +5,8 @@
 #include <GL/glew.h>
 #include <tactile_stdlib.hpp>
 
+#include "throw.hpp"
+
 namespace Tactile {
 
 Icons::Icons(TextureManager& textures)
@@ -24,7 +26,7 @@ auto Icons::GetIcon(const LayerType type) const -> CStr
       return TAC_ICON_GROUP_LAYER;
 
     default:
-      throw TactileError{"Failed to recognize layer type!"};
+      ThrowTraced(TactileError{"Failed to recognize layer type!"});
   }
 }
 

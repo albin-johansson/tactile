@@ -10,6 +10,7 @@
 #include <tactile_stdlib.hpp>
 
 #include "editor/gui/scoped.hpp"
+#include "throw.hpp"
 
 namespace Tactile {
 namespace {
@@ -33,7 +34,7 @@ constexpr std::array gItems{std::make_pair("string", PropertyType::String),
     return static_cast<usize>(it - gItems.begin());
   }
   else {
-    throw TactileError{"Invalid property type!"};
+    ThrowTraced(TactileError{"Invalid property type!"});
   }
 }
 

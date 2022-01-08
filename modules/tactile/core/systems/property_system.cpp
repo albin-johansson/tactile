@@ -6,6 +6,8 @@
 
 #include <tactile_stdlib.hpp>
 
+#include "throw.hpp"
+
 namespace Tactile::Sys {
 namespace {
 
@@ -180,7 +182,7 @@ auto GetContext(entt::registry& registry, const ContextID id) -> PropertyContext
     }
   }
 
-  throw TactileError{"No matching property context!"};
+  ThrowTraced(TactileError{"No matching property context!"});
 }
 
 auto GetContext(const entt::registry& registry, const ContextID id)
@@ -196,7 +198,7 @@ auto GetContext(const entt::registry& registry, const ContextID id)
     }
   }
 
-  throw TactileError{"No matching property context!"};
+  ThrowTraced(TactileError{"No matching property context!"});
 }
 
 auto GetCurrentContextId(const entt::registry& registry) -> ContextID
@@ -228,7 +230,7 @@ auto GetProperty(const entt::registry& registry,
     return registry.get<Property>(entity);
   }
   else {
-    throw TactileError{"Found no property with the specified name!"};
+    ThrowTraced(TactileError{"Found no property with the specified name!"});
   }
 }
 

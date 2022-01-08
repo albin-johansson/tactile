@@ -9,6 +9,8 @@
 #include <tactile_def.hpp>
 #include <tactile_stdlib.hpp>
 
+#include "throw.hpp"
+
 namespace Tactile {
 
 template <typename K, typename V>
@@ -45,7 +47,7 @@ class VectorMap final {
       return mData.emplace_back(std::move(key), mapped_type{std::forward<Args>(args)...});
     }
     else {
-      throw TactileError{"Duplicate key!"};
+      ThrowTraced(TactileError{"Duplicate key!"});
     }
   }
 
@@ -120,7 +122,7 @@ class VectorMap final {
       return it->second;
     }
     else {
-      throw TactileError{"Invalid key!"};
+      ThrowTraced(TactileError{"Invalid key!"});
     }
   }
 
@@ -131,7 +133,7 @@ class VectorMap final {
       return it->second;
     }
     else {
-      throw TactileError{"Invalid key!"};
+      ThrowTraced(TactileError{"Invalid key!"});
     }
   }
 
@@ -141,7 +143,7 @@ class VectorMap final {
       return mData.at(index);
     }
     else {
-      throw TactileError{"Invalid index!"};
+      ThrowTraced(TactileError{"Invalid index!"});
     }
   }
 
@@ -151,7 +153,7 @@ class VectorMap final {
       return mData.at(index);
     }
     else {
-      throw TactileError{"Invalid index!"};
+      ThrowTraced(TactileError{"Invalid index!"});
     }
   }
 

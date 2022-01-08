@@ -11,6 +11,7 @@
 #include "build.hpp"
 #include "io/preferences.hpp"
 #include "logging.hpp"
+#include "throw.hpp"
 
 namespace Tactile {
 namespace {
@@ -53,7 +54,7 @@ ApplicationConfiguration::ApplicationConfiguration()
 
   if (glewInit() != GLEW_OK) {
     LogError("Failed to initialize GLEW!");
-    throw TactileError{"Failed to initialize GLEW!"};
+    ThrowTraced(TactileError{"Failed to initialize GLEW!"});
   }
 
   LogDebug("OpenGL version... {}", glGetString(GL_VERSION));
