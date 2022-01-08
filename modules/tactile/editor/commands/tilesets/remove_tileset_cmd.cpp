@@ -1,7 +1,6 @@
 #include "remove_tileset_cmd.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/systems/tileset_system.hpp"
 
 namespace Tactile {
@@ -24,7 +23,7 @@ void RemoveTilesetCmd::Undo()
 void RemoveTilesetCmd::Redo()
 {
   const auto entity = Sys::FindTileset(mRegistry, mTilesetId);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   mSnapshot = Sys::CopyTileset(mRegistry, entity);
   Sys::RemoveTileset(mRegistry, mTilesetId);

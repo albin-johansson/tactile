@@ -1,7 +1,6 @@
 #include "tile_layer_system.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/components/layer.hpp"
 
 namespace Tactile::Sys {
@@ -11,8 +10,8 @@ void SetTileInLayer(entt::registry& registry,
                     const MapPosition& position,
                     const TileID tile)
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<TileLayer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
 
   auto& layer = registry.get<TileLayer>(entity);
   layer.matrix.at(position.GetRowIndex()).at(position.GetColumnIndex()) = tile;
@@ -22,13 +21,13 @@ void SetTilesInLayer(entt::registry& registry,
                      const entt::entity entity,
                      const TileCache& tiles)
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<TileLayer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
 
   auto& matrix = registry.get<TileLayer>(entity).matrix;
   for (const auto& [position, tile] : tiles) {
-    assert(position.GetRowIndex() < matrix.size());
-    assert(position.GetColumnIndex() < matrix.front().size());
+    TACTILE_ASSERT(position.GetRowIndex() < matrix.size());
+    TACTILE_ASSERT(position.GetColumnIndex() < matrix.front().size());
     matrix[position.GetRowIndex()][position.GetColumnIndex()] = tile;
   }
 }

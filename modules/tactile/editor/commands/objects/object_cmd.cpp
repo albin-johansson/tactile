@@ -1,8 +1,8 @@
 #include "object_cmd.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
+#include "assert.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/object_system.hpp"
@@ -20,7 +20,7 @@ auto AObjectCmd::GetTargetObjectContext() const -> PropertyContext&
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindObject(registry, mObjectId);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   return registry.get<PropertyContext>(entity);
 }
@@ -30,7 +30,7 @@ auto AObjectCmd::GetTargetObject() -> Object&
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindObject(registry, mObjectId);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   return registry.get<Object>(entity);
 }

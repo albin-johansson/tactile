@@ -1,8 +1,8 @@
 #include "layer_tree_system.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // swap
 
+#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 
@@ -11,8 +11,8 @@ namespace {
 
 void SwapIndices(entt::registry& registry, const entt::entity a, const entt::entity b)
 {
-  assert(a != entt::null);
-  assert(b != entt::null);
+  TACTILE_ASSERT(a != entt::null);
+  TACTILE_ASSERT(b != entt::null);
 
   auto& fst = registry.get<LayerTreeNode>(a);
   auto& snd = registry.get<LayerTreeNode>(b);
@@ -123,8 +123,8 @@ void DecrementIndicesOfSiblingsBelow(entt::registry& registry, const entt::entit
 
 void DestroyNode(entt::registry& registry, const entt::entity entity)
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
 
   /* Fix indices of siblings that are below the removed layer */
   DecrementIndicesOfSiblingsBelow(registry, entity);
@@ -146,40 +146,40 @@ void DestroyNode(entt::registry& registry, const entt::entity entity)
 
 void MoveNodeUp(entt::registry& registry, const entt::entity entity)
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
-  assert(CanMoveNodeUp(registry, entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(CanMoveNodeUp(registry, entity));
 
   const auto target = GetSiblingAbove(registry, entity);
-  assert(target != entt::null);
+  TACTILE_ASSERT(target != entt::null);
 
   SwapIndices(registry, entity, target);
 }
 
 void MoveNodeDown(entt::registry& registry, const entt::entity entity)
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
-  assert(CanMoveNodeDown(registry, entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(CanMoveNodeDown(registry, entity));
 
   const auto target = GetSiblingBelow(registry, entity);
-  assert(target != entt::null);
+  TACTILE_ASSERT(target != entt::null);
 
   SwapIndices(registry, entity, target);
 }
 
 auto CanMoveNodeUp(const entt::registry& registry, const entt::entity entity) -> bool
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
 
   return registry.get<LayerTreeNode>(entity).index > 0u;
 }
 
 auto CanMoveNodeDown(const entt::registry& registry, const entt::entity entity) -> bool
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
 
   const auto index = registry.get<LayerTreeNode>(entity).index;
   const auto nSiblings = GetSiblingCount(registry, entity);
@@ -191,10 +191,10 @@ auto IsChildNode(const entt::registry& registry,
                  const entt::entity parent,
                  const entt::entity entity) -> bool
 {
-  assert(parent != entt::null);
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(parent));
-  assert(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(parent != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(parent));
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
 
   for (const auto child : registry.get<LayerTreeNode>(parent).children) {
     if (child == entity) {
@@ -211,8 +211,8 @@ auto IsChildNode(const entt::registry& registry,
 auto GetSiblingAbove(const entt::registry& registry, const entt::entity entity)
     -> entt::entity
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
 
   const auto index = registry.get<LayerTreeNode>(entity).index;
   if (index != 0u) {
@@ -226,8 +226,8 @@ auto GetSiblingAbove(const entt::registry& registry, const entt::entity entity)
 auto GetSiblingBelow(const entt::registry& registry, const entt::entity entity)
     -> entt::entity
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
 
   const auto index = registry.get<LayerTreeNode>(entity).index;
   return GetSibling(registry, entity, index + 1u);
@@ -235,8 +235,8 @@ auto GetSiblingBelow(const entt::registry& registry, const entt::entity entity)
 
 auto GetSiblingCount(const entt::registry& registry, const entt::entity entity) -> usize
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<Parent>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<Parent>(entity));
 
   const auto& parent = registry.get<Parent>(entity);
 
@@ -260,8 +260,8 @@ auto GetSiblingCount(const entt::registry& registry, const entt::entity entity) 
 
 auto GetChildrenCount(const entt::registry& registry, const entt::entity entity) -> usize
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
 
   const auto& node = registry.get<LayerTreeNode>(entity);
   auto count = node.children.size();
@@ -275,9 +275,9 @@ auto GetChildrenCount(const entt::registry& registry, const entt::entity entity)
 
 auto GetGlobalIndex(const entt::registry& registry, const entt::entity entity) -> usize
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
-  assert(registry.all_of<Parent>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(registry.all_of<Parent>(entity));
 
   const auto& node = registry.get<LayerTreeNode>(entity);
   const auto& parent = registry.get<Parent>(entity);

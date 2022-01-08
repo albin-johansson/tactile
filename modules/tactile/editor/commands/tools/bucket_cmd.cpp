@@ -1,7 +1,6 @@
 #include "bucket_cmd.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/algorithms/flood_fill.hpp"
 #include "core/components/layer.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -24,8 +23,8 @@ void BucketCmd::Undo()
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindLayer(registry, mLayer);
-  assert(entity != entt::null);
-  assert(registry.all_of<TileLayer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
 
   const auto target = mTarget.value();
   auto& layer = registry.get<TileLayer>(entity);
@@ -42,8 +41,8 @@ void BucketCmd::Redo()
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindLayer(registry, mLayer);
-  assert(entity != entt::null);
-  assert(registry.all_of<TileLayer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
 
   mTarget = Sys::GetTileFromLayer(registry, entity, mOrigin);
   Flood(registry, entity, mOrigin, mReplacement, mPositions);

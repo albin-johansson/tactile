@@ -1,7 +1,6 @@
 #include "remove_layer_cmd.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 
 namespace Tactile {
@@ -20,7 +19,7 @@ void RemoveLayerCmd::Undo()
 void RemoveLayerCmd::Redo()
 {
   const auto entity = Sys::FindLayer(mRegistry, mLayerId);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   mLayerSnapshot = Sys::CopyLayer(mRegistry, entity);
   Sys::RemoveLayer(mRegistry, entity);

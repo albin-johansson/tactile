@@ -1,9 +1,10 @@
 #pragma once
 
-#include <cassert>     // assert
 #include <filesystem>  // path
 
 #include <tactile_io.hpp>
+
+#include "assert.hpp"
 
 namespace Tactile {
 
@@ -54,7 +55,7 @@ class MapParser final {
    */
   [[nodiscard]] auto GetData() const noexcept -> const IO::Map&
   {
-    assert(mData);
+    TACTILE_ASSERT(mData);
     return *mData;
   }
 

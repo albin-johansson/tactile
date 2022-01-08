@@ -1,8 +1,8 @@
 #include "alignment.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui_internal.h>
+
+#include "assert.hpp"
 
 namespace Tactile {
 
@@ -53,7 +53,7 @@ auto AlignNextItemToTheRight(const CStr text) -> float
 
 auto GetStandardComponentWidth(const char* text) -> float
 {
-  assert(text);
+  TACTILE_ASSERT(text);
   return ImGui::CalcTextSize(text).x + (ImGui::GetStyle().FramePadding.x * 2.0f);
 }
 

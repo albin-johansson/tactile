@@ -1,6 +1,5 @@
 #include "add_property_cmd.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
 #include "core/systems/property_system.hpp"

@@ -1,13 +1,13 @@
 #include "layer_system.hpp"
 
 #include <algorithm>  // sort
-#include <cassert>    // assert
 #include <utility>    // move, swap
 #include <vector>     // erase
 
 #include <fmt/format.h>  // format
 #include <tactile_stdlib.hpp>
 
+#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
@@ -76,11 +76,11 @@ auto AddBasicLayer(entt::registry& registry,
     layer.opacity = 1.0f;
   }
 
-  assert(parent == entt::null || registry.all_of<GroupLayer>(parent));
+  TACTILE_ASSERT(parent == entt::null || registry.all_of<GroupLayer>(parent));
   registry.emplace<Parent>(entity, parent);
 
   if (parent != entt::null) {
-    assert(registry.all_of<LayerTreeNode>(parent));
+    TACTILE_ASSERT(registry.all_of<LayerTreeNode>(parent));
     auto& parentNode = registry.get<LayerTreeNode>(parent);
     parentNode.children.push_back(entity);
   }
@@ -234,7 +234,7 @@ void RemoveLayer(entt::registry& registry, const entt::entity entity)
 
 void SelectLayer(entt::registry& registry, const entt::entity entity)
 {
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& active = registry.ctx<ActiveLayer>();
   active.entity = entity;
@@ -242,10 +242,10 @@ void SelectLayer(entt::registry& registry, const entt::entity entity)
 
 auto CopyLayer(const entt::registry& registry, const entt::entity source) -> LayerSnapshot
 {
-  assert(source != entt::null);
-  assert(registry.all_of<Layer>(source));
-  assert(registry.all_of<LayerTreeNode>(source));
-  assert(registry.all_of<Parent>(source));
+  TACTILE_ASSERT(source != entt::null);
+  TACTILE_ASSERT(registry.all_of<Layer>(source));
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(source));
+  TACTILE_ASSERT(registry.all_of<Parent>(source));
   assert((registry.any_of<TileLayer, ObjectLayer, GroupLayer>(source)));
 
   LayerSnapshot snapshot;
@@ -378,8 +378,8 @@ void SetLayerOpacity(entt::registry& registry,
                      const entt::entity entity,
                      const float opacity)
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<Layer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<Layer>(entity));
 
   auto& layer = registry.get<Layer>(entity);
   layer.opacity = opacity;
@@ -389,8 +389,8 @@ void SetLayerVisible(entt::registry& registry,
                      const entt::entity entity,
                      const bool visible)
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<Layer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<Layer>(entity));
 
   auto& layer = registry.get<Layer>(entity);
   layer.visible = visible;
@@ -415,29 +415,29 @@ auto GetActiveLayer(const entt::registry& registry) -> entt::entity
 
 auto GetLayerIndex(const entt::registry& registry, const entt::entity entity) -> usize
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<LayerTreeNode>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
   return registry.get<LayerTreeNode>(entity).index;
 }
 
 auto GetLayerOpacity(const entt::registry& registry, const entt::entity entity) -> float
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<Layer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<Layer>(entity));
   return registry.get<Layer>(entity).opacity;
 }
 
 auto GetLayerId(const entt::registry& registry, const entt::entity entity) -> LayerID
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<Layer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<Layer>(entity));
   return registry.get<Layer>(entity).id;
 }
 
 auto IsLayerVisible(const entt::registry& registry, const entt::entity entity) -> bool
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<Layer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<Layer>(entity));
   return registry.get<Layer>(entity).visible;
 }
 

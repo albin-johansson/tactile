@@ -1,7 +1,6 @@
 #include "command_stack.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/algorithms/invoke_n.hpp"
 #include "io/preferences.hpp"
 
@@ -27,7 +26,7 @@ void CommandStack::ResetClean()
 
 void CommandStack::Undo()
 {
-  assert(CanUndo());
+  TACTILE_ASSERT(CanUndo());
 
   const auto& cmd = mStack.at(mIndex.value());
   cmd->Undo();
@@ -42,7 +41,7 @@ void CommandStack::Undo()
 
 void CommandStack::Redo()
 {
-  assert(CanRedo());
+  TACTILE_ASSERT(CanRedo());
 
   const auto index = mIndex ? *mIndex + 1 : 0;
 
@@ -80,7 +79,7 @@ auto CommandStack::CanRedo() const -> bool
 
 auto CommandStack::GetUndoText() const -> const std::string&
 {
-  assert(CanUndo());
+  TACTILE_ASSERT(CanUndo());
 
   const auto& cmd = mStack.at(mIndex.value());
   return cmd->GetText();
@@ -88,7 +87,7 @@ auto CommandStack::GetUndoText() const -> const std::string&
 
 auto CommandStack::GetRedoText() const -> const std::string&
 {
-  assert(CanRedo());
+  TACTILE_ASSERT(CanRedo());
 
   const auto& cmd = mStack.at(mIndex ? *mIndex + 1 : 0);
   return cmd->GetText();

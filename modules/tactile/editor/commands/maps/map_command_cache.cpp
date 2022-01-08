@@ -1,7 +1,6 @@
 #include "map_command_cache.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
@@ -17,7 +16,7 @@ void MapCommandCache::RestoreTiles(entt::registry& registry)
 {
   for (const auto& [layerId, tileCache] : mCache) {
     const auto entity = Sys::FindLayer(registry, layerId);
-    assert(entity != entt::null);
+    TACTILE_ASSERT(entity != entt::null);
 
     for (const auto& [position, tileId] : tileCache) {
       Sys::SetTileInLayer(registry, entity, position, tileId);

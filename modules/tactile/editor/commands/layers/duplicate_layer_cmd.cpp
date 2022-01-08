@@ -1,7 +1,6 @@
 #include "duplicate_layer_cmd.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 
 namespace Tactile {
@@ -27,7 +26,7 @@ void DuplicateLayerCmd::Redo()
   }
   else {
     // Reuse previous ID of duplicated layer
-    assert(Sys::FindLayer(registry, *mNewLayerId) == entt::null);
+    TACTILE_ASSERT(Sys::FindLayer(registry, *mNewLayerId) == entt::null);
     auto& layer = registry.get<Layer>(entity);
     layer.id = *mNewLayerId;
   }

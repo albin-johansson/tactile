@@ -1,8 +1,8 @@
 #include "rename_layer_cmd.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
+#include "assert.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/layers/layer_system.hpp"
 
@@ -22,7 +22,7 @@ void RenameLayerCmd::Undo()
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindLayer(registry, mLayerId);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get<PropertyContext>(entity);
   context.name = mPreviousName.value();
@@ -35,7 +35,7 @@ void RenameLayerCmd::Redo()
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindLayer(registry, mLayerId);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get<PropertyContext>(entity);
   mPreviousName = context.name;

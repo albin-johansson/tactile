@@ -1,12 +1,12 @@
 #include "layer_dock.hpp"
 
-#include <cassert>  // assert
-#include <limits>   // numeric_limits
+#include <limits>  // numeric_limits
 
 #include <imgui.h>
 #include <tactile_def.hpp>
 
 #include "add_layer_popup.hpp"
+#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
@@ -83,7 +83,7 @@ void LayerDock::Update(const Model& model,
   mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   const auto* registry = model.GetActiveRegistry();
-  assert(registry);
+  TACTILE_ASSERT(registry);
 
   if (dock.IsOpen()) {
     UpdateLayerDockButtons(*registry, dispatcher);
@@ -116,7 +116,7 @@ void LayerDock::Update(const Model& model,
     const auto target = *mRenameTarget;
 
     const auto entity = Sys::FindLayer(*registry, target);
-    assert(entity != entt::null);
+    TACTILE_ASSERT(entity != entt::null);
 
     const auto& context = registry->get<PropertyContext>(entity);
 

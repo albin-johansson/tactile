@@ -1,7 +1,6 @@
 #pragma once
 
 #include <algorithm>  // find_if, erase_if, iter_swap
-#include <cassert>    // assert
 #include <iterator>   // distance
 #include <utility>    // pair, move, forward
 #include <vector>     // vector

@@ -1,15 +1,15 @@
 #include "checkbox.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
+
+#include "assert.hpp"
 
 namespace Tactile {
 
 auto Checkbox(const NotNull<CStr> label, NotNull<bool*> value, const CStr tooltip) -> bool
 {
-  assert(label);
-  assert(value);
+  TACTILE_ASSERT(label);
+  TACTILE_ASSERT(value);
   const auto changed = ImGui::Checkbox(label, value);
 
   if (tooltip && ImGui::IsItemHovered()) {

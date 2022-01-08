@@ -1,11 +1,11 @@
 #include "property_system.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 #include <vector>   // erase
 
 #include <tactile_stdlib.hpp>
 
+#include "assert.hpp"
 #include "throw.hpp"
 
 namespace Tactile::Sys {
@@ -20,7 +20,7 @@ inline ContextID gNextContextId{1};
 auto AddPropertyContext(entt::registry& registry, const entt::entity entity)
     -> PropertyContext&
 {
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
   auto& context = registry.emplace<PropertyContext>(entity);
 
   context.id = gNextContextId;
@@ -32,8 +32,8 @@ auto AddPropertyContext(entt::registry& registry, const entt::entity entity)
 auto CopyPropertyContext(const entt::registry& registry, const entt::entity source)
     -> PropertyContextSnapshot
 {
-  assert(source != entt::null);
-  assert(registry.all_of<PropertyContext>(source));
+  TACTILE_ASSERT(source != entt::null);
+  TACTILE_ASSERT(registry.all_of<PropertyContext>(source));
   const auto& context = registry.get<PropertyContext>(source);
 
   PropertyContextSnapshot snapshot;
@@ -52,7 +52,7 @@ void RestorePropertyContext(entt::registry& registry,
                             const entt::entity entity,
                             PropertyContextSnapshot snapshot)
 {
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get_or_emplace<PropertyContext>(entity);
   context.id = snapshot.id;
@@ -68,7 +68,7 @@ void AddProperty(entt::registry& registry,
                  std::string name,
                  const PropertyType type)
 {
-  assert(!HasPropertyWithName(registry, context, name));
+  TACTILE_ASSERT(!HasPropertyWithName(registry, context, name));
 
   const auto entity = registry.create();
   auto& property = registry.emplace<Property>(entity);
@@ -83,7 +83,7 @@ void AddProperty(entt::registry& registry,
                  std::string name,
                  PropertyValue value)
 {
-  assert(!HasPropertyWithName(registry, context, name));
+  TACTILE_ASSERT(!HasPropertyWithName(registry, context, name));
 
   const auto entity = registry.create();
   auto& property = registry.emplace<Property>(entity);
@@ -98,7 +98,7 @@ void RemoveProperty(entt::registry& registry,
                     const std::string_view name)
 {
   const auto entity = FindProperty(registry, context, name);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   std::erase(context.properties, entity);
   registry.destroy(entity);
@@ -109,8 +109,8 @@ void RenameProperty(entt::registry& registry,
                     const std::string_view oldName,
                     std::string newName)
 {
-  assert(HasPropertyWithName(registry, context, oldName));
-  assert(!HasPropertyWithName(registry, context, newName));
+  TACTILE_ASSERT(HasPropertyWithName(registry, context, oldName));
+  TACTILE_ASSERT(!HasPropertyWithName(registry, context, newName));
 
   const auto entity = FindProperty(registry, context, oldName);
   auto& property = registry.get<Property>(entity);
@@ -123,7 +123,7 @@ void UpdateProperty(entt::registry& registry,
                     PropertyValue value)
 {
   const auto entity = FindProperty(registry, context, name);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& property = registry.get<Property>(entity);
   property.value = std::move(value);
@@ -135,7 +135,7 @@ void ChangePropertyType(entt::registry& registry,
                         const PropertyType type)
 {
   const auto entity = FindProperty(registry, context, name);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& property = registry.get<Property>(entity);
   property.value.ResetToDefault(type);

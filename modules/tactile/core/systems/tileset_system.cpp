@@ -1,11 +1,11 @@
 #include "tileset_system.hpp"
 
-#include <cassert>        // assert
 #include <unordered_map>  // unordered_map
 #include <utility>        // move
 
 #include <tactile_stdlib.hpp>
 
+#include "assert.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"
@@ -131,7 +131,7 @@ auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt:
 auto CopyTileset(const entt::registry& registry, const entt::entity source)
     -> TilesetSnapshot
 {
-  assert(source != entt::null);
+  TACTILE_ASSERT(source != entt::null);
   TilesetSnapshot snapshot;
 
   snapshot.core = registry.get<Tileset>(source);
@@ -146,7 +146,7 @@ auto CopyTileset(const entt::registry& registry, const entt::entity source)
 void SelectTileset(entt::registry& registry, const TilesetID id)
 {
   const auto entity = FindTileset(registry, id);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& activeTileset = registry.ctx<ActiveTileset>();
   activeTileset.entity = entity;
@@ -155,7 +155,7 @@ void SelectTileset(entt::registry& registry, const TilesetID id)
 void RemoveTileset(entt::registry& registry, const TilesetID id)
 {
   const auto entity = FindTileset(registry, id);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& activeTileset = registry.ctx<ActiveTileset>();
   if (entity == activeTileset.entity) {
@@ -177,7 +177,7 @@ void RemoveTileset(entt::registry& registry, const TilesetID id)
 void UpdateTilesetSelection(entt::registry& registry, const Region& region)
 {
   auto& active = registry.ctx<ActiveTileset>();
-  assert(active.entity != entt::null);
+  TACTILE_ASSERT(active.entity != entt::null);
 
   auto& selection = registry.get<TilesetSelection>(active.entity);
   selection.region = region;
@@ -267,8 +267,8 @@ auto GetTileFromTileset(const entt::registry& registry,
                         const entt::entity entity,
                         const MapPosition& position) -> TileID
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<Tileset>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<Tileset>(entity));
   const auto& tileset = registry.get<Tileset>(entity);
 
   const auto row = position.GetRow();

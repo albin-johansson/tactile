@@ -1,10 +1,10 @@
 #include "eraser_tool_system.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
 #include <tactile_def.hpp>
 
+#include "assert.hpp"
 #include "core/map_position.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
@@ -24,7 +24,7 @@ inline TileCache gOldState;
 void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 {
   const auto entity = GetActiveLayer(registry);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   if (!gOldState.Contains(cursor)) {
     gOldState.Emplace(cursor, GetTileFromLayer(registry, entity, cursor));

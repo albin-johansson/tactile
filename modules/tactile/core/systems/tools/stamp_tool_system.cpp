@@ -1,10 +1,10 @@
 #include "stamp_tool_system.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
 #include <tactile_def.hpp>
 
+#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map_position.hpp"
@@ -28,13 +28,13 @@ inline TileCache gSequence;
 
 void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 {
-  assert(IsUsable(registry));
+  TACTILE_ASSERT(IsUsable(registry));
 
   const auto layerEntity = GetActiveLayer(registry);
-  assert(layerEntity != entt::null);
+  TACTILE_ASSERT(layerEntity != entt::null);
 
   const auto tilesetEntity = GetActiveTileset(registry);
-  assert(tilesetEntity != entt::null);
+  TACTILE_ASSERT(tilesetEntity != entt::null);
 
   const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
   const auto& region = selection.region.value();

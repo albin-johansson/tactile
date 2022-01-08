@@ -1,11 +1,10 @@
 #include "render_stamp_preview.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <tactile_def.hpp>
 
+#include "assert.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
@@ -81,7 +80,7 @@ void RenderStampPreview(const entt::registry& registry,
   const auto& activeTileset = registry.ctx<ActiveTileset>();
 
   const auto tilesetEntity = activeTileset.entity;
-  assert(tilesetEntity != entt::null);
+  TACTILE_ASSERT(tilesetEntity != entt::null);
 
   const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
   if (!selection.region) {

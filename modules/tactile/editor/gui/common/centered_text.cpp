@@ -1,15 +1,15 @@
 #include "centered_text.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 #include <imgui_internal.h>
+
+#include "assert.hpp"
 
 namespace Tactile {
 
 void CenteredText(const NotNull<CStr> text)
 {
-  assert(text);
+  TACTILE_ASSERT(text);
   const auto textSize = ImGui::CalcTextSize(text);
 
   const auto region = ImGui::GetContentRegionAvail();

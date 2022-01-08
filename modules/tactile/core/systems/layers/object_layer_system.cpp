@@ -1,7 +1,6 @@
 #include "object_layer_system.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/map.hpp"
@@ -66,8 +65,8 @@ auto FindObject(const entt::registry& registry,
                 const float x,
                 const float y) -> entt::entity
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<ObjectLayer>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<ObjectLayer>(entity));
 
   const auto& map = registry.ctx<Map>();
   const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);

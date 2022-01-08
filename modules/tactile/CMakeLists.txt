@@ -530,7 +530,6 @@ endif ()
 target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <cstdint>
                           <cstddef>
-                          <cassert>
                           <memory>
                           <utility>
                           <array>

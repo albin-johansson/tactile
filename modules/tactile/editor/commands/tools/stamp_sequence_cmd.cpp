@@ -1,8 +1,8 @@
 #include "stamp_sequence_cmd.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
+#include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
@@ -33,7 +33,7 @@ void StampSequenceCmd::ApplySequence(const TileCache& cache)
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindLayer(registry, mLayer);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   Sys::SetTilesInLayer(registry, entity, cache);
 }

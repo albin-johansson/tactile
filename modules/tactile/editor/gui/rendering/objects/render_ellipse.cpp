@@ -1,11 +1,10 @@
 #include "render_ellipse.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <tactile_def.hpp>
 
+#include "assert.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property_context.hpp"
 #include "editor/gui/rendering/common_rendering.hpp"
@@ -37,7 +36,7 @@ void RenderEllipse(const entt::registry& registry,
                    const uint32 color)
 {
   const auto& object = registry.get<Object>(entity);
-  assert(object.type == ObjectType::Ellipse);
+  TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
   const auto xRadius = 0.5f * object.width * info.ratio.x;
   const auto yRadius = 0.5f * object.height * info.ratio.y;

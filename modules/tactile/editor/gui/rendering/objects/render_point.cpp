@@ -1,11 +1,10 @@
 #include "render_point.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <tactile_def.hpp>
 
+#include "assert.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property_context.hpp"
 #include "editor/gui/rendering/common_rendering.hpp"
@@ -40,7 +39,7 @@ void RenderPoint(const entt::registry& registry,
                  const uint32 color)
 {
   const auto& object = registry.get<Object>(entity);
-  assert(object.type == ObjectType::Point);
+  TACTILE_ASSERT(object.type == ObjectType::Point);
 
   if (info.bounds_rect.Contains(cen::FPoint{position.x, position.y})) {
     RenderShadowedCircle(position, radius, color, thickness);

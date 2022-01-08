@@ -1,12 +1,12 @@
 #include "configuration.hpp"
 
-#include <cassert>    // assert
 #include <cstdlib>    // abort
 #include <exception>  // set_terminate
 
 #include <GL/glew.h>
 #include <tactile_stdlib.hpp>
 
+#include "assert.hpp"
 #include "attributes.hpp"
 #include "build.hpp"
 #include "io/preferences.hpp"
@@ -46,7 +46,7 @@ ApplicationConfiguration::ApplicationConfiguration()
   mWindow.emplace("Tactile", cen::Window::GetDefaultSize(), GetWindowFlags());
   mWindow->SetIcon(cen::Surface{"resources/icon.png"});
 
-  assert(mWindow.has_value());
+  TACTILE_ASSERT(mWindow.has_value());
   mOpenGL.emplace(*mWindow);
   mOpenGL->MakeCurrent(*mWindow);
 
@@ -62,7 +62,7 @@ ApplicationConfiguration::ApplicationConfiguration()
 
   LoadPreferences();
 
-  assert(mOpenGL.has_value());
+  TACTILE_ASSERT(mOpenGL.has_value());
   mImGui.emplace(*mWindow, *mOpenGL);
 
   SDL_MaximizeWindow(mWindow->get());

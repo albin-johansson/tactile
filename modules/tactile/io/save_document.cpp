@@ -1,10 +1,10 @@
 #include "save_document.hpp"
 
-#include <cassert>     // assert
 #include <filesystem>  // absolute
 
 #include <tactile_io.hpp>
 
+#include "assert.hpp"
 #include "convert_document_to_ir.hpp"
 #include "io/preferences.hpp"
 #include "profile.hpp"
@@ -35,7 +35,7 @@ namespace {
 
 void SaveDocument(const Document& document)
 {
-  assert(!document.path.empty());
+  TACTILE_ASSERT(!document.path.empty());
   TACTILE_PROFILE_START
 
   const auto path = std::filesystem::absolute(document.path);

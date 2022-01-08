@@ -1,7 +1,6 @@
 #include "rename_property_dialog.hpp"
 
-#include <cassert>  // assert
-
+#include "assert.hpp"
 #include "core/systems/property_system.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/model.hpp"
@@ -23,7 +22,7 @@ auto RenamePropertyDialog::Validate(const Model& model, std::string_view input) 
     -> bool
 {
   const auto* registry = model.GetActiveRegistry();
-  assert(registry);
+  TACTILE_ASSERT(registry);
 
   const auto& context = Sys::GetCurrentContext(*registry);
   return !input.empty() && !Sys::HasPropertyWithName(*registry, context, input);

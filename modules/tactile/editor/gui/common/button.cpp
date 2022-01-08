@@ -1,9 +1,8 @@
 #include "button.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 
+#include "assert.hpp"
 #include "editor/gui/scoped.hpp"
 
 namespace Tactile {
@@ -14,7 +13,7 @@ auto Button(const NotNull<CStr> text,
             const float width,
             const float height) -> bool
 {
-  assert(text);
+  TACTILE_ASSERT(text);
 
   const Scoped::Disable disable{!enabled};
 

@@ -1,10 +1,10 @@
 #include "viewport_system.hpp"
 
 #include <algorithm>  // min, max
-#include <cassert>    // assert
 #include <cmath>      // round
 #include <utility>    // pair
 
+#include "assert.hpp"
 #include "core/components/texture.hpp"
 #include "core/map.hpp"
 #include "core/mouse_pos.hpp"
@@ -40,9 +40,9 @@ void OffsetBoundViewport(entt::registry& registry,
                          const float viewWidth,
                          const float viewHeight)
 {
-  assert(entity != entt::null);
-  assert(registry.all_of<Viewport>(entity));
-  assert(registry.all_of<Texture>(entity));
+  TACTILE_ASSERT(entity != entt::null);
+  TACTILE_ASSERT(registry.all_of<Viewport>(entity));
+  TACTILE_ASSERT(registry.all_of<Texture>(entity));
 
   auto& viewport = registry.get<Viewport>(entity);
   viewport.x_offset += dx;
@@ -93,7 +93,7 @@ void ResetViewportZoom(entt::registry& registry)
 
 void DecreaseViewportZoom(entt::registry& registry)
 {
-  assert(CanDecreaseViewportZoom(registry));
+  TACTILE_ASSERT(CanDecreaseViewportZoom(registry));
 
   auto& viewport = registry.ctx<Viewport>();
   const auto& mouse = registry.ctx<MousePos>();

@@ -1,7 +1,5 @@
 #include "set_object_visibility_cmd.hpp"
 
-#include <cassert>  // assert
-
 #include "core/components/object.hpp"
 
 namespace Tactile {

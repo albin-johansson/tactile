@@ -2,6 +2,7 @@
 
 #include <string>  // string
 
+#include "assert.hpp"
 #include "core/systems/component_system.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/model.hpp"
@@ -25,7 +26,7 @@ auto CreateComponentAttributeDialog::Validate(const Model& model,
                                               const std::string_view input) const -> bool
 {
   const auto* registry = model.GetActiveRegistry();
-  assert(registry);
+  TACTILE_ASSERT(registry);
 
   return !input.empty() &&
          !Sys::IsComponentAttributeNameTaken(*registry, mComponentId, input);

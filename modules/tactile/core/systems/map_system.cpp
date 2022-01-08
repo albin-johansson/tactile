@@ -1,10 +1,10 @@
 #include "map_system.hpp"
 
-#include <cassert>      // assert
 #include <type_traits>  // enable_if_t, is_unsigned_v
 
 #include <tactile_stdlib.hpp>
 
+#include "assert.hpp"
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
 #include "core/map.hpp"
@@ -70,7 +70,7 @@ void RemoveColumn(entt::registry& registry)
 
     for (auto&& [entity, layer] : registry.view<TileLayer>().each()) {
       for (auto& row : layer.matrix) {
-        assert(row.size() > 1);
+        TACTILE_ASSERT(row.size() > 1);
         row.pop_back();
       }
     }

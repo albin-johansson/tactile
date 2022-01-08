@@ -1,11 +1,10 @@
 #include "render_rect.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <tactile_def.hpp>
 
+#include "assert.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property_context.hpp"
 #include "editor/gui/rendering/common_rendering.hpp"
@@ -36,7 +35,7 @@ void RenderRect(const entt::registry& registry,
                 const uint32 color)
 {
   const auto& object = registry.get<Object>(entity);
-  assert(object.type == ObjectType::Rectangle);
+  TACTILE_ASSERT(object.type == ObjectType::Rectangle);
 
   const auto size = ImVec2{object.width, object.height} * info.ratio;
   const auto rect = cen::FRect{position.x, position.y, size.x, size.y};

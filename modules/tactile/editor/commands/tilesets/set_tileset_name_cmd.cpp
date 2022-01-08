@@ -1,8 +1,8 @@
 #include "set_tileset_name_cmd.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
+#include "assert.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/tileset_system.hpp"
 
@@ -22,7 +22,7 @@ void SetTilesetNameCmd::Undo()
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindTileset(registry, mTilesetId);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get<PropertyContext>(entity);
   context.name = mOldName.value();
@@ -33,7 +33,7 @@ void SetTilesetNameCmd::Redo()
   auto& registry = mRegistry.get();
 
   const auto entity = Sys::FindTileset(registry, mTilesetId);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get<PropertyContext>(entity);
   mOldName = context.name;

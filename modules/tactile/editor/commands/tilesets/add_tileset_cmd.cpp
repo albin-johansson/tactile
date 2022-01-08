@@ -1,8 +1,8 @@
 #include "add_tileset_cmd.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
+#include "assert.hpp"
 #include "core/systems/tileset_system.hpp"
 
 namespace Tactile {
@@ -24,7 +24,7 @@ void AddTilesetCmd::Undo()
   const auto id = mTilesetId.value();
 
   const auto entity = Sys::FindTileset(registry, id);
-  assert(entity != entt::null);
+  TACTILE_ASSERT(entity != entt::null);
 
   mSnapshot = Sys::CopyTileset(registry, entity);
   Sys::RemoveTileset(registry, id);

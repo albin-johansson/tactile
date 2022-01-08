@@ -1,11 +1,11 @@
 #include "map_view.hpp"
 
-#include <cassert>  // assert
-#include <cmath>    // round
+#include <cmath>  // round
 
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
@@ -79,7 +79,7 @@ void UpdateCursorGizmos(const entt::registry& registry,
                         const ViewportCursorInfo& cursor,
                         const RenderInfo& info)
 {
-  assert(cursor.is_within_map);
+  TACTILE_ASSERT(cursor.is_within_map);
 
   if (!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered()) {
     return;
@@ -179,7 +179,7 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
   if (Scoped::Popup popup{"##MapViewObjectContextMenu"}; popup.IsOpen()) {
     const auto active = registry.ctx<ActiveObject>();
 
-    assert(active.entity != entt::null);
+    TACTILE_ASSERT(active.entity != entt::null);
     const auto& object = registry.get<Object>(active.entity);
 
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Object Properties")) {

@@ -1,9 +1,9 @@
 #include "docking_toolbar.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 #include <imgui_internal.h>
+
+#include "assert.hpp"
 
 namespace Tactile {
 
@@ -14,7 +14,7 @@ namespace Tactile {
 
 void BeginDockingToolbar(NotNull<CStr> name, int& toolbarAxis)
 {
-  assert(name);
+  TACTILE_ASSERT(name);
 
   const auto requestedSize =
       (toolbarAxis == ImGuiAxis_X) ? ImVec2{-1.0f, 0.0f} : ImVec2{0.0f, -1.0f};

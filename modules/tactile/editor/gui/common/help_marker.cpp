@@ -1,14 +1,14 @@
 #include "help_marker.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
+
+#include "assert.hpp"
 
 namespace Tactile {
 
 void HelpMarker(const NotNull<CStr> text)
 {
-  assert(text);
+  TACTILE_ASSERT(text);
 
   ImGui::TextDisabled("(?)");
   if (ImGui::IsItemHovered()) {

@@ -1,8 +1,8 @@
 #include "model.hpp"
 
-#include <cassert>  // assert
 #include <utility>  // move
 
+#include "assert.hpp"
 #include "core/map.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -44,13 +44,13 @@ auto Model::CanRedo() const -> bool
 
 auto Model::GetUndoText() const -> const std::string&
 {
-  assert(CanUndo());
+  TACTILE_ASSERT(CanUndo());
   return mDocuments.At(mActiveMap.value())->commands.GetUndoText();
 }
 
 auto Model::GetRedoText() const -> const std::string&
 {
-  assert(CanRedo());
+  TACTILE_ASSERT(CanRedo());
   return mDocuments.At(mActiveMap.value())->commands.GetRedoText();
 }
 
@@ -91,8 +91,8 @@ auto Model::AddMap(const int tileWidth,
                    const usize rows,
                    const usize columns) -> MapID
 {
-  assert(tileWidth > 0);
-  assert(tileHeight > 0);
+  TACTILE_ASSERT(tileWidth > 0);
+  TACTILE_ASSERT(tileHeight > 0);
 
   Document document;
   document.registry = Sys::MakeRegistry();
@@ -108,13 +108,13 @@ auto Model::AddMap(const int tileWidth,
 
 void Model::SelectMap(const MapID id)
 {
-  assert(mDocuments.Contains(id));
+  TACTILE_ASSERT(mDocuments.Contains(id));
   mActiveMap = id;
 }
 
 void Model::RemoveMap(const MapID id)
 {
-  assert(mDocuments.Contains(id));
+  TACTILE_ASSERT(mDocuments.Contains(id));
   mDocuments.Erase(id);
 
   if (mActiveMap == id) {
@@ -130,13 +130,13 @@ void Model::RemoveMap(const MapID id)
 
 auto Model::HasPath(const MapID id) const -> bool
 {
-  assert(mDocuments.Contains(id));
+  TACTILE_ASSERT(mDocuments.Contains(id));
   return !mDocuments.At(id)->path.empty();
 }
 
 auto Model::GetPath(const MapID id) const -> const std::filesystem::path&
 {
-  assert(mDocuments.Contains(id));
+  TACTILE_ASSERT(mDocuments.Contains(id));
   return mDocuments.At(id)->path;
 }
 

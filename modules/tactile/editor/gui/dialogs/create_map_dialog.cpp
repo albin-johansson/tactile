@@ -1,10 +1,9 @@
 #include "create_map_dialog.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 #include <tactile_def.hpp>
 
+#include "assert.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "io/preferences.hpp"
@@ -64,10 +63,10 @@ void CreateMapDialog::UpdateContents(const Model&, entt::dispatcher&)
 
 void CreateMapDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  assert(mTileWidth > 0);
-  assert(mTileHeight > 0);
-  assert(mRows > 0);
-  assert(mColumns > 0);
+  TACTILE_ASSERT(mTileWidth > 0);
+  TACTILE_ASSERT(mTileHeight > 0);
+  TACTILE_ASSERT(mRows > 0);
+  TACTILE_ASSERT(mColumns > 0);
   dispatcher.enqueue<CreateMapEvent>(mTileWidth,
                                      mTileHeight,
                                      static_cast<usize>(mRows),

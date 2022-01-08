@@ -1,9 +1,8 @@
 #include "add_property_dialog.hpp"
 
-#include <cassert>  // assert
-
 #include <imgui.h>
 
+#include "assert.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/utils/buffer_utils.hpp"
 #include "editor/events/property_events.hpp"
@@ -35,7 +34,7 @@ void AddPropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 auto AddPropertyDialog::IsCurrentInputValid(const Model& model) const -> bool
 {
   const auto* registry = model.GetActiveRegistry();
-  assert(registry);
+  TACTILE_ASSERT(registry);
 
   const auto name = CreateStringViewFromBuffer(mNameBuffer);
   const auto& context = Sys::GetCurrentContext(*registry);
