@@ -35,31 +35,27 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
     activeLayerId = layer.id;
   }
 
+  Scoped::Group group;
+
   if (Button(TAC_ICON_ADD, "Add new layer")) {
     OpenAddLayerPopup();
   }
 
   UpdateAddLayerPopup(dispatcher);
 
-  ImGui::SameLine();
   if (Button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
     dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
   }
 
-  ImGui::SameLine();
   if (Button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
     dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
   }
-
-  ImGui::SameLine();
 
   if (Button(TAC_ICON_MOVE_UP,
              "Move layer up",
              activeLayerId && Sys::CanMoveLayerUp(registry, *activeLayerId))) {
     dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
   }
-
-  ImGui::SameLine();
 
   if (Button(TAC_ICON_MOVE_DOWN,
              "Move layer down",
@@ -87,15 +83,16 @@ void LayerDock::Update(const Model& model,
 
   if (dock.IsOpen()) {
     UpdateLayerDockButtons(*registry, dispatcher);
+    ImGui::SameLine();
+
+    Scoped::Group group;
     if (registry->view<Layer>().empty()) {
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available layers!");
     }
     else {
-      const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
-      const auto size = ImVec2{std::numeric_limits<float>::min(),
-                               ImGui::GetWindowHeight() - (4 * textLineHeight)};
-
+      const ImVec2 size{-std::numeric_limits<float>::min(),
+                        -std::numeric_limits<float>::min()};
       if (Scoped::ListBox list{"##LayerTreeNode", size}; list.IsOpen()) {
         for (auto&& [entity, node] : registry->view<LayerTreeNode>().each()) {
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include

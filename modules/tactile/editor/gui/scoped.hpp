@@ -51,6 +51,13 @@ class StyleVar final {
   bool mPopped{};
 };
 
+class Group final {
+ public:
+  Group() { ImGui::BeginGroup(); }
+
+  ~Group() { ImGui::EndGroup(); }
+};
+
 class Child final {
  public:
   explicit Child(const CStr id,
