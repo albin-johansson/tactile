@@ -7,6 +7,7 @@ find_package(OpenGL REQUIRED)  # Not acquired using vcpkg
 find_package(GLEW CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
+find_package(unofficial-nativefiledialog CONFIG REQUIRED)
 
 find_path(STB_INCLUDE_DIRS "stb.h")
 
@@ -458,6 +459,7 @@ target_link_libraries(${TACTILE_LIB}
                       EnTT::EnTT
                       fmt::fmt
                       protobuf::libprotobuf
+                      unofficial::nativefiledialog::nfd
                       GLEW::GLEW
                       OpenGL::GL
                       ${Boost_LIBRARIES}

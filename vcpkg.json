@@ -27,6 +27,7 @@
     "pugixml",
     "magic-enum",
     "stb",
-    "gtest"
+    "gtest",
+    "nativefiledialog"
   ]
 }
