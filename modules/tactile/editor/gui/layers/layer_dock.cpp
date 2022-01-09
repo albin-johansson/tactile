@@ -1,5 +1,7 @@
 #include "layer_dock.hpp"
 
+#define NOMINMAX
+
 #include <limits>  // numeric_limits
 
 #include <imgui.h>

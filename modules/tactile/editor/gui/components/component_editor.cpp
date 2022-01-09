@@ -1,5 +1,7 @@
 #include "component_editor.hpp"
 
+#define NOMINMAX
+
 #include <limits>   // numeric_limits
 #include <string>   // string
 #include <utility>  // move
