@@ -55,7 +55,8 @@ void UpdateCreditsDialog()
       Row("nativefiledialog", "Zlib");
       Row("Protocol Buffers", "BSD");
       Row("pugixml", "MIT");
-      Row("SDL", "Zlib");
+      Row("SDL2", "Zlib");
+      Row("SDL2_image", "Zlib");
       Row("stb_image", "MIT");
       Row("yaml-cpp", "MIT");
       Row("googletest", "BSD");
