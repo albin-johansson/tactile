@@ -289,6 +289,8 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
                                          const PropertyContext& context,
                                          bool& isItemContextOpen)
 {
+  bool first = true;
+
   for (const auto entity : context.properties) {
     const auto& property = registry.get<Property>(entity);
 
@@ -299,6 +301,11 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();
+
+    if (first) {
+      ImGui::Separator();
+    }
+
     ImGui::AlignTextToFramePadding();
     ImGui::Selectable(name.c_str());
 
@@ -315,6 +322,11 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
     }
 
     ImGui::TableNextColumn();
+
+    if (first) {
+      ImGui::Separator();
+    }
+
     if (value.IsString()) {
       if (const auto updated = InputString("##CustomPropertyInput", value.AsString())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
@@ -350,6 +362,8 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
+
+    first = false;
   }
 }
 
