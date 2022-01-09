@@ -1,17 +1,14 @@
 #include "input_widgets.hpp"
 
-#define NOMINMAX
-
 #include <array>    // array
 #include <limits>   // numeric_limits
 #include <utility>  // move
-
-#include <portable-file-dialogs.h>
 
 #include "core/utils/buffer_utils.hpp"
 #include "core/utils/color_utils.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "io/file_dialog.hpp"
 
 namespace Tactile {
 
@@ -207,9 +204,9 @@ auto InputFile(const CStr id, const std::filesystem::path& value)
   const Scoped::ID scope{id};
 
   if (ImGui::Button(TAC_ICON_THREE_DOTS)) {
-    auto files = pfd::open_file{"Select File..."}.result();
-    if (!files.empty()) {
-      return files.front();
+    auto dialog = FileDialog::OpenFile();
+    if (dialog.IsOkay()) {
+      return dialog.GetPath();
     }
   }
 

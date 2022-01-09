@@ -1,9 +1,6 @@
 #include "file_menu.hpp"
 
-#include <utility>  // move
-
 #include <imgui.h>
-#include <portable-file-dialogs.h>
 
 #include "editor/events/map_events.hpp"
 #include "editor/events/quit_event.hpp"
@@ -12,6 +9,7 @@
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
+#include "io/file_dialog.hpp"
 #include "io/history.hpp"
 
 namespace Tactile {
@@ -116,13 +114,10 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 
 void FileMenu::UpdateMapFileDialog(entt::dispatcher& dispatcher)
 {
-  auto path = pfd::open_file{"Open Map...",  //
-                             "",
-                             {"Map Files", "*.json *.tmx *.xml *.yaml *.yml"}}
-                  .result();
+  auto dialog = FileDialog::OpenMap();
 
-  if (!path.empty()) {
-    dispatcher.enqueue<OpenMapEvent>(std::move(path.front()));
+  if (dialog.IsOkay()) {
+    dispatcher.enqueue<OpenMapEvent>(dialog.GetPath());
   }
 
   mShowOpenMapDialog = false;

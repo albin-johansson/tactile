@@ -4,7 +4,6 @@
 #include <filesystem>  // path
 
 #include <imgui.h>
-#include <portable-file-dialogs.h>
 #include <tactile_def.hpp>
 
 #include "core/utils/buffer_utils.hpp"
@@ -12,6 +11,7 @@
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/scoped.hpp"
+#include "io/file_dialog.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -27,14 +27,12 @@ constinit int gTileHeight = 32;
 
 void ShowImageFileDialog()
 {
-  auto files =
-      pfd::open_file{"Select image", "", {"Image Files", "*.png *.jpg"}}.result();
-
-  if (files.empty()) {
+  auto dialog = FileDialog::OpenImage();
+  if (!dialog.IsOkay()) {
     return;
   }
 
-  gFullImagePath = files.front();
+  gFullImagePath = dialog.GetPath();
   const auto pathStr = gFullImagePath.string();
 
   if (pathStr.size() > gPathPreviewBuffer.size()) {

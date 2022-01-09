@@ -2,10 +2,8 @@
 
 #include <utility>  // move
 
-#include <portable-file-dialogs.h>
-#include <tactile_io.hpp>
-
 #include "editor/events/save_events.hpp"
+#include "io/file_dialog.hpp"
 #include "io/preferences.hpp"
 #include "logging.hpp"
 
@@ -19,14 +17,14 @@ constinit bool gShow = false;
 void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
 {
   if (gShow) {
-    auto path =
-        pfd::save_file{"Save as...", "", {"Map File", "*.json *.tmx *.xml *.yml *.yaml"}}
-            .result();
+    auto dialog = FileDialog::SaveMap();
+    if (dialog.IsOkay()) {
+      auto path = dialog.GetPath().string();
 
-    if (!path.empty()) {
-      if (!path.ends_with(".json") && !path.ends_with(".tmx") &&
-          !path.ends_with(".xml") && !path.ends_with(".yml") &&
-          !path.ends_with(".yaml")) {
+      // TODO is this logic still required with new file dialogs?
+      if (!path.ends_with(".yaml") && !path.ends_with(".yml") &&
+          !path.ends_with(".tmx") && !path.ends_with(".xml") &&
+          !path.ends_with(".json")) {
         const auto& format = Prefs::GetPreferredFormat();
         LogInfo("No suffix provided in requested file path, using preferred format ({})",
                 format);
