@@ -52,7 +52,6 @@ void UpdateCreditsDialog()
       Row("IconFontCppHeaders", "Zlib");
       Row("JSON for Modern C++", "MIT");
       Row("Magic Enum C++", "MIT");
-      Row("portable-file-dialogs", "WTFPL");
       Row("Protocol Buffers", "BSD");
       Row("pugixml", "MIT");
       Row("SDL", "Zlib");

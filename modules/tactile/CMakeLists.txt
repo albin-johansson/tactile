@@ -445,7 +445,6 @@ target_include_directories(${TACTILE_LIB}
                            SYSTEM PUBLIC
                            ${LIBRARY_DIR}/centurion
                            ${LIBRARY_DIR}/fontawesome
-                           ${LIBRARY_DIR}/pfd
                            ${STB_INCLUDE_DIRS}
                            ${Boost_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
