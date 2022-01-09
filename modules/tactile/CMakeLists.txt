@@ -415,6 +415,8 @@ set(SOURCE_FILES
     io/convert_document_to_ir.hpp
     io/directories.cpp
     io/directories.hpp
+    io/file_dialog.cpp
+    io/file_dialog.hpp
     io/history.cpp
     io/history.hpp
     io/map_parser.cpp
