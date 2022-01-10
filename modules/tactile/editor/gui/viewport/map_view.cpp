@@ -123,7 +123,7 @@ void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
 
   if (const auto popup = Scoped::Popup::ForItem("##MapViewContextMenu", flags);
       popup.IsOpen()) {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Map Properties")) {
+    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
 
@@ -182,7 +182,7 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
     TACTILE_ASSERT(active.entity != entt::null);
     const auto& object = registry.get<Object>(active.entity);
 
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Object Properties")) {
+    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
       dispatcher.enqueue<SetPropertyContextEvent>(active.entity);
     }
 

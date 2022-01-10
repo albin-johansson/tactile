@@ -16,7 +16,7 @@ void MapMenu::Update(const Model& model, entt::dispatcher& dispatcher)
   Scoped::Disable disable{!model.HasActiveDocument()};
   Scoped::Menu menu{"Map"};
   if (menu.IsOpen()) {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Map Properties")) {
+    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
 

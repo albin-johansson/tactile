@@ -14,7 +14,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
                           const LayerID id)
 {
   if (auto popup = Scoped::Popup::ForItem("##LayerItemPopup"); popup.IsOpen()) {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Layer Properties")) {
+    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
       dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
     }
 

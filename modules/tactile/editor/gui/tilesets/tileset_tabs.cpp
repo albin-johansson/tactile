@@ -25,7 +25,7 @@ void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Tileset Properties")) {
+    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
       dispatcher.enqueue<ShowTilesetPropertiesEvent>(id);
     }
 
