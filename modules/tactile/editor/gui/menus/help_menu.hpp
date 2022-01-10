@@ -1,22 +1,23 @@
 #pragma once
 
+#include <entt/entt.hpp>
+
+#include "editor/gui/dialogs/credits_dialog.hpp"
+
 namespace Tactile {
 
-/// \addtogroup gui
-/// \{
+class Model;
 
 class HelpMenu final {
  public:
-  void Update();
+  void Update(const Model& model, entt::dispatcher& dispatcher);
 
   void UpdateWindows();
 
  private:
+  CreditsDialog mCreditsDialog;
   bool mShowAboutTactile{};
   bool mShowAboutImGui{};
-  bool mShowCredits{};
 };
-
-/// \} End of group gui
 
 }  // namespace Tactile

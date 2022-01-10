@@ -3,20 +3,14 @@
 #include <imgui.h>
 #include <tactile_def.hpp>
 
-#include "editor/gui/alignment.hpp"
 #include "editor/gui/scoped.hpp"
 
 namespace Tactile {
 namespace {
 
-constexpr auto gWindowFlags =
-    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-
 constexpr auto gTableFlags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
                              ImGuiTableFlags_Resizable |
                              ImGuiTableFlags_SizingStretchProp;
-
-constinit bool gIsVisible = false;
 
 void Row(const CStr lib, const CStr license)
 {
@@ -31,43 +25,45 @@ void Row(const CStr lib, const CStr license)
 
 }  // namespace
 
-void UpdateCreditsDialog()
+CreditsDialog::CreditsDialog() : ADialog{"Credits"}
 {
-  CenterNextWindowOnAppearance();
-  if (Scoped::Modal modal{"Credits", gWindowFlags, &gIsVisible}; modal.IsOpen()) {
-    ImGui::TextUnformatted(
-        "Tactile is developed using the following open-source libraries.");
-    ImGui::Spacing();
-
-    if (Scoped::Table table{"##CreditsTable", 2, gTableFlags}; table.IsOpen()) {
-      ImGui::TableSetupColumn("Library");
-      ImGui::TableSetupColumn("License");
-      ImGui::TableHeadersRow();
-
-      Row("Centurion", "MIT");
-      Row("Dear ImGui", "MIT");
-      Row("EnTT", "MIT");
-      Row("fmt", "MIT");
-      Row("GLEW", "BSD/MIT");
-      Row("IconFontCppHeaders", "Zlib");
-      Row("JSON for Modern C++", "MIT");
-      Row("Magic Enum C++", "MIT");
-      Row("nativefiledialog", "Zlib");
-      Row("Protocol Buffers", "BSD");
-      Row("pugixml", "MIT");
-      Row("SDL2", "Zlib");
-      Row("SDL2_image", "Zlib");
-      Row("stb_image", "MIT");
-      Row("yaml-cpp", "MIT");
-      Row("googletest", "BSD");
-    }
-  }
+  SetAcceptButtonLabel(nullptr);
+  SetCloseButtonLabel("Close");
 }
 
-void OpenCreditsDialog()
+void CreditsDialog::Open()
 {
-  gIsVisible = true;
-  ImGui::OpenPopup("Credits");
+  Show();
+}
+
+void CreditsDialog::UpdateContents(const Model&, entt::dispatcher&)
+{
+  ImGui::TextUnformatted(
+      "Tactile is developed using the following open-source libraries.");
+  ImGui::Spacing();
+
+  if (Scoped::Table table{"##CreditsTable", 2, gTableFlags}; table.IsOpen()) {
+    ImGui::TableSetupColumn("Library");
+    ImGui::TableSetupColumn("License");
+    ImGui::TableHeadersRow();
+
+    Row("Centurion", "MIT");
+    Row("Dear ImGui", "MIT");
+    Row("EnTT", "MIT");
+    Row("fmt", "MIT");
+    Row("GLEW", "BSD/MIT");
+    Row("IconFontCppHeaders", "Zlib");
+    Row("JSON for Modern C++", "MIT");
+    Row("Magic Enum C++", "MIT");
+    Row("nativefiledialog", "Zlib");
+    Row("Protocol Buffers", "BSD");
+    Row("pugixml", "MIT");
+    Row("SDL2", "Zlib");
+    Row("SDL2_image", "Zlib");
+    Row("stb_image", "MIT");
+    Row("yaml-cpp", "MIT");
+    Row("googletest", "BSD");
+  }
 }
 
 }  // namespace Tactile

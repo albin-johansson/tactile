@@ -1,14 +1,17 @@
 #pragma once
 
+#include "dialog.hpp"
+
 namespace Tactile {
 
-/**
- * \brief Updates the credits dialog.
- *
- * \ingroup gui
- */
-void UpdateCreditsDialog();
+class CreditsDialog final : public ADialog {
+ public:
+  CreditsDialog();
 
-void OpenCreditsDialog();
+  void Open();
+
+ protected:
+  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+};
 
 }  // namespace Tactile

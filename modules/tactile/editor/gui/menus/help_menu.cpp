@@ -11,7 +11,7 @@
 
 namespace Tactile {
 
-void HelpMenu::Update()
+void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   if (Scoped::Menu menu{"Help"}; menu.IsOpen()) {
     mShowAboutTactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
@@ -23,8 +23,12 @@ void HelpMenu::Update()
     }
 
     ImGui::Separator();
-    mShowCredits = ImGui::MenuItem("Credits...");
+    if (ImGui::MenuItem("Credits...")) {
+      mCreditsDialog.Open();
+    }
   }
+
+  mCreditsDialog.Update(model, dispatcher);
 }
 
 void HelpMenu::UpdateWindows()
@@ -37,13 +41,6 @@ void HelpMenu::UpdateWindows()
     CenterNextWindowOnAppearance();
     ImGui::ShowAboutWindow(&mShowAboutImGui);
   }
-
-  if (mShowCredits) {
-    OpenCreditsDialog();
-    mShowCredits = false;
-  }
-
-  UpdateCreditsDialog();
 }
 
 }  // namespace Tactile

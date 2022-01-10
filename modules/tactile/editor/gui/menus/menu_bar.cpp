@@ -14,7 +14,7 @@ void MenuBar::Update(const Model& model, entt::dispatcher& dispatcher)
     mEditMenu.Update(model, dispatcher);
     mViewMenu.Update(model, dispatcher);
     mMapMenu.Update(model, dispatcher);
-    mHelpMenu.Update();
+    mHelpMenu.Update(model, dispatcher);
     mDebugMenu.Update();
 
     ImGui::EndMainMenuBar();
