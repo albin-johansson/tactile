@@ -1,5 +1,7 @@
 #pragma once
 
+#include <tactile_def.hpp>
+
 #include "dialog.hpp"
 #include "io/preferences.hpp"
 
@@ -10,6 +12,9 @@ namespace Tactile {
 
 class SettingsDialog final : public ADialog {
  public:
+  TACTILE_DEFAULT_COPY(SettingsDialog)
+  TACTILE_DEFAULT_MOVE(SettingsDialog)
+
   SettingsDialog();
 
   ~SettingsDialog() override = default;
@@ -26,8 +31,8 @@ class SettingsDialog final : public ADialog {
   void OnApply(entt::dispatcher& dispatcher) override;
 
  private:
-  Preferences mSnapshot; /* The original settings when the dialog was opened */
-  Preferences mSettings; /* The value of the settings in the GUI */
+  Preferences mSnapshot;  ///< The original settings when the dialog was opened.
+  Preferences mSettings;  ///< The value of the settings in the GUI.
 
   void ApplySettings(entt::dispatcher& dispatcher);
 
