@@ -19,7 +19,6 @@
 #include "core/systems/viewport_system.hpp"
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
-#include "editor/gui/dialogs/map_import_error_dialog.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
 #include "editor/gui/toolbar/toolbar.hpp"
 #include "editor/gui/viewport/map_view.hpp"
