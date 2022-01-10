@@ -8,47 +8,39 @@
 #include "logging.hpp"
 
 namespace Tactile {
-namespace {
 
-constinit bool gShow = false;
-
-}  // namespace
-
-void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
+void OpenSaveAsDialog(entt::dispatcher& dispatcher)
 {
-  if (gShow) {
-    auto dialog = FileDialog::SaveMap();
-    if (dialog.IsOkay()) {
-      auto path = dialog.GetPath().string();
+  auto dialog = FileDialog::SaveMap();
+  if (dialog.IsOkay()) {
+    auto path = dialog.GetPath();
 
-      // TODO is this logic still required with new file dialogs?
-      if (!path.ends_with(".yaml") && !path.ends_with(".yml") &&
-          !path.ends_with(".tmx") && !path.ends_with(".xml") &&
-          !path.ends_with(".json")) {
-        const auto& format = Prefs::GetPreferredFormat();
-        LogInfo("No suffix provided in requested file path, using preferred format ({})",
-                format);
-        if (format == "YAML") {
-          path += ".yaml";
-        }
-        else if (format == "JSON") {
-          path += ".json";
-        }
-        else if (format == "XML") {
-          path += ".tmx";
-        }
+    const auto ext = path.extension();
+    const auto hasValidExtension = ext == ".yaml" || ext == ".yml" || ext == ".json" ||
+                                   ext == ".tmx" || ext == ".xml";
+
+    // TODO is this logic still required with new file dialogs?
+    if (!hasValidExtension) {
+      const auto& format = Prefs::GetPreferredFormat();
+      LogWarning("Invalid file extension '{}', assuming '{}'", ext, format);
+
+      if (format == "YAML") {
+        path += ".yaml";
       }
-
-      dispatcher.enqueue<SaveAsEvent>(std::move(path));
+      else if (format == "JSON") {
+        path += ".json";
+      }
+      else if (format == "XML") {
+        path += ".tmx";
+      }
+      else {
+        LogError("Could not amend requested file path with valid extension!");
+        return;
+      }
     }
 
-    gShow = false;
+    dispatcher.enqueue<SaveAsEvent>(std::move(path));
   }
-}
-
-void OpenSaveAsDialog()
-{
-  gShow = true;
 }
 
 }  // namespace Tactile

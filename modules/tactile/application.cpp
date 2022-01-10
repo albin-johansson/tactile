@@ -242,7 +242,7 @@ void Application::OnSaveAs(const SaveAsEvent& event)
 void Application::OnOpenSaveAsDialog()
 {
   if (mModel.HasActiveDocument()) {
-    OpenSaveAsDialog();
+    OpenSaveAsDialog(mDispatcher);
   }
 }
 

@@ -41,7 +41,6 @@ void WidgetManager::Update(const Model& model,
   mResizeMapDialog.Update(model, dispatcher);
 
   UpdateMapImportErrorDialog();
-  UpdateSaveAsDialog(dispatcher);
 }
 
 void WidgetManager::ShowSettings()
