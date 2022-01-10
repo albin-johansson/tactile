@@ -2,6 +2,7 @@
 
 #include <entt/entt.hpp>
 
+#include "editor/gui/dialogs/about_dialog.hpp"
 #include "editor/gui/dialogs/credits_dialog.hpp"
 
 namespace Tactile {
@@ -15,8 +16,8 @@ class HelpMenu final {
   void UpdateWindows();
 
  private:
+  AboutDialog mAboutDialog;
   CreditsDialog mCreditsDialog;
-  bool mShowAboutTactile{};
   bool mShowAboutImGui{};
 };
 

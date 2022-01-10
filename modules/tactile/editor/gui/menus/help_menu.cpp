@@ -14,7 +14,10 @@ namespace Tactile {
 void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   if (Scoped::Menu menu{"Help"}; menu.IsOpen()) {
-    mShowAboutTactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
+    if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
+      mAboutDialog.Open();
+    }
+
     mShowAboutImGui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
 
     ImGui::Separator();
@@ -28,15 +31,12 @@ void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     }
   }
 
+  mAboutDialog.Update(model, dispatcher);
   mCreditsDialog.Update(model, dispatcher);
 }
 
 void HelpMenu::UpdateWindows()
 {
-  if (mShowAboutTactile) {
-    UpdateAboutDialog(&mShowAboutTactile);
-  }
-
   if (mShowAboutImGui) {
     CenterNextWindowOnAppearance();
     ImGui::ShowAboutWindow(&mShowAboutImGui);

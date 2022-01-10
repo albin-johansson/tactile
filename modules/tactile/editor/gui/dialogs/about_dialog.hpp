@@ -1,14 +1,17 @@
 #pragma once
 
+#include "dialog.hpp"
+
 namespace Tactile {
 
-/**
- * \brief Updates the "About Tactile" dialog.
- *
- * \ingroup gui
- *
- * \param[out] open a pointer to which the open state is written to.
- */
-void UpdateAboutDialog(bool* open);
+class AboutDialog final : public ADialog {
+ public:
+  AboutDialog();
+
+  void Open();
+
+ protected:
+  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+};
 
 }  // namespace Tactile

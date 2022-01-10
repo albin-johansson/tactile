@@ -1,44 +1,45 @@
 #include "about_dialog.hpp"
 
-#include <centurion.hpp>  // open_url
+#include <centurion.hpp>
 #include <imgui.h>
 
-#include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/scoped.hpp"
 
 #define TACTILE_VER "0.3.0"
 #define TACTILE_URL "https://www.github.com/albin-johansson/tactile"
+#define TACTILE_LICENSE "GPL v3.0"
 
 namespace Tactile {
-namespace {
 
-constexpr auto gSourceCode = "Source code: " TACTILE_URL;
-
-}  // namespace
-
-void UpdateAboutDialog(bool* open)
+AboutDialog::AboutDialog() : ADialog{"About Tactile"}
 {
-  CenterNextWindowOnAppearance();
-  Scoped::Window window{"About Tactile", ImGuiWindowFlags_AlwaysAutoResize, open};
-  if (window.IsOpen()) {
-    ImGui::TextUnformatted("Tactile " TACTILE_VER " (C) Albin Johansson 2020-2021");
-    ImGui::Separator();
+  SetAcceptButtonLabel(nullptr);
+  SetCloseButtonLabel("Close");
+}
 
-    ImGui::TextUnformatted(
-        "This tool is open-source software, using the GPL v3.0 license.");
+void AboutDialog::Open()
+{
+  Show();
+}
 
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(gSourceCode);
-    ImGui::SameLine();
-    if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser")) {
-      cen::OpenURL(TACTILE_URL);
-    }
+void AboutDialog::UpdateContents(const Model&, entt::dispatcher&)
+{
+  ImGui::TextUnformatted("Tactile " TACTILE_VER " (C) Albin Johansson 2020-2022");
+  ImGui::Separator();
 
-    ImGui::Spacing();
-    ImGui::TextUnformatted("Icons by Font Awesome.");
+  ImGui::TextUnformatted("This tool is open-source software, using the " TACTILE_LICENSE
+                         " license.");
+
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted("Source code: " TACTILE_URL);
+  ImGui::SameLine();
+  if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser")) {
+    cen::OpenURL(TACTILE_URL);
   }
+
+  ImGui::Spacing();
+  ImGui::TextUnformatted("Icons by Font Awesome.");
 }
 
 }  // namespace Tactile
