@@ -9,6 +9,9 @@ namespace Tactile {
 
 class ResizeMapDialog final : public ADialog {
  public:
+  TACTILE_DEFAULT_COPY(ResizeMapDialog)
+  TACTILE_DEFAULT_MOVE(ResizeMapDialog)
+
   ResizeMapDialog();
 
   ~ResizeMapDialog() override = default;
