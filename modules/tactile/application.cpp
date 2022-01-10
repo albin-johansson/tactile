@@ -300,7 +300,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
     AddFileToHistory(event.path);
   }
   else {
-    OpenMapImportErrorDialog(parser.GetError());
+    mWidgets.ShowMapImportErrorDialog(parser.GetError());
   }
 }
 

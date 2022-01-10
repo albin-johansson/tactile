@@ -2,7 +2,6 @@
 
 #include <utility>  // move
 
-#include "dialogs/map_import_error_dialog.hpp"
 #include "dialogs/resize_map_dialog.hpp"
 #include "dialogs/save_as_dialog.hpp"
 #include "editor/model.hpp"
@@ -39,8 +38,7 @@ void WidgetManager::Update(const Model& model,
   }
 
   mResizeMapDialog.Update(model, dispatcher);
-
-  UpdateMapImportErrorDialog();
+  mMapImportErrorDialog.Update(model, dispatcher);
 }
 
 void WidgetManager::ShowSettings()
@@ -88,6 +86,11 @@ void WidgetManager::ShowResizeMapDialog(const usize currentRows,
                                         const usize currentColumns)
 {
   mResizeMapDialog.Show(currentRows, currentColumns);
+}
+
+void WidgetManager::ShowMapImportErrorDialog(const IO::ParseError error)
+{
+  mMapImportErrorDialog.Open(error);
 }
 
 void WidgetManager::ShowComponentEditor(const Model& model)

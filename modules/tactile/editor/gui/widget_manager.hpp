@@ -2,8 +2,10 @@
 
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
+#include <tactile_io.hpp>
 
 #include "components/component_dock.hpp"
+#include "dialogs/map_import_error_dialog.hpp"
 #include "dialogs/resize_map_dialog.hpp"
 #include "layers/layer_dock.hpp"
 #include "menus/menu_bar.hpp"
@@ -38,6 +40,8 @@ class WidgetManager final {
 
   void ShowResizeMapDialog(usize currentRows, usize currentColumns);
 
+  void ShowMapImportErrorDialog(IO::ParseError error);
+
   void ShowComponentEditor(const Model& model);
 
   void SetToolbarVisible(bool visible);
@@ -66,6 +70,7 @@ class WidgetManager final {
   ComponentDock mComponentDock;
 
   ResizeMapDialog mResizeMapDialog;
+  MapImportErrorDialog mMapImportErrorDialog;
 };
 
 }  // namespace Tactile

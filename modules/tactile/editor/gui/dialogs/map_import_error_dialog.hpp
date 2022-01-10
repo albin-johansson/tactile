@@ -1,26 +1,23 @@
 #pragma once
 
+#include <tactile_def.hpp>
 #include <tactile_io.hpp>
+
+#include "dialog.hpp"
 
 namespace Tactile {
 
-/// \addtogroup gui
-/// \{
+class MapImportErrorDialog final : public ADialog {
+ public:
+  MapImportErrorDialog();
 
-/**
- * \brief Updates the map parsing error dialog.
- *
- * \see `OpenMapImportErrorDialog()`
- */
-void UpdateMapImportErrorDialog();
+  void Open(IO::ParseError error);
 
-/**
- * \brief Opens the map parsing error dialog.
- *
- * \param error the parse error that will be displayed.
- */
-void OpenMapImportErrorDialog(IO::ParseError error);
+ protected:
+  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
 
-/// \} End of group gui
+ private:
+  Maybe<IO::ParseError> mError;
+};
 
 }  // namespace Tactile

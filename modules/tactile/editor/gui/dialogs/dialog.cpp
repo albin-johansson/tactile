@@ -24,24 +24,31 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Spacing();
 
-    if (ImGui::Button(mCloseButtonLabel)) {
+    if (mCloseButtonLabel && ImGui::Button(mCloseButtonLabel)) {
       OnCancel();
       ImGui::CloseCurrentPopup();
     }
 
     const auto valid = IsCurrentInputValid(model);
 
-    ImGui::SameLine();
+    if (mAcceptButtonLabel) {
+      if (mCloseButtonLabel) {
+        ImGui::SameLine();
+      }
 
-    if (mAcceptButtonLabel && Button(mAcceptButtonLabel, nullptr, valid)) {
-      OnAccept(dispatcher);
-      ImGui::CloseCurrentPopup();
+      if (Button(mAcceptButtonLabel, nullptr, valid)) {
+        OnAccept(dispatcher);
+        ImGui::CloseCurrentPopup();
+      }
     }
 
-    ImGui::SameLine();
-
-    if (mApplyButtonLabel && Button(mApplyButtonLabel, nullptr, valid)) {
-      OnApply(dispatcher);
+    if (mApplyButtonLabel) {
+      if (mCloseButtonLabel || mAcceptButtonLabel) {
+        ImGui::SameLine();
+      }
+      if (Button(mApplyButtonLabel, nullptr, valid)) {
+        OnApply(dispatcher);
+      }
     }
   }
 }
@@ -63,7 +70,7 @@ void ADialog::SetApplyButtonLabel(const CStr label)
 
 void ADialog::SetCloseButtonLabel(const CStr label)
 {
-  mCloseButtonLabel = label ? label : "Cancel";
+  mCloseButtonLabel = label;
 }
 
 }  // namespace Tactile
