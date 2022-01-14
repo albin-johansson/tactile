@@ -31,7 +31,9 @@ enum class LogLevel {
 };
 
 template <typename... Args>
-void Print(const fmt::color color, const std::string_view fmt, const Args&... args)
+void Print([[maybe_unused]] const fmt::color color,
+           const std::string_view fmt,
+           const Args&... args)
 {
   if constexpr (IsPlatformWindows()) {
     fmt::print(fmt, args...);
