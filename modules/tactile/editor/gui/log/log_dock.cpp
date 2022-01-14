@@ -171,7 +171,7 @@ void LogDock::Update()
       ShowLogContents(mLogLevel);
     }
     else {
-      CenteredText("No logged messages matching current filter.");
+      CenteredText("No logged messages match the current filter.");
     }
 
     if (auto popup = Scoped::Popup::ForWindow("##LogDockContext"); popup.IsOpen()) {
