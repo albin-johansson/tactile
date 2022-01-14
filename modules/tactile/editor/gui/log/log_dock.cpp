@@ -1,8 +1,5 @@
 #include "log_dock.hpp"
 
-#include <deque>    // deque
-#include <utility>  // move
-
 #include <imgui.h>
 #include <tactile_def.hpp>
 
@@ -14,7 +11,6 @@
 namespace Tactile {
 namespace {
 
-constinit bool gHasFocus = false;
 constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                              ImGuiWindowFlags_HorizontalScrollbar |
@@ -22,7 +18,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
 
 }  // namespace
 
-void UpdateLogDock()
+void LogDock::Update()
 {
   if (!Prefs::GetShowLogDock()) {
     return;
@@ -31,7 +27,7 @@ void UpdateLogDock()
   bool visible = Prefs::GetShowLogDock();
 
   Scoped::Window dock{"Log", gWindowFlags, &visible};
-  gHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
+  mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.IsOpen()) {
     Scoped::Child pane{"##LogPane", ImVec2{}, true, gChildFlags};
@@ -54,11 +50,6 @@ void UpdateLogDock()
   }
 
   Prefs::SetShowLogDock(visible);
-}
-
-auto IsLogDockFocused() noexcept -> bool
-{
-  return gHasFocus;
 }
 
 }  // namespace Tactile

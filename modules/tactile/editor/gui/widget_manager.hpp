@@ -1,25 +1,33 @@
 #pragma once
 
+#include <memory>  // unique_ptr
+
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 #include <tactile_io.hpp>
-
-#include "components/component_dock.hpp"
-#include "dialogs/map_import_error_dialog.hpp"
-#include "dialogs/resize_map_dialog.hpp"
-#include "layers/layer_dock.hpp"
-#include "menus/menu_bar.hpp"
-#include "properties/properties_dock.hpp"
-#include "tilesets/tileset_dock.hpp"
-#include "toolbar/toolbar.hpp"
 
 namespace Tactile {
 
 class Model;
 class Icons;
 
+class MenuBar;
+class Toolbar;
+class TilesetDock;
+class LayerDock;
+class PropertiesDock;
+class ComponentDock;
+class LogDock;
+
+class ResizeMapDialog;
+class MapImportErrorDialog;
+
 class WidgetManager final {
  public:
+  WidgetManager();
+
+  ~WidgetManager() noexcept;
+
   void Update(const Model& model, const Icons& icons, entt::dispatcher& dispatcher);
 
   void ShowSettings();
@@ -62,15 +70,16 @@ class WidgetManager final {
   [[nodiscard]] auto GetTilesetViewHeight() const -> Maybe<float>;
 
  private:
-  MenuBar mMenuBar;
-  Toolbar mToolbar;
-  TilesetDock mTilesetDock;
-  LayerDock mLayerDock;
-  PropertiesDock mPropertiesDock;
-  ComponentDock mComponentDock;
+  std::unique_ptr<MenuBar> mMenuBar;
+  std::unique_ptr<Toolbar> mToolbar;
+  std::unique_ptr<TilesetDock> mTilesetDock;
+  std::unique_ptr<LayerDock> mLayerDock;
+  std::unique_ptr<PropertiesDock> mPropertiesDock;
+  std::unique_ptr<ComponentDock> mComponentDock;
+  std::unique_ptr<LogDock> mLogDock;
 
-  ResizeMapDialog mResizeMapDialog;
-  MapImportErrorDialog mMapImportErrorDialog;
+  std::unique_ptr<ResizeMapDialog> mResizeMapDialog;
+  std::unique_ptr<MapImportErrorDialog> mMapImportErrorDialog;
 };
 
 }  // namespace Tactile

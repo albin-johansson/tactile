@@ -1,11 +1,15 @@
 #pragma once
 
-#include <string>  // string
-
 namespace Tactile {
 
-void UpdateLogDock();
+class LogDock final {
+ public:
+  void Update();
 
-[[nodiscard]] auto IsLogDockFocused() noexcept -> bool;
+  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+
+ private:
+  bool mHasFocus{};
+};
 
 }  // namespace Tactile
