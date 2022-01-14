@@ -1,6 +1,7 @@
 #include "model.hpp"
 
-#include <utility>  // move
+#include <algorithm>  // any_of
+#include <utility>    // move
 
 #include <tactile_stdlib.hpp>
 
@@ -21,61 +22,6 @@ void Model::Update()
   if (auto* registry = GetActiveRegistry()) {
     Sys::UpdateAnimations(*registry);
   }
-}
-
-void Model::OnCommandCapacityChanged(const SetCommandCapacityEvent& event)
-{
-  for (auto& [id, document] : mDocuments) {
-    document->commands.SetCapacity(event.capacity);
-  }
-}
-
-auto Model::IsClean() const -> bool
-{
-  return mActiveMap && mDocuments.At(*mActiveMap)->commands.IsClean();
-}
-
-auto Model::CanUndo() const -> bool
-{
-  return mActiveMap && mDocuments.At(*mActiveMap)->commands.CanUndo();
-}
-
-auto Model::CanRedo() const -> bool
-{
-  return mActiveMap && mDocuments.At(*mActiveMap)->commands.CanRedo();
-}
-
-auto Model::GetUndoText() const -> const std::string&
-{
-  TACTILE_ASSERT(CanUndo());
-  return mDocuments.At(mActiveMap.value())->commands.GetUndoText();
-}
-
-auto Model::GetRedoText() const -> const std::string&
-{
-  TACTILE_ASSERT(CanRedo());
-  return mDocuments.At(mActiveMap.value())->commands.GetRedoText();
-}
-
-auto Model::CanSaveDocument() const -> bool
-{
-  if (mActiveMap) {
-    const auto& document = mDocuments.At(*mActiveMap);
-    return !document->commands.IsClean();
-  }
-  else {
-    return false;
-  }
-}
-
-auto Model::CanDecreaseViewportTileSize() const -> bool
-{
-  if (HasActiveDocument()) {
-    const auto& document = mDocuments.At(*mActiveMap);
-    return Sys::CanDecreaseViewportZoom(document->registry);
-  }
-
-  return false;
 }
 
 auto Model::AddMap(Document document) -> MapID
@@ -145,18 +91,40 @@ auto Model::GetPath(const MapID id) const -> const std::filesystem::path&
 
 auto Model::HasDocumentWithPath(const std::filesystem::path& path) const -> bool
 {
-  for (const auto& [id, document] : mDocuments) {
-    if (document->path == path) {
-      return true;
-    }
-  }
+  return std::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
+    return pair.second->path == path;
+  });
+}
 
-  return false;
+auto Model::GetActiveMapId() const -> Maybe<MapID>
+{
+  return mActiveMap;
 }
 
 auto Model::HasActiveDocument() const -> bool
 {
   return mActiveMap.has_value();
+}
+
+auto Model::CanSaveDocument() const -> bool
+{
+  if (mActiveMap) {
+    const auto& document = mDocuments.At(*mActiveMap);
+    return !document->commands.IsClean();
+  }
+  else {
+    return false;
+  }
+}
+
+auto Model::CanDecreaseViewportTileSize() const -> bool
+{
+  if (HasActiveDocument()) {
+    const auto& document = mDocuments.At(*mActiveMap);
+    return Sys::CanDecreaseViewportZoom(document->registry);
+  }
+
+  return false;
 }
 
 auto Model::GetActiveDocument() -> Document*
@@ -217,6 +185,40 @@ auto Model::GetActiveRegistryRef() const -> const entt::registry&
   else {
     ThrowTraced(TactileError{"No active registry to return!"});
   }
+}
+
+void Model::SetCommandCapacity(const usize capacity)
+{
+  for (auto& [id, document] : mDocuments) {
+    document->commands.SetCapacity(capacity);
+  }
+}
+
+auto Model::IsClean() const -> bool
+{
+  return mActiveMap && mDocuments.At(*mActiveMap)->commands.IsClean();
+}
+
+auto Model::CanUndo() const -> bool
+{
+  return mActiveMap && mDocuments.At(*mActiveMap)->commands.CanUndo();
+}
+
+auto Model::CanRedo() const -> bool
+{
+  return mActiveMap && mDocuments.At(*mActiveMap)->commands.CanRedo();
+}
+
+auto Model::GetUndoText() const -> const std::string&
+{
+  TACTILE_ASSERT(CanUndo());
+  return mDocuments.At(mActiveMap.value())->commands.GetUndoText();
+}
+
+auto Model::GetRedoText() const -> const std::string&
+{
+  TACTILE_ASSERT(CanRedo());
+  return mDocuments.At(mActiveMap.value())->commands.GetRedoText();
 }
 
 auto Model::IsStampActive() const -> bool

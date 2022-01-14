@@ -42,6 +42,9 @@ void Execute(Model& model, Args&&... args)
     auto& commands = document->commands;
     commands.Push<Command>(document->registry, std::forward<Args>(args)...);
   }
+  else {
+    LogError("Could not execute a command due to no active document!");
+  }
 }
 
 template <typename Command, typename... Args>
@@ -50,6 +53,9 @@ void Register(Model& model, Args&&... args)
   if (auto* document = model.GetActiveDocument()) {
     auto& commands = document->commands;
     commands.PushWithoutRedo<Command>(document->registry, std::forward<Args>(args)...);
+  }
+  else {
+    LogError("Could not register a command due to no active document!");
   }
 }
 
@@ -211,7 +217,7 @@ void Application::OnRedo()
 
 void Application::OnSetCommandCapacity(const SetCommandCapacityEvent& event)
 {
-  mModel.OnCommandCapacityChanged(event);
+  mModel.SetCommandCapacity(event.capacity);
 }
 
 void Application::OnSave()
@@ -310,30 +316,26 @@ void Application::OnSelectMap(const SelectMapEvent& event)
 
 void Application::OnSelectTool(const SelectToolEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::SelectTool(*registry, event.type);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::SelectTool(registry, event.type);
 }
 
 void Application::OnMousePressed(const MousePressedEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::ToolOnPressed(*registry, mDispatcher, event.info);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::ToolOnPressed(registry, mDispatcher, event.info);
 }
 
 void Application::OnMouseDrag(const MouseDragEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::ToolOnDragged(*registry, mDispatcher, event.info);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::ToolOnDragged(registry, mDispatcher, event.info);
 }
 
 void Application::OnMouseReleased(const MouseReleasedEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::ToolOnReleased(*registry, mDispatcher, event.info);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::ToolOnReleased(registry, mDispatcher, event.info);
 }
 
 void Application::OnStampSequence(StampSequenceEvent event)
