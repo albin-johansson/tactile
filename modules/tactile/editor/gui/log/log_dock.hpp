@@ -1,5 +1,7 @@
 #pragma once
 
+#include "logging.hpp"
+
 namespace Tactile {
 
 class LogDock final {
@@ -9,6 +11,7 @@ class LogDock final {
   [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
 
  private:
+  LogLevel mLogLevel{LogLevel::Verbose};
   bool mHasFocus{};
 };
 
