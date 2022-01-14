@@ -5,7 +5,7 @@
 #include "editor/events/map_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "editor/gui/tilesets/dialogs/tileset_dialog.hpp"
+#include "editor/gui/tilesets/dialogs/create_tileset_dialog.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 

@@ -394,8 +394,8 @@ set(SOURCE_FILES
     editor/gui/tilesets/tileset_view.cpp
     editor/gui/tilesets/tileset_view.hpp
 
-    editor/gui/tilesets/dialogs/tileset_dialog.cpp
-    editor/gui/tilesets/dialogs/tileset_dialog.hpp
+    editor/gui/tilesets/dialogs/create_tileset_dialog.cpp
+    editor/gui/tilesets/dialogs/create_tileset_dialog.hpp
 
     editor/gui/toolbar/toolbar.cpp
     editor/gui/toolbar/toolbar.hpp
