@@ -49,7 +49,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
         drag.last_mouse_y = mouse.y;
 
         active.entity = objectEntity;
-        dispatcher.enqueue<SetPropertyContextEvent>(objectEntity);
+        dispatcher.enqueue<InspectContextEvent>(objectEntity);
       }
     }
     else if (mouse.button == cen::MouseButton::Right) {

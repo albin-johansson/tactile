@@ -114,7 +114,6 @@ class Application final {
   void OnRemoveTileset(const RemoveTilesetEvent& event);
   void OnSelectTileset(const SelectTilesetEvent& event);
   void OnSetTilesetSelection(const SetTilesetSelectionEvent& event);
-  void OnShowTilesetProperties(const ShowTilesetPropertiesEvent& event);
   void OnSetTilesetName(const SetTilesetNameEvent& event);
 
   void OnAddRow();
@@ -134,7 +133,6 @@ class Application final {
   void OnSetLayerVisible(const SetLayerVisibleEvent& event);
   void OnOpenRenameLayerDialog(const OpenRenameLayerDialogEvent& event);
   void OnRenameLayer(const RenameLayerEvent& event);
-  void OnShowLayerProperties(const ShowLayerPropertiesEvent& event);
 
   void OnSetObjectName(const SetObjectNameEvent& event);
   void OnMoveObject(const MoveObjectEvent& event);
@@ -150,7 +148,7 @@ class Application final {
   void OnRenameProperty(const RenamePropertyEvent& event);
   void OnUpdateProperty(const UpdatePropertyEvent& event);
   void OnChangePropertyType(const ChangePropertyTypeEvent& event);
-  void OnSetPropertyContext(const SetPropertyContextEvent& event);
+  void OnInspectContext(const InspectContextEvent& event);
 
   void OnOpenComponentEditor();
   void OnCreateComponentDef(const CreateComponentDefEvent& event);

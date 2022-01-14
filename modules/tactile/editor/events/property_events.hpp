@@ -55,7 +55,7 @@ struct ChangePropertyTypeEvent final
   PropertyType type;  ///< Requested new property type.
 };
 
-struct SetPropertyContextEvent final
+struct InspectContextEvent final
 {
   entt::entity entity{entt::null};  ///< Entity that features `PropertyContext` component.
 };

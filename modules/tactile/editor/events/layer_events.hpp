@@ -51,11 +51,6 @@ struct SetLayerVisibleEvent final
   bool visible{};
 };
 
-struct ShowLayerPropertiesEvent final
-{
-  LayerID id;
-};
-
 struct OpenRenameLayerDialogEvent final
 {
   LayerID id;

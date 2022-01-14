@@ -2,8 +2,10 @@
 
 #include <imgui.h>
 
+#include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "editor/events/layer_events.hpp"
+#include "editor/events/property_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 
@@ -15,7 +17,9 @@ void UpdateLayerItemPopup(const entt::registry& registry,
 {
   if (auto popup = Scoped::Popup::ForItem("##LayerItemPopup"); popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
-      dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
+      const auto entity = Sys::FindLayer(registry, id);
+      TACTILE_ASSERT(entity != entt::null);
+      dispatcher.enqueue<InspectContextEvent>(entity);
     }
 
     ImGui::Separator();

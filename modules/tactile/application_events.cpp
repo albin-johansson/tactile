@@ -54,7 +54,6 @@ void SubscribeToEvents(App& app)
   app.Connect<RemoveTilesetEvent, &App::OnRemoveTileset>();
   app.Connect<SelectTilesetEvent, &App::OnSelectTileset>();
   app.Connect<SetTilesetSelectionEvent, &App::OnSetTilesetSelection>();
-  app.Connect<ShowTilesetPropertiesEvent, &App::OnShowTilesetProperties>();
   app.Connect<SetTilesetNameEvent, &App::OnSetTilesetName>();
 
   app.Connect<AddRowEvent, &App::OnAddRow>();
@@ -74,7 +73,6 @@ void SubscribeToEvents(App& app)
   app.Connect<SetLayerVisibleEvent, &App::OnSetLayerVisible>();
   app.Connect<OpenRenameLayerDialogEvent, &App::OnOpenRenameLayerDialog>();
   app.Connect<RenameLayerEvent, &App::OnRenameLayer>();
-  app.Connect<ShowLayerPropertiesEvent, &App::OnShowLayerProperties>();
 
   app.Connect<SetObjectNameEvent, &App::OnSetObjectName>();
   app.Connect<MoveObjectEvent, &App::OnMoveObject>();
@@ -90,7 +88,7 @@ void SubscribeToEvents(App& app)
   app.Connect<RenamePropertyEvent, &App::OnRenameProperty>();
   app.Connect<UpdatePropertyEvent, &App::OnUpdateProperty>();
   app.Connect<ChangePropertyTypeEvent, &App::OnChangePropertyType>();
-  app.Connect<SetPropertyContextEvent, &App::OnSetPropertyContext>();
+  app.Connect<InspectContextEvent, &App::OnInspectContext>();
 
   app.Connect<OpenComponentEditorEvent, &App::OnOpenComponentEditor>();
   app.Connect<CreateComponentDefEvent, &App::OnCreateComponentDef>();

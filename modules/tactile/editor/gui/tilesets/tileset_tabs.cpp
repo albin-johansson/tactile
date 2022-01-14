@@ -4,6 +4,7 @@
 
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
+#include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/menus/map_menu.hpp"
@@ -16,7 +17,9 @@ namespace {
 constexpr auto gTabBarFlags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
-void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
+void UpdateContextMenu(const TilesetID id,
+                       const entt::entity tilesetEntity,
+                       entt::dispatcher& dispatcher)
 {
   if (auto popup = Scoped::Popup::ForItem("##TilesetTabContext"); popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
@@ -26,7 +29,7 @@ void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
-      dispatcher.enqueue<ShowTilesetPropertiesEvent>(id);
+      dispatcher.enqueue<InspectContextEvent>(tilesetEntity);
     }
 
     ImGui::Separator();
@@ -76,7 +79,7 @@ void TilesetTabWidget::Update(const entt::registry& registry,
         dispatcher.enqueue<SelectTilesetEvent>(tileset.id);
       }
       else {
-        UpdateContextMenu(tileset.id, dispatcher);
+        UpdateContextMenu(tileset.id, entity, dispatcher);
       }
     }
   }

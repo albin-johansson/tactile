@@ -451,13 +451,6 @@ void Application::OnSetTilesetSelection(const SetTilesetSelectionEvent& event)
   Sys::UpdateTilesetSelection(registry, event.selection);
 }
 
-void Application::OnShowTilesetProperties(const ShowTilesetPropertiesEvent& event)
-{
-  auto& registry = mModel.GetActiveRegistryRef();
-  auto& current = registry.ctx<ActivePropertyContext>();
-  current.entity = Sys::FindTileset(registry, event.id);
-}
-
 void Application::OnSetTilesetName(const SetTilesetNameEvent& event)
 {
   Execute<SetTilesetNameCmd>(mModel, event.id, event.name);
@@ -548,14 +541,6 @@ void Application::OnRenameLayer(const RenameLayerEvent& event)
   Execute<RenameLayerCmd>(mModel, event.id, event.name);
 }
 
-void Application::OnShowLayerProperties(const ShowLayerPropertiesEvent& event)
-{
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    auto& current = registry->ctx<ActivePropertyContext>();
-    current.entity = Sys::FindLayer(*registry, event.id);
-  }
-}
-
 void Application::OnSetObjectName(const SetObjectNameEvent& event)
 {
   Execute<SetObjectNameCmd>(mModel, event.id, event.name);
@@ -627,12 +612,11 @@ void Application::OnChangePropertyType(const ChangePropertyTypeEvent& event)
   Execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
 }
 
-void Application::OnSetPropertyContext(const SetPropertyContextEvent& event)
+void Application::OnInspectContext(const InspectContextEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    auto& current = registry->ctx<ActivePropertyContext>();
-    current.entity = event.entity;
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  auto& current = registry.ctx<ActivePropertyContext>();
+  current.entity = event.entity;
 }
 
 void Application::OnOpenComponentEditor()

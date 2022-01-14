@@ -183,7 +183,7 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
     const auto& object = registry.get<Object>(active.entity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
-      dispatcher.enqueue<SetPropertyContextEvent>(active.entity);
+      dispatcher.enqueue<InspectContextEvent>(active.entity);
     }
 
     ImGui::Separator();

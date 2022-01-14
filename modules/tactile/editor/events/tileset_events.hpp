@@ -37,7 +37,7 @@ struct SetTilesetSelectionEvent final
   Region selection;
 };
 
-struct ShowTilesetPropertiesEvent final
+struct [[deprecated]] InspectTilesetEvent final
 {
   TilesetID id;
 };
