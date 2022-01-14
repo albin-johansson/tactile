@@ -16,7 +16,7 @@ auto main(int, char**) -> int
   catch (const std::exception& e) {
     Tactile::Print(fmt::color::hot_pink, "Unhandled exception message: '{}'\n", e.what());
 
-    if (const auto* stacktrace = boost::get_error_info<Tactile::TracedError>(e)) {
+    if (const auto* stacktrace = boost::get_error_info<Tactile::TraceInfo>(e)) {
       Tactile::Print(fmt::color::hot_pink, "{}\n", *stacktrace);
     }
 
