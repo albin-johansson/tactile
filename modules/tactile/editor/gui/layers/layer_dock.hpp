@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-#include "rename_layer_dialog.hpp"
+#include "dialogs/rename_layer_dialog.hpp"
 
 namespace Tactile {
 

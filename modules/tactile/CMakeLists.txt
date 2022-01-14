@@ -348,8 +348,9 @@ set(SOURCE_FILES
     editor/gui/layers/layer_item.hpp
     editor/gui/layers/layer_item_popup.cpp
     editor/gui/layers/layer_item_popup.hpp
-    editor/gui/layers/rename_layer_dialog.cpp
-    editor/gui/layers/rename_layer_dialog.hpp
+
+    editor/gui/layers/dialogs/rename_layer_dialog.cpp
+    editor/gui/layers/dialogs/rename_layer_dialog.hpp
 
     editor/gui/log/log_dock.cpp
     editor/gui/log/log_dock.hpp
