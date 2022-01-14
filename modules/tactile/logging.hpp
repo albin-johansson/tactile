@@ -33,7 +33,7 @@ template <typename... Args>
 void Print(const fmt::color color, const std::string_view fmt, const Args&... args)
 {
   if constexpr (IsPlatformWindows()) {
-    fmt::print(fmt::fg(color), fmt, args...);
+    fmt::print(fmt, args...);
   }
   else {
     fmt::print(fmt::fg(color), fmt, args...);
