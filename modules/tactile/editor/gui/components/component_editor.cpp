@@ -9,7 +9,6 @@
 #include <centurion.hpp>
 #include <imgui.h>
 
-#include "assert.hpp"
 #include "core/components/component.hpp"
 #include "core/systems/component_system.hpp"
 #include "editor/events/component_events.hpp"
@@ -33,24 +32,21 @@ ComponentEditor::ComponentEditor() : ADialog{"Component Editor"}
 
 void ComponentEditor::Open(const Model& model)
 {
-  const auto* registry = model.GetActiveRegistry();
-  TACTILE_ASSERT(registry);
-
-  mActiveComponent = Sys::GetFirstAvailableComponentDef(*registry);
+  const auto& registry = model.GetActiveRegistryRef();
+  mActiveComponent = Sys::GetFirstAvailableComponentDef(registry);
   Show();
 }
 
 void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto* registry = model.GetActiveRegistry();
-  TACTILE_ASSERT(registry);
+  const auto& registry = model.GetActiveRegistryRef();
 
   /* Ensure that the active component ID hasn't been invalidated */
-  if (mActiveComponent && !Sys::IsComponentValid(*registry, *mActiveComponent)) {
+  if (mActiveComponent && !Sys::IsComponentValid(registry, *mActiveComponent)) {
     mActiveComponent.reset();
   }
 
-  if (registry->storage<ComponentDef>().empty()) {
+  if (registry.storage<ComponentDef>().empty()) {
     ImGui::TextUnformatted("There are no available components for the current map.");
 
     if (CenteredButton(TAC_ICON_ADD, "Create Component")) {
@@ -63,13 +59,13 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
     ImGui::SameLine();
 
     if (!mActiveComponent) {
-      const auto entity = registry->view<ComponentDef>().front();
-      mActiveComponent = registry->get<ComponentDef>(entity).id;
+      const auto entity = registry.view<ComponentDef>().front();
+      mActiveComponent = registry.get<ComponentDef>(entity).id;
     }
 
-    const auto& name = Sys::GetComponentDefName(*registry, mActiveComponent.value());
+    const auto& name = Sys::GetComponentDefName(registry, mActiveComponent.value());
     if (Scoped::Combo combo{"##ComponentEditorCombo", name.c_str()}; combo.IsOpen()) {
-      for (auto&& [entity, component] : registry->view<ComponentDef>().each()) {
+      for (auto&& [entity, component] : registry.view<ComponentDef>().each()) {
         if (ImGui::Selectable(component.name.c_str())) {
           mActiveComponent = component.id;
         }
@@ -88,13 +84,13 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
       ImGui::OpenPopup("##ComponentEditorPopup");
     }
 
-    ShowComponentComboPopup(*registry, dispatcher);
+    ShowComponentComboPopup(registry, dispatcher);
 
     ImGui::Separator();
   }
 
   if (mActiveComponent) {
-    ShowComponentAttributes(*registry, dispatcher, *mActiveComponent);
+    ShowComponentAttributes(registry, dispatcher, *mActiveComponent);
   }
 
   mCreateComponentDialog.Update(model, dispatcher);

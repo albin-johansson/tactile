@@ -52,12 +52,9 @@ class Model final {
 
   [[nodiscard]] auto GetActiveRegistry() const -> const entt::registry*;
 
-  [[nodiscard]] auto begin() const noexcept -> const_iterator
-  {
-    return mDocuments.begin();
-  }
+  [[nodiscard]] auto GetActiveRegistryRef() -> entt::registry&;
 
-  [[nodiscard]] auto end() const noexcept -> const_iterator { return mDocuments.end(); }
+  [[nodiscard]] auto GetActiveRegistryRef() const -> const entt::registry&;
 
   [[nodiscard]] auto IsStampActive() const -> bool;
 
@@ -88,6 +85,13 @@ class Model final {
   [[nodiscard]] auto CanSaveDocument() const -> bool;
 
   [[nodiscard]] auto CanDecreaseViewportTileSize() const -> bool;
+
+  [[nodiscard]] auto begin() const noexcept -> const_iterator
+  {
+    return mDocuments.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept -> const_iterator { return mDocuments.end(); }
 
  private:
   document_map mDocuments;

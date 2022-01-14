@@ -4,7 +4,6 @@
 
 #include <imgui.h>
 
-#include "assert.hpp"
 #include "dialogs/add_property_dialog.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -25,10 +24,8 @@ void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
-    const auto* registry = model.GetActiveRegistry();
-    TACTILE_ASSERT(registry);
-
-    mPropertyTable.Update(*registry, dispatcher);
+    const auto& registry = model.GetActiveRegistryRef();
+    mPropertyTable.Update(registry, dispatcher);
   }
 
   mAddDialog.Update(model, dispatcher);

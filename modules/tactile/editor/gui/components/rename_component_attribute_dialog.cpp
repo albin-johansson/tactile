@@ -2,7 +2,6 @@
 
 #include <utility>  // move
 
-#include "assert.hpp"
 #include "core/systems/component_system.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/model.hpp"
@@ -32,11 +31,9 @@ void RenameComponentAttributeDialog::OnAccept(entt::dispatcher& dispatcher)
 auto RenameComponentAttributeDialog::Validate(const Model& model,
                                               const std::string_view input) const -> bool
 {
-  const auto* registry = model.GetActiveRegistry();
-  TACTILE_ASSERT(registry);
-
+  const auto& registry = model.GetActiveRegistryRef();
   return !input.empty() &&
-         !Sys::IsComponentAttributeNameTaken(*registry, mComponentId.value(), input);
+         !Sys::IsComponentAttributeNameTaken(registry, mComponentId.value(), input);
 }
 
 }  // namespace Tactile

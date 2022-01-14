@@ -2,6 +2,8 @@
 
 #include <utility>  // move
 
+#include <tactile_stdlib.hpp>
+
 #include "assert.hpp"
 #include "core/map.hpp"
 #include "core/systems/animation_system.hpp"
@@ -10,6 +12,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "throw.hpp"
 
 namespace Tactile {
 
@@ -193,6 +196,26 @@ auto Model::GetActiveRegistry() const -> const entt::registry*
   }
   else {
     return nullptr;
+  }
+}
+
+auto Model::GetActiveRegistryRef() -> entt::registry&
+{
+  if (mActiveMap) {
+    return mDocuments.At(*mActiveMap)->registry;
+  }
+  else {
+    ThrowTraced(TactileError{"No active registry to return!"});
+  }
+}
+
+auto Model::GetActiveRegistryRef() const -> const entt::registry&
+{
+  if (mActiveMap) {
+    return mDocuments.At(*mActiveMap)->registry;
+  }
+  else {
+    ThrowTraced(TactileError{"No active registry to return!"});
   }
 }
 

@@ -80,15 +80,14 @@ void LayerDock::Update(const Model& model,
   Scoped::Window dock{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
   mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
-  const auto* registry = model.GetActiveRegistry();
-  TACTILE_ASSERT(registry);
+  const auto& registry = model.GetActiveRegistryRef();
 
   if (dock.IsOpen()) {
-    UpdateLayerDockButtons(*registry, dispatcher);
+    UpdateLayerDockButtons(registry, dispatcher);
     ImGui::SameLine();
 
     Scoped::Group group;
-    if (registry->view<Layer>().empty()) {
+    if (registry.view<Layer>().empty()) {
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available layers!");
     }
@@ -96,13 +95,13 @@ void LayerDock::Update(const Model& model,
       const ImVec2 size{-std::numeric_limits<float>::min(),
                         -std::numeric_limits<float>::min()};
       if (Scoped::ListBox list{"##LayerTreeNode", size}; list.IsOpen()) {
-        for (auto&& [entity, node] : registry->view<LayerTreeNode>().each()) {
+        for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
              other components in the view query directly. */
-          const auto& layer = registry->get<Layer>(entity);
-          const auto& parent = registry->get<Parent>(entity);
+          const auto& layer = registry.get<Layer>(entity);
+          const auto& parent = registry.get<Parent>(entity);
           if (parent.entity == entt::null) {
-            LayerItem(*registry, icons, dispatcher, entity, layer);
+            LayerItem(registry, icons, dispatcher, entity, layer);
           }
         }
       }
@@ -114,10 +113,10 @@ void LayerDock::Update(const Model& model,
   if (mRenameTarget.has_value()) {
     const auto target = *mRenameTarget;
 
-    const auto entity = Sys::FindLayer(*registry, target);
+    const auto entity = Sys::FindLayer(registry, target);
     TACTILE_ASSERT(entity != entt::null);
 
-    const auto& context = registry->get<PropertyContext>(entity);
+    const auto& context = registry.get<PropertyContext>(entity);
 
     mRenameLayerDialog.Show(target, context.name);
     mRenameTarget.reset();
