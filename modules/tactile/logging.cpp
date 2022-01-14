@@ -9,10 +9,17 @@
 namespace Tactile {
 namespace {
 
-inline std::deque<std::string> gHistory;
+struct LoggedString final
+{
+  LogLevel level{};
+  std::string str;
+};
+
+inline std::deque<LoggedString> gHistory;
 inline LogLevel gLogLevel{LogLevel::Info};
 
 void Log(const fmt::color color,
+         const LogLevel level,
          const std::string_view priority,
          const std::string_view fmt,
          const fmt::format_args args)
@@ -21,7 +28,7 @@ void Log(const fmt::color color,
   const auto msg = fmt::vformat(fmt, args);
   const auto full = fmt::format("{:%H:%M:%S} > {}\n", fmt::localtime(time), msg);
 
-  gHistory.push_back(full);
+  gHistory.emplace_back(level, full);
 
   if constexpr (IsDebugBuild()) {
     if constexpr (IsPlatformWindows()) {
@@ -37,63 +44,38 @@ void Log(const fmt::color color,
 
 namespace LoggerImpl {
 
-[[nodiscard]] constexpr auto IsEnabled(const LogLevel level) -> bool
-{
-  switch (level) {
-    case LogLevel::Verbose:
-      return gLogLevel == LogLevel::Verbose;
-
-    case LogLevel::Debug:
-      return gLogLevel == LogLevel::Verbose || gLogLevel == LogLevel::Debug;
-
-    case LogLevel::Info:
-      return gLogLevel == LogLevel::Verbose || gLogLevel == LogLevel::Debug ||
-             gLogLevel == LogLevel::Info;
-
-    case LogLevel::Warning:
-      return gLogLevel == LogLevel::Verbose || gLogLevel == LogLevel::Debug ||
-             gLogLevel == LogLevel::Info || gLogLevel == LogLevel::Warning;
-
-    case LogLevel::Error:
-      return true; /* Errors are always logged */
-
-    default:
-      return false;
-  }
-}
-
 void LogVerboseV(const std::string_view fmt, const fmt::format_args args)
 {
   if (IsEnabled(LogLevel::Verbose)) {
-    Log(fmt::color::violet, "[VERBOSE]", fmt, args);
+    Log(fmt::color::violet, LogLevel::Verbose, "[VERBOSE]", fmt, args);
   }
 }
 
 void LogDebugV(const std::string_view fmt, const fmt::format_args args)
 {
   if (IsEnabled(LogLevel::Debug)) {
-    Log(fmt::color::aquamarine, "[DEBUG]", fmt, args);
+    Log(fmt::color::aquamarine, LogLevel::Debug, "[DEBUG]", fmt, args);
   }
 }
 
 void LogInfoV(const std::string_view fmt, const fmt::format_args args)
 {
   if (IsEnabled(LogLevel::Info)) {
-    Log(fmt::color::white, "[INFO]", fmt, args);
+    Log(fmt::color::white, LogLevel::Info, "[INFO]", fmt, args);
   }
 }
 
 void LogWarningV(const std::string_view fmt, const fmt::format_args args)
 {
   if (IsEnabled(LogLevel::Warning)) {
-    Log(fmt::color::yellow, "[WARNING]", fmt, args);
+    Log(fmt::color::yellow, LogLevel::Warning, "[WARNING]", fmt, args);
   }
 }
 
 void LogErrorV(const std::string_view fmt, const fmt::format_args args)
 {
   if (IsEnabled(LogLevel::Error)) {
-    Log(fmt::color::orange_red, "[ERROR]", fmt, args);
+    Log(fmt::color::orange_red, LogLevel::Error, "[ERROR]", fmt, args);
   }
 }
 
@@ -111,7 +93,12 @@ void SetLogLevel(const LogLevel level)
 
 auto GetLoggedString(const usize index) -> const std::string&
 {
-  return gHistory.at(index);
+  return gHistory.at(index).str;
+}
+
+auto GetLoggedStringLevel(const usize index) -> LogLevel
+{
+  return gHistory.at(index).level;
 }
 
 auto GetLogSize() -> usize
@@ -119,9 +106,52 @@ auto GetLogSize() -> usize
   return gHistory.size();
 }
 
+auto GetLogSize(const LogLevel filter) -> usize
+{
+  usize count = 0;
+
+  for (const auto& [level, str] : gHistory) {
+    if (IsEnabled(filter, level)) {
+      ++count;
+    }
+  }
+
+  return count;
+}
+
 auto GetLogLevel() -> LogLevel
 {
   return gLogLevel;
+}
+
+auto IsEnabled(const LogLevel filter, const LogLevel level) -> bool
+{
+  switch (level) {
+    case LogLevel::Verbose:
+      return filter == LogLevel::Verbose;
+
+    case LogLevel::Debug:
+      return filter == LogLevel::Verbose || filter == LogLevel::Debug;
+
+    case LogLevel::Info:
+      return filter == LogLevel::Verbose || filter == LogLevel::Debug ||
+             filter == LogLevel::Info;
+
+    case LogLevel::Warning:
+      return filter == LogLevel::Verbose || filter == LogLevel::Debug ||
+             filter == LogLevel::Info || filter == LogLevel::Warning;
+
+    case LogLevel::Error:
+      return true; /* Errors are always logged */
+
+    default:
+      return false;
+  }
+}
+
+auto IsEnabled(const LogLevel level) -> bool
+{
+  return IsEnabled(gLogLevel, level);
 }
 
 }  // namespace Tactile

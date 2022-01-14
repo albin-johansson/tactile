@@ -76,8 +76,16 @@ void SetLogLevel(LogLevel level);
 
 [[nodiscard]] auto GetLoggedString(usize index) -> const std::string&;
 
+[[nodiscard]] auto GetLoggedStringLevel(usize index) -> LogLevel;
+
 [[nodiscard]] auto GetLogSize() -> usize;
 
+[[nodiscard]] auto GetLogSize(LogLevel filter) -> usize;
+
 [[nodiscard]] auto GetLogLevel() -> LogLevel;
+
+[[nodiscard]] auto IsEnabled(LogLevel filter, LogLevel level) -> bool;
+
+[[nodiscard]] auto IsEnabled(LogLevel level) -> bool;
 
 }  // namespace Tactile
