@@ -117,10 +117,14 @@ auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt:
 {
   const auto entity = registry.create();
 
-  registry.emplace<Tileset>(entity, std::move(snapshot.core));
+  auto& tileset = registry.emplace<Tileset>(entity, std::move(snapshot.core));
   registry.emplace<TilesetSelection>(entity, snapshot.selection);
   registry.emplace<Texture>(entity, snapshot.texture);
   registry.emplace<UvTileSize>(entity, snapshot.uv);
+
+  auto& viewport = registry.emplace<Viewport>(entity);
+  viewport.tile_width = static_cast<float>(tileset.tile_width);
+  viewport.tile_height = static_cast<float>(tileset.tile_height);
 
   RefreshTilesetCache(registry, entity);
   RestorePropertyContext(registry, entity, std::move(snapshot.context));
