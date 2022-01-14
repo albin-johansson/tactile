@@ -4,7 +4,6 @@
 #include <tactile_def.hpp>
 #include <tactile_stdlib.hpp>
 
-#include "editor/gui/alignment.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
