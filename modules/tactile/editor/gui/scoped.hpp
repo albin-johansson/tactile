@@ -25,6 +25,13 @@ struct Disable final
   ~Disable() { ImGui::EndDisabled(); }
 };
 
+struct Tooltip final
+{
+  Tooltip() { ImGui::BeginTooltip(); }
+
+  ~Tooltip() { ImGui::EndTooltip(); }
+};
+
 class StyleVar final {
  public:
   StyleVar(const ImGuiStyleVar index, const ImVec2& value)
