@@ -31,15 +31,10 @@ void Log(const fmt::color color,
   const auto msg = fmt::vformat(fmt, args);
   const auto full = fmt::format("{:%H:%M:%S} > {}\n", fmt::localtime(time), msg);
 
-  gHistory.emplace_back(level, full);
+  gHistory.push_back(LoggedString{level, full});
 
   if constexpr (IsDebugBuild()) {
-    if constexpr (IsPlatformWindows()) {
-      fmt::print("{:>9} {}", priority, full);
-    }
-    else {
-      fmt::print(fmt::fg(color), "{:>9} {}", priority, full);
-    }
+    Print(color, "{:>9} {}", priority, full);
   }
 }
 
