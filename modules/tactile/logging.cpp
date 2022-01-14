@@ -27,9 +27,9 @@ void Log(const fmt::color color,
          const std::string_view fmt,
          const fmt::format_args args)
 {
-  const auto time = std::time(nullptr);
+  const auto time = fmt::localtime(std::time(nullptr));
   const auto msg = fmt::vformat(fmt, args);
-  const auto full = fmt::format("{:%H:%M:%S} > {}\n", fmt::localtime(time), msg);
+  const auto full = fmt::vformat("{:%H:%M:%S} > {}\n", fmt::make_format_args(time, msg));
 
   gHistory.push_back(LoggedString{level, full});
 
