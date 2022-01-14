@@ -417,9 +417,9 @@ auto AddComponent(entt::registry& registry,
   return comp;
 }
 
-void RemoveComponent(entt::registry& registry,
+auto RemoveComponent(entt::registry& registry,
                      const ContextID contextId,
-                     const ComponentID componentId)
+                     const ComponentID componentId) -> RemoveComponentResult
 {
   TACTILE_ASSERT(FindComponentDef(registry, componentId) != entt::null);
   TACTILE_ASSERT(HasComponent(registry, contextId, componentId));
@@ -429,10 +429,16 @@ void RemoveComponent(entt::registry& registry,
   auto& context = GetContext(registry, contextId);
   entt::entity match = entt::null;
 
+  RemoveComponentResult snapshot;
+  snapshot.context_id = contextId;
+  snapshot.component_id = componentId;
+
   for (const auto componentEntity : context.components) {
     const auto& component = registry.get<Component>(componentEntity);
     if (component.type == componentId) {
+      snapshot.values = component.values;
       match = componentEntity;
+
       registry.destroy(componentEntity);
     }
   }
@@ -441,6 +447,27 @@ void RemoveComponent(entt::registry& registry,
   std::erase_if(context.components, [match](const entt::entity componentEntity) {
     return componentEntity == match;
   });
+
+  return snapshot;
+}
+
+void RestoreComponent(entt::registry& registry, RemoveComponentResult snapshot)
+{
+  TACTILE_ASSERT(FindComponentDef(registry, snapshot.component_id) != entt::null);
+  TACTILE_ASSERT(!HasComponent(registry, snapshot.context_id, snapshot.component_id));
+
+  LogDebug("Restoring component '{}' for context '{}'",
+           snapshot.component_id,
+           snapshot.context_id);
+
+  auto& context = GetContext(registry, snapshot.context_id);
+
+  const auto componentEntity = registry.create();
+  context.components.push_back(componentEntity);
+
+  auto& comp = registry.emplace<Component>(componentEntity);
+  comp.type = snapshot.component_id;
+  comp.values = std::move(snapshot.values);
 }
 
 void UpdateComponent(entt::registry& registry,

@@ -704,6 +704,11 @@ void Application::OnAddComponent(const AddComponentEvent& event)
   Execute<AddComponentCmd>(mModel, event.context, event.component);
 }
 
+void Application::OnRemoveComponent(const RemoveComponentEvent& event)
+{
+  Execute<RemoveComponentCmd>(mModel, event.context, event.component);
+}
+
 void Application::OnUpdateComponent(const UpdateComponentEvent& event)
 {
   Execute<UpdateComponentCmd>(mModel,

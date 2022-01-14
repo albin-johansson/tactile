@@ -104,6 +104,7 @@ void SubscribeToEvents(App& app)
   app.Connect<UpdateComponentDefAttributeEvent, &App::OnUpdateComponentDefAttribute>();
 
   app.Connect<AddComponentEvent, &App::OnAddComponent>();
+  app.Connect<RemoveComponentEvent, &App::OnRemoveComponent>();
   app.Connect<UpdateComponentEvent, &App::OnUpdateComponent>();
   app.Connect<ResetComponentValuesEvent, &App::OnResetComponentValues>();
 

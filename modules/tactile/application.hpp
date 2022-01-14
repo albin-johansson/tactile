@@ -164,6 +164,7 @@ class Application final {
   void OnUpdateComponentDefAttribute(const UpdateComponentDefAttributeEvent& event);
 
   void OnAddComponent(const AddComponentEvent& event);
+  void OnRemoveComponent(const RemoveComponentEvent& event);
   void OnUpdateComponent(const UpdateComponentEvent& event);
   void OnResetComponentValues(const ResetComponentValuesEvent& event);
 

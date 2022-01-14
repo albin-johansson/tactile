@@ -54,6 +54,7 @@ struct CommandId final
     DuplicateComponentAttribute,
 
     AddComponent,
+    RemoveComponent,
     UpdateComponent,
     ResetComponent
   };

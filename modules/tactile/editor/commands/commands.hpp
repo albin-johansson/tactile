@@ -7,6 +7,7 @@
 #include "components/create_component_def_cmd.hpp"
 #include "components/duplicate_component_attribute_cmd.hpp"
 #include "components/remove_component_attribute_cmd.hpp"
+#include "components/remove_component_cmd.hpp"
 #include "components/remove_component_def_cmd.hpp"
 #include "components/rename_component_attribute_cmd.hpp"
 #include "components/rename_component_cmd.hpp"

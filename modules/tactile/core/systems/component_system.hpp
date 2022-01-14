@@ -266,6 +266,13 @@ void SetComponentAttributeValue(entt::registry& registry,
 auto AddComponent(entt::registry& registry, ContextID contextId, ComponentID componentId)
     -> Component&;
 
+struct RemoveComponentResult final
+{
+  ContextID context_id{};        ///< Context from which component was removed.
+  ComponentID component_id{};    ///< Previous component ID.
+  ComponentAttributeMap values;  ///< Removed context attributes.
+};
+
 /**
  * \brief Removes a component from a context.
  *
@@ -277,11 +284,21 @@ auto AddComponent(entt::registry& registry, ContextID contextId, ComponentID com
  * \param contextId the ID of the context that will have the component removed.
  * \param componentId the ID of the component that will be removed.
  *
+ * \return a snapshot of the removed component.
+ *
  * \see HasComponent()
  */
-void RemoveComponent(entt::registry& registry,
+auto RemoveComponent(entt::registry& registry,
                      ContextID contextId,
-                     ComponentID componentId);
+                     ComponentID componentId) -> RemoveComponentResult;
+
+/**
+ * \brief Restores a previously removed component to a context.
+ *
+ * \param registry the current document registry.
+ * \param snapshot the snapshot of the previously removed component.
+ */
+void RestoreComponent(entt::registry& registry, RemoveComponentResult snapshot);
 
 void UpdateComponent(entt::registry& registry,
                      ContextID contextId,
