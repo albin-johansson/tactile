@@ -11,19 +11,23 @@
 
 namespace Tactile {
 
+MapMenu::MapMenu() : mCreateTilesetDialog{std::make_unique<CreateTilesetDialog>()} {}
+
+MapMenu::~MapMenu() noexcept = default;
+
 void MapMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   Scoped::Disable disable{!model.HasActiveDocument()};
-  Scoped::Menu menu{"Map"};
-  if (menu.IsOpen()) {
+  if (Scoped::Menu menu{"Map"}; menu.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
 
     ImGui::Separator();
 
-    mShowTilesetDialog =
-        ImGui::MenuItem(TAC_ICON_TILESET " Add Tileset...", TACTILE_PRIMARY_MOD "+T");
+    if (ImGui::MenuItem(TAC_ICON_TILESET " Add Tileset...", TACTILE_PRIMARY_MOD "+T")) {
+      ShowAddTilesetDialog();
+    }
 
     ImGui::Separator();
 
@@ -49,21 +53,13 @@ void MapMenu::Update(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<OpenResizeMapDialogEvent>();
     }
   }
-}
 
-void MapMenu::UpdateWindows(entt::dispatcher& dispatcher)
-{
-  if (mShowTilesetDialog) {
-    OpenTilesetDialog();
-    mShowTilesetDialog = false;
-  }
-
-  UpdateTilesetDialog(dispatcher);
+  mCreateTilesetDialog->Update(model, dispatcher);
 }
 
 void MapMenu::ShowAddTilesetDialog()
 {
-  mShowTilesetDialog = true;
+  mCreateTilesetDialog->Open();
 }
 
 }  // namespace Tactile
