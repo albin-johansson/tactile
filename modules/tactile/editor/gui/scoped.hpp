@@ -51,6 +51,32 @@ class StyleVar final {
   bool mPopped{};
 };
 
+class StyleColor final {
+ public:
+  StyleColor(const ImGuiCol index, const ImVec4& color)
+  {
+    ImGui::PushStyleColor(index, color);
+  }
+
+  StyleColor(const ImGuiCol index, const uint32 value)
+  {
+    ImGui::PushStyleColor(index, value);
+  }
+
+  ~StyleColor() { Pop(); }
+
+  void Pop()
+  {
+    if (!mPopped) {
+      ImGui::PopStyleColor();
+      mPopped = true;
+    }
+  }
+
+ private:
+  bool mPopped{};
+};
+
 class Group final {
  public:
   Group() { ImGui::BeginGroup(); }
