@@ -13,6 +13,7 @@
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
 #include "core/viewport.hpp"
+#include "logging.hpp"
 #include "property_system.hpp"
 
 namespace Tactile::Sys {
@@ -66,6 +67,8 @@ auto MakeTileset(entt::registry& registry,
   const auto id = tilesets.next_id;
   ++tilesets.next_id;
 
+  LogDebug("Creating tileset with ID '{}'", id);
+
   const auto entity = registry.create();
   auto& tileset = registry.emplace<Tileset>(entity);
   tileset.id = id;
@@ -115,6 +118,7 @@ auto MakeTileset(entt::registry& registry,
 
 auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity
 {
+  LogDebug("Restoring tileset with ID '{}'", snapshot.core.id);
   const auto entity = registry.create();
 
   auto& tileset = registry.emplace<Tileset>(entity, std::move(snapshot.core));
@@ -149,6 +153,8 @@ auto CopyTileset(const entt::registry& registry, const entt::entity source)
 
 void SelectTileset(entt::registry& registry, const TilesetID id)
 {
+  LogVerbose("Selecting tileset '{}'", id);
+
   const auto entity = FindTileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);
 
@@ -158,6 +164,8 @@ void SelectTileset(entt::registry& registry, const TilesetID id)
 
 void RemoveTileset(entt::registry& registry, const TilesetID id)
 {
+  LogDebug("Removing tileset '{}'", id);
+
   const auto entity = FindTileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);
 
