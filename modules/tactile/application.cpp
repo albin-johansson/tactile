@@ -362,70 +362,61 @@ void Application::OnCenterViewport()
 
 void Application::OnOffsetViewport(const OffsetViewportEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::OffsetViewport(*registry, event.dx, event.dy);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::OffsetViewport(registry, event.dx, event.dy);
 }
 
 void Application::OnOffsetBoundViewport(const OffsetBoundViewportEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::OffsetBoundViewport(*registry,
-                             event.entity,
-                             event.dx,
-                             event.dy,
-                             event.view_width,
-                             event.view_height);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::OffsetBoundViewport(registry,
+                           event.entity,
+                           event.dx,
+                           event.dy,
+                           event.view_width,
+                           event.view_height);
 }
 
 void Application::OnPanLeft()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::PanViewportLeft(*registry);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::PanViewportLeft(registry);
 }
 
 void Application::OnPanRight()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::PanViewportRight(*registry);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::PanViewportRight(registry);
 }
 
 void Application::OnPanUp()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::PanViewportUp(*registry);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::PanViewportUp(registry);
 }
 
 void Application::OnPanDown()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::PanViewportDown(*registry);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::PanViewportDown(registry);
 }
 
 void Application::OnIncreaseZoom()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::IncreaseViewportZoom(*registry);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::IncreaseViewportZoom(registry);
 }
 
 void Application::OnDecreaseZoom()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::DecreaseViewportZoom(*registry);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::DecreaseViewportZoom(registry);
 }
 
 void Application::OnResetZoom()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::ResetViewportZoom(*registry);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::ResetViewportZoom(registry);
 }
 
 void Application::OnShowAddTilesetDialog()
@@ -450,24 +441,21 @@ void Application::OnRemoveTileset(const RemoveTilesetEvent& event)
 
 void Application::OnSelectTileset(const SelectTilesetEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::SelectTileset(*registry, event.id);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::SelectTileset(registry, event.id);
 }
 
 void Application::OnSetTilesetSelection(const SetTilesetSelectionEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::UpdateTilesetSelection(*registry, event.selection);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  Sys::UpdateTilesetSelection(registry, event.selection);
 }
 
 void Application::OnShowTilesetProperties(const ShowTilesetPropertiesEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    auto& current = registry->ctx<ActivePropertyContext>();
-    current.entity = Sys::FindTileset(*registry, event.id);
-  }
+  auto& registry = mModel.GetActiveRegistryRef();
+  auto& current = registry.ctx<ActivePropertyContext>();
+  current.entity = Sys::FindTileset(registry, event.id);
 }
 
 void Application::OnSetTilesetName(const SetTilesetNameEvent& event)
