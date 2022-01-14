@@ -19,6 +19,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                              ImGuiWindowFlags_HorizontalScrollbar |
                              ImGuiWindowFlags_AlwaysAutoResize;
 
+// TODO should verbose/debug options be disabled in release builds?
 [[nodiscard]] auto ShowLogLevelFilterCombo(const LogLevel currentLevel) -> Maybe<LogLevel>
 {
   static constexpr CStr verboseFilter = "Everything";
@@ -106,27 +107,40 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
   }
 }
 
+void ShowColorLegendHint()
+{
+  ImGui::TextDisabled("(?)");
+
+  if (ImGui::IsItemHovered()) {
+    Scoped::Tooltip tooltip;
+
+    static const auto verboseColor = GetColorForLevel(LogLevel::Verbose);
+    static const auto debugColor = GetColorForLevel(LogLevel::Debug);
+    static const auto infoColor = GetColorForLevel(LogLevel::Info);
+    static const auto warningColor = GetColorForLevel(LogLevel::Warning);
+    static const auto errorColor = GetColorForLevel(LogLevel::Error);
+
+    ImGui::TextColored(verboseColor, "Verbose message");
+    ImGui::TextColored(debugColor, "Debug message");
+    ImGui::TextColored(infoColor, "Info message");
+    ImGui::TextColored(warningColor, "Warning message");
+    ImGui::TextColored(errorColor, "Error message");
+  }
+}
+
 void ShowLogContents(const LogLevel filter)
 {
   Scoped::StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
   if (Scoped::Child pane{"##LogPane", {}, true, gChildFlags}; pane.IsOpen()) {
     ImGuiListClipper clipper;
-    clipper.Begin(static_cast<int>(GetLogSize()));
+    clipper.Begin(static_cast<int>(GetLogSize(filter)));
 
     while (clipper.Step()) {
       for (auto i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {
-        const auto index = static_cast<usize>(i);
-        const auto level = GetLoggedStringLevel(index);
-
-        if (!IsEnabled(filter, level)) {
-          ImGui::TextColored({0.20f, 0.20f, 0.20f, 1.0f}, "***");
-        }
-        else {
-          const auto color = GetColorForLevel(level);
-          const auto& str = GetLoggedString(index);
-          ImGui::TextColored(color, "%s", str.c_str());
-        }
+        const auto& [level, str] = GetFilteredLogEntry(filter, static_cast<usize>(i));
+        const auto color = GetColorForLevel(level);
+        ImGui::TextColored(color, "%s", str.c_str());
       }
     }
   }
@@ -149,6 +163,9 @@ void LogDock::Update()
     if (const auto level = ShowLogLevelFilterCombo(mLogLevel)) {
       mLogLevel = *level;
     }
+
+    ImGui::SameLine();
+    ShowColorLegendHint();
 
     if (GetLogSize(mLogLevel) != 0u) {
       ShowLogContents(mLogLevel);

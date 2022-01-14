@@ -2,6 +2,7 @@
 
 #include <string>       // string
 #include <string_view>  // string_view
+#include <utility>      // pair
 
 #include <fmt/color.h>
 #include <fmt/format.h>
@@ -70,20 +71,43 @@ void LogError(const std::string_view fmt, const Args&... args)
   LoggerImpl::LogErrorV(fmt, fmt::make_format_args(args...));
 }
 
+/// \brief Clears the entire log history.
 void ClearLogHistory();
 
 void SetLogLevel(LogLevel level);
 
-[[nodiscard]] auto GetLoggedString(usize index) -> const std::string&;
+/**
+ * \brief Returns the log entry at a specific index amongst entries that satisfy a filter.
+ *
+ * \param filter the log level filter to apply before querying log entries.
+ * \param index the index of the desired log entry among those that satisfy the filter.
+ *
+ * \return a pair of the found log level and logged message.
+ *
+ * \throws TactileError if no log entry was found.
+ *
+ * \see GetLogSize(LogLevel)
+ */
+[[nodiscard]] auto GetFilteredLogEntry(LogLevel filter, usize index)
+    -> std::pair<LogLevel, const std::string&>;
 
-[[nodiscard]] auto GetLoggedStringLevel(usize index) -> LogLevel;
-
-[[nodiscard]] auto GetLogSize() -> usize;
-
+/**
+ * \brief Returns the amount of log entries that satisfy a filter.
+ *
+ * \param filter the filter that will be used.
+ *
+ * \return the amount of log entries that weren't filtered out.
+ */
 [[nodiscard]] auto GetLogSize(LogLevel filter) -> usize;
 
-[[nodiscard]] auto GetLogLevel() -> LogLevel;
-
+/**
+ * \brief Indicates whether a message using a specific log level satisfies a filter.
+ *
+ * \param filter the filter level to use.
+ * \param level the log level to check.
+ *
+ * \return `true` if the log level is enabled according to the filter; `false` otherwise.
+ */
 [[nodiscard]] auto IsEnabled(LogLevel filter, LogLevel level) -> bool;
 
 [[nodiscard]] auto IsEnabled(LogLevel level) -> bool;

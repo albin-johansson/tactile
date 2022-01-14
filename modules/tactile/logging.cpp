@@ -5,6 +5,9 @@
 
 #include <fmt/chrono.h>
 #include <fmt/core.h>
+#include <tactile_stdlib.hpp>
+
+#include "throw.hpp"
 
 namespace Tactile {
 namespace {
@@ -91,19 +94,23 @@ void SetLogLevel(const LogLevel level)
   gLogLevel = level;
 }
 
-auto GetLoggedString(const usize index) -> const std::string&
+auto GetFilteredLogEntry(const LogLevel filter, const usize index)
+    -> std::pair<LogLevel, const std::string&>
 {
-  return gHistory.at(index).str;
-}
+  usize i = 0;
 
-auto GetLoggedStringLevel(const usize index) -> LogLevel
-{
-  return gHistory.at(index).level;
-}
+  for (const auto& [level, str] : gHistory) {
+    if (IsEnabled(filter, level)) {
+      if (i == index) {
+        return {level, str};
+      }
+      else {
+        ++i;
+      }
+    }
+  }
 
-auto GetLogSize() -> usize
-{
-  return gHistory.size();
+  ThrowTraced(TactileError{"Invalid index for filtered log entry!"});
 }
 
 auto GetLogSize(const LogLevel filter) -> usize
@@ -117,11 +124,6 @@ auto GetLogSize(const LogLevel filter) -> usize
   }
 
   return count;
-}
-
-auto GetLogLevel() -> LogLevel
-{
-  return gLogLevel;
 }
 
 auto IsEnabled(const LogLevel filter, const LogLevel level) -> bool
