@@ -76,6 +76,7 @@ Graphics::Graphics(const RenderInfo& info)
     , mViewportTileSize{info.grid_size}
     , mLogicalTileSize{info.tile_size}
     , mTileSizeRatio{info.ratio}
+    , mBounds{info.bounds}
     , mBoundsRect{info.bounds_rect}
 {}
 
@@ -200,19 +201,14 @@ void Graphics::RenderCenteredText(const CStr text, const ImVec2& center)
   ImGui::GetWindowDrawList()->AddText({x, y}, GetDrawColor(), text);
 }
 
-void Graphics::RenderGrid(const ImVec2& origin, const Region& bounds)
+void Graphics::RenderTranslatedGrid()
 {
-  auto* list = ImGui::GetWindowDrawList();
+  const auto endRow = mBounds.end.GetRow();
+  const auto endCol = mBounds.end.GetColumn();
 
-  const auto color = GetDrawColor();
-  const auto endRow = bounds.end.GetRow();
-  const auto endCol = bounds.end.GetColumn();
-
-  for (auto row = bounds.begin.GetRow(); row < endRow; ++row) {
-    for (auto col = bounds.begin.GetColumn(); col < endCol; ++col) {
-      const ImVec2 pos = {origin.x + (mViewportTileSize.x * static_cast<float>(col)),
-                          origin.y + (mViewportTileSize.y * static_cast<float>(row))};
-      list->AddRect(pos, pos + mViewportTileSize, color);
+  for (auto row = mBounds.begin.GetRow(); row < endRow; ++row) {
+    for (auto col = mBounds.begin.GetColumn(); col < endCol; ++col) {
+      DrawTranslatedRect(FromMatrixToAbsolute(row, col), mViewportTileSize);
     }
   }
 }

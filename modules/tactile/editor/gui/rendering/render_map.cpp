@@ -3,7 +3,6 @@
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
-#include "core/utils/color_utils.hpp"
 #include "graphics.hpp"
 #include "io/preferences.hpp"
 #include "render_info.hpp"
@@ -62,9 +61,9 @@ void RenderMap(const entt::registry& registry, const RenderInfo& info)
   graphics.SetLineThickness(1.0f);
 
   if (Prefs::GetShowGrid()) {
-    const auto gridColor = Darker(Prefs::GetViewportBackground());
-    graphics.SetDrawColor(gridColor.WithAlpha(50));
-    graphics.RenderGrid(info.map_position, info.bounds);
+    constexpr auto color = cen::colors::white.WithAlpha(20);
+    graphics.SetDrawColor(color);
+    graphics.RenderTranslatedGrid();
   }
 }
 

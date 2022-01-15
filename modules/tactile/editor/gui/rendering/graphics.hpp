@@ -4,10 +4,11 @@
 #include <imgui.h>
 #include <tactile_def.hpp>
 
+#include "core/region.hpp"
+
 namespace Tactile {
 
 struct RenderInfo;
-struct Region;
 
 /**
  * \brief Provides a common simplified rendering API.
@@ -56,7 +57,7 @@ class Graphics final {
 
   void RenderCenteredText(CStr text, const ImVec2& center);
 
-  void RenderGrid(const ImVec2& origin, const Region& bounds);
+  void RenderTranslatedGrid();
 
   void SetDrawColor(const cen::Color& color);
 
@@ -86,6 +87,7 @@ class Graphics final {
   ImVec2 mViewportTileSize{32, 32};
   ImVec2 mLogicalTileSize{32, 32};
   ImVec2 mTileSizeRatio{1, 1};
+  Region mBounds;
   cen::FRect mBoundsRect;
   cen::Color mDrawColor{cen::colors::black};
   float mLineThickness{1};
