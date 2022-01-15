@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-SetObjectNameCmd::SetObjectNameCmd(Ref<entt::registry> registry,
+SetObjectNameCmd::SetObjectNameCmd(RegistryRef registry,
                                    const ObjectID id,
                                    std::string name)
     : AObjectCmd{"Set Object Name", registry, id}

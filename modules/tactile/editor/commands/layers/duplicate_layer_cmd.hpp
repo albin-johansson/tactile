@@ -10,7 +10,7 @@ namespace Tactile {
 
 class DuplicateLayerCmd final : public ACommand {
  public:
-  DuplicateLayerCmd(Ref<entt::registry> registry, LayerID id);
+  DuplicateLayerCmd(RegistryRef registry, LayerID id);
 
   void Undo() override;
 
@@ -22,7 +22,7 @@ class DuplicateLayerCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   LayerID mLayerId;
   Maybe<LayerID> mNewLayerId;
 };

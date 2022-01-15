@@ -8,7 +8,7 @@
 
 namespace Tactile {
 
-StampSequenceCmd::StampSequenceCmd(Ref<entt::registry> registry,
+StampSequenceCmd::StampSequenceCmd(RegistryRef registry,
                                    TileCache&& oldState,
                                    TileCache&& newState)
     : ACommand{"Stamp Sequence"}

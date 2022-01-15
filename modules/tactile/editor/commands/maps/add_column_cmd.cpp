@@ -5,7 +5,7 @@
 
 namespace Tactile {
 
-AddColumnCmd::AddColumnCmd(Ref<entt::registry> registry)
+AddColumnCmd::AddColumnCmd(RegistryRef registry)
     : ACommand{"Add Column(s)"}
     , mRegistry{registry}
 {}

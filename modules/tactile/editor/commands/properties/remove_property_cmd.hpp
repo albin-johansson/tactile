@@ -13,7 +13,7 @@ namespace Tactile {
 
 class RemovePropertyCmd final : public ACommand {
  public:
-  RemovePropertyCmd(Ref<entt::registry> registry, std::string name);
+  RemovePropertyCmd(RegistryRef registry, std::string name);
 
   void Undo() override;
 
@@ -25,7 +25,7 @@ class RemovePropertyCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   ContextID mContextId;
   std::string mName;
   Maybe<PropertyValue> mPreviousValue;

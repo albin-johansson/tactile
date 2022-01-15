@@ -5,9 +5,7 @@
 
 namespace Tactile {
 
-ResizeMapCmd::ResizeMapCmd(Ref<entt::registry> registry,
-                           const usize nRows,
-                           const usize nCols)
+ResizeMapCmd::ResizeMapCmd(RegistryRef registry, const usize nRows, const usize nCols)
     : ACommand{"Resize Map"}
     , mRegistry{registry}
     , mRows{nRows}

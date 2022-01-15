@@ -12,9 +12,7 @@ namespace Tactile {
 
 class RenamePropertyCmd final : public ACommand {
  public:
-  RenamePropertyCmd(Ref<entt::registry> registry,
-                    std::string oldName,
-                    std::string newName);
+  RenamePropertyCmd(RegistryRef registry, std::string oldName, std::string newName);
 
   void Undo() override;
 
@@ -26,7 +24,7 @@ class RenamePropertyCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   ContextID mContextId;
   std::string mOldName;
   std::string mNewName;

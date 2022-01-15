@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-RenamePropertyCmd::RenamePropertyCmd(Ref<entt::registry> registry,
+RenamePropertyCmd::RenamePropertyCmd(RegistryRef registry,
                                      std::string oldName,
                                      std::string newName)
     : ACommand{"Rename Property"}

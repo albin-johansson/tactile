@@ -12,7 +12,7 @@ namespace Tactile {
 
 class AddPropertyCmd final : public ACommand {
  public:
-  AddPropertyCmd(Ref<entt::registry> registry, std::string name, PropertyType type);
+  AddPropertyCmd(RegistryRef registry, std::string name, PropertyType type);
 
   void Undo() override;
 
@@ -24,7 +24,7 @@ class AddPropertyCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   ContextID mContextId;
   std::string mName;
   PropertyType mType;

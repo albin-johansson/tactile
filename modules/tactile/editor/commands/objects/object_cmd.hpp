@@ -14,7 +14,7 @@ struct PropertyContext;
 
 class AObjectCmd : public ACommand {
  public:
-  AObjectCmd(std::string name, Ref<entt::registry> registry, ObjectID id);
+  AObjectCmd(std::string name, RegistryRef registry, ObjectID id);
 
  protected:
   [[nodiscard]] auto GetTargetObject() -> Object&;
@@ -24,7 +24,7 @@ class AObjectCmd : public ACommand {
   [[nodiscard]] auto GetTargetObjectId() const noexcept -> ObjectID { return mObjectId; }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   ObjectID mObjectId;
 };
 

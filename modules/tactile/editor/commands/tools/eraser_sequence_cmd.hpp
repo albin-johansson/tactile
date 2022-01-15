@@ -14,7 +14,7 @@ namespace Tactile {
 
 class EraserSequenceCmd final : public ACommand {
  public:
-  EraserSequenceCmd(Ref<entt::registry> registry, TileCache&& oldState);
+  EraserSequenceCmd(RegistryRef registry, TileCache&& oldState);
 
   void Undo() override;
 
@@ -26,7 +26,7 @@ class EraserSequenceCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   LayerID mLayer;
   TileCache mOldState;
 };

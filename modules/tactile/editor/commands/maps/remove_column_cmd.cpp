@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-RemoveColumnCmd::RemoveColumnCmd(Ref<entt::registry> registry)
+RemoveColumnCmd::RemoveColumnCmd(RegistryRef registry)
     : ACommand{"Remove Column(s)"}
     , mRegistry{registry}
 {}

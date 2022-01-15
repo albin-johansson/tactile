@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-RemoveRowCmd::RemoveRowCmd(Ref<entt::registry> registry)
+RemoveRowCmd::RemoveRowCmd(RegistryRef registry)
     : ACommand{"Remove Row(s)"}
     , mRegistry{registry}
 {}

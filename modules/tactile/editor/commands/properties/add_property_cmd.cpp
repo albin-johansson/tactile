@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-AddPropertyCmd::AddPropertyCmd(Ref<entt::registry> registry,
+AddPropertyCmd::AddPropertyCmd(RegistryRef registry,
                                std::string name,
                                const PropertyType type)
     : ACommand{"Add Property"}

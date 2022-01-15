@@ -14,9 +14,7 @@ namespace Tactile {
 
 class StampSequenceCmd final : public ACommand {
  public:
-  StampSequenceCmd(Ref<entt::registry> registry,
-                   TileCache&& oldState,
-                   TileCache&& newState);
+  StampSequenceCmd(RegistryRef registry, TileCache&& oldState, TileCache&& newState);
 
   void Undo() override;
 
@@ -28,7 +26,7 @@ class StampSequenceCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   LayerID mLayer;
   TileCache mOldState;
   TileCache mNewState;

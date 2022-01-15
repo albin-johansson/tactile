@@ -16,7 +16,7 @@ namespace Tactile {
 
 class BucketCmd final : public ACommand {
  public:
-  BucketCmd(Ref<entt::registry> registry, MapPosition origin, TileID replacement);
+  BucketCmd(RegistryRef registry, MapPosition origin, TileID replacement);
 
   void Undo() override;
 
@@ -25,7 +25,7 @@ class BucketCmd final : public ACommand {
   [[nodiscard]] auto GetId() const noexcept -> int override { return CommandId::Bucket; }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   LayerID mLayer;
   MapPosition mOrigin;
   TileID mReplacement;

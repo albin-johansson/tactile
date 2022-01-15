@@ -4,7 +4,7 @@
 
 namespace Tactile {
 
-SetLayerOpacityCmd::SetLayerOpacityCmd(Ref<entt::registry> registry,
+SetLayerOpacityCmd::SetLayerOpacityCmd(RegistryRef registry,
                                        const LayerID id,
                                        const float opacity)
     : ACommand{"Set Layer Opacity"}

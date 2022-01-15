@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-RemovePropertyCmd::RemovePropertyCmd(Ref<entt::registry> registry, std::string name)
+RemovePropertyCmd::RemovePropertyCmd(RegistryRef registry, std::string name)
     : ACommand{"Remove Property"}
     , mRegistry{registry}
     , mContextId{Sys::GetCurrentContextId(mRegistry)}

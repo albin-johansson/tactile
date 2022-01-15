@@ -5,9 +5,7 @@
 
 namespace Tactile {
 
-AddRowCmd::AddRowCmd(Ref<entt::registry> registry)
-    : ACommand{"Add Row(s)"}
-    , mRegistry{registry}
+AddRowCmd::AddRowCmd(RegistryRef registry) : ACommand{"Add Row(s)"}, mRegistry{registry}
 {}
 
 void AddRowCmd::Undo()

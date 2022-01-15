@@ -10,7 +10,7 @@ namespace Tactile {
 
 class SetObjectVisibilityCmd final : public AObjectCmd {
  public:
-  SetObjectVisibilityCmd(Ref<entt::registry> registry, ObjectID id, bool visible);
+  SetObjectVisibilityCmd(RegistryRef registry, ObjectID id, bool visible);
 
   void Undo() override;
 

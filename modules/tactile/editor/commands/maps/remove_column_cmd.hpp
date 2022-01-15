@@ -11,7 +11,7 @@ namespace Tactile {
 
 class RemoveColumnCmd final : public ACommand {
  public:
-  explicit RemoveColumnCmd(Ref<entt::registry> registry);
+  explicit RemoveColumnCmd(RegistryRef registry);
 
   void Undo() override;
 
@@ -25,7 +25,7 @@ class RemoveColumnCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   MapCommandCache mCache;
   usize mColumns{1};
 };

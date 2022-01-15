@@ -13,7 +13,7 @@ namespace Tactile {
 
 class MoveObjectCmd final : public AObjectCmd {
  public:
-  MoveObjectCmd(Ref<entt::registry> registry,
+  MoveObjectCmd(RegistryRef registry,
                 ObjectID id,
                 float oldX,
                 float oldY,

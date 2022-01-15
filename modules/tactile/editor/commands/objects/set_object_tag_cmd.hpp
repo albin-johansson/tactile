@@ -12,7 +12,7 @@ namespace Tactile {
 
 class SetObjectTagCmd final : public AObjectCmd {
  public:
-  SetObjectTagCmd(Ref<entt::registry> registry, ObjectID id, std::string tag);
+  SetObjectTagCmd(RegistryRef registry, ObjectID id, std::string tag);
 
   void Undo() override;
 

@@ -4,7 +4,7 @@
 
 namespace Tactile {
 
-MoveLayerDownCmd::MoveLayerDownCmd(Ref<entt::registry> registry, const LayerID id)
+MoveLayerDownCmd::MoveLayerDownCmd(RegistryRef registry, const LayerID id)
     : ACommand{"Move Layer Down"}
     , mRegistry{registry}
     , mLayerId{id}

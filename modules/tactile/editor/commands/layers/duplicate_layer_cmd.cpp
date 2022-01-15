@@ -5,7 +5,7 @@
 
 namespace Tactile {
 
-DuplicateLayerCmd::DuplicateLayerCmd(Ref<entt::registry> registry, const LayerID id)
+DuplicateLayerCmd::DuplicateLayerCmd(RegistryRef registry, const LayerID id)
     : ACommand{"Duplicate Layer"}
     , mRegistry{registry}
     , mLayerId{id}

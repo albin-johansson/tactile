@@ -8,7 +8,7 @@
 
 namespace Tactile {
 
-BucketCmd::BucketCmd(Ref<entt::registry> registry,
+BucketCmd::BucketCmd(RegistryRef registry,
                      const MapPosition origin,
                      const TileID replacement)
     : ACommand{"Bucket Fill"}

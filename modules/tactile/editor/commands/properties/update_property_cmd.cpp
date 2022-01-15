@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-UpdatePropertyCmd::UpdatePropertyCmd(Ref<entt::registry> registry,
+UpdatePropertyCmd::UpdatePropertyCmd(RegistryRef registry,
                                      std::string name,
                                      PropertyValue value)
     : ACommand{"Update Property"}

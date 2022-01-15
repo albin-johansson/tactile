@@ -9,7 +9,7 @@
 
 namespace Tactile {
 
-EraserSequenceCmd::EraserSequenceCmd(Ref<entt::registry> registry, TileCache&& oldState)
+EraserSequenceCmd::EraserSequenceCmd(RegistryRef registry, TileCache&& oldState)
     : ACommand{"Eraser Sequence"}
     , mRegistry{registry}
     , mLayer{Sys::GetActiveLayerID(registry).value()}

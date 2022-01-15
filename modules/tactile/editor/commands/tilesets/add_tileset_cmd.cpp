@@ -7,7 +7,7 @@
 
 namespace Tactile {
 
-AddTilesetCmd::AddTilesetCmd(Ref<entt::registry> registry,
+AddTilesetCmd::AddTilesetCmd(RegistryRef registry,
                              Texture texture,
                              const int tileWidth,
                              const int tileHeight)

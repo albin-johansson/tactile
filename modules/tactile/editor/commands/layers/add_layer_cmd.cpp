@@ -5,7 +5,7 @@
 
 namespace Tactile {
 
-AddLayerCmd::AddLayerCmd(Ref<entt::registry> registry, const LayerType type)
+AddLayerCmd::AddLayerCmd(RegistryRef registry, const LayerType type)
     : ACommand{"Add Layer"}
     , mRegistry{registry}
     , mLayerType{type}

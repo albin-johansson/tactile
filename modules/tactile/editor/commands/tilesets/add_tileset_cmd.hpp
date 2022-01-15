@@ -12,10 +12,7 @@ namespace Tactile {
 
 class AddTilesetCmd final : public ACommand {
  public:
-  AddTilesetCmd(Ref<entt::registry> registry,
-                Texture texture,
-                int tileWidth,
-                int tileHeight);
+  AddTilesetCmd(RegistryRef registry, Texture texture, int tileWidth, int tileHeight);
 
   void Undo() override;
 
@@ -27,7 +24,7 @@ class AddTilesetCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   Texture mTexture;
   int mTileWidth;
   int mTileHeight;

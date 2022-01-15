@@ -10,7 +10,7 @@ namespace Tactile {
 
 class AddColumnCmd final : public ACommand {
  public:
-  explicit AddColumnCmd(Ref<entt::registry> registry);
+  explicit AddColumnCmd(RegistryRef registry);
 
   void Undo() override;
 
@@ -24,7 +24,7 @@ class AddColumnCmd final : public ACommand {
   }
 
  private:
-  Ref<entt::registry> mRegistry;
+  RegistryRef mRegistry;
   usize mColumns{1};
 };
 
