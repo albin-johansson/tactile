@@ -1,24 +1,27 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry, entity
+#include <entt/entt.hpp>
 
 namespace Tactile {
 
-struct RenderInfo;
+class Graphics;
+struct Region;
 
 /**
  * \brief Renders a tile layer.
  *
  * \ingroup rendering
  *
- * \param registry the active registry.
+ * \param graphics the graphics context that will be used.
+ * \param registry the current registry.
  * \param layerEntity the entity that represents the tile layer.
- * \param info the rendering context information that will be used.
+ * \param bounds the render bounds that will be respected.
  * \param parentOpacity the opacity of the parent layer.
  */
-void RenderTileLayer(const entt::registry& registry,
+void RenderTileLayer(Graphics& graphics,
+                     const entt::registry& registry,
                      entt::entity layerEntity,
-                     const RenderInfo& info,
+                     const Region& bounds,
                      float parentOpacity);
 
 }  // namespace Tactile

@@ -1,24 +1,30 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry, entity
+#include <centurion.hpp>
+#include <entt/entt.hpp>
 
 namespace Tactile {
 
-struct RenderInfo;
+class Graphics;
+
+void RenderObject(Graphics& graphics,
+                  const entt::registry& registry,
+                  entt::entity objectEntity,
+                  const cen::Color& color);
 
 /**
  * \brief Renders an object layer.
  *
  * \ingroup rendering
  *
+ * \param graphics the graphics context that will be used.
  * \param registry the associated registry.
  * \param layerEntity the object layer entity.
- * \param info the rendering context information that will be used.
  * \param parentOpacity the opacity of the parent layer.
  */
-void RenderObjectLayer(const entt::registry& registry,
+void RenderObjectLayer(Graphics& graphics,
+                       const entt::registry& registry,
                        entt::entity layerEntity,
-                       const RenderInfo& info,
                        float parentOpacity);
 
 }  // namespace Tactile

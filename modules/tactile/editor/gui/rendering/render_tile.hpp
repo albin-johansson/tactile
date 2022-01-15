@@ -1,27 +1,29 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 struct ImVec2;
 
 namespace Tactile {
 
+class Graphics;
+
 /**
  * \brief Renders a single tile.
  *
  * \ingroup rendering
  *
- * \param tile the ID of the tile that will be rendered.
+ * \param graphics the graphics context that will be used.
  * \param registry the active registry.
- * \param screenPos the position of the rendered tile on the screen.
- * \param gridSize the size of tiles in the viewport.
- * \param opacity the opacity of the tile, in the range [0, 1].
+ * \param tile the tile that will be rendered.
+ * \param row the row coordinate of the tile.
+ * \param column the column coordinate of the tile.
  */
-void RenderTile(TileID tile,
+void RenderTile(Graphics& graphics,
                 const entt::registry& registry,
-                const ImVec2& screenPos,
-                const ImVec2& gridSize,
-                float opacity = 1.0);
+                TileID tile,
+                int32 row,
+                int32 column);
 
 }  // namespace Tactile

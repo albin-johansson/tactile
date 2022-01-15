@@ -252,8 +252,8 @@ set(SOURCE_FILES
 
     editor/gui/rendering/canvas.hpp
     editor/gui/rendering/canvas.cpp
-    editor/gui/rendering/common_rendering.cpp
-    editor/gui/rendering/common_rendering.hpp
+    editor/gui/rendering/graphics.cpp
+    editor/gui/rendering/graphics.hpp
     editor/gui/rendering/grid.cpp
     editor/gui/rendering/grid.hpp
     editor/gui/rendering/render_bounds.cpp
@@ -270,15 +270,6 @@ set(SOURCE_FILES
     editor/gui/rendering/render_tile.hpp
     editor/gui/rendering/render_tile_layer.cpp
     editor/gui/rendering/render_tile_layer.hpp
-
-    editor/gui/rendering/objects/render_ellipse.cpp
-    editor/gui/rendering/objects/render_ellipse.hpp
-    editor/gui/rendering/objects/render_object.cpp
-    editor/gui/rendering/objects/render_object.hpp
-    editor/gui/rendering/objects/render_point.cpp
-    editor/gui/rendering/objects/render_point.hpp
-    editor/gui/rendering/objects/render_rect.cpp
-    editor/gui/rendering/objects/render_rect.hpp
 
     editor/gui/alignment.cpp
     editor/gui/alignment.hpp

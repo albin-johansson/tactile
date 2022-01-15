@@ -1,45 +1,37 @@
 #include "render_tile.hpp"
 
 #include <imgui.h>
-#include <imgui_internal.h>
 
 #include "core/components/texture.hpp"
-#include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/gui/texture_utils.hpp"
+#include "graphics.hpp"
 
 namespace Tactile {
 
-void RenderTile(const TileID tile,
+void RenderTile(Graphics& graphics,
                 const entt::registry& registry,
-                const ImVec2& screenPos,
-                const ImVec2& gridSize,
-                const float opacity)
+                const TileID tile,
+                const int32 row,
+                const int32 column)
 {
   const auto tilesetEntity = Sys::FindTilesetWithTile(registry, tile);
   if (tilesetEntity != entt::null) {
     const auto& texture = registry.get<Texture>(tilesetEntity);
+    const auto& uvTileSize = registry.get<UvTileSize>(tilesetEntity);
 
-    const auto textureId = ToTextureID(texture.id);
     const auto tileToRender = Sys::GetTileToRender(registry, tilesetEntity, tile);
-    const auto& source = Sys::GetSourceRect(registry, tilesetEntity, tileToRender);
+    const auto& sourceRect = Sys::GetSourceRect(registry, tilesetEntity, tileToRender);
 
-    const auto row =
-        static_cast<float>(source.GetY()) / static_cast<float>(source.GetHeight());
-    const auto col =
-        static_cast<float>(source.GetX()) / static_cast<float>(source.GetWidth());
+    const ImVec4 source{static_cast<float>(sourceRect.GetX()),
+                        static_cast<float>(sourceRect.GetY()),
+                        static_cast<float>(sourceRect.GetWidth()),
+                        static_cast<float>(sourceRect.GetHeight())};
+    const ImVec2 uv{uvTileSize.width, uvTileSize.height};
 
-    const auto uv = registry.get<UvTileSize>(tilesetEntity);
-    const auto uvMin = ImVec2{col * uv.width, row * uv.height};
-    const auto uvMax = uvMin + ImVec2{uv.width, uv.height};
-
-    ImGui::GetWindowDrawList()->AddImage(textureId,
-                                         screenPos,
-                                         screenPos + gridSize,
-                                         uvMin,
-                                         uvMax,
-                                         IM_COL32(255, 255, 255, 255 * opacity));
+    const auto position = graphics.FromMatrixToAbsolute(row, column);
+    graphics.RenderTranslatedImage(texture.id, source, position, uv);
   }
 }
 

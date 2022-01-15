@@ -34,4 +34,13 @@ namespace Tactile {
   return IM_COL32(color.GetRed(), color.GetGreen(), color.GetBlue(), color.GetAlpha());
 }
 
+[[nodiscard]] inline auto Darker(const cen::Color& color) -> cen::Color
+{
+  constexpr float factor = 0.8f;
+  return cen::Color::FromNorm(factor * color.GetRedNorm(),
+                              factor * color.GetGreenNorm(),
+                              factor * color.GetBlueNorm(),
+                              1.0f);
+}
+
 }  // namespace Tactile
