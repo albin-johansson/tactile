@@ -9,6 +9,10 @@ This document provides a brief outline of planned features for the Tactile edito
 * Minimap widget
 * Custom themes?
 
+## Performance
+
+* Cache the associated tileset entities with tiles to improve tile rendering performance
+
 ## UX
 
 * Fix viewport zoom on desktops
