@@ -112,6 +112,7 @@ void ShowColorLegendHint()
   ImGui::TextDisabled("(?)");
 
   if (ImGui::IsItemHovered()) {
+    Scoped::StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
     Scoped::Tooltip tooltip;
 
     static const auto verboseColor = GetColorForLevel(LogLevel::Verbose);
