@@ -10,7 +10,7 @@ class Graphics;
 void RenderObject(Graphics& graphics,
                   const entt::registry& registry,
                   entt::entity objectEntity,
-                  const cen::Color& color);
+                  const cen::color& color);
 
 /**
  * \brief Renders an object layer.

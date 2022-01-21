@@ -61,7 +61,7 @@ void RenderMap(const entt::registry& registry, const RenderInfo& info)
   graphics.SetLineThickness(1.0f);
 
   if (Prefs::GetShowGrid()) {
-    graphics.SetDrawColor(cen::colors::white.WithAlpha(20));
+    graphics.SetDrawColor(cen::colors::white.with_alpha(20));
     graphics.RenderTranslatedGrid();
   }
 }

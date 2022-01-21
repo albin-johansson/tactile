@@ -50,7 +50,7 @@ struct Preferences final
 
   std::string preferred_format;
   Theme theme;
-  cen::Color viewport_background;
+  cen::color viewport_background;
   usize command_capacity;
   int preferred_tile_width;
   int preferred_tile_height;
@@ -88,7 +88,7 @@ void ResetAppearancePreferences(Preferences& prefs);
 void SetShowGrid(bool show) noexcept;
 
 [[nodiscard]] auto GetTheme() noexcept -> Theme;
-[[nodiscard]] auto GetViewportBackground() noexcept -> const cen::Color&;
+[[nodiscard]] auto GetViewportBackground() noexcept -> const cen::color&;
 [[nodiscard]] auto GetWindowBorder() noexcept -> bool;
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
 

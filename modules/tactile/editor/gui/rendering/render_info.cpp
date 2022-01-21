@@ -10,7 +10,7 @@
 namespace Tactile {
 namespace {
 
-[[nodiscard]] auto ConvertBoundsToRect(const RenderInfo& info) -> cen::FRect
+[[nodiscard]] auto ConvertBoundsToRect(const RenderInfo& info) -> cen::frect
 {
   const auto begin = info.bounds.begin;
 
@@ -25,7 +25,7 @@ namespace {
   const auto width = static_cast<float>(size.GetColumn()) * gridWidth;
   const auto height = static_cast<float>(size.GetRow()) * gridHeight;
 
-  return cen::FRect{pos.x, pos.y, width, height};
+  return cen::frect{pos.x, pos.y, width, height};
 }
 
 }  // namespace

@@ -21,46 +21,54 @@ namespace cen {
 /// \{
 
 /**
- * \class vk_library
+ * \defgroup vulkan Vulkan
  *
+ * \brief Contains utilities related to Vulkan.
+ */
+
+/// \addtogroup vulkan
+/// \{
+
+/**
  * \brief Responsible for loading and unloading a Vulkan library.
- *
- * \since 6.0.0
  */
 class vk_library final {
  public:
+  CENTURION_DISABLE_COPY(vk_library)
+  CENTURION_DISABLE_MOVE(vk_library)
+
   /**
    * \brief Loads a Vulkan library.
    *
-   * \param path optional file path to a Vulkan library; a null path indicates that the
-   * default library will be used.
+   * \param path optional file path to a Vulkan library; a null path indicates that the default
+   * library will be used.
+   *
+   * \throws sdl_error if the library cannot be loaded.
    */
   CENTURION_NODISCARD_CTOR explicit vk_library(const char* path = nullptr)
   {
     if (SDL_Vulkan_LoadLibrary(path) == -1) {
-      throw SDLError{};
+      throw sdl_error{};
     }
   }
 
   ~vk_library() noexcept { SDL_Vulkan_UnloadLibrary(); }
-
-  CENTURION_DISABLE_COPY(vk_library)
-  CENTURION_DISABLE_MOVE(vk_library)
 };
+
+/// \} End of group vulkan
 
 /// \} End of group video
 
+/// \ingroup vulkan
 namespace vk {
 
-/// \addtogroup video
+/// \addtogroup vulkan
 /// \{
 
 /**
  * \brief Returns the address of the `vkGetInstanceProcAddr` function.
  *
- * \return the address of the `vkGetInstanceProcAddr` function.
- *
- * \since 6.0.0
+ * \return the `vkGetInstanceProcAddr` address.
  */
 [[nodiscard]] inline auto get_instance_proc_addr() noexcept -> void*
 {
@@ -72,31 +80,26 @@ namespace vk {
  *
  * \pre `window` must be a Vulkan window.
  *
- * \tparam T the ownership semantics of the window.
- *
  * \param window the Vulkan window.
  * \param instance the current Vulkan instance.
  * \param[out] outSurface the handle that will receive the handle of the created surface.
  *
- * \return `success` if the surface was succesfully created; `failure` otherwise.
- *
- * \since 6.0.0
+ * \return `success` if the surface was successfully created; `failure` otherwise.
  */
 template <typename T>
-auto create_surface(BasicWindow<T>& window,
+auto create_surface(basic_window<T>& window,
                     VkInstance instance,
-                    VkSurfaceKHR* outSurface) noexcept -> Result
+                    VkSurfaceKHR* outSurface) noexcept -> result
 {
-  assert(window.IsVulkan());
+  assert(window.is_vulkan());
   return SDL_Vulkan_CreateSurface(window.get(), instance, outSurface) == SDL_TRUE;
 }
 
 /**
  * \brief Returns the extensions required to create a Vulkan surface.
  *
- * \return the required Vulkan extensions; `std::nullopt` if something goes wrong.
- *
- * \since 6.0.0
+ * \return the required Vulkan extensions; an empty optional is returned if something goes
+ * wrong.
  */
 inline auto required_extensions() -> std::optional<std::vector<const char*>>
 {
@@ -118,18 +121,14 @@ inline auto required_extensions() -> std::optional<std::vector<const char*>>
  *
  * \pre `window` must be a Vulkan window.
  *
- * \tparam T the ownership semantics of the window.
- *
  * \param window the Vulkan window that will be queried.
  *
  * \return the size of the window drawable.
- *
- * \since 6.0.0
  */
 template <typename T>
-[[nodiscard]] auto drawable_size(const BasicWindow<T>& window) noexcept -> Area
+[[nodiscard]] auto drawable_size(const basic_window<T>& window) noexcept -> iarea
 {
-  assert(window.IsVulkan());
+  assert(window.is_vulkan());
 
   int width{};
   int height{};
@@ -138,7 +137,7 @@ template <typename T>
   return {width, height};
 }
 
-/// \} End of group video
+/// \} End of group vulkan
 
 }  // namespace vk
 }  // namespace cen

@@ -179,7 +179,7 @@ auto InputWidget(const CStr id, const ObjectRef value) -> Maybe<ObjectRef>
   return nothing;
 }
 
-auto InputWidget(const CStr id, const cen::Color value) -> Maybe<cen::Color>
+auto InputWidget(const CStr id, const cen::color value) -> Maybe<cen::color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
@@ -188,7 +188,7 @@ auto InputWidget(const CStr id, const cen::Color value) -> Maybe<cen::Color>
 
   auto arr = ColorToArray(value);
   if (ImGui::ColorEdit4("##InputString[color]", arr.data(), flags)) {
-    return cen::Color::FromNorm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
+    return cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
   }
 
   if (ImGui::IsItemHovered()) {

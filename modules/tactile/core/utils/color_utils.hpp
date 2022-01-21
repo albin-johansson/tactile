@@ -19,28 +19,28 @@ namespace Tactile {
  *
  * \return an array of normalized color components.
  */
-[[nodiscard]] constexpr auto ColorToArray(const cen::Color& color) noexcept
+[[nodiscard]] constexpr auto ColorToArray(const cen::color& color) noexcept
     -> std::array<float, 4>
 {
-  const auto r = color.GetRedNorm();
-  const auto g = color.GetGreenNorm();
-  const auto b = color.GetBlueNorm();
-  const auto a = color.GetAlphaNorm();
+  const auto r = color.norm_red();
+  const auto g = color.norm_green();
+  const auto b = color.norm_blue();
+  const auto a = color.norm_alpha();
   return {r, g, b, a};
 }
 
-[[nodiscard]] constexpr auto ColorToU32(const cen::Color& color) -> uint32
+[[nodiscard]] constexpr auto ColorToU32(const cen::color& color) -> uint32
 {
-  return IM_COL32(color.GetRed(), color.GetGreen(), color.GetBlue(), color.GetAlpha());
+  return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
 }
 
-[[nodiscard]] inline auto Darker(const cen::Color& color) -> cen::Color
+[[nodiscard]] inline auto Darker(const cen::color& color) -> cen::color
 {
   constexpr float factor = 0.8f;
-  return cen::Color::FromNorm(factor * color.GetRedNorm(),
-                              factor * color.GetGreenNorm(),
-                              factor * color.GetBlueNorm(),
-                              1.0f);
+  return cen::color::from_norm(factor * color.norm_red(),
+                               factor * color.norm_green(),
+                               factor * color.norm_blue(),
+                               1.0f);
 }
 
 }  // namespace Tactile

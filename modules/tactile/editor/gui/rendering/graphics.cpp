@@ -167,7 +167,7 @@ void Graphics::RenderImage(const uint texture,
                  position + mViewportTileSize,
                  uvMin,
                  uvMax,
-                 ColorToU32(cen::colors::white.WithAlpha(mOpacity)));
+                 ColorToU32(cen::colors::white.with_alpha(mOpacity)));
 }
 
 void Graphics::RenderTranslatedImage(const uint texture,
@@ -213,7 +213,7 @@ void Graphics::RenderTranslatedGrid()
   }
 }
 
-void Graphics::SetDrawColor(const cen::Color& color)
+void Graphics::SetDrawColor(const cen::color& color)
 {
   mDrawColor = color;
 }
@@ -237,14 +237,14 @@ auto Graphics::IsIntersectingBounds(const ImVec2& position, const ImVec2& size) 
     -> bool
 {
   const auto translated = Translate(position);
-  const cen::FRect rect{translated.x, translated.y, size.x, size.y};
-  return Intersects(mBoundsRect, rect);
+  const cen::frect rect{translated.x, translated.y, size.x, size.y};
+  return cen::intersects(mBoundsRect, rect);
 }
 
 auto Graphics::IsWithinTranslatedBounds(const ImVec2& position) const -> bool
 {
   const auto translated = Translate(position);
-  return mBoundsRect.Contains({translated.x, translated.y});
+  return mBoundsRect.contains({translated.x, translated.y});
 }
 
 auto Graphics::Translate(const ImVec2& position) const -> ImVec2
@@ -259,7 +259,7 @@ auto Graphics::GetDrawColor() const -> uint32
 
 auto Graphics::GetShadowDrawColor() const -> uint32
 {
-  return ColorToU32(cen::colors::black.WithAlpha(mOpacity));
+  return ColorToU32(cen::colors::black.with_alpha(mOpacity));
 }
 
 }  // namespace Tactile

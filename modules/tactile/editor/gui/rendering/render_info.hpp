@@ -21,7 +21,7 @@ struct CanvasInfo;
 struct RenderInfo final
 {
   Region bounds;           ///< The area of the map that should be rendered.
-  cen::FRect bounds_rect;  ///< Same as bounds but as a rectangle.
+  cen::frect bounds_rect;  ///< Same as bounds but as a rectangle.
 
   ImVec2 map_position{};  ///< Absolute screen position of the map.
   ImVec2 grid_size{};     ///< Graphical tile size.

@@ -24,10 +24,10 @@ void RenderTile(Graphics& graphics,
     const auto tileToRender = Sys::GetTileToRender(registry, tilesetEntity, tile);
     const auto& sourceRect = Sys::GetSourceRect(registry, tilesetEntity, tileToRender);
 
-    const ImVec4 source{static_cast<float>(sourceRect.GetX()),
-                        static_cast<float>(sourceRect.GetY()),
-                        static_cast<float>(sourceRect.GetWidth()),
-                        static_cast<float>(sourceRect.GetHeight())};
+    const ImVec4 source{static_cast<float>(sourceRect.x()),
+                        static_cast<float>(sourceRect.y()),
+                        static_cast<float>(sourceRect.width()),
+                        static_cast<float>(sourceRect.height())};
     const ImVec2 uv{uvTileSize.width, uvTileSize.height};
 
     const auto position = graphics.FromMatrixToAbsolute(row, column);

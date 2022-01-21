@@ -31,8 +31,8 @@ struct Tileset final
 
 struct TilesetCache final
 {
-  std::unordered_map<TileID, cen::Rect> source_rects;  ///< Tileset source rectangles.
-  std::unordered_map<TileID, entt::entity> tiles;      ///< Tiles to `FancyTile` entities.
+  std::unordered_map<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
+  std::unordered_map<TileID, entt::entity> tiles;  ///< Tiles to `FancyTile` entities.
 };
 
 struct TilesetSelection final

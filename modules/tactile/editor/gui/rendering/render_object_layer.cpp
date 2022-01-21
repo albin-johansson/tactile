@@ -18,7 +18,7 @@ void RenderPointObject(Graphics& graphics,
                        const entt::registry& registry,
                        const entt::entity objectEntity,
                        const ImVec2& position,
-                       const cen::Color& color)
+                       const cen::color& color)
 {
   const float radius = std::min(graphics.GetViewportTileSize().x / 4.0f, 6.0f);
 
@@ -49,7 +49,7 @@ void RenderEllipseObject(Graphics& graphics,
                          const entt::registry& registry,
                          const entt::entity objectEntity,
                          const ImVec2& position,
-                         const cen::Color& color)
+                         const cen::color& color)
 {
   const auto& object = registry.get<Object>(objectEntity);
   const auto& context = registry.get<PropertyContext>(objectEntity);
@@ -81,7 +81,7 @@ void RenderRectangleObject(Graphics& graphics,
                            const entt::registry& registry,
                            const entt::entity objectEntity,
                            const ImVec2& position,
-                           const cen::Color& color)
+                           const cen::color& color)
 {
   const auto& object = registry.get<Object>(objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::Rectangle);
@@ -100,7 +100,7 @@ void RenderRectangleObject(Graphics& graphics,
       if (textSize.x <= size.x) {
         const auto textX = (size.x - textSize.x) / 2.0f;
 
-        graphics.SetDrawColor(cen::colors::white.WithAlpha(color.GetAlpha()));
+        graphics.SetDrawColor(cen::colors::white.with_alpha(color.alpha()));
         graphics.RenderTranslatedText(name, position + ImVec2{textX, size.y + 4.0f});
       }
     }
@@ -112,7 +112,7 @@ void RenderRectangleObject(Graphics& graphics,
 void RenderObject(Graphics& graphics,
                   const entt::registry& registry,
                   const entt::entity objectEntity,
-                  const cen::Color& color)
+                  const cen::color& color)
 {
   const auto& object = registry.get<Object>(objectEntity);
 
@@ -146,7 +146,7 @@ void RenderObjectLayer(Graphics& graphics,
   const auto& objectLayer = registry.get<ObjectLayer>(layerEntity);
 
   const auto opacity = parentOpacity * layer.opacity;
-  const auto objectColor = cen::Color::FromNorm(1, 0, 0, opacity);
+  const auto objectColor = cen::color::from_norm(1, 0, 0, opacity);
 
   for (const auto objectEntity : objectLayer.objects) {
     RenderObject(graphics, registry, objectEntity, objectColor);

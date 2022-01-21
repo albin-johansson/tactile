@@ -21,7 +21,7 @@ namespace cen {
  */
 class haptic_direction final {
  public:
-  using direction_type = BasicVector3<Sint32>;
+  using direction_type = basic_vector3<int32>;
 
   /**
    * \brief Creates a haptic direction of the specified type.
@@ -52,7 +52,7 @@ class haptic_direction final {
    */
   void set_type(const haptic_direction_type type) noexcept
   {
-    m_direction.type = ToUnderlying(type);
+    m_direction.type = to_underlying(type);
   }
 
   /**

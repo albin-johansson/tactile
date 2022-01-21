@@ -18,10 +18,10 @@ namespace {
 
 [[nodiscard]] consteval auto GetWindowFlags() noexcept
 {
-  auto flags = cen::Window::Hidden | cen::Window::Resizable | cen::Window::OpenGL;
+  auto flags = cen::window::hidden | cen::window::resizable | cen::window::opengl;
 
   if constexpr (IsPlatformOSX()) {
-    flags |= cen::Window ::AllowHighDPI;
+    flags |= cen::window::allow_high_dpi;
   }
 
   return flags;
@@ -43,8 +43,8 @@ ApplicationConfiguration::ApplicationConfiguration()
 
   InitAttributes();
 
-  mWindow.emplace("Tactile", cen::Window::GetDefaultSize(), GetWindowFlags());
-  mWindow->SetIcon(cen::Surface{"resources/icon.png"});
+  mWindow.emplace("Tactile", cen::window::default_size(), GetWindowFlags());
+  mWindow->set_icon(cen::surface{"resources/icon.png"});
 
   TACTILE_ASSERT(mWindow.has_value());
   mOpenGL.emplace(*mWindow);

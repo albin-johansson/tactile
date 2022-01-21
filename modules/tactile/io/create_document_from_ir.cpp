@@ -59,7 +59,7 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
 
       case PropertyType::Color: {
         const auto color = IO::GetColor(propertyData);
-        property.value = cen::Color{color.red, color.green, color.blue, color.alpha};
+        property.value = cen::color{color.red, color.green, color.blue, color.alpha};
         break;
       }
 
@@ -116,7 +116,7 @@ void AddAnimation(entt::registry& registry,
 
     auto& frame = registry.emplace<AnimationFrame>(frameEntity);
     frame.tile = TileID{firstGlobalId + IO::GetTile(frameData)};
-    frame.duration = cen::U32_Millis{IO::GetDuration(frameData)};
+    frame.duration = cen::u32ms{IO::GetDuration(frameData)};
 
     animation.frames.push_back(frameEntity);
   }

@@ -47,7 +47,7 @@ class Application final {
   ApplicationConfiguration* mConfiguration{}; /* Non-owning */
 
   entt::dispatcher mDispatcher;
-  cen::Keyboard mKeyboard;
+  cen::keyboard mKeyboard;
 
   Model mModel;
   TextureManager mTextures;

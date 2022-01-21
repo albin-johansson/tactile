@@ -59,7 +59,7 @@ class Graphics final {
 
   void RenderTranslatedGrid();
 
-  void SetDrawColor(const cen::Color& color);
+  void SetDrawColor(const cen::color& color);
 
   void SetOpacity(float opacity);
 
@@ -88,8 +88,8 @@ class Graphics final {
   ImVec2 mLogicalTileSize{32, 32};
   ImVec2 mTileSizeRatio{1, 1};
   Region mBounds;
-  cen::FRect mBoundsRect;
-  cen::Color mDrawColor{cen::colors::black};
+  cen::frect mBoundsRect;
+  cen::color mDrawColor{cen::colors::black};
   float mLineThickness{1};
   uint8 mOpacity{255};
 

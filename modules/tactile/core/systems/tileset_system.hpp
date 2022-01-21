@@ -197,7 +197,7 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto GetSourceRect(const entt::registry& registry,
                                  entt::entity tilesetEntity,
-                                 TileID id) -> const cen::Rect&;
+                                 TileID id) -> const cen::irect&;
 
 /**
  * \brief Returns the identifier of a tile at a certain position in a tileset.

@@ -57,17 +57,17 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Reg
       const auto ww = (c1 != c2) ? 1 : 0;
       const auto hh = (r1 != r2) ? 1 : 0;
 
-      cen::FRect rect;
-      rect.SetX(static_cast<float>(c1) * tileSize.x);
-      rect.SetY(static_cast<float>(r1) * tileSize.y);
-      rect.SetWidth(static_cast<float>(w + ww) * tileSize.x);
-      rect.SetHeight(static_cast<float>(h + hh) * tileSize.y);
+      cen::frect rect;
+      rect.set_x(static_cast<float>(c1) * tileSize.x);
+      rect.set_y(static_cast<float>(r1) * tileSize.y);
+      rect.set_width(static_cast<float>(w + ww) * tileSize.x);
+      rect.set_height(static_cast<float>(h + hh) * tileSize.y);
 
       Region selection;
-      selection.begin = {toRow(rect.GetY()), toColumn(rect.GetX())};
+      selection.begin = {toRow(rect.y()), toColumn(rect.x())};
 
-      const MapPosition offset{toRow(rect.GetMaxY() - rect.GetY()),
-                               toColumn(rect.GetMaxX() - rect.GetX())};
+      const MapPosition offset{toRow(rect.max_y() - rect.y()),
+                               toColumn(rect.max_x() - rect.x())};
       selection.end = selection.begin + offset;
 
       return selection;

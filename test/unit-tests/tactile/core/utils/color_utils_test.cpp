@@ -8,8 +8,8 @@ TEST(ColorUtils, ColorToArray)
 {
   const auto color = cen::colors::tan;
   const auto array = ColorToArray(color);
-  ASSERT_EQ(color.GetRedNorm(), array.at(0));
-  ASSERT_EQ(color.GetGreenNorm(), array.at(1));
-  ASSERT_EQ(color.GetBlueNorm(), array.at(2));
-  ASSERT_EQ(color.GetAlphaNorm(), array.at(3));
+  ASSERT_EQ(color.norm_red(), array.at(0));
+  ASSERT_EQ(color.norm_green(), array.at(1));
+  ASSERT_EQ(color.norm_blue(), array.at(2));
+  ASSERT_EQ(color.norm_alpha(), array.at(3));
 }

@@ -165,7 +165,7 @@ TEST(CreateDocumentFromIR, Test)
       const auto propertyEntity = Sys::FindProperty(registry, mapContext, "cool color");
       const auto& property = registry.get<Property>(propertyEntity);
       ASSERT_TRUE(property.value.IsColor());
-      ASSERT_EQ(cen::Color::FromARGB("#FF55AAFF"), property.value.AsColor());
+      ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), property.value.AsColor());
     }
 
     {
