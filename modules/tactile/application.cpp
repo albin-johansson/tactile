@@ -131,6 +131,8 @@ void Application::SaveCurrentFilesToHistory()
 
 void Application::PollEvents()
 {
+  // TODO reintroduce event_handler::data()
+
   SDL_Event event{};
   while (SDL_PollEvent(&event)) {
     ImGui_ImplSDL2_ProcessEvent(&event);
