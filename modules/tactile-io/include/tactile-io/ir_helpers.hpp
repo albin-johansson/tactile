@@ -332,6 +332,46 @@ void EachProperty(const T& source, U&& callable)
   }
 }
 
+template <typename U>
+void EachComponentDef(const Map& map, U&& callable)
+{
+  const auto count = GetComponentDefCount(map);
+  for (usize index = 0; index < count; ++index) {
+    const auto& def = GetComponentDef(map, index);
+    callable(def);
+  }
+}
+
+template <typename U>
+void EachAttribute(const ComponentDef& def, U&& callable)
+{
+  const auto count = GetAttributeCount(def);
+  for (usize index = 0; index < count; ++index) {
+    const auto* name = GetAttributeName(def, index);
+    callable(name);
+  }
+}
+
+template <typename U>
+void EachAttribute(const Component& component, U&& callable)
+{
+  const auto count = GetAttributeCount(component);
+  for (usize index = 0; index < count; ++index) {
+    const auto* name = GetAttributeName(component, index);
+    callable(name);
+  }
+}
+
+template <typename T, typename U>
+void EachComponent(const T& source, U&& callable)
+{
+  const auto count = GetComponentCount(source);
+  for (usize index = 0; index < count; ++index) {
+    const auto& component = GetComponent(source, index);
+    callable(component);
+  }
+}
+
 }  // namespace Tactile::IO
 
 #endif  // TACTILE_IO_IR_HELPERS_HPP_

@@ -13,6 +13,8 @@ namespace Tactile::IO {
 
 /* Forward declarations of IR types, which are not defined in client code. */
 struct Property;
+struct Component;
+struct ComponentDef;
 struct AnimationFrame;
 struct Object;
 struct Layer;

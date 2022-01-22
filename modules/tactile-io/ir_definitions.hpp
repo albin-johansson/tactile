@@ -1,6 +1,8 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <functional>  // less
+#include <map>         // map
 #include <memory>      // unique_ptr
 #include <string>      // string
 #include <variant>     // variant
@@ -20,29 +22,53 @@ namespace Tactile::IO {
 /* Simple strong integral type for use in property value variant */
 enum ObjectRef : int32 {};
 
+// clang-format off
+using PropertyValue = std::variant<std::string,
+                                   int32,
+                                   float,
+                                   bool,
+                                   Color,
+                                   std::filesystem::path,
+                                   ObjectRef>;
+// clang-format on
+
 /// \brief Intermediate representation of a property.
 struct Property final
 {
-  using Value = std::
-      variant<std::string, int32, float, bool, Color, std::filesystem::path, ObjectRef>;
+  std::string name;     ///< The unique (within the context) property name
+  PropertyValue value;  ///< The property value.
+};
 
-  std::string name;  ///< The unique (within the context) property name
-  Value value;       ///< The property value.
+struct ComponentDef final
+{
+  std::string name;  ///< Locally unique component definition name.
+  std::map<std::string, PropertyValue, std::less<>> attributes;
+};
+
+struct Component final
+{
+  std::string type;
+  std::map<std::string, PropertyValue, std::less<>> values;
 };
 
 /// \brief Intermediate representation of a map object.
 struct Object final
 {
-  int32 id{};                              ///< Unique object identifier.
-  float x{};                               ///< Logical x-coordinate.
-  float y{};                               ///< Logical y-coordinate.
-  float width{};                           ///< Logical width.
-  float height{};                          ///< Logical height.
+  int32 id{};  ///< Unique object identifier.
+
+  float x{};       ///< Logical x-coordinate.
+  float y{};       ///< Logical y-coordinate.
+  float width{};   ///< Logical width.
+  float height{};  ///< Logical height.
+
   ObjectType type{ObjectType::Rectangle};  ///< Specific object type.
   std::string tag;                         ///< Optional user-defined type tag.
   std::string name;                        ///< Object name.
-  std::vector<Property> properties;        ///< Object properties.
-  bool visible{true};                      ///< Is the object visible?
+
+  std::vector<Property> properties;
+  std::vector<Component> components;
+
+  bool visible{true};  ///< Is the object visible?
 };
 
 /// \brief Intermediate representation of a tile animation frame.
@@ -55,26 +81,36 @@ struct AnimationFrame final
 /// \brief Intermediate representation of tile data.
 struct Tile final
 {
-  int32 id{};                             ///< Local ID of the associated tile.
+  int32 id{};  ///< Local ID of the associated tile.
+
   std::vector<AnimationFrame> animation;  ///< Optional animation frames.
   std::vector<Object> objects;            ///< Optional collection of contained objects.
-  std::vector<Property> properties;       ///< Tile properties.
+
+  std::vector<Property> properties;
+  std::vector<Component> components;
 };
 
 /// \brief Intermediate representation of a tileset.
 struct Tileset final
 {
-  int32 first_id{};                           ///< The first global tile ID.
-  int32 tile_width{};                         ///< Logical tile width.
-  int32 tile_height{};                        ///< Logical tile height.
-  int32 tile_count{};                         ///< Total amount of tiles.
-  int32 column_count{};                       ///< The amount of columns.
-  int32 image_width{};                        ///< Width of the tileset image, in pixels.
-  int32 image_height{};                       ///< Height of the tileset image, in pixels.
+  int32 first_id{};  ///< The first global tile ID.
+
+  int32 tile_width{};   ///< Logical tile width.
+  int32 tile_height{};  ///< Logical tile height.
+
+  int32 tile_count{};    ///< Total amount of tiles.
+  int32 column_count{};  ///< The amount of columns.
+
+  int32 image_width{};   ///< Width of the tileset image, in pixels.
+  int32 image_height{};  ///< Height of the tileset image, in pixels.
+
   std::filesystem::path absolute_image_path;  ///< Absolute path of tileset image.
   std::string name;                           ///< Tileset name.
-  std::vector<Tile> tiles;                    ///< Data related to specific tiles.
-  std::vector<Property> properties;           ///< Tileset properties.
+
+  std::vector<Tile> tiles;  ///< Data related to specific tiles.
+
+  std::vector<Property> properties;
+  std::vector<Component> components;
 };
 
 /// \brief Intermediate representation of tile layer data.
@@ -104,29 +140,42 @@ struct Layer final
 {
   using LayerContent = std::variant<TileLayer, ObjectLayer, GroupLayer>;
 
-  int32 id{};                        ///< Unique layer identifier.
-  usize index{};                     ///< Local layer stack index.
-  LayerType type{};                  ///< The type of the layer.
-  LayerContent data;                 ///< Type-specific data.
-  std::string name;                  ///< The name of the layer.
-  std::vector<Property> properties;  ///< The layer properties.
-  float opacity{1.0f};               ///< Opacity of the layer, [0, 1].
-  bool is_visible{true};             ///< Is the layer visible?
+  int32 id{};     ///< Unique layer identifier.
+  usize index{};  ///< Local layer stack index.
+
+  LayerType type{};   ///< The type of the layer.
+  LayerContent data;  ///< Type-specific data.
+
+  std::string name;  ///< The name of the layer.
+
+  std::vector<Property> properties;
+  std::vector<Component> components;
+
+  float opacity{1.0f};    ///< Opacity of the layer, [0, 1].
+  bool is_visible{true};  ///< Is the layer visible?
 };
 
 /// \brief Intermediate representation of a map.
 struct Map final
 {
   std::filesystem::path absolute_path;  ///< Absolute path of the map file.
-  int32 next_layer_id{};                ///< The next available layer ID.
-  int32 next_object_id{};               ///< The next available object ID.
-  int32 tile_width{};                   ///< The logical tile width.
-  int32 tile_height{};                  ///< The logical tile height.
-  usize row_count{};                    ///< The number of rows.
-  usize column_count{};                 ///< The number of columns.
-  std::vector<Tileset> tilesets;        ///< The associated tilesets.
-  std::vector<Layer> layers;            ///< The associated layers.
-  std::vector<Property> properties;     ///< The map properties.
+
+  int32 next_layer_id{};   ///< The next available layer ID.
+  int32 next_object_id{};  ///< The next available object ID.
+
+  int32 tile_width{};   ///< The logical tile width.
+  int32 tile_height{};  ///< The logical tile height.
+
+  usize row_count{};     ///< The number of rows.
+  usize column_count{};  ///< The number of columns.
+
+  std::vector<Tileset> tilesets;  ///< The associated tilesets.
+  std::vector<Layer> layers;      ///< The associated layers.
+
+  std::vector<Property> properties;
+  std::vector<Component> components;
+
+  std::vector<ComponentDef> component_definitions;  ///< Available component definitions.
 };
 
 }  // namespace Tactile::IO

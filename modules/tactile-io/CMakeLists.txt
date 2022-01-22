@@ -17,6 +17,7 @@ set(TACTILE_IO_SOURCES
     io_utils.hpp
     ir_animation_frame.cpp
     ir_common.cpp
+    ir_component.cpp
     ir_definitions.hpp
     ir_layer.cpp
     ir_map.cpp
@@ -32,6 +33,7 @@ set(TACTILE_IO_SOURCES
     include/tactile-io/emit.hpp
     include/tactile-io/ir_animation_frame.hpp
     include/tactile-io/ir_common.hpp
+    include/tactile-io/ir_component.hpp
     include/tactile-io/ir_helpers.hpp
     include/tactile-io/ir_layer.hpp
     include/tactile-io/ir_map.hpp
