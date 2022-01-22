@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <vector>      // vector
 
 #include "../yaml_fwd.hpp"
 #include "tactile_io.hpp"
