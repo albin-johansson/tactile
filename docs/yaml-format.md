@@ -190,7 +190,7 @@ The `Frame` node represents a frame in an animation.
 |    Attribute |   Type   | Required | Description                                 |
 |-------------:|:--------:|:--------:|:--------------------------------------------|
 |       `name` | `string` |   Yes    | The name of the component.                  |
-| `attributes` | Sequence |   Yes    | A sequence of `ComponentDefAttribute` nodes |
+| `attributes` | Sequence |    No    | A sequence of `ComponentDefAttribute` nodes |
 
 ## `ComponentDefAttribute`
 
