@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry, entity, dispatcher
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 namespace Tactile {
