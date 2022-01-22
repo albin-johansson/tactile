@@ -191,18 +191,19 @@ void VerifyMap(const std::filesystem::path& path)
   MapParser parser{path};
   ASSERT_EQ(ParseError::None, parser.GetError());
 
-  const auto& data = parser.GetData();
-  ASSERT_EQ(6, IO::GetRowCount(data));
-  ASSERT_EQ(8, IO::GetColumnCount(data));
-  ASSERT_EQ(4, IO::GetNextLayerId(data));
-  ASSERT_EQ(4, IO::GetNextObjectId(data));
-  ASSERT_EQ(32, IO::GetTileWidth(data));
-  ASSERT_EQ(32, IO::GetTileHeight(data));
-  ASSERT_EQ(std::filesystem::absolute(path), IO::GetPath(data));
+  const auto& irMap = parser.GetData();
 
-  VerifyTilesets(data);
-  VerifyLayers(data);
-  VerifyProperties(data);
+  ASSERT_EQ(6, IO::GetRowCount(irMap));
+  ASSERT_EQ(8, IO::GetColumnCount(irMap));
+  ASSERT_EQ(4, IO::GetNextLayerId(irMap));
+  ASSERT_EQ(4, IO::GetNextObjectId(irMap));
+  ASSERT_EQ(32, IO::GetTileWidth(irMap));
+  ASSERT_EQ(32, IO::GetTileHeight(irMap));
+  ASSERT_EQ(std::filesystem::absolute(path), IO::GetPath(irMap));
+
+  VerifyTilesets(irMap);
+  VerifyLayers(irMap);
+  VerifyProperties(irMap);
 }
 
 }  // namespace
