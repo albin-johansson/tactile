@@ -219,6 +219,18 @@ auto GetComponentDef(const entt::registry& registry, const ComponentID id)
   }
 }
 
+auto GetComponentDef(const entt::registry& registry, const std::string_view name)
+    -> std::pair<entt::entity, const ComponentDef&>
+{
+  for (auto&& [entity, def] : registry.view<ComponentDef>().each()) {
+    if (def.name == name) {
+      return {entity, def};
+    }
+  }
+
+  ThrowTraced(TactileError{"Invalid component name!"});
+}
+
 auto GetComponentDefName(const entt::registry& registry, const ComponentID id)
     -> const std::string&
 {

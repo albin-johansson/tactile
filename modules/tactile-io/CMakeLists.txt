@@ -121,6 +121,8 @@ set(TACTILE_IO_SOURCES
     yaml/yaml_fwd.hpp
 
     yaml/emitter/emit_yaml_map.cpp
+    yaml/emitter/save_components.cpp
+    yaml/emitter/save_components.hpp
     yaml/emitter/save_layers.cpp
     yaml/emitter/save_layers.hpp
     yaml/emitter/save_object.cpp

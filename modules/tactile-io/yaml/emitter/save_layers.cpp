@@ -8,6 +8,7 @@
 
 #include "emit.hpp"
 #include "ir_helpers.hpp"
+#include "save_components.hpp"
 #include "save_object.hpp"
 #include "save_properties.hpp"
 
@@ -107,6 +108,7 @@ void SaveLayer(YAML::Emitter& emitter,
   }
 
   SaveProperties(emitter, layer, dir);
+  SaveComponents(emitter, layer, dir);
 
   emitter << YAML::EndMap;
 }

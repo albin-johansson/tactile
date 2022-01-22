@@ -5,6 +5,7 @@
 #include <tactile_def.hpp>
 
 #include "core/components/animation.hpp"
+#include "core/components/component.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
@@ -14,6 +15,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
+#include "core/systems/component_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/document.hpp"
 #include "profile.hpp"
@@ -21,15 +23,20 @@
 namespace Tactile {
 namespace {
 
+[[nodiscard]] auto ConvertColor(const cen::color& color) -> IO::Color
+{
+  return {color.red(), color.green(), color.blue(), color.alpha()};
+}
+
 template <typename T>
 void ConvertProperties(T& source,
                        const entt::registry& registry,
-                       const PropertyContext& context)
+                       const std::vector<entt::entity>& properties)
 
 {
-  IO::ReserveProperties(source, context.properties.size());
+  IO::ReserveProperties(source, properties.size());
 
-  for (const auto propertyEntity : context.properties) {
+  for (const auto propertyEntity : properties) {
     const auto& property = registry.get<Property>(propertyEntity);
 
     auto& data = IO::AddProperty(source);
@@ -53,8 +60,7 @@ void ConvertProperties(T& source,
         break;
 
       case PropertyType::Color: {
-        const auto& color = property.value.AsColor();
-        IO::AssignColor(data, {color.red(), color.green(), color.blue(), color.alpha()});
+        IO::AssignColor(data, ConvertColor(property.value.AsColor()));
         break;
       }
 
@@ -69,7 +75,67 @@ void ConvertProperties(T& source,
   }
 }
 
-void ConvertObject(IO::Object& ir,
+template <typename T>
+void ConvertComponents(const IO::Map& ir,
+                       T& source,
+                       const entt::registry& registry,
+                       const std::vector<entt::entity>& components)
+{
+  IO::ReserveComponents(source, components.size());
+
+  for (const auto componentEntity : components) {
+    const auto& component = registry.get<Component>(componentEntity);
+
+    const auto& type = Sys::GetComponentDefName(registry, component.type);
+    const auto& irDef = IO::GetComponentDef(ir, type.c_str());
+
+    auto& irComponent = IO::AddComponent(source, irDef);
+
+    for (const auto& [attributeName, attribute] : component.values) {
+      switch (attribute.GetType().value()) {
+        case PropertyType::String:
+          IO::SetAttributeString(irComponent,
+                                 attributeName.c_str(),
+                                 attribute.AsString().c_str());
+          break;
+
+        case PropertyType::Integer:
+          IO::SetAttributeInt(irComponent, attributeName.c_str(), attribute.AsInt());
+          break;
+
+        case PropertyType::Floating:
+          IO::SetAttributeFloat(irComponent, attributeName.c_str(), attribute.AsFloat());
+          break;
+
+        case PropertyType::Boolean:
+          IO::SetAttributeBool(irComponent, attributeName.c_str(), attribute.AsBool());
+          break;
+
+        case PropertyType::Color: {
+          IO::SetAttributeColor(irComponent,
+                                attributeName.c_str(),
+                                ConvertColor(attribute.AsColor()));
+          break;
+        }
+
+        case PropertyType::File:
+          IO::SetAttributeFile(irComponent,
+                               attributeName.c_str(),
+                               attribute.AsFile().c_str());
+          break;
+
+        case PropertyType::Object:
+          IO::SetAttributeObject(irComponent,
+                                 attributeName.c_str(),
+                                 attribute.AsObject());
+          break;
+      }
+    }
+  }
+}
+
+void ConvertObject(IO::Map& irMap,
+                   IO::Object& ir,
                    const entt::registry& registry,
                    const entt::entity entity)
 {
@@ -85,10 +151,12 @@ void ConvertObject(IO::Object& ir,
 
   const auto& context = registry.get<PropertyContext>(entity);
   IO::SetName(ir, context.name.c_str());
-  ConvertProperties(ir, registry, context);
+  ConvertProperties(ir, registry, context.properties);
+  ConvertComponents(irMap, ir, registry, context.components);
 }
 
-void ConvertFancyTiles(IO::Tileset& ir,
+void ConvertFancyTiles(IO::Map& irMap,
+                       IO::Tileset& ir,
                        const entt::registry& registry,
                        const Tileset& tileset)
 
@@ -113,15 +181,17 @@ void ConvertFancyTiles(IO::Tileset& ir,
       IO::ReserveObjects(tileData, tile.objects.size());
       for (const auto objectEntity : tile.objects) {
         auto& objectData = IO::AddObject(tileData);
-        ConvertObject(objectData, registry, objectEntity);
+        ConvertObject(irMap, objectData, registry, objectEntity);
       }
 
-      ConvertProperties(tileData, registry, ctx);
+      ConvertProperties(tileData, registry, ctx.properties);
+      ConvertComponents(irMap, tileData, registry, ctx.components);
     }
   }
 }
 
-void ConvertTileset(IO::Tileset& ir,
+void ConvertTileset(IO::Map& irMap,
+                    IO::Tileset& ir,
                     const entt::registry& registry,
                     const entt::entity entity,
                     const Tileset& tileset)
@@ -140,11 +210,13 @@ void ConvertTileset(IO::Tileset& ir,
   const auto& ctx = registry.get<PropertyContext>(entity);
   IO::SetName(ir, ctx.name.c_str());
 
-  ConvertProperties(ir, registry, ctx);
-  ConvertFancyTiles(ir, registry, tileset);
+  ConvertProperties(ir, registry, ctx.properties);
+  ConvertComponents(irMap, ir, registry, ctx.components);
+  ConvertFancyTiles(irMap, ir, registry, tileset);
 }
 
-void ConvertLayer(IO::Layer& ir,
+void ConvertLayer(IO::Map& irMap,
+                  IO::Layer& ir,
                   const entt::registry& registry,
                   const entt::entity entity,
                   const LayerTreeNode& node,
@@ -160,7 +232,8 @@ void ConvertLayer(IO::Layer& ir,
   IO::SetVisible(ir, layer.visible);
 
   IO::SetName(ir, context.name.c_str());
-  ConvertProperties(ir, registry, context);
+  ConvertProperties(ir, registry, context.properties);
+  ConvertComponents(irMap, ir, registry, context.components);
 
   switch (layer.type) {
     case LayerType::TileLayer: {
@@ -185,7 +258,7 @@ void ConvertLayer(IO::Layer& ir,
 
       for (const auto objectEntity : objectLayer.objects) {
         auto& object = IO::AddObject(objectLayerData);
-        ConvertObject(object, registry, objectEntity);
+        ConvertObject(irMap, object, registry, objectEntity);
       }
 
       break;
@@ -198,7 +271,7 @@ void ConvertLayer(IO::Layer& ir,
       for (const auto child : node.children) {
         auto& childData = IO::AddLayer(groupLayer);
         const auto& childNode = registry.get<LayerTreeNode>(child);
-        ConvertLayer(childData, registry, child, childNode, nRows, nCols);
+        ConvertLayer(irMap, childData, registry, child, childNode, nRows, nCols);
       }
 
       break;
@@ -206,26 +279,32 @@ void ConvertLayer(IO::Layer& ir,
   }
 }
 
-void ConvertLayers(IO::Map& ir, const entt::registry& registry)
+void ConvertLayers(IO::Map& irMap, const entt::registry& registry)
 {
   const auto& map = registry.ctx<Map>();
 
-  IO::ReserveLayers(ir, registry.storage<LayerTreeNode>().size());
+  IO::ReserveLayers(irMap, registry.storage<LayerTreeNode>().size());
   for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
     const auto& parent = registry.get<Parent>(entity);
     if (parent.entity == entt::null) {
-      auto& layerData = IO::AddLayer(ir);
-      ConvertLayer(layerData, registry, entity, node, map.row_count, map.column_count);
+      auto& layerData = IO::AddLayer(irMap);
+      ConvertLayer(irMap,
+                   layerData,
+                   registry,
+                   entity,
+                   node,
+                   map.row_count,
+                   map.column_count);
     }
   }
 }
 
-void ConvertTilesets(IO::Map& ir, const entt::registry& registry)
+void ConvertTilesets(IO::Map& irMap, const entt::registry& registry)
 {
-  IO::ReserveTilesets(ir, registry.storage<Tileset>().size());
+  IO::ReserveTilesets(irMap, registry.storage<Tileset>().size());
   for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
-    auto& tilesetData = IO::AddTileset(ir);
-    ConvertTileset(tilesetData, registry, entity, tileset);
+    auto& tilesetData = IO::AddTileset(irMap);
+    ConvertTileset(irMap, tilesetData, registry, entity, tileset);
   }
 }
 
@@ -244,6 +323,52 @@ void ConvertMapAttributes(IO::Map& ir, const Document& document)
   IO::SetColumnCount(ir, map.column_count);
 }
 
+void ConvertComponentDefinitions(IO::Map& ir, const entt::registry& registry)
+{
+  for (auto&& [entity, def] : registry.view<ComponentDef>().each()) {
+    auto& definition = IO::DefineComponent(ir, def.name.c_str());
+
+    for (const auto& [name, value] : def.attributes) {
+      const auto type = value.GetType().value();
+      IO::DefineAttribute(definition, name.c_str(), type);
+
+      switch (type) {
+        case PropertyType::String:
+          IO::SetAttributeDefaultString(definition,
+                                        name.c_str(),
+                                        value.AsString().c_str());
+          break;
+
+        case PropertyType::Integer:
+          IO::SetAttributeDefaultInt(definition, name.c_str(), value.AsInt());
+          break;
+
+        case PropertyType::Floating:
+          IO::SetAttributeDefaultFloat(definition, name.c_str(), value.AsFloat());
+          break;
+
+        case PropertyType::Boolean:
+          IO::SetAttributeDefaultBool(definition, name.c_str(), value.AsBool());
+          break;
+
+        case PropertyType::Color:
+          IO::SetAttributeDefaultColor(definition,
+                                       name.c_str(),
+                                       ConvertColor(value.AsColor()));
+          break;
+
+        case PropertyType::File:
+          IO::SetAttributeDefaultFile(definition, name.c_str(), value.AsFile().c_str());
+          break;
+
+        case PropertyType::Object:
+          IO::SetAttributeDefaultObject(definition, name.c_str(), value.AsObject());
+          break;
+      }
+    }
+  }
+}
+
 }  // namespace
 
 auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr
@@ -252,16 +377,20 @@ auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr
 
   const auto& registry = document.registry;
 
-  auto ir = IO::CreateMap();
-  ConvertMapAttributes(*ir, document);
+  auto irMap = IO::CreateMap();
 
-  ConvertTilesets(*ir, registry);
-  ConvertLayers(*ir, registry);
+  ConvertComponentDefinitions(*irMap, registry);
+  ConvertMapAttributes(*irMap, document);
 
-  ConvertProperties(*ir, registry, registry.ctx<PropertyContext>());
+  ConvertTilesets(*irMap, registry);
+  ConvertLayers(*irMap, registry);
+
+  const auto& context = registry.ctx<PropertyContext>();
+  ConvertProperties(*irMap, registry, context.properties);
+  ConvertComponents(*irMap, *irMap, registry, context.components);
 
   TACTILE_PROFILE_END("Converted document to intermediate representation");
-  return ir;
+  return irMap;
 }
 
 }  // namespace Tactile

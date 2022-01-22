@@ -3,6 +3,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "emit.hpp"
+#include "save_components.hpp"
 #include "save_layers.hpp"
 #include "save_properties.hpp"
 #include "save_tilesets.hpp"
@@ -32,7 +33,11 @@ void EmitYamlMap(const Map& map, const EmitterOptions options)
   const std::filesystem::path path = GetPath(map);
   const auto dir = path.parent_path();
 
+  SaveComponentDefinitions(emitter, map, dir);
+
   SaveProperties(emitter, map, dir);
+  SaveComponents(emitter, map, dir);
+
   SaveLayers(emitter, map, dir, options);
   SaveTilesets(emitter, map, dir);
 

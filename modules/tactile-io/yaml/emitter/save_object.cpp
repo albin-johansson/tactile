@@ -4,6 +4,7 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "save_components.hpp"
 #include "save_properties.hpp"
 
 namespace Tactile::IO {
@@ -30,11 +31,11 @@ void SaveObject(YAML::Emitter& emitter,
       break;
   }
 
-  if (const auto name = GetName(object); std::strcmp(name, "") != 0) {
+  if (const auto* name = GetName(object); std::strcmp(name, "") != 0) {
     emitter << YAML::Key << "name" << YAML::Value << name;
   }
 
-  if (const auto tag = GetTag(object); std::strcmp(tag, "") != 0) {
+  if (const auto* tag = GetTag(object); std::strcmp(tag, "") != 0) {
     emitter << YAML::Key << "tag" << YAML::Value << tag;
   }
 
@@ -59,6 +60,7 @@ void SaveObject(YAML::Emitter& emitter,
   }
 
   SaveProperties(emitter, object, dir);
+  SaveComponents(emitter, object, dir);
 
   emitter << YAML::EndMap;
 }

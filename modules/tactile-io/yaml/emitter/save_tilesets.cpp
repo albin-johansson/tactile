@@ -8,6 +8,7 @@
 
 #include "../../common_saving.hpp"
 #include "ir_helpers.hpp"
+#include "save_components.hpp"
 #include "save_object.hpp"
 #include "save_properties.hpp"
 
@@ -62,6 +63,8 @@ void SaveFancyTiles(YAML::Emitter& emitter,
         }
 
         SaveProperties(emitter, tile, dir);
+        SaveComponents(emitter, tile, dir);
+
         emitter << YAML::EndMap;
       }
     });
@@ -90,6 +93,7 @@ void SaveTileset(const Tileset& tileset,
   emitter << YAML::Key << "image-height" << YAML::Value << GetImageHeight(tileset);
 
   SaveProperties(emitter, tileset, dir);
+  SaveComponents(emitter, tileset, dir);
   SaveFancyTiles(emitter, tileset, dir);
 
   emitter << YAML::EndMap;

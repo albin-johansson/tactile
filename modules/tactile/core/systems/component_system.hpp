@@ -100,6 +100,9 @@ void RenameComponentDef(entt::registry& registry, ComponentID id, std::string na
 [[nodiscard]] auto GetComponentDef(const entt::registry& registry, ComponentID id)
     -> std::pair<entt::entity, const ComponentDef&>;
 
+[[nodiscard]] auto GetComponentDef(const entt::registry& registry, std::string_view name)
+    -> std::pair<entt::entity, const ComponentDef&>;
+
 [[nodiscard]] auto GetComponentDefName(const entt::registry& registry, ComponentID id)
     -> const std::string&;
 
