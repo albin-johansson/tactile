@@ -1,5 +1,6 @@
 #include "tileset_view.hpp"
 
+#include <centurion.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -16,6 +17,7 @@ namespace Tactile {
 namespace {
 
 constexpr auto gRubberBandColor = IM_COL32(0, 0x44, 0xCC, 100);
+constexpr cen::color gGridColor{200, 200, 200, 40};
 
 [[nodiscard]] auto TrackScrollOffset(const ImVec2& canvasSize, ImVec2 offset) -> ImVec2
 {
@@ -97,7 +99,7 @@ void TilesetView::Update(const entt::registry& registry,
   }
 
   graphics.SetLineThickness(1);
-  graphics.SetDrawColor(cen::color{200, 200, 200, 40});
+  graphics.SetDrawColor(gGridColor);
   graphics.RenderTranslatedGrid();
 
   graphics.PopClip();
