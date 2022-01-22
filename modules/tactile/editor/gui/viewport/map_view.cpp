@@ -17,12 +17,12 @@
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/common/mouse_tracker.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/rendering/canvas.hpp"
-#include "editor/gui/rendering/render_bounds.hpp"
+#include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_info.hpp"
 #include "editor/gui/rendering/render_map.hpp"
 #include "editor/gui/rendering/render_stamp_preview.hpp"
 #include "editor/gui/scoped.hpp"
+#include "io/preferences.hpp"
 #include "viewport_cursor_info.hpp"
 #include "viewport_overlay.hpp"
 
@@ -145,30 +145,38 @@ void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
 
 void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  const auto canvas = GetCanvasInfo();
-  ClearBackground(canvas);
-  UpdateViewportOffset(canvas, dispatcher);
-
-  auto* drawList = ImGui::GetWindowDrawList();
-  drawList->PushClipRect(canvas.tl, canvas.br, true);
-
   const auto& viewport = registry.ctx<Viewport>();
-  const auto info = GetRenderInfo(registry, canvas);
+  const auto& map = registry.ctx<Map>();
+
+  const auto info = GetRenderInfo(viewport, map);
+  UpdateViewportOffset(info.canvas_br - info.canvas_tl, dispatcher);
+
+  Graphics graphics{info};
+
+  graphics.SetDrawColor(Prefs::GetViewportBackground());
+  graphics.Clear();
+
+  graphics.PushClip();
 
   // TODO viewport should be centered by default
   if (gCenterViewport) {
-    CenterViewport(dispatcher, viewport, canvas.size, info.row_count, info.col_count);
+    CenterViewport(dispatcher,
+                   viewport,
+                   info.canvas_br - info.canvas_tl,
+                   info.row_count,
+                   info.col_count);
     gCenterViewport = false;
   }
 
-  RenderMap(registry, info);
+  RenderMap(graphics, registry);
 
   const auto cursor = GetViewportCursorInfo(info);
   if (cursor.is_within_map) {
     UpdateCursorGizmos(registry, dispatcher, cursor, info);
   }
 
-  drawList->PopClipRect();
+  graphics.PopClip();
+
   UpdateViewportOverlay(registry, cursor);
   UpdateContextMenu(registry, dispatcher, cursor);
 }

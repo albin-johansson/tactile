@@ -5,7 +5,6 @@
 #include "core/components/parent.hpp"
 #include "graphics.hpp"
 #include "io/preferences.hpp"
-#include "render_info.hpp"
 #include "render_object_layer.hpp"
 #include "render_tile_layer.hpp"
 
@@ -13,14 +12,13 @@ namespace Tactile {
 namespace {
 
 void RenderLayer(Graphics& graphics,
-                 const Region& bounds,
                  const entt::registry& registry,
                  const entt::entity layerEntity,
                  const Layer& layer,
                  const float parentOpacity)
 {
   if (layer.type == LayerType::TileLayer) {
-    RenderTileLayer(graphics, registry, layerEntity, bounds, parentOpacity);
+    RenderTileLayer(graphics, registry, layerEntity, parentOpacity);
   }
   else if (layer.type == LayerType::ObjectLayer) {
     RenderObjectLayer(graphics, registry, layerEntity, parentOpacity);
@@ -29,10 +27,8 @@ void RenderLayer(Graphics& graphics,
 
 }  // namespace
 
-void RenderMap(const entt::registry& registry, const RenderInfo& info)
+void RenderMap(Graphics& graphics, const entt::registry& registry)
 {
-  Graphics graphics{info};
-
   for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
     const auto& layer = registry.get<Layer>(entity);
     const auto& parent = registry.get<Parent>(entity);
@@ -43,12 +39,7 @@ void RenderMap(const entt::registry& registry, const RenderInfo& info)
 
     if (layer.visible) {
       if (!parentLayer || parentLayer->visible) {
-        RenderLayer(graphics,
-                    info.bounds,
-                    registry,
-                    entity,
-                    layer,
-                    layer.opacity * parentOpacity);
+        RenderLayer(graphics, registry, entity, layer, layer.opacity * parentOpacity);
       }
     }
   }

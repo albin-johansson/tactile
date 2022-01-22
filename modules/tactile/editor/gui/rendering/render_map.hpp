@@ -1,19 +1,19 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
+#include <entt/entt.hpp>
 
 namespace Tactile {
 
-struct RenderInfo;
+class Graphics;
 
 /**
  * \brief Renders a map.
  *
  * \ingroup rendering
  *
+ * \param graphics the graphics context that will be used.
  * \param registry the registry associated with the map that will rendered.
- * \param info the rendering context information that will be used.
  */
-void RenderMap(const entt::registry& registry, const RenderInfo& info);
+void RenderMap(Graphics& graphics, const entt::registry& registry);
 
 }  // namespace Tactile

@@ -17,9 +17,19 @@ class Graphics final {
  public:
   explicit Graphics(const RenderInfo& info);
 
+  void PushClip();
+
+  void PopClip();
+
+  void Clear();
+
   void DrawRect(const ImVec2& position, const ImVec2& size);
 
+  void FillRect(const ImVec2& position, const ImVec2& size);
+
   void DrawTranslatedRect(const ImVec2& position, const ImVec2& size);
+
+  void FillTranslatedRect(const ImVec2& position, const ImVec2& size);
 
   void DrawRectWithShadow(const ImVec2& position, const ImVec2& size);
 
@@ -32,6 +42,8 @@ class Graphics final {
   void DrawEllipseWithShadow(const ImVec2& center, const ImVec2& radius);
 
   void DrawTranslatedEllipseWithShadow(const ImVec2& center, const ImVec2& radius);
+
+  void RenderImage(uint texture, const ImVec2& position, const ImVec2& size);
 
   /**
    * \brief Renders a portion of a tileset texture.
@@ -82,7 +94,11 @@ class Graphics final {
 
   [[nodiscard]] auto GetTileSizeRatio() const -> ImVec2 { return mTileSizeRatio; }
 
+  [[nodiscard]] auto GetBounds() const -> Region { return mBounds; }
+
  private:
+  ImVec2 mCanvasTL;
+  ImVec2 mCanvasBR;
   ImVec2 mOrigin{0, 0};
   ImVec2 mViewportTileSize{32, 32};
   ImVec2 mLogicalTileSize{32, 32};

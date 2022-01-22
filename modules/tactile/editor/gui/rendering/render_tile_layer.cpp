@@ -11,12 +11,12 @@ namespace Tactile {
 void RenderTileLayer(Graphics& graphics,
                      const entt::registry& registry,
                      const entt::entity layerEntity,
-                     const Region& bounds,
                      const float parentOpacity)
 {
   const auto& layer = registry.get<Layer>(layerEntity);
   graphics.SetOpacity(parentOpacity * layer.opacity);
 
+  const auto bounds = graphics.GetBounds();
   const auto endRow = bounds.end.GetRow();
   const auto endCol = bounds.end.GetColumn();
 

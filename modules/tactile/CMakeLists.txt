@@ -250,12 +250,8 @@ set(SOURCE_FILES
     editor/gui/layout/load_default_layout.cpp
     editor/gui/layout/load_default_layout.hpp
 
-    editor/gui/rendering/canvas.hpp
-    editor/gui/rendering/canvas.cpp
     editor/gui/rendering/graphics.cpp
     editor/gui/rendering/graphics.hpp
-    editor/gui/rendering/grid.cpp
-    editor/gui/rendering/grid.hpp
     editor/gui/rendering/render_bounds.cpp
     editor/gui/rendering/render_bounds.hpp
     editor/gui/rendering/render_info.cpp

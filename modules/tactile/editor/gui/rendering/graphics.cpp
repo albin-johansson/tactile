@@ -14,6 +14,24 @@
 namespace Tactile {
 namespace {
 
+[[nodiscard]] auto ConvertBoundsToRect(const RenderInfo& info) -> cen::frect
+{
+  const auto begin = info.bounds.begin;
+
+  const auto gridWidth = info.grid_size.x;
+  const auto gridHeight = info.grid_size.y;
+
+  const ImVec2 index{static_cast<float>(begin.GetColumn()),
+                     static_cast<float>(begin.GetRow())};
+  const auto pos = info.origin + (index * info.grid_size);
+
+  const auto size = info.bounds.end - info.bounds.begin;
+  const auto width = static_cast<float>(size.GetColumn()) * gridWidth;
+  const auto height = static_cast<float>(size.GetRow()) * gridHeight;
+
+  return {pos.x, pos.y, width, height};
+}
+
 void PathEllipticalArcTo(ImDrawList* self,
                          const ImVec2& center,
                          const ImVec2& radius,
@@ -51,6 +69,7 @@ void AddEllipse(ImDrawList* self,
   self->PathStroke(color, true, thickness);
 }
 
+/*
 void AddFilledEllipse(ImDrawList* self,
                       const ImVec2& center,
                       const ImVec2& radius,
@@ -68,17 +87,37 @@ void AddFilledEllipse(ImDrawList* self,
 
   self->PathFillConvex(color);
 }
+*/
 
 }  // namespace
 
 Graphics::Graphics(const RenderInfo& info)
-    : mOrigin{info.map_position}
+    : mCanvasTL{info.canvas_tl}
+    , mCanvasBR{info.canvas_br}
+    , mOrigin{info.origin}
     , mViewportTileSize{info.grid_size}
     , mLogicalTileSize{info.tile_size}
     , mTileSizeRatio{info.ratio}
     , mBounds{info.bounds}
-    , mBoundsRect{info.bounds_rect}
+    , mBoundsRect{ConvertBoundsToRect(info)}
 {}
+
+void Graphics::PushClip()
+{
+  auto* list = ImGui::GetWindowDrawList();
+  list->PushClipRect(mCanvasTL, mCanvasBR, true);
+}
+
+void Graphics::PopClip()
+{
+  auto* list = ImGui::GetWindowDrawList();
+  list->PopClipRect();
+}
+
+void Graphics::Clear()
+{
+  FillRect(mCanvasTL, mCanvasBR - mCanvasTL);
+}
 
 void Graphics::DrawRect(const ImVec2& position, const ImVec2& size)
 {
@@ -86,9 +125,20 @@ void Graphics::DrawRect(const ImVec2& position, const ImVec2& size)
   list->AddRect(position, position + size, GetDrawColor(), 0, 0, mLineThickness);
 }
 
+void Graphics::FillRect(const ImVec2& position, const ImVec2& size)
+{
+  auto* list = ImGui::GetWindowDrawList();
+  list->AddRectFilled(position, position + size, GetDrawColor());
+}
+
 void Graphics::DrawTranslatedRect(const ImVec2& position, const ImVec2& size)
 {
   DrawRect(Translate(position), size);
+}
+
+void Graphics::FillTranslatedRect(const ImVec2& position, const ImVec2& size)
+{
+  FillRect(Translate(position), size);
 }
 
 void Graphics::DrawRectWithShadow(const ImVec2& position, const ImVec2& size)
@@ -148,6 +198,12 @@ void Graphics::DrawEllipseWithShadow(const ImVec2& center, const ImVec2& radius)
 void Graphics::DrawTranslatedEllipseWithShadow(const ImVec2& center, const ImVec2& radius)
 {
   DrawEllipseWithShadow(Translate(center), radius);
+}
+
+void Graphics::RenderImage(const uint texture, const ImVec2& position, const ImVec2& size)
+{
+  auto* list = ImGui::GetWindowDrawList();
+  list->AddImage(ToTextureID(texture), position, position + size);
 }
 
 void Graphics::RenderImage(const uint texture,

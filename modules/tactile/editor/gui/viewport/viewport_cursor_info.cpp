@@ -13,7 +13,7 @@ auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
   ViewportCursorInfo cursor;
 
   const auto mouse = ImGui::GetMousePos();
-  cursor.raw_position = mouse - info.map_position;
+  cursor.raw_position = mouse - info.origin;
 
   const auto index = cursor.raw_position / info.grid_size;
   const auto row = std::trunc(index.y);
@@ -26,8 +26,8 @@ auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
     cursor.map_position = {static_cast<int32>(row), static_cast<int32>(col)};
   }
 
-  cursor.clamped_position = {info.map_position.x + (col * info.grid_size.x),
-                             info.map_position.y + (row * info.grid_size.y)};
+  cursor.clamped_position = {info.origin.x + (col * info.grid_size.x),
+                             info.origin.y + (row * info.grid_size.y)};
 
   return cursor;
 }

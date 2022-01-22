@@ -1,58 +1,86 @@
 #include "render_info.hpp"
 
+#include <algorithm>  // min, max
+
 #include <imgui_internal.h>
 
-#include "canvas.hpp"
+#include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
-#include "render_bounds.hpp"
 
 namespace Tactile {
 namespace {
 
-[[nodiscard]] auto ConvertBoundsToRect(const RenderInfo& info) -> cen::frect
+auto GetRenderBounds(const ImVec2& tl,
+                     const ImVec2& br,
+                     const ImVec2& origin,
+                     const ImVec2& gridSize,
+                     const float rows,
+                     const float cols) -> Region
 {
-  const auto begin = info.bounds.begin;
+  const auto begin = (tl - origin) / gridSize;
+  const auto end = (br - origin) / gridSize;
 
-  const auto gridWidth = info.grid_size.x;
-  const auto gridHeight = info.grid_size.y;
+  const auto beginRow = std::max(0, static_cast<int32>(begin.y));
+  const auto beginCol = std::max(0, static_cast<int32>(begin.x));
 
-  const auto index =
-      ImVec2{static_cast<float>(begin.GetColumn()), static_cast<float>(begin.GetRow())};
-  const auto pos = info.map_position + (index * info.grid_size);
+  const auto endRow = static_cast<int32>(std::min(rows, end.y + 1));
+  const auto endCol = static_cast<int32>(std::min(cols, end.x + 1));
 
-  const auto size = info.bounds.end - info.bounds.begin;
-  const auto width = static_cast<float>(size.GetColumn()) * gridWidth;
-  const auto height = static_cast<float>(size.GetRow()) * gridHeight;
+  Region bounds;
 
-  return cen::frect{pos.x, pos.y, width, height};
+  bounds.begin = {beginRow, beginCol};
+  bounds.end = {endRow, endCol};
+
+  return bounds;
+}
+
+auto GetRenderInfo(const Viewport& viewport,
+                   const ImVec2& logicalTileSize,
+                   const int32 rows,
+                   const int32 columns) -> RenderInfo
+{
+  RenderInfo info;
+
+  info.canvas_tl = ImGui::GetCursorScreenPos();
+  info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
+
+  info.origin = info.canvas_tl + ImVec2{viewport.x_offset, viewport.y_offset};
+
+  info.tile_size = logicalTileSize;
+  info.grid_size = {viewport.tile_width, viewport.tile_height};
+  info.ratio = info.grid_size / info.tile_size;
+
+  info.row_count = static_cast<float>(rows);
+  info.col_count = static_cast<float>(columns);
+
+  info.bounds = GetRenderBounds(info.canvas_tl,
+                                info.canvas_br,
+                                info.origin,
+                                info.grid_size,
+                                info.row_count,
+                                info.col_count);
+
+  return info;
 }
 
 }  // namespace
 
-auto GetRenderInfo(const entt::registry& registry, const CanvasInfo& canvas) -> RenderInfo
+auto GetRenderInfo(const Viewport& viewport, const Map& map) -> RenderInfo
 {
-  RenderInfo info;
+  const ImVec2 tileSize{static_cast<float>(map.tile_width),
+                        static_cast<float>(map.tile_height)};
+  return GetRenderInfo(viewport,
+                       tileSize,
+                       static_cast<int32>(map.row_count),
+                       static_cast<int32>(map.column_count));
+}
 
-  const auto& map = registry.ctx<Map>();
-  info.row_count = static_cast<float>(map.row_count);
-  info.col_count = static_cast<float>(map.column_count);
-
-  const auto& viewport = registry.ctx<Viewport>();
-  const auto offset = ImVec2{viewport.x_offset, viewport.y_offset};
-
-  info.grid_size = {viewport.tile_width, viewport.tile_height};
-  info.map_position = canvas.tl + offset;
-
-  info.tile_size = {static_cast<float>(map.tile_width),
-                    static_cast<float>(map.tile_height)};
-
-  info.ratio = info.grid_size / info.tile_size;
-
-  info.bounds = GetRenderBounds(canvas, info);
-  info.bounds_rect = ConvertBoundsToRect(info);
-
-  return info;
+auto GetRenderInfo(const Viewport& viewport, const Tileset& tileset) -> RenderInfo
+{
+  const ImVec2 tileSize{static_cast<float>(tileset.tile_width),
+                        static_cast<float>(tileset.tile_height)};
+  return GetRenderInfo(viewport, tileSize, tileset.row_count, tileset.column_count);
 }
 
 }  // namespace Tactile

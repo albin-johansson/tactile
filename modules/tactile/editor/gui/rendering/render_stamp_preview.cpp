@@ -94,7 +94,7 @@ void RenderStampPreview(const entt::registry& registry,
   PreviewInfo info;
   info.texture_id = ToTextureID(texture.id);
 
-  info.map_pos = renderInfo.map_position;
+  info.map_pos = renderInfo.origin;
   info.grid_size = renderInfo.grid_size;
   info.uv_size = {uv.width, uv.height};
 

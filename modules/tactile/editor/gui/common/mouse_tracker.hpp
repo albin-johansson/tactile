@@ -1,16 +1,15 @@
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
-#include <imgui.h>
+#include <entt/entt.hpp>
+
+struct ImVec2;
 
 namespace Tactile {
-
-struct CanvasInfo;
 
 /// \addtogroup gui
 /// \{
 
-void UpdateViewportOffset(const CanvasInfo& canvas, entt::dispatcher& dispatcher);
+void UpdateViewportOffset(const ImVec2& viewportSize, entt::dispatcher& dispatcher);
 
 /// \} End of group gui
 
