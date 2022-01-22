@@ -1,25 +1,28 @@
 # YAML format
 
-Other than the Tiled JSON and XML formats, Tactile supports its own custom YAML map format. If
-you're familiar with the Tiled JSON format, you'll notice many similarities. However, one of the key
-differences is that the Tactile YAML format doesn't support embedded tilesets. All predefined names are in `kebab-case`. All attributes that aren't specified as required may be omitted from save files.
+Other than the Tiled JSON and XML formats, Tactile supports its own custom YAML map format. If you're familiar with the
+Tiled JSON format, you'll notice many similarities. However, one of the key differences is that the Tactile YAML format
+doesn't support embedded tilesets. All predefined names are in `kebab-case`. All attributes that aren't specified as
+required may be omitted from save files.
 
 ## Root
 
 The root node in the Tactile YAML format provides general information about the tilemap.
 
-|        Attribute |   Type   | Required | Description                           |
-|-----------------:|:--------:|:--------:|:--------------------------------------|
-|        `version` |  `int`   |   Yes    | The version of the YAML map format.   |
-|      `row-count` |  `int`   |   Yes    | The number of rows in the tilemap.    |
-|   `column-count` |  `int`   |   Yes    | The number of columns in the tilemap. |
-|     `tile-width` |  `int`   |   Yes    | The width of tiles in the tilemap.    |
-|    `tile-height` |  `int`   |   Yes    | The height of tiles in the tilemap.   |
-|  `next-layer-id` |  `int`   |   Yes    | The next available layer ID.          |
-| `next-object-id` |  `int`   |   Yes    | The next available object ID.         |
-|         `layers` | Sequence |    No    | A sequence of `Layer` nodes.          |
-|       `tilesets` | Sequence |    No    | A sequence of `TilesetRef` nodes.     |
-|     `properties` | Sequence |    No    | A sequence of `Property` nodes.       |
+|               Attribute |   Type   | Required | Description                           |
+|------------------------:|:--------:|:--------:|:--------------------------------------|
+|               `version` |  `int`   |   Yes    | The version of the YAML map format.   |
+|             `row-count` |  `int`   |   Yes    | The number of rows in the tilemap.    |
+|          `column-count` |  `int`   |   Yes    | The number of columns in the tilemap. |
+|            `tile-width` |  `int`   |   Yes    | The width of tiles in the tilemap.    |
+|           `tile-height` |  `int`   |   Yes    | The height of tiles in the tilemap.   |
+|         `next-layer-id` |  `int`   |   Yes    | The next available layer ID.          |
+|        `next-object-id` |  `int`   |   Yes    | The next available object ID.         |
+|                `layers` | Sequence |    No    | A sequence of `Layer` nodes.          |
+|              `tilesets` | Sequence |    No    | A sequence of `TilesetRef` nodes.     |
+|            `properties` | Sequence |    No    | A sequence of `Property` nodes.       |
+| `component-definitions` | Sequence |    No    | A sequence of `ComponentDef` nodes.   |
+|            `components` | Sequence |    No    | A sequence of `Component` nodes.      |
 
 ---
 
@@ -45,8 +48,8 @@ data: |
   5 6 7 8
 ```
 
-In addition to the layer attributes listed above, each of the three different kinds of layers have
-additional attributes.
+In addition to the layer attributes listed above, each of the three different kinds of layers have additional
+attributes.
 
 ### `TileLayer`
 
@@ -98,7 +101,8 @@ y: 456
 
 ## `TilesetRef`
 
-The `TilesetRef` node provides information about an external tileset definition, and are always stored in the main tilemap file.
+The `TilesetRef` node provides information about an external tileset definition, and are always stored in the main
+tilemap file.
 
 |         Attribute |   Type   | Required | Description                                           |
 |------------------:|:--------:|:--------:|:------------------------------------------------------|
@@ -116,10 +120,9 @@ path: foo/bar/tileset.yaml
 
 ## `Tileset`
 
-The `Tileset` node is always defined in an external YAML file, since embedded tilesets are not
-supported by the Tactile YAML format. By default, a tileset that is added to a map in the Tactile
-editor will be stored next to the main map file. Note, the `tiles` node only contains tiles that
-feature additional data, such as properties and animations.
+The `Tileset` node is always defined in an external YAML file, since embedded tilesets are not supported by the Tactile
+YAML format. By default, a tileset that is added to a map in the Tactile editor will be stored next to the main map
+file. Note, the `tiles` node only contains tiles that feature additional data, such as properties and animations.
 
 |      Attribute |   Type   | Required | Description                                |
 |---------------:|:--------:|:--------:|:-------------------------------------------|
@@ -182,45 +185,61 @@ The `Frame` node represents a frame in an animation.
 
 ---
 
-### `ComponentTemplate` (Not implemented)
+## `ComponentDef`
 
-|    Attribute |   Type   | Required | Description                               |
-|-------------:|:--------:|:--------:|:------------------------------------------|
-|       `name` | `string` |   Yes    | The name of the component template.       |
-| `attributes` | Sequence |    No    | A sequence of `ComponentAttribute` nodes. |
+|    Attribute |   Type   | Required | Description                                 |
+|-------------:|:--------:|:--------:|:--------------------------------------------|
+|       `name` | `string` |   Yes    | The name of the component.                  |
+| `attributes` | Sequence |   Yes    | A sequence of `ComponentDefAttribute` nodes |
+
+## `ComponentDefAttribute`
+
+| Attribute |   Type    | Required | Description                                                          |
+|----------:|:---------:|:--------:|:---------------------------------------------------------------------|
+|    `name` | `string`  |   Yes    | The name of the attribute.                                           |
+|    `type` | `string`  |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
+| `default` | `variant` |    No    | The default attribute value.                                         |
 
 Example:
 
 ```YAML
-name: Vec2f
+name: GameObject
 attributes:
-  - name: X
+  - name: opacity
     type: float
-  - name: Y
-    type: float
-```
-
-```YAML
-name: Movable
-attributes:
-  - name: Velocity
-    type: Vec2f
-  - name: Position
-    type: Vec2f
+    default: 1.0
+  - name: health
+    type: int
+    default: 100
+  - name: tag
+    type: string
 ```
 
 ---
 
-### `ComponentAttribute` (Not implemented)
+## `Component`
 
-| Attribute |   Type   | Required | Description                                                     |
-|----------:|:--------:|:--------:|:----------------------------------------------------------------|
-|    `name` | `string` |   Yes    | The name of the attribute.                                      |
-|    `type` | `string` |   Yes    | The name of a `ComponentTemplate` or any of the property types. |
+| Attribute |   Type   | Required | Description                                |
+|----------:|:--------:|:--------:|:-------------------------------------------|
+|    `type` | `string` |   Yes    | The name of the component definition type. |
+|  `values` | Sequence |    No    | A sequence of `ComponentAttribute` nodes.  |
+
+## `ComponentAttribute`
+
+| Attribute |   Type    | Required | Description                |
+|----------:|:---------:|:--------:|:---------------------------|
+|    `name` | `string`  |   Yes    | The name of the attribute. |
+|   `value` | `variant` |   Yes    |                            |
+
+Example:
 
 ```YAML
-name: Health
-type: float
+type: Physics
+values:
+  - name: simulated
+    value: false
+  - name: collision-detection
+    value: continuous
 ```
 
 ---
