@@ -14,7 +14,6 @@ TEST(FloodFill, Flood)
   auto registry = sys::MakeRegistry();
 
   const auto entity = sys::AddTileLayer(registry);
-  const auto& layer = registry.get<TileLayer>(entity);
 
   registry.ctx<ActiveLayer>().entity = entity;
 
