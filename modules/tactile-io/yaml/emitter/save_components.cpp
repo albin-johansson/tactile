@@ -26,7 +26,7 @@ void SaveComponentsImpl(YAML::Emitter& emitter,
         emitter << YAML::BeginMap;
         emitter << YAML::Key << "name" << YAML::Value << attr;
 
-        emitter << YAML::Key << "type";
+        emitter << YAML::Key << "value";
         switch (GetAttributeType(component, attr)) {
           case PropertyType::String:
             emitter << YAML::Value << GetString(component, attr);

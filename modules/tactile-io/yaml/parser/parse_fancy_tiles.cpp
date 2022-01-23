@@ -2,6 +2,7 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "parse_components.hpp"
 #include "parse_object.hpp"
 #include "parse_properties.hpp"
 
@@ -29,7 +30,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseFancyTile(const YAML::Node& node, Tileset& tileset) -> ParseError
+[[nodiscard]] auto ParseFancyTile(const YAML::Node& node,
+                                  const Map& map,
+                                  Tileset& tileset) -> ParseError
 {
   auto& tile = AddTile(tileset);
 
@@ -53,7 +56,7 @@ namespace {
   if (auto seq = node["objects"]) {
     ReserveObjects(tile, seq.size());
     for (const auto& objectNode : seq) {
-      if (const auto err = ParseObject(objectNode, tile); err != ParseError::None) {
+      if (const auto err = ParseObject(objectNode, map, tile); err != ParseError::None) {
         return err;
       }
     }
@@ -63,18 +66,24 @@ namespace {
     return err;
   }
 
+  if (const auto err = ParseComponents(map, node, tile); err != ParseError::None) {
+    return err;
+  }
+
   return ParseError::None;
 }
 
 }  // namespace
 
-auto ParseFancyTiles(const YAML::Node& node, Tileset& tileset) -> ParseError
+auto ParseFancyTiles(const YAML::Node& node, const Map& map, Tileset& tileset)
+    -> ParseError
 {
   if (auto seq = node["tiles"]) {
     ReserveTiles(tileset, seq.size());
 
     for (const auto& tileNode : seq) {
-      if (const auto err = ParseFancyTile(tileNode, tileset); err != ParseError::None) {
+      if (const auto err = ParseFancyTile(tileNode, map, tileset);
+          err != ParseError::None) {
         return err;
       }
     }

@@ -6,6 +6,7 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseObjectLayer(const YAML::Node& node, Layer& layer) -> ParseError;
+[[nodiscard]] auto ParseObjectLayer(const YAML::Node& node, const Map& map, Layer& layer)
+    -> ParseError;
 
 }  // namespace Tactile::IO

@@ -1,9 +1,7 @@
 #include "parse_properties.hpp"
 
 #include <filesystem>  // path
-#include <iostream>
-#include <string>       // string
-#include <string_view>  // string_view
+#include <string>      // string
 
 #include <tactile_def.hpp>
 #include <tactile_stdlib.hpp>
@@ -17,28 +15,8 @@ namespace {
 [[nodiscard]] auto ParseType(const YAML::Node& node, PropertyType& type) -> ParseError
 {
   if (auto propType = node["type"]) {
-    const auto name = propType.as<std::string>();
-
-    if (name == "string") {
-      type = PropertyType::String;
-    }
-    else if (name == "int") {
-      type = PropertyType::Integer;
-    }
-    else if (name == "float") {
-      type = PropertyType::Floating;
-    }
-    else if (name == "bool") {
-      type = PropertyType::Boolean;
-    }
-    else if (name == "color") {
-      type = PropertyType::Color;
-    }
-    else if (name == "object") {
-      type = PropertyType::Object;
-    }
-    else if (name == "file") {
-      type = PropertyType::File;
+    if (const auto parsedType = ParseAttributeType(propType.as<std::string>())) {
+      type = *parsedType;
     }
     else {
       return ParseError::PropertyUnknownType;

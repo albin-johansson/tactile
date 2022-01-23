@@ -5,6 +5,7 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "parse_components.hpp"
 #include "parse_fancy_tiles.hpp"
 #include "parse_properties.hpp"
 
@@ -96,11 +97,15 @@ namespace {
       return ParseError::TilesetMissingImageHeight;
     }
 
-    if (const auto err = ParseFancyTiles(node, tileset); err != ParseError::None) {
+    if (const auto err = ParseFancyTiles(node, map, tileset); err != ParseError::None) {
       return err;
     }
 
     if (const auto err = ParseProperties(node, tileset); err != ParseError::None) {
+      return err;
+    }
+
+    if (const auto err = ParseComponents(map, node, tileset); err != ParseError::None) {
       return err;
     }
 

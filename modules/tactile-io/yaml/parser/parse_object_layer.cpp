@@ -6,7 +6,7 @@
 
 namespace Tactile::IO {
 
-auto ParseObjectLayer(const YAML::Node& node, Layer& layer) -> ParseError
+auto ParseObjectLayer(const YAML::Node& node, const Map& map, Layer& layer) -> ParseError
 {
   auto& objectLayer = MarkAsObjectLayer(layer);
 
@@ -14,7 +14,7 @@ auto ParseObjectLayer(const YAML::Node& node, Layer& layer) -> ParseError
     ReserveObjects(objectLayer, seq.size());
 
     for (const auto& objectNode : seq) {
-      if (const auto err = ParseObject(objectNode, objectLayer);
+      if (const auto err = ParseObject(objectNode, map, objectLayer);
           err != ParseError::None) {
         return err;
       }

@@ -4,13 +4,15 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "parse_components.hpp"
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
 
 template <typename T>
-[[nodiscard]] auto ParseObjectImpl(const YAML::Node& node, T& parent) -> ParseError
+[[nodiscard]] auto ParseObjectImpl(const YAML::Node& node, const Map& map, T& parent)
+    -> ParseError
 {
   auto& object = AddObject(parent);
 
@@ -87,19 +89,23 @@ template <typename T>
     return err;
   }
 
+  if (const auto err = ParseComponents(map, node, object); err != ParseError::None) {
+    return err;
+  }
+
   return ParseError::None;
 }
 
 }  // namespace
 
-auto ParseObject(const YAML::Node& node, ObjectLayer& layer) -> ParseError
+auto ParseObject(const YAML::Node& node, const Map& map, ObjectLayer& layer) -> ParseError
 {
-  return ParseObjectImpl(node, layer);
+  return ParseObjectImpl(node, map, layer);
 }
 
-auto ParseObject(const YAML::Node& node, Tile& tile) -> ParseError
+auto ParseObject(const YAML::Node& node, const Map& map, Tile& tile) -> ParseError
 {
-  return ParseObjectImpl(node, tile);
+  return ParseObjectImpl(node, map, tile);
 }
 
 }  // namespace Tactile::IO

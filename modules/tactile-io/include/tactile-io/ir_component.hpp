@@ -102,6 +102,9 @@ TACTILE_IO_API_QUERY
 auto GetComponentDefCount(const Map& map) -> usize;
 
 TACTILE_IO_API
+void ReserveComponentDefinitions(Map& map, usize n);
+
+TACTILE_IO_API
 void ReserveComponents(Map& map, usize n);
 
 TACTILE_IO_API

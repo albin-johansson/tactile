@@ -13,4 +13,7 @@ namespace Tactile::IO {
 
 [[nodiscard]] auto ParseColorARGB(std::string_view argb) -> std::optional<Color>;
 
+[[nodiscard]] auto ParseAttributeType(std::string_view type)
+    -> std::optional<PropertyType>;
+
 }  // namespace Tactile::IO

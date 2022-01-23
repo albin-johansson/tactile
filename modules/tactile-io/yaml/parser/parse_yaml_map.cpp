@@ -3,6 +3,7 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "parse_components.hpp"
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
@@ -67,6 +68,10 @@ namespace {
       return ParseError::MapMissingNextObjectId;
     }
 
+    if (const auto err = ParseComponentDefinitions(node, map); err != ParseError::None) {
+      return err;
+    }
+
     if (auto seq = node["layers"]) {
       if (const auto err = ParseLayers(seq, map); err != ParseError::None) {
         return err;
@@ -80,6 +85,10 @@ namespace {
     }
 
     if (const auto err = ParseProperties(node, map); err != ParseError::None) {
+      return err;
+    }
+
+    if (const auto err = ParseComponents(node, map); err != ParseError::None) {
       return err;
     }
 

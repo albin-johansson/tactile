@@ -5,6 +5,35 @@ tile-width: 32
 tile-height: 32
 next-layer-id: 4
 next-object-id: 4
+component-definitions:
+  - name: Component 1
+    attributes:
+      - name: integer
+        type: int
+        default: 42
+  - name: Component 2
+    attributes:
+      - name: float-1
+        type: float
+        default: 123
+      - name: float-2
+        type: float
+        default: 321
+  - name: Component 3
+    attributes:
+      - name: str
+        type: string
+components:
+  - type: Component 1
+    values:
+      - name: integer
+        value: 100
+  - type: Component 2
+    values:
+      - name: float-1
+        value: 549
+      - name: float-2
+        value: 192
 properties:
   - name: boolean
     type: bool
@@ -40,7 +69,7 @@ layers:
       360 360 360 360 360 360 360 360
   - name: Tile Layer 2
     id: 2
-    opacity: 0.829999983
+    opacity: 0.83
     type: tile-layer
     data: |
       1293 1294 1295 0 0 0 307 308

@@ -132,6 +132,8 @@ set(TACTILE_IO_SOURCES
     yaml/emitter/save_tilesets.cpp
     yaml/emitter/save_tilesets.hpp
 
+    yaml/parser/parse_components.cpp
+    yaml/parser/parse_components.hpp
     yaml/parser/parse_fancy_tiles.cpp
     yaml/parser/parse_fancy_tiles.hpp
     yaml/parser/parse_layers.cpp

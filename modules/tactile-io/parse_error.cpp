@@ -109,6 +109,24 @@ auto GetCause(const ParseError error) -> CStr
     case ParseError::PropertyUnknownType:
       return "The map featured a property with an unknown type!";
 
+    case ParseError::ComponentDefMissingName:
+      return "The map featured a component definition without a name!";
+
+    case ParseError::ComponentMissingType:
+      return "The map featured a component without a type!";
+
+    case ParseError::ComponentMissingValues:
+      return "The map featured a component with missing values!";
+
+    case ParseError::ComponentAttributeMissingName:
+      return "The map featured a component attribute without a name!";
+
+    case ParseError::ComponentAttributeMissingValue:
+      return "The map featured a component attribute without a value!";
+
+    case ParseError::CouldNotParseComponentAttributeValue:
+      return "The map featured an invalid component attribute value!";
+
     case ParseError::ObjectMissingId:
       return "The map featured an object layer containing an object without an ID!";
 

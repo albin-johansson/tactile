@@ -60,6 +60,18 @@ enum class ParseError {
   PropertyMissingType,
   PropertyUnknownType,
 
+  ComponentDefMissingName,            // Tactile YAML only
+  ComponentDefAttributeMissingName,   // Tactile YAML only
+  ComponentDefAttributeMissingType,   // Tactile YAML only
+  ComponentDefAttributeInvalidType,   // Tactile YAML only
+  ComponentDefAttributeInvalidValue,  // Tactile YAML only
+
+  ComponentMissingType,                  // Tactile YAML only
+  ComponentMissingValues,                // Tactile YAML only
+  ComponentAttributeMissingName,         // Tactile YAML only
+  ComponentAttributeMissingValue,        // Tactile YAML only
+  CouldNotParseComponentAttributeValue,  // Tactile YAML only
+
   ObjectMissingId,
   ObjectInvalidType,  // Tactile YAML only
   ObjectMissingType,  // Tactile YAML only

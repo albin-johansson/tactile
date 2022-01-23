@@ -1,13 +1,16 @@
 #include "create_document_from_ir.hpp"
 
-#include <algorithm>  // sort
-#include <cstring>    // strcmp
+#include <algorithm>   // sort
+#include <cstring>     // strcmp
+#include <filesystem>  // path
+#include <string>      // string
 
 #include <entt/entt.hpp>  // registry
 #include <fmt/format.h>   // format
 #include <tactile_stdlib.hpp>
 
 #include "core/components/animation.hpp"
+#include "core/components/component.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
@@ -15,6 +18,7 @@
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
+#include "core/systems/component_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/registry_system.hpp"
@@ -23,6 +27,11 @@
 
 namespace Tactile {
 namespace {
+
+[[nodiscard]] constexpr auto ToColor(const IO::Color& irColor) -> cen::color
+{
+  return {irColor.red, irColor.green, irColor.blue, irColor.alpha};
+}
 
 template <typename T>
 void AddProperties(entt::registry& registry, const entt::entity entity, const T& source)
@@ -57,11 +66,9 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
         property.value = IO::GetBool(propertyData);
         break;
 
-      case PropertyType::Color: {
-        const auto color = IO::GetColor(propertyData);
-        property.value = cen::color{color.red, color.green, color.blue, color.alpha};
+      case PropertyType::Color:
+        property.value = ToColor(IO::GetColor(propertyData));
         break;
-      }
 
       case PropertyType::File:
         property.value = std::filesystem::path{IO::GetFile(propertyData)};
@@ -76,26 +83,79 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
   }
 }
 
-auto AddObject(entt::registry& registry, const IO::Object& data) -> entt::entity
+template <typename T>
+void AddComponents(entt::registry& registry, const entt::entity entity, const T& source)
+{
+  auto& context = (entity != entt::null) ? registry.get<PropertyContext>(entity)
+                                         : registry.ctx<PropertyContext>();
+  context.components.reserve(IO::GetComponentCount(source));
+
+  IO::EachComponent(source, [&](const IO::Component& irComponent) {
+    const auto& [defEntity, def] =
+        Sys::GetComponentDef(registry, IO::GetName(irComponent));
+
+    const auto componentEntity = registry.create();
+    context.components.push_back(componentEntity);
+
+    auto& component = registry.emplace<Component>(componentEntity);
+    component.type = def.id;
+
+    IO::EachAttribute(irComponent, [&](const CStr attr) {
+      switch (IO::GetAttributeType(irComponent, attr)) {
+        case PropertyType::String:
+          component.values[attr] = std::string{IO::GetString(irComponent, attr)};
+          break;
+
+        case PropertyType::Integer:
+          component.values[attr] = IO::GetInt(irComponent, attr);
+          break;
+
+        case PropertyType::Floating:
+          component.values[attr] = IO::GetFloat(irComponent, attr);
+          break;
+
+        case PropertyType::Boolean:
+          component.values[attr] = IO::GetBool(irComponent, attr);
+          break;
+
+        case PropertyType::File:
+          component.values[attr] = std::filesystem::path{IO::GetFile(irComponent, attr)};
+          break;
+
+        case PropertyType::Color:
+          component.values[attr] = ToColor(IO::GetColor(irComponent, attr));
+          break;
+
+        case PropertyType::Object:
+          component.values[attr] = ObjectRef{IO::GetObject(irComponent, attr)};
+          break;
+      }
+    });
+  });
+}
+
+auto AddObject(entt::registry& registry, const IO::Object& irObject) -> entt::entity
 {
   const auto objectEntity = registry.create();
 
   auto& object = registry.emplace<Object>(objectEntity);
-  object.id = ObjectID{IO::GetId(data)};
-  object.x = IO::GetX(data);
-  object.y = IO::GetY(data);
-  object.width = IO::GetWidth(data);
-  object.height = IO::GetHeight(data);
-  object.type = IO::GetType(data);
-  object.visible = IO::IsVisible(data);
+  object.id = ObjectID{IO::GetId(irObject)};
+  object.x = IO::GetX(irObject);
+  object.y = IO::GetY(irObject);
+  object.width = IO::GetWidth(irObject);
+  object.height = IO::GetHeight(irObject);
+  object.type = IO::GetType(irObject);
+  object.visible = IO::IsVisible(irObject);
 
-  if (const auto tag = IO::GetTag(data); std::strcmp(tag, "") != 0) {
+  if (const auto* tag = IO::GetTag(irObject); std::strcmp(tag, "") != 0) {
     object.tag = tag;
   }
 
   auto& context = Sys::AddPropertyContext(registry, objectEntity);
-  context.name = IO::GetName(data);
-  AddProperties(registry, objectEntity, data);
+  context.name = IO::GetName(irObject);
+
+  AddProperties(registry, objectEntity, irObject);
+  AddComponents(registry, objectEntity, irObject);
 
   return objectEntity;
 }
@@ -124,13 +184,13 @@ void AddAnimation(entt::registry& registry,
 
 void AddTileObjects(entt::registry& registry,
                     FancyTile& tile,
-                    const IO::Tile& tileData,
+                    const IO::Tile& irTile,
                     const usize nObjects)
 {
   tile.objects.reserve(nObjects);
 
   for (usize index = 0; index < nObjects; ++index) {
-    const auto& objectData = IO::GetObject(tileData, index);
+    const auto& objectData = IO::GetObject(irTile, index);
     const auto objectEntity = AddObject(registry, objectData);
     tile.objects.push_back(objectEntity);
   }
@@ -138,143 +198,140 @@ void AddTileObjects(entt::registry& registry,
 
 void MakeFancyTiles(entt::registry& registry,
                     TilesetCache& cache,
-                    const IO::Tileset& data)
+                    const IO::Tileset& irTileset)
 {
-  const auto firstGlobalId = IO::GetFirstGlobalId(data);
-  const auto count = IO::GetTileInfoCount(data);
+  const auto firstGlobalId = IO::GetFirstGlobalId(irTileset);
+  const auto count = IO::GetTileInfoCount(irTileset);
   for (usize index = 0; index < count; ++index) {
-    const auto& tileData = IO::GetTileInfo(data, index);
+    const auto& irTileInfo = IO::GetTileInfo(irTileset, index);
 
     const auto tileEntity = registry.create();
     auto& tile = registry.emplace<FancyTile>(tileEntity);
-    tile.id = TileID{firstGlobalId + IO::GetId(tileData)};
+    tile.id = TileID{firstGlobalId + IO::GetId(irTileInfo)};
 
     cache.tiles.try_emplace(tile.id, tileEntity);
 
-    if (const auto nFrames = IO::GetAnimationFrameCount(tileData); nFrames != 0) {
-      AddAnimation(registry, tileEntity, firstGlobalId, tileData, nFrames);
+    if (const auto nFrames = IO::GetAnimationFrameCount(irTileInfo); nFrames != 0) {
+      AddAnimation(registry, tileEntity, firstGlobalId, irTileInfo, nFrames);
     }
 
-    if (const auto nObjects = IO::GetObjectCount(tileData); nObjects != 0) {
-      AddTileObjects(registry, tile, tileData, nObjects);
+    if (const auto nObjects = IO::GetObjectCount(irTileInfo); nObjects != 0) {
+      AddTileObjects(registry, tile, irTileInfo, nObjects);
     }
 
     auto& context = Sys::AddPropertyContext(registry, tileEntity);
     context.name = fmt::format("Tile {}", tile.id);
-    AddProperties(registry, tileEntity, tileData);
+    AddProperties(registry, tileEntity, irTileInfo);
+    AddComponents(registry, tileEntity, irTileInfo);
   }
 }
 
 void MakeTileset(entt::registry& registry,
                  TextureManager& textures,
-                 const IO::Tileset& data)
+                 const IO::Tileset& irTileset)
 {
-  const auto info = textures.Load(IO::GetImagePath(data)).value();
+  const auto info = textures.Load(IO::GetImagePath(irTileset)).value();
   const auto entity = Sys::MakeTileset(registry,
-                                       TileID{IO::GetFirstGlobalId(data)},
+                                       TileID{IO::GetFirstGlobalId(irTileset)},
                                        info,
-                                       IO::GetTileWidth(data),
-                                       IO::GetTileHeight(data));
+                                       IO::GetTileWidth(irTileset),
+                                       IO::GetTileHeight(irTileset));
 
-  registry.get<PropertyContext>(entity).name = IO::GetName(data);
-  AddProperties(registry, entity, data);
+  registry.get<PropertyContext>(entity).name = IO::GetName(irTileset);
+  AddProperties(registry, entity, irTileset);
+  AddComponents(registry, entity, irTileset);
 
   auto& cache = registry.get<TilesetCache>(entity);
-  MakeFancyTiles(registry, cache, data);
+  MakeFancyTiles(registry, cache, irTileset);
 }
 
 void MakeObjectLayer(entt::registry& registry,
                      const entt::entity entity,
-                     const IO::ObjectLayer& data)
+                     const IO::ObjectLayer& irObjectLayer)
 {
-  const auto count = IO::GetObjectCount(data);
+  const auto count = IO::GetObjectCount(irObjectLayer);
 
   auto& objectLayer = registry.emplace<ObjectLayer>(entity);
   objectLayer.objects.reserve(count);
 
   for (usize index = 0; index < count; ++index) {
-    const auto& objectData = IO::GetObject(data, index);
+    const auto& objectData = IO::GetObject(irObjectLayer, index);
     const auto objectEntity = AddObject(registry, objectData);
     objectLayer.objects.push_back(objectEntity);
   }
 }
 
 auto MakeLayer(entt::registry& registry,
-               const IO::Layer& data,
+               const IO::Layer& irLayer,
                const entt::entity parent = entt::null) -> entt::entity
 {
   const auto entity = Sys::AddBasicLayer(registry,
-                                         LayerID{IO::GetId(data)},
-                                         IO::GetType(data),
-                                         IO::GetName(data),
+                                         LayerID{IO::GetId(irLayer)},
+                                         IO::GetType(irLayer),
+                                         IO::GetName(irLayer),
                                          parent);
 
   auto& node = registry.get<LayerTreeNode>(entity);
-  node.index = IO::GetIndex(data);
+  node.index = IO::GetIndex(irLayer);
 
   auto& layer = registry.get<Layer>(entity);
-  layer.opacity = IO::GetOpacity(data);
-  layer.visible = IO::IsVisible(data);
+  layer.opacity = IO::GetOpacity(irLayer);
+  layer.visible = IO::IsVisible(irLayer);
 
-  const auto type = IO::GetType(data);
+  const auto type = IO::GetType(irLayer);
   if (type == LayerType::TileLayer) {
-    const auto& tileLayerData = IO::GetTileLayer(data);
-    const auto nRows = IO::GetRowCount(tileLayerData);
-    const auto nCols = IO::GetColumnCount(tileLayerData);
+    const auto& irTileLayer = IO::GetTileLayer(irLayer);
+    const auto nRows = IO::GetRowCount(irTileLayer);
+    const auto nCols = IO::GetColumnCount(irTileLayer);
 
     auto& tileLayer = registry.emplace<TileLayer>(entity);
     tileLayer.matrix = MakeTileMatrix(nRows, nCols);
 
     for (usize row = 0; row < nRows; ++row) {
       for (usize col = 0; col < nCols; ++col) {
-        tileLayer.matrix[row][col] = TileID{IO::GetTile(tileLayerData, row, col)};
+        tileLayer.matrix[row][col] = TileID{IO::GetTile(irTileLayer, row, col)};
       }
     }
   }
   else if (type == LayerType::ObjectLayer) {
-    const auto& objectLayerData = IO::GetObjectLayer(data);
-    MakeObjectLayer(registry, entity, objectLayerData);
+    const auto& irObjectLayer = IO::GetObjectLayer(irLayer);
+    MakeObjectLayer(registry, entity, irObjectLayer);
   }
   else if (type == LayerType::GroupLayer) {
     registry.emplace<GroupLayer>(entity);
 
-    const auto& groupLayerData = IO::GetGroupLayer(data);
-    const auto count = IO::GetLayerCount(groupLayerData);
-
-    for (usize index = 0; index < count; ++index) {
-      const auto& layerData = IO::GetLayer(groupLayerData, index);
-      MakeLayer(registry, layerData, entity);
-    }
+    const auto& irGroupLayer = IO::GetGroupLayer(irLayer);
+    IO::EachLayer(irGroupLayer, [&](const IO::Layer& irSublayer) {
+      MakeLayer(registry, irSublayer, entity);
+    });
   }
 
-  AddProperties(registry, entity, data);
+  AddProperties(registry, entity, irLayer);
+  AddComponents(registry, entity, irLayer);
 
   return entity;
 }
 
-void CreateLayers(Document& document, const IO::Map& ir)
+void CreateLayers(Document& document, const IO::Map& irMap)
 {
-  const auto count = IO::GetLayerCount(ir);
-  for (usize index = 0; index < count; ++index) {
-    MakeLayer(document.registry, IO::GetLayer(ir, index));
-  }
+  IO::EachLayer(irMap,
+                [&](const IO::Layer& irLayer) { MakeLayer(document.registry, irLayer); });
 
   Sys::SortLayers(document.registry);
 
-  if (count != 0) {
+  if (!document.registry.storage<LayerTreeNode>().empty()) {
     auto& activeLayer = document.registry.ctx<ActiveLayer>();
     activeLayer.entity = document.registry.view<LayerTreeNode>().front();
   }
 }
 
-void CreateTilesets(Document& document, TextureManager& textures, const IO::Map& ir)
+void CreateTilesets(Document& document, TextureManager& textures, const IO::Map& irMap)
 {
-  const auto count = IO::GetTilesetCount(ir);
-  for (usize index = 0; index < count; ++index) {
-    MakeTileset(document.registry, textures, IO::GetTileset(ir, index));
-  }
+  IO::EachTileset(irMap, [&](const IO::Tileset& irTileset) {
+    MakeTileset(document.registry, textures, irTileset);
+  });
 
-  if (count != 0) {
+  if (!document.registry.storage<Tileset>().empty()) {
     auto& activeTileset = document.registry.ctx<ActiveTileset>();
     activeTileset.entity = document.registry.view<Tileset>().front();
   }
@@ -286,33 +343,100 @@ void InitRootPropertyContext(Document& document)
   context.name = document.path.filename().string();
 }
 
-void InitMapContext(Map& map, const IO::Map& ir)
+void InitMapContext(Map& map, const IO::Map& irMap)
 {
-  map.next_layer_id = LayerID{IO::GetNextLayerId(ir)};
-  map.next_object_id = ObjectID{IO::GetNextObjectId(ir)};
+  map.next_layer_id = LayerID{IO::GetNextLayerId(irMap)};
+  map.next_object_id = ObjectID{IO::GetNextObjectId(irMap)};
 
-  map.tile_width = IO::GetTileWidth(ir);
-  map.tile_height = IO::GetTileHeight(ir);
+  map.tile_width = IO::GetTileWidth(irMap);
+  map.tile_height = IO::GetTileHeight(irMap);
 
-  map.row_count = IO::GetRowCount(ir);
-  map.column_count = IO::GetColumnCount(ir);
+  map.row_count = IO::GetRowCount(irMap);
+  map.column_count = IO::GetColumnCount(irMap);
+}
+
+void InitComponentDefinitions(entt::registry& registry, const IO::Map& irMap)
+{
+  IO::EachComponentDef(irMap, [&](const IO::ComponentDef& irDef) {
+    const auto* componentName = IO::GetName(irDef);
+
+    const auto componentId = Sys::CreateComponentDef(registry, componentName);
+    auto [entity, def] = Sys::GetComponentDef(registry, componentId);
+
+    IO::EachAttribute(irDef, [&](const CStr attr) {
+      const auto type = IO::GetAttributeType(irDef, attr);
+      switch (type) {
+        case PropertyType::String:
+          Sys::CreateComponentAttribute(registry,
+                                        componentId,
+                                        attr,
+                                        std::string{IO::GetString(irDef, attr)});
+          break;
+
+        case PropertyType::Integer:
+          Sys::CreateComponentAttribute(registry,
+                                        componentId,
+                                        attr,
+                                        IO::GetInt(irDef, attr));
+          break;
+
+        case PropertyType::Floating:
+          Sys::CreateComponentAttribute(registry,
+                                        componentId,
+                                        attr,
+                                        IO::GetFloat(irDef, attr));
+          break;
+
+        case PropertyType::Boolean:
+          Sys::CreateComponentAttribute(registry,
+                                        componentId,
+                                        attr,
+                                        IO::GetBool(irDef, attr));
+          break;
+
+        case PropertyType::File:
+          Sys::CreateComponentAttribute(registry,
+                                        componentId,
+                                        attr,
+                                        std::filesystem::path{IO::GetFile(irDef, attr)});
+          break;
+
+        case PropertyType::Color:
+          Sys::CreateComponentAttribute(registry,
+                                        componentId,
+                                        attr,
+                                        ToColor(IO::GetColor(irDef, attr)));
+          break;
+
+        case PropertyType::Object:
+          Sys::CreateComponentAttribute(registry,
+                                        componentId,
+                                        attr,
+                                        ObjectRef{IO::GetObject(irDef, attr)});
+          break;
+      }
+    });
+  });
 }
 
 }  // namespace
 
-auto CreateDocumentFromIR(const IO::Map& ir, TextureManager& textures) -> Document
+auto CreateDocumentFromIR(const IO::Map& irMap, TextureManager& textures) -> Document
 {
   Document document;
-  document.path = IO::GetPath(ir);
+  document.path = IO::GetPath(irMap);
   document.registry = Sys::MakeRegistry();
 
-  InitMapContext(document.registry.ctx<Map>(), ir);
+  InitComponentDefinitions(document.registry, irMap);
+
+  InitMapContext(document.registry.ctx<Map>(), irMap);
   InitRootPropertyContext(document);
 
-  AddProperties(document.registry, entt::null, ir);
+  AddProperties(document.registry, entt::null, irMap);
+  AddComponents(document.registry, entt::null, irMap);
 
-  CreateTilesets(document, textures, ir);
-  CreateLayers(document, ir);
+  CreateTilesets(document, textures, irMap);
+  CreateLayers(document, irMap);
 
   return document;
 }

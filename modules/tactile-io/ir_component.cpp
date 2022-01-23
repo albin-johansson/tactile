@@ -311,6 +311,11 @@ auto GetComponentDefCount(const Map& map) -> usize
   return map.component_definitions.size();
 }
 
+void ReserveComponentDefinitions(Map& map, const usize n)
+{
+  map.component_definitions.reserve(n);
+}
+
 void ReserveComponents(Map& map, const usize n)
 {
   map.components.reserve(n);

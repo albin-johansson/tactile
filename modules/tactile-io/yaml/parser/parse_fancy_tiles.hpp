@@ -6,7 +6,8 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseFancyTiles(const YAML::Node& node, Tileset& tileset)
-    -> ParseError;
+[[nodiscard]] auto ParseFancyTiles(const YAML::Node& node,
+                                   const Map& map,
+                                   Tileset& tileset) -> ParseError;
 
 }  // namespace Tactile::IO

@@ -5,6 +5,7 @@
 #include <tactile_def.hpp>
 #include <yaml-cpp/yaml.h>
 
+#include "parse_components.hpp"
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"
@@ -13,12 +14,14 @@ namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseLayer(const YAML::Node& node,
+                              const Map& map,
                               Layer& layer,
                               usize index,
                               usize nRows,
                               usize nCols) -> ParseError;
 
 [[nodiscard]] auto ParseGroupLayer(const YAML::Node& node,
+                                   const Map& map,
                                    Layer& layer,
                                    const usize nRows,
                                    const usize nCols) -> ParseError
@@ -32,7 +35,7 @@ namespace {
     for (const auto& layerNode : seq) {
       auto& child = AddLayer(groupLayer);
 
-      if (const auto err = ParseLayer(layerNode, child, index, nRows, nCols);
+      if (const auto err = ParseLayer(layerNode, map, child, index, nRows, nCols);
           err != ParseError::None) {
         return err;
       }
@@ -45,6 +48,7 @@ namespace {
 }
 
 [[nodiscard]] auto ParseLayer(const YAML::Node& node,
+                              const Map& map,
                               Layer& layer,
                               const usize index,
                               const usize nRows,
@@ -90,12 +94,12 @@ namespace {
       }
     }
     else if (value == "object-layer") {
-      if (const auto err = ParseObjectLayer(node, layer); err != ParseError::None) {
+      if (const auto err = ParseObjectLayer(node, map, layer); err != ParseError::None) {
         return err;
       }
     }
     else if (value == "group-layer") {
-      if (const auto err = ParseGroupLayer(node, layer, nRows, nCols);
+      if (const auto err = ParseGroupLayer(node, map, layer, nRows, nCols);
           err != ParseError::None) {
         return err;
       }
@@ -109,6 +113,10 @@ namespace {
   }
 
   if (const auto err = ParseProperties(node, layer); err != ParseError::None) {
+    return err;
+  }
+
+  if (const auto err = ParseComponents(map, node, layer); err != ParseError::None) {
     return err;
   }
 
@@ -127,7 +135,7 @@ auto ParseLayers(const YAML::Node& seq, Map& map) -> ParseError
   usize index = 0;
   for (const auto& layerNode : seq) {
     auto& layer = AddLayer(map);
-    if (const auto err = ParseLayer(layerNode, layer, index, nRows, nCols);
+    if (const auto err = ParseLayer(layerNode, map, layer, index, nRows, nCols);
         err != ParseError::None) {
       return err;
     }

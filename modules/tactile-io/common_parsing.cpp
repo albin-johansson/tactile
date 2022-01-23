@@ -80,4 +80,32 @@ auto ParseColorARGB(const std::string_view argb) -> std::optional<Color>
   }
 }
 
+auto ParseAttributeType(const std::string_view type) -> std::optional<PropertyType>
+{
+  if (type == "string") {
+    return PropertyType::String;
+  }
+  else if (type == "int") {
+    return PropertyType::Integer;
+  }
+  else if (type == "float") {
+    return PropertyType::Floating;
+  }
+  else if (type == "bool") {
+    return PropertyType::Boolean;
+  }
+  else if (type == "color") {
+    return PropertyType::Color;
+  }
+  else if (type == "object") {
+    return PropertyType::Object;
+  }
+  else if (type == "file") {
+    return PropertyType::File;
+  }
+  else {
+    return std::nullopt;
+  }
+}
+
 }  // namespace Tactile::IO

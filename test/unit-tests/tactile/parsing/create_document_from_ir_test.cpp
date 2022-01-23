@@ -33,7 +33,7 @@ void CheckMapAttributes(const entt::registry& registry)
   const auto& context = registry.ctx<PropertyContext>();
   ASSERT_EQ("map.yaml", context.name);
   ASSERT_EQ(7, context.properties.size());
-  ASSERT_EQ(0, context.components.size());
+  ASSERT_EQ(2, context.components.size());
 
   {
     const auto propertyEntity = Sys::FindProperty(registry, context, "boolean");
@@ -217,6 +217,7 @@ void CheckTilesets(const entt::registry& registry)
 TEST(CreateDocumentFromIR, Test)
 {
   MapParser parser{"test-resources/yaml/map.yaml"};
+  ASSERT_EQ(IO::ParseError::None, parser.GetError());
   ASSERT_TRUE(parser);
 
   TextureManager textures;
