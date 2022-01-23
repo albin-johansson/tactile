@@ -12,14 +12,14 @@ void BucketToolOnPressed(entt::registry& registry,
                          entt::dispatcher& dispatcher,
                          const MouseInfo& mouse)
 {
-  if (IsTileLayerActive(registry) && IsSingleTileSelectedInTileset(registry) &&
+  if (IsTileLayerActive(registry) && is_single_tile_selected_in_tileset(registry) &&
       mouse.button == cen::mouse_button::left) {
-    const auto entity = GetActiveTileset(registry);
+    const auto entity = find_active_tileset(registry);
     TACTILE_ASSERT(entity != entt::null);
 
     const auto& selection = registry.get<TilesetSelection>(entity);
     const auto position = selection.region->begin;
-    const auto replacement = GetTileFromTileset(registry, entity, position);
+    const auto replacement = get_tile_from_tileset(registry, entity, position);
 
     dispatcher.enqueue<FloodEvent>(mouse.position_in_map, replacement);
   }

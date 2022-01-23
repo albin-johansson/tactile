@@ -231,11 +231,11 @@ void MakeTileset(entt::registry& registry,
                  const IO::Tileset& irTileset)
 {
   const auto info = textures.Load(IO::GetImagePath(irTileset)).value();
-  const auto entity = sys::MakeTileset(registry,
-                                       TileID{IO::GetFirstGlobalId(irTileset)},
-                                       info,
-                                       IO::GetTileWidth(irTileset),
-                                       IO::GetTileHeight(irTileset));
+  const auto entity = sys::make_tileset(registry,
+                                        TileID{IO::GetFirstGlobalId(irTileset)},
+                                        info,
+                                        IO::GetTileWidth(irTileset),
+                                        IO::GetTileHeight(irTileset));
 
   registry.get<PropertyContext>(entity).name = IO::GetName(irTileset);
   AddProperties(registry, entity, irTileset);

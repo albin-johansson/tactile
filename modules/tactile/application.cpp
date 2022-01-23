@@ -178,7 +178,9 @@ void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
       const auto width = mWidgets.GetTilesetViewWidth();
       const auto height = mWidgets.GetTilesetViewHeight();
       if (width && height) {
-        const auto entity = sys::GetActiveTileset(*registry);
+        const auto entity = sys::find_active_tileset(*registry);
+        TACTILE_ASSERT(entity != entt::null);
+
         const auto& viewport = registry->get<Viewport>(entity);
 
         const auto dx = static_cast<float>(event.x) * (viewport.tile_width / scaling);
@@ -444,13 +446,13 @@ void Application::OnRemoveTileset(const RemoveTilesetEvent& event)
 void Application::OnSelectTileset(const SelectTilesetEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  sys::SelectTileset(registry, event.id);
+  sys::select_tileset(registry, event.id);
 }
 
 void Application::OnSetTilesetSelection(const SetTilesetSelectionEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  sys::UpdateTilesetSelection(registry, event.selection);
+  sys::update_tileset_selection(registry, event.selection);
 }
 
 void Application::OnSetTilesetName(const SetTilesetNameEvent& event)

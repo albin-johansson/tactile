@@ -285,7 +285,7 @@ auto Model::IsBucketPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
     return sys::IsTileLayerActive(*registry) &&
-           sys::IsSingleTileSelectedInTileset(*registry);
+           sys::is_single_tile_selected_in_tileset(*registry);
   }
   else {
     return false;

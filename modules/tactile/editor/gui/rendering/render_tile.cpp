@@ -16,13 +16,13 @@ void RenderTile(Graphics& graphics,
                 const int32 row,
                 const int32 column)
 {
-  const auto tilesetEntity = sys::FindTilesetWithTile(registry, tile);
+  const auto tilesetEntity = sys::find_tileset_with_tile(registry, tile);
   if (tilesetEntity != entt::null) {
     const auto& texture = registry.get<Texture>(tilesetEntity);
     const auto& uvTileSize = registry.get<UvTileSize>(tilesetEntity);
 
-    const auto tileToRender = sys::GetTileToRender(registry, tilesetEntity, tile);
-    const auto& sourceRect = sys::GetSourceRect(registry, tilesetEntity, tileToRender);
+    const auto tileToRender = sys::get_tile_to_render(registry, tilesetEntity, tile);
+    const auto& sourceRect = sys::get_source_rect(registry, tilesetEntity, tileToRender);
 
     const ImVec4 source{static_cast<float>(sourceRect.x()),
                         static_cast<float>(sourceRect.y()),

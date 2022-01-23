@@ -89,7 +89,7 @@ void UpdateMouseTileLabels(const entt::registry& registry,
       }
 
       if (global != empty_tile) {
-        const auto local = sys::ConvertToLocal(registry, global);
+        const auto local = sys::convert_to_local(registry, global);
         if (cursor.is_within_map && local) {
           ImGui::Text("Local ID: %i", *local);
         }

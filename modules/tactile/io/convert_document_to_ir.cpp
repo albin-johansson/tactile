@@ -164,7 +164,7 @@ void ConvertFancyTiles(IO::Map& irMap,
   for (auto&& [entity, tile, ctx] : registry.view<FancyTile, PropertyContext>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       auto& tileData = IO::AddTile(ir);
-      IO::SetId(tileData, sys::ConvertToLocal(registry, tile.id).value());
+      IO::SetId(tileData, sys::convert_to_local(registry, tile.id).value());
 
       if (const auto* animation = registry.try_get<Animation>(entity)) {
         IO::ReserveAnimationFrames(tileData, animation->frames.size());
@@ -173,7 +173,7 @@ void ConvertFancyTiles(IO::Map& irMap,
           const auto& frame = registry.get<AnimationFrame>(frameEntity);
 
           auto& frameData = IO::AddAnimationFrame(tileData);
-          IO::SetTile(frameData, sys::ConvertToLocal(registry, frame.tile).value());
+          IO::SetTile(frameData, sys::convert_to_local(registry, frame.tile).value());
           IO::SetDuration(frameData, static_cast<int32>(frame.duration.count()));
         }
       }

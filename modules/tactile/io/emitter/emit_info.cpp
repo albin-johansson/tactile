@@ -159,7 +159,7 @@ void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
       if (worthSaving) {
         FancyTileData data;
         data.global_id = tile.id;
-        data.local_id = sys::ConvertToLocal(*mRegistry, tile.id).value();
+        data.local_id = sys::convert_to_local(*mRegistry, tile.id).value();
         data.context_id = context.id;
 
         func(data);
@@ -204,7 +204,7 @@ void EmitInfo::each_fancy_tile_animation_frame(const TileID id,
     const auto& frame = mRegistry->get<AnimationFrame>(frameEntity);
 
     AnimationFrameData data;
-    data.local_tile = sys::ConvertToLocal(*mRegistry, frame.tile).value();
+    data.local_tile = sys::convert_to_local(*mRegistry, frame.tile).value();
     data.duration_ms = frame.duration.count();
 
     func(data);
@@ -396,7 +396,7 @@ auto EmitInfo::destination_dir() const -> const std::filesystem::path&
 
 auto EmitInfo::to_tileset_entity(const TilesetID id) const -> entt::entity
 {
-  const auto entity = sys::FindTileset(*mRegistry, id);
+  const auto entity = sys::find_tileset(*mRegistry, id);
   if (entity != entt::null) {
     return entity;
   }
