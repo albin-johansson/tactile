@@ -199,7 +199,7 @@ class VectorMap final {
     if (const auto it = Find(key); it != end()) {
       const auto index = std::distance(begin(), it);
       if constexpr (MoveLater) {
-        if (index != GetSize() - 1) {
+        if (static_cast<usize>(index) != GetSize() - 1u) {
           std::iter_swap(it, it + 1);
         }
       }
