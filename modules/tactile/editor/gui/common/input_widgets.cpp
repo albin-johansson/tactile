@@ -12,47 +12,47 @@
 
 namespace Tactile {
 
-auto Input(const CStr id, const PropertyValue& value) -> Maybe<PropertyValue>
+auto Input(const CStr id, const attribute_value& value) -> Maybe<attribute_value>
 {
-  switch (value.GetType().value()) {
+  switch (value.type()) {
     case PropertyType::String: {
-      if (auto updated = InputStringWithHint(id, "Empty", value.AsString())) {
+      if (auto updated = InputStringWithHint(id, "Empty", value.as_string())) {
         return std::move(updated);
       }
       break;
     }
     case PropertyType::Integer: {
-      if (const auto updated = InputWidget(id, value.AsInt())) {
+      if (const auto updated = InputWidget(id, value.as_int())) {
         return updated;
       }
       break;
     }
     case PropertyType::Floating: {
-      if (const auto updated = InputWidget(id, value.AsFloat())) {
+      if (const auto updated = InputWidget(id, value.as_float())) {
         return updated;
       }
       break;
     }
     case PropertyType::Boolean: {
-      if (const auto updated = InputWidget(id, value.AsBool())) {
+      if (const auto updated = InputWidget(id, value.as_bool())) {
         return updated;
       }
       break;
     }
     case PropertyType::File: {
-      if (auto updated = InputFile(id, value.AsFile())) {
+      if (auto updated = InputFile(id, value.as_file())) {
         return std::move(updated);
       }
       break;
     }
     case PropertyType::Color: {
-      if (const auto updated = InputWidget(id, value.AsColor())) {
+      if (const auto updated = InputWidget(id, value.as_color())) {
         return updated;
       }
       break;
     }
     case PropertyType::Object: {
-      if (const auto updated = InputWidget(id, value.AsObject())) {
+      if (const auto updated = InputWidget(id, value.as_object())) {
         return updated;
       }
       break;
@@ -165,7 +165,7 @@ auto InputWidget(const CStr id, bool value) -> Maybe<bool>
   return nothing;
 }
 
-auto InputWidget(const CStr id, const ObjectRef value) -> Maybe<ObjectRef>
+auto InputWidget(const CStr id, const object_t value) -> Maybe<object_t>
 {
   const Scoped::ID scope{id};
 

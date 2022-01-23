@@ -277,7 +277,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
 
   if (mContextState.show_change_type_dialog) {
     const auto& name = mChangeTypeTarget.value();
-    const auto type = Sys::GetProperty(registry, context, name).value.GetType().value();
+    const auto type = Sys::GetProperty(registry, context, name).value.type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(name, type);
     mChangeTypeTarget.reset();
     mContextState.show_change_type_dialog = false;
@@ -327,38 +327,38 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
       ImGui::Separator();
     }
 
-    if (value.IsString()) {
-      if (const auto updated = InputString("##CustomPropertyInput", value.AsString())) {
+    if (value.is_string()) {
+      if (const auto updated = InputString("##CustomPropertyInput", value.as_string())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
-    else if (value.IsInt()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsInt())) {
+    else if (value.is_int()) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_int())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
-    else if (value.IsFloat()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsFloat())) {
+    else if (value.is_float()) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_float())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
-    else if (value.IsBool()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsBool())) {
+    else if (value.is_bool()) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_bool())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
-    else if (value.IsColor()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsColor())) {
+    else if (value.is_color()) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_color())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
-    else if (value.IsObject()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.AsObject())) {
+    else if (value.is_object()) {
+      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_object())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
-    else if (value.IsFile()) {
-      if (const auto updated = InputFile("##CustomPropertyInput", value.AsFile())) {
+    else if (value.is_file()) {
+      if (const auto updated = InputFile("##CustomPropertyInput", value.as_file())) {
         dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }

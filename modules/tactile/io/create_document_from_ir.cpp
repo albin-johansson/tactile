@@ -75,7 +75,7 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
         break;
 
       case PropertyType::Object:
-        property.value = ObjectRef{IO::GetObject(propertyData)};
+        property.value = object_t{IO::GetObject(propertyData)};
         break;
     };
 
@@ -127,7 +127,7 @@ void AddComponents(entt::registry& registry, const entt::entity entity, const T&
           break;
 
         case PropertyType::Object:
-          component.values[attr] = ObjectRef{IO::GetObject(irComponent, attr)};
+          component.values[attr] = object_t{IO::GetObject(irComponent, attr)};
           break;
       }
     });
@@ -412,7 +412,7 @@ void InitComponentDefinitions(entt::registry& registry, const IO::Map& irMap)
           Sys::CreateComponentAttribute(registry,
                                         componentId,
                                         attr,
-                                        ObjectRef{IO::GetObject(irDef, attr)});
+                                        object_t{IO::GetObject(irDef, attr)});
           break;
       }
     });

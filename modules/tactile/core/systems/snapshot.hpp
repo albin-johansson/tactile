@@ -12,7 +12,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 
 namespace Tactile::Sys {
 
@@ -20,7 +20,7 @@ struct PropertyContextSnapshot final
 {
   ContextID id;
   std::string name;
-  std::map<std::string, PropertyValue, std::less<>> properties;
+  std::map<std::string, attribute_value, std::less<>> properties;
 };
 
 struct TilesetSnapshot final

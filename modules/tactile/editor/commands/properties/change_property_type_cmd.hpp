@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // registry
 #include <tactile_def.hpp>
 
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
@@ -29,7 +29,7 @@ class ChangePropertyTypeCmd final : public ACommand {
   ContextID mContextId;
   std::string mName;
   PropertyType mPropertyType;
-  Maybe<PropertyValue> mPreviousValue;
+  Maybe<attribute_value> mPreviousValue;
 };
 
 }  // namespace Tactile

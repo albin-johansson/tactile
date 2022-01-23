@@ -26,7 +26,7 @@ void SetComponentAttributeTypeCmd::Undo()
   Sys::SetComponentAttributeType(registry,
                                  mComponentId,
                                  mAttributeName,
-                                 previous.GetType().value());
+                                 previous.type());
   Sys::SetComponentAttributeValue(registry, mComponentId, mAttributeName, previous);
 }
 

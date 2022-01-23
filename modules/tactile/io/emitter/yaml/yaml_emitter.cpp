@@ -9,7 +9,7 @@
 #include <tactile_stdlib.hpp>
 #include <yaml-cpp/yaml.h>
 
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 #include "io/emitter/emit_info.hpp"
 #include "io/preferences.hpp"
 #include "logging.hpp"
@@ -20,35 +20,35 @@ namespace {
 
 constexpr int tileset_node_version = 1;
 
-auto operator<<(YAML::Emitter& emitter, const PropertyValue& value) -> YAML::Emitter&
+auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::Emitter&
 {
-  switch (value.GetType().value()) {
+  switch (value.type()) {
     case PropertyType::String:
-      emitter << value.AsString();
+      emitter << value.as_string();
       break;
 
     case PropertyType::Integer:
-      emitter << value.AsInt();
+      emitter << value.as_int();
       break;
 
     case PropertyType::Floating:
-      emitter << value.AsFloat();
+      emitter << value.as_float();
       break;
 
     case PropertyType::Boolean:
-      emitter << value.AsBool();
+      emitter << value.as_bool();
       break;
 
     case PropertyType::File:
-      emitter << value.AsFile().c_str();
+      emitter << value.as_file().c_str();
       break;
 
     case PropertyType::Color:
-      emitter << value.AsColor().as_rgba();
+      emitter << value.as_color().as_rgba();
       break;
 
     case PropertyType::Object:
-      emitter << value.AsObject();
+      emitter << value.as_object();
       break;
   }
 
@@ -90,12 +90,12 @@ void emit_object_data(YAML::Emitter& emitter,
 
 void emit_component_definition_attribute(YAML::Emitter& emitter,
                                          const std::string& name,
-                                         const PropertyValue& value)
+                                         const attribute_value& value)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;
 
-  const auto type = value.GetType().value();
+  const auto type = value.type();
   emitter << YAML::Key << "type" << YAML::Value << stringify(type);
 
   if (!value.has_default_value()) {
@@ -123,7 +123,7 @@ void emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
       emitter << YAML::Key << "attributes" << YAML::BeginSeq;
 
       info.each_component_def_attrs(
-          [&](const std::string& name, const PropertyValue& value) {
+          [&](const std::string& name, const attribute_value& value) {
             emit_component_definition_attribute(emitter, name, value);
           },
           index);
@@ -145,7 +145,7 @@ void emit_properties(YAML::Emitter& emitter,
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
 
     info.each_property(contextId,
-                       [&](const std::string& name, const PropertyValue& value) {
+                       [&](const std::string& name, const attribute_value& value) {
                          emitter << YAML::BeginMap;
                          emitter << YAML::Key << "name" << YAML::Value << name;
                          emitter << YAML::Key << "value" << YAML::Value << value;

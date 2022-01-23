@@ -271,7 +271,7 @@ void CreateComponentAttribute(entt::registry& registry,
 void CreateComponentAttribute(entt::registry& registry,
                               const ComponentID id,
                               const std::string& name,
-                              const PropertyValue& value)
+                              const attribute_value& value)
 {
   LogDebug("Adding attribute '{}' to component '{}'", name, id);
 
@@ -359,17 +359,17 @@ void SetComponentAttributeType(entt::registry& registry,
              type);
 
   auto iter = GetComponentAttribute(registry, id, attribute);
-  iter->second.ResetToDefault(type);
+  iter->second.reset_to_default(type);
 }
 
 void SetComponentAttributeValue(entt::registry& registry,
                                 const ComponentID id,
                                 const std::string_view attribute,
-                                PropertyValue value)
+                                attribute_value value)
 {
   auto iter = GetComponentAttribute(registry, id, attribute);
 
-  TACTILE_ASSERT_MSG(iter->second.GetType() == value.GetType(),
+  TACTILE_ASSERT_MSG(iter->second.type() == value.type(),
                      "Requested default value had wrong type!");
   iter->second = std::move(value);
 }
@@ -379,12 +379,12 @@ auto GetComponentAttributeType(const entt::registry& registry,
                                const std::string_view attribute) -> PropertyType
 {
   const auto iter = GetComponentAttribute(registry, id, attribute);
-  return iter->second.GetType().value();
+  return iter->second.type();
 }
 
 auto GetComponentAttributeValue(const entt::registry& registry,
                                 const ComponentID id,
-                                const std::string_view attribute) -> const PropertyValue&
+                                const std::string_view attribute) -> const attribute_value&
 {
   const auto iter = GetComponentAttribute(registry, id, attribute);
   return iter->second;
@@ -486,7 +486,7 @@ void UpdateComponent(entt::registry& registry,
                      const ContextID contextId,
                      const ComponentID componentId,
                      const std::string_view attribute,
-                     PropertyValue value)
+                     attribute_value value)
 {
   auto& component = GetComponent(registry, contextId, componentId);
 
@@ -547,7 +547,7 @@ auto GetComponent(const entt::registry& registry,
 }
 
 auto GetAttribute(const Component& component, const std::string_view attribute)
-    -> const PropertyValue&
+    -> const attribute_value&
 {
   if (const auto it = component.values.find(attribute); it != component.values.end()) {
     return it->second;
@@ -560,7 +560,7 @@ auto GetAttribute(const Component& component, const std::string_view attribute)
 auto GetComponentAttribute(const entt::registry& registry,
                            const ContextID contextId,
                            const ComponentID componentId,
-                           const std::string_view attribute) -> const PropertyValue&
+                           const std::string_view attribute) -> const attribute_value&
 {
   const auto& context = GetContext(registry, contextId);
 

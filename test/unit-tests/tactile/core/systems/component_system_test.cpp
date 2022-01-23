@@ -240,12 +240,12 @@ TEST(ComponentSystem, SetComponentAttributeValue)
   Sys::CreateComponentAttribute(registry, def, "Foo");
   Sys::SetComponentAttributeValue(registry, def, "Foo", "Bar"s);
 
-  ASSERT_EQ("Bar", Sys::GetComponentAttributeValue(registry, def, "Foo").AsString());
+  ASSERT_EQ("Bar", Sys::GetComponentAttributeValue(registry, def, "Foo").as_string());
 
   Sys::SetComponentAttributeType(registry, def, "Foo", PropertyType::Boolean);
   Sys::SetComponentAttributeValue(registry, def, "Foo", true);
 
-  ASSERT_TRUE(Sys::GetComponentAttributeValue(registry, def, "Foo").AsBool());
+  ASSERT_TRUE(Sys::GetComponentAttributeValue(registry, def, "Foo").as_bool());
 }
 
 TEST(ComponentSystem, IsComponentAttributeNameTaken)
@@ -277,8 +277,8 @@ TEST(ComponentSystem, AddComponent)
   ASSERT_EQ(def, component.type);
   ASSERT_EQ(2u, component.values.size());
 
-  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, entity, def, "X").AsInt());
-  ASSERT_EQ(-3.5f, Sys::GetComponentAttribute(registry, entity, def, "Y").AsFloat());
+  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, entity, def, "X").as_int());
+  ASSERT_EQ(-3.5f, Sys::GetComponentAttribute(registry, entity, def, "Y").as_float());
 
   ASSERT_THROW(Sys::GetComponentAttribute(registry, entity, def, "foo"), TactileError);
 }
@@ -307,28 +307,28 @@ TEST(ComponentSystem, ResetComponent)
   ASSERT_TRUE(Sys::HasComponent(registry, a, def));
   ASSERT_TRUE(Sys::HasComponent(registry, b, def));
 
-  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, a, def, "A").AsInt());
-  ASSERT_EQ(123, Sys::GetComponentAttribute(registry, b, def, "A").AsInt());
+  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, a, def, "A").as_int());
+  ASSERT_EQ(123, Sys::GetComponentAttribute(registry, b, def, "A").as_int());
 
-  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, a, def, "B").AsString());
-  ASSERT_EQ("Coo", Sys::GetComponentAttribute(registry, b, def, "B").AsString());
+  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, a, def, "B").as_string());
+  ASSERT_EQ("Coo", Sys::GetComponentAttribute(registry, b, def, "B").as_string());
 
-  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, a, def, "C").AsFloat());
-  ASSERT_EQ(2.0f, Sys::GetComponentAttribute(registry, b, def, "C").AsFloat());
+  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, a, def, "C").as_float());
+  ASSERT_EQ(2.0f, Sys::GetComponentAttribute(registry, b, def, "C").as_float());
 
   Sys::ResetComponent(registry, b, def);
 
   ASSERT_TRUE(Sys::HasComponent(registry, a, def));
   ASSERT_TRUE(Sys::HasComponent(registry, b, def));
 
-  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, a, def, "A").AsInt());
-  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, b, def, "A").AsInt());
+  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, a, def, "A").as_int());
+  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, b, def, "A").as_int());
 
-  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, a, def, "B").AsString());
-  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, b, def, "B").AsString());
+  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, a, def, "B").as_string());
+  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, b, def, "B").as_string());
 
-  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, a, def, "C").AsFloat());
-  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, b, def, "C").AsFloat());
+  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, a, def, "C").as_float());
+  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, b, def, "C").as_float());
 }
 
 TEST(ComponentSystem, HasComponent)

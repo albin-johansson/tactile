@@ -73,7 +73,7 @@ void AddProperty(entt::registry& registry,
   const auto entity = registry.create();
   auto& property = registry.emplace<Property>(entity);
   property.name = std::move(name);
-  property.value.ResetToDefault(type);
+  property.value.reset_to_default(type);
 
   context.properties.push_back(entity);
 }
@@ -81,7 +81,7 @@ void AddProperty(entt::registry& registry,
 void AddProperty(entt::registry& registry,
                  PropertyContext& context,
                  std::string name,
-                 PropertyValue value)
+                 attribute_value value)
 {
   TACTILE_ASSERT(!HasPropertyWithName(registry, context, name));
 
@@ -120,7 +120,7 @@ void RenameProperty(entt::registry& registry,
 void UpdateProperty(entt::registry& registry,
                     PropertyContext& context,
                     const std::string_view name,
-                    PropertyValue value)
+                    attribute_value value)
 {
   const auto entity = FindProperty(registry, context, name);
   TACTILE_ASSERT(entity != entt::null);
@@ -138,7 +138,7 @@ void ChangePropertyType(entt::registry& registry,
   TACTILE_ASSERT(entity != entt::null);
 
   auto& property = registry.get<Property>(entity);
-  property.value.ResetToDefault(type);
+  property.value.reset_to_default(type);
 }
 
 auto GetCurrentContext(entt::registry& registry) -> PropertyContext&

@@ -37,7 +37,7 @@ class ComponentEditor final : public ADialog {
   void ShowComponentAttribute(entt::dispatcher& dispatcher,
                               ComponentID id,
                               const std::string& name,
-                              const PropertyValue& value);
+                              const attribute_value& value);
 };
 
 }  // namespace Tactile

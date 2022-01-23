@@ -11,7 +11,7 @@
 
 namespace Tactile {
 
-class PropertyValue;
+class attribute_value;
 
 struct TilesetData final
 {
@@ -70,7 +70,7 @@ struct ObjectData final
 class EmitInfo final {
  public:
   using component_def_attr_visitor = std::function<void(const std::string&,  //
-                                                        const PropertyValue&)>;
+                                                        const attribute_value&)>;
 
   using component_visitor = std::function<void(const std::string&,  //
                                                const ComponentAttributeMap&)>;
@@ -84,7 +84,7 @@ class EmitInfo final {
   using layer_visitor = std::function<void(LayerID)>;
   using layer_tile_visitor = std::function<void(usize, usize, TileID)>;
 
-  using property_visitor = std::function<void(const std::string&, const PropertyValue&)>;
+  using property_visitor = std::function<void(const std::string&, const attribute_value&)>;
 
   explicit EmitInfo(std::filesystem::path destination, const entt::registry& registry);
 

@@ -52,8 +52,8 @@ TEST_F(PropertySystemTest, CopyPropertyContext)
   ASSERT_EQ(context.name, snapshot.name);
 
   ASSERT_EQ(2u, snapshot.properties.size());
-  ASSERT_EQ(123, snapshot.properties.at("A").AsInt());
-  ASSERT_EQ("abc", snapshot.properties.at("B").AsString());
+  ASSERT_EQ(123, snapshot.properties.at("A").as_int());
+  ASSERT_EQ("abc", snapshot.properties.at("B").as_string());
 }
 
 TEST_F(PropertySystemTest, RestorePropertyContext)
@@ -87,8 +87,8 @@ TEST_F(PropertySystemTest, RestorePropertyContext)
     ASSERT_TRUE(Sys::HasPropertyWithName(mRegistry, context, "A"));
     ASSERT_TRUE(Sys::HasPropertyWithName(mRegistry, context, "B"));
 
-    ASSERT_EQ(12, Sys::GetProperty(mRegistry, context, "A").value.AsInt());
-    ASSERT_EQ(3.14f, Sys::GetProperty(mRegistry, context, "B").value.AsFloat());
+    ASSERT_EQ(12, Sys::GetProperty(mRegistry, context, "A").value.as_int());
+    ASSERT_EQ(3.14f, Sys::GetProperty(mRegistry, context, "B").value.as_float());
   }
 }
 
@@ -99,7 +99,7 @@ TEST_F(PropertySystemTest, AddPropertyWithType)
 
   Sys::AddProperty(mRegistry, context, "str", PropertyType::String);
   ASSERT_TRUE(Sys::HasPropertyWithName(mRegistry, context, "str"));
-  ASSERT_EQ("", Sys::GetProperty(mRegistry, context, "str").value.AsString());
+  ASSERT_EQ("", Sys::GetProperty(mRegistry, context, "str").value.as_string());
 }
 
 TEST_F(PropertySystemTest, AddPropertyWithValue)
@@ -109,7 +109,7 @@ TEST_F(PropertySystemTest, AddPropertyWithValue)
 
   Sys::AddProperty(mRegistry, context, "int", 123);
   ASSERT_TRUE(Sys::HasPropertyWithName(mRegistry, context, "int"));
-  ASSERT_EQ(123, Sys::GetProperty(mRegistry, context, "int").value.AsInt());
+  ASSERT_EQ(123, Sys::GetProperty(mRegistry, context, "int").value.as_int());
 }
 
 TEST_F(PropertySystemTest, RemoveProperty)
@@ -143,10 +143,10 @@ TEST_F(PropertySystemTest, UpdateProperty)
   auto& context = mRegistry.ctx<PropertyContext>();
 
   Sys::AddProperty(mRegistry, context, "xyz", 45.3f);
-  ASSERT_EQ(45.3f, Sys::GetProperty(mRegistry, context, "xyz").value.AsFloat());
+  ASSERT_EQ(45.3f, Sys::GetProperty(mRegistry, context, "xyz").value.as_float());
 
   Sys::UpdateProperty(mRegistry, context, "xyz", 123.5f);
-  ASSERT_EQ(123.5f, Sys::GetProperty(mRegistry, context, "xyz").value.AsFloat());
+  ASSERT_EQ(123.5f, Sys::GetProperty(mRegistry, context, "xyz").value.as_float());
 }
 
 TEST_F(PropertySystemTest, ChangePropertyType)
@@ -154,15 +154,15 @@ TEST_F(PropertySystemTest, ChangePropertyType)
   auto& context = mRegistry.ctx<PropertyContext>();
 
   Sys::AddProperty(mRegistry, context, "foo", 123);
-  ASSERT_TRUE(Sys::GetProperty(mRegistry, context, "foo").value.IsInt());
+  ASSERT_TRUE(Sys::GetProperty(mRegistry, context, "foo").value.is_int());
 
   Sys::ChangePropertyType(mRegistry, context, "foo", PropertyType::String);
-  ASSERT_TRUE(Sys::GetProperty(mRegistry, context, "foo").value.IsString());
-  ASSERT_EQ("", Sys::GetProperty(mRegistry, context, "foo").value.AsString());
+  ASSERT_TRUE(Sys::GetProperty(mRegistry, context, "foo").value.is_string());
+  ASSERT_EQ("", Sys::GetProperty(mRegistry, context, "foo").value.as_string());
 
   Sys::ChangePropertyType(mRegistry, context, "foo", PropertyType::Integer);
-  ASSERT_TRUE(Sys::GetProperty(mRegistry, context, "foo").value.IsInt());
-  ASSERT_EQ(0, Sys::GetProperty(mRegistry, context, "foo").value.AsInt());
+  ASSERT_TRUE(Sys::GetProperty(mRegistry, context, "foo").value.is_int());
+  ASSERT_EQ(0, Sys::GetProperty(mRegistry, context, "foo").value.as_int());
 }
 
 TEST_F(PropertySystemTest, GetContext)
@@ -180,5 +180,5 @@ TEST_F(PropertySystemTest, GetProperty)
   const auto& property = Sys::GetProperty(mRegistry, context, "foo");
 
   ASSERT_EQ("foo", property.name);
-  ASSERT_EQ(42, property.value.AsInt());
+  ASSERT_EQ(42, property.value.as_int());
 }

@@ -9,7 +9,7 @@ namespace Tactile {
 UpdateComponentAttributeCmd::UpdateComponentAttributeCmd(RegistryRef registry,
                                                          const ComponentID id,
                                                          std::string attribute,
-                                                         PropertyValue value)
+                                                         attribute_value value)
     : ACommand{"Update Component Attribute"}
     , mRegistry{registry}
     , mComponentId{id}

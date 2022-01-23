@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // registry
 #include <tactile_def.hpp>
 
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
@@ -13,7 +13,7 @@ namespace Tactile {
 
 class UpdatePropertyCmd final : public ACommand {
  public:
-  UpdatePropertyCmd(RegistryRef registry, std::string name, PropertyValue value);
+  UpdatePropertyCmd(RegistryRef registry, std::string name, attribute_value value);
 
   void Undo() override;
 
@@ -30,8 +30,8 @@ class UpdatePropertyCmd final : public ACommand {
   RegistryRef mRegistry;
   ContextID mContextId;
   std::string mName;
-  PropertyValue mNewValue;
-  Maybe<PropertyValue> mOldValue;
+  attribute_value mNewValue;
+  Maybe<attribute_value> mOldValue;
 };
 
 }  // namespace Tactile

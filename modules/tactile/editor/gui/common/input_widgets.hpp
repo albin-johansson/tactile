@@ -7,12 +7,12 @@
 #include <imgui.h>
 #include <tactile_def.hpp>
 
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 
 namespace Tactile {
 
 /// General purpose property value input component.
-[[nodiscard]] auto Input(CStr id, const PropertyValue& value) -> Maybe<PropertyValue>;
+[[nodiscard]] auto Input(CStr id, const attribute_value& value) -> Maybe<attribute_value>;
 
 [[nodiscard]] auto InputWidget(CStr id, int value) -> Maybe<int>;
 
@@ -36,7 +36,7 @@ namespace Tactile {
 
 [[nodiscard]] auto InputWidget(CStr id, bool value) -> Maybe<bool>;
 
-[[nodiscard]] auto InputWidget(CStr id, ObjectRef value) -> Maybe<ObjectRef>;
+[[nodiscard]] auto InputWidget(CStr id, object_t value) -> Maybe<object_t>;
 
 [[nodiscard]] auto InputWidget(CStr id, cen::color value) -> Maybe<cen::color>;
 

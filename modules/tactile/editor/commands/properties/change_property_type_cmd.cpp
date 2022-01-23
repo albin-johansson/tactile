@@ -19,7 +19,7 @@ ChangePropertyTypeCmd::ChangePropertyTypeCmd(RegistryRef registry,
 void ChangePropertyTypeCmd::Undo()
 {
   const auto& value = mPreviousValue.value();
-  const auto type = value.GetType().value();
+  const auto type = value.type();
 
   auto& context = Sys::GetContext(mRegistry, mContextId);
   Sys::ChangePropertyType(mRegistry, context, mName, type);

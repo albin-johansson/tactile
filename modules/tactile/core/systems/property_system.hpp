@@ -8,7 +8,7 @@
 
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 #include "snapshot.hpp"
 
 namespace Tactile::Sys {
@@ -142,7 +142,7 @@ void AddProperty(entt::registry& registry,
 void AddProperty(entt::registry& registry,
                  PropertyContext& context,
                  std::string name,
-                 PropertyValue value);
+                 attribute_value value);
 
 /**
  * \brief Removes a property from a property context.
@@ -186,7 +186,7 @@ void RenameProperty(entt::registry& registry,
 void UpdateProperty(entt::registry& registry,
                     PropertyContext& context,
                     std::string_view name,
-                    PropertyValue value);
+                    attribute_value value);
 
 /**
  * \brief Changes the type of the value of an existing property.

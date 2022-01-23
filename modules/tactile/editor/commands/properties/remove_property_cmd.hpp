@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // registry
 #include <tactile_def.hpp>
 
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
@@ -28,7 +28,7 @@ class RemovePropertyCmd final : public ACommand {
   RegistryRef mRegistry;
   ContextID mContextId;
   std::string mName;
-  Maybe<PropertyValue> mPreviousValue;
+  Maybe<attribute_value> mPreviousValue;
 };
 
 }  // namespace Tactile

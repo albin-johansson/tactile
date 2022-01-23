@@ -5,7 +5,7 @@
 #include <tactile_def.hpp>
 
 #include "core/components/component.hpp"
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 
 namespace Tactile {
 
@@ -64,7 +64,7 @@ struct UpdateComponentDefAttributeEvent final
 {
   ComponentID id{};
   std::string attribute;
-  PropertyValue value;
+  attribute_value value;
 };
 
 struct AddComponentEvent final
@@ -90,7 +90,7 @@ struct UpdateComponentEvent final
   ContextID context{};
   ComponentID component{};
   std::string attribute;
-  PropertyValue value;
+  attribute_value value;
 };
 
 }  // namespace Tactile

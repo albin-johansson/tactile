@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 
 namespace Tactile {
 
@@ -46,7 +46,7 @@ struct RenamePropertyEvent final
 struct UpdatePropertyEvent final
 {
   std::string name;     ///< Name of property to modify.
-  PropertyValue value;  ///< Updated value of the property.
+  attribute_value value;  ///< Updated value of the property.
 };
 
 struct ChangePropertyTypeEvent final

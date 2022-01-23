@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
@@ -16,7 +16,7 @@ class UpdateComponentCmd final : public ACommand {
                      ContextID contextId,
                      ComponentID componentId,
                      std::string attribute,
-                     PropertyValue value);
+                     attribute_value value);
 
   void Undo() override;
 
@@ -34,8 +34,8 @@ class UpdateComponentCmd final : public ACommand {
   ContextID mContextId{};
   ComponentID mComponentId{};
   std::string mAttributeName;
-  PropertyValue mUpdatedValue;
-  Maybe<PropertyValue> mPreviousValue;
+  attribute_value mUpdatedValue;
+  Maybe<attribute_value> mPreviousValue;
 };
 
 }  // namespace Tactile

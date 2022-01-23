@@ -33,10 +33,10 @@ set(SOURCE_FILES
     cfg/protobuf_context.cpp
     cfg/protobuf_context.hpp
 
+    core/attribute_value.hpp
     core/map.hpp
     core/mouse_info.hpp
     core/mouse_pos.hpp
-    core/property_value.hpp
     core/region.hpp
     core/tile_cache.hpp
     core/tool_type.hpp

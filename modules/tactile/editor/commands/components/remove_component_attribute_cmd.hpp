@@ -27,7 +27,7 @@ class RemoveComponentAttributeCmd final : public ACommand {
   RegistryRef mRegistry;
   ComponentID mComponentId{};
   std::string mAttributeName;
-  Maybe<PropertyValue> mPreviousDefault;
+  Maybe<attribute_value> mPreviousDefault;
 };
 
 }  // namespace Tactile

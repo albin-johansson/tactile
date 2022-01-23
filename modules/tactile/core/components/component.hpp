@@ -8,11 +8,11 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 
 namespace Tactile {
 
-using ComponentAttributeMap = std::map<std::string, PropertyValue, std::less<>>;
+using ComponentAttributeMap = std::map<std::string, attribute_value, std::less<>>;
 
 /**
  * Describes the structure of a component.

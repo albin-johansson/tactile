@@ -9,7 +9,7 @@
 #include <tactile_def.hpp>
 
 #include "core/components/component.hpp"
-#include "core/property_value.hpp"
+#include "core/attribute_value.hpp"
 
 namespace Tactile::Sys {
 
@@ -146,7 +146,7 @@ void CreateComponentAttribute(entt::registry& registry,
 void CreateComponentAttribute(entt::registry& registry,
                               ComponentID id,
                               const std::string& name,
-                              const PropertyValue& value);
+                              const attribute_value& value);
 
 /**
  * \brief Removes an attribute from a component definition.
@@ -228,7 +228,7 @@ void SetComponentAttributeType(entt::registry& registry,
 void SetComponentAttributeValue(entt::registry& registry,
                                 ComponentID id,
                                 std::string_view attribute,
-                                PropertyValue value);
+                                attribute_value value);
 
 [[nodiscard]] auto GetComponentAttributeType(const entt::registry& registry,
                                              ComponentID id,
@@ -237,7 +237,7 @@ void SetComponentAttributeValue(entt::registry& registry,
 [[nodiscard]] auto GetComponentAttributeValue(const entt::registry& registry,
                                               ComponentID id,
                                               std::string_view attribute)
-    -> const PropertyValue&;
+    -> const attribute_value&;
 
 [[nodiscard]] auto IsComponentAttributeNameTaken(const entt::registry& registry,
                                                  ComponentID id,
@@ -307,7 +307,7 @@ void UpdateComponent(entt::registry& registry,
                      ContextID contextId,
                      ComponentID componentId,
                      std::string_view attribute,
-                     PropertyValue value);
+                     attribute_value value);
 
 struct ResetComponentResult final
 {
@@ -359,13 +359,13 @@ auto ResetComponent(entt::registry& registry,
                                 ComponentID componentId) -> const Component&;
 
 [[nodiscard]] auto GetAttribute(const Component& component, std::string_view attribute)
-    -> const PropertyValue&;
+    -> const attribute_value&;
 
 [[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
                                          ContextID contextId,
                                          ComponentID componentId,
                                          std::string_view attribute)
-    -> const PropertyValue&;
+    -> const attribute_value&;
 
 [[nodiscard]] auto GetComponentCount(const entt::registry& registry, ContextID contextId)
     -> usize;

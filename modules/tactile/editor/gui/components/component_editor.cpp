@@ -152,7 +152,7 @@ void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
 void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
                                              const ComponentID id,
                                              const std::string& name,
-                                             const PropertyValue& value)
+                                             const attribute_value& value)
 {
   const Scoped::ID scope{name.c_str()};
 
@@ -184,7 +184,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   ImGui::TableNextColumn();
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
 
-  const auto type = value.GetType().value();
+  const auto type = value.type();
   PropertyType newType = type;
   PropertyTypeCombo(type, newType);
   if (newType != type) {
