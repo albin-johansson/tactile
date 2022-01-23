@@ -9,7 +9,7 @@
 
 using namespace tactile;
 
-TEST(FloodFill, Flood)
+TEST(FloodFill, flood)
 {
   auto registry = sys::MakeRegistry();
 
@@ -43,7 +43,7 @@ TEST(FloodFill, Flood)
 
   {
     std::vector<MapPosition> affected;
-    Flood(registry, entity, {4, 1}, 2, affected);
+    flood(registry, entity, {4, 1}, 2, affected);
   }
 
   /* 0  0  0  0  0
@@ -84,7 +84,7 @@ TEST(FloodFill, Flood)
 
   {
     std::vector<MapPosition> affected;
-    Flood(registry, entity, {3, 1}, 3, affected);
+    flood(registry, entity, {3, 1}, 3, affected);
   }
 
   /* 0  0  0  0  0

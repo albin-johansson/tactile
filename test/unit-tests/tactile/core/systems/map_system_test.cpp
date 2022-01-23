@@ -53,7 +53,7 @@ TEST(MapSystem, RemoveRow)
   ASSERT_EQ(4u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
-  InvokeN(4, [&] { sys::RemoveRow(registry); });
+  invoke_n(4, [&] { sys::RemoveRow(registry); });
   ASSERT_EQ(1u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 }
@@ -69,7 +69,7 @@ TEST(MapSystem, RemoveColumn)
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(4u, map.column_count);
 
-  InvokeN(4, [&] { sys::RemoveColumn(registry); });
+  invoke_n(4, [&] { sys::RemoveColumn(registry); });
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(1u, map.column_count);
 }

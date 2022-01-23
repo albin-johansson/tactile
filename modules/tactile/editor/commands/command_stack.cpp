@@ -58,7 +58,7 @@ void CommandStack::SetCapacity(const usize capacity)
   const auto size = GetSize();
   if (size > mCapacity) {
     const auto n = size - mCapacity;
-    InvokeN(n, [this] { RemoveOldestCommand(); });
+    invoke_n(n, [this] { RemoveOldestCommand(); });
   }
 }
 

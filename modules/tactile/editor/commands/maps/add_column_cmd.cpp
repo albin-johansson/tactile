@@ -12,12 +12,12 @@ AddColumnCmd::AddColumnCmd(RegistryRef registry)
 
 void AddColumnCmd::Undo()
 {
-  InvokeN(mColumns, [this] { sys::RemoveColumn(mRegistry); });
+  invoke_n(mColumns, [this] { sys::RemoveColumn(mRegistry); });
 }
 
 void AddColumnCmd::Redo()
 {
-  InvokeN(mColumns, [this] { sys::AddColumn(mRegistry); });
+  invoke_n(mColumns, [this] { sys::AddColumn(mRegistry); });
 }
 
 auto AddColumnCmd::MergeWith(const ACommand& cmd) -> bool

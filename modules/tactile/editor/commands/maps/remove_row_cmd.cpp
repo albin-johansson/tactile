@@ -13,7 +13,7 @@ RemoveRowCmd::RemoveRowCmd(RegistryRef registry)
 
 void RemoveRowCmd::Undo()
 {
-  InvokeN(mRows, [this] { sys::AddRow(mRegistry); });
+  invoke_n(mRows, [this] { sys::AddRow(mRegistry); });
   mCache.RestoreTiles(mRegistry);
 }
 
@@ -28,7 +28,7 @@ void RemoveRowCmd::Redo()
   mCache.Clear();
   mCache.SaveTiles(mRegistry, begin, end);
 
-  InvokeN(mRows, [this] { sys::RemoveRow(mRegistry); });
+  invoke_n(mRows, [this] { sys::RemoveRow(mRegistry); });
 }
 
 auto RemoveRowCmd::MergeWith(const ACommand& cmd) -> bool

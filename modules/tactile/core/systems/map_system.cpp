@@ -82,17 +82,17 @@ void ResizeMap(entt::registry& registry, const usize nRows, const usize nCols)
   auto& map = registry.ctx<Map>();
 
   if (const auto diff = GetDiff(map.row_count, nRows); map.row_count < nRows) {
-    InvokeN(diff, [&] { AddRow(registry); });
+    invoke_n(diff, [&] { AddRow(registry); });
   }
   else {
-    InvokeN(diff, [&] { RemoveRow(registry); });
+    invoke_n(diff, [&] { RemoveRow(registry); });
   }
 
   if (const auto diff = GetDiff(map.column_count, nCols); map.column_count < nCols) {
-    InvokeN(diff, [&] { AddColumn(registry); });
+    invoke_n(diff, [&] { AddColumn(registry); });
   }
   else {
-    InvokeN(diff, [&] { RemoveColumn(registry); });
+    invoke_n(diff, [&] { RemoveColumn(registry); });
   }
 }
 

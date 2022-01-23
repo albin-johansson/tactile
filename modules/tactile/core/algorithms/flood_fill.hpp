@@ -2,7 +2,7 @@
 
 #include <vector>  // vector
 
-#include <entt/entt.hpp>  // registry, entity
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 #include "core/map_position.hpp"
@@ -18,7 +18,7 @@ namespace tactile {
  * \param replacement the tile identifier used to replace the origin identifier.
  * \param[out] affected the positions of the tiles affected by the flood fill.
  */
-void Flood(entt::registry& registry,
+void flood(entt::registry& registry,
            entt::entity entity,
            const MapPosition& origin,
            TileID replacement,

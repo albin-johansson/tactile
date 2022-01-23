@@ -13,7 +13,7 @@ RemoveColumnCmd::RemoveColumnCmd(RegistryRef registry)
 
 void RemoveColumnCmd::Undo()
 {
-  InvokeN(mColumns, [this] { sys::AddColumn(mRegistry); });
+  invoke_n(mColumns, [this] { sys::AddColumn(mRegistry); });
   mCache.RestoreTiles(mRegistry);
 }
 
@@ -28,7 +28,7 @@ void RemoveColumnCmd::Redo()
   mCache.Clear();
   mCache.SaveTiles(registry, begin, end);
 
-  InvokeN(mColumns, [this] { sys::RemoveColumn(mRegistry); });
+  invoke_n(mColumns, [this] { sys::RemoveColumn(mRegistry); });
 }
 
 auto RemoveColumnCmd::MergeWith(const ACommand& cmd) -> bool

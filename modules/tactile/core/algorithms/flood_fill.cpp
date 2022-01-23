@@ -7,7 +7,7 @@
 
 namespace tactile {
 
-void Flood(entt::registry& registry,
+void flood(entt::registry& registry,
            const entt::entity entity,
            const MapPosition& origin,
            const TileID replacement,
