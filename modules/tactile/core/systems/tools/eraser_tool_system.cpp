@@ -26,8 +26,8 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
   const auto entity = GetActiveLayer(registry);
   TACTILE_ASSERT(entity != entt::null);
 
-  if (!gOldState.Contains(cursor)) {
-    gOldState.Emplace(cursor, GetTileFromLayer(registry, entity, cursor));
+  if (!gOldState.contains(cursor)) {
+    gOldState.emplace(cursor, GetTileFromLayer(registry, entity, cursor));
   }
 
   SetTileInLayer(registry, entity, cursor, empty_tile);
@@ -38,7 +38,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 void EraserToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    gOldState.Clear();
+    gOldState.clear();
     UpdateSequence(registry, mouse.position_in_map);
   }
 }

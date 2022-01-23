@@ -23,7 +23,7 @@ namespace tactile {
 class Model final {
  public:
   // Store documents on the heap to ensure stability, which is important for commands
-  using document_map = VectorMap<MapID, std::unique_ptr<Document>>;
+  using document_map = vector_map<MapID, std::unique_ptr<Document>>;
   using const_iterator = document_map::const_iterator;
 
   /**

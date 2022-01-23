@@ -52,10 +52,10 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
       if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
         if (IsPositionInMap(registry, pos)) {
-          if (!gOldState.Contains(pos)) {
-            gOldState.Emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
+          if (!gOldState.contains(pos)) {
+            gOldState.emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
           }
-          gSequence.EmplaceOrReplace(pos, tile);
+          gSequence.emplace_or_replace(pos, tile);
           SetTileInLayer(registry, layerEntity, pos, tile);
         }
       }
@@ -68,8 +68,8 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    gOldState.Clear();
-    gSequence.Clear();
+    gOldState.clear();
+    gSequence.clear();
 
     UpdateSequence(registry, mouse.position_in_map);
   }

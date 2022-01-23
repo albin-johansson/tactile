@@ -28,7 +28,7 @@ auto Model::AddMap(Document document) -> MapID
 {
   const auto id = mNextId;
 
-  mDocuments.Emplace(id, std::make_unique<Document>(std::move(document)));
+  mDocuments.emplace(id, std::make_unique<Document>(std::move(document)));
   mActiveMap = id;
 
   ++mNextId;
@@ -57,18 +57,18 @@ auto Model::AddMap(const int tileWidth,
 
 void Model::SelectMap(const MapID id)
 {
-  TACTILE_ASSERT(mDocuments.Contains(id));
+  TACTILE_ASSERT(mDocuments.contains(id));
   mActiveMap = id;
 }
 
 void Model::RemoveMap(const MapID id)
 {
-  TACTILE_ASSERT(mDocuments.Contains(id));
-  mDocuments.Erase(id);
+  TACTILE_ASSERT(mDocuments.contains(id));
+  mDocuments.erase(id);
 
   if (mActiveMap == id) {
-    if (!mDocuments.IsEmpty()) {
-      const auto& [mapId, map] = mDocuments.AtIndex(0);
+    if (!mDocuments.empty()) {
+      const auto& [mapId, map] = mDocuments.at_index(0);
       mActiveMap = mapId;
     }
     else {
@@ -79,14 +79,14 @@ void Model::RemoveMap(const MapID id)
 
 auto Model::HasPath(const MapID id) const -> bool
 {
-  TACTILE_ASSERT(mDocuments.Contains(id));
-  return !mDocuments.At(id)->path.empty();
+  TACTILE_ASSERT(mDocuments.contains(id));
+  return !mDocuments.at(id)->path.empty();
 }
 
 auto Model::GetPath(const MapID id) const -> const std::filesystem::path&
 {
-  TACTILE_ASSERT(mDocuments.Contains(id));
-  return mDocuments.At(id)->path;
+  TACTILE_ASSERT(mDocuments.contains(id));
+  return mDocuments.at(id)->path;
 }
 
 auto Model::HasDocumentWithPath(const std::filesystem::path& path) const -> bool
@@ -109,7 +109,7 @@ auto Model::HasActiveDocument() const -> bool
 auto Model::CanSaveDocument() const -> bool
 {
   if (mActiveMap) {
-    const auto& document = mDocuments.At(*mActiveMap);
+    const auto& document = mDocuments.at(*mActiveMap);
     return !document->commands.IsClean();
   }
   else {
@@ -120,7 +120,7 @@ auto Model::CanSaveDocument() const -> bool
 auto Model::CanDecreaseViewportTileSize() const -> bool
 {
   if (HasActiveDocument()) {
-    const auto& document = mDocuments.At(*mActiveMap);
+    const auto& document = mDocuments.at(*mActiveMap);
     return sys::CanDecreaseViewportZoom(document->registry);
   }
 
@@ -130,7 +130,7 @@ auto Model::CanDecreaseViewportTileSize() const -> bool
 auto Model::GetActiveDocument() -> Document*
 {
   if (mActiveMap) {
-    return mDocuments.At(*mActiveMap).get();
+    return mDocuments.at(*mActiveMap).get();
   }
   else {
     return nullptr;
@@ -140,7 +140,7 @@ auto Model::GetActiveDocument() -> Document*
 auto Model::GetActiveDocument() const -> const Document*
 {
   if (mActiveMap) {
-    return mDocuments.At(*mActiveMap).get();
+    return mDocuments.at(*mActiveMap).get();
   }
   else {
     return nullptr;
@@ -150,7 +150,7 @@ auto Model::GetActiveDocument() const -> const Document*
 auto Model::GetActiveRegistry() -> entt::registry*
 {
   if (mActiveMap) {
-    return &mDocuments.At(*mActiveMap)->registry;
+    return &mDocuments.at(*mActiveMap)->registry;
   }
   else {
     return nullptr;
@@ -160,7 +160,7 @@ auto Model::GetActiveRegistry() -> entt::registry*
 auto Model::GetActiveRegistry() const -> const entt::registry*
 {
   if (mActiveMap) {
-    return &mDocuments.At(*mActiveMap)->registry;
+    return &mDocuments.at(*mActiveMap)->registry;
   }
   else {
     return nullptr;
@@ -170,7 +170,7 @@ auto Model::GetActiveRegistry() const -> const entt::registry*
 auto Model::GetActiveRegistryRef() -> entt::registry&
 {
   if (mActiveMap) {
-    return mDocuments.At(*mActiveMap)->registry;
+    return mDocuments.at(*mActiveMap)->registry;
   }
   else {
     ThrowTraced(TactileError{"No active registry to return!"});
@@ -180,7 +180,7 @@ auto Model::GetActiveRegistryRef() -> entt::registry&
 auto Model::GetActiveRegistryRef() const -> const entt::registry&
 {
   if (mActiveMap) {
-    return mDocuments.At(*mActiveMap)->registry;
+    return mDocuments.at(*mActiveMap)->registry;
   }
   else {
     ThrowTraced(TactileError{"No active registry to return!"});
@@ -196,29 +196,29 @@ void Model::SetCommandCapacity(const usize capacity)
 
 auto Model::IsClean() const -> bool
 {
-  return mActiveMap && mDocuments.At(*mActiveMap)->commands.IsClean();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.IsClean();
 }
 
 auto Model::CanUndo() const -> bool
 {
-  return mActiveMap && mDocuments.At(*mActiveMap)->commands.CanUndo();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.CanUndo();
 }
 
 auto Model::CanRedo() const -> bool
 {
-  return mActiveMap && mDocuments.At(*mActiveMap)->commands.CanRedo();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.CanRedo();
 }
 
 auto Model::GetUndoText() const -> const std::string&
 {
   TACTILE_ASSERT(CanUndo());
-  return mDocuments.At(mActiveMap.value())->commands.GetUndoText();
+  return mDocuments.at(mActiveMap.value())->commands.GetUndoText();
 }
 
 auto Model::GetRedoText() const -> const std::string&
 {
   TACTILE_ASSERT(CanRedo());
-  return mDocuments.At(mActiveMap.value())->commands.GetRedoText();
+  return mDocuments.at(mActiveMap.value())->commands.GetRedoText();
 }
 
 auto Model::IsStampActive() const -> bool

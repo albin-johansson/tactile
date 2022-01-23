@@ -7,6 +7,6 @@
 
 namespace tactile {
 
-using TileCache = VectorMap<MapPosition, TileID>;
+using TileCache = vector_map<MapPosition, TileID>;
 
 }  // namespace tactile

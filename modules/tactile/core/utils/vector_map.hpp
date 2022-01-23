@@ -13,7 +13,7 @@
 namespace tactile {
 
 template <typename K, typename V>
-class VectorMap final {
+class vector_map final {
  public:
   using key_type = K;
   using mapped_type = V;
@@ -23,26 +23,26 @@ class VectorMap final {
   using const_iterator = typename storage_type::const_iterator;
   using size_type = usize;
 
-  explicit VectorMap(const size_type n) { Reserve(n); }
+  explicit vector_map(const size_type n) { reserve(n); }
 
-  VectorMap() = default;
+  vector_map() = default;
 
-  VectorMap(const VectorMap&) = default;
-  auto operator=(const VectorMap&) -> VectorMap& = default;
+  vector_map(const vector_map&) = default;
+  auto operator=(const vector_map&) -> vector_map& = default;
 
-  VectorMap(VectorMap&&) noexcept = default;
-  auto operator=(VectorMap&&) noexcept -> VectorMap& = default;
+  vector_map(vector_map&&) noexcept = default;
+  auto operator=(vector_map&&) noexcept -> vector_map& = default;
 
-  ~VectorMap() noexcept = default;
+  ~vector_map() noexcept = default;
 
-  void Clear() { mData.clear(); }
+  void clear() { mData.clear(); }
 
-  void Reserve(const size_type n) { mData.reserve(n); }
+  void reserve(const size_type n) { mData.reserve(n); }
 
   template <typename... Args>
-  auto Emplace(key_type key, Args&&... args) -> value_type&
+  auto emplace(key_type key, Args&&... args) -> value_type&
   {
-    if (!Contains(key)) {
+    if (!contains(key)) {
       return mData.emplace_back(std::move(key), mapped_type{std::forward<Args>(args)...});
     }
     else {
@@ -51,49 +51,49 @@ class VectorMap final {
   }
 
   template <typename... Args>
-  auto EmplaceOrReplace(key_type key, Args&&... args) -> value_type&
+  auto emplace_or_replace(key_type key, Args&&... args) -> value_type&
   {
-    if (const auto it = Find(key); it != end()) {
+    if (const auto it = find(key); it != end()) {
       it->second = mapped_type{std::forward<Args>(args)...};
       return *it;
     }
     else {
-      return Emplace(std::move(key), std::forward<Args>(args)...);
+      return emplace(std::move(key), std::forward<Args>(args)...);
     }
   }
 
   template <typename... Args>
-  auto TryEmplace(const key_type& key, Args&&... args) -> value_type&
+  auto try_emplace(const key_type& key, Args&&... args) -> value_type&
   {
-    if (const auto it = Find(key); it != end()) {
+    if (const auto it = find(key); it != end()) {
       it->second = mapped_type{std::forward<Args>(args)...};
       return *it;
     }
     else {
-      return Emplace(key, std::forward<Args>(args)...);
+      return emplace(key, std::forward<Args>(args)...);
     }
   }
 
   template <typename T>
-  void Erase(const T& key)
+  void erase(const T& key)
   {
     std::erase_if(mData, [&key](const value_type& pair) { return pair.first == key; });
   }
 
   template <typename T>
-  void MoveLater(const T& key)
+  void move_later(const T& key)
   {
-    MoveElement<true>(key);
+    move_elem<true>(key);
   }
 
   template <typename T>
-  void MoveEarlier(const T& key)
+  void move_earlier(const T& key)
   {
-    MoveElement<false>(key);
+    move_elem<false>(key);
   }
 
   template <typename T>
-  [[nodiscard]] auto Find(const T& key) -> iterator
+  [[nodiscard]] auto find(const T& key) -> iterator
   {
     return std::find_if(mData.begin(), mData.end(), [&key](const value_type& pair) {
       return pair.first == key;
@@ -101,7 +101,7 @@ class VectorMap final {
   }
 
   template <typename T>
-  [[nodiscard]] auto Find(const T& key) const -> const_iterator
+  [[nodiscard]] auto find(const T& key) const -> const_iterator
   {
     return std::find_if(mData.begin(), mData.end(), [&key](const value_type& pair) {
       return pair.first == key;
@@ -111,13 +111,13 @@ class VectorMap final {
   template <typename T>
   [[nodiscard]] auto operator[](const T& key) -> mapped_type&
   {
-    return TryEmplace(key).second;
+    return try_emplace(key).second;
   }
 
   template <typename T>
-  [[nodiscard]] auto At(const T& key) -> mapped_type&
+  [[nodiscard]] auto at(const T& key) -> mapped_type&
   {
-    if (auto it = Find(key); it != end()) {
+    if (auto it = find(key); it != end()) {
       return it->second;
     }
     else {
@@ -126,9 +126,9 @@ class VectorMap final {
   }
 
   template <typename T>
-  [[nodiscard]] auto At(const T& key) const -> const mapped_type&
+  [[nodiscard]] auto at(const T& key) const -> const mapped_type&
   {
-    if (auto it = Find(key); it != end()) {
+    if (auto it = find(key); it != end()) {
       return it->second;
     }
     else {
@@ -136,9 +136,9 @@ class VectorMap final {
     }
   }
 
-  [[nodiscard]] auto AtIndex(const usize index) -> value_type&
+  [[nodiscard]] auto at_index(const usize index) -> value_type&
   {
-    if (index < GetSize()) {
+    if (index < size()) {
       return mData.at(index);
     }
     else {
@@ -146,9 +146,9 @@ class VectorMap final {
     }
   }
 
-  [[nodiscard]] auto AtIndex(const usize index) const -> const value_type&
+  [[nodiscard]] auto at_index(const usize index) const -> const value_type&
   {
-    if (index < GetSize()) {
+    if (index < size()) {
       return mData.at(index);
     }
     else {
@@ -157,15 +157,15 @@ class VectorMap final {
   }
 
   template <typename T>
-  [[nodiscard]] auto Contains(const T& key) const -> bool
+  [[nodiscard]] auto contains(const T& key) const -> bool
   {
-    return Find(key) != end();
+    return find(key) != end();
   }
 
   template <typename T>
-  [[nodiscard]] auto IndexOf(const T& key) const -> Maybe<size_type>
+  [[nodiscard]] auto index_of(const T& key) const -> Maybe<size_type>
   {
-    if (const auto it = Find(key); it != end()) {
+    if (const auto it = find(key); it != end()) {
       return std::distance(begin(), it);
     }
     else {
@@ -173,14 +173,11 @@ class VectorMap final {
     }
   }
 
-  [[nodiscard]] auto GetSize() const noexcept -> size_type { return mData.size(); }
+  [[nodiscard]] auto size() const noexcept -> size_type { return mData.size(); }
 
-  [[nodiscard]] auto GetCapacity() const noexcept -> size_type
-  {
-    return mData.capacity();
-  }
+  [[nodiscard]] auto capacity() const noexcept -> size_type { return mData.capacity(); }
 
-  [[nodiscard]] auto IsEmpty() const noexcept -> bool { return mData.empty(); }
+  [[nodiscard]] auto empty() const noexcept -> bool { return mData.empty(); }
 
   [[nodiscard]] auto begin() noexcept -> iterator { return mData.begin(); }
 
@@ -194,12 +191,12 @@ class VectorMap final {
   storage_type mData;
 
   template <bool MoveLater, typename T>
-  void MoveElement(const T& key)
+  void move_elem(const T& key)
   {
-    if (const auto it = Find(key); it != end()) {
+    if (const auto it = find(key); it != end()) {
       const auto index = std::distance(begin(), it);
       if constexpr (MoveLater) {
-        if (static_cast<usize>(index) != GetSize() - 1u) {
+        if (static_cast<usize>(index) != size() - 1u) {
           std::iter_swap(it, it + 1);
         }
       }
