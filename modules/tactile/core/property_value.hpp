@@ -4,8 +4,11 @@
 #include <string>      // string
 #include <variant>     // variant, monostate, get, get_if, holds_alternative
 
-#include <centurion.hpp>  // color
+#include <centurion.hpp>
 #include <tactile_def.hpp>
+#include <tactile_stdlib.hpp>
+
+#include "throw.hpp"
 
 namespace Tactile {
 
@@ -312,6 +315,34 @@ class PropertyValue final {
     }
     else {
       return nothing;
+    }
+  }
+
+  [[nodiscard]] auto has_default_value() const -> bool
+  {
+    if (const auto* str = std::get_if<string_type>(&mValue)) {
+      return str->empty();
+    }
+    else if (const auto* i = std::get_if<integer_type>(&mValue)) {
+      return *i == 0;
+    }
+    else if (const auto* f = std::get_if<float_type>(&mValue)) {
+      return *f == 0;
+    }
+    else if (const auto* b = std::get_if<bool>(&mValue)) {
+      return !*b;
+    }
+    else if (const auto* path = std::get_if<file_type>(&mValue)) {
+      return path->empty();
+    }
+    else if (const auto* obj = std::get_if<ObjectRef>(&mValue)) {
+      return *obj == ObjectRef{};
+    }
+    else if (const auto* color = std::get_if<color_type>(&mValue)) {
+      return *color == cen::colors::white;
+    }
+    else {
+      ThrowTraced(TactileError{"Invalid property type!"});
     }
   }
 
