@@ -3,7 +3,7 @@
 #include <centurion.hpp>
 #include <entt/entt.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class Graphics;
 
@@ -27,4 +27,4 @@ void RenderObjectLayer(Graphics& graphics,
                        entt::entity layerEntity,
                        float parentOpacity);
 
-}  // namespace Tactile
+}  // namespace tactile

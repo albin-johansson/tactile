@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 struct UvTileSize final
 {
@@ -8,4 +8,4 @@ struct UvTileSize final
   float height{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

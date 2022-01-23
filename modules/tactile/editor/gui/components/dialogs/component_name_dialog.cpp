@@ -3,7 +3,7 @@
 #include "core/systems/component_system.hpp"
 #include "editor/model.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 auto AComponentNameDialog::Validate(const Model& model,
                                     const std::string_view input) const -> bool
@@ -12,4 +12,4 @@ auto AComponentNameDialog::Validate(const Model& model,
   return !input.empty() && !Sys::IsComponentNameTaken(registry, input);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

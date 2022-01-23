@@ -3,7 +3,7 @@
 #include "assert.hpp"
 #include "core/systems/tileset_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RemoveTilesetCmd::RemoveTilesetCmd(RegistryRef registry, const TilesetID id)
     : ACommand{"Remove Tileset"}
@@ -29,4 +29,4 @@ void RemoveTilesetCmd::Redo()
   Sys::RemoveTileset(mRegistry, mTilesetId);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

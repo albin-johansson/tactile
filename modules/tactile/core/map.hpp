@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>  // entity
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 struct Map final
 {
@@ -20,4 +20,4 @@ struct Map final
   int32 group_layer_suffix{1};   ///< Incrementing group layer suffix.
 };
 
-}  // namespace Tactile
+}  // namespace tactile

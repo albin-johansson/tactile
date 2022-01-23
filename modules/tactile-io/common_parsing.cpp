@@ -2,7 +2,7 @@
 
 #include <tactile_stdlib.hpp>
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ParseColorRGB(const std::string_view rgb) -> std::optional<Color>
 {
@@ -108,4 +108,4 @@ auto ParseAttributeType(const std::string_view type) -> std::optional<PropertyTy
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

@@ -6,7 +6,7 @@
 #include "common_saving.hpp"
 #include "ir_helpers.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto SaveProperty(const Property& property,
@@ -94,4 +94,4 @@ auto SaveProperties(const Object& object, const std::filesystem::path& dir) -> J
   return SavePropertiesImpl(object, dir);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

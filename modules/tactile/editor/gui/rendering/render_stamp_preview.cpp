@@ -13,7 +13,7 @@
 #include "editor/gui/texture_utils.hpp"
 #include "render_info.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr uint32 gPreviewOpacity = 100;  // [0, 255]
@@ -106,4 +106,4 @@ void RenderStampPreview(const entt::registry& registry,
   RenderPreviewTiles(registry, info);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -2,7 +2,7 @@
 
 #include "dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup gui
 /// \{
@@ -31,4 +31,4 @@ class CreateMapDialog final : public ADialog {
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

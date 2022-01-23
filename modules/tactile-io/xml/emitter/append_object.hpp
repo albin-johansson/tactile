@@ -6,10 +6,10 @@
 
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void AppendObject(pugi::xml_node source,
                   const Object& object,
                   const std::filesystem::path& dir);
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

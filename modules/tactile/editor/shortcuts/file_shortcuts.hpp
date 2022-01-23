@@ -2,7 +2,7 @@
 
 #include "shortcut.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct NewMapShortcut final : AShortcut
 {
@@ -45,4 +45,4 @@ struct SaveAsShortcut final : AShortcut
       -> bool override;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

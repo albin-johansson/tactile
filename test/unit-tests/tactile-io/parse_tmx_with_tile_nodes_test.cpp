@@ -2,7 +2,7 @@
 
 #include "io/map_parser.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 TEST(TmxTileNodes, Parse)
 {

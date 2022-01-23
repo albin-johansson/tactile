@@ -6,8 +6,8 @@
 
 #include "../json_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

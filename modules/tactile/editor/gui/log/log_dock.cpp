@@ -11,7 +11,7 @@
 #include "logging.hpp"
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
@@ -185,4 +185,4 @@ void LogDock::Update()
   Prefs::SetShowLogDock(visible);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

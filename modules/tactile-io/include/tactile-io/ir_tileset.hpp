@@ -4,7 +4,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /// \name Tileset API
 /// \{
@@ -318,6 +318,6 @@ auto GetProperty(const Tileset& tileset, usize index) -> const Property&;
 
 /// \} End of tileset API
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_TILESET_HPP_

@@ -9,7 +9,7 @@
 
 #include "ir_definitions.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SetName(Property& property, const CStr name)
 {
@@ -189,4 +189,4 @@ auto IsColor(const Property& property) -> bool
   return std::holds_alternative<Color>(property.value);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

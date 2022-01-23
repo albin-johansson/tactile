@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // entity, null
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup events
 /// \{
@@ -58,4 +58,4 @@ struct SpawnObjectContextMenuEvent final
 
 /// \} End of group events
 
-}  // namespace Tactile
+}  // namespace tactile

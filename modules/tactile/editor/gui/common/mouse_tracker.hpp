@@ -4,7 +4,7 @@
 
 struct ImVec2;
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup gui
 /// \{
@@ -13,4 +13,4 @@ void UpdateViewportOffset(const ImVec2& viewportSize, entt::dispatcher& dispatch
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

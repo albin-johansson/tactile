@@ -9,7 +9,7 @@
 #include "append_properties.hpp"
 #include "ir_helpers.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 void AppendCommonLayerAttributes(pugi::xml_node node, const Layer& layer)
@@ -127,4 +127,4 @@ void AppendLayer(pugi::xml_node mapNode,
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

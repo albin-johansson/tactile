@@ -2,7 +2,7 @@
 
 #include "logging.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class LogDock final {
  public:
@@ -15,4 +15,4 @@ class LogDock final {
   bool mHasFocus{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -1,7 +1,7 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 void InitAttributes();
 
-}  // namespace Tactile
+}  // namespace tactile

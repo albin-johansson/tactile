@@ -6,7 +6,7 @@
 
 #include "editor/gui/dialogs/dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class ChangePropertyTypeDialog final : public ADialog {
  public:
@@ -29,4 +29,4 @@ class ChangePropertyTypeDialog final : public ADialog {
   Maybe<PropertyType> mPreviousType;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

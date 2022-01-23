@@ -7,7 +7,7 @@
 #include "logging.hpp"
 #include "profile.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 MapParser::MapParser(const std::filesystem::path& path)
 {
@@ -22,4 +22,4 @@ MapParser::MapParser(const std::filesystem::path& path)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

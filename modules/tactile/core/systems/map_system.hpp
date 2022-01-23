@@ -5,7 +5,7 @@
 
 #include "core/map_position.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 /// \name Map system
 /// \{
@@ -64,4 +64,4 @@ void ResizeMap(entt::registry& registry, usize nRows, usize nCols);
 
 /// \} End of map system
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

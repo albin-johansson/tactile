@@ -2,8 +2,8 @@
 
 #include "io/map_parser.hpp"
 
-using namespace Tactile;
-using namespace Tactile::IO;
+using namespace tactile;
+using namespace tactile::IO;
 
 namespace {
 

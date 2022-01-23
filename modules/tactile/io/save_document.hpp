@@ -2,7 +2,7 @@
 
 #include "editor/document.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Saves a map document.
@@ -13,4 +13,4 @@ namespace Tactile {
  */
 void SaveDocument(const Document& document);
 
-}  // namespace Tactile
+}  // namespace tactile

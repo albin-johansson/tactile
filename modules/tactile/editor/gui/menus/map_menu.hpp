@@ -4,7 +4,7 @@
 
 #include <entt/entt.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 class CreateTilesetDialog;
@@ -23,4 +23,4 @@ class MapMenu final {
   std::unique_ptr<CreateTilesetDialog> mCreateTilesetDialog;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

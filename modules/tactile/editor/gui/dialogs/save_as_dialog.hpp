@@ -2,8 +2,8 @@
 
 #include <entt/entt.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 void OpenSaveAsDialog(entt::dispatcher& dispatcher);
 
-}  // namespace Tactile
+}  // namespace tactile

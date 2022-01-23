@@ -7,7 +7,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-namespace Tactile {
+namespace tactile {
 
 auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Region>
 {
@@ -77,4 +77,4 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Reg
   return nothing;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

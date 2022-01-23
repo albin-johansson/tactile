@@ -10,7 +10,7 @@
 #include "ir_helpers.hpp"
 #include "save_xml.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void AppendMapChild(pugi::xml_document& xml,
                     const Map& map,
@@ -53,4 +53,4 @@ void EmitXmlMap(const Map& data, const EmitterOptions options)
   SaveXml(xml, path);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

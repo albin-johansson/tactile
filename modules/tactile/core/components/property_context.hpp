@@ -6,7 +6,7 @@
 #include <entt/entt.hpp>  // entity
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 struct PropertyContext final
 {
@@ -21,4 +21,4 @@ struct ActivePropertyContext final
   entt::entity entity{entt::null};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

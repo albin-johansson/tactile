@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 auto ToolButton(CStr label,
                 CStr tooltip,
@@ -11,4 +11,4 @@ auto ToolButton(CStr label,
                 float width = 0,
                 float height = 0) -> bool;
 
-}  // namespace Tactile
+}  // namespace tactile

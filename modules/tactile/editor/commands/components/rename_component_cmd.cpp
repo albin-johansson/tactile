@@ -4,7 +4,7 @@
 
 #include "core/systems/component_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RenameComponentCmd::RenameComponentCmd(RegistryRef registry,
                                        const ComponentID id,
@@ -29,4 +29,4 @@ void RenameComponentCmd::Redo()
   Sys::RenameComponentDef(registry, mComponentId, mUpdatedName);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -3,7 +3,7 @@
 #include "core/map.hpp"
 #include "core/systems/map_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 ResizeMapCmd::ResizeMapCmd(RegistryRef registry, const usize nRows, const usize nCols)
     : ACommand{"Resize Map"}
@@ -51,4 +51,4 @@ auto ResizeMapCmd::IsLossyResize() const -> bool
   return mPrevRows > mRows || mPrevCols > mCols;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

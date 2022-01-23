@@ -8,7 +8,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class UpdateComponentAttributeCmd final : public ACommand {
  public:
@@ -36,4 +36,4 @@ class UpdateComponentAttributeCmd final : public ACommand {
   Maybe<attribute_value> mPreviousValue;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

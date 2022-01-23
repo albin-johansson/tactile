@@ -5,7 +5,7 @@
 
 #include "dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class MapImportErrorDialog final : public ADialog {
  public:
@@ -20,4 +20,4 @@ class MapImportErrorDialog final : public ADialog {
   Maybe<IO::ParseError> mError;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

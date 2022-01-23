@@ -15,7 +15,7 @@
 #include "core/tile_cache.hpp"
 #include "editor/events/tool_events.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 namespace {
 
 inline TileCache gOldState;
@@ -91,4 +91,4 @@ void StampToolOnReleased(entt::registry& registry,
   }
 }
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

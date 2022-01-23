@@ -5,7 +5,7 @@
 #include "core/systems/registry_system.hpp"
 #include "core/viewport.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 class ViewportSystemTest : public testing::Test {
  protected:

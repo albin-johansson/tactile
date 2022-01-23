@@ -7,7 +7,7 @@
 #include "core/tile_cache.hpp"
 #include "core/tool_type.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup events
 /// \{
@@ -51,4 +51,4 @@ struct FloodEvent final
 
 /// \} End of group events
 
-}  // namespace Tactile
+}  // namespace tactile

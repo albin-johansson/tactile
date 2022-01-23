@@ -1,6 +1,6 @@
 #include "shortcut.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto IsOnlyActive(const uint16 modifiers, const uint16 currentMask) noexcept
@@ -36,4 +36,4 @@ void AShortcut::Poll(const Model& model,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

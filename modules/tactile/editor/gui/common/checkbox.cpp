@@ -4,7 +4,7 @@
 
 #include "assert.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 auto Checkbox(const NotNull<CStr> label, NotNull<bool*> value, const CStr tooltip) -> bool
 {
@@ -19,4 +19,4 @@ auto Checkbox(const NotNull<CStr> label, NotNull<bool*> value, const CStr toolti
   return changed;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -4,7 +4,7 @@
 
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
 {
@@ -34,4 +34,4 @@ void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

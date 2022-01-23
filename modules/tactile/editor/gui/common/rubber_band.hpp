@@ -6,7 +6,7 @@
 
 struct ImVec2;
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Updates a "rubber band" (rectangular selection) in the current canvas.
@@ -21,4 +21,4 @@ namespace Tactile {
 [[nodiscard]] auto RubberBand(const ImVec2& offset, const ImVec2& tileSize)
     -> Maybe<Region>;
 
-}  // namespace Tactile
+}  // namespace tactile

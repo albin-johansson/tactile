@@ -7,7 +7,7 @@
 #include "save_components.hpp"
 #include "save_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SaveObject(YAML::Emitter& emitter,
                 const Object& object,
@@ -65,4 +65,4 @@ void SaveObject(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

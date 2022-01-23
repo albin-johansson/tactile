@@ -2,7 +2,7 @@
 
 #include <google/protobuf/stubs/common.h>
 
-namespace Tactile {
+namespace tactile {
 
 ProtobufContext::ProtobufContext()
 {
@@ -14,4 +14,4 @@ ProtobufContext::~ProtobufContext()
   google::protobuf::ShutdownProtobufLibrary();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

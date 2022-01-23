@@ -3,7 +3,7 @@
 #include <fstream>  // ofstream
 #include <iomanip>  // setw
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SaveJson(const JSON& json, const std::filesystem::path& path, const bool indent)
 {
@@ -16,4 +16,4 @@ void SaveJson(const JSON& json, const std::filesystem::path& path, const bool in
   stream << json;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

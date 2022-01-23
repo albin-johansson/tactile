@@ -7,7 +7,7 @@
 #include "editor/commands/command_id.hpp"
 #include "map_command_cache.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RemoveColumnCmd final : public ACommand {
  public:
@@ -30,4 +30,4 @@ class RemoveColumnCmd final : public ACommand {
   usize mColumns{1};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -6,7 +6,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /// \name Map API
 /// \{
@@ -413,6 +413,6 @@ auto GetProperty(const Map& map, usize index) -> const Property&;
 
 /// \} End of map API
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_MAP_HPP_

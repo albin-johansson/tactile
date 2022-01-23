@@ -9,7 +9,7 @@
 
 #include "core/attribute_value.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// General purpose property value input component.
 [[nodiscard]] auto Input(CStr id, const attribute_value& value) -> Maybe<attribute_value>;
@@ -43,4 +43,4 @@ namespace Tactile {
 [[nodiscard]] auto InputFile(CStr id, const std::filesystem::path& value)
     -> Maybe<std::filesystem::path>;
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -4,7 +4,7 @@
 
 #include "core/attribute_value.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct Property final
 {
@@ -12,4 +12,4 @@ struct Property final
   attribute_value value;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

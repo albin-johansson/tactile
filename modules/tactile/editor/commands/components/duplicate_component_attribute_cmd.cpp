@@ -4,7 +4,7 @@
 
 #include "core/systems/component_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 DuplicateComponentAttributeCmd::DuplicateComponentAttributeCmd(RegistryRef registry,
                                                                ComponentID componentId,
@@ -29,4 +29,4 @@ void DuplicateComponentAttributeCmd::Redo()
       Sys::DuplicateComponentAttribute(registry, mComponentId, mAttributeName);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

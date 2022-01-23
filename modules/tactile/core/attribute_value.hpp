@@ -12,7 +12,7 @@
 #include "assert.hpp"
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup core
 /// \{
@@ -447,4 +447,4 @@ class attribute_value final {
 
 /// \} End of group core
 
-}  // namespace Tactile
+}  // namespace tactile

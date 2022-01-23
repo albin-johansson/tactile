@@ -1,6 +1,6 @@
 #include "remove_component_cmd.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RemoveComponentCmd::RemoveComponentCmd(RegistryRef registry,
                                        const ContextID contextId,
@@ -24,4 +24,4 @@ void RemoveComponentCmd::Redo()
   mSnapshot = Sys::RemoveComponent(registry, mContextId, mComponentId);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

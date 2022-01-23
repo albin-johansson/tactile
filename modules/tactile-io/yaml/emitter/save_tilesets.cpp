@@ -12,7 +12,7 @@
 #include "save_object.hpp"
 #include "save_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 constexpr int tileset_node_version = 1;
@@ -126,4 +126,4 @@ void SaveTilesets(YAML::Emitter& emitter,
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

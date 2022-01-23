@@ -2,7 +2,7 @@
 
 #include <fstream>  // ofstream
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SaveXml(const pugi::xml_document& xml, const std::filesystem::path& path)
 {
@@ -10,4 +10,4 @@ void SaveXml(const pugi::xml_document& xml, const std::filesystem::path& path)
   xml.save(stream, " ");
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

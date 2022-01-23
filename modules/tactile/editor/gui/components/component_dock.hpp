@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class ComponentDock final {
  public:
@@ -12,4 +12,4 @@ class ComponentDock final {
   bool mHasFocus{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

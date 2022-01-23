@@ -5,7 +5,7 @@
 
 #include "ir_definitions.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SetName(Tileset& tileset, const CStr name)
 {
@@ -155,4 +155,4 @@ auto GetProperty(const Tileset& tileset, const usize index) -> const Property&
   return tileset.properties.at(index);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

@@ -7,7 +7,7 @@
 
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /**
  * \brief Attempts to find a property with the specified name.
@@ -372,6 +372,6 @@ void EachComponent(const T& source, U&& callable)
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_HELPERS_HPP_

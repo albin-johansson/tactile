@@ -4,7 +4,7 @@
 #include "button.hpp"
 #include "editor/gui/alignment.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 auto CenteredButton(const NotNull<CStr> text, const CStr tooltip) -> bool
 {
@@ -16,4 +16,4 @@ auto CenteredButton(const NotNull<CStr> text, const CStr tooltip) -> bool
   return Button(text, tooltip);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

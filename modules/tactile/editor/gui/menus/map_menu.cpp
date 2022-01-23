@@ -9,7 +9,7 @@
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 MapMenu::MapMenu() : mCreateTilesetDialog{std::make_unique<CreateTilesetDialog>()} {}
 
@@ -62,4 +62,4 @@ void MapMenu::ShowAddTilesetDialog()
   mCreateTilesetDialog->Open();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

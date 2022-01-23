@@ -11,7 +11,7 @@
 #include "editor/gui/scoped.hpp"
 #include "tileset_view.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gTabBarFlags =
@@ -90,4 +90,4 @@ auto TilesetTabWidget::GetTilesetView() const -> const TilesetView&
   return mTilesetView;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

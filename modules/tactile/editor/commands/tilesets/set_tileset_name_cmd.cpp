@@ -6,7 +6,7 @@
 #include "core/components/property_context.hpp"
 #include "core/systems/tileset_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 SetTilesetNameCmd::SetTilesetNameCmd(RegistryRef registry,
                                      const TilesetID id,
@@ -53,4 +53,4 @@ auto SetTilesetNameCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

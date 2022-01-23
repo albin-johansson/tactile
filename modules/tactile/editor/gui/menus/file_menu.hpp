@@ -4,7 +4,7 @@
 
 #include "editor/gui/dialogs/create_map_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 
@@ -32,4 +32,4 @@ class FileMenu final {
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

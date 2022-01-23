@@ -11,7 +11,7 @@
 #include "editor/gui/texture_utils.hpp"
 #include "render_info.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto ConvertBoundsToRect(const RenderInfo& info) -> cen::frect
@@ -318,4 +318,4 @@ auto Graphics::GetShadowDrawColor() const -> uint32
   return ColorToU32(cen::colors::black.with_alpha(mOpacity));
 }
 
-}  // namespace Tactile
+}  // namespace tactile

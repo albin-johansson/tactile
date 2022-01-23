@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>  // registry, dispatcher
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Updates the state of the layer item popup.
@@ -18,4 +18,4 @@ void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           LayerID id);
 
-}  // namespace Tactile
+}  // namespace tactile

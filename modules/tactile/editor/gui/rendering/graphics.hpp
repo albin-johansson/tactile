@@ -6,7 +6,7 @@
 
 #include "core/region.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct RenderInfo;
 
@@ -114,4 +114,4 @@ class Graphics final {
   [[nodiscard]] auto GetShadowDrawColor() const -> uint32;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

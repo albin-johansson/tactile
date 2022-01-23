@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>  // registry, entity
 #include <tactile_def.hpp>
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 /// \name Object system
 /// \{
@@ -21,4 +21,4 @@ namespace Tactile::Sys {
 
 /// \} End of object system
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <entt/entt.hpp>  // dispatcher
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 class WidgetManager;
@@ -15,4 +15,4 @@ void UpdateShortcuts(const Model& model,
                      const SDL_KeyboardEvent& event,
                      entt::dispatcher& dispatcher);
 
-}  // namespace Tactile
+}  // namespace tactile

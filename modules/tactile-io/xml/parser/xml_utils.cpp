@@ -6,7 +6,7 @@
 #include <limits>     // numeric_limits
 #include <utility>    // move
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 constexpr int error_int = std::numeric_limits<int>::lowest();
@@ -92,4 +92,4 @@ auto GetBool(const pugi::xml_node node, const NotNull<CStr> attr) -> Maybe<bool>
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

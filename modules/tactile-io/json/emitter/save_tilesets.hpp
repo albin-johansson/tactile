@@ -5,10 +5,10 @@
 #include "../json_common.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto SaveTilesets(const Map& map,
                                 const std::filesystem::path& dir,
                                 EmitterOptions options) -> JSON;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

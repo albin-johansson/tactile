@@ -9,7 +9,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class ChangePropertyTypeCmd final : public ACommand {
  public:
@@ -32,4 +32,4 @@ class ChangePropertyTypeCmd final : public ACommand {
   Maybe<attribute_value> mPreviousValue;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

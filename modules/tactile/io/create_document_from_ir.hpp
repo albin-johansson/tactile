@@ -4,7 +4,7 @@
 
 #include "editor/document.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class TextureManager;
 
@@ -19,4 +19,4 @@ class TextureManager;
 [[nodiscard]] auto CreateDocumentFromIR(const IO::Map& irMap, TextureManager& textures)
     -> Document;
 
-}  // namespace Tactile
+}  // namespace tactile

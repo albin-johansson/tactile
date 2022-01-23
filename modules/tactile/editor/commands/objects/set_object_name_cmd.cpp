@@ -4,7 +4,7 @@
 
 #include "core/components/property_context.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 SetObjectNameCmd::SetObjectNameCmd(RegistryRef registry,
                                    const ObjectID id,
@@ -39,4 +39,4 @@ auto SetObjectNameCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

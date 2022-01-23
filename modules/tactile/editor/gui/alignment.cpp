@@ -4,7 +4,7 @@
 
 #include "assert.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void CenterNextWindowOnAppearance()
 {
@@ -57,4 +57,4 @@ auto GetStandardComponentWidth(const char* text) -> float
   return ImGui::CalcTextSize(text).x + (ImGui::GetStyle().FramePadding.x * 2.0f);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

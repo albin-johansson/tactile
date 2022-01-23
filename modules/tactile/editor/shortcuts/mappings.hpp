@@ -5,7 +5,7 @@
 
 #include "build.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 #if TACTILE_PLATFORM_OSX
 
@@ -25,4 +25,4 @@ inline constexpr uint16 gPrimaryModifier = KMOD_LCTRL;
 
 inline constexpr uint16 gSecondaryModifier = KMOD_LALT;
 
-}  // namespace Tactile
+}  // namespace tactile

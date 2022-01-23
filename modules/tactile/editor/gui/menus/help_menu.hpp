@@ -5,7 +5,7 @@
 #include "editor/gui/dialogs/about_dialog.hpp"
 #include "editor/gui/dialogs/credits_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 
@@ -21,4 +21,4 @@ class HelpMenu final {
   bool mShowAboutImGui{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

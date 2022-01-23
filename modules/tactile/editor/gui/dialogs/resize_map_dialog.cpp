@@ -5,7 +5,7 @@
 #include "editor/events/map_events.hpp"
 #include "editor/gui/common/button.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 ResizeMapDialog::ResizeMapDialog() : ADialog{"Resize Map"} {}
 
@@ -32,4 +32,4 @@ void ResizeMapDialog::OnAccept(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ResizeMapEvent>(mRows, mColumns);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

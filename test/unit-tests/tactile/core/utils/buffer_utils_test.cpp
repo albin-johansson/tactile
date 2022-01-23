@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace Tactile;
+using namespace tactile;
 
 TEST(BufferUtils, ZeroBuffer)
 {

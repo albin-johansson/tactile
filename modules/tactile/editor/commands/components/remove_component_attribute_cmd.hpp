@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RemoveComponentAttributeCmd final : public ACommand {
  public:
@@ -30,4 +30,4 @@ class RemoveComponentAttributeCmd final : public ACommand {
   Maybe<attribute_value> mPreviousDefault;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

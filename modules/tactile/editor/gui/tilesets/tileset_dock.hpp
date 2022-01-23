@@ -5,7 +5,7 @@
 
 #include "tileset_tabs.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class TilesetDock final {
  public:
@@ -25,4 +25,4 @@ class TilesetDock final {
   void ResetState();
 };
 
-}  // namespace Tactile
+}  // namespace tactile

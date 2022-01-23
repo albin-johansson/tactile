@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class CreateComponentAttributeCmd final : public ACommand {
  public:
@@ -27,4 +27,4 @@ class CreateComponentAttributeCmd final : public ACommand {
   std::string mName;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -2,7 +2,7 @@
 
 #include "core/systems/layers/layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 SetLayerVisibilityCmd::SetLayerVisibilityCmd(RegistryRef registry,
                                              const LayerID id,
@@ -25,4 +25,4 @@ void SetLayerVisibilityCmd::Redo()
   Sys::SetLayerVisible(mRegistry, mLayerId, mVisible);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

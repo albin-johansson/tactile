@@ -8,7 +8,7 @@
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 auto GetRenderBounds(const ImVec2& tl,
@@ -83,4 +83,4 @@ auto GetRenderInfo(const Viewport& viewport, const Tileset& tileset) -> RenderIn
   return GetRenderInfo(viewport, tileSize, tileset.row_count, tileset.column_count);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

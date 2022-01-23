@@ -6,7 +6,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 BucketCmd::BucketCmd(RegistryRef registry,
                      const MapPosition origin,
@@ -48,4 +48,4 @@ void BucketCmd::Redo()
   Flood(registry, entity, mOrigin, mReplacement, mPositions);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -2,7 +2,7 @@
 
 #include "component_name_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class CreateComponentDialog final : public AComponentNameDialog {
  public:
@@ -14,4 +14,4 @@ class CreateComponentDialog final : public AComponentNameDialog {
   void OnAccept(entt::dispatcher& dispatcher) override;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

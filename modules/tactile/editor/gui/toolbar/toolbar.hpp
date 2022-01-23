@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>  // dispatcher
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 
@@ -21,4 +21,4 @@ class Toolbar final {
   bool mHasFocus{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

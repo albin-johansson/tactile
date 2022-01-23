@@ -4,8 +4,8 @@
 
 #include <pugixml.hpp>  // xml_document
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SaveXml(const pugi::xml_document& xml, const std::filesystem::path& path);
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

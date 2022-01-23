@@ -4,7 +4,7 @@
 #include "core/map.hpp"
 #include "core/systems/map_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RemoveRowCmd::RemoveRowCmd(RegistryRef registry)
     : ACommand{"Remove Row(s)"}
@@ -45,4 +45,4 @@ auto RemoveRowCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

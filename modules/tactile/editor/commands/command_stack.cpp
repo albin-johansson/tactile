@@ -4,7 +4,7 @@
 #include "core/algorithms/invoke_n.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 CommandStack::CommandStack() : mCapacity{Prefs::GetCommandCapacity()} {}
 
@@ -127,4 +127,4 @@ void CommandStack::RemoveCommandsAfterCurrentIndex()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

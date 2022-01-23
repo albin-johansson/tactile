@@ -2,7 +2,7 @@
 
 #include "core/systems/component_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 AddComponentCmd::AddComponentCmd(RegistryRef registry,
                                  const ContextID contextId,
@@ -25,4 +25,4 @@ void AddComponentCmd::Redo()
   Sys::AddComponent(registry, mContextId, mComponentId);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

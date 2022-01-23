@@ -3,7 +3,7 @@
 #include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 DuplicateLayerCmd::DuplicateLayerCmd(RegistryRef registry, const LayerID id)
     : ACommand{"Duplicate Layer"}
@@ -32,4 +32,4 @@ void DuplicateLayerCmd::Redo()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

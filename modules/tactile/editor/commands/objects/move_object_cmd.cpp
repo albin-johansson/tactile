@@ -2,7 +2,7 @@
 
 #include "core/components/object.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 MoveObjectCmd::MoveObjectCmd(RegistryRef registry,
                              const ObjectID id,
@@ -31,4 +31,4 @@ void MoveObjectCmd::Redo()
   object.y = mNewY;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

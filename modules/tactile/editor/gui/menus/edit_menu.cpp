@@ -13,7 +13,7 @@
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -97,4 +97,4 @@ void EditMenu::ShowComponentEditor(const Model& model)
   mComponentEditor.Open(model);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

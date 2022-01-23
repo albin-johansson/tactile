@@ -4,7 +4,7 @@
 #include "editor/events/property_events.hpp"
 #include "editor/model.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog{"Rename Property"}
 {
@@ -25,4 +25,4 @@ auto RenamePropertyDialog::Validate(const Model& model, std::string_view input) 
   return !input.empty() && !Sys::HasPropertyWithName(registry, context, input);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

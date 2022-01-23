@@ -6,7 +6,7 @@
 
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void AppendProperties(pugi::xml_node node,
                       const Map& map,
@@ -28,4 +28,4 @@ void AppendProperties(pugi::xml_node node,
                       const Object& object,
                       const std::filesystem::path& dir);
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

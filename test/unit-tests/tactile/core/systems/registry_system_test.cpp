@@ -11,7 +11,7 @@
 #include "core/mouse_pos.hpp"
 #include "core/viewport.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 TEST(RegistrySystem, MakeRegistry)
 {

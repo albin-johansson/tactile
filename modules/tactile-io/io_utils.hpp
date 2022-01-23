@@ -5,8 +5,8 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto Split(CStr str, char sep) -> std::vector<std::string>;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

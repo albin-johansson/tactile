@@ -5,7 +5,7 @@
 #include "../../common_saving.hpp"
 #include "ir_helpers.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 void AppendProperty(pugi::xml_node root,
@@ -107,4 +107,4 @@ void AppendProperties(pugi::xml_node node,
   AppendPropertiesImpl(node, object, dir);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

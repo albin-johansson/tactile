@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup commands
 /// \{
@@ -96,4 +96,4 @@ class ACommand {
 
 /// \} End of group commands
 
-}  // namespace Tactile
+}  // namespace tactile

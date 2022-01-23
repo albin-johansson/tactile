@@ -2,10 +2,10 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 void PropertyTypeCombo(PropertyType& out);
 
 void PropertyTypeCombo(PropertyType previous, PropertyType& out);
 
-}  // namespace Tactile
+}  // namespace tactile

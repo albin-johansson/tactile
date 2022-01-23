@@ -8,7 +8,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class CreateComponentDefCmd final : public ACommand {
  public:
@@ -29,4 +29,4 @@ class CreateComponentDefCmd final : public ACommand {
   Maybe<ComponentID> mComponentId;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

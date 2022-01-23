@@ -8,7 +8,7 @@
 #include "save_properties.hpp"
 #include "save_tilesets.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 constexpr int32 version = 1;
@@ -47,4 +47,4 @@ void EmitYamlMap(const Map& map, const EmitterOptions options)
   stream << emitter.c_str();
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

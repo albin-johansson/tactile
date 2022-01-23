@@ -4,7 +4,7 @@
 
 #include "core/systems/property_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 ChangePropertyTypeCmd::ChangePropertyTypeCmd(RegistryRef registry,
                                              std::string name,
@@ -35,4 +35,4 @@ void ChangePropertyTypeCmd::Redo()
   Sys::ChangePropertyType(mRegistry, context, mName, mPropertyType);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

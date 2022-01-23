@@ -11,7 +11,7 @@
 #include "editor/shortcuts/mappings.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 void UpdateWidgetsMenu(const bool hasActiveMap)
@@ -132,4 +132,4 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

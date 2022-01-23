@@ -8,7 +8,7 @@
 #include "editor/gui/alignment.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 CreateMapDialog::CreateMapDialog() : ADialog{"Create New Map"}
 {
@@ -78,4 +78,4 @@ auto CreateMapDialog::IsCurrentInputValid(const Model&) const -> bool
   return (mTileWidth > 0) && (mTileHeight > 0) && (mRows > 0) && (mColumns > 0);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

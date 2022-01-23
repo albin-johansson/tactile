@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class MoveLayerUpCmd final : public ACommand {
  public:
@@ -26,4 +26,4 @@ class MoveLayerUpCmd final : public ACommand {
   LayerID mLayerId;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

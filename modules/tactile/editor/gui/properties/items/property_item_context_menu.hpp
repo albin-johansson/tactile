@@ -4,7 +4,7 @@
 
 #include <entt/entt.hpp>  // dispatcher
 
-namespace Tactile {
+namespace tactile {
 
 struct PropertyItemContextMenuState final
 {
@@ -17,4 +17,4 @@ auto PropertyItemContextMenu(entt::dispatcher& dispatcher,
                              const std::string& name,
                              PropertyItemContextMenuState& state) -> bool;
 
-}  // namespace Tactile
+}  // namespace tactile

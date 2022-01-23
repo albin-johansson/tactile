@@ -9,7 +9,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/texture_utils.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void UpdateHomePageContent(const Icons& icons, entt::dispatcher& dispatcher)
 {
@@ -33,4 +33,4 @@ void UpdateHomePageContent(const Icons& icons, entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

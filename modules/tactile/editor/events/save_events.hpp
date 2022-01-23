@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup events
 /// \{
@@ -20,4 +20,4 @@ struct SaveAsEvent final
 
 /// \} End of group events
 
-}  // namespace Tactile
+}  // namespace tactile

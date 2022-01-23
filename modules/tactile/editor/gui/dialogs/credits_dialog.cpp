@@ -5,7 +5,7 @@
 
 #include "editor/gui/scoped.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gTableFlags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
@@ -66,4 +66,4 @@ void CreditsDialog::UpdateContents(const Model&, entt::dispatcher&)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -9,7 +9,7 @@
 #include "io/preferences.hpp"
 #include "profile.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto GetEmitterOptions() -> IO::EmitterOptions
@@ -50,4 +50,4 @@ void SaveDocument(const Document& document)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

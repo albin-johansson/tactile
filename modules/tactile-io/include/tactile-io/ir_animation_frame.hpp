@@ -15,7 +15,7 @@
 #include "ir_tile.hpp"
 #include "ir_tileset.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /// \addtogroup io
 /// \{
@@ -65,6 +65,6 @@ auto GetDuration(const AnimationFrame& frame) -> int32;
 
 /// \} End of group io
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_ANIMATION_FRAME_HPP_

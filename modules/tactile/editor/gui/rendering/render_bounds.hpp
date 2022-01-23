@@ -1,3 +1,3 @@
 #pragma once
 
-namespace Tactile {}  // namespace Tactile
+namespace tactile {}  // namespace tactile

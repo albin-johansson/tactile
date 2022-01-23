@@ -11,7 +11,7 @@
 
 #include "command.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup commands
 /// \{
@@ -188,4 +188,4 @@ class CommandStack final {
 
 /// \} End of group commands
 
-}  // namespace Tactile
+}  // namespace tactile

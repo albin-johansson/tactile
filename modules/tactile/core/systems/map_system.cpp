@@ -10,7 +10,7 @@
 #include "core/map.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 namespace {
 
 template <typename T>
@@ -107,4 +107,4 @@ auto IsPositionInMap(const entt::registry& registry, const MapPosition& position
          (static_cast<usize>(column) < map.column_count);
 }
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

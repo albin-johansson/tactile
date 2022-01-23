@@ -11,7 +11,7 @@
 #include "core/components/property_context.hpp"
 #include "graphics.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 void RenderPointObject(Graphics& graphics,
@@ -153,4 +153,4 @@ void RenderObjectLayer(Graphics& graphics,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

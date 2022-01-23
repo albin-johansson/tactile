@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class AddRowCmd final : public ACommand {
  public:
@@ -25,4 +25,4 @@ class AddRowCmd final : public ACommand {
   usize mRows{1};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

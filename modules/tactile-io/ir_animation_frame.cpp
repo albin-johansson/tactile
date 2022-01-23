@@ -4,7 +4,7 @@
 
 #include "ir_definitions.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SetTile(AnimationFrame& frame, const int32 tile)
 {
@@ -27,4 +27,4 @@ auto GetDuration(const AnimationFrame& frame) -> int32
   return frame.duration;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

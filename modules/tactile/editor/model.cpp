@@ -15,7 +15,7 @@
 #include "core/systems/viewport_system.hpp"
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void Model::Update()
 {
@@ -302,4 +302,4 @@ auto Model::IsObjectSelectionPossible() const -> bool
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

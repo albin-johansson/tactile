@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Shows a `(?)` label with the specified tooltip text.
@@ -13,4 +13,4 @@ namespace Tactile {
  */
 void HelpMarker(NotNull<CStr> text);
 
-}  // namespace Tactile
+}  // namespace tactile

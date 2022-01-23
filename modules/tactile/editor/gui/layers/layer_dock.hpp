@@ -5,7 +5,7 @@
 
 #include "dialogs/rename_layer_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 class Icons;
@@ -24,4 +24,4 @@ class LayerDock final {
   bool mHasFocus{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

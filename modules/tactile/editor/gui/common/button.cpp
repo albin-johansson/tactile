@@ -5,7 +5,7 @@
 #include "assert.hpp"
 #include "editor/gui/scoped.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 auto Button(const NotNull<CStr> text,
             const CStr tooltip,
@@ -29,4 +29,4 @@ auto Button(const NotNull<CStr> text,
   return result;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

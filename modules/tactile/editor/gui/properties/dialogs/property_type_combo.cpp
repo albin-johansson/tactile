@@ -12,7 +12,7 @@
 #include "editor/gui/scoped.hpp"
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr std::array gItems{std::make_pair("string", PropertyType::String),
@@ -71,4 +71,4 @@ void PropertyTypeCombo(const PropertyType previous, PropertyType& out)
   PropertyTypeComboImpl(out, previous);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

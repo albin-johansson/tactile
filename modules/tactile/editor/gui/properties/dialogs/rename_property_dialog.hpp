@@ -2,7 +2,7 @@
 
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RenamePropertyDialog final : public AStringInputDialog {
  public:
@@ -17,4 +17,4 @@ class RenamePropertyDialog final : public AStringInputDialog {
       -> bool override;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

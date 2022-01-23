@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 struct Texture final
 {
@@ -14,4 +14,4 @@ struct Texture final
   std::filesystem::path path;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

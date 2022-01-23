@@ -4,10 +4,10 @@
 #include "tactile_io.hpp"
 #include "yaml/yaml_fwd.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseFancyTiles(const YAML::Node& node,
                                    const Map& map,
                                    Tileset& tileset) -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

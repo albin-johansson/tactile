@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // registry
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Component that denotes tiles with additional meta-information.
@@ -19,4 +19,4 @@ struct FancyTile final
   std::vector<entt::entity> objects;  ///< Associated object entities.
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -8,7 +8,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup utils
 /// \{
@@ -99,4 +99,4 @@ template <usize Size>
 
 /// \} End of group utils
 
-}  // namespace Tactile
+}  // namespace tactile

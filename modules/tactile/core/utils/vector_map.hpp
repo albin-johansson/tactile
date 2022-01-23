@@ -10,7 +10,7 @@
 
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 template <typename K, typename V>
 class VectorMap final {
@@ -212,4 +212,4 @@ class VectorMap final {
   }
 };
 
-}  // namespace Tactile
+}  // namespace tactile

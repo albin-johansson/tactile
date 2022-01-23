@@ -6,7 +6,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 StampSequenceCmd::StampSequenceCmd(RegistryRef registry,
                                    TileCache&& oldState,
@@ -38,4 +38,4 @@ void StampSequenceCmd::ApplySequence(const TileCache& cache)
   Sys::SetTilesInLayer(registry, entity, cache);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

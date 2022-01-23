@@ -6,7 +6,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void UpdateAddLayerPopup(entt::dispatcher& dispatcher)
 {
@@ -30,4 +30,4 @@ void OpenAddLayerPopup()
   ImGui::OpenPopup("AddLayerPopup");
 }
 
-}  // namespace Tactile
+}  // namespace tactile

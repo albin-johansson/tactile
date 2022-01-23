@@ -1,9 +1,9 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 class EmitInfo;
 
 void emit_yaml_map(const EmitInfo& info);
 
-}  // namespace Tactile
+}  // namespace tactile

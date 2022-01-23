@@ -14,7 +14,7 @@
 #include "map_parser.hpp"
 #include <session.pb.h>
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr int gFormatVersion = 1;
@@ -25,7 +25,7 @@ inline const auto gFilePath = GetPersistentFileDir() / "session.bin";
 
 void RestoreLastSession(Model& model, TextureManager& textures)
 {
-  Proto::Session session;
+  proto::Session session;
 
   std::ifstream stream{gFilePath, std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
@@ -46,7 +46,7 @@ void RestoreLastSession(Model& model, TextureManager& textures)
 
 void SaveSession(const Model& model)
 {
-  Proto::Session session;
+  proto::Session session;
   for (const auto& [id, document] : model) {
     if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);
@@ -60,4 +60,4 @@ void SaveSession(const Model& model)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

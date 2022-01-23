@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>  // registry, dispatcher
 
-namespace Tactile {
+namespace tactile {
 
 void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher);
 
@@ -11,4 +11,4 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
 
 void OpenObjectContextMenu();
 
-}  // namespace Tactile
+}  // namespace tactile

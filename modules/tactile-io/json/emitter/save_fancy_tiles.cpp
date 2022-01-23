@@ -8,7 +8,7 @@
 #include "save_object.hpp"
 #include "save_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto SaveFrame(const AnimationFrame& frame) -> JSON
@@ -80,4 +80,4 @@ auto SaveFancyTiles(const Tileset& tileset, const std::filesystem::path& dir) ->
   return array;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

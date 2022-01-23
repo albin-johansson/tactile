@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 class TextureManager;
@@ -29,4 +29,4 @@ void SaveSession(const Model& model);
 
 /// \} End of group io
 
-}  // namespace Tactile
+}  // namespace tactile

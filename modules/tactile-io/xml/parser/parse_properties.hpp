@@ -5,7 +5,7 @@
 #include "parse_error.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseProperties(pugi::xml_node node, Map& map) -> ParseError;
 [[nodiscard]] auto ParseProperties(pugi::xml_node node, Tileset& tileset) -> ParseError;
@@ -13,4 +13,4 @@ namespace Tactile::IO {
 [[nodiscard]] auto ParseProperties(pugi::xml_node node, Layer& layer) -> ParseError;
 [[nodiscard]] auto ParseProperties(pugi::xml_node node, Object& object) -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

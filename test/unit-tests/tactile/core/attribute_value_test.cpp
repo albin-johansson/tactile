@@ -1,7 +1,7 @@
 #include <core/attribute_value.hpp>
 #include <gtest/gtest.h>
 
-using namespace Tactile;
+using namespace tactile;
 using namespace std::string_literals;
 
 TEST(AttributeValue, Defaults)

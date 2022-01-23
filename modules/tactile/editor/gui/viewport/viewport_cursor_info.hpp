@@ -4,7 +4,7 @@
 
 #include "core/map_position.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct RenderInfo;
 
@@ -18,4 +18,4 @@ struct ViewportCursorInfo final
 
 [[nodiscard]] auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo;
 
-}  // namespace Tactile
+}  // namespace tactile

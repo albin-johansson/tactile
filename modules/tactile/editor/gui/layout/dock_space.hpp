@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup gui
 /// \{
@@ -13,4 +13,4 @@ void ResetLayout();
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -5,7 +5,7 @@
 #include "append_properties.hpp"
 #include "ir_helpers.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 void AppendAnimation(pugi::xml_node tileNode, const Tile& tile)
@@ -54,4 +54,4 @@ void AppendFancyTiles(pugi::xml_node node,
   });
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

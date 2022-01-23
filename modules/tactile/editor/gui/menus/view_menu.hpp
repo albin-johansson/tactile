@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 
@@ -11,4 +11,4 @@ class ViewMenu final {
   void Update(const Model& model, entt::dispatcher& dispatcher);
 };
 
-}  // namespace Tactile
+}  // namespace tactile

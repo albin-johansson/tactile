@@ -9,7 +9,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup commands
 /// \{
@@ -35,4 +35,4 @@ class BucketCmd final : public ACommand {
 
 /// \} End of group commands
 
-}  // namespace Tactile
+}  // namespace tactile

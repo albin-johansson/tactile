@@ -2,7 +2,7 @@
 
 #include <magic_enum.hpp>  // enum_name
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto GetCause(const ParseError error) -> CStr
 {
@@ -176,4 +176,4 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
   return stream << magic_enum::enum_name(error);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

@@ -2,7 +2,7 @@
 
 #include "shortcut.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct CenterViewportShortcut final : AShortcut
 {
@@ -91,4 +91,4 @@ struct ToggleUiShortcut final : AShortcut
       -> bool override;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

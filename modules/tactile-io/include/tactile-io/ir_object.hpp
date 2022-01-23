@@ -6,7 +6,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /// \name Object API
 /// \{
@@ -257,6 +257,6 @@ auto IsVisible(const Object& object) -> bool;
 
 /// \} End of Object API
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_OBJECT_HPP_

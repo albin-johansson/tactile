@@ -6,7 +6,7 @@
 #include <pugixml.hpp>  // xml_node
 #include <tactile_def.hpp>
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto Collect(pugi::xml_node node, CStr str) -> std::vector<pugi::xml_node>;
 
@@ -21,4 +21,4 @@ namespace Tactile::IO {
 
 [[nodiscard]] auto GetBool(pugi::xml_node node, NotNull<CStr> attr) -> Maybe<bool>;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

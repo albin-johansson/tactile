@@ -2,7 +2,7 @@
 
 #include "parse_tileset.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ParseTilesets(const JSON& json, Map& map, const std::filesystem::path& dir)
     -> ParseError
@@ -24,4 +24,4 @@ auto ParseTilesets(const JSON& json, Map& map, const std::filesystem::path& dir)
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

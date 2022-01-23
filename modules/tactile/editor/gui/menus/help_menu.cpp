@@ -9,7 +9,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -43,4 +43,4 @@ void HelpMenu::UpdateWindows()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

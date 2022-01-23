@@ -4,7 +4,7 @@
 
 #include "core/map_position.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup core
 /// \{
@@ -19,4 +19,4 @@ struct MouseInfo final
 
 /// \} End of group core
 
-}  // namespace Tactile
+}  // namespace tactile

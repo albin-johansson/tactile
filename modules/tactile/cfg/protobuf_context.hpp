@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 class ProtobufContext final {
  public:
@@ -9,4 +9,4 @@ class ProtobufContext final {
   ~ProtobufContext();
 };
 
-}  // namespace Tactile
+}  // namespace tactile

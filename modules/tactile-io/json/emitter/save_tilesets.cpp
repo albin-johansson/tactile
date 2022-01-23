@@ -11,7 +11,7 @@
 #include "save_json.hpp"
 #include "save_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 void AddCommonAttributes(JSON& json,
@@ -102,4 +102,4 @@ auto SaveTilesets(const Map& map,
   return json;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

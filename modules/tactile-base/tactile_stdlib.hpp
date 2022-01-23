@@ -14,7 +14,7 @@
 
 #include "tactile_def.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 template <typename T>
 using Integral = std::enable_if_t<std::is_integral_v<T>, int>;
@@ -195,6 +195,6 @@ template <typename T, Floating<T> = 0>
   return str;
 }
 
-}  // namespace Tactile
+}  // namespace tactile
 
 #endif  // TACTILE_TACTILE_STDLIB_HPP_

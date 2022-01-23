@@ -8,7 +8,7 @@
 
 #include "core/map_position.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class MapCommandCache final {
   using TileCache = std::map<MapPosition, TileID, std::less<>>;
@@ -27,4 +27,4 @@ class MapCommandCache final {
   LayerCache mCache;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

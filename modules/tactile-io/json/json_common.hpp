@@ -2,8 +2,8 @@
 
 #include <nlohmann/json.hpp>  // json
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 using JSON = nlohmann::json;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

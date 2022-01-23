@@ -13,7 +13,7 @@
 #include "io/preferences.hpp"
 #include "logging.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 void LoadIconFont(const float size)
@@ -94,4 +94,4 @@ ImGuiContext::~ImGuiContext()
   ImGui::DestroyContext();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

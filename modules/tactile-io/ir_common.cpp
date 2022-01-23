@@ -2,7 +2,7 @@
 
 #include <filesystem>  // exists, path, is_regular_file
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto DeduceFormat(const CPathStr str) -> MapFormat
 {
@@ -31,4 +31,4 @@ auto DeduceFormat(const CPathStr str) -> MapFormat
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

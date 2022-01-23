@@ -4,7 +4,7 @@
 
 #include "core/mouse_info.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 void ObjectSelectionToolOnPressed(entt::registry& registry,
                                   entt::dispatcher& dispatcher,
@@ -16,4 +16,4 @@ void ObjectSelectionToolOnReleased(entt::registry& registry,
                                    entt::dispatcher& dispatcher,
                                    const MouseInfo& mouse);
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

@@ -7,7 +7,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RemoveTilesetCmd final : public ACommand {
  public:
@@ -28,4 +28,4 @@ class RemoveTilesetCmd final : public ACommand {
   Maybe<Sys::TilesetSnapshot> mSnapshot;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -8,7 +8,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RenamePropertyCmd final : public ACommand {
  public:
@@ -30,4 +30,4 @@ class RenamePropertyCmd final : public ACommand {
   std::string mNewName;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

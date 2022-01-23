@@ -4,7 +4,7 @@
 
 #include "tileset_view.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class TilesetTabWidget final {
  public:
@@ -16,4 +16,4 @@ class TilesetTabWidget final {
   TilesetView mTilesetView;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

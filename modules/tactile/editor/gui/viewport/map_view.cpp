@@ -26,7 +26,7 @@
 #include "viewport_cursor_info.hpp"
 #include "viewport_overlay.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gTileHighlightColor = IM_COL32(0, 255, 0, 200);
@@ -230,4 +230,4 @@ void OpenObjectContextMenu()
                    ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

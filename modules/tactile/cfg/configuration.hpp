@@ -6,7 +6,7 @@
 #include "imgui_context.hpp"
 #include "protobuf_context.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /* This class handles the configuration of aspects such as windows and OpenGL contexts */
 class ApplicationConfiguration final {
@@ -27,4 +27,4 @@ class ApplicationConfiguration final {
   Maybe<ImGuiContext> mImGui;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

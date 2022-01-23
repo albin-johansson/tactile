@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup core
 /// \{
@@ -24,4 +24,4 @@ constexpr void InvokeN(const Integer n, T&& callable) noexcept(noexcept(callable
 
 /// \} End of group core
 
-}  // namespace Tactile
+}  // namespace tactile

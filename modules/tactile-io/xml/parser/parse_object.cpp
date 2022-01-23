@@ -5,7 +5,7 @@
 #include "parse_properties.hpp"
 #include "xml_utils.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ParseObject(const pugi::xml_node node, Object& object) -> ParseError
 {
@@ -41,4 +41,4 @@ auto ParseObject(const pugi::xml_node node, Object& object) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

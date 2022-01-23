@@ -4,7 +4,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /// \name Tile API
 /// \{
@@ -203,6 +203,6 @@ auto GetProperty(const Tile& tile, usize index) -> const Property&;
 
 /// \} End of tile API
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_TILE_HPP_

@@ -3,7 +3,7 @@
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseFancyTile(const JSON& json, Tile& tile) -> ParseError
@@ -54,4 +54,4 @@ auto ParseFancyTiles(const JSON& json, Tileset& tileset) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

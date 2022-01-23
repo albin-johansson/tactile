@@ -3,7 +3,7 @@
 #include "core/algorithms/invoke_n.hpp"
 #include "core/systems/map_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 AddColumnCmd::AddColumnCmd(RegistryRef registry)
     : ACommand{"Add Column(s)"}
@@ -31,4 +31,4 @@ auto AddColumnCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

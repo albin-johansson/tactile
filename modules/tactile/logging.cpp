@@ -9,7 +9,7 @@
 
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 struct LoggedString final
@@ -151,4 +151,4 @@ auto IsEnabled(const LogLevel level) -> bool
   return IsEnabled(gLogLevel, level);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

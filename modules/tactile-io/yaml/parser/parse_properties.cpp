@@ -9,7 +9,7 @@
 
 #include "common_parsing.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseType(const YAML::Node& node, PropertyType& type) -> ParseError
@@ -151,4 +151,4 @@ auto ParseProperties(const YAML::Node& node, Object& object) -> ParseError
   return ParsePropertiesImpl(node, object);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

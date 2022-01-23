@@ -4,7 +4,7 @@
 #include "tactile_io.hpp"
 #include "yaml/yaml_fwd.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseProperties(const YAML::Node& node, Map& map) -> ParseError;
 
@@ -17,4 +17,4 @@ namespace Tactile::IO {
 
 [[nodiscard]] auto ParseProperties(const YAML::Node& node, Object& object) -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

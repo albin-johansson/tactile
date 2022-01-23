@@ -2,7 +2,7 @@
 
 #include "save_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto SaveObject(const Object& object, const std::filesystem::path& dir) -> JSON
 {
@@ -33,4 +33,4 @@ auto SaveObject(const Object& object, const std::filesystem::path& dir) -> JSON
   return json;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

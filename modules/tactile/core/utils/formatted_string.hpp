@@ -6,7 +6,7 @@
 #include <fmt/format.h>  // format_to_n
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 template <usize Capacity = 128>
 class FormattedString final {
@@ -36,4 +36,4 @@ class FormattedString final {
   usize mSize{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

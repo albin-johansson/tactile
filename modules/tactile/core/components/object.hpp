@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // entity, null
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Component that represents objects located in object layers.
@@ -46,4 +46,4 @@ struct ObjectDragInfo final
   float last_mouse_y{};     ///< Mouse viewport y-coordinate at last update.
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -6,7 +6,7 @@
 #include "core/map_position.hpp"
 #include "core/tile_cache.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 /// \name Tile layer system
 /// \{
@@ -26,4 +26,4 @@ void SetTilesInLayer(entt::registry& registry,
 
 /// \} End of tile layer system
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

@@ -2,7 +2,7 @@
 
 #include "core/systems/layers/layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 SetLayerOpacityCmd::SetLayerOpacityCmd(RegistryRef registry,
                                        const LayerID id,
@@ -38,4 +38,4 @@ auto SetLayerOpacityCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

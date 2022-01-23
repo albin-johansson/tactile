@@ -6,7 +6,7 @@
 #include "graphics.hpp"
 #include "render_tile.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void RenderTileLayer(Graphics& graphics,
                      const entt::registry& registry,
@@ -30,4 +30,4 @@ void RenderTileLayer(Graphics& graphics,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

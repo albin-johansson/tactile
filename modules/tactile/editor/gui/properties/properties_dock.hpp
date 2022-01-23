@@ -10,7 +10,7 @@
 #include "dialogs/rename_property_dialog.hpp"
 #include "property_table.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 
@@ -34,4 +34,4 @@ class PropertiesDock final {
   bool mHasFocus{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -7,7 +7,7 @@
 
 #include "editor/commands/command.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct Object;
 struct PropertyContext;
@@ -28,4 +28,4 @@ class AObjectCmd : public ACommand {
   ObjectID mObjectId;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

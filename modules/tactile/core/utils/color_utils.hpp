@@ -6,7 +6,7 @@
 #include <imgui.h>
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Converts a color into an array of normalized color components.
@@ -43,4 +43,4 @@ namespace Tactile {
                                1.0f);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

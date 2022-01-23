@@ -4,7 +4,7 @@
 
 #include "core/systems/component_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 SetComponentAttributeTypeCmd::SetComponentAttributeTypeCmd(RegistryRef registry,
                                                            const ComponentID id,
@@ -23,10 +23,7 @@ void SetComponentAttributeTypeCmd::Undo()
 
   const auto previous = mPreviousValue.value();
 
-  Sys::SetComponentAttributeType(registry,
-                                 mComponentId,
-                                 mAttributeName,
-                                 previous.type());
+  Sys::SetComponentAttributeType(registry, mComponentId, mAttributeName, previous.type());
   Sys::SetComponentAttributeValue(registry, mComponentId, mAttributeName, previous);
 }
 
@@ -39,4 +36,4 @@ void SetComponentAttributeTypeCmd::Redo()
   Sys::SetComponentAttributeType(registry, mComponentId, mAttributeName, mNewType);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

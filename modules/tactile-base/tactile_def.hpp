@@ -23,7 +23,7 @@
   Class(Class&&) noexcept = delete; \
   auto operator=(Class&&) noexcept->Class& = delete;
 
-namespace Tactile {
+namespace tactile {
 
 using CStr = const char*;
 
@@ -96,6 +96,6 @@ enum class LayerType {
   GroupLayer
 };
 
-}  // namespace Tactile
+}  // namespace tactile
 
 #endif  // TACTILE_TACTILE_HPP_

@@ -10,7 +10,7 @@
 
 #include "core/attribute_value.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 using ComponentAttributeMap = std::map<std::string, attribute_value, std::less<>>;
 
@@ -40,4 +40,4 @@ struct Component final
   ComponentAttributeMap values;  ///< Current values.
 };
 
-}  // namespace Tactile
+}  // namespace tactile

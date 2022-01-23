@@ -7,7 +7,7 @@
 #include "core/systems/viewport_system.hpp"
 #include "core/viewport.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 namespace {
 
 [[nodiscard]] auto GetHitDetectionBounds(const Object& object,
@@ -87,4 +87,4 @@ auto FindObject(const entt::registry& registry,
   return entt::null;
 }
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

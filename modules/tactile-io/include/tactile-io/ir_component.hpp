@@ -6,7 +6,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /// \name Component API
 /// \{
@@ -229,6 +229,6 @@ auto GetComponentCount(const Tile& tile) -> usize;
 
 /// \} End of component API
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_COMPONENT_HPP_

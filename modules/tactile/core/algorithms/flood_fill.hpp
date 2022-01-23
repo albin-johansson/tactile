@@ -7,7 +7,7 @@
 
 #include "core/map_position.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Floods the specified tile layer with a tile at the specified location.
@@ -24,4 +24,4 @@ void Flood(entt::registry& registry,
            TileID replacement,
            std::vector<MapPosition>& affected);
 
-}  // namespace Tactile
+}  // namespace tactile

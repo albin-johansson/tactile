@@ -5,7 +5,7 @@
 #include "../../common_saving.hpp"
 #include "ir_helpers.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 template <typename T>
@@ -99,4 +99,4 @@ void SaveProperties(YAML::Emitter& emitter,
   SavePropertiesImpl(emitter, object, dir);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

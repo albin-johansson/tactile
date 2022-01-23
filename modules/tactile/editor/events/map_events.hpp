@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup events
 /// \{
@@ -64,4 +64,4 @@ struct ResizeMapEvent final
 
 /// \} End of group events
 
-}  // namespace Tactile
+}  // namespace tactile

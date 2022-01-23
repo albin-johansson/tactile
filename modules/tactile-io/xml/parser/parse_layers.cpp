@@ -11,7 +11,7 @@
 #include "parse_tile_layer.hpp"
 #include "xml_utils.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseLayer(pugi::xml_node node, Layer& layer, usize index)
@@ -111,4 +111,4 @@ auto ParseLayers(const pugi::xml_node root, Map& map) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

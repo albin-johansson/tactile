@@ -10,7 +10,7 @@
 #define TACTILE_URL "https://www.github.com/albin-johansson/tactile"
 #define TACTILE_LICENSE "GPL v3.0"
 
-namespace Tactile {
+namespace tactile {
 
 AboutDialog::AboutDialog() : ADialog{"About Tactile"}
 {
@@ -42,4 +42,4 @@ void AboutDialog::UpdateContents(const Model&, entt::dispatcher&)
   ImGui::TextUnformatted("Icons by Font Awesome.");
 }
 
-}  // namespace Tactile
+}  // namespace tactile

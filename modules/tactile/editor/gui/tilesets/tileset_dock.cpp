@@ -13,7 +13,7 @@
 #include "io/preferences.hpp"
 #include "tileset_tabs.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
@@ -61,4 +61,4 @@ void TilesetDock::ResetState()
   mWindowContainsMouse = false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

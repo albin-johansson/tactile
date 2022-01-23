@@ -7,7 +7,7 @@
 #include "core/components/component.hpp"
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RenameComponentAttributeDialog final : public AStringInputDialog {
  public:
@@ -24,4 +24,4 @@ class RenameComponentAttributeDialog final : public AStringInputDialog {
   Maybe<ComponentID> mComponentId;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

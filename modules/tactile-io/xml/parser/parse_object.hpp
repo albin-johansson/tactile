@@ -5,8 +5,8 @@
 #include "parse_error.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseObject(pugi::xml_node node, Object& object) -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

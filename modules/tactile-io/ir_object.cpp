@@ -4,7 +4,7 @@
 
 #include "ir_definitions.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SetName(Object& object, const CStr name)
 {
@@ -123,4 +123,4 @@ auto IsVisible(const Object& object) -> bool
   return object.visible;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

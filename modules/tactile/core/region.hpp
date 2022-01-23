@@ -2,7 +2,7 @@
 
 #include "core/map_position.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \brief Represents a region of a grid.
 /// \ingroup core
@@ -14,4 +14,4 @@ struct Region final
   [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

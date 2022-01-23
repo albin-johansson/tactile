@@ -7,7 +7,7 @@
 #include "editor/commands/command_id.hpp"
 #include "map_command_cache.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class ResizeMapCmd final : public ACommand {
  public:
@@ -33,4 +33,4 @@ class ResizeMapCmd final : public ACommand {
   [[nodiscard]] auto IsLossyResize() const -> bool;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

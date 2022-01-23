@@ -4,7 +4,7 @@
 
 #include "assert.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr const nfdchar_t* gMapFileFilter = "yaml,yml,json,tmx,xml";
@@ -74,4 +74,4 @@ auto FileDialog::SaveImage() -> FileDialog
   return SaveFile(gImageFileFilter);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

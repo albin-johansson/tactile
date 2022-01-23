@@ -9,7 +9,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
@@ -67,4 +67,4 @@ void UpdateLayerItemPopup(const entt::registry& registry,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

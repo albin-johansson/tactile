@@ -3,7 +3,7 @@
 #include "core/algorithms/invoke_n.hpp"
 #include "core/systems/map_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 AddRowCmd::AddRowCmd(RegistryRef registry) : ACommand{"Add Row(s)"}, mRegistry{registry}
 {}
@@ -29,4 +29,4 @@ auto AddRowCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -7,7 +7,7 @@
 
 struct ImGuiStyle;
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup gui
 /// \{
@@ -39,4 +39,4 @@ void ApplyTheme(ImGuiStyle& style, Theme theme);
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

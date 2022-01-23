@@ -8,7 +8,7 @@
 #include "parse_properties.hpp"
 #include "read_json.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseImagePath(const JSON& json,
@@ -140,4 +140,4 @@ auto ParseTileset(const JSON& json, Tileset& tileset, const std::filesystem::pat
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

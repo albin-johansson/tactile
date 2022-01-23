@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 struct Viewport final
 {
@@ -10,4 +10,4 @@ struct Viewport final
   float tile_height{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -7,7 +7,7 @@
 
 #include "core/components/texture.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class TextureManager final {
  public:
@@ -24,4 +24,4 @@ class TextureManager final {
   std::vector<uint> mTextures;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

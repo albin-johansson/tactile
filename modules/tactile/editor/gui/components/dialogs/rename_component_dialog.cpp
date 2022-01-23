@@ -4,7 +4,7 @@
 
 #include "editor/events/component_events.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RenameComponentDialog::RenameComponentDialog() : AComponentNameDialog{"Rename Component"}
 {
@@ -23,4 +23,4 @@ void RenameComponentDialog::OnAccept(entt::dispatcher& dispatcher)
                                               std::string{GetCurrentInput()});
 }
 
-}  // namespace Tactile
+}  // namespace tactile

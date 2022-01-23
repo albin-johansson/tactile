@@ -8,7 +8,7 @@
 #include "file_shortcuts.hpp"
 #include "view_shortcuts.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 inline std::vector<std::unique_ptr<AShortcut>> gShortcuts;
@@ -69,4 +69,4 @@ void UpdateShortcuts(const Model& model,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

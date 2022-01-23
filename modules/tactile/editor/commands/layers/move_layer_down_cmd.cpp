@@ -2,7 +2,7 @@
 
 #include "core/systems/layers/layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 MoveLayerDownCmd::MoveLayerDownCmd(RegistryRef registry, const LayerID id)
     : ACommand{"Move Layer Down"}
@@ -20,4 +20,4 @@ void MoveLayerDownCmd::Redo()
   Sys::MoveLayerDown(mRegistry, mLayerId);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

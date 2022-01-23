@@ -32,7 +32,7 @@
 #include "io/session.hpp"
 #include "logging.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 template <typename Command, typename... Args>
@@ -738,4 +738,4 @@ void Application::OnQuit()
   mQuit = true;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

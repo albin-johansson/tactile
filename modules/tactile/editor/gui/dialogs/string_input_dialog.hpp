@@ -9,7 +9,7 @@
 
 #include "dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class AStringInputDialog : public ADialog {
  public:
@@ -38,4 +38,4 @@ class AStringInputDialog : public ADialog {
   bool mShouldAcquireFocus{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

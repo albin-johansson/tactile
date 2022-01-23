@@ -32,31 +32,31 @@ example.
 
 void Emit() 
 {
-  auto irMap = Tactile::IO::CreateMap();
-  Tactile::IO::SetPath(*irMap, "resources/foo.yaml");
+  auto irMap = tactile::IO::CreateMap();
+  tactile::IO::SetPath(*irMap, "resources/foo.yaml");
 
-  Tactile::IO::SetRowCount(*irMap, 42);
-  Tactile::IO::SetColumnCount(*irMap, 123);
+  tactile::IO::SetRowCount(*irMap, 42);
+  tactile::IO::SetColumnCount(*irMap, 123);
   
-  auto& layer = Tactile::IO::AddLayer(*irMap);
-  Tactile::IO::SetName(layer, "Foo");
+  auto& layer = tactile::IO::AddLayer(*irMap);
+  tactile::IO::SetName(layer, "Foo");
 
   // ...
 
-  Tactile::IO::EmitMap(*irMap);
+  tactile::IO::EmitMap(*irMap);
 }
 
 void Parse()
 {
-  Tactile::IO::ParseError err{};
-  if (const auto irMap = Tactile::IO::ParseMap("resources/foo.yaml", &err)) {
-    const auto rows = Tactile::IO::GetRowCount(*irMap);
-    const auto columns = Tactile::IO::GetColumnCount(*irMap);
+  tactile::IO::ParseError err{};
+  if (const auto irMap = tactile::IO::ParseMap("resources/foo.yaml", &err)) {
+    const auto rows = tactile::IO::GetRowCount(*irMap);
+    const auto columns = tactile::IO::GetColumnCount(*irMap);
     
     // ...
   }
   else {
-    std::cout << "Failed to parse map: " << Tactile::IO::GetCause(err) << '\n';
+    std::cout << "Failed to parse map: " << tactile::IO::GetCause(err) << '\n';
   }
 }
 ```

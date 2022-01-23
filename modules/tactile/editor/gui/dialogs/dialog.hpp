@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 
@@ -51,4 +51,4 @@ class ADialog {
   bool mShow{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

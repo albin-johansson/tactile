@@ -2,7 +2,7 @@
 
 #include <fstream>  // ifstream
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>
 {
@@ -19,4 +19,4 @@ auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

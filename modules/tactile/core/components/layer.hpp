@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // entity, null
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Context component that keeps track of the selected layer.
@@ -64,4 +64,4 @@ struct ObjectLayer final
 struct GroupLayer final
 {};
 
-}  // namespace Tactile
+}  // namespace tactile

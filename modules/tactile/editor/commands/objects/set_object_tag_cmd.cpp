@@ -4,7 +4,7 @@
 
 #include "core/components/object.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 SetObjectTagCmd::SetObjectTagCmd(RegistryRef registry, const ObjectID id, std::string tag)
     : AObjectCmd{"Set Object Tag", registry, id}
@@ -37,4 +37,4 @@ auto SetObjectTagCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

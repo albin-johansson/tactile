@@ -4,7 +4,7 @@
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/scoped.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 ADialog::ADialog(const CStr title) : mTitle{title} {}
 
@@ -73,4 +73,4 @@ void ADialog::SetCloseButtonLabel(const CStr label)
   mCloseButtonLabel = label;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -22,7 +22,7 @@
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 ComponentEditor::ComponentEditor() : ADialog{"Component Editor"}
 {
@@ -198,4 +198,4 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

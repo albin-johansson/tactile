@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class DuplicateLayerCmd final : public ACommand {
  public:
@@ -27,4 +27,4 @@ class DuplicateLayerCmd final : public ACommand {
   Maybe<LayerID> mNewLayerId;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup core
 /// \{
@@ -15,4 +15,4 @@ enum class ToolType {
 
 /// \} End of group core
 
-}  // namespace Tactile
+}  // namespace tactile

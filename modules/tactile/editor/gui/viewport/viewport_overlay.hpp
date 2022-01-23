@@ -2,11 +2,11 @@
 
 #include <entt/entt.hpp>  // registry
 
-namespace Tactile {
+namespace tactile {
 
 struct ViewportCursorInfo;
 
 void UpdateViewportOverlay(const entt::registry& registry,
                            const ViewportCursorInfo& cursor);
 
-}  // namespace Tactile
+}  // namespace tactile

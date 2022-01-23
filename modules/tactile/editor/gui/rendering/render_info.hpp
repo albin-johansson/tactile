@@ -4,7 +4,7 @@
 
 #include "core/region.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct Viewport;
 struct Map;
@@ -43,4 +43,4 @@ struct RenderInfo final
 
 /// \} End of group rendering
 
-}  // namespace Tactile
+}  // namespace tactile

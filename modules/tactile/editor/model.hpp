@@ -11,7 +11,7 @@
 #include "events/command_events.hpp"
 #include "events/tool_events.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Represents a facade between the editor and the underlying core documents.
@@ -316,4 +316,4 @@ class Model final {
   MapID mNextId{1};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

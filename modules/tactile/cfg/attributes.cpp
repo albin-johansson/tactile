@@ -4,7 +4,7 @@
 
 #include "build.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void InitAttributes()
 {
@@ -30,4 +30,4 @@ void InitAttributes()
   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

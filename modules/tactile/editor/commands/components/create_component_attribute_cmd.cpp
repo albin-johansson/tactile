@@ -4,7 +4,7 @@
 
 #include "core/systems/component_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 CreateComponentAttributeCmd::CreateComponentAttributeCmd(RegistryRef registry,
                                                          const ComponentID id,
@@ -27,4 +27,4 @@ void CreateComponentAttributeCmd::Redo()
   Sys::CreateComponentAttribute(registry, mComponentId, mName);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

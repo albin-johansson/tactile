@@ -4,7 +4,7 @@
 
 #include "append_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void AppendObject(pugi::xml_node source,
                   const Object& object,
@@ -51,4 +51,4 @@ void AppendObject(pugi::xml_node source,
   AppendProperties(node, object, dir);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

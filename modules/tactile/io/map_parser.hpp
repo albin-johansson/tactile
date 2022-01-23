@@ -6,7 +6,7 @@
 
 #include "assert.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Represents the core parser engine for map files.
@@ -64,4 +64,4 @@ class MapParser final {
   IO::MapPtr mData;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

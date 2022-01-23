@@ -6,7 +6,7 @@
 #include "editor/events/component_events.hpp"
 #include "editor/model.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 CreateComponentAttributeDialog::CreateComponentAttributeDialog()
     : AStringInputDialog{"Create Attribute"}
@@ -35,4 +35,4 @@ void CreateComponentAttributeDialog::OnAccept(entt::dispatcher& dispatcher)
                                                     std::string{GetCurrentInput()});
 }
 
-}  // namespace Tactile
+}  // namespace tactile

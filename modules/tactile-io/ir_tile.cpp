@@ -2,7 +2,7 @@
 
 #include "ir_definitions.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SetId(Tile& tile, const int32 id)
 {
@@ -94,4 +94,4 @@ auto GetProperty(const Tile& tile, const usize index) -> const Property&
   return tile.properties.at(index);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

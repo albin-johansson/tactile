@@ -9,7 +9,7 @@
 #include "parser.hpp"
 #include "xml_utils.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto IsOrthogonalMap(const pugi::xml_node root) -> bool
@@ -126,4 +126,4 @@ auto ParseXmlMap(const CPathStr path, ParseError* error) -> Map*
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

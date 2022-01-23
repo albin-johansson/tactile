@@ -5,7 +5,7 @@
 
 #include "editor/gui/dialogs/dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class CreateTilesetDialog final : public ADialog {
  public:
@@ -29,4 +29,4 @@ class CreateTilesetDialog final : public ADialog {
   void ShowImageFileDialog();
 };
 
-}  // namespace Tactile
+}  // namespace tactile

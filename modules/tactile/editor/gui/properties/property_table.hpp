@@ -8,7 +8,7 @@
 #include "core/components/property_context.hpp"
 #include "items/property_item_context_menu.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class PropertyTable final {
  public:
@@ -25,4 +25,4 @@ class PropertyTable final {
                             bool& isItemContextOpen);
 };
 
-}  // namespace Tactile
+}  // namespace tactile

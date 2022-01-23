@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class SetLayerOpacityCmd final : public ACommand {
  public:
@@ -30,4 +30,4 @@ class SetLayerOpacityCmd final : public ACommand {
   Maybe<float> mPreviousOpacity;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

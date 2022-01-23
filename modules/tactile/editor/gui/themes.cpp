@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr float gAccentOpacity = 0.65f;
@@ -159,4 +159,4 @@ void ApplyTheme(ImGuiStyle& style, const Theme theme)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -7,7 +7,7 @@
 #include "parse_components.hpp"
 #include "parse_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 template <typename T>
@@ -108,4 +108,4 @@ auto ParseObject(const YAML::Node& node, const Map& map, Tile& tile) -> ParseErr
   return ParseObjectImpl(node, map, tile);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

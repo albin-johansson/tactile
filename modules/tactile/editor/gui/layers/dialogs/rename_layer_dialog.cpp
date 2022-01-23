@@ -6,7 +6,7 @@
 
 #include "editor/events/layer_events.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RenameLayerDialog::RenameLayerDialog() : AStringInputDialog{"Rename Layer"}
 {
@@ -30,4 +30,4 @@ auto RenameLayerDialog::Validate(const Model&, const std::string_view input) con
   return !input.empty() && mOldName != input;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

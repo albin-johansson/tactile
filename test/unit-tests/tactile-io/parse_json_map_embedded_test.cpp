@@ -6,7 +6,7 @@
 
 #include "io_test_helpers.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 namespace {
 

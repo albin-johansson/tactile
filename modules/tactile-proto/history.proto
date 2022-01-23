@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package Tactile.Proto;
+package tactile.proto;
 
 message History {
   optional string last_opened_file = 1;

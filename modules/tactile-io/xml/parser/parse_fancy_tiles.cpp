@@ -4,7 +4,7 @@
 #include "parse_properties.hpp"
 #include "xml_utils.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ParseFancyTiles(const pugi::xml_node node, Tileset& tileset) -> ParseError
 {
@@ -33,4 +33,4 @@ auto ParseFancyTiles(const pugi::xml_node node, Tileset& tileset) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

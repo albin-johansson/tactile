@@ -5,7 +5,7 @@
 
 #include "core/components/layer.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class Icons;
 
@@ -26,4 +26,4 @@ void LayerItem(const entt::registry& registry,
                entt::entity layerEntity,
                const Layer& layer);
 
-}  // namespace Tactile
+}  // namespace tactile

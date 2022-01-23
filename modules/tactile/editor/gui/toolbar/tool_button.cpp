@@ -4,7 +4,7 @@
 
 #include "editor/gui/common/button.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 auto ToolButton(const CStr label,
                 const CStr tooltip,
@@ -27,4 +27,4 @@ auto ToolButton(const CStr label,
   return pressed;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

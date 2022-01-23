@@ -8,7 +8,7 @@
 #include "render_object_layer.hpp"
 #include "render_tile_layer.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 void RenderLayer(Graphics& graphics,
@@ -57,4 +57,4 @@ void RenderMap(Graphics& graphics, const entt::registry& registry)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

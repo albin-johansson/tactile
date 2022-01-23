@@ -11,7 +11,7 @@
 
 #include "build.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace LoggerImpl {
 
 void LogVerboseV(std::string_view fmt, fmt::format_args args);
@@ -114,4 +114,4 @@ void SetLogLevel(LogLevel level);
 
 [[nodiscard]] auto IsEnabled(LogLevel level) -> bool;
 
-}  // namespace Tactile
+}  // namespace tactile

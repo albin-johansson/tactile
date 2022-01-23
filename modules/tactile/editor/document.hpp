@@ -6,7 +6,7 @@
 
 #include "editor/commands/command_stack.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct Document final
 {
@@ -15,4 +15,4 @@ struct Document final
   std::filesystem::path path;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

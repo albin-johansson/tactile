@@ -6,7 +6,7 @@
 #include <entt/entt.hpp>  // entity
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Component that represents a single frame in an animation.
@@ -31,4 +31,4 @@ struct Animation final
   std::vector<entt::entity> frames;  ///< The associated frames.
 };
 
-}  // namespace Tactile
+}  // namespace tactile

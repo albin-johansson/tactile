@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>  // registry, entity
 #include <tactile_def.hpp>
 
-namespace Tactile::Sys::LayerTree {
+namespace tactile::Sys::LayerTree {
 
 void SortNodes(entt::registry& registry);
 
@@ -42,4 +42,4 @@ void MoveNodeDown(entt::registry& registry, entt::entity entity);
 [[nodiscard]] auto GetGlobalIndex(const entt::registry& registry, entt::entity entity)
     -> usize;
 
-}  // namespace Tactile::Sys::LayerTree
+}  // namespace tactile::Sys::LayerTree

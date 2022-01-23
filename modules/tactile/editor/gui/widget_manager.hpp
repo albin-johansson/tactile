@@ -6,7 +6,7 @@
 #include <tactile_def.hpp>
 #include <tactile_io.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 class Icons;
@@ -82,4 +82,4 @@ class WidgetManager final {
   std::unique_ptr<MapImportErrorDialog> mMapImportErrorDialog;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

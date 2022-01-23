@@ -12,7 +12,7 @@
 #include "io/file_dialog.hpp"
 #include "io/history.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -123,4 +123,4 @@ void FileMenu::UpdateMapFileDialog(entt::dispatcher& dispatcher)
   mShowOpenMapDialog = false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

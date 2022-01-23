@@ -8,7 +8,7 @@
 #include "io/preferences.hpp"
 #include "load_default_layout.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constinit bool gInitialized = false;
@@ -35,4 +35,4 @@ void ResetLayout()
   LoadDefaultLayout(gRootId.value(), true);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

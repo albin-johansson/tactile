@@ -20,7 +20,7 @@
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class ApplicationConfiguration;
 
@@ -170,4 +170,4 @@ class Application final {
   void OnQuit();
 };
 
-}  // namespace Tactile
+}  // namespace tactile

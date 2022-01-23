@@ -9,7 +9,7 @@
 #include "save_object.hpp"
 #include "save_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 void AddCommonAttributes(JSON& json, const Layer& layer, const std::filesystem::path& dir)
@@ -119,4 +119,4 @@ auto SaveLayers(const Map& map, const std::filesystem::path& dir) -> JSON
   return json;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

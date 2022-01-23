@@ -5,7 +5,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void MapCommandCache::Clear() noexcept
 {
@@ -53,4 +53,4 @@ void MapCommandCache::MergeWith(const MapCommandCache& other)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -9,7 +9,7 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/property_system.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 namespace {
 

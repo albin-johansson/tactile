@@ -5,7 +5,7 @@
 #include "../yaml_fwd.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SaveProperties(YAML::Emitter& emitter,
                     const Map& map,
@@ -27,4 +27,4 @@ void SaveProperties(YAML::Emitter& emitter,
                     const Object& object,
                     const std::filesystem::path& dir);
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

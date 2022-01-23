@@ -10,7 +10,7 @@
 #include "io/preferences.hpp"
 #include "viewport_cursor_info.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gFlags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
@@ -143,4 +143,4 @@ void UpdateViewportOverlay(const entt::registry& registry,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

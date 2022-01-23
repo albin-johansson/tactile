@@ -9,7 +9,7 @@
 #include "parse_fancy_tiles.hpp"
 #include "parse_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseTileset(Map& map,
@@ -152,4 +152,4 @@ auto ParseTilesets(const YAML::Node& seq, Map& map) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

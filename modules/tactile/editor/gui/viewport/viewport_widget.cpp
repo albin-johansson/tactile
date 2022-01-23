@@ -8,7 +8,7 @@
 #include "editor/model.hpp"
 #include "home_page_content.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gWindowFlags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
@@ -65,4 +65,4 @@ auto IsMouseWithinViewport() noexcept -> bool
   return gMouseWithinWindow;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

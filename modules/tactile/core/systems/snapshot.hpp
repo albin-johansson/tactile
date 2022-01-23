@@ -7,14 +7,14 @@
 
 #include <tactile_def.hpp>
 
+#include "core/attribute_value.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
-#include "core/attribute_value.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 struct PropertyContextSnapshot final
 {
@@ -49,4 +49,4 @@ struct LayerSnapshot final
   Maybe<std::vector<LayerSnapshot>> children;
 };
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class AddColumnCmd final : public ACommand {
  public:
@@ -28,4 +28,4 @@ class AddColumnCmd final : public ACommand {
   usize mColumns{1};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

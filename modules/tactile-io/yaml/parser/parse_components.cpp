@@ -6,7 +6,7 @@
 
 #include "common_parsing.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 template <typename T>
@@ -241,4 +241,4 @@ auto ParseComponents(const Map& map, const YAML::Node& node, Object& object) -> 
   return ParseComponentsImpl(map, node, object);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

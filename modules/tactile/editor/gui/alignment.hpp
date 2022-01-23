@@ -5,7 +5,7 @@
 #include <imgui.h>
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 void CenterNextWindowOnAppearance();
 
@@ -28,4 +28,4 @@ template <typename... Strings>
   return spacing + (std::max)({ImGui::CalcTextSize(strings).x...});
 }
 
-}  // namespace Tactile
+}  // namespace tactile

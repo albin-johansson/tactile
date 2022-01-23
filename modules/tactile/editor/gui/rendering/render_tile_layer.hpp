@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class Graphics;
 
@@ -21,4 +21,4 @@ void RenderTileLayer(Graphics& graphics,
                      entt::entity layerEntity,
                      float parentOpacity);
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -5,7 +5,7 @@
 
 #include "assert.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * This widget is shamelessly based on an example provided in this issue:
@@ -66,4 +66,4 @@ void EndDockingToolbar()
   ImGui::End();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

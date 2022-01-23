@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Converts an OpenGL texture identifier to a Dear ImGui texture identifier.
@@ -16,4 +16,4 @@ namespace Tactile {
  */
 [[nodiscard]] auto ToTextureID(uint texture) -> ImTextureID;
 
-}  // namespace Tactile
+}  // namespace tactile

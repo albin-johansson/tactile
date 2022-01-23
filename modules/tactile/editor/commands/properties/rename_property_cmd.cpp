@@ -4,7 +4,7 @@
 
 #include "core/systems/property_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RenamePropertyCmd::RenamePropertyCmd(RegistryRef registry,
                                      std::string oldName,
@@ -28,4 +28,4 @@ void RenamePropertyCmd::Redo()
   Sys::RenameProperty(mRegistry, context, mOldName, mNewName);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

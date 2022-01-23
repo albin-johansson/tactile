@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Shows a label that is centered in the parent region.
@@ -13,4 +13,4 @@ namespace Tactile {
  */
 void CenteredText(NotNull<CStr> text);
 
-}  // namespace Tactile
+}  // namespace tactile

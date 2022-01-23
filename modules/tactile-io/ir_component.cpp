@@ -6,7 +6,7 @@
 
 #include "ir_definitions.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 template <typename T>
@@ -532,4 +532,4 @@ auto GetComponentCount(const Map& map) -> usize
   return map.components.size();
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

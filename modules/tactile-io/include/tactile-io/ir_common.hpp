@@ -9,7 +9,7 @@
 
 #include "api.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /* Forward declarations of IR types, which are not defined in client code. */
 struct Property;
@@ -59,6 +59,6 @@ enum class MapFormat {
 TACTILE_IO_API_QUERY
 auto DeduceFormat(CPathStr str) -> MapFormat;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_COMMON_HPP_

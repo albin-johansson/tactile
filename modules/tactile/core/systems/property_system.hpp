@@ -6,12 +6,12 @@
 #include <entt/entt.hpp>  // registry, entity
 #include <tactile_def.hpp>
 
+#include "core/attribute_value.hpp"
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
-#include "core/attribute_value.hpp"
 #include "snapshot.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 /// \name Property system
 /// \{
@@ -276,4 +276,4 @@ void ResetNextContextId() noexcept;
 
 /// \} End of property system
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

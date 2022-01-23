@@ -12,7 +12,7 @@
 #include "editor/gui/scoped.hpp"
 #include "layer_item_popup.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 void GroupLayerItem(const entt::registry& registry,
@@ -99,4 +99,4 @@ void LayerItem(const entt::registry& registry,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

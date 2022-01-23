@@ -4,7 +4,7 @@
 
 #include "core/systems/component_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 UpdateComponentCmd::UpdateComponentCmd(RegistryRef registry,
                                        const ContextID contextId,
@@ -58,4 +58,4 @@ auto UpdateComponentCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

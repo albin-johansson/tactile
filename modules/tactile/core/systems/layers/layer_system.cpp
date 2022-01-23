@@ -19,7 +19,7 @@
 #include "layer_tree_system.hpp"
 #include "tile_layer_system.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 namespace {
 
 [[nodiscard]] auto GetNewLayerParent(const entt::registry& registry) -> entt::entity
@@ -484,4 +484,4 @@ auto GetActiveLayerID(const entt::registry& registry) -> Maybe<LayerID>
   }
 }
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

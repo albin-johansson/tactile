@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Shows a button.
@@ -21,4 +21,4 @@ auto Button(NotNull<CStr> text,
             float width = 0,
             float height = 0) -> bool;
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -5,7 +5,7 @@
 
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RenameLayerDialog final : public AStringInputDialog {
  public:
@@ -26,4 +26,4 @@ class RenameLayerDialog final : public AStringInputDialog {
   Maybe<std::string> mOldName;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

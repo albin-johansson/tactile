@@ -4,11 +4,11 @@
 
 #include <entt/entt.hpp>  // entity, null
 
-namespace Tactile {
+namespace tactile {
 
 struct Parent final
 {
   entt::entity entity{entt::null};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

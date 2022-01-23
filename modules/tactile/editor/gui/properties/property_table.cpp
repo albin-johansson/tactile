@@ -20,7 +20,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 void PrepareTableRow(const CStr label)
@@ -367,4 +367,4 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

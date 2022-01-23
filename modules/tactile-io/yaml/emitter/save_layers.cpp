@@ -12,7 +12,7 @@
 #include "save_object.hpp"
 #include "save_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void SaveTiles(YAML::Emitter& emitter, const Layer& layer, const bool fold)
 {
@@ -127,4 +127,4 @@ void SaveLayers(YAML::Emitter& emitter,
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

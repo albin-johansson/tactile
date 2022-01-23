@@ -6,11 +6,11 @@
 
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 void AppendTileset(pugi::xml_node mapNode,
                    const Tileset& tileset,
                    const std::filesystem::path& dir,
                    EmitterOptions options);
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

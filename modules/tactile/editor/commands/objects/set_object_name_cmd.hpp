@@ -8,7 +8,7 @@
 #include "editor/commands/command_id.hpp"
 #include "object_cmd.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class SetObjectNameCmd final : public AObjectCmd {
  public:
@@ -30,4 +30,4 @@ class SetObjectNameCmd final : public AObjectCmd {
   Maybe<std::string> mOldName;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

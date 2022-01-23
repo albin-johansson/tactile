@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace Tactile;
+using namespace tactile;
 
 using Map = VectorMap<int, std::string>;
 

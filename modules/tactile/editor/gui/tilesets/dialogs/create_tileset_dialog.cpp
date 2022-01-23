@@ -7,7 +7,7 @@
 #include "io/file_dialog.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 CreateTilesetDialog::CreateTilesetDialog() : ADialog{"Create tileset"}
 {
@@ -72,4 +72,4 @@ void CreateTilesetDialog::ShowImageFileDialog()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

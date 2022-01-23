@@ -5,8 +5,8 @@
 #include "parse_error.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseCSV(CStr csv, TileLayer& layer) -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

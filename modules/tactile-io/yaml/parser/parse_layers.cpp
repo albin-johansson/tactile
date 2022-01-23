@@ -10,7 +10,7 @@
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseLayer(const YAML::Node& node,
@@ -146,4 +146,4 @@ auto ParseLayers(const YAML::Node& seq, Map& map) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

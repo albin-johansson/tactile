@@ -9,15 +9,15 @@
 auto main(int, char**) -> int
 {
   try {
-    Tactile::ApplicationConfiguration configuration;
-    Tactile::Application app{&configuration};
+    tactile::ApplicationConfiguration configuration;
+    tactile::Application app{&configuration};
     return app.Run();
   }
   catch (const std::exception& e) {
-    Tactile::Print(fmt::color::hot_pink, "Unhandled exception message: '{}'\n", e.what());
+    tactile::Print(fmt::color::hot_pink, "Unhandled exception message: '{}'\n", e.what());
 
-    if (const auto* stacktrace = boost::get_error_info<Tactile::TraceInfo>(e)) {
-      Tactile::Print(fmt::color::hot_pink, "{}\n", *stacktrace);
+    if (const auto* stacktrace = boost::get_error_info<tactile::TraceInfo>(e)) {
+      tactile::Print(fmt::color::hot_pink, "{}\n", *stacktrace);
     }
 
     std::abort();

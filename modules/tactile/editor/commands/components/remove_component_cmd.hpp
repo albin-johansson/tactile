@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RemoveComponentCmd final : public ACommand {
  public:
@@ -28,4 +28,4 @@ class RemoveComponentCmd final : public ACommand {
   Maybe<Sys::RemoveComponentResult> mSnapshot;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

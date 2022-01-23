@@ -13,7 +13,7 @@
 #define TACTILE_IO_PATH_STR(str) str
 #endif  // TACTILE_COMPILER_MSVC
 
-namespace Tactile {
+namespace tactile {
 
 inline void WriteToFile(const CStr file, const CStr data)
 {
@@ -21,4 +21,4 @@ inline void WriteToFile(const CStr file, const CStr data)
   stream << data;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

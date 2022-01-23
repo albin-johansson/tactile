@@ -3,7 +3,7 @@
 #include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 AddLayerCmd::AddLayerCmd(RegistryRef registry, const LayerType type)
     : ACommand{"Add Layer"}
@@ -54,4 +54,4 @@ void AddLayerCmd::Redo()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

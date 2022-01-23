@@ -10,7 +10,7 @@
 #include "editor/gui/themes.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 void UpdatePreviewSettings(const Preferences& prefs)
@@ -214,4 +214,4 @@ void SettingsDialog::UpdateExportTab()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

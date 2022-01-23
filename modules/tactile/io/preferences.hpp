@@ -5,7 +5,7 @@
 #include <centurion.hpp>  // color
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup io
 /// \{
@@ -126,4 +126,4 @@ void SetViewportOverlayPos(OverlayPos pos) noexcept;
 /// \} End of group io
 
 }  // namespace Prefs
-}  // namespace Tactile
+}  // namespace tactile

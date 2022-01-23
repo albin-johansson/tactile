@@ -6,7 +6,7 @@
 #include "parse_object.hpp"
 #include "parse_properties.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseAnimationFrame(const YAML::Node& node, Tile& tile) -> ParseError
@@ -92,4 +92,4 @@ auto ParseFancyTiles(const YAML::Node& node, const Map& map, Tileset& tileset)
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

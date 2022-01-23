@@ -14,7 +14,7 @@
 #pragma GCC diagnostic pop
 #endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
 
-namespace Tactile {
+namespace tactile {
 
 using TraceInfo = boost::error_info<struct ErrorInfoTag, boost::stacktrace::stacktrace>;
 
@@ -24,4 +24,4 @@ template <typename Exception>
   throw boost::enable_error_info(e) << TraceInfo{boost::stacktrace::stacktrace()};
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -17,7 +17,7 @@
 #include "viewport/map_view.hpp"
 #include "viewport/viewport_widget.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 WidgetManager::WidgetManager()
     : mMenuBar{std::make_unique<MenuBar>()}
@@ -136,7 +136,7 @@ auto WidgetManager::IsToolbarFocused() const -> bool
 
 auto WidgetManager::IsViewportFocused() const -> bool
 {
-  return Tactile::IsViewportFocused();
+  return tactile::IsViewportFocused();
 }
 
 auto WidgetManager::IsLayerDockFocused() const -> bool
@@ -179,4 +179,4 @@ auto WidgetManager::GetTilesetViewHeight() const -> Maybe<float>
   return mTilesetDock->GetTilesetView().GetHeight();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

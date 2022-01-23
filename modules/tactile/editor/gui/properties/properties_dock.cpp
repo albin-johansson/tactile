@@ -9,7 +9,7 @@
 #include "editor/model.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -51,4 +51,4 @@ void PropertiesDock::ShowChangePropertyTypeDialog(std::string name,
   mChangeTypeDialog.Show(std::move(name), type);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

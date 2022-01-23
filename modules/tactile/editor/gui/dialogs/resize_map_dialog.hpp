@@ -5,7 +5,7 @@
 
 #include "dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class ResizeMapDialog final : public ADialog {
  public:
@@ -28,4 +28,4 @@ class ResizeMapDialog final : public ADialog {
   usize mColumns{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

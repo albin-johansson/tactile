@@ -4,7 +4,7 @@
 
 #include "core/systems/property_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RemovePropertyCmd::RemovePropertyCmd(RegistryRef registry, std::string name)
     : ACommand{"Remove Property"}
@@ -27,4 +27,4 @@ void RemovePropertyCmd::Redo()
   Sys::RemoveProperty(mRegistry, context, mName);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

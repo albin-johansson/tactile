@@ -2,7 +2,7 @@
 
 #include "core/components/object.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 SetObjectVisibilityCmd::SetObjectVisibilityCmd(RegistryRef registry,
                                                const ObjectID id,
@@ -24,4 +24,4 @@ void SetObjectVisibilityCmd::Redo()
   object.visible = mVisible;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

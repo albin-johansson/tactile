@@ -5,8 +5,8 @@
 #include "core/map_position.hpp"
 #include "core/utils/vector_map.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 using TileCache = VectorMap<MapPosition, TileID>;
 
-}  // namespace Tactile
+}  // namespace tactile

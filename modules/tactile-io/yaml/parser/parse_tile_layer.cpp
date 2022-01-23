@@ -8,7 +8,7 @@
 
 #include "io_utils.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseTiles(TileLayer& layer,
@@ -56,4 +56,4 @@ auto ParseTileLayer(const YAML::Node& node,
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

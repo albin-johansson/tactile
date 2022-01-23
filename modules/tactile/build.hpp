@@ -48,7 +48,7 @@
 #define TACTILE_PLATFORM_OSX 0
 #endif  // __APPLE__
 
-namespace Tactile {
+namespace tactile {
 
 [[nodiscard]] consteval auto IsDebugBuild() noexcept -> bool
 {
@@ -82,4 +82,4 @@ namespace Tactile {
 #endif  // TACTILE_PLATFORM_OSX
 }
 
-}  // namespace Tactile
+}  // namespace tactile

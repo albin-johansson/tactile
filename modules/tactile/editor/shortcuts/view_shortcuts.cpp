@@ -7,7 +7,7 @@
 #include "io/preferences.hpp"
 #include "mappings.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 CenterViewportShortcut::CenterViewportShortcut()
     : AShortcut{cen::scancodes::space, KMOD_LSHIFT}
@@ -131,4 +131,4 @@ auto ToggleUiShortcut::IsEnabled(const Model& model, const WidgetManager& widget
   return model.HasActiveDocument() && widgets.IsEditorFocused();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

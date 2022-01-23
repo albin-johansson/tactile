@@ -4,7 +4,7 @@
 #include "parse_error.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseObject(const YAML::Node& node, const Map& map, ObjectLayer& layer)
     -> ParseError;
@@ -12,4 +12,4 @@ namespace Tactile::IO {
 [[nodiscard]] auto ParseObject(const YAML::Node& node, const Map& map, Tile& tile)
     -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

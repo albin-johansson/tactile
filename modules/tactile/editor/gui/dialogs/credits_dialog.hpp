@@ -2,7 +2,7 @@
 
 #include "dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class CreditsDialog final : public ADialog {
  public:
@@ -14,4 +14,4 @@ class CreditsDialog final : public ADialog {
   void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

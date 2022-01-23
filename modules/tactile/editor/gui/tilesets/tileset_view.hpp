@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class TilesetView final {
  public:
@@ -20,4 +20,4 @@ class TilesetView final {
   Maybe<float> mHeight;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

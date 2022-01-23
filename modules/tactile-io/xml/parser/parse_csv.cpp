@@ -4,7 +4,7 @@
 
 #include "io_utils.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ParseCSV(const CStr csv, TileLayer& layer) -> ParseError
 {
@@ -26,4 +26,4 @@ auto ParseCSV(const CStr csv, TileLayer& layer) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

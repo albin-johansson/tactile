@@ -4,7 +4,7 @@
 
 #include "common_saving.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 void SaveColor() {}
@@ -202,4 +202,4 @@ void SaveComponents(YAML::Emitter& emitter,
   SaveComponentsImpl(emitter, tile, dir);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

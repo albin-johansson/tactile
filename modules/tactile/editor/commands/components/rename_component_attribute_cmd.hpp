@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RenameComponentAttributeCmd final : public ACommand {
  public:
@@ -31,4 +31,4 @@ class RenameComponentAttributeCmd final : public ACommand {
   std::string mUpdatedName;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

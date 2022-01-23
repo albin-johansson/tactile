@@ -3,7 +3,7 @@
 #include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RemoveLayerCmd::RemoveLayerCmd(RegistryRef registry, const LayerID id)
     : ACommand{"Remove Layer"}
@@ -25,4 +25,4 @@ void RemoveLayerCmd::Redo()
   Sys::RemoveLayer(mRegistry, entity);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

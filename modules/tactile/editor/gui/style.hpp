@@ -2,7 +2,7 @@
 
 struct ImGuiStyle;
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Applies the styling used by Tactile to the specified style instance.
@@ -13,4 +13,4 @@ namespace Tactile {
  */
 void ApplyStyle(ImGuiStyle& style);
 
-}  // namespace Tactile
+}  // namespace tactile

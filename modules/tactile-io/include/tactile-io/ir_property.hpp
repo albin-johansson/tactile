@@ -6,7 +6,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /// \name Property API
 /// \{
@@ -277,6 +277,6 @@ auto IsColor(const Property& property) -> bool;
 
 /// \} End of property API
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_PROPERTY_HPP_

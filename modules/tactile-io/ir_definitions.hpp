@@ -17,7 +17,7 @@
    provide a robust and stable ABI, but do not rely on the implementation details in any
    way in client code. You have been warned... :) */
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /* Simple strong integral type for use in property value variant */
 enum ObjectRef : int32 {};
@@ -178,4 +178,4 @@ struct Map final
   std::vector<ComponentDef> component_definitions;  ///< Available component definitions.
 };
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

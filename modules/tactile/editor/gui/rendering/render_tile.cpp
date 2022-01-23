@@ -8,7 +8,7 @@
 #include "editor/gui/texture_utils.hpp"
 #include "graphics.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void RenderTile(Graphics& graphics,
                 const entt::registry& registry,
@@ -35,4 +35,4 @@ void RenderTile(Graphics& graphics,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -8,7 +8,7 @@
 
 #include "core/systems/registry_system.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 class PropertySystemTest : public testing::Test {
  protected:

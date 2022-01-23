@@ -5,7 +5,7 @@
 #include "editor/gui/components/component_editor.hpp"
 #include "editor/gui/dialogs/settings_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 
@@ -30,4 +30,4 @@ class EditMenu final {
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

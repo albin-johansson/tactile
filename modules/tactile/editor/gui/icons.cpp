@@ -7,7 +7,7 @@
 
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 Icons::Icons(TextureManager& textures)
     : mTactileIcon{textures.Load("resources/icon.png").value().id}
@@ -30,4 +30,4 @@ auto Icons::GetIcon(const LayerType type) const -> CStr
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

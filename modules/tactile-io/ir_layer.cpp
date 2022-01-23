@@ -9,7 +9,7 @@
 
 #include "ir_definitions.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto MarkAsTileLayer(Layer& layer) -> TileLayer&
 {
@@ -252,4 +252,4 @@ auto GetLayer(const GroupLayer& layer, const usize index) -> const Layer&
   return *layer.layers.at(index);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

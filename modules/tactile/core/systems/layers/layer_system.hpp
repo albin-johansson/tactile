@@ -8,7 +8,7 @@
 #include "core/map.hpp"
 #include "core/systems/snapshot.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 /// \name Layer system
 /// \{
@@ -321,4 +321,4 @@ inline void SetLayerVisible(entt::registry& registry,
 
 /// \} End of layer system
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

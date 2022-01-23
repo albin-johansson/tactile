@@ -4,7 +4,7 @@
 #include "ir_definitions.hpp"
 #include "ir_map.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto GetDefaultEmitterOptions() -> EmitterOptions
 {
@@ -34,4 +34,4 @@ auto EmitMap(const Map& map, const EmitterOptions options) -> bool
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

@@ -9,7 +9,7 @@
 
 #include "logging.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 struct TextureDataDeleter final
@@ -76,4 +76,4 @@ auto TextureManager::Load(const std::filesystem::path& path) -> Maybe<Texture>
   return texture;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

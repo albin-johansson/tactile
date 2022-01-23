@@ -7,7 +7,7 @@
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 namespace {
 
 [[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
@@ -109,4 +109,4 @@ void ObjectSelectionToolOnReleased(entt::registry& registry,
   }
 }
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

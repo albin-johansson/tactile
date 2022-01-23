@@ -4,7 +4,7 @@
 
 #include <tactile_stdlib.hpp>
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ParseTileData(const JSON& json, TileLayer& layer) -> ParseError
 {
@@ -41,4 +41,4 @@ auto ParseTileData(const JSON& json, TileLayer& layer) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

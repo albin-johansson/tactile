@@ -8,7 +8,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class AddPropertyCmd final : public ACommand {
  public:
@@ -30,4 +30,4 @@ class AddPropertyCmd final : public ACommand {
   PropertyType mType;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

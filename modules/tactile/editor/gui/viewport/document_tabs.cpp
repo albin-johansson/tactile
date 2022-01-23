@@ -8,7 +8,7 @@
 #include "editor/model.hpp"
 #include "map_view.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -46,4 +46,4 @@ void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

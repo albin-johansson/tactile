@@ -2,7 +2,7 @@
 
 #include "shortcut.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct UndoShortcut final : AShortcut
 {
@@ -104,4 +104,4 @@ struct EnableStampShortcut final : AShortcut
       -> bool override;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

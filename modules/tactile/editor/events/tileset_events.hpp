@@ -7,7 +7,7 @@
 
 #include "core/region.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup events
 /// \{
@@ -51,4 +51,4 @@ struct SetTilesetNameEvent final
 
 /// \} End of group events
 
-}  // namespace Tactile
+}  // namespace tactile

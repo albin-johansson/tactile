@@ -4,7 +4,7 @@
 #include <filesystem>  // path
 #include <string>      // string
 
-namespace Tactile {
+namespace tactile {
 
 /// \name File history API
 /// \{
@@ -35,4 +35,4 @@ void SetLastClosedFile(const std::filesystem::path& path);
 
 /// \} End of file history API
 
-}  // namespace Tactile
+}  // namespace tactile

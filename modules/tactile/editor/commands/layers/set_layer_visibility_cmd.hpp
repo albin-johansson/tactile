@@ -6,7 +6,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class SetLayerVisibilityCmd final : public ACommand {
  public:
@@ -28,4 +28,4 @@ class SetLayerVisibilityCmd final : public ACommand {
   Maybe<bool> mPreviousVisibility;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -9,7 +9,7 @@
 #include "map_menu.hpp"
 #include "view_menu.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 
@@ -42,4 +42,4 @@ class MenuBar final {
   DebugMenu mDebugMenu;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

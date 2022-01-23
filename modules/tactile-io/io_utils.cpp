@@ -2,7 +2,7 @@
 
 #include <sstream>  // stringstream
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto Split(const CStr str, const char sep) -> std::vector<std::string>
 {
@@ -19,4 +19,4 @@ auto Split(const CStr str, const char sep) -> std::vector<std::string>
   return tokens;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

@@ -8,8 +8,8 @@
 
 #include "logging.hpp"
 
-using namespace Tactile;
-using namespace Tactile::IO;
+using namespace tactile;
+using namespace tactile::IO;
 
 using PE = ParseError;
 using PathErrorPair = std::pair<CStr, PE>;

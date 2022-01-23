@@ -25,7 +25,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/utils/texture_manager.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 [[nodiscard]] constexpr auto ToColor(const IO::Color& irColor) -> cen::color
@@ -441,4 +441,4 @@ auto CreateDocumentFromIR(const IO::Map& irMap, TextureManager& textures) -> Doc
   return document;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

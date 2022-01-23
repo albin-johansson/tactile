@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Loads the default layout for the specified dock space.
@@ -15,4 +15,4 @@ namespace Tactile {
  */
 void LoadDefaultLayout(ImGuiID id, bool resetVisibility);
 
-}  // namespace Tactile
+}  // namespace tactile

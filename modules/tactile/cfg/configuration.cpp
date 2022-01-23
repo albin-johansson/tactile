@@ -13,7 +13,7 @@
 #include "logging.hpp"
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 [[nodiscard]] consteval auto GetWindowFlags() noexcept
@@ -73,4 +73,4 @@ auto ApplicationConfiguration::GetWindow() -> SDL_Window*
   return mWindow->get();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -3,7 +3,7 @@
 #include "core/components/component.hpp"
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class CreateComponentAttributeDialog final : public AStringInputDialog {
  public:
@@ -21,4 +21,4 @@ class CreateComponentAttributeDialog final : public AStringInputDialog {
   ComponentID mComponentId{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

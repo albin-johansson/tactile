@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup commands
 /// \{
@@ -62,4 +62,4 @@ struct CommandId final
 
 /// \} End of group commands
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -7,7 +7,7 @@
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class DuplicateComponentAttributeCmd final : public ACommand {
  public:
@@ -31,4 +31,4 @@ class DuplicateComponentAttributeCmd final : public ACommand {
   Maybe<std::string> mDuplicatedName;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

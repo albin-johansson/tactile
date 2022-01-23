@@ -5,7 +5,7 @@
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/registry_system.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 namespace {
 

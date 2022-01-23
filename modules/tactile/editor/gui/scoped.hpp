@@ -5,7 +5,7 @@
 #include <imgui.h>
 #include <tactile_def.hpp>
 
-namespace Tactile::Scoped {
+namespace tactile::Scoped {
 
 struct ID final
 {
@@ -329,4 +329,4 @@ class TreeNode final {
   bool mOpen{};
 };
 
-}  // namespace Tactile::Scoped
+}  // namespace tactile::Scoped

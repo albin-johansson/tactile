@@ -16,7 +16,7 @@
 #include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
@@ -168,4 +168,4 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
   Prefs::SetShowComponentDock(showDock);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

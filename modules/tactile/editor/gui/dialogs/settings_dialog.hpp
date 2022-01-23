@@ -5,7 +5,7 @@
 #include "dialog.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup gui
 /// \{
@@ -45,4 +45,4 @@ class SettingsDialog final : public ADialog {
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

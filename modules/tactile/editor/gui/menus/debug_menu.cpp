@@ -8,7 +8,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void DebugMenu::Update()
 {
@@ -42,4 +42,4 @@ void DebugMenu::UpdateWindows()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

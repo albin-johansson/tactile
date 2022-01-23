@@ -8,7 +8,7 @@
 #include "editor/model.hpp"
 #include "property_type_combo.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 AddPropertyDialog::AddPropertyDialog() : ADialog{"Add Property"}
 {
@@ -39,4 +39,4 @@ auto AddPropertyDialog::IsCurrentInputValid(const Model& model) const -> bool
   return !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

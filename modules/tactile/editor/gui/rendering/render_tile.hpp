@@ -5,7 +5,7 @@
 
 struct ImVec2;
 
-namespace Tactile {
+namespace tactile {
 
 class Graphics;
 
@@ -26,4 +26,4 @@ void RenderTile(Graphics& graphics,
                 int32 row,
                 int32 column);
 
-}  // namespace Tactile
+}  // namespace tactile

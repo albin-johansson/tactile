@@ -7,7 +7,7 @@
 
 #include "core/attribute_value.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup events
 /// \{
@@ -45,7 +45,7 @@ struct RenamePropertyEvent final
 
 struct UpdatePropertyEvent final
 {
-  std::string name;     ///< Name of property to modify.
+  std::string name;       ///< Name of property to modify.
   attribute_value value;  ///< Updated value of the property.
 };
 
@@ -62,4 +62,4 @@ struct InspectContextEvent final
 
 /// \} End of group events
 
-}  // namespace Tactile
+}  // namespace tactile

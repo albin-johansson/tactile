@@ -3,7 +3,7 @@
 #include <tactile_def.hpp>
 #include <tactile_stdlib.hpp>
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ParseTileNodes(const pugi::xml_node& data, TileLayer& layer) -> ParseError
 {
@@ -22,4 +22,4 @@ auto ParseTileNodes(const pugi::xml_node& data, TileLayer& layer) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

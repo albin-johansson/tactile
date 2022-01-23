@@ -2,7 +2,7 @@
 
 #include <tactile_io.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 struct Document;
 
@@ -16,4 +16,4 @@ struct Document;
  */
 [[nodiscard]] auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr;
 
-}  // namespace Tactile
+}  // namespace tactile

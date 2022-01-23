@@ -77,7 +77,7 @@
 
 /// \} End of group gui
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup gui
 /// \{
@@ -115,4 +115,4 @@ class Icons final {
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -4,7 +4,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup core
 /// \{
@@ -219,4 +219,4 @@ class MapPosition final {
 
 /// \} End of group core
 
-}  // namespace Tactile
+}  // namespace tactile

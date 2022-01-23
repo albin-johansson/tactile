@@ -5,7 +5,7 @@
 
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseColorRGB(std::string_view rgb) -> std::optional<Color>;
 
@@ -16,4 +16,4 @@ namespace Tactile::IO {
 [[nodiscard]] auto ParseAttributeType(std::string_view type)
     -> std::optional<PropertyType>;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

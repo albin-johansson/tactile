@@ -7,7 +7,7 @@
 #include "ir_common.hpp"
 #include "parse_error.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /**
  * \brief Attempts to parse a Tiled JSON map at the specified file path.
@@ -117,6 +117,6 @@ auto ParseYamlMap(CPathStr path, ParseError* error = nullptr) -> Map*;
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_PARSER_HPP_

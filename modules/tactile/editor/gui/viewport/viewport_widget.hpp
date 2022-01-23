@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>  // dispatcher
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 class Icons;
@@ -17,4 +17,4 @@ void CenterViewport();
 
 [[nodiscard]] auto IsMouseWithinViewport() noexcept -> bool;
 
-}  // namespace Tactile
+}  // namespace tactile

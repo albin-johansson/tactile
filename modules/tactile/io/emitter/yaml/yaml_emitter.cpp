@@ -15,7 +15,7 @@
 #include "logging.hpp"
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr int tileset_node_version = 1;
@@ -482,4 +482,4 @@ void emit_yaml_map(const EmitInfo& info)
   stream << emitter.c_str();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

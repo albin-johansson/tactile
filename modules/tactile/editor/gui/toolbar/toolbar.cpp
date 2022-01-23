@@ -17,7 +17,7 @@
 #include "editor/model.hpp"
 #include "tool_button.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -178,4 +178,4 @@ void Toolbar::SetVisible(const bool visible)
   mVisible = visible;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

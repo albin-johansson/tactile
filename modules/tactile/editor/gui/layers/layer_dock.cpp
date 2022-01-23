@@ -23,7 +23,7 @@
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& dispatcher)
@@ -130,4 +130,4 @@ void LayerDock::ShowRenameLayerDialog(const LayerID id)
   mRenameTarget = id;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

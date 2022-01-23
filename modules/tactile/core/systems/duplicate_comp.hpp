@@ -10,7 +10,7 @@
 #include "core/map.hpp"
 #include "property_system.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 template <typename T>
 auto DuplicateComp(entt::registry& registry,
@@ -69,4 +69,4 @@ auto DuplicateLayer(entt::registry& registry,
                     entt::entity parent,
                     bool recursive) -> entt::entity;
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

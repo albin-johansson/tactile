@@ -6,7 +6,7 @@
 #include "core/components/property_context.hpp"
 #include "core/systems/layers/layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RenameLayerCmd::RenameLayerCmd(RegistryRef registry, const LayerID id, std::string name)
     : ACommand{"Rename Layer"}
@@ -40,4 +40,4 @@ void RenameLayerCmd::Redo()
   context.name = mName;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

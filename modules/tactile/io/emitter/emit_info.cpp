@@ -21,7 +21,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "throw.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 template <typename T>
@@ -438,4 +438,4 @@ auto EmitInfo::to_object_entity(const ObjectID id) const -> entt::entity
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

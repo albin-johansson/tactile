@@ -4,7 +4,7 @@
 
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class AComponentNameDialog : public AStringInputDialog {
  protected:
@@ -14,4 +14,4 @@ class AComponentNameDialog : public AStringInputDialog {
       -> bool final;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

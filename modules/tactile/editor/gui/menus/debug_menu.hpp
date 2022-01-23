@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 class DebugMenu final {
  public:
@@ -14,4 +14,4 @@ class DebugMenu final {
   bool mShowStyleEditor{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

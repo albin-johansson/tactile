@@ -5,7 +5,7 @@
 #include <fmt/format.h>  // format
 #include <tactile_stdlib.hpp>
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto GetTilesetImagePath(const std::filesystem::path& image,
                          const std::filesystem::path& dir) -> std::string
@@ -75,4 +75,4 @@ auto AsARGB(const Color& color) -> std::string
                      color.blue);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

@@ -6,7 +6,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /**
  * \brief Marks a layer as a tile layer.
@@ -409,6 +409,6 @@ auto GetLayerCount(const GroupLayer& layer) -> usize;
 TACTILE_IO_API_QUERY
 auto GetLayer(const GroupLayer& layer, usize index) -> const Layer&;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_IR_LAYER_HPP_

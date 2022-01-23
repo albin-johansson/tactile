@@ -9,7 +9,7 @@
 
 #include "core/components/component.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class attribute_value;
 
@@ -84,7 +84,8 @@ class EmitInfo final {
   using layer_visitor = std::function<void(LayerID)>;
   using layer_tile_visitor = std::function<void(usize, usize, TileID)>;
 
-  using property_visitor = std::function<void(const std::string&, const attribute_value&)>;
+  using property_visitor =
+      std::function<void(const std::string&, const attribute_value&)>;
 
   explicit EmitInfo(std::filesystem::path destination, const entt::registry& registry);
 
@@ -207,4 +208,4 @@ class EmitInfo final {
   [[nodiscard]] auto to_object_entity(ObjectID id) const -> entt::entity;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

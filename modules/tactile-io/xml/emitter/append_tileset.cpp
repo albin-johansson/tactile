@@ -8,7 +8,7 @@
 #include "emit.hpp"
 #include "save_xml.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 void AddCommon(pugi::xml_node node,
@@ -85,4 +85,4 @@ void AppendTileset(pugi::xml_node mapNode,
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

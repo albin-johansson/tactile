@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Returns the path to the persistent file directory.
@@ -13,4 +13,4 @@ namespace Tactile {
  */
 [[nodiscard]] auto GetPersistentFileDir() -> const std::filesystem::path&;
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -6,7 +6,7 @@
 
 #include "editor/gui/rendering/render_info.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
 {
@@ -32,4 +32,4 @@ auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
   return cursor;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -6,7 +6,7 @@
 #include "editor/commands/command_id.hpp"
 #include "object_cmd.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup commands
 /// \{
@@ -38,4 +38,4 @@ class MoveObjectCmd final : public AObjectCmd {
 
 /// \} End of group commands
 
-}  // namespace Tactile
+}  // namespace tactile

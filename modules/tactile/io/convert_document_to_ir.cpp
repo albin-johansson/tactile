@@ -20,7 +20,7 @@
 #include "editor/document.hpp"
 #include "profile.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto ConvertColor(const cen::color& color) -> IO::Color
@@ -393,4 +393,4 @@ auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr
   return irMap;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

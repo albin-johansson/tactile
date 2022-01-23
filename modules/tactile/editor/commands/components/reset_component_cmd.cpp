@@ -1,6 +1,6 @@
 #include "reset_component_cmd.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 ResetComponentCmd::ResetComponentCmd(RegistryRef registry,
                                      const ContextID contextId,
@@ -29,4 +29,4 @@ void ResetComponentCmd::Redo()
   mSnapshot = Sys::ResetComponent(registry, mContextId, mComponentId);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

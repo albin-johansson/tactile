@@ -7,7 +7,7 @@
 #include "io/preferences.hpp"
 #include "logging.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void OpenSaveAsDialog(entt::dispatcher& dispatcher)
 {
@@ -43,4 +43,4 @@ void OpenSaveAsDialog(entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

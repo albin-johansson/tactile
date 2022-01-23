@@ -5,7 +5,7 @@
 #include <nfd.h>
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class FileDialog final {
  public:
@@ -43,4 +43,4 @@ class FileDialog final {
   FileDialog(nfdresult_t result, nfdchar_t* path);
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -5,8 +5,8 @@
 #include "parse_error.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseTileData(pugi::xml_node node, TileLayer& layer) -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

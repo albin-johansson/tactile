@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 class Application;
 
@@ -11,4 +11,4 @@ class Application;
  */
 void SubscribeToEvents(Application& app);
 
-}  // namespace Tactile
+}  // namespace tactile

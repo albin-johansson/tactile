@@ -3,7 +3,7 @@
 #include <centurion.hpp>
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /// Handles the configuration of the Dear ImGui context.
 class ImGuiContext final {
@@ -20,4 +20,4 @@ class ImGuiContext final {
   bool mInitializedBackend{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

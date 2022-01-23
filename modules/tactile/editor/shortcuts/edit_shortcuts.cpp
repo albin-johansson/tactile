@@ -10,7 +10,7 @@
 #include "editor/model.hpp"
 #include "mappings.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, gPrimaryModifier} {}
 
@@ -154,4 +154,4 @@ auto EnableStampShortcut::IsEnabled(const Model& model,
   return model.HasActiveDocument() && widgets.IsEditorFocused();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

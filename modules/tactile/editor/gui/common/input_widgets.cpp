@@ -10,7 +10,7 @@
 #include "editor/gui/scoped.hpp"
 #include "io/file_dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 auto Input(const CStr id, const attribute_value& value) -> Maybe<attribute_value>
 {
@@ -228,4 +228,4 @@ auto InputFile(const CStr id, const std::filesystem::path& value)
   return nothing;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

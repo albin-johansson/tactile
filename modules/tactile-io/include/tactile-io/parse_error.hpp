@@ -6,7 +6,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /// \addtogroup io
 /// \{
@@ -115,6 +115,6 @@ auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;
 
 /// \} End of group io
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_PARSE_ERROR_HPP_

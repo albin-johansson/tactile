@@ -9,7 +9,7 @@
 #include "dialogs/rename_component_dialog.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class ComponentEditor final : public ADialog {
  public:
@@ -40,4 +40,4 @@ class ComponentEditor final : public ADialog {
                               const attribute_value& value);
 };
 
-}  // namespace Tactile
+}  // namespace tactile

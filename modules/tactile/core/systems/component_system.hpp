@@ -8,10 +8,10 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-#include "core/components/component.hpp"
 #include "core/attribute_value.hpp"
+#include "core/components/component.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 /// \name Component definition functions
 /// \{
@@ -375,4 +375,4 @@ auto ResetComponent(entt::registry& registry,
 
 /// \} End of component functions
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

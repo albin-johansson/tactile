@@ -7,7 +7,7 @@
 #include "core/utils/buffer_utils.hpp"
 #include "editor/gui/common/button.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 AStringInputDialog::AStringInputDialog(const CStr title) : ADialog{title} {}
 
@@ -51,4 +51,4 @@ auto AStringInputDialog::GetPreviousString() const -> const std::string&
   return mPrevious;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

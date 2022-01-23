@@ -4,7 +4,7 @@
 
 #include "core/systems/component_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 CreateComponentDefCmd::CreateComponentDefCmd(RegistryRef registry, std::string name)
     : ACommand{"Create Component Definition"}
@@ -29,4 +29,4 @@ void CreateComponentDefCmd::Redo()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

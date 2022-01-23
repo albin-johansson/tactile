@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class Graphics;
 
@@ -16,4 +16,4 @@ class Graphics;
  */
 void RenderMap(Graphics& graphics, const entt::registry& registry);
 
-}  // namespace Tactile
+}  // namespace tactile

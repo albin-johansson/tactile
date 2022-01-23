@@ -5,7 +5,7 @@
 
 #include "assert.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void CenteredText(const NotNull<CStr> text)
 {
@@ -20,4 +20,4 @@ void CenteredText(const NotNull<CStr> text)
   ImGui::TextUnformatted(text);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

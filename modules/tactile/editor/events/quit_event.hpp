@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup events
 /// \{
@@ -10,4 +10,4 @@ struct QuitEvent final
 
 /// \} End of group events
 
-}  // namespace Tactile
+}  // namespace tactile

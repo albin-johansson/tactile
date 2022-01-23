@@ -5,7 +5,7 @@
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void Flood(entt::registry& registry,
            const entt::entity entity,
@@ -47,4 +47,4 @@ void Flood(entt::registry& registry,
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -4,8 +4,8 @@
 #include "parse_error.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseFancyTiles(const JSON& json, Tileset& tileset) -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

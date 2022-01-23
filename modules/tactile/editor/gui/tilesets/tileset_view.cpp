@@ -13,7 +13,7 @@
 #include "editor/gui/rendering/render_info.hpp"
 #include "io/preferences.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gRubberBandColor = IM_COL32(0, 0x44, 0xCC, 100);
@@ -115,4 +115,4 @@ auto TilesetView::GetHeight() const -> Maybe<float>
   return mHeight;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

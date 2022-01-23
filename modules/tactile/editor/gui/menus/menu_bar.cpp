@@ -5,7 +5,7 @@
 #include "editor/model.hpp"
 #include "map_menu.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void MenuBar::Update(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -51,4 +51,4 @@ void MenuBar::ShowComponentEditor(const Model& model)
   mEditMenu.ShowComponentEditor(model);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

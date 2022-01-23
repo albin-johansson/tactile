@@ -5,7 +5,7 @@
 #include "assert.hpp"
 #include "core/systems/tileset_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 AddTilesetCmd::AddTilesetCmd(RegistryRef registry,
                              Texture texture,
@@ -46,4 +46,4 @@ void AddTilesetCmd::Redo()
   active.entity = Sys::FindTileset(registry, mTilesetId.value());
 }
 
-}  // namespace Tactile
+}  // namespace tactile

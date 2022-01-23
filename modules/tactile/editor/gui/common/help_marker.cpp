@@ -4,7 +4,7 @@
 
 #include "assert.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 void HelpMarker(const NotNull<CStr> text)
 {
@@ -22,4 +22,4 @@ void HelpMarker(const NotNull<CStr> text)
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

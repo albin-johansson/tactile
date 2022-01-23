@@ -4,7 +4,7 @@ This is the core module for the Tactile editor, providing the application logic 
 application is, not very surprisingly, the `Application` class, which connects the core model logic and the GUI.
 
 The core logic is implemented using an ECS architecture, provided in the `core` folder. All systems are located in
-the `Tactile::Sys` namespace. An important aspect of the core logic is that it has no dependencies on the GUI. Instead,
+the `tactile::Sys` namespace. An important aspect of the core logic is that it has no dependencies on the GUI. Instead,
 the core logic and the GUI communicate through the use of events, which are then handled by the
 aforementioned `Application` class.
 

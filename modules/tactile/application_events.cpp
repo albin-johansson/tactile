@@ -7,7 +7,7 @@
 #include "editor/events/view_events.hpp"
 #include "editor/events/viewport_events.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 using App = Application;
 
@@ -110,4 +110,4 @@ void SubscribeToEvents(App& app)
   app.Connect<QuitEvent, &App::OnQuit>();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

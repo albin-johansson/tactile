@@ -9,7 +9,7 @@
 #include "parse_tilesets.hpp"
 #include "parser.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseMap(const std::filesystem::path& path, Map& map) -> ParseError
@@ -120,4 +120,4 @@ auto ParseYamlMap(const CPathStr path, ParseError* error) -> Map*
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

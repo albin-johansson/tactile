@@ -13,7 +13,7 @@
 #include "logging.hpp"
 #include <history.pb.h>
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr int gFormatVersion = 1;
@@ -33,7 +33,7 @@ void LoadFileHistory()
   LogVerbose("Loading file history...");
   std::ifstream stream{gFilePath, std::ios::in | std::ios::binary};
 
-  Proto::History h;
+  proto::History h;
   if (h.ParseFromIstream(&stream)) {
     if (h.has_last_opened_file()) {
       gLastClosedFile = h.last_opened_file();
@@ -51,7 +51,7 @@ void LoadFileHistory()
 
 void SaveFileHistory()
 {
-  Proto::History h;
+  proto::History h;
 
   if (gLastClosedFile) {
     h.set_last_opened_file(*gLastClosedFile);
@@ -115,4 +115,4 @@ auto GetLastClosedFile() -> const std::string&
   return gLastClosedFile.value();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

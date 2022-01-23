@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>  // dispatcher
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup gui
 /// \{
@@ -25,4 +25,4 @@ void OpenAddLayerPopup();
 
 /// \} End of group gui
 
-}  // namespace Tactile
+}  // namespace tactile

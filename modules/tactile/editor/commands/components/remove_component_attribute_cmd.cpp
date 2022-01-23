@@ -4,7 +4,7 @@
 
 #include "core/systems/component_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 RemoveComponentAttributeCmd::RemoveComponentAttributeCmd(RegistryRef registry,
                                                          const ComponentID componentId,
@@ -33,4 +33,4 @@ void RemoveComponentAttributeCmd::Redo()
   Sys::RemoveComponentAttribute(registry, mComponentId, mAttributeName);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

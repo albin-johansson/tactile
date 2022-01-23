@@ -13,7 +13,7 @@
 #include "parser.hpp"
 #include "read_json.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto CheckOrientation(const JSON& json) -> ParseError
@@ -188,4 +188,4 @@ auto ParseJsonMap(const CPathStr path, ParseError* error) -> Map*
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

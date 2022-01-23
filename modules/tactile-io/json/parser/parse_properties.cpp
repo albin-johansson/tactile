@@ -5,7 +5,7 @@
 
 #include "common_parsing.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseValue(const JSON& json,
@@ -114,4 +114,4 @@ auto ParseProperties(const JSON& json, Object& object) -> ParseError
   return ParsePropertiesImpl(json, object);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

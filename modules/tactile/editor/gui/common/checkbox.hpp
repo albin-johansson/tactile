@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Shows a checkbox.
@@ -17,4 +17,4 @@ namespace Tactile {
  */
 auto Checkbox(NotNull<CStr> label, NotNull<bool*> value, CStr tooltip = nullptr) -> bool;
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -14,7 +14,7 @@
 #include "core/utils/texture_manager.hpp"
 #include "io/map_parser.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 namespace {
 

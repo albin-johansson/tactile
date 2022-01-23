@@ -6,7 +6,7 @@
 #include "api.hpp"
 #include "ir_common.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 /**
  * \brief Provides various options for use with the different emitters.
@@ -80,6 +80,6 @@ void EmitYamlMap(const Map& map, EmitterOptions options = GetDefaultEmitterOptio
 TACTILE_IO_API
 auto EmitMap(const Map& map, EmitterOptions options = GetDefaultEmitterOptions()) -> bool;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
 
 #endif  // TACTILE_IO_EMIT_HPP_

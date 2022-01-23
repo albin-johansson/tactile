@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace Tactile;
+using namespace tactile;
 
 TEST(MapPosition, Defaults)
 {

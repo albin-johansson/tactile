@@ -4,10 +4,10 @@
 
 #include <tactile_def.hpp>
 
-#include "core/components/component.hpp"
 #include "core/attribute_value.hpp"
+#include "core/components/component.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct OpenComponentEditorEvent final
 {};
@@ -93,4 +93,4 @@ struct UpdateComponentEvent final
   attribute_value value;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -5,7 +5,7 @@
 
 #include "ir_definitions.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto NewMap() -> Map*
 {
@@ -165,4 +165,4 @@ auto GetProperty(const Map& map, const usize index) -> const Property&
   return map.properties.at(index);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

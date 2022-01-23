@@ -7,7 +7,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 EraserSequenceCmd::EraserSequenceCmd(RegistryRef registry, TileCache&& oldState)
     : ACommand{"Eraser Sequence"}
@@ -41,4 +41,4 @@ void EraserSequenceCmd::Redo()
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

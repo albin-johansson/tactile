@@ -8,7 +8,7 @@
 #include "editor/model.hpp"
 #include "mappings.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, gPrimaryModifier} {}
 
@@ -59,4 +59,4 @@ auto SaveAsShortcut::IsEnabled(const Model& model, const WidgetManager&) const -
   return model.CanSaveDocument();
 }
 
-}  // namespace Tactile
+}  // namespace tactile

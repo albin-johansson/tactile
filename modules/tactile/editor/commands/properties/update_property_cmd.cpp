@@ -4,7 +4,7 @@
 
 #include "core/systems/property_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 UpdatePropertyCmd::UpdatePropertyCmd(RegistryRef registry,
                                      std::string name,
@@ -43,4 +43,4 @@ auto UpdatePropertyCmd::MergeWith(const ACommand& cmd) -> bool
   return false;
 }
 
-}  // namespace Tactile
+}  // namespace tactile

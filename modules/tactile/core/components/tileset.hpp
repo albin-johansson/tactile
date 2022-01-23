@@ -9,7 +9,7 @@
 
 #include "core/region.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 struct TilesetContext final
 {
@@ -45,4 +45,4 @@ struct ActiveTileset final
   entt::entity entity{entt::null};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

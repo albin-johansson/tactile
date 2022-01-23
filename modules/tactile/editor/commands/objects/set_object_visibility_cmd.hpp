@@ -6,7 +6,7 @@
 #include "editor/commands/command_id.hpp"
 #include "object_cmd.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class SetObjectVisibilityCmd final : public AObjectCmd {
  public:
@@ -26,4 +26,4 @@ class SetObjectVisibilityCmd final : public AObjectCmd {
   Maybe<bool> mPreviousVisibility;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -8,7 +8,7 @@
 #include "save_properties.hpp"
 #include "save_tilesets.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto SaveMap(const Map& map,
@@ -50,4 +50,4 @@ void EmitJsonMap(const Map& map, const EmitterOptions options)
   SaveJson(json, path, options & EmitterOption_IndentOutput);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

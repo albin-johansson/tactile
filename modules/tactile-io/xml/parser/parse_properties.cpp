@@ -8,7 +8,7 @@
 #include "common_parsing.hpp"
 #include "xml_utils.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseValue(const pugi::xml_node node,
@@ -114,4 +114,4 @@ auto ParseProperties(const pugi::xml_node node, Object& object) -> ParseError
   return ParsePropertiesImpl(node, object);
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

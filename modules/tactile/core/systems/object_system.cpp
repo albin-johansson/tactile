@@ -2,7 +2,7 @@
 
 #include "core/components/object.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 
 auto FindObject(const entt::registry& registry, const ObjectID id) -> entt::entity
 {
@@ -15,4 +15,4 @@ auto FindObject(const entt::registry& registry, const ObjectID id) -> entt::enti
   return entt::null;
 }
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

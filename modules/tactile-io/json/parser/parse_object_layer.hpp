@@ -4,10 +4,10 @@
 #include "parse_error.hpp"
 #include "tactile_io.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 [[nodiscard]] auto ParseObjectLayer(const JSON& json, Layer& layer) -> ParseError;
 
 [[nodiscard]] auto ParseObjectLayer(const JSON& json, Tile& tile) -> ParseError;
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

@@ -7,7 +7,7 @@
 #include "component_name_dialog.hpp"
 #include "core/components/component.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 class RenameComponentDialog final : public AComponentNameDialog {
  public:
@@ -22,4 +22,4 @@ class RenameComponentDialog final : public AComponentNameDialog {
   Maybe<ComponentID> mComponentId;
 };
 
-}  // namespace Tactile
+}  // namespace tactile

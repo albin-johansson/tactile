@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /// \addtogroup events
 /// \{
@@ -49,4 +49,4 @@ struct PanRightEvent final
 
 /// \} End of group events
 
-}  // namespace Tactile
+}  // namespace tactile

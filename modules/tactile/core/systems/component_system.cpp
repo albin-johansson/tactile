@@ -11,7 +11,7 @@
 #include "property_system.hpp"
 #include "throw.hpp"
 
-namespace Tactile::Sys {
+namespace tactile::Sys {
 namespace {
 
 [[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
@@ -384,7 +384,8 @@ auto GetComponentAttributeType(const entt::registry& registry,
 
 auto GetComponentAttributeValue(const entt::registry& registry,
                                 const ComponentID id,
-                                const std::string_view attribute) -> const attribute_value&
+                                const std::string_view attribute)
+    -> const attribute_value&
 {
   const auto iter = GetComponentAttribute(registry, id, attribute);
   return iter->second;
@@ -594,4 +595,4 @@ auto IsComponentNameTaken(const entt::registry& registry, const std::string_view
   return false;
 }
 
-}  // namespace Tactile::Sys
+}  // namespace tactile::Sys

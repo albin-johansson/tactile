@@ -16,7 +16,7 @@
 #define PRINT_FLAG(Name, Mask) \
   LogInfo(Name "... {}", (prefs.flags & (Mask)) ? "yes" : "no")
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 inline const auto gSettingsPath = GetPersistentFileDir() / "settings.bin";
@@ -104,7 +104,7 @@ void LoadPreferences()
   if (std::filesystem::exists(gSettingsPath)) {
     std::ifstream stream{gSettingsPath, std::ios::in | std::ios::binary};
 
-    Proto::Settings cfg;
+    proto::Settings cfg;
     if (cfg.ParseFromIstream(&stream)) {
       if (cfg.has_theme()) {
         settings.theme = static_cast<Theme>(cfg.theme());
@@ -197,9 +197,9 @@ void LoadPreferences()
 
 void SavePreferences()
 {
-  Proto::Settings cfg;
+  proto::Settings cfg;
 
-  cfg.set_theme(static_cast<Proto::Theme>(settings.theme));
+  cfg.set_theme(static_cast<proto::Theme>(settings.theme));
   cfg.set_show_grid(Prefs::GetShowGrid());
   cfg.set_window_border(Prefs::GetWindowBorder());
 
@@ -227,7 +227,7 @@ void SavePreferences()
   cfg.set_show_log_dock(Prefs::GetShowLogDock());
   cfg.set_show_component_dock(Prefs::GetShowComponentDock());
   cfg.set_restore_layout(Prefs::GetRestoreLayout());
-  cfg.set_viewport_overlay_pos(Proto::OverlayPos{settings.viewport_overlay_pos});
+  cfg.set_viewport_overlay_pos(proto::OverlayPos{settings.viewport_overlay_pos});
 
   std::ofstream stream{gSettingsPath, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
@@ -414,4 +414,4 @@ auto GetRestoreLastSession() noexcept -> bool
 }
 
 }  // namespace Prefs
-}  // namespace Tactile
+}  // namespace tactile

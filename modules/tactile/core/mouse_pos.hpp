@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Tactile {
+namespace tactile {
 
 struct MousePos final
 {
@@ -8,4 +8,4 @@ struct MousePos final
   float y{};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

@@ -7,7 +7,7 @@
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/registry_system.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 TEST(FloodFill, Flood)
 {

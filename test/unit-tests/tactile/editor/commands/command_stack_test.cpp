@@ -6,7 +6,7 @@
 
 #include "io/preferences.hpp"
 
-using namespace Tactile;
+using namespace tactile;
 
 namespace {
 

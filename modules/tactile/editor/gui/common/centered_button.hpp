@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 /**
  * \brief Shows a button that is centered in the parent region.
@@ -16,4 +16,4 @@ namespace Tactile {
  */
 auto CenteredButton(NotNull<CStr> label, CStr tooltip = nullptr) -> bool;
 
-}  // namespace Tactile
+}  // namespace tactile

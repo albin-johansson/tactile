@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-namespace Tactile {
+namespace tactile {
 
 MapImportErrorDialog::MapImportErrorDialog() : ADialog{"Map import error"}
 {
@@ -21,4 +21,4 @@ void MapImportErrorDialog::UpdateContents(const Model&, entt::dispatcher&)
   ImGui::Text("Cause: %s", IO::GetCause(mError.value()));
 }
 
-}  // namespace Tactile
+}  // namespace tactile

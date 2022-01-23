@@ -7,7 +7,7 @@
 #include "parse_csv.hpp"
 #include "parse_tile_nodes.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 
 auto ParseTileData(const pugi::xml_node node, TileLayer& layer) -> ParseError
 {
@@ -36,4 +36,4 @@ auto ParseTileData(const pugi::xml_node node, TileLayer& layer) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO

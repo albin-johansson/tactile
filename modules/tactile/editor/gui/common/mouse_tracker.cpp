@@ -4,7 +4,7 @@
 
 #include "editor/events/viewport_events.hpp"
 
-namespace Tactile {
+namespace tactile {
 namespace {
 
 constexpr auto gButtonFlags = ImGuiButtonFlags_MouseButtonLeft |
@@ -22,4 +22,4 @@ void UpdateViewportOffset(const ImVec2& viewportSize, entt::dispatcher& dispatch
   }
 }
 
-}  // namespace Tactile
+}  // namespace tactile

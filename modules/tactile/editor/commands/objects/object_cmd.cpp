@@ -7,7 +7,7 @@
 #include "core/components/property_context.hpp"
 #include "core/systems/object_system.hpp"
 
-namespace Tactile {
+namespace tactile {
 
 AObjectCmd::AObjectCmd(std::string name, RegistryRef registry, const ObjectID id)
     : ACommand{std::move(name)}
@@ -35,4 +35,4 @@ auto AObjectCmd::GetTargetObject() -> Object&
   return registry.get<Object>(entity);
 }
 
-}  // namespace Tactile
+}  // namespace tactile

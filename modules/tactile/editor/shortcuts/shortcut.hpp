@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>  // dispatcher
 #include <tactile_def.hpp>
 
-namespace Tactile {
+namespace tactile {
 
 class Model;
 class WidgetManager;
@@ -38,4 +38,4 @@ class AShortcut {
   uint16 mModifiers{KMOD_NONE};
 };
 
-}  // namespace Tactile
+}  // namespace tactile

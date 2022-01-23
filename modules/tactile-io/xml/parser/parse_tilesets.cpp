@@ -9,7 +9,7 @@
 #include "parse_properties.hpp"
 #include "xml_utils.hpp"
 
-namespace Tactile::IO {
+namespace tactile::IO {
 namespace {
 
 [[nodiscard]] auto GetImageNode(const pugi::xml_node node) -> pugi::xml_node
@@ -168,4 +168,4 @@ auto ParseTilesets(const pugi::xml_node root, Map& map, const std::filesystem::p
   return ParseError::None;
 }
 
-}  // namespace Tactile::IO
+}  // namespace tactile::IO
