@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
+#include <entt/entt.hpp>
 
 namespace tactile::sys {
 
@@ -8,13 +8,11 @@ namespace tactile::sys {
 /// \{
 
 /**
- * \brief Updates all animations in the registry.
+ * \brief Updates all animations in a registry.
  *
- * \param registry the registry that will be updated.
- *
- * \see Animation
+ * \param registry the document registry.
  */
-void UpdateAnimations(entt::registry& registry);
+void update_animations(entt::registry& registry);
 
 /// \} End of animation system
 

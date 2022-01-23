@@ -6,7 +6,7 @@
 
 namespace tactile::sys {
 
-void UpdateAnimations(entt::registry& registry)
+void update_animations(entt::registry& registry)
 {
   for (auto&& [entity, animation] : registry.view<Animation>().each()) {
     const auto now = cen::ticks32();
