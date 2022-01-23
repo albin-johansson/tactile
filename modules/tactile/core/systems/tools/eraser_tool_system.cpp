@@ -11,7 +11,7 @@
 #include "core/tile_cache.hpp"
 #include "editor/events/tool_events.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 namespace {
 
 inline TileCache gOldState;
@@ -59,4 +59,4 @@ void EraserToolOnReleased(entt::registry& registry,
   }
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

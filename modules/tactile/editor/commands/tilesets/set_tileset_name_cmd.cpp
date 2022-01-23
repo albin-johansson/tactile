@@ -21,7 +21,7 @@ void SetTilesetNameCmd::Undo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = Sys::FindTileset(registry, mTilesetId);
+  const auto entity = sys::FindTileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get<PropertyContext>(entity);
@@ -32,7 +32,7 @@ void SetTilesetNameCmd::Redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = Sys::FindTileset(registry, mTilesetId);
+  const auto entity = sys::FindTileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get<PropertyContext>(entity);

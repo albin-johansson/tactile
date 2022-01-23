@@ -234,7 +234,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
   const auto& current = registry.ctx<ActivePropertyContext>();
-  const auto& context = Sys::GetCurrentContext(registry);
+  const auto& context = sys::GetCurrentContext(registry);
 
   if (Scoped::Table table{"##PropertyTable", 2, flags}; table.IsOpen()) {
     if (current.entity == entt::null) {
@@ -277,7 +277,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
 
   if (mContextState.show_change_type_dialog) {
     const auto& name = mChangeTypeTarget.value();
-    const auto type = Sys::GetProperty(registry, context, name).value.type();
+    const auto type = sys::GetProperty(registry, context, name).value.type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(name, type);
     mChangeTypeTarget.reset();
     mContextState.show_change_type_dialog = false;

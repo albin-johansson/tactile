@@ -15,28 +15,28 @@ constexpr entt::entity null_entity = entt::null;
 
 TEST(LayerSystem, SortLayers)
 {
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
   auto& active = registry.ctx<ActiveLayer>();
 
-  const auto a = Sys::AddTileLayer(registry);
-  const auto b = Sys::AddObjectLayer(registry);
-  const auto c = Sys::AddGroupLayer(registry);
+  const auto a = sys::AddTileLayer(registry);
+  const auto b = sys::AddObjectLayer(registry);
+  const auto c = sys::AddGroupLayer(registry);
 
   active.entity = c;
-  const auto d = Sys::AddTileLayer(registry);
-  const auto e = Sys::AddTileLayer(registry);
-  const auto f = Sys::AddGroupLayer(registry);
+  const auto d = sys::AddTileLayer(registry);
+  const auto e = sys::AddTileLayer(registry);
+  const auto f = sys::AddGroupLayer(registry);
 
   active.entity = f;
-  const auto g = Sys::AddTileLayer(registry);
-  const auto h = Sys::AddTileLayer(registry);
+  const auto g = sys::AddTileLayer(registry);
+  const auto h = sys::AddTileLayer(registry);
 
   active.entity = c;
-  const auto i = Sys::AddTileLayer(registry);
-  const auto j = Sys::AddTileLayer(registry);
+  const auto i = sys::AddTileLayer(registry);
+  const auto j = sys::AddTileLayer(registry);
 
   active.entity = entt::null;
-  const auto k = Sys::AddObjectLayer(registry);
+  const auto k = sys::AddObjectLayer(registry);
 
   /*
    - A
@@ -52,85 +52,85 @@ TEST(LayerSystem, SortLayers)
    - K
    */
 
-  ASSERT_EQ(0, Sys::GetLayerIndex(registry, a));
-  ASSERT_EQ(1, Sys::GetLayerIndex(registry, b));
-  ASSERT_EQ(2, Sys::GetLayerIndex(registry, c));
+  ASSERT_EQ(0, sys::GetLayerIndex(registry, a));
+  ASSERT_EQ(1, sys::GetLayerIndex(registry, b));
+  ASSERT_EQ(2, sys::GetLayerIndex(registry, c));
   {
-    ASSERT_EQ(0, Sys::GetLayerIndex(registry, d));
-    ASSERT_EQ(1, Sys::GetLayerIndex(registry, e));
-    ASSERT_EQ(2, Sys::GetLayerIndex(registry, f));
+    ASSERT_EQ(0, sys::GetLayerIndex(registry, d));
+    ASSERT_EQ(1, sys::GetLayerIndex(registry, e));
+    ASSERT_EQ(2, sys::GetLayerIndex(registry, f));
     {
-      ASSERT_EQ(0, Sys::GetLayerIndex(registry, g));
-      ASSERT_EQ(1, Sys::GetLayerIndex(registry, h));
+      ASSERT_EQ(0, sys::GetLayerIndex(registry, g));
+      ASSERT_EQ(1, sys::GetLayerIndex(registry, h));
     }
 
-    ASSERT_EQ(3, Sys::GetLayerIndex(registry, i));
-    ASSERT_EQ(4, Sys::GetLayerIndex(registry, j));
+    ASSERT_EQ(3, sys::GetLayerIndex(registry, i));
+    ASSERT_EQ(4, sys::GetLayerIndex(registry, j));
   }
 
-  ASSERT_EQ(3, Sys::GetLayerIndex(registry, k));
+  ASSERT_EQ(3, sys::GetLayerIndex(registry, k));
 }
 
 TEST(LayerSystem, RemoveLayer)
 {
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
   auto& active = registry.ctx<ActiveLayer>();
 
-  const auto a = Sys::AddTileLayer(registry);
-  const auto b = Sys::AddGroupLayer(registry);
+  const auto a = sys::AddTileLayer(registry);
+  const auto b = sys::AddGroupLayer(registry);
 
   active.entity = b;
-  const auto c = Sys::AddObjectLayer(registry);
-  const auto d = Sys::AddObjectLayer(registry);
-  const auto e = Sys::AddGroupLayer(registry);
+  const auto c = sys::AddObjectLayer(registry);
+  const auto d = sys::AddObjectLayer(registry);
+  const auto e = sys::AddGroupLayer(registry);
 
   active.entity = e;
-  const auto f = Sys::AddTileLayer(registry);
-  const auto g = Sys::AddTileLayer(registry);
+  const auto f = sys::AddTileLayer(registry);
+  const auto g = sys::AddTileLayer(registry);
 
   active.entity = entt::null;
-  const auto h = Sys::AddTileLayer(registry);
+  const auto h = sys::AddTileLayer(registry);
 
-  ASSERT_EQ(0, Sys::GetLayerIndex(registry, a));
-  ASSERT_EQ(1, Sys::GetLayerIndex(registry, b));
+  ASSERT_EQ(0, sys::GetLayerIndex(registry, a));
+  ASSERT_EQ(1, sys::GetLayerIndex(registry, b));
   {
-    ASSERT_EQ(0, Sys::GetLayerIndex(registry, c));
-    ASSERT_EQ(1, Sys::GetLayerIndex(registry, d));
-    ASSERT_EQ(2, Sys::GetLayerIndex(registry, e));
+    ASSERT_EQ(0, sys::GetLayerIndex(registry, c));
+    ASSERT_EQ(1, sys::GetLayerIndex(registry, d));
+    ASSERT_EQ(2, sys::GetLayerIndex(registry, e));
     {
-      ASSERT_EQ(0, Sys::GetLayerIndex(registry, f));
-      ASSERT_EQ(1, Sys::GetLayerIndex(registry, g));
+      ASSERT_EQ(0, sys::GetLayerIndex(registry, f));
+      ASSERT_EQ(1, sys::GetLayerIndex(registry, g));
     }
   }
-  ASSERT_EQ(2, Sys::GetLayerIndex(registry, h));
+  ASSERT_EQ(2, sys::GetLayerIndex(registry, h));
 
-  Sys::RemoveLayer(registry, a);
-  ASSERT_EQ(0, Sys::GetLayerIndex(registry, b));
+  sys::RemoveLayer(registry, a);
+  ASSERT_EQ(0, sys::GetLayerIndex(registry, b));
   {
-    ASSERT_EQ(0, Sys::GetLayerIndex(registry, c));
-    ASSERT_EQ(1, Sys::GetLayerIndex(registry, d));
-    ASSERT_EQ(2, Sys::GetLayerIndex(registry, e));
+    ASSERT_EQ(0, sys::GetLayerIndex(registry, c));
+    ASSERT_EQ(1, sys::GetLayerIndex(registry, d));
+    ASSERT_EQ(2, sys::GetLayerIndex(registry, e));
     {
-      ASSERT_EQ(0, Sys::GetLayerIndex(registry, f));
-      ASSERT_EQ(1, Sys::GetLayerIndex(registry, g));
+      ASSERT_EQ(0, sys::GetLayerIndex(registry, f));
+      ASSERT_EQ(1, sys::GetLayerIndex(registry, g));
     }
   }
-  ASSERT_EQ(1, Sys::GetLayerIndex(registry, h));
+  ASSERT_EQ(1, sys::GetLayerIndex(registry, h));
 
-  Sys::RemoveLayer(registry, d);
-  ASSERT_EQ(0, Sys::GetLayerIndex(registry, b));
+  sys::RemoveLayer(registry, d);
+  ASSERT_EQ(0, sys::GetLayerIndex(registry, b));
   {
-    ASSERT_EQ(0, Sys::GetLayerIndex(registry, c));
-    ASSERT_EQ(1, Sys::GetLayerIndex(registry, e));
+    ASSERT_EQ(0, sys::GetLayerIndex(registry, c));
+    ASSERT_EQ(1, sys::GetLayerIndex(registry, e));
     {
-      ASSERT_EQ(0, Sys::GetLayerIndex(registry, f));
-      ASSERT_EQ(1, Sys::GetLayerIndex(registry, g));
+      ASSERT_EQ(0, sys::GetLayerIndex(registry, f));
+      ASSERT_EQ(1, sys::GetLayerIndex(registry, g));
     }
   }
-  ASSERT_EQ(1, Sys::GetLayerIndex(registry, h));
+  ASSERT_EQ(1, sys::GetLayerIndex(registry, h));
 
-  Sys::RemoveLayer(registry, b);
-  ASSERT_EQ(0, Sys::GetLayerIndex(registry, h));
+  sys::RemoveLayer(registry, b);
+  ASSERT_EQ(0, sys::GetLayerIndex(registry, h));
   ASSERT_EQ(1, registry.storage<Layer>().size());
 
   // Make sure all child layers were destroyed
@@ -152,29 +152,29 @@ TEST(LayerSystem, DuplicateLayer)
 {
   // TODO improve this test
 
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
 
-  const auto a = Sys::AddTileLayer(registry);
-  Sys::SetLayerOpacity(registry, a, 0.5f);
-  Sys::SetLayerVisible(registry, a, false);
+  const auto a = sys::AddTileLayer(registry);
+  sys::SetLayerOpacity(registry, a, 0.5f);
+  sys::SetLayerVisible(registry, a, false);
 
-  const auto b = Sys::DuplicateLayer(registry, a);
+  const auto b = sys::DuplicateLayer(registry, a);
 
-  ASSERT_EQ(0, Sys::GetLayerIndex(registry, a));
-  ASSERT_EQ(1, Sys::GetLayerIndex(registry, b));
+  ASSERT_EQ(0, sys::GetLayerIndex(registry, a));
+  ASSERT_EQ(1, sys::GetLayerIndex(registry, b));
 
-  ASSERT_EQ(Sys::GetLayerOpacity(registry, a), Sys::GetLayerOpacity(registry, b));
-  ASSERT_EQ(Sys::IsLayerVisible(registry, a), Sys::IsLayerVisible(registry, b));
+  ASSERT_EQ(sys::GetLayerOpacity(registry, a), sys::GetLayerOpacity(registry, b));
+  ASSERT_EQ(sys::IsLayerVisible(registry, a), sys::IsLayerVisible(registry, b));
 }
 
 TEST(LayerSystem, FindLayer)
 {
-  auto registry = Sys::MakeRegistry();
-  ASSERT_EQ(null_entity, Sys::FindLayer(registry, 1));
+  auto registry = sys::MakeRegistry();
+  ASSERT_EQ(null_entity, sys::FindLayer(registry, 1));
 
-  const auto a = Sys::AddTileLayer(registry);
-  const auto b = Sys::AddObjectLayer(registry);
+  const auto a = sys::AddTileLayer(registry);
+  const auto b = sys::AddObjectLayer(registry);
 
-  ASSERT_EQ(a, Sys::FindLayer(registry, 1));
-  ASSERT_EQ(b, Sys::FindLayer(registry, 2));
+  ASSERT_EQ(a, sys::FindLayer(registry, 1));
+  ASSERT_EQ(b, sys::FindLayer(registry, 2));
 }

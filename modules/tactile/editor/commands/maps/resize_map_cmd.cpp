@@ -15,7 +15,7 @@ ResizeMapCmd::ResizeMapCmd(RegistryRef registry, const usize nRows, const usize 
 void ResizeMapCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  Sys::ResizeMap(registry, mPrevRows.value(), mPrevCols.value());
+  sys::ResizeMap(registry, mPrevRows.value(), mPrevCols.value());
 
   if (IsLossyResize()) {
     mCache.RestoreTiles(registry);
@@ -43,7 +43,7 @@ void ResizeMapCmd::Redo()
                      MapPosition::From(rows, cols));
   }
 
-  Sys::ResizeMap(registry, mRows, mCols);
+  sys::ResizeMap(registry, mRows, mCols);
 }
 
 auto ResizeMapCmd::IsLossyResize() const -> bool

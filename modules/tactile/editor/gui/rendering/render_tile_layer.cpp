@@ -22,7 +22,7 @@ void RenderTileLayer(Graphics& graphics,
 
   for (auto row = bounds.begin.GetRow(); row < endRow; ++row) {
     for (auto col = bounds.begin.GetColumn(); col < endCol; ++col) {
-      const auto tile = Sys::GetTileFromLayer(registry, layerEntity, {row, col});
+      const auto tile = sys::GetTileFromLayer(registry, layerEntity, {row, col});
       if (tile != empty_tile) {
         RenderTile(graphics, registry, tile, row, col);
       }

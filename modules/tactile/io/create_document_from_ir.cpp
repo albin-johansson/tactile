@@ -92,7 +92,7 @@ void AddComponents(entt::registry& registry, const entt::entity entity, const T&
 
   IO::EachComponent(source, [&](const IO::Component& irComponent) {
     const auto& [defEntity, def] =
-        Sys::GetComponentDef(registry, IO::GetName(irComponent));
+        sys::GetComponentDef(registry, IO::GetName(irComponent));
 
     const auto componentEntity = registry.create();
     context.components.push_back(componentEntity);
@@ -151,7 +151,7 @@ auto AddObject(entt::registry& registry, const IO::Object& irObject) -> entt::en
     object.tag = tag;
   }
 
-  auto& context = Sys::AddPropertyContext(registry, objectEntity);
+  auto& context = sys::AddPropertyContext(registry, objectEntity);
   context.name = IO::GetName(irObject);
 
   AddProperties(registry, objectEntity, irObject);
@@ -219,7 +219,7 @@ void MakeFancyTiles(entt::registry& registry,
       AddTileObjects(registry, tile, irTileInfo, nObjects);
     }
 
-    auto& context = Sys::AddPropertyContext(registry, tileEntity);
+    auto& context = sys::AddPropertyContext(registry, tileEntity);
     context.name = fmt::format("Tile {}", tile.id);
     AddProperties(registry, tileEntity, irTileInfo);
     AddComponents(registry, tileEntity, irTileInfo);
@@ -231,7 +231,7 @@ void MakeTileset(entt::registry& registry,
                  const IO::Tileset& irTileset)
 {
   const auto info = textures.Load(IO::GetImagePath(irTileset)).value();
-  const auto entity = Sys::MakeTileset(registry,
+  const auto entity = sys::MakeTileset(registry,
                                        TileID{IO::GetFirstGlobalId(irTileset)},
                                        info,
                                        IO::GetTileWidth(irTileset),
@@ -265,7 +265,7 @@ auto MakeLayer(entt::registry& registry,
                const IO::Layer& irLayer,
                const entt::entity parent = entt::null) -> entt::entity
 {
-  const auto entity = Sys::AddBasicLayer(registry,
+  const auto entity = sys::AddBasicLayer(registry,
                                          LayerID{IO::GetId(irLayer)},
                                          IO::GetType(irLayer),
                                          IO::GetName(irLayer),
@@ -317,7 +317,7 @@ void CreateLayers(Document& document, const IO::Map& irMap)
   IO::EachLayer(irMap,
                 [&](const IO::Layer& irLayer) { MakeLayer(document.registry, irLayer); });
 
-  Sys::SortLayers(document.registry);
+  sys::SortLayers(document.registry);
 
   if (!document.registry.storage<LayerTreeNode>().empty()) {
     auto& activeLayer = document.registry.ctx<ActiveLayer>();
@@ -360,56 +360,56 @@ void InitComponentDefinitions(entt::registry& registry, const IO::Map& irMap)
   IO::EachComponentDef(irMap, [&](const IO::ComponentDef& irDef) {
     const auto* componentName = IO::GetName(irDef);
 
-    const auto componentId = Sys::CreateComponentDef(registry, componentName);
-    auto [entity, def] = Sys::GetComponentDef(registry, componentId);
+    const auto componentId = sys::CreateComponentDef(registry, componentName);
+    auto [entity, def] = sys::GetComponentDef(registry, componentId);
 
     IO::EachAttribute(irDef, [&](const CStr attr) {
       const auto type = IO::GetAttributeType(irDef, attr);
       switch (type) {
         case PropertyType::String:
-          Sys::CreateComponentAttribute(registry,
+          sys::CreateComponentAttribute(registry,
                                         componentId,
                                         attr,
                                         std::string{IO::GetString(irDef, attr)});
           break;
 
         case PropertyType::Integer:
-          Sys::CreateComponentAttribute(registry,
+          sys::CreateComponentAttribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetInt(irDef, attr));
           break;
 
         case PropertyType::Floating:
-          Sys::CreateComponentAttribute(registry,
+          sys::CreateComponentAttribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetFloat(irDef, attr));
           break;
 
         case PropertyType::Boolean:
-          Sys::CreateComponentAttribute(registry,
+          sys::CreateComponentAttribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetBool(irDef, attr));
           break;
 
         case PropertyType::File:
-          Sys::CreateComponentAttribute(registry,
+          sys::CreateComponentAttribute(registry,
                                         componentId,
                                         attr,
                                         std::filesystem::path{IO::GetFile(irDef, attr)});
           break;
 
         case PropertyType::Color:
-          Sys::CreateComponentAttribute(registry,
+          sys::CreateComponentAttribute(registry,
                                         componentId,
                                         attr,
                                         ToColor(IO::GetColor(irDef, attr)));
           break;
 
         case PropertyType::Object:
-          Sys::CreateComponentAttribute(registry,
+          sys::CreateComponentAttribute(registry,
                                         componentId,
                                         attr,
                                         object_t{IO::GetObject(irDef, attr)});
@@ -425,7 +425,7 @@ auto CreateDocumentFromIR(const IO::Map& irMap, TextureManager& textures) -> Doc
 {
   Document document;
   document.path = IO::GetPath(irMap);
-  document.registry = Sys::MakeRegistry();
+  document.registry = sys::MakeRegistry();
 
   InitComponentDefinitions(document.registry, irMap);
 

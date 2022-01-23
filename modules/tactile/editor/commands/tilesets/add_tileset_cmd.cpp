@@ -23,27 +23,27 @@ void AddTilesetCmd::Undo()
   auto& registry = mRegistry.get();
   const auto id = mTilesetId.value();
 
-  const auto entity = Sys::FindTileset(registry, id);
+  const auto entity = sys::FindTileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);
 
-  mSnapshot = Sys::CopyTileset(registry, entity);
-  Sys::RemoveTileset(registry, id);
+  mSnapshot = sys::CopyTileset(registry, entity);
+  sys::RemoveTileset(registry, id);
 }
 
 void AddTilesetCmd::Redo()
 {
   auto& registry = mRegistry.get();
   if (!mSnapshot) {
-    const auto entity = Sys::MakeTileset(registry, mTexture, mTileWidth, mTileHeight);
+    const auto entity = sys::MakeTileset(registry, mTexture, mTileWidth, mTileHeight);
     const auto& tileset = registry.get<Tileset>(entity);
     mTilesetId = tileset.id;
   }
   else {
-    Sys::RestoreTileset(registry, *mSnapshot);
+    sys::RestoreTileset(registry, *mSnapshot);
   }
 
   auto& active = registry.ctx<ActiveTileset>();
-  active.entity = Sys::FindTileset(registry, mTilesetId.value());
+  active.entity = sys::FindTileset(registry, mTilesetId.value());
 }
 
 }  // namespace tactile

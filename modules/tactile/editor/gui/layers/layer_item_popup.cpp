@@ -17,7 +17,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
 {
   if (auto popup = Scoped::Popup::ForItem("##LayerItemPopup"); popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
-      const auto entity = Sys::FindLayer(registry, id);
+      const auto entity = sys::FindLayer(registry, id);
       TACTILE_ASSERT(entity != entt::null);
       dispatcher.enqueue<InspectContextEvent>(entity);
     }
@@ -38,14 +38,14 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     }
 
     ImGui::Separator();
-    if (const auto isLayerVisible = Sys::IsLayerVisible(registry, id);
+    if (const auto isLayerVisible = sys::IsLayerVisible(registry, id);
         ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Layer Visibility",
                         nullptr,
                         isLayerVisible)) {
       dispatcher.enqueue<SetLayerVisibleEvent>(id, !isLayerVisible);
     }
 
-    if (auto opacity = Sys::GetLayerOpacity(registry, id);
+    if (auto opacity = sys::GetLayerOpacity(registry, id);
         ImGui::SliderFloat("Opacity", &opacity, 0, 1.0f)) {
       dispatcher.enqueue<SetLayerOpacityEvent>(id, opacity);
     }
@@ -54,14 +54,14 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move Layer Up",
                         nullptr,
                         false,
-                        Sys::CanMoveLayerUp(registry, id))) {
+                        sys::CanMoveLayerUp(registry, id))) {
       dispatcher.enqueue<MoveLayerUpEvent>(id);
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move Layer Down",
                         nullptr,
                         false,
-                        Sys::CanMoveLayerDown(registry, id))) {
+                        sys::CanMoveLayerDown(registry, id))) {
       dispatcher.enqueue<MoveLayerDownEvent>(id);
     }
   }

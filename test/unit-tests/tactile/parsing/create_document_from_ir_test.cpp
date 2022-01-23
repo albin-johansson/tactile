@@ -36,42 +36,42 @@ void CheckMapAttributes(const entt::registry& registry)
   ASSERT_EQ(2, context.components.size());
 
   {
-    const auto propertyEntity = Sys::FindProperty(registry, context, "boolean");
+    const auto propertyEntity = sys::FindProperty(registry, context, "boolean");
     const auto& property = registry.get<Property>(propertyEntity);
     ASSERT_TRUE(property.value.is_bool());
     ASSERT_TRUE(property.value.as_bool());
   }
 
   {
-    const auto propertyEntity = Sys::FindProperty(registry, context, "cool color");
+    const auto propertyEntity = sys::FindProperty(registry, context, "cool color");
     const auto& property = registry.get<Property>(propertyEntity);
     ASSERT_TRUE(property.value.is_color());
     ASSERT_EQ(cen::color::from_rgba("#1A2B3C4D"), property.value.as_color());
   }
 
   {
-    const auto propertyEntity = Sys::FindProperty(registry, context, "floating");
+    const auto propertyEntity = sys::FindProperty(registry, context, "floating");
     const auto& property = registry.get<Property>(propertyEntity);
     ASSERT_TRUE(property.value.is_float());
     ASSERT_FLOAT_EQ(12.3f, property.value.as_float());
   }
 
   {
-    const auto propertyEntity = Sys::FindProperty(registry, context, "integer");
+    const auto propertyEntity = sys::FindProperty(registry, context, "integer");
     const auto& property = registry.get<Property>(propertyEntity);
     ASSERT_TRUE(property.value.is_int());
     ASSERT_EQ(42, property.value.as_int());
   }
 
   {
-    const auto propertyEntity = Sys::FindProperty(registry, context, "object ref");
+    const auto propertyEntity = sys::FindProperty(registry, context, "object ref");
     const auto& property = registry.get<Property>(propertyEntity);
     ASSERT_TRUE(property.value.is_object());
     ASSERT_EQ(1, property.value.as_object());
   }
 
   {
-    const auto propertyEntity = Sys::FindProperty(registry, context, "path");
+    const auto propertyEntity = sys::FindProperty(registry, context, "path");
     const auto& property = registry.get<Property>(propertyEntity);
     ASSERT_TRUE(property.value.is_file());
     ASSERT_EQ(std::filesystem::path{"foo.bar"}, property.value.as_file());
@@ -80,7 +80,7 @@ void CheckMapAttributes(const entt::registry& registry)
 
 void CheckTileLayer1(const entt::registry& registry)
 {
-  const auto entity = Sys::FindLayer(registry, 1);
+  const auto entity = sys::FindLayer(registry, 1);
   ASSERT_NE(entity, gNullEntity);
 
   const auto& context = registry.get<PropertyContext>(entity);
@@ -101,7 +101,7 @@ void CheckTileLayer1(const entt::registry& registry)
 
 void CheckTileLayer2(const entt::registry& registry)
 {
-  const auto entity = Sys::FindLayer(registry, 2);
+  const auto entity = sys::FindLayer(registry, 2);
   ASSERT_NE(entity, gNullEntity);
 
   const auto& context = registry.get<PropertyContext>(entity);
@@ -138,7 +138,7 @@ void CheckTileLayer2(const entt::registry& registry)
 
 void CheckObjectLayer1(const entt::registry& registry)
 {
-  const auto entity = Sys::FindLayer(registry, 3);
+  const auto entity = sys::FindLayer(registry, 3);
   ASSERT_NE(gNullEntity, entity);
 
   const auto& context = registry.get<PropertyContext>(entity);
@@ -156,12 +156,12 @@ void CheckObjectLayer1(const entt::registry& registry)
   const auto& objectLayer = registry.get<ObjectLayer>(entity);
   ASSERT_EQ(2, objectLayer.objects.size());
 
-  ASSERT_TRUE(Sys::HasObject(registry, entity, 2));
-  ASSERT_TRUE(Sys::HasObject(registry, entity, 3));
-  ASSERT_FALSE(Sys::HasObject(registry, entity, 42));
+  ASSERT_TRUE(sys::HasObject(registry, entity, 2));
+  ASSERT_TRUE(sys::HasObject(registry, entity, 3));
+  ASSERT_FALSE(sys::HasObject(registry, entity, 42));
 
   {
-    const auto rectEntity = Sys::FindObject(registry, entity, 2);
+    const auto rectEntity = sys::FindObject(registry, entity, 2);
     const auto& rect = registry.get<Object>(rectEntity);
     const auto& rectContext = registry.get<PropertyContext>(rectEntity);
 

@@ -33,7 +33,7 @@ ComponentEditor::ComponentEditor() : ADialog{"Component Editor"}
 void ComponentEditor::Open(const Model& model)
 {
   const auto& registry = model.GetActiveRegistryRef();
-  mActiveComponent = Sys::GetFirstAvailableComponentDef(registry);
+  mActiveComponent = sys::GetFirstAvailableComponentDef(registry);
   Show();
 }
 
@@ -42,7 +42,7 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
   const auto& registry = model.GetActiveRegistryRef();
 
   /* Ensure that the active component ID hasn't been invalidated */
-  if (mActiveComponent && !Sys::IsComponentValid(registry, *mActiveComponent)) {
+  if (mActiveComponent && !sys::IsComponentValid(registry, *mActiveComponent)) {
     mActiveComponent.reset();
   }
 
@@ -63,7 +63,7 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
       mActiveComponent = registry.get<ComponentDef>(entity).id;
     }
 
-    const auto& name = Sys::GetComponentDefName(registry, mActiveComponent.value());
+    const auto& name = sys::GetComponentDefName(registry, mActiveComponent.value());
     if (Scoped::Combo combo{"##ComponentEditorCombo", name.c_str()}; combo.IsOpen()) {
       for (auto&& [entity, component] : registry.view<ComponentDef>().each()) {
         if (ImGui::Selectable(component.name.c_str())) {
@@ -108,7 +108,7 @@ void ComponentEditor::ShowComponentComboPopup(const entt::registry& registry,
   if (Scoped::Popup popup{"##ComponentEditorPopup"}; popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
       const auto id = mActiveComponent.value();
-      mRenameComponentDialog.Open(Sys::GetComponentDefName(registry, id), id);
+      mRenameComponentDialog.Open(sys::GetComponentDefName(registry, id), id);
     }
 
     ImGui::Separator();
@@ -124,7 +124,7 @@ void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
                                               entt::dispatcher& dispatcher,
                                               const ComponentID id)
 {
-  const auto& [defEntity, def] = Sys::GetComponentDef(registry, id);
+  const auto& [defEntity, def] = sys::GetComponentDef(registry, id);
 
   if (def.attributes.empty()) {
     CenteredText("There are no attributes defined for the current component.");

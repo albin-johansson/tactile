@@ -14,7 +14,7 @@
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 struct PropertyContextSnapshot final
 {
@@ -49,4 +49,4 @@ struct LayerSnapshot final
   Maybe<std::vector<LayerSnapshot>> children;
 };
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

@@ -20,7 +20,7 @@ UpdateComponentAttributeCmd::UpdateComponentAttributeCmd(RegistryRef registry,
 void UpdateComponentAttributeCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  Sys::SetComponentAttributeValue(registry,
+  sys::SetComponentAttributeValue(registry,
                                   mComponentId,
                                   mAttributeName,
                                   mPreviousValue.value());
@@ -31,8 +31,8 @@ void UpdateComponentAttributeCmd::Redo()
   auto& registry = mRegistry.get();
 
   mPreviousValue =
-      Sys::GetComponentAttributeValue(registry, mComponentId, mAttributeName);
-  Sys::SetComponentAttributeValue(registry, mComponentId, mAttributeName, mUpdatedValue);
+      sys::GetComponentAttributeValue(registry, mComponentId, mAttributeName);
+  sys::SetComponentAttributeValue(registry, mComponentId, mAttributeName, mUpdatedValue);
 }
 
 auto UpdateComponentAttributeCmd::MergeWith(const ACommand& cmd) -> bool

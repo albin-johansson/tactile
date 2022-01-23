@@ -28,7 +28,7 @@ class RemoveLayerCmd final : public ACommand {
  private:
   RegistryRef mRegistry;
   LayerID mLayerId;
-  Maybe<Sys::LayerSnapshot> mLayerSnapshot;
+  Maybe<sys::LayerSnapshot> mLayerSnapshot;
 };
 
 /// \} End of group commands

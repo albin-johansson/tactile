@@ -13,20 +13,20 @@ DuplicateLayerCmd::DuplicateLayerCmd(RegistryRef registry, const LayerID id)
 
 void DuplicateLayerCmd::Undo()
 {
-  Sys::RemoveLayer(mRegistry, mNewLayerId.value());
+  sys::RemoveLayer(mRegistry, mNewLayerId.value());
 }
 
 void DuplicateLayerCmd::Redo()
 {
   auto& registry = mRegistry.get();
-  const auto entity = Sys::DuplicateLayer(registry, mLayerId);
+  const auto entity = sys::DuplicateLayer(registry, mLayerId);
 
   if (!mNewLayerId) {
-    mNewLayerId = Sys::GetLayerId(registry, entity);
+    mNewLayerId = sys::GetLayerId(registry, entity);
   }
   else {
     // Reuse previous ID of duplicated layer
-    TACTILE_ASSERT(Sys::FindLayer(registry, *mNewLayerId) == entt::null);
+    TACTILE_ASSERT(sys::FindLayer(registry, *mNewLayerId) == entt::null);
     auto& layer = registry.get<Layer>(entity);
     layer.id = *mNewLayerId;
   }

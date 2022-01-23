@@ -8,7 +8,7 @@
 #include "assert.hpp"
 #include "throw.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 namespace {
 
 /* Identifier used to distinguish property contexts, generated on a
@@ -256,4 +256,4 @@ auto GetNextContextId() noexcept -> ContextID
   return gNextContextId;
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

@@ -10,7 +10,7 @@
 #include "core/viewport.hpp"
 #include "property_system.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 auto MakeRegistry() -> entt::registry
 {
@@ -44,4 +44,4 @@ auto MakeRegistry() -> entt::registry
   return registry;
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

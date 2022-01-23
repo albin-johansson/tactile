@@ -11,7 +11,7 @@
 #include "core/components/property_context.hpp"
 #include "snapshot.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 /// \name Property system
 /// \{
@@ -276,4 +276,4 @@ void ResetNextContextId() noexcept;
 
 /// \} End of property system
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

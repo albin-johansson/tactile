@@ -11,14 +11,14 @@ RemoveComponentDefCmd::RemoveComponentDefCmd(RegistryRef registry, const Compone
 void RemoveComponentDefCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  Sys::RestoreComponentDef(registry, mSnapshot.value());
+  sys::RestoreComponentDef(registry, mSnapshot.value());
   mSnapshot.reset();
 }
 
 void RemoveComponentDefCmd::Redo()
 {
   auto& registry = mRegistry.get();
-  mSnapshot = Sys::RemoveComponentDef(registry, mComponentId);
+  mSnapshot = sys::RemoveComponentDef(registry, mComponentId);
 }
 
 }  // namespace tactile

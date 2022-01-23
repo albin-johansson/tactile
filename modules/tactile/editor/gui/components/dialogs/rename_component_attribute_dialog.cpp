@@ -33,7 +33,7 @@ auto RenameComponentAttributeDialog::Validate(const Model& model,
 {
   const auto& registry = model.GetActiveRegistryRef();
   return !input.empty() &&
-         !Sys::IsComponentAttributeNameTaken(registry, mComponentId.value(), input);
+         !sys::IsComponentAttributeNameTaken(registry, mComponentId.value(), input);
 }
 
 }  // namespace tactile

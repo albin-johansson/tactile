@@ -21,8 +21,8 @@ auto RenamePropertyDialog::Validate(const Model& model, std::string_view input) 
     -> bool
 {
   const auto& registry = model.GetActiveRegistryRef();
-  const auto& context = Sys::GetCurrentContext(registry);
-  return !input.empty() && !Sys::HasPropertyWithName(registry, context, input);
+  const auto& context = sys::GetCurrentContext(registry);
+  return !input.empty() && !sys::HasPropertyWithName(registry, context, input);
 }
 
 }  // namespace tactile

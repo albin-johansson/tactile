@@ -9,7 +9,7 @@
 #include "core/region.hpp"
 #include "snapshot.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 /// \name Tileset system
 /// \{
@@ -228,4 +228,4 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
 
 /// \} End of tileset system
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

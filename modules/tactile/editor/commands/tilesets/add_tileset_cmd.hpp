@@ -29,7 +29,7 @@ class AddTilesetCmd final : public ACommand {
   int mTileWidth;
   int mTileHeight;
   Maybe<TilesetID> mTilesetId;
-  Maybe<Sys::TilesetSnapshot> mSnapshot;
+  Maybe<sys::TilesetSnapshot> mSnapshot;
 };
 
 }  // namespace tactile

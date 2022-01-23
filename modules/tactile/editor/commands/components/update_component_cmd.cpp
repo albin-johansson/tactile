@@ -23,7 +23,7 @@ void UpdateComponentCmd::Undo()
 {
   auto& registry = mRegistry.get();
 
-  Sys::UpdateComponent(registry,
+  sys::UpdateComponent(registry,
                        mContextId,
                        mComponentId,
                        mAttributeName,
@@ -37,8 +37,8 @@ void UpdateComponentCmd::Redo()
   auto& registry = mRegistry.get();
 
   mPreviousValue =
-      Sys::GetComponentAttribute(registry, mContextId, mComponentId, mAttributeName);
-  Sys::UpdateComponent(registry, mContextId, mComponentId, mAttributeName, mUpdatedValue);
+      sys::GetComponentAttribute(registry, mContextId, mComponentId, mAttributeName);
+  sys::UpdateComponent(registry, mContextId, mComponentId, mAttributeName, mUpdatedValue);
 }
 
 auto UpdateComponentCmd::MergeWith(const ACommand& cmd) -> bool

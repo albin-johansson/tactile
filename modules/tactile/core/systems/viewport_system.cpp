@@ -10,7 +10,7 @@
 #include "core/mouse_pos.hpp"
 #include "core/viewport.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 namespace {
 
 constexpr float gMinTileHeight = 4;
@@ -153,4 +153,4 @@ auto GetViewportScalingRatio(const entt::registry& registry) -> ViewportScalingR
   return {xRatio, yRatio};
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

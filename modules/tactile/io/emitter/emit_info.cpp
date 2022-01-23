@@ -159,7 +159,7 @@ void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
       if (worthSaving) {
         FancyTileData data;
         data.global_id = tile.id;
-        data.local_id = Sys::ConvertToLocal(*mRegistry, tile.id).value();
+        data.local_id = sys::ConvertToLocal(*mRegistry, tile.id).value();
         data.context_id = context.id;
 
         func(data);
@@ -204,7 +204,7 @@ void EmitInfo::each_fancy_tile_animation_frame(const TileID id,
     const auto& frame = mRegistry->get<AnimationFrame>(frameEntity);
 
     AnimationFrameData data;
-    data.local_tile = Sys::ConvertToLocal(*mRegistry, frame.tile).value();
+    data.local_tile = sys::ConvertToLocal(*mRegistry, frame.tile).value();
     data.duration_ms = frame.duration.count();
 
     func(data);
@@ -213,15 +213,15 @@ void EmitInfo::each_fancy_tile_animation_frame(const TileID id,
 
 auto EmitInfo::component_count(const ContextID id) const -> usize
 {
-  return Sys::GetComponentCount(*mRegistry, id);
+  return sys::GetComponentCount(*mRegistry, id);
 }
 
 void EmitInfo::each_component(const ContextID id, const component_visitor& func) const
 {
-  const auto& context = Sys::GetContext(*mRegistry, id);
+  const auto& context = sys::GetContext(*mRegistry, id);
   for (const auto componentEntity : context.components) {
     const auto& component = mRegistry->get<Component>(componentEntity);
-    const auto type = Sys::GetComponentDefName(*mRegistry, component.type);
+    const auto type = sys::GetComponentDefName(*mRegistry, component.type);
     func(type, component.values);
   }
 }
@@ -335,13 +335,13 @@ auto EmitInfo::object_context(const ObjectID id) const -> ContextID
 
 auto EmitInfo::property_count(const ContextID id) const -> usize
 {
-  const auto& context = Sys::GetContext(*mRegistry, id);
+  const auto& context = sys::GetContext(*mRegistry, id);
   return context.properties.size();
 }
 
 void EmitInfo::each_property(const ContextID id, const property_visitor& func) const
 {
-  const auto& context = Sys::GetContext(*mRegistry, id);
+  const auto& context = sys::GetContext(*mRegistry, id);
   for (const auto propertyEntity : context.properties) {
     const auto& property = mRegistry->get<Property>(propertyEntity);
     func(property.name, property.value);
@@ -396,7 +396,7 @@ auto EmitInfo::destination_dir() const -> const std::filesystem::path&
 
 auto EmitInfo::to_tileset_entity(const TilesetID id) const -> entt::entity
 {
-  const auto entity = Sys::FindTileset(*mRegistry, id);
+  const auto entity = sys::FindTileset(*mRegistry, id);
   if (entity != entt::null) {
     return entity;
   }
@@ -418,7 +418,7 @@ auto EmitInfo::to_tile_entity(const TileID id) const -> entt::entity
 
 auto EmitInfo::to_layer_entity(const LayerID id) const -> entt::entity
 {
-  const auto entity = Sys::FindLayer(*mRegistry, id);
+  const auto entity = sys::FindLayer(*mRegistry, id);
   if (entity != entt::null) {
     return entity;
   }
@@ -429,7 +429,7 @@ auto EmitInfo::to_layer_entity(const LayerID id) const -> entt::entity
 
 auto EmitInfo::to_object_entity(const ObjectID id) const -> entt::entity
 {
-  const auto entity = Sys::FindObject(*mRegistry, id);
+  const auto entity = sys::FindObject(*mRegistry, id);
   if (entity != entt::null) {
     return entity;
   }

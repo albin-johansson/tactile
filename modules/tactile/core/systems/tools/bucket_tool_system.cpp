@@ -6,7 +6,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "editor/events/tool_events.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 void BucketToolOnPressed(entt::registry& registry,
                          entt::dispatcher& dispatcher,
@@ -25,4 +25,4 @@ void BucketToolOnPressed(entt::registry& registry,
   }
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

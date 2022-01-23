@@ -33,10 +33,10 @@ void AddPropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 auto AddPropertyDialog::IsCurrentInputValid(const Model& model) const -> bool
 {
   const auto& registry = model.GetActiveRegistryRef();
-  const auto& context = Sys::GetCurrentContext(registry);
+  const auto& context = sys::GetCurrentContext(registry);
 
   const auto name = CreateStringViewFromBuffer(mNameBuffer);
-  return !name.empty() && !Sys::HasPropertyWithName(registry, context, name);
+  return !name.empty() && !sys::HasPropertyWithName(registry, context, name);
 }
 
 }  // namespace tactile

@@ -113,7 +113,7 @@ void ShowAddComponentButtonPopupContent(const entt::registry& registry,
   }
   else {
     for (auto [defEntity, def] : view.each()) {
-      Scoped::Disable disable{Sys::HasComponent(registry, contextId, def.id)};
+      Scoped::Disable disable{sys::HasComponent(registry, contextId, def.id)};
 
       if (ImGui::MenuItem(def.name.c_str())) {
         dispatcher.enqueue<AddComponentEvent>(contextId, def.id);
@@ -141,13 +141,13 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
-    const auto& context = Sys::GetCurrentContext(registry);
+    const auto& context = sys::GetCurrentContext(registry);
     ImGui::Text("Context: %s", context.name.c_str());
 
     if (Scoped::Child pane{"##ComponentsChild"}; pane.IsOpen()) {
       for (const auto componentEntity : context.components) {
         const auto& component = registry.get<Component>(componentEntity);
-        const auto& name = Sys::GetComponentDefName(registry, component.type);
+        const auto& name = sys::GetComponentDefName(registry, component.type);
 
         ImGui::Separator();
         ShowComponent(dispatcher, context.id, name.c_str(), component);

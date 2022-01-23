@@ -26,7 +26,7 @@ auto CreateComponentAttributeDialog::Validate(const Model& model,
 {
   const auto& registry = model.GetActiveRegistryRef();
   return !input.empty() &&
-         !Sys::IsComponentAttributeNameTaken(registry, mComponentId, input);
+         !sys::IsComponentAttributeNameTaken(registry, mComponentId, input);
 }
 
 void CreateComponentAttributeDialog::OnAccept(entt::dispatcher& dispatcher)

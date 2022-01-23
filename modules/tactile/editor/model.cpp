@@ -20,7 +20,7 @@ namespace tactile {
 void Model::Update()
 {
   if (auto* registry = GetActiveRegistry()) {
-    Sys::UpdateAnimations(*registry);
+    sys::UpdateAnimations(*registry);
   }
 }
 
@@ -44,7 +44,7 @@ auto Model::AddMap(const int tileWidth,
   TACTILE_ASSERT(tileHeight > 0);
 
   Document document;
-  document.registry = Sys::MakeRegistry();
+  document.registry = sys::MakeRegistry();
 
   auto& map = document.registry.ctx<Map>();
   map.tile_width = tileWidth;
@@ -121,7 +121,7 @@ auto Model::CanDecreaseViewportTileSize() const -> bool
 {
   if (HasActiveDocument()) {
     const auto& document = mDocuments.At(*mActiveMap);
-    return Sys::CanDecreaseViewportZoom(document->registry);
+    return sys::CanDecreaseViewportZoom(document->registry);
   }
 
   return false;
@@ -224,7 +224,7 @@ auto Model::GetRedoText() const -> const std::string&
 auto Model::IsStampActive() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return Sys::IsStampEnabled(*registry);
+    return sys::IsStampEnabled(*registry);
   }
   else {
     return false;
@@ -234,7 +234,7 @@ auto Model::IsStampActive() const -> bool
 auto Model::IsEraserActive() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return Sys::IsEraserEnabled(*registry);
+    return sys::IsEraserEnabled(*registry);
   }
   else {
     return false;
@@ -244,7 +244,7 @@ auto Model::IsEraserActive() const -> bool
 auto Model::IsBucketActive() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return Sys::IsBucketEnabled(*registry);
+    return sys::IsBucketEnabled(*registry);
   }
   else {
     return false;
@@ -254,7 +254,7 @@ auto Model::IsBucketActive() const -> bool
 auto Model::IsObjectSelectionActive() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return Sys::IsObjectSelectionEnabled(*registry);
+    return sys::IsObjectSelectionEnabled(*registry);
   }
   else {
     return false;
@@ -264,7 +264,7 @@ auto Model::IsObjectSelectionActive() const -> bool
 auto Model::IsStampPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return Sys::IsTileLayerActive(*registry);
+    return sys::IsTileLayerActive(*registry);
   }
   else {
     return false;
@@ -274,7 +274,7 @@ auto Model::IsStampPossible() const -> bool
 auto Model::IsEraserPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return Sys::IsTileLayerActive(*registry);
+    return sys::IsTileLayerActive(*registry);
   }
   else {
     return false;
@@ -284,8 +284,8 @@ auto Model::IsEraserPossible() const -> bool
 auto Model::IsBucketPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return Sys::IsTileLayerActive(*registry) &&
-           Sys::IsSingleTileSelectedInTileset(*registry);
+    return sys::IsTileLayerActive(*registry) &&
+           sys::IsSingleTileSelectedInTileset(*registry);
   }
   else {
     return false;
@@ -295,7 +295,7 @@ auto Model::IsBucketPossible() const -> bool
 auto Model::IsObjectSelectionPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return Sys::IsObjectLayerActive(*registry);
+    return sys::IsObjectLayerActive(*registry);
   }
   else {
     return false;

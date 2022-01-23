@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>  // registry, entity
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 /// \name Viewport system
 /// \{
@@ -136,4 +136,4 @@ void IncreaseViewportZoom(entt::registry& registry);
 
 /// \} End of viewport system
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

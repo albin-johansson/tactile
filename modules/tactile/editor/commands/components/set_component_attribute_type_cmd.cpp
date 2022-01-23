@@ -23,8 +23,8 @@ void SetComponentAttributeTypeCmd::Undo()
 
   const auto previous = mPreviousValue.value();
 
-  Sys::SetComponentAttributeType(registry, mComponentId, mAttributeName, previous.type());
-  Sys::SetComponentAttributeValue(registry, mComponentId, mAttributeName, previous);
+  sys::SetComponentAttributeType(registry, mComponentId, mAttributeName, previous.type());
+  sys::SetComponentAttributeValue(registry, mComponentId, mAttributeName, previous);
 }
 
 void SetComponentAttributeTypeCmd::Redo()
@@ -32,8 +32,8 @@ void SetComponentAttributeTypeCmd::Redo()
   auto& registry = mRegistry.get();
 
   mPreviousValue =
-      Sys::GetComponentAttributeValue(registry, mComponentId, mAttributeName);
-  Sys::SetComponentAttributeType(registry, mComponentId, mAttributeName, mNewType);
+      sys::GetComponentAttributeValue(registry, mComponentId, mAttributeName);
+  sys::SetComponentAttributeType(registry, mComponentId, mAttributeName, mNewType);
 }
 
 }  // namespace tactile

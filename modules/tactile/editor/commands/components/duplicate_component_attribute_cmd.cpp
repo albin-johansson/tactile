@@ -18,7 +18,7 @@ DuplicateComponentAttributeCmd::DuplicateComponentAttributeCmd(RegistryRef regis
 void DuplicateComponentAttributeCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  Sys::RemoveComponentAttribute(registry, mComponentId, mDuplicatedName.value());
+  sys::RemoveComponentAttribute(registry, mComponentId, mDuplicatedName.value());
   mDuplicatedName.reset();
 }
 
@@ -26,7 +26,7 @@ void DuplicateComponentAttributeCmd::Redo()
 {
   auto& registry = mRegistry.get();
   mDuplicatedName =
-      Sys::DuplicateComponentAttribute(registry, mComponentId, mAttributeName);
+      sys::DuplicateComponentAttribute(registry, mComponentId, mAttributeName);
 }
 
 }  // namespace tactile

@@ -178,7 +178,7 @@ void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
       const auto width = mWidgets.GetTilesetViewWidth();
       const auto height = mWidgets.GetTilesetViewHeight();
       if (width && height) {
-        const auto entity = Sys::GetActiveTileset(*registry);
+        const auto entity = sys::GetActiveTileset(*registry);
         const auto& viewport = registry->get<Viewport>(entity);
 
         const auto dx = static_cast<float>(event.x) * (viewport.tile_width / scaling);
@@ -319,25 +319,25 @@ void Application::OnSelectMap(const SelectMapEvent& event)
 void Application::OnSelectTool(const SelectToolEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::SelectTool(registry, event.type);
+  sys::SelectTool(registry, event.type);
 }
 
 void Application::OnMousePressed(const MousePressedEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::ToolOnPressed(registry, mDispatcher, event.info);
+  sys::ToolOnPressed(registry, mDispatcher, event.info);
 }
 
 void Application::OnMouseDrag(const MouseDragEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::ToolOnDragged(registry, mDispatcher, event.info);
+  sys::ToolOnDragged(registry, mDispatcher, event.info);
 }
 
 void Application::OnMouseReleased(const MouseReleasedEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::ToolOnReleased(registry, mDispatcher, event.info);
+  sys::ToolOnReleased(registry, mDispatcher, event.info);
 }
 
 void Application::OnStampSequence(StampSequenceEvent event)
@@ -365,13 +365,13 @@ void Application::OnCenterViewport()
 void Application::OnOffsetViewport(const OffsetViewportEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::OffsetViewport(registry, event.dx, event.dy);
+  sys::OffsetViewport(registry, event.dx, event.dy);
 }
 
 void Application::OnOffsetBoundViewport(const OffsetBoundViewportEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::OffsetBoundViewport(registry,
+  sys::OffsetBoundViewport(registry,
                            event.entity,
                            event.dx,
                            event.dy,
@@ -382,43 +382,43 @@ void Application::OnOffsetBoundViewport(const OffsetBoundViewportEvent& event)
 void Application::OnPanLeft()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::PanViewportLeft(registry);
+  sys::PanViewportLeft(registry);
 }
 
 void Application::OnPanRight()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::PanViewportRight(registry);
+  sys::PanViewportRight(registry);
 }
 
 void Application::OnPanUp()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::PanViewportUp(registry);
+  sys::PanViewportUp(registry);
 }
 
 void Application::OnPanDown()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::PanViewportDown(registry);
+  sys::PanViewportDown(registry);
 }
 
 void Application::OnIncreaseZoom()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::IncreaseViewportZoom(registry);
+  sys::IncreaseViewportZoom(registry);
 }
 
 void Application::OnDecreaseZoom()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::DecreaseViewportZoom(registry);
+  sys::DecreaseViewportZoom(registry);
 }
 
 void Application::OnResetZoom()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::ResetViewportZoom(registry);
+  sys::ResetViewportZoom(registry);
 }
 
 void Application::OnShowAddTilesetDialog()
@@ -444,13 +444,13 @@ void Application::OnRemoveTileset(const RemoveTilesetEvent& event)
 void Application::OnSelectTileset(const SelectTilesetEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::SelectTileset(registry, event.id);
+  sys::SelectTileset(registry, event.id);
 }
 
 void Application::OnSetTilesetSelection(const SetTilesetSelectionEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  Sys::UpdateTilesetSelection(registry, event.selection);
+  sys::UpdateTilesetSelection(registry, event.selection);
 }
 
 void Application::OnSetTilesetName(const SetTilesetNameEvent& event)
@@ -504,7 +504,7 @@ void Application::OnRemoveLayer(const RemoveLayerEvent& event)
 void Application::OnSelectLayer(const SelectLayerEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
-    Sys::SelectLayer(*registry, event.id);
+    sys::SelectLayer(*registry, event.id);
   }
 }
 

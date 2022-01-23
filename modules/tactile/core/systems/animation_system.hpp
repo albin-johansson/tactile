@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>  // registry
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 /// \name Animation system
 /// \{
@@ -18,4 +18,4 @@ void UpdateAnimations(entt::registry& registry);
 
 /// \} End of animation system
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

@@ -6,7 +6,7 @@
 #include "object_selection_tool_system.hpp"
 #include "stamp_tool_system.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 void SelectTool(entt::registry& registry, const ToolType tool)
 {
@@ -117,4 +117,4 @@ auto IsObjectSelectionEnabled(const entt::registry& registry) -> bool
   return active.tool == ToolType::ObjectSelection;
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

@@ -61,7 +61,7 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
       const auto position = MapPosition{row, col};
       const auto previewTilePos = info.mouse_pos + position - info.offset;
 
-      if (Sys::IsPositionInMap(registry, previewTilePos)) {
+      if (sys::IsPositionInMap(registry, previewTilePos)) {
         const auto tilesetTilePos = info.selection_begin + position;
         const auto tilesetTileRow = static_cast<float>(tilesetTilePos.GetRow());
         const auto tilesetTileCol = static_cast<float>(tilesetTilePos.GetColumn());

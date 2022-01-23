@@ -4,7 +4,7 @@
 
 #include "core/components/animation.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 void UpdateAnimations(entt::registry& registry)
 {
@@ -21,4 +21,4 @@ void UpdateAnimations(entt::registry& registry)
   }
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

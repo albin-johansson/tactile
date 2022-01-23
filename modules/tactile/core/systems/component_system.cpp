@@ -11,7 +11,7 @@
 #include "property_system.hpp"
 #include "throw.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
@@ -162,7 +162,7 @@ void RestoreComponentDef(entt::registry& registry, RemoveComponentDefResult snap
   for (auto&& [contextId, values] : snapshot.values) {
     LogVerbose("Restoring component '{}' for context '{}'", snapshot.id, contextId);
 
-    auto& context = Sys::GetContext(registry, contextId);
+    auto& context = sys::GetContext(registry, contextId);
 
     const auto componentEntity = registry.create();
     auto& component = registry.emplace<Component>(componentEntity);
@@ -175,7 +175,7 @@ void RestoreComponentDef(entt::registry& registry, RemoveComponentDefResult snap
 
 void RenameComponentDef(entt::registry& registry, const ComponentID id, std::string name)
 {
-  TACTILE_ASSERT(!Sys::IsComponentNameTaken(registry, name));
+  TACTILE_ASSERT(!sys::IsComponentNameTaken(registry, name));
 
   LogDebug("Renaming component definition '{}' to '{}'", id, name);
 
@@ -595,4 +595,4 @@ auto IsComponentNameTaken(const entt::registry& registry, const std::string_view
   return false;
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

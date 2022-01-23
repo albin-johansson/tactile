@@ -5,7 +5,7 @@
 #include "core/mouse_info.hpp"
 #include "core/tool_type.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 void SelectTool(entt::registry& registry, ToolType tool);
 
@@ -29,4 +29,4 @@ void ToolOnReleased(entt::registry& registry,
 
 [[nodiscard]] auto IsObjectSelectionEnabled(const entt::registry& registry) -> bool;
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

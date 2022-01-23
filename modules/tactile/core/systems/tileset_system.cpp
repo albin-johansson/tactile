@@ -16,7 +16,7 @@
 #include "logging.hpp"
 #include "property_system.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto CreateSourceRectCache(const Tileset& tileset)
@@ -308,4 +308,4 @@ auto ConvertToLocal(const entt::registry& registry, const TileID global) -> Mayb
   }
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

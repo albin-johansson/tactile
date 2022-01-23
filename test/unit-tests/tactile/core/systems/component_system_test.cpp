@@ -18,7 +18,7 @@ constexpr entt::entity null_entity = entt::null;
 [[nodiscard]] auto CreateContext(entt::registry& registry) -> ContextID
 {
   const auto entity = registry.create();
-  const auto& context = Sys::AddPropertyContext(registry, entity);
+  const auto& context = sys::AddPropertyContext(registry, entity);
   return context.id;
 }
 
@@ -26,24 +26,24 @@ constexpr entt::entity null_entity = entt::null;
 
 TEST(ComponentSystem, CreateComponentDef)
 {
-  auto registry = Sys::MakeRegistry();
-  ASSERT_FALSE(Sys::IsComponentNameTaken(registry, "Foo"));
-  ASSERT_FALSE(Sys::IsComponentNameTaken(registry, "Bar"));
+  auto registry = sys::MakeRegistry();
+  ASSERT_FALSE(sys::IsComponentNameTaken(registry, "Foo"));
+  ASSERT_FALSE(sys::IsComponentNameTaken(registry, "Bar"));
 
-  const auto foo = Sys::CreateComponentDef(registry, "Foo");
-  ASSERT_TRUE(Sys::IsComponentNameTaken(registry, "Foo"));
-  ASSERT_FALSE(Sys::IsComponentNameTaken(registry, "Bar"));
+  const auto foo = sys::CreateComponentDef(registry, "Foo");
+  ASSERT_TRUE(sys::IsComponentNameTaken(registry, "Foo"));
+  ASSERT_FALSE(sys::IsComponentNameTaken(registry, "Bar"));
 
-  const auto bar = Sys::CreateComponentDef(registry, "Bar");
-  ASSERT_TRUE(Sys::IsComponentNameTaken(registry, "Foo"));
-  ASSERT_TRUE(Sys::IsComponentNameTaken(registry, "Bar"));
+  const auto bar = sys::CreateComponentDef(registry, "Bar");
+  ASSERT_TRUE(sys::IsComponentNameTaken(registry, "Foo"));
+  ASSERT_TRUE(sys::IsComponentNameTaken(registry, "Bar"));
 
   ASSERT_NE(foo, bar);
 
-  ASSERT_EQ("Foo", Sys::GetComponentDefName(registry, foo));
-  ASSERT_EQ("Bar", Sys::GetComponentDefName(registry, bar));
+  ASSERT_EQ("Foo", sys::GetComponentDefName(registry, foo));
+  ASSERT_EQ("Bar", sys::GetComponentDefName(registry, bar));
 
-  const auto [entity, def] = Sys::GetComponentDef(registry, foo);
+  const auto [entity, def] = sys::GetComponentDef(registry, foo);
   ASSERT_EQ(foo, def.id);
   ASSERT_EQ("Foo", def.name);
   ASSERT_TRUE(def.attributes.empty());
@@ -53,71 +53,71 @@ TEST(ComponentSystem, RemoveComponentDef)
 {
   const std::string name = "Definition";
 
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
 
-  const auto def = Sys::CreateComponentDef(registry, name);
-  ASSERT_TRUE(Sys::IsComponentNameTaken(registry, name));
-  ASSERT_NE(null_entity, Sys::FindComponentDef(registry, def));
+  const auto def = sys::CreateComponentDef(registry, name);
+  ASSERT_TRUE(sys::IsComponentNameTaken(registry, name));
+  ASSERT_NE(null_entity, sys::FindComponentDef(registry, def));
 
   const auto a = CreateContext(registry);
   const auto b = CreateContext(registry);
   const auto c = CreateContext(registry);
 
-  Sys::AddComponent(registry, a, def);
-  Sys::AddComponent(registry, b, def);
-  Sys::AddComponent(registry, c, def);
+  sys::AddComponent(registry, a, def);
+  sys::AddComponent(registry, b, def);
+  sys::AddComponent(registry, c, def);
 
-  ASSERT_TRUE(Sys::HasComponent(registry, a, def));
-  ASSERT_TRUE(Sys::HasComponent(registry, b, def));
-  ASSERT_TRUE(Sys::HasComponent(registry, c, def));
+  ASSERT_TRUE(sys::HasComponent(registry, a, def));
+  ASSERT_TRUE(sys::HasComponent(registry, b, def));
+  ASSERT_TRUE(sys::HasComponent(registry, c, def));
 
-  Sys::RemoveComponentDef(registry, def);
+  sys::RemoveComponentDef(registry, def);
 
-  ASSERT_FALSE(Sys::IsComponentNameTaken(registry, name));
-  ASSERT_EQ(null_entity, Sys::FindComponentDef(registry, def));
+  ASSERT_FALSE(sys::IsComponentNameTaken(registry, name));
+  ASSERT_EQ(null_entity, sys::FindComponentDef(registry, def));
 
-  ASSERT_FALSE(Sys::HasComponent(registry, a, def));
-  ASSERT_FALSE(Sys::HasComponent(registry, b, def));
-  ASSERT_FALSE(Sys::HasComponent(registry, c, def));
+  ASSERT_FALSE(sys::HasComponent(registry, a, def));
+  ASSERT_FALSE(sys::HasComponent(registry, b, def));
+  ASSERT_FALSE(sys::HasComponent(registry, c, def));
 }
 
 TEST(ComponentSystem, RenameComponentDef)
 {
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
 
-  const auto def = Sys::CreateComponentDef(registry, "Foo");
-  ASSERT_EQ("Foo", Sys::GetComponentDefName(registry, def));
+  const auto def = sys::CreateComponentDef(registry, "Foo");
+  ASSERT_EQ("Foo", sys::GetComponentDefName(registry, def));
 
-  Sys::RenameComponentDef(registry, def, "Bar");
-  ASSERT_EQ("Bar", Sys::GetComponentDefName(registry, def));
+  sys::RenameComponentDef(registry, def, "Bar");
+  ASSERT_EQ("Bar", sys::GetComponentDefName(registry, def));
 }
 
 TEST(ComponentSystem, FindComponentDef)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto id = Sys::CreateComponentDef(registry, "Foo");
-  ASSERT_NE(null_entity, Sys::FindComponentDef(registry, id));
-  ASSERT_EQ(null_entity, Sys::FindComponentDef(registry, id + 1));
+  auto registry = sys::MakeRegistry();
+  const auto id = sys::CreateComponentDef(registry, "Foo");
+  ASSERT_NE(null_entity, sys::FindComponentDef(registry, id));
+  ASSERT_EQ(null_entity, sys::FindComponentDef(registry, id + 1));
 }
 
 TEST(ComponentSystem, GetComponentDef)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto id = Sys::CreateComponentDef(registry, "Foo");
+  auto registry = sys::MakeRegistry();
+  const auto id = sys::CreateComponentDef(registry, "Foo");
 
   const auto& ref = registry;
 
-  ASSERT_THROW(Sys::GetComponentDef(registry, id + 1), TactileError);
-  ASSERT_THROW(Sys::GetComponentDef(ref, id + 1), TactileError);
+  ASSERT_THROW(sys::GetComponentDef(registry, id + 1), TactileError);
+  ASSERT_THROW(sys::GetComponentDef(ref, id + 1), TactileError);
 
   {
-    const auto [entity, def] = Sys::GetComponentDef(registry, id);
+    const auto [entity, def] = sys::GetComponentDef(registry, id);
     ASSERT_EQ(id, def.id);
     ASSERT_EQ("Foo", def.name);
   }
 
   {
-    const auto [entity, def] = Sys::GetComponentDef(ref, id);
+    const auto [entity, def] = sys::GetComponentDef(ref, id);
     ASSERT_EQ(id, def.id);
     ASSERT_EQ("Foo", def.name);
   }
@@ -125,276 +125,276 @@ TEST(ComponentSystem, GetComponentDef)
 
 TEST(ComponentSystem, GetComponentDefName)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto id = Sys::CreateComponentDef(registry, "Hello");
-  ASSERT_EQ("Hello", Sys::GetComponentDefName(registry, id));
+  auto registry = sys::MakeRegistry();
+  const auto id = sys::CreateComponentDef(registry, "Hello");
+  ASSERT_EQ("Hello", sys::GetComponentDefName(registry, id));
 }
 
 TEST(ComponentSystem, CreateComponentAttribute)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto def = Sys::CreateComponentDef(registry, "Def");
-  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  auto registry = sys::MakeRegistry();
+  const auto def = sys::CreateComponentDef(registry, "Def");
+  ASSERT_FALSE(sys::IsComponentAttributeNameTaken(registry, def, "A"));
 
-  Sys::CreateComponentAttribute(registry, def, "A");
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  sys::CreateComponentAttribute(registry, def, "A");
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "A"));
 }
 
 TEST(ComponentSystem, RemoveComponentAttribute)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto def = Sys::CreateComponentDef(registry, "Def");
+  auto registry = sys::MakeRegistry();
+  const auto def = sys::CreateComponentDef(registry, "Def");
 
   const auto a = CreateContext(registry);
   const auto b = CreateContext(registry);
 
-  Sys::AddComponent(registry, a, def);
-  Sys::AddComponent(registry, b, def);
+  sys::AddComponent(registry, a, def);
+  sys::AddComponent(registry, b, def);
 
-  Sys::CreateComponentAttribute(registry, def, "A");
-  Sys::CreateComponentAttribute(registry, def, "B");
+  sys::CreateComponentAttribute(registry, def, "A");
+  sys::CreateComponentAttribute(registry, def, "B");
 
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "B"));
-  ASSERT_TRUE(Sys::HasComponent(registry, a, def));
-  ASSERT_TRUE(Sys::HasComponent(registry, b, def));
-  ASSERT_EQ(1u, Sys::GetComponentCount(registry, a));
-  ASSERT_EQ(1u, Sys::GetComponentCount(registry, b));
-  ASSERT_EQ(2u, Sys::GetComponent(registry, a, def).values.size());
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "B"));
+  ASSERT_TRUE(sys::HasComponent(registry, a, def));
+  ASSERT_TRUE(sys::HasComponent(registry, b, def));
+  ASSERT_EQ(1u, sys::GetComponentCount(registry, a));
+  ASSERT_EQ(1u, sys::GetComponentCount(registry, b));
+  ASSERT_EQ(2u, sys::GetComponent(registry, a, def).values.size());
 
-  Sys::RemoveComponentAttribute(registry, def, "A");
+  sys::RemoveComponentAttribute(registry, def, "A");
 
-  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "B"));
-  ASSERT_TRUE(Sys::HasComponent(registry, a, def));
-  ASSERT_TRUE(Sys::HasComponent(registry, b, def));
-  ASSERT_EQ(1u, Sys::GetComponentCount(registry, a));
-  ASSERT_EQ(1u, Sys::GetComponentCount(registry, b));
-  ASSERT_EQ(1u, Sys::GetComponent(registry, a, def).values.size());
+  ASSERT_FALSE(sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "B"));
+  ASSERT_TRUE(sys::HasComponent(registry, a, def));
+  ASSERT_TRUE(sys::HasComponent(registry, b, def));
+  ASSERT_EQ(1u, sys::GetComponentCount(registry, a));
+  ASSERT_EQ(1u, sys::GetComponentCount(registry, b));
+  ASSERT_EQ(1u, sys::GetComponent(registry, a, def).values.size());
 }
 
 TEST(ComponentSystem, RenameComponentAttribute)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto def = Sys::CreateComponentDef(registry, "Def");
+  auto registry = sys::MakeRegistry();
+  const auto def = sys::CreateComponentDef(registry, "Def");
 
-  Sys::CreateComponentAttribute(registry, def, "A");
+  sys::CreateComponentAttribute(registry, def, "A");
 
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
-  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "B"));
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_FALSE(sys::IsComponentAttributeNameTaken(registry, def, "B"));
 
-  Sys::RenameComponentAttribute(registry, def, "A", "B");
+  sys::RenameComponentAttribute(registry, def, "A", "B");
 
-  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "B"));
+  ASSERT_FALSE(sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "B"));
 }
 
 TEST(ComponentSystem, DuplicateComponentAttribute)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto def = Sys::CreateComponentDef(registry, "Def");
+  auto registry = sys::MakeRegistry();
+  const auto def = sys::CreateComponentDef(registry, "Def");
 
-  Sys::CreateComponentAttribute(registry, def, "A");
-  ASSERT_EQ(1u, Sys::GetComponentAttributeCount(registry, def));
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
-  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "A (1)"));
+  sys::CreateComponentAttribute(registry, def, "A");
+  ASSERT_EQ(1u, sys::GetComponentAttributeCount(registry, def));
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_FALSE(sys::IsComponentAttributeNameTaken(registry, def, "A (1)"));
 
-  Sys::DuplicateComponentAttribute(registry, def, "A");
-  ASSERT_EQ(2u, Sys::GetComponentAttributeCount(registry, def));
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A"));
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "A (1)"));
+  sys::DuplicateComponentAttribute(registry, def, "A");
+  ASSERT_EQ(2u, sys::GetComponentAttributeCount(registry, def));
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "A"));
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "A (1)"));
 
-  Sys::CreateComponentAttribute(registry, def, "B");
-  Sys::CreateComponentAttribute(registry, def, "B (1)");
-  ASSERT_EQ(4u, Sys::GetComponentAttributeCount(registry, def));
-  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "B (2)"));
+  sys::CreateComponentAttribute(registry, def, "B");
+  sys::CreateComponentAttribute(registry, def, "B (1)");
+  ASSERT_EQ(4u, sys::GetComponentAttributeCount(registry, def));
+  ASSERT_FALSE(sys::IsComponentAttributeNameTaken(registry, def, "B (2)"));
 
-  Sys::DuplicateComponentAttribute(registry, def, "B");
-  ASSERT_EQ(5u, Sys::GetComponentAttributeCount(registry, def));
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "B (2)"));
+  sys::DuplicateComponentAttribute(registry, def, "B");
+  ASSERT_EQ(5u, sys::GetComponentAttributeCount(registry, def));
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "B (2)"));
 }
 
 TEST(ComponentSystem, SetComponentAttributeType)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto def = Sys::CreateComponentDef(registry, "Def");
+  auto registry = sys::MakeRegistry();
+  const auto def = sys::CreateComponentDef(registry, "Def");
 
-  Sys::CreateComponentAttribute(registry, def, "A");
-  ASSERT_EQ(PropertyType::String, Sys::GetComponentAttributeType(registry, def, "A"));
+  sys::CreateComponentAttribute(registry, def, "A");
+  ASSERT_EQ(PropertyType::String, sys::GetComponentAttributeType(registry, def, "A"));
 
-  Sys::SetComponentAttributeType(registry, def, "A", PropertyType::Integer);
-  ASSERT_EQ(PropertyType::Integer, Sys::GetComponentAttributeType(registry, def, "A"));
+  sys::SetComponentAttributeType(registry, def, "A", PropertyType::Integer);
+  ASSERT_EQ(PropertyType::Integer, sys::GetComponentAttributeType(registry, def, "A"));
 
-  ASSERT_THROW(Sys::GetComponentAttributeType(registry, def, "B"), TactileError);
+  ASSERT_THROW(sys::GetComponentAttributeType(registry, def, "B"), TactileError);
 }
 
 TEST(ComponentSystem, SetComponentAttributeValue)
 {
   using namespace std::string_literals;
 
-  auto registry = Sys::MakeRegistry();
-  const auto def = Sys::CreateComponentDef(registry, "Def");
+  auto registry = sys::MakeRegistry();
+  const auto def = sys::CreateComponentDef(registry, "Def");
 
-  ASSERT_THROW(Sys::SetComponentAttributeValue(registry, def, "ABC", 42), TactileError);
+  ASSERT_THROW(sys::SetComponentAttributeValue(registry, def, "ABC", 42), TactileError);
 
-  Sys::CreateComponentAttribute(registry, def, "Foo");
-  Sys::SetComponentAttributeValue(registry, def, "Foo", "Bar"s);
+  sys::CreateComponentAttribute(registry, def, "Foo");
+  sys::SetComponentAttributeValue(registry, def, "Foo", "Bar"s);
 
-  ASSERT_EQ("Bar", Sys::GetComponentAttributeValue(registry, def, "Foo").as_string());
+  ASSERT_EQ("Bar", sys::GetComponentAttributeValue(registry, def, "Foo").as_string());
 
-  Sys::SetComponentAttributeType(registry, def, "Foo", PropertyType::Boolean);
-  Sys::SetComponentAttributeValue(registry, def, "Foo", true);
+  sys::SetComponentAttributeType(registry, def, "Foo", PropertyType::Boolean);
+  sys::SetComponentAttributeValue(registry, def, "Foo", true);
 
-  ASSERT_TRUE(Sys::GetComponentAttributeValue(registry, def, "Foo").as_bool());
+  ASSERT_TRUE(sys::GetComponentAttributeValue(registry, def, "Foo").as_bool());
 }
 
 TEST(ComponentSystem, IsComponentAttributeNameTaken)
 {
-  auto registry = Sys::MakeRegistry();
-  const auto def = Sys::CreateComponentDef(registry, "Def");
-  ASSERT_FALSE(Sys::IsComponentAttributeNameTaken(registry, def, "abc"));
+  auto registry = sys::MakeRegistry();
+  const auto def = sys::CreateComponentDef(registry, "Def");
+  ASSERT_FALSE(sys::IsComponentAttributeNameTaken(registry, def, "abc"));
 
-  Sys::CreateComponentAttribute(registry, def, "abc");
-  ASSERT_TRUE(Sys::IsComponentAttributeNameTaken(registry, def, "abc"));
+  sys::CreateComponentAttribute(registry, def, "abc");
+  ASSERT_TRUE(sys::IsComponentAttributeNameTaken(registry, def, "abc"));
 }
 
 TEST(ComponentSystem, AddComponent)
 {
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
 
-  const auto def = Sys::CreateComponentDef(registry, "Position");
-  Sys::CreateComponentAttribute(registry, def, "X");
-  Sys::CreateComponentAttribute(registry, def, "Y");
+  const auto def = sys::CreateComponentDef(registry, "Position");
+  sys::CreateComponentAttribute(registry, def, "X");
+  sys::CreateComponentAttribute(registry, def, "Y");
 
-  Sys::SetComponentAttributeType(registry, def, "X", PropertyType::Integer);
-  Sys::SetComponentAttributeValue(registry, def, "X", 42);
+  sys::SetComponentAttributeType(registry, def, "X", PropertyType::Integer);
+  sys::SetComponentAttributeValue(registry, def, "X", 42);
 
-  Sys::SetComponentAttributeType(registry, def, "Y", PropertyType::Floating);
-  Sys::SetComponentAttributeValue(registry, def, "Y", -3.5f);
+  sys::SetComponentAttributeType(registry, def, "Y", PropertyType::Floating);
+  sys::SetComponentAttributeValue(registry, def, "Y", -3.5f);
 
   const auto entity = CreateContext(registry);
-  auto& component = Sys::AddComponent(registry, entity, def);
+  auto& component = sys::AddComponent(registry, entity, def);
   ASSERT_EQ(def, component.type);
   ASSERT_EQ(2u, component.values.size());
 
-  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, entity, def, "X").as_int());
-  ASSERT_EQ(-3.5f, Sys::GetComponentAttribute(registry, entity, def, "Y").as_float());
+  ASSERT_EQ(42, sys::GetComponentAttribute(registry, entity, def, "X").as_int());
+  ASSERT_EQ(-3.5f, sys::GetComponentAttribute(registry, entity, def, "Y").as_float());
 
-  ASSERT_THROW(Sys::GetComponentAttribute(registry, entity, def, "foo"), TactileError);
+  ASSERT_THROW(sys::GetComponentAttribute(registry, entity, def, "foo"), TactileError);
 }
 
 TEST(ComponentSystem, ResetComponent)
 {
   using namespace std::string_literals;
 
-  auto registry = Sys::MakeRegistry();
-  const auto def = Sys::CreateComponentDef(registry, "Foo");
+  auto registry = sys::MakeRegistry();
+  const auto def = sys::CreateComponentDef(registry, "Foo");
 
-  Sys::CreateComponentAttribute(registry, def, "A", 42);
-  Sys::CreateComponentAttribute(registry, def, "B", "Boo"s);
-  Sys::CreateComponentAttribute(registry, def, "C", 1.5f);
+  sys::CreateComponentAttribute(registry, def, "A", 42);
+  sys::CreateComponentAttribute(registry, def, "B", "Boo"s);
+  sys::CreateComponentAttribute(registry, def, "C", 1.5f);
 
   const auto a = CreateContext(registry);
   const auto b = CreateContext(registry);
 
-  Sys::AddComponent(registry, a, def);
-  Sys::AddComponent(registry, b, def);
+  sys::AddComponent(registry, a, def);
+  sys::AddComponent(registry, b, def);
 
-  Sys::UpdateComponent(registry, b, def, "A", 123);
-  Sys::UpdateComponent(registry, b, def, "B", "Coo"s);
-  Sys::UpdateComponent(registry, b, def, "C", 2.0f);
+  sys::UpdateComponent(registry, b, def, "A", 123);
+  sys::UpdateComponent(registry, b, def, "B", "Coo"s);
+  sys::UpdateComponent(registry, b, def, "C", 2.0f);
 
-  ASSERT_TRUE(Sys::HasComponent(registry, a, def));
-  ASSERT_TRUE(Sys::HasComponent(registry, b, def));
+  ASSERT_TRUE(sys::HasComponent(registry, a, def));
+  ASSERT_TRUE(sys::HasComponent(registry, b, def));
 
-  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, a, def, "A").as_int());
-  ASSERT_EQ(123, Sys::GetComponentAttribute(registry, b, def, "A").as_int());
+  ASSERT_EQ(42, sys::GetComponentAttribute(registry, a, def, "A").as_int());
+  ASSERT_EQ(123, sys::GetComponentAttribute(registry, b, def, "A").as_int());
 
-  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, a, def, "B").as_string());
-  ASSERT_EQ("Coo", Sys::GetComponentAttribute(registry, b, def, "B").as_string());
+  ASSERT_EQ("Boo", sys::GetComponentAttribute(registry, a, def, "B").as_string());
+  ASSERT_EQ("Coo", sys::GetComponentAttribute(registry, b, def, "B").as_string());
 
-  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, a, def, "C").as_float());
-  ASSERT_EQ(2.0f, Sys::GetComponentAttribute(registry, b, def, "C").as_float());
+  ASSERT_EQ(1.5f, sys::GetComponentAttribute(registry, a, def, "C").as_float());
+  ASSERT_EQ(2.0f, sys::GetComponentAttribute(registry, b, def, "C").as_float());
 
-  Sys::ResetComponent(registry, b, def);
+  sys::ResetComponent(registry, b, def);
 
-  ASSERT_TRUE(Sys::HasComponent(registry, a, def));
-  ASSERT_TRUE(Sys::HasComponent(registry, b, def));
+  ASSERT_TRUE(sys::HasComponent(registry, a, def));
+  ASSERT_TRUE(sys::HasComponent(registry, b, def));
 
-  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, a, def, "A").as_int());
-  ASSERT_EQ(42, Sys::GetComponentAttribute(registry, b, def, "A").as_int());
+  ASSERT_EQ(42, sys::GetComponentAttribute(registry, a, def, "A").as_int());
+  ASSERT_EQ(42, sys::GetComponentAttribute(registry, b, def, "A").as_int());
 
-  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, a, def, "B").as_string());
-  ASSERT_EQ("Boo", Sys::GetComponentAttribute(registry, b, def, "B").as_string());
+  ASSERT_EQ("Boo", sys::GetComponentAttribute(registry, a, def, "B").as_string());
+  ASSERT_EQ("Boo", sys::GetComponentAttribute(registry, b, def, "B").as_string());
 
-  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, a, def, "C").as_float());
-  ASSERT_EQ(1.5f, Sys::GetComponentAttribute(registry, b, def, "C").as_float());
+  ASSERT_EQ(1.5f, sys::GetComponentAttribute(registry, a, def, "C").as_float());
+  ASSERT_EQ(1.5f, sys::GetComponentAttribute(registry, b, def, "C").as_float());
 }
 
 TEST(ComponentSystem, HasComponent)
 {
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
 
   const auto a = CreateContext(registry);
   const auto b = CreateContext(registry);
 
-  const auto def = Sys::CreateComponentDef(registry, "def");
+  const auto def = sys::CreateComponentDef(registry, "def");
 
-  ASSERT_FALSE(Sys::HasComponent(registry, a, def));
-  ASSERT_FALSE(Sys::HasComponent(registry, b, def));
+  ASSERT_FALSE(sys::HasComponent(registry, a, def));
+  ASSERT_FALSE(sys::HasComponent(registry, b, def));
 
-  Sys::AddComponent(registry, a, def);
+  sys::AddComponent(registry, a, def);
 
-  ASSERT_TRUE(Sys::HasComponent(registry, a, def));
-  ASSERT_FALSE(Sys::HasComponent(registry, b, def));
+  ASSERT_TRUE(sys::HasComponent(registry, a, def));
+  ASSERT_FALSE(sys::HasComponent(registry, b, def));
 
-  Sys::RemoveComponent(registry, a, def);
+  sys::RemoveComponent(registry, a, def);
 
-  ASSERT_FALSE(Sys::HasComponent(registry, a, def));
-  ASSERT_FALSE(Sys::HasComponent(registry, b, def));
+  ASSERT_FALSE(sys::HasComponent(registry, a, def));
+  ASSERT_FALSE(sys::HasComponent(registry, b, def));
 }
 
 TEST(ComponentSystem, RemoveComponent)
 {
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
 
-  const auto a = Sys::CreateComponentDef(registry, "A");
-  const auto b = Sys::CreateComponentDef(registry, "B");
+  const auto a = sys::CreateComponentDef(registry, "A");
+  const auto b = sys::CreateComponentDef(registry, "B");
 
   const auto entity = CreateContext(registry);
-  Sys::AddComponent(registry, entity, a);
-  Sys::AddComponent(registry, entity, b);
+  sys::AddComponent(registry, entity, a);
+  sys::AddComponent(registry, entity, b);
 
-  ASSERT_TRUE(Sys::HasComponent(registry, entity, a));
-  ASSERT_TRUE(Sys::HasComponent(registry, entity, b));
-  ASSERT_EQ(2u, Sys::GetComponentCount(registry, entity));
+  ASSERT_TRUE(sys::HasComponent(registry, entity, a));
+  ASSERT_TRUE(sys::HasComponent(registry, entity, b));
+  ASSERT_EQ(2u, sys::GetComponentCount(registry, entity));
 
-  Sys::RemoveComponent(registry, entity, b);
-  ASSERT_TRUE(Sys::HasComponent(registry, entity, a));
-  ASSERT_FALSE(Sys::HasComponent(registry, entity, b));
-  ASSERT_EQ(1u, Sys::GetComponentCount(registry, entity));
+  sys::RemoveComponent(registry, entity, b);
+  ASSERT_TRUE(sys::HasComponent(registry, entity, a));
+  ASSERT_FALSE(sys::HasComponent(registry, entity, b));
+  ASSERT_EQ(1u, sys::GetComponentCount(registry, entity));
 
-  Sys::RemoveComponent(registry, entity, a);
-  ASSERT_FALSE(Sys::HasComponent(registry, entity, a));
-  ASSERT_FALSE(Sys::HasComponent(registry, entity, b));
-  ASSERT_EQ(0u, Sys::GetComponentCount(registry, entity));
+  sys::RemoveComponent(registry, entity, a);
+  ASSERT_FALSE(sys::HasComponent(registry, entity, a));
+  ASSERT_FALSE(sys::HasComponent(registry, entity, b));
+  ASSERT_EQ(0u, sys::GetComponentCount(registry, entity));
 }
 
 TEST(ComponentSystem, GetComponent)
 {
-  auto registry = Sys::MakeRegistry();
+  auto registry = sys::MakeRegistry();
 
-  const auto a = Sys::CreateComponentDef(registry, "A");
-  const auto b = Sys::CreateComponentDef(registry, "B");
+  const auto a = sys::CreateComponentDef(registry, "A");
+  const auto b = sys::CreateComponentDef(registry, "B");
 
   const auto entity = CreateContext(registry);
-  ASSERT_THROW(Sys::GetComponent(registry, entity, a), TactileError);
-  ASSERT_THROW(Sys::GetComponent(registry, entity, b), TactileError);
+  ASSERT_THROW(sys::GetComponent(registry, entity, a), TactileError);
+  ASSERT_THROW(sys::GetComponent(registry, entity, b), TactileError);
 
-  Sys::AddComponent(registry, entity, a);
-  ASSERT_NO_THROW(Sys::GetComponent(registry, entity, a));
-  ASSERT_THROW(Sys::GetComponent(registry, entity, b), TactileError);
+  sys::AddComponent(registry, entity, a);
+  ASSERT_NO_THROW(sys::GetComponent(registry, entity, a));
+  ASSERT_THROW(sys::GetComponent(registry, entity, b), TactileError);
 
-  const auto& component = Sys::GetComponent(registry, entity, a);
+  const auto& component = sys::GetComponent(registry, entity, a);
   ASSERT_EQ(a, component.type);
 }

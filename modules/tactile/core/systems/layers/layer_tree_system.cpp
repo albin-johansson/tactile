@@ -6,7 +6,7 @@
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 
-namespace tactile::Sys::LayerTree {
+namespace tactile::sys::layer_tree {
 namespace {
 
 void SwapIndices(entt::registry& registry, const entt::entity a, const entt::entity b)
@@ -292,4 +292,4 @@ auto GetGlobalIndex(const entt::registry& registry, const entt::entity entity) -
   }
 }
 
-}  // namespace tactile::Sys::LayerTree
+}  // namespace tactile::sys::layer_tree

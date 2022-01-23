@@ -55,13 +55,13 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
 
   if (Button(TAC_ICON_MOVE_UP,
              "Move layer up",
-             activeLayerId && Sys::CanMoveLayerUp(registry, *activeLayerId))) {
+             activeLayerId && sys::CanMoveLayerUp(registry, *activeLayerId))) {
     dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
   }
 
   if (Button(TAC_ICON_MOVE_DOWN,
              "Move layer down",
-             activeLayerId && Sys::CanMoveLayerDown(registry, *activeLayerId))) {
+             activeLayerId && sys::CanMoveLayerDown(registry, *activeLayerId))) {
     dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
   }
 }
@@ -113,7 +113,7 @@ void LayerDock::Update(const Model& model,
   if (mRenameTarget.has_value()) {
     const auto target = *mRenameTarget;
 
-    const auto entity = Sys::FindLayer(registry, target);
+    const auto entity = sys::FindLayer(registry, target);
     TACTILE_ASSERT(entity != entt::null);
 
     const auto& context = registry.get<PropertyContext>(entity);

@@ -13,23 +13,23 @@ void Flood(entt::registry& registry,
            const TileID replacement,
            std::vector<MapPosition>& affected)
 {
-  const auto target = Sys::GetTileFromLayer(registry, entity, origin);
+  const auto target = sys::GetTileFromLayer(registry, entity, origin);
 
-  if (!Sys::IsPositionInMap(registry, origin) || (target == replacement)) {
+  if (!sys::IsPositionInMap(registry, origin) || (target == replacement)) {
     return;
   }
 
   std::queue<MapPosition> positions;
 
-  Sys::SetTileInLayer(registry, entity, origin, replacement);
+  sys::SetTileInLayer(registry, entity, origin, replacement);
   affected.push_back(origin);
   positions.push(origin);
 
   auto update = [&](const MapPosition& position) {
-    if (Sys::IsPositionInMap(registry, position)) {
-      const auto tile = Sys::GetTileFromLayer(registry, entity, position);
+    if (sys::IsPositionInMap(registry, position)) {
+      const auto tile = sys::GetTileFromLayer(registry, entity, position);
       if (tile == target) {
-        Sys::SetTileInLayer(registry, entity, position, replacement);
+        sys::SetTileInLayer(registry, entity, position, replacement);
         affected.push_back(position);
         positions.push(position);
       }

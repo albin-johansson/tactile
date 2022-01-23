@@ -11,7 +11,7 @@
 #include "core/attribute_value.hpp"
 #include "core/components/component.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 /// \name Component definition functions
 /// \{
@@ -375,4 +375,4 @@ auto ResetComponent(entt::registry& registry,
 
 /// \} End of component functions
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

@@ -15,14 +15,14 @@ SetLayerOpacityCmd::SetLayerOpacityCmd(RegistryRef registry,
 
 void SetLayerOpacityCmd::Undo()
 {
-  Sys::SetLayerOpacity(mRegistry, mLayerId, mPreviousOpacity.value());
+  sys::SetLayerOpacity(mRegistry, mLayerId, mPreviousOpacity.value());
   mPreviousOpacity.reset();
 }
 
 void SetLayerOpacityCmd::Redo()
 {
-  mPreviousOpacity = Sys::GetLayerOpacity(mRegistry, mLayerId);
-  Sys::SetLayerOpacity(mRegistry, mLayerId, mOpacity);
+  mPreviousOpacity = sys::GetLayerOpacity(mRegistry, mLayerId);
+  sys::SetLayerOpacity(mRegistry, mLayerId, mOpacity);
 }
 
 auto SetLayerOpacityCmd::MergeWith(const ACommand& cmd) -> bool

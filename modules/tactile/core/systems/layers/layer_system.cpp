@@ -19,7 +19,7 @@
 #include "layer_tree_system.hpp"
 #include "tile_layer_system.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto GetNewLayerParent(const entt::registry& registry) -> entt::entity
@@ -200,27 +200,27 @@ auto RestoreLayer(entt::registry& registry, LayerSnapshot snapshot) -> entt::ent
   while (GetLayerIndex(registry, entity) != snapshot.index) {
     const auto index = GetLayerIndex(registry, entity);
     if (index > snapshot.index) {
-      LayerTree::MoveNodeUp(registry, entity);
+      layer_tree::MoveNodeUp(registry, entity);
     }
     else if (index < snapshot.index) {
-      LayerTree::MoveNodeDown(registry, entity);
+      layer_tree::MoveNodeDown(registry, entity);
     }
   }
 
-  LayerTree::SortNodes(registry);
+  layer_tree::SortNodes(registry);
   return entity;
 }
 
 void SortLayers(entt::registry& registry)
 {
-  LayerTree::SortNodes(registry);
+  layer_tree::SortNodes(registry);
 }
 
 void RemoveLayer(entt::registry& registry, const entt::entity entity)
 {
   auto maybe_reset = [&](entt::entity& active, const entt::entity entity) {
     if (active != entt::null) {
-      if (entity == active || LayerTree::IsChildNode(registry, entity, active)) {
+      if (entity == active || layer_tree::IsChildNode(registry, entity, active)) {
         active = entt::null;
       }
     }
@@ -229,7 +229,7 @@ void RemoveLayer(entt::registry& registry, const entt::entity entity)
   maybe_reset(registry.ctx<ActiveLayer>().entity, entity);
   maybe_reset(registry.ctx<ActivePropertyContext>().entity, entity);
 
-  LayerTree::DestroyNode(registry, entity);
+  layer_tree::DestroyNode(registry, entity);
 }
 
 void SelectLayer(entt::registry& registry, const entt::entity entity)
@@ -293,7 +293,7 @@ auto DuplicateLayer(entt::registry& registry, const entt::entity source) -> entt
   const auto& sourceParent = registry.get<Parent>(source);
   const auto copy = DuplicateLayer(registry, source, sourceParent.entity, false);
 
-  LayerTree::SortNodes(registry);
+  layer_tree::SortNodes(registry);
 
   return copy;
 }
@@ -308,7 +308,7 @@ auto DuplicateLayer(entt::registry& registry,
      duplicate. */
 
   if (!recursive) {
-    LayerTree::IncrementIndicesOfSiblingsBelow(registry, source);
+    layer_tree::IncrementIndicesOfSiblingsBelow(registry, source);
   }
 
   const auto copy = registry.create();
@@ -366,12 +366,12 @@ auto DuplicateLayer(entt::registry& registry,
 
 void MoveLayerUp(entt::registry& registry, const entt::entity entity)
 {
-  LayerTree::MoveNodeUp(registry, entity);
+  layer_tree::MoveNodeUp(registry, entity);
 }
 
 void MoveLayerDown(entt::registry& registry, const entt::entity entity)
 {
-  LayerTree::MoveNodeDown(registry, entity);
+  layer_tree::MoveNodeDown(registry, entity);
 }
 
 void SetLayerOpacity(entt::registry& registry,
@@ -443,12 +443,12 @@ auto IsLayerVisible(const entt::registry& registry, const entt::entity entity) -
 
 auto CanMoveLayerUp(const entt::registry& registry, const entt::entity entity) -> bool
 {
-  return LayerTree::CanMoveNodeUp(registry, entity);
+  return layer_tree::CanMoveNodeUp(registry, entity);
 }
 
 auto CanMoveLayerDown(const entt::registry& registry, const entt::entity entity) -> bool
 {
-  return LayerTree::CanMoveNodeDown(registry, entity);
+  return layer_tree::CanMoveNodeDown(registry, entity);
 }
 
 auto IsTileLayerActive(const entt::registry& registry) -> bool
@@ -484,4 +484,4 @@ auto GetActiveLayerID(const entt::registry& registry) -> Maybe<LayerID>
   }
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

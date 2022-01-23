@@ -3,7 +3,7 @@
 #include "assert.hpp"
 #include "core/components/layer.hpp"
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 void SetTileInLayer(entt::registry& registry,
                     const entt::entity entity,
@@ -50,4 +50,4 @@ auto GetTileFromLayer(const entt::registry& registry,
   }
 }
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

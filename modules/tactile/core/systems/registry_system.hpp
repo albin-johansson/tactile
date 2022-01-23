@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>  // registry
 
-namespace tactile::Sys {
+namespace tactile::sys {
 
 /**
  * \brief Creates a registry with the expected context variables.
@@ -25,4 +25,4 @@ namespace tactile::Sys {
  */
 [[nodiscard]] auto MakeRegistry() -> entt::registry;
 
-}  // namespace tactile::Sys
+}  // namespace tactile::sys

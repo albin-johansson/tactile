@@ -85,7 +85,7 @@ void UpdateCursorGizmos(const entt::registry& registry,
     return;
   }
 
-  if (Sys::IsTileLayerActive(registry)) {
+  if (sys::IsTileLayerActive(registry)) {
     ImGui::GetWindowDrawList()->AddRect(cursor.clamped_position,
                                         cursor.clamped_position + info.grid_size,
                                         gTileHighlightColor,
@@ -109,7 +109,7 @@ void UpdateCursorGizmos(const entt::registry& registry,
     });
   }
 
-  if (Sys::IsStampEnabled(registry) && Sys::HasNonEmptyTilesetSelection(registry)) {
+  if (sys::IsStampEnabled(registry) && sys::HasNonEmptyTilesetSelection(registry)) {
     RenderStampPreview(registry, cursor.map_position, info);
   }
 }

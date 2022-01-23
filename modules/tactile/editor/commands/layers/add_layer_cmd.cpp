@@ -16,17 +16,17 @@ void AddLayerCmd::Undo()
   auto& registry = mRegistry.get();
 
   const auto id = mLayerId.value();
-  const auto entity = Sys::FindLayer(registry, id);
+  const auto entity = sys::FindLayer(registry, id);
   TACTILE_ASSERT(entity != entt::null);
 
-  mLayerSnapshot = Sys::CopyLayer(registry, entity);
-  Sys::RemoveLayer(registry, id);
+  mLayerSnapshot = sys::CopyLayer(registry, entity);
+  sys::RemoveLayer(registry, id);
 }
 
 void AddLayerCmd::Redo()
 {
   if (mLayerSnapshot) {
-    Sys::RestoreLayer(mRegistry, *mLayerSnapshot);
+    sys::RestoreLayer(mRegistry, *mLayerSnapshot);
   }
   else {
     auto& registry = mRegistry.get();
@@ -34,15 +34,15 @@ void AddLayerCmd::Redo()
     entt::entity entity{entt::null};
     switch (mLayerType) {
       case LayerType::TileLayer: {
-        entity = Sys::AddTileLayer(registry);
+        entity = sys::AddTileLayer(registry);
         break;
       }
       case LayerType::ObjectLayer: {
-        entity = Sys::AddObjectLayer(registry);
+        entity = sys::AddObjectLayer(registry);
         break;
       }
       case LayerType::GroupLayer: {
-        entity = Sys::AddGroupLayer(registry);
+        entity = sys::AddGroupLayer(registry);
         break;
       }
     }
@@ -50,7 +50,7 @@ void AddLayerCmd::Redo()
     TACTILE_ASSERT(entity != entt::null);
     mLayerId = registry.get<Layer>(entity).id;
 
-    Sys::SortLayers(registry);
+    sys::SortLayers(registry);
   }
 }
 

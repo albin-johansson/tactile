@@ -13,7 +13,7 @@ StampSequenceCmd::StampSequenceCmd(RegistryRef registry,
                                    TileCache&& newState)
     : ACommand{"Stamp Sequence"}
     , mRegistry{registry}
-    , mLayer{Sys::GetActiveLayerID(registry).value()}
+    , mLayer{sys::GetActiveLayerID(registry).value()}
     , mOldState{std::move(oldState)}
     , mNewState{std::move(newState)}
 {}
@@ -32,10 +32,10 @@ void StampSequenceCmd::ApplySequence(const TileCache& cache)
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = Sys::FindLayer(registry, mLayer);
+  const auto entity = sys::FindLayer(registry, mLayer);
   TACTILE_ASSERT(entity != entt::null);
 
-  Sys::SetTilesInLayer(registry, entity, cache);
+  sys::SetTilesInLayer(registry, entity, cache);
 }
 
 }  // namespace tactile
