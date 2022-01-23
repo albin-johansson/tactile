@@ -26,9 +26,9 @@ struct AnimationFrame final
  */
 struct Animation final
 {
-  usize index{};                       ///< Index of the current frame.
-  cen::u32ms last_update_time{};  ///< When a frame was last changed.
-  std::vector<entt::entity> frames;    ///< The associated frames.
+  usize index{};                     ///< Index of the current frame.
+  cen::u32ms last_update_time{};     ///< When a frame was last changed.
+  std::vector<entt::entity> frames;  ///< The associated frames.
 };
 
 }  // namespace Tactile
