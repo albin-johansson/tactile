@@ -420,6 +420,12 @@ set(SOURCE_FILES
     io/session.hpp
     io/create_document_from_ir.cpp
     io/create_document_from_ir.hpp
+
+    io/emitter/emit_info.cpp
+    io/emitter/emit_info.hpp
+
+    io/emitter/yaml/yaml_emitter.cpp
+    io/emitter/yaml/yaml_emitter.hpp
     )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
