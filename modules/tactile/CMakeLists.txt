@@ -94,46 +94,8 @@ endif ()
 
 add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  target_compile_options(${TACTILE_LIB}
-                         PRIVATE
-                         /EHsc
-                         /MP
-                         /W4
-                         /bigobj
-                         /Zc:preprocessor
-                         /Zc:__cplusplus
-                         /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
-                         )
-
-  target_compile_options(${TACTILE_EXE}
-                         PRIVATE
-                         /EHsc
-                         /MP
-                         /W4
-                         /bigobj
-                         /Zc:preprocessor
-                         /Zc:__cplusplus
-                         /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
-                         )
-
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")
-  target_compile_options(${TACTILE_LIB}
-                         PRIVATE
-                         -Wall
-                         -Wextra
-                         -Wpedantic
-                         -Wconversion
-                         )
-
-  target_compile_options(${TACTILE_EXE}
-                         PRIVATE
-                         -Wall
-                         -Wextra
-                         -Wpedantic
-                         -Wconversion
-                         )
-endif ()
+tactile_set_compile_options(${TACTILE_LIB})
+tactile_set_compile_options(${TACTILE_EXE})
 
 target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <cstdint>

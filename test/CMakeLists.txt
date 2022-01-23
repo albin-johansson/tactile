@@ -46,16 +46,12 @@ set(TEST_FILES
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
 
+tactile_set_compile_options(${TACTILE_TEST})
+
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_TEST}
                          PRIVATE
-                         /EHsc
-                         /MP
-                         /W4
-                         /bigobj
-                         /Zc:preprocessor
-                         /Zc:__cplusplus
-                         /wd4834  # "discarding return value of function with 'nodiscard' attribute"
+                         /wd4834  # disable [[nodiscard]] warnings
                          )
 
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")

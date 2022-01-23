@@ -46,6 +46,30 @@ find_package(Boost REQUIRED)
 
 include(Utilities)
 
+function(tactile_set_compile_options target)
+  if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(${target}
+                           PRIVATE
+                           /EHsc
+                           /MP
+                           /W4
+                           /bigobj
+                           /Zc:preprocessor
+                           /Zc:__cplusplus
+                           /wd5105  # "macro expansion producing 'defined' has undefined behavior"
+                           )
+
+  elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")
+    target_compile_options(${target}
+                           PRIVATE
+                           -Wall
+                           -Wextra
+                           -Wpedantic
+                           -Wconversion
+                           )
+  endif ()
+endfunction()
+
 add_subdirectory(modules/tactile-proto)
 add_subdirectory(modules/tactile-io)
 add_subdirectory(modules/tactile)
