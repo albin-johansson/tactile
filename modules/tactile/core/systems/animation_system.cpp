@@ -1,6 +1,6 @@
 #include "animation_system.hpp"
 
-#include <centurion.hpp>  // ticks
+#include <centurion.hpp>
 
 #include "core/components/animation.hpp"
 
@@ -9,7 +9,7 @@ namespace tactile::sys {
 void UpdateAnimations(entt::registry& registry)
 {
   for (auto&& [entity, animation] : registry.view<Animation>().each()) {
-    const auto now = cen::ticks();
+    const auto now = cen::ticks32();
 
     const auto frameEntity = animation.frames.at(animation.index);
     const auto& currentFrame = registry.get<AnimationFrame>(frameEntity);
