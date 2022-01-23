@@ -18,8 +18,8 @@ CreateMapDialog::CreateMapDialog() : ADialog{"Create New Map"}
 void CreateMapDialog::Open()
 {
   ADialog::Show();
-  mTileWidth = Prefs::GetPreferredTileWidth();
-  mTileHeight = Prefs::GetPreferredTileHeight();
+  mTileWidth = prefs::GetPreferredTileWidth();
+  mTileHeight = prefs::GetPreferredTileHeight();
   mRows = 5;
   mColumns = 5;
 }

@@ -24,11 +24,11 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
 {
   ResetState();
 
-  if (!Prefs::GetShowTilesetDock()) {
+  if (!prefs::GetShowTilesetDock()) {
     return;
   }
 
-  bool visible = Prefs::GetShowTilesetDock();
+  bool visible = prefs::GetShowTilesetDock();
   Scoped::Window window{"Tilesets", gWindowFlags, &visible};
   if (window.IsOpen()) {
     mHasFocus = ImGui::IsWindowFocused();
@@ -47,7 +47,7 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
     }
   }
 
-  Prefs::SetShowTilesetDock(visible);
+  prefs::SetShowTilesetDock(visible);
 }
 
 auto TilesetDock::GetTilesetView() const -> const TilesetView&

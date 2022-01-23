@@ -153,7 +153,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 
   Graphics graphics{info};
 
-  graphics.SetDrawColor(Prefs::GetViewportBackground());
+  graphics.SetDrawColor(prefs::GetViewportBackground());
   graphics.Clear();
 
   graphics.PushClip();

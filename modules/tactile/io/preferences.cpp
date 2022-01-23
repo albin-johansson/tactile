@@ -200,8 +200,8 @@ void SavePreferences()
   proto::Settings cfg;
 
   cfg.set_theme(static_cast<proto::Theme>(settings.theme));
-  cfg.set_show_grid(Prefs::GetShowGrid());
-  cfg.set_window_border(Prefs::GetWindowBorder());
+  cfg.set_show_grid(prefs::GetShowGrid());
+  cfg.set_window_border(prefs::GetWindowBorder());
 
   {
     auto* background = cfg.mutable_viewport_background();
@@ -212,21 +212,21 @@ void SavePreferences()
   }
 
   cfg.set_command_capacity(settings.command_capacity);
-  cfg.set_restore_last_session(Prefs::GetRestoreLastSession());
+  cfg.set_restore_last_session(prefs::GetRestoreLastSession());
   cfg.set_preferred_tile_width(settings.preferred_tile_width);
   cfg.set_preferred_tile_height(settings.preferred_tile_height);
 
   cfg.set_preferred_format(settings.preferred_format);
-  cfg.set_embed_tilesets(Prefs::GetEmbedTilesets());
-  cfg.set_indent_output(Prefs::GetIndentOutput());
-  cfg.set_fold_tile_data(Prefs::GetFoldTileData());
+  cfg.set_embed_tilesets(prefs::GetEmbedTilesets());
+  cfg.set_indent_output(prefs::GetIndentOutput());
+  cfg.set_fold_tile_data(prefs::GetFoldTileData());
 
-  cfg.set_show_tileset_dock(Prefs::GetShowTilesetDock());
-  cfg.set_show_layer_dock(Prefs::GetShowLayerDock());
-  cfg.set_show_properties_dock(Prefs::GetShowPropertiesDock());
-  cfg.set_show_log_dock(Prefs::GetShowLogDock());
-  cfg.set_show_component_dock(Prefs::GetShowComponentDock());
-  cfg.set_restore_layout(Prefs::GetRestoreLayout());
+  cfg.set_show_tileset_dock(prefs::GetShowTilesetDock());
+  cfg.set_show_layer_dock(prefs::GetShowLayerDock());
+  cfg.set_show_properties_dock(prefs::GetShowPropertiesDock());
+  cfg.set_show_log_dock(prefs::GetShowLogDock());
+  cfg.set_show_component_dock(prefs::GetShowComponentDock());
+  cfg.set_restore_layout(prefs::GetRestoreLayout());
   cfg.set_viewport_overlay_pos(proto::OverlayPos{settings.viewport_overlay_pos});
 
   std::ofstream stream{gSettingsPath, std::ios::out | std::ios::trunc | std::ios::binary};
@@ -245,7 +245,7 @@ auto GetPreferences() -> const Preferences&
   return settings;
 }
 
-namespace Prefs {
+namespace prefs {
 
 void ResetAppearancePreferences(Preferences& prefs)
 {
@@ -413,5 +413,5 @@ auto GetRestoreLastSession() noexcept -> bool
   return settings.flags & Preferences::restore_last_session;
 }
 
-}  // namespace Prefs
+}  // namespace prefs
 }  // namespace tactile

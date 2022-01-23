@@ -21,7 +21,7 @@ void OpenSaveAsDialog(entt::dispatcher& dispatcher)
 
     // TODO is this logic still required with new file dialogs?
     if (!hasValidExtension) {
-      const auto& format = Prefs::GetPreferredFormat();
+      const auto& format = prefs::GetPreferredFormat();
       LogWarning("Invalid file extension '{}', assuming '{}'", ext, format);
 
       if (format == "YAML") {

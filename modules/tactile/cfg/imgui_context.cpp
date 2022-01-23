@@ -70,9 +70,9 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 
   auto& style = ImGui::GetStyle();
   ApplyStyle(style);
-  ApplyTheme(style, Prefs::GetTheme());
+  ApplyTheme(style, prefs::GetTheme());
 
-  style.WindowBorderSize = Prefs::GetWindowBorder() ? 1.0f : 0.0f;
+  style.WindowBorderSize = prefs::GetWindowBorder() ? 1.0f : 0.0f;
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
   if constexpr (IsPlatformOSX()) {

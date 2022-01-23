@@ -77,7 +77,7 @@ void SetPreferences(Preferences prefs);
 /// \} End of preference API
 /// \} End of group io
 
-namespace Prefs {
+namespace prefs {
 
 /// \addtogroup io
 /// \{
@@ -125,5 +125,5 @@ void SetViewportOverlayPos(OverlayPos pos) noexcept;
 /// \} End of preference API
 /// \} End of group io
 
-}  // namespace Prefs
+}  // namespace prefs
 }  // namespace tactile

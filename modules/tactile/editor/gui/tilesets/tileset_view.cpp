@@ -76,7 +76,7 @@ void TilesetView::Update(const entt::registry& registry,
   const auto info = GetRenderInfo(viewport, tileset);
   Graphics graphics{info};
 
-  graphics.SetDrawColor(Prefs::GetViewportBackground());
+  graphics.SetDrawColor(prefs::GetViewportBackground());
   graphics.Clear();
 
   const auto offset = ImVec2{viewport.x_offset, viewport.y_offset};

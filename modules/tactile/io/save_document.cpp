@@ -16,15 +16,15 @@ namespace {
 {
   IO::EmitterOptions options = 0;
 
-  if (Prefs::GetEmbedTilesets()) {
+  if (prefs::GetEmbedTilesets()) {
     options |= IO::EmitterOption_EmbedTilesets;
   }
 
-  if (Prefs::GetFoldTileData()) {
+  if (prefs::GetFoldTileData()) {
     options |= IO::EmitterOption_FoldTileData;
   }
 
-  if (Prefs::GetIndentOutput()) {
+  if (prefs::GetIndentOutput()) {
     options |= IO::EmitterOption_IndentOutput;
   }
 

@@ -169,7 +169,7 @@ class CommandStack final {
   /**
    * \brief Returns the maximum amount of commands that the stack can hold.
    *
-   * \details The capacity defaults to the value of `Prefs::GetCommandCapacity()`.
+   * \details The capacity defaults to the value of `prefs::GetCommandCapacity()`.
    *
    * \return the stack capacity.
    */

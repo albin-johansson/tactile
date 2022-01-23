@@ -26,7 +26,7 @@ void PreparePositionAndPivot()
   const auto pos = ImGui::GetWindowPos();
   const auto size = ImGui::GetWindowSize();
 
-  const auto corner = Prefs::GetViewportOverlayPos();
+  const auto corner = prefs::GetViewportOverlayPos();
   const bool isRight =
       corner == OverlayPos::TopRight || corner == OverlayPos::BottomRight;
   const bool isBottom =
@@ -104,22 +104,22 @@ void UpdateMouseTileLabels(const entt::registry& registry,
 void UpdateOverlayContextMenu()
 {
   if (auto popup = Scoped::Popup::ForWindow("##ViewportOverlayPopup"); popup.IsOpen()) {
-    const auto corner = Prefs::GetViewportOverlayPos();
+    const auto corner = prefs::GetViewportOverlayPos();
 
     if (ImGui::MenuItem("Top-left", nullptr, corner == OverlayPos::TopLeft)) {
-      Prefs::SetViewportOverlayPos(OverlayPos::TopLeft);
+      prefs::SetViewportOverlayPos(OverlayPos::TopLeft);
     }
 
     if (ImGui::MenuItem("Top-right", nullptr, corner == OverlayPos::TopRight)) {
-      Prefs::SetViewportOverlayPos(OverlayPos::TopRight);
+      prefs::SetViewportOverlayPos(OverlayPos::TopRight);
     }
 
     if (ImGui::MenuItem("Bottom-left", nullptr, corner == OverlayPos::BottomLeft)) {
-      Prefs::SetViewportOverlayPos(OverlayPos::BottomLeft);
+      prefs::SetViewportOverlayPos(OverlayPos::BottomLeft);
     }
 
     if (ImGui::MenuItem("Bottom-right", nullptr, corner == OverlayPos::BottomRight)) {
-      Prefs::SetViewportOverlayPos(OverlayPos::BottomRight);
+      prefs::SetViewportOverlayPos(OverlayPos::BottomRight);
     }
   }
 }

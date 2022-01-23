@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-CommandStack::CommandStack() : mCapacity{Prefs::GetCommandCapacity()} {}
+CommandStack::CommandStack() : mCapacity{prefs::GetCommandCapacity()} {}
 
 void CommandStack::Clear()
 {

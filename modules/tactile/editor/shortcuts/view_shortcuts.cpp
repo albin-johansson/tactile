@@ -115,7 +115,7 @@ ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, gPrimary
 
 void ToggleGridShortcut::Activate(entt::dispatcher&)
 {
-  Prefs::SetShowGrid(!Prefs::GetShowGrid());
+  prefs::SetShowGrid(!prefs::GetShowGrid());
 }
 
 ToggleUiShortcut::ToggleUiShortcut() : AShortcut{cen::scancodes::tab} {}

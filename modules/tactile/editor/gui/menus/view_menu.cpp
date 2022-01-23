@@ -23,24 +23,24 @@ void UpdateWidgetsMenu(const bool hasActiveMap)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Properties", nullptr, Prefs::GetShowPropertiesDock())) {
-      Prefs::SetShowPropertiesDock(!Prefs::GetShowPropertiesDock());
+    if (ImGui::MenuItem("Properties", nullptr, prefs::GetShowPropertiesDock())) {
+      prefs::SetShowPropertiesDock(!prefs::GetShowPropertiesDock());
     }
 
-    if (ImGui::MenuItem("Layers", nullptr, Prefs::GetShowLayerDock())) {
-      Prefs::SetShowLayerDock(!Prefs::GetShowLayerDock());
+    if (ImGui::MenuItem("Layers", nullptr, prefs::GetShowLayerDock())) {
+      prefs::SetShowLayerDock(!prefs::GetShowLayerDock());
     }
 
-    if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock())) {
-      Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
+    if (ImGui::MenuItem("Tilesets", nullptr, prefs::GetShowTilesetDock())) {
+      prefs::SetShowTilesetDock(!prefs::GetShowTilesetDock());
     }
 
-    if (ImGui::MenuItem("Log", nullptr, Prefs::GetShowLogDock())) {
-      Prefs::SetShowLogDock(!Prefs::GetShowLogDock());
+    if (ImGui::MenuItem("Log", nullptr, prefs::GetShowLogDock())) {
+      prefs::SetShowLogDock(!prefs::GetShowLogDock());
     }
 
-    if (ImGui::MenuItem("Components", nullptr, Prefs::GetShowComponentDock())) {
-      Prefs::SetShowComponentDock(!Prefs::GetShowComponentDock());
+    if (ImGui::MenuItem("Components", nullptr, prefs::GetShowComponentDock())) {
+      prefs::SetShowComponentDock(!prefs::GetShowComponentDock());
     }
   }
 }
@@ -64,11 +64,11 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (bool showGrid = Prefs::GetShowGrid();
+    if (bool showGrid = prefs::GetShowGrid();
         ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid",
                         TACTILE_PRIMARY_MOD "+G",
                         &showGrid)) {
-      Prefs::SetShowGrid(showGrid);
+      prefs::SetShowGrid(showGrid);
     }
 
     ImGui::Separator();

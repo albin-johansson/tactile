@@ -364,7 +364,7 @@ void emit_object_layer_data(YAML::Emitter& emitter,
 
 void emit_tile_layer_data(YAML::Emitter& emitter, const EmitInfo& info, const LayerID id)
 {
-  const bool fold = Prefs::GetFoldTileData();
+  const bool fold = prefs::GetFoldTileData();
 
   const auto nRows = info.row_count();
   const auto nCols = info.column_count();

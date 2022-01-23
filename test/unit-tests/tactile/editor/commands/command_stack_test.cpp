@@ -50,7 +50,7 @@ TEST(CommandStack, Defaults)
 {
   const CommandStack stack;
   ASSERT_EQ(0, stack.GetSize());
-  ASSERT_EQ(Prefs::GetCommandCapacity(), stack.GetCapacity());
+  ASSERT_EQ(prefs::GetCommandCapacity(), stack.GetCapacity());
   ASSERT_FALSE(stack.CanUndo());
   ASSERT_FALSE(stack.CanRedo());
   ASSERT_TRUE(stack.IsClean());

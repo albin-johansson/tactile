@@ -65,7 +65,7 @@ void SettingsDialog::ApplySettings(entt::dispatcher& dispatcher)
 {
   SetPreferences(mSettings);
   if (mSettings.command_capacity != mSnapshot.command_capacity) {
-    dispatcher.enqueue<SetCommandCapacityEvent>(Prefs::GetCommandCapacity());
+    dispatcher.enqueue<SetCommandCapacityEvent>(prefs::GetCommandCapacity());
   }
 }
 
@@ -74,7 +74,7 @@ void SettingsDialog::UpdateBehaviorTab()
   if (Scoped::TabItem item{"Behavior"}; item.IsOpen()) {
     ImGui::Spacing();
     if (ImGui::Button("Restore Defaults")) {
-      Prefs::ResetBehaviorPreferences(mSettings);
+      prefs::ResetBehaviorPreferences(mSettings);
       UpdatePreviewSettings(mSettings);
     }
     ImGui::Spacing();
@@ -122,7 +122,7 @@ void SettingsDialog::UpdateAppearanceTab()
     ImGui::Spacing();
 
     if (ImGui::Button("Restore Defaults")) {
-      Prefs::ResetAppearancePreferences(mSettings);
+      prefs::ResetAppearancePreferences(mSettings);
       UpdatePreviewSettings(mSettings);
     }
 
@@ -167,7 +167,7 @@ void SettingsDialog::UpdateExportTab()
     ImGui::Spacing();
 
     if (ImGui::Button("Restore Defaults")) {
-      Prefs::ResetExportPreferences(mSettings);
+      prefs::ResetExportPreferences(mSettings);
       UpdatePreviewSettings(mSettings);
     }
 

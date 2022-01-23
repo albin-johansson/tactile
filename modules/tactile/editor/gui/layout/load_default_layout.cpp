@@ -30,7 +30,7 @@ void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
   ImGui::DockBuilderFinish(id);
 
   if (resetVisibility) {
-    Prefs::ResetDockVisibilities();
+    prefs::ResetDockVisibilities();
   }
 }
 

@@ -75,7 +75,7 @@ auto Application::Run() -> int
 
   LoadFileHistory();
 
-  if (Prefs::GetRestoreLastSession()) {
+  if (prefs::GetRestoreLastSession()) {
     RestoreLastSession(mModel, mTextures);
   }
 
@@ -706,27 +706,27 @@ void Application::OnToggleUi()
   static bool show = false;
 
   if (!show) {
-    mWidgetShowState.prev_show_layer_dock = Prefs::GetShowLayerDock();
-    mWidgetShowState.prev_show_tileset_dock = Prefs::GetShowTilesetDock();
-    mWidgetShowState.prev_show_properties_dock = Prefs::GetShowPropertiesDock();
-    mWidgetShowState.prev_show_log_dock = Prefs::GetShowLogDock();
-    mWidgetShowState.prev_show_component_dock = Prefs::GetShowComponentDock();
+    mWidgetShowState.prev_show_layer_dock = prefs::GetShowLayerDock();
+    mWidgetShowState.prev_show_tileset_dock = prefs::GetShowTilesetDock();
+    mWidgetShowState.prev_show_properties_dock = prefs::GetShowPropertiesDock();
+    mWidgetShowState.prev_show_log_dock = prefs::GetShowLogDock();
+    mWidgetShowState.prev_show_component_dock = prefs::GetShowComponentDock();
     mWidgetShowState.prev_show_toolbar = mWidgets.IsToolbarVisible();
   }
 
-  Prefs::SetShowLayerDock(show);
-  Prefs::SetShowTilesetDock(show);
-  Prefs::SetShowPropertiesDock(show);
-  Prefs::SetShowLogDock(show);
-  Prefs::SetShowComponentDock(show);
+  prefs::SetShowLayerDock(show);
+  prefs::SetShowTilesetDock(show);
+  prefs::SetShowPropertiesDock(show);
+  prefs::SetShowLogDock(show);
+  prefs::SetShowComponentDock(show);
   mWidgets.SetToolbarVisible(show);
 
   if (show) {
-    Prefs::SetShowLayerDock(mWidgetShowState.prev_show_layer_dock);
-    Prefs::SetShowTilesetDock(mWidgetShowState.prev_show_tileset_dock);
-    Prefs::SetShowPropertiesDock(mWidgetShowState.prev_show_properties_dock);
-    Prefs::SetShowLogDock(mWidgetShowState.prev_show_log_dock);
-    Prefs::SetShowComponentDock(mWidgetShowState.prev_show_component_dock);
+    prefs::SetShowLayerDock(mWidgetShowState.prev_show_layer_dock);
+    prefs::SetShowTilesetDock(mWidgetShowState.prev_show_tileset_dock);
+    prefs::SetShowPropertiesDock(mWidgetShowState.prev_show_properties_dock);
+    prefs::SetShowLogDock(mWidgetShowState.prev_show_log_dock);
+    prefs::SetShowComponentDock(mWidgetShowState.prev_show_component_dock);
     mWidgets.SetToolbarVisible(mWidgetShowState.prev_show_toolbar);
   }
 

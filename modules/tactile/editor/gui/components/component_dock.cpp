@@ -131,7 +131,7 @@ void ShowAddComponentButtonPopupContent(const entt::registry& registry,
 
 void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  auto showDock = Prefs::GetShowComponentDock();
+  auto showDock = prefs::GetShowComponentDock();
 
   if (!showDock) {
     return;
@@ -165,7 +165,7 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
     }
   }
 
-  Prefs::SetShowComponentDock(showDock);
+  prefs::SetShowComponentDock(showDock);
 }
 
 }  // namespace tactile
