@@ -8,16 +8,15 @@
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
 #include "core/map.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
 
 namespace tactile::sys {
 namespace {
 
 template <typename T>
-using Unsigned = std::enable_if_t<std::is_unsigned_v<T>, int>;
+using unsigned_t = std::enable_if_t<std::is_unsigned_v<T>, int>;
 
-template <typename T, Unsigned<T> = 0>
-[[nodiscard]] constexpr auto GetDiff(const T a, const T b) noexcept -> T
+template <typename T, unsigned_t<T> = 0>
+[[nodiscard]] constexpr auto get_diff(const T a, const T b) noexcept -> T
 {
   if (a < b) {
     return b - a;
@@ -29,7 +28,7 @@ template <typename T, Unsigned<T> = 0>
 
 }  // namespace
 
-void AddRow(entt::registry& registry)
+void add_row_to_map(entt::registry& registry)
 {
   auto& map = registry.ctx<MapInfo>();
   ++map.row_count;
@@ -39,7 +38,7 @@ void AddRow(entt::registry& registry)
   }
 }
 
-void AddColumn(entt::registry& registry)
+void add_column_to_map(entt::registry& registry)
 {
   auto& map = registry.ctx<MapInfo>();
   ++map.column_count;
@@ -51,7 +50,7 @@ void AddColumn(entt::registry& registry)
   }
 }
 
-void RemoveRow(entt::registry& registry)
+void remove_row_from_map(entt::registry& registry)
 {
   auto& map = registry.ctx<MapInfo>();
   if (map.row_count > 1) {
@@ -62,7 +61,7 @@ void RemoveRow(entt::registry& registry)
   }
 }
 
-void RemoveColumn(entt::registry& registry)
+void remove_column_from_map(entt::registry& registry)
 {
   auto& map = registry.ctx<MapInfo>();
   if (map.column_count > 1) {
@@ -77,26 +76,27 @@ void RemoveColumn(entt::registry& registry)
   }
 }
 
-void ResizeMap(entt::registry& registry, const usize nRows, const usize nCols)
+void resize_map(entt::registry& registry, usize nRows, usize nCols)
 {
   auto& map = registry.ctx<MapInfo>();
 
-  if (const auto diff = GetDiff(map.row_count, nRows); map.row_count < nRows) {
-    invoke_n(diff, [&] { AddRow(registry); });
+  if (const auto diff = get_diff(map.row_count, nRows); map.row_count < nRows) {
+    invoke_n(diff, [&] { add_row_to_map(registry); });
   }
   else {
-    invoke_n(diff, [&] { RemoveRow(registry); });
+    invoke_n(diff, [&] { remove_row_from_map(registry); });
   }
 
-  if (const auto diff = GetDiff(map.column_count, nCols); map.column_count < nCols) {
-    invoke_n(diff, [&] { AddColumn(registry); });
+  if (const auto diff = get_diff(map.column_count, nCols); map.column_count < nCols) {
+    invoke_n(diff, [&] { add_column_to_map(registry); });
   }
   else {
-    invoke_n(diff, [&] { RemoveColumn(registry); });
+    invoke_n(diff, [&] { remove_column_from_map(registry); });
   }
 }
 
-auto IsPositionInMap(const entt::registry& registry, const tile_position& position) -> bool
+auto is_position_in_map(const entt::registry& registry, const tile_position& position)
+    -> bool
 {
   const auto& map = registry.ctx<MapInfo>();
 

@@ -51,7 +51,7 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
       const auto tile = get_tile_from_tileset(registry, tilesetEntity, selectionPosition);
       if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
-        if (IsPositionInMap(registry, pos)) {
+        if (is_position_in_map(registry, pos)) {
           if (!gOldState.contains(pos)) {
             gOldState.emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
           }

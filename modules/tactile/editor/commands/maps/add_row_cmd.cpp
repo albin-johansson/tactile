@@ -10,12 +10,12 @@ AddRowCmd::AddRowCmd(RegistryRef registry) : ACommand{"Add Row(s)"}, mRegistry{r
 
 void AddRowCmd::Undo()
 {
-  invoke_n(mRows, [this] { sys::RemoveRow(mRegistry); });
+  invoke_n(mRows, [this] { sys::remove_row_from_map(mRegistry); });
 }
 
 void AddRowCmd::Redo()
 {
-  invoke_n(mRows, [this] { sys::AddRow(mRegistry); });
+  invoke_n(mRows, [this] { sys::add_row_to_map(mRegistry); });
 }
 
 auto AddRowCmd::MergeWith(const ACommand& cmd) -> bool

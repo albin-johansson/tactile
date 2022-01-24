@@ -15,12 +15,12 @@ TEST(MapSystem, AddRow)
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
-  sys::AddRow(registry);
+  sys::add_row_to_map(registry);
   ASSERT_EQ(6u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
-  sys::AddRow(registry);
-  sys::AddRow(registry);
+  sys::add_row_to_map(registry);
+  sys::add_row_to_map(registry);
   ASSERT_EQ(8u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 }
@@ -32,12 +32,12 @@ TEST(MapSystem, AddColumn)
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
-  sys::AddColumn(registry);
+  sys::add_column_to_map(registry);
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(6u, map.column_count);
 
-  sys::AddColumn(registry);
-  sys::AddColumn(registry);
+  sys::add_column_to_map(registry);
+  sys::add_column_to_map(registry);
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(8u, map.column_count);
 }
@@ -49,11 +49,11 @@ TEST(MapSystem, RemoveRow)
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
-  sys::RemoveRow(registry);
+  sys::remove_row_from_map(registry);
   ASSERT_EQ(4u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
-  invoke_n(4, [&] { sys::RemoveRow(registry); });
+  invoke_n(4, [&] { sys::remove_row_from_map(registry); });
   ASSERT_EQ(1u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 }
@@ -65,11 +65,11 @@ TEST(MapSystem, RemoveColumn)
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
-  sys::RemoveColumn(registry);
+  sys::remove_column_from_map(registry);
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(4u, map.column_count);
 
-  invoke_n(4, [&] { sys::RemoveColumn(registry); });
+  invoke_n(4, [&] { sys::remove_column_from_map(registry); });
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(1u, map.column_count);
 }
@@ -79,11 +79,11 @@ TEST(MapSystem, ResizeMap)
   auto registry = sys::MakeRegistry();
   auto& map = registry.ctx<MapInfo>();
 
-  sys::ResizeMap(registry, 12u, 3u);
+  sys::resize_map(registry, 12u, 3u);
   ASSERT_EQ(12u, map.row_count);
   ASSERT_EQ(3u, map.column_count);
 
-  sys::ResizeMap(registry, 0u, 0u);
+  sys::resize_map(registry, 0u, 0u);
   ASSERT_EQ(1u, map.row_count);
   ASSERT_EQ(1u, map.column_count);
 }
@@ -95,13 +95,13 @@ TEST(MapSystem, IsPositionInMap)
 
   for (usize r = 0; r < map.row_count; ++r) {
     for (usize c = 0; c < map.column_count; ++c) {
-      ASSERT_TRUE(sys::IsPositionInMap(registry, tile_position::from(r, c)));
+      ASSERT_TRUE(sys::is_position_in_map(registry, tile_position::from(r, c)));
     }
   }
 
   // clang-format off
-  ASSERT_FALSE(sys::IsPositionInMap(registry, tile_position::from(map.row_count, map.column_count)));
-  ASSERT_FALSE(sys::IsPositionInMap(registry, tile_position::from(map.row_count - 1u, map.column_count)));
-  ASSERT_FALSE(sys::IsPositionInMap(registry, tile_position::from(map.row_count, map.column_count - 1u)));
+  ASSERT_FALSE(sys::is_position_in_map(registry, tile_position::from(map.row_count, map.column_count)));
+  ASSERT_FALSE(sys::is_position_in_map(registry, tile_position::from(map.row_count - 1u, map.column_count)));
+  ASSERT_FALSE(sys::is_position_in_map(registry, tile_position::from(map.row_count, map.column_count - 1u)));
   // clang-format on
 }

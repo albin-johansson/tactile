@@ -15,7 +15,7 @@ void flood(entt::registry& registry,
 {
   const auto target = sys::GetTileFromLayer(registry, entity, origin);
 
-  if (!sys::IsPositionInMap(registry, origin) || (target == replacement)) {
+  if (!sys::is_position_in_map(registry, origin) || (target == replacement)) {
     return;
   }
 
@@ -26,7 +26,7 @@ void flood(entt::registry& registry,
   positions.push(origin);
 
   auto update = [&](const tile_position& position) {
-    if (sys::IsPositionInMap(registry, position)) {
+    if (sys::is_position_in_map(registry, position)) {
       const auto tile = sys::GetTileFromLayer(registry, entity, position);
       if (tile == target) {
         sys::SetTileInLayer(registry, entity, position, replacement);
