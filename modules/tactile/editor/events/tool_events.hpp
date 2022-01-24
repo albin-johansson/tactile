@@ -2,7 +2,7 @@
 
 #include <tactile_def.hpp>
 
-#include "core/map_position.hpp"
+#include "core/tile_position.hpp"
 #include "core/mouse_info.hpp"
 #include "core/tile_cache.hpp"
 #include "core/tool_type.hpp"
@@ -45,7 +45,7 @@ struct EraserSequenceEvent final
 
 struct FloodEvent final
 {
-  map_position origin;
+  tile_position origin;
   TileID replacement;
 };
 

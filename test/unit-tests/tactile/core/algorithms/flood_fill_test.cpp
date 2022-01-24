@@ -42,7 +42,7 @@ TEST(FloodFill, flood)
   sys::SetTileInLayer(registry, entity, {4, 0}, 1);
 
   {
-    std::vector<map_position> affected;
+    std::vector<tile_position> affected;
     flood(registry, entity, {4, 1}, 2, affected);
   }
 
@@ -83,7 +83,7 @@ TEST(FloodFill, flood)
   ASSERT_EQ(2, sys::GetTileFromLayer(registry, entity, {4, 4}));
 
   {
-    std::vector<map_position> affected;
+    std::vector<tile_position> affected;
     flood(registry, entity, {3, 1}, 3, affected);
   }
 

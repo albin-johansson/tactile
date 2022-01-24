@@ -95,13 +95,13 @@ TEST(MapSystem, IsPositionInMap)
 
   for (usize r = 0; r < map.row_count; ++r) {
     for (usize c = 0; c < map.column_count; ++c) {
-      ASSERT_TRUE(sys::IsPositionInMap(registry, map_position::from(r, c)));
+      ASSERT_TRUE(sys::IsPositionInMap(registry, tile_position::from(r, c)));
     }
   }
 
   // clang-format off
-  ASSERT_FALSE(sys::IsPositionInMap(registry, map_position::from(map.row_count, map.column_count)));
-  ASSERT_FALSE(sys::IsPositionInMap(registry, map_position::from(map.row_count - 1u, map.column_count)));
-  ASSERT_FALSE(sys::IsPositionInMap(registry, map_position::from(map.row_count, map.column_count - 1u)));
+  ASSERT_FALSE(sys::IsPositionInMap(registry, tile_position::from(map.row_count, map.column_count)));
+  ASSERT_FALSE(sys::IsPositionInMap(registry, tile_position::from(map.row_count - 1u, map.column_count)));
+  ASSERT_FALSE(sys::IsPositionInMap(registry, tile_position::from(map.row_count, map.column_count - 1u)));
   // clang-format on
 }

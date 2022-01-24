@@ -284,7 +284,7 @@ auto is_single_tile_selected_in_tileset(const entt::registry& registry) -> bool
     const auto& selection = registry.get<TilesetSelection>(active.entity);
     if (selection.region) {
       const auto& region = *selection.region;
-      return (region.end - region.begin) == map_position{1, 1};
+      return (region.end - region.begin) == tile_position{1, 1};
     }
   }
 
@@ -330,7 +330,7 @@ auto get_source_rect(const entt::registry& registry,
 
 auto get_tile_from_tileset(const entt::registry& registry,
                            const entt::entity entity,
-                           const map_position& position) -> TileID
+                           const tile_position& position) -> TileID
 {
   TACTILE_ASSERT(entity != entt::null);
   TACTILE_ASSERT(registry.all_of<Tileset>(entity));

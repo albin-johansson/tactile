@@ -6,12 +6,12 @@
 #include <entt/entt.hpp>  // registry
 #include <tactile_def.hpp>
 
-#include "core/map_position.hpp"
+#include "core/tile_position.hpp"
 
 namespace tactile {
 
 class MapCommandCache final {
-  using TileCache = std::map<map_position, TileID, std::less<>>;
+  using TileCache = std::map<tile_position, TileID, std::less<>>;
   using LayerCache = std::map<LayerID, TileCache, std::less<>>;
 
  public:
@@ -19,7 +19,7 @@ class MapCommandCache final {
 
   void RestoreTiles(entt::registry& registry);
 
-  void SaveTiles(const entt::registry& registry, map_position begin, map_position end);
+  void SaveTiles(const entt::registry& registry, tile_position begin, tile_position end);
 
   void MergeWith(const MapCommandCache& other);
 

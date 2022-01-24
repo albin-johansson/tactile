@@ -5,7 +5,7 @@
 #include <tactile_def.hpp>
 
 #include "assert.hpp"
-#include "core/map_position.hpp"
+#include "core/tile_position.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/tile_cache.hpp"
@@ -21,7 +21,7 @@ inline TileCache gOldState;
   return IsTileLayerActive(registry);
 }
 
-void UpdateSequence(entt::registry& registry, const map_position& cursor)
+void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 {
   const auto entity = GetActiveLayer(registry);
   TACTILE_ASSERT(entity != entt::null);

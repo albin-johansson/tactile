@@ -7,7 +7,7 @@ namespace tactile::sys {
 
 void SetTileInLayer(entt::registry& registry,
                     const entt::entity entity,
-                    const map_position& position,
+                    const tile_position& position,
                     const TileID tile)
 {
   TACTILE_ASSERT(entity != entt::null);
@@ -34,7 +34,7 @@ void SetTilesInLayer(entt::registry& registry,
 
 auto GetTileFromLayer(const entt::registry& registry,
                       const entt::entity entity,
-                      const map_position& position) -> TileID
+                      const tile_position& position) -> TileID
 {
   const auto& tileLayer = registry.get<TileLayer>(entity);
   const auto& matrix = tileLayer.matrix;

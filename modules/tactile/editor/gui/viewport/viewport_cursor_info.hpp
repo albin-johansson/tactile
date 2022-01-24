@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "core/map_position.hpp"
+#include "core/tile_position.hpp"
 
 namespace tactile {
 
@@ -10,7 +10,7 @@ struct RenderInfo;
 
 struct ViewportCursorInfo final
 {
-  map_position map_position;
+  tile_position map_position;
   ImVec2 clamped_position{};
   ImVec2 raw_position{};
   bool is_within_map{};

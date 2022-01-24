@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>  // registry
 #include <tactile_def.hpp>
 
-#include "core/map_position.hpp"
+#include "core/tile_position.hpp"
 
 namespace tactile::sys {
 
@@ -60,7 +60,7 @@ void ResizeMap(entt::registry& registry, usize nRows, usize nCols);
  * \return `true` if the position is within the map; `false` otherwise.
  */
 [[nodiscard]] auto IsPositionInMap(const entt::registry& registry,
-                                   const map_position& position) -> bool;
+                                   const tile_position& position) -> bool;
 
 /// \} End of map system
 

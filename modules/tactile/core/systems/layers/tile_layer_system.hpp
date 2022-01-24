@@ -3,7 +3,7 @@
 #include <entt/entt.hpp>  // registry, entity
 #include <tactile_def.hpp>
 
-#include "core/map_position.hpp"
+#include "core/tile_position.hpp"
 #include "core/tile_cache.hpp"
 
 namespace tactile::sys {
@@ -13,7 +13,7 @@ namespace tactile::sys {
 
 void SetTileInLayer(entt::registry& registry,
                     entt::entity entity,
-                    const map_position& position,
+                    const tile_position& position,
                     TileID tile);
 
 void SetTilesInLayer(entt::registry& registry,
@@ -22,7 +22,7 @@ void SetTilesInLayer(entt::registry& registry,
 
 [[nodiscard]] auto GetTileFromLayer(const entt::registry& registry,
                                     entt::entity entity,
-                                    const map_position& position) -> TileID;
+                                    const tile_position& position) -> TileID;
 
 /// \} End of tile layer system
 

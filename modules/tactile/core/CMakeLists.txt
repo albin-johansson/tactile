@@ -15,6 +15,7 @@ set(TACTILE_CORE_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/mouse_pos.hpp
     ${PROJECT_SOURCE_DIR}/region.hpp
     ${PROJECT_SOURCE_DIR}/tile_cache.hpp
+    ${PROJECT_SOURCE_DIR}/tile_position.hpp
     ${PROJECT_SOURCE_DIR}/tool_type.hpp
     ${PROJECT_SOURCE_DIR}/viewport.hpp
 
