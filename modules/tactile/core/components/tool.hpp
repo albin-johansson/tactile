@@ -6,7 +6,7 @@ namespace tactile {
 
 struct ActiveTool final
 {
-  ToolType tool{ToolType::None};
+  tool_type tool{tool_type::none};
 };
 
 }  // namespace tactile

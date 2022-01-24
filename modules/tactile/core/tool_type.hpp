@@ -2,17 +2,17 @@
 
 namespace tactile {
 
-/// \addtogroup core
-/// \{
-
-enum class ToolType {
-  None,
-  Stamp,
-  Eraser,
-  Bucket,
-  ObjectSelection
+/**
+ * \brief Represents the various available mouse tool types.
+ *
+ * \ingroup core
+ */
+enum class tool_type {
+  none,
+  stamp,
+  eraser,
+  bucket,
+  object_selection
 };
-
-/// \} End of group core
 
 }  // namespace tactile

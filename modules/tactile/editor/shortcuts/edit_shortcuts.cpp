@@ -119,7 +119,7 @@ EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}
 
 void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
 }
 
 auto EnableBucketShortcut::IsEnabled(const Model& model,
@@ -132,7 +132,7 @@ EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
 
 void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
 }
 
 auto EnableEraserShortcut::IsEnabled(const Model& model,
@@ -145,7 +145,7 @@ EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
 
 void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
 }
 
 auto EnableStampShortcut::IsEnabled(const Model& model,

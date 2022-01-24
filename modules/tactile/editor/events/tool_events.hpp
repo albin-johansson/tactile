@@ -29,7 +29,7 @@ struct MouseReleasedEvent final
 
 struct SelectToolEvent final
 {
-  ToolType type;
+  tool_type type;
 };
 
 struct StampSequenceEvent final

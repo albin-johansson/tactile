@@ -7,7 +7,7 @@
 
 namespace tactile::sys {
 
-void SelectTool(entt::registry& registry, ToolType tool);
+void SelectTool(entt::registry& registry, tool_type tool);
 
 void ToolOnPressed(entt::registry& registry,
                    entt::dispatcher& dispatcher,

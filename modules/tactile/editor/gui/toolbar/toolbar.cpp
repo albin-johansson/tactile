@@ -126,7 +126,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsStampPossible(),
                  bw,
                  bh)) {
-    dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
   }
 
   if (axis == ImGuiAxis_X) {
@@ -139,7 +139,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsBucketPossible(),
                  bw,
                  bh)) {
-    dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
   }
 
   if (axis == ImGuiAxis_X) {
@@ -152,7 +152,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsEraserPossible(),
                  bw,
                  bh)) {
-    dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
   }
 
   separate();
@@ -167,7 +167,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsObjectSelectionPossible(),
                  bw,
                  bh)) {
-    dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
   }
 
   EndDockingToolbar();
