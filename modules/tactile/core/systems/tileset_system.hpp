@@ -1,7 +1,7 @@
 #pragma once
 
-#include <centurion.hpp>  // irect
-#include <entt/entt.hpp>  // registry, entity
+#include <centurion.hpp>
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 #include "core/components/texture.hpp"
@@ -26,7 +26,7 @@ namespace tactile::sys {
  * - `PropertyContext`
  * - `Viewport`
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
  * \param firstId the first global tile ID associated with the tileset.
  * \param texture information about the associated texture.
  * \param tileWidth the width of tiles in the tileset.

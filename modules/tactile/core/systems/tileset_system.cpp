@@ -54,6 +54,40 @@ void refresh_tileset_cache(entt::registry& registry, const entt::entity entity)
   }
 }
 
+void register_new_tiles_in_tile_context(entt::registry& registry,
+                                        const entt::entity tilesetEntity)
+{
+  auto& tilesets = registry.ctx<TilesetContext>();
+  const auto& tileset = registry.get<Tileset>(tilesetEntity);
+
+  for (TileID tile = tileset.first_id; tile <= tileset.last_id; ++tile) {
+    tilesets.tile_to_tileset[tile] = tilesetEntity;
+  }
+}
+
+void unregister_tiles_from_tile_context(entt::registry& registry,
+                                        const entt::entity tilesetEntity)
+{
+  auto& tilesets = registry.ctx<TilesetContext>();
+  const auto& tileset = registry.get<Tileset>(tilesetEntity);
+
+  for (TileID tile = tileset.first_id; tile <= tileset.last_id; ++tile) {
+    tilesets.tile_to_tileset.erase(tile);
+  }
+}
+
+void add_viewport(entt::registry& registry,
+                  const entt::entity tilesetEntity,
+                  const int32 tileWidth,
+                  const int32 tileHeight)
+{
+  auto& viewport = registry.emplace<Viewport>(tilesetEntity);
+  viewport.x_offset = 0;
+  viewport.y_offset = 0;
+  viewport.tile_width = static_cast<float>(tileWidth);
+  viewport.tile_height = static_cast<float>(tileHeight);
+}
+
 }  // namespace
 
 auto make_tileset(entt::registry& registry,
@@ -69,8 +103,8 @@ auto make_tileset(entt::registry& registry,
 
   LogDebug("Creating tileset with ID '{}'", id);
 
-  const auto entity = registry.create();
-  auto& tileset = registry.emplace<Tileset>(entity);
+  const auto tilesetEntity = registry.create();
+  auto& tileset = registry.emplace<Tileset>(tilesetEntity);
   tileset.id = id;
 
   tileset.tile_width = tileWidth;
@@ -84,27 +118,25 @@ auto make_tileset(entt::registry& registry,
   tileset.last_id = tileset.first_id + TileID{tileset.tile_count};
   tilesets.next_tile_id += tileset.tile_count + 1;
 
-  registry.emplace<Texture>(entity, texture);
+  registry.emplace<Texture>(tilesetEntity, texture);
 
-  auto& uv = registry.emplace<UvTileSize>(entity);
+  auto& uv = registry.emplace<UvTileSize>(tilesetEntity);
   uv.width = static_cast<float>(tileWidth) / static_cast<float>(texture.width);
   uv.height = static_cast<float>(tileHeight) / static_cast<float>(texture.height);
 
-  auto& cache = registry.emplace<TilesetCache>(entity);
+  auto& cache = registry.emplace<TilesetCache>(tilesetEntity);
   cache.source_rects = create_source_rect_cache(tileset);
 
-  auto& context = AddPropertyContext(registry, entity);
+  auto& context = AddPropertyContext(registry, tilesetEntity);
   context.name = texture.path.stem().string();
 
-  registry.emplace<TilesetSelection>(entity);
+  registry.emplace<TilesetSelection>(tilesetEntity);
 
-  auto& viewport = registry.emplace<Viewport>(entity);
-  viewport.x_offset = 0;
-  viewport.y_offset = 0;
-  viewport.tile_width = static_cast<float>(tileset.tile_width);
-  viewport.tile_height = static_cast<float>(tileset.tile_height);
+  add_viewport(registry, tilesetEntity, tileset.tile_width, tileset.tile_height);
 
-  return entity;
+  register_new_tiles_in_tile_context(registry, tilesetEntity);
+
+  return tilesetEntity;
 }
 
 auto make_tileset(entt::registry& registry,
@@ -119,21 +151,21 @@ auto make_tileset(entt::registry& registry,
 auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity
 {
   LogDebug("Restoring tileset with ID '{}'", snapshot.core.id);
-  const auto entity = registry.create();
+  const auto tilesetEntity = registry.create();
 
-  auto& tileset = registry.emplace<Tileset>(entity, std::move(snapshot.core));
-  registry.emplace<TilesetSelection>(entity, snapshot.selection);
-  registry.emplace<Texture>(entity, snapshot.texture);
-  registry.emplace<UvTileSize>(entity, snapshot.uv);
+  auto& tileset = registry.emplace<Tileset>(tilesetEntity, std::move(snapshot.core));
+  registry.emplace<TilesetSelection>(tilesetEntity, snapshot.selection);
+  registry.emplace<Texture>(tilesetEntity, snapshot.texture);
+  registry.emplace<UvTileSize>(tilesetEntity, snapshot.uv);
 
-  auto& viewport = registry.emplace<Viewport>(entity);
-  viewport.tile_width = static_cast<float>(tileset.tile_width);
-  viewport.tile_height = static_cast<float>(tileset.tile_height);
+  add_viewport(registry, tilesetEntity, tileset.tile_width, tileset.tile_height);
 
-  refresh_tileset_cache(registry, entity);
-  RestorePropertyContext(registry, entity, std::move(snapshot.context));
+  refresh_tileset_cache(registry, tilesetEntity);
+  register_new_tiles_in_tile_context(registry, tilesetEntity);
 
-  return entity;
+  RestorePropertyContext(registry, tilesetEntity, std::move(snapshot.context));
+
+  return tilesetEntity;
 }
 
 auto copy_tileset(const entt::registry& registry, const entt::entity source)
@@ -178,6 +210,8 @@ void remove_tileset(entt::registry& registry, const TilesetID id)
   if (entity == activeContext.entity) {
     activeContext.entity = entt::null;
   }
+
+  unregister_tiles_from_tile_context(registry, entity);
 
   registry.destroy(entity);
 

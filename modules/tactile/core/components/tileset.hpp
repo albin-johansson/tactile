@@ -3,18 +3,26 @@
 #include <filesystem>     // path
 #include <unordered_map>  // unordered_map
 
-#include <centurion.hpp>  // irect
-#include <entt/entt.hpp>  // entity, null
+#include <centurion.hpp>
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 #include "core/region.hpp"
 
 namespace tactile {
 
+/**
+ * \brief Tileset state for a single map.
+ */
 struct TilesetContext final
 {
   TilesetID next_id{};    ///< Next available tileset ID.
   TileID next_tile_id{};  ///< Next available global tile ID.
+
+  /**
+   * \brief Maps all global tile identifiers to the associated tileset.
+   */
+  std::unordered_map<TileID, entt::entity> tile_to_tileset;
 };
 
 struct Tileset final
@@ -29,10 +37,13 @@ struct Tileset final
   int32 column_count{};  ///< Amount of tile columns.
 };
 
+/**
+ * \brief Cached information about a single tileset.
+ */
 struct TilesetCache final
 {
   std::unordered_map<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
-  std::unordered_map<TileID, entt::entity> tiles;  ///< Tiles to `FancyTile` entities.
+  std::unordered_map<TileID, entt::entity> tiles;       ///< Additional tile info.
 };
 
 struct TilesetSelection final
