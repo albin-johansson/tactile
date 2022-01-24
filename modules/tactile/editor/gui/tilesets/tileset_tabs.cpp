@@ -21,7 +21,7 @@ void UpdateContextMenu(const TilesetID id,
                        const entt::entity tilesetEntity,
                        entt::dispatcher& dispatcher)
 {
-  if (auto popup = Scoped::Popup::ForItem("##TilesetTabContext"); popup.IsOpen()) {
+  if (auto popup = scoped::Popup::ForItem("##TilesetTabContext"); popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
       dispatcher.enqueue<ShowAddTilesetDialogEvent>();
     }
@@ -51,7 +51,7 @@ void UpdateContextMenu(const TilesetID id,
 void TilesetTabWidget::Update(const entt::registry& registry,
                               entt::dispatcher& dispatcher)
 {
-  if (Scoped::TabBar bar{"TilesetTabBar", gTabBarFlags}; bar.IsOpen()) {
+  if (scoped::TabBar bar{"TilesetTabBar", gTabBarFlags}; bar.IsOpen()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       dispatcher.enqueue<ShowAddTilesetDialogEvent>();
@@ -59,13 +59,13 @@ void TilesetTabWidget::Update(const entt::registry& registry,
 
     const auto& activeTileset = registry.ctx<ActiveTileset>();
     for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
-      const Scoped::ID scope{tileset.id};
+      const scoped::ID scope{tileset.id};
 
       const auto isActive = activeTileset.entity == entity;
       const auto& context = registry.get<PropertyContext>(entity);
 
       bool opened = true;
-      if (Scoped::TabItem item{context.name.c_str(),
+      if (scoped::TabItem item{context.name.c_str(),
                                &opened,
                                isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.IsOpen()) {

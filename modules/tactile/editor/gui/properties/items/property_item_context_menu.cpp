@@ -12,7 +12,7 @@ auto PropertyItemContextMenu(entt::dispatcher& dispatcher,
                              const std::string& name,
                              PropertyItemContextMenuState& state) -> bool
 {
-  if (auto popup = Scoped::Popup::ForItem("##PropertyItemContext"); popup.IsOpen()) {
+  if (auto popup = scoped::Popup::ForItem("##PropertyItemContext"); popup.IsOpen()) {
     state.show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename Property...");
     state.show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change Type...");
 

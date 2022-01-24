@@ -121,7 +121,7 @@ void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
 
-  if (const auto popup = Scoped::Popup::ForItem("##MapViewContextMenu", flags);
+  if (const auto popup = scoped::Popup::ForItem("##MapViewContextMenu", flags);
       popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
@@ -184,7 +184,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 void UpdateMapViewObjectContextMenu(const entt::registry& registry,
                                     entt::dispatcher& dispatcher)
 {
-  if (Scoped::Popup popup{"##MapViewObjectContextMenu"}; popup.IsOpen()) {
+  if (scoped::Popup popup{"##MapViewObjectContextMenu"}; popup.IsOpen()) {
     const auto active = registry.ctx<ActiveObject>();
 
     TACTILE_ASSERT(active.entity != entt::null);
@@ -202,7 +202,7 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
     }
 
     // TODO implement the object actions
-    Scoped::Disable disable;
+    scoped::Disable disable;
 
     ImGui::Separator();
 

@@ -20,7 +20,7 @@ void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
   bool isVisible = prefs::GetShowPropertiesDock();
 
-  Scoped::Window dock{"Properties", flags, &isVisible};
+  scoped::Window dock{"Properties", flags, &isVisible};
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {

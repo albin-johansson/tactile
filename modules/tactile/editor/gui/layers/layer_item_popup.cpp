@@ -15,7 +15,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           const LayerID id)
 {
-  if (auto popup = Scoped::Popup::ForItem("##LayerItemPopup"); popup.IsOpen()) {
+  if (auto popup = scoped::Popup::ForItem("##LayerItemPopup"); popup.IsOpen()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
       const auto entity = sys::FindLayer(registry, id);
       TACTILE_ASSERT(entity != entt::null);

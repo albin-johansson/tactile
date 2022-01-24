@@ -15,7 +15,7 @@ auto Button(const NotNull<CStr> text,
 {
   TACTILE_ASSERT(text);
 
-  const Scoped::Disable disable{!enabled};
+  const scoped::Disable disable{!enabled};
 
   const auto result = ImGui::Button(text, {width, height});
 

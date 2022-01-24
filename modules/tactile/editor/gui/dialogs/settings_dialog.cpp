@@ -36,7 +36,7 @@ void SettingsDialog::Open()
 
 void SettingsDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
-  Scoped::TabBar bar{"##SettingsTabBar"};
+  scoped::TabBar bar{"##SettingsTabBar"};
   if (bar.IsOpen()) {
     UpdateBehaviorTab();
     UpdateAppearanceTab();
@@ -71,7 +71,7 @@ void SettingsDialog::ApplySettings(entt::dispatcher& dispatcher)
 
 void SettingsDialog::UpdateBehaviorTab()
 {
-  if (Scoped::TabItem item{"Behavior"}; item.IsOpen()) {
+  if (scoped::TabItem item{"Behavior"}; item.IsOpen()) {
     ImGui::Spacing();
     if (ImGui::Button("Restore Defaults")) {
       prefs::ResetBehaviorPreferences(mSettings);
@@ -118,7 +118,7 @@ void SettingsDialog::UpdateBehaviorTab()
 
 void SettingsDialog::UpdateAppearanceTab()
 {
-  if (Scoped::TabItem item{"Appearance"}; item.IsOpen()) {
+  if (scoped::TabItem item{"Appearance"}; item.IsOpen()) {
     ImGui::Spacing();
 
     if (ImGui::Button("Restore Defaults")) {
@@ -128,7 +128,7 @@ void SettingsDialog::UpdateAppearanceTab()
 
     ImGui::Spacing();
 
-    if (Scoped::Combo theme{"Theme", magic_enum::enum_name(mSettings.theme).data()};
+    if (scoped::Combo theme{"Theme", magic_enum::enum_name(mSettings.theme).data()};
         theme.IsOpen()) {
       for (auto&& [name, value] : themes) {
         if (ImGui::Selectable(name)) {
@@ -163,7 +163,7 @@ void SettingsDialog::UpdateAppearanceTab()
 
 void SettingsDialog::UpdateExportTab()
 {
-  if (Scoped::TabItem item{"Export"}; item.IsOpen()) {
+  if (scoped::TabItem item{"Export"}; item.IsOpen()) {
     ImGui::Spacing();
 
     if (ImGui::Button("Restore Defaults")) {
@@ -173,7 +173,7 @@ void SettingsDialog::UpdateExportTab()
 
     ImGui::Spacing();
 
-    if (Scoped::Combo format("Preferred Format", mSettings.preferred_format.c_str());
+    if (scoped::Combo format("Preferred Format", mSettings.preferred_format.c_str());
         format.IsOpen()) {
       if (ImGui::MenuItem("YAML")) {
         mSettings.preferred_format = "YAML";

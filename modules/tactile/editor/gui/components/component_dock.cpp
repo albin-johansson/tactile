@@ -61,27 +61,27 @@ void ShowComponent(entt::dispatcher& dispatcher,
                    const CStr name,
                    const Component& component)
 {
-  const Scoped::ID componentScope{name};
+  const scoped::ID componentScope{name};
 
   constexpr auto headerFlags =
       ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
 
-  if (Scoped::TreeNode node{name, headerFlags}; node.IsOpen()) {
+  if (scoped::TreeNode node{name, headerFlags}; node.IsOpen()) {
     ImGui::SameLine();
     if (TrailingComponentButton()) {
       ImGui::OpenPopup("##ComponentPopup");
     }
 
-    if (const auto popup = Scoped::Popup::ForItem("##ComponentPopup"); popup.IsOpen()) {
+    if (const auto popup = scoped::Popup::ForItem("##ComponentPopup"); popup.IsOpen()) {
       ShowComponentPopupContent(dispatcher, contextId, component.type);
     }
 
     constexpr auto tableFlags =
         ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
-    if (Scoped::Table table{"##ComponentAttributeTable", 2, tableFlags}; table.IsOpen()) {
+    if (scoped::Table table{"##ComponentAttributeTable", 2, tableFlags}; table.IsOpen()) {
       for (const auto& [attributeName, attribute] : component.values) {
-        const Scoped::ID attributeScope{attributeName.c_str()};
+        const scoped::ID attributeScope{attributeName.c_str()};
 
         ImGui::TableNextRow();
         ImGui::TableNextColumn();
@@ -108,12 +108,12 @@ void ShowAddComponentButtonPopupContent(const entt::registry& registry,
 {
   const auto view = registry.view<ComponentDef>();
   if (view.empty()) {
-    Scoped::Disable disable;
+    scoped::Disable disable;
     ImGui::TextUnformatted("No available components");
   }
   else {
     for (auto [defEntity, def] : view.each()) {
-      Scoped::Disable disable{sys::HasComponent(registry, contextId, def.id)};
+      scoped::Disable disable{sys::HasComponent(registry, contextId, def.id)};
 
       if (ImGui::MenuItem(def.name.c_str())) {
         dispatcher.enqueue<AddComponentEvent>(contextId, def.id);
@@ -137,14 +137,14 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
     return;
   }
 
-  Scoped::Window dock{"Components", gWindowFlags, &showDock};
+  scoped::Window dock{"Components", gWindowFlags, &showDock};
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
     const auto& context = sys::GetCurrentContext(registry);
     ImGui::Text("Context: %s", context.name.c_str());
 
-    if (Scoped::Child pane{"##ComponentsChild"}; pane.IsOpen()) {
+    if (scoped::Child pane{"##ComponentsChild"}; pane.IsOpen()) {
       for (const auto componentEntity : context.components) {
         const auto& component = registry.get<Component>(componentEntity);
         const auto& name = sys::GetComponentDefName(registry, component.type);
@@ -159,7 +159,7 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
         ImGui::OpenPopup("##AddComponentButtonPopup");
       }
 
-      if (Scoped::Popup popup{"##AddComponentButtonPopup"}; popup.IsOpen()) {
+      if (scoped::Popup popup{"##AddComponentButtonPopup"}; popup.IsOpen()) {
         ShowAddComponentButtonPopupContent(registry, dispatcher, context.id);
       }
     }

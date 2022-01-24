@@ -5,7 +5,7 @@
 #include <imgui.h>
 #include <tactile_def.hpp>
 
-namespace tactile::Scoped {
+namespace tactile::scoped {
 
 struct ID final
 {

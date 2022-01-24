@@ -59,7 +59,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
   }
 
   ImGui::SetNextItemWidth(comboWidth);
-  if (Scoped::Combo filterCombo{"##LogFilterCombo", filter}; filterCombo.IsOpen()) {
+  if (scoped::Combo filterCombo{"##LogFilterCombo", filter}; filterCombo.IsOpen()) {
     if (ImGui::MenuItem(verboseFilter)) {
       return LogLevel::Verbose;
     }
@@ -112,8 +112,8 @@ void ShowColorLegendHint()
   ImGui::TextDisabled("(?)");
 
   if (ImGui::IsItemHovered()) {
-    Scoped::StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
-    Scoped::Tooltip tooltip;
+    scoped::StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+    scoped::Tooltip tooltip;
 
     static const auto verboseColor = GetColorForLevel(LogLevel::Verbose);
     static const auto debugColor = GetColorForLevel(LogLevel::Debug);
@@ -131,9 +131,9 @@ void ShowColorLegendHint()
 
 void ShowLogContents(const LogLevel filter)
 {
-  Scoped::StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+  scoped::StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
-  if (Scoped::Child pane{"##LogPane", {}, true, gChildFlags}; pane.IsOpen()) {
+  if (scoped::Child pane{"##LogPane", {}, true, gChildFlags}; pane.IsOpen()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(GetLogSize(filter)));
 
@@ -157,7 +157,7 @@ void LogDock::Update()
 
   bool visible = prefs::GetShowLogDock();
 
-  Scoped::Window dock{"Log", gWindowFlags, &visible};
+  scoped::Window dock{"Log", gWindowFlags, &visible};
   mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.IsOpen()) {
@@ -175,7 +175,7 @@ void LogDock::Update()
       CenteredText("No logged messages match the current filter.");
     }
 
-    if (auto popup = Scoped::Popup::ForWindow("##LogDockContext"); popup.IsOpen()) {
+    if (auto popup = scoped::Popup::ForWindow("##LogDockContext"); popup.IsOpen()) {
       if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
         ClearLogHistory();
       }

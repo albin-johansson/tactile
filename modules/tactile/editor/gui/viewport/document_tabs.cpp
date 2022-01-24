@@ -12,10 +12,10 @@ namespace tactile {
 
 void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (Scoped::TabBar bar{"##MapViewportTabBar", ImGuiTabBarFlags_Reorderable};
+  if (scoped::TabBar bar{"##MapViewportTabBar", ImGuiTabBarFlags_Reorderable};
       bar.IsOpen()) {
     for (const auto& [id, document] : model) {
-      const Scoped::ID scope{id};
+      const scoped::ID scope{id};
 
       ImGuiTabItemFlags flags = 0;
       const auto isActive = model.GetActiveMapId() == id;
@@ -30,7 +30,7 @@ void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher)
 
       const auto& context = document->registry.ctx<PropertyContext>();
       bool opened = true;
-      if (Scoped::TabItem item{context.name.c_str(), &opened, flags}; item.IsOpen()) {
+      if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.IsOpen()) {
         if (isActive) {
           UpdateMapView(document->registry, dispatcher);
         }

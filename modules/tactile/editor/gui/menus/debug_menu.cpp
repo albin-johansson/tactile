@@ -12,7 +12,7 @@ namespace tactile {
 
 void DebugMenu::Update()
 {
-  if (Scoped::Menu menu{"Debug"}; menu.IsOpen()) {
+  if (scoped::Menu menu{"Debug"}; menu.IsOpen()) {
     mShowMetrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
     if constexpr (IsDebugBuild()) {
@@ -36,7 +36,7 @@ void DebugMenu::UpdateWindows()
     }
 
     if (mShowStyleEditor) {
-      Scoped::Window editor{"Style Editor"};
+      scoped::Window editor{"Style Editor"};
       ImGui::ShowStyleEditor();
     }
   }

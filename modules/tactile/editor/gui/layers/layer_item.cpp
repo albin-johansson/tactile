@@ -24,7 +24,7 @@ void GroupLayerItem(const entt::registry& registry,
                     const CStr name)
 {
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-  if (Scoped::TreeNode treeNode{"##GroupLayerTreeNode", flags, "%s", name};
+  if (scoped::TreeNode treeNode{"##GroupLayerTreeNode", flags, "%s", name};
       treeNode.IsOpen()) {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
@@ -61,7 +61,7 @@ void LayerItem(const entt::registry& registry,
                const entt::entity layerEntity,
                const Layer& layer)
 {
-  const Scoped::ID scope{layer.id};
+  const scoped::ID scope{layer.id};
 
   const auto& activeLayer = registry.ctx<ActiveLayer>();
   const auto isActiveLayer = layerEntity == activeLayer.entity;
