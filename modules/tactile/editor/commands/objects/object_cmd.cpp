@@ -19,7 +19,7 @@ auto AObjectCmd::GetTargetObjectContext() const -> PropertyContext&
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindObject(registry, mObjectId);
+  const auto entity = sys::find_object(registry, mObjectId);
   TACTILE_ASSERT(entity != entt::null);
 
   return registry.get<PropertyContext>(entity);
@@ -29,7 +29,7 @@ auto AObjectCmd::GetTargetObject() -> Object&
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindObject(registry, mObjectId);
+  const auto entity = sys::find_object(registry, mObjectId);
   TACTILE_ASSERT(entity != entt::null);
 
   return registry.get<Object>(entity);

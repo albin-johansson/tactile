@@ -429,7 +429,7 @@ auto EmitInfo::to_layer_entity(const LayerID id) const -> entt::entity
 
 auto EmitInfo::to_object_entity(const ObjectID id) const -> entt::entity
 {
-  const auto entity = sys::FindObject(*mRegistry, id);
+  const auto entity = sys::find_object(*mRegistry, id);
   if (entity != entt::null) {
     return entity;
   }

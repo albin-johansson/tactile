@@ -4,7 +4,7 @@
 
 namespace tactile::sys {
 
-auto FindObject(const entt::registry& registry, const ObjectID id) -> entt::entity
+auto find_object(const entt::registry& registry, const ObjectID id) -> entt::entity
 {
   for (auto&& [entity, object] : registry.view<Object>().each()) {
     if (object.id == id) {

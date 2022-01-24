@@ -1,9 +1,14 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry, entity
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 namespace tactile::sys {
+
+/**
+ * \ingroup systems
+ * \defgroup object-system Object System
+ */
 
 /// \name Object system
 /// \{
@@ -11,12 +16,14 @@ namespace tactile::sys {
 /**
  * \brief Returns the object entity associated with a specific ID.
  *
- * \param registry the registry that will be queried.
- * \param id the ID associated with the desired object entity.
+ * \ingroup object-system
  *
- * \return the found entity; the null entity is returned if no match is found.
+ * \param registry the document registry.
+ * \param id the ID associated with the desired object.
+ *
+ * \return the found entity; a null entity is returned if no object is found.
  */
-[[nodiscard]] auto FindObject(const entt::registry& registry, ObjectID id)
+[[nodiscard]] auto find_object(const entt::registry& registry, ObjectID id)
     -> entt::entity;
 
 /// \} End of object system
