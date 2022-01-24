@@ -15,7 +15,7 @@ namespace tactile::sys {
 
 /**
  * \ingroup systems
- * \defgroup component-system Component system
+ * \defgroup component-system Component System
  */
 
 /// \addtogroup component-system
