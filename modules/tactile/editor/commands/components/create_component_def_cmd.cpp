@@ -15,17 +15,17 @@ CreateComponentDefCmd::CreateComponentDefCmd(RegistryRef registry, std::string n
 void CreateComponentDefCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  sys::RemoveComponentDef(registry, mComponentId.value());
+  sys::remove_component_def(registry, mComponentId.value());
 }
 
 void CreateComponentDefCmd::Redo()
 {
   auto& registry = mRegistry.get();
   if (!mComponentId) {
-    mComponentId = sys::CreateComponentDef(registry, mName);
+    mComponentId = sys::make_component_def(registry, mName);
   }
   else {
-    sys::CreateComponentDef(mRegistry, *mComponentId, mName);
+    sys::make_component_def(mRegistry, *mComponentId, mName);
   }
 }
 

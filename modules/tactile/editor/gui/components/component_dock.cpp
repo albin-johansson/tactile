@@ -113,7 +113,7 @@ void ShowAddComponentButtonPopupContent(const entt::registry& registry,
   }
   else {
     for (auto [defEntity, def] : view.each()) {
-      scoped::Disable disable{sys::HasComponent(registry, contextId, def.id)};
+      scoped::Disable disable{sys::has_component(registry, contextId, def.id)};
 
       if (ImGui::MenuItem(def.name.c_str())) {
         dispatcher.enqueue<AddComponentEvent>(contextId, def.id);
@@ -147,7 +147,7 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
     if (scoped::Child pane{"##ComponentsChild"}; pane.IsOpen()) {
       for (const auto componentEntity : context.components) {
         const auto& component = registry.get<Component>(componentEntity);
-        const auto& name = sys::GetComponentDefName(registry, component.type);
+        const auto& name = sys::get_component_def_name(registry, component.type);
 
         ImGui::Separator();
         ShowComponent(dispatcher, context.id, name.c_str(), component);

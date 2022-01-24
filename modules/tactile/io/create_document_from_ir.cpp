@@ -92,7 +92,7 @@ void AddComponents(entt::registry& registry, const entt::entity entity, const T&
 
   IO::EachComponent(source, [&](const IO::Component& irComponent) {
     const auto& [defEntity, def] =
-        sys::GetComponentDef(registry, IO::GetName(irComponent));
+        sys::get_component_def(registry, IO::GetName(irComponent));
 
     const auto componentEntity = registry.create();
     context.components.push_back(componentEntity);
@@ -360,56 +360,56 @@ void InitComponentDefinitions(entt::registry& registry, const IO::Map& irMap)
   IO::EachComponentDef(irMap, [&](const IO::ComponentDef& irDef) {
     const auto* componentName = IO::GetName(irDef);
 
-    const auto componentId = sys::CreateComponentDef(registry, componentName);
-    auto [entity, def] = sys::GetComponentDef(registry, componentId);
+    const auto componentId = sys::make_component_def(registry, componentName);
+    auto [entity, def] = sys::get_component_def(registry, componentId);
 
     IO::EachAttribute(irDef, [&](const CStr attr) {
       const auto type = IO::GetAttributeType(irDef, attr);
       switch (type) {
         case PropertyType::String:
-          sys::CreateComponentAttribute(registry,
+          sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         std::string{IO::GetString(irDef, attr)});
           break;
 
         case PropertyType::Integer:
-          sys::CreateComponentAttribute(registry,
+          sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetInt(irDef, attr));
           break;
 
         case PropertyType::Floating:
-          sys::CreateComponentAttribute(registry,
+          sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetFloat(irDef, attr));
           break;
 
         case PropertyType::Boolean:
-          sys::CreateComponentAttribute(registry,
+          sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetBool(irDef, attr));
           break;
 
         case PropertyType::File:
-          sys::CreateComponentAttribute(registry,
+          sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         std::filesystem::path{IO::GetFile(irDef, attr)});
           break;
 
         case PropertyType::Color:
-          sys::CreateComponentAttribute(registry,
+          sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         ToColor(IO::GetColor(irDef, attr)));
           break;
 
         case PropertyType::Object:
-          sys::CreateComponentAttribute(registry,
+          sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         object_t{IO::GetObject(irDef, attr)});

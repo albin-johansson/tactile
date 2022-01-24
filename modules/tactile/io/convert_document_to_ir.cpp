@@ -86,7 +86,7 @@ void ConvertComponents(const IO::Map& ir,
   for (const auto componentEntity : components) {
     const auto& component = registry.get<Component>(componentEntity);
 
-    const auto& type = sys::GetComponentDefName(registry, component.type);
+    const auto& type = sys::get_component_def_name(registry, component.type);
     const auto& irDef = IO::GetComponentDef(ir, type.c_str());
 
     auto& irComponent = IO::AddComponent(source, irDef);

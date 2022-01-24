@@ -18,13 +18,13 @@ CreateComponentAttributeCmd::CreateComponentAttributeCmd(RegistryRef registry,
 void CreateComponentAttributeCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  sys::RemoveComponentAttribute(registry, mComponentId, mName);
+  sys::remove_component_attribute(registry, mComponentId, mName);
 }
 
 void CreateComponentAttributeCmd::Redo()
 {
   auto& registry = mRegistry.get();
-  sys::CreateComponentAttribute(registry, mComponentId, mName);
+  sys::make_component_attribute(registry, mComponentId, mName);
 }
 
 }  // namespace tactile

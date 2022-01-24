@@ -18,15 +18,15 @@ RenameComponentCmd::RenameComponentCmd(RegistryRef registry,
 void RenameComponentCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  sys::RenameComponentDef(registry, mComponentId, mPreviousName.value());
+  sys::rename_component_def(registry, mComponentId, mPreviousName.value());
 }
 
 void RenameComponentCmd::Redo()
 {
   auto& registry = mRegistry.get();
 
-  mPreviousName = sys::GetComponentDefName(registry, mComponentId);
-  sys::RenameComponentDef(registry, mComponentId, mUpdatedName);
+  mPreviousName = sys::get_component_def_name(registry, mComponentId);
+  sys::rename_component_def(registry, mComponentId, mUpdatedName);
 }
 
 }  // namespace tactile

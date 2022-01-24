@@ -18,7 +18,7 @@ RemoveComponentAttributeCmd::RemoveComponentAttributeCmd(RegistryRef registry,
 void RemoveComponentAttributeCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  sys::CreateComponentAttribute(registry,
+  sys::make_component_attribute(registry,
                                 mComponentId,
                                 mAttributeName,
                                 mPreviousDefault.value());
@@ -29,8 +29,8 @@ void RemoveComponentAttributeCmd::Redo()
 {
   auto& registry = mRegistry.get();
   mPreviousDefault =
-      sys::GetComponentAttributeValue(registry, mComponentId, mAttributeName);
-  sys::RemoveComponentAttribute(registry, mComponentId, mAttributeName);
+      sys::get_component_attribute_value(registry, mComponentId, mAttributeName);
+  sys::remove_component_attribute(registry, mComponentId, mAttributeName);
 }
 
 }  // namespace tactile

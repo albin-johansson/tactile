@@ -20,13 +20,13 @@ RenameComponentAttributeCmd::RenameComponentAttributeCmd(RegistryRef registry,
 void RenameComponentAttributeCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  sys::RenameComponentAttribute(registry, mComponentId, mUpdatedName, mPreviousName);
+  sys::rename_component_attribute(registry, mComponentId, mUpdatedName, mPreviousName);
 }
 
 void RenameComponentAttributeCmd::Redo()
 {
   auto& registry = mRegistry.get();
-  sys::RenameComponentAttribute(registry, mComponentId, mPreviousName, mUpdatedName);
+  sys::rename_component_attribute(registry, mComponentId, mPreviousName, mUpdatedName);
 }
 
 }  // namespace tactile

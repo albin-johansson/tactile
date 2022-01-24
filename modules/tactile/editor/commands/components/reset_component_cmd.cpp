@@ -17,7 +17,7 @@ void ResetComponentCmd::Undo()
   const auto& snapshot = mSnapshot.value();
 
   for (const auto& [name, value] : snapshot.values) {
-    sys::UpdateComponent(registry, mContextId, mComponentId, name, value);
+    sys::update_component(registry, mContextId, mComponentId, name, value);
   }
 
   mSnapshot.reset();
@@ -26,7 +26,7 @@ void ResetComponentCmd::Undo()
 void ResetComponentCmd::Redo()
 {
   auto& registry = mRegistry.get();
-  mSnapshot = sys::ResetComponent(registry, mContextId, mComponentId);
+  mSnapshot = sys::reset_component(registry, mContextId, mComponentId);
 }
 
 }  // namespace tactile

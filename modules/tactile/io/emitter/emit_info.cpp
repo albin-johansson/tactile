@@ -213,7 +213,7 @@ void EmitInfo::each_fancy_tile_animation_frame(const TileID id,
 
 auto EmitInfo::component_count(const ContextID id) const -> usize
 {
-  return sys::GetComponentCount(*mRegistry, id);
+  return sys::get_component_count(*mRegistry, id);
 }
 
 void EmitInfo::each_component(const ContextID id, const component_visitor& func) const
@@ -221,7 +221,7 @@ void EmitInfo::each_component(const ContextID id, const component_visitor& func)
   const auto& context = sys::GetContext(*mRegistry, id);
   for (const auto componentEntity : context.components) {
     const auto& component = mRegistry->get<Component>(componentEntity);
-    const auto type = sys::GetComponentDefName(*mRegistry, component.type);
+    const auto type = sys::get_component_def_name(*mRegistry, component.type);
     func(type, component.values);
   }
 }
