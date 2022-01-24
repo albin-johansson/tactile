@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
+#include <entt/entt.hpp>
 
 namespace tactile::sys {
 
