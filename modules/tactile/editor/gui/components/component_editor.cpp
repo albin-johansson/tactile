@@ -1,7 +1,5 @@
 #include "component_editor.hpp"
 
-#define NOMINMAX
-
 #include <limits>   // numeric_limits
 #include <string>   // string
 #include <utility>  // move
@@ -182,7 +180,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   }
 
   ImGui::TableNextColumn();
-  ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
+  ImGui::SetNextItemWidth(-(std::numeric_limits<float>::min)());
 
   const auto type = value.type();
   PropertyType newType = type;
