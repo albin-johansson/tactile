@@ -233,6 +233,18 @@ auto find_component_def(const entt::registry& registry, const ComponentID id)
   return entt::null;
 }
 
+auto find_component_def(const entt::registry& registry, const std::string_view name)
+    -> entt::entity
+{
+  for (auto&& [entity, def] : registry.view<ComponentDef>().each()) {
+    if (def.name == name) {
+      return entity;
+    }
+  }
+
+  return entt::null;
+}
+
 auto get_component_def(entt::registry& registry, const ComponentID id)
     -> std::pair<entt::entity, ComponentDef&>
 {
@@ -255,18 +267,6 @@ auto get_component_def(const entt::registry& registry, const ComponentID id)
   else {
     ThrowTraced(TactileError{"Failed to find component definition with specified ID!"});
   }
-}
-
-auto get_component_def(const entt::registry& registry, const std::string_view name)
-    -> std::pair<entt::entity, const ComponentDef&>
-{
-  for (auto&& [entity, def] : registry.view<ComponentDef>().each()) {
-    if (def.name == name) {
-      return {entity, def};
-    }
-  }
-
-  ThrowTraced(TactileError{"Invalid component name!"});
 }
 
 auto get_component_def_name(const entt::registry& registry, const ComponentID id)

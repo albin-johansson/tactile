@@ -140,14 +140,13 @@ void rename_component_def(entt::registry& registry, ComponentID id, std::string 
 [[nodiscard]] auto find_component_def(const entt::registry& registry, ComponentID id)
     -> entt::entity;
 
+[[nodiscard]] auto find_component_def(const entt::registry& registry,
+                                      std::string_view name) -> entt::entity;
+
 [[nodiscard]] auto get_component_def(entt::registry& registry, ComponentID id)
     -> std::pair<entt::entity, ComponentDef&>;
 
 [[nodiscard]] auto get_component_def(const entt::registry& registry, ComponentID id)
-    -> std::pair<entt::entity, const ComponentDef&>;
-
-[[nodiscard]] auto get_component_def(const entt::registry& registry,
-                                     std::string_view name)
     -> std::pair<entt::entity, const ComponentDef&>;
 
 [[nodiscard]] auto get_component_def_name(const entt::registry& registry, ComponentID id)

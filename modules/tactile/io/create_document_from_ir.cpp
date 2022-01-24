@@ -91,8 +91,10 @@ void AddComponents(entt::registry& registry, const entt::entity entity, const T&
   context.components.reserve(IO::GetComponentCount(source));
 
   IO::EachComponent(source, [&](const IO::Component& irComponent) {
-    const auto& [defEntity, def] =
-        sys::get_component_def(registry, IO::GetName(irComponent));
+    const auto defEntity = sys::find_component_def(registry, IO::GetName(irComponent));
+    TACTILE_ASSERT(defEntity != entt::null);
+
+    const auto def = registry.get<ComponentDef>(defEntity);
 
     const auto componentEntity = registry.create();
     context.components.push_back(componentEntity);
