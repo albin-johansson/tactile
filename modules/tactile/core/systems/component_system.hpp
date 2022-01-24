@@ -13,6 +13,14 @@
 
 namespace tactile::sys {
 
+/**
+ * \ingroup systems
+ * \defgroup component-system Component system
+ */
+
+/// \addtogroup component-system
+/// \{
+
 struct remove_component_def_result final
 {
   ComponentID id{};                                   ///< Previous component ID.
@@ -382,5 +390,7 @@ auto reset_component(entt::registry& registry,
                                        ContextID contextId) -> usize;
 
 /// \} End of component functions
+
+/// \} End of group component-system
 
 }  // namespace tactile::sys
