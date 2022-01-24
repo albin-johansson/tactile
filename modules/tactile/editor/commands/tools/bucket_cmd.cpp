@@ -9,7 +9,7 @@
 namespace tactile {
 
 BucketCmd::BucketCmd(RegistryRef registry,
-                     const MapPosition origin,
+                     const map_position origin,
                      const TileID replacement)
     : ACommand{"Bucket Fill"}
     , mRegistry{registry}
@@ -29,7 +29,7 @@ void BucketCmd::Undo()
   const auto target = mTarget.value();
   auto& layer = registry.get<TileLayer>(entity);
   for (const auto& position : mPositions) {
-    layer.matrix.at(position.GetRowIndex()).at(position.GetColumnIndex()) = target;
+    layer.matrix.at(position.row_index()).at(position.col_index()) = target;
   }
 
   mPositions.clear();

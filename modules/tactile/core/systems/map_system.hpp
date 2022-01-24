@@ -60,7 +60,7 @@ void ResizeMap(entt::registry& registry, usize nRows, usize nCols);
  * \return `true` if the position is within the map; `false` otherwise.
  */
 [[nodiscard]] auto IsPositionInMap(const entt::registry& registry,
-                                   const MapPosition& position) -> bool;
+                                   const map_position& position) -> bool;
 
 /// \} End of map system
 

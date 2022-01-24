@@ -96,12 +96,12 @@ void ResizeMap(entt::registry& registry, const usize nRows, const usize nCols)
   }
 }
 
-auto IsPositionInMap(const entt::registry& registry, const MapPosition& position) -> bool
+auto IsPositionInMap(const entt::registry& registry, const map_position& position) -> bool
 {
   const auto& map = registry.ctx<Map>();
 
-  const auto row = position.GetRow();
-  const auto column = position.GetColumn();
+  const auto row = position.row();
+  const auto column = position.col();
 
   return (row >= 0) && (column >= 0) && (static_cast<usize>(row) < map.row_count) &&
          (static_cast<usize>(column) < map.column_count);

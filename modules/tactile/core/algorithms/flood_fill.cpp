@@ -9,9 +9,9 @@ namespace tactile {
 
 void flood(entt::registry& registry,
            const entt::entity entity,
-           const MapPosition& origin,
+           const map_position& origin,
            const TileID replacement,
-           std::vector<MapPosition>& affected)
+           std::vector<map_position>& affected)
 {
   const auto target = sys::GetTileFromLayer(registry, entity, origin);
 
@@ -19,13 +19,13 @@ void flood(entt::registry& registry,
     return;
   }
 
-  std::queue<MapPosition> positions;
+  std::queue<map_position> positions;
 
   sys::SetTileInLayer(registry, entity, origin, replacement);
   affected.push_back(origin);
   positions.push(origin);
 
-  auto update = [&](const MapPosition& position) {
+  auto update = [&](const map_position& position) {
     if (sys::IsPositionInMap(registry, position)) {
       const auto tile = sys::GetTileFromLayer(registry, entity, position);
       if (tile == target) {
@@ -40,10 +40,10 @@ void flood(entt::registry& registry,
     const auto position = positions.front();
     positions.pop();
 
-    update(position.West());
-    update(position.East());
-    update(position.South());
-    update(position.North());
+    update(position.west());
+    update(position.east());
+    update(position.south());
+    update(position.north());
   }
 }
 

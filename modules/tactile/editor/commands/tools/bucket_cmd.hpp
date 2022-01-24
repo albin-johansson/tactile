@@ -16,7 +16,7 @@ namespace tactile {
 
 class BucketCmd final : public ACommand {
  public:
-  BucketCmd(RegistryRef registry, MapPosition origin, TileID replacement);
+  BucketCmd(RegistryRef registry, map_position origin, TileID replacement);
 
   void Undo() override;
 
@@ -27,10 +27,10 @@ class BucketCmd final : public ACommand {
  private:
   RegistryRef mRegistry;
   LayerID mLayer;
-  MapPosition mOrigin;
+  map_position mOrigin;
   TileID mReplacement;
   Maybe<TileID> mTarget;
-  std::vector<MapPosition> mPositions;
+  std::vector<map_position> mPositions;
 };
 
 /// \} End of group commands

@@ -40,11 +40,11 @@ void RenderSelection(const Region& selection, const ImVec2& min, const ImVec2& t
 {
   const auto diff = selection.end - selection.begin;
 
-  const ImVec2 origin{static_cast<float>(selection.begin.GetColumn()) * tileSize.x,
-                      static_cast<float>(selection.begin.GetRow()) * tileSize.y};
+  const ImVec2 origin{static_cast<float>(selection.begin.col()) * tileSize.x,
+                      static_cast<float>(selection.begin.row()) * tileSize.y};
 
-  const ImVec2 size{static_cast<float>(diff.GetColumn()) * tileSize.x,
-                    static_cast<float>(diff.GetRow()) * tileSize.y};
+  const ImVec2 size{static_cast<float>(diff.col()) * tileSize.x,
+                    static_cast<float>(diff.row()) * tileSize.y};
 
   ImGui::GetWindowDrawList()->AddRectFilled(min + origin,
                                             min + origin + size,

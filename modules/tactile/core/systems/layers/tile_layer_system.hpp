@@ -13,7 +13,7 @@ namespace tactile::sys {
 
 void SetTileInLayer(entt::registry& registry,
                     entt::entity entity,
-                    const MapPosition& position,
+                    const map_position& position,
                     TileID tile);
 
 void SetTilesInLayer(entt::registry& registry,
@@ -22,7 +22,7 @@ void SetTilesInLayer(entt::registry& registry,
 
 [[nodiscard]] auto GetTileFromLayer(const entt::registry& registry,
                                     entt::entity entity,
-                                    const MapPosition& position) -> TileID;
+                                    const map_position& position) -> TileID;
 
 /// \} End of tile layer system
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <compare>
+#include <compare>  // <=>
 
 #include <tactile_def.hpp>
 
@@ -10,16 +10,16 @@ namespace tactile {
 /// \{
 
 /**
- * \class MapPosition
+ * \brief Represents a tile position in a map or tileset.
  *
- * \brief Represents a row/column position in a tilemap.
- *
- * \headerfile map_position.hpp
+ * \note This class may represent map positions with negative indices.
  */
-class MapPosition final {
+class map_position final {
  public:
-  /// Creates a map position that represents (0, 0).
-  constexpr MapPosition() noexcept = default;
+  /**
+   * \brief Creates a map position at origin, (0, 0).
+   */
+  constexpr map_position() noexcept = default;
 
   /**
    * \brief Creates a map position.
@@ -27,13 +27,13 @@ class MapPosition final {
    * \param row the row index.
    * \param column the column index.
    */
-  constexpr MapPosition(const int32 row, const int32 column) noexcept
+  constexpr map_position(const int32 row, const int32 column) noexcept
       : mRow{row}
       , mCol{column}
   {}
 
-  [[nodiscard]] constexpr static auto From(const usize row, const usize column) noexcept
-      -> MapPosition
+  [[nodiscard]] constexpr static auto from(const usize row, const usize column) noexcept
+      -> map_position
   {
     return {static_cast<int32>(row), static_cast<int32>(column)};
   }
@@ -44,23 +44,24 @@ class MapPosition final {
    * \param index the index of the position.
    * \param nCols the total number of columns.
    *
-   * \return a row/column position translated from the supplied index.
+   * \return a position translated from the supplied index.
    */
-  [[nodiscard]] constexpr static auto FromIndex(const int32 index,
-                                                const int32 nCols) noexcept -> MapPosition
+  [[nodiscard]] constexpr static auto from_index(const int32 index,
+                                                 const int32 nCols) noexcept
+      -> map_position
   {
-    return MapPosition{index / nCols, index % nCols};
+    return map_position{index / nCols, index % nCols};
   }
 
   /**
    * \brief Sets the row index associated with the position.
    */
-  constexpr void SetRow(const int32 row) { mRow = row; }
+  constexpr void set_row(const int32 row) noexcept { mRow = row; }
 
   /**
    * \brief Sets the column index associated with the position.
    */
-  constexpr void SetColumn(const int32 column) { mCol = column; }
+  constexpr void set_col(const int32 column) noexcept { mCol = column; }
 
   /**
    * \brief Creates and position that is offset from this position.
@@ -70,8 +71,9 @@ class MapPosition final {
    *
    * \return a position that is offset from this position.
    */
-  [[nodiscard]] constexpr auto OffsetBy(const int32 row, const int32 column) const
-      -> MapPosition
+  [[nodiscard]] constexpr auto offset_by(const int32 row,
+                                         const int32 column) const noexcept
+      -> map_position
   {
     return {mRow + row, mCol + column};
   }
@@ -81,14 +83,20 @@ class MapPosition final {
    *
    * \return a position one step to the "north".
    */
-  [[nodiscard]] constexpr auto North() const -> MapPosition { return {mRow - 1, mCol}; }
+  [[nodiscard]] constexpr auto north() const noexcept -> map_position
+  {
+    return {mRow - 1, mCol};
+  }
 
   /**
    * \brief Returns a map position that is one step south of this map position.
    *
    * \return a position one step to the "south".
    */
-  [[nodiscard]] constexpr auto South() const -> MapPosition { return {mRow + 1, mCol}; }
+  [[nodiscard]] constexpr auto south() const noexcept -> map_position
+  {
+    return {mRow + 1, mCol};
+  }
 
   /**
    * \brief Returns a map position that is one step to the west of this map
@@ -96,7 +104,10 @@ class MapPosition final {
    *
    * a position one step to the "west".
    */
-  [[nodiscard]] constexpr auto West() const -> MapPosition { return {mRow, mCol - 1}; }
+  [[nodiscard]] constexpr auto west() const noexcept -> map_position
+  {
+    return {mRow, mCol - 1};
+  }
 
   /**
    * \brief Returns a map position that is one step to the east of this map
@@ -104,21 +115,24 @@ class MapPosition final {
    *
    * \return a position one step to the "east".
    */
-  [[nodiscard]] constexpr auto East() const -> MapPosition { return {mRow, mCol + 1}; }
+  [[nodiscard]] constexpr auto east() const noexcept -> map_position
+  {
+    return {mRow, mCol + 1};
+  }
 
   /**
    * \brief Returns the row index of the map position.
    *
-   * \return the associated row index.
+   * \return the row index.
    */
-  [[nodiscard]] constexpr auto GetRow() const -> int32 { return mRow; }
+  [[nodiscard]] constexpr auto row() const noexcept -> int32 { return mRow; }
 
   /**
    * \brief Returns the column index of the map position.
    *
-   * \return the associated column index.
+   * \return the column index.
    */
-  [[nodiscard]] constexpr auto GetColumn() const -> int32 { return mCol; }
+  [[nodiscard]] constexpr auto col() const noexcept -> int32 { return mCol; }
 
   /**
    * \brief Returns the raw row index associated with the map position.
@@ -127,19 +141,19 @@ class MapPosition final {
    *
    * \return the raw row index.
    */
-  [[nodiscard]] constexpr auto GetRowIndex() const noexcept -> usize
+  [[nodiscard]] constexpr auto row_index() const noexcept -> usize
   {
     return static_cast<usize>(mRow);
   }
 
   /**
-   * \brief Returns the raw column index associated with the map position.
+   * \brief Returns the column index associated with the map position.
    *
    * \details This function is meant to be used when indexing vectors, etc.
    *
    * \return the raw column index.
    */
-  [[nodiscard]] constexpr auto GetColumnIndex() const noexcept -> usize
+  [[nodiscard]] constexpr auto col_index() const noexcept -> usize
   {
     return static_cast<usize>(mCol);
   }
@@ -147,75 +161,62 @@ class MapPosition final {
   /**
    * \brief Returns the row index converted to a y-coordinate.
    *
-   * \param tileSize the current tile size.
+   * \param tileHeight the current tile height.
    *
    * \return the row index converted to a y-coordinate.
    */
-  [[nodiscard]] constexpr auto RowToY(const int32 tileSize) const noexcept -> int32
+  [[nodiscard]] constexpr auto row_to_y(const int32 tileHeight) const noexcept -> int32
   {
-    return mRow * tileSize;
+    return mRow * tileHeight;
   }
 
   /**
-   * \brief Returns the column index converted to an x-coordinate.
+   * \brief Returns the col index converted to an x-coordinate.
    *
-   * \param tileSize the current tile size.
+   * \param tileWidth the current tile width.
    *
    * \return the column index converted to an x-coordinate.
    */
-  [[nodiscard]] constexpr auto ColumnToX(const int32 tileSize) const noexcept -> int32
+  [[nodiscard]] constexpr auto col_to_x(const int32 tileWidth) const noexcept -> int32
   {
-    return mCol * tileSize;
+    return mCol * tileWidth;
   }
 
-  // clang-format off
-  [[nodiscard]] constexpr auto operator<=>(const MapPosition&) const noexcept = default;
-  // clang-format on
+  [[nodiscard]] constexpr auto operator<=>(const map_position&) const noexcept = default;
 
  private:
   int32 mRow{};
   int32 mCol{};
 };
 
-/**
- * \brief Adds two positions and returns the result.
- *
- * \param lhs the left-hand side position.
- * \param rhs the right-hand side position.
- *
- * \return a position that is the sum of two positions.
- */
-[[nodiscard]] constexpr auto operator+(const MapPosition& lhs, const MapPosition& rhs)
-    -> MapPosition
+/// \name Map position operators
+/// \{
+
+[[nodiscard]] constexpr auto operator+(const map_position& lhs,
+                                       const map_position& rhs) noexcept -> map_position
 {
-  return MapPosition{lhs.GetRow() + rhs.GetRow(), lhs.GetColumn() + rhs.GetColumn()};
+  return {lhs.row() + rhs.row(), lhs.col() + rhs.col()};
 }
 
-/**
- * \brief Subtracts two positions and returns the result.
- *
- * \param lhs the left-hand side position.
- * \param rhs the right-hand side position.
- *
- * \return a position that is the difference between two positions.
- */
-[[nodiscard]] constexpr auto operator-(const MapPosition& lhs, const MapPosition& rhs)
-    -> MapPosition
+[[nodiscard]] constexpr auto operator-(const map_position& lhs,
+                                       const map_position& rhs) noexcept -> map_position
 {
-  return MapPosition{lhs.GetRow() - rhs.GetRow(), lhs.GetColumn() - rhs.GetColumn()};
+  return {lhs.row() - rhs.row(), lhs.col() - rhs.col()};
 }
 
-[[nodiscard]] constexpr auto operator*(const MapPosition& lhs, const MapPosition& rhs)
-    -> MapPosition
+[[nodiscard]] constexpr auto operator*(const map_position& lhs,
+                                       const map_position& rhs) noexcept -> map_position
 {
-  return MapPosition{lhs.GetRow() * rhs.GetRow(), lhs.GetColumn() * rhs.GetColumn()};
+  return {lhs.row() * rhs.row(), lhs.col() * rhs.col()};
 }
 
-[[nodiscard]] constexpr auto operator/(const MapPosition& lhs, const MapPosition& rhs)
-    -> MapPosition
+[[nodiscard]] constexpr auto operator/(const map_position& lhs,
+                                       const map_position& rhs) noexcept -> map_position
 {
-  return MapPosition{lhs.GetRow() / rhs.GetRow(), lhs.GetColumn() / rhs.GetColumn()};
+  return {lhs.row() / rhs.row(), lhs.col() / rhs.col()};
 }
+
+/// \} End of map position operators
 
 /// \} End of group core
 

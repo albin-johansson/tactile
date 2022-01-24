@@ -8,8 +8,8 @@ namespace tactile {
 /// \ingroup core
 struct Region final
 {
-  MapPosition begin;  ///< The top-left position.
-  MapPosition end;    ///< The bottom-right position.
+  map_position begin;  ///< The top-left position.
+  map_position end;    ///< The bottom-right position.
 
   [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
 };

@@ -219,7 +219,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_tile_from_tileset(const entt::registry& registry,
                                          entt::entity entity,
-                                         const MapPosition& position) -> TileID;
+                                         const map_position& position) -> TileID;
 
 /**
  * \brief Converts a global tile identifier to its local counterpart.

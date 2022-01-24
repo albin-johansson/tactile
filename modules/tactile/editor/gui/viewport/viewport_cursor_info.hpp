@@ -10,7 +10,7 @@ struct RenderInfo;
 
 struct ViewportCursorInfo final
 {
-  MapPosition map_position;
+  map_position map_position;
   ImVec2 clamped_position{};
   ImVec2 raw_position{};
   bool is_within_map{};

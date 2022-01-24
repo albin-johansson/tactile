@@ -36,11 +36,11 @@ void ResizeMapCmd::Redo()
 
     mCache.Clear();
     mCache.SaveTiles(registry,
-                     MapPosition::From(rows - (mPrevRows.value() - mRows), 0u),
-                     MapPosition::From(rows, cols));
+                     map_position::from(rows - (mPrevRows.value() - mRows), 0u),
+                     map_position::from(rows, cols));
     mCache.SaveTiles(registry,
-                     MapPosition::From(0u, cols - (mPrevCols.value() - mCols)),
-                     MapPosition::From(rows, cols));
+                     map_position::from(0u, cols - (mPrevCols.value() - mCols)),
+                     map_position::from(rows, cols));
   }
 
   sys::ResizeMap(registry, mRows, mCols);

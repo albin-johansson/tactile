@@ -35,9 +35,9 @@ void EraserSequenceCmd::Redo()
 
   auto& matrix = registry.get<TileLayer>(entity).matrix;
   for (const auto& [position, _] : mOldState) {
-    TACTILE_ASSERT(position.GetRowIndex() < matrix.size());
-    TACTILE_ASSERT(position.GetColumnIndex() < matrix.front().size());
-    matrix[position.GetRowIndex()][position.GetColumnIndex()] = empty_tile;
+    TACTILE_ASSERT(position.row_index() < matrix.size());
+    TACTILE_ASSERT(position.col_index() < matrix.front().size());
+    matrix[position.row_index()][position.col_index()] = empty_tile;
   }
 }
 

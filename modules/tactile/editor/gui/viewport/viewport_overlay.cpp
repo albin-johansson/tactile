@@ -62,8 +62,8 @@ void UpdateMouseRowColumnLabels(const ViewportCursorInfo& cursor)
 {
   if (cursor.is_within_map) {
     ImGui::Text("Row/Column: (%i, %i)",
-                cursor.map_position.GetRow(),
-                cursor.map_position.GetColumn());
+                cursor.map_position.row(),
+                cursor.map_position.col());
   }
   else {
     ImGui::TextUnformatted("Row/Column: N/A");

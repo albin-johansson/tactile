@@ -21,7 +21,7 @@ inline TileCache gOldState;
   return IsTileLayerActive(registry);
 }
 
-void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
+void UpdateSequence(entt::registry& registry, const map_position& cursor)
 {
   const auto entity = GetActiveLayer(registry);
   TACTILE_ASSERT(entity != entt::null);

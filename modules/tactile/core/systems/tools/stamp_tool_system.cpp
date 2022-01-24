@@ -26,7 +26,7 @@ inline TileCache gSequence;
   return IsTileLayerActive(registry) && is_tileset_selection_not_empty(registry);
 }
 
-void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
+void UpdateSequence(entt::registry& registry, const map_position& cursor)
 {
   TACTILE_ASSERT(IsUsable(registry));
 
@@ -39,13 +39,13 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
   const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
   const auto& region = selection.region.value();
   const auto selectionSize = region.end - region.begin;
-  const auto previewOffset = selectionSize / MapPosition{2, 2};
-  const auto endRow = selectionSize.GetRow();
-  const auto endCol = selectionSize.GetColumn();
+  const auto previewOffset = selectionSize / map_position{2, 2};
+  const auto endRow = selectionSize.row();
+  const auto endCol = selectionSize.col();
 
   for (auto row = 0; row < endRow; ++row) {
     for (auto col = 0; col < endCol; ++col) {
-      const auto index = MapPosition{row, col};
+      const auto index = map_position{row, col};
       const auto selectionPosition = region.begin + index;
 
       const auto tile = get_tile_from_tileset(registry, tilesetEntity, selectionPosition);

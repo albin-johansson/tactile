@@ -21,13 +21,13 @@ namespace {
   const auto gridWidth = info.grid_size.x;
   const auto gridHeight = info.grid_size.y;
 
-  const ImVec2 index{static_cast<float>(begin.GetColumn()),
-                     static_cast<float>(begin.GetRow())};
+  const ImVec2 index{static_cast<float>(begin.col()),
+                     static_cast<float>(begin.row())};
   const auto pos = info.origin + (index * info.grid_size);
 
   const auto size = info.bounds.end - info.bounds.begin;
-  const auto width = static_cast<float>(size.GetColumn()) * gridWidth;
-  const auto height = static_cast<float>(size.GetRow()) * gridHeight;
+  const auto width = static_cast<float>(size.col()) * gridWidth;
+  const auto height = static_cast<float>(size.row()) * gridHeight;
 
   return {pos.x, pos.y, width, height};
 }
@@ -259,11 +259,11 @@ void Graphics::RenderCenteredText(const CStr text, const ImVec2& center)
 
 void Graphics::RenderTranslatedGrid()
 {
-  const auto endRow = mBounds.end.GetRow();
-  const auto endCol = mBounds.end.GetColumn();
+  const auto endRow = mBounds.end.row();
+  const auto endCol = mBounds.end.col();
 
-  for (auto row = mBounds.begin.GetRow(); row < endRow; ++row) {
-    for (auto col = mBounds.begin.GetColumn(); col < endCol; ++col) {
+  for (auto row = mBounds.begin.row(); row < endRow; ++row) {
+    for (auto col = mBounds.begin.col(); col < endCol; ++col) {
       DrawTranslatedRect(FromMatrixToAbsolute(row, col), mViewportTileSize);
     }
   }

@@ -20,8 +20,8 @@ namespace tactile {
  */
 void flood(entt::registry& registry,
            entt::entity entity,
-           const MapPosition& origin,
+           const map_position& origin,
            TileID replacement,
-           std::vector<MapPosition>& affected);
+           std::vector<map_position>& affected);
 
 }  // namespace tactile

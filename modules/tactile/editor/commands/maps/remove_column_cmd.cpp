@@ -22,8 +22,8 @@ void RemoveColumnCmd::Redo()
   auto& registry = mRegistry.get();
 
   const auto& map = registry.ctx<Map>();
-  const auto begin = MapPosition::From(0u, map.column_count - mColumns - 1u);
-  const auto end = MapPosition::From(map.row_count, map.column_count);
+  const auto begin = map_position::from(0u, map.column_count - mColumns - 1u);
+  const auto end = map_position::from(map.row_count, map.column_count);
 
   mCache.Clear();
   mCache.SaveTiles(registry, begin, end);

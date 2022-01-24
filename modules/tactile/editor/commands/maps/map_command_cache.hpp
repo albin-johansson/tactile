@@ -11,7 +11,7 @@
 namespace tactile {
 
 class MapCommandCache final {
-  using TileCache = std::map<MapPosition, TileID, std::less<>>;
+  using TileCache = std::map<map_position, TileID, std::less<>>;
   using LayerCache = std::map<LayerID, TileCache, std::less<>>;
 
  public:
@@ -19,7 +19,7 @@ class MapCommandCache final {
 
   void RestoreTiles(entt::registry& registry);
 
-  void SaveTiles(const entt::registry& registry, MapPosition begin, MapPosition end);
+  void SaveTiles(const entt::registry& registry, map_position begin, map_position end);
 
   void MergeWith(const MapCommandCache& other);
 

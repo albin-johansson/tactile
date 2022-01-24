@@ -17,11 +17,11 @@ void RenderTileLayer(Graphics& graphics,
   graphics.SetOpacity(parentOpacity * layer.opacity);
 
   const auto bounds = graphics.GetBounds();
-  const auto endRow = bounds.end.GetRow();
-  const auto endCol = bounds.end.GetColumn();
+  const auto endRow = bounds.end.row();
+  const auto endCol = bounds.end.col();
 
-  for (auto row = bounds.begin.GetRow(); row < endRow; ++row) {
-    for (auto col = bounds.begin.GetColumn(); col < endCol; ++col) {
+  for (auto row = bounds.begin.row(); row < endRow; ++row) {
+    for (auto col = bounds.begin.col(); col < endCol; ++col) {
       const auto tile = sys::GetTileFromLayer(registry, layerEntity, {row, col});
       if (tile != empty_tile) {
         RenderTile(graphics, registry, tile, row, col);
