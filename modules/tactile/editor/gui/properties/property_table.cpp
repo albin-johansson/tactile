@@ -114,7 +114,7 @@ void NativeReadOnlyRow(const CStr label, const usize value)
   ImGui::Text("%llu", static_cast<ulonglong>(value)); /* Cast to avoid format warnings */
 }
 
-void ShowNativeMapProperties(const std::string& name, const Map& map)
+void ShowNativeMapProperties(const std::string& name, const MapInfo& map)
 {
   NativeReadOnlyRow("Type", "Map");
   NativeReadOnlyRow("Name", name.c_str());
@@ -238,7 +238,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
 
   if (Scoped::Table table{"##PropertyTable", 2, flags}; table.IsOpen()) {
     if (current.entity == entt::null) {
-      ShowNativeMapProperties(context.name, registry.ctx<Map>());
+      ShowNativeMapProperties(context.name, registry.ctx<MapInfo>());
     }
     else {
       if (const auto* tileset = registry.try_get<Tileset>(current.entity)) {

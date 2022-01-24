@@ -46,7 +46,7 @@ inline auto DuplicateComp<ObjectLayer>(entt::registry& registry,
                                        const entt::entity source,
                                        const entt::entity destination) -> ObjectLayer&
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   auto& layer = registry.emplace<ObjectLayer>(destination);
 
   const auto& sourceLayer = registry.get<ObjectLayer>(source);

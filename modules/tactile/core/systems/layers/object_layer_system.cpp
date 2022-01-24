@@ -68,7 +68,7 @@ auto FindObject(const entt::registry& registry,
   TACTILE_ASSERT(entity != entt::null);
   TACTILE_ASSERT(registry.all_of<ObjectLayer>(entity));
 
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
   const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
 
   const auto& layer = registry.get<ObjectLayer>(entity);

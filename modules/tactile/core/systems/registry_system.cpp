@@ -23,7 +23,7 @@ auto MakeRegistry() -> entt::registry
   registry.set<ActiveObject>();
   registry.set<MousePos>();
 
-  auto& map = registry.set<Map>();
+  auto& map = registry.set<MapInfo>();
   map.row_count = 5;
   map.column_count = 5;
 

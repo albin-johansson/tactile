@@ -11,7 +11,7 @@ using namespace tactile;
 TEST(MapSystem, AddRow)
 {
   auto registry = sys::MakeRegistry();
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
@@ -28,7 +28,7 @@ TEST(MapSystem, AddRow)
 TEST(MapSystem, AddColumn)
 {
   auto registry = sys::MakeRegistry();
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
@@ -45,7 +45,7 @@ TEST(MapSystem, AddColumn)
 TEST(MapSystem, RemoveRow)
 {
   auto registry = sys::MakeRegistry();
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
@@ -61,7 +61,7 @@ TEST(MapSystem, RemoveRow)
 TEST(MapSystem, RemoveColumn)
 {
   auto registry = sys::MakeRegistry();
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   ASSERT_EQ(5u, map.row_count);
   ASSERT_EQ(5u, map.column_count);
 
@@ -77,7 +77,7 @@ TEST(MapSystem, RemoveColumn)
 TEST(MapSystem, ResizeMap)
 {
   auto registry = sys::MakeRegistry();
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
 
   sys::ResizeMap(registry, 12u, 3u);
   ASSERT_EQ(12u, map.row_count);
@@ -91,7 +91,7 @@ TEST(MapSystem, ResizeMap)
 TEST(MapSystem, IsPositionInMap)
 {
   const auto registry = sys::MakeRegistry();
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
 
   for (usize r = 0; r < map.row_count; ++r) {
     for (usize c = 0; c < map.column_count; ++c) {

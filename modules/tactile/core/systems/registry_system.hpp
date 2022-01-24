@@ -8,7 +8,7 @@ namespace tactile::sys {
  * \brief Creates a registry with the expected context variables.
  *
  * \details The created registry will feature the following context variables:
- * - `Map`
+ * - `MapInfo`
  * - `ActiveLayer`
  * - `ActiveTileset`
  * - `ActivePropertyContext`

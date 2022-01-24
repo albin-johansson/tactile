@@ -85,7 +85,7 @@ void PanViewportDown(entt::registry& registry)
 
 void ResetViewportZoom(entt::registry& registry)
 {
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
   auto& viewport = registry.ctx<Viewport>();
   viewport.tile_width = 2.0f * static_cast<float>(map.tile_width);
   viewport.tile_height = 2.0f * static_cast<float>(map.tile_height);
@@ -145,7 +145,7 @@ auto CanDecreaseViewportZoom(const entt::registry& registry) -> bool
 auto GetViewportScalingRatio(const entt::registry& registry) -> ViewportScalingRatio
 {
   const auto& viewport = registry.ctx<Viewport>();
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
 
   const auto xRatio = viewport.tile_width / static_cast<float>(map.tile_width);
   const auto yRatio = viewport.tile_height / static_cast<float>(map.tile_height);

@@ -350,37 +350,37 @@ void EmitInfo::each_property(const ContextID id, const property_visitor& func) c
 
 auto EmitInfo::tile_width() const -> int32
 {
-  const auto& map = mRegistry->ctx<Map>();
+  const auto& map = mRegistry->ctx<MapInfo>();
   return map.tile_width;
 }
 
 auto EmitInfo::tile_height() const -> int32
 {
-  const auto& map = mRegistry->ctx<Map>();
+  const auto& map = mRegistry->ctx<MapInfo>();
   return map.tile_height;
 }
 
 auto EmitInfo::next_layer_id() const -> LayerID
 {
-  const auto& map = mRegistry->ctx<Map>();
+  const auto& map = mRegistry->ctx<MapInfo>();
   return map.next_layer_id;
 }
 
 auto EmitInfo::next_object_id() const -> ObjectID
 {
-  const auto& map = mRegistry->ctx<Map>();
+  const auto& map = mRegistry->ctx<MapInfo>();
   return map.next_object_id;
 }
 
 auto EmitInfo::row_count() const -> usize
 {
-  const auto& map = mRegistry->ctx<Map>();
+  const auto& map = mRegistry->ctx<MapInfo>();
   return map.row_count;
 }
 
 auto EmitInfo::column_count() const -> usize
 {
-  const auto& map = mRegistry->ctx<Map>();
+  const auto& map = mRegistry->ctx<MapInfo>();
   return map.column_count;
 }
 

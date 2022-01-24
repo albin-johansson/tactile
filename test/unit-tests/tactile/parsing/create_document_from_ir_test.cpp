@@ -22,7 +22,7 @@ inline constexpr entt::entity gNullEntity = entt::null;
 
 void CheckMapAttributes(const entt::registry& registry)
 {
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
   ASSERT_EQ(32, map.tile_width);
   ASSERT_EQ(32, map.tile_height);
   ASSERT_EQ(6, map.row_count);

@@ -26,7 +26,7 @@ void ResizeMapCmd::Redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
   mPrevRows = map.row_count;
   mPrevCols = map.column_count;
 

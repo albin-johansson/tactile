@@ -66,7 +66,7 @@ auto GetRenderInfo(const Viewport& viewport,
 
 }  // namespace
 
-auto GetRenderInfo(const Viewport& viewport, const Map& map) -> RenderInfo
+auto GetRenderInfo(const Viewport& viewport, const MapInfo& map) -> RenderInfo
 {
   const ImVec2 tileSize{static_cast<float>(map.tile_width),
                         static_cast<float>(map.tile_height)};

@@ -47,7 +47,7 @@ auto Model::AddMap(const int tileWidth,
   Document document;
   document.registry = sys::MakeRegistry();
 
-  auto& map = document.registry.ctx<Map>();
+  auto& map = document.registry.ctx<MapInfo>();
   map.tile_width = tileWidth;
   map.tile_height = tileHeight;
   map.row_count = rows;

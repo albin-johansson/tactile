@@ -21,7 +21,7 @@ void RemoveRowCmd::Redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
   const auto begin = tile_position::from(map.row_count - mRows - 1u, 0u);
   const auto end = tile_position::from(map.row_count, map.column_count);
 

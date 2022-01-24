@@ -31,7 +31,7 @@ template <typename T, Unsigned<T> = 0>
 
 void AddRow(entt::registry& registry)
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   ++map.row_count;
 
   for (auto&& [entity, layer] : registry.view<TileLayer>().each()) {
@@ -41,7 +41,7 @@ void AddRow(entt::registry& registry)
 
 void AddColumn(entt::registry& registry)
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   ++map.column_count;
 
   for (auto&& [entity, layer] : registry.view<TileLayer>().each()) {
@@ -53,7 +53,7 @@ void AddColumn(entt::registry& registry)
 
 void RemoveRow(entt::registry& registry)
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   if (map.row_count > 1) {
     --map.row_count;
     for (auto&& [entity, layer] : registry.view<TileLayer>().each()) {
@@ -64,7 +64,7 @@ void RemoveRow(entt::registry& registry)
 
 void RemoveColumn(entt::registry& registry)
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
   if (map.column_count > 1) {
     --map.column_count;
 
@@ -79,7 +79,7 @@ void RemoveColumn(entt::registry& registry)
 
 void ResizeMap(entt::registry& registry, const usize nRows, const usize nCols)
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
 
   if (const auto diff = GetDiff(map.row_count, nRows); map.row_count < nRows) {
     invoke_n(diff, [&] { AddRow(registry); });
@@ -98,7 +98,7 @@ void ResizeMap(entt::registry& registry, const usize nRows, const usize nCols)
 
 auto IsPositionInMap(const entt::registry& registry, const tile_position& position) -> bool
 {
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
 
   const auto row = position.row();
   const auto column = position.col();

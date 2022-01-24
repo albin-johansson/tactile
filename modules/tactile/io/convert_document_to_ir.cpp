@@ -281,7 +281,7 @@ void ConvertLayer(IO::Map& irMap,
 
 void ConvertLayers(IO::Map& irMap, const entt::registry& registry)
 {
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
 
   IO::ReserveLayers(irMap, registry.storage<LayerTreeNode>().size());
   for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
@@ -310,7 +310,7 @@ void ConvertTilesets(IO::Map& irMap, const entt::registry& registry)
 
 void ConvertMapAttributes(IO::Map& ir, const Document& document)
 {
-  const auto& map = document.registry.ctx<Map>();
+  const auto& map = document.registry.ctx<MapInfo>();
   IO::SetPath(ir, std::filesystem::absolute(document.path).c_str());
 
   IO::SetNextLayerId(ir, map.next_layer_id);

@@ -7,7 +7,7 @@
 namespace tactile {
 
 struct Viewport;
-struct Map;
+struct MapInfo;
 struct Tileset;
 
 /// \addtogroup rendering
@@ -36,7 +36,7 @@ struct RenderInfo final
   float col_count{};  ///< Total amount of columns.
 };
 
-[[nodiscard]] auto GetRenderInfo(const Viewport& viewport, const Map& map) -> RenderInfo;
+[[nodiscard]] auto GetRenderInfo(const Viewport& viewport, const MapInfo& map) -> RenderInfo;
 
 [[nodiscard]] auto GetRenderInfo(const Viewport& viewport, const Tileset& tileset)
     -> RenderInfo;

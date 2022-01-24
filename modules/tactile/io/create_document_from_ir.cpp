@@ -343,7 +343,7 @@ void InitRootPropertyContext(Document& document)
   context.name = document.path.filename().string();
 }
 
-void InitMapContext(Map& map, const IO::Map& irMap)
+void InitMapContext(MapInfo& map, const IO::Map& irMap)
 {
   map.next_layer_id = LayerID{IO::GetNextLayerId(irMap)};
   map.next_object_id = ObjectID{IO::GetNextObjectId(irMap)};
@@ -429,7 +429,7 @@ auto CreateDocumentFromIR(const IO::Map& irMap, TextureManager& textures) -> Doc
 
   InitComponentDefinitions(document.registry, irMap);
 
-  InitMapContext(document.registry.ctx<Map>(), irMap);
+  InitMapContext(document.registry.ctx<MapInfo>(), irMap);
   InitRootPropertyContext(document);
 
   AddProperties(document.registry, entt::null, irMap);

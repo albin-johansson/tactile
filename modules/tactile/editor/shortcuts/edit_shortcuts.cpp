@@ -73,7 +73,7 @@ void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
 auto RemoveRowShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
 {
   if (const auto* registry = model.GetActiveRegistry()) {
-    const auto& map = registry->ctx<Map>();
+    const auto& map = registry->ctx<MapInfo>();
     return map.row_count > 1;
   }
   else {
@@ -94,7 +94,7 @@ auto RemoveColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) c
     -> bool
 {
   if (const auto* registry = model.GetActiveRegistry()) {
-    const auto& map = registry->ctx<Map>();
+    const auto& map = registry->ctx<MapInfo>();
     return map.column_count > 1;
   }
   else {

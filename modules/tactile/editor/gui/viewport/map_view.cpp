@@ -146,7 +146,7 @@ void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
 void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   const auto& viewport = registry.ctx<Viewport>();
-  const auto& map = registry.ctx<Map>();
+  const auto& map = registry.ctx<MapInfo>();
 
   const auto info = GetRenderInfo(viewport, map);
   UpdateViewportOffset(info.canvas_br - info.canvas_tl, dispatcher);

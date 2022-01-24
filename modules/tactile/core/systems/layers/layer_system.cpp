@@ -95,7 +95,7 @@ auto AddBasicLayer(entt::registry& registry,
 
 auto AddTileLayer(entt::registry& registry) -> entt::entity
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
 
   const auto entity = AddBasicLayer(registry,
                                     map.next_layer_id,
@@ -113,7 +113,7 @@ auto AddTileLayer(entt::registry& registry) -> entt::entity
 
 auto AddObjectLayer(entt::registry& registry) -> entt::entity
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
 
   const auto entity =
       AddBasicLayer(registry,
@@ -131,7 +131,7 @@ auto AddObjectLayer(entt::registry& registry) -> entt::entity
 
 auto AddGroupLayer(entt::registry& registry) -> entt::entity
 {
-  auto& map = registry.ctx<Map>();
+  auto& map = registry.ctx<MapInfo>();
 
   const auto entity = AddBasicLayer(registry,
                                     map.next_layer_id,
@@ -333,7 +333,7 @@ auto DuplicateLayer(entt::registry& registry,
   }
 
   {
-    auto& map = registry.ctx<Map>();
+    auto& map = registry.ctx<MapInfo>();
     auto& layer = DuplicateComp<Layer>(registry, source, copy);
     layer.id = map.next_layer_id;
 
