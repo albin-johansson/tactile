@@ -92,8 +92,8 @@ void LayerDock::Update(const Model& model,
       CenteredText("No available layers!");
     }
     else {
-      const ImVec2 size{-std::numeric_limits<float>::min(),
-                        -std::numeric_limits<float>::min()};
+      const ImVec2 size{-(std::numeric_limits<float>::min)(),
+                        -(std::numeric_limits<float>::min)()};
       if (scoped::ListBox list{"##LayerTreeNode", size}; list.IsOpen()) {
         for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
