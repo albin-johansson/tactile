@@ -61,7 +61,7 @@ void Register(Model& model, Args&&... args)
 
 }  // namespace
 
-Application::Application(ApplicationConfiguration* configuration)
+Application::Application(app_configuration* configuration)
     : mConfiguration{configuration}
     , mIcons{mTextures}
 {
@@ -71,7 +71,7 @@ Application::Application(ApplicationConfiguration* configuration)
 
 auto Application::Run() -> int
 {
-  auto* window = mConfiguration->GetWindow();
+  auto& window = mConfiguration->window();
 
   LoadFileHistory();
 
@@ -79,7 +79,7 @@ auto Application::Run() -> int
     RestoreLastSession(mModel, mTextures);
   }
 
-  SDL_ShowWindow(window);
+  window.show();
 
   const auto& io = ImGui::GetIO();
   while (!mQuit) {
@@ -103,11 +103,11 @@ auto Application::Run() -> int
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    SDL_GL_SwapWindow(window);
+    cen::gl::swap(window);
   }
 
   OnAboutToExit();
-  SDL_HideWindow(window);
+  window.hide();
 
   return 0;
 }

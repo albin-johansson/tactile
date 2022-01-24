@@ -22,7 +22,7 @@
 
 namespace tactile {
 
-class ApplicationConfiguration;
+class app_configuration;
 
 /// Tracks visibility of widgets for the "Toggle UI" feature.
 struct WidgetShowState final
@@ -39,12 +39,12 @@ class Application final {
   friend void SubscribeToEvents(Application&);
 
  public:
-  explicit Application(ApplicationConfiguration* configuration);
+  explicit Application(app_configuration* configuration);
 
   auto Run() -> int;
 
  private:
-  ApplicationConfiguration* mConfiguration{}; /* Non-owning */
+  app_configuration* mConfiguration{}; /* Non-owning */
 
   entt::dispatcher mDispatcher;
   cen::keyboard mKeyboard;

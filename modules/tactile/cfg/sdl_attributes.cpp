@@ -1,4 +1,4 @@
-#include "attributes.hpp"
+#include "sdl_attributes.hpp"
 
 #include <SDL.h>
 
@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-void InitAttributes()
+void init_sdl_attributes()
 {
   /* Ensure nearest pixel sampling */
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");

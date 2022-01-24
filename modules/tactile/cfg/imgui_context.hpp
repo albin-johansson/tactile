@@ -5,15 +5,19 @@
 
 namespace tactile {
 
-/// Handles the configuration of the Dear ImGui context.
-class ImGuiContext final {
+/**
+ * \brief Handles the configuration of the Dear ImGui context.
+ *
+ * \ingroup cfg
+ */
+class im_gui_context final {
  public:
-  ImGuiContext(cen::window& window, cen::gl_context& context);
+  im_gui_context(cen::window& window, cen::gl_context& context);
 
-  ~ImGuiContext();
+  ~im_gui_context();
 
-  TACTILE_DEFAULT_COPY(ImGuiContext)
-  TACTILE_DEFAULT_MOVE(ImGuiContext)
+  TACTILE_DEFAULT_COPY(im_gui_context)
+  TACTILE_DEFAULT_MOVE(im_gui_context)
 
  private:
   /* This is used as a workaround to annoying unit test issues for Windows CI builds */

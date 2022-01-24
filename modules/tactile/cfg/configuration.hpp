@@ -8,23 +8,33 @@
 
 namespace tactile {
 
-/* This class handles the configuration of aspects such as windows and OpenGL contexts */
-class ApplicationConfiguration final {
- public:
-  ApplicationConfiguration();
+/**
+ * \defgroup cfg Configuration
+ *
+ * \brief Contains utilities related to the configuration of the application.
+ */
 
-  /* Returns the application window, don't free the returned pointer! */
-  [[nodiscard]] auto GetWindow() -> SDL_Window*;
+/**
+ * \brief Handles the configuration of the application window, OpenGL context, etc.
+ *
+ * \ingroup cfg
+ */
+class app_configuration final {
+ public:
+  app_configuration();
+
+  /* Returns the application window */
+  [[nodiscard]] auto window() -> cen::window&;
 
  private:
-  ProtobufContext mProtobuf;
+  protobuf_context mProtobuf;
   cen::sdl mSDL;
   cen::img mIMG;
 
-  /* Initialization of these members need to be deferred */
+  /* Initialization of these members needs to be deferred */
   Maybe<cen::window> mWindow;
   Maybe<cen::gl_context> mOpenGL;
-  Maybe<ImGuiContext> mImGui;
+  Maybe<im_gui_context> mImGui;
 };
 
 }  // namespace tactile

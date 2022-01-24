@@ -9,7 +9,7 @@
 auto main(int, char**) -> int
 {
   try {
-    tactile::ApplicationConfiguration configuration;
+    tactile::app_configuration configuration;
     tactile::Application app{&configuration};
     return app.Run();
   }

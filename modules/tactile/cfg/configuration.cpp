@@ -7,16 +7,16 @@
 #include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
-#include "attributes.hpp"
 #include "build.hpp"
 #include "io/preferences.hpp"
 #include "logging.hpp"
+#include "sdl_attributes.hpp"
 #include "throw.hpp"
 
 namespace tactile {
 namespace {
 
-[[nodiscard]] consteval auto GetWindowFlags() noexcept
+[[nodiscard]] consteval auto get_window_flags() noexcept -> uint32
 {
   auto flags = cen::window::hidden | cen::window::resizable | cen::window::opengl;
 
@@ -29,7 +29,7 @@ namespace {
 
 }  // namespace
 
-ApplicationConfiguration::ApplicationConfiguration()
+app_configuration::app_configuration()
 {
   /* Use terminate handler that doesn't do anything fancy, e.g. no logging */
   std::set_terminate([] { std::abort(); });
@@ -41,9 +41,9 @@ ApplicationConfiguration::ApplicationConfiguration()
     SetLogLevel(LogLevel::Info);
   }
 
-  InitAttributes();
+  init_sdl_attributes();
 
-  mWindow.emplace("Tactile", cen::window::default_size(), GetWindowFlags());
+  mWindow.emplace("Tactile", cen::window::default_size(), get_window_flags());
   mWindow->set_icon(cen::surface{"resources/icon.png"});
 
   TACTILE_ASSERT(mWindow.has_value());
@@ -68,9 +68,9 @@ ApplicationConfiguration::ApplicationConfiguration()
   SDL_MaximizeWindow(mWindow->get());
 }
 
-auto ApplicationConfiguration::GetWindow() -> SDL_Window*
+auto app_configuration::window() -> cen::window&
 {
-  return mWindow->get();
+  return mWindow.value();
 }
 
 }  // namespace tactile

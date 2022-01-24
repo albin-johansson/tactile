@@ -16,7 +16,7 @@
 namespace tactile {
 namespace {
 
-void LoadIconFont(const float size)
+void load_icon_font(const float size)
 {
   static constexpr std::array<ImWchar, 3> range = {ICON_MIN_FA, ICON_MAX_FA, 0};
   ImFontConfig config{};
@@ -31,7 +31,7 @@ void LoadIconFont(const float size)
                                range.data());
 }
 
-void LoadFonts()
+void load_fonts()
 {
   auto& io = ImGui::GetIO();
 
@@ -44,17 +44,17 @@ void LoadFonts()
     io.FontGlobalScale = 0.5f;
     io.Fonts->AddFontFromFileTTF("resources/fonts/roboto/Roboto-Regular.ttf",
                                  scaling * fontSize);
-    LoadIconFont(scaling * fontSize);
+    load_icon_font(scaling * fontSize);
   }
   else {
     io.Fonts->AddFontDefault();
-    LoadIconFont(13.0f);
+    load_icon_font(13.0f);
   }
 }
 
 }  // namespace
 
-ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
+im_gui_context::im_gui_context(cen::window& window, cen::gl_context& context)
 {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
@@ -64,7 +64,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // NOLINT
   io.WantCaptureKeyboard = true;
 
-  LoadFonts();
+  load_fonts();
 
   ImGui::StyleColorsDark();
 
@@ -85,7 +85,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   LogDebug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
 }
 
-ImGuiContext::~ImGuiContext()
+im_gui_context::~im_gui_context()
 {
   if (mInitializedBackend) {
     ImGui_ImplOpenGL3_Shutdown();
