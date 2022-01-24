@@ -2,27 +2,23 @@
 
 #include <vector>  // vector
 
-#include <centurion.hpp>  // milliseconds
-#include <entt/entt.hpp>  // entity
+#include <centurion.hpp>
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 namespace tactile {
 
 /**
- * \brief Component that represents a single frame in an animation.
- *
- * \see Animation
+ * \brief Represents a single frame in an animation.
  */
 struct AnimationFrame final
 {
-  TileID tile{};
-  cen::u32ms duration{};
+  TileID tile{};          ///< Tile that will be rendered during the frame.
+  cen::u32ms duration{};  ///< Duration of the frame.
 };
 
 /**
- * \brief Component that represents an animation.
- *
- * \see AnimationFrame
+ * \brief Represents an animation.
  */
 struct Animation final
 {
