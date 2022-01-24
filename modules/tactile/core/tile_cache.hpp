@@ -2,8 +2,8 @@
 
 #include <tactile_def.hpp>
 
-#include "core/tile_position.hpp"
-#include "core/utils/vector_map.hpp"
+#include "tile_position.hpp"
+#include "utils/vector_map.hpp"
 
 namespace tactile {
 
