@@ -83,7 +83,7 @@ auto InputWidget(const CStr id, float value, const float min, const float max)
 {
   const scoped::ID scope{id};
 
-  ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
+  ImGui::SetNextItemWidth(-(std::numeric_limits<float>::min)());
 
   if (min != 0 || max != 0) {
     if (ImGui::SliderFloat("##InputString[float]", &value, min, max)) {
