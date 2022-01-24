@@ -1,11 +1,14 @@
 #pragma once
 
-#include "core/tile_position.hpp"
+#include "tile_position.hpp"
 
 namespace tactile {
 
-/// \brief Represents a region of a grid.
-/// \ingroup core
+/**
+ * \brief Represents a region of a grid.
+ *
+ * \ingroup core
+ */
 struct Region final
 {
   tile_position begin;  ///< The top-left position.
