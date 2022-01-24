@@ -44,6 +44,11 @@ struct TilesetCache final
 {
   std::unordered_map<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
   std::unordered_map<TileID, entt::entity> tiles;       ///< Additional tile info.
+
+  /**
+   * \brief Frame-by-frame cache that maps tiles to the tile that should be rendered.
+   */
+  mutable std::unordered_map<TileID, TileID> source_to_render;
 };
 
 struct TilesetSelection final

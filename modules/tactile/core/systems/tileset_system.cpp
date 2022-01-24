@@ -90,6 +90,13 @@ void add_viewport(entt::registry& registry,
 
 }  // namespace
 
+void update_tilesets(entt::registry& registry)
+{
+  for (auto&& [entity, cache] : registry.view<TilesetCache>().each()) {
+    cache.source_to_render.clear();
+  }
+}
+
 auto make_tileset(entt::registry& registry,
                   const TileID firstId,
                   const Texture& texture,
@@ -290,11 +297,22 @@ auto get_tile_to_render(const entt::registry& registry,
 {
   const auto& cache = registry.get<TilesetCache>(tilesetEntity);
 
-  if (const auto it = cache.tiles.find(id); it != cache.tiles.end()) {
-    const auto entity = it->second;
+  /* Check for already cached tile to render */
+  if (const auto iter = cache.source_to_render.find(id);
+      iter != cache.source_to_render.end()) {
+    return iter->second;
+  }
+
+  if (const auto iter = cache.tiles.find(id); iter != cache.tiles.end()) {
+    const auto entity = iter->second;
+
     if (const auto* animation = registry.try_get<Animation>(entity)) {
       const auto frameEntity = animation->frames.at(animation->index);
       const auto& frame = registry.get<AnimationFrame>(frameEntity);
+
+      /* This cache is cleared before each frame */
+      cache.source_to_render[id] = frame.tile;
+
       return frame.tile;
     }
   }

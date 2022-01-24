@@ -20,6 +20,7 @@ namespace tactile {
 void Model::Update()
 {
   if (auto* registry = GetActiveRegistry()) {
+    sys::update_tilesets(*registry);
     sys::update_animations(*registry);
   }
 }

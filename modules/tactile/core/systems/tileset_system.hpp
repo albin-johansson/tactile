@@ -15,6 +15,16 @@ namespace tactile::sys {
 /// \{
 
 /**
+ * \brief Updates the state of tilesets.
+ *
+ * \details This function should be each frame, as it handles aspects related to tile
+ * caching.
+ *
+ * \param registry the document registry.
+ */
+void update_tilesets(entt::registry& registry);
+
+/**
  * \brief Creates a tileset entity.
  *
  * \details The created entity will feature the following components:
@@ -163,19 +173,17 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
     -> bool;
 
 /**
- * \brief Returns the ID of the tile that should be rendered when the specified tile is
- * encountered.
+ * \brief Returns the rendered appearance of a tile.
  *
- * \details This function is used to determine the correct tile to render with animated
- * tiles. In other words, this function will simply return the supplied ID for
+ * \details This function is used to determine the correct tile to render for animated
+ * tiles. In other words, this function will simply return the supplied tile for
  * non-animated tiles.
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
  * \param tilesetEntity the parent tileset entity.
- * \param id the identifier for the tile that will be queried.
+ * \param id the tile to query.
  *
- * \return the ID of the tile that should be rendered when the specified tile is
- * encountered.
+ * \return the tile that should be rendered when the specified tile is encountered.
  */
 [[nodiscard]] auto get_tile_to_render(const entt::registry& registry,
                                       entt::entity tilesetEntity,
