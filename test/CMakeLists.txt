@@ -9,8 +9,8 @@ find_package(GTest CONFIG REQUIRED)
 set(TEST_FILES
     unit-tests/test_main.cpp
 
-    unit-tests/tactile/core/map_position_test.cpp
     unit-tests/tactile/core/attribute_value_test.cpp
+    unit-tests/tactile/core/tile_position_test.cpp
 
     unit-tests/tactile/core/algorithms/flood_fill_test.cpp
 

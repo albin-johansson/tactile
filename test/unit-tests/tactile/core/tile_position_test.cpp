@@ -5,14 +5,14 @@
 
 using namespace tactile;
 
-TEST(MapPosition, Defaults)
+TEST(TilePosition, Defaults)
 {
   const tile_position position;
   ASSERT_EQ(0, position.row());
   ASSERT_EQ(0, position.col());
 }
 
-TEST(MapPosition, RowColConstructor)
+TEST(TilePosition, RowColConstructor)
 {
   const tile_position a{123, 557};
   ASSERT_EQ(123, a.row());
@@ -25,14 +25,14 @@ TEST(MapPosition, RowColConstructor)
   ASSERT_EQ(-1, c.col());
 }
 
-TEST(MapPosition, From)
+TEST(TilePosition, From)
 {
   const auto position = tile_position::from(42u, 849u);
   ASSERT_EQ(42, position.row());
   ASSERT_EQ(849, position.col());
 }
 
-TEST(MapPosition, SetRow)
+TEST(TilePosition, SetRow)
 {
   tile_position position;
 
@@ -42,7 +42,7 @@ TEST(MapPosition, SetRow)
   ASSERT_EQ(row, position.row());
 }
 
-TEST(MapPosition, SetColumn)
+TEST(TilePosition, SetColumn)
 {
   tile_position position;
 
@@ -52,7 +52,7 @@ TEST(MapPosition, SetColumn)
   ASSERT_EQ(column, position.col());
 }
 
-TEST(MapPosition, OffsetBy)
+TEST(TilePosition, OffsetBy)
 {
   const tile_position position{3, 4};
   const auto result = position.offset_by(4, 6);
@@ -60,45 +60,45 @@ TEST(MapPosition, OffsetBy)
   ASSERT_EQ(10, result.col());
 }
 
-TEST(MapPosition, GetRow)
+TEST(TilePosition, GetRow)
 {
   const tile_position position{8'324, 0};
   ASSERT_EQ(8'324, position.row());
 }
 
-TEST(MapPosition, GetColumn)
+TEST(TilePosition, GetColumn)
 {
   const tile_position position{0, 493};
   ASSERT_EQ(493, position.col());
 }
 
-TEST(MapPosition, GetRowIndex)
+TEST(TilePosition, GetRowIndex)
 {
   const tile_position position{6'532, 0};
   ASSERT_EQ(6'532u, position.row_index());
 }
 
-TEST(MapPosition, GetColIndex)
+TEST(TilePosition, GetColIndex)
 {
   const tile_position position{0, 18'343};
   ASSERT_EQ(18'343u, position.col_index());
 }
 
-TEST(MapPosition, RowToY)
+TEST(TilePosition, RowToY)
 {
   const auto tileSize = 134;
   const tile_position position{12, 34};
   ASSERT_EQ(12 * tileSize, position.row_to_y(tileSize));
 }
 
-TEST(MapPosition, ColToX)
+TEST(TilePosition, ColToX)
 {
   const auto tileSize = 68;
   const tile_position position{12, 34};
   ASSERT_EQ(34 * tileSize, position.col_to_x(tileSize));
 }
 
-TEST(MapPosition, North)
+TEST(TilePosition, North)
 {
   const tile_position source{7, 15};
   const tile_position moved = source.north();
@@ -107,7 +107,7 @@ TEST(MapPosition, North)
   ASSERT_EQ(source.col(), moved.col());
 }
 
-TEST(MapPosition, East)
+TEST(TilePosition, East)
 {
   const tile_position source{52, 77};
   const tile_position moved = source.east();
@@ -116,7 +116,7 @@ TEST(MapPosition, East)
   ASSERT_EQ(source.col() + 1, moved.col());
 }
 
-TEST(MapPosition, South)
+TEST(TilePosition, South)
 {
   const tile_position source{33, 6};
   const tile_position moved = source.south();
@@ -125,7 +125,7 @@ TEST(MapPosition, South)
   ASSERT_EQ(source.col(), moved.col());
 }
 
-TEST(MapPosition, West)
+TEST(TilePosition, West)
 {
   const tile_position source{62, 39};
   const tile_position moved = source.west();
@@ -134,7 +134,7 @@ TEST(MapPosition, West)
   ASSERT_EQ(source.col() - 1, moved.col());
 }
 
-TEST(MapPosition, Addition)
+TEST(TilePosition, Addition)
 {
   const tile_position a{2, 3};
   const tile_position b{6, 4};
@@ -144,7 +144,7 @@ TEST(MapPosition, Addition)
   ASSERT_EQ(a.col() + b.col(), sum.col());
 }
 
-TEST(MapPosition, Subtraction)
+TEST(TilePosition, Subtraction)
 {
   const tile_position a{13, 7};
   const tile_position b{4, 2};
@@ -154,7 +154,7 @@ TEST(MapPosition, Subtraction)
   ASSERT_EQ(a.col() - b.col(), diff.col());
 }
 
-TEST(MapPosition, EqualityOperator)
+TEST(TilePosition, EqualityOperator)
 {
   const tile_position pos{45, 23};
   ASSERT_EQ(pos, pos);
@@ -168,7 +168,7 @@ TEST(MapPosition, EqualityOperator)
   ASSERT_FALSE(diff == pos);
 }
 
-TEST(MapPosition, InequalityOperator)
+TEST(TilePosition, InequalityOperator)
 {
   const tile_position pos{45, 23};
   ASSERT_FALSE(pos != pos);
