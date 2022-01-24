@@ -372,9 +372,6 @@ auto reset_component(entt::registry& registry,
                                  ContextID contextId,
                                  ComponentID componentId) -> const Component&;
 
-[[nodiscard]] auto get_attribute(const Component& component, std::string_view attribute)
-    -> const attribute_value&;
-
 [[nodiscard]] auto get_component_attribute(const entt::registry& registry,
                                            ContextID contextId,
                                            ComponentID componentId,

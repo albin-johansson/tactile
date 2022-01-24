@@ -562,17 +562,6 @@ auto get_component(const entt::registry& registry,
   ThrowTraced(TactileError{"Context did not feature requested component!"});
 }
 
-auto get_attribute(const Component& component, const std::string_view attribute)
-    -> const attribute_value&
-{
-  if (const auto it = component.values.find(attribute); it != component.values.end()) {
-    return it->second;
-  }
-  else {
-    ThrowTraced(TactileError{"Did not find component attribute!"});
-  }
-}
-
 auto get_component_attribute(const entt::registry& registry,
                              const ContextID contextId,
                              const ComponentID componentId,
