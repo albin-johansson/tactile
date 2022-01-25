@@ -67,7 +67,7 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Reg
       selection.begin = {toRow(rect.y()), toColumn(rect.x())};
 
       const tile_position offset{toRow(rect.max_y() - rect.y()),
-                               toColumn(rect.max_x() - rect.x())};
+                                 toColumn(rect.max_x() - rect.x())};
       selection.end = selection.begin + offset;
 
       return selection;

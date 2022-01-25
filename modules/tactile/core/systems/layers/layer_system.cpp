@@ -12,7 +12,7 @@
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/map.hpp"
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/property_system.hpp"
@@ -227,7 +227,7 @@ void RemoveLayer(entt::registry& registry, const entt::entity entity)
   };
 
   maybe_reset(registry.ctx<ActiveLayer>().entity, entity);
-  maybe_reset(registry.ctx<ActivePropertyContext>().entity, entity);
+  maybe_reset(registry.ctx<active_attribute_context>().entity, entity);
 
   layer_tree::DestroyNode(registry, entity);
 }
@@ -326,7 +326,7 @@ auto DuplicateLayer(entt::registry& registry,
   }
 
   {
-    auto& context = DuplicateComp<PropertyContext>(registry, source, copy);
+    auto& context = DuplicateComp<attribute_context>(registry, source, copy);
     if (!recursive) {
       context.name += " (Copy)";
     }

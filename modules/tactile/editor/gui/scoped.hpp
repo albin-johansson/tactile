@@ -329,4 +329,4 @@ class TreeNode final {
   bool mOpen{};
 };
 
-}  // namespace tactile::Scoped
+}  // namespace tactile::scoped

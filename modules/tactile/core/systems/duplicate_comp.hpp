@@ -6,7 +6,7 @@
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/map.hpp"
 #include "property_system.hpp"
 
@@ -21,14 +21,14 @@ auto DuplicateComp(entt::registry& registry,
 }
 
 template <>
-inline auto DuplicateComp<PropertyContext>(entt::registry& registry,
-                                           const entt::entity source,
-                                           const entt::entity destination)
-    -> PropertyContext&
+inline auto DuplicateComp<attribute_context>(entt::registry& registry,
+                                             const entt::entity source,
+                                             const entt::entity destination)
+    -> attribute_context&
 {
   auto& context = AddPropertyContext(registry, destination);
 
-  const auto& srcContext = registry.get<PropertyContext>(source);
+  const auto& srcContext = registry.get<attribute_context>(source);
   context.name = srcContext.name;
 
   for (const auto srcPropertyEntity : srcContext.properties) {
@@ -54,7 +54,7 @@ inline auto DuplicateComp<ObjectLayer>(entt::registry& registry,
     const auto objectEntity = registry.create();
     layer.objects.push_back(objectEntity);
 
-    DuplicateComp<PropertyContext>(registry, sourceObject, objectEntity);
+    DuplicateComp<attribute_context>(registry, sourceObject, objectEntity);
 
     auto& object = DuplicateComp<Object>(registry, sourceObject, objectEntity);
     object.id = map.next_object_id;

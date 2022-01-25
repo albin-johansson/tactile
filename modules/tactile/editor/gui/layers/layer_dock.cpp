@@ -11,7 +11,7 @@
 #include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"
@@ -116,7 +116,7 @@ void LayerDock::Update(const Model& model,
     const auto entity = sys::FindLayer(registry, target);
     TACTILE_ASSERT(entity != entt::null);
 
-    const auto& context = registry.get<PropertyContext>(entity);
+    const auto& context = registry.get<attribute_context>(entity);
 
     mRenameLayerDialog.Show(target, context.name);
     mRenameTarget.reset();

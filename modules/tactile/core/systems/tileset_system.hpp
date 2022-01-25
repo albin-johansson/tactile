@@ -5,8 +5,8 @@
 #include <tactile_def.hpp>
 
 #include "core/components/texture.hpp"
-#include "core/tile_position.hpp"
 #include "core/region.hpp"
+#include "core/tile_position.hpp"
 #include "snapshot.hpp"
 
 namespace tactile::sys {
@@ -33,7 +33,7 @@ void update_tilesets(entt::registry& registry);
  * - `TilesetCache`
  * - `TilesetSelection`
  * - `UvTileSize`
- * - `PropertyContext`
+ * - `attribute_context`
  * - `Viewport`
  *
  * \param registry the document registry.

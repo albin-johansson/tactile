@@ -11,7 +11,7 @@
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
@@ -149,7 +149,7 @@ void ConvertObject(IO::Map& irMap,
   IO::SetTag(ir, object.tag.c_str());
   IO::SetVisible(ir, object.visible);
 
-  const auto& context = registry.get<PropertyContext>(entity);
+  const auto& context = registry.get<attribute_context>(entity);
   IO::SetName(ir, context.name.c_str());
   ConvertProperties(ir, registry, context.properties);
   ConvertComponents(irMap, ir, registry, context.components);
@@ -161,7 +161,8 @@ void ConvertFancyTiles(IO::Map& irMap,
                        const Tileset& tileset)
 
 {
-  for (auto&& [entity, tile, ctx] : registry.view<FancyTile, PropertyContext>().each()) {
+  for (auto&& [entity, tile, ctx] :
+       registry.view<FancyTile, attribute_context>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       auto& tileData = IO::AddTile(ir);
       IO::SetId(tileData, sys::convert_to_local(registry, tile.id).value());
@@ -207,7 +208,7 @@ void ConvertTileset(IO::Map& irMap,
   IO::SetImageWidth(ir, texture.width);
   IO::SetImageHeight(ir, texture.height);
 
-  const auto& ctx = registry.get<PropertyContext>(entity);
+  const auto& ctx = registry.get<attribute_context>(entity);
   IO::SetName(ir, ctx.name.c_str());
 
   ConvertProperties(ir, registry, ctx.properties);
@@ -224,7 +225,7 @@ void ConvertLayer(IO::Map& irMap,
                   const usize nCols)
 {
   const auto& layer = registry.get<Layer>(entity);
-  const auto& context = registry.get<PropertyContext>(entity);
+  const auto& context = registry.get<attribute_context>(entity);
 
   IO::SetIndex(ir, node.index);
   IO::SetId(ir, layer.id);
@@ -385,7 +386,7 @@ auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr
   ConvertTilesets(*irMap, registry);
   ConvertLayers(*irMap, registry);
 
-  const auto& context = registry.ctx<PropertyContext>();
+  const auto& context = registry.ctx<attribute_context>();
   ConvertProperties(*irMap, registry, context.properties);
   ConvertComponents(*irMap, *irMap, registry, context.components);
 

@@ -57,7 +57,8 @@ struct ChangePropertyTypeEvent final
 
 struct InspectContextEvent final
 {
-  entt::entity entity{entt::null};  ///< Entity that features `PropertyContext` component.
+  entt::entity entity{
+      entt::null};  ///< Entity that features `attribute_context` component.
 };
 
 /// \} End of group events

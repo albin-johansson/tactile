@@ -6,7 +6,7 @@
 #include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "logging.hpp"
 #include "property_system.hpp"
 #include "throw.hpp"
@@ -119,7 +119,7 @@ auto remove_component_def(entt::registry& registry, const ComponentID id)
   result.attributes = def.attributes;
 
   /* Cache attributes from components that will be removed */
-  auto cache = [&](const ComponentID componentId, const PropertyContext& context) {
+  auto cache = [&](const ComponentID componentId, const attribute_context& context) {
     for (const auto componentEntity : context.components) {
       const auto& component = registry.get<Component>(componentEntity);
       if (component.type == componentId) {
@@ -136,11 +136,11 @@ auto remove_component_def(entt::registry& registry, const ComponentID id)
     });
   };
 
-  auto& root = registry.ctx<PropertyContext>();
+  auto& root = registry.ctx<attribute_context>();
   cache(def.id, root);
   remove(root.components);
 
-  for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
+  for (auto&& [entity, context] : registry.view<attribute_context>().each()) {
     cache(def.id, context);
     remove(context.components);
   }

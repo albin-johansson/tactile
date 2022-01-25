@@ -4,7 +4,7 @@
 
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
@@ -30,7 +30,7 @@ void CheckMapAttributes(const entt::registry& registry)
   ASSERT_EQ(4, map.next_layer_id);
   ASSERT_EQ(4, map.next_object_id);
 
-  const auto& context = registry.ctx<PropertyContext>();
+  const auto& context = registry.ctx<attribute_context>();
   ASSERT_EQ("map.yaml", context.name);
   ASSERT_EQ(7, context.properties.size());
   ASSERT_EQ(2, context.components.size());
@@ -83,7 +83,7 @@ void CheckTileLayer1(const entt::registry& registry)
   const auto entity = sys::FindLayer(registry, 1);
   ASSERT_NE(entity, gNullEntity);
 
-  const auto& context = registry.get<PropertyContext>(entity);
+  const auto& context = registry.get<attribute_context>(entity);
   ASSERT_EQ("Tile Layer 1", context.name);
   ASSERT_TRUE(context.properties.empty());
   ASSERT_TRUE(context.components.empty());
@@ -104,7 +104,7 @@ void CheckTileLayer2(const entt::registry& registry)
   const auto entity = sys::FindLayer(registry, 2);
   ASSERT_NE(entity, gNullEntity);
 
-  const auto& context = registry.get<PropertyContext>(entity);
+  const auto& context = registry.get<attribute_context>(entity);
   ASSERT_EQ("Tile Layer 2", context.name);
   ASSERT_EQ(2, context.properties.size());
   ASSERT_TRUE(context.components.empty());
@@ -141,7 +141,7 @@ void CheckObjectLayer1(const entt::registry& registry)
   const auto entity = sys::FindLayer(registry, 3);
   ASSERT_NE(gNullEntity, entity);
 
-  const auto& context = registry.get<PropertyContext>(entity);
+  const auto& context = registry.get<attribute_context>(entity);
   ASSERT_EQ("Object Layer 1", context.name);
   ASSERT_TRUE(context.properties.empty());
   ASSERT_TRUE(context.components.empty());
@@ -163,7 +163,7 @@ void CheckObjectLayer1(const entt::registry& registry)
   {
     const auto rectEntity = sys::FindObject(registry, entity, 2);
     const auto& rect = registry.get<Object>(rectEntity);
-    const auto& rectContext = registry.get<PropertyContext>(rectEntity);
+    const auto& rectContext = registry.get<attribute_context>(rectEntity);
 
     ASSERT_EQ("Rect", rectContext.name);
     ASSERT_EQ(36, rect.x);
@@ -196,7 +196,7 @@ void CheckTilesets(const entt::registry& registry)
   const auto& tilesetEntity = registry.ctx<ActiveTileset>().entity;
   ASSERT_NE(gNullEntity, tilesetEntity);
 
-  const auto& context = registry.get<PropertyContext>(tilesetEntity);
+  const auto& context = registry.get<attribute_context>(tilesetEntity);
   ASSERT_EQ("outside", context.name);
   ASSERT_TRUE(context.properties.empty());
   ASSERT_TRUE(context.components.empty());

@@ -15,7 +15,7 @@
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/component_system.hpp"
@@ -38,8 +38,8 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
 {
   const auto count = IO::GetPropertyCount(source);
 
-  auto& context = (entity != entt::null) ? registry.get<PropertyContext>(entity)
-                                         : registry.ctx<PropertyContext>();
+  auto& context = (entity != entt::null) ? registry.get<attribute_context>(entity)
+                                         : registry.ctx<attribute_context>();
   context.properties.reserve(count);
 
   for (usize index = 0; index < count; ++index) {
@@ -86,8 +86,8 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
 template <typename T>
 void AddComponents(entt::registry& registry, const entt::entity entity, const T& source)
 {
-  auto& context = (entity != entt::null) ? registry.get<PropertyContext>(entity)
-                                         : registry.ctx<PropertyContext>();
+  auto& context = (entity != entt::null) ? registry.get<attribute_context>(entity)
+                                         : registry.ctx<attribute_context>();
   context.components.reserve(IO::GetComponentCount(source));
 
   IO::EachComponent(source, [&](const IO::Component& irComponent) {
@@ -239,7 +239,7 @@ void MakeTileset(entt::registry& registry,
                                         IO::GetTileWidth(irTileset),
                                         IO::GetTileHeight(irTileset));
 
-  registry.get<PropertyContext>(entity).name = IO::GetName(irTileset);
+  registry.get<attribute_context>(entity).name = IO::GetName(irTileset);
   AddProperties(registry, entity, irTileset);
   AddComponents(registry, entity, irTileset);
 
@@ -341,7 +341,7 @@ void CreateTilesets(Document& document, TextureManager& textures, const IO::Map&
 
 void InitRootPropertyContext(Document& document)
 {
-  auto& context = document.registry.ctx<PropertyContext>();
+  auto& context = document.registry.ctx<attribute_context>();
   context.name = document.path.filename().string();
 }
 

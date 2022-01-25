@@ -7,12 +7,12 @@
 #include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/tileset.hpp"
-#include "core/tile_position.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_cache.hpp"
+#include "core/tile_position.hpp"
 #include "editor/events/tool_events.hpp"
 
 namespace tactile::sys {

@@ -3,12 +3,12 @@
 #include <string>  // string
 #include <vector>  // vector
 
-#include <entt/entt.hpp>  // entity
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
 namespace tactile {
 
-struct PropertyContext final
+struct attribute_context final
 {
   ContextID id{};
   std::string name;
@@ -16,7 +16,7 @@ struct PropertyContext final
   std::vector<entt::entity> components;
 };
 
-struct ActivePropertyContext final
+struct active_attribute_context final
 {
   entt::entity entity{entt::null};
 };

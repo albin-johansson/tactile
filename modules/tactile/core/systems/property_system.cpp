@@ -18,10 +18,10 @@ inline ContextID gNextContextId{1};
 }  // namespace
 
 auto AddPropertyContext(entt::registry& registry, const entt::entity entity)
-    -> PropertyContext&
+    -> attribute_context&
 {
   TACTILE_ASSERT(entity != entt::null);
-  auto& context = registry.emplace<PropertyContext>(entity);
+  auto& context = registry.emplace<attribute_context>(entity);
 
   context.id = gNextContextId;
   ++gNextContextId;
@@ -33,8 +33,8 @@ auto CopyPropertyContext(const entt::registry& registry, const entt::entity sour
     -> PropertyContextSnapshot
 {
   TACTILE_ASSERT(source != entt::null);
-  TACTILE_ASSERT(registry.all_of<PropertyContext>(source));
-  const auto& context = registry.get<PropertyContext>(source);
+  TACTILE_ASSERT(registry.all_of<attribute_context>(source));
+  const auto& context = registry.get<attribute_context>(source);
 
   PropertyContextSnapshot snapshot;
   snapshot.id = context.id;
@@ -54,7 +54,7 @@ void RestorePropertyContext(entt::registry& registry,
 {
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get_or_emplace<PropertyContext>(entity);
+  auto& context = registry.get_or_emplace<attribute_context>(entity);
   context.id = snapshot.id;
   context.name = std::move(snapshot.name);
 
@@ -64,7 +64,7 @@ void RestorePropertyContext(entt::registry& registry,
 }
 
 void AddProperty(entt::registry& registry,
-                 PropertyContext& context,
+                 attribute_context& context,
                  std::string name,
                  const PropertyType type)
 {
@@ -79,7 +79,7 @@ void AddProperty(entt::registry& registry,
 }
 
 void AddProperty(entt::registry& registry,
-                 PropertyContext& context,
+                 attribute_context& context,
                  std::string name,
                  attribute_value value)
 {
@@ -94,7 +94,7 @@ void AddProperty(entt::registry& registry,
 }
 
 void RemoveProperty(entt::registry& registry,
-                    PropertyContext& context,
+                    attribute_context& context,
                     const std::string_view name)
 {
   const auto entity = FindProperty(registry, context, name);
@@ -105,7 +105,7 @@ void RemoveProperty(entt::registry& registry,
 }
 
 void RenameProperty(entt::registry& registry,
-                    PropertyContext& context,
+                    attribute_context& context,
                     const std::string_view oldName,
                     std::string newName)
 {
@@ -118,7 +118,7 @@ void RenameProperty(entt::registry& registry,
 }
 
 void UpdateProperty(entt::registry& registry,
-                    PropertyContext& context,
+                    attribute_context& context,
                     const std::string_view name,
                     attribute_value value)
 {
@@ -130,7 +130,7 @@ void UpdateProperty(entt::registry& registry,
 }
 
 void ChangePropertyType(entt::registry& registry,
-                        PropertyContext& context,
+                        attribute_context& context,
                         const std::string_view name,
                         const PropertyType type)
 {
@@ -141,27 +141,27 @@ void ChangePropertyType(entt::registry& registry,
   property.value.reset_to_default(type);
 }
 
-auto GetCurrentContext(entt::registry& registry) -> PropertyContext&
+auto GetCurrentContext(entt::registry& registry) -> attribute_context&
 {
-  const auto& current = registry.ctx<ActivePropertyContext>();
-  return (current.entity != entt::null) ? registry.get<PropertyContext>(current.entity)
-                                        : registry.ctx<PropertyContext>();
+  const auto& current = registry.ctx<active_attribute_context>();
+  return (current.entity != entt::null) ? registry.get<attribute_context>(current.entity)
+                                        : registry.ctx<attribute_context>();
 }
 
-auto GetCurrentContext(const entt::registry& registry) -> const PropertyContext&
+auto GetCurrentContext(const entt::registry& registry) -> const attribute_context&
 {
-  const auto& current = registry.ctx<ActivePropertyContext>();
-  return (current.entity != entt::null) ? registry.get<PropertyContext>(current.entity)
-                                        : registry.ctx<PropertyContext>();
+  const auto& current = registry.ctx<active_attribute_context>();
+  return (current.entity != entt::null) ? registry.get<attribute_context>(current.entity)
+                                        : registry.ctx<attribute_context>();
 }
 
 auto HasContext(const entt::registry& registry, const ContextID id) -> bool
 {
-  if (registry.ctx<PropertyContext>().id == id) {
+  if (registry.ctx<attribute_context>().id == id) {
     return true;
   }
 
-  for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
+  for (auto&& [entity, context] : registry.view<attribute_context>().each()) {
     if (context.id == id) {
       return true;
     }
@@ -170,13 +170,13 @@ auto HasContext(const entt::registry& registry, const ContextID id) -> bool
   return false;
 }
 
-auto GetContext(entt::registry& registry, const ContextID id) -> PropertyContext&
+auto GetContext(entt::registry& registry, const ContextID id) -> attribute_context&
 {
-  if (auto& context = registry.ctx<PropertyContext>(); context.id == id) {
+  if (auto& context = registry.ctx<attribute_context>(); context.id == id) {
     return context;
   }
 
-  for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
+  for (auto&& [entity, context] : registry.view<attribute_context>().each()) {
     if (context.id == id) {
       return context;
     }
@@ -186,13 +186,13 @@ auto GetContext(entt::registry& registry, const ContextID id) -> PropertyContext
 }
 
 auto GetContext(const entt::registry& registry, const ContextID id)
-    -> const PropertyContext&
+    -> const attribute_context&
 {
-  if (const auto& context = registry.ctx<PropertyContext>(); context.id == id) {
+  if (const auto& context = registry.ctx<attribute_context>(); context.id == id) {
     return context;
   }
 
-  for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
+  for (auto&& [entity, context] : registry.view<attribute_context>().each()) {
     if (context.id == id) {
       return context;
     }
@@ -208,7 +208,7 @@ auto GetCurrentContextId(const entt::registry& registry) -> ContextID
 }
 
 auto FindProperty(const entt::registry& registry,
-                  const PropertyContext& context,
+                  const attribute_context& context,
                   const std::string_view name) -> entt::entity
 {
   for (const auto entity : context.properties) {
@@ -222,7 +222,7 @@ auto FindProperty(const entt::registry& registry,
 }
 
 auto GetProperty(const entt::registry& registry,
-                 const PropertyContext& context,
+                 const attribute_context& context,
                  const std::string_view name) -> const Property&
 {
   const auto entity = FindProperty(registry, context, name);
@@ -235,7 +235,7 @@ auto GetProperty(const entt::registry& registry,
 }
 
 auto HasPropertyWithName(const entt::registry& registry,
-                         const PropertyContext& context,
+                         const attribute_context& context,
                          const std::string_view name) -> bool
 {
   return FindProperty(registry, context, name) != entt::null;

@@ -2,7 +2,7 @@
 
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/tool.hpp"
 #include "core/map.hpp"
@@ -18,7 +18,7 @@ auto MakeRegistry() -> entt::registry
 
   registry.set<ActiveLayer>();
   registry.set<ActiveTileset>();
-  registry.set<ActivePropertyContext>();
+  registry.set<active_attribute_context>();
   registry.set<ActiveTool>();
   registry.set<ActiveObject>();
   registry.set<MousePos>();
@@ -33,7 +33,7 @@ auto MakeRegistry() -> entt::registry
   viewport.x_offset = 0;
   viewport.y_offset = 0;
 
-  auto& context = registry.set<PropertyContext>();
+  auto& context = registry.set<attribute_context>();
   context.id = GetAndUpdateNextContextId();
   context.name = "Map";
 

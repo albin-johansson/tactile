@@ -15,7 +15,7 @@ namespace tactile::sys {
  * - `ActiveTool`
  * - `ActiveObject`
  * - `Viewport`
- * - `PropertyContext`
+ * - `attribute_context`
  * - `TilesetContext`
  * - `MousePos`
  *

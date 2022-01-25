@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "items/property_item_context_menu.hpp"
 
 namespace tactile {
@@ -21,7 +21,7 @@ class PropertyTable final {
 
   void ShowCustomProperties(const entt::registry& registry,
                             entt::dispatcher& dispatcher,
-                            const PropertyContext& context,
+                            const attribute_context& context,
                             bool& isItemContextOpen);
 };
 

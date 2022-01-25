@@ -8,7 +8,7 @@
 
 #include "core/attribute_value.hpp"
 #include "core/components/property.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "snapshot.hpp"
 
 namespace tactile::sys {
@@ -29,7 +29,7 @@ namespace tactile::sys {
  * \return the created property context.
  */
 auto AddPropertyContext(entt::registry& registry, entt::entity entity)
-    -> PropertyContext&;
+    -> attribute_context&;
 
 /**
  * \brief Creates a snapshot of the state of a property context.
@@ -72,11 +72,11 @@ void RestorePropertyContext(entt::registry& registry,
  *
  * \return the current property context.
  */
-[[nodiscard]] auto GetCurrentContext(entt::registry& registry) -> PropertyContext&;
+[[nodiscard]] auto GetCurrentContext(entt::registry& registry) -> attribute_context&;
 
 /// \copydoc GetCurrentContext()
 [[nodiscard]] auto GetCurrentContext(const entt::registry& registry)
-    -> const PropertyContext&;
+    -> const attribute_context&;
 
 /**
  * \brief Indicates whether or not there is a context associated with a specific ID.
@@ -99,11 +99,12 @@ void RestorePropertyContext(entt::registry& registry,
  *
  * \throws TactileError if there is no matching property context.
  */
-[[nodiscard]] auto GetContext(entt::registry& registry, ContextID id) -> PropertyContext&;
+[[nodiscard]] auto GetContext(entt::registry& registry, ContextID id)
+    -> attribute_context&;
 
 /// \copydoc GetContext()
 [[nodiscard]] auto GetContext(const entt::registry& registry, ContextID id)
-    -> const PropertyContext&;
+    -> const attribute_context&;
 
 /**
  * \brief Returns the identifier associated with the currently active property context.
@@ -125,7 +126,7 @@ void RestorePropertyContext(entt::registry& registry,
  * \param type the type of the property value.
  */
 void AddProperty(entt::registry& registry,
-                 PropertyContext& context,
+                 attribute_context& context,
                  std::string name,
                  PropertyType type);
 
@@ -140,7 +141,7 @@ void AddProperty(entt::registry& registry,
  * \param value the initial value of the property.
  */
 void AddProperty(entt::registry& registry,
-                 PropertyContext& context,
+                 attribute_context& context,
                  std::string name,
                  attribute_value value);
 
@@ -154,7 +155,7 @@ void AddProperty(entt::registry& registry,
  * \param name the name of the property that will be removed.
  */
 void RemoveProperty(entt::registry& registry,
-                    PropertyContext& context,
+                    attribute_context& context,
                     std::string_view name);
 
 /**
@@ -169,7 +170,7 @@ void RemoveProperty(entt::registry& registry,
  * \param newName the new name of the property.
  */
 void RenameProperty(entt::registry& registry,
-                    PropertyContext& context,
+                    attribute_context& context,
                     std::string_view oldName,
                     std::string newName);
 
@@ -184,7 +185,7 @@ void RenameProperty(entt::registry& registry,
  * \param value the new value of the property.
  */
 void UpdateProperty(entt::registry& registry,
-                    PropertyContext& context,
+                    attribute_context& context,
                     std::string_view name,
                     attribute_value value);
 
@@ -201,7 +202,7 @@ void UpdateProperty(entt::registry& registry,
  * \param value the new type of the property.
  */
 void ChangePropertyType(entt::registry& registry,
-                        PropertyContext& context,
+                        attribute_context& context,
                         std::string_view name,
                         PropertyType type);
 
@@ -218,7 +219,7 @@ void ChangePropertyType(entt::registry& registry,
  * \see GetProperty()
  */
 [[nodiscard]] auto FindProperty(const entt::registry& registry,
-                                const PropertyContext& context,
+                                const attribute_context& context,
                                 std::string_view name) -> entt::entity;
 
 /**
@@ -235,7 +236,7 @@ void ChangePropertyType(entt::registry& registry,
  * \see FindProperty()
  */
 [[nodiscard]] auto GetProperty(const entt::registry& registry,
-                               const PropertyContext& context,
+                               const attribute_context& context,
                                std::string_view name) -> const Property&;
 
 /**
@@ -254,7 +255,7 @@ void ChangePropertyType(entt::registry& registry,
  * \see FindProperty()
  */
 [[nodiscard]] auto HasPropertyWithName(const entt::registry& registry,
-                                       const PropertyContext& context,
+                                       const attribute_context& context,
                                        std::string_view name) -> bool;
 
 /* Useful for testing purposes */

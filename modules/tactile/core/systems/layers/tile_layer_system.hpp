@@ -3,8 +3,8 @@
 #include <entt/entt.hpp>  // registry, entity
 #include <tactile_def.hpp>
 
-#include "core/tile_position.hpp"
 #include "core/tile_cache.hpp"
+#include "core/tile_position.hpp"
 
 namespace tactile::sys {
 

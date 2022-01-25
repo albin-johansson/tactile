@@ -80,7 +80,7 @@ TEST_F(PropertySystemTest, RestorePropertyContext)
     const auto newEntity = mRegistry.create();
     sys::RestorePropertyContext(mRegistry, newEntity, snapshot);
 
-    const auto& context = mRegistry.get<PropertyContext>(newEntity);
+    const auto& context = mRegistry.get<attribute_context>(newEntity);
     ASSERT_EQ(id, context.id);
     ASSERT_EQ("ABC", context.name);
 
@@ -128,7 +128,7 @@ TEST_F(PropertySystemTest, RemoveProperty)
 
 TEST_F(PropertySystemTest, RenameProperty)
 {
-  auto& context = mRegistry.ctx<PropertyContext>();
+  auto& context = mRegistry.ctx<attribute_context>();
 
   sys::AddProperty(mRegistry, context, "abc", PropertyType::Color);
   ASSERT_TRUE(sys::HasPropertyWithName(mRegistry, context, "abc"));
@@ -140,7 +140,7 @@ TEST_F(PropertySystemTest, RenameProperty)
 
 TEST_F(PropertySystemTest, UpdateProperty)
 {
-  auto& context = mRegistry.ctx<PropertyContext>();
+  auto& context = mRegistry.ctx<attribute_context>();
 
   sys::AddProperty(mRegistry, context, "xyz", 45.3f);
   ASSERT_EQ(45.3f, sys::GetProperty(mRegistry, context, "xyz").value.as_float());
@@ -151,7 +151,7 @@ TEST_F(PropertySystemTest, UpdateProperty)
 
 TEST_F(PropertySystemTest, ChangePropertyType)
 {
-  auto& context = mRegistry.ctx<PropertyContext>();
+  auto& context = mRegistry.ctx<attribute_context>();
 
   sys::AddProperty(mRegistry, context, "foo", 123);
   ASSERT_TRUE(sys::GetProperty(mRegistry, context, "foo").value.is_int());
@@ -167,13 +167,13 @@ TEST_F(PropertySystemTest, ChangePropertyType)
 
 TEST_F(PropertySystemTest, GetContext)
 {
-  ASSERT_NO_THROW(sys::GetContext(mRegistry, mRegistry.ctx<PropertyContext>().id));
+  ASSERT_NO_THROW(sys::GetContext(mRegistry, mRegistry.ctx<attribute_context>().id));
   ASSERT_THROW(sys::GetContext(mRegistry, sys::GetNextContextId()), TactileError);
 }
 
 TEST_F(PropertySystemTest, GetProperty)
 {
-  auto& context = mRegistry.ctx<PropertyContext>();
+  auto& context = mRegistry.ctx<attribute_context>();
   ASSERT_THROW(sys::GetProperty(mRegistry, context, "foo"), TactileError);
 
   sys::AddProperty(mRegistry, context, "foo", 42);

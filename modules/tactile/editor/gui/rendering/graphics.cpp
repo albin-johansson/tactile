@@ -21,8 +21,7 @@ namespace {
   const auto gridWidth = info.grid_size.x;
   const auto gridHeight = info.grid_size.y;
 
-  const ImVec2 index{static_cast<float>(begin.col()),
-                     static_cast<float>(begin.row())};
+  const ImVec2 index{static_cast<float>(begin.col()), static_cast<float>(begin.row())};
   const auto pos = info.origin + (index * info.grid_size);
 
   const auto size = info.bounds.end - info.bounds.begin;

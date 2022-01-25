@@ -8,8 +8,8 @@
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
-#include "core/tile_position.hpp"
 #include "core/systems/map_system.hpp"
+#include "core/tile_position.hpp"
 #include "editor/gui/texture_utils.hpp"
 #include "render_info.hpp"
 

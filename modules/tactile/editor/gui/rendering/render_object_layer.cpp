@@ -8,7 +8,7 @@
 #include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "graphics.hpp"
 
 namespace tactile {
@@ -30,7 +30,7 @@ void RenderPointObject(Graphics& graphics,
     graphics.SetLineThickness(2.0f);
     graphics.DrawTranslatedCircleWithShadow(position, radius);
 
-    const auto& context = registry.get<PropertyContext>(objectEntity);
+    const auto& context = registry.get<attribute_context>(objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);
@@ -52,7 +52,7 @@ void RenderEllipseObject(Graphics& graphics,
                          const cen::color& color)
 {
   const auto& object = registry.get<Object>(objectEntity);
-  const auto& context = registry.get<PropertyContext>(objectEntity);
+  const auto& context = registry.get<attribute_context>(objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
   const ImVec2 size = {object.width, object.height};
@@ -93,7 +93,7 @@ void RenderRectangleObject(Graphics& graphics,
     graphics.SetLineThickness(2.0f);
     graphics.DrawTranslatedRectWithShadow(position, size);
 
-    const auto& context = registry.get<PropertyContext>(objectEntity);
+    const auto& context = registry.get<attribute_context>(objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);

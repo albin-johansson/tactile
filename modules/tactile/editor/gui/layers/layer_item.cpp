@@ -5,7 +5,7 @@
 
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/icons.hpp"
@@ -73,7 +73,7 @@ void LayerItem(const entt::registry& registry,
     flags |= ImGuiTreeNodeFlags_Selected;
   }
 
-  const auto& context = registry.get<PropertyContext>(layerEntity);
+  const auto& context = registry.get<attribute_context>(layerEntity);
   FormattedString name{"{} {}", icons.GetIcon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {

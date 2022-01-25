@@ -3,7 +3,7 @@
 #include <utility>  // move
 
 #include "assert.hpp"
-#include "core/components/property_context.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/systems/tileset_system.hpp"
 
 namespace tactile {
@@ -24,7 +24,7 @@ void SetTilesetNameCmd::Undo()
   const auto entity = sys::find_tileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<PropertyContext>(entity);
+  auto& context = registry.get<attribute_context>(entity);
   context.name = mOldName.value();
 }
 
@@ -35,7 +35,7 @@ void SetTilesetNameCmd::Redo()
   const auto entity = sys::find_tileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<PropertyContext>(entity);
+  auto& context = registry.get<attribute_context>(entity);
   mOldName = context.name;
   context.name = mNewName;
 }

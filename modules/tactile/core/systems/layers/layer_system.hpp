@@ -22,7 +22,7 @@ namespace tactile::sys {
  * - `Layer`
  * - `LayerTreeNode`
  * - `Parent`
- * - `PropertyContext`
+ * - `attribute_context`
  *
  * \param registry the associated registry.
  * \param id the unique identifier associated with the layer.
@@ -50,7 +50,7 @@ auto AddBasicLayer(entt::registry& registry,
  * - `Layer`
  * - `TileLayer`
  * - `Parent`
- * - `PropertyContext`
+ * - `attribute_context`
  *
  * \param registry the associated registry.
  *
@@ -70,7 +70,7 @@ auto AddTileLayer(entt::registry& registry) -> entt::entity;
  * - `Layer`
  * - `ObjectLayer`
  * - `Parent`
- * - `PropertyContext`
+ * - `attribute_context`
  *
  * \param registry the associated registry.
  *
@@ -90,7 +90,7 @@ auto AddObjectLayer(entt::registry& registry) -> entt::entity;
  * - `Layer`
  * - `GroupLayer`
  * - `Parent`
- * - `PropertyContext`
+ * - `attribute_context`
  *
  * \param registry the associated registry.
  *

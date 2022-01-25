@@ -10,7 +10,7 @@
 namespace tactile {
 
 struct Object;
-struct PropertyContext;
+struct attribute_context;
 
 class AObjectCmd : public ACommand {
  public:
@@ -19,7 +19,7 @@ class AObjectCmd : public ACommand {
  protected:
   [[nodiscard]] auto GetTargetObject() -> Object&;
 
-  [[nodiscard]] auto GetTargetObjectContext() const -> PropertyContext&;
+  [[nodiscard]] auto GetTargetObjectContext() const -> attribute_context&;
 
   [[nodiscard]] auto GetTargetObjectId() const noexcept -> ObjectID { return mObjectId; }
 

@@ -7,8 +7,8 @@
 
 #include "assert.hpp"
 #include "core/components/animation.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/fancy_tile.hpp"
-#include "core/components/property_context.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
@@ -213,7 +213,7 @@ void remove_tileset(entt::registry& registry, const TilesetID id)
     activeTileset.entity = entt::null;
   }
 
-  auto& activeContext = registry.ctx<ActivePropertyContext>();
+  auto& activeContext = registry.ctx<active_attribute_context>();
   if (entity == activeContext.entity) {
     activeContext.entity = entt::null;
   }
@@ -358,7 +358,7 @@ auto convert_to_local(const entt::registry& registry, const TileID global)
     return global - tileset.first_id;
   }
   else {
-    return nothing; // TODO throw?
+    return nothing;
   }
 }
 
