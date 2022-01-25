@@ -1,10 +1,10 @@
 #include "session.hpp"
 
-#include <filesystem>  // absolute
+#include <filesystem>  // path, absolute
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 
-#include <centurion.hpp>  // ...
+#include <centurion.hpp>
 #include <tactile_stdlib.hpp>
 
 #include "create_document_from_ir.hpp"
@@ -19,7 +19,11 @@ namespace {
 
 constexpr int gFormatVersion = 1;
 
-inline const auto gFilePath = GetPersistentFileDir() / "session.bin";
+[[nodiscard]] auto get_file_path() -> const std::filesystem::path&
+{
+  static const auto path = get_persistent_file_dir() / "session.bin";
+  return path;
+}
 
 }  // namespace
 
@@ -27,7 +31,7 @@ void RestoreLastSession(Model& model, TextureManager& textures)
 {
   proto::Session session;
 
-  std::ifstream stream{gFilePath, std::ios::in | std::ios::binary};
+  std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
       MapParser parser{file};
@@ -54,7 +58,8 @@ void SaveSession(const Model& model)
     }
   }
 
-  std::ofstream stream{gFilePath, std::ios::out | std::ios::trunc | std::ios::binary};
+  std::ofstream stream{get_file_path(),
+                       std::ios::out | std::ios::trunc | std::ios::binary};
   if (!session.SerializeToOstream(&stream)) {
     LogError("Failed to save session file!");
   }

@@ -1,7 +1,7 @@
 #include "history.hpp"
 
 #include <algorithm>   // find, find_if
-#include <filesystem>  // exists
+#include <filesystem>  // path, exists
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 #include <utility>     // move
@@ -19,19 +19,23 @@ namespace {
 constexpr int gFormatVersion = 1;
 constexpr usize gMaxSize = 10;
 
-inline const auto gFilePath = GetPersistentFileDir() / "history.bin";
-
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
 inline Maybe<std::string> gLastClosedFile;
 inline std::deque<std::string> gHistory;
+
+[[nodiscard]] auto get_file_path() -> const std::filesystem::path&
+{
+  static const auto path = get_persistent_file_dir() / "history.bin";
+  return path;
+}
 
 }  // namespace
 
 void LoadFileHistory()
 {
   LogVerbose("Loading file history...");
-  std::ifstream stream{gFilePath, std::ios::in | std::ios::binary};
+  std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
 
   proto::History h;
   if (h.ParseFromIstream(&stream)) {
@@ -63,7 +67,8 @@ void SaveFileHistory()
   }
 
   {
-    std::ofstream stream{gFilePath, std::ios::out | std::ios::trunc | std::ios::binary};
+    std::ofstream stream{get_file_path(),
+                         std::ios::out | std::ios::trunc | std::ios::binary};
     if (!h.SerializeToOstream(&stream)) {
       LogError("Failed to save file history!");
     }

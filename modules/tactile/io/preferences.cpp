@@ -1,6 +1,6 @@
 #include "preferences.hpp"
 
-#include <filesystem>  // exists
+#include <filesystem>  // path, exists
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 #include <utility>     // move
@@ -19,8 +19,6 @@
 namespace tactile {
 namespace {
 
-inline const auto gSettingsPath = GetPersistentFileDir() / "settings.bin";
-
 constexpr Theme gThemeDef = Theme::Nocturnal;
 constexpr cen::color gViewportBackgroundDef{60, 60, 60};
 
@@ -37,6 +35,12 @@ constexpr uint64 gFlagsDef =
     Preferences::show_tileset_dock | Preferences::show_properties_dock |
     Preferences::show_component_dock | Preferences::restore_layout |
     Preferences::restore_last_session;
+
+[[nodiscard]] auto get_file_path() -> const std::filesystem::path&
+{
+  static const auto path = get_persistent_file_dir() / "settings.bin";
+  return path;
+}
 
 [[nodiscard]] auto MakeDefaultPreferences() -> Preferences
 {
@@ -101,8 +105,9 @@ void LoadPreferences()
 {
   settings = MakeDefaultPreferences();
 
-  if (std::filesystem::exists(gSettingsPath)) {
-    std::ifstream stream{gSettingsPath, std::ios::in | std::ios::binary};
+  const auto& path = get_file_path();
+  if (std::filesystem::exists(path)) {
+    std::ifstream stream{path, std::ios::in | std::ios::binary};
 
     proto::Settings cfg;
     if (cfg.ParseFromIstream(&stream)) {
@@ -229,7 +234,8 @@ void SavePreferences()
   cfg.set_restore_layout(prefs::GetRestoreLayout());
   cfg.set_viewport_overlay_pos(proto::OverlayPos{settings.viewport_overlay_pos});
 
-  std::ofstream stream{gSettingsPath, std::ios::out | std::ios::trunc | std::ios::binary};
+  std::ofstream stream{get_file_path(),
+                       std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
     LogError("Failed to save preferences!");
   }
