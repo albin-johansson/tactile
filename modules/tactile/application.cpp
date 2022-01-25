@@ -73,7 +73,7 @@ auto Application::Run() -> int
 {
   auto& window = mConfiguration->window();
 
-  LoadFileHistory();
+  load_file_history();
 
   if (prefs::GetRestoreLastSession()) {
     RestoreLastSession(mModel, mTextures);
@@ -117,14 +117,14 @@ void Application::OnAboutToExit()
   SaveCurrentFilesToHistory();
   SavePreferences();
   SaveSession(mModel);
-  SaveFileHistory();
+  save_file_history();
 }
 
 void Application::SaveCurrentFilesToHistory()
 {
   for (const auto& [id, document] : mModel) {
     if (!document->path.empty()) {
-      AddFileToHistory(document->path);
+      add_file_to_history(document->path);
     }
   }
 }
@@ -290,7 +290,7 @@ void Application::OnCreateMap(const CreateMapEvent& event)
 void Application::OnCloseMap(const CloseMapEvent& event)
 {
   if (mModel.HasPath(event.id)) {
-    SetLastClosedFile(mModel.GetPath(event.id));
+    set_last_closed_file(mModel.GetPath(event.id));
   }
   mModel.RemoveMap(event.id);
 }
@@ -306,7 +306,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
   MapParser parser{event.path};
   if (parser) {
     mModel.AddMap(CreateDocumentFromIR(parser.GetData(), mTextures));
-    AddFileToHistory(event.path);
+    add_file_to_history(event.path);
   }
   else {
     mWidgets.ShowMapImportErrorDialog(parser.GetError());

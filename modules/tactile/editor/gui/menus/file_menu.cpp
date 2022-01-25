@@ -83,12 +83,12 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
                         nullptr,
                         false,
-                        HasValidLastClosedFile())) {
+                        is_last_closed_file_valid())) {
       // TODO this will need to be tweaked if tileset documents viewing will be supported
-      dispatcher.enqueue<OpenMapEvent>(GetLastClosedFile());
+      dispatcher.enqueue<OpenMapEvent>(last_closed_file());
     }
 
-    const auto& history = GetFileHistory();
+    const auto& history = file_history();
 
     if (!history.empty()) {
       ImGui::Separator();
@@ -107,7 +107,7 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
                         nullptr,
                         false,
                         !history.empty())) {
-      ClearFileHistory();
+      clear_file_history();
     }
   }
 }

@@ -11,6 +11,7 @@
 
 #include "directories.hpp"
 #include "logging.hpp"
+#include "throw.hpp"
 #include <history.pb.h>
 
 namespace tactile {
@@ -32,7 +33,7 @@ inline std::deque<std::string> gHistory;
 
 }  // namespace
 
-void LoadFileHistory()
+void load_file_history()
 {
   LogVerbose("Loading file history...");
   std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
@@ -53,7 +54,7 @@ void LoadFileHistory()
   }
 }
 
-void SaveFileHistory()
+void save_file_history()
 {
   proto::History h;
 
@@ -75,13 +76,13 @@ void SaveFileHistory()
   }
 }
 
-void ClearFileHistory()
+void clear_file_history()
 {
   LogVerbose("Clearing file history...");
   gHistory.clear();
 }
 
-void AddFileToHistory(const std::filesystem::path& path)
+void add_file_to_history(const std::filesystem::path& path)
 {
   auto converted = ConvertToForwardSlashes(path);
   if (std::find(gHistory.begin(), gHistory.end(), converted) == gHistory.end()) {
@@ -97,27 +98,32 @@ void AddFileToHistory(const std::filesystem::path& path)
   }
 }
 
-void SetLastClosedFile(const std::filesystem::path& path)
+void set_last_closed_file(const std::filesystem::path& path)
 {
   gLastClosedFile = ConvertToForwardSlashes(path);
   LogVerbose("Last closed file is now '{}'", *gLastClosedFile);
 
-  AddFileToHistory(path);
+  add_file_to_history(path);
 }
 
-auto GetFileHistory() -> const std::deque<std::string>&
+auto file_history() -> const std::deque<std::string>&
 {
   return gHistory;
 }
 
-auto HasValidLastClosedFile() -> bool
+auto is_last_closed_file_valid() -> bool
 {
   return gLastClosedFile && std::filesystem::exists(*gLastClosedFile);
 }
 
-auto GetLastClosedFile() -> const std::string&
+auto last_closed_file() -> const std::string&
 {
-  return gLastClosedFile.value();
+  if (is_last_closed_file_valid()) {
+    return gLastClosedFile.value();
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid last closed file!"});
+  }
 }
 
 }  // namespace tactile
