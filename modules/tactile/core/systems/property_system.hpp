@@ -17,30 +17,30 @@ namespace tactile::sys {
 /// \{
 
 /**
- * \brief Adds a property context component to an entity.
+ * \brief Adds a attribute context component to an entity.
  *
- * \details The created property context will automatically be assigned a unique ID.
+ * \details The created attribute context will automatically be assigned a unique ID.
  *
  * \pre The supplied entity identifier cannot be null.
  *
  * \param registry the source registry.
- * \param entity the entity that will be assigned a property context.
+ * \param entity the entity that will be assigned a attribute context.
  *
- * \return the created property context.
+ * \return the created attribute context.
  */
 auto AddPropertyContext(entt::registry& registry, entt::entity entity)
     -> attribute_context&;
 
 /**
- * \brief Creates a snapshot of the state of a property context.
+ * \brief Creates a snapshot of the state of a attribute context.
  *
  * \pre The supplied entity cannot be null.
- * \pre The supplied entity must feature a property context component.
+ * \pre The supplied entity must feature a attribute context component.
  *
  * \param registry the source registry.
- * \param source the source entity that features a property context.
+ * \param source the source entity that features a attribute context.
  *
- * \return a snapshot of the property context.
+ * \return a snapshot of the attribute context.
  *
  * \see RestorePropertyContext()
  */
@@ -48,15 +48,15 @@ auto AddPropertyContext(entt::registry& registry, entt::entity entity)
                                        entt::entity source) -> PropertyContextSnapshot;
 
 /**
- * \brief Restores a property context component based on a snapshot.
+ * \brief Restores a attribute context component based on a snapshot.
  *
- * \details This function will override any current property context component associated
+ * \details This function will override any current attribute context component associated
  * with the specified entity.
  *
  * \pre The supplied entity identifier cannot be null.
  *
  * \param registry the source registry.
- * \param entity the entity that will be assigned the restored property context.
+ * \param entity the entity that will be assigned the restored attribute context.
  * \param snapshot a snapshot obtained through `CopyPropertyContext()`.
  *
  * \see CopyPropertyContext()
@@ -66,11 +66,11 @@ void RestorePropertyContext(entt::registry& registry,
                             PropertyContextSnapshot snapshot);
 
 /**
- * \brief Returns the currently active property context.
+ * \brief Returns the currently active attribute context.
  *
  * \param registry the source registry.
  *
- * \return the current property context.
+ * \return the current attribute context.
  */
 [[nodiscard]] auto GetCurrentContext(entt::registry& registry) -> attribute_context&;
 
@@ -84,20 +84,20 @@ void RestorePropertyContext(entt::registry& registry,
  * \param registry the source registry.
  * \param id the context identifier to look for.
  *
- * \return `true` if there is a property context associated with the ID; `false`
+ * \return `true` if there is a attribute context associated with the ID; `false`
  * otherwise.
  */
 [[nodiscard]] auto HasContext(const entt::registry& registry, ContextID id) -> bool;
 
 /**
- * \brief Returns the property context associated with a context ID.
+ * \brief Returns the attribute context associated with a context ID.
  *
  * \param registry the source registry.
- * \param id the identifier associated with the desired property context.
+ * \param id the identifier associated with the desired attribute context.
  *
- * \return a reference to the found property context.
+ * \return a reference to the found attribute context.
  *
- * \throws TactileError if there is no matching property context.
+ * \throws TactileError if there is no matching attribute context.
  */
 [[nodiscard]] auto GetContext(entt::registry& registry, ContextID id)
     -> attribute_context&;
@@ -107,7 +107,7 @@ void RestorePropertyContext(entt::registry& registry,
     -> const attribute_context&;
 
 /**
- * \brief Returns the identifier associated with the currently active property context.
+ * \brief Returns the identifier associated with the currently active attribute context.
  *
  * \param registry the source registry.
  *
@@ -116,9 +116,9 @@ void RestorePropertyContext(entt::registry& registry,
 [[nodiscard]] auto GetCurrentContextId(const entt::registry& registry) -> ContextID;
 
 /**
- * \brief Adds a property to a property context.
+ * \brief Adds a property to a attribute context.
  *
- * \pre The supplied name must be unique within the property context.
+ * \pre The supplied name must be unique within the attribute context.
  *
  * \param registry the source registry.
  * \param context the context that will be modified.
@@ -131,9 +131,9 @@ void AddProperty(entt::registry& registry,
                  PropertyType type);
 
 /**
- * \brief Adds a property to a property context.
+ * \brief Adds a property to a attribute context.
  *
- * \pre The name must be unique within the property context.
+ * \pre The name must be unique within the attribute context.
  *
  * \param registry the source registry.
  * \param context the context that will be modified.
@@ -146,7 +146,7 @@ void AddProperty(entt::registry& registry,
                  attribute_value value);
 
 /**
- * \brief Removes a property from a property context.
+ * \brief Removes a property from a attribute context.
  *
  * \pre The context must feature a property with the specified name.
  *
@@ -159,7 +159,7 @@ void RemoveProperty(entt::registry& registry,
                     std::string_view name);
 
 /**
- * \brief Renames a property in a property context.
+ * \brief Renames a property in a attribute context.
  *
  * \pre The context must feature a property with the _old_ name.
  * \pre The context must _not_ feature a property with the _new_ name.
@@ -210,7 +210,7 @@ void ChangePropertyType(entt::registry& registry,
  * \brief Attempts to find a property in a context with a specific name.
  *
  * \param registry the source registry.
- * \param context the property context that will be queried.
+ * \param context the attribute context that will be queried.
  * \param name the name of the desired property.
  *
  * \return the found property entity; the null entity is returned if there was no match.
@@ -223,10 +223,10 @@ void ChangePropertyType(entt::registry& registry,
                                 std::string_view name) -> entt::entity;
 
 /**
- * \brief Returns a property in a property context with a specific name.
+ * \brief Returns a property in a attribute context with a specific name.
  *
  * \param registry the source registry.
- * \param context the property context that will be queried.
+ * \param context the attribute context that will be queried.
  * \param name the name of the desired property.
  *
  * \return a reference to the matching property.
@@ -240,13 +240,13 @@ void ChangePropertyType(entt::registry& registry,
                                std::string_view name) -> const Property&;
 
 /**
- * \brief Indicates whether or not a property context has a property with a certain name.
+ * \brief Indicates whether or not a attribute context has a property with a certain name.
  *
  * \note Use the `FindProperty()` function if you intend to make use of the property
  * entity, in order to avoid unnecessary lookups.
  *
  * \param registry the source registry.
- * \param context the property context that will be queried..
+ * \param context the attribute context that will be queried..
  * \param name the name of the property to look for.
  *
  * \return `true` if the context has a property with the specified name; `false`

@@ -11,7 +11,7 @@
 namespace tactile::sys {
 namespace {
 
-/* Identifier used to distinguish property contexts, generated on a
+/* Identifier used to distinguish attribute contexts, generated on a
    session-by-session basis and not stored anywhere in save files. */
 inline ContextID gNextContextId{1};
 
@@ -182,7 +182,7 @@ auto GetContext(entt::registry& registry, const ContextID id) -> attribute_conte
     }
   }
 
-  ThrowTraced(TactileError{"No matching property context!"});
+  ThrowTraced(TactileError{"No matching attribute context!"});
 }
 
 auto GetContext(const entt::registry& registry, const ContextID id)
@@ -198,7 +198,7 @@ auto GetContext(const entt::registry& registry, const ContextID id)
     }
   }
 
-  ThrowTraced(TactileError{"No matching property context!"});
+  ThrowTraced(TactileError{"No matching attribute context!"});
 }
 
 auto GetCurrentContextId(const entt::registry& registry) -> ContextID

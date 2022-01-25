@@ -32,7 +32,7 @@ struct ComponentDef final
 };
 
 /**
- * Represents a user-defined component that can be attached to property context entities.
+ * Represents a user-defined component that can be attached to attribute context entities.
  */
 struct Component final
 {

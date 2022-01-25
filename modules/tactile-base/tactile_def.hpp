@@ -42,7 +42,7 @@ using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
 
-/// Identifier for property contexts (not persistent).
+/// Identifier for attribute contexts (not persistent).
 using ContextID = int32;
 
 /// Identifier for component definition types (not persistent).
