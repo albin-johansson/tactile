@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-auto get_persistent_file_dir() -> const std::filesystem::path&
+auto persistent_file_dir() -> const std::filesystem::path&
 {
   static const std::filesystem::path path{
       cen::preferred_path("albin-johansson", "tactile").copy()};

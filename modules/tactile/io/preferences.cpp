@@ -38,7 +38,7 @@ constexpr uint64 gFlagsDef =
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&
 {
-  static const auto path = get_persistent_file_dir() / "settings.bin";
+  static const auto path = persistent_file_dir() / "settings.bin";
   return path;
 }
 

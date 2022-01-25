@@ -21,7 +21,7 @@ constexpr int gFormatVersion = 1;
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&
 {
-  static const auto path = get_persistent_file_dir() / "session.bin";
+  static const auto path = persistent_file_dir() / "session.bin";
   return path;
 }
 

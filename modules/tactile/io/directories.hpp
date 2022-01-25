@@ -11,6 +11,6 @@ namespace tactile {
  *
  * \return the persistent file directory path.
  */
-[[nodiscard]] auto get_persistent_file_dir() -> const std::filesystem::path&;
+[[nodiscard]] auto persistent_file_dir() -> const std::filesystem::path&;
 
 }  // namespace tactile
