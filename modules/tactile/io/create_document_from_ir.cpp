@@ -427,7 +427,7 @@ auto CreateDocumentFromIR(const IO::Map& irMap, TextureManager& textures) -> Doc
 {
   Document document;
   document.path = IO::GetPath(irMap);
-  document.registry = sys::MakeRegistry();
+  document.registry = sys::make_document_registry();
 
   InitComponentDefinitions(document.registry, irMap);
 

@@ -15,7 +15,7 @@ using namespace tactile;
 
 TEST(RegistrySystem, MakeRegistry)
 {
-  const auto registry = sys::MakeRegistry();
+  const auto registry = sys::make_document_registry();
   ASSERT_TRUE(registry.try_ctx<MapInfo>());
   ASSERT_TRUE(registry.try_ctx<ActiveLayer>());
   ASSERT_TRUE(registry.try_ctx<ActiveTileset>());

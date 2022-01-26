@@ -12,7 +12,7 @@
 
 namespace tactile::sys {
 
-auto MakeRegistry() -> entt::registry
+auto make_document_registry() -> entt::registry
 {
   entt::registry registry;
 

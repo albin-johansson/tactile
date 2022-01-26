@@ -11,7 +11,7 @@ using namespace tactile;
 
 TEST(FloodFill, flood)
 {
-  auto registry = sys::MakeRegistry();
+  auto registry = sys::make_document_registry();
 
   const auto entity = sys::AddTileLayer(registry);
 

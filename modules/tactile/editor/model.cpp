@@ -45,7 +45,7 @@ auto Model::AddMap(const int tileWidth,
   TACTILE_ASSERT(tileHeight > 0);
 
   Document document;
-  document.registry = sys::MakeRegistry();
+  document.registry = sys::make_document_registry();
 
   auto& map = document.registry.ctx<MapInfo>();
   map.tile_width = tileWidth;

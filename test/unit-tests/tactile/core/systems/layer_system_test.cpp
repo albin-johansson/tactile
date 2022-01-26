@@ -15,7 +15,7 @@ constexpr entt::entity null_entity = entt::null;
 
 TEST(LayerSystem, SortLayers)
 {
-  auto registry = sys::MakeRegistry();
+  auto registry = sys::make_document_registry();
   auto& active = registry.ctx<ActiveLayer>();
 
   const auto a = sys::AddTileLayer(registry);
@@ -73,7 +73,7 @@ TEST(LayerSystem, SortLayers)
 
 TEST(LayerSystem, RemoveLayer)
 {
-  auto registry = sys::MakeRegistry();
+  auto registry = sys::make_document_registry();
   auto& active = registry.ctx<ActiveLayer>();
 
   const auto a = sys::AddTileLayer(registry);
@@ -152,7 +152,7 @@ TEST(LayerSystem, DuplicateLayer)
 {
   // TODO improve this test
 
-  auto registry = sys::MakeRegistry();
+  auto registry = sys::make_document_registry();
 
   const auto a = sys::AddTileLayer(registry);
   sys::SetLayerOpacity(registry, a, 0.5f);
@@ -169,7 +169,7 @@ TEST(LayerSystem, DuplicateLayer)
 
 TEST(LayerSystem, FindLayer)
 {
-  auto registry = sys::MakeRegistry();
+  auto registry = sys::make_document_registry();
   ASSERT_EQ(null_entity, sys::FindLayer(registry, 1));
 
   const auto a = sys::AddTileLayer(registry);
