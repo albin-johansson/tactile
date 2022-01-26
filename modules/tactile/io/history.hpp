@@ -51,8 +51,6 @@ void set_last_closed_file(const std::filesystem::path& path);
  */
 [[nodiscard]] auto file_history() -> const std::deque<std::string>&;
 
-/// Indicates whether or not there is a valid last closed file entry
-
 /**
  * \brief Indicates whether there is a valid most recently closed file entry.
  *
