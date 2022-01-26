@@ -2,11 +2,11 @@
 
 #include <entt/entt.hpp>  // registry, entity
 
+#include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
-#include "core/components/attribute_context.hpp"
 #include "core/map.hpp"
 #include "property_system.hpp"
 

@@ -6,12 +6,12 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-namespace tactile {
+namespace tactile::comp {
 
 /**
  * \brief Represents a single frame in an animation.
  */
-struct AnimationFrame final
+struct animation_frame final
 {
   TileID tile{};          ///< Tile that will be rendered during the frame.
   cen::u32ms duration{};  ///< Duration of the frame.
@@ -20,11 +20,11 @@ struct AnimationFrame final
 /**
  * \brief Represents an animation.
  */
-struct Animation final
+struct animation final
 {
   usize index{};                     ///< Index of the current frame.
   cen::u32ms last_update_time{};     ///< When a frame was last changed.
   std::vector<entt::entity> frames;  ///< The associated frames.
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp

@@ -7,8 +7,8 @@
 #include <tactile_def.hpp>
 
 #include "core/attribute_value.hpp"
-#include "core/components/property.hpp"
 #include "core/components/attribute_context.hpp"
+#include "core/components/property.hpp"
 #include "snapshot.hpp"
 
 namespace tactile::sys {

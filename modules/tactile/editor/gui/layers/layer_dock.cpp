@@ -9,9 +9,9 @@
 
 #include "add_layer_popup.hpp"
 #include "assert.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
-#include "core/components/attribute_context.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"

@@ -306,9 +306,9 @@ auto get_tile_to_render(const entt::registry& registry,
   if (const auto iter = cache.tiles.find(id); iter != cache.tiles.end()) {
     const auto entity = iter->second;
 
-    if (const auto* animation = registry.try_get<Animation>(entity)) {
+    if (const auto* animation = registry.try_get<comp::animation>(entity)) {
       const auto frameEntity = animation->frames.at(animation->index);
-      const auto& frame = registry.get<AnimationFrame>(frameEntity);
+      const auto& frame = registry.get<comp::animation_frame>(frameEntity);
 
       /* This cache is cleared before each frame */
       cache.source_to_render[id] = frame.tile;

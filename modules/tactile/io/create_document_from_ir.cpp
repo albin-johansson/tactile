@@ -10,12 +10,12 @@
 #include <tactile_stdlib.hpp>
 
 #include "core/components/animation.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/component.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property.hpp"
-#include "core/components/attribute_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/component_system.hpp"
@@ -168,7 +168,7 @@ void AddAnimation(entt::registry& registry,
                   const IO::Tile& tileData,
                   const usize nFrames)
 {
-  auto& animation = registry.emplace<Animation>(tileEntity);
+  auto& animation = registry.emplace<comp::animation>(tileEntity);
   animation.frames.reserve(nFrames);
 
   for (usize index = 0; index < nFrames; ++index) {
@@ -176,7 +176,7 @@ void AddAnimation(entt::registry& registry,
 
     const auto frameEntity = registry.create();
 
-    auto& frame = registry.emplace<AnimationFrame>(frameEntity);
+    auto& frame = registry.emplace<comp::animation_frame>(frameEntity);
     frame.tile = TileID{firstGlobalId + IO::GetTile(frameData)};
     frame.duration = cen::u32ms{IO::GetDuration(frameData)};
 

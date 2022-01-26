@@ -7,11 +7,11 @@
 
 #include "assert.hpp"
 #include "core/components/animation.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/component.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
-#include "core/components/attribute_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/component_system.hpp"
@@ -154,7 +154,7 @@ void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
        mRegistry->view<FancyTile, attribute_context>().each()) {
     const bool inTileset = tile.id >= tileset.first_id && tile.id <= tileset.last_id;
     if (inTileset) {
-      const bool worthSaving = mRegistry->all_of<Animation>(entity) ||
+      const bool worthSaving = mRegistry->all_of<comp::animation>(entity) ||
                                !context.properties.empty() || !tile.objects.empty();
       if (worthSaving) {
         FancyTileData data;
@@ -187,7 +187,7 @@ auto EmitInfo::fancy_tile_animation_frame_count(const TileID id) const -> usize
 {
   const auto entity = to_tile_entity(id);
 
-  if (const auto* animation = mRegistry->try_get<Animation>(entity)) {
+  if (const auto* animation = mRegistry->try_get<comp::animation>(entity)) {
     return animation->frames.size();
   }
 
@@ -199,9 +199,9 @@ void EmitInfo::each_fancy_tile_animation_frame(const TileID id,
 {
   const auto entity = to_tile_entity(id);
 
-  const auto& animation = mRegistry->get<Animation>(entity);
+  const auto& animation = mRegistry->get<comp::animation>(entity);
   for (const auto frameEntity : animation.frames) {
-    const auto& frame = mRegistry->get<AnimationFrame>(frameEntity);
+    const auto& frame = mRegistry->get<comp::animation_frame>(frameEntity);
 
     AnimationFrameData data;
     data.local_tile = sys::convert_to_local(*mRegistry, frame.tile).value();

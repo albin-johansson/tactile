@@ -5,13 +5,13 @@
 #include <tactile_def.hpp>
 
 #include "core/components/animation.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/component.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
-#include "core/components/attribute_context.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
@@ -167,11 +167,11 @@ void ConvertFancyTiles(IO::Map& irMap,
       auto& tileData = IO::AddTile(ir);
       IO::SetId(tileData, sys::convert_to_local(registry, tile.id).value());
 
-      if (const auto* animation = registry.try_get<Animation>(entity)) {
+      if (const auto* animation = registry.try_get<comp::animation>(entity)) {
         IO::ReserveAnimationFrames(tileData, animation->frames.size());
 
         for (const auto frameEntity : animation->frames) {
-          const auto& frame = registry.get<AnimationFrame>(frameEntity);
+          const auto& frame = registry.get<comp::animation_frame>(frameEntity);
 
           auto& frameData = IO::AddAnimationFrame(tileData);
           IO::SetTile(frameData, sys::convert_to_local(registry, frame.tile).value());

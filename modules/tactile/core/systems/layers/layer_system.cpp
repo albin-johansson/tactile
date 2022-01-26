@@ -8,11 +8,11 @@
 #include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
+#include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
-#include "core/components/attribute_context.hpp"
 #include "core/map.hpp"
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/property_system.hpp"

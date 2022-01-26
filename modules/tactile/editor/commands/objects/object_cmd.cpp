@@ -3,8 +3,8 @@
 #include <utility>  // move
 
 #include "assert.hpp"
-#include "core/components/object.hpp"
 #include "core/components/attribute_context.hpp"
+#include "core/components/object.hpp"
 #include "core/systems/object_system.hpp"
 
 namespace tactile {
