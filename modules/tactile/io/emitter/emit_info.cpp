@@ -151,7 +151,7 @@ void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
   const auto& tileset = mRegistry->get<Tileset>(tilesetEntity);
 
   for (auto&& [entity, tile, context] :
-       mRegistry->view<FancyTile, comp::attribute_context>().each()) {
+       mRegistry->view<comp::fancy_tile, comp::attribute_context>().each()) {
     const bool inTileset = tile.id >= tileset.first_id && tile.id <= tileset.last_id;
     if (inTileset) {
       const bool worthSaving = mRegistry->all_of<comp::animation>(entity) ||
@@ -178,7 +178,7 @@ auto EmitInfo::fancy_tile_object_count(const TileID id) const -> usize
 void EmitInfo::each_fancy_tile_object(const TileID id, const object_visitor& func) const
 {
   const auto entity = to_tile_entity(id);
-  const auto& tile = mRegistry->get<FancyTile>(entity);
+  const auto& tile = mRegistry->get<comp::fancy_tile>(entity);
 
   each_object(*mRegistry, tile.objects, func);
 }
@@ -407,7 +407,7 @@ auto EmitInfo::to_tileset_entity(const TilesetID id) const -> entt::entity
 
 auto EmitInfo::to_tile_entity(const TileID id) const -> entt::entity
 {
-  for (auto&& [entity, fancy] : mRegistry->view<FancyTile>().each()) {
+  for (auto&& [entity, fancy] : mRegistry->view<comp::fancy_tile>().each()) {
     if (fancy.id == id) {
       return entity;
     }

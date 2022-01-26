@@ -47,7 +47,7 @@ void refresh_tileset_cache(entt::registry& registry, const entt::entity entity)
   auto& cache = registry.emplace_or_replace<TilesetCache>(entity);
   cache.source_rects = create_source_rect_cache(tileset);
 
-  for (auto&& [tileEntity, tile] : registry.view<FancyTile>().each()) {
+  for (auto&& [tileEntity, tile] : registry.view<comp::fancy_tile>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       cache.tiles.try_emplace(tile.id, tileEntity);
     }

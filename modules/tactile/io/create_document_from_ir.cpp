@@ -185,7 +185,7 @@ void AddAnimation(entt::registry& registry,
 }
 
 void AddTileObjects(entt::registry& registry,
-                    FancyTile& tile,
+                    comp::fancy_tile& tile,
                     const IO::Tile& irTile,
                     const usize nObjects)
 {
@@ -208,7 +208,7 @@ void MakeFancyTiles(entt::registry& registry,
     const auto& irTileInfo = IO::GetTileInfo(irTileset, index);
 
     const auto tileEntity = registry.create();
-    auto& tile = registry.emplace<FancyTile>(tileEntity);
+    auto& tile = registry.emplace<comp::fancy_tile>(tileEntity);
     tile.id = TileID{firstGlobalId + IO::GetId(irTileInfo)};
 
     cache.tiles.try_emplace(tile.id, tileEntity);

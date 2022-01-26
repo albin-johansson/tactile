@@ -162,7 +162,7 @@ void ConvertFancyTiles(IO::Map& irMap,
 
 {
   for (auto&& [entity, tile, ctx] :
-       registry.view<FancyTile, comp::attribute_context>().each()) {
+       registry.view<comp::fancy_tile, comp::attribute_context>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       auto& tileData = IO::AddTile(ir);
       IO::SetId(tileData, sys::convert_to_local(registry, tile.id).value());
