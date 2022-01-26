@@ -623,6 +623,107 @@ class basic_renderer final {
 
   /// \} End of texture rendering functions
 
+  /// \name Arbitrary triangle rendering functions
+  /// \{
+
+#if SDL_VERSION_ATLEAST(2, 0, 18)
+
+  /**
+   * \brief Render arbitrary triangles.
+   *
+   * \tparam Size the deduced amount of vertices.
+   *
+   * \param vertices the vertices that will be rendered.
+   *
+   * \return `success` if the rendering is successful; `failure` otherwise.
+   */
+  template <std::size_t Size>
+  auto render_geo(bounded_array_ref<const SDL_Vertex, Size> vertices) noexcept -> result
+  {
+    return SDL_RenderGeometry(mRenderer,
+                              nullptr,
+                              vertices,
+                              static_cast<int>(Size),
+                              nullptr,
+                              0) == 0;
+  }
+
+  /**
+   * \brief Render arbitrary triangles.
+   *
+   * \tparam VertexCount the deduced amount of vertices.
+   * \tparam IndexCount the deduced amount of indices.
+   *
+   * \param vertices the vertices that will be rendered.
+   * \param indices the indices of the vertices that will be rendered.
+   *
+   * \return `success` if the rendering is successful; `failure` otherwise.
+   */
+  template <std::size_t VertexCount, std::size_t IndexCount>
+  auto render_geo(bounded_array_ref<const SDL_Vertex, VertexCount> vertices,
+                  bounded_array_ref<const int, IndexCount> indices) noexcept -> result
+  {
+    static_assert(IndexCount <= VertexCount);
+    return SDL_RenderGeometry(mRenderer,
+                              nullptr,
+                              vertices,
+                              static_cast<int>(VertexCount),
+                              indices,
+                              static_cast<int>(IndexCount)) == 0;
+  }
+
+  /**
+   * \brief Render arbitrary triangles, using a texture.
+   *
+   * \tparam Size the deduced amount of vertices.
+   *
+   * \param texture the texture that will be rendered.
+   * \param vertices the vertices that will be rendered.
+   *
+   * \return `success` if the rendering is successful; `failure` otherwise.
+   */
+  template <typename X, std::size_t Size>
+  auto render_geo(const basic_texture<X>& texture,
+                  bounded_array_ref<const SDL_Vertex, Size> vertices) noexcept -> result
+  {
+    return SDL_RenderGeometry(mRenderer,
+                              texture.get(),
+                              vertices,
+                              static_cast<int>(Size),
+                              nullptr,
+                              0) == 0;
+  }
+
+  /**
+   * \brief Render arbitrary triangles, using a texture.
+   *
+   * \tparam VertexCount the deduced amount of vertices.
+   * \tparam IndexCount the deduced amount of indices.
+   *
+   * \param texture the texture that will be rendered.
+   * \param vertices the vertices that will be rendered.
+   * \param indices the indices of the vertices that will be rendered.
+   *
+   * \return `success` if the rendering is successful; `failure` otherwise.
+   */
+  template <typename X, std::size_t VertexCount, std::size_t IndexCount>
+  auto render_geo(const basic_texture<X>& texture,
+                  bounded_array_ref<const SDL_Vertex, VertexCount>& vertices,
+                  bounded_array_ref<const int, IndexCount>& indices) noexcept -> result
+  {
+    static_assert(IndexCount <= VertexCount);
+    return SDL_RenderGeometry(mRenderer,
+                              texture.get(),
+                              vertices,
+                              static_cast<int>(VertexCount),
+                              indices,
+                              static_cast<int>(IndexCount)) == 0;
+  }
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 18)
+
+  /// \} End of arbitrary triangle rendering functions
+
   /// \name Render target functions
   /// \{
 
@@ -780,6 +881,95 @@ class basic_renderer final {
   {
     return SDL_RenderGetIntegerScale(get());
   }
+
+#if SDL_VERSION_ATLEAST(2, 0, 18)
+
+  /**
+   * \brief Convert real coordinates to logical coordinates.
+   *
+   * \param realX the real window x-coordinate.
+   * \param realY the real window y-coordinate.
+   *
+   * \return the corresponding logical coordinate.
+   *
+   * \see `from_logical()`
+   *
+   * \see `set_scale()`
+   * \see `set_logical_size()`
+   * \see `scale()`
+   * \see `logical_size()`
+   */
+  [[nodiscard]] auto to_logical(const int realX, const int realY) const noexcept -> fpoint
+  {
+    float logicalX{};
+    float logicalY{};
+    SDL_RenderWindowToLogical(get(), realX, realY, &logicalX, &logicalY);
+    return {logicalX, logicalY};
+  }
+
+  /**
+   * \brief Convert real coordinates to logical coordinates.
+   *
+   * \param real the real window coordinates.
+   *
+   * \return the corresponding logical coordinate.
+   *
+   * \see `from_logical()`
+   *
+   * \see `set_scale()`
+   * \see `set_logical_size()`
+   * \see `scale()`
+   * \see `logical_size()`
+   */
+  [[nodiscard]] auto to_logical(const ipoint& real) const noexcept -> fpoint
+  {
+    return to_logical(real.x(), real.y());
+  }
+
+  /**
+   * \brief Convert logical coordinates to real window coordinates.
+   *
+   * \param logicalX the logical x-coordinate.
+   * \param logicalY the logical y-coordinate.
+   *
+   * \return the corresponding real window coordinate.
+   *
+   * \see `to_logical()`
+   *
+   * \see `set_scale()`
+   * \see `set_logical_size()`
+   * \see `scale()`
+   * \see `logical_size()`
+   */
+  [[nodiscard]] auto from_logical(const float logicalX, const float logicalY) const noexcept
+      -> ipoint
+  {
+    int realX{};
+    int realY{};
+    SDL_RenderLogicalToWindow(get(), logicalX, logicalY, &realX, &realY);
+    return {realX, realY};
+  }
+
+  /**
+   * \brief Convert logical coordinates to real window coordinates.
+   *
+   * \param logical the logical coordinate.
+   *
+   * \return the corresponding real window coordinate.
+   *
+   * \see `to_logical()`
+   *
+   * \see `set_scale()`
+   * \see `set_logical_size()`
+   * \see `scale()`
+   * \see `logical_size()`
+   */
+  [[nodiscard]] auto from_logical(const fpoint& logical) const noexcept -> ipoint
+  {
+    return from_logical(logical.x(), logical.y());
+  }
+
+#endif  // #if SDL_VERSION_ATLEAST(2, 0, 18)
 
   /// \} End of resolution-independent rendering
 

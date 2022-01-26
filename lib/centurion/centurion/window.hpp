@@ -4,7 +4,9 @@
 #include <SDL.h>
 
 #include <cassert>   // assert
-#include <optional>  // optional
+#include <cstddef>   // size_t
+#include <memory>    // unique_ptr
+#include <optional>  // optional, nullopt
 #include <ostream>   // ostream
 #include <string>    // string, to_string
 #include <utility>   // pair, make_pair, move
@@ -620,34 +622,55 @@ class basic_window final {
     return SDL_GetWindowGrab(mWindow);
   }
 
-  /// \} End of mouse functions
-
-  /// \name Getters
-  /// \{
+#if SDL_VERSION_ATLEAST(2, 0, 18)
 
   /**
-   * \brief Returns the identifier associated with the window.
+   * \brief Removes any previous set mouse confinement region.
    *
-   * \return the window identifier.
-   */
-  [[nodiscard]] auto id() const noexcept -> uint32 { return SDL_GetWindowID(mWindow); }
-
-  /**
-   * \brief Returns the display index associated with the window.
+   * \return `success` if nothing goes wrong; `failure` otherwise.
    *
-   * \return the display index associated with the window; an empty optional is returned if the
-   * display index cannot be obtained.
+   * \see `set_mouse_rect()`
    */
-  [[nodiscard]] auto display_index() const noexcept -> std::optional<int>
+  auto reset_mouse_rect() noexcept -> result
   {
-    const auto index = SDL_GetWindowDisplayIndex(mWindow);
-    if (index != -1) {
-      return index;
+    return SDL_SetWindowMouseRect(mWindow, nullptr) == 0;
+  }
+
+  /**
+   * \brief Confines the mouse to a specific region of the window.
+   *
+   * \param rect the area of the window to restrict the mouse to.
+   *
+   * \return `success` if the mouse rect was updated; `failure` otherwise.
+   *
+   * \see `reset_mouse_rect()`
+   */
+  auto set_mouse_rect(const irect& rect) noexcept -> result
+  {
+    return SDL_SetWindowMouseRect(mWindow, rect.data()) == 0;
+  }
+
+  /**
+   * \brief Returns the region of the window that the mouse is confined to, if there is one.
+   *
+   * \return the mouse confinement region; an empty optional is returned if there is none.
+   */
+  [[nodiscard]] auto mouse_rect() const noexcept -> std::optional<irect>
+  {
+    if (const auto* rect = SDL_GetWindowMouseRect(mWindow)) {
+      return irect{*rect};
     }
     else {
       return std::nullopt;
     }
   }
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 18)
+
+  /// \} End of mouse functions
+
+  /// \name Getters
+  /// \{
 
   /**
    * \brief Returns the title of the window.
@@ -678,6 +701,35 @@ class basic_window final {
     return opacity;
   }
 
+  /// \} End of getters
+
+  /// \name Queries
+  /// \{
+
+  /**
+   * \brief Returns the identifier associated with the window.
+   *
+   * \return the window identifier.
+   */
+  [[nodiscard]] auto id() const noexcept -> uint32 { return SDL_GetWindowID(mWindow); }
+
+  /**
+   * \brief Returns the display index associated with the window.
+   *
+   * \return the display index associated with the window; an empty optional is returned if the
+   * display index cannot be obtained.
+   */
+  [[nodiscard]] auto display_index() const noexcept -> std::optional<int>
+  {
+    const auto index = SDL_GetWindowDisplayIndex(mWindow);
+    if (index != -1) {
+      return index;
+    }
+    else {
+      return std::nullopt;
+    }
+  }
+
   /**
    * \brief Returns the pixel format used by the window.
    *
@@ -698,7 +750,37 @@ class basic_window final {
     return SDL_IsScreenKeyboardShown(get()) == SDL_TRUE;
   }
 
-  /// \} End of getters
+#if SDL_VERSION_ATLEAST(2, 0, 18)
+
+  /**
+   * \brief Represents raw ICC profile data.
+   */
+  struct icc_profile_data final {
+    using data_type = std::unique_ptr<void, detail::sdl_deleter>;
+
+    data_type data;      ///< Pointer to the raw ICC profile data.
+    std::size_t size{};  ///< The size of the raw data, in bytes.
+  };
+
+  /**
+   * \brief Returns the ICC profile data for the screen containing the window.
+   *
+   * \return the ICC profile data; an empty optional is returned upon failure.
+   */
+  [[nodiscard]] auto icc_profile() const noexcept -> std::optional<icc_profile_data>
+  {
+    std::size_t size{};
+    if (auto* icc = SDL_GetWindowICCProfile(get(), &size)) {
+      return icc_profile_data{icc, size};
+    }
+    else {
+      return std::nullopt;
+    }
+  }
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 18)
+
+  /// \} End of queries
 
   /// \name Flag queries
   /// \{

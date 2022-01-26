@@ -28,6 +28,7 @@
 #include "surface.hpp"
 #include "texture.hpp"
 #include "unicode.hpp"
+#include "version.hpp"
 
 #if CENTURION_HAS_FEATURE_FORMAT
 
@@ -52,9 +53,56 @@ namespace cen {
 /// \addtogroup font
 /// \{
 
+#if SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
+/**
+ * \brief Returns the version of FreeType2 that SDL_ttf uses.
+ *
+ * \return the FreeType2 version.
+ *
+ * \atleastsdl 2.0.18
+ */
+[[nodiscard]] inline auto ttf_free_type_version() noexcept -> version
+{
+  version ver;
+  TTF_GetFreeTypeVersion(&ver.major, &ver.minor, &ver.patch);
+  return ver;
+}
+
+/**
+ * \brief Returns the versio of HarfBuzz that SDL_ttf uses.
+ *
+ * \return the HarfBuzz version.
+ *
+ * \atleastsdl 2.0.18
+ */
+[[nodiscard]] inline auto ttf_harf_buzz_version() noexcept -> version
+{
+  version ver;
+  TTF_GetHarfBuzzVersion(&ver.major, &ver.minor, &ver.patch);
+  return ver;
+}
+
+inline auto ttf_set_script(const int script) noexcept -> result
+{
+  return TTF_SetScript(script) == 0;
+}
+
+inline auto ttf_set_direction(const int direction) noexcept -> result
+{
+  return TTF_SetDirection(direction) == 0;
+}
+
+#endif  // SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
 enum class font_hint {
   normal = TTF_HINTING_NORMAL,
   light = TTF_HINTING_LIGHT,
+
+#if SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+  light_subpixel = TTF_HINTING_LIGHT_SUBPIXEL,
+#endif  // SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
   mono = TTF_HINTING_MONO,
   none = TTF_HINTING_NONE
 };
@@ -70,6 +118,13 @@ enum class font_hint {
 
     case font_hint::light:
       return "light";
+
+#if SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
+    case font_hint::light_subpixel:
+      return "light_subpixel";
+
+#endif  // SDL_TTF_VERSION_ATLEAST(2, 0, 18)
 
     case font_hint::mono:
       return "mono";
@@ -97,6 +152,15 @@ struct glyph_metrics final {
   int advance{};  ///< The advance offset.
 };
 
+#if SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
+struct font_dpi final {
+  uint horizontal{};
+  uint vertical{};
+};
+
+#endif  // SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
 /**
  * \brief Represents a TrueType font.
  *
@@ -116,10 +180,10 @@ class font final {
   /// \{
 
   /**
-   * \brief Creates a font based on the TTF-font at the specified path.
+   * \brief Opens a font.
    *
    * \param file the file path of the font file.
-   * \param size the size of the font.
+   * \param size the point size of the font.
    *
    * \throws exception if the font size is not greater than zero.
    * \throws ttf_error if the font cannot be opened.
@@ -128,11 +192,11 @@ class font final {
   {
     assert(file);
 
-    if (size <= 0) {
+    if (mSize <= 0) {
       throw exception{"Bad font size!"};
     }
 
-    mFont.reset(TTF_OpenFont(file, size));
+    mFont.reset(TTF_OpenFont(file, mSize));
     if (!mFont) {
       throw ttf_error{};
     }
@@ -141,7 +205,85 @@ class font final {
   /// \copydoc font(const char*, int)
   font(const std::string& file, const int size) : font{file.c_str(), size} {}
 
+#if SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
+  /**
+   * \brief Opens a font with the specified DPI settings.
+   *
+   * \param file the path to the source font file.
+   * \param size the point size of the font.
+   * \param dpi the DPI information.
+   *
+   * \throws exception if the font size is invalid.
+   * \throws ttf_error if the font cannot be opened.
+   */
+  font(const char* file, const int size, const font_dpi& dpi) : mSize{size}
+  {
+    assert(file);
+
+    if (mSize <= 0) {
+      throw exception{"Bad font size!"};
+    }
+
+    mFont.reset(TTF_OpenFontDPI(file, mSize, dpi.horizontal, dpi.vertical));
+    if (!mFont) {
+      throw ttf_error{};
+    }
+  }
+
+  /// \copydoc font(const char*, int, const font_dpi&)
+  font(const std::string& file, const int size, const font_dpi& dpi)
+      : font{file.c_str(), size, dpi}
+  {}
+
+#endif  // SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
   /// \} End of construction
+
+#if SDL_TTF_VERSION_ATLEAST(2, 0, 18)
+
+  /**
+   * \brief Sets the size of the font dynamically.
+   *
+   * \param size the new point size.
+   *
+   * \return `success` if the size was successfully changed; `failure` otherwise.
+   *
+   * \atleastsdl 2.0.18
+   */
+  auto set_size(const int size) noexcept -> result
+  {
+    if (size <= 0) {
+      return failure;
+    }
+
+    mSize = size;
+
+    return TTF_SetFontSize(mFont.get(), mSize) >= 0;
+  }
+
+  /**
+   * \brief Sets the size of the font dynamically.
+   *
+   * \param size the new point size.
+   * \param dpi the DPI size information.
+   *
+   * \return `success` if the size was successfully changed; `failure` otherwise.
+   *
+   * \atleastsdl 2.0.18
+   */
+  auto set_size(const int size, const font_dpi& dpi) noexcept -> result
+  {
+    if (size <= 0) {
+      return failure;
+    }
+
+    mSize = size;
+
+    return TTF_SetFontSizeDPI(mFont.get(), size, dpi.horizontal, dpi.vertical) == 0;
+  }
+
+#endif  // SDL_TTF_VERSION_ATLEAST(2, 0, 18)
 
   /// \name Style functions
   /// \{
@@ -458,6 +600,41 @@ class font final {
   }
 
   /// \} End of glyph information functions
+
+  /// \name SDF functions
+  /// \{
+
+#if SDL_VERSION_ATLEAST(2, 0, 18)
+
+  /**
+   * \brief Sets whether SDF (Signed Distance Field) rendering is enabled.
+   *
+   * \param enable `true` to enable SDF rendering; `false` otherwise.
+   *
+   * \return `success` if nothing goes wrong; `failure` otherwise.
+   *
+   * \atleastsdl 2.0.18
+   */
+  auto set_sdf_enabled(const bool enable) noexcept -> result
+  {
+    return TTF_SetFontSDF(mFont.get(), enable ? SDL_TRUE : SDL_FALSE) == 0;
+  }
+
+  /**
+   * \brief Indicates whether SDF rendering is enabled.
+   *
+   * \return `true` if SDF rendering is enabled; `false` otherwise.
+   *
+   * \atleastsdl 2.0.18
+   */
+  [[nodiscard]] auto sdf_enabled() const noexcept -> bool
+  {
+    return TTF_GetFontSDF(mFont.get()) == SDL_TRUE;
+  }
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 18)
+
+  /// \} End of SDF functions
 
   /// \name Glyph rendering functions
   /// \{
