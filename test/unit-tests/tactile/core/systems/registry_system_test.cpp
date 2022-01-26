@@ -19,11 +19,11 @@ TEST(RegistrySystem, MakeRegistry)
   ASSERT_TRUE(registry.try_ctx<MapInfo>());
   ASSERT_TRUE(registry.try_ctx<ActiveLayer>());
   ASSERT_TRUE(registry.try_ctx<ActiveTileset>());
-  ASSERT_TRUE(registry.try_ctx<active_attribute_context>());
+  ASSERT_TRUE(registry.try_ctx<comp::active_attribute_context>());
   ASSERT_TRUE(registry.try_ctx<ActiveTool>());
   ASSERT_TRUE(registry.try_ctx<ActiveObject>());
   ASSERT_TRUE(registry.try_ctx<Viewport>());
-  ASSERT_TRUE(registry.try_ctx<attribute_context>());
+  ASSERT_TRUE(registry.try_ctx<comp::attribute_context>());
   ASSERT_TRUE(registry.try_ctx<TilesetContext>());
   ASSERT_TRUE(registry.try_ctx<MousePos>());
 }

@@ -235,7 +235,7 @@ void Application::OnSave()
       SaveDocument(*document);
       document->commands.MarkAsClean();
 
-      auto& context = document->registry.ctx<attribute_context>();
+      auto& context = document->registry.ctx<comp::attribute_context>();
       context.name = document->path.filename().string();
     }
     else {
@@ -277,7 +277,7 @@ void Application::OnShowOpenMapDialog()
 void Application::OnShowMapProperties()
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
-    auto& current = registry->ctx<active_attribute_context>();
+    auto& current = registry->ctx<comp::active_attribute_context>();
     current.entity = entt::null;
   }
 }
@@ -623,7 +623,7 @@ void Application::OnChangePropertyType(const ChangePropertyTypeEvent& event)
 void Application::OnInspectContext(const InspectContextEvent& event)
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  auto& current = registry.ctx<active_attribute_context>();
+  auto& current = registry.ctx<comp::active_attribute_context>();
   current.entity = event.entity;
 }
 

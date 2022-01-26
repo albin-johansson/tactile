@@ -6,7 +6,7 @@
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-namespace tactile {
+namespace tactile::comp {
 
 struct attribute_context final
 {
@@ -21,4 +21,4 @@ struct active_attribute_context final
   entt::entity entity{entt::null};
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp

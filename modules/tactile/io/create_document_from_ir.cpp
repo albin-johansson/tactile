@@ -38,8 +38,8 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
 {
   const auto count = IO::GetPropertyCount(source);
 
-  auto& context = (entity != entt::null) ? registry.get<attribute_context>(entity)
-                                         : registry.ctx<attribute_context>();
+  auto& context = (entity != entt::null) ? registry.get<comp::attribute_context>(entity)
+                                         : registry.ctx<comp::attribute_context>();
   context.properties.reserve(count);
 
   for (usize index = 0; index < count; ++index) {
@@ -86,20 +86,20 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
 template <typename T>
 void AddComponents(entt::registry& registry, const entt::entity entity, const T& source)
 {
-  auto& context = (entity != entt::null) ? registry.get<attribute_context>(entity)
-                                         : registry.ctx<attribute_context>();
+  auto& context = (entity != entt::null) ? registry.get<comp::attribute_context>(entity)
+                                         : registry.ctx<comp::attribute_context>();
   context.components.reserve(IO::GetComponentCount(source));
 
   IO::EachComponent(source, [&](const IO::Component& irComponent) {
     const auto defEntity = sys::find_component_def(registry, IO::GetName(irComponent));
     TACTILE_ASSERT(defEntity != entt::null);
 
-    const auto def = registry.get<ComponentDef>(defEntity);
+    const auto def = registry.get<comp::component_def>(defEntity);
 
     const auto componentEntity = registry.create();
     context.components.push_back(componentEntity);
 
-    auto& component = registry.emplace<Component>(componentEntity);
+    auto& component = registry.emplace<comp::component>(componentEntity);
     component.type = def.id;
 
     IO::EachAttribute(irComponent, [&](const CStr attr) {
@@ -239,7 +239,7 @@ void MakeTileset(entt::registry& registry,
                                         IO::GetTileWidth(irTileset),
                                         IO::GetTileHeight(irTileset));
 
-  registry.get<attribute_context>(entity).name = IO::GetName(irTileset);
+  registry.get<comp::attribute_context>(entity).name = IO::GetName(irTileset);
   AddProperties(registry, entity, irTileset);
   AddComponents(registry, entity, irTileset);
 
@@ -341,7 +341,7 @@ void CreateTilesets(Document& document, TextureManager& textures, const IO::Map&
 
 void InitRootPropertyContext(Document& document)
 {
-  auto& context = document.registry.ctx<attribute_context>();
+  auto& context = document.registry.ctx<comp::attribute_context>();
   context.name = document.path.filename().string();
 }
 

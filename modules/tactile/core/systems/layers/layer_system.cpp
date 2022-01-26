@@ -227,7 +227,7 @@ void RemoveLayer(entt::registry& registry, const entt::entity entity)
   };
 
   maybe_reset(registry.ctx<ActiveLayer>().entity, entity);
-  maybe_reset(registry.ctx<active_attribute_context>().entity, entity);
+  maybe_reset(registry.ctx<comp::active_attribute_context>().entity, entity);
 
   layer_tree::DestroyNode(registry, entity);
 }
@@ -326,7 +326,7 @@ auto DuplicateLayer(entt::registry& registry,
   }
 
   {
-    auto& context = DuplicateComp<attribute_context>(registry, source, copy);
+    auto& context = DuplicateComp<comp::attribute_context>(registry, source, copy);
     if (!recursive) {
       context.name += " (Copy)";
     }

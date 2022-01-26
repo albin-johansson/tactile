@@ -62,7 +62,7 @@ void TilesetTabWidget::Update(const entt::registry& registry,
       const scoped::ID scope{tileset.id};
 
       const auto isActive = activeTileset.entity == entity;
-      const auto& context = registry.get<attribute_context>(entity);
+      const auto& context = registry.get<comp::attribute_context>(entity);
 
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(),

@@ -213,7 +213,7 @@ void remove_tileset(entt::registry& registry, const TilesetID id)
     activeTileset.entity = entt::null;
   }
 
-  auto& activeContext = registry.ctx<active_attribute_context>();
+  auto& activeContext = registry.ctx<comp::active_attribute_context>();
   if (entity == activeContext.entity) {
     activeContext.entity = entt::null;
   }

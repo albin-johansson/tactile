@@ -73,7 +73,7 @@ void LayerItem(const entt::registry& registry,
     flags |= ImGuiTreeNodeFlags_Selected;
   }
 
-  const auto& context = registry.get<attribute_context>(layerEntity);
+  const auto& context = registry.get<comp::attribute_context>(layerEntity);
   FormattedString name{"{} {}", icons.GetIcon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {

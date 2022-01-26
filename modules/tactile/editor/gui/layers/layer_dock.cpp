@@ -116,7 +116,7 @@ void LayerDock::Update(const Model& model,
     const auto entity = sys::FindLayer(registry, target);
     TACTILE_ASSERT(entity != entt::null);
 
-    const auto& context = registry.get<attribute_context>(entity);
+    const auto& context = registry.get<comp::attribute_context>(entity);
 
     mRenameLayerDialog.Show(target, context.name);
     mRenameTarget.reset();

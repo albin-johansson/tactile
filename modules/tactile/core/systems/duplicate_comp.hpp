@@ -21,14 +21,14 @@ auto DuplicateComp(entt::registry& registry,
 }
 
 template <>
-inline auto DuplicateComp<attribute_context>(entt::registry& registry,
-                                             const entt::entity source,
-                                             const entt::entity destination)
-    -> attribute_context&
+inline auto DuplicateComp<comp::attribute_context>(entt::registry& registry,
+                                                   const entt::entity source,
+                                                   const entt::entity destination)
+    -> comp::attribute_context&
 {
   auto& context = AddPropertyContext(registry, destination);
 
-  const auto& srcContext = registry.get<attribute_context>(source);
+  const auto& srcContext = registry.get<comp::attribute_context>(source);
   context.name = srcContext.name;
 
   for (const auto srcPropertyEntity : srcContext.properties) {
@@ -54,7 +54,7 @@ inline auto DuplicateComp<ObjectLayer>(entt::registry& registry,
     const auto objectEntity = registry.create();
     layer.objects.push_back(objectEntity);
 
-    DuplicateComp<attribute_context>(registry, sourceObject, objectEntity);
+    DuplicateComp<comp::attribute_context>(registry, sourceObject, objectEntity);
 
     auto& object = DuplicateComp<Object>(registry, sourceObject, objectEntity);
     object.id = map.next_object_id;

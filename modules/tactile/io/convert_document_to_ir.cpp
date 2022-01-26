@@ -84,7 +84,7 @@ void ConvertComponents(const IO::Map& ir,
   IO::ReserveComponents(source, components.size());
 
   for (const auto componentEntity : components) {
-    const auto& component = registry.get<Component>(componentEntity);
+    const auto& component = registry.get<comp::component>(componentEntity);
 
     const auto& type = sys::get_component_def_name(registry, component.type);
     const auto& irDef = IO::GetComponentDef(ir, type.c_str());
@@ -149,7 +149,7 @@ void ConvertObject(IO::Map& irMap,
   IO::SetTag(ir, object.tag.c_str());
   IO::SetVisible(ir, object.visible);
 
-  const auto& context = registry.get<attribute_context>(entity);
+  const auto& context = registry.get<comp::attribute_context>(entity);
   IO::SetName(ir, context.name.c_str());
   ConvertProperties(ir, registry, context.properties);
   ConvertComponents(irMap, ir, registry, context.components);
@@ -162,7 +162,7 @@ void ConvertFancyTiles(IO::Map& irMap,
 
 {
   for (auto&& [entity, tile, ctx] :
-       registry.view<FancyTile, attribute_context>().each()) {
+       registry.view<FancyTile, comp::attribute_context>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       auto& tileData = IO::AddTile(ir);
       IO::SetId(tileData, sys::convert_to_local(registry, tile.id).value());
@@ -208,7 +208,7 @@ void ConvertTileset(IO::Map& irMap,
   IO::SetImageWidth(ir, texture.width);
   IO::SetImageHeight(ir, texture.height);
 
-  const auto& ctx = registry.get<attribute_context>(entity);
+  const auto& ctx = registry.get<comp::attribute_context>(entity);
   IO::SetName(ir, ctx.name.c_str());
 
   ConvertProperties(ir, registry, ctx.properties);
@@ -225,7 +225,7 @@ void ConvertLayer(IO::Map& irMap,
                   const usize nCols)
 {
   const auto& layer = registry.get<Layer>(entity);
-  const auto& context = registry.get<attribute_context>(entity);
+  const auto& context = registry.get<comp::attribute_context>(entity);
 
   IO::SetIndex(ir, node.index);
   IO::SetId(ir, layer.id);
@@ -326,7 +326,7 @@ void ConvertMapAttributes(IO::Map& ir, const Document& document)
 
 void ConvertComponentDefinitions(IO::Map& ir, const entt::registry& registry)
 {
-  for (auto&& [entity, def] : registry.view<ComponentDef>().each()) {
+  for (auto&& [entity, def] : registry.view<comp::component_def>().each()) {
     auto& definition = IO::DefineComponent(ir, def.name.c_str());
 
     for (const auto& [name, value] : def.attributes) {
@@ -386,7 +386,7 @@ auto ConvertDocumentToIR(const Document& document) -> IO::MapPtr
   ConvertTilesets(*irMap, registry);
   ConvertLayers(*irMap, registry);
 
-  const auto& context = registry.ctx<attribute_context>();
+  const auto& context = registry.ctx<comp::attribute_context>();
   ConvertProperties(*irMap, registry, context.properties);
   ConvertComponents(*irMap, *irMap, registry, context.components);
 

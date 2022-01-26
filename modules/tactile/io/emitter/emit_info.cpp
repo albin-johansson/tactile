@@ -31,7 +31,7 @@ void each_object(const entt::registry& registry,
 {
   for (const auto objectEntity : objects) {
     const auto& object = registry.get<Object>(objectEntity);
-    const auto& context = registry.get<attribute_context>(objectEntity);
+    const auto& context = registry.get<comp::attribute_context>(objectEntity);
 
     ObjectData data;
     data.id = object.id;
@@ -60,14 +60,14 @@ EmitInfo::EmitInfo(std::filesystem::path destination, const entt::registry& regi
 
 auto EmitInfo::component_def_count() const -> usize
 {
-  return mRegistry->storage<ComponentDef>().size();
+  return mRegistry->storage<comp::component_def>().size();
 }
 
 auto EmitInfo::component_def_name(const usize index) const -> const std::string&
 {
-  const auto entity = mRegistry->storage<ComponentDef>().at(index);
+  const auto entity = mRegistry->storage<comp::component_def>().at(index);
   if (entity != entt::null) {
-    const auto& def = mRegistry->get<ComponentDef>(entity);
+    const auto& def = mRegistry->get<comp::component_def>(entity);
     return def.name;
   }
   else {
@@ -77,9 +77,9 @@ auto EmitInfo::component_def_name(const usize index) const -> const std::string&
 
 auto EmitInfo::component_def_attr_count(const usize index) const -> usize
 {
-  const auto entity = mRegistry->storage<ComponentDef>().at(index);
+  const auto entity = mRegistry->storage<comp::component_def>().at(index);
   if (entity != entt::null) {
-    const auto& def = mRegistry->get<ComponentDef>(entity);
+    const auto& def = mRegistry->get<comp::component_def>(entity);
     return def.attributes.size();
   }
   else {
@@ -90,9 +90,9 @@ auto EmitInfo::component_def_attr_count(const usize index) const -> usize
 void EmitInfo::each_component_def_attrs(const component_def_attr_visitor& func,
                                         const usize definitionIndex) const
 {
-  const auto entity = mRegistry->storage<ComponentDef>().at(definitionIndex);
+  const auto entity = mRegistry->storage<comp::component_def>().at(definitionIndex);
   if (entity != entt::null) {
-    const auto& def = mRegistry->get<ComponentDef>(entity);
+    const auto& def = mRegistry->get<comp::component_def>(entity);
     for (const auto& [attrName, attrValue] : def.attributes) {
       func(attrName, attrValue);
     }
@@ -110,7 +110,7 @@ auto EmitInfo::tileset_count() const -> usize
 void EmitInfo::each_tileset(const tileset_visitor& func) const
 {
   for (auto&& [entity, tileset, context, texture] :
-       mRegistry->view<Tileset, attribute_context, Texture>().each()) {
+       mRegistry->view<Tileset, comp::attribute_context, Texture>().each()) {
     TilesetData data;
 
     data.id = tileset.id;
@@ -134,7 +134,7 @@ void EmitInfo::each_tileset(const tileset_visitor& func) const
 auto EmitInfo::tileset_context(const TilesetID id) const -> ContextID
 {
   const auto entity = to_tileset_entity(id);
-  return mRegistry->get<attribute_context>(entity).id;
+  return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
 auto EmitInfo::tileset_fancy_tile_count(TilesetID id) const -> usize
@@ -151,7 +151,7 @@ void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
   const auto& tileset = mRegistry->get<Tileset>(tilesetEntity);
 
   for (auto&& [entity, tile, context] :
-       mRegistry->view<FancyTile, attribute_context>().each()) {
+       mRegistry->view<FancyTile, comp::attribute_context>().each()) {
     const bool inTileset = tile.id >= tileset.first_id && tile.id <= tileset.last_id;
     if (inTileset) {
       const bool worthSaving = mRegistry->all_of<comp::animation>(entity) ||
@@ -220,7 +220,7 @@ void EmitInfo::each_component(const ContextID id, const component_visitor& func)
 {
   const auto& context = sys::GetContext(*mRegistry, id);
   for (const auto componentEntity : context.components) {
-    const auto& component = mRegistry->get<Component>(componentEntity);
+    const auto& component = mRegistry->get<comp::component>(componentEntity);
     const auto type = sys::get_component_def_name(*mRegistry, component.type);
     func(type, component.values);
   }
@@ -228,7 +228,7 @@ void EmitInfo::each_component(const ContextID id, const component_visitor& func)
 
 auto EmitInfo::root_context() const -> ContextID
 {
-  return mRegistry->ctx<attribute_context>().id;
+  return mRegistry->ctx<comp::attribute_context>().id;
 }
 
 auto EmitInfo::layer_count(const Maybe<LayerID> id) const -> usize
@@ -270,7 +270,7 @@ auto EmitInfo::layer_data(const LayerID id) const -> LayerData
 {
   const auto entity = to_layer_entity(id);
 
-  const auto& context = mRegistry->get<attribute_context>(entity);
+  const auto& context = mRegistry->get<comp::attribute_context>(entity);
   const auto& layer = mRegistry->get<Layer>(entity);
 
   LayerData data;
@@ -324,13 +324,13 @@ void EmitInfo::each_layer_object(const LayerID id, const object_visitor& func) c
 auto EmitInfo::layer_context(const LayerID id) const -> ContextID
 {
   const auto entity = to_layer_entity(id);
-  return mRegistry->get<attribute_context>(entity).id;
+  return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
 auto EmitInfo::object_context(const ObjectID id) const -> ContextID
 {
   const auto entity = to_object_entity(id);
-  return mRegistry->get<attribute_context>(entity).id;
+  return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
 auto EmitInfo::property_count(const ContextID id) const -> usize

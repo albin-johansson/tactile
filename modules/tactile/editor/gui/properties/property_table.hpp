@@ -21,7 +21,7 @@ class PropertyTable final {
 
   void ShowCustomProperties(const entt::registry& registry,
                             entt::dispatcher& dispatcher,
-                            const attribute_context& context,
+                            const comp::attribute_context& context,
                             bool& isItemContextOpen);
 };
 

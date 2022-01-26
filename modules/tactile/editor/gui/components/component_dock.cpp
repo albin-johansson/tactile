@@ -59,7 +59,7 @@ void ShowComponentPopupContent(entt::dispatcher& dispatcher,
 void ShowComponent(entt::dispatcher& dispatcher,
                    const ContextID contextId,
                    const CStr name,
-                   const Component& component)
+                   const comp::component& component)
 {
   const scoped::ID componentScope{name};
 
@@ -106,7 +106,7 @@ void ShowAddComponentButtonPopupContent(const entt::registry& registry,
                                         entt::dispatcher& dispatcher,
                                         const ContextID contextId)
 {
-  const auto view = registry.view<ComponentDef>();
+  const auto view = registry.view<comp::component_def>();
   if (view.empty()) {
     scoped::Disable disable;
     ImGui::TextUnformatted("No available components");
@@ -146,7 +146,7 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
 
     if (scoped::Child pane{"##ComponentsChild"}; pane.IsOpen()) {
       for (const auto componentEntity : context.components) {
-        const auto& component = registry.get<Component>(componentEntity);
+        const auto& component = registry.get<comp::component>(componentEntity);
         const auto& name = sys::get_component_def_name(registry, component.type);
 
         ImGui::Separator();

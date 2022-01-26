@@ -28,7 +28,7 @@ void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher)
         }
       }
 
-      const auto& context = document->registry.ctx<attribute_context>();
+      const auto& context = document->registry.ctx<comp::attribute_context>();
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.IsOpen()) {
         if (isActive) {

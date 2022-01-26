@@ -24,7 +24,7 @@ void SetTilesetNameCmd::Undo()
   const auto entity = sys::find_tileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<attribute_context>(entity);
+  auto& context = registry.get<comp::attribute_context>(entity);
   context.name = mOldName.value();
 }
 
@@ -35,7 +35,7 @@ void SetTilesetNameCmd::Redo()
   const auto entity = sys::find_tileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<attribute_context>(entity);
+  auto& context = registry.get<comp::attribute_context>(entity);
   mOldName = context.name;
   context.name = mNewName;
 }
