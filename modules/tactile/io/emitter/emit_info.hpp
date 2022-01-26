@@ -73,7 +73,7 @@ class EmitInfo final {
                                                         const attribute_value&)>;
 
   using component_visitor = std::function<void(const std::string&,  //
-                                               const ComponentAttributeMap&)>;
+                                               const component_attribute_map&)>;
 
   using tileset_visitor = std::function<void(const TilesetData&)>;
   using fancy_tile_visitor = std::function<void(const FancyTileData&)>;

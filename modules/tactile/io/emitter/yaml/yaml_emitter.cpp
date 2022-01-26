@@ -165,7 +165,7 @@ void emit_components(YAML::Emitter& emitter,
 
     info.each_component(
         contextId,
-        [&](const std::string& type, const ComponentAttributeMap& values) {
+        [&](const std::string& type, const component_attribute_map& values) {
           emitter << YAML::BeginMap;
 
           emitter << YAML::Key << "type" << YAML::Value << type;

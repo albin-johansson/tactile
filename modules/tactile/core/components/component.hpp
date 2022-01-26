@@ -12,7 +12,7 @@
 
 namespace tactile {
 
-using ComponentAttributeMap = std::map<std::string, attribute_value, std::less<>>;
+using component_attribute_map = std::map<std::string, attribute_value, std::less<>>;
 
 namespace comp {
 
@@ -30,7 +30,7 @@ struct component_def final
 {
   ComponentID id{};  ///< Unique ID for the component definition.
   std::string name;  ///< The human-readable component name, also unique.
-  ComponentAttributeMap attributes;
+  component_attribute_map attributes;
 };
 
 /**
@@ -38,8 +38,8 @@ struct component_def final
  */
 struct component final
 {
-  ComponentID type;              ///< The ID of the component definition type.
-  ComponentAttributeMap values;  ///< Current values.
+  ComponentID type;                ///< The ID of the component definition type.
+  component_attribute_map values;  ///< Current values.
 };
 
 }  // namespace comp
