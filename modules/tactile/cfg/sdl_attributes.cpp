@@ -1,6 +1,7 @@
 #include "sdl_attributes.hpp"
 
 #include <SDL.h>
+#include <centurion.hpp>
 
 #include "build.hpp"
 
@@ -18,16 +19,15 @@ void init_sdl_attributes()
   SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
   if constexpr (IsPlatformOSX()) {
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+    cen::gl::set(cen::gl_attribute::context_flags,
+                 SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
   }
 
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+  cen::gl::set(cen::gl_attribute::context_profile_mask, SDL_GL_CONTEXT_PROFILE_CORE);
+  cen::gl::set(cen::gl_attribute::context_major_version, 3);
+  cen::gl::set(cen::gl_attribute::context_minor_version, 2);
 
-  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+  cen::gl::set(cen::gl_attribute::double_buffer, 1);
 }
 
 }  // namespace tactile

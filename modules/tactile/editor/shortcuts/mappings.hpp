@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <centurion.hpp>
 #include <tactile_def.hpp>
 
 #include "build.hpp"
@@ -12,17 +12,17 @@ namespace tactile {
 #define TACTILE_PRIMARY_MOD "Cmd"
 #define TACTILE_SECONDARY_MOD "Option"
 
-inline constexpr uint16 gPrimaryModifier = KMOD_LGUI;
+inline constexpr cen::key_mod gPrimaryModifier = cen::key_mod::lgui;
 
 #else
 
 #define TACTILE_PRIMARY_MOD "Ctrl"
 #define TACTILE_SECONDARY_MOD "Alt"
 
-inline constexpr uint16 gPrimaryModifier = KMOD_LCTRL;
+inline constexpr cen::key_mod gPrimaryModifier = cen::key_mod::lctrl;
 
 #endif  // TACTILE_PLATFORM_OSX
 
-inline constexpr uint16 gSecondaryModifier = KMOD_LALT;
+inline constexpr cen::key_mod gSecondaryModifier = cen::key_mod::lalt;
 
 }  // namespace tactile

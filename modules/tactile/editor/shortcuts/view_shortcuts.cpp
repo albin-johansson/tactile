@@ -10,7 +10,7 @@
 namespace tactile {
 
 CenterViewportShortcut::CenterViewportShortcut()
-    : AShortcut{cen::scancodes::space, KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::space, cen::key_mod::lshift}
 {}
 
 void CenterViewportShortcut::Activate(entt::dispatcher& dispatcher)
@@ -55,7 +55,7 @@ auto IncreaseViewportZoomShortcut::IsEnabled(const Model& model,
 }
 
 PanUpShortcut::PanUpShortcut()
-    : AShortcut{cen::scancodes::up, gPrimaryModifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::up, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
 void PanUpShortcut::Activate(entt::dispatcher& dispatcher)
@@ -69,7 +69,7 @@ auto PanUpShortcut::IsEnabled(const Model& model, const WidgetManager&) const ->
 }
 
 PanDownShortcut::PanDownShortcut()
-    : AShortcut{cen::scancodes::down, gPrimaryModifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::down, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
 void PanDownShortcut::Activate(entt::dispatcher& dispatcher)
@@ -83,7 +83,7 @@ auto PanDownShortcut::IsEnabled(const Model& model, const WidgetManager&) const 
 }
 
 PanLeftShortcut::PanLeftShortcut()
-    : AShortcut{cen::scancodes::left, gPrimaryModifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::left, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
 void PanLeftShortcut::Activate(entt::dispatcher& dispatcher)
@@ -97,7 +97,7 @@ auto PanLeftShortcut::IsEnabled(const Model& model, const WidgetManager&) const 
 }
 
 PanRightShortcut::PanRightShortcut()
-    : AShortcut{cen::scancodes::right, gPrimaryModifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::right, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
 void PanRightShortcut::Activate(entt::dispatcher& dispatcher)

@@ -46,7 +46,7 @@ auto SaveShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> 
 }
 
 SaveAsShortcut::SaveAsShortcut()
-    : AShortcut{cen::scancodes::s, gPrimaryModifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::s, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
 void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)

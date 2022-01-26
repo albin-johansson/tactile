@@ -62,7 +62,7 @@ auto AddColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) cons
 }
 
 RemoveRowShortcut::RemoveRowShortcut()
-    : AShortcut{cen::scancodes::r, gSecondaryModifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::r, gSecondaryModifier | cen::key_mod::lshift}
 {}
 
 void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
@@ -82,7 +82,7 @@ auto RemoveRowShortcut::IsEnabled(const Model& model, const WidgetManager&) cons
 }
 
 RemoveColumnShortcut::RemoveColumnShortcut()
-    : AShortcut{cen::scancodes::c, gSecondaryModifier | KMOD_LSHIFT}
+    : AShortcut{cen::scancodes::c, gSecondaryModifier | cen::key_mod::lshift}
 {}
 
 void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)

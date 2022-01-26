@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SDL.h>
-#include <entt/entt.hpp>  // dispatcher
+#include <centurion.hpp>
+#include <entt/entt.hpp>
 
 namespace tactile {
 
@@ -12,7 +12,7 @@ void LoadDefaultShortcuts();
 
 void UpdateShortcuts(const Model& model,
                      const WidgetManager& widgets,
-                     const SDL_KeyboardEvent& event,
+                     const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher);
 
 }  // namespace tactile

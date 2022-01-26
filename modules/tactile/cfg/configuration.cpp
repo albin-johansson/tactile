@@ -48,9 +48,9 @@ app_configuration::app_configuration()
 
   TACTILE_ASSERT(mWindow.has_value());
   mOpenGL.emplace(*mWindow);
-  mOpenGL->MakeCurrent(*mWindow);
+  mOpenGL->make_current(*mWindow);
 
-  SDL_GL_SetSwapInterval(1); /* Enables VSync */
+  cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 
   if (glewInit() != GLEW_OK) {
     LogError("Failed to initialize GLEW!");
@@ -65,7 +65,7 @@ app_configuration::app_configuration()
   TACTILE_ASSERT(mOpenGL.has_value());
   mImGui.emplace(*mWindow, *mOpenGL);
 
-  SDL_MaximizeWindow(mWindow->get());
+  mWindow->maximize();
 }
 
 auto app_configuration::window() -> cen::window&

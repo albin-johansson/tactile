@@ -4,7 +4,6 @@
 #include <vector>  // vector
 
 #include "edit_shortcuts.hpp"
-#include "editor/gui/menus/edit_menu.hpp"
 #include "file_shortcuts.hpp"
 #include "view_shortcuts.hpp"
 
@@ -61,7 +60,7 @@ void LoadDefaultShortcuts()
 
 void UpdateShortcuts(const Model& model,
                      const WidgetManager& widgets,
-                     const SDL_KeyboardEvent& event,
+                     const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher)
 {
   for (const auto& shortcut : gShortcuts) {

@@ -131,38 +131,42 @@ void Application::SaveCurrentFilesToHistory()
 
 void Application::PollEvents()
 {
-  // TODO reintroduce event_handler::data()
+  cen::event_handler handler;
+  while (handler.poll()) {
+    ImGui_ImplSDL2_ProcessEvent(handler.data());
 
-  SDL_Event event{};
-  while (SDL_PollEvent(&event)) {
-    ImGui_ImplSDL2_ProcessEvent(&event);
-
-    switch (event.type) {
-      case SDL_QUIT:
+    switch (handler.type().value()) {
+      case cen::event_type::quit:
         mQuit = true;
         break;
 
-      case SDL_KEYUP:
+      case cen::event_type::key_up:
         [[fallthrough]];
-      case SDL_KEYDOWN:
-        OnKeyboardEvent(event.key);
+      case cen::event_type::key_down:
+        OnKeyboardEvent(handler.get<cen::keyboard_event>());
         break;
 
-      case SDL_MOUSEWHEEL:
-        OnMouseWheelEvent(event.wheel);
+      case cen::event_type::mouse_wheel:
+        OnMouseWheelEvent(handler.get<cen::mouse_wheel_event>());
+        break;
+
+      default:
         break;
     }
   }
 }
 
-void Application::OnKeyboardEvent(SDL_KeyboardEvent event)
+void Application::OnKeyboardEvent(cen::keyboard_event event)
 {
   /* We don't care about these modifiers, they are just noise */
-  event.keysym.mod &= ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE);
+  event.set_modifier(cen::key_mod::caps, false);
+  event.set_modifier(cen::key_mod::num, false);
+  event.set_modifier(cen::key_mod::mode, false);
+
   UpdateShortcuts(mModel, mWidgets, event, mDispatcher);
 }
 
-void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
+void Application::OnMouseWheelEvent(const cen::mouse_wheel_event& event)
 {
   constexpr float scaling = 4.0f;
 
@@ -170,8 +174,8 @@ void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
   if (registry && !ImGui::GetTopMostPopupModal()) {
     if (IsMouseWithinViewport()) {
       const auto& viewport = registry->ctx<Viewport>();
-      const auto dx = static_cast<float>(event.x) * (viewport.tile_width / scaling);
-      const auto dy = static_cast<float>(event.y) * (viewport.tile_height / scaling);
+      const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
+      const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
       mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
     }
     else if (mWidgets.IsTilesetDockHovered()) {
@@ -183,8 +187,8 @@ void Application::OnMouseWheelEvent(const SDL_MouseWheelEvent& event)
 
         const auto& viewport = registry->get<Viewport>(entity);
 
-        const auto dx = static_cast<float>(event.x) * (viewport.tile_width / scaling);
-        const auto dy = static_cast<float>(event.y) * (viewport.tile_height / scaling);
+        const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
+        const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
         mDispatcher.enqueue<OffsetBoundViewportEvent>(entity, -dx, dy, *width, *height);
       }
     }

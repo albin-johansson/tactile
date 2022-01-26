@@ -68,8 +68,8 @@ class Application final {
   void SaveCurrentFilesToHistory();
 
   void PollEvents();
-  void OnKeyboardEvent(SDL_KeyboardEvent event);
-  void OnMouseWheelEvent(const SDL_MouseWheelEvent& event);
+  void OnKeyboardEvent(cen::keyboard_event event);
+  void OnMouseWheelEvent(const cen::mouse_wheel_event& event);
 
   void UpdateFrame();
 
