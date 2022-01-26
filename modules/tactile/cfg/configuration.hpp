@@ -9,12 +9,6 @@
 namespace tactile {
 
 /**
- * \defgroup cfg Configuration
- *
- * \brief Contains utilities related to the configuration of the application.
- */
-
-/**
  * \brief Handles the configuration of the application window, OpenGL context, etc.
  *
  * \ingroup cfg
