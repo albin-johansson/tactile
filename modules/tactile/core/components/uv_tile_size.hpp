@@ -8,4 +8,4 @@ struct uv_tile_size final
   float height{};
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp

@@ -66,4 +66,4 @@ struct object_layer final
 struct group_layer final
 {};
 
-}  // namespace tactile
+}  // namespace tactile::comp

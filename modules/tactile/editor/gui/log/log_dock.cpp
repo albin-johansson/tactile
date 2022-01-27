@@ -20,7 +20,8 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                              ImGuiWindowFlags_AlwaysAutoResize;
 
 // TODO should verbose/debug options be disabled in release builds?
-[[nodiscard]] auto ShowLogLevelFilterCombo(const log_level currentLevel) -> Maybe<log_level>
+[[nodiscard]] auto ShowLogLevelFilterCombo(const log_level currentLevel)
+    -> Maybe<log_level>
 {
   static constexpr CStr verboseFilter = "Everything";
   static constexpr CStr debugFilter = "Debug / Information / Warnings / Errors";

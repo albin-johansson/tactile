@@ -9,4 +9,4 @@ struct active_tool final
   tool_type tool{tool_type::none};
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp

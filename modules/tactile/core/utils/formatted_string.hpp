@@ -9,10 +9,10 @@
 namespace tactile {
 
 template <usize Capacity = 128>
-class FormattedString final {
+class formatted_string final {
  public:
   template <typename... Args>
-  explicit FormattedString(const std::string_view fmt, const Args&... args)
+  explicit formatted_string(const std::string_view fmt, const Args&... args)
   {
     const auto result =
         fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
@@ -20,16 +20,16 @@ class FormattedString final {
     mSize = result.size;
   }
 
-  [[nodiscard]] auto GetData() const noexcept -> CStr { return mBuffer.data(); }
+  [[nodiscard]] auto data() const noexcept -> CStr { return mBuffer.data(); }
 
-  [[nodiscard]] auto GetView() const noexcept -> std::string_view
+  [[nodiscard]] auto view() const noexcept -> std::string_view
   {
     return std::string_view{mBuffer.data(), mSize};
   }
 
-  [[nodiscard]] auto GetSize() const noexcept -> usize { return mBuffer.size(); }
+  [[nodiscard]] auto size() const noexcept -> usize { return mBuffer.size(); }
 
-  [[nodiscard]] constexpr auto GetCapacity() const noexcept -> usize { return Capacity; }
+  [[nodiscard]] constexpr auto capacity() const noexcept -> usize { return Capacity; }
 
  private:
   std::array<char, Capacity + 1> mBuffer;  // NOLINT

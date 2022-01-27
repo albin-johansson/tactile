@@ -74,10 +74,10 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<comp::attribute_context>(layerEntity);
-  FormattedString name{"{} {}", icons.GetIcon(layer.type), context.name};
+  formatted_string name{"{} {}", icons.GetIcon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {
-    if (ImGui::Selectable(name.GetData(), isActiveLayer)) {
+    if (ImGui::Selectable(name.data(), isActiveLayer)) {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
@@ -89,13 +89,7 @@ void LayerItem(const entt::registry& registry,
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
   }
   else {
-    GroupLayerItem(registry,
-                   icons,
-                   dispatcher,
-                   layerEntity,
-                   layer,
-                   flags,
-                   name.GetData());
+    GroupLayerItem(registry, icons, dispatcher, layerEntity, layer, flags, name.data());
   }
 }
 

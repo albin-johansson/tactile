@@ -66,8 +66,8 @@ inline auto DuplicateComp<comp::object_layer>(entt::registry& registry,
 }
 
 auto duplicate_layer(entt::registry& registry,
-                    entt::entity entity,
-                    entt::entity parent,
-                    bool recursive) -> entt::entity;
+                     entt::entity entity,
+                     entt::entity parent,
+                     bool recursive) -> entt::entity;
 
 }  // namespace tactile::sys

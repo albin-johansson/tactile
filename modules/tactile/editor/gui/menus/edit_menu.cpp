@@ -21,16 +21,16 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     const auto canUndo = model.CanUndo();
     const auto canRedo = model.CanRedo();
 
-    const FormattedString undoText{TAC_ICON_UNDO " Undo {}",
-                                   canUndo ? model.GetUndoText() : ""};
-    const FormattedString redoText{TAC_ICON_REDO " Redo {}",
-                                   canRedo ? model.GetRedoText() : ""};
+    const formatted_string undoText{TAC_ICON_UNDO " Undo {}",
+                                    canUndo ? model.GetUndoText() : ""};
+    const formatted_string redoText{TAC_ICON_REDO " Redo {}",
+                                    canRedo ? model.GetRedoText() : ""};
 
-    if (ImGui::MenuItem(undoText.GetData(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
+    if (ImGui::MenuItem(undoText.data(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (ImGui::MenuItem(redoText.GetData(), TACTILE_PRIMARY_MOD "+Y", false, canRedo)) {
+    if (ImGui::MenuItem(redoText.data(), TACTILE_PRIMARY_MOD "+Y", false, canRedo)) {
       dispatcher.enqueue<RedoEvent>();
     }
 
