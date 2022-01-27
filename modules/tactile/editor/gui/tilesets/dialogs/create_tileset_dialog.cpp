@@ -55,12 +55,12 @@ auto CreateTilesetDialog::IsCurrentInputValid(const Model&) const -> bool
 
 void CreateTilesetDialog::ShowImageFileDialog()
 {
-  auto dialog = FileDialog::OpenImage();
-  if (!dialog.IsOkay()) {
+  auto dialog = file_dialog::open_image();
+  if (!dialog.is_okay()) {
     return;
   }
 
-  mFullImagePath = dialog.GetPath();
+  mFullImagePath = dialog.path();
   const auto pathStr = mFullImagePath.string();
 
   if (pathStr.size() > mPathPreviewBuffer.size()) {

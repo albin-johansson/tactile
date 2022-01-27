@@ -12,66 +12,66 @@ constexpr const nfdchar_t* gImageFileFilter = "png,jpg";
 
 }  // namespace
 
-FileDialog::FileDialog(const nfdresult_t result, nfdchar_t* path)
+file_dialog::file_dialog(const nfdresult_t result, nfdchar_t* path)
     : mResult{result}
     , mPath{path}
 {}
 
-FileDialog::~FileDialog() noexcept
+file_dialog::~file_dialog() noexcept
 {
   if (mResult == NFD_OKAY) {
     free(mPath);
   }
 }
 
-auto FileDialog::IsOkay() const noexcept -> bool
+auto file_dialog::is_okay() const noexcept -> bool
 {
   return mResult == NFD_OKAY;
 }
 
-auto FileDialog::WasCanceled() const noexcept -> bool
+auto file_dialog::was_canceled() const noexcept -> bool
 {
   return mResult == NFD_CANCEL;
 }
 
-auto FileDialog::GetPath() const -> std::filesystem::path
+auto file_dialog::path() const -> std::filesystem::path
 {
-  TACTILE_ASSERT(IsOkay());
+  TACTILE_ASSERT(is_okay());
   return {mPath};
 }
 
-auto FileDialog::OpenFile(const nfdchar_t* filter, const nfdchar_t* defaultPath)
-    -> FileDialog
+auto file_dialog::open_file(const nfdchar_t* filter, const nfdchar_t* defaultPath)
+    -> file_dialog
 {
   nfdchar_t* path{};
   return {NFD_OpenDialog(filter, defaultPath, &path), path};
 }
 
-auto FileDialog::OpenMap() -> FileDialog
+auto file_dialog::open_map() -> file_dialog
 {
-  return OpenFile(gMapFileFilter);
+  return open_file(gMapFileFilter);
 }
 
-auto FileDialog::OpenImage() -> FileDialog
+auto file_dialog::open_image() -> file_dialog
 {
-  return OpenFile(gImageFileFilter);
+  return open_file(gImageFileFilter);
 }
 
-auto FileDialog::SaveFile(const nfdchar_t* filter, const nfdchar_t* defaultPath)
-    -> FileDialog
+auto file_dialog::save_file(const nfdchar_t* filter, const nfdchar_t* defaultPath)
+    -> file_dialog
 {
   nfdchar_t* path{};
   return {NFD_SaveDialog(filter, defaultPath, &path), path};
 }
 
-auto FileDialog::SaveMap() -> FileDialog
+auto file_dialog::save_map() -> file_dialog
 {
-  return SaveFile(gMapFileFilter);
+  return save_file(gMapFileFilter);
 }
 
-auto FileDialog::SaveImage() -> FileDialog
+auto file_dialog::save_image() -> file_dialog
 {
-  return SaveFile(gImageFileFilter);
+  return save_file(gImageFileFilter);
 }
 
 }  // namespace tactile

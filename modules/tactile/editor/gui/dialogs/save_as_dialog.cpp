@@ -11,9 +11,9 @@ namespace tactile {
 
 void OpenSaveAsDialog(entt::dispatcher& dispatcher)
 {
-  auto dialog = FileDialog::SaveMap();
-  if (dialog.IsOkay()) {
-    auto path = dialog.GetPath();
+  auto dialog = file_dialog::save_map();
+  if (dialog.is_okay()) {
+    auto path = dialog.path();
 
     const auto ext = path.extension();
     const auto hasValidExtension = ext == ".yaml" || ext == ".yml" || ext == ".json" ||

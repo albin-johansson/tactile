@@ -204,9 +204,9 @@ auto InputFile(const CStr id, const std::filesystem::path& value)
   const scoped::ID scope{id};
 
   if (ImGui::Button(TAC_ICON_THREE_DOTS)) {
-    auto dialog = FileDialog::OpenFile();
-    if (dialog.IsOkay()) {
-      return dialog.GetPath();
+    auto dialog = file_dialog::open_file();
+    if (dialog.is_okay()) {
+      return dialog.path();
     }
   }
 

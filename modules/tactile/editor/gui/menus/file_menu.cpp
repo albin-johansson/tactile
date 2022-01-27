@@ -114,10 +114,10 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 
 void FileMenu::UpdateMapFileDialog(entt::dispatcher& dispatcher)
 {
-  auto dialog = FileDialog::OpenMap();
+  auto dialog = file_dialog::open_map();
 
-  if (dialog.IsOkay()) {
-    dispatcher.enqueue<OpenMapEvent>(dialog.GetPath());
+  if (dialog.is_okay()) {
+    dispatcher.enqueue<OpenMapEvent>(dialog.path());
   }
 
   mShowOpenMapDialog = false;
