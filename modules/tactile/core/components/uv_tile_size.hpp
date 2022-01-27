@@ -1,8 +1,8 @@
 #pragma once
 
-namespace tactile {
+namespace tactile::comp {
 
-struct UvTileSize final
+struct uv_tile_size final
 {
   float width{};
   float height{};

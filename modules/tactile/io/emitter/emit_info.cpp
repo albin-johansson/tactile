@@ -236,11 +236,11 @@ auto EmitInfo::layer_count(const Maybe<LayerID> id) const -> usize
 {
   if (id) {
     const auto entity = to_layer_entity(*id);
-    const auto& node = mRegistry->get<LayerTreeNode>(entity);
+    const auto& node = mRegistry->get<comp::layer_tree_node>(entity);
     return node.children.size();
   }
   else {
-    return mRegistry->storage<Layer>().size();
+    return mRegistry->storage<comp::layer>().size();
   }
 }
 
@@ -248,10 +248,10 @@ void EmitInfo::each_layer(const Maybe<LayerID> parentId, const layer_visitor& fu
 {
   if (!parentId) {
     /* Only iterate top-level layers */
-    for (auto&& [entity, node] : mRegistry->view<LayerTreeNode>().each()) {
+    for (auto&& [entity, node] : mRegistry->view<comp::layer_tree_node>().each()) {
       const auto& parent = mRegistry->get<comp::parent>(entity);
       if (parent.entity == entt::null) {
-        const auto& layer = mRegistry->get<Layer>(entity);
+        const auto& layer = mRegistry->get<comp::layer>(entity);
         func(layer.id);
       }
     }
@@ -259,9 +259,9 @@ void EmitInfo::each_layer(const Maybe<LayerID> parentId, const layer_visitor& fu
   else {
     /* Only visit immediate layer children, recursive visits are handled by the emitter */
     const auto parentEntity = to_layer_entity(*parentId);
-    const auto& node = mRegistry->get<LayerTreeNode>(parentEntity);
+    const auto& node = mRegistry->get<comp::layer_tree_node>(parentEntity);
     for (const auto child : node.children) {
-      const auto& childLayer = mRegistry->get<Layer>(child);
+      const auto& childLayer = mRegistry->get<comp::layer>(child);
       func(childLayer.id);
     }
   }
@@ -272,7 +272,7 @@ auto EmitInfo::layer_data(const LayerID id) const -> LayerData
   const auto entity = to_layer_entity(id);
 
   const auto& context = mRegistry->get<comp::attribute_context>(entity);
-  const auto& layer = mRegistry->get<Layer>(entity);
+  const auto& layer = mRegistry->get<comp::layer>(entity);
 
   LayerData data;
 
@@ -287,7 +287,7 @@ auto EmitInfo::layer_data(const LayerID id) const -> LayerData
 void EmitInfo::each_layer_tile(const LayerID id, const layer_tile_visitor& func) const
 {
   const auto entity = sys::get_tile_layer_entity(*mRegistry, id);
-  const auto& layer = mRegistry->get<TileLayer>(entity);
+  const auto& layer = mRegistry->get<comp::tile_layer>(entity);
   sys::each_tile(layer, func);
 }
 
@@ -295,8 +295,8 @@ auto EmitInfo::layer_object_count(const LayerID id) const -> usize
 {
   const auto entity = to_layer_entity(id);
 
-  TACTILE_ASSERT(mRegistry->all_of<ObjectLayer>(entity));
-  const auto& objectLayer = mRegistry->get<ObjectLayer>(entity);
+  TACTILE_ASSERT(mRegistry->all_of<comp::object_layer>(entity));
+  const auto& objectLayer = mRegistry->get<comp::object_layer>(entity);
 
   return objectLayer.objects.size();
 }
@@ -305,8 +305,8 @@ void EmitInfo::each_layer_object(const LayerID id, const object_visitor& func) c
 {
   const auto entity = to_layer_entity(id);
 
-  TACTILE_ASSERT(mRegistry->all_of<ObjectLayer>(entity));
-  const auto& objectLayer = mRegistry->get<ObjectLayer>(entity);
+  TACTILE_ASSERT(mRegistry->all_of<comp::object_layer>(entity));
+  const auto& objectLayer = mRegistry->get<comp::object_layer>(entity);
 
   each_object(*mRegistry, objectLayer.objects, func);
 }

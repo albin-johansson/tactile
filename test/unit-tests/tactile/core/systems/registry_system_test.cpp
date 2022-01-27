@@ -17,10 +17,10 @@ TEST(RegistrySystem, MakeDocumentRegistry)
 {
   const auto registry = sys::make_document_registry();
   ASSERT_TRUE(registry.try_ctx<MapInfo>());
-  ASSERT_TRUE(registry.try_ctx<ActiveLayer>());
+  ASSERT_TRUE(registry.try_ctx<comp::active_layer>());
   ASSERT_TRUE(registry.try_ctx<comp::active_tileset>());
   ASSERT_TRUE(registry.try_ctx<comp::active_attribute_context>());
-  ASSERT_TRUE(registry.try_ctx<ActiveTool>());
+  ASSERT_TRUE(registry.try_ctx<comp::active_tool>());
   ASSERT_TRUE(registry.try_ctx<comp::active_object>());
   ASSERT_TRUE(registry.try_ctx<Viewport>());
   ASSERT_TRUE(registry.try_ctx<comp::attribute_context>());

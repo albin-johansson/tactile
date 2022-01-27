@@ -17,7 +17,7 @@ constexpr entt::entity null_entity = entt::null;
 TEST(LayerSystem, SortLayers)
 {
   auto registry = sys::make_document_registry();
-  auto& active = registry.ctx<ActiveLayer>();
+  auto& active = registry.ctx<comp::active_layer>();
 
   const auto a = sys::make_tile_layer(registry);
   const auto b = sys::make_object_layer(registry);
@@ -75,7 +75,7 @@ TEST(LayerSystem, SortLayers)
 TEST(LayerSystem, RemoveLayer)
 {
   auto registry = sys::make_document_registry();
-  auto& active = registry.ctx<ActiveLayer>();
+  auto& active = registry.ctx<comp::active_layer>();
 
   const auto a = sys::make_tile_layer(registry);
   const auto b = sys::make_group_layer(registry);
@@ -132,7 +132,7 @@ TEST(LayerSystem, RemoveLayer)
 
   sys::remove_layer(registry, b);
   ASSERT_EQ(0, sys::layer_local_index(registry, h));
-  ASSERT_EQ(1, registry.storage<Layer>().size());
+  ASSERT_EQ(1, registry.storage<comp::layer>().size());
 
   // Make sure all child layers were destroyed
   ASSERT_FALSE(registry.valid(a));
@@ -156,15 +156,15 @@ TEST(LayerSystem, DuplicateLayer)
   auto registry = sys::make_document_registry();
 
   const auto a = sys::make_tile_layer(registry);
-  auto& layerA = registry.get<Layer>(a);
+  auto& layerA = registry.get<comp::layer>(a);
   layerA.opacity = 0.5f;
   layerA.visible = false;
 
   const auto b = sys::duplicate_layer(registry, a);
-  const auto& layerB = registry.get<Layer>(a);
+  const auto& layerB = registry.get<comp::layer>(a);
 
-  ASSERT_EQ(0, registry.get<LayerTreeNode>(a).index);
-  ASSERT_EQ(1, registry.get<LayerTreeNode>(b).index);
+  ASSERT_EQ(0, registry.get<comp::layer_tree_node>(a).index);
+  ASSERT_EQ(1, registry.get<comp::layer_tree_node>(b).index);
 
   ASSERT_EQ(layerA.opacity, layerB.opacity);
   ASSERT_EQ(layerA.visible, layerB.visible);

@@ -15,10 +15,10 @@ namespace tactile::sys {
  * - `MousePos`
  * - `Viewport`
  * - `attribute_context`
- * - `ActiveLayer`
+ * - `active_layer`
  * - `active_tileset`
  * - `active_attribute_context`
- * - `ActiveTool`
+ * - `active_tool`
  * - `active_object`
  *
  * \return a document registry.

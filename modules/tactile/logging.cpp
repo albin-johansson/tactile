@@ -40,7 +40,7 @@ void _log(const fmt::color color,
 
 }  // namespace
 
-namespace LoggerImpl {
+namespace logger {
 
 void log_verbose_v(const std::string_view fmt, const fmt::format_args args)
 {
@@ -77,7 +77,7 @@ void log_error_v(const std::string_view fmt, const fmt::format_args args)
   }
 }
 
-}  // namespace LoggerImpl
+}  // namespace logger
 
 void clear_log_history()
 {

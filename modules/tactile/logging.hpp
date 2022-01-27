@@ -12,7 +12,7 @@
 #include "build.hpp"
 
 namespace tactile {
-namespace LoggerImpl {
+namespace logger {
 
 void log_verbose_v(std::string_view fmt, fmt::format_args args);
 void log_debug_v(std::string_view fmt, fmt::format_args args);
@@ -20,7 +20,7 @@ void log_info_v(std::string_view fmt, fmt::format_args args);
 void log_warning_v(std::string_view fmt, fmt::format_args args);
 void log_error_v(std::string_view fmt, fmt::format_args args);
 
-}  // namespace LoggerImpl
+}  // namespace logger
 
 enum class log_level {
   verbose,  ///< Logs everything.
@@ -46,31 +46,31 @@ void print([[maybe_unused]] const fmt::color color,
 template <typename... Args>
 void log_verbose(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::log_verbose_v(fmt, fmt::make_format_args(args...));
+  logger::log_verbose_v(fmt, fmt::make_format_args(args...));
 }
 
 template <typename... Args>
 void log_debug(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::log_debug_v(fmt, fmt::make_format_args(args...));
+  logger::log_debug_v(fmt, fmt::make_format_args(args...));
 }
 
 template <typename... Args>
-void LogInfo(const std::string_view fmt, const Args&... args)
+void log_info(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::log_info_v(fmt, fmt::make_format_args(args...));
+  logger::log_info_v(fmt, fmt::make_format_args(args...));
 }
 
 template <typename... Args>
 void log_warning(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::log_warning_v(fmt, fmt::make_format_args(args...));
+  logger::log_warning_v(fmt, fmt::make_format_args(args...));
 }
 
 template <typename... Args>
 void log_error(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::log_error_v(fmt, fmt::make_format_args(args...));
+  logger::log_error_v(fmt, fmt::make_format_args(args...));
 }
 
 /**

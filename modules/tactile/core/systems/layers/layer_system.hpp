@@ -146,10 +146,10 @@ auto duplicate_layer(entt::registry& registry,
 [[nodiscard]] auto find_layer(const entt::registry& registry, LayerID id) -> entt::entity;
 
 [[nodiscard]] auto get_layer(entt::registry& registry, LayerID id)
-    -> std::pair<entt::entity, Layer&>;
+    -> std::pair<entt::entity, comp::layer&>;
 
 [[nodiscard]] auto get_layer(const entt::registry& registry, LayerID id)
-    -> std::pair<entt::entity, const Layer&>;
+    -> std::pair<entt::entity, const comp::layer&>;
 
 [[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;
 

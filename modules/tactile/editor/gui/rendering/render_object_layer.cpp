@@ -142,8 +142,8 @@ void RenderObjectLayer(Graphics& graphics,
                        const entt::entity layerEntity,
                        const float parentOpacity)
 {
-  const auto& layer = registry.get<Layer>(layerEntity);
-  const auto& objectLayer = registry.get<ObjectLayer>(layerEntity);
+  const auto& layer = registry.get<comp::layer>(layerEntity);
+  const auto& objectLayer = registry.get<comp::object_layer>(layerEntity);
 
   const auto opacity = parentOpacity * layer.opacity;
   const auto objectColor = cen::color::from_norm(1, 0, 0, opacity);

@@ -21,7 +21,7 @@ void EraserSequenceCmd::Undo()
   auto& registry = mRegistry.get();
 
   const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  auto& layer = registry.get<TileLayer>(entity);
+  auto& layer = registry.get<comp::tile_layer>(entity);
 
   sys::set_tiles(layer, mOldState);
 }
@@ -33,7 +33,7 @@ void EraserSequenceCmd::Redo()
   const auto entity = sys::find_layer(registry, mLayer);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& matrix = registry.get<TileLayer>(entity).matrix;
+  auto& matrix = registry.get<comp::tile_layer>(entity).matrix;
   for (const auto& [position, _] : mOldState) {
     TACTILE_ASSERT(position.row_index() < matrix.size());
     TACTILE_ASSERT(position.col_index() < matrix.front().size());

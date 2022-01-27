@@ -29,12 +29,12 @@ namespace {
 
 void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  const auto activeLayerEntity = registry.ctx<ActiveLayer>().entity;
+  const auto activeLayerEntity = registry.ctx<comp::active_layer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
   Maybe<LayerID> activeLayerId;
   if (hasActiveLayer) {
-    const auto& layer = registry.get<Layer>(activeLayerEntity);
+    const auto& layer = registry.get<comp::layer>(activeLayerEntity);
     activeLayerId = layer.id;
   }
 
@@ -88,7 +88,7 @@ void LayerDock::Update(const Model& model,
     ImGui::SameLine();
 
     scoped::Group group;
-    if (registry.view<Layer>().empty()) {
+    if (registry.view<comp::layer>().empty()) {
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available layers!");
     }
@@ -96,10 +96,10 @@ void LayerDock::Update(const Model& model,
       const ImVec2 size{-(std::numeric_limits<float>::min)(),
                         -(std::numeric_limits<float>::min)()};
       if (scoped::ListBox list{"##LayerTreeNode", size}; list.IsOpen()) {
-        for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
+        for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
              other components in the view query directly. */
-          const auto& layer = registry.get<Layer>(entity);
+          const auto& layer = registry.get<comp::layer>(entity);
           const auto& parent = registry.get<comp::parent>(entity);
           if (parent.entity == entt::null) {
             LayerItem(registry, icons, dispatcher, entity, layer);

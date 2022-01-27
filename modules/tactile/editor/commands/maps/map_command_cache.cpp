@@ -16,7 +16,7 @@ void MapCommandCache::RestoreTiles(entt::registry& registry)
 {
   for (const auto& [layerId, tileCache] : mCache) {
     const auto entity = sys::get_tile_layer_entity(registry, layerId);
-    auto& layer = registry.get<TileLayer>(entity);
+    auto& layer = registry.get<comp::tile_layer>(entity);
 
     for (const auto& [position, tileId] : tileCache) {
       sys::set_tile(layer, position, tileId);
@@ -28,7 +28,8 @@ void MapCommandCache::SaveTiles(const entt::registry& registry,
                                 const tile_position begin,
                                 const tile_position end)
 {
-  for (auto&& [entity, layer, tileLayer] : registry.view<Layer, TileLayer>().each()) {
+  for (auto&& [entity, layer, tileLayer] :
+       registry.view<comp::layer, comp::tile_layer>().each()) {
     auto& tileCache = mCache[layer.id];
 
     const auto endRow = end.row();

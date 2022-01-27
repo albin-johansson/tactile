@@ -48,7 +48,7 @@ void AddLayerCmd::Redo()
     }
 
     TACTILE_ASSERT(entity != entt::null);
-    mLayerId = registry.get<Layer>(entity).id;
+    mLayerId = registry.get<comp::layer>(entity).id;
 
     sys::sort_layers(registry);
   }

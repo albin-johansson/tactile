@@ -2,9 +2,9 @@
 
 #include "core/tool_type.hpp"
 
-namespace tactile {
+namespace tactile::comp {
 
-struct ActiveTool final
+struct active_tool final
 {
   tool_type tool{tool_type::none};
 };

@@ -88,13 +88,13 @@ void CheckTileLayer1(const entt::registry& registry)
   ASSERT_TRUE(context.properties.empty());
   ASSERT_TRUE(context.components.empty());
 
-  const auto& layer = registry.get<Layer>(entity);
+  const auto& layer = registry.get<comp::layer>(entity);
   ASSERT_EQ(LayerType::TileLayer, layer.type);
   ASSERT_EQ(1.0f, layer.opacity);
   ASSERT_TRUE(layer.visible);
 
-  ASSERT_TRUE(registry.all_of<TileLayer>(entity));
-  const auto& tileLayer = registry.get<TileLayer>(entity);
+  ASSERT_TRUE(registry.all_of<comp::tile_layer>(entity));
+  const auto& tileLayer = registry.get<comp::tile_layer>(entity);
 
   ASSERT_EQ(48, tileLayer.matrix.size() * tileLayer.matrix.at(0).size());
 }
@@ -109,15 +109,15 @@ void CheckTileLayer2(const entt::registry& registry)
   ASSERT_EQ(2, context.properties.size());
   ASSERT_TRUE(context.components.empty());
 
-  const auto& layer = registry.get<Layer>(entity);
+  const auto& layer = registry.get<comp::layer>(entity);
   ASSERT_EQ(LayerType::TileLayer, layer.type);
   ASSERT_FLOAT_EQ(0.83f, layer.opacity);
   ASSERT_TRUE(layer.visible);
 
   {
-    ASSERT_TRUE(registry.all_of<TileLayer>(entity));
+    ASSERT_TRUE(registry.all_of<comp::tile_layer>(entity));
 
-    const auto& tileLayer = registry.get<TileLayer>(entity);
+    const auto& tileLayer = registry.get<comp::tile_layer>(entity);
     ASSERT_EQ(48, tileLayer.matrix.size() * tileLayer.matrix.at(0).size());
   }
 
@@ -146,14 +146,14 @@ void CheckObjectLayer1(const entt::registry& registry)
   ASSERT_TRUE(context.properties.empty());
   ASSERT_TRUE(context.components.empty());
 
-  const auto& layer = registry.get<Layer>(entity);
+  const auto& layer = registry.get<comp::layer>(entity);
   ASSERT_EQ(LayerType::ObjectLayer, layer.type);
   ASSERT_EQ(1.0f, layer.opacity);
   ASSERT_TRUE(layer.visible);
 
-  ASSERT_TRUE(registry.all_of<ObjectLayer>(entity));
+  ASSERT_TRUE(registry.all_of<comp::object_layer>(entity));
 
-  const auto& objectLayer = registry.get<ObjectLayer>(entity);
+  const auto& objectLayer = registry.get<comp::object_layer>(entity);
   ASSERT_EQ(2, objectLayer.objects.size());
 
   ASSERT_TRUE(sys::has_object(registry, objectLayer, 2));
@@ -179,10 +179,10 @@ void CheckObjectLayer1(const entt::registry& registry)
 void CheckLayers(const Document& document)
 {
   const auto& registry = document.registry;
-  const auto& activeLayer = registry.ctx<ActiveLayer>();
+  const auto& activeLayer = registry.ctx<comp::active_layer>();
 
-  ASSERT_EQ(3, registry.storage<Layer>().size());
-  ASSERT_EQ(1, registry.get<Layer>(activeLayer.entity).id);
+  ASSERT_EQ(3, registry.storage<comp::layer>().size());
+  ASSERT_EQ(1, registry.get<comp::layer>(activeLayer.entity).id);
 
   CheckTileLayer1(registry);
   CheckTileLayer2(registry);

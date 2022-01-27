@@ -35,14 +35,14 @@ namespace {
 }  // namespace
 
 auto has_object(const entt::registry& registry,
-                const ObjectLayer& layer,
+                const comp::object_layer& layer,
                 const ObjectID id) -> bool
 {
   return find_object(registry, layer, id) != entt::null;
 }
 
 auto find_object(const entt::registry& registry,
-                 const ObjectLayer& layer,
+                 const comp::object_layer& layer,
                  const ObjectID id) -> entt::entity
 {
   for (const auto objectEntity : layer.objects) {
@@ -56,7 +56,7 @@ auto find_object(const entt::registry& registry,
 }
 
 auto find_object(const entt::registry& registry,
-                 const ObjectLayer& layer,
+                 const comp::object_layer& layer,
                  const float x,
                  const float y) -> entt::entity
 {

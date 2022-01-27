@@ -127,7 +127,7 @@ auto make_tileset(entt::registry& registry,
 
   registry.emplace<comp::texture>(tilesetEntity, texture);
 
-  auto& uv = registry.emplace<UvTileSize>(tilesetEntity);
+  auto& uv = registry.emplace<comp::uv_tile_size>(tilesetEntity);
   uv.width = static_cast<float>(tileWidth) / static_cast<float>(texture.width);
   uv.height = static_cast<float>(tileHeight) / static_cast<float>(texture.height);
 
@@ -164,7 +164,7 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
       registry.emplace<comp::tileset>(tilesetEntity, std::move(snapshot.core));
   registry.emplace<comp::tileset_selection>(tilesetEntity, snapshot.selection);
   registry.emplace<comp::texture>(tilesetEntity, snapshot.texture);
-  registry.emplace<UvTileSize>(tilesetEntity, snapshot.uv);
+  registry.emplace<comp::uv_tile_size>(tilesetEntity, snapshot.uv);
 
   add_viewport(registry, tilesetEntity, tileset.tile_width, tileset.tile_height);
 
@@ -185,7 +185,7 @@ auto copy_tileset(const entt::registry& registry, const entt::entity source)
   snapshot.core = registry.get<comp::tileset>(source);
   snapshot.selection = registry.get<comp::tileset_selection>(source);
   snapshot.texture = registry.get<comp::texture>(source);
-  snapshot.uv = registry.get<UvTileSize>(source);
+  snapshot.uv = registry.get<comp::uv_tile_size>(source);
   snapshot.context = CopyPropertyContext(registry, source);
 
   return snapshot;

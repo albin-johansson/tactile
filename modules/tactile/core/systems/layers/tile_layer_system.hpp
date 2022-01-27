@@ -43,7 +43,7 @@ namespace tactile::sys {
  *
  * \throws TactileError if the position is invalid.
  */
-void set_tile(TileLayer& layer, const tile_position& position, TileID tile);
+void set_tile(comp::tile_layer& layer, const tile_position& position, TileID tile);
 
 /**
  * \brief Restores the values of tiles in a tile layer according to a tile cache.
@@ -53,7 +53,7 @@ void set_tile(TileLayer& layer, const tile_position& position, TileID tile);
  * \param layer the target tile layer.
  * \param tiles the source tile cache.
  */
-void set_tiles(TileLayer& layer, const TileCache& tiles);
+void set_tiles(comp::tile_layer& layer, const TileCache& tiles);
 
 /**
  * \brief Returns the tile at a specific position in a tile layer.
@@ -63,7 +63,7 @@ void set_tiles(TileLayer& layer, const TileCache& tiles);
  *
  * \return the tile at the position; the empty tile is returned for invalid positions.
  */
-[[nodiscard]] auto get_tile(const TileLayer& layer, const tile_position& position)
+[[nodiscard]] auto get_tile(const comp::tile_layer& layer, const tile_position& position)
     -> TileID;
 
 /**
@@ -75,7 +75,7 @@ void set_tiles(TileLayer& layer, const TileCache& tiles);
  * \param callable the function object invoked for each tile.
  */
 template <typename T>
-void each_tile(const TileLayer& layer, T&& callable)
+void each_tile(const comp::tile_layer& layer, T&& callable)
 {
   TACTILE_ASSERT(!layer.matrix.empty());
   TACTILE_ASSERT(!layer.matrix.at(0).empty());

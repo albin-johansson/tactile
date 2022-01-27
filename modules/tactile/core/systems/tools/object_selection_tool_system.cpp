@@ -38,7 +38,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
       active.entity = entt::null;
 
       const auto layerEntity = get_active_layer(registry);
-      const auto& layer = registry.get<ObjectLayer>(layerEntity);
+      const auto& layer = registry.get<comp::object_layer>(layerEntity);
 
       const auto objectEntity = find_object(registry, layer, mouse.x, mouse.y);
       if (objectEntity != entt::null) {
@@ -59,7 +59,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
       active.entity = entt::null;
 
       const auto layerEntity = get_active_layer(registry);
-      const auto& layer = registry.get<ObjectLayer>(layerEntity);
+      const auto& layer = registry.get<comp::object_layer>(layerEntity);
 
       const auto objectEntity = find_object(registry, layer, mouse.x, mouse.y);
       if (objectEntity != entt::null) {

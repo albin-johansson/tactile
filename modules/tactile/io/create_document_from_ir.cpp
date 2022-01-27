@@ -254,7 +254,7 @@ void MakeObjectLayer(entt::registry& registry,
 {
   const auto count = IO::GetObjectCount(irObjectLayer);
 
-  auto& objectLayer = registry.emplace<ObjectLayer>(entity);
+  auto& objectLayer = registry.emplace<comp::object_layer>(entity);
   objectLayer.objects.reserve(count);
 
   for (usize index = 0; index < count; ++index) {
@@ -274,10 +274,10 @@ auto MakeLayer(entt::registry& registry,
                                             IO::GetName(irLayer),
                                             parent);
 
-  auto& node = registry.get<LayerTreeNode>(entity);
+  auto& node = registry.get<comp::layer_tree_node>(entity);
   node.index = IO::GetIndex(irLayer);
 
-  auto& layer = registry.get<Layer>(entity);
+  auto& layer = registry.get<comp::layer>(entity);
   layer.opacity = IO::GetOpacity(irLayer);
   layer.visible = IO::IsVisible(irLayer);
 
@@ -287,7 +287,7 @@ auto MakeLayer(entt::registry& registry,
     const auto nRows = IO::GetRowCount(irTileLayer);
     const auto nCols = IO::GetColumnCount(irTileLayer);
 
-    auto& tileLayer = registry.emplace<TileLayer>(entity);
+    auto& tileLayer = registry.emplace<comp::tile_layer>(entity);
     tileLayer.matrix = MakeTileMatrix(nRows, nCols);
 
     for (usize row = 0; row < nRows; ++row) {
@@ -301,7 +301,7 @@ auto MakeLayer(entt::registry& registry,
     MakeObjectLayer(registry, entity, irObjectLayer);
   }
   else if (type == LayerType::GroupLayer) {
-    registry.emplace<GroupLayer>(entity);
+    registry.emplace<comp::group_layer>(entity);
 
     const auto& irGroupLayer = IO::GetGroupLayer(irLayer);
     IO::EachLayer(irGroupLayer, [&](const IO::Layer& irSublayer) {
@@ -322,9 +322,9 @@ void CreateLayers(Document& document, const IO::Map& irMap)
 
   sys::sort_layers(document.registry);
 
-  if (!document.registry.storage<LayerTreeNode>().empty()) {
-    auto& activeLayer = document.registry.ctx<ActiveLayer>();
-    activeLayer.entity = document.registry.view<LayerTreeNode>().front();
+  if (!document.registry.storage<comp::layer_tree_node>().empty()) {
+    auto& activeLayer = document.registry.ctx<comp::active_layer>();
+    activeLayer.entity = document.registry.view<comp::layer_tree_node>().front();
   }
 }
 

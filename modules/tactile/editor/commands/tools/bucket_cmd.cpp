@@ -24,10 +24,10 @@ void BucketCmd::Undo()
 
   const auto entity = sys::find_layer(registry, mLayer);
   TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
+  TACTILE_ASSERT(registry.all_of<comp::tile_layer>(entity));
 
   const auto target = mTarget.value();
-  auto& layer = registry.get<TileLayer>(entity);
+  auto& layer = registry.get<comp::tile_layer>(entity);
   for (const auto& position : mPositions) {
     layer.matrix.at(position.row_index()).at(position.col_index()) = target;
   }
@@ -41,7 +41,7 @@ void BucketCmd::Redo()
   auto& registry = mRegistry.get();
 
   const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  const auto& layer = registry.get<TileLayer>(entity);
+  const auto& layer = registry.get<comp::tile_layer>(entity);
 
   mTarget = sys::get_tile(layer, mOrigin);
   flood(registry, entity, mOrigin, mReplacement, mPositions);

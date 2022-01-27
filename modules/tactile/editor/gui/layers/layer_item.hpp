@@ -24,6 +24,6 @@ void LayerItem(const entt::registry& registry,
                const Icons& icons,
                entt::dispatcher& dispatcher,
                entt::entity layerEntity,
-               const Layer& layer);
+               const comp::layer& layer);
 
 }  // namespace tactile

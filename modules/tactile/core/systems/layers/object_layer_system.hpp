@@ -19,11 +19,11 @@ namespace tactile::sys {
 /// \{
 
 [[nodiscard]] auto has_object(const entt::registry& registry,
-                              const ObjectLayer& layer,
+                              const comp::object_layer& layer,
                               ObjectID id) -> bool;
 
 [[nodiscard]] auto find_object(const entt::registry& registry,
-                               const ObjectLayer& layer,
+                               const comp::object_layer& layer,
                                ObjectID id) -> entt::entity;
 
 /**
@@ -44,7 +44,7 @@ namespace tactile::sys {
  *         a null entity is returned if there is none.
  */
 [[nodiscard]] auto find_object(const entt::registry& registry,
-                               const ObjectLayer& layer,
+                               const comp::object_layer& layer,
                                float x,
                                float y) -> entt::entity;
 

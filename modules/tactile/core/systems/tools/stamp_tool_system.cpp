@@ -32,9 +32,9 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 
   const auto layerEntity = get_active_layer(registry);
   TACTILE_ASSERT(layerEntity != entt::null);
-  TACTILE_ASSERT(registry.all_of<TileLayer>(layerEntity));
+  TACTILE_ASSERT(registry.all_of<comp::tile_layer>(layerEntity));
 
-  auto& layer = registry.get<TileLayer>(layerEntity);
+  auto& layer = registry.get<comp::tile_layer>(layerEntity);
 
   const auto tilesetEntity = find_active_tileset(registry);
   TACTILE_ASSERT(tilesetEntity != entt::null);

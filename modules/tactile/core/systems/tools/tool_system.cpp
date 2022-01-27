@@ -10,7 +10,7 @@ namespace tactile::sys {
 
 void SelectTool(entt::registry& registry, const tool_type tool)
 {
-  auto& active = registry.ctx<ActiveTool>();
+  auto& active = registry.ctx<comp::active_tool>();
   active.tool = (active.tool == tool) ? tool_type::none : tool;
 }
 
@@ -18,7 +18,7 @@ void ToolOnPressed(entt::registry& registry,
                    entt::dispatcher& dispatcher,
                    const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<ActiveTool>();
+  const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
     case tool_type::none:
       break;
@@ -45,7 +45,7 @@ void ToolOnDragged(entt::registry& registry,
                    [[maybe_unused]] entt::dispatcher& dispatcher,
                    const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<ActiveTool>();
+  const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
     case tool_type::none:
       [[fallthrough]];
@@ -71,7 +71,7 @@ void ToolOnReleased(entt::registry& registry,
                     entt::dispatcher& dispatcher,
                     const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<ActiveTool>();
+  const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
     case tool_type::none:
       [[fallthrough]];
@@ -95,25 +95,25 @@ void ToolOnReleased(entt::registry& registry,
 
 auto IsStampEnabled(const entt::registry& registry) -> bool
 {
-  const auto& active = registry.ctx<ActiveTool>();
+  const auto& active = registry.ctx<comp::active_tool>();
   return active.tool == tool_type::stamp;
 }
 
 auto IsEraserEnabled(const entt::registry& registry) -> bool
 {
-  const auto& active = registry.ctx<ActiveTool>();
+  const auto& active = registry.ctx<comp::active_tool>();
   return active.tool == tool_type::eraser;
 }
 
 auto IsBucketEnabled(const entt::registry& registry) -> bool
 {
-  const auto& active = registry.ctx<ActiveTool>();
+  const auto& active = registry.ctx<comp::active_tool>();
   return active.tool == tool_type::bucket;
 }
 
 auto IsObjectSelectionEnabled(const entt::registry& registry) -> bool
 {
-  const auto& active = registry.ctx<ActiveTool>();
+  const auto& active = registry.ctx<comp::active_tool>();
   return active.tool == tool_type::object_selection;
 }
 

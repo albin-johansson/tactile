@@ -16,10 +16,10 @@ auto make_document_registry() -> entt::registry
 {
   entt::registry registry;
 
-  registry.set<ActiveLayer>();
+  registry.set<comp::active_layer>();
   registry.set<comp::active_tileset>();
   registry.set<comp::active_attribute_context>();
-  registry.set<ActiveTool>();
+  registry.set<comp::active_tool>();
   registry.set<comp::active_object>();
   registry.set<MousePos>();
 

@@ -220,11 +220,11 @@ void ConvertLayer(IO::Map& irMap,
                   IO::Layer& ir,
                   const entt::registry& registry,
                   const entt::entity entity,
-                  const LayerTreeNode& node,
+                  const comp::layer_tree_node& node,
                   const usize nRows,
                   const usize nCols)
 {
-  const auto& layer = registry.get<Layer>(entity);
+  const auto& layer = registry.get<comp::layer>(entity);
   const auto& context = registry.get<comp::attribute_context>(entity);
 
   IO::SetIndex(ir, node.index);
@@ -241,7 +241,7 @@ void ConvertLayer(IO::Map& irMap,
       auto& tileLayer = IO::MarkAsTileLayer(ir);
       IO::ReserveTiles(tileLayer, nRows, nCols);
 
-      const auto matrix = registry.get<TileLayer>(entity).matrix;
+      const auto matrix = registry.get<comp::tile_layer>(entity).matrix;
       for (usize row = 0; row < nRows; ++row) {
         for (usize col = 0; col < nCols; ++col) {
           IO::SetTile(tileLayer, row, col, matrix.at(row).at(col));
@@ -252,7 +252,7 @@ void ConvertLayer(IO::Map& irMap,
     }
 
     case LayerType::ObjectLayer: {
-      const auto& objectLayer = registry.get<ObjectLayer>(entity);
+      const auto& objectLayer = registry.get<comp::object_layer>(entity);
 
       auto& objectLayerData = IO::MarkAsObjectLayer(ir);
       IO::ReserveObjects(objectLayerData, objectLayer.objects.size());
@@ -271,7 +271,7 @@ void ConvertLayer(IO::Map& irMap,
 
       for (const auto child : node.children) {
         auto& childData = IO::AddLayer(groupLayer);
-        const auto& childNode = registry.get<LayerTreeNode>(child);
+        const auto& childNode = registry.get<comp::layer_tree_node>(child);
         ConvertLayer(irMap, childData, registry, child, childNode, nRows, nCols);
       }
 
@@ -284,8 +284,8 @@ void ConvertLayers(IO::Map& irMap, const entt::registry& registry)
 {
   const auto& map = registry.ctx<MapInfo>();
 
-  IO::ReserveLayers(irMap, registry.storage<LayerTreeNode>().size());
-  for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
+  IO::ReserveLayers(irMap, registry.storage<comp::layer_tree_node>().size());
+  for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
     const auto& parent = registry.get<comp::parent>(entity);
     if (parent.entity == entt::null) {
       auto& layerData = IO::AddLayer(irMap);

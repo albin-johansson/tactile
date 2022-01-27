@@ -14,7 +14,7 @@
 #include <settings.pb.h>
 
 #define PRINT_FLAG(Name, Mask) \
-  LogInfo(Name "... {}", (prefs.flags & (Mask)) ? "yes" : "no")
+  log_info(Name "... {}", (prefs.flags & (Mask)) ? "yes" : "no")
 
 namespace tactile {
 namespace {
@@ -58,15 +58,15 @@ inline Preferences settings = MakeDefaultPreferences();
 
 void PrintPreferences(Preferences& prefs)
 {
-  LogInfo("Theme... {}", magic_enum::enum_name(prefs.theme));
-  LogInfo("Viewport background... {}", prefs.viewport_background.as_rgb());
+  log_info("Theme... {}", magic_enum::enum_name(prefs.theme));
+  log_info("Viewport background... {}", prefs.viewport_background.as_rgb());
 
-  LogInfo("Command capacity... {}", prefs.command_capacity);
-  LogInfo("Preferred tile width... {}", prefs.preferred_tile_width);
-  LogInfo("Preferred tile height... {}", prefs.preferred_tile_height);
+  log_info("Command capacity... {}", prefs.command_capacity);
+  log_info("Preferred tile width... {}", prefs.preferred_tile_width);
+  log_info("Preferred tile height... {}", prefs.preferred_tile_height);
 
-  LogInfo("Preferred format... {}", prefs.preferred_format);
-  LogInfo("Viewport overlay pos... {}", prefs.viewport_overlay_pos);
+  log_info("Preferred format... {}", prefs.preferred_format);
+  log_info("Viewport overlay pos... {}", prefs.viewport_overlay_pos);
 
   PRINT_FLAG("Embed tilesets", Preferences::embed_tilesets);
   PRINT_FLAG("Indent output", Preferences::indent_output);

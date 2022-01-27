@@ -19,7 +19,7 @@ void GroupLayerItem(const entt::registry& registry,
                     const Icons& icons,
                     entt::dispatcher& dispatcher,
                     const entt::entity layerEntity,
-                    const Layer& layer,
+                    const comp::layer& layer,
                     const ImGuiTreeNodeFlags flags,
                     const CStr name)
 {
@@ -35,9 +35,9 @@ void GroupLayerItem(const entt::registry& registry,
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
 
-    const auto& node = registry.get<LayerTreeNode>(layerEntity);
+    const auto& node = registry.get<comp::layer_tree_node>(layerEntity);
     for (const auto child : node.children) {
-      const auto& childLayer = registry.get<Layer>(child);
+      const auto& childLayer = registry.get<comp::layer>(child);
       LayerItem(registry, icons, dispatcher, child, childLayer);
     }
   }
@@ -59,11 +59,11 @@ void LayerItem(const entt::registry& registry,
                const Icons& icons,
                entt::dispatcher& dispatcher,
                const entt::entity layerEntity,
-               const Layer& layer)
+               const comp::layer& layer)
 {
   const scoped::ID scope{layer.id};
 
-  const auto& activeLayer = registry.ctx<ActiveLayer>();
+  const auto& activeLayer = registry.ctx<comp::active_layer>();
   const auto isActiveLayer = layerEntity == activeLayer.entity;
 
   auto flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |

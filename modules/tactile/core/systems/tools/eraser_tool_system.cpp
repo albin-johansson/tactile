@@ -26,8 +26,8 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
   const auto entity = get_active_layer(registry);
   TACTILE_ASSERT(entity != entt::null);
 
-  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
-  auto& layer = registry.get<TileLayer>(entity);
+  TACTILE_ASSERT(registry.all_of<comp::tile_layer>(entity));
+  auto& layer = registry.get<comp::tile_layer>(entity);
 
   if (!gOldState.contains(cursor)) {
     gOldState.emplace(cursor, get_tile(layer, cursor));

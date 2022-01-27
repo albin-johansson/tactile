@@ -28,7 +28,7 @@ struct TilesetSnapshot final
   comp::tileset core;
   comp::tileset_selection selection;
   comp::texture texture;
-  UvTileSize uv;
+  comp::uv_tile_size uv;
   PropertyContextSnapshot context;
 };
 
@@ -41,7 +41,7 @@ struct ObjectSnapshot final
 struct LayerSnapshot final
 {
   usize index{};
-  Layer core;
+  comp::layer core;
   PropertyContextSnapshot context;
   Maybe<LayerID> parent;
   Maybe<TileMatrix> tiles;
