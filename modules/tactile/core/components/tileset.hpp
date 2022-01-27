@@ -61,4 +61,4 @@ struct active_tileset final
   entt::entity entity{entt::null};
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp
