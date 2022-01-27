@@ -7,7 +7,7 @@ using namespace tactile;
 TEST(BufferUtils, ZeroBuffer)
 {
   std::array<char, 5> buffer;  // NOLINT
-  ZeroBuffer(buffer);
+  zero_buffer(buffer);
 
   ASSERT_EQ(0, buffer.at(0));
   ASSERT_EQ(0, buffer.at(1));
@@ -19,7 +19,7 @@ TEST(BufferUtils, ZeroBuffer)
 TEST(BufferUtils, CopyStringIntoBuffer)
 {
   std::array<char, 10> buffer;  // NOLINT
-  CopyStringIntoBuffer(buffer, "abcdef");
+  copy_string_into_buffer(buffer, "abcdef");
 
   ASSERT_EQ('a', buffer.at(0));
   ASSERT_EQ('b', buffer.at(1));
@@ -38,7 +38,7 @@ TEST(BufferUtils, CopyStringIntoBuffer)
 TEST(BufferUtils, CopyStringIntoBufferThatIsTooSmall)
 {
   std::array<char, 4> buffer;  // NOLINT
-  CopyStringIntoBuffer(buffer, "abcdef");
+  copy_string_into_buffer(buffer, "abcdef");
 
   ASSERT_EQ('a', buffer.at(0));
   ASSERT_EQ('b', buffer.at(1));
@@ -49,7 +49,7 @@ TEST(BufferUtils, CopyStringIntoBufferThatIsTooSmall)
 TEST(BufferUtils, CreateStringFromBuffer)
 {
   const std::array buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
-  const auto str = CreateStringFromBuffer(buffer);
+  const auto str = create_string_from_buffer(buffer);
 
   ASSERT_EQ("abcdef", str);
 }
@@ -57,7 +57,7 @@ TEST(BufferUtils, CreateStringFromBuffer)
 TEST(BufferUtils, CreateStringViewFromBuffer)
 {
   const std::array buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
-  const auto str = CreateStringViewFromBuffer(buffer);
+  const auto str = create_string_view_from_buffer(buffer);
 
   ASSERT_EQ(6, str.size());
   ASSERT_EQ("abcdef", str);

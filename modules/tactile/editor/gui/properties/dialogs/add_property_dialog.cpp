@@ -26,7 +26,7 @@ void AddPropertyDialog::UpdateContents(const Model&, entt::dispatcher&)
 
 void AddPropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(mNameBuffer),
+  dispatcher.enqueue<AddPropertyEvent>(create_string_from_buffer(mNameBuffer),
                                        mPropertyType);
 }
 
@@ -35,7 +35,7 @@ auto AddPropertyDialog::IsCurrentInputValid(const Model& model) const -> bool
   const auto& registry = model.GetActiveRegistryRef();
   const auto& context = sys::GetCurrentContext(registry);
 
-  const auto name = CreateStringViewFromBuffer(mNameBuffer);
+  const auto name = create_string_view_from_buffer(mNameBuffer);
   return !name.empty() && !sys::HasPropertyWithName(registry, context, name);
 }
 

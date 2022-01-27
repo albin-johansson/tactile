@@ -37,13 +37,13 @@ void AStringInputDialog::Show(std::string previous)
 {
   mShouldAcquireFocus = true;
   mPrevious = std::move(previous);
-  CopyStringIntoBuffer(mBuffer, mPrevious);
+  copy_string_into_buffer(mBuffer, mPrevious);
   ADialog::Show();
 }
 
 auto AStringInputDialog::GetCurrentInput() const -> std::string_view
 {
-  return CreateStringViewFromBuffer(mBuffer);
+  return create_string_view_from_buffer(mBuffer);
 }
 
 auto AStringInputDialog::GetPreviousString() const -> const std::string&

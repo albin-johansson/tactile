@@ -16,7 +16,7 @@ CreateTilesetDialog::CreateTilesetDialog() : ADialog{"Create tileset"}
 
 void CreateTilesetDialog::Open()
 {
-  ZeroBuffer(mPathPreviewBuffer);
+  zero_buffer(mPathPreviewBuffer);
   mFullImagePath.clear();
   mTileWidth = prefs::GetPreferredTileWidth();
   mTileHeight = prefs::GetPreferredTileHeight();
@@ -65,10 +65,10 @@ void CreateTilesetDialog::ShowImageFileDialog()
 
   if (pathStr.size() > mPathPreviewBuffer.size()) {
     const auto name = mFullImagePath.filename();
-    CopyStringIntoBuffer(mPathPreviewBuffer, name.string());
+    copy_string_into_buffer(mPathPreviewBuffer, name.string());
   }
   else {
-    CopyStringIntoBuffer(mPathPreviewBuffer, pathStr);
+    copy_string_into_buffer(mPathPreviewBuffer, pathStr);
   }
 }
 

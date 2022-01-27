@@ -21,7 +21,7 @@ namespace tactile {
  * \param buffer the buffer that will be zeroed.
  */
 template <usize Size>
-void ZeroBuffer(std::array<char, Size>& buffer)
+void zero_buffer(std::array<char, Size>& buffer)
 {
   std::memset(buffer.data(), 0, sizeof buffer);
 }
@@ -41,9 +41,9 @@ void ZeroBuffer(std::array<char, Size>& buffer)
  * \param str the string that will be copied into the buffer.
  */
 template <usize Size>
-void CopyStringIntoBuffer(std::array<char, Size>& buffer, const std::string_view str)
+void copy_string_into_buffer(std::array<char, Size>& buffer, const std::string_view str)
 {
-  ZeroBuffer(buffer);
+  zero_buffer(buffer);
 
   usize index = 0;
   for (const auto ch : str) {
@@ -72,7 +72,7 @@ void CopyStringIntoBuffer(std::array<char, Size>& buffer, const std::string_view
  * \return a string created from the buffer.
  */
 template <usize Size>
-[[nodiscard]] auto CreateStringFromBuffer(const std::array<char, Size>& buffer)
+[[nodiscard]] auto create_string_from_buffer(const std::array<char, Size>& buffer)
     -> std::string
 {
   usize index = 0;
@@ -85,7 +85,7 @@ template <usize Size>
 }
 
 template <usize Size>
-[[nodiscard]] auto CreateStringViewFromBuffer(const std::array<char, Size>& buffer)
+[[nodiscard]] auto create_string_view_from_buffer(const std::array<char, Size>& buffer)
     -> std::string_view
 {
   usize index = 0;

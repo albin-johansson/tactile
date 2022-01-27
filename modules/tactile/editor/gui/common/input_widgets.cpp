@@ -118,7 +118,7 @@ auto InputStringWithHint(const CStr id,
   const scoped::ID scope{id};
 
   std::array<char, 100> buffer;  // NOLINT safely uninitialized
-  CopyStringIntoBuffer(buffer, value);
+  copy_string_into_buffer(buffer, value);
 
   if (label) {
     ImGui::AlignTextToFramePadding();
@@ -136,7 +136,7 @@ auto InputStringWithHint(const CStr id,
                                sizeof buffer,
                                flags,
                                filter)) {
-    return CreateStringFromBuffer(buffer);
+    return create_string_from_buffer(buffer);
   }
 
   if (ImGui::IsItemHovered()) {
