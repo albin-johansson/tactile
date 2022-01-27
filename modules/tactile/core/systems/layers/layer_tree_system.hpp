@@ -1,45 +1,50 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry, entity
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
-namespace tactile::sys::layer_tree {
+namespace tactile::sys {
 
-void SortNodes(entt::registry& registry);
+void sort_layers(entt::registry& registry);
 
-void IncrementIndicesOfSiblingsBelow(entt::registry& registry, entt::entity entity);
+void increment_layer_indices_of_siblings_below(entt::registry& registry,
+                                               entt::entity entity);
 
-void DecrementIndicesOfSiblingsBelow(entt::registry& registry, entt::entity entity);
+void decrement_layer_indices_of_siblings_below(entt::registry& registry,
+                                               entt::entity entity);
 
-void DestroyNode(entt::registry& registry, entt::entity entity);
+void destroy_layer_node(entt::registry& registry, entt::entity entity);
 
-void MoveNodeUp(entt::registry& registry, entt::entity entity);
+void move_layer_up(entt::registry& registry, entt::entity entity);
 
-void MoveNodeDown(entt::registry& registry, entt::entity entity);
+void move_layer_down(entt::registry& registry, entt::entity entity);
 
-[[nodiscard]] auto CanMoveNodeUp(const entt::registry& registry, entt::entity entity)
+[[nodiscard]] auto can_move_layer_up(const entt::registry& registry, entt::entity entity)
     -> bool;
 
-[[nodiscard]] auto CanMoveNodeDown(const entt::registry& registry, entt::entity entity)
-    -> bool;
+[[nodiscard]] auto can_move_layer_down(const entt::registry& registry,
+                                       entt::entity entity) -> bool;
 
-[[nodiscard]] auto IsChildNode(const entt::registry& registry,
-                               entt::entity parent,
-                               entt::entity entity) -> bool;
+[[nodiscard]] auto is_child_layer_node(const entt::registry& registry,
+                                       entt::entity parent,
+                                       entt::entity entity) -> bool;
 
-[[nodiscard]] auto GetSiblingAbove(const entt::registry& registry, entt::entity entity)
-    -> entt::entity;
+[[nodiscard]] auto layer_sibling_above(const entt::registry& registry,
+                                       entt::entity entity) -> entt::entity;
 
-[[nodiscard]] auto GetSiblingBelow(const entt::registry& registry, entt::entity entity)
-    -> entt::entity;
+[[nodiscard]] auto layer_sibling_below(const entt::registry& registry,
+                                       entt::entity entity) -> entt::entity;
 
-[[nodiscard]] auto GetSiblingCount(const entt::registry& registry, entt::entity entity)
+[[nodiscard]] auto layer_sibling_count(const entt::registry& registry,
+                                       entt::entity entity) -> usize;
+
+[[nodiscard]] auto layer_children_count(const entt::registry& registry,
+                                        entt::entity entity) -> usize;
+
+[[nodiscard]] auto layer_local_index(const entt::registry& registry, entt::entity entity)
     -> usize;
 
-[[nodiscard]] auto GetChildrenCount(const entt::registry& registry, entt::entity entity)
+[[nodiscard]] auto layer_global_index(const entt::registry& registry, entt::entity entity)
     -> usize;
 
-[[nodiscard]] auto GetGlobalIndex(const entt::registry& registry, entt::entity entity)
-    -> usize;
-
-}  // namespace tactile::sys::layer_tree
+}  // namespace tactile::sys

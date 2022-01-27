@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "core/components/layer.hpp"
+#include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/registry_system.hpp"
 
 using namespace tactile;
@@ -52,23 +53,23 @@ TEST(LayerSystem, SortLayers)
    - K
    */
 
-  ASSERT_EQ(0, sys::get_layer_index(registry, a));
-  ASSERT_EQ(1, sys::get_layer_index(registry, b));
-  ASSERT_EQ(2, sys::get_layer_index(registry, c));
+  ASSERT_EQ(0, sys::layer_local_index(registry, a));
+  ASSERT_EQ(1, sys::layer_local_index(registry, b));
+  ASSERT_EQ(2, sys::layer_local_index(registry, c));
   {
-    ASSERT_EQ(0, sys::get_layer_index(registry, d));
-    ASSERT_EQ(1, sys::get_layer_index(registry, e));
-    ASSERT_EQ(2, sys::get_layer_index(registry, f));
+    ASSERT_EQ(0, sys::layer_local_index(registry, d));
+    ASSERT_EQ(1, sys::layer_local_index(registry, e));
+    ASSERT_EQ(2, sys::layer_local_index(registry, f));
     {
-      ASSERT_EQ(0, sys::get_layer_index(registry, g));
-      ASSERT_EQ(1, sys::get_layer_index(registry, h));
+      ASSERT_EQ(0, sys::layer_local_index(registry, g));
+      ASSERT_EQ(1, sys::layer_local_index(registry, h));
     }
 
-    ASSERT_EQ(3, sys::get_layer_index(registry, i));
-    ASSERT_EQ(4, sys::get_layer_index(registry, j));
+    ASSERT_EQ(3, sys::layer_local_index(registry, i));
+    ASSERT_EQ(4, sys::layer_local_index(registry, j));
   }
 
-  ASSERT_EQ(3, sys::get_layer_index(registry, k));
+  ASSERT_EQ(3, sys::layer_local_index(registry, k));
 }
 
 TEST(LayerSystem, RemoveLayer)
@@ -91,46 +92,46 @@ TEST(LayerSystem, RemoveLayer)
   active.entity = entt::null;
   const auto h = sys::make_tile_layer(registry);
 
-  ASSERT_EQ(0, sys::get_layer_index(registry, a));
-  ASSERT_EQ(1, sys::get_layer_index(registry, b));
+  ASSERT_EQ(0, sys::layer_local_index(registry, a));
+  ASSERT_EQ(1, sys::layer_local_index(registry, b));
   {
-    ASSERT_EQ(0, sys::get_layer_index(registry, c));
-    ASSERT_EQ(1, sys::get_layer_index(registry, d));
-    ASSERT_EQ(2, sys::get_layer_index(registry, e));
+    ASSERT_EQ(0, sys::layer_local_index(registry, c));
+    ASSERT_EQ(1, sys::layer_local_index(registry, d));
+    ASSERT_EQ(2, sys::layer_local_index(registry, e));
     {
-      ASSERT_EQ(0, sys::get_layer_index(registry, f));
-      ASSERT_EQ(1, sys::get_layer_index(registry, g));
+      ASSERT_EQ(0, sys::layer_local_index(registry, f));
+      ASSERT_EQ(1, sys::layer_local_index(registry, g));
     }
   }
-  ASSERT_EQ(2, sys::get_layer_index(registry, h));
+  ASSERT_EQ(2, sys::layer_local_index(registry, h));
 
   sys::remove_layer(registry, a);
-  ASSERT_EQ(0, sys::get_layer_index(registry, b));
+  ASSERT_EQ(0, sys::layer_local_index(registry, b));
   {
-    ASSERT_EQ(0, sys::get_layer_index(registry, c));
-    ASSERT_EQ(1, sys::get_layer_index(registry, d));
-    ASSERT_EQ(2, sys::get_layer_index(registry, e));
+    ASSERT_EQ(0, sys::layer_local_index(registry, c));
+    ASSERT_EQ(1, sys::layer_local_index(registry, d));
+    ASSERT_EQ(2, sys::layer_local_index(registry, e));
     {
-      ASSERT_EQ(0, sys::get_layer_index(registry, f));
-      ASSERT_EQ(1, sys::get_layer_index(registry, g));
+      ASSERT_EQ(0, sys::layer_local_index(registry, f));
+      ASSERT_EQ(1, sys::layer_local_index(registry, g));
     }
   }
-  ASSERT_EQ(1, sys::get_layer_index(registry, h));
+  ASSERT_EQ(1, sys::layer_local_index(registry, h));
 
   sys::remove_layer(registry, d);
-  ASSERT_EQ(0, sys::get_layer_index(registry, b));
+  ASSERT_EQ(0, sys::layer_local_index(registry, b));
   {
-    ASSERT_EQ(0, sys::get_layer_index(registry, c));
-    ASSERT_EQ(1, sys::get_layer_index(registry, e));
+    ASSERT_EQ(0, sys::layer_local_index(registry, c));
+    ASSERT_EQ(1, sys::layer_local_index(registry, e));
     {
-      ASSERT_EQ(0, sys::get_layer_index(registry, f));
-      ASSERT_EQ(1, sys::get_layer_index(registry, g));
+      ASSERT_EQ(0, sys::layer_local_index(registry, f));
+      ASSERT_EQ(1, sys::layer_local_index(registry, g));
     }
   }
-  ASSERT_EQ(1, sys::get_layer_index(registry, h));
+  ASSERT_EQ(1, sys::layer_local_index(registry, h));
 
   sys::remove_layer(registry, b);
-  ASSERT_EQ(0, sys::get_layer_index(registry, h));
+  ASSERT_EQ(0, sys::layer_local_index(registry, h));
   ASSERT_EQ(1, registry.storage<Layer>().size());
 
   // Make sure all child layers were destroyed

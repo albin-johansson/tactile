@@ -4,6 +4,7 @@
 
 #include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/layer_tree_system.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/gui/icons.hpp"

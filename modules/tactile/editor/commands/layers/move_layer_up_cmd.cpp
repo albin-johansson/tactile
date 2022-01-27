@@ -1,6 +1,7 @@
 #include "move_layer_up_cmd.hpp"
 
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/layer_tree_system.hpp"
 
 namespace tactile {
 

@@ -2,6 +2,7 @@
 
 #include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/layer_tree_system.hpp"
 
 namespace tactile {
 
@@ -19,8 +20,7 @@ void AddLayerCmd::Undo()
   const auto entity = sys::find_layer(registry, id);
   TACTILE_ASSERT(entity != entt::null);
 
-  mLayerSnapshot = sys::copy_layer(registry, entity);
-  sys::remove_layer(registry, entity);
+  mLayerSnapshot = sys::remove_layer(registry, entity);
 }
 
 void AddLayerCmd::Redo()

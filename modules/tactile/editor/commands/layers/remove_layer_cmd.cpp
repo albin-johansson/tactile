@@ -21,8 +21,7 @@ void RemoveLayerCmd::Redo()
   const auto entity = sys::find_layer(mRegistry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
-  mLayerSnapshot = sys::copy_layer(mRegistry, entity);
-  sys::remove_layer(mRegistry, entity);
+  mLayerSnapshot = sys::remove_layer(mRegistry, entity);
 }
 
 }  // namespace tactile

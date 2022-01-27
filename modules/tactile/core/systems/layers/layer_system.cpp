@@ -21,7 +21,7 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto GetNewLayerParent(const entt::registry& registry) -> entt::entity
+[[nodiscard]] auto _new_layer_parent(const entt::registry& registry) -> entt::entity
 {
   const auto active = registry.ctx<ActiveLayer>();
   if (active.entity != entt::null && registry.all_of<GroupLayer>(active.entity)) {
@@ -32,7 +32,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto GetNewLayerIndex(const entt::registry& registry,
+[[nodiscard]] auto _new_layer_index(const entt::registry& registry,
                                     const entt::entity layerEntity,
                                     const entt::entity parentEntity) -> usize
 {
@@ -52,6 +52,55 @@ namespace {
   }
 }
 
+[[nodiscard]] auto _copy_layer(const entt::registry& registry, const entt::entity source)
+    -> LayerSnapshot
+{
+  TACTILE_ASSERT(source != entt::null);
+  TACTILE_ASSERT(registry.all_of<Layer>(source));
+  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(source));
+  TACTILE_ASSERT(registry.all_of<comp::parent>(source));
+  assert((registry.any_of<TileLayer, ObjectLayer, GroupLayer>(source)));
+
+  LayerSnapshot snapshot;
+  snapshot.index = registry.get<LayerTreeNode>(source).index;
+  snapshot.core = registry.get<Layer>(source);
+  snapshot.context = CopyPropertyContext(registry, source);
+
+  const auto parentEntity = registry.get<comp::parent>(source).entity;
+  if (parentEntity != entt::null) {
+    snapshot.parent = registry.get<Layer>(parentEntity).id;
+  }
+
+  switch (snapshot.core.type) {
+    case LayerType::TileLayer: {
+      snapshot.tiles = registry.get<TileLayer>(source).matrix;
+      break;
+    }
+    case LayerType::ObjectLayer: {
+      auto& objects = snapshot.objects.emplace();
+
+      for (const auto objectEntity : registry.get<ObjectLayer>(source).objects) {
+        auto& objectSnapshot = objects.emplace_back();
+        objectSnapshot.core = registry.get<comp::object>(objectEntity);
+        objectSnapshot.context = CopyPropertyContext(registry, objectEntity);
+      }
+
+      break;
+    }
+    case LayerType::GroupLayer: {
+      auto& children = snapshot.children.emplace();
+
+      for (const auto child : registry.get<LayerTreeNode>(source).children) {
+        children.push_back(_copy_layer(registry, child));
+      }
+
+      break;
+    }
+  }
+
+  return snapshot;
+}
+
 }  // namespace
 
 auto make_basic_layer(entt::registry& registry,
@@ -64,7 +113,7 @@ auto make_basic_layer(entt::registry& registry,
 
   {
     auto& node = registry.emplace<LayerTreeNode>(entity);
-    node.index = GetNewLayerIndex(registry, entity, parent);
+    node.index = _new_layer_index(registry, entity, parent);
   }
 
   {
@@ -101,7 +150,7 @@ auto make_tile_layer(entt::registry& registry) -> entt::entity
                        map.next_layer_id,
                        LayerType::TileLayer,
                        fmt::format("Tile Layer {}", map.tile_layer_suffix),
-                       GetNewLayerParent(registry));
+                       _new_layer_parent(registry));
   ++map.next_layer_id;
   ++map.tile_layer_suffix;
 
@@ -120,7 +169,7 @@ auto make_object_layer(entt::registry& registry) -> entt::entity
                        map.next_layer_id,
                        LayerType::ObjectLayer,
                        fmt::format("Object Layer {}", map.object_layer_suffix),
-                       GetNewLayerParent(registry));
+                       _new_layer_parent(registry));
   ++map.next_layer_id;
   ++map.object_layer_suffix;
 
@@ -138,13 +187,33 @@ auto make_group_layer(entt::registry& registry) -> entt::entity
                        map.next_layer_id,
                        LayerType::GroupLayer,
                        fmt::format("Group Layer {}", map.group_layer_suffix),
-                       GetNewLayerParent(registry));
+                       _new_layer_parent(registry));
   ++map.next_layer_id;
   ++map.group_layer_suffix;
 
   registry.emplace<GroupLayer>(entity);
 
   return entity;
+}
+
+auto remove_layer(entt::registry& registry, const entt::entity entity) -> LayerSnapshot
+{
+  auto snapshot = _copy_layer(registry, entity);
+
+  auto maybe_reset = [&](entt::entity& active, const entt::entity entity) {
+    if (active != entt::null) {
+      if (entity == active || is_child_layer_node(registry, entity, active)) {
+        active = entt::null;
+      }
+    }
+  };
+
+  maybe_reset(registry.ctx<ActiveLayer>().entity, entity);
+  maybe_reset(registry.ctx<comp::active_attribute_context>().entity, entity);
+
+  destroy_layer_node(registry, entity);
+
+  return snapshot;
 }
 
 auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::entity
@@ -198,88 +267,20 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
   }
 
   /* Restore the previous layer index */
-  while (get_layer_index(registry, entity) != snapshot.index) {
-    const auto index = get_layer_index(registry, entity);
+
+  // TODO add function for this in layer tree system
+  while (layer_local_index(registry, entity) != snapshot.index) {
+    const auto index = layer_local_index(registry, entity);
     if (index > snapshot.index) {
-      layer_tree::MoveNodeUp(registry, entity);
+      move_layer_up(registry, entity);
     }
     else if (index < snapshot.index) {
-      layer_tree::MoveNodeDown(registry, entity);
+      move_layer_down(registry, entity);
     }
   }
 
-  layer_tree::SortNodes(registry);
+  sort_layers(registry);
   return entity;
-}
-
-void sort_layers(entt::registry& registry)
-{
-  layer_tree::SortNodes(registry);
-}
-
-void remove_layer(entt::registry& registry, const entt::entity entity)
-{
-  auto maybe_reset = [&](entt::entity& active, const entt::entity entity) {
-    if (active != entt::null) {
-      if (entity == active || layer_tree::IsChildNode(registry, entity, active)) {
-        active = entt::null;
-      }
-    }
-  };
-
-  maybe_reset(registry.ctx<ActiveLayer>().entity, entity);
-  maybe_reset(registry.ctx<comp::active_attribute_context>().entity, entity);
-
-  layer_tree::DestroyNode(registry, entity);
-}
-
-auto copy_layer(const entt::registry& registry, const entt::entity source)
-    -> LayerSnapshot
-{
-  TACTILE_ASSERT(source != entt::null);
-  TACTILE_ASSERT(registry.all_of<Layer>(source));
-  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(source));
-  TACTILE_ASSERT(registry.all_of<comp::parent>(source));
-  assert((registry.any_of<TileLayer, ObjectLayer, GroupLayer>(source)));
-
-  LayerSnapshot snapshot;
-  snapshot.index = registry.get<LayerTreeNode>(source).index;
-  snapshot.core = registry.get<Layer>(source);
-  snapshot.context = CopyPropertyContext(registry, source);
-
-  const auto parentEntity = registry.get<comp::parent>(source).entity;
-  if (parentEntity != entt::null) {
-    snapshot.parent = registry.get<Layer>(parentEntity).id;
-  }
-
-  switch (snapshot.core.type) {
-    case LayerType::TileLayer: {
-      snapshot.tiles = registry.get<TileLayer>(source).matrix;
-      break;
-    }
-    case LayerType::ObjectLayer: {
-      auto& objects = snapshot.objects.emplace();
-
-      for (const auto objectEntity : registry.get<ObjectLayer>(source).objects) {
-        auto& objectSnapshot = objects.emplace_back();
-        objectSnapshot.core = registry.get<comp::object>(objectEntity);
-        objectSnapshot.context = CopyPropertyContext(registry, objectEntity);
-      }
-
-      break;
-    }
-    case LayerType::GroupLayer: {
-      auto& children = snapshot.children.emplace();
-
-      for (const auto child : registry.get<LayerTreeNode>(source).children) {
-        children.push_back(copy_layer(registry, child));
-      }
-
-      break;
-    }
-  }
-
-  return snapshot;
 }
 
 auto duplicate_layer(entt::registry& registry, const entt::entity source) -> entt::entity
@@ -287,7 +288,7 @@ auto duplicate_layer(entt::registry& registry, const entt::entity source) -> ent
   const auto& sourceParent = registry.get<comp::parent>(source);
   const auto copy = duplicate_layer(registry, source, sourceParent.entity, false);
 
-  layer_tree::SortNodes(registry);
+  sort_layers(registry);
 
   return copy;
 }
@@ -302,7 +303,7 @@ auto duplicate_layer(entt::registry& registry,
      duplicate. */
 
   if (!recursive) {
-    layer_tree::IncrementIndicesOfSiblingsBelow(registry, source);
+    increment_layer_indices_of_siblings_below(registry, source);
   }
 
   const auto copy = registry.create();
@@ -358,38 +359,6 @@ auto duplicate_layer(entt::registry& registry,
   return copy;
 }
 
-void move_layer_up(entt::registry& registry, const entt::entity entity)
-{
-  layer_tree::MoveNodeUp(registry, entity);
-}
-
-void move_layer_down(entt::registry& registry, const entt::entity entity)
-{
-  layer_tree::MoveNodeDown(registry, entity);
-}
-
-void set_layer_opacity(entt::registry& registry,
-                       const entt::entity entity,
-                       const float opacity)
-{
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<Layer>(entity));
-
-  auto& layer = registry.get<Layer>(entity);
-  layer.opacity = opacity;
-}
-
-void set_layer_visible(entt::registry& registry,
-                       const entt::entity entity,
-                       const bool visible)
-{
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<Layer>(entity));
-
-  auto& layer = registry.get<Layer>(entity);
-  layer.visible = visible;
-}
-
 auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entity
 {
   for (auto&& [entity, layer] : registry.view<Layer>().each()) {
@@ -429,24 +398,6 @@ auto get_active_layer(const entt::registry& registry) -> entt::entity
 {
   const auto& active = registry.ctx<ActiveLayer>();
   return active.entity;
-}
-
-auto get_layer_index(const entt::registry& registry, const entt::entity entity) -> usize
-{
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
-  return registry.get<LayerTreeNode>(entity).index;
-}
-
-auto can_move_layer_up(const entt::registry& registry, const entt::entity entity) -> bool
-{
-  return layer_tree::CanMoveNodeUp(registry, entity);
-}
-
-auto can_move_layer_down(const entt::registry& registry, const entt::entity entity)
-    -> bool
-{
-  return layer_tree::CanMoveNodeDown(registry, entity);
 }
 
 auto is_tile_layer_active(const entt::registry& registry) -> bool
