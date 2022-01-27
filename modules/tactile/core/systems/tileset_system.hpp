@@ -127,6 +127,14 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
 [[nodiscard]] auto find_tileset(const entt::registry& registry, TilesetID id)
     -> entt::entity;
 
+[[nodiscard]] auto get_tileset_entity(const entt::registry& registry, TilesetID id)
+    -> entt::entity;
+
+[[nodiscard]] auto find_tile(const entt::registry& registry, TileID id) -> entt::entity;
+
+[[nodiscard]] auto get_tile_entity(const entt::registry& registry, TileID id)
+    -> entt::entity;
+
 /**
  * \brief Attempts to find the tileset that contains a specific tile.
  *

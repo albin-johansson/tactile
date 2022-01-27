@@ -27,9 +27,9 @@ namespace tactile {
 namespace {
 
 template <typename T>
-void each_object(const entt::registry& registry,
-                 const std::vector<entt::entity>& objects,
-                 const T& func)
+void _each_object(const entt::registry& registry,
+                  const std::vector<entt::entity>& objects,
+                  const T& func)
 {
   for (const auto objectEntity : objects) {
     const auto& object = registry.get<comp::object>(objectEntity);
@@ -135,7 +135,7 @@ void EmitInfo::each_tileset(const tileset_visitor& func) const
 
 auto EmitInfo::tileset_context(const TilesetID id) const -> ContextID
 {
-  const auto entity = to_tileset_entity(id);
+  const auto entity = sys::get_tileset_entity(*mRegistry, id);
   return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
@@ -149,7 +149,7 @@ auto EmitInfo::tileset_fancy_tile_count(TilesetID id) const -> usize
 void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
                                        const fancy_tile_visitor& func) const
 {
-  const auto tilesetEntity = to_tileset_entity(id);
+  const auto tilesetEntity = sys::get_tileset_entity(*mRegistry, id);
   const auto& tileset = mRegistry->get<comp::tileset>(tilesetEntity);
 
   for (auto&& [entity, tile, context] :
@@ -179,15 +179,14 @@ auto EmitInfo::fancy_tile_object_count(const TileID id) const -> usize
 
 void EmitInfo::each_fancy_tile_object(const TileID id, const object_visitor& func) const
 {
-  const auto entity = to_tile_entity(id);
+  const auto entity = sys::get_tile_entity(*mRegistry, id);
   const auto& tile = mRegistry->get<comp::fancy_tile>(entity);
-
-  each_object(*mRegistry, tile.objects, func);
+  _each_object(*mRegistry, tile.objects, func);
 }
 
 auto EmitInfo::fancy_tile_animation_frame_count(const TileID id) const -> usize
 {
-  const auto entity = to_tile_entity(id);
+  const auto entity = sys::get_tile_entity(*mRegistry, id);
 
   if (const auto* animation = mRegistry->try_get<comp::animation>(entity)) {
     return animation->frames.size();
@@ -199,7 +198,7 @@ auto EmitInfo::fancy_tile_animation_frame_count(const TileID id) const -> usize
 void EmitInfo::each_fancy_tile_animation_frame(const TileID id,
                                                const animation_frame_visitor& func) const
 {
-  const auto entity = to_tile_entity(id);
+  const auto entity = sys::get_tile_entity(*mRegistry, id);
 
   const auto& animation = mRegistry->get<comp::animation>(entity);
   for (const auto frameEntity : animation.frames) {
@@ -301,7 +300,7 @@ auto EmitInfo::layer_object_count(const LayerID id) const -> usize
 void EmitInfo::each_layer_object(const LayerID id, const object_visitor& func) const
 {
   const auto&& [entity, layer] = sys::get_object_layer(*mRegistry, id);
-  each_object(*mRegistry, layer.objects, func);
+  _each_object(*mRegistry, layer.objects, func);
 }
 
 auto EmitInfo::layer_context(const LayerID id) const -> ContextID
@@ -375,28 +374,6 @@ auto EmitInfo::destination_file() const -> const std::filesystem::path&
 auto EmitInfo::destination_dir() const -> const std::filesystem::path&
 {
   return mDestinationDir;
-}
-
-auto EmitInfo::to_tileset_entity(const TilesetID id) const -> entt::entity
-{
-  const auto entity = sys::find_tileset(*mRegistry, id);
-  if (entity != entt::null) {
-    return entity;
-  }
-  else {
-    ThrowTraced(TactileError{"Did not find entity associated with tileset ID!"});
-  }
-}
-
-auto EmitInfo::to_tile_entity(const TileID id) const -> entt::entity
-{
-  for (auto&& [entity, fancy] : mRegistry->view<comp::fancy_tile>().each()) {
-    if (fancy.id == id) {
-      return entity;
-    }
-  }
-
-  ThrowTraced(TactileError{"Did not find fancy tile associated with tile ID!"});
 }
 
 }  // namespace tactile

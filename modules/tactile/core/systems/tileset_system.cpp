@@ -248,6 +248,40 @@ auto find_tileset(const entt::registry& registry, const TilesetID id) -> entt::e
   return entt::null;
 }
 
+auto get_tileset_entity(const entt::registry& registry, const TilesetID id)
+    -> entt::entity
+{
+  const auto entity = find_tileset(registry, id);
+  if (entity != entt::null) {
+    return entity;
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid tileset ID!"});
+  }
+}
+
+auto find_tile(const entt::registry& registry, const TileID id) -> entt::entity
+{
+  for (auto&& [entity, fancy] : registry.view<comp::fancy_tile>().each()) {
+    if (fancy.id == id) {
+      return entity;
+    }
+  }
+
+  return entt::null;
+}
+
+auto get_tile_entity(const entt::registry& registry, const TileID id) -> entt::entity
+{
+  const auto entity = find_tile(registry, id);
+  if (entity != entt::null) {
+    return entity;
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid tile ID!"});
+  }
+}
+
 auto find_tileset_with_tile(const entt::registry& registry, const TileID id)
     -> entt::entity
 {
