@@ -19,7 +19,7 @@ namespace tactile::sys {
  * - `ActiveTileset`
  * - `active_attribute_context`
  * - `ActiveTool`
- * - `ActiveObject`
+ * - `active_object`
  *
  * \return a document registry.
  */

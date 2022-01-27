@@ -44,7 +44,7 @@ void RenderMap(Graphics& graphics, const entt::registry& registry)
     }
   }
 
-  if (const auto& activeObject = registry.ctx<ActiveObject>();
+  if (const auto& activeObject = registry.ctx<comp::active_object>();
       activeObject.entity != entt::null) {
     RenderObject(graphics, registry, activeObject.entity, cen::colors::yellow);
   }

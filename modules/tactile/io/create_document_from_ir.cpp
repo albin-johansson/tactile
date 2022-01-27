@@ -140,7 +140,7 @@ auto AddObject(entt::registry& registry, const IO::Object& irObject) -> entt::en
 {
   const auto objectEntity = registry.create();
 
-  auto& object = registry.emplace<Object>(objectEntity);
+  auto& object = registry.emplace<comp::object>(objectEntity);
   object.id = ObjectID{IO::GetId(irObject)};
   object.x = IO::GetX(irObject);
   object.y = IO::GetY(irObject);

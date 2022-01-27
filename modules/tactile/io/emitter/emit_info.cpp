@@ -30,7 +30,7 @@ void each_object(const entt::registry& registry,
                  const T& func)
 {
   for (const auto objectEntity : objects) {
-    const auto& object = registry.get<Object>(objectEntity);
+    const auto& object = registry.get<comp::object>(objectEntity);
     const auto& context = registry.get<comp::attribute_context>(objectEntity);
 
     ObjectData data;

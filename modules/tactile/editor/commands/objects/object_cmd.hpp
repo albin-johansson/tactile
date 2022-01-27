@@ -6,18 +6,17 @@
 #include <tactile_def.hpp>
 
 #include "core/components/attribute_context.hpp"
+#include "core/components/object.hpp"
 #include "editor/commands/command.hpp"
 
 namespace tactile {
-
-struct Object;
 
 class AObjectCmd : public ACommand {
  public:
   AObjectCmd(std::string name, RegistryRef registry, ObjectID id);
 
  protected:
-  [[nodiscard]] auto GetTargetObject() -> Object&;
+  [[nodiscard]] auto GetTargetObject() -> comp::object&;
 
   [[nodiscard]] auto GetTargetObjectContext() const -> comp::attribute_context&;
 

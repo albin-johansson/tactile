@@ -10,7 +10,7 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto GetHitDetectionBounds(const Object& object,
+[[nodiscard]] auto GetHitDetectionBounds(const comp::object& object,
                                          const float mapTileWidth,
                                          const float mapTileHeight,
                                          const float xRatio,
@@ -51,7 +51,7 @@ auto FindObject(const entt::registry& registry,
   const auto& layer = registry.get<ObjectLayer>(entity);
 
   for (const auto objectEntity : layer.objects) {
-    const auto& object = registry.get<Object>(objectEntity);
+    const auto& object = registry.get<comp::object>(objectEntity);
     if (object.id == id) {
       return objectEntity;
     }
@@ -73,7 +73,7 @@ auto FindObject(const entt::registry& registry,
 
   const auto& layer = registry.get<ObjectLayer>(entity);
   for (const auto objectEntity : layer.objects) {
-    const auto& object = registry.get<Object>(objectEntity);
+    const auto& object = registry.get<comp::object>(objectEntity);
     const auto bounds = GetHitDetectionBounds(object,
                                               static_cast<float>(map.tile_width),
                                               static_cast<float>(map.tile_height),

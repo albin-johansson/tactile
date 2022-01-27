@@ -20,7 +20,7 @@ auto make_document_registry() -> entt::registry
   registry.set<ActiveTileset>();
   registry.set<comp::active_attribute_context>();
   registry.set<ActiveTool>();
-  registry.set<ActiveObject>();
+  registry.set<comp::active_object>();
   registry.set<MousePos>();
 
   auto& map = registry.set<MapInfo>();

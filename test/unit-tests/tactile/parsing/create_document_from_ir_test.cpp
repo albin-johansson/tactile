@@ -162,7 +162,7 @@ void CheckObjectLayer1(const entt::registry& registry)
 
   {
     const auto rectEntity = sys::FindObject(registry, entity, 2);
-    const auto& rect = registry.get<Object>(rectEntity);
+    const auto& rect = registry.get<comp::object>(rectEntity);
     const auto& rectContext = registry.get<comp::attribute_context>(rectEntity);
 
     ASSERT_EQ("Rect", rectContext.name);

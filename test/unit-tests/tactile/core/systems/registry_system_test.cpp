@@ -2,9 +2,9 @@
 
 #include <gtest/gtest.h>
 
+#include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/attribute_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/tool.hpp"
 #include "core/map.hpp"
@@ -21,7 +21,7 @@ TEST(RegistrySystem, MakeRegistry)
   ASSERT_TRUE(registry.try_ctx<ActiveTileset>());
   ASSERT_TRUE(registry.try_ctx<comp::active_attribute_context>());
   ASSERT_TRUE(registry.try_ctx<ActiveTool>());
-  ASSERT_TRUE(registry.try_ctx<ActiveObject>());
+  ASSERT_TRUE(registry.try_ctx<comp::active_object>());
   ASSERT_TRUE(registry.try_ctx<Viewport>());
   ASSERT_TRUE(registry.try_ctx<comp::attribute_context>());
   ASSERT_TRUE(registry.try_ctx<TilesetContext>());

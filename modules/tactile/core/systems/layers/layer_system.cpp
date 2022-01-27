@@ -178,7 +178,7 @@ auto RestoreLayer(entt::registry& registry, LayerSnapshot snapshot) -> entt::ent
       for (auto objectSnapshot : snapshot.objects.value()) {
         const auto objectEntity = registry.create();
 
-        registry.emplace<Object>(objectEntity, std::move(objectSnapshot.core));
+        registry.emplace<comp::object>(objectEntity, std::move(objectSnapshot.core));
         RestorePropertyContext(registry, objectEntity, std::move(objectSnapshot.context));
 
         objectLayer.objects.push_back(objectEntity);
@@ -268,7 +268,7 @@ auto CopyLayer(const entt::registry& registry, const entt::entity source) -> Lay
 
       for (const auto objectEntity : registry.get<ObjectLayer>(source).objects) {
         auto& objectSnapshot = objects.emplace_back();
-        objectSnapshot.core = registry.get<Object>(objectEntity);
+        objectSnapshot.core = registry.get<comp::object>(objectEntity);
         objectSnapshot.context = CopyPropertyContext(registry, objectEntity);
       }
 

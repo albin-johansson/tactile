@@ -34,7 +34,7 @@ struct TilesetSnapshot final
 
 struct ObjectSnapshot final
 {
-  Object core;
+  comp::object core;
   PropertyContextSnapshot context;
 };
 

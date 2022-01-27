@@ -139,7 +139,7 @@ void ConvertObject(IO::Map& irMap,
                    const entt::registry& registry,
                    const entt::entity entity)
 {
-  const auto& object = registry.get<Object>(entity);
+  const auto& object = registry.get<comp::object>(entity);
   IO::SetId(ir, object.id);
   IO::SetX(ir, object.x);
   IO::SetY(ir, object.y);

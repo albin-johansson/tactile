@@ -5,15 +5,15 @@
 #include <entt/entt.hpp>  // entity, null
 #include <tactile_def.hpp>
 
-namespace tactile {
+namespace tactile::comp {
 
 /**
  * \brief Component that represents objects located in object layers.
  *
- * \see ActiveObject
- * \see ObjectDragInfo
+ * \see active_object
+ * \see object_drag_info
  */
-struct Object final
+struct object final
 {
   ObjectID id{};      ///< Unique object identifier.
   float x{};          ///< X-coordinate.
@@ -28,17 +28,15 @@ struct Object final
 /**
  * \brief Context component pointing to the currently active object entity.
  */
-struct ActiveObject final
+struct active_object final
 {
   entt::entity entity{entt::null};  ///< The currently active object (possibly null).
 };
 
 /**
  * \brief Component that provides temporary information about dragged objects.
- *
- * \see Object
  */
-struct ObjectDragInfo final
+struct object_drag_info final
 {
   float origin_object_x{};  ///< Object X-coordinate at the drag start.
   float origin_object_y{};  ///< Object Y-coordinate at the drag start.
@@ -46,4 +44,4 @@ struct ObjectDragInfo final
   float last_mouse_y{};     ///< Mouse viewport y-coordinate at last update.
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp

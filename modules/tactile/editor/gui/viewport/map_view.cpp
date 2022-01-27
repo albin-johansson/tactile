@@ -185,10 +185,10 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
                                     entt::dispatcher& dispatcher)
 {
   if (scoped::Popup popup{"##MapViewObjectContextMenu"}; popup.IsOpen()) {
-    const auto active = registry.ctx<ActiveObject>();
+    const auto active = registry.ctx<comp::active_object>();
 
     TACTILE_ASSERT(active.entity != entt::null);
-    const auto& object = registry.get<Object>(active.entity);
+    const auto& object = registry.get<comp::object>(active.entity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
       dispatcher.enqueue<InspectContextEvent>(active.entity);

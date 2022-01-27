@@ -4,7 +4,6 @@
 
 #include "assert.hpp"
 #include "core/components/attribute_context.hpp"
-#include "core/components/object.hpp"
 #include "core/systems/object_system.hpp"
 
 namespace tactile {
@@ -25,14 +24,14 @@ auto AObjectCmd::GetTargetObjectContext() const -> comp::attribute_context&
   return registry.get<comp::attribute_context>(entity);
 }
 
-auto AObjectCmd::GetTargetObject() -> Object&
+auto AObjectCmd::GetTargetObject() -> comp::object&
 {
   auto& registry = mRegistry.get();
 
   const auto entity = sys::find_object(registry, mObjectId);
   TACTILE_ASSERT(entity != entt::null);
 
-  return registry.get<Object>(entity);
+  return registry.get<comp::object>(entity);
 }
 
 }  // namespace tactile
