@@ -5,7 +5,7 @@
 #include <utility>  // move
 
 #include "core/utils/buffer_utils.hpp"
-#include "core/utils/color_utils.hpp"
+#include "core/utils/colors.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/file_dialog.hpp"
@@ -191,7 +191,7 @@ auto InputWidget(const CStr id, const cen::color value) -> Maybe<cen::color>
 
   const scoped::ID scope{id};
 
-  auto arr = ColorToArray(value);
+  auto arr = color_to_array(value);
   if (ImGui::ColorEdit4("##InputString[color]", arr.data(), flags)) {
     return cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
   }

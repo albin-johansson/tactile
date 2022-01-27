@@ -1,4 +1,4 @@
-#include "core/utils/color_utils.hpp"
+#include "core/utils/colors.hpp"
 
 #include <gtest/gtest.h>
 
@@ -7,7 +7,7 @@ using namespace tactile;
 TEST(ColorUtils, ColorToArray)
 {
   const auto color = cen::colors::tan;
-  const auto array = ColorToArray(color);
+  const auto array = color_to_array(color);
   ASSERT_EQ(color.norm_red(), array.at(0));
   ASSERT_EQ(color.norm_green(), array.at(1));
   ASSERT_EQ(color.norm_blue(), array.at(2));

@@ -7,7 +7,7 @@
 
 #include "assert.hpp"
 #include "core/region.hpp"
-#include "core/utils/color_utils.hpp"
+#include "core/utils/colors.hpp"
 #include "editor/gui/texture_utils.hpp"
 #include "render_info.hpp"
 
@@ -222,7 +222,7 @@ void Graphics::RenderImage(const uint texture,
                  position + mViewportTileSize,
                  uvMin,
                  uvMax,
-                 ColorToU32(cen::colors::white.with_alpha(mOpacity)));
+                 color_to_u32(cen::colors::white.with_alpha(mOpacity)));
 }
 
 void Graphics::RenderTranslatedImage(const uint texture,
@@ -309,12 +309,12 @@ auto Graphics::Translate(const ImVec2& position) const -> ImVec2
 
 auto Graphics::GetDrawColor() const -> uint32
 {
-  return ColorToU32(mDrawColor);
+  return color_to_u32(mDrawColor);
 }
 
 auto Graphics::GetShadowDrawColor() const -> uint32
 {
-  return ColorToU32(cen::colors::black.with_alpha(mOpacity));
+  return color_to_u32(cen::colors::black.with_alpha(mOpacity));
 }
 
 }  // namespace tactile

@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include <magic_enum.hpp>
 
-#include "core/utils/color_utils.hpp"
+#include "core/utils/colors.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/gui/common/checkbox.hpp"
 #include "editor/gui/scoped.hpp"
@@ -138,7 +138,7 @@ void SettingsDialog::UpdateAppearanceTab()
       }
     }
 
-    if (auto arr = ColorToArray(mSettings.viewport_background);
+    if (auto arr = color_to_array(mSettings.viewport_background);
         ImGui::ColorEdit3("Viewport background color",
                           arr.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
