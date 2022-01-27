@@ -27,7 +27,7 @@ constexpr int gFormatVersion = 1;
 
 }  // namespace
 
-void RestoreLastSession(Model& model, TextureManager& textures)
+void restore_last_session(Model& model, TextureManager& textures)
 {
   proto::Session session;
 
@@ -48,7 +48,7 @@ void RestoreLastSession(Model& model, TextureManager& textures)
   }
 }
 
-void SaveSession(const Model& model)
+void save_session(const Model& model)
 {
   proto::Session session;
   for (const auto& [id, document] : model) {

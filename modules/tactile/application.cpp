@@ -76,7 +76,7 @@ auto Application::Run() -> int
   load_file_history();
 
   if (prefs::GetRestoreLastSession()) {
-    RestoreLastSession(mModel, mTextures);
+    restore_last_session(mModel, mTextures);
   }
 
   window.show();
@@ -116,7 +116,7 @@ void Application::OnAboutToExit()
 {
   SaveCurrentFilesToHistory();
   SavePreferences();
-  SaveSession(mModel);
+  save_session(mModel);
   save_file_history();
 }
 

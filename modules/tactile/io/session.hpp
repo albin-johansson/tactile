@@ -14,18 +14,18 @@ class TextureManager;
  * \param model the model that the previous session will be restored to.
  * \param textures the texture manager that will be used.
  *
- * \see `SaveSession()`
+ * \see `save_session()`
  */
-void RestoreLastSession(Model& model, TextureManager& textures);
+void restore_last_session(Model& model, TextureManager& textures);
 
 /**
  * \brief Saves the current session.
  *
  * \param model the model that represent the current session that will be saved.
  *
- * \see `RestoreLastSession()`
+ * \see `restore_last_session()`
  */
-void SaveSession(const Model& model);
+void save_session(const Model& model);
 
 /// \} End of group io
 
