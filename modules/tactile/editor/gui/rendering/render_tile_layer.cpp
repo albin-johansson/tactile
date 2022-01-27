@@ -14,6 +14,8 @@ void RenderTileLayer(Graphics& graphics,
                      const float parentOpacity)
 {
   const auto& layer = registry.get<Layer>(layerEntity);
+  const auto& tileLayer = registry.get<TileLayer>(layerEntity);
+
   graphics.SetOpacity(parentOpacity * layer.opacity);
 
   const auto bounds = graphics.GetBounds();
@@ -22,7 +24,7 @@ void RenderTileLayer(Graphics& graphics,
 
   for (auto row = bounds.begin.row(); row < endRow; ++row) {
     for (auto col = bounds.begin.col(); col < endCol; ++col) {
-      const auto tile = sys::GetTileFromLayer(registry, layerEntity, {row, col});
+      const auto tile = sys::get_tile(tileLayer, {row, col});
       if (tile != empty_tile) {
         RenderTile(graphics, registry, tile, row, col);
       }

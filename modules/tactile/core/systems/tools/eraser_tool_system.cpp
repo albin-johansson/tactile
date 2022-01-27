@@ -26,11 +26,14 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
   const auto entity = GetActiveLayer(registry);
   TACTILE_ASSERT(entity != entt::null);
 
+  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
+  auto& layer = registry.get<TileLayer>(entity);
+
   if (!gOldState.contains(cursor)) {
-    gOldState.emplace(cursor, GetTileFromLayer(registry, entity, cursor));
+    gOldState.emplace(cursor, get_tile(layer, cursor));
   }
 
-  SetTileInLayer(registry, entity, cursor, empty_tile);
+  set_tile(layer, cursor, empty_tile);
 }
 
 }  // namespace

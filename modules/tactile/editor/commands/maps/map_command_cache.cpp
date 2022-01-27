@@ -15,11 +15,11 @@ void MapCommandCache::Clear() noexcept
 void MapCommandCache::RestoreTiles(entt::registry& registry)
 {
   for (const auto& [layerId, tileCache] : mCache) {
-    const auto entity = sys::FindLayer(registry, layerId);
-    TACTILE_ASSERT(entity != entt::null);
+    const auto entity = sys::get_tile_layer_entity(registry, layerId);
+    auto& layer = registry.get<TileLayer>(entity);
 
     for (const auto& [position, tileId] : tileCache) {
-      sys::SetTileInLayer(registry, entity, position, tileId);
+      sys::set_tile(layer, position, tileId);
     }
   }
 }
@@ -36,7 +36,7 @@ void MapCommandCache::SaveTiles(const entt::registry& registry,
     for (auto row = begin.row(); row < endRow; ++row) {
       for (auto col = begin.col(); col < endCol; ++col) {
         const tile_position position{row, col};
-        const auto tile = sys::GetTileFromLayer(registry, entity, position);
+        const auto tile = sys::get_tile(tileLayer, position);
         tileCache.try_emplace(position, tile);
       }
     }

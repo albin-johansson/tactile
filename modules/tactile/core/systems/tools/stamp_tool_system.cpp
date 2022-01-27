@@ -32,6 +32,9 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 
   const auto layerEntity = GetActiveLayer(registry);
   TACTILE_ASSERT(layerEntity != entt::null);
+  TACTILE_ASSERT(registry.all_of<TileLayer>(layerEntity));
+
+  auto& layer = registry.get<TileLayer>(layerEntity);
 
   const auto tilesetEntity = find_active_tileset(registry);
   TACTILE_ASSERT(tilesetEntity != entt::null);
@@ -53,10 +56,10 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
         const auto pos = cursor + index - previewOffset;
         if (is_position_in_map(registry, pos)) {
           if (!gOldState.contains(pos)) {
-            gOldState.emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
+            gOldState.emplace(pos, get_tile(layer, pos));
           }
           gSequence.emplace_or_replace(pos, tile);
-          SetTileInLayer(registry, layerEntity, pos, tile);
+          set_tile(layer, pos, tile);
         }
       }
     }

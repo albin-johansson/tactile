@@ -40,11 +40,10 @@ void BucketCmd::Redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindLayer(registry, mLayer);
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
+  const auto entity = sys::get_tile_layer_entity(registry, mLayer);
+  const auto& layer = registry.get<TileLayer>(entity);
 
-  mTarget = sys::GetTileFromLayer(registry, entity, mOrigin);
+  mTarget = sys::get_tile(layer, mOrigin);
   flood(registry, entity, mOrigin, mReplacement, mPositions);
 }
 

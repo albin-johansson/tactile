@@ -1,6 +1,9 @@
 #include "object_system.hpp"
 
+#include <tactile_stdlib.hpp>
+
 #include "core/components/object.hpp"
+#include "throw.hpp"
 
 namespace tactile::sys {
 
@@ -13,6 +16,17 @@ auto find_object(const entt::registry& registry, const ObjectID id) -> entt::ent
   }
 
   return entt::null;
+}
+
+auto get_object(const entt::registry& registry, ObjectID id) -> entt::entity
+{
+  const auto entity = find_object(registry, id);
+  if (entity != entt::null) {
+    return entity;
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid object identifier!"});
+  }
 }
 
 }  // namespace tactile::sys

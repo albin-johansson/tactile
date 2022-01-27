@@ -16,6 +16,7 @@
 #include "core/map.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/object_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/tileset_system.hpp"
@@ -285,20 +286,9 @@ auto EmitInfo::layer_data(const LayerID id) const -> LayerData
 
 void EmitInfo::each_layer_tile(const LayerID id, const layer_tile_visitor& func) const
 {
-  const auto entity = to_layer_entity(id);
-
-  TACTILE_ASSERT(mRegistry->all_of<TileLayer>(entity));
-  const auto& tileLayer = mRegistry->get<TileLayer>(entity);
-
-  const auto nRows = row_count();
-  const auto nCols = column_count();
-
-  for (usize row = 0; row < nRows; ++row) {
-    for (usize col = 0; col < nCols; ++col) {
-      const auto tile = tileLayer.matrix.at(row).at(col);
-      func(row, col, tile);
-    }
-  }
+  const auto entity = sys::get_tile_layer_entity(*mRegistry, id);
+  const auto& layer = mRegistry->get<TileLayer>(entity);
+  sys::each_tile(layer, func);
 }
 
 auto EmitInfo::layer_object_count(const LayerID id) const -> usize
@@ -329,7 +319,7 @@ auto EmitInfo::layer_context(const LayerID id) const -> ContextID
 
 auto EmitInfo::object_context(const ObjectID id) const -> ContextID
 {
-  const auto entity = to_object_entity(id);
+  const auto entity = sys::get_object(*mRegistry, id);
   return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
@@ -424,17 +414,6 @@ auto EmitInfo::to_layer_entity(const LayerID id) const -> entt::entity
   }
   else {
     ThrowTraced(TactileError{"Invalid layer ID!"});
-  }
-}
-
-auto EmitInfo::to_object_entity(const ObjectID id) const -> entt::entity
-{
-  const auto entity = sys::find_object(*mRegistry, id);
-  if (entity != entt::null) {
-    return entity;
-  }
-  else {
-    ThrowTraced(TactileError{"Invalid object ID!"});
   }
 }
 

@@ -32,10 +32,10 @@ void StampSequenceCmd::ApplySequence(const TileCache& cache)
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindLayer(registry, mLayer);
-  TACTILE_ASSERT(entity != entt::null);
+  const auto entity = sys::get_tile_layer_entity(registry, mLayer);
+  auto& layer = registry.get<TileLayer>(entity);
 
-  sys::SetTilesInLayer(registry, entity, cache);
+  sys::set_tiles(layer, cache);
 }
 
 }  // namespace tactile

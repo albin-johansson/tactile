@@ -20,10 +20,10 @@ void EraserSequenceCmd::Undo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindLayer(registry, mLayer);
-  TACTILE_ASSERT(entity != entt::null);
+  const auto entity = sys::get_tile_layer_entity(registry, mLayer);
+  auto& layer = registry.get<TileLayer>(entity);
 
-  sys::SetTilesInLayer(registry, entity, mOldState);
+  sys::set_tiles(layer, mOldState);
 }
 
 void EraserSequenceCmd::Redo()

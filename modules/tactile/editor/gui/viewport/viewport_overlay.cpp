@@ -79,8 +79,9 @@ void UpdateMouseTileLabels(const entt::registry& registry,
     if (registry.all_of<TileLayer>(activeLayer.entity)) {
       ImGui::Separator();
 
-      const auto global =
-          sys::GetTileFromLayer(registry, activeLayer.entity, cursor.map_position);
+      const auto& layer = registry.get<TileLayer>(activeLayer.entity);
+      const auto global = sys::get_tile(layer, cursor.map_position);
+
       if (cursor.is_within_map && global != empty_tile) {
         ImGui::Text("Global ID: %i", global);
       }

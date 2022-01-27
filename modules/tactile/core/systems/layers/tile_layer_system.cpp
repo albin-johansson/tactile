@@ -1,49 +1,62 @@
 #include "tile_layer_system.hpp"
 
-#include "assert.hpp"
-#include "core/components/layer.hpp"
+#include "layer_system.hpp"
+#include "throw.hpp"
 
 namespace tactile::sys {
+namespace {
 
-void SetTileInLayer(entt::registry& registry,
-                    const entt::entity entity,
-                    const tile_position& position,
-                    const TileID tile)
+[[nodiscard]] auto is_valid_position(const TileLayer& layer,
+                                     const usize row,
+                                     const usize col) -> bool
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
-
-  auto& layer = registry.get<TileLayer>(entity);
-  layer.matrix.at(position.row_index()).at(position.col_index()) = tile;
+  return row < layer.matrix.size() && col < layer.matrix[0].size();
 }
 
-void SetTilesInLayer(entt::registry& registry,
-                     const entt::entity entity,
-                     const TileCache& tiles)
-{
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
+}  // namespace
 
-  auto& matrix = registry.get<TileLayer>(entity).matrix;
-  for (const auto& [position, tile] : tiles) {
-    TACTILE_ASSERT(position.row_index() < matrix.size());
-    TACTILE_ASSERT(position.col_index() < matrix.front().size());
-    matrix[position.row_index()][position.col_index()] = tile;
+auto get_tile_layer_entity(const entt::registry& registry, const LayerID id)
+    -> entt::entity
+{
+  const auto entity = sys::FindLayer(registry, id);
+  if (entity != entt::null && registry.all_of<TileLayer>(entity)) {
+    return entity;
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid tile layer identifier!"});
   }
 }
 
-auto GetTileFromLayer(const entt::registry& registry,
-                      const entt::entity entity,
-                      const tile_position& position) -> TileID
+void set_tile(TileLayer& layer, const tile_position& position, const TileID tile)
 {
-  const auto& tileLayer = registry.get<TileLayer>(entity);
-  const auto& matrix = tileLayer.matrix;
-
   const auto row = position.row_index();
   const auto col = position.col_index();
 
-  if (row < matrix.size() && col < matrix.at(0).size()) {
-    return matrix.at(row).at(col);
+  if (is_valid_position(layer, row, col)) {
+    layer.matrix[row][col] = tile;
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid tile layer position!"});
+  }
+}
+
+void set_tiles(TileLayer& layer, const TileCache& tiles)
+{
+  for (const auto& [position, tile] : tiles) {
+    const auto row = position.row_index();
+    const auto col = position.col_index();
+    TACTILE_ASSERT(is_valid_position(layer, row, col));
+    layer.matrix[row][col] = tile;
+  }
+}
+
+auto get_tile(const TileLayer& layer, const tile_position& position) -> TileID
+{
+  const auto row = position.row_index();
+  const auto col = position.col_index();
+
+  if (is_valid_position(layer, row, col)) {
+    return layer.matrix[row][col];
   }
   else {
     return empty_tile;
