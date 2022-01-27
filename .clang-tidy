@@ -18,6 +18,7 @@ Checks: "-*,
          clang-analyzer-*,
          
          misc-*,
+         -misc-no-recursion,
          -misc-non-private-member-variables-in-classes,
          
          cppcoreguidelines-*,
