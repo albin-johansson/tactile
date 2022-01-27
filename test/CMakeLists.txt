@@ -22,7 +22,7 @@ set(TEST_FILES
     unit-tests/tactile/core/systems/tree_system_test.cpp
     unit-tests/tactile/core/systems/viewport_system_test.cpp
 
-    unit-tests/tactile/core/utils/buffer_utils_test.cpp
+    unit-tests/tactile/core/utils/buffers_test.cpp
     unit-tests/tactile/core/utils/colors_test.cpp
     unit-tests/tactile/core/utils/vector_map_test.cpp
 

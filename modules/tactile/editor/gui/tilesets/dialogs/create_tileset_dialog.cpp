@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "core/utils/buffer_utils.hpp"
+#include "core/utils/buffers.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "io/file_dialog.hpp"
 #include "io/preferences.hpp"

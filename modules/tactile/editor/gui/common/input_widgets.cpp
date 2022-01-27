@@ -4,7 +4,7 @@
 #include <limits>   // numeric_limits
 #include <utility>  // move
 
-#include "core/utils/buffer_utils.hpp"
+#include "core/utils/buffers.hpp"
 #include "core/utils/colors.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"

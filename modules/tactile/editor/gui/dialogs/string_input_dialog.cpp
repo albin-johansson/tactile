@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-#include "core/utils/buffer_utils.hpp"
+#include "core/utils/buffers.hpp"
 #include "editor/gui/common/button.hpp"
 
 namespace tactile {

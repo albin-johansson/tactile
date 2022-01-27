@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "core/systems/property_system.hpp"
-#include "core/utils/buffer_utils.hpp"
+#include "core/utils/buffers.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/model.hpp"
 #include "property_type_combo.hpp"
