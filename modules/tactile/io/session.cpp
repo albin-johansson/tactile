@@ -4,7 +4,6 @@
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 
-#include <centurion.hpp>
 #include <tactile_stdlib.hpp>
 
 #include "create_document_from_ir.hpp"
@@ -17,7 +16,7 @@
 namespace tactile {
 namespace {
 
-constexpr int gFormatVersion = 1;
+constexpr int gFormatVersion [[maybe_unused]] = 1;
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&
 {
