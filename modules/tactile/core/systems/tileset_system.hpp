@@ -29,7 +29,7 @@ void update_tilesets(entt::registry& registry);
  *
  * \details The created entity will feature the following components:
  * - `Tileset`
- * - `Texture`
+ * - `texture`
  * - `TilesetCache`
  * - `TilesetSelection`
  * - `UvTileSize`
@@ -46,13 +46,13 @@ void update_tilesets(entt::registry& registry);
  */
 auto make_tileset(entt::registry& registry,
                   TileID firstId,
-                  const Texture& texture,
+                  const comp::texture& texture,
                   int32 tileWidth,
                   int32 tileHeight) -> entt::entity;
 
 // This overload should be used when the user adds new tilesets (i.e. not from parsing)
 auto make_tileset(entt::registry& registry,
-                  const Texture& texture,
+                  const comp::texture& texture,
                   int32 tileWidth,
                   int32 tileHeight) -> entt::entity;
 

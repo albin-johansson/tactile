@@ -203,7 +203,7 @@ void ConvertTileset(IO::Map& irMap,
   IO::SetTileCount(ir, tileset.tile_count);
   IO::SetColumnCount(ir, tileset.column_count);
 
-  const auto& texture = registry.get<Texture>(entity);
+  const auto& texture = registry.get<comp::texture>(entity);
   IO::SetImagePath(ir, std::filesystem::absolute(texture.path).c_str());
   IO::SetImageWidth(ir, texture.width);
   IO::SetImageHeight(ir, texture.height);

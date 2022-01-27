@@ -4,9 +4,9 @@
 
 #include <tactile_def.hpp>
 
-namespace tactile {
+namespace tactile::comp {
 
-struct Texture final
+struct texture final
 {
   uint id{};
   int width{};
@@ -14,4 +14,4 @@ struct Texture final
   std::filesystem::path path;
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp

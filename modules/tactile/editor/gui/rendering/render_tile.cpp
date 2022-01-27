@@ -19,7 +19,7 @@ void RenderTile(Graphics& graphics,
   const auto& context = registry.ctx<TilesetContext>();
   const auto tilesetEntity = context.tile_to_tileset.at(tile);
   if (tilesetEntity != entt::null) {
-    const auto& texture = registry.get<Texture>(tilesetEntity);
+    const auto& texture = registry.get<comp::texture>(tilesetEntity);
     const auto& uvTileSize = registry.get<UvTileSize>(tilesetEntity);
 
     const auto tileToRender = sys::get_tile_to_render(registry, tilesetEntity, tile);

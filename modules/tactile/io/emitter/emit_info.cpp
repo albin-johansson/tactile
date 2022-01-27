@@ -110,7 +110,7 @@ auto EmitInfo::tileset_count() const -> usize
 void EmitInfo::each_tileset(const tileset_visitor& func) const
 {
   for (auto&& [entity, tileset, context, texture] :
-       mRegistry->view<Tileset, comp::attribute_context, Texture>().each()) {
+       mRegistry->view<Tileset, comp::attribute_context, comp::texture>().each()) {
     TilesetData data;
 
     data.id = tileset.id;

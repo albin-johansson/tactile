@@ -88,7 +88,7 @@ void RenderStampPreview(const entt::registry& registry,
   }
 
   const auto& region = selection.region.value();
-  const auto& texture = registry.get<Texture>(tilesetEntity);
+  const auto& texture = registry.get<comp::texture>(tilesetEntity);
   const auto& uv = registry.get<UvTileSize>(tilesetEntity);
 
   PreviewInfo info;

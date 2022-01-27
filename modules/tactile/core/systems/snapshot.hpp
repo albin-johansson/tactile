@@ -27,7 +27,7 @@ struct TilesetSnapshot final
 {
   Tileset core;
   TilesetSelection selection;
-  Texture texture;
+  comp::texture texture;
   UvTileSize uv;
   PropertyContextSnapshot context;
 };

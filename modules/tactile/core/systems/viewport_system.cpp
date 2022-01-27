@@ -42,7 +42,7 @@ void OffsetBoundViewport(entt::registry& registry,
 {
   TACTILE_ASSERT(entity != entt::null);
   TACTILE_ASSERT(registry.all_of<Viewport>(entity));
-  TACTILE_ASSERT(registry.all_of<Texture>(entity));
+  TACTILE_ASSERT(registry.all_of<comp::texture>(entity));
 
   auto& viewport = registry.get<Viewport>(entity);
   viewport.x_offset += dx;
@@ -51,7 +51,7 @@ void OffsetBoundViewport(entt::registry& registry,
   viewport.x_offset = std::min(0.0f, viewport.x_offset);
   viewport.y_offset = std::min(0.0f, viewport.y_offset);
 
-  const auto& texture = registry.get<Texture>(entity);
+  const auto& texture = registry.get<comp::texture>(entity);
   const auto textureWidth = static_cast<float>(texture.width);
   const auto textureHeight = static_cast<float>(texture.height);
 

@@ -207,7 +207,7 @@ void CheckTilesets(const entt::registry& registry)
   ASSERT_EQ(32, tileset.column_count);
   ASSERT_EQ(1024, tileset.tile_count);
 
-  const auto& texture = registry.get<Texture>(tilesetEntity);
+  const auto& texture = registry.get<comp::texture>(tilesetEntity);
   ASSERT_EQ(1024, texture.width);
   ASSERT_EQ(1024, texture.height);
 }
