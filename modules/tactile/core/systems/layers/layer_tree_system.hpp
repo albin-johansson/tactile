@@ -5,6 +5,14 @@
 
 namespace tactile::sys {
 
+/**
+ * \ingroup layer-system
+ * \defgroup layer-tree-system Layer Tree System
+ */
+
+/// \addtogroup layer-tree-system
+/// \{
+
 void sort_layers(entt::registry& registry);
 
 void increment_layer_indices_of_siblings_below(entt::registry& registry,
@@ -46,5 +54,7 @@ void move_layer_down(entt::registry& registry, entt::entity entity);
 
 [[nodiscard]] auto layer_global_index(const entt::registry& registry, entt::entity entity)
     -> usize;
+
+/// \} End of group layer-tree-system
 
 }  // namespace tactile::sys
