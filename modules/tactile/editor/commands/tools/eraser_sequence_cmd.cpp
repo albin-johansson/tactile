@@ -12,7 +12,7 @@ namespace tactile {
 EraserSequenceCmd::EraserSequenceCmd(RegistryRef registry, TileCache&& oldState)
     : ACommand{"Eraser Sequence"}
     , mRegistry{registry}
-    , mLayer{sys::GetActiveLayerID(registry).value()}
+    , mLayer{sys::get_active_layer_id(registry).value()}
     , mOldState{std::move(oldState)}
 {}
 
@@ -30,7 +30,7 @@ void EraserSequenceCmd::Redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindLayer(registry, mLayer);
+  const auto entity = sys::find_layer(registry, mLayer);
   TACTILE_ASSERT(entity != entt::null);
 
   auto& matrix = registry.get<TileLayer>(entity).matrix;

@@ -18,12 +18,12 @@ inline TileCache gOldState;
 
 [[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
 {
-  return IsTileLayerActive(registry);
+  return is_tile_layer_active(registry);
 }
 
 void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 {
-  const auto entity = GetActiveLayer(registry);
+  const auto entity = get_active_layer(registry);
   TACTILE_ASSERT(entity != entt::null);
 
   TACTILE_ASSERT(registry.all_of<TileLayer>(entity));

@@ -18,7 +18,7 @@ namespace {
 auto get_tile_layer_entity(const entt::registry& registry, const LayerID id)
     -> entt::entity
 {
-  const auto entity = sys::FindLayer(registry, id);
+  const auto entity = sys::find_layer(registry, id);
   if (entity != entt::null && registry.all_of<TileLayer>(entity)) {
     return entity;
   }

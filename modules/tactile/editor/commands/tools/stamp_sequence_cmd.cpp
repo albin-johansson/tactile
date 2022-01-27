@@ -13,7 +13,7 @@ StampSequenceCmd::StampSequenceCmd(RegistryRef registry,
                                    TileCache&& newState)
     : ACommand{"Stamp Sequence"}
     , mRegistry{registry}
-    , mLayer{sys::GetActiveLayerID(registry).value()}
+    , mLayer{sys::get_active_layer_id(registry).value()}
     , mOldState{std::move(oldState)}
     , mNewState{std::move(newState)}
 {}

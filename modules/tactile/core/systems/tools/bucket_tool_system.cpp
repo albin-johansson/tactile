@@ -12,7 +12,7 @@ void BucketToolOnPressed(entt::registry& registry,
                          entt::dispatcher& dispatcher,
                          const MouseInfo& mouse)
 {
-  if (IsTileLayerActive(registry) && is_single_tile_selected_in_tileset(registry) &&
+  if (is_tile_layer_active(registry) && is_single_tile_selected_in_tileset(registry) &&
       mouse.button == cen::mouse_button::left) {
     const auto entity = find_active_tileset(registry);
     TACTILE_ASSERT(entity != entt::null);

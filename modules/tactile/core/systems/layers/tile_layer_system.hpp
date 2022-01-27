@@ -11,7 +11,7 @@
 namespace tactile::sys {
 
 /**
- * \ingroup systems
+ * \ingroup layer-system
  * \defgroup tile-layer-system Tile Layer System
  */
 

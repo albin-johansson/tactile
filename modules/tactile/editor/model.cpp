@@ -265,7 +265,7 @@ auto Model::IsObjectSelectionActive() const -> bool
 auto Model::IsStampPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return sys::IsTileLayerActive(*registry);
+    return sys::is_tile_layer_active(*registry);
   }
   else {
     return false;
@@ -275,7 +275,7 @@ auto Model::IsStampPossible() const -> bool
 auto Model::IsEraserPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return sys::IsTileLayerActive(*registry);
+    return sys::is_tile_layer_active(*registry);
   }
   else {
     return false;
@@ -285,7 +285,7 @@ auto Model::IsEraserPossible() const -> bool
 auto Model::IsBucketPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return sys::IsTileLayerActive(*registry) &&
+    return sys::is_tile_layer_active(*registry) &&
            sys::is_single_tile_selected_in_tileset(*registry);
   }
   else {
@@ -296,7 +296,7 @@ auto Model::IsBucketPossible() const -> bool
 auto Model::IsObjectSelectionPossible() const -> bool
 {
   if (const auto* registry = GetActiveRegistry()) {
-    return sys::IsObjectLayerActive(*registry);
+    return sys::is_object_layer_active(*registry);
   }
   else {
     return false;

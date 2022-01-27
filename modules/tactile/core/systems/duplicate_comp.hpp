@@ -64,7 +64,7 @@ inline auto DuplicateComp<ObjectLayer>(entt::registry& registry,
   return layer;
 }
 
-auto DuplicateLayer(entt::registry& registry,
+auto duplicate_layer(entt::registry& registry,
                     entt::entity entity,
                     entt::entity parent,
                     bool recursive) -> entt::entity;

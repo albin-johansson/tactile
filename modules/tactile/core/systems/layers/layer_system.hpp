@@ -1,16 +1,26 @@
 #pragma once
 
-#include <string>  // string
+#include <string>   // string
+#include <utility>  // pair
 
-#include <entt/entt.hpp>  // registry, entity, null
+#include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
+#include "core/components/layer.hpp"
 #include "core/map.hpp"
 #include "core/systems/snapshot.hpp"
 
 namespace tactile::sys {
 
-/// \name Layer system
+/**
+ * \ingroup systems
+ * \defgroup layer-system Layer System
+ */
+
+/// \addtogroup layer-system
+/// \{
+
+/// \name General layer functions
 /// \{
 
 /**
@@ -34,11 +44,11 @@ namespace tactile::sys {
  *
  * \since 0.2.0
  */
-auto AddBasicLayer(entt::registry& registry,
-                   LayerID id,
-                   LayerType type,
-                   std::string name,
-                   entt::entity parent = entt::null) -> entt::entity;
+auto make_basic_layer(entt::registry& registry,
+                      LayerID id,
+                      LayerType type,
+                      std::string name,
+                      entt::entity parent = entt::null) -> entt::entity;
 
 /**
  * \brief Creates a tile layer entity.
@@ -58,7 +68,7 @@ auto AddBasicLayer(entt::registry& registry,
  *
  * \since 0.2.0
  */
-auto AddTileLayer(entt::registry& registry) -> entt::entity;
+auto make_tile_layer(entt::registry& registry) -> entt::entity;
 
 /**
  * \brief Creates an object layer entity.
@@ -78,7 +88,7 @@ auto AddTileLayer(entt::registry& registry) -> entt::entity;
  *
  * \since 0.2.0
  */
-auto AddObjectLayer(entt::registry& registry) -> entt::entity;
+auto make_object_layer(entt::registry& registry) -> entt::entity;
 
 /**
  * \brief Creates a group layer entity.
@@ -98,9 +108,9 @@ auto AddObjectLayer(entt::registry& registry) -> entt::entity;
  *
  * \since 0.2.0
  */
-auto AddGroupLayer(entt::registry& registry) -> entt::entity;
+auto make_group_layer(entt::registry& registry) -> entt::entity;
 
-auto RestoreLayer(entt::registry& registry, LayerSnapshot snapshot) -> entt::entity;
+auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::entity;
 
 /**
  * \brief Sorts all layers according to their current indices.
@@ -109,7 +119,7 @@ auto RestoreLayer(entt::registry& registry, LayerSnapshot snapshot) -> entt::ent
  *
  * \since 0.2.0
  */
-void SortLayers(entt::registry& registry);
+void sort_layers(entt::registry& registry);
 
 /**
  * \brief Removes the layer associated with the specified ID.
@@ -124,29 +134,17 @@ void SortLayers(entt::registry& registry);
  *
  * \since 0.2.0
  */
-void RemoveLayer(entt::registry& registry, entt::entity entity);
+void remove_layer(entt::registry& registry, entt::entity entity);
 
-/**
- * \brief Selects the layer associated with the specified ID.
- *
- * \pre `entity` must be associated with an existing layer.
- *
- * \param registry the associated registry.
- * \param entity the entity associated with the layer that will be selected.
- *
- * \since 0.2.0
- */
-void SelectLayer(entt::registry& registry, entt::entity entity);
-
-[[nodiscard]] auto CopyLayer(const entt::registry& registry, entt::entity source)
+[[nodiscard]] auto copy_layer(const entt::registry& registry, entt::entity source)
     -> LayerSnapshot;
 
-auto DuplicateLayer(entt::registry& registry, entt::entity source) -> entt::entity;
+auto duplicate_layer(entt::registry& registry, entt::entity source) -> entt::entity;
 
-auto DuplicateLayer(entt::registry& registry,
-                    entt::entity source,
-                    entt::entity parent,
-                    bool recursive) -> entt::entity;
+auto duplicate_layer(entt::registry& registry,
+                     entt::entity source,
+                     entt::entity parent,
+                     bool recursive) -> entt::entity;
 
 /**
  * \brief Moves the specified layer "up", i.e. earlier in the rendering order.
@@ -159,11 +157,11 @@ auto DuplicateLayer(entt::registry& registry,
  * \param registry the associated registry.
  * \param entity the entity associated with the layer that will be moved up.
  *
- * \see `CanMoveLayerUp()`
+ * \see `can_move_layer_up()`
  *
  * \since 0.2.0
  */
-void MoveLayerUp(entt::registry& registry, entt::entity entity);
+void move_layer_up(entt::registry& registry, entt::entity entity);
 
 /**
  * \brief Moves the specified layer "down", i.e. later in the rendering order.
@@ -176,37 +174,19 @@ void MoveLayerUp(entt::registry& registry, entt::entity entity);
  * \param registry the associated registry.
  * \param entity the entity associated with the layer that will be moved downwards.
  *
- * \see `CanMoveLayerDown()`
+ * \see `can_move_layer_down()`
  *
  * \since 0.2.0
  */
-void MoveLayerDown(entt::registry& registry, entt::entity entity);
+void move_layer_down(entt::registry& registry, entt::entity entity);
 
-/**
- * \brief Sets the opacity of the specified layer.
- *
- * \pre `entity` must be associated with an existing layer.
- *
- * \param registry the associated registry.
- * \param entity the entity associated with the layer that will be modified.
- * \param opacity the new opacity of the layer, in the range [0, 1].
- *
- * \since 0.2.0
- */
-void SetLayerOpacity(entt::registry& registry, entt::entity entity, float opacity);
+[[deprecated]] void set_layer_opacity(entt::registry& registry,
+                                      entt::entity entity,
+                                      float opacity);
 
-/**
- * \brief Sets the visibility of the specified layer.
- *
- * \pre `entity` must be associated with an existing layer.
- *
- * \param registry the associated registry.
- * \param entity the entity associated with the layer that will be modified.
- * \param visible the visibility of the layer.
- *
- * \since 0.2.0
- */
-void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible);
+[[deprecated]] void set_layer_visible(entt::registry& registry,
+                                      entt::entity entity,
+                                      bool visible);
 
 /**
  * \brief Attempts to find the layer associated with the specified ID.
@@ -218,107 +198,33 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto FindLayer(const entt::registry& registry, LayerID id) -> entt::entity;
+[[nodiscard]] auto find_layer(const entt::registry& registry, LayerID id) -> entt::entity;
 
-[[nodiscard]] auto GetActiveLayer(const entt::registry& registry) -> entt::entity;
+[[nodiscard]] auto get_layer(entt::registry& registry, LayerID id)
+    -> std::pair<entt::entity, Layer&>;
 
-[[nodiscard]] auto GetLayerIndex(const entt::registry& registry, entt::entity) -> usize;
+[[nodiscard]] auto get_layer(const entt::registry& registry, LayerID id)
+    -> std::pair<entt::entity, const Layer&>;
 
-[[nodiscard]] auto GetLayerOpacity(const entt::registry& registry, entt::entity entity)
-    -> float;
+[[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto GetLayerId(const entt::registry& registry, entt::entity entity)
-    -> LayerID;
+[[nodiscard, deprecated]] auto get_layer_index(const entt::registry& registry,
+                                               entt::entity entity) -> usize;
 
-[[nodiscard]] auto IsLayerVisible(const entt::registry& registry, entt::entity entity)
+[[nodiscard]] auto can_move_layer_up(const entt::registry& registry, entt::entity entity)
     -> bool;
 
-[[nodiscard]] auto CanMoveLayerUp(const entt::registry& registry, entt::entity entity)
-    -> bool;
+[[nodiscard]] auto can_move_layer_down(const entt::registry& registry,
+                                       entt::entity entity) -> bool;
 
-[[nodiscard]] auto CanMoveLayerDown(const entt::registry& registry, entt::entity entity)
-    -> bool;
+[[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;
 
-[[nodiscard]] auto IsTileLayerActive(const entt::registry& registry) -> bool;
+[[nodiscard]] auto is_object_layer_active(const entt::registry& registry) -> bool;
 
-[[nodiscard]] auto IsObjectLayerActive(const entt::registry& registry) -> bool;
+[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>;
 
-[[nodiscard]] auto GetActiveLayerID(const entt::registry& registry) -> Maybe<LayerID>;
+/// \} End of general layer functions
 
-inline void RemoveLayer(entt::registry& registry, const LayerID id)
-{
-  const auto entity = FindLayer(registry, id);
-  RemoveLayer(registry, entity);
-}
-
-inline void SelectLayer(entt::registry& registry, const LayerID id)
-{
-  const auto entity = FindLayer(registry, id);
-  SelectLayer(registry, entity);
-}
-
-inline auto DuplicateLayer(entt::registry& registry, const LayerID id) -> entt::entity
-{
-  const auto entity = FindLayer(registry, id);
-  return DuplicateLayer(registry, entity);
-}
-
-inline void MoveLayerUp(entt::registry& registry, const LayerID id)
-{
-  const auto entity = FindLayer(registry, id);
-  MoveLayerUp(registry, entity);
-}
-
-inline void MoveLayerDown(entt::registry& registry, const LayerID id)
-{
-  const auto entity = FindLayer(registry, id);
-  MoveLayerDown(registry, entity);
-}
-
-inline void SetLayerOpacity(entt::registry& registry,
-                            const LayerID id,
-                            const float opacity)
-{
-  const auto entity = FindLayer(registry, id);
-  SetLayerOpacity(registry, entity, opacity);
-}
-
-inline void SetLayerVisible(entt::registry& registry,
-                            const LayerID id,
-                            const bool visible)
-{
-  const auto entity = FindLayer(registry, id);
-  SetLayerVisible(registry, entity, visible);
-}
-
-[[nodiscard]] inline auto GetLayerOpacity(const entt::registry& registry,
-                                          const LayerID id) -> float
-{
-  const auto entity = FindLayer(registry, id);
-  return GetLayerOpacity(registry, entity);
-}
-
-[[nodiscard]] inline auto IsLayerVisible(const entt::registry& registry, const LayerID id)
-    -> bool
-{
-  const auto entity = FindLayer(registry, id);
-  return IsLayerVisible(registry, entity);
-}
-
-[[nodiscard]] inline auto CanMoveLayerUp(const entt::registry& registry, const LayerID id)
-    -> bool
-{
-  const auto entity = FindLayer(registry, id);
-  return CanMoveLayerUp(registry, entity);
-}
-
-[[nodiscard]] inline auto CanMoveLayerDown(const entt::registry& registry,
-                                           const LayerID id) -> bool
-{
-  const auto entity = FindLayer(registry, id);
-  return CanMoveLayerDown(registry, entity);
-}
-
-/// \} End of layer system
+/// \} End of group layer-system
 
 }  // namespace tactile::sys

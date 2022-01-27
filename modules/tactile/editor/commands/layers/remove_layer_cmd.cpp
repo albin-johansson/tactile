@@ -13,16 +13,16 @@ RemoveLayerCmd::RemoveLayerCmd(RegistryRef registry, const LayerID id)
 
 void RemoveLayerCmd::Undo()
 {
-  sys::RestoreLayer(mRegistry, mLayerSnapshot.value());
+  sys::restore_layer(mRegistry, mLayerSnapshot.value());
 }
 
 void RemoveLayerCmd::Redo()
 {
-  const auto entity = sys::FindLayer(mRegistry, mLayerId);
+  const auto entity = sys::find_layer(mRegistry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
-  mLayerSnapshot = sys::CopyLayer(mRegistry, entity);
-  sys::RemoveLayer(mRegistry, entity);
+  mLayerSnapshot = sys::copy_layer(mRegistry, entity);
+  sys::remove_layer(mRegistry, entity);
 }
 
 }  // namespace tactile

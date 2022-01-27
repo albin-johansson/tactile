@@ -267,11 +267,11 @@ auto MakeLayer(entt::registry& registry,
                const IO::Layer& irLayer,
                const entt::entity parent = entt::null) -> entt::entity
 {
-  const auto entity = sys::AddBasicLayer(registry,
-                                         LayerID{IO::GetId(irLayer)},
-                                         IO::GetType(irLayer),
-                                         IO::GetName(irLayer),
-                                         parent);
+  const auto entity = sys::make_basic_layer(registry,
+                                            LayerID{IO::GetId(irLayer)},
+                                            IO::GetType(irLayer),
+                                            IO::GetName(irLayer),
+                                            parent);
 
   auto& node = registry.get<LayerTreeNode>(entity);
   node.index = IO::GetIndex(irLayer);
@@ -319,7 +319,7 @@ void CreateLayers(Document& document, const IO::Map& irMap)
   IO::EachLayer(irMap,
                 [&](const IO::Layer& irLayer) { MakeLayer(document.registry, irLayer); });
 
-  sys::SortLayers(document.registry);
+  sys::sort_layers(document.registry);
 
   if (!document.registry.storage<LayerTreeNode>().empty()) {
     auto& activeLayer = document.registry.ctx<ActiveLayer>();

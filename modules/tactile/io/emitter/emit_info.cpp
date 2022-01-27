@@ -408,7 +408,7 @@ auto EmitInfo::to_tile_entity(const TileID id) const -> entt::entity
 
 auto EmitInfo::to_layer_entity(const LayerID id) const -> entt::entity
 {
-  const auto entity = sys::FindLayer(*mRegistry, id);
+  const auto entity = sys::find_layer(*mRegistry, id);
   if (entity != entt::null) {
     return entity;
   }

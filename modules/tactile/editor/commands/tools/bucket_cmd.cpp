@@ -13,7 +13,7 @@ BucketCmd::BucketCmd(RegistryRef registry,
                      const TileID replacement)
     : ACommand{"Bucket Fill"}
     , mRegistry{registry}
-    , mLayer{sys::GetActiveLayerID(registry).value()}
+    , mLayer{sys::get_active_layer_id(registry).value()}
     , mOrigin{origin}
     , mReplacement{replacement}
 {}
@@ -22,7 +22,7 @@ void BucketCmd::Undo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindLayer(registry, mLayer);
+  const auto entity = sys::find_layer(registry, mLayer);
   TACTILE_ASSERT(entity != entt::null);
   TACTILE_ASSERT(registry.all_of<TileLayer>(entity));
 

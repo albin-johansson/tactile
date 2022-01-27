@@ -85,7 +85,7 @@ void UpdateCursorGizmos(const entt::registry& registry,
     return;
   }
 
-  if (sys::IsTileLayerActive(registry)) {
+  if (sys::is_tile_layer_active(registry)) {
     ImGui::GetWindowDrawList()->AddRect(cursor.clamped_position,
                                         cursor.clamped_position + info.grid_size,
                                         gTileHighlightColor,

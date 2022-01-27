@@ -80,7 +80,7 @@ void CheckMapAttributes(const entt::registry& registry)
 
 void CheckTileLayer1(const entt::registry& registry)
 {
-  const auto entity = sys::FindLayer(registry, 1);
+  const auto entity = sys::find_layer(registry, 1);
   ASSERT_NE(entity, gNullEntity);
 
   const auto& context = registry.get<comp::attribute_context>(entity);
@@ -101,7 +101,7 @@ void CheckTileLayer1(const entt::registry& registry)
 
 void CheckTileLayer2(const entt::registry& registry)
 {
-  const auto entity = sys::FindLayer(registry, 2);
+  const auto entity = sys::find_layer(registry, 2);
   ASSERT_NE(entity, gNullEntity);
 
   const auto& context = registry.get<comp::attribute_context>(entity);
@@ -138,7 +138,7 @@ void CheckTileLayer2(const entt::registry& registry)
 
 void CheckObjectLayer1(const entt::registry& registry)
 {
-  const auto entity = sys::FindLayer(registry, 3);
+  const auto entity = sys::find_layer(registry, 3);
   ASSERT_NE(gNullEntity, entity);
 
   const auto& context = registry.get<comp::attribute_context>(entity);

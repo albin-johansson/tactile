@@ -510,7 +510,8 @@ void Application::OnRemoveLayer(const RemoveLayerEvent& event)
 void Application::OnSelectLayer(const SelectLayerEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
-    sys::SelectLayer(*registry, event.id);
+    auto& active = registry->ctx<ActiveLayer>();
+    active.entity = sys::find_layer(*registry, event.id);
   }
 }
 

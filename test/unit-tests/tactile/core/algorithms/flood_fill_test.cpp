@@ -13,7 +13,7 @@ TEST(FloodFill, flood)
 {
   auto registry = sys::make_document_registry();
 
-  const auto entity = sys::AddTileLayer(registry);
+  const auto entity = sys::make_tile_layer(registry);
   auto& layer = registry.get<TileLayer>(entity);
 
   registry.ctx<ActiveLayer>().entity = entity;

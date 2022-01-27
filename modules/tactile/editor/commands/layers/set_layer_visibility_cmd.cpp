@@ -15,14 +15,22 @@ SetLayerVisibilityCmd::SetLayerVisibilityCmd(RegistryRef registry,
 
 void SetLayerVisibilityCmd::Undo()
 {
-  sys::SetLayerVisible(mRegistry, mLayerId, mPreviousVisibility.value());
+  auto& registry = mRegistry.get();
+
+  const auto [entity, layer] = sys::get_layer(registry, mLayerId);
+  layer.visible = mPreviousVisibility.value();
+
   mPreviousVisibility.reset();
 }
 
 void SetLayerVisibilityCmd::Redo()
 {
-  mPreviousVisibility = sys::IsLayerVisible(mRegistry, mLayerId);
-  sys::SetLayerVisible(mRegistry, mLayerId, mVisible);
+  auto& registry = mRegistry.get();
+
+  auto [entity, layer] = sys::get_layer(registry, mLayerId);
+  mPreviousVisibility = layer.visible;
+
+  layer.visible = mVisible;
 }
 
 }  // namespace tactile

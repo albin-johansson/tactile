@@ -12,7 +12,7 @@ namespace {
 
 [[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
 {
-  return IsObjectLayerActive(registry);
+  return is_object_layer_active(registry);
 }
 
 [[nodiscard]] auto GetTargetObject(const entt::registry& registry, const MouseInfo& mouse)
@@ -37,7 +37,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
       auto& active = registry.ctx<comp::active_object>();
       active.entity = entt::null;
 
-      const auto layerEntity = GetActiveLayer(registry);
+      const auto layerEntity = get_active_layer(registry);
       const auto objectEntity = FindObject(registry, layerEntity, mouse.x, mouse.y);
       if (objectEntity != entt::null) {
         const auto& object = registry.get<comp::object>(objectEntity);
@@ -56,7 +56,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
       auto& active = registry.ctx<comp::active_object>();
       active.entity = entt::null;
 
-      const auto layerEntity = GetActiveLayer(registry);
+      const auto layerEntity = get_active_layer(registry);
       const auto objectEntity = FindObject(registry, layerEntity, mouse.x, mouse.y);
 
       if (objectEntity != entt::null) {

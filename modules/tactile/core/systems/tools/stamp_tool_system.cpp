@@ -23,14 +23,14 @@ inline TileCache gSequence;
 
 [[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
 {
-  return IsTileLayerActive(registry) && is_tileset_selection_not_empty(registry);
+  return is_tile_layer_active(registry) && is_tileset_selection_not_empty(registry);
 }
 
 void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 {
   TACTILE_ASSERT(IsUsable(registry));
 
-  const auto layerEntity = GetActiveLayer(registry);
+  const auto layerEntity = get_active_layer(registry);
   TACTILE_ASSERT(layerEntity != entt::null);
   TACTILE_ASSERT(registry.all_of<TileLayer>(layerEntity));
 

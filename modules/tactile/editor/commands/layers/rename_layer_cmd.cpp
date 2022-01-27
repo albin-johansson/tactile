@@ -19,7 +19,7 @@ void RenameLayerCmd::Undo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindLayer(registry, mLayerId);
+  const auto entity = sys::find_layer(registry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get<comp::attribute_context>(entity);
@@ -32,7 +32,7 @@ void RenameLayerCmd::Redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::FindLayer(registry, mLayerId);
+  const auto entity = sys::find_layer(registry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.get<comp::attribute_context>(entity);
