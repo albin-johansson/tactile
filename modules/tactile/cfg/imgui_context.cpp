@@ -35,7 +35,7 @@ void load_fonts()
 {
   auto& io = ImGui::GetIO();
 
-  if constexpr (IsPlatformOSX()) {
+  if constexpr (on_osx) {
     constexpr auto fontSize = 11.0f;
 
     const auto dpi = cen::display_dpi().value();
@@ -75,7 +75,7 @@ im_gui_context::im_gui_context(cen::window& window, cen::gl_context& context)
   style.WindowBorderSize = prefs::GetWindowBorder() ? 1.0f : 0.0f;
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
-  if constexpr (IsPlatformOSX()) {
+  if constexpr (on_osx) {
     mInitializedBackend = ImGui_ImplOpenGL3_Init("#version 150");
   }
   else {

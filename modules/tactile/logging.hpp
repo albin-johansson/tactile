@@ -35,7 +35,7 @@ void Print([[maybe_unused]] const fmt::color color,
            const std::string_view fmt,
            const Args&... args)
 {
-  if constexpr (IsPlatformWindows()) {
+  if constexpr (on_windows) {
     fmt::print(fmt, args...);
   }
   else {

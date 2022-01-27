@@ -20,7 +20,7 @@ namespace {
 {
   auto flags = cen::window::hidden | cen::window::resizable | cen::window::opengl;
 
-  if constexpr (IsPlatformOSX()) {
+  if constexpr (on_osx) {
     flags |= cen::window::allow_high_dpi;
   }
 
@@ -34,7 +34,7 @@ app_configuration::app_configuration()
   /* Use terminate handler that doesn't do anything fancy, e.g. no logging */
   std::set_terminate([] { std::abort(); });
 
-  if constexpr (IsDebugBuild()) {
+  if constexpr (is_debug_build) {
     SetLogLevel(LogLevel::Verbose);
   }
   else {

@@ -132,7 +132,7 @@ void ShowNativeTilesetProperties(const std::string& name,
 {
   NativeReadOnlyRow("Type", "Tileset");
 
-  if constexpr (IsDebugBuild()) {
+  if constexpr (is_debug_build) {
     NativeReadOnlyRow("ID", tileset.id);
   }
 
@@ -167,7 +167,7 @@ void ShowNativeLayerProperties(const Layer& layer, entt::dispatcher& dispatcher)
       break;
   }
 
-  if constexpr (IsDebugBuild()) {
+  if constexpr (is_debug_build) {
     NativeReadOnlyRow("ID", layer.id);
   }
 
@@ -198,7 +198,7 @@ void ShowNativeObjectProperties(const std::string& name,
       break;
   }
 
-  if constexpr (IsDebugBuild()) {
+  if constexpr (is_debug_build) {
     NativeReadOnlyRow("ID", object.id);
   }
 

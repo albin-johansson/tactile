@@ -15,7 +15,7 @@ void DebugMenu::Update()
   if (scoped::Menu menu{"Debug"}; menu.IsOpen()) {
     mShowMetrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
-    if constexpr (IsDebugBuild()) {
+    if constexpr (is_debug_build) {
       ImGui::Separator();
       mShowDemo = ImGui::MenuItem("Show Demo Window...");
       mShowStyleEditor = ImGui::MenuItem("Show Style Editor...");
@@ -30,7 +30,7 @@ void DebugMenu::UpdateWindows()
     ImGui::ShowMetricsWindow(&mShowMetrics);
   }
 
-  if constexpr (IsDebugBuild()) {
+  if constexpr (is_debug_build) {
     if (mShowDemo) {
       ImGui::ShowDemoWindow(&mShowDemo);
     }

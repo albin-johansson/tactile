@@ -18,7 +18,7 @@ void init_sdl_attributes()
   /* Make sure that we use OpenGL */
   SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
-  if constexpr (IsPlatformOSX()) {
+  if constexpr (on_osx) {
     cen::gl::set(cen::gl_attribute::context_flags,
                  SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
   }

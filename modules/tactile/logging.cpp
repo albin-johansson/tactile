@@ -33,7 +33,7 @@ void Log(const fmt::color color,
 
   gHistory.push_back(LoggedString{level, full});
 
-  if constexpr (IsDebugBuild()) {
+  if constexpr (is_debug_build) {
     Print(color, "{:>9} {}", priority, full);
   }
 }
