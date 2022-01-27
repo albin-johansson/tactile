@@ -101,6 +101,21 @@ namespace {
   return snapshot;
 }
 
+void _restore_layer_index(entt::registry& registry,
+                          const entt::entity layerEntity,
+                          const usize previousIndex)
+{
+  while (layer_local_index(registry, layerEntity) != previousIndex) {
+    const auto index = layer_local_index(registry, layerEntity);
+    if (index > previousIndex) {
+      move_layer_up(registry, layerEntity);
+    }
+    else if (index < previousIndex) {
+      move_layer_down(registry, layerEntity);
+    }
+  }
+}
+
 }  // namespace
 
 auto make_basic_layer(entt::registry& registry,
@@ -257,7 +272,7 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
     }
     case LayerType::GroupLayer: {
       /* We don't need to add the children to the restored group here, that is
-         handled by AddBasicLayer. */
+         handled by make_basic_layer. */
       registry.emplace<GroupLayer>(entity);
       for (auto layerSnapshot : snapshot.children.value()) {
         restore_layer(registry, std::move(layerSnapshot));
@@ -266,18 +281,7 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
     }
   }
 
-  /* Restore the previous layer index */
-
-  // TODO add function for this in layer tree system
-  while (layer_local_index(registry, entity) != snapshot.index) {
-    const auto index = layer_local_index(registry, entity);
-    if (index > snapshot.index) {
-      move_layer_up(registry, entity);
-    }
-    else if (index < snapshot.index) {
-      move_layer_down(registry, entity);
-    }
-  }
+  _restore_layer_index(registry, entity, snapshot.index);
 
   sort_layers(registry);
   return entity;
