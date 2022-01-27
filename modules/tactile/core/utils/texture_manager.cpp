@@ -12,16 +12,16 @@
 namespace tactile {
 namespace {
 
-struct TextureDataDeleter final
+struct texture_data_deleter final
 {
   void operator()(uchar* data) noexcept { stbi_image_free(data); }
 };
 
-using TextureDataPtr = std::unique_ptr<uchar, TextureDataDeleter>;
+using texture_data_ptr = std::unique_ptr<uchar, texture_data_deleter>;
 
 }  // namespace
 
-TextureManager::~TextureManager()
+texture_manager::~texture_manager()
 {
   for (const auto texture : mTextures) {
     log_debug("Deleting texture {}", texture);
@@ -31,13 +31,13 @@ TextureManager::~TextureManager()
   mTextures.clear();
 }
 
-auto TextureManager::Load(const std::filesystem::path& path) -> Maybe<comp::texture>
+auto texture_manager::load(const std::filesystem::path& path) -> Maybe<comp::texture>
 {
   comp::texture texture;
   texture.path = path;
 
   // Load from file
-  TextureDataPtr data{
+  texture_data_ptr data{
       stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4)};
   if (!data) {
     return nothing;

@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-class TextureManager;
+class texture_manager;
 
 /**
  * \brief Creates a map document from an intermediate map representation.
@@ -16,7 +16,7 @@ class TextureManager;
  *
  * \return a document based on the intermediate representation.
  */
-[[nodiscard]] auto CreateDocumentFromIR(const IO::Map& irMap, TextureManager& textures)
+[[nodiscard]] auto CreateDocumentFromIR(const IO::Map& irMap, texture_manager& textures)
     -> Document;
 
 }  // namespace tactile

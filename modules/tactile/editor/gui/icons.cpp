@@ -9,8 +9,8 @@
 
 namespace tactile {
 
-Icons::Icons(TextureManager& textures)
-    : mTactileIcon{textures.Load("resources/icon.png").value().id}
+Icons::Icons(texture_manager& textures)
+    : mTactileIcon{textures.load("resources/icon.png").value().id}
 {}
 
 auto Icons::GetIcon(const LayerType type) const -> CStr

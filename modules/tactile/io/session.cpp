@@ -26,7 +26,7 @@ constexpr int gFormatVersion [[maybe_unused]] = 1;
 
 }  // namespace
 
-void restore_last_session(Model& model, TextureManager& textures)
+void restore_last_session(Model& model, texture_manager& textures)
 {
   proto::Session session;
 

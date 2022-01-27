@@ -230,10 +230,10 @@ void MakeFancyTiles(entt::registry& registry,
 }
 
 void MakeTileset(entt::registry& registry,
-                 TextureManager& textures,
+                 texture_manager& textures,
                  const IO::Tileset& irTileset)
 {
-  const auto info = textures.Load(IO::GetImagePath(irTileset)).value();
+  const auto info = textures.load(IO::GetImagePath(irTileset)).value();
   const auto entity = sys::make_tileset(registry,
                                         TileID{IO::GetFirstGlobalId(irTileset)},
                                         info,
@@ -328,7 +328,7 @@ void CreateLayers(Document& document, const IO::Map& irMap)
   }
 }
 
-void CreateTilesets(Document& document, TextureManager& textures, const IO::Map& irMap)
+void CreateTilesets(Document& document, texture_manager& textures, const IO::Map& irMap)
 {
   IO::EachTileset(irMap, [&](const IO::Tileset& irTileset) {
     MakeTileset(document.registry, textures, irTileset);
@@ -424,7 +424,7 @@ void InitComponentDefinitions(entt::registry& registry, const IO::Map& irMap)
 
 }  // namespace
 
-auto CreateDocumentFromIR(const IO::Map& irMap, TextureManager& textures) -> Document
+auto CreateDocumentFromIR(const IO::Map& irMap, texture_manager& textures) -> Document
 {
   Document document;
   document.path = IO::GetPath(irMap);

@@ -87,7 +87,7 @@ namespace tactile {
 
 class Icons final {
  public:
-  explicit Icons(TextureManager& textures);
+  explicit Icons(texture_manager& textures);
 
   /**
    * \brief Returns the icon string literal for the specified layer type.

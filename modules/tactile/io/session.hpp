@@ -3,7 +3,7 @@
 namespace tactile {
 
 class Model;
-class TextureManager;
+class texture_manager;
 
 /// \addtogroup io
 /// \{
@@ -16,7 +16,7 @@ class TextureManager;
  *
  * \see `save_session()`
  */
-void restore_last_session(Model& model, TextureManager& textures);
+void restore_last_session(Model& model, texture_manager& textures);
 
 /**
  * \brief Saves the current session.

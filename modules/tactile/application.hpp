@@ -50,7 +50,7 @@ class Application final {
   cen::keyboard mKeyboard;
 
   Model mModel;
-  TextureManager mTextures;
+  texture_manager mTextures;
   Icons mIcons;
 
   WidgetManager mWidgets;

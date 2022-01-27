@@ -220,7 +220,7 @@ TEST(CreateDocumentFromIR, Test)
   ASSERT_EQ(IO::ParseError::None, parser.GetError());
   ASSERT_TRUE(parser);
 
-  TextureManager textures;
+  texture_manager textures;
   const auto document = CreateDocumentFromIR(parser.GetData(), textures);
 
   ASSERT_EQ(std::filesystem::absolute("test-resources/yaml/map.yaml"), document.path);

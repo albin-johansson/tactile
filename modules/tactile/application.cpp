@@ -434,7 +434,7 @@ void Application::OnShowAddTilesetDialog()
 
 void Application::OnAddTileset(const AddTilesetEvent& event)
 {
-  if (auto info = mTextures.Load(event.path)) {
+  if (auto info = mTextures.load(event.path)) {
     Execute<AddTilesetCmd>(mModel, std::move(*info), event.tile_width, event.tile_height);
   }
   else {
