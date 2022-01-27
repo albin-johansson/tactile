@@ -34,7 +34,7 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
     mHasFocus = ImGui::IsWindowFocused();
     mWindowContainsMouse = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
-    if (!registry.view<Tileset>().empty()) {
+    if (!registry.view<comp::tileset>().empty()) {
       mTabWidget.Update(registry, dispatcher);
     }
     else {

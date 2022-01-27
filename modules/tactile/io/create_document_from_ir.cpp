@@ -199,7 +199,7 @@ void AddTileObjects(entt::registry& registry,
 }
 
 void MakeFancyTiles(entt::registry& registry,
-                    TilesetCache& cache,
+                    comp::tileset_cache& cache,
                     const IO::Tileset& irTileset)
 {
   const auto firstGlobalId = IO::GetFirstGlobalId(irTileset);
@@ -243,7 +243,7 @@ void MakeTileset(entt::registry& registry,
   AddProperties(registry, entity, irTileset);
   AddComponents(registry, entity, irTileset);
 
-  auto& cache = registry.get<TilesetCache>(entity);
+  auto& cache = registry.get<comp::tileset_cache>(entity);
   MakeFancyTiles(registry, cache, irTileset);
 }
 
@@ -333,9 +333,9 @@ void CreateTilesets(Document& document, TextureManager& textures, const IO::Map&
     MakeTileset(document.registry, textures, irTileset);
   });
 
-  if (!document.registry.storage<Tileset>().empty()) {
-    auto& activeTileset = document.registry.ctx<ActiveTileset>();
-    activeTileset.entity = document.registry.view<Tileset>().front();
+  if (!document.registry.storage<comp::tileset>().empty()) {
+    auto& activeTileset = document.registry.ctx<comp::active_tileset>();
+    activeTileset.entity = document.registry.view<comp::tileset>().front();
   }
 }
 

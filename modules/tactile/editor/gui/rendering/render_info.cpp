@@ -76,7 +76,7 @@ auto GetRenderInfo(const Viewport& viewport, const MapInfo& map) -> RenderInfo
                        static_cast<int32>(map.column_count));
 }
 
-auto GetRenderInfo(const Viewport& viewport, const Tileset& tileset) -> RenderInfo
+auto GetRenderInfo(const Viewport& viewport, const comp::tileset& tileset) -> RenderInfo
 {
   const ImVec2 tileSize{static_cast<float>(tileset.tile_width),
                         static_cast<float>(tileset.tile_height)};

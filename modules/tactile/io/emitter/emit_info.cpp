@@ -104,13 +104,13 @@ void EmitInfo::each_component_def_attrs(const component_def_attr_visitor& func,
 
 auto EmitInfo::tileset_count() const -> usize
 {
-  return mRegistry->storage<Tileset>().size();
+  return mRegistry->storage<comp::tileset>().size();
 }
 
 void EmitInfo::each_tileset(const tileset_visitor& func) const
 {
   for (auto&& [entity, tileset, context, texture] :
-       mRegistry->view<Tileset, comp::attribute_context, comp::texture>().each()) {
+       mRegistry->view<comp::tileset, comp::attribute_context, comp::texture>().each()) {
     TilesetData data;
 
     data.id = tileset.id;
@@ -148,7 +148,7 @@ void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
                                        const fancy_tile_visitor& func) const
 {
   const auto tilesetEntity = to_tileset_entity(id);
-  const auto& tileset = mRegistry->get<Tileset>(tilesetEntity);
+  const auto& tileset = mRegistry->get<comp::tileset>(tilesetEntity);
 
   for (auto&& [entity, tile, context] :
        mRegistry->view<comp::fancy_tile, comp::attribute_context>().each()) {

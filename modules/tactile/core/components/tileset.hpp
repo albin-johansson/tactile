@@ -9,12 +9,12 @@
 
 #include "core/region.hpp"
 
-namespace tactile {
+namespace tactile::comp {
 
 /**
  * \brief Tileset state for a single map.
  */
-struct TilesetContext final
+struct tileset_context final
 {
   TilesetID next_id{};    ///< Next available tileset ID.
   TileID next_tile_id{};  ///< Next available global tile ID.
@@ -25,7 +25,7 @@ struct TilesetContext final
   std::unordered_map<TileID, entt::entity> tile_to_tileset;
 };
 
-struct Tileset final
+struct tileset final
 {
   TilesetID id{};        ///< Unique ID associated with the tileset.
   TileID first_id{};     ///< First associated global tile ID.
@@ -40,7 +40,7 @@ struct Tileset final
 /**
  * \brief Cached information about a single tileset.
  */
-struct TilesetCache final
+struct tileset_cache final
 {
   std::unordered_map<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
   std::unordered_map<TileID, entt::entity> tiles;       ///< Additional tile info.
@@ -51,12 +51,12 @@ struct TilesetCache final
   mutable std::unordered_map<TileID, TileID> source_to_render;
 };
 
-struct TilesetSelection final
+struct tileset_selection final
 {
   Maybe<Region> region;
 };
 
-struct ActiveTileset final
+struct active_tileset final
 {
   entt::entity entity{entt::null};
 };

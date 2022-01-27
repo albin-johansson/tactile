@@ -2,13 +2,13 @@
 
 #include <imgui.h>
 
+#include "core/components/tileset.hpp"
 #include "core/region.hpp"
 
 namespace tactile {
 
 struct Viewport;
 struct MapInfo;
-struct Tileset;
 
 /// \addtogroup rendering
 /// \{
@@ -39,7 +39,7 @@ struct RenderInfo final
 [[nodiscard]] auto GetRenderInfo(const Viewport& viewport, const MapInfo& map)
     -> RenderInfo;
 
-[[nodiscard]] auto GetRenderInfo(const Viewport& viewport, const Tileset& tileset)
+[[nodiscard]] auto GetRenderInfo(const Viewport& viewport, const comp::tileset& tileset)
     -> RenderInfo;
 
 /// \} End of group rendering

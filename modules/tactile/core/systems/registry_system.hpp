@@ -11,12 +11,12 @@ namespace tactile::sys {
  *
  * \details The created registry will feature the following context variables:
  * - `MapInfo`
- * - `TilesetContext`
+ * - `tileset_context`
  * - `MousePos`
  * - `Viewport`
  * - `attribute_context`
  * - `ActiveLayer`
- * - `ActiveTileset`
+ * - `active_tileset`
  * - `active_attribute_context`
  * - `ActiveTool`
  * - `active_object`

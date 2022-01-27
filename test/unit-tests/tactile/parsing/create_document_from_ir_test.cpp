@@ -191,9 +191,9 @@ void CheckLayers(const Document& document)
 
 void CheckTilesets(const entt::registry& registry)
 {
-  ASSERT_EQ(2, registry.storage<Tileset>().size());
+  ASSERT_EQ(2, registry.storage<comp::tileset>().size());
 
-  const auto& tilesetEntity = registry.ctx<ActiveTileset>().entity;
+  const auto& tilesetEntity = registry.ctx<comp::active_tileset>().entity;
   ASSERT_NE(gNullEntity, tilesetEntity);
 
   const auto& context = registry.get<comp::attribute_context>(tilesetEntity);
@@ -201,7 +201,7 @@ void CheckTilesets(const entt::registry& registry)
   ASSERT_TRUE(context.properties.empty());
   ASSERT_TRUE(context.components.empty());
 
-  const auto& tileset = registry.get<Tileset>(tilesetEntity);
+  const auto& tileset = registry.get<comp::tileset>(tilesetEntity);
   ASSERT_EQ(1025, tileset.first_id);
   ASSERT_EQ(32, tileset.row_count);
   ASSERT_EQ(32, tileset.column_count);

@@ -77,12 +77,12 @@ void RenderStampPreview(const entt::registry& registry,
                         const tile_position& mousePos,
                         const RenderInfo& renderInfo)
 {
-  const auto& activeTileset = registry.ctx<ActiveTileset>();
+  const auto& activeTileset = registry.ctx<comp::active_tileset>();
 
   const auto tilesetEntity = activeTileset.entity;
   TACTILE_ASSERT(tilesetEntity != entt::null);
 
-  const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
+  const auto& selection = registry.get<comp::tileset_selection>(tilesetEntity);
   if (!selection.region) {
     return;
   }

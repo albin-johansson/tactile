@@ -16,7 +16,7 @@ void RenderTile(Graphics& graphics,
                 const int32 row,
                 const int32 column)
 {
-  const auto& context = registry.ctx<TilesetContext>();
+  const auto& context = registry.ctx<comp::tileset_context>();
   const auto tilesetEntity = context.tile_to_tileset.at(tile);
   if (tilesetEntity != entt::null) {
     const auto& texture = registry.get<comp::texture>(tilesetEntity);

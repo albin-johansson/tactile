@@ -28,11 +28,11 @@ void update_tilesets(entt::registry& registry);
  * \brief Creates a tileset entity.
  *
  * \details The created entity will feature the following components:
- * - `Tileset`
+ * - `tileset`
  * - `texture`
- * - `TilesetCache`
- * - `TilesetSelection`
- * - `UvTileSize`
+ * - `tileset_cache`
+ * - `tileset_selection`
+ * - `uv_tile_size`
  * - `attribute_context`
  * - `Viewport`
  *

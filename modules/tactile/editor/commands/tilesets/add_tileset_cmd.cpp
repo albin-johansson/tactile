@@ -35,14 +35,14 @@ void AddTilesetCmd::Redo()
   auto& registry = mRegistry.get();
   if (!mSnapshot) {
     const auto entity = sys::make_tileset(registry, mTexture, mTileWidth, mTileHeight);
-    const auto& tileset = registry.get<Tileset>(entity);
+    const auto& tileset = registry.get<comp::tileset>(entity);
     mTilesetId = tileset.id;
   }
   else {
     sys::restore_tileset(registry, *mSnapshot);
   }
 
-  auto& active = registry.ctx<ActiveTileset>();
+  auto& active = registry.ctx<comp::active_tileset>();
   active.entity = sys::find_tileset(registry, mTilesetId.value());
 }
 

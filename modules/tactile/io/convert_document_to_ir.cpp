@@ -158,7 +158,7 @@ void ConvertObject(IO::Map& irMap,
 void ConvertFancyTiles(IO::Map& irMap,
                        IO::Tileset& ir,
                        const entt::registry& registry,
-                       const Tileset& tileset)
+                       const comp::tileset& tileset)
 
 {
   for (auto&& [entity, tile, ctx] :
@@ -195,7 +195,7 @@ void ConvertTileset(IO::Map& irMap,
                     IO::Tileset& ir,
                     const entt::registry& registry,
                     const entt::entity entity,
-                    const Tileset& tileset)
+                    const comp::tileset& tileset)
 {
   IO::SetFirstGlobalId(ir, tileset.first_id);
   IO::SetTileWidth(ir, tileset.tile_width);
@@ -302,8 +302,8 @@ void ConvertLayers(IO::Map& irMap, const entt::registry& registry)
 
 void ConvertTilesets(IO::Map& irMap, const entt::registry& registry)
 {
-  IO::ReserveTilesets(irMap, registry.storage<Tileset>().size());
-  for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
+  IO::ReserveTilesets(irMap, registry.storage<comp::tileset>().size());
+  for (auto&& [entity, tileset] : registry.view<comp::tileset>().each()) {
     auto& tilesetData = IO::AddTileset(irMap);
     ConvertTileset(irMap, tilesetData, registry, entity, tileset);
   }

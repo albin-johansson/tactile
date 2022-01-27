@@ -16,7 +16,7 @@ void RemoveTilesetCmd::Undo()
   auto& registry = mRegistry.get();
   sys::restore_tileset(registry, mSnapshot.value());
 
-  auto& active = registry.ctx<ActiveTileset>();
+  auto& active = registry.ctx<comp::active_tileset>();
   active.entity = sys::find_tileset(registry, mTilesetId);
 }
 
