@@ -248,7 +248,7 @@ void EmitInfo::each_layer(const Maybe<LayerID> parentId, const layer_visitor& fu
   if (!parentId) {
     /* Only iterate top-level layers */
     for (auto&& [entity, node] : mRegistry->view<LayerTreeNode>().each()) {
-      const auto& parent = mRegistry->get<Parent>(entity);
+      const auto& parent = mRegistry->get<comp::parent>(entity);
       if (parent.entity == entt::null) {
         const auto& layer = mRegistry->get<Layer>(entity);
         func(layer.id);

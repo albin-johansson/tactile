@@ -43,7 +43,7 @@ namespace {
   }
   else {
     usize index = 0;
-    for (auto&& [entity, layer, parent] : registry.view<Layer, Parent>().each()) {
+    for (auto&& [entity, layer, parent] : registry.view<Layer, comp::parent>().each()) {
       if (layerEntity != entity && parent.entity == entt::null) {
         ++index;
       }
@@ -77,7 +77,7 @@ auto AddBasicLayer(entt::registry& registry,
   }
 
   TACTILE_ASSERT(parent == entt::null || registry.all_of<GroupLayer>(parent));
-  registry.emplace<Parent>(entity, parent);
+  registry.emplace<comp::parent>(entity, parent);
 
   if (parent != entt::null) {
     TACTILE_ASSERT(registry.all_of<LayerTreeNode>(parent));
@@ -245,7 +245,7 @@ auto CopyLayer(const entt::registry& registry, const entt::entity source) -> Lay
   TACTILE_ASSERT(source != entt::null);
   TACTILE_ASSERT(registry.all_of<Layer>(source));
   TACTILE_ASSERT(registry.all_of<LayerTreeNode>(source));
-  TACTILE_ASSERT(registry.all_of<Parent>(source));
+  TACTILE_ASSERT(registry.all_of<comp::parent>(source));
   assert((registry.any_of<TileLayer, ObjectLayer, GroupLayer>(source)));
 
   LayerSnapshot snapshot;
@@ -253,7 +253,7 @@ auto CopyLayer(const entt::registry& registry, const entt::entity source) -> Lay
   snapshot.core = registry.get<Layer>(source);
   snapshot.context = CopyPropertyContext(registry, source);
 
-  const auto parentEntity = registry.get<Parent>(source).entity;
+  const auto parentEntity = registry.get<comp::parent>(source).entity;
   if (parentEntity != entt::null) {
     snapshot.parent = registry.get<Layer>(parentEntity).id;
   }
@@ -290,7 +290,7 @@ auto CopyLayer(const entt::registry& registry, const entt::entity source) -> Lay
 
 auto DuplicateLayer(entt::registry& registry, const entt::entity source) -> entt::entity
 {
-  const auto& sourceParent = registry.get<Parent>(source);
+  const auto& sourceParent = registry.get<comp::parent>(source);
   const auto copy = DuplicateLayer(registry, source, sourceParent.entity, false);
 
   layer_tree::SortNodes(registry);
@@ -318,7 +318,7 @@ auto DuplicateLayer(entt::registry& registry,
     node.index = registry.get<LayerTreeNode>(source).index;
   }
 
-  registry.emplace<Parent>(copy, parent);
+  registry.emplace<comp::parent>(copy, parent);
 
   if (parent != entt::null) {
     auto& parentNode = registry.get<LayerTreeNode>(parent);

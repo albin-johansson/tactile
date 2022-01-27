@@ -99,7 +99,7 @@ void LayerDock::Update(const Model& model,
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
              other components in the view query directly. */
           const auto& layer = registry.get<Layer>(entity);
-          const auto& parent = registry.get<Parent>(entity);
+          const auto& parent = registry.get<comp::parent>(entity);
           if (parent.entity == entt::null) {
             LayerItem(registry, icons, dispatcher, entity, layer);
           }

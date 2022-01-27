@@ -31,7 +31,7 @@ void RenderMap(Graphics& graphics, const entt::registry& registry)
 {
   for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
     const auto& layer = registry.get<Layer>(entity);
-    const auto& parent = registry.get<Parent>(entity);
+    const auto& parent = registry.get<comp::parent>(entity);
 
     const auto* parentLayer =
         (parent.entity != entt::null) ? registry.try_get<Layer>(parent.entity) : nullptr;

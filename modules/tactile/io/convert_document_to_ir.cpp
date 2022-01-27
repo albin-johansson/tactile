@@ -286,7 +286,7 @@ void ConvertLayers(IO::Map& irMap, const entt::registry& registry)
 
   IO::ReserveLayers(irMap, registry.storage<LayerTreeNode>().size());
   for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
-    const auto& parent = registry.get<Parent>(entity);
+    const auto& parent = registry.get<comp::parent>(entity);
     if (parent.entity == entt::null) {
       auto& layerData = IO::AddLayer(irMap);
       ConvertLayer(irMap,

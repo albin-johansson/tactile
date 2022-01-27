@@ -49,7 +49,7 @@ void DestroyChildNodes(entt::registry& registry, const entt::entity entity)
                               const entt::entity entity,
                               const usize targetIndex) -> entt::entity
 {
-  const auto& parent = registry.get<Parent>(entity);
+  const auto& parent = registry.get<comp::parent>(entity);
   if (parent.entity != entt::null) {
     const auto& parentNode = registry.get<LayerTreeNode>(parent.entity);
     for (const auto child : parentNode.children) {
@@ -61,7 +61,7 @@ void DestroyChildNodes(entt::registry& registry, const entt::entity entity)
   }
   else {
     for (auto&& [otherEntity, otherNode, otherParent] :
-         registry.view<LayerTreeNode, Parent>().each()) {
+         registry.view<LayerTreeNode, comp::parent>().each()) {
       if (otherParent.entity == entt::null && otherNode.index == targetIndex) {
         return otherEntity;
       }
@@ -130,7 +130,7 @@ void DestroyNode(entt::registry& registry, const entt::entity entity)
   DecrementIndicesOfSiblingsBelow(registry, entity);
 
   /* Remove the node from the parent node, if there is one. */
-  const auto& parent = registry.get<Parent>(entity);
+  const auto& parent = registry.get<comp::parent>(entity);
   if (parent.entity != entt::null) {
     auto& parentNode = registry.get<LayerTreeNode>(parent.entity);
     std::erase(parentNode.children, entity);
@@ -236,15 +236,15 @@ auto GetSiblingBelow(const entt::registry& registry, const entt::entity entity)
 auto GetSiblingCount(const entt::registry& registry, const entt::entity entity) -> usize
 {
   TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<Parent>(entity));
+  TACTILE_ASSERT(registry.all_of<comp::parent>(entity));
 
-  const auto& parent = registry.get<Parent>(entity);
+  const auto& parent = registry.get<comp::parent>(entity);
 
   if (parent.entity == entt::null) {
     usize count = 0;
 
     for (auto&& [otherEntity, otherNode, otherParent] :
-         registry.view<LayerTreeNode, Parent>().each()) {
+         registry.view<LayerTreeNode, comp::parent>().each()) {
       if (otherEntity != entity && otherParent.entity == entt::null) {
         ++count;
       }
@@ -277,10 +277,10 @@ auto GetGlobalIndex(const entt::registry& registry, const entt::entity entity) -
 {
   TACTILE_ASSERT(entity != entt::null);
   TACTILE_ASSERT(registry.all_of<LayerTreeNode>(entity));
-  TACTILE_ASSERT(registry.all_of<Parent>(entity));
+  TACTILE_ASSERT(registry.all_of<comp::parent>(entity));
 
   const auto& node = registry.get<LayerTreeNode>(entity);
-  const auto& parent = registry.get<Parent>(entity);
+  const auto& parent = registry.get<comp::parent>(entity);
 
   const auto base = node.index + CountSiblingsAboveInclusiveChildren(registry, entity);
 
