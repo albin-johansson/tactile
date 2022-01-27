@@ -37,7 +37,7 @@ void ConvertProperties(T& source,
   IO::ReserveProperties(source, properties.size());
 
   for (const auto propertyEntity : properties) {
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
 
     auto& data = IO::AddProperty(source);
     IO::SetName(data, property.name.c_str());

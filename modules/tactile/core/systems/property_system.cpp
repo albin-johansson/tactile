@@ -41,7 +41,7 @@ auto CopyPropertyContext(const entt::registry& registry, const entt::entity sour
   snapshot.name = context.name;
 
   for (const auto propertyEntity : context.properties) {
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     snapshot.properties.try_emplace(property.name, property.value);
   }
 
@@ -71,7 +71,7 @@ void AddProperty(entt::registry& registry,
   TACTILE_ASSERT(!HasPropertyWithName(registry, context, name));
 
   const auto entity = registry.create();
-  auto& property = registry.emplace<Property>(entity);
+  auto& property = registry.emplace<comp::property>(entity);
   property.name = std::move(name);
   property.value.reset_to_default(type);
 
@@ -86,7 +86,7 @@ void AddProperty(entt::registry& registry,
   TACTILE_ASSERT(!HasPropertyWithName(registry, context, name));
 
   const auto entity = registry.create();
-  auto& property = registry.emplace<Property>(entity);
+  auto& property = registry.emplace<comp::property>(entity);
   property.name = std::move(name);
   property.value = std::move(value);
 
@@ -113,7 +113,7 @@ void RenameProperty(entt::registry& registry,
   TACTILE_ASSERT(!HasPropertyWithName(registry, context, newName));
 
   const auto entity = FindProperty(registry, context, oldName);
-  auto& property = registry.get<Property>(entity);
+  auto& property = registry.get<comp::property>(entity);
   property.name = std::move(newName);
 }
 
@@ -125,7 +125,7 @@ void UpdateProperty(entt::registry& registry,
   const auto entity = FindProperty(registry, context, name);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& property = registry.get<Property>(entity);
+  auto& property = registry.get<comp::property>(entity);
   property.value = std::move(value);
 }
 
@@ -137,7 +137,7 @@ void ChangePropertyType(entt::registry& registry,
   const auto entity = FindProperty(registry, context, name);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& property = registry.get<Property>(entity);
+  auto& property = registry.get<comp::property>(entity);
   property.value.reset_to_default(type);
 }
 
@@ -214,7 +214,7 @@ auto FindProperty(const entt::registry& registry,
                   const std::string_view name) -> entt::entity
 {
   for (const auto entity : context.properties) {
-    const auto& property = registry.get<Property>(entity);
+    const auto& property = registry.get<comp::property>(entity);
     if (property.name == name) {
       return entity;
     }
@@ -225,11 +225,11 @@ auto FindProperty(const entt::registry& registry,
 
 auto GetProperty(const entt::registry& registry,
                  const comp::attribute_context& context,
-                 const std::string_view name) -> const Property&
+                 const std::string_view name) -> const comp::property&
 {
   const auto entity = FindProperty(registry, context, name);
   if (entity != entt::null) {
-    return registry.get<Property>(entity);
+    return registry.get<comp::property>(entity);
   }
   else {
     ThrowTraced(TactileError{"Found no property with the specified name!"});

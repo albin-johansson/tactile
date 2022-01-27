@@ -4,12 +4,12 @@
 
 #include "core/attribute_value.hpp"
 
-namespace tactile {
+namespace tactile::comp {
 
-struct Property final
+struct property final
 {
   std::string name;
   attribute_value value;
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp

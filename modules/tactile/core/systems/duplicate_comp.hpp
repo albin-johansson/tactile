@@ -35,7 +35,7 @@ inline auto DuplicateComp<comp::attribute_context>(entt::registry& registry,
     const auto propertyEntity = registry.create();
     context.properties.push_back(propertyEntity);
 
-    DuplicateComp<Property>(registry, srcPropertyEntity, propertyEntity);
+    DuplicateComp<comp::property>(registry, srcPropertyEntity, propertyEntity);
   }
 
   return context;

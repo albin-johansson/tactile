@@ -343,7 +343,7 @@ void EmitInfo::each_property(const ContextID id, const property_visitor& func) c
 {
   const auto& context = sys::GetContext(*mRegistry, id);
   for (const auto propertyEntity : context.properties) {
-    const auto& property = mRegistry->get<Property>(propertyEntity);
+    const auto& property = mRegistry->get<comp::property>(propertyEntity);
     func(property.name, property.value);
   }
 }

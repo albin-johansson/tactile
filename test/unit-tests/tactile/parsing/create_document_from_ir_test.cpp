@@ -2,9 +2,9 @@
 
 #include <gtest/gtest.h>
 
+#include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
-#include "core/components/attribute_context.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
@@ -37,42 +37,42 @@ void CheckMapAttributes(const entt::registry& registry)
 
   {
     const auto propertyEntity = sys::FindProperty(registry, context, "boolean");
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     ASSERT_TRUE(property.value.is_bool());
     ASSERT_TRUE(property.value.as_bool());
   }
 
   {
     const auto propertyEntity = sys::FindProperty(registry, context, "cool color");
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     ASSERT_TRUE(property.value.is_color());
     ASSERT_EQ(cen::color::from_rgba("#1A2B3C4D"), property.value.as_color());
   }
 
   {
     const auto propertyEntity = sys::FindProperty(registry, context, "floating");
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     ASSERT_TRUE(property.value.is_float());
     ASSERT_FLOAT_EQ(12.3f, property.value.as_float());
   }
 
   {
     const auto propertyEntity = sys::FindProperty(registry, context, "integer");
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     ASSERT_TRUE(property.value.is_int());
     ASSERT_EQ(42, property.value.as_int());
   }
 
   {
     const auto propertyEntity = sys::FindProperty(registry, context, "object ref");
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     ASSERT_TRUE(property.value.is_object());
     ASSERT_EQ(1, property.value.as_object());
   }
 
   {
     const auto propertyEntity = sys::FindProperty(registry, context, "path");
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     ASSERT_TRUE(property.value.is_file());
     ASSERT_EQ(std::filesystem::path{"foo.bar"}, property.value.as_file());
   }
@@ -123,14 +123,14 @@ void CheckTileLayer2(const entt::registry& registry)
 
   {
     const auto& propertyEntity = context.properties.at(0);
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     ASSERT_EQ("a", property.name);
     ASSERT_EQ(42, property.value.as_int());
   }
 
   {
     const auto& propertyEntity = context.properties.at(1);
-    const auto& property = registry.get<Property>(propertyEntity);
+    const auto& property = registry.get<comp::property>(propertyEntity);
     ASSERT_EQ("b", property.name);
     ASSERT_EQ(2.5f, property.value.as_float());
   }

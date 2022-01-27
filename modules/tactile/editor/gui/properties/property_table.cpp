@@ -292,7 +292,7 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
   bool first = true;
 
   for (const auto entity : context.properties) {
-    const auto& property = registry.get<Property>(entity);
+    const auto& property = registry.get<comp::property>(entity);
 
     const auto& name = property.name;
     const auto& value = property.value;

@@ -238,7 +238,7 @@ void ChangePropertyType(entt::registry& registry,
  */
 [[nodiscard]] auto GetProperty(const entt::registry& registry,
                                const comp::attribute_context& context,
-                               std::string_view name) -> const Property&;
+                               std::string_view name) -> const comp::property&;
 
 /**
  * \brief Indicates whether or not a attribute context has a property with a certain name.

@@ -46,7 +46,7 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
     const auto& propertyData = IO::GetProperty(source, index);
 
     const auto propertyEntity = registry.create();
-    auto& property = registry.emplace<Property>(propertyEntity);
+    auto& property = registry.emplace<comp::property>(propertyEntity);
     property.name = IO::GetName(propertyData);
 
     switch (IO::GetType(propertyData)) {
