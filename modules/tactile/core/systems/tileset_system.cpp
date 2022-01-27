@@ -160,7 +160,8 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
   LogDebug("Restoring tileset with ID '{}'", snapshot.core.id);
   const auto tilesetEntity = registry.create();
 
-  auto& tileset = registry.emplace<comp::tileset>(tilesetEntity, std::move(snapshot.core));
+  auto& tileset =
+      registry.emplace<comp::tileset>(tilesetEntity, std::move(snapshot.core));
   registry.emplace<comp::tileset_selection>(tilesetEntity, snapshot.selection);
   registry.emplace<comp::texture>(tilesetEntity, snapshot.texture);
   registry.emplace<UvTileSize>(tilesetEntity, snapshot.uv);
