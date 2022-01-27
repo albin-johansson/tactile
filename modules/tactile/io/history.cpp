@@ -35,7 +35,7 @@ inline std::deque<std::string> gHistory;
 
 void load_file_history()
 {
-  LogVerbose("Loading file history...");
+  log_verbose("Loading file history...");
   std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
 
   proto::History h;
@@ -45,12 +45,12 @@ void load_file_history()
     }
 
     for (auto file : h.files()) {
-      LogDebug("Loaded '{}' from file history", file);
+      log_debug("Loaded '{}' from file history", file);
       gHistory.push_back(std::move(file));
     }
   }
   else {
-    LogWarning("Failed to read history file (this is expected for first time runs)");
+    log_warning("Failed to read history file (this is expected for first time runs)");
   }
 }
 
@@ -63,7 +63,7 @@ void save_file_history()
   }
 
   for (const auto& path : gHistory) {
-    LogDebug("Saving '{}' to file history", path);
+    log_debug("Saving '{}' to file history", path);
     h.add_files(path);
   }
 
@@ -71,14 +71,14 @@ void save_file_history()
     std::ofstream stream{get_file_path(),
                          std::ios::out | std::ios::trunc | std::ios::binary};
     if (!h.SerializeToOstream(&stream)) {
-      LogError("Failed to save file history!");
+      log_error("Failed to save file history!");
     }
   }
 }
 
 void clear_file_history()
 {
-  LogVerbose("Clearing file history...");
+  log_verbose("Clearing file history...");
   gHistory.clear();
 }
 
@@ -86,7 +86,7 @@ void add_file_to_history(const std::filesystem::path& path)
 {
   auto converted = ConvertToForwardSlashes(path);
   if (std::find(gHistory.begin(), gHistory.end(), converted) == gHistory.end()) {
-    LogDebug("Adding '{}' to history...", converted);
+    log_debug("Adding '{}' to history...", converted);
     gHistory.push_back(std::move(converted));
 
     if (gHistory.size() > gMaxSize) {
@@ -94,14 +94,14 @@ void add_file_to_history(const std::filesystem::path& path)
     }
   }
   else {
-    LogDebug("Did not add existing entry '{}' to file history", converted);
+    log_debug("Did not add existing entry '{}' to file history", converted);
   }
 }
 
 void set_last_closed_file(const std::filesystem::path& path)
 {
   gLastClosedFile = ConvertToForwardSlashes(path);
-  LogVerbose("Last closed file is now '{}'", *gLastClosedFile);
+  log_verbose("Last closed file is now '{}'", *gLastClosedFile);
 
   add_file_to_history(path);
 }

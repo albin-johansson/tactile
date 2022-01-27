@@ -24,7 +24,7 @@ using TextureDataPtr = std::unique_ptr<uchar, TextureDataDeleter>;
 TextureManager::~TextureManager()
 {
   for (const auto texture : mTextures) {
-    LogDebug("Deleting texture {}", texture);
+    log_debug("Deleting texture {}", texture);
     glDeleteTextures(1, &texture);
   }
 
@@ -70,7 +70,7 @@ auto TextureManager::Load(const std::filesystem::path& path) -> Maybe<comp::text
                GL_UNSIGNED_BYTE,
                data.get());
 
-  LogDebug("Loaded texture with ID {}", texture.id);
+  log_debug("Loaded texture with ID {}", texture.id);
   mTextures.push_back(texture.id);
 
   return texture;

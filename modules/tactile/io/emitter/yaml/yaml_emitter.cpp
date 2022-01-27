@@ -264,7 +264,7 @@ void emit_tileset_file(const EmitInfo& info,
   emitter << YAML::EndMap;
 
   const auto path = info.destination_dir() / filename;
-  LogDebug("Saving external tileset to {}", path);
+  log_debug("Saving external tileset to {}", path);
 
   std::ofstream stream{path, std::ios::out};
   stream << emitter.c_str();

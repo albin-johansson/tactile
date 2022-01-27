@@ -35,10 +35,10 @@ app_configuration::app_configuration()
   std::set_terminate([] { std::abort(); });
 
   if constexpr (is_debug_build) {
-    SetLogLevel(LogLevel::Verbose);
+    set_log_level(log_level::verbose);
   }
   else {
-    SetLogLevel(LogLevel::Info);
+    set_log_level(log_level::info);
   }
 
   init_sdl_attributes();
@@ -53,12 +53,12 @@ app_configuration::app_configuration()
   cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 
   if (glewInit() != GLEW_OK) {
-    LogError("Failed to initialize GLEW!");
+    log_error("Failed to initialize GLEW!");
     ThrowTraced(TactileError{"Failed to initialize GLEW!"});
   }
 
-  LogDebug("OpenGL version... {}", glGetString(GL_VERSION));
-  LogDebug("OpenGL renderer... {}", glGetString(GL_RENDERER));
+  log_debug("OpenGL version... {}", glGetString(GL_VERSION));
+  log_debug("OpenGL renderer... {}", glGetString(GL_RENDERER));
 
   LoadPreferences();
 

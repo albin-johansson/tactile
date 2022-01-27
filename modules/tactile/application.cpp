@@ -43,7 +43,7 @@ void Execute(Model& model, Args&&... args)
     commands.Push<Command>(document->registry, std::forward<Args>(args)...);
   }
   else {
-    LogError("Could not execute a command due to no active document!");
+    log_error("Could not execute a command due to no active document!");
   }
 }
 
@@ -55,7 +55,7 @@ void Register(Model& model, Args&&... args)
     commands.PushWithoutRedo<Command>(document->registry, std::forward<Args>(args)...);
   }
   else {
-    LogError("Could not register a command due to no active document!");
+    log_error("Could not register a command due to no active document!");
   }
 }
 
@@ -303,7 +303,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
 {
   /* Just silently ignore the request if the map is already open */
   if (mModel.HasDocumentWithPath(event.path)) {
-    LogWarning("Tried to open map that was already open!");
+    log_warning("Tried to open map that was already open!");
     return;
   }
 
@@ -438,7 +438,7 @@ void Application::OnAddTileset(const AddTilesetEvent& event)
     Execute<AddTilesetCmd>(mModel, std::move(*info), event.tile_width, event.tile_height);
   }
   else {
-    LogError("Failed to load tileset texture!");
+    log_error("Failed to load tileset texture!");
   }
 }
 

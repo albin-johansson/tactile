@@ -15,7 +15,7 @@ void assertion_failed_msg(const char* expr,
                           const long line)
 
 {
-  tactile::Print(fmt::color::orange_red,
+  tactile::print(fmt::color::orange_red,
                  "{}:{} expression '{}' evaluated to false: {}\n{}",
                  file,
                  line,

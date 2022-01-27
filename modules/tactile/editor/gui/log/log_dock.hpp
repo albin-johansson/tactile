@@ -11,7 +11,7 @@ class LogDock final {
   [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
 
  private:
-  LogLevel mLogLevel{LogLevel::Verbose};
+  log_level mLogLevel{log_level::verbose};
   bool mHasFocus{};
 };
 

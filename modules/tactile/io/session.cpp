@@ -38,12 +38,12 @@ void restore_last_session(Model& model, TextureManager& textures)
         model.AddMap(CreateDocumentFromIR(parser.GetData(), textures));
       }
       else {
-        LogWarning("Failed to restore map from last session!");
+        log_warning("Failed to restore map from last session!");
       }
     }
   }
   else {
-    LogWarning("Failed to parse binary session file!");
+    log_warning("Failed to parse binary session file!");
   }
 }
 
@@ -60,7 +60,7 @@ void save_session(const Model& model)
   std::ofstream stream{get_file_path(),
                        std::ios::out | std::ios::trunc | std::ios::binary};
   if (!session.SerializeToOstream(&stream)) {
-    LogError("Failed to save session file!");
+    log_error("Failed to save session file!");
   }
 }
 

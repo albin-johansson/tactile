@@ -14,24 +14,24 @@
 namespace tactile {
 namespace LoggerImpl {
 
-void LogVerboseV(std::string_view fmt, fmt::format_args args);
-void LogDebugV(std::string_view fmt, fmt::format_args args);
-void LogInfoV(std::string_view fmt, fmt::format_args args);
-void LogWarningV(std::string_view fmt, fmt::format_args args);
-void LogErrorV(std::string_view fmt, fmt::format_args args);
+void log_verbose_v(std::string_view fmt, fmt::format_args args);
+void log_debug_v(std::string_view fmt, fmt::format_args args);
+void log_info_v(std::string_view fmt, fmt::format_args args);
+void log_warning_v(std::string_view fmt, fmt::format_args args);
+void log_error_v(std::string_view fmt, fmt::format_args args);
 
 }  // namespace LoggerImpl
 
-enum class LogLevel {
-  Verbose,  ///< Logs everything.
-  Debug,    ///< Logs stuff that a developer might be interested in.
-  Info,     ///< Default log level, emit informational stuff for ordinary users.
-  Warning,  ///< Only emit warnings and errors.
-  Error     ///< Only emit errors.
+enum class log_level {
+  verbose,  ///< Logs everything.
+  debug,    ///< Logs stuff that a developer might be interested in.
+  info,     ///< Default log level, emit informational stuff for ordinary users.
+  warning,  ///< Only emit warnings and errors.
+  error     ///< Only emit errors.
 };
 
 template <typename... Args>
-void Print([[maybe_unused]] const fmt::color color,
+void print([[maybe_unused]] const fmt::color color,
            const std::string_view fmt,
            const Args&... args)
 {
@@ -44,39 +44,41 @@ void Print([[maybe_unused]] const fmt::color color,
 }
 
 template <typename... Args>
-void LogVerbose(const std::string_view fmt, const Args&... args)
+void log_verbose(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::LogVerboseV(fmt, fmt::make_format_args(args...));
+  LoggerImpl::log_verbose_v(fmt, fmt::make_format_args(args...));
 }
 
 template <typename... Args>
-void LogDebug(const std::string_view fmt, const Args&... args)
+void log_debug(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::LogDebugV(fmt, fmt::make_format_args(args...));
+  LoggerImpl::log_debug_v(fmt, fmt::make_format_args(args...));
 }
 
 template <typename... Args>
 void LogInfo(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::LogInfoV(fmt, fmt::make_format_args(args...));
+  LoggerImpl::log_info_v(fmt, fmt::make_format_args(args...));
 }
 
 template <typename... Args>
-void LogWarning(const std::string_view fmt, const Args&... args)
+void log_warning(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::LogWarningV(fmt, fmt::make_format_args(args...));
+  LoggerImpl::log_warning_v(fmt, fmt::make_format_args(args...));
 }
 
 template <typename... Args>
-void LogError(const std::string_view fmt, const Args&... args)
+void log_error(const std::string_view fmt, const Args&... args)
 {
-  LoggerImpl::LogErrorV(fmt, fmt::make_format_args(args...));
+  LoggerImpl::log_error_v(fmt, fmt::make_format_args(args...));
 }
 
-/// \brief Clears the entire log history.
-void ClearLogHistory();
+/**
+ * \brief Clears the entire log history.
+ */
+void clear_log_history();
 
-void SetLogLevel(LogLevel level);
+void set_log_level(log_level level);
 
 /**
  * \brief Returns the log entry at a specific index amongst entries that satisfy a filter.
@@ -88,10 +90,10 @@ void SetLogLevel(LogLevel level);
  *
  * \throws TactileError if no log entry was found.
  *
- * \see GetLogSize(LogLevel)
+ * \see log_size(log_level)
  */
-[[nodiscard]] auto GetFilteredLogEntry(LogLevel filter, usize index)
-    -> std::pair<LogLevel, const std::string&>;
+[[nodiscard]] auto get_filtered_log_entry(log_level filter, usize index)
+    -> std::pair<log_level, const std::string&>;
 
 /**
  * \brief Returns the amount of log entries that satisfy a filter.
@@ -100,7 +102,7 @@ void SetLogLevel(LogLevel level);
  *
  * \return the amount of log entries that weren't filtered out.
  */
-[[nodiscard]] auto GetLogSize(LogLevel filter) -> usize;
+[[nodiscard]] auto log_size(log_level filter) -> usize;
 
 /**
  * \brief Indicates whether a message using a specific log level satisfies a filter.
@@ -110,8 +112,8 @@ void SetLogLevel(LogLevel level);
  *
  * \return `true` if the log level is enabled according to the filter; `false` otherwise.
  */
-[[nodiscard]] auto IsEnabled(LogLevel filter, LogLevel level) -> bool;
+[[nodiscard]] auto is_enabled(log_level filter, log_level level) -> bool;
 
-[[nodiscard]] auto IsEnabled(LogLevel level) -> bool;
+[[nodiscard]] auto is_enabled(log_level level) -> bool;
 
 }  // namespace tactile

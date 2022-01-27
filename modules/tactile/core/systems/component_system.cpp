@@ -80,7 +80,7 @@ auto make_component_def(entt::registry& registry, std::string name) -> Component
   TACTILE_ASSERT_MSG(!is_valid_component(registry, next_id),
                      "Verify use of use explicit component identifiers!");
 
-  LogDebug("Creating component definition '{}' (ID '{}')", name, next_id);
+  log_debug("Creating component definition '{}' (ID '{}')", name, next_id);
 
   const auto entity = registry.create();
 
@@ -98,7 +98,7 @@ void make_component_def(entt::registry& registry, const ComponentID id, std::str
   TACTILE_ASSERT(!is_valid_component(registry, id));
   TACTILE_ASSERT(!is_component_name_taken(registry, name));
 
-  LogDebug("Creating component definition with explicit ID '{}'", id);
+  log_debug("Creating component definition with explicit ID '{}'", id);
 
   const auto entity = registry.create();
 
@@ -110,7 +110,7 @@ void make_component_def(entt::registry& registry, const ComponentID id, std::str
 auto remove_component_def(entt::registry& registry, const ComponentID id)
     -> remove_component_def_result
 {
-  LogDebug("Deleting component definition '{}'", id);
+  log_debug("Deleting component definition '{}'", id);
 
   const auto [defEntity, def] = get_component_def(registry, id);
 
@@ -153,7 +153,7 @@ auto remove_component_def(entt::registry& registry, const ComponentID id)
 
 void restore_component_def(entt::registry& registry, remove_component_def_result snapshot)
 {
-  LogDebug("Restoring component definition '{}'", snapshot.id);
+  log_debug("Restoring component definition '{}'", snapshot.id);
 
   make_component_def(registry, snapshot.id, snapshot.name);
   for (auto&& [name, value] : snapshot.attributes) {
@@ -161,7 +161,7 @@ void restore_component_def(entt::registry& registry, remove_component_def_result
   }
 
   for (auto&& [contextId, values] : snapshot.values) {
-    LogVerbose("Restoring component '{}' for context '{}'", snapshot.id, contextId);
+    log_verbose("Restoring component '{}' for context '{}'", snapshot.id, contextId);
 
     auto& context = sys::GetContext(registry, contextId);
 
@@ -180,7 +180,7 @@ void rename_component_def(entt::registry& registry,
 {
   TACTILE_ASSERT(!sys::is_component_name_taken(registry, name));
 
-  LogDebug("Renaming component definition '{}' to '{}'", id, name);
+  log_debug("Renaming component definition '{}' to '{}'", id, name);
 
   auto [entity, def] = get_component_def(registry, id);
   def.name = std::move(name);
@@ -289,7 +289,7 @@ void make_component_attribute(entt::registry& registry,
                               const std::string& name,
                               const attribute_value& value)
 {
-  LogDebug("Adding attribute '{}' to component '{}'", name, id);
+  log_debug("Adding attribute '{}' to component '{}'", name, id);
 
   auto [defEntity, def] = get_component_def(registry, id);
   def.attributes[name] = value;
@@ -306,7 +306,7 @@ void remove_component_attribute(entt::registry& registry,
                                 const ComponentID id,
                                 const std::string_view name)
 {
-  LogDebug("Removing attribute '{}' from component '{}'", name, id);
+  log_debug("Removing attribute '{}' from component '{}'", name, id);
 
   TACTILE_ASSERT(find_component_def(registry, id) != entt::null);
   TACTILE_ASSERT(is_component_attribute_name_taken(registry, id, name));
@@ -332,7 +332,7 @@ void rename_component_attribute(entt::registry& registry,
 {
   TACTILE_ASSERT(!is_component_attribute_name_taken(registry, id, updated));
 
-  LogDebug("Renaming attribute '{}' in component '{}' to '{}'", current, id, updated);
+  log_debug("Renaming attribute '{}' in component '{}' to '{}'", current, id, updated);
 
   auto [defEntity, def] = get_component_def(registry, id);
 
@@ -347,7 +347,7 @@ auto duplicate_component_attribute(entt::registry& registry,
                                    const ComponentID id,
                                    const std::string_view attribute) -> std::string
 {
-  LogDebug("Duplicating attribute '{}' in component '{}'", attribute, id);
+  log_debug("Duplicating attribute '{}' in component '{}'", attribute, id);
 
   auto [defEntity, def] = get_component_def(registry, id);
   auto iter = GetComponentAttribute(registry, id, attribute);
@@ -369,10 +369,10 @@ void set_component_attribute_type(entt::registry& registry,
                                   const std::string_view attribute,
                                   const PropertyType type)
 {
-  LogVerbose("Setting type of attribute '{}' in component '{}' to '{}'",
-             attribute,
-             id,
-             type);
+  log_verbose("Setting type of attribute '{}' in component '{}' to '{}'",
+              attribute,
+              id,
+              type);
 
   auto iter = GetComponentAttribute(registry, id, attribute);
   iter->second.reset_to_default(type);
@@ -453,7 +453,7 @@ auto remove_component(entt::registry& registry,
   TACTILE_ASSERT(find_component_def(registry, componentId) != entt::null);
   TACTILE_ASSERT(has_component(registry, contextId, componentId));
 
-  LogDebug("Removing component '{}' from context '{}'", componentId, contextId);
+  log_debug("Removing component '{}' from context '{}'", componentId, contextId);
 
   auto& context = GetContext(registry, contextId);
   entt::entity match = entt::null;
@@ -485,9 +485,9 @@ void restore_component(entt::registry& registry, remove_component_result snapsho
   TACTILE_ASSERT(find_component_def(registry, snapshot.component_id) != entt::null);
   TACTILE_ASSERT(!has_component(registry, snapshot.context_id, snapshot.component_id));
 
-  LogDebug("Restoring component '{}' for context '{}'",
-           snapshot.component_id,
-           snapshot.context_id);
+  log_debug("Restoring component '{}' for context '{}'",
+            snapshot.component_id,
+            snapshot.context_id);
 
   auto& context = GetContext(registry, snapshot.context_id);
 
@@ -517,7 +517,7 @@ auto reset_component(entt::registry& registry,
 {
   TACTILE_ASSERT(has_component(registry, contextId, componentId));
 
-  LogDebug("Resetting component '{}' in context '{}'", componentId, contextId);
+  log_debug("Resetting component '{}' in context '{}'", componentId, contextId);
 
   const auto& [defEntity, def] = get_component_def(registry, componentId);
   auto& component = GetComponent(registry, contextId, componentId);

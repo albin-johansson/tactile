@@ -108,7 +108,7 @@ auto make_tileset(entt::registry& registry,
   const auto id = tilesets.next_id;
   ++tilesets.next_id;
 
-  LogDebug("Creating tileset with ID '{}'", id);
+  log_debug("Creating tileset with ID '{}'", id);
 
   const auto tilesetEntity = registry.create();
   auto& tileset = registry.emplace<comp::tileset>(tilesetEntity);
@@ -157,7 +157,7 @@ auto make_tileset(entt::registry& registry,
 
 auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity
 {
-  LogDebug("Restoring tileset with ID '{}'", snapshot.core.id);
+  log_debug("Restoring tileset with ID '{}'", snapshot.core.id);
   const auto tilesetEntity = registry.create();
 
   auto& tileset =
@@ -193,7 +193,7 @@ auto copy_tileset(const entt::registry& registry, const entt::entity source)
 
 void select_tileset(entt::registry& registry, const TilesetID id)
 {
-  LogVerbose("Selecting tileset '{}'", id);
+  log_verbose("Selecting tileset '{}'", id);
 
   const auto entity = find_tileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);
@@ -204,7 +204,7 @@ void select_tileset(entt::registry& registry, const TilesetID id)
 
 void remove_tileset(entt::registry& registry, const TilesetID id)
 {
-  LogDebug("Removing tileset '{}'", id);
+  log_debug("Removing tileset '{}'", id);
 
   const auto entity = find_tileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);

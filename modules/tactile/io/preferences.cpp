@@ -193,7 +193,7 @@ void LoadPreferences()
     }
   }
   else {
-    LogInfo("Did not find preferences file, assuming defaults");
+    log_info("Did not find preferences file, assuming defaults");
     SavePreferences();
   }
 
@@ -237,7 +237,7 @@ void SavePreferences()
   std::ofstream stream{get_file_path(),
                        std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
-    LogError("Failed to save preferences!");
+    log_error("Failed to save preferences!");
   }
 }
 

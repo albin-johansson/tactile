@@ -46,7 +46,7 @@ void SaveDocument(const Document& document)
     TACTILE_PROFILE_END("Emitted document")
   }
   else {
-    LogWarning("Failed to emit map!");
+    log_warning("Failed to emit map!");
   }
 }
 

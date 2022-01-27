@@ -12,29 +12,29 @@
 namespace tactile {
 namespace {
 
-struct LoggedString final
+struct logged_string final
 {
-  LogLevel level{};
+  log_level level{};
   std::string str;
 };
 
-inline std::deque<LoggedString> gHistory;
-inline LogLevel gLogLevel{LogLevel::Info};
+inline std::deque<logged_string> _history;
+inline log_level _log_level{log_level::info};
 
-void Log(const fmt::color color,
-         const LogLevel level,
-         const std::string_view priority,
-         const std::string_view fmt,
-         const fmt::format_args args)
+void _log(const fmt::color color,
+          const log_level level,
+          const std::string_view priority,
+          const std::string_view fmt,
+          const fmt::format_args args)
 {
   const auto time = fmt::localtime(std::time(nullptr));
   const auto msg = fmt::vformat(fmt, args);
   const auto full = fmt::vformat("{:%H:%M:%S} > {}\n", fmt::make_format_args(time, msg));
 
-  gHistory.push_back(LoggedString{level, full});
+  _history.push_back(logged_string{level, full});
 
   if constexpr (is_debug_build) {
-    Print(color, "{:>9} {}", priority, full);
+    print(color, "{:>9} {}", priority, full);
   }
 }
 
@@ -42,60 +42,60 @@ void Log(const fmt::color color,
 
 namespace LoggerImpl {
 
-void LogVerboseV(const std::string_view fmt, const fmt::format_args args)
+void log_verbose_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (IsEnabled(LogLevel::Verbose)) {
-    Log(fmt::color::violet, LogLevel::Verbose, "[VERBOSE]", fmt, args);
+  if (is_enabled(log_level::verbose)) {
+    _log(fmt::color::violet, log_level::verbose, "[VERBOSE]", fmt, args);
   }
 }
 
-void LogDebugV(const std::string_view fmt, const fmt::format_args args)
+void log_debug_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (IsEnabled(LogLevel::Debug)) {
-    Log(fmt::color::aquamarine, LogLevel::Debug, "[DEBUG]", fmt, args);
+  if (is_enabled(log_level::debug)) {
+    _log(fmt::color::aquamarine, log_level::debug, "[DEBUG]", fmt, args);
   }
 }
 
-void LogInfoV(const std::string_view fmt, const fmt::format_args args)
+void log_info_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (IsEnabled(LogLevel::Info)) {
-    Log(fmt::color::white, LogLevel::Info, "[INFO]", fmt, args);
+  if (is_enabled(log_level::info)) {
+    _log(fmt::color::white, log_level::info, "[INFO]", fmt, args);
   }
 }
 
-void LogWarningV(const std::string_view fmt, const fmt::format_args args)
+void log_warning_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (IsEnabled(LogLevel::Warning)) {
-    Log(fmt::color::yellow, LogLevel::Warning, "[WARNING]", fmt, args);
+  if (is_enabled(log_level::warning)) {
+    _log(fmt::color::yellow, log_level::warning, "[WARNING]", fmt, args);
   }
 }
 
-void LogErrorV(const std::string_view fmt, const fmt::format_args args)
+void log_error_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (IsEnabled(LogLevel::Error)) {
-    Log(fmt::color::orange_red, LogLevel::Error, "[ERROR]", fmt, args);
+  if (is_enabled(log_level::error)) {
+    _log(fmt::color::orange_red, log_level::error, "[ERROR]", fmt, args);
   }
 }
 
 }  // namespace LoggerImpl
 
-void ClearLogHistory()
+void clear_log_history()
 {
-  gHistory.clear();
+  _history.clear();
 }
 
-void SetLogLevel(const LogLevel level)
+void set_log_level(const log_level level)
 {
-  gLogLevel = level;
+  _log_level = level;
 }
 
-auto GetFilteredLogEntry(const LogLevel filter, const usize index)
-    -> std::pair<LogLevel, const std::string&>
+auto get_filtered_log_entry(const log_level filter, const usize index)
+    -> std::pair<log_level, const std::string&>
 {
   usize i = 0;
 
-  for (const auto& [level, str] : gHistory) {
-    if (IsEnabled(filter, level)) {
+  for (const auto& [level, str] : _history) {
+    if (is_enabled(filter, level)) {
       if (i == index) {
         return {level, str};
       }
@@ -108,12 +108,12 @@ auto GetFilteredLogEntry(const LogLevel filter, const usize index)
   ThrowTraced(TactileError{"Invalid index for filtered log entry!"});
 }
 
-auto GetLogSize(const LogLevel filter) -> usize
+auto log_size(const log_level filter) -> usize
 {
   usize count = 0;
 
-  for (const auto& [level, str] : gHistory) {
-    if (IsEnabled(filter, level)) {
+  for (const auto& [level, str] : _history) {
+    if (is_enabled(filter, level)) {
       ++count;
     }
   }
@@ -121,24 +121,24 @@ auto GetLogSize(const LogLevel filter) -> usize
   return count;
 }
 
-auto IsEnabled(const LogLevel filter, const LogLevel level) -> bool
+auto is_enabled(const log_level filter, const log_level level) -> bool
 {
   switch (level) {
-    case LogLevel::Verbose:
-      return filter == LogLevel::Verbose;
+    case log_level::verbose:
+      return filter == log_level::verbose;
 
-    case LogLevel::Debug:
-      return filter == LogLevel::Verbose || filter == LogLevel::Debug;
+    case log_level::debug:
+      return filter == log_level::verbose || filter == log_level::debug;
 
-    case LogLevel::Info:
-      return filter == LogLevel::Verbose || filter == LogLevel::Debug ||
-             filter == LogLevel::Info;
+    case log_level::info:
+      return filter == log_level::verbose || filter == log_level::debug ||
+             filter == log_level::info;
 
-    case LogLevel::Warning:
-      return filter == LogLevel::Verbose || filter == LogLevel::Debug ||
-             filter == LogLevel::Info || filter == LogLevel::Warning;
+    case log_level::warning:
+      return filter == log_level::verbose || filter == log_level::debug ||
+             filter == log_level::info || filter == log_level::warning;
 
-    case LogLevel::Error:
+    case log_level::error:
       return true; /* Errors are always logged */
 
     default:
@@ -146,9 +146,9 @@ auto IsEnabled(const LogLevel filter, const LogLevel level) -> bool
   }
 }
 
-auto IsEnabled(const LogLevel level) -> bool
+auto is_enabled(const log_level level) -> bool
 {
-  return IsEnabled(gLogLevel, level);
+  return is_enabled(_log_level, level);
 }
 
 }  // namespace tactile

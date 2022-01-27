@@ -22,7 +22,7 @@ void OpenSaveAsDialog(entt::dispatcher& dispatcher)
     // TODO is this logic still required with new file dialogs?
     if (!hasValidExtension) {
       const auto& format = prefs::GetPreferredFormat();
-      LogWarning("Invalid file extension '{}', assuming '{}'", ext, format);
+      log_warning("Invalid file extension '{}', assuming '{}'", ext, format);
 
       if (format == "YAML") {
         path += ".yaml";
@@ -34,7 +34,7 @@ void OpenSaveAsDialog(entt::dispatcher& dispatcher)
         path += ".tmx";
       }
       else {
-        LogError("Could not amend requested file path with valid extension!");
+        log_error("Could not amend requested file path with valid extension!");
         return;
       }
     }

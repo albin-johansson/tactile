@@ -82,7 +82,7 @@ im_gui_context::im_gui_context(cen::window& window, cen::gl_context& context)
     mInitializedBackend = ImGui_ImplOpenGL3_Init("#version 130");
   }
 
-  LogDebug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
+  log_debug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
 }
 
 im_gui_context::~im_gui_context()
