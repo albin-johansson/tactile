@@ -125,7 +125,7 @@ void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
 auto EnableBucketShortcut::IsEnabled(const Model& model,
                                      const WidgetManager& widgets) const -> bool
 {
-  return model.HasActiveDocument() && widgets.IsEditorFocused();
+  return model.IsBucketPossible() && widgets.IsEditorFocused();
 }
 
 EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
@@ -138,7 +138,7 @@ void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 auto EnableEraserShortcut::IsEnabled(const Model& model,
                                      const WidgetManager& widgets) const -> bool
 {
-  return model.HasActiveDocument() && widgets.IsEditorFocused();
+  return model.IsEraserPossible() && widgets.IsEditorFocused();
 }
 
 EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
@@ -151,7 +151,22 @@ void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
 auto EnableStampShortcut::IsEnabled(const Model& model,
                                     const WidgetManager& widgets) const -> bool
 {
-  return model.HasActiveDocument() && widgets.IsEditorFocused();
+  return model.IsStampPossible() && widgets.IsEditorFocused();
+}
+
+EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
+    : AShortcut{cen::scancodes::q}
+{}
+
+void EnableObjectSelectionShortcut::Activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
+}
+
+auto EnableObjectSelectionShortcut::IsEnabled(const Model& model,
+                                              const WidgetManager& widgets) const -> bool
+{
+  return model.IsObjectSelectionPossible() && widgets.IsEditorFocused();
 }
 
 }  // namespace tactile

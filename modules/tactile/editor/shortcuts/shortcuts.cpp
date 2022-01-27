@@ -36,6 +36,7 @@ void LoadDefaultShortcuts()
   LoadShortcut<EnableStampShortcut>();
   LoadShortcut<EnableEraserShortcut>();
   LoadShortcut<EnableBucketShortcut>();
+  LoadShortcut<EnableObjectSelectionShortcut>();
 
   LoadShortcut<AddRowShortcut>();
   LoadShortcut<AddColumnShortcut>();

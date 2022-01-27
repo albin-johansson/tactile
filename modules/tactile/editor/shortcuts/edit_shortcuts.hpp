@@ -104,4 +104,14 @@ struct EnableStampShortcut final : AShortcut
       -> bool override;
 };
 
+struct EnableObjectSelectionShortcut final : AShortcut
+{
+  EnableObjectSelectionShortcut();
+
+  void Activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto IsEnabled(const Model& model, const WidgetManager& widgets) const
+      -> bool override;
+};
+
 }  // namespace tactile
