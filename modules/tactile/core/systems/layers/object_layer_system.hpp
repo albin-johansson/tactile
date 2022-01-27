@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>  // pair
+
 #include <entt/entt.hpp>
 #include <tactile_def.hpp>
 
@@ -17,6 +19,9 @@ namespace tactile::sys {
 
 /// \name Object functions
 /// \{
+
+[[nodiscard]] auto get_object_layer(const entt::registry& registry, LayerID id)
+    -> std::pair<entt::entity, const comp::object_layer&>;
 
 [[nodiscard]] auto has_object(const entt::registry& registry,
                               const comp::object_layer& layer,

@@ -16,6 +16,7 @@
 #include "core/map.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/object_system.hpp"
 #include "core/systems/property_system.hpp"
@@ -235,7 +236,7 @@ auto EmitInfo::root_context() const -> ContextID
 auto EmitInfo::layer_count(const Maybe<LayerID> id) const -> usize
 {
   if (id) {
-    const auto entity = to_layer_entity(*id);
+    const auto entity = sys::get_layer_entity(*mRegistry, *id);
     const auto& node = mRegistry->get<comp::layer_tree_node>(entity);
     return node.children.size();
   }
@@ -258,7 +259,7 @@ void EmitInfo::each_layer(const Maybe<LayerID> parentId, const layer_visitor& fu
   }
   else {
     /* Only visit immediate layer children, recursive visits are handled by the emitter */
-    const auto parentEntity = to_layer_entity(*parentId);
+    const auto parentEntity = sys::get_layer_entity(*mRegistry, *parentId);
     const auto& node = mRegistry->get<comp::layer_tree_node>(parentEntity);
     for (const auto child : node.children) {
       const auto& childLayer = mRegistry->get<comp::layer>(child);
@@ -269,7 +270,7 @@ void EmitInfo::each_layer(const Maybe<LayerID> parentId, const layer_visitor& fu
 
 auto EmitInfo::layer_data(const LayerID id) const -> LayerData
 {
-  const auto entity = to_layer_entity(id);
+  const auto entity = sys::get_layer_entity(*mRegistry, id);
 
   const auto& context = mRegistry->get<comp::attribute_context>(entity);
   const auto& layer = mRegistry->get<comp::layer>(entity);
@@ -293,27 +294,19 @@ void EmitInfo::each_layer_tile(const LayerID id, const layer_tile_visitor& func)
 
 auto EmitInfo::layer_object_count(const LayerID id) const -> usize
 {
-  const auto entity = to_layer_entity(id);
-
-  TACTILE_ASSERT(mRegistry->all_of<comp::object_layer>(entity));
-  const auto& objectLayer = mRegistry->get<comp::object_layer>(entity);
-
-  return objectLayer.objects.size();
+  const auto&& [entity, layer] = sys::get_object_layer(*mRegistry, id);
+  return layer.objects.size();
 }
 
 void EmitInfo::each_layer_object(const LayerID id, const object_visitor& func) const
 {
-  const auto entity = to_layer_entity(id);
-
-  TACTILE_ASSERT(mRegistry->all_of<comp::object_layer>(entity));
-  const auto& objectLayer = mRegistry->get<comp::object_layer>(entity);
-
-  each_object(*mRegistry, objectLayer.objects, func);
+  const auto&& [entity, layer] = sys::get_object_layer(*mRegistry, id);
+  each_object(*mRegistry, layer.objects, func);
 }
 
 auto EmitInfo::layer_context(const LayerID id) const -> ContextID
 {
-  const auto entity = to_layer_entity(id);
+  const auto entity = sys::find_layer(*mRegistry, id);
   return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
@@ -404,17 +397,6 @@ auto EmitInfo::to_tile_entity(const TileID id) const -> entt::entity
   }
 
   ThrowTraced(TactileError{"Did not find fancy tile associated with tile ID!"});
-}
-
-auto EmitInfo::to_layer_entity(const LayerID id) const -> entt::entity
-{
-  const auto entity = sys::find_layer(*mRegistry, id);
-  if (entity != entt::null) {
-    return entity;
-  }
-  else {
-    ThrowTraced(TactileError{"Invalid layer ID!"});
-  }
 }
 
 }  // namespace tactile

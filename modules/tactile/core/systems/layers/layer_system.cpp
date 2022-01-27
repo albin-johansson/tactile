@@ -376,6 +376,17 @@ auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entit
   return entt::null;
 }
 
+auto get_layer_entity(const entt::registry& registry, const LayerID id) -> entt::entity
+{
+  const auto entity = sys::find_layer(registry, id);
+  if (entity != entt::null && registry.all_of<comp::layer>(entity)) {
+    return entity;
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid layer ID!"});
+  }
+}
+
 auto get_layer(entt::registry& registry, const LayerID id)
     -> std::pair<entt::entity, comp::layer&>
 {

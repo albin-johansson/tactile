@@ -202,8 +202,6 @@ class EmitInfo final {
   [[nodiscard]] auto to_tileset_entity(TilesetID id) const -> entt::entity;
 
   [[nodiscard]] auto to_tile_entity(TileID id) const -> entt::entity;
-
-  [[nodiscard]] auto to_layer_entity(LayerID id) const -> entt::entity;
 };
 
 }  // namespace tactile

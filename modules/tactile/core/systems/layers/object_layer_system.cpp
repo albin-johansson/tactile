@@ -3,6 +3,7 @@
 #include "core/components/object.hpp"
 #include "core/map.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "layer_system.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -33,6 +34,18 @@ namespace {
 }
 
 }  // namespace
+
+auto get_object_layer(const entt::registry& registry, const LayerID id)
+    -> std::pair<entt::entity, const comp::object_layer&>
+{
+  const auto entity = find_layer(registry, id);
+  if (entity != entt::null && registry.all_of<comp::object_layer>(entity)) {
+    return {entity, registry.get<comp::object_layer>(entity)};
+  }
+  else {
+    ThrowTraced(TactileError{"Invalid object layer ID!"});
+  }
+}
 
 auto has_object(const entt::registry& registry,
                 const comp::object_layer& layer,
