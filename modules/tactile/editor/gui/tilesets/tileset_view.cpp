@@ -94,7 +94,8 @@ void TilesetView::Update(const entt::registry& registry,
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
   RenderTilesetImage(graphics, registry.get<comp::texture>(entity), position);
 
-  if (const auto& selection = registry.get<comp::tileset_selection>(entity); selection.region) {
+  if (const auto& selection = registry.get<comp::tileset_selection>(entity);
+      selection.region) {
     RenderSelection(*selection.region, position, tileSize);
   }
 
