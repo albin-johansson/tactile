@@ -6,12 +6,15 @@
 
 namespace tactile::comp {
 
+/**
+ * \brief Represents a loaded OpenGL texture.
+ */
 struct texture final
 {
-  uint id{};
-  int width{};
-  int height{};
-  std::filesystem::path path;
+  uint id{};                   ///< The OpenGL texture identifier.
+  int width{};                 ///< The texture pixel width.
+  int height{};                ///< The texture pixel height.
+  std::filesystem::path path;  ///< Source file path.
 };
 
 }  // namespace tactile::comp
