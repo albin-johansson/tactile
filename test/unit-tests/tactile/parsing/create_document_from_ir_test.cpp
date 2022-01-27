@@ -156,12 +156,12 @@ void CheckObjectLayer1(const entt::registry& registry)
   const auto& objectLayer = registry.get<ObjectLayer>(entity);
   ASSERT_EQ(2, objectLayer.objects.size());
 
-  ASSERT_TRUE(sys::HasObject(registry, entity, 2));
-  ASSERT_TRUE(sys::HasObject(registry, entity, 3));
-  ASSERT_FALSE(sys::HasObject(registry, entity, 42));
+  ASSERT_TRUE(sys::has_object(registry, objectLayer, 2));
+  ASSERT_TRUE(sys::has_object(registry, objectLayer, 3));
+  ASSERT_FALSE(sys::has_object(registry, objectLayer, 42));
 
   {
-    const auto rectEntity = sys::FindObject(registry, entity, 2);
+    const auto rectEntity = sys::find_object(registry, objectLayer, 2);
     const auto& rect = registry.get<comp::object>(rectEntity);
     const auto& rectContext = registry.get<comp::attribute_context>(rectEntity);
 

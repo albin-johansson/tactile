@@ -38,7 +38,9 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
       active.entity = entt::null;
 
       const auto layerEntity = get_active_layer(registry);
-      const auto objectEntity = FindObject(registry, layerEntity, mouse.x, mouse.y);
+      const auto& layer = registry.get<ObjectLayer>(layerEntity);
+
+      const auto objectEntity = find_object(registry, layer, mouse.x, mouse.y);
       if (objectEntity != entt::null) {
         const auto& object = registry.get<comp::object>(objectEntity);
 
@@ -57,8 +59,9 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
       active.entity = entt::null;
 
       const auto layerEntity = get_active_layer(registry);
-      const auto objectEntity = FindObject(registry, layerEntity, mouse.x, mouse.y);
+      const auto& layer = registry.get<ObjectLayer>(layerEntity);
 
+      const auto objectEntity = find_object(registry, layer, mouse.x, mouse.y);
       if (objectEntity != entt::null) {
         active.entity = objectEntity;
         dispatcher.enqueue<SpawnObjectContextMenuEvent>(objectEntity);
