@@ -69,13 +69,12 @@ void set_tiles(comp::tile_layer& layer, const TileCache& tiles);
 /**
  * \brief Visits each tile in a tile layer.
  *
- * \tparam T the function object type, must provide `operator()(usize, usize, TileID)`.
+ * \details The function object must provide `operator()(usize, usize, TileID)`.
  *
  * \param layer the tile layer to visit.
  * \param callable the function object invoked for each tile.
  */
-template <typename T>
-void each_tile(const comp::tile_layer& layer, T&& callable)
+void each_tile(const comp::tile_layer& layer, auto&& callable)
 {
   TACTILE_ASSERT(!layer.matrix.empty());
   TACTILE_ASSERT(!layer.matrix.at(0).empty());
