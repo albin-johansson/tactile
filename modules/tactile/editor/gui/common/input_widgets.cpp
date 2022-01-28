@@ -20,43 +20,43 @@ constexpr float _min_float = -(std::numeric_limits<float>::min)();
 auto Input(const CStr id, const attribute_value& value) -> Maybe<attribute_value>
 {
   switch (value.type()) {
-    case PropertyType::String: {
+    case attribute_type::string: {
       if (auto updated = InputStringWithHint(id, "Empty", value.as_string())) {
         return std::move(updated);
       }
       break;
     }
-    case PropertyType::Integer: {
+    case attribute_type::integer: {
       if (const auto updated = InputWidget(id, value.as_int())) {
         return updated;
       }
       break;
     }
-    case PropertyType::Floating: {
+    case attribute_type::floating: {
       if (const auto updated = InputWidget(id, value.as_float())) {
         return updated;
       }
       break;
     }
-    case PropertyType::Boolean: {
+    case attribute_type::boolean: {
       if (const auto updated = InputWidget(id, value.as_bool())) {
         return updated;
       }
       break;
     }
-    case PropertyType::File: {
+    case attribute_type::file: {
       if (auto updated = InputFile(id, value.as_file())) {
         return std::move(updated);
       }
       break;
     }
-    case PropertyType::Color: {
+    case attribute_type::color: {
       if (const auto updated = InputWidget(id, value.as_color())) {
         return updated;
       }
       break;
     }
-    case PropertyType::Object: {
+    case attribute_type::object: {
       if (const auto updated = InputWidget(id, value.as_object())) {
         return updated;
       }

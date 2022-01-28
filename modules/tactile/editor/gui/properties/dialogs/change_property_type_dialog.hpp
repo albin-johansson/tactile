@@ -13,7 +13,7 @@ class ChangePropertyTypeDialog final : public ADialog {
 
   ~ChangePropertyTypeDialog() override = default;
 
-  void Show(std::string name, PropertyType type);
+  void Show(std::string name, attribute_type type);
 
  protected:
   void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
@@ -23,9 +23,9 @@ class ChangePropertyTypeDialog final : public ADialog {
   [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool override;
 
  private:
-  PropertyType mCurrentType{PropertyType::String};
+  attribute_type mCurrentType{attribute_type::string};
   Maybe<std::string> mPropertyName;
-  Maybe<PropertyType> mPreviousType;
+  Maybe<attribute_type> mPreviousType;
 };
 
 }  // namespace tactile

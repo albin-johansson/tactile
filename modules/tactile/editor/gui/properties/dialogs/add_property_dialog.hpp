@@ -24,7 +24,7 @@ class AddPropertyDialog final : public ADialog {
 
  private:
   std::array<char, 128> mNameBuffer{};
-  PropertyType mPropertyType{PropertyType::String};
+  attribute_type mPropertyType{attribute_type::string};
 };
 
 }  // namespace tactile

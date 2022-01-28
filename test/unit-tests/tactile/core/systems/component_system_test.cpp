@@ -220,10 +220,10 @@ TEST(ComponentSystem, SetComponentAttributeType)
   const auto def = sys::make_component_def(registry, "Def");
 
   sys::make_component_attribute(registry, def, "A");
-  ASSERT_EQ(PropertyType::String, sys::get_component_attribute_type(registry, def, "A"));
+  ASSERT_EQ(attribute_type::string, sys::get_component_attribute_type(registry, def, "A"));
 
-  sys::set_component_attribute_type(registry, def, "A", PropertyType::Integer);
-  ASSERT_EQ(PropertyType::Integer, sys::get_component_attribute_type(registry, def, "A"));
+  sys::set_component_attribute_type(registry, def, "A", attribute_type::integer);
+  ASSERT_EQ(attribute_type::integer, sys::get_component_attribute_type(registry, def, "A"));
 
   ASSERT_THROW(sys::get_component_attribute_type(registry, def, "B"), TactileError);
 }
@@ -242,7 +242,7 @@ TEST(ComponentSystem, SetComponentAttributeValue)
 
   ASSERT_EQ("Bar", sys::get_component_attribute_value(registry, def, "Foo").as_string());
 
-  sys::set_component_attribute_type(registry, def, "Foo", PropertyType::Boolean);
+  sys::set_component_attribute_type(registry, def, "Foo", attribute_type::boolean);
   sys::set_component_attribute_value(registry, def, "Foo", true);
 
   ASSERT_TRUE(sys::get_component_attribute_value(registry, def, "Foo").as_bool());
@@ -266,10 +266,10 @@ TEST(ComponentSystem, AddComponent)
   sys::make_component_attribute(registry, def, "X");
   sys::make_component_attribute(registry, def, "Y");
 
-  sys::set_component_attribute_type(registry, def, "X", PropertyType::Integer);
+  sys::set_component_attribute_type(registry, def, "X", attribute_type::integer);
   sys::set_component_attribute_value(registry, def, "X", 42);
 
-  sys::set_component_attribute_type(registry, def, "Y", PropertyType::Floating);
+  sys::set_component_attribute_type(registry, def, "Y", attribute_type::floating);
   sys::set_component_attribute_value(registry, def, "Y", -3.5f);
 
   const auto entity = CreateContext(registry);

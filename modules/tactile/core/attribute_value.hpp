@@ -94,27 +94,27 @@ class attribute_value final {
    *
    * \param type the new value type.
    */
-  void reset_to_default(const PropertyType type)
+  void reset_to_default(const attribute_type type)
   {
-    if (type == PropertyType::Integer) {
+    if (type == attribute_type::integer) {
       set_value<integer_type>(0);
     }
-    else if (type == PropertyType::Floating) {
+    else if (type == attribute_type::floating) {
       set_value<float_type>(0);
     }
-    else if (type == PropertyType::Boolean) {
+    else if (type == attribute_type::boolean) {
       set_value<bool>(false);
     }
-    else if (type == PropertyType::String) {
+    else if (type == attribute_type::string) {
       set_value<string_type>(string_type{});
     }
-    else if (type == PropertyType::Color) {
+    else if (type == attribute_type::color) {
       set_value<color_type>(cen::colors::black);
     }
-    else if (type == PropertyType::Object) {
+    else if (type == attribute_type::object) {
       set_value<object_t>(object_t{});
     }
-    else if (type == PropertyType::File) {
+    else if (type == attribute_type::file) {
       set_value<file_type>(file_type{});
     }
     else {
@@ -167,29 +167,29 @@ class attribute_value final {
    *
    * \return the attribute type.
    */
-  [[nodiscard]] auto type() const noexcept -> PropertyType
+  [[nodiscard]] auto type() const noexcept -> attribute_type
   {
     if (holds<integer_type>()) {
-      return PropertyType::Integer;
+      return attribute_type::integer;
     }
     else if (holds<float_type>()) {
-      return PropertyType::Floating;
+      return attribute_type::floating;
     }
     else if (holds<bool>()) {
-      return PropertyType::Boolean;
+      return attribute_type::boolean;
     }
     else if (holds<object_t>()) {
-      return PropertyType::Object;
+      return attribute_type::object;
     }
     else if (holds<color_type>()) {
-      return PropertyType::Color;
+      return attribute_type::color;
     }
     else if (holds<file_type>()) {
-      return PropertyType::File;
+      return attribute_type::file;
     }
     else {
       TACTILE_ASSERT(holds<string_type>());
-      return PropertyType::String;
+      return attribute_type::string;
     }
   }
 
@@ -200,7 +200,7 @@ class attribute_value final {
    */
   [[nodiscard]] auto is_string() const noexcept -> bool
   {
-    return type() == PropertyType::String;
+    return type() == attribute_type::string;
   }
 
   /**
@@ -210,7 +210,7 @@ class attribute_value final {
    */
   [[nodiscard]] auto is_int() const noexcept -> bool
   {
-    return type() == PropertyType::Integer;
+    return type() == attribute_type::integer;
   }
 
   /**
@@ -220,7 +220,7 @@ class attribute_value final {
    */
   [[nodiscard]] auto is_float() const noexcept -> bool
   {
-    return type() == PropertyType::Floating;
+    return type() == attribute_type::floating;
   }
 
   /**
@@ -230,7 +230,7 @@ class attribute_value final {
    */
   [[nodiscard]] auto is_bool() const noexcept -> bool
   {
-    return type() == PropertyType::Boolean;
+    return type() == attribute_type::boolean;
   }
 
   /**
@@ -240,7 +240,7 @@ class attribute_value final {
    */
   [[nodiscard]] auto is_file() const noexcept -> bool
   {
-    return type() == PropertyType::File;
+    return type() == attribute_type::file;
   }
 
   /**
@@ -250,7 +250,7 @@ class attribute_value final {
    */
   [[nodiscard]] auto is_object() const noexcept -> bool
   {
-    return type() == PropertyType::Object;
+    return type() == attribute_type::object;
   }
 
   /**
@@ -260,7 +260,7 @@ class attribute_value final {
    */
   [[nodiscard]] auto is_color() const noexcept -> bool
   {
-    return type() == PropertyType::Color;
+    return type() == attribute_type::color;
   }
 
   /// \} End of type checks

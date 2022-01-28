@@ -45,7 +45,7 @@ class WidgetManager final {
 
   void ShowRenamePropertyDialog(const std::string& name);
 
-  void ShowChangePropertyTypeDialog(std::string name, PropertyType type);
+  void ShowChangePropertyTypeDialog(std::string name, attribute_type type);
 
   void ShowResizeMapDialog(usize currentRows, usize currentColumns);
 

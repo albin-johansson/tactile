@@ -23,31 +23,31 @@ constexpr int tileset_node_version = 1;
 auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::Emitter&
 {
   switch (value.type()) {
-    case PropertyType::String:
+    case attribute_type::string:
       emitter << value.as_string();
       break;
 
-    case PropertyType::Integer:
+    case attribute_type::integer:
       emitter << value.as_int();
       break;
 
-    case PropertyType::Floating:
+    case attribute_type::floating:
       emitter << value.as_float();
       break;
 
-    case PropertyType::Boolean:
+    case attribute_type::boolean:
       emitter << value.as_bool();
       break;
 
-    case PropertyType::File:
+    case attribute_type::file:
       emitter << value.as_file().c_str();
       break;
 
-    case PropertyType::Color:
+    case attribute_type::color:
       emitter << value.as_color().as_rgba();
       break;
 
-    case PropertyType::Object:
+    case attribute_type::object:
       emitter << value.as_object();
       break;
   }
@@ -55,28 +55,28 @@ auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::E
   return emitter;
 }
 
-[[nodiscard]] auto stringify(const PropertyType type) -> std::string
+[[nodiscard]] auto stringify(const attribute_type type) -> std::string
 {
   switch (type) {
-    case PropertyType::String:
+    case attribute_type::string:
       return "string";
 
-    case PropertyType::Integer:
+    case attribute_type::integer:
       return "int";
 
-    case PropertyType::Floating:
+    case attribute_type::floating:
       return "float";
 
-    case PropertyType::Boolean:
+    case attribute_type::boolean:
       return "bool";
 
-    case PropertyType::File:
+    case attribute_type::file:
       return "file";
 
-    case PropertyType::Color:
+    case attribute_type::color:
       return "color";
 
-    case PropertyType::Object:
+    case attribute_type::object:
       return "object";
 
     default:

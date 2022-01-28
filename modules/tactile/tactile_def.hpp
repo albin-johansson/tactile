@@ -83,15 +83,15 @@ using Maybe = std::optional<T>;
 
 constexpr std::nullopt_t nothing = std::nullopt;
 
-/// \brief Provides values for all different possible property types.
-enum class PropertyType {
-  String,    ///< A string property.
-  Integer,   ///< An integer property.
-  Floating,  ///< A floating-point property.
-  Boolean,   ///< A boolean property.
-  File,      ///< A file path property.
-  Color,     ///< A color property.
-  Object     ///< An integer ID property, that refers to a map object.
+/// \brief Represents the different possible attributes types.
+enum class attribute_type {
+  string,    ///< A string property.
+  integer,   ///< An integer property.
+  floating,  ///< A floating-point property.
+  boolean,   ///< A boolean property.
+  file,      ///< A file path property.
+  color,     ///< A color property.
+  object     ///< An integer ID property, that refers to a map object.
 };
 
 /// \brief Represents the different available map object types.

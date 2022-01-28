@@ -97,7 +97,7 @@ TEST_F(PropertySystemTest, AddPropertyWithType)
   const auto entity = mRegistry.create();
   auto& context = sys::AddPropertyContext(mRegistry, entity);
 
-  sys::AddProperty(mRegistry, context, "str", PropertyType::String);
+  sys::AddProperty(mRegistry, context, "str", attribute_type::string);
   ASSERT_TRUE(sys::HasPropertyWithName(mRegistry, context, "str"));
   ASSERT_EQ("", sys::GetProperty(mRegistry, context, "str").value.as_string());
 }
@@ -117,7 +117,7 @@ TEST_F(PropertySystemTest, RemoveProperty)
   const auto entity = mRegistry.create();
   auto& context = sys::AddPropertyContext(mRegistry, entity);
 
-  sys::AddProperty(mRegistry, context, "X", PropertyType::Integer);
+  sys::AddProperty(mRegistry, context, "X", attribute_type::integer);
   ASSERT_TRUE(sys::HasPropertyWithName(mRegistry, context, "X"));
   ASSERT_EQ(1u, context.properties.size());
 
@@ -130,7 +130,7 @@ TEST_F(PropertySystemTest, RenameProperty)
 {
   auto& context = mRegistry.ctx<comp::attribute_context>();
 
-  sys::AddProperty(mRegistry, context, "abc", PropertyType::Color);
+  sys::AddProperty(mRegistry, context, "abc", attribute_type::color);
   ASSERT_TRUE(sys::HasPropertyWithName(mRegistry, context, "abc"));
 
   sys::RenameProperty(mRegistry, context, "abc", "def");
@@ -156,11 +156,11 @@ TEST_F(PropertySystemTest, ChangePropertyType)
   sys::AddProperty(mRegistry, context, "foo", 123);
   ASSERT_TRUE(sys::GetProperty(mRegistry, context, "foo").value.is_int());
 
-  sys::ChangePropertyType(mRegistry, context, "foo", PropertyType::String);
+  sys::ChangePropertyType(mRegistry, context, "foo", attribute_type::string);
   ASSERT_TRUE(sys::GetProperty(mRegistry, context, "foo").value.is_string());
   ASSERT_EQ("", sys::GetProperty(mRegistry, context, "foo").value.as_string());
 
-  sys::ChangePropertyType(mRegistry, context, "foo", PropertyType::Integer);
+  sys::ChangePropertyType(mRegistry, context, "foo", attribute_type::integer);
   ASSERT_TRUE(sys::GetProperty(mRegistry, context, "foo").value.is_int());
   ASSERT_EQ(0, sys::GetProperty(mRegistry, context, "foo").value.as_int());
 }

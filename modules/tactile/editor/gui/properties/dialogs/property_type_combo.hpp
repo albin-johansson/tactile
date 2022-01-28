@@ -4,8 +4,8 @@
 
 namespace tactile {
 
-void PropertyTypeCombo(PropertyType& out);
+void PropertyTypeCombo(attribute_type& out);
 
-void PropertyTypeCombo(PropertyType previous, PropertyType& out);
+void PropertyTypeCombo(attribute_type previous, attribute_type& out);
 
 }  // namespace tactile

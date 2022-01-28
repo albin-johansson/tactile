@@ -97,7 +97,7 @@ void WidgetManager::ShowRenamePropertyDialog(const std::string& name)
 }
 
 void WidgetManager::ShowChangePropertyTypeDialog(std::string name,
-                                                 const PropertyType type)
+                                                 const attribute_type type)
 {
   mPropertiesDock->ShowChangePropertyTypeDialog(std::move(name), type);
 }

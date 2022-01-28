@@ -65,7 +65,7 @@ void RestorePropertyContext(entt::registry& registry,
 void AddProperty(entt::registry& registry,
                  comp::attribute_context& context,
                  std::string name,
-                 const PropertyType type)
+                 const attribute_type type)
 {
   TACTILE_ASSERT(!HasPropertyWithName(registry, context, name));
 
@@ -131,7 +131,7 @@ void UpdateProperty(entt::registry& registry,
 void ChangePropertyType(entt::registry& registry,
                         comp::attribute_context& context,
                         const std::string_view name,
-                        const PropertyType type)
+                        const attribute_type type)
 {
   const auto entity = FindProperty(registry, context, name);
   TACTILE_ASSERT(entity != entt::null);

@@ -7,7 +7,7 @@ using namespace std::string_literals;
 TEST(AttributeValue, Defaults)
 {
   const attribute_value value;
-  ASSERT_EQ(PropertyType::String, value.type());
+  ASSERT_EQ(attribute_type::string, value.type());
 
   ASSERT_TRUE(value.is_string());
   ASSERT_FALSE(value.is_int());

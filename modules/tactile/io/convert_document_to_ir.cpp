@@ -42,32 +42,32 @@ void ConvertProperties(T& source,
     IO::SetName(data, property.name.c_str());
 
     switch (property.value.type()) {
-      case PropertyType::String:
+      case attribute_type::string:
         IO::AssignString(data, property.value.as_string().c_str());
         break;
 
-      case PropertyType::Integer:
+      case attribute_type::integer:
         IO::AssignInt(data, property.value.as_int());
         break;
 
-      case PropertyType::Floating:
+      case attribute_type::floating:
         IO::AssignFloat(data, property.value.as_float());
         break;
 
-      case PropertyType::Boolean:
+      case attribute_type::boolean:
         IO::AssignBool(data, property.value.as_bool());
         break;
 
-      case PropertyType::Color: {
+      case attribute_type::color: {
         IO::AssignColor(data, ConvertColor(property.value.as_color()));
         break;
       }
 
-      case PropertyType::File:
+      case attribute_type::file:
         IO::AssignFile(data, property.value.as_file().c_str());
         break;
 
-      case PropertyType::Object:
+      case attribute_type::object:
         IO::AssignObject(data, property.value.as_object());
         break;
     }
@@ -92,38 +92,38 @@ void ConvertComponents(const IO::Map& ir,
 
     for (const auto& [attributeName, attribute] : component.values) {
       switch (attribute.type()) {
-        case PropertyType::String:
+        case attribute_type::string:
           IO::SetAttributeString(irComponent,
                                  attributeName.c_str(),
                                  attribute.as_string().c_str());
           break;
 
-        case PropertyType::Integer:
+        case attribute_type::integer:
           IO::SetAttributeInt(irComponent, attributeName.c_str(), attribute.as_int());
           break;
 
-        case PropertyType::Floating:
+        case attribute_type::floating:
           IO::SetAttributeFloat(irComponent, attributeName.c_str(), attribute.as_float());
           break;
 
-        case PropertyType::Boolean:
+        case attribute_type::boolean:
           IO::SetAttributeBool(irComponent, attributeName.c_str(), attribute.as_bool());
           break;
 
-        case PropertyType::Color: {
+        case attribute_type::color: {
           IO::SetAttributeColor(irComponent,
                                 attributeName.c_str(),
                                 ConvertColor(attribute.as_color()));
           break;
         }
 
-        case PropertyType::File:
+        case attribute_type::file:
           IO::SetAttributeFile(irComponent,
                                attributeName.c_str(),
                                attribute.as_file().c_str());
           break;
 
-        case PropertyType::Object:
+        case attribute_type::object:
           IO::SetAttributeObject(irComponent,
                                  attributeName.c_str(),
                                  attribute.as_object());
@@ -333,35 +333,35 @@ void ConvertComponentDefinitions(IO::Map& ir, const entt::registry& registry)
       IO::DefineAttribute(definition, name.c_str(), type);
 
       switch (type) {
-        case PropertyType::String:
+        case attribute_type::string:
           IO::SetAttributeDefaultString(definition,
                                         name.c_str(),
                                         value.as_string().c_str());
           break;
 
-        case PropertyType::Integer:
+        case attribute_type::integer:
           IO::SetAttributeDefaultInt(definition, name.c_str(), value.as_int());
           break;
 
-        case PropertyType::Floating:
+        case attribute_type::floating:
           IO::SetAttributeDefaultFloat(definition, name.c_str(), value.as_float());
           break;
 
-        case PropertyType::Boolean:
+        case attribute_type::boolean:
           IO::SetAttributeDefaultBool(definition, name.c_str(), value.as_bool());
           break;
 
-        case PropertyType::Color:
+        case attribute_type::color:
           IO::SetAttributeDefaultColor(definition,
                                        name.c_str(),
                                        ConvertColor(value.as_color()));
           break;
 
-        case PropertyType::File:
+        case attribute_type::file:
           IO::SetAttributeDefaultFile(definition, name.c_str(), value.as_file().c_str());
           break;
 
-        case PropertyType::Object:
+        case attribute_type::object:
           IO::SetAttributeDefaultObject(definition, name.c_str(), value.as_object());
           break;
       }

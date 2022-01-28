@@ -15,7 +15,7 @@ TEST(IrProperty, Defaults)
   auto& property = IO::AddProperty(*map);
 
   ASSERT_STREQ("", IO::GetName(property));
-  ASSERT_EQ(PropertyType::String, IO::GetType(property));
+  ASSERT_EQ(attribute_type::string, IO::GetType(property));
 
   ASSERT_TRUE(IO::IsString(property));
   ASSERT_STREQ("", IO::GetString(property));
@@ -28,7 +28,7 @@ TEST(IrProperty, AddProperty)
 
   auto& property = IO::AddProperty(*map);
   ASSERT_EQ(1u, IO::GetPropertyCount(*map));
-  ASSERT_EQ(PropertyType::String, IO::GetType(property));
+  ASSERT_EQ(attribute_type::string, IO::GetType(property));
   ASSERT_TRUE(IO::IsString(property));
   ASSERT_STREQ("", IO::GetString(property));
 }
@@ -47,7 +47,7 @@ TEST(IrProperty, Assignment)
 {
   auto map = IO::CreateMap();
   auto& property = IO::AddProperty(*map);
-  ASSERT_EQ(PropertyType::String, IO::GetType(property));
+  ASSERT_EQ(attribute_type::string, IO::GetType(property));
 
   IO::AssignString(property, "foo");
   ASSERT_TRUE(IO::IsString(property));

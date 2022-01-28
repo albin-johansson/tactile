@@ -13,7 +13,7 @@ class SetComponentAttributeTypeCmd final : public ACommand {
   SetComponentAttributeTypeCmd(RegistryRef registry,
                                ComponentID id,
                                std::string attribute,
-                               PropertyType type);
+                               attribute_type type);
 
   void Undo() override;
 
@@ -28,7 +28,7 @@ class SetComponentAttributeTypeCmd final : public ACommand {
   RegistryRef mRegistry;
   ComponentID mComponentId;
   std::string mAttributeName;
-  PropertyType mNewType;
+  attribute_type mNewType;
   Maybe<attribute_value> mPreviousValue;
 };
 

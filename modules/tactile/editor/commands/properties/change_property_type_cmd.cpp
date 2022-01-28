@@ -8,7 +8,7 @@ namespace tactile {
 
 ChangePropertyTypeCmd::ChangePropertyTypeCmd(RegistryRef registry,
                                              std::string name,
-                                             PropertyType type)
+                                             attribute_type type)
     : ACommand{"Change Property Type"}
     , mRegistry{registry}
     , mContextId{sys::GetCurrentContextId(mRegistry)}

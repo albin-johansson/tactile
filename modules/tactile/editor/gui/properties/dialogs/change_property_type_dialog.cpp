@@ -15,7 +15,7 @@ ChangePropertyTypeDialog::ChangePropertyTypeDialog() : ADialog{"Change Property 
   SetAcceptButtonLabel("Change");
 }
 
-void ChangePropertyTypeDialog::Show(std::string name, const PropertyType type)
+void ChangePropertyTypeDialog::Show(std::string name, const attribute_type type)
 {
   mPropertyName = std::move(name);
   mCurrentType = type;

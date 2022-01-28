@@ -239,7 +239,7 @@ auto duplicate_component_attribute(entt::registry& registry,
 void set_component_attribute_type(entt::registry& registry,
                                   ComponentID id,
                                   std::string_view attribute,
-                                  PropertyType type);
+                                  attribute_type type);
 
 /**
  * \brief Sets the default value of a component attribute.
@@ -265,7 +265,7 @@ void set_component_attribute_value(entt::registry& registry,
 [[nodiscard]] auto get_component_attribute_type(const entt::registry& registry,
                                                 ComponentID id,
                                                 std::string_view attribute)
-    -> PropertyType;
+    -> attribute_type;
 
 [[nodiscard]] auto get_component_attribute_value(const entt::registry& registry,
                                                  ComponentID id,

@@ -18,7 +18,7 @@ struct ShowAddPropertyDialogEvent final
 struct ShowChangePropertyTypeDialogEvent final
 {
   std::string name;
-  PropertyType current_type;
+  attribute_type current_type;
 };
 
 struct ShowRenamePropertyDialogEvent final
@@ -29,7 +29,7 @@ struct ShowRenamePropertyDialogEvent final
 struct AddPropertyEvent final
 {
   std::string name;   ///< The chosen name.
-  PropertyType type;  ///< The chosen type.
+  attribute_type type;  ///< The chosen type.
 };
 
 struct RemovePropertyEvent final
@@ -52,7 +52,7 @@ struct UpdatePropertyEvent final
 struct ChangePropertyTypeEvent final
 {
   std::string name;   ///< Name of property to modify.
-  PropertyType type;  ///< Requested new property type.
+  attribute_type type;  ///< Requested new property type.
 };
 
 struct InspectContextEvent final

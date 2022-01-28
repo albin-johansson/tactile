@@ -367,7 +367,7 @@ auto duplicate_component_attribute(entt::registry& registry,
 void set_component_attribute_type(entt::registry& registry,
                                   const ComponentID id,
                                   const std::string_view attribute,
-                                  const PropertyType type)
+                                  const attribute_type type)
 {
   log_verbose("Setting type of attribute '{}' in component '{}' to '{}'",
               attribute,
@@ -392,7 +392,7 @@ void set_component_attribute_value(entt::registry& registry,
 
 auto get_component_attribute_type(const entt::registry& registry,
                                   const ComponentID id,
-                                  const std::string_view attribute) -> PropertyType
+                                  const std::string_view attribute) -> attribute_type
 {
   const auto iter = GetComponentAttribute(registry, id, attribute);
   return iter->second.type();

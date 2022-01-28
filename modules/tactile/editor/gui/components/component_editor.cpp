@@ -183,7 +183,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   ImGui::SetNextItemWidth(-(std::numeric_limits<float>::min)());
 
   const auto type = value.type();
-  PropertyType newType = type;
+  attribute_type newType = type;
   PropertyTypeCombo(type, newType);
   if (newType != type) {
     dispatcher.enqueue<SetComponentAttributeTypeEvent>(id, name, newType);

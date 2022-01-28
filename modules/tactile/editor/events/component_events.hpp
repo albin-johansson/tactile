@@ -56,7 +56,7 @@ struct SetComponentAttributeTypeEvent final
 {
   ComponentID id{};
   std::string attribute;
-  PropertyType type{};
+  attribute_type type{};
 };
 
 struct UpdateComponentDefAttributeEvent final

@@ -51,31 +51,31 @@ void AddProperties(entt::registry& registry, const entt::entity entity, const T&
     property.name = IO::GetName(propertyData);
 
     switch (IO::GetType(propertyData)) {
-      case PropertyType::String:
+      case attribute_type::string:
         property.value = std::string{IO::GetString(propertyData)};
         break;
 
-      case PropertyType::Integer:
+      case attribute_type::integer:
         property.value = IO::GetInt(propertyData);
         break;
 
-      case PropertyType::Floating:
+      case attribute_type::floating:
         property.value = IO::GetFloat(propertyData);
         break;
 
-      case PropertyType::Boolean:
+      case attribute_type::boolean:
         property.value = IO::GetBool(propertyData);
         break;
 
-      case PropertyType::Color:
+      case attribute_type::color:
         property.value = ToColor(IO::GetColor(propertyData));
         break;
 
-      case PropertyType::File:
+      case attribute_type::file:
         property.value = std::filesystem::path{IO::GetFile(propertyData)};
         break;
 
-      case PropertyType::Object:
+      case attribute_type::object:
         property.value = object_t{IO::GetObject(propertyData)};
         break;
     };
@@ -105,31 +105,31 @@ void AddComponents(entt::registry& registry, const entt::entity entity, const T&
 
     IO::EachAttribute(irComponent, [&](const CStr attr) {
       switch (IO::GetAttributeType(irComponent, attr)) {
-        case PropertyType::String:
+        case attribute_type::string:
           component.values[attr] = std::string{IO::GetString(irComponent, attr)};
           break;
 
-        case PropertyType::Integer:
+        case attribute_type::integer:
           component.values[attr] = IO::GetInt(irComponent, attr);
           break;
 
-        case PropertyType::Floating:
+        case attribute_type::floating:
           component.values[attr] = IO::GetFloat(irComponent, attr);
           break;
 
-        case PropertyType::Boolean:
+        case attribute_type::boolean:
           component.values[attr] = IO::GetBool(irComponent, attr);
           break;
 
-        case PropertyType::File:
+        case attribute_type::file:
           component.values[attr] = std::filesystem::path{IO::GetFile(irComponent, attr)};
           break;
 
-        case PropertyType::Color:
+        case attribute_type::color:
           component.values[attr] = ToColor(IO::GetColor(irComponent, attr));
           break;
 
-        case PropertyType::Object:
+        case attribute_type::object:
           component.values[attr] = object_t{IO::GetObject(irComponent, attr)};
           break;
       }
@@ -369,49 +369,49 @@ void InitComponentDefinitions(entt::registry& registry, const IO::Map& irMap)
     IO::EachAttribute(irDef, [&](const CStr attr) {
       const auto type = IO::GetAttributeType(irDef, attr);
       switch (type) {
-        case PropertyType::String:
+        case attribute_type::string:
           sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         std::string{IO::GetString(irDef, attr)});
           break;
 
-        case PropertyType::Integer:
+        case attribute_type::integer:
           sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetInt(irDef, attr));
           break;
 
-        case PropertyType::Floating:
+        case attribute_type::floating:
           sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetFloat(irDef, attr));
           break;
 
-        case PropertyType::Boolean:
+        case attribute_type::boolean:
           sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         IO::GetBool(irDef, attr));
           break;
 
-        case PropertyType::File:
+        case attribute_type::file:
           sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         std::filesystem::path{IO::GetFile(irDef, attr)});
           break;
 
-        case PropertyType::Color:
+        case attribute_type::color:
           sys::make_component_attribute(registry,
                                         componentId,
                                         attr,
                                         ToColor(IO::GetColor(irDef, attr)));
           break;
 
-        case PropertyType::Object:
+        case attribute_type::object:
           sys::make_component_attribute(registry,
                                         componentId,
                                         attr,

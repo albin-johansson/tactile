@@ -129,7 +129,7 @@ void RestorePropertyContext(entt::registry& registry,
 void AddProperty(entt::registry& registry,
                  comp::attribute_context& context,
                  std::string name,
-                 PropertyType type);
+                 attribute_type type);
 
 /**
  * \brief Adds a property to a attribute context.
@@ -205,7 +205,7 @@ void UpdateProperty(entt::registry& registry,
 void ChangePropertyType(entt::registry& registry,
                         comp::attribute_context& context,
                         std::string_view name,
-                        PropertyType type);
+                        attribute_type type);
 
 /**
  * \brief Attempts to find a property in a context with a specific name.
