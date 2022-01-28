@@ -2,9 +2,8 @@
 
 #include <string>  // string
 
-#include <tactile_def.hpp>
-
 #include "editor/gui/dialogs/dialog.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

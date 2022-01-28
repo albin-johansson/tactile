@@ -7,7 +7,6 @@
 
 #include <entt/entt.hpp>  // registry
 #include <fmt/format.h>   // format
-#include <tactile_stdlib.hpp>
 
 #include "core/components/animation.hpp"
 #include "core/components/attribute_context.hpp"
@@ -25,6 +24,7 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/utils/texture_manager.hpp"
+#include "tactile_stdlib.hpp"
 
 namespace tactile {
 namespace {

@@ -1,11 +1,10 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include "core/mouse_info.hpp"
 #include "core/tile_cache.hpp"
 #include "core/tile_position.hpp"
 #include "core/tool_type.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

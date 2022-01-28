@@ -3,9 +3,8 @@
 #include <filesystem>  // path
 #include <vector>      // vector
 
-#include <tactile_def.hpp>
-
 #include "core/components/texture.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

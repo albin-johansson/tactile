@@ -3,7 +3,8 @@
 #include <string>  // string
 
 #include <centurion.hpp>  // color
-#include <tactile_def.hpp>
+
+#include "tactile_def.hpp"
 
 namespace tactile {
 

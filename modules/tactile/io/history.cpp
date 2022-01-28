@@ -6,11 +6,10 @@
 #include <ios>         // ios
 #include <utility>     // move
 
-#include <tactile_def.hpp>
-#include <tactile_stdlib.hpp>
-
 #include "directories.hpp"
 #include "logging.hpp"
+#include "tactile_def.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 #include <history.pb.h>
 

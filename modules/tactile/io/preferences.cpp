@@ -7,10 +7,10 @@
 
 #include <centurion.hpp>
 #include <magic_enum.hpp>
-#include <tactile_def.hpp>
 
 #include "directories.hpp"
 #include "logging.hpp"
+#include "tactile_def.hpp"
 #include <settings.pb.h>
 
 #define PRINT_FLAG(Name, Mask) \

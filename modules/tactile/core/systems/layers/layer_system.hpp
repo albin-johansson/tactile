@@ -4,11 +4,11 @@
 #include <utility>  // pair
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 
 #include "core/components/layer.hpp"
 #include "core/map.hpp"
 #include "core/systems/snapshot.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile::sys {
 

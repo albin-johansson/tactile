@@ -4,7 +4,8 @@
 #include <vector>  // vector
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
+
+#include "tactile_def.hpp"
 
 namespace tactile::comp {
 

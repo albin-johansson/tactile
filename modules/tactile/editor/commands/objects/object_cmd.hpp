@@ -3,11 +3,11 @@
 #include <string>  // string
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 
 #include "core/components/attribute_context.hpp"
 #include "core/components/object.hpp"
 #include "editor/commands/command.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

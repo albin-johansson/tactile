@@ -3,12 +3,12 @@
 #include <utility>  // move
 
 #include <fmt/format.h>
-#include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
 #include "core/components/attribute_context.hpp"
 #include "logging.hpp"
 #include "property_system.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile::sys {

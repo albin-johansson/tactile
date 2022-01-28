@@ -1,13 +1,12 @@
 #pragma once
 
-#include <tactile_def.hpp>
-
 #include "core/components/component.hpp"
 #include "dialogs/create_component_attribute_dialog.hpp"
 #include "dialogs/create_component_dialog.hpp"
 #include "dialogs/rename_component_attribute_dialog.hpp"
 #include "dialogs/rename_component_dialog.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

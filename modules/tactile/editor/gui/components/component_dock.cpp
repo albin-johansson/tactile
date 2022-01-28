@@ -3,7 +3,6 @@
 #include <utility>  // move
 
 #include <imgui.h>
-#include <tactile_def.hpp>
 
 #include "core/components/component.hpp"
 #include "core/systems/component_system.hpp"
@@ -15,6 +14,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/preferences.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 namespace {

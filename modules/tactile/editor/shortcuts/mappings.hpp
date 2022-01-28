@@ -1,9 +1,9 @@
 #pragma once
 
 #include <centurion.hpp>
-#include <tactile_def.hpp>
 
 #include "build.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

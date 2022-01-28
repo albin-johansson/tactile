@@ -3,7 +3,6 @@
 #include <locale>  // locale, isalpha, isdigit, isspace
 
 #include <imgui.h>
-#include <tactile_def.hpp>
 
 #include "build.hpp"
 #include "core/components/layer.hpp"
@@ -19,6 +18,7 @@
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 namespace {

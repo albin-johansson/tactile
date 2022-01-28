@@ -4,12 +4,12 @@
 #include <memory>      // unique_ptr
 
 #include <entt/entt.hpp>  // registry
-#include <tactile_def.hpp>
 
 #include "core/utils/vector_map.hpp"
 #include "document.hpp"
 #include "events/command_events.hpp"
 #include "events/tool_events.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

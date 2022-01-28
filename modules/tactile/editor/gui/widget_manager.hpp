@@ -3,8 +3,9 @@
 #include <memory>  // unique_ptr
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 #include <tactile_io.hpp>
+
+#include "tactile_def.hpp"
 
 namespace tactile {
 

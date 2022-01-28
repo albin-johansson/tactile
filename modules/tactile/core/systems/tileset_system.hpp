@@ -2,12 +2,12 @@
 
 #include <centurion.hpp>
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 
 #include "core/components/texture.hpp"
 #include "core/region.hpp"
 #include "core/tile_position.hpp"
 #include "snapshot.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile::sys {
 

@@ -5,9 +5,9 @@
 #include <string>      // string
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 
 #include "core/components/component.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

@@ -3,7 +3,8 @@
 #include <string>  // string
 
 #include <entt/entt.hpp>  // entity, null
-#include <tactile_def.hpp>
+
+#include "tactile_def.hpp"
 
 namespace tactile {
 

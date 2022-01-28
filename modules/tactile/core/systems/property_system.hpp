@@ -4,12 +4,12 @@
 #include <string_view>  // string_view
 
 #include <entt/entt.hpp>  // registry, entity
-#include <tactile_def.hpp>
 
 #include "core/attribute_value.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/property.hpp"
 #include "snapshot.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile::sys {
 

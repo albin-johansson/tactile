@@ -1,8 +1,7 @@
 #include "object_system.hpp"
 
-#include <tactile_stdlib.hpp>
-
 #include "core/components/object.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile::sys {

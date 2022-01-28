@@ -3,11 +3,11 @@
 #include <string>  // string
 
 #include <entt/entt.hpp>  // registry
-#include <tactile_def.hpp>
 
 #include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

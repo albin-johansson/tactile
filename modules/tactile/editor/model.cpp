@@ -3,8 +3,6 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include <tactile_stdlib.hpp>
-
 #include "assert.hpp"
 #include "core/map.hpp"
 #include "core/systems/animation_system.hpp"
@@ -13,6 +11,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

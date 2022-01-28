@@ -2,7 +2,6 @@
 
 #include <imgui.h>
 #include <imgui_internal.h>
-#include <tactile_def.hpp>
 
 #include "assert.hpp"
 #include "core/components/texture.hpp"
@@ -12,6 +11,7 @@
 #include "core/tile_position.hpp"
 #include "editor/gui/texture_utils.hpp"
 #include "render_info.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 namespace {

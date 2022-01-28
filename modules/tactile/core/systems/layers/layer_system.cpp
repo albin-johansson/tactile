@@ -5,7 +5,6 @@
 #include <vector>     // erase
 
 #include <fmt/format.h>  // format
-#include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
 #include "core/components/attribute_context.hpp"
@@ -16,6 +15,7 @@
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/property_system.hpp"
 #include "layer_tree_system.hpp"
+#include "tactile_stdlib.hpp"
 #include "tile_layer_system.hpp"
 
 namespace tactile::sys {

@@ -5,14 +5,14 @@
 #include <sstream>  // stringstream
 #include <string>   // string
 
-#include <tactile_def.hpp>
-#include <tactile_stdlib.hpp>
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute_value.hpp"
 #include "io/emitter/emit_info.hpp"
 #include "io/preferences.hpp"
 #include "logging.hpp"
+#include "tactile_def.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

@@ -2,9 +2,8 @@
 
 #include <utility>  // move
 
-#include <tactile_def.hpp>
-
 #include "editor/events/layer_events.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

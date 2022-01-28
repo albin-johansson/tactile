@@ -5,9 +5,8 @@
 #include <utility>    // pair, move, forward
 #include <vector>     // vector
 
-#include <tactile_def.hpp>
-#include <tactile_stdlib.hpp>
-
+#include "tactile_def.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

@@ -1,7 +1,6 @@
 #include "layer_item.hpp"
 
 #include <imgui.h>
-#include <tactile_def.hpp>
 
 #include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
@@ -11,6 +10,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "layer_item_popup.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 namespace {

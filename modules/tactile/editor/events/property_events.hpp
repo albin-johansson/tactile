@@ -3,9 +3,9 @@
 #include <string>  // string
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 
 #include "core/attribute_value.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

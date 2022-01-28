@@ -3,10 +3,10 @@
 #include <filesystem>  // exists
 
 #include <imgui.h>
-#include <tactile_def.hpp>
 
 #include "io/preferences.hpp"
 #include "load_default_layout.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 namespace {

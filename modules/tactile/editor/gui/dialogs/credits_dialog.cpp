@@ -1,9 +1,9 @@
 #include "credits_dialog.hpp"
 
 #include <imgui.h>
-#include <tactile_def.hpp>
 
 #include "editor/gui/scoped.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 namespace {

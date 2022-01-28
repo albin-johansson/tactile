@@ -3,11 +3,11 @@
 #include <vector>  // vector
 
 #include <entt/entt.hpp>  // registry
-#include <tactile_def.hpp>
 
 #include "core/tile_position.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

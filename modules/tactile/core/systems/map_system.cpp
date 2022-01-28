@@ -2,12 +2,11 @@
 
 #include <type_traits>  // enable_if_t, is_unsigned_v
 
-#include <tactile_stdlib.hpp>
-
 #include "assert.hpp"
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
 #include "core/map.hpp"
+#include "tactile_stdlib.hpp"
 
 namespace tactile::sys {
 namespace {

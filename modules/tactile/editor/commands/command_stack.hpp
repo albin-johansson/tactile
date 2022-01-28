@@ -7,9 +7,8 @@
 #include <type_traits>  // enable_if_t, is_base_of_v
 #include <utility>      // move
 
-#include <tactile_def.hpp>
-
 #include "command.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

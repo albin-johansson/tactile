@@ -5,14 +5,13 @@
 #include <string>      // string
 #include <vector>      // vector
 
-#include <tactile_def.hpp>
-
 #include "core/attribute_value.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile::sys {
 

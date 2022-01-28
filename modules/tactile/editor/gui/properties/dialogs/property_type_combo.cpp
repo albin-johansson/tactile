@@ -6,10 +6,10 @@
 #include <utility>    // pair, make_pair
 
 #include <imgui.h>
-#include <tactile_def.hpp>
-#include <tactile_stdlib.hpp>
 
 #include "editor/gui/scoped.hpp"
+#include "tactile_def.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

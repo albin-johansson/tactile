@@ -2,8 +2,6 @@
 
 #include <filesystem>  // absolute
 
-#include <tactile_def.hpp>
-
 #include "core/components/animation.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/component.hpp"
@@ -19,6 +17,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "editor/document.hpp"
 #include "profile.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 namespace {

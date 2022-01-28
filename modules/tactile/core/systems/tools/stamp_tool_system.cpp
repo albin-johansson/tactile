@@ -2,8 +2,6 @@
 
 #include <utility>  // move
 
-#include <tactile_def.hpp>
-
 #include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/tileset.hpp"
@@ -14,6 +12,7 @@
 #include "core/tile_cache.hpp"
 #include "core/tile_position.hpp"
 #include "editor/events/tool_events.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile::sys {
 namespace {

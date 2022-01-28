@@ -5,7 +5,6 @@
 #include <limits>  // numeric_limits
 
 #include <imgui.h>
-#include <tactile_def.hpp>
 
 #include "add_layer_popup.hpp"
 #include "assert.hpp"
@@ -23,6 +22,7 @@
 #include "editor/model.hpp"
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 namespace {

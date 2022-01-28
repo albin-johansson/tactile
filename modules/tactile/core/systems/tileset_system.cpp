@@ -3,8 +3,6 @@
 #include <unordered_map>  // unordered_map
 #include <utility>        // move
 
-#include <tactile_stdlib.hpp>
-
 #include "assert.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attribute_context.hpp"
@@ -15,6 +13,7 @@
 #include "core/viewport.hpp"
 #include "logging.hpp"
 #include "property_system.hpp"
+#include "tactile_stdlib.hpp"
 
 namespace tactile::sys {
 namespace {

@@ -2,10 +2,9 @@
 
 #include <string>  // string
 
-#include <tactile_def.hpp>
-
 #include "core/attribute_value.hpp"
 #include "core/components/component.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

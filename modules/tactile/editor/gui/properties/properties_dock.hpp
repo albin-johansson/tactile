@@ -3,12 +3,12 @@
 #include <string>  // string
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 
 #include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
 #include "property_table.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

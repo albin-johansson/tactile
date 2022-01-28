@@ -1,9 +1,9 @@
 #pragma once
 
 #include <IconsFontAwesome5.h>
-#include <tactile_def.hpp>
 
 #include "core/utils/texture_manager.hpp"
+#include "tactile_def.hpp"
 
 /// \addtogroup gui
 /// \{

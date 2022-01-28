@@ -3,8 +3,6 @@
 #include <utility>  // move
 #include <vector>   // vector
 
-#include <tactile_stdlib.hpp>
-
 #include "assert.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attribute_context.hpp"
@@ -21,6 +19,7 @@
 #include "core/systems/object_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

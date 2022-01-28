@@ -4,13 +4,13 @@
 #include <exception>  // set_terminate
 
 #include <GL/glew.h>
-#include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
 #include "build.hpp"
 #include "io/preferences.hpp"
 #include "logging.hpp"
 #include "sdl_attributes.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

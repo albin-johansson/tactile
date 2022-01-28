@@ -6,10 +6,10 @@
 #include <variant>     // variant, get, get_if, holds_alternative
 
 #include <centurion.hpp>
-#include <tactile_def.hpp>
-#include <tactile_stdlib.hpp>
 
 #include "assert.hpp"
+#include "tactile_def.hpp"
+#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

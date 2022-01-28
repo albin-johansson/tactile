@@ -1,9 +1,9 @@
 #pragma once
 
-#include <tactile_def.hpp>
 #include <tactile_io.hpp>
 
 #include "dialog.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

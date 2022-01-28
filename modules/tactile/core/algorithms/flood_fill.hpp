@@ -3,9 +3,9 @@
 #include <vector>  // vector
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 
 #include "core/tile_position.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

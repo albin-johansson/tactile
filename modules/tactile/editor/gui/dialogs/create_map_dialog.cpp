@@ -1,12 +1,12 @@
 #include "create_map_dialog.hpp"
 
 #include <imgui.h>
-#include <tactile_def.hpp>
 
 #include "assert.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "io/preferences.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

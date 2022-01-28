@@ -1,7 +1,8 @@
 #pragma once
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
+
+#include "tactile_def.hpp"
 
 namespace tactile {
 

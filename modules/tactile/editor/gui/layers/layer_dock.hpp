@@ -1,9 +1,9 @@
 #pragma once
 
 #include <entt/entt.hpp>
-#include <tactile_def.hpp>
 
 #include "dialogs/rename_layer_dialog.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

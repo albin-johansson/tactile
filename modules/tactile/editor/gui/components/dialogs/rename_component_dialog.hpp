@@ -2,10 +2,9 @@
 
 #include <string>  // string
 
-#include <tactile_def.hpp>
-
 #include "component_name_dialog.hpp"
 #include "core/components/component.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

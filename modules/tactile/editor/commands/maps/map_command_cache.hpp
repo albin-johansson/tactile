@@ -4,9 +4,9 @@
 #include <map>         // map
 
 #include <entt/entt.hpp>  // registry
-#include <tactile_def.hpp>
 
 #include "core/tile_position.hpp"
+#include "tactile_def.hpp"
 
 namespace tactile {
 

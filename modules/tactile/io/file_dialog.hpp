@@ -3,7 +3,8 @@
 #include <filesystem>  // path
 
 #include <nfd.h>
-#include <tactile_def.hpp>
+
+#include "tactile_def.hpp"
 
 namespace tactile {
 
