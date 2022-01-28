@@ -71,6 +71,5 @@ function(tactile_set_compile_options target)
 endfunction()
 
 add_subdirectory(modules/tactile-proto)
-add_subdirectory(modules/tactile-io)
 add_subdirectory(modules/tactile)
 add_subdirectory(test)
