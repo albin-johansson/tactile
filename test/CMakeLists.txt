@@ -31,17 +31,6 @@ set(TEST_FILES
     unit-tests/tactile/parsing/create_document_from_ir_test.cpp
 
     unit-tests/tactile-base/tactile_stdlib_test.cpp
-
-    unit-tests/tactile-io/io_test_helpers.hpp
-    unit-tests/tactile-io/ir_layer_test.cpp
-    unit-tests/tactile-io/ir_object_test.cpp
-    unit-tests/tactile-io/ir_property_test.cpp
-    unit-tests/tactile-io/map_parser_test.cpp
-    unit-tests/tactile-io/parse_json_map_embedded_test.cpp
-    unit-tests/tactile-io/parse_map_with_embedded_tilesets_test.cpp
-    unit-tests/tactile-io/parse_map_with_external_tilesets_test.cpp
-    unit-tests/tactile-io/parse_tmx_with_tile_nodes_test.cpp
-    unit-tests/tactile-io/parse_yaml_map_test.cpp
     )
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
