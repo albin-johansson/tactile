@@ -26,6 +26,7 @@
 namespace tactile {
 
 using CStr = const char*;
+using c_str = const char*;
 
 using uchar = unsigned char;
 using uint = unsigned int;
@@ -43,20 +44,31 @@ using int32 = std::int32_t;
 using int64 = std::int64_t;
 
 /// Identifier for attribute contexts (not persistent).
-using ContextID = int32;
+using ContextID [[deprecated]] = int32;
+using context_id = int32;
 
 /// Identifier for component definition types (not persistent).
-using ComponentID = int32;
+using ComponentID [[deprecated]] = int32;
+using component_id = int32;
 
-using MapID = int32;
-using TilesetID = int32;
-using LayerID = int32;
-using ObjectID = int32;
-using TileID = int32;
+using MapID [[deprecated]] = int32;
+using map_id = int32;
 
-constexpr TileID empty_tile = 0;
+using TilesetID [[deprecated]] = int32;
+using tileset_id = int32;
 
-using TileRow = std::vector<TileID>;
+using LayerID [[deprecated]] = int32;
+using layer_id = int32;
+
+using ObjectID [[deprecated]] = int32;
+using object_id = int32;
+
+using TileID [[deprecated]] = int32;
+using tile_id = int32;
+
+constexpr tile_id empty_tile = 0;
+
+using TileRow = std::vector<tile_id>;
 using TileMatrix = std::vector<TileRow>;
 
 template <typename T>
