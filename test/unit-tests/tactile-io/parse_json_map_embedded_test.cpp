@@ -287,7 +287,7 @@ void ValidateLayers(const IO::Map& map)
   {
     const auto& layer = IO::GetLayer(map, 0u);
     ASSERT_STREQ("Tile Layer 1", IO::GetName(layer));
-    ASSERT_EQ(LayerType::TileLayer, IO::GetType(layer));
+    ASSERT_EQ(layer_type::tile_layer, IO::GetType(layer));
     ASSERT_EQ(1, IO::GetId(layer));
     ASSERT_EQ(0u, IO::GetIndex(layer));
     ASSERT_FLOAT_EQ(1.0f, IO::GetOpacity(layer));
@@ -306,7 +306,7 @@ void ValidateLayers(const IO::Map& map)
   {
     const auto& layer = IO::GetLayer(map, 1u);
     ASSERT_STREQ("Tile Layer 2", IO::GetName(layer));
-    ASSERT_EQ(LayerType::TileLayer, IO::GetType(layer));
+    ASSERT_EQ(layer_type::tile_layer, IO::GetType(layer));
     ASSERT_EQ(2, IO::GetId(layer));
     ASSERT_EQ(1u, IO::GetIndex(layer));
     ASSERT_FLOAT_EQ(0.6f, IO::GetOpacity(layer));
@@ -325,7 +325,7 @@ void ValidateLayers(const IO::Map& map)
   {
     const auto& layer = IO::GetLayer(map, 2u);
     ASSERT_STREQ("Object Layer 1", IO::GetName(layer));
-    ASSERT_EQ(LayerType::ObjectLayer, IO::GetType(layer));
+    ASSERT_EQ(layer_type::object_layer, IO::GetType(layer));
     ASSERT_EQ(3, IO::GetId(layer));
     ASSERT_EQ(2u, IO::GetIndex(layer));
     ASSERT_FLOAT_EQ(0.8f, IO::GetOpacity(layer));
@@ -339,7 +339,7 @@ void ValidateLayers(const IO::Map& map)
     {
       const auto& object = IO::GetObject(objectLayer, 0u);
       ASSERT_STREQ("Foo", IO::GetName(object));
-      ASSERT_EQ(ObjectType::Rectangle, IO::GetType(object));
+      ASSERT_EQ(object_type::rect, IO::GetType(object));
       ASSERT_EQ(6, IO::GetId(object));
       ASSERT_FLOAT_EQ(293, IO::GetX(object));
       ASSERT_FLOAT_EQ(196, IO::GetY(object));
@@ -352,7 +352,7 @@ void ValidateLayers(const IO::Map& map)
     {
       const auto& object = IO::GetObject(objectLayer, 1u);
       ASSERT_STREQ("Bar", IO::GetName(object));
-      ASSERT_EQ(ObjectType::Point, IO::GetType(object));
+      ASSERT_EQ(object_type::point, IO::GetType(object));
       ASSERT_EQ(7, IO::GetId(object));
       ASSERT_FLOAT_EQ(574, IO::GetX(object));
       ASSERT_FLOAT_EQ(341, IO::GetY(object));
@@ -366,7 +366,7 @@ void ValidateLayers(const IO::Map& map)
   {
     const auto& layer = IO::GetLayer(map, 3u);
     ASSERT_STREQ("Group Layer 1", IO::GetName(layer));
-    ASSERT_EQ(LayerType::GroupLayer, IO::GetType(layer));
+    ASSERT_EQ(layer_type::group_layer, IO::GetType(layer));
     ASSERT_EQ(4, IO::GetId(layer));
     ASSERT_EQ(3u, IO::GetIndex(layer));
     ASSERT_FLOAT_EQ(1.0f, IO::GetOpacity(layer));
@@ -379,7 +379,7 @@ void ValidateLayers(const IO::Map& map)
 
     const auto& childLayer = IO::GetLayer(groupLayer, 0u);
     ASSERT_STREQ("Tile Layer 3", IO::GetName(childLayer));
-    ASSERT_EQ(LayerType::TileLayer, IO::GetType(childLayer));
+    ASSERT_EQ(layer_type::tile_layer, IO::GetType(childLayer));
     ASSERT_EQ(5, IO::GetId(childLayer));
     ASSERT_EQ(0u, IO::GetIndex(childLayer));
     ASSERT_FLOAT_EQ(0.9f, IO::GetOpacity(childLayer));

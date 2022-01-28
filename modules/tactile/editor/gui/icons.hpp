@@ -98,7 +98,7 @@ class Icons final {
    *
    * \throws TactileError if the layer type isn't recognized.
    */
-  [[nodiscard]] auto GetIcon(LayerType type) const -> CStr;
+  [[nodiscard]] auto GetIcon(layer_type type) const -> CStr;
 
   /**
    * \brief Returns the texture identifier for the Tactile icon.

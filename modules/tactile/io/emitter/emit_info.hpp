@@ -46,7 +46,7 @@ struct FancyTileData final
 struct LayerData final
 {
   std::string name;
-  LayerType type{};
+  layer_type type{};
   float opacity{};
   bool visible{};
 };
@@ -63,7 +63,7 @@ struct ObjectData final
   std::string name;
   std::string tag;
 
-  ObjectType type{};
+  object_type type{};
   bool visible{};
 };
 

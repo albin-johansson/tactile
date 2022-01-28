@@ -299,15 +299,15 @@ void emit_object_data(YAML::Emitter& emitter,
 
   emitter << YAML::Key << "type";
   switch (object.type) {
-    case ObjectType::Point:
+    case object_type::point:
       emitter << YAML::Value << "point";
       break;
 
-    case ObjectType::Rectangle:
+    case object_type::rect:
       emitter << YAML::Value << "rect";
       break;
 
-    case ObjectType::Ellipse:
+    case object_type::ellipse:
       emitter << YAML::Value << "ellipse";
       break;
   }
@@ -422,17 +422,17 @@ void emit_layers(YAML::Emitter& emitter,
 
     emitter << YAML::Key << "type";
     switch (layer.type) {
-      case LayerType::TileLayer:
+      case layer_type::tile_layer:
         emitter << YAML::Value << "tile-layer";
         emit_tile_layer_data(emitter, info, id);
         break;
 
-      case LayerType::ObjectLayer:
+      case layer_type::object_layer:
         emitter << YAML::Value << "object-layer";
         emit_object_layer_data(emitter, info, id);
         break;
 
-      case LayerType::GroupLayer:
+      case layer_type::group_layer:
         emitter << YAML::Value << "group-layer";
         emit_layers(emitter, info, id);
         break;

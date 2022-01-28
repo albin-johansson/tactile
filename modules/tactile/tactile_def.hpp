@@ -44,26 +44,26 @@ using int32 = std::int32_t;
 using int64 = std::int64_t;
 
 /// Identifier for attribute contexts (not persistent).
-using ContextID [[deprecated]] = int32;
+using ContextID = int32;
 using context_id = int32;
 
 /// Identifier for component definition types (not persistent).
-using ComponentID [[deprecated]] = int32;
+using ComponentID = int32;
 using component_id = int32;
 
-using MapID [[deprecated]] = int32;
+using MapID = int32;
 using map_id = int32;
 
-using TilesetID [[deprecated]] = int32;
+using TilesetID = int32;
 using tileset_id = int32;
 
-using LayerID [[deprecated]] = int32;
+using LayerID = int32;
 using layer_id = int32;
 
-using ObjectID [[deprecated]] = int32;
+using ObjectID = int32;
 using object_id = int32;
 
-using TileID [[deprecated]] = int32;
+using TileID = int32;
 using tile_id = int32;
 
 constexpr tile_id empty_tile = 0;
@@ -77,6 +77,9 @@ using NotNull = T;
 
 template <typename T>
 using Ref = std::reference_wrapper<T>;
+
+template <typename T>
+using ref = std::reference_wrapper<T>;
 
 template <typename T>
 using Maybe = std::optional<T>;
@@ -95,17 +98,17 @@ enum class attribute_type {
 };
 
 /// \brief Represents the different available map object types.
-enum class ObjectType {
-  Point,
-  Rectangle,
-  Ellipse
+enum class object_type {
+  point,
+  rect,
+  ellipse
 };
 
 /// \brief Represents all different layer types.
-enum class LayerType {
-  TileLayer,
-  ObjectLayer,
-  GroupLayer
+enum class layer_type {
+  tile_layer,
+  object_layer,
+  group_layer
 };
 
 }  // namespace tactile

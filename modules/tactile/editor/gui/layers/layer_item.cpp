@@ -76,7 +76,7 @@ void LayerItem(const entt::registry& registry,
   const auto& context = registry.get<comp::attribute_context>(layerEntity);
   formatted_string name{"{} {}", icons.GetIcon(layer.type), context.name};
 
-  if (layer.type != LayerType::GroupLayer) {
+  if (layer.type != layer_type::group_layer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }

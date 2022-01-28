@@ -282,7 +282,7 @@ auto MakeLayer(entt::registry& registry,
   layer.visible = IO::IsVisible(irLayer);
 
   const auto type = IO::GetType(irLayer);
-  if (type == LayerType::TileLayer) {
+  if (type == layer_type::tile_layer) {
     const auto& irTileLayer = IO::GetTileLayer(irLayer);
     const auto nRows = IO::GetRowCount(irTileLayer);
     const auto nCols = IO::GetColumnCount(irTileLayer);
@@ -296,11 +296,11 @@ auto MakeLayer(entt::registry& registry,
       }
     }
   }
-  else if (type == LayerType::ObjectLayer) {
+  else if (type == layer_type::object_layer) {
     const auto& irObjectLayer = IO::GetObjectLayer(irLayer);
     MakeObjectLayer(registry, entity, irObjectLayer);
   }
-  else if (type == LayerType::GroupLayer) {
+  else if (type == layer_type::group_layer) {
     registry.emplace<comp::group_layer>(entity);
 
     const auto& irGroupLayer = IO::GetGroupLayer(irLayer);

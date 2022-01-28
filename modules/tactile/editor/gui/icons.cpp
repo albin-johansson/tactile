@@ -13,16 +13,16 @@ Icons::Icons(texture_manager& textures)
     : mTactileIcon{textures.load("resources/icon.png").value().id}
 {}
 
-auto Icons::GetIcon(const LayerType type) const -> CStr
+auto Icons::GetIcon(const layer_type type) const -> CStr
 {
   switch (type) {
-    case LayerType::TileLayer:
+    case layer_type::tile_layer:
       return TAC_ICON_TILE_LAYER;
 
-    case LayerType::ObjectLayer:
+    case layer_type::object_layer:
       return TAC_ICON_OBJECT_LAYER;
 
-    case LayerType::GroupLayer:
+    case layer_type::group_layer:
       return TAC_ICON_GROUP_LAYER;
 
     default:

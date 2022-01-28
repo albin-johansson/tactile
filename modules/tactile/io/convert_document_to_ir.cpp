@@ -236,7 +236,7 @@ void ConvertLayer(IO::Map& irMap,
   ConvertComponents(irMap, ir, registry, context.components);
 
   switch (layer.type) {
-    case LayerType::TileLayer: {
+    case layer_type::tile_layer: {
       auto& tileLayer = IO::MarkAsTileLayer(ir);
       IO::ReserveTiles(tileLayer, nRows, nCols);
 
@@ -250,7 +250,7 @@ void ConvertLayer(IO::Map& irMap,
       break;
     }
 
-    case LayerType::ObjectLayer: {
+    case layer_type::object_layer: {
       const auto& objectLayer = registry.get<comp::object_layer>(entity);
 
       auto& objectLayerData = IO::MarkAsObjectLayer(ir);
@@ -264,7 +264,7 @@ void ConvertLayer(IO::Map& irMap,
       break;
     }
 
-    case LayerType::GroupLayer: {
+    case layer_type::group_layer: {
       auto& groupLayer = IO::MarkAsGroupLayer(ir);
       IO::ReserveLayers(groupLayer, node.children.size());
 

@@ -74,11 +74,11 @@ namespace {
   }
 
   switch (snapshot.core.type) {
-    case LayerType::TileLayer: {
+    case layer_type::tile_layer: {
       snapshot.tiles = registry.get<comp::tile_layer>(source).matrix;
       break;
     }
-    case LayerType::ObjectLayer: {
+    case layer_type::object_layer: {
       auto& objects = snapshot.objects.emplace();
 
       for (const auto objectEntity : registry.get<comp::object_layer>(source).objects) {
@@ -89,7 +89,7 @@ namespace {
 
       break;
     }
-    case LayerType::GroupLayer: {
+    case layer_type::group_layer: {
       auto& children = snapshot.children.emplace();
 
       for (const auto child : registry.get<comp::layer_tree_node>(source).children) {
@@ -122,7 +122,7 @@ void _restore_layer_index(entt::registry& registry,
 
 auto make_basic_layer(entt::registry& registry,
                       const LayerID id,
-                      const LayerType type,
+                      const layer_type type,
                       std::string name,
                       const entt::entity parent) -> entt::entity
 {
@@ -165,7 +165,7 @@ auto make_tile_layer(entt::registry& registry) -> entt::entity
   const auto entity =
       make_basic_layer(registry,
                        map.next_layer_id,
-                       LayerType::TileLayer,
+                       layer_type::tile_layer,
                        fmt::format("Tile Layer {}", map.tile_layer_suffix),
                        _new_layer_parent(registry));
   ++map.next_layer_id;
@@ -184,7 +184,7 @@ auto make_object_layer(entt::registry& registry) -> entt::entity
   const auto entity =
       make_basic_layer(registry,
                        map.next_layer_id,
-                       LayerType::ObjectLayer,
+                       layer_type::object_layer,
                        fmt::format("Object Layer {}", map.object_layer_suffix),
                        _new_layer_parent(registry));
   ++map.next_layer_id;
@@ -202,7 +202,7 @@ auto make_group_layer(entt::registry& registry) -> entt::entity
   const auto entity =
       make_basic_layer(registry,
                        map.next_layer_id,
-                       LayerType::GroupLayer,
+                       layer_type::group_layer,
                        fmt::format("Group Layer {}", map.group_layer_suffix),
                        _new_layer_parent(registry));
   ++map.next_layer_id;
@@ -255,12 +255,12 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
   RestorePropertyContext(registry, entity, std::move(snapshot.context));
 
   switch (snapshot.core.type) {
-    case LayerType::TileLayer: {
+    case layer_type::tile_layer: {
       auto& tileLayer = registry.emplace<comp::tile_layer>(entity);
       tileLayer.matrix = snapshot.tiles.value();
       break;
     }
-    case LayerType::ObjectLayer: {
+    case layer_type::object_layer: {
       auto& objectLayer = registry.emplace<comp::object_layer>(entity);
       for (auto objectSnapshot : snapshot.objects.value()) {
         const auto objectEntity = registry.create();
@@ -272,7 +272,7 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
       }
       break;
     }
-    case LayerType::GroupLayer: {
+    case layer_type::group_layer: {
       /* We don't need to add the children to the restored group here, that is
          handled by make_basic_layer. */
       registry.emplace<comp::group_layer>(entity);

@@ -89,7 +89,7 @@ void CheckTileLayer1(const entt::registry& registry)
   ASSERT_TRUE(context.components.empty());
 
   const auto& layer = registry.get<comp::layer>(entity);
-  ASSERT_EQ(LayerType::TileLayer, layer.type);
+  ASSERT_EQ(layer_type::tile_layer, layer.type);
   ASSERT_EQ(1.0f, layer.opacity);
   ASSERT_TRUE(layer.visible);
 
@@ -110,7 +110,7 @@ void CheckTileLayer2(const entt::registry& registry)
   ASSERT_TRUE(context.components.empty());
 
   const auto& layer = registry.get<comp::layer>(entity);
-  ASSERT_EQ(LayerType::TileLayer, layer.type);
+  ASSERT_EQ(layer_type::tile_layer, layer.type);
   ASSERT_FLOAT_EQ(0.83f, layer.opacity);
   ASSERT_TRUE(layer.visible);
 
@@ -147,7 +147,7 @@ void CheckObjectLayer1(const entt::registry& registry)
   ASSERT_TRUE(context.components.empty());
 
   const auto& layer = registry.get<comp::layer>(entity);
-  ASSERT_EQ(LayerType::ObjectLayer, layer.type);
+  ASSERT_EQ(layer_type::object_layer, layer.type);
   ASSERT_EQ(1.0f, layer.opacity);
   ASSERT_TRUE(layer.visible);
 
@@ -172,7 +172,7 @@ void CheckObjectLayer1(const entt::registry& registry)
     ASSERT_EQ(30, rect.height);
     ASSERT_EQ("CustomType", rect.tag);
     ASSERT_TRUE(rect.visible);
-    ASSERT_EQ(ObjectType::Rectangle, rect.type);
+    ASSERT_EQ(object_type::rect, rect.type);
   }
 }
 

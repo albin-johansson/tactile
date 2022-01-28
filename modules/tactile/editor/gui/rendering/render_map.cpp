@@ -17,10 +17,10 @@ void RenderLayer(Graphics& graphics,
                  const comp::layer& layer,
                  const float parentOpacity)
 {
-  if (layer.type == LayerType::TileLayer) {
+  if (layer.type == layer_type::tile_layer) {
     RenderTileLayer(graphics, registry, layerEntity, parentOpacity);
   }
-  else if (layer.type == LayerType::ObjectLayer) {
+  else if (layer.type == layer_type::object_layer) {
     RenderObjectLayer(graphics, registry, layerEntity, parentOpacity);
   }
 }

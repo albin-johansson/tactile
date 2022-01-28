@@ -154,15 +154,15 @@ void ShowNativeTilesetProperties(const std::string& name,
 void ShowNativeLayerProperties(const comp::layer& layer, entt::dispatcher& dispatcher)
 {
   switch (layer.type) {
-    case LayerType::TileLayer:
+    case layer_type::tile_layer:
       NativeReadOnlyRow("Type", "Tile Layer");
       break;
 
-    case LayerType::ObjectLayer:
+    case layer_type::object_layer:
       NativeReadOnlyRow("Type", "Object Layer");
       break;
 
-    case LayerType::GroupLayer:
+    case layer_type::group_layer:
       NativeReadOnlyRow("Type", "Group Layer");
       break;
   }
@@ -185,15 +185,15 @@ void ShowNativeObjectProperties(const std::string& name,
                                 entt::dispatcher& dispatcher)
 {
   switch (object.type) {
-    case ObjectType::Rectangle:
+    case object_type::rect:
       NativeReadOnlyRow("Type", "Rectangle");
       break;
 
-    case ObjectType::Point:
+    case object_type::point:
       NativeReadOnlyRow("Type", "Point");
       break;
 
-    case ObjectType::Ellipse:
+    case object_type::ellipse:
       NativeReadOnlyRow("Type", "Ellipse");
       break;
   }
@@ -209,7 +209,7 @@ void ShowNativeObjectProperties(const std::string& name,
   NativeReadOnlyRow("X", object.x);
   NativeReadOnlyRow("Y", object.y);
 
-  if (object.type != ObjectType::Point) {
+  if (object.type != object_type::point) {
     NativeReadOnlyRow("Width", object.width);
     NativeReadOnlyRow("Height", object.height);
   }
