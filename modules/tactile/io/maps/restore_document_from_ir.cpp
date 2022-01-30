@@ -300,7 +300,7 @@ void _restore_component_definitions(entt::registry& registry, const map_data& ma
 
 }  // namespace
 
-auto restore_document(const parsing::parse_data& data, texture_manager& textures)
+auto restore_document_from_ir(const parsing::parse_data& data, texture_manager& textures)
     -> Document
 {
   Document document;

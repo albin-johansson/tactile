@@ -311,7 +311,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
   parser.parse_map(event.path);
 
   if (parser.is_okay()) {
-    mModel.AddMap(restore_document(parser.data(), mTextures));
+    mModel.AddMap(restore_document_from_ir(parser.data(), mTextures));
     add_file_to_history(event.path);
   }
   else {

@@ -35,7 +35,7 @@ void restore_last_session(Model& model, texture_manager& textures)
       parsing::map_parser parser;
       parser.parse_map(file);
       if (parser.is_okay()) {
-        model.AddMap(restore_document(parser.data(), textures));
+        model.AddMap(restore_document_from_ir(parser.data(), textures));
       }
       else {
         log_warning("Failed to restore map from last session!");
