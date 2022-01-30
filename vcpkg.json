@@ -6,7 +6,7 @@
   "maintainers": [
     "albin-johansson"
   ],
-  "builtin-baseline": "772fe6cbce530cb3a5f0fee67b57e9861676e5d0",
+  "builtin-baseline": "6ba505cf2c1752d8ea5abb21427e23ff89dc486f",
   "dependencies": [
     "sdl2",
     "sdl2-image",
