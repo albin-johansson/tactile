@@ -83,7 +83,7 @@ void clear_file_history()
 
 void add_file_to_history(const std::filesystem::path& path)
 {
-  auto converted = ConvertToForwardSlashes(path);
+  auto converted = convert_to_forward_slashes(path);
   if (std::find(gHistory.begin(), gHistory.end(), converted) == gHistory.end()) {
     log_debug("Adding '{}' to history...", converted);
     gHistory.push_back(std::move(converted));
@@ -99,7 +99,7 @@ void add_file_to_history(const std::filesystem::path& path)
 
 void set_last_closed_file(const std::filesystem::path& path)
 {
-  gLastClosedFile = ConvertToForwardSlashes(path);
+  gLastClosedFile = convert_to_forward_slashes(path);
   log_verbose("Last closed file is now '{}'", *gLastClosedFile);
 
   add_file_to_history(path);

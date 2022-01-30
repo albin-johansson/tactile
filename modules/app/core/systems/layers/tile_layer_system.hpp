@@ -66,18 +66,6 @@ void set_tiles(comp::tile_layer& layer, const TileCache& tiles);
 [[nodiscard]] auto get_tile(const comp::tile_layer& layer, const tile_position& position)
     -> tile_id;
 
-[[nodiscard]] auto make_tile_row(usize nCols) -> tile_row;
-
-/**
- * \brief Creates a tile matrix with the specified dimensions.
- *
- * \param nRows the number or rows.
- * \param nCols the number of columns.
- *
- * \return a matrix with empty tile identifiers.
- */
-[[nodiscard]] auto make_tile_matrix(usize nRows, usize nCols) -> tile_matrix;
-
 /**
  * \brief Visits each tile in a tile layer.
  *

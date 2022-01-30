@@ -245,7 +245,7 @@ void _add_common_tileset_attributes(nlohmann::json& json,
 
   const auto imagePath =
       std::filesystem::relative(data.image_path, info.destination_dir());
-  json["image"] = ConvertToForwardSlashes(imagePath);
+  json["image"] = convert_to_forward_slashes(imagePath);
 
   json["imagewidth"] = data.image_width;
   json["imageheight"] = data.image_height;

@@ -4,8 +4,8 @@
 #include <memory>     // make_unique
 #include <string>     // string
 
-#include "core/systems/layers/tile_layer_system.hpp"
 #include "core/utils/strings.hpp"
+#include "core/utils/tiles.hpp"
 #include "tactile_stdlib.hpp"
 #include "yaml_attributes.hpp"
 
@@ -23,8 +23,8 @@ namespace {
 {
   usize index = 0;
   for (const auto& token : split(tileData.c_str(), ' ')) {
-    if (const auto id = FromString<tile_id>(token.c_str())) {
-      const auto [row, col] = ToMatrixCoords(index, columns);
+    if (const auto id = from_string<tile_id>(token.c_str())) {
+      const auto [row, col] = to_matrix_coords(index, columns);
       layer.tiles[row][col] = *id;
       ++index;
     }
@@ -44,7 +44,7 @@ namespace {
   data.type = layer_type::tile_layer;
 
   auto& tileLayer = data.data.emplace<ir::tile_layer_data>();
-  tileLayer.tiles = sys::make_tile_matrix(rows, columns);
+  tileLayer.tiles = make_tile_matrix(rows, columns);
 
   if (auto tiles = node["data"]) {
     auto rawTiles = tiles.as<std::string>();

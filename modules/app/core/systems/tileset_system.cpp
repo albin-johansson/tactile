@@ -29,7 +29,7 @@ namespace {
   for (tile_id id{tileset.first_id}; id <= tileset.last_id; ++id) {
     const auto index = id - tileset.first_id;
 
-    const auto [row, col] = ToMatrixCoords(index, tileset.column_count);
+    const auto [row, col] = to_matrix_coords(index, tileset.column_count);
     const auto x = col * tileset.tile_width;
     const auto y = row * tileset.tile_height;
 

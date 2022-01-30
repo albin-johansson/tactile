@@ -53,7 +53,7 @@ void save_session(const Model& model)
   for (const auto& [id, document] : model) {
     if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);
-      session.add_files(ConvertToForwardSlashes(documentPath));
+      session.add_files(convert_to_forward_slashes(documentPath));
     }
   }
 

@@ -289,7 +289,7 @@ void _emit_tileset_file(const emit_info& info,
   const auto imagePath =
       std::filesystem::relative(tileset.image_path, info.destination_dir());
   emitter << YAML::Key << "image-path" << YAML::Value
-          << ConvertToForwardSlashes(imagePath);
+          << convert_to_forward_slashes(imagePath);
   emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_width;
   emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_height;
 
