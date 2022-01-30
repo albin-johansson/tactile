@@ -6,6 +6,7 @@
 #include <functional>     // reference_wrapper, less
 #include <map>            // map
 #include <optional>       // optional, nullopt_t, nullopt
+#include <ostream>        // ostream
 #include <type_traits>    // is_pointer_v
 #include <unordered_map>  // unordered_map
 
@@ -104,6 +105,41 @@ enum class attribute_type {
   color,     ///< A color property.
   object     ///< An integer ID property, that refers to a map object.
 };
+
+inline auto operator<<(std::ostream& stream, const attribute_type type) -> std::ostream&
+{
+  switch (type) {
+    case attribute_type::string:
+      stream << "string";
+      break;
+
+    case attribute_type::integer:
+      stream << "int";
+      break;
+
+    case attribute_type::floating:
+      stream << "float";
+      break;
+
+    case attribute_type::boolean:
+      stream << "bool";
+      break;
+
+    case attribute_type::file:
+      stream << "file";
+      break;
+
+    case attribute_type::color:
+      stream << "color";
+      break;
+
+    case attribute_type::object:
+      stream << "object";
+      break;
+  }
+
+  return stream;
+}
 
 /// \brief Represents the different available map object types.
 enum class object_type {
