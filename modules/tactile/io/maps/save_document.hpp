@@ -7,10 +7,10 @@ namespace tactile {
 /**
  * \brief Saves a map document.
  *
- * \ingroup io
- *
  * \param document the map document that will be saved.
+ *
+ * \ingroup io
  */
-void SaveDocument(const Document& document);
+void save_document(const Document& document);
 
 }  // namespace tactile

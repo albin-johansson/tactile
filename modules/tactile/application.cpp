@@ -232,7 +232,7 @@ void Application::OnSave()
 {
   if (auto* document = mModel.GetActiveDocument()) {
     if (!document->path.empty()) {
-      SaveDocument(*document);
+      save_document(*document);
       document->commands.MarkAsClean();
 
       auto& context = document->registry.ctx<comp::attribute_context>();

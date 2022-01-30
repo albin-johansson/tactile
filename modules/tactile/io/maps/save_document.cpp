@@ -13,7 +13,7 @@
 
 namespace tactile {
 
-void SaveDocument(const Document& document)
+void save_document(const Document& document)
 {
   TACTILE_ASSERT(!document.path.empty());
   TACTILE_PROFILE_START
