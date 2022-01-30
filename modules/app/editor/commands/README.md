@@ -22,7 +22,7 @@ The process of adding a new command to the application always involves a set of 
    event.
 4. Make sure that the dispatcher connects the event to the appropriate `Application` function,
    see `application_events.cpp`.
-5. Implement the creation of the command using one of the `Execute()` or `Register()` functions in `application.cpp`,
-   which adds a command to the command stack. `Execute()` invokes the `Redo()` function of the added command
-   immediately (this is the most common case), `Register()` is used for commands whose effects have already been
+5. Implement the creation of the command using one of the `_execute()` or `_register()` functions in `application.cpp`,
+   which adds a command to the command stack. `_execute()` invokes the `Redo()` function of the added command
+   immediately (this is the most common case), `_register()` is used for commands whose effects have already been
    applied, as with the stamp tool, for example.
