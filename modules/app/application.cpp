@@ -36,7 +36,7 @@ namespace tactile {
 namespace {
 
 template <typename Command, typename... Args>
-void Execute(Model& model, Args&&... args)
+void _execute(Model& model, Args&&... args)
 {
   if (auto* document = model.GetActiveDocument()) {
     auto& commands = document->commands;
@@ -48,7 +48,7 @@ void Execute(Model& model, Args&&... args)
 }
 
 template <typename Command, typename... Args>
-void Register(Model& model, Args&&... args)
+void _register(Model& model, Args&&... args)
 {
   if (auto* document = model.GetActiveDocument()) {
     auto& commands = document->commands;
@@ -350,19 +350,19 @@ void Application::OnMouseReleased(const MouseReleasedEvent& event)
 
 void Application::OnStampSequence(StampSequenceEvent event)
 {
-  Register<StampSequenceCmd>(mModel,
-                             std::move(event.old_state),
-                             std::move(event.sequence));
+  _register<StampSequenceCmd>(mModel,
+                              std::move(event.old_state),
+                              std::move(event.sequence));
 }
 
 void Application::OnEraserSequence(EraserSequenceEvent event)
 {
-  Register<EraserSequenceCmd>(mModel, std::move(event.old_state));
+  _register<EraserSequenceCmd>(mModel, std::move(event.old_state));
 }
 
 void Application::OnFlood(const FloodEvent& event)
 {
-  Execute<BucketCmd>(mModel, event.origin, event.replacement);
+  _execute<BucketCmd>(mModel, event.origin, event.replacement);
 }
 
 void Application::OnCenterViewport()
@@ -437,7 +437,10 @@ void Application::OnShowAddTilesetDialog()
 void Application::OnAddTileset(const AddTilesetEvent& event)
 {
   if (auto info = mTextures.load(event.path)) {
-    Execute<AddTilesetCmd>(mModel, std::move(*info), event.tile_width, event.tile_height);
+    _execute<AddTilesetCmd>(mModel,
+                            std::move(*info),
+                            event.tile_width,
+                            event.tile_height);
   }
   else {
     log_error("Failed to load tileset texture!");
@@ -446,7 +449,7 @@ void Application::OnAddTileset(const AddTilesetEvent& event)
 
 void Application::OnRemoveTileset(const RemoveTilesetEvent& event)
 {
-  Execute<RemoveTilesetCmd>(mModel, event.id);
+  _execute<RemoveTilesetCmd>(mModel, event.id);
 }
 
 void Application::OnSelectTileset(const SelectTilesetEvent& event)
@@ -463,32 +466,32 @@ void Application::OnSetTilesetSelection(const SetTilesetSelectionEvent& event)
 
 void Application::OnSetTilesetName(const SetTilesetNameEvent& event)
 {
-  Execute<SetTilesetNameCmd>(mModel, event.id, event.name);
+  _execute<SetTilesetNameCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnAddRow()
 {
-  Execute<AddRowCmd>(mModel);
+  _execute<AddRowCmd>(mModel);
 }
 
 void Application::OnAddColumn()
 {
-  Execute<AddColumnCmd>(mModel);
+  _execute<AddColumnCmd>(mModel);
 }
 
 void Application::OnRemoveRow()
 {
-  Execute<RemoveRowCmd>(mModel);
+  _execute<RemoveRowCmd>(mModel);
 }
 
 void Application::OnRemoveColumn()
 {
-  Execute<RemoveColumnCmd>(mModel);
+  _execute<RemoveColumnCmd>(mModel);
 }
 
 void Application::OnResizeMap(const ResizeMapEvent& event)
 {
-  Execute<ResizeMapCmd>(mModel, event.row_count, event.col_count);
+  _execute<ResizeMapCmd>(mModel, event.row_count, event.col_count);
 }
 
 void Application::OnOpenResizeMapDialog()
@@ -501,12 +504,12 @@ void Application::OnOpenResizeMapDialog()
 
 void Application::OnAddLayer(const AddLayerEvent& event)
 {
-  Execute<AddLayerCmd>(mModel, event.type);
+  _execute<AddLayerCmd>(mModel, event.type);
 }
 
 void Application::OnRemoveLayer(const RemoveLayerEvent& event)
 {
-  Execute<RemoveLayerCmd>(mModel, event.id);
+  _execute<RemoveLayerCmd>(mModel, event.id);
 }
 
 void Application::OnSelectLayer(const SelectLayerEvent& event)
@@ -519,27 +522,27 @@ void Application::OnSelectLayer(const SelectLayerEvent& event)
 
 void Application::OnMoveLayerUp(const MoveLayerUpEvent& event)
 {
-  Execute<MoveLayerUpCmd>(mModel, event.id);
+  _execute<MoveLayerUpCmd>(mModel, event.id);
 }
 
 void Application::OnMoveLayerDown(const MoveLayerDownEvent& event)
 {
-  Execute<MoveLayerDownCmd>(mModel, event.id);
+  _execute<MoveLayerDownCmd>(mModel, event.id);
 }
 
 void Application::OnDuplicateLayer(const DuplicateLayerEvent& event)
 {
-  Execute<DuplicateLayerCmd>(mModel, event.id);
+  _execute<DuplicateLayerCmd>(mModel, event.id);
 }
 
 void Application::OnSetLayerOpacity(const SetLayerOpacityEvent& event)
 {
-  Execute<SetLayerOpacityCmd>(mModel, event.id, event.opacity);
+  _execute<SetLayerOpacityCmd>(mModel, event.id, event.opacity);
 }
 
 void Application::OnSetLayerVisible(const SetLayerVisibleEvent& event)
 {
-  Execute<SetLayerVisibilityCmd>(mModel, event.id, event.visible);
+  _execute<SetLayerVisibilityCmd>(mModel, event.id, event.visible);
 }
 
 void Application::OnOpenRenameLayerDialog(const OpenRenameLayerDialogEvent& event)
@@ -549,32 +552,32 @@ void Application::OnOpenRenameLayerDialog(const OpenRenameLayerDialogEvent& even
 
 void Application::OnRenameLayer(const RenameLayerEvent& event)
 {
-  Execute<RenameLayerCmd>(mModel, event.id, event.name);
+  _execute<RenameLayerCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnSetObjectName(const SetObjectNameEvent& event)
 {
-  Execute<SetObjectNameCmd>(mModel, event.id, event.name);
+  _execute<SetObjectNameCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnMoveObject(const MoveObjectEvent& event)
 {
-  Register<MoveObjectCmd>(mModel,
-                          event.id,
-                          event.old_x,
-                          event.old_y,
-                          event.new_x,
-                          event.new_y);
+  _register<MoveObjectCmd>(mModel,
+                           event.id,
+                           event.old_x,
+                           event.old_y,
+                           event.new_x,
+                           event.new_y);
 }
 
 void Application::OnSetObjectVisibility(const SetObjectVisibilityEvent& event)
 {
-  Execute<SetObjectVisibilityCmd>(mModel, event.id, event.visible);
+  _execute<SetObjectVisibilityCmd>(mModel, event.id, event.visible);
 }
 
 void Application::OnSetObjectTag(const SetObjectTagEvent& event)
 {
-  Execute<SetObjectTagCmd>(mModel, event.id, event.tag);
+  _execute<SetObjectTagCmd>(mModel, event.id, event.tag);
 }
 
 void Application::OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent&)
@@ -600,27 +603,27 @@ void Application::OnShowChangePropertyTypeDialog(
 
 void Application::OnAddProperty(const AddPropertyEvent& event)
 {
-  Execute<AddPropertyCmd>(mModel, event.name, event.type);
+  _execute<AddPropertyCmd>(mModel, event.name, event.type);
 }
 
 void Application::OnRemoveProperty(const RemovePropertyEvent& event)
 {
-  Execute<RemovePropertyCmd>(mModel, event.name);
+  _execute<RemovePropertyCmd>(mModel, event.name);
 }
 
 void Application::OnRenameProperty(const RenamePropertyEvent& event)
 {
-  Execute<RenamePropertyCmd>(mModel, event.old_name, event.new_name);
+  _execute<RenamePropertyCmd>(mModel, event.old_name, event.new_name);
 }
 
 void Application::OnUpdateProperty(const UpdatePropertyEvent& event)
 {
-  Execute<UpdatePropertyCmd>(mModel, event.name, event.value);
+  _execute<UpdatePropertyCmd>(mModel, event.name, event.value);
 }
 
 void Application::OnChangePropertyType(const ChangePropertyTypeEvent& event)
 {
-  Execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
+  _execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
 }
 
 void Application::OnInspectContext(const InspectContextEvent& event)
@@ -637,73 +640,73 @@ void Application::OnOpenComponentEditor()
 
 void Application::OnCreateComponentDef(const CreateComponentDefEvent& event)
 {
-  Execute<CreateComponentDefCmd>(mModel, event.name);
+  _execute<CreateComponentDefCmd>(mModel, event.name);
 }
 
 void Application::OnRemoveComponentDef(const RemoveComponentDefEvent& event)
 {
-  Execute<RemoveComponentDefCmd>(mModel, event.id);
+  _execute<RemoveComponentDefCmd>(mModel, event.id);
 }
 
 void Application::OnRenameComponentDef(const RenameComponentDefEvent& event)
 {
-  Execute<RenameComponentCmd>(mModel, event.id, event.name);
+  _execute<RenameComponentCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnCreateComponentAttribute(const CreateComponentAttributeEvent& event)
 {
-  Execute<CreateComponentAttributeCmd>(mModel, event.id, event.name);
+  _execute<CreateComponentAttributeCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnRemoveComponentAttribute(const RemoveComponentAttributeEvent& event)
 {
-  Execute<RemoveComponentAttributeCmd>(mModel, event.id, event.name);
+  _execute<RemoveComponentAttributeCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnRenameComponentAttribute(const RenameComponentAttributeEvent& event)
 {
-  Execute<RenameComponentAttributeCmd>(mModel, event.id, event.previous, event.updated);
+  _execute<RenameComponentAttributeCmd>(mModel, event.id, event.previous, event.updated);
 }
 
 void Application::OnDuplicateComponentAttribute(
     const DuplicateComponentAttributeEvent& event)
 {
-  Execute<DuplicateComponentAttributeCmd>(mModel, event.id, event.attribute);
+  _execute<DuplicateComponentAttributeCmd>(mModel, event.id, event.attribute);
 }
 
 void Application::OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event)
 {
-  Execute<SetComponentAttributeTypeCmd>(mModel, event.id, event.attribute, event.type);
+  _execute<SetComponentAttributeTypeCmd>(mModel, event.id, event.attribute, event.type);
 }
 
 void Application::OnUpdateComponentDefAttribute(
     const UpdateComponentDefAttributeEvent& event)
 {
-  Execute<UpdateComponentAttributeCmd>(mModel, event.id, event.attribute, event.value);
+  _execute<UpdateComponentAttributeCmd>(mModel, event.id, event.attribute, event.value);
 }
 
 void Application::OnAddComponent(const AddComponentEvent& event)
 {
-  Execute<AddComponentCmd>(mModel, event.context, event.component);
+  _execute<AddComponentCmd>(mModel, event.context, event.component);
 }
 
 void Application::OnRemoveComponent(const RemoveComponentEvent& event)
 {
-  Execute<RemoveComponentCmd>(mModel, event.context, event.component);
+  _execute<RemoveComponentCmd>(mModel, event.context, event.component);
 }
 
 void Application::OnUpdateComponent(const UpdateComponentEvent& event)
 {
-  Execute<UpdateComponentCmd>(mModel,
-                              event.context,
-                              event.component,
-                              event.attribute,
-                              event.value);
+  _execute<UpdateComponentCmd>(mModel,
+                               event.context,
+                               event.component,
+                               event.attribute,
+                               event.value);
 }
 
 void Application::OnResetComponentValues(const ResetComponentValuesEvent& event)
 {
-  Execute<ResetComponentCmd>(mModel, event.context, event.component);
+  _execute<ResetComponentCmd>(mModel, event.context, event.component);
 }
 
 void Application::OnToggleUi()
