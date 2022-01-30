@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <string>      // string
 
 #include "io/maps/ir.hpp"
 #include "tactile_def.hpp"
@@ -23,7 +22,5 @@ class emit_info final {
   std::filesystem::path mDestinationDir;
   ir::map_data mData;
 };
-
-[[nodiscard]] auto stringify(attribute_type type) -> std::string;
 
 }  // namespace tactile::emitter

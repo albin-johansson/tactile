@@ -9,51 +9,16 @@
 
 #include "core/attribute_value.hpp"
 #include "emit_info.hpp"
+#include "io/maps/yaml_utils.hpp"
 #include "io/preferences.hpp"
 #include "logging.hpp"
 #include "tactile_def.hpp"
 #include "tactile_stdlib.hpp"
-#include "throw.hpp"
 
 namespace tactile::emitter {
 namespace {
 
 constexpr int tileset_node_version = 1;
-
-auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::Emitter&
-{
-  switch (value.type()) {
-    case attribute_type::string:
-      emitter << value.as_string();
-      break;
-
-    case attribute_type::integer:
-      emitter << value.as_int();
-      break;
-
-    case attribute_type::floating:
-      emitter << value.as_float();
-      break;
-
-    case attribute_type::boolean:
-      emitter << value.as_bool();
-      break;
-
-    case attribute_type::file:
-      emitter << value.as_file().c_str();
-      break;
-
-    case attribute_type::color:
-      emitter << value.as_color().as_rgba();
-      break;
-
-    case attribute_type::object:
-      emitter << value.as_object();
-      break;
-  }
-
-  return emitter;
-}
 
 void _emit_properties(YAML::Emitter& emitter, const ir::attribute_context_data& context)
 {
@@ -373,7 +338,7 @@ void _emit_component_definition_attribute(YAML::Emitter& emitter,
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;
-  emitter << YAML::Key << "type" << YAML::Value << stringify(value.type());
+  emitter << YAML::Key << "type" << YAML::Value << value.type();
 
   if (!value.has_default_value()) {
     emitter << YAML::Key << "default" << YAML::Value << value;
