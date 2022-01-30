@@ -78,7 +78,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_component_definition_attribute(const YAML::Node& node,
-                                                         component_map& def)
+                                                         ir::component_map& def)
     -> parse_error
 {
   std::string name;
@@ -146,7 +146,7 @@ namespace {
   return parse_error::none;
 }
 
-[[nodiscard]] auto _parse_component_definition(const YAML::Node& node, map_data& data)
+[[nodiscard]] auto _parse_component_definition(const YAML::Node& node, ir::map_data& data)
     -> parse_error
 {
   std::string type;
@@ -172,8 +172,8 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_component(const YAML::Node& node,
-                                    const map_data& map,
-                                    attribute_context_data& data) -> parse_error
+                                    const ir::map_data& map,
+                                    ir::attribute_context_data& data) -> parse_error
 {
   std::string type;
   if (auto typeName = node["type"]) {
@@ -212,7 +212,8 @@ namespace {
 
 }  // namespace
 
-auto parse_component_definitions(const YAML::Node& node, map_data& data) -> parse_error
+auto parse_component_definitions(const YAML::Node& node, ir::map_data& data)
+    -> parse_error
 {
   if (auto sequence = node["component-definitions"]) {
     for (const auto& defNode : sequence) {
@@ -227,8 +228,8 @@ auto parse_component_definitions(const YAML::Node& node, map_data& data) -> pars
 }
 
 auto parse_components(const YAML::Node& node,
-                      const map_data& map,
-                      attribute_context_data& data) -> parse_error
+                      const ir::map_data& map,
+                      ir::attribute_context_data& data) -> parse_error
 {
   if (auto sequence = node["components"]) {
     for (const auto& componentNode : sequence) {
@@ -242,7 +243,8 @@ auto parse_components(const YAML::Node& node,
   return parse_error::none;
 }
 
-auto parse_properties(const YAML::Node& node, attribute_context_data& data) -> parse_error
+auto parse_properties(const YAML::Node& node, ir::attribute_context_data& data)
+    -> parse_error
 {
   if (auto sequence = node["properties"]) {
     for (const auto& propertyNode : sequence) {

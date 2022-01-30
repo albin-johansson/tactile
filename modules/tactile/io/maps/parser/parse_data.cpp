@@ -22,12 +22,12 @@ auto parse_data::error() const -> parse_error
   return mError;
 }
 
-auto parse_data::data() -> map_data&
+auto parse_data::data() -> ir::map_data&
 {
   return mData;
 }
 
-auto parse_data::data() const -> const map_data&
+auto parse_data::data() const -> const ir::map_data&
 {
   return mData;
 }

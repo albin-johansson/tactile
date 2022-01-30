@@ -1,11 +1,13 @@
 #ifndef TACTILE_TACTILE_HPP_
 #define TACTILE_TACTILE_HPP_
 
-#include <cstddef>      // size_t
-#include <cstdint>      // int{}_t, uint{}_t
-#include <functional>   // reference_wrapper
-#include <optional>     // optional, nullopt_t, nullopt
-#include <type_traits>  // is_pointer_v
+#include <cstddef>        // size_t
+#include <cstdint>        // int{}_t, uint{}_t
+#include <functional>     // reference_wrapper, less
+#include <map>            // map
+#include <optional>       // optional, nullopt_t, nullopt
+#include <type_traits>    // is_pointer_v
+#include <unordered_map>  // unordered_map
 
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
@@ -74,6 +76,12 @@ using TileMatrix = std::vector<TileRow>;
 template <typename T>
   requires std::is_pointer_v<T>
 using NotNull = T;
+
+template <typename K, typename V>
+using tree_map = std::map<K, V, std::less<>>;
+
+template <typename K, typename V>
+using hash_map = std::unordered_map<K, V>;
 
 template <typename T>
 using Ref = std::reference_wrapper<T>;

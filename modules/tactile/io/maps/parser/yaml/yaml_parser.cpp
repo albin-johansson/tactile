@@ -11,7 +11,7 @@
 namespace tactile::parsing {
 namespace {
 
-[[nodiscard]] auto _parse_map(const std::filesystem::path& path, map_data& data)
+[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::map_data& data)
     -> parse_error
 {
   if (!std::filesystem::exists(path)) {

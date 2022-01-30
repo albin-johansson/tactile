@@ -1,24 +1,15 @@
 #pragma once
 
-#include <filesystem>     // path
-#include <functional>     // less
-#include <map>            // map
-#include <memory>         // unique_ptr
-#include <string>         // string
-#include <unordered_map>  // unordered_map
-#include <variant>        // variant
-#include <vector>         // vector
+#include <filesystem>  // path
+#include <memory>      // unique_ptr
+#include <string>      // string
+#include <variant>     // variant
+#include <vector>      // vector
 
 #include "core/attribute_value.hpp"
 #include "tactile_def.hpp"
 
-namespace tactile {
-
-template <typename K, typename V>
-using tree_map = std::map<K, V, std::less<>>;
-
-template <typename K, typename V>
-using hash_map = std::unordered_map<K, V>;
+namespace tactile::ir {
 
 using component_map = tree_map<std::string, attribute_value>;
 
@@ -133,4 +124,4 @@ struct map_data
   attribute_context_data context;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ir

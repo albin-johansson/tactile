@@ -8,10 +8,10 @@
 namespace tactile::parsing {
 
 [[nodiscard]] auto parse_object(const YAML::Node& node,
-                                const map_data& map,
-                                object_data* object) -> parse_error;
+                                const ir::map_data& map,
+                                ir::object_data* object) -> parse_error;
 
-[[nodiscard]] auto parse_layers(const YAML::Node& sequence, map_data& data)
+[[nodiscard]] auto parse_layers(const YAML::Node& sequence, ir::map_data& data)
     -> parse_error;
 
 }  // namespace tactile::parsing
