@@ -10,7 +10,7 @@ namespace tactile::parsing {
 
 class parse_data final {
  public:
-  void set_path(std::filesystem::path path);
+  void set_path(const std::filesystem::path& path);
 
   void set_error(parse_error error);
 

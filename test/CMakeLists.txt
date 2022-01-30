@@ -9,28 +9,28 @@ find_package(GTest CONFIG REQUIRED)
 set(TEST_FILES
     unit-tests/test_main.cpp
 
-    unit-tests/tactile/core/attribute_value_test.cpp
-    unit-tests/tactile/core/tile_position_test.cpp
+    unit-tests/app/tactile_stdlib_test.cpp
 
-    unit-tests/tactile/core/algorithms/flood_fill_test.cpp
+    unit-tests/app/core/attribute_value_test.cpp
+    unit-tests/app/core/tile_position_test.cpp
 
-    unit-tests/tactile/core/systems/component_system_test.cpp
-    unit-tests/tactile/core/systems/layer_system_test.cpp
-    unit-tests/tactile/core/systems/map_system_test.cpp
-    unit-tests/tactile/core/systems/property_system_test.cpp
-    unit-tests/tactile/core/systems/registry_system_test.cpp
-    unit-tests/tactile/core/systems/tree_system_test.cpp
-    unit-tests/tactile/core/systems/viewport_system_test.cpp
+    unit-tests/app/core/algorithms/flood_fill_test.cpp
 
-    unit-tests/tactile/core/utils/buffers_test.cpp
-    unit-tests/tactile/core/utils/colors_test.cpp
-    unit-tests/tactile/core/utils/vector_map_test.cpp
+    unit-tests/app/core/systems/component_system_test.cpp
+    unit-tests/app/core/systems/layer_system_test.cpp
+    unit-tests/app/core/systems/map_system_test.cpp
+    unit-tests/app/core/systems/property_system_test.cpp
+    unit-tests/app/core/systems/registry_system_test.cpp
+    unit-tests/app/core/systems/tree_system_test.cpp
+    unit-tests/app/core/systems/viewport_system_test.cpp
 
-    unit-tests/tactile/editor/commands/command_stack_test.cpp
+    unit-tests/app/core/utils/buffers_test.cpp
+    unit-tests/app/core/utils/colors_test.cpp
+    unit-tests/app/core/utils/vector_map_test.cpp
 
-    unit-tests/tactile/parsing/create_document_from_ir_test.cpp
+    unit-tests/app/editor/commands/command_stack_test.cpp
 
-    unit-tests/tactile-base/tactile_stdlib_test.cpp
+    unit-tests/app/io/maps/restore_document_from_ir_test.cpp
     )
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})

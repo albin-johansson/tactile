@@ -1,12 +1,10 @@
 #include "parse_data.hpp"
 
-#include <utility>  // move
-
 namespace tactile::parsing {
 
-void parse_data::set_path(std::filesystem::path path)
+void parse_data::set_path(const std::filesystem::path& path)
 {
-  mPath = std::move(path);
+  mPath = std::filesystem::absolute(path);
 }
 
 void parse_data::set_error(const parse_error error)
