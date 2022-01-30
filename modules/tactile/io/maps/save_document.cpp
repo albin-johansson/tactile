@@ -3,12 +3,12 @@
 #include <filesystem>  // absolute
 
 #include "assert.hpp"
-#include "convert_document_to_ir.hpp"
 #include "emitter/emit_info.hpp"
 #include "emitter/json_emitter.hpp"
 #include "emitter/yaml_emitter.hpp"
+#include "io/maps/convert_document_to_ir.hpp"
+#include "io/preferences.hpp"
 #include "logging.hpp"
-#include "preferences.hpp"
 #include "profile.hpp"
 
 namespace tactile {

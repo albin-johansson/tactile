@@ -6,7 +6,7 @@
 #include "logging.hpp"
 #include "profile.hpp"
 #include "throw.hpp"
-#include "yaml/yaml_parser.hpp"
+#include "io/maps/parser/yaml/yaml_parser.hpp"
 
 namespace tactile::parsing {
 

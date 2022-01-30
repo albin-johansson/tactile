@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-#include "io/parser/parse_data.hpp"
+#include "io/maps/parser/parse_data.hpp"
 
 namespace tactile::parsing {
 

@@ -25,10 +25,10 @@
 #include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/history.hpp"
-#include "io/parser/map_parser.hpp"
+#include "io/maps/parser/map_parser.hpp"
+#include "io/maps/restore_document_from_ir.hpp"
+#include "io/maps/save_document.hpp"
 #include "io/preferences.hpp"
-#include "io/restore_document.hpp"
-#include "io/save_document.hpp"
 #include "io/session.hpp"
 #include "logging.hpp"
 

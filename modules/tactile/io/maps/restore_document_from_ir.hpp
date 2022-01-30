@@ -1,7 +1,7 @@
 #pragma once
 
 #include "editor/document.hpp"
-#include "io/parser/parse_data.hpp"
+#include "parser/parse_data.hpp"
 
 namespace tactile {
 

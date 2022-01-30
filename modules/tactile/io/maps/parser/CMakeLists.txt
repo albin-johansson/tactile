@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(tactile-app-io-parser CXX)
+project(tactile-app-io-maps-parser CXX)
 
-set(TACTILE_IO_PARSER_SOURCE_FILES
+set(TACTILE_IO_MAPS_PARSER_SOURCE_FILES
 
     ${PROJECT_SOURCE_DIR}/map_parser.cpp
     ${PROJECT_SOURCE_DIR}/map_parser.hpp

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "dialog.hpp"
-#include "io/parser/parse_error.hpp"
+#include "io/maps/parser/parse_error.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {

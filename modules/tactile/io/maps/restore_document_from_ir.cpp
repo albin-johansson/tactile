@@ -1,4 +1,4 @@
-#include "restore_document.hpp"
+#include "restore_document_from_ir.hpp"
 
 #include <variant>  // get
 

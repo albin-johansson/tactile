@@ -9,7 +9,7 @@
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 
-#include "io/emitter/emit_info.hpp"
+#include "emit_info.hpp"
 #include "io/preferences.hpp"
 #include "logging.hpp"
 #include "tactile_stdlib.hpp"

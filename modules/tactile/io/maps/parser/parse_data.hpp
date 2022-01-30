@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-#include "io/ir.hpp"
+#include "io/maps/ir.hpp"
 #include "parse_error.hpp"
 #include "tactile_def.hpp"
 

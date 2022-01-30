@@ -4,7 +4,7 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "io/parser/parse_data.hpp"
+#include "io/maps/parser/parse_data.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile::parsing {

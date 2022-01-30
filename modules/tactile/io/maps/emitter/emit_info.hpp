@@ -3,7 +3,7 @@
 #include <filesystem>  // path
 #include <string>      // string
 
-#include "io/ir.hpp"
+#include "io/maps/ir.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile::emitter {
