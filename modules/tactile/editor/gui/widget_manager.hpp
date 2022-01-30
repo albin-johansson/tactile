@@ -3,8 +3,8 @@
 #include <memory>  // unique_ptr
 
 #include <entt/entt.hpp>
-#include <tactile_io.hpp>
 
+#include "io/parser/parse_error.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {
@@ -49,7 +49,7 @@ class WidgetManager final {
 
   void ShowResizeMapDialog(usize currentRows, usize currentColumns);
 
-  void ShowMapImportErrorDialog(IO::ParseError error);
+  void ShowMapImportErrorDialog(parsing::parse_error error);
 
   void ShowComponentEditor(const Model& model);
 

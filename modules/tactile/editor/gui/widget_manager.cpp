@@ -108,7 +108,7 @@ void WidgetManager::ShowResizeMapDialog(const usize currentRows,
   mResizeMapDialog->Show(currentRows, currentColumns);
 }
 
-void WidgetManager::ShowMapImportErrorDialog(const IO::ParseError error)
+void WidgetManager::ShowMapImportErrorDialog(const parsing::parse_error error)
 {
   mMapImportErrorDialog->Open(error);
 }

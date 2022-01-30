@@ -4,11 +4,11 @@
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 
-#include "create_document_from_ir.hpp"
+#include "restore_document.hpp"
 #include "directories.hpp"
 #include "editor/model.hpp"
+#include "io/parser/map_parser.hpp"
 #include "logging.hpp"
-#include "map_parser.hpp"
 #include "tactile_stdlib.hpp"
 #include <session.pb.h>
 
@@ -32,9 +32,10 @@ void restore_last_session(Model& model, texture_manager& textures)
   std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
-      MapParser parser{file};
-      if (parser) {
-        model.AddMap(CreateDocumentFromIR(parser.GetData(), textures));
+      parsing::map_parser parser;
+      parser.parse_map(file);
+      if (parser.is_okay()) {
+        model.AddMap(restore_document(parser.data(), textures));
       }
       else {
         log_warning("Failed to restore map from last session!");

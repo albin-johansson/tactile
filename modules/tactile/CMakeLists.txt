@@ -4,9 +4,13 @@ project(tactile-app CXX)
 
 find_package(OpenGL REQUIRED)  # Not acquired using vcpkg
 
-find_package(GLEW CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
+find_package(GLEW CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
+find_package(yaml-cpp CONFIG REQUIRED)
+find_package(pugixml CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 find_package(unofficial-nativefiledialog CONFIG REQUIRED)
 
 find_path(STB_INCLUDE_DIRS "stb.h")
@@ -39,13 +43,11 @@ set(SOURCE_FILES
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 
 add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
-add_dependencies(${TACTILE_LIB} ${TACTILE_IO})
 
 target_include_directories(${TACTILE_LIB}
                            PUBLIC
                            ${PROJECT_SOURCE_DIR}
                            ${ROOT_DIR}/modules/tactile-base
-                           ${ROOT_DIR}/modules/tactile-io/include
 
                            SYSTEM PUBLIC
                            ${LIBRARY_DIR}/centurion
@@ -58,13 +60,16 @@ target_include_directories(${TACTILE_LIB}
 target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       ${TACTILE_PROTO}
-                      ${TACTILE_IO}
                       SDL2::SDL2-static
                       SDL2::SDL2_image
                       imgui::imgui
                       EnTT::EnTT
+                      magic_enum::magic_enum
                       fmt::fmt
                       protobuf::libprotobuf
+                      yaml-cpp
+                      nlohmann_json::nlohmann_json
+                      pugixml::static
                       unofficial::nativefiledialog::nfd
                       GLEW::GLEW
                       OpenGL::GL
@@ -116,6 +121,9 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <entt/entt.hpp>
                           <imgui.h>
                           <fmt/format.h>
+                          <yaml-cpp/yaml.h>
+                          <nlohmann/json.hpp>
+                          <pugixml.hpp>
                           )
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})

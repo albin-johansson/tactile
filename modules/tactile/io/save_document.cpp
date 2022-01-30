@@ -2,36 +2,13 @@
 
 #include <filesystem>  // absolute
 
-#include <tactile_io.hpp>
-
 #include "assert.hpp"
-#include "convert_document_to_ir.hpp"
-#include "io/preferences.hpp"
+#include "emitter/emit_info.hpp"
+#include "emitter/yaml/yaml_emitter.hpp"
+#include "preferences.hpp"
 #include "profile.hpp"
 
 namespace tactile {
-namespace {
-
-[[nodiscard]] auto GetEmitterOptions() -> IO::EmitterOptions
-{
-  IO::EmitterOptions options = 0;
-
-  if (prefs::GetEmbedTilesets()) {
-    options |= IO::EmitterOption_EmbedTilesets;
-  }
-
-  if (prefs::GetFoldTileData()) {
-    options |= IO::EmitterOption_FoldTileData;
-  }
-
-  if (prefs::GetIndentOutput()) {
-    options |= IO::EmitterOption_IndentOutput;
-  }
-
-  return options;
-}
-
-}  // namespace
 
 void SaveDocument(const Document& document)
 {
@@ -41,13 +18,10 @@ void SaveDocument(const Document& document)
   const auto path = std::filesystem::absolute(document.path);
   log_info("Trying to save map to {}", path);
 
-  const auto data = ConvertDocumentToIR(document);
-  if (IO::EmitMap(*data, GetEmitterOptions())) {
-    TACTILE_PROFILE_END("Emitted document")
-  }
-  else {
-    log_warning("Failed to emit map!");
-  }
+  EmitInfo info{path, document.registry};
+  emit_yaml_map(info);
+
+  TACTILE_PROFILE_END("Emitted document")
 }
 
 }  // namespace tactile

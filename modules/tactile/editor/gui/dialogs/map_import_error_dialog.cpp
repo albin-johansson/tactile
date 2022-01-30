@@ -9,7 +9,7 @@ MapImportErrorDialog::MapImportErrorDialog() : ADialog{"Map import error"}
   SetCloseButtonLabel(nullptr);
 }
 
-void MapImportErrorDialog::Open(const IO::ParseError error)
+void MapImportErrorDialog::Open(const parsing::parse_error error)
 {
   mError = error;
   Show();
@@ -18,7 +18,7 @@ void MapImportErrorDialog::Open(const IO::ParseError error)
 void MapImportErrorDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
   ImGui::TextUnformatted("Oops, failed to open the specified map!");
-  ImGui::Text("Cause: %s", IO::GetCause(mError.value()));
+  ImGui::Text("Cause: %s", parsing::to_cause(mError.value()).data());
 }
 
 }  // namespace tactile
