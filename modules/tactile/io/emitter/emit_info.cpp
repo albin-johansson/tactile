@@ -53,18 +53,18 @@ void _each_object(const entt::registry& registry,
 
 }  // namespace
 
-EmitInfo::EmitInfo(std::filesystem::path destination, const entt::registry& registry)
+emit_info::emit_info(std::filesystem::path destination, const entt::registry& registry)
     : mDestinationFile{std::move(destination)}
     , mDestinationDir{mDestinationFile.parent_path()}
     , mRegistry{&registry}
 {}
 
-auto EmitInfo::component_def_count() const -> usize
+auto emit_info::component_def_count() const -> usize
 {
   return mRegistry->storage<comp::component_def>().size();
 }
 
-auto EmitInfo::component_def_name(const usize index) const -> const std::string&
+auto emit_info::component_def_name(const usize index) const -> const std::string&
 {
   const auto entity = mRegistry->storage<comp::component_def>().at(index);
   if (entity != entt::null) {
@@ -76,7 +76,7 @@ auto EmitInfo::component_def_name(const usize index) const -> const std::string&
   }
 }
 
-auto EmitInfo::component_def_attr_count(const usize index) const -> usize
+auto emit_info::component_def_attr_count(const usize index) const -> usize
 {
   const auto entity = mRegistry->storage<comp::component_def>().at(index);
   if (entity != entt::null) {
@@ -88,8 +88,8 @@ auto EmitInfo::component_def_attr_count(const usize index) const -> usize
   }
 }
 
-void EmitInfo::each_component_def_attrs(const component_def_attr_visitor& func,
-                                        const usize definitionIndex) const
+void emit_info::each_component_def_attrs(const component_def_attr_visitor& func,
+                                         const usize definitionIndex) const
 {
   const auto entity = mRegistry->storage<comp::component_def>().at(definitionIndex);
   if (entity != entt::null) {
@@ -103,12 +103,12 @@ void EmitInfo::each_component_def_attrs(const component_def_attr_visitor& func,
   }
 }
 
-auto EmitInfo::tileset_count() const -> usize
+auto emit_info::tileset_count() const -> usize
 {
   return mRegistry->storage<comp::tileset>().size();
 }
 
-void EmitInfo::each_tileset(const tileset_visitor& func) const
+void emit_info::each_tileset(const tileset_visitor& func) const
 {
   for (auto&& [entity, tileset, context, texture] :
        mRegistry->view<comp::tileset, comp::attribute_context, comp::texture>().each()) {
@@ -132,21 +132,21 @@ void EmitInfo::each_tileset(const tileset_visitor& func) const
   }
 }
 
-auto EmitInfo::tileset_context(const TilesetID id) const -> ContextID
+auto emit_info::tileset_context(const TilesetID id) const -> ContextID
 {
   const auto entity = sys::get_tileset_entity(*mRegistry, id);
   return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
-auto EmitInfo::tileset_fancy_tile_count(TilesetID id) const -> usize
+auto emit_info::tileset_fancy_tile_count(TilesetID id) const -> usize
 {
   usize count = 0;
   each_tileset_fancy_tile(id, [&count](const FancyTileData&) { ++count; });
   return count;
 }
 
-void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
-                                       const fancy_tile_visitor& func) const
+void emit_info::each_tileset_fancy_tile(const TilesetID id,
+                                        const fancy_tile_visitor& func) const
 {
   const auto tilesetEntity = sys::get_tileset_entity(*mRegistry, id);
   const auto& tileset = mRegistry->get<comp::tileset>(tilesetEntity);
@@ -169,21 +169,21 @@ void EmitInfo::each_tileset_fancy_tile(const TilesetID id,
   }
 }
 
-auto EmitInfo::fancy_tile_object_count(const TileID id) const -> usize
+auto emit_info::fancy_tile_object_count(const TileID id) const -> usize
 {
   usize count = 0;
   each_fancy_tile_object(id, [&count](const ObjectData&) { ++count; });
   return count;
 }
 
-void EmitInfo::each_fancy_tile_object(const TileID id, const object_visitor& func) const
+void emit_info::each_fancy_tile_object(const TileID id, const object_visitor& func) const
 {
   const auto entity = sys::get_tile_entity(*mRegistry, id);
   const auto& tile = mRegistry->get<comp::fancy_tile>(entity);
   _each_object(*mRegistry, tile.objects, func);
 }
 
-auto EmitInfo::fancy_tile_animation_frame_count(const TileID id) const -> usize
+auto emit_info::fancy_tile_animation_frame_count(const TileID id) const -> usize
 {
   const auto entity = sys::get_tile_entity(*mRegistry, id);
 
@@ -194,8 +194,8 @@ auto EmitInfo::fancy_tile_animation_frame_count(const TileID id) const -> usize
   return 0;
 }
 
-void EmitInfo::each_fancy_tile_animation_frame(const TileID id,
-                                               const animation_frame_visitor& func) const
+void emit_info::each_fancy_tile_animation_frame(const TileID id,
+                                                const animation_frame_visitor& func) const
 {
   const auto entity = sys::get_tile_entity(*mRegistry, id);
 
@@ -211,12 +211,12 @@ void EmitInfo::each_fancy_tile_animation_frame(const TileID id,
   }
 }
 
-auto EmitInfo::component_count(const ContextID id) const -> usize
+auto emit_info::component_count(const ContextID id) const -> usize
 {
   return sys::get_component_count(*mRegistry, id);
 }
 
-void EmitInfo::each_component(const ContextID id, const component_visitor& func) const
+void emit_info::each_component(const ContextID id, const component_visitor& func) const
 {
   const auto& context = sys::GetContext(*mRegistry, id);
   for (const auto componentEntity : context.components) {
@@ -226,12 +226,12 @@ void EmitInfo::each_component(const ContextID id, const component_visitor& func)
   }
 }
 
-auto EmitInfo::root_context() const -> ContextID
+auto emit_info::root_context() const -> ContextID
 {
   return mRegistry->ctx<comp::attribute_context>().id;
 }
 
-auto EmitInfo::layer_count(const Maybe<LayerID> id) const -> usize
+auto emit_info::layer_count(const Maybe<LayerID> id) const -> usize
 {
   if (id) {
     const auto entity = sys::get_layer_entity(*mRegistry, *id);
@@ -243,7 +243,7 @@ auto EmitInfo::layer_count(const Maybe<LayerID> id) const -> usize
   }
 }
 
-void EmitInfo::each_layer(const Maybe<LayerID> parentId, const layer_visitor& func) const
+void emit_info::each_layer(const Maybe<LayerID> parentId, const layer_visitor& func) const
 {
   if (!parentId) {
     /* Only iterate top-level layers */
@@ -266,7 +266,7 @@ void EmitInfo::each_layer(const Maybe<LayerID> parentId, const layer_visitor& fu
   }
 }
 
-auto EmitInfo::layer_data(const LayerID id) const -> LayerData
+auto emit_info::layer_data(const LayerID id) const -> LayerData
 {
   const auto entity = sys::get_layer_entity(*mRegistry, id);
 
@@ -283,44 +283,44 @@ auto EmitInfo::layer_data(const LayerID id) const -> LayerData
   return data;
 }
 
-void EmitInfo::each_layer_tile(const LayerID id, const layer_tile_visitor& func) const
+void emit_info::each_layer_tile(const LayerID id, const layer_tile_visitor& func) const
 {
   const auto entity = sys::get_tile_layer_entity(*mRegistry, id);
   const auto& layer = mRegistry->get<comp::tile_layer>(entity);
   sys::each_tile(layer, func);
 }
 
-auto EmitInfo::layer_object_count(const LayerID id) const -> usize
+auto emit_info::layer_object_count(const LayerID id) const -> usize
 {
   const auto&& [entity, layer] = sys::get_object_layer(*mRegistry, id);
   return layer.objects.size();
 }
 
-void EmitInfo::each_layer_object(const LayerID id, const object_visitor& func) const
+void emit_info::each_layer_object(const LayerID id, const object_visitor& func) const
 {
   const auto&& [entity, layer] = sys::get_object_layer(*mRegistry, id);
   _each_object(*mRegistry, layer.objects, func);
 }
 
-auto EmitInfo::layer_context(const LayerID id) const -> ContextID
+auto emit_info::layer_context(const LayerID id) const -> ContextID
 {
   const auto entity = sys::find_layer(*mRegistry, id);
   return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
-auto EmitInfo::object_context(const ObjectID id) const -> ContextID
+auto emit_info::object_context(const ObjectID id) const -> ContextID
 {
   const auto entity = sys::get_object(*mRegistry, id);
   return mRegistry->get<comp::attribute_context>(entity).id;
 }
 
-auto EmitInfo::property_count(const ContextID id) const -> usize
+auto emit_info::property_count(const ContextID id) const -> usize
 {
   const auto& context = sys::GetContext(*mRegistry, id);
   return context.properties.size();
 }
 
-void EmitInfo::each_property(const ContextID id, const property_visitor& func) const
+void emit_info::each_property(const ContextID id, const property_visitor& func) const
 {
   const auto& context = sys::GetContext(*mRegistry, id);
   for (const auto propertyEntity : context.properties) {
@@ -329,48 +329,48 @@ void EmitInfo::each_property(const ContextID id, const property_visitor& func) c
   }
 }
 
-auto EmitInfo::tile_width() const -> int32
+auto emit_info::tile_width() const -> int32
 {
   const auto& map = mRegistry->ctx<MapInfo>();
   return map.tile_width;
 }
 
-auto EmitInfo::tile_height() const -> int32
+auto emit_info::tile_height() const -> int32
 {
   const auto& map = mRegistry->ctx<MapInfo>();
   return map.tile_height;
 }
 
-auto EmitInfo::next_layer_id() const -> LayerID
+auto emit_info::next_layer_id() const -> LayerID
 {
   const auto& map = mRegistry->ctx<MapInfo>();
   return map.next_layer_id;
 }
 
-auto EmitInfo::next_object_id() const -> ObjectID
+auto emit_info::next_object_id() const -> ObjectID
 {
   const auto& map = mRegistry->ctx<MapInfo>();
   return map.next_object_id;
 }
 
-auto EmitInfo::row_count() const -> usize
+auto emit_info::row_count() const -> usize
 {
   const auto& map = mRegistry->ctx<MapInfo>();
   return map.row_count;
 }
 
-auto EmitInfo::column_count() const -> usize
+auto emit_info::column_count() const -> usize
 {
   const auto& map = mRegistry->ctx<MapInfo>();
   return map.column_count;
 }
 
-auto EmitInfo::destination_file() const -> const std::filesystem::path&
+auto emit_info::destination_file() const -> const std::filesystem::path&
 {
   return mDestinationFile;
 }
 
-auto EmitInfo::destination_dir() const -> const std::filesystem::path&
+auto emit_info::destination_dir() const -> const std::filesystem::path&
 {
   return mDestinationDir;
 }

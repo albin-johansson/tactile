@@ -85,7 +85,7 @@ auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::E
 }
 
 void emit_object_data(YAML::Emitter& emitter,
-                      const EmitInfo& info,
+                      const emit_info& info,
                       const ObjectData& object);
 
 void emit_component_definition_attribute(YAML::Emitter& emitter,
@@ -105,7 +105,7 @@ void emit_component_definition_attribute(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
+void emit_component_definitions(YAML::Emitter& emitter, const emit_info& info)
 {
   const auto count = info.component_def_count();
 
@@ -138,7 +138,7 @@ void emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
 }
 
 void emit_properties(YAML::Emitter& emitter,
-                     const EmitInfo& info,
+                     const emit_info& info,
                      const ContextID contextId)
 {
   if (info.property_count(contextId) > 0u) {
@@ -157,7 +157,7 @@ void emit_properties(YAML::Emitter& emitter,
 }
 
 void emit_components(YAML::Emitter& emitter,
-                     const EmitInfo& info,
+                     const emit_info& info,
                      const ContextID contextId)
 {
   if (info.component_count(contextId) > 0u) {
@@ -187,7 +187,7 @@ void emit_components(YAML::Emitter& emitter,
 }
 
 void emit_tileset_tile_animation(YAML::Emitter& emitter,
-                                 const EmitInfo& info,
+                                 const emit_info& info,
                                  const TileID id)
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
@@ -202,7 +202,7 @@ void emit_tileset_tile_animation(YAML::Emitter& emitter,
   emitter << YAML::EndSeq;
 }
 
-void emit_tileset_tiles(YAML::Emitter& emitter, const EmitInfo& info, const TilesetID id)
+void emit_tileset_tiles(YAML::Emitter& emitter, const emit_info& info, const TilesetID id)
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
@@ -229,7 +229,7 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const EmitInfo& info, const Tile
   emitter << YAML::EndSeq;
 }
 
-void emit_tileset_file(const EmitInfo& info,
+void emit_tileset_file(const emit_info& info,
                        const std::string& filename,
                        const TilesetData& tileset)
 {
@@ -270,7 +270,7 @@ void emit_tileset_file(const EmitInfo& info,
   stream << emitter.c_str();
 }
 
-void emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
+void emit_tilesets(YAML::Emitter& emitter, const emit_info& info)
 {
   if (info.tileset_count() == 0) {
     return;
@@ -292,7 +292,7 @@ void emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
 }
 
 void emit_object_data(YAML::Emitter& emitter,
-                      const EmitInfo& info,
+                      const emit_info& info,
                       const ObjectData& object)
 {
   emitter << YAML::Key << "id" << YAML::Value << object.id;
@@ -346,7 +346,7 @@ void emit_object_data(YAML::Emitter& emitter,
 }
 
 void emit_object_layer_data(YAML::Emitter& emitter,
-                            const EmitInfo& info,
+                            const emit_info& info,
                             const LayerID id)
 {
   if (info.layer_object_count(id) == 0) {
@@ -362,7 +362,7 @@ void emit_object_layer_data(YAML::Emitter& emitter,
   emitter << YAML::EndSeq;
 }
 
-void emit_tile_layer_data(YAML::Emitter& emitter, const EmitInfo& info, const LayerID id)
+void emit_tile_layer_data(YAML::Emitter& emitter, const emit_info& info, const LayerID id)
 {
   const bool fold = prefs::GetFoldTileData();
 
@@ -395,7 +395,7 @@ void emit_tile_layer_data(YAML::Emitter& emitter, const EmitInfo& info, const La
 }
 
 void emit_layers(YAML::Emitter& emitter,
-                 const EmitInfo& info,
+                 const emit_info& info,
                  const Maybe<LayerID> parent = {})
 {
   if (info.layer_count(parent) == 0u) {
@@ -450,7 +450,7 @@ void emit_layers(YAML::Emitter& emitter,
 
 }  // namespace
 
-void emit_yaml_map(const EmitInfo& info)
+void emit_yaml_map(const emit_info& info)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);

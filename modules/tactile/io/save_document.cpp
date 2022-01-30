@@ -18,7 +18,7 @@ void SaveDocument(const Document& document)
   const auto path = std::filesystem::absolute(document.path);
   log_info("Trying to save map to {}", path);
 
-  emitter::EmitInfo info{path, document.registry};
+  emitter::emit_info info{path, document.registry};
   emit_yaml_map(info);
 
   TACTILE_PROFILE_END("Emitted document")

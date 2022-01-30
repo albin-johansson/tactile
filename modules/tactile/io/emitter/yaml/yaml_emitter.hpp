@@ -2,8 +2,8 @@
 
 namespace tactile::emitter {
 
-class EmitInfo;
+class emit_info;
 
-void emit_yaml_map(const EmitInfo& info);
+void emit_yaml_map(const emit_info& info);
 
 }  // namespace tactile::emitter

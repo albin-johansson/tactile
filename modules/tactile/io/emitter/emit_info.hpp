@@ -66,7 +66,7 @@ struct ObjectData final
   bool visible{};
 };
 
-class EmitInfo final {
+class emit_info final {
  public:
   using component_def_attr_visitor = std::function<void(const std::string&,  //
                                                         const attribute_value&)>;
@@ -86,7 +86,7 @@ class EmitInfo final {
   using property_visitor =
       std::function<void(const std::string&, const attribute_value&)>;
 
-  explicit EmitInfo(std::filesystem::path destination, const entt::registry& registry);
+  explicit emit_info(std::filesystem::path destination, const entt::registry& registry);
 
   /// \name Component definitions
   /// \{
