@@ -121,7 +121,7 @@ auto last_closed_file() -> const std::string&
     return gLastClosedFile.value();
   }
   else {
-    ThrowTraced(TactileError{"Invalid last closed file!"});
+    throw_traced(tactile_error{"Invalid last closed file!"});
   }
 }
 

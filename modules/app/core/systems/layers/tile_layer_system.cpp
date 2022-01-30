@@ -23,7 +23,7 @@ auto get_tile_layer_entity(const entt::registry& registry, const layer_id id)
     return entity;
   }
   else {
-    ThrowTraced(TactileError{"Invalid tile layer identifier!"});
+    throw_traced(tactile_error{"Invalid tile layer identifier!"});
   }
 }
 
@@ -36,7 +36,7 @@ void set_tile(comp::tile_layer& layer, const tile_position& position, const tile
     layer.matrix[row][col] = tile;
   }
   else {
-    ThrowTraced(TactileError{"Invalid tile layer position!"});
+    throw_traced(tactile_error{"Invalid tile layer position!"});
   }
 }
 

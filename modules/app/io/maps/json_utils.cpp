@@ -37,7 +37,7 @@ void to_json(nlohmann::json& json, const attribute_value& value)
       break;
 
     default:
-      ThrowTraced(TactileError{"Invalid attribute type!"});
+      throw_traced(tactile_error{"Invalid attribute type!"});
   }
 }
 

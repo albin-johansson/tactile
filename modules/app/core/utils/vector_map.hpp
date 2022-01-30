@@ -45,7 +45,7 @@ class vector_map final {
       return mData.emplace_back(std::move(key), mapped_type{std::forward<Args>(args)...});
     }
     else {
-      ThrowTraced(TactileError{"Duplicate key!"});
+      throw_traced(tactile_error{"Duplicate key!"});
     }
   }
 
@@ -120,7 +120,7 @@ class vector_map final {
       return it->second;
     }
     else {
-      ThrowTraced(TactileError{"Invalid key!"});
+      throw_traced(tactile_error{"Invalid key!"});
     }
   }
 
@@ -131,7 +131,7 @@ class vector_map final {
       return it->second;
     }
     else {
-      ThrowTraced(TactileError{"Invalid key!"});
+      throw_traced(tactile_error{"Invalid key!"});
     }
   }
 
@@ -141,7 +141,7 @@ class vector_map final {
       return mData.at(index);
     }
     else {
-      ThrowTraced(TactileError{"Invalid index!"});
+      throw_traced(tactile_error{"Invalid index!"});
     }
   }
 
@@ -151,7 +151,7 @@ class vector_map final {
       return mData.at(index);
     }
     else {
-      ThrowTraced(TactileError{"Invalid index!"});
+      throw_traced(tactile_error{"Invalid index!"});
     }
   }
 

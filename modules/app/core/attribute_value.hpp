@@ -168,7 +168,7 @@ class attribute_value final {
       set_value<file_type>(file_type{});
     }
     else {
-      ThrowTraced(TactileError{"Invalid attribute type!"});
+      throw_traced(tactile_error{"Invalid attribute type!"});
     }
   }
 
@@ -203,7 +203,7 @@ class attribute_value final {
       return *color == cen::colors::white;
     }
     else {
-      ThrowTraced(TactileError{"Invalid property type!"});
+      throw_traced(tactile_error{"Invalid property type!"});
     }
   }
 
@@ -371,7 +371,7 @@ class attribute_value final {
       return *str;
     }
     else {
-      ThrowTraced(TactileError{"Attribute was not a string!"});
+      throw_traced(tactile_error{"Attribute was not a string!"});
     }
   }
 
@@ -388,7 +388,7 @@ class attribute_value final {
       return *i;
     }
     else {
-      ThrowTraced(TactileError{"Attribute was not an integer!"});
+      throw_traced(tactile_error{"Attribute was not an integer!"});
     }
   }
 
@@ -405,7 +405,7 @@ class attribute_value final {
       return *f;
     }
     else {
-      ThrowTraced(TactileError{"Attribute was not a float!"});
+      throw_traced(tactile_error{"Attribute was not a float!"});
     }
   }
 
@@ -422,7 +422,7 @@ class attribute_value final {
       return *b;
     }
     else {
-      ThrowTraced(TactileError{"Attribute was not a boolean!"});
+      throw_traced(tactile_error{"Attribute was not a boolean!"});
     }
   }
 
@@ -439,7 +439,7 @@ class attribute_value final {
       return *file;
     }
     else {
-      ThrowTraced(TactileError{"Attribute was not a file!"});
+      throw_traced(tactile_error{"Attribute was not a file!"});
     }
   }
 
@@ -456,7 +456,7 @@ class attribute_value final {
       return *obj;
     }
     else {
-      ThrowTraced(TactileError{"Attribute was not an object reference!"});
+      throw_traced(tactile_error{"Attribute was not an object reference!"});
     }
   }
 
@@ -473,7 +473,7 @@ class attribute_value final {
       return *color;
     }
     else {
-      ThrowTraced(TactileError{"Attribute was not a color!"});
+      throw_traced(tactile_error{"Attribute was not a color!"});
     }
   }
 

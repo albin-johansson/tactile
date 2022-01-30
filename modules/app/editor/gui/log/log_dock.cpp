@@ -104,7 +104,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
       return {1.00f, 0.27f, 0.00f, 1.00f};
 
     default:
-      ThrowTraced(TactileError{"Did not recognize log level!"});
+      throw_traced(tactile_error{"Did not recognize log level!"});
   }
 }
 

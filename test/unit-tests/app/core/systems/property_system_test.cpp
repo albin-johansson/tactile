@@ -168,13 +168,13 @@ TEST_F(PropertySystemTest, ChangePropertyType)
 TEST_F(PropertySystemTest, GetContext)
 {
   ASSERT_NO_THROW(sys::GetContext(mRegistry, mRegistry.ctx<comp::attribute_context>().id));
-  ASSERT_THROW(sys::GetContext(mRegistry, sys::GetNextContextId()), TactileError);
+  ASSERT_THROW(sys::GetContext(mRegistry, sys::GetNextContextId()), tactile_error);
 }
 
 TEST_F(PropertySystemTest, GetProperty)
 {
   auto& context = mRegistry.ctx<comp::attribute_context>();
-  ASSERT_THROW(sys::GetProperty(mRegistry, context, "foo"), TactileError);
+  ASSERT_THROW(sys::GetProperty(mRegistry, context, "foo"), tactile_error);
 
   sys::AddProperty(mRegistry, context, "foo", 42);
   const auto& property = sys::GetProperty(mRegistry, context, "foo");

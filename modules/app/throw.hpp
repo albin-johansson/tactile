@@ -18,11 +18,11 @@
 
 namespace tactile {
 
-class TactileError : public std::exception {
+class tactile_error : public std::exception {
  public:
-  TactileError() noexcept = default;
+  tactile_error() noexcept = default;
 
-  explicit TactileError(const char* what) : mWhat{what ? what : "N/A"} {}
+  explicit tactile_error(const char* what) : mWhat{what ? what : "N/A"} {}
 
   [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat; }
 
@@ -30,12 +30,11 @@ class TactileError : public std::exception {
   const char* mWhat{"N/A"};
 };
 
-using TraceInfo = boost::error_info<struct ErrorInfoTag, boost::stacktrace::stacktrace>;
+using trace_info = boost::error_info<struct ErrorInfoTag, boost::stacktrace::stacktrace>;
 
-template <typename Exception>
-[[noreturn]] void ThrowTraced(const Exception& e)
+[[noreturn]] void throw_traced(const auto& error)
 {
-  throw boost::enable_error_info(e) << TraceInfo{boost::stacktrace::stacktrace()};
+  throw boost::enable_error_info(error) << trace_info{boost::stacktrace::stacktrace()};
 }
 
 }  // namespace tactile

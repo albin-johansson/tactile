@@ -53,7 +53,7 @@ TEST(VectorMap, Emplace)
   ASSERT_TRUE(map.contains(42));
   ASSERT_EQ(1u, map.size());
 
-  ASSERT_THROW(map.emplace(42, "bar"), TactileError);
+  ASSERT_THROW(map.emplace(42, "bar"), tactile_error);
 }
 
 TEST(VectorMap, EmplaceOrReplace)
@@ -222,22 +222,22 @@ TEST(VectorMap, Find)
 TEST(VectorMap, At)
 {
   string_map map;
-  ASSERT_THROW(map.at(0), TactileError);
+  ASSERT_THROW(map.at(0), tactile_error);
 
   map[0] = "123";
 
   ASSERT_EQ("123", map.at(0));
-  ASSERT_THROW(map.at(1), TactileError);
+  ASSERT_THROW(map.at(1), tactile_error);
 
   const auto& ref = map;
   ASSERT_EQ("123", ref.at(0));
-  ASSERT_THROW(ref.at(1), TactileError);
+  ASSERT_THROW(ref.at(1), tactile_error);
 }
 
 TEST(VectorMap, AtIndex)
 {
   string_map map;
-  ASSERT_THROW(map.at_index(0u), TactileError);
+  ASSERT_THROW(map.at_index(0u), tactile_error);
 
   map[42] = "foo";
   map[84] = "bar";
@@ -245,13 +245,13 @@ TEST(VectorMap, AtIndex)
   ASSERT_EQ("foo", map.at_index(0u).second);
   ASSERT_EQ("bar", map.at_index(1u).second);
 
-  ASSERT_THROW(map.at_index(2u), TactileError);
+  ASSERT_THROW(map.at_index(2u), tactile_error);
 
   const auto& ref = map;
   ASSERT_EQ("foo", ref.at_index(0u).second);
   ASSERT_EQ("bar", ref.at_index(1u).second);
 
-  ASSERT_THROW(ref.at_index(2u), TactileError);
+  ASSERT_THROW(ref.at_index(2u), tactile_error);
 }
 
 TEST(VectorMap, Contains)

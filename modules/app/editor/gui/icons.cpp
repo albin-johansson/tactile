@@ -26,7 +26,7 @@ auto Icons::GetIcon(const layer_type type) const -> c_str
       return TAC_ICON_GROUP_LAYER;
 
     default:
-      ThrowTraced(TactileError{"Failed to recognize layer type!"});
+      throw_traced(tactile_error{"Failed to recognize layer type!"});
   }
 }
 

@@ -107,8 +107,8 @@ TEST(ComponentSystem, GetComponentDef)
 
   const auto& ref = registry;
 
-  ASSERT_THROW(sys::get_component_def(registry, id + 1), TactileError);
-  ASSERT_THROW(sys::get_component_def(ref, id + 1), TactileError);
+  ASSERT_THROW(sys::get_component_def(registry, id + 1), tactile_error);
+  ASSERT_THROW(sys::get_component_def(ref, id + 1), tactile_error);
 
   {
     const auto [entity, def] = sys::get_component_def(registry, id);
@@ -225,7 +225,7 @@ TEST(ComponentSystem, SetComponentAttributeType)
   sys::set_component_attribute_type(registry, def, "A", attribute_type::integer);
   ASSERT_EQ(attribute_type::integer, sys::get_component_attribute_type(registry, def, "A"));
 
-  ASSERT_THROW(sys::get_component_attribute_type(registry, def, "B"), TactileError);
+  ASSERT_THROW(sys::get_component_attribute_type(registry, def, "B"), tactile_error);
 }
 
 TEST(ComponentSystem, SetComponentAttributeValue)
@@ -235,7 +235,8 @@ TEST(ComponentSystem, SetComponentAttributeValue)
   auto registry = sys::make_document_registry();
   const auto def = sys::make_component_def(registry, "Def");
 
-  ASSERT_THROW(sys::set_component_attribute_value(registry, def, "ABC", 42), TactileError);
+  ASSERT_THROW(sys::set_component_attribute_value(registry, def, "ABC", 42),
+               tactile_error);
 
   sys::make_component_attribute(registry, def, "Foo");
   sys::set_component_attribute_value(registry, def, "Foo", "Bar"s);
@@ -280,7 +281,7 @@ TEST(ComponentSystem, AddComponent)
   ASSERT_EQ(42, sys::get_component_attribute(registry, entity, def, "X").as_int());
   ASSERT_EQ(-3.5f, sys::get_component_attribute(registry, entity, def, "Y").as_float());
 
-  ASSERT_THROW(sys::get_component_attribute(registry, entity, def, "foo"), TactileError);
+  ASSERT_THROW(sys::get_component_attribute(registry, entity, def, "foo"), tactile_error);
 }
 
 TEST(ComponentSystem, ResetComponent)
@@ -388,12 +389,12 @@ TEST(ComponentSystem, GetComponent)
   const auto b = sys::make_component_def(registry, "B");
 
   const auto entity = CreateContext(registry);
-  ASSERT_THROW(sys::get_component(registry, entity, a), TactileError);
-  ASSERT_THROW(sys::get_component(registry, entity, b), TactileError);
+  ASSERT_THROW(sys::get_component(registry, entity, a), tactile_error);
+  ASSERT_THROW(sys::get_component(registry, entity, b), tactile_error);
 
   sys::add_component(registry, entity, a);
   ASSERT_NO_THROW(sys::get_component(registry, entity, a));
-  ASSERT_THROW(sys::get_component(registry, entity, b), TactileError);
+  ASSERT_THROW(sys::get_component(registry, entity, b), tactile_error);
 
   const auto& component = sys::get_component(registry, entity, a);
   ASSERT_EQ(a, component.type);

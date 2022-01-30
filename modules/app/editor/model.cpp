@@ -173,7 +173,7 @@ auto Model::GetActiveRegistryRef() -> entt::registry&
     return mDocuments.at(*mActiveMap)->registry;
   }
   else {
-    ThrowTraced(TactileError{"No active registry to return!"});
+    throw_traced(tactile_error{"No active registry to return!"});
   }
 }
 
@@ -183,7 +183,7 @@ auto Model::GetActiveRegistryRef() const -> const entt::registry&
     return mDocuments.at(*mActiveMap)->registry;
   }
   else {
-    ThrowTraced(TactileError{"No active registry to return!"});
+    throw_traced(tactile_error{"No active registry to return!"});
   }
 }
 

@@ -24,7 +24,7 @@ auto get_object(const entt::registry& registry, object_id id) -> entt::entity
     return entity;
   }
   else {
-    ThrowTraced(TactileError{"Invalid object identifier!"});
+    throw_traced(tactile_error{"Invalid object identifier!"});
   }
 }
 

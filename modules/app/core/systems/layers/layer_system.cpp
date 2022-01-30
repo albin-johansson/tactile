@@ -383,7 +383,7 @@ auto get_layer_entity(const entt::registry& registry, const layer_id id) -> entt
     return entity;
   }
   else {
-    ThrowTraced(TactileError{"Invalid layer ID!"});
+    throw_traced(tactile_error{"Invalid layer ID!"});
   }
 }
 
@@ -395,7 +395,7 @@ auto get_layer(entt::registry& registry, const layer_id id)
     return {entity, registry.get<comp::layer>(entity)};
   }
   else {
-    ThrowTraced(TactileError{"Invalid layer identifier!"});
+    throw_traced(tactile_error{"Invalid layer identifier!"});
   }
 }
 
@@ -407,7 +407,7 @@ auto get_layer(const entt::registry& registry, const layer_id id)
     return {entity, registry.get<comp::layer>(entity)};
   }
   else {
-    ThrowTraced(TactileError{"Invalid layer identifier!"});
+    throw_traced(tactile_error{"Invalid layer identifier!"});
   }
 }
 

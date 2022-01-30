@@ -183,7 +183,7 @@ auto GetContext(entt::registry& registry, const context_id id) -> comp::attribut
     }
   }
 
-  ThrowTraced(TactileError{"No matching attribute context!"});
+  throw_traced(tactile_error{"No matching attribute context!"});
 }
 
 auto GetContext(const entt::registry& registry, const context_id id)
@@ -199,7 +199,7 @@ auto GetContext(const entt::registry& registry, const context_id id)
     }
   }
 
-  ThrowTraced(TactileError{"No matching attribute context!"});
+  throw_traced(tactile_error{"No matching attribute context!"});
 }
 
 auto GetCurrentContextId(const entt::registry& registry) -> context_id
@@ -231,7 +231,7 @@ auto GetProperty(const entt::registry& registry,
     return registry.get<comp::property>(entity);
   }
   else {
-    ThrowTraced(TactileError{"Found no property with the specified name!"});
+    throw_traced(tactile_error{"Found no property with the specified name!"});
   }
 }
 

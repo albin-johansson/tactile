@@ -37,7 +37,7 @@ auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::E
       break;
 
     default:
-      ThrowTraced(TactileError{"Invalid attribute type!"});
+      throw_traced(tactile_error{"Invalid attribute type!"});
   }
 
   return emitter;
@@ -75,7 +75,7 @@ auto operator<<(YAML::Emitter& emitter, const attribute_type type) -> YAML::Emit
       break;
 
     default:
-      ThrowTraced(TactileError{"Invalid attribute type!"});
+      throw_traced(tactile_error{"Invalid attribute type!"});
   }
 
   return emitter;
