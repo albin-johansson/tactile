@@ -18,7 +18,7 @@ void map_parser::parse_map(const std::filesystem::path& path)
     TACTILE_PROFILE_START
 
     // TODO determine extension and which parser to choose
-    mData = parsing::parse_yaml_map(path);
+    mData = parse_yaml_map(path);
 
     TACTILE_PROFILE_END("Parsed map")
   }
@@ -31,11 +31,11 @@ void map_parser::parse_map(const std::filesystem::path& path)
       }
     }
 
-    mData.set_error(parsing::parse_error::unknown);
+    mData.set_error(parse_error::unknown);
   }
   catch (...) {
     log_error("Parser threw non-exception value!");
-    mData.set_error(parsing::parse_error::unknown);
+    mData.set_error(parse_error::unknown);
   }
 }
 
@@ -51,7 +51,7 @@ auto map_parser::error() const -> parse_error
 
 auto map_parser::is_okay() const -> bool
 {
-  return mData.error() == parsing::parse_error::none;
+  return mData.error() == parse_error::none;
 }
 
 }  // namespace tactile::parsing
