@@ -5,18 +5,12 @@
 #include <cstring>       // strlen
 #include <string>        // string, stof
 #include <system_error>  // errc
-#include <type_traits>   // enable_if_t, is_integral_v, is_floating_point_v
 #include <vector>        // vector
 
+#include "sfinae.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {
-
-template <typename T>
-using is_integral = std::enable_if_t<std::is_integral_v<T>, int>;
-
-template <typename T>
-using is_floating = std::enable_if_t<std::is_floating_point_v<T>, int>;
 
 [[nodiscard]] auto split(const char* str, char sep) -> std::vector<std::string>;
 

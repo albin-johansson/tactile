@@ -7,6 +7,7 @@ set(TACTILE_CORE_UTILS_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/buffers.hpp
     ${PROJECT_SOURCE_DIR}/colors.hpp
     ${PROJECT_SOURCE_DIR}/formatted_string.hpp
+    ${PROJECT_SOURCE_DIR}/sfinae.hpp
     ${PROJECT_SOURCE_DIR}/strings.cpp
     ${PROJECT_SOURCE_DIR}/strings.hpp
     ${PROJECT_SOURCE_DIR}/texture_manager.cpp

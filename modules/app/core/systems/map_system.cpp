@@ -1,11 +1,10 @@
 #include "map_system.hpp"
 
-#include <type_traits>  // enable_if_t, is_unsigned_v
-
 #include "assert.hpp"
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
 #include "core/map.hpp"
+#include "core/utils/sfinae.hpp"
 #include "core/utils/tiles.hpp"
 #include "layers/tile_layer_system.hpp"
 #include "tactile_stdlib.hpp"
@@ -13,10 +12,7 @@
 namespace tactile::sys {
 namespace {
 
-template <typename T>
-using unsigned_t = std::enable_if_t<std::is_unsigned_v<T>, int>;
-
-template <typename T, unsigned_t<T> = 0>
+template <typename T, is_unsigned<T> = 0>
 [[nodiscard]] constexpr auto get_diff(const T a, const T b) noexcept -> T
 {
   if (a < b) {
