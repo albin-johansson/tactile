@@ -12,6 +12,7 @@ set(TACTILE_IO_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/file_dialog.hpp
     ${PROJECT_SOURCE_DIR}/history.cpp
     ${PROJECT_SOURCE_DIR}/history.hpp
+    ${PROJECT_SOURCE_DIR}/ir.hpp
     ${PROJECT_SOURCE_DIR}/preferences.cpp
     ${PROJECT_SOURCE_DIR}/preferences.hpp
     ${PROJECT_SOURCE_DIR}/restore_document.cpp

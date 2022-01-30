@@ -29,7 +29,7 @@ namespace {
 
 void _restore_properties(entt::registry& registry,
                          const entt::entity entity,
-                         const parsing::attribute_context_data& source)
+                         const attribute_context_data& source)
 {
   const auto count = source.properties.size();
 
@@ -50,7 +50,7 @@ void _restore_properties(entt::registry& registry,
 
 void _restore_components(entt::registry& registry,
                          const entt::entity entity,
-                         const parsing::attribute_context_data& source)
+                         const attribute_context_data& source)
 {
   auto& context = (entity != entt::null) ? registry.get<comp::attribute_context>(entity)
                                          : registry.ctx<comp::attribute_context>();
@@ -73,7 +73,7 @@ void _restore_components(entt::registry& registry,
   }
 }
 
-auto _restore_object(entt::registry& registry, const parsing::object_data& objectData)
+auto _restore_object(entt::registry& registry, const object_data& objectData)
     -> entt::entity
 {
   const auto objectEntity = registry.create();
@@ -101,7 +101,7 @@ auto _restore_object(entt::registry& registry, const parsing::object_data& objec
 
 void _restore_object_layer(entt::registry& registry,
                            const entt::entity entity,
-                           const parsing::object_layer_data& objectLayerData)
+                           const object_layer_data& objectLayerData)
 {
   auto& objectLayer = registry.emplace<comp::object_layer>(entity);
   objectLayer.objects.reserve(objectLayerData.objects.size());
@@ -113,7 +113,7 @@ void _restore_object_layer(entt::registry& registry,
 }
 
 auto _restore_layer(entt::registry& registry,
-                    const parsing::layer_data& layerData,
+                    const layer_data& layerData,
                     const entt::entity parent = entt::null) -> entt::entity
 {
   const auto entity = sys::make_basic_layer(registry,  //
@@ -131,7 +131,7 @@ auto _restore_layer(entt::registry& registry,
 
   switch (layerData.type) {
     case layer_type::tile_layer: {
-      const auto& tileLayerData = std::get<parsing::tile_layer_data>(layerData.data);
+      const auto& tileLayerData = std::get<tile_layer_data>(layerData.data);
 
       auto& tileLayer = registry.emplace<comp::tile_layer>(entity);
       tileLayer.matrix = tileLayerData.tiles;
@@ -139,14 +139,14 @@ auto _restore_layer(entt::registry& registry,
       break;
     }
     case layer_type::object_layer: {
-      const auto& objectLayerData = std::get<parsing::object_layer_data>(layerData.data);
+      const auto& objectLayerData = std::get<object_layer_data>(layerData.data);
       _restore_object_layer(registry, entity, objectLayerData);
       break;
     }
     case layer_type::group_layer: {
       registry.emplace<comp::group_layer>(entity);
 
-      const auto& groupData = std::get<parsing::group_layer_data>(layerData.data);
+      const auto& groupData = std::get<group_layer_data>(layerData.data);
       for (const auto& childLayerData : groupData.children) {
         _restore_layer(registry, *childLayerData, entity);
       }
@@ -161,7 +161,7 @@ auto _restore_layer(entt::registry& registry,
   return entity;
 }
 
-void _restore_layers(Document& document, const parsing::map_data& mapData)
+void _restore_layers(Document& document, const map_data& mapData)
 {
   for (const auto& layerData : mapData.layers) {
     _restore_layer(document.registry, layerData);
@@ -178,7 +178,7 @@ void _restore_layers(Document& document, const parsing::map_data& mapData)
 void _restore_tile_animation(entt::registry& registry,
                              const entt::entity tileEntity,
                              const int32 firstGlobalId,
-                             const parsing::fancy_tile_data& tileData)
+                             const fancy_tile_data& tileData)
 {
   auto& animation = registry.emplace<comp::animation>(tileEntity);
   animation.frames.reserve(tileData.frames.size());
@@ -196,7 +196,7 @@ void _restore_tile_animation(entt::registry& registry,
 
 void _restore_fancy_tile_objects(entt::registry& registry,
                                  comp::fancy_tile& tile,
-                                 const parsing::fancy_tile_data& tileData)
+                                 const fancy_tile_data& tileData)
 {
   tile.objects.reserve(tileData.objects.size());
 
@@ -208,7 +208,7 @@ void _restore_fancy_tile_objects(entt::registry& registry,
 
 void _restore_fancy_tiles(entt::registry& registry,
                           comp::tileset_cache& cache,
-                          const parsing::tileset_data& tilesetData)
+                          const tileset_data& tilesetData)
 {
   const auto firstGlobalId = tilesetData.first_tile;
 
@@ -238,7 +238,7 @@ void _restore_fancy_tiles(entt::registry& registry,
 
 void _restore_tileset(entt::registry& registry,
                       texture_manager& textures,
-                      const parsing::tileset_data& tilesetData)
+                      const tileset_data& tilesetData)
 {
   const auto texture = textures.load(tilesetData.image_path).value();
   const auto entity = sys::make_tileset(registry,
@@ -258,7 +258,7 @@ void _restore_tileset(entt::registry& registry,
 
 void _restore_tilesets(Document& document,
                        texture_manager& textures,
-                       const parsing::map_data& mapData)
+                       const map_data& mapData)
 {
   for (const auto& tilesetData : mapData.tilesets) {
     _restore_tileset(document.registry, textures, tilesetData);
@@ -276,7 +276,7 @@ void _restore_root_attribute_context(Document& document)
   context.name = document.path.filename().string();
 }
 
-void _restore_map_context(MapInfo& map, const parsing::map_data& mapData)
+void _restore_map_context(MapInfo& map, const map_data& mapData)
 {
   map.next_layer_id = mapData.next_layer_id;
   map.next_object_id = mapData.next_object_id;
@@ -288,8 +288,7 @@ void _restore_map_context(MapInfo& map, const parsing::map_data& mapData)
   map.column_count = mapData.col_count;
 }
 
-void _restore_component_definitions(entt::registry& registry,
-                                    const parsing::map_data& mapData)
+void _restore_component_definitions(entt::registry& registry, const map_data& mapData)
 {
   for (const auto& [name, attributes] : mapData.component_definitions) {
     const auto id = sys::make_component_def(registry, name);
