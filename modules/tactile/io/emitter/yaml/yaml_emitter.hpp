@@ -1,9 +1,9 @@
 #pragma once
 
-namespace tactile {
+namespace tactile::emitter {
 
 class EmitInfo;
 
 void emit_yaml_map(const EmitInfo& info);
 
-}  // namespace tactile
+}  // namespace tactile::emitter

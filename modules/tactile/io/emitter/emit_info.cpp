@@ -22,7 +22,7 @@
 #include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
-namespace tactile {
+namespace tactile::emitter {
 namespace {
 
 template <typename T>
@@ -375,4 +375,4 @@ auto EmitInfo::destination_dir() const -> const std::filesystem::path&
   return mDestinationDir;
 }
 
-}  // namespace tactile
+}  // namespace tactile::emitter

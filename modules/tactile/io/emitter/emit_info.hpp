@@ -6,12 +6,11 @@
 
 #include <entt/entt.hpp>
 
+#include "core/attribute_value.hpp"
 #include "core/components/component.hpp"
 #include "tactile_def.hpp"
 
-namespace tactile {
-
-class attribute_value;
+namespace tactile::emitter {
 
 struct TilesetData final
 {
@@ -200,4 +199,4 @@ class EmitInfo final {
   const entt::registry* mRegistry;
 };
 
-}  // namespace tactile
+}  // namespace tactile::emitter
