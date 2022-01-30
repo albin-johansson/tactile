@@ -17,7 +17,7 @@ class map_parser final {
   [[nodiscard]] auto is_okay() const -> bool;
 
  private:
-  parsing::parse_data mData;
+  parse_data mData;
 };
 
 }  // namespace tactile::parsing
