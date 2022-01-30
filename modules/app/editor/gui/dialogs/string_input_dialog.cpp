@@ -9,7 +9,7 @@
 
 namespace tactile {
 
-AStringInputDialog::AStringInputDialog(const CStr title) : ADialog{title} {}
+AStringInputDialog::AStringInputDialog(const c_str title) : ADialog{title} {}
 
 void AStringInputDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
@@ -23,7 +23,7 @@ void AStringInputDialog::UpdateContents(const Model&, entt::dispatcher&)
                            sizeof mBuffer);
 }
 
-void AStringInputDialog::SetInputHint(const CStr hint)
+void AStringInputDialog::SetInputHint(const c_str hint)
 {
   mHint = hint;
 }

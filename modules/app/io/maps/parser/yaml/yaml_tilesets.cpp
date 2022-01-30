@@ -15,11 +15,11 @@ constexpr int32 _tileset_file_version = 1;
 [[nodiscard]] auto _parse_animation_frame(const YAML::Node& node,
                                           ir::fancy_tile_data& tile) -> parse_error
 {
-  TileID frameTile{};
+  tile_id frameTile{};
   uint32 frameDuration{};
 
   if (auto id = node["tile"]) {
-    frameTile = id.as<TileID>();
+    frameTile = id.as<tile_id>();
   }
   else {
     return parse_error::no_animation_frame_tile;
@@ -43,10 +43,10 @@ constexpr int32 _tileset_file_version = 1;
                                      const ir::map_data& map,
                                      ir::tileset_data& tileset) -> parse_error
 {
-  TileID tileId{};
+  tile_id tileId{};
 
   if (auto id = node["id"]) {
-    tileId = id.as<TileID>();
+    tileId = id.as<tile_id>();
   }
   else {
     return parse_error::no_fancy_tile_id;
@@ -107,7 +107,7 @@ constexpr int32 _tileset_file_version = 1;
 
 [[nodiscard]] auto _parse_tileset(const std::filesystem::path& source,
                                   ir::map_data& map,
-                                  const TileID firstTileId) -> parse_error
+                                  const tile_id firstTileId) -> parse_error
 {
   try {
     const auto node = YAML::LoadFile(source.string());
@@ -238,7 +238,7 @@ auto parse_tilesets(const YAML::Node& sequence,
     const auto source = std::filesystem::weakly_canonical(dir / path.as<std::string>());
 
     if (std::filesystem::exists(source)) {
-      if (const auto err = _parse_tileset(source, map, first.as<TileID>());
+      if (const auto err = _parse_tileset(source, map, first.as<tile_id>());
           err != parse_error::none) {
         return err;
       }

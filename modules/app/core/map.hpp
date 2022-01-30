@@ -15,8 +15,8 @@ struct MapInfo final
   int32 tile_width{};   ///< Logical width of all tiles.
   int32 tile_height{};  ///< Logical height of all tiles.
 
-  LayerID next_layer_id{1};    ///< The next available layer identifier.
-  ObjectID next_object_id{1};  ///< The next available object identifier.
+  layer_id next_layer_id{1};    ///< The next available layer identifier.
+  object_id next_object_id{1};  ///< The next available object identifier.
 
   int32 tile_layer_suffix{1};    ///< Incrementing tile layer suffix.
   int32 object_layer_suffix{1};  ///< Incrementing object layer suffix.

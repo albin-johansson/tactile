@@ -17,7 +17,7 @@ constexpr float _min_float = -(std::numeric_limits<float>::min)();
 
 }  // namespace
 
-auto Input(const CStr id, const attribute_value& value) -> Maybe<attribute_value>
+auto Input(const c_str id, const attribute_value& value) -> maybe<attribute_value>
 {
   switch (value.type()) {
     case attribute_type::string: {
@@ -67,7 +67,7 @@ auto Input(const CStr id, const attribute_value& value) -> Maybe<attribute_value
   return nothing;
 }
 
-auto InputWidget(const CStr id, int value) -> Maybe<int>
+auto InputWidget(const c_str id, int value) -> maybe<int>
 {
   const scoped::ID scope{id};
 
@@ -83,8 +83,8 @@ auto InputWidget(const CStr id, int value) -> Maybe<int>
   return nothing;
 }
 
-auto InputWidget(const CStr id, float value, const float min, const float max)
-    -> Maybe<float>
+auto InputWidget(const c_str id, float value, const float min, const float max)
+    -> maybe<float>
 {
   const scoped::ID scope{id};
 
@@ -108,12 +108,12 @@ auto InputWidget(const CStr id, float value, const float min, const float max)
   return nothing;
 }
 
-auto InputStringWithHint(const CStr id,
-                         const CStr hint,
+auto InputStringWithHint(const c_str id,
+                         const c_str hint,
                          const std::string& value,
-                         const CStr label,
+                         const c_str label,
                          const ImGuiInputTextFlags flags,
-                         const ImGuiInputTextCallback filter) -> Maybe<std::string>
+                         const ImGuiInputTextCallback filter) -> maybe<std::string>
 {
   const scoped::ID scope{id};
 
@@ -146,16 +146,16 @@ auto InputStringWithHint(const CStr id,
   return nothing;
 }
 
-auto InputString(const CStr id,
+auto InputString(const c_str id,
                  const std::string& value,
-                 const CStr label,
+                 const c_str label,
                  const ImGuiInputTextFlags flags,
-                 const ImGuiInputTextCallback filter) -> Maybe<std::string>
+                 const ImGuiInputTextCallback filter) -> maybe<std::string>
 {
   return InputStringWithHint(id, nullptr, value, label, flags, filter);
 }
 
-auto InputWidget(const CStr id, bool value) -> Maybe<bool>
+auto InputWidget(const c_str id, bool value) -> maybe<bool>
 {
   const scoped::ID scope{id};
 
@@ -170,7 +170,7 @@ auto InputWidget(const CStr id, bool value) -> Maybe<bool>
   return nothing;
 }
 
-auto InputWidget(const CStr id, const object_t value) -> Maybe<object_t>
+auto InputWidget(const c_str id, const object_t value) -> maybe<object_t>
 {
   const scoped::ID scope{id};
 
@@ -184,7 +184,7 @@ auto InputWidget(const CStr id, const object_t value) -> Maybe<object_t>
   return nothing;
 }
 
-auto InputWidget(const CStr id, const cen::color value) -> Maybe<cen::color>
+auto InputWidget(const c_str id, const cen::color value) -> maybe<cen::color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
@@ -203,8 +203,8 @@ auto InputWidget(const CStr id, const cen::color value) -> Maybe<cen::color>
   return nothing;
 }
 
-auto InputFile(const CStr id, const std::filesystem::path& value)
-    -> Maybe<std::filesystem::path>
+auto InputFile(const c_str id, const std::filesystem::path& value)
+    -> maybe<std::filesystem::path>
 {
   const scoped::ID scope{id};
 

@@ -36,8 +36,8 @@ constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoS
 }
 
 void ShowComponentPopupContent(entt::dispatcher& dispatcher,
-                               const ContextID contextId,
-                               const ComponentID componentId)
+                               const context_id contextId,
+                               const component_id componentId)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
     dispatcher.enqueue<ResetComponentValuesEvent>(contextId, componentId);
@@ -57,8 +57,8 @@ void ShowComponentPopupContent(entt::dispatcher& dispatcher,
 }
 
 void ShowComponent(entt::dispatcher& dispatcher,
-                   const ContextID contextId,
-                   const CStr name,
+                   const context_id contextId,
+                   const c_str name,
                    const comp::component& component)
 {
   const scoped::ID componentScope{name};
@@ -104,7 +104,7 @@ void ShowComponent(entt::dispatcher& dispatcher,
 
 void ShowAddComponentButtonPopupContent(const entt::registry& registry,
                                         entt::dispatcher& dispatcher,
-                                        const ContextID contextId)
+                                        const context_id contextId)
 {
   const auto view = registry.view<comp::component_def>();
   if (view.empty()) {

@@ -23,16 +23,16 @@ namespace tactile::sys {
 
 struct remove_component_def_result final
 {
-  ComponentID id{};                                     ///< Previous component ID.
-  std::string name;                                     ///< Previous component name.
-  component_attribute_map attributes;                   ///< Removed component attributes.
-  std::map<ContextID, component_attribute_map> values;  ///< Removed context attributes.
+  component_id id{};                   ///< Previous component ID.
+  std::string name;                    ///< Previous component name.
+  component_attribute_map attributes;  ///< Removed component attributes.
+  std::map<context_id, component_attribute_map> values;  ///< Removed context attributes.
 };
 
 struct remove_component_result final
 {
-  ContextID context_id{};          ///< Context from which component was removed.
-  ComponentID component_id{};      ///< Previous component ID.
+  context_id context_id{};         ///< Context from which component was removed.
+  component_id component_id{};     ///< Previous component ID.
   component_attribute_map values;  ///< Removed context attributes.
 };
 
@@ -54,7 +54,7 @@ struct reset_component_result final
  *
  * \return the ID associated with the new component definition.
  */
-auto make_component_def(entt::registry& registry, std::string name) -> ComponentID;
+auto make_component_def(entt::registry& registry, std::string name) -> component_id;
 
 /**
  * \brief Creates a new component definition with a specific identifier.
@@ -70,7 +70,7 @@ auto make_component_def(entt::registry& registry, std::string name) -> Component
  * \param id the requested component identifier.
  * \param name the name of the component.
  */
-void make_component_def(entt::registry& registry, ComponentID id, std::string name);
+void make_component_def(entt::registry& registry, component_id id, std::string name);
 
 /**
  * \brief Deletes a component definition, removing it from all contexts.
@@ -84,7 +84,7 @@ void make_component_def(entt::registry& registry, ComponentID id, std::string na
  *
  * \see restore_component_def()
  */
-auto remove_component_def(entt::registry& registry, ComponentID id)
+auto remove_component_def(entt::registry& registry, component_id id)
     -> remove_component_def_result;
 
 /**
@@ -110,7 +110,7 @@ void restore_component_def(entt::registry& registry,
  * \param id the ID of the component that will be renamed.
  * \param name the new component name.
  */
-void rename_component_def(entt::registry& registry, ComponentID id, std::string name);
+void rename_component_def(entt::registry& registry, component_id id, std::string name);
 
 /**
  * \brief Indicates whether a component ID is valid, i.e. if it's currently in use.
@@ -120,7 +120,7 @@ void rename_component_def(entt::registry& registry, ComponentID id, std::string 
  *
  * \return `true` if the component ID is valid; `false` otherwise.
  */
-[[nodiscard]] auto is_valid_component(const entt::registry& registry, ComponentID id)
+[[nodiscard]] auto is_valid_component(const entt::registry& registry, component_id id)
     -> bool;
 
 /**
@@ -135,21 +135,21 @@ void rename_component_def(entt::registry& registry, ComponentID id, std::string 
                                            std::string_view name) -> bool;
 
 [[nodiscard]] auto get_first_available_component_def(const entt::registry& registry)
-    -> Maybe<ComponentID>;
+    -> maybe<component_id>;
 
-[[nodiscard]] auto find_component_def(const entt::registry& registry, ComponentID id)
+[[nodiscard]] auto find_component_def(const entt::registry& registry, component_id id)
     -> entt::entity;
 
 [[nodiscard]] auto find_component_def(const entt::registry& registry,
                                       std::string_view name) -> entt::entity;
 
-[[nodiscard]] auto get_component_def(entt::registry& registry, ComponentID id)
+[[nodiscard]] auto get_component_def(entt::registry& registry, component_id id)
     -> std::pair<entt::entity, comp::component_def&>;
 
-[[nodiscard]] auto get_component_def(const entt::registry& registry, ComponentID id)
+[[nodiscard]] auto get_component_def(const entt::registry& registry, component_id id)
     -> std::pair<entt::entity, const comp::component_def&>;
 
-[[nodiscard]] auto get_component_def_name(const entt::registry& registry, ComponentID id)
+[[nodiscard]] auto get_component_def_name(const entt::registry& registry, component_id id)
     -> const std::string&;
 
 /// \} End of component definition functions
@@ -172,11 +172,11 @@ void rename_component_def(entt::registry& registry, ComponentID id, std::string 
  * \param name the name of the attribute.
  */
 void make_component_attribute(entt::registry& registry,
-                              ComponentID id,
+                              component_id id,
                               const std::string& name);
 
 void make_component_attribute(entt::registry& registry,
-                              ComponentID id,
+                              component_id id,
                               const std::string& name,
                               const attribute_value& value);
 
@@ -194,7 +194,7 @@ void make_component_attribute(entt::registry& registry,
  * \param name the name of the attribute that will be removed.
  */
 void remove_component_attribute(entt::registry& registry,
-                                ComponentID id,
+                                component_id id,
                                 std::string_view name);
 
 /**
@@ -210,12 +210,12 @@ void remove_component_attribute(entt::registry& registry,
  * \param updated the new name of the attribute.
  */
 void rename_component_attribute(entt::registry& registry,
-                                ComponentID id,
+                                component_id id,
                                 const std::string& current,
                                 std::string updated);
 
 auto duplicate_component_attribute(entt::registry& registry,
-                                   ComponentID id,
+                                   component_id id,
                                    std::string_view attribute) -> std::string;
 
 /**
@@ -237,7 +237,7 @@ auto duplicate_component_attribute(entt::registry& registry,
  * \see set_component_attribute_value()
  */
 void set_component_attribute_type(entt::registry& registry,
-                                  ComponentID id,
+                                  component_id id,
                                   std::string_view attribute,
                                   attribute_type type);
 
@@ -258,26 +258,26 @@ void set_component_attribute_type(entt::registry& registry,
  * \see set_component_attribute_type()
  */
 void set_component_attribute_value(entt::registry& registry,
-                                   ComponentID id,
+                                   component_id id,
                                    std::string_view attribute,
                                    attribute_value value);
 
 [[nodiscard]] auto get_component_attribute_type(const entt::registry& registry,
-                                                ComponentID id,
+                                                component_id id,
                                                 std::string_view attribute)
     -> attribute_type;
 
 [[nodiscard]] auto get_component_attribute_value(const entt::registry& registry,
-                                                 ComponentID id,
+                                                 component_id id,
                                                  std::string_view attribute)
     -> const attribute_value&;
 
 [[nodiscard]] auto is_component_attribute_name_taken(const entt::registry& registry,
-                                                     ComponentID id,
+                                                     component_id id,
                                                      std::string_view name) -> bool;
 
 [[nodiscard]] auto get_component_attribute_count(const entt::registry& registry,
-                                                 ComponentID id) -> usize;
+                                                 component_id id) -> usize;
 
 /// \} End of component attribute functions
 
@@ -299,8 +299,9 @@ void set_component_attribute_value(entt::registry& registry,
  *
  * \see has_component()
  */
-auto add_component(entt::registry& registry, ContextID contextId, ComponentID componentId)
-    -> comp::component&;
+auto add_component(entt::registry& registry,
+                   context_id contextId,
+                   component_id componentId) -> comp::component&;
 
 /**
  * \brief Removes a component from a context.
@@ -318,8 +319,8 @@ auto add_component(entt::registry& registry, ContextID contextId, ComponentID co
  * \see has_component()
  */
 auto remove_component(entt::registry& registry,
-                      ContextID contextId,
-                      ComponentID componentId) -> remove_component_result;
+                      context_id contextId,
+                      component_id componentId) -> remove_component_result;
 
 /**
  * \brief Restores a previously removed component to a context.
@@ -330,8 +331,8 @@ auto remove_component(entt::registry& registry,
 void restore_component(entt::registry& registry, remove_component_result snapshot);
 
 void update_component(entt::registry& registry,
-                      ContextID contextId,
-                      ComponentID componentId,
+                      context_id contextId,
+                      component_id componentId,
                       std::string_view attribute,
                       attribute_value value);
 
@@ -348,8 +349,8 @@ void update_component(entt::registry& registry,
  * \return a snapshot of the previous values of the reset attributes.
  */
 auto reset_component(entt::registry& registry,
-                     ContextID contextId,
-                     ComponentID componentId) -> reset_component_result;
+                     context_id contextId,
+                     component_id componentId) -> reset_component_result;
 
 /**
  * \brief Indicates whether a context holds a specific component.
@@ -361,8 +362,8 @@ auto reset_component(entt::registry& registry,
  * \return `true` if the context has the component; `false` otherwise.
  */
 [[nodiscard]] auto has_component(const entt::registry& registry,
-                                 ContextID contextId,
-                                 ComponentID componentId) -> bool;
+                                 context_id contextId,
+                                 component_id componentId) -> bool;
 
 /**
  * \brief Returns a component from a context.
@@ -376,17 +377,17 @@ auto reset_component(entt::registry& registry,
  * \throws TactileError if there is no match.
  */
 [[nodiscard]] auto get_component(const entt::registry& registry,
-                                 ContextID contextId,
-                                 ComponentID componentId) -> const comp::component&;
+                                 context_id contextId,
+                                 component_id componentId) -> const comp::component&;
 
 [[nodiscard]] auto get_component_attribute(const entt::registry& registry,
-                                           ContextID contextId,
-                                           ComponentID componentId,
+                                           context_id contextId,
+                                           component_id componentId,
                                            std::string_view attribute)
     -> const attribute_value&;
 
 [[nodiscard]] auto get_component_count(const entt::registry& registry,
-                                       ContextID contextId) -> usize;
+                                       context_id contextId) -> usize;
 
 /// \} End of component functions
 

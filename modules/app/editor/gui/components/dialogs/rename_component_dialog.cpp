@@ -11,7 +11,7 @@ RenameComponentDialog::RenameComponentDialog() : AComponentNameDialog{"Rename Co
   SetAcceptButtonLabel("Rename");
 }
 
-void RenameComponentDialog::Open(std::string previousName, const ComponentID id)
+void RenameComponentDialog::Open(std::string previousName, const component_id id)
 {
   mComponentId = id;
   Show(std::move(previousName));

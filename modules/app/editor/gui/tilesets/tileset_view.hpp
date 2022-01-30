@@ -12,13 +12,13 @@ class TilesetView final {
               entt::entity entity,
               entt::dispatcher& dispatcher);
 
-  [[nodiscard]] auto GetWidth() const -> Maybe<float>;
+  [[nodiscard]] auto GetWidth() const -> maybe<float>;
 
-  [[nodiscard]] auto GetHeight() const -> Maybe<float>;
+  [[nodiscard]] auto GetHeight() const -> maybe<float>;
 
  private:
-  Maybe<float> mWidth;
-  Maybe<float> mHeight;
+  maybe<float> mWidth;
+  maybe<float> mHeight;
 };
 
 }  // namespace tactile

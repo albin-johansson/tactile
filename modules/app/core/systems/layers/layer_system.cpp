@@ -121,7 +121,7 @@ void _restore_layer_index(entt::registry& registry,
 }  // namespace
 
 auto make_basic_layer(entt::registry& registry,
-                      const LayerID id,
+                      const layer_id id,
                       const layer_type type,
                       std::string name,
                       const entt::entity parent) -> entt::entity
@@ -172,7 +172,7 @@ auto make_tile_layer(entt::registry& registry) -> entt::entity
   ++map.tile_layer_suffix;
 
   auto& tileLayer = registry.emplace<comp::tile_layer>(entity);
-  tileLayer.matrix = MakeTileMatrix(map.row_count, map.column_count);
+  tileLayer.matrix = make_tile_matrix(map.row_count, map.column_count);
 
   return entity;
 }
@@ -365,7 +365,7 @@ auto duplicate_layer(entt::registry& registry,
   return copy;
 }
 
-auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entity
+auto find_layer(const entt::registry& registry, const layer_id id) -> entt::entity
 {
   for (auto&& [entity, layer] : registry.view<comp::layer>().each()) {
     if (layer.id == id) {
@@ -376,9 +376,9 @@ auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entit
   return entt::null;
 }
 
-auto get_layer_entity(const entt::registry& registry, const LayerID id) -> entt::entity
+auto get_layer_entity(const entt::registry& registry, const layer_id id) -> entt::entity
 {
-  const auto entity = sys::find_layer(registry, id);
+  const auto entity = find_layer(registry, id);
   if (entity != entt::null && registry.all_of<comp::layer>(entity)) {
     return entity;
   }
@@ -387,7 +387,7 @@ auto get_layer_entity(const entt::registry& registry, const LayerID id) -> entt:
   }
 }
 
-auto get_layer(entt::registry& registry, const LayerID id)
+auto get_layer(entt::registry& registry, const layer_id id)
     -> std::pair<entt::entity, comp::layer&>
 {
   const auto entity = find_layer(registry, id);
@@ -399,7 +399,7 @@ auto get_layer(entt::registry& registry, const LayerID id)
   }
 }
 
-auto get_layer(const entt::registry& registry, const LayerID id)
+auto get_layer(const entt::registry& registry, const layer_id id)
     -> std::pair<entt::entity, const comp::layer&>
 {
   const auto entity = find_layer(registry, id);
@@ -439,7 +439,7 @@ auto is_object_layer_active(const entt::registry& registry) -> bool
   }
 }
 
-auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>
+auto get_active_layer_id(const entt::registry& registry) -> maybe<layer_id>
 {
   const auto& active = registry.ctx<comp::active_layer>();
   if (active.entity != entt::null) {

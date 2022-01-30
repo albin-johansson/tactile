@@ -2,6 +2,7 @@
 
 #include <string>  // string
 
+#include "core/attribute_value.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 #include "tactile_def.hpp"
 
@@ -24,8 +25,8 @@ class ChangePropertyTypeDialog final : public ADialog {
 
  private:
   attribute_type mCurrentType{attribute_type::string};
-  Maybe<std::string> mPropertyName;
-  Maybe<attribute_type> mPreviousType;
+  maybe<std::string> mPropertyName;
+  maybe<attribute_type> mPreviousType;
 };
 
 }  // namespace tactile

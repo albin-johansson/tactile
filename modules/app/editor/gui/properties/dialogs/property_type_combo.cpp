@@ -28,7 +28,7 @@ constexpr std::array gItems{std::make_pair("string", attribute_type::string),
   const auto it = std::find_if(
       gItems.begin(),
       gItems.end(),
-      [=](const std::pair<CStr, attribute_type>& pair) { return type == pair.second; });
+      [=](const std::pair<c_str, attribute_type>& pair) { return type == pair.second; });
 
   if (it != gItems.end()) {
     return static_cast<usize>(it - gItems.begin());
@@ -38,7 +38,7 @@ constexpr std::array gItems{std::make_pair("string", attribute_type::string),
   }
 }
 
-void PropertyTypeComboImpl(attribute_type& out, Maybe<attribute_type> previousType)
+void PropertyTypeComboImpl(attribute_type& out, maybe<attribute_type> previousType)
 {
   const auto currentIndex = GetIndexFromType(out);
   auto&& [currentName, currentType] = gItems.at(currentIndex);

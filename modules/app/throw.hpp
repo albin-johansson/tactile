@@ -1,5 +1,7 @@
 #pragma once
 
+#include <exception>  // exception
+
 #include "build.hpp"
 
 #if TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
@@ -15,6 +17,18 @@
 #endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
 
 namespace tactile {
+
+class TactileError : public std::exception {
+ public:
+  TactileError() noexcept = default;
+
+  explicit TactileError(const char* what) : mWhat{what ? what : "N/A"} {}
+
+  [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat; }
+
+ private:
+  const char* mWhat{"N/A"};
+};
 
 using TraceInfo = boost::error_info<struct ErrorInfoTag, boost::stacktrace::stacktrace>;
 

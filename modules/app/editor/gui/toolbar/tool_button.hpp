@@ -4,8 +4,8 @@
 
 namespace tactile {
 
-auto ToolButton(CStr label,
-                CStr tooltip,
+auto ToolButton(c_str label,
+                c_str tooltip,
                 bool selected,
                 bool enabled = true,
                 float width = 0,

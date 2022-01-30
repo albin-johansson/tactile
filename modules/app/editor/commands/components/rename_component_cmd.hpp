@@ -11,7 +11,7 @@ namespace tactile {
 
 class RenameComponentCmd final : public ACommand {
  public:
-  RenameComponentCmd(RegistryRef registry, ComponentID id, std::string name);
+  RenameComponentCmd(RegistryRef registry, component_id id, std::string name);
 
   void Undo() override;
 
@@ -24,9 +24,9 @@ class RenameComponentCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  ComponentID mComponentId{};
+  component_id mComponentId{};
   std::string mUpdatedName;
-  Maybe<std::string> mPreviousName;
+  maybe<std::string> mPreviousName;
 };
 
 }  // namespace tactile

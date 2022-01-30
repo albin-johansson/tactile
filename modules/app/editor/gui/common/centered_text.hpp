@@ -11,6 +11,6 @@ namespace tactile {
  *
  * \param text the text that will be displayed.
  */
-void CenteredText(NotNull<CStr> text);
+void CenteredText(c_str text);
 
 }  // namespace tactile

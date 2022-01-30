@@ -2,6 +2,7 @@
 
 #include <array>  // array
 
+#include "core/attribute_value.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 #include "tactile_def.hpp"
 

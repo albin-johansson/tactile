@@ -45,7 +45,7 @@ void update_tilesets(entt::registry& registry);
  * \return the created tileset entity.
  */
 auto make_tileset(entt::registry& registry,
-                  TileID firstId,
+                  tile_id firstId,
                   const comp::texture& texture,
                   int32 tileWidth,
                   int32 tileHeight) -> entt::entity;
@@ -90,7 +90,7 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
  *
  * \param id the ID associated with the tileset that will be selected.
  */
-void select_tileset(entt::registry& registry, TilesetID id);
+void select_tileset(entt::registry& registry, tileset_id id);
 
 /**
  * \brief Removes the tileset associated with the specified ID.
@@ -104,7 +104,7 @@ void select_tileset(entt::registry& registry, TilesetID id);
  *
  * \param id the ID associated with the tileset that will be removed.
  */
-void remove_tileset(entt::registry& registry, TilesetID id);
+void remove_tileset(entt::registry& registry, tileset_id id);
 
 /**
  * \brief Sets the region of the active tileset that is selected.
@@ -124,15 +124,15 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *
  * \return the associated tileset entity; a null entity is returned if there is none.
  */
-[[nodiscard]] auto find_tileset(const entt::registry& registry, TilesetID id)
+[[nodiscard]] auto find_tileset(const entt::registry& registry, tileset_id id)
     -> entt::entity;
 
-[[nodiscard]] auto get_tileset_entity(const entt::registry& registry, TilesetID id)
+[[nodiscard]] auto get_tileset_entity(const entt::registry& registry, tileset_id id)
     -> entt::entity;
 
-[[nodiscard]] auto find_tile(const entt::registry& registry, TileID id) -> entt::entity;
+[[nodiscard]] auto find_tile(const entt::registry& registry, tile_id id) -> entt::entity;
 
-[[nodiscard]] auto get_tile_entity(const entt::registry& registry, TileID id)
+[[nodiscard]] auto get_tile_entity(const entt::registry& registry, tile_id id)
     -> entt::entity;
 
 /**
@@ -143,7 +143,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *
  * \return the found tileset entity; a null entity is returned otherwise.
  */
-[[nodiscard]] auto find_tileset_with_tile(const entt::registry& registry, TileID id)
+[[nodiscard]] auto find_tileset_with_tile(const entt::registry& registry, tile_id id)
     -> entt::entity;
 
 /**
@@ -195,7 +195,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_tile_to_render(const entt::registry& registry,
                                       entt::entity tilesetEntity,
-                                      TileID id) -> TileID;
+                                      tile_id id) -> tile_id;
 
 /**
  * \brief Returns the region out of the tileset texture that should be rendered when
@@ -214,7 +214,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_source_rect(const entt::registry& registry,
                                    entt::entity tilesetEntity,
-                                   TileID id) -> const cen::irect&;
+                                   tile_id id) -> const cen::irect&;
 
 /**
  * \brief Returns the identifier of a tile at a certain position in a tileset.
@@ -227,7 +227,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_tile_from_tileset(const entt::registry& registry,
                                          entt::entity entity,
-                                         const tile_position& position) -> TileID;
+                                         const tile_position& position) -> tile_id;
 
 /**
  * \brief Converts a global tile identifier to its local counterpart.
@@ -240,8 +240,8 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *
  * \return the corresponding local tile identifier; `nothing` if something went wrong.
  */
-[[nodiscard]] auto convert_to_local(const entt::registry& registry, TileID global)
-    -> Maybe<TileID>;
+[[nodiscard]] auto convert_to_local(const entt::registry& registry, tile_id global)
+    -> maybe<tile_id>;
 
 /// \} End of tileset system
 

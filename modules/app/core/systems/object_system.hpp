@@ -22,7 +22,7 @@ namespace tactile::sys {
  *
  * \return the found entity; a null entity is returned if no object is found.
  */
-[[nodiscard]] auto find_object(const entt::registry& registry, ObjectID id)
+[[nodiscard]] auto find_object(const entt::registry& registry, object_id id)
     -> entt::entity;
 
 /**
@@ -35,7 +35,7 @@ namespace tactile::sys {
  *
  * \throws TactileError if the object identifier is invalid.
  */
-[[nodiscard]] auto get_object(const entt::registry& registry, ObjectID id)
+[[nodiscard]] auto get_object(const entt::registry& registry, object_id id)
     -> entt::entity;
 
 /// \} End of group object-system

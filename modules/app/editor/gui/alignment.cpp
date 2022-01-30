@@ -46,7 +46,7 @@ auto AlignNextItemToTheRight(const float width) -> float
   return x;
 }
 
-auto AlignNextItemToTheRight(const CStr text) -> float
+auto AlignNextItemToTheRight(const c_str text) -> float
 {
   return AlignNextItemToTheRight(GetStandardComponentWidth(text));
 }

@@ -12,7 +12,7 @@ RenameLayerDialog::RenameLayerDialog() : AStringInputDialog{"Rename Layer"}
   SetAcceptButtonLabel("Rename");
 }
 
-void RenameLayerDialog::Show(const LayerID id, std::string oldName)
+void RenameLayerDialog::Show(const layer_id id, std::string oldName)
 {
   mTargetId = id;
   mOldName = std::move(oldName);

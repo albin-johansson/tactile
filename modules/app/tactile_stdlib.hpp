@@ -1,5 +1,4 @@
-#ifndef TACTILE_TACTILE_STDLIB_HPP_
-#define TACTILE_TACTILE_STDLIB_HPP_
+#pragma once
 
 #include <algorithm>     // replace, min
 #include <charconv>      // from_chars
@@ -22,18 +21,6 @@ using Integral = std::enable_if_t<std::is_integral_v<T>, int>;
 template <typename T>
 using Floating = std::enable_if_t<std::is_floating_point_v<T>, int>;
 
-class TactileError : public std::exception {
- public:
-  TactileError() noexcept = default;
-
-  explicit TactileError(const CStr what) : mWhat{what ? what : "N/A"} {}
-
-  [[nodiscard]] auto what() const noexcept -> CStr override { return mWhat; }
-
- private:
-  CStr mWhat{"N/A"};
-};
-
 /**
  * \brief Converts a matrix index to the corresponding row/column pair.
  *
@@ -53,38 +40,6 @@ template <typename T, Integral<T> = 0>
 }
 
 /**
- * \brief Creates a row of tiles.
- *
- * \param nCols the number of columns.
- *
- * \return a row filled with empty tile identifiers.
- */
-[[nodiscard]] inline auto MakeTileRow(const usize nCols) -> TileRow
-{
-  TileRow row;
-  row.reserve(nCols);
-  row.assign(nCols, 0);
-  return row;
-}
-
-/**
- * \brief Creates a tile matrix with the specified dimensions.
- *
- * \param nRows the number or rows.
- * \param nCols the number of columns.
- *
- * \return a matrix with empty tile identifiers.
- */
-[[nodiscard]] inline auto MakeTileMatrix(const usize nRows, const usize nCols)
-    -> TileMatrix
-{
-  TileMatrix tiles;
-  tiles.reserve(nRows);
-  tiles.assign(nRows, MakeTileRow(nCols));
-  return tiles;
-}
-
-/**
  * \brief Converts a string into an integer.
  *
  * \details This function is particularly useful for converting substrings into integers.
@@ -95,11 +50,11 @@ template <typename T, Integral<T> = 0>
  *
  * \return an integer using the specified base; `nothing` if something goes wrong.
  *
- * \see `FromString(CStr, int)`
+ * \see `FromString(c_str, int)`
  */
 template <typename T, Integral<T> = 0>
-[[nodiscard]] auto FromString(const CStr str, const usize length, const int base)
-    -> Maybe<T>
+[[nodiscard]] auto FromString(const c_str str, const usize length, const int base)
+    -> maybe<T>
 {
   if (!str) {
     return nothing;
@@ -127,10 +82,10 @@ template <typename T, Integral<T> = 0>
  *
  * \return an integer using the specified base; `nothing` if something goes wrong.
  *
- * \see `FromString(CStr, usize, int)`
+ * \see `FromString(c_str, usize, int)`
  */
 template <typename T, Integral<T> = 0>
-[[nodiscard]] auto FromString(const CStr str, const int base = 10) -> Maybe<T>
+[[nodiscard]] auto FromString(const c_str str, const int base = 10) -> maybe<T>
 {
   if (!str) {
     return nothing;
@@ -148,7 +103,7 @@ template <typename T, Integral<T> = 0>
  * \return the corresponding floating-point value; `nothing` if something goes wrong.
  */
 template <typename T, Floating<T> = 0>
-[[nodiscard]] auto FromString(const CStr str) -> Maybe<T>
+[[nodiscard]] auto FromString(const c_str str) -> maybe<T>
 {
   if (!str) {
     return nothing;
@@ -196,5 +151,3 @@ template <typename T, Floating<T> = 0>
 }
 
 }  // namespace tactile
-
-#endif  // TACTILE_TACTILE_STDLIB_HPP_

@@ -14,7 +14,7 @@ namespace tactile {
 class MoveObjectCmd final : public AObjectCmd {
  public:
   MoveObjectCmd(RegistryRef registry,
-                ObjectID id,
+                object_id id,
                 float oldX,
                 float oldY,
                 float newX,

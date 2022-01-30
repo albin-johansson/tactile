@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-ADialog::ADialog(const CStr title) : mTitle{title} {}
+ADialog::ADialog(const c_str title) : mTitle{title} {}
 
 void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -58,17 +58,17 @@ void ADialog::Show()
   mShow = true;
 }
 
-void ADialog::SetAcceptButtonLabel(const CStr label)
+void ADialog::SetAcceptButtonLabel(const c_str label)
 {
   mAcceptButtonLabel = label;
 }
 
-void ADialog::SetApplyButtonLabel(const CStr label)
+void ADialog::SetApplyButtonLabel(const c_str label)
 {
   mApplyButtonLabel = label;
 }
 
-void ADialog::SetCloseButtonLabel(const CStr label)
+void ADialog::SetCloseButtonLabel(const c_str label)
 {
   mCloseButtonLabel = label;
 }

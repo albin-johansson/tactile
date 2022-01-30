@@ -11,6 +11,6 @@ namespace tactile {
  *
  * \param text the tooltip text.
  */
-void HelpMarker(NotNull<CStr> text);
+void HelpMarker(c_str text);
 
 }  // namespace tactile

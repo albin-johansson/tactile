@@ -5,7 +5,7 @@
 
 namespace tactile {
 
-MoveLayerUpCmd::MoveLayerUpCmd(RegistryRef registry, const LayerID id)
+MoveLayerUpCmd::MoveLayerUpCmd(RegistryRef registry, const layer_id id)
     : ACommand{"Move Layer Up"}
     , mRegistry{registry}
     , mLayerId{id}

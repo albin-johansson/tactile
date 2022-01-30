@@ -23,12 +23,12 @@ struct AddTilesetEvent final
 
 struct RemoveTilesetEvent final
 {
-  TilesetID id;
+  tileset_id id;
 };
 
 struct SelectTilesetEvent final
 {
-  TilesetID id;
+  tileset_id id;
 };
 
 struct SetTilesetSelectionEvent final
@@ -38,13 +38,13 @@ struct SetTilesetSelectionEvent final
 
 struct [[deprecated]] InspectTilesetEvent final
 {
-  TilesetID id;
+  tileset_id id;
 };
 
 /// \brief Emitted when the name of a tileset should be changed.
 struct SetTilesetNameEvent final
 {
-  TilesetID id{};    ///< ID of target tileset.
+  tileset_id id{};   ///< ID of target tileset.
   std::string name;  ///< The new tileset name.
 };
 

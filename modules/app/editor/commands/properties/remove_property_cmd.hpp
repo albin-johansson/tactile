@@ -26,9 +26,9 @@ class RemovePropertyCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  ContextID mContextId;
+  context_id mContextId;
   std::string mName;
-  Maybe<attribute_value> mPreviousValue;
+  maybe<attribute_value> mPreviousValue;
 };
 
 }  // namespace tactile

@@ -88,7 +88,7 @@ void RestorePropertyContext(entt::registry& registry,
  * \return `true` if there is a attribute context associated with the ID; `false`
  * otherwise.
  */
-[[nodiscard]] auto HasContext(const entt::registry& registry, ContextID id) -> bool;
+[[nodiscard]] auto HasContext(const entt::registry& registry, context_id id) -> bool;
 
 /**
  * \brief Returns the attribute context associated with a context ID.
@@ -100,11 +100,11 @@ void RestorePropertyContext(entt::registry& registry,
  *
  * \throws TactileError if there is no matching attribute context.
  */
-[[nodiscard]] auto GetContext(entt::registry& registry, ContextID id)
+[[nodiscard]] auto GetContext(entt::registry& registry, context_id id)
     -> comp::attribute_context&;
 
 /// \copydoc GetContext()
-[[nodiscard]] auto GetContext(const entt::registry& registry, ContextID id)
+[[nodiscard]] auto GetContext(const entt::registry& registry, context_id id)
     -> const comp::attribute_context&;
 
 /**
@@ -114,7 +114,7 @@ void RestorePropertyContext(entt::registry& registry,
  *
  * \return the current context identifier.
  */
-[[nodiscard]] auto GetCurrentContextId(const entt::registry& registry) -> ContextID;
+[[nodiscard]] auto GetCurrentContextId(const entt::registry& registry) -> context_id;
 
 /**
  * \brief Adds a property to a attribute context.
@@ -267,14 +267,14 @@ void ResetNextContextId() noexcept;
  *
  * \return the previous next context ID.
  */
-[[nodiscard]] auto GetAndUpdateNextContextId() noexcept -> ContextID;
+[[nodiscard]] auto GetAndUpdateNextContextId() noexcept -> context_id;
 
 /**
  * \brief Returns the next available context ID.
  *
  * \return a valid context ID.
  */
-[[nodiscard]] auto GetNextContextId() noexcept -> ContextID;
+[[nodiscard]] auto GetNextContextId() noexcept -> context_id;
 
 /// \} End of property system
 

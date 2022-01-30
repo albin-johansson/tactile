@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-auto Checkbox(const NotNull<CStr> label, NotNull<bool*> value, const CStr tooltip) -> bool
+auto Checkbox(const c_str label, bool* value, const c_str tooltip) -> bool
 {
   TACTILE_ASSERT(label);
   TACTILE_ASSERT(value);

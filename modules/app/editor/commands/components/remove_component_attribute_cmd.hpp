@@ -11,7 +11,7 @@ namespace tactile {
 class RemoveComponentAttributeCmd final : public ACommand {
  public:
   RemoveComponentAttributeCmd(RegistryRef registry,
-                              ComponentID componentId,
+                              component_id componentId,
                               std::string attribute);
 
   void Undo() override;
@@ -25,9 +25,9 @@ class RemoveComponentAttributeCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  ComponentID mComponentId{};
+  component_id mComponentId{};
   std::string mAttributeName;
-  Maybe<attribute_value> mPreviousDefault;
+  maybe<attribute_value> mPreviousDefault;
 };
 
 }  // namespace tactile

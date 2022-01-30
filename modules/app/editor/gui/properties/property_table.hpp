@@ -16,8 +16,8 @@ class PropertyTable final {
 
  private:
   PropertyItemContextMenuState mContextState;
-  Maybe<std::string> mRenameTarget;
-  Maybe<std::string> mChangeTypeTarget;
+  maybe<std::string> mRenameTarget;
+  maybe<std::string> mChangeTypeTarget;
 
   void ShowCustomProperties(const entt::registry& registry,
                             entt::dispatcher& dispatcher,

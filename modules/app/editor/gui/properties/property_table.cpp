@@ -23,7 +23,7 @@
 namespace tactile {
 namespace {
 
-void PrepareTableRow(const CStr label)
+void PrepareTableRow(const c_str label)
 {
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
@@ -34,7 +34,7 @@ void PrepareTableRow(const CStr label)
 
 [[nodiscard]] auto NativeNameRow(const std::string& name,
                                  const bool validateAsFileName = false)
-    -> Maybe<std::string>
+    -> maybe<std::string>
 {
   PrepareTableRow("Name");
 
@@ -66,7 +66,7 @@ void PrepareTableRow(const CStr label)
   }
 }
 
-[[nodiscard]] auto NativeOpacityRow(const float opacity) -> Maybe<float>
+[[nodiscard]] auto NativeOpacityRow(const float opacity) -> maybe<float>
 {
   PrepareTableRow("Opacity");
 
@@ -74,7 +74,7 @@ void PrepareTableRow(const CStr label)
   return InputWidget("##NativeOpacityRow", opacity, 0.0f, 1.0f);
 }
 
-[[nodiscard]] auto NativeVisibilityRow(const bool visible) -> Maybe<bool>
+[[nodiscard]] auto NativeVisibilityRow(const bool visible) -> maybe<bool>
 {
   PrepareTableRow("Visible");
 
@@ -82,7 +82,7 @@ void PrepareTableRow(const CStr label)
   return InputWidget("##NativeVisibilityRow", visible);
 }
 
-void NativeReadOnlyRow(const CStr label, const CStr value)
+void NativeReadOnlyRow(const c_str label, const c_str value)
 {
   PrepareTableRow(label);
 
@@ -90,7 +90,7 @@ void NativeReadOnlyRow(const CStr label, const CStr value)
   ImGui::TextUnformatted(value);
 }
 
-void NativeReadOnlyRow(const CStr label, const float value)
+void NativeReadOnlyRow(const c_str label, const float value)
 {
   PrepareTableRow(label);
 
@@ -98,7 +98,7 @@ void NativeReadOnlyRow(const CStr label, const float value)
   ImGui::Text("%.2f", value);
 }
 
-void NativeReadOnlyRow(const CStr label, const int32 value)
+void NativeReadOnlyRow(const c_str label, const int32 value)
 {
   PrepareTableRow(label);
 
@@ -106,7 +106,7 @@ void NativeReadOnlyRow(const CStr label, const int32 value)
   ImGui::Text("%d", value);
 }
 
-void NativeReadOnlyRow(const CStr label, const usize value)
+void NativeReadOnlyRow(const c_str label, const usize value)
 {
   PrepareTableRow(label);
 

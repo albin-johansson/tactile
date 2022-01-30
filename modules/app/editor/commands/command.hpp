@@ -11,7 +11,7 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-using RegistryRef = Ref<entt::registry>;
+using RegistryRef = ref<entt::registry>;
 
 class ACommand {
  public:

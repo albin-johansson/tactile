@@ -16,7 +16,7 @@ namespace tactile::comp {
  */
 struct fancy_tile final
 {
-  TileID id{};                        ///< The ID of the associated tile.
+  tile_id id{};                       ///< The ID of the associated tile.
   std::vector<entt::entity> objects;  ///< Associated object entities.
 };
 

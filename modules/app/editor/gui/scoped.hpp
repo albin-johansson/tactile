@@ -12,7 +12,7 @@ struct ID final
 {
   explicit ID(const void* ptr) { ImGui::PushID(ptr); }
 
-  explicit ID(const CStr str) { ImGui::PushID(str); }
+  explicit ID(const c_str str) { ImGui::PushID(str); }
 
   explicit ID(const int id) { ImGui::PushID(id); }
 
@@ -94,7 +94,7 @@ class Group final {
 
 class Child final {
  public:
-  explicit Child(const CStr id,
+  explicit Child(const c_str id,
                  const ImVec2& size = {0, 0},
                  const bool border = false,
                  const ImGuiWindowFlags flags = 0)
@@ -111,7 +111,8 @@ class Child final {
 
 class Combo final {
  public:
-  Combo(const CStr name, const CStr current) : mOpen{ImGui::BeginCombo(name, current)} {}
+  Combo(const c_str name, const c_str current) : mOpen{ImGui::BeginCombo(name, current)}
+  {}
 
   ~Combo()
   {
@@ -128,7 +129,7 @@ class Combo final {
 
 class TabBar final {
  public:
-  explicit TabBar(const CStr name, const ImGuiTabBarFlags flags = 0)
+  explicit TabBar(const c_str name, const ImGuiTabBarFlags flags = 0)
       : mOpen{ImGui::BeginTabBar(name, flags)}
   {}
 
@@ -147,7 +148,7 @@ class TabBar final {
 
 class TabItem final {
  public:
-  explicit TabItem(const CStr name,
+  explicit TabItem(const c_str name,
                    bool* open = nullptr,
                    const ImGuiTabItemFlags flags = 0)
       : mOpen{ImGui::BeginTabItem(name, open, flags)}
@@ -168,7 +169,7 @@ class TabItem final {
 
 class Table final {
  public:
-  Table(const CStr name, const int nColumns, const ImGuiTableFlags flags = 0)
+  Table(const c_str name, const int nColumns, const ImGuiTableFlags flags = 0)
       : mOpen{ImGui::BeginTable(name, nColumns, flags)}
   {}
 
@@ -187,17 +188,17 @@ class Table final {
 
 class Popup final {
  public:
-  explicit Popup(const CStr name, const ImGuiWindowFlags flags = 0)
+  explicit Popup(const c_str name, const ImGuiWindowFlags flags = 0)
       : mOpen{ImGui::BeginPopup(name, flags)}
   {}
 
-  [[nodiscard]] static auto ForItem(const CStr name, const ImGuiPopupFlags flags = 1)
+  [[nodiscard]] static auto ForItem(const c_str name, const ImGuiPopupFlags flags = 1)
       -> Popup
   {
     return Popup{ImGui::BeginPopupContextItem(name, flags)};
   }
 
-  [[nodiscard]] static auto ForWindow(const CStr name, const ImGuiPopupFlags flags = 1)
+  [[nodiscard]] static auto ForWindow(const c_str name, const ImGuiPopupFlags flags = 1)
       -> Popup
   {
     return Popup{ImGui::BeginPopupContextWindow(name, flags)};
@@ -220,7 +221,7 @@ class Popup final {
 
 class ListBox final {
  public:
-  explicit ListBox(const CStr label, const ImVec2& size = {0, 0})
+  explicit ListBox(const c_str label, const ImVec2& size = {0, 0})
       : mOpen{ImGui::BeginListBox(label, size)}
   {}
 
@@ -239,7 +240,7 @@ class ListBox final {
 
 class Menu final {
  public:
-  explicit Menu(const CStr name, const bool enabled = true)
+  explicit Menu(const c_str name, const bool enabled = true)
       : mOpen{ImGui::BeginMenu(name, enabled)}
   {}
 
@@ -258,7 +259,7 @@ class Menu final {
 
 class Modal final {
  public:
-  explicit Modal(const CStr name, const ImGuiWindowFlags flags = 0, bool* open = nullptr)
+  explicit Modal(const c_str name, const ImGuiWindowFlags flags = 0, bool* open = nullptr)
       : mOpen{ImGui::BeginPopupModal(name, open, flags)}
   {}
 
@@ -277,7 +278,7 @@ class Modal final {
 
 class Window final {
  public:
-  explicit Window(const CStr label,
+  explicit Window(const c_str label,
                   const ImGuiWindowFlags flags = 0,
                   bool* open = nullptr)
       : mOpen{ImGui::Begin(label, open, flags)}
@@ -305,14 +306,14 @@ class Window final {
 
 class TreeNode final {
  public:
-  explicit TreeNode(const CStr id, const ImGuiTreeNodeFlags flags = 0)
+  explicit TreeNode(const c_str id, const ImGuiTreeNodeFlags flags = 0)
       : mOpen{ImGui::TreeNodeEx(id, flags)}
   {}
 
   template <typename... Args>
-  explicit TreeNode(const CStr id,
+  explicit TreeNode(const c_str id,
                     const ImGuiTreeNodeFlags flags,
-                    const CStr fmt,
+                    const c_str fmt,
                     Args&&... args)
       : mOpen{ImGui::TreeNodeEx(id, flags, fmt, std::forward<Args>(args)...)}
   {}

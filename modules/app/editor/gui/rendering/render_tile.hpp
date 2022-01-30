@@ -23,7 +23,7 @@ class Graphics;
  */
 void RenderTile(Graphics& graphics,
                 const entt::registry& registry,
-                TileID tile,
+                tile_id tile,
                 int32 row,
                 int32 column);
 

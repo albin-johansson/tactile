@@ -27,8 +27,8 @@ class ResizeMapCmd final : public ACommand {
   usize mRows{};
   usize mCols{};
   MapCommandCache mCache;
-  Maybe<usize> mPrevRows{};
-  Maybe<usize> mPrevCols{};
+  maybe<usize> mPrevRows{};
+  maybe<usize> mPrevCols{};
 
   [[nodiscard]] auto IsLossyResize() const -> bool;
 };

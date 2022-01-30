@@ -15,6 +15,6 @@ namespace tactile {
  *
  * \return `true` if the value changed; `false` otherwise.
  */
-auto Checkbox(NotNull<CStr> label, NotNull<bool*> value, CStr tooltip = nullptr) -> bool;
+auto Checkbox(c_str label, bool* value, c_str tooltip = nullptr) -> bool;
 
 }  // namespace tactile

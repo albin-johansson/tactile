@@ -65,7 +65,7 @@ void RenderEllipseObject(Graphics& graphics,
   graphics.DrawTranslatedEllipseWithShadow(center, radius);
 
   if (!context.name.empty()) {
-    const CStr text = context.name.c_str();
+    const c_str text = context.name.c_str();
     const auto textSize = ImGui::CalcTextSize(text);
     if (textSize.x <= radius.x) {
       const auto textX = center.x - (textSize.x / 2.0f);

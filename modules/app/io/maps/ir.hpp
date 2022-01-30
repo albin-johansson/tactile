@@ -7,6 +7,8 @@
 #include <vector>      // vector
 
 #include "core/attribute_value.hpp"
+#include "core/layer_type.hpp"
+#include "core/object_type.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile::ir {
@@ -39,7 +41,7 @@ struct object_data final
 
 struct tile_layer_data final
 {
-  TileMatrix tiles;
+  std::vector<std::vector<tile_id>> tiles;
 };
 
 struct object_layer_data final

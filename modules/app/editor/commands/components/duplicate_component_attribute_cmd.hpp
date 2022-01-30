@@ -11,7 +11,7 @@ namespace tactile {
 class DuplicateComponentAttributeCmd final : public ACommand {
  public:
   DuplicateComponentAttributeCmd(RegistryRef registry,
-                                 ComponentID componentId,
+                                 component_id componentId,
                                  std::string attribute);
 
   void Undo() override;
@@ -25,9 +25,9 @@ class DuplicateComponentAttributeCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  ComponentID mComponentId{};
+  component_id mComponentId{};
   std::string mAttributeName;
-  Maybe<std::string> mDuplicatedName;
+  maybe<std::string> mDuplicatedName;
 };
 
 }  // namespace tactile

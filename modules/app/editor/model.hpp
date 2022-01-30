@@ -23,7 +23,7 @@ namespace tactile {
 class Model final {
  public:
   // Store documents on the heap to ensure stability, which is important for commands
-  using document_map = vector_map<MapID, std::unique_ptr<Document>>;
+  using document_map = vector_map<map_id, std::unique_ptr<Document>>;
   using const_iterator = document_map::const_iterator;
 
   /**
@@ -43,7 +43,7 @@ class Model final {
    *
    * \return the unique identifier assigned to the map.
    */
-  auto AddMap(Document document) -> MapID;
+  auto AddMap(Document document) -> map_id;
 
   /**
    * \brief Creates an empty map with the specified attributes.
@@ -55,7 +55,7 @@ class Model final {
    *
    * \return the unique identifier assigned to the map.
    */
-  auto AddMap(int tileWidth, int tileHeight, usize rows, usize columns) -> MapID;
+  auto AddMap(int tileWidth, int tileHeight, usize rows, usize columns) -> map_id;
 
   /**
    * \brief Makes a specific map active.
@@ -64,7 +64,7 @@ class Model final {
    *
    * \param id the identifier of the map that will be selected.
    */
-  void SelectMap(MapID id);
+  void SelectMap(map_id id);
 
   /**
    * \brief Closes a currently open map.
@@ -76,7 +76,7 @@ class Model final {
    *
    * \param id the identifier of the map that will be closed.
    */
-  void RemoveMap(MapID id);
+  void RemoveMap(map_id id);
 
   /**
    * \brief Indicates whether a specific map has an associated file path.
@@ -87,7 +87,7 @@ class Model final {
    *
    * \return `true` if the map has a file path; `false` otherwise.
    */
-  [[nodiscard]] auto HasPath(MapID id) const -> bool;
+  [[nodiscard]] auto HasPath(map_id id) const -> bool;
 
   /**
    * \brief Returns the (potentially empty) file path associated with a map.
@@ -98,7 +98,7 @@ class Model final {
    *
    * \return the associated file path.
    */
-  [[nodiscard]] auto GetPath(MapID id) const -> const std::filesystem::path&;
+  [[nodiscard]] auto GetPath(map_id id) const -> const std::filesystem::path&;
 
   /**
    * \brief Indicates whether there is an open document associated with a file path.
@@ -137,7 +137,7 @@ class Model final {
    *
    * \return the identifier of the active map.
    */
-  [[nodiscard]] auto GetActiveMapId() const -> Maybe<MapID>;
+  [[nodiscard]] auto GetActiveMapId() const -> maybe<map_id>;
 
   /**
    * \brief Returns the currently active document, if there is one.
@@ -312,8 +312,8 @@ class Model final {
 
  private:
   document_map mDocuments;
-  Maybe<MapID> mActiveMap;
-  MapID mNextId{1};
+  maybe<map_id> mActiveMap;
+  map_id mNextId{1};
 };
 
 }  // namespace tactile

@@ -12,7 +12,7 @@ namespace {
 
 /* Identifier used to distinguish attribute contexts, generated on a
    session-by-session basis and not stored anywhere in save files. */
-inline ContextID gNextContextId{1};
+inline context_id gNextContextId{1};
 
 }  // namespace
 
@@ -156,7 +156,7 @@ auto GetCurrentContext(const entt::registry& registry) -> const comp::attribute_
              : registry.ctx<comp::attribute_context>();
 }
 
-auto HasContext(const entt::registry& registry, const ContextID id) -> bool
+auto HasContext(const entt::registry& registry, const context_id id) -> bool
 {
   if (registry.ctx<comp::attribute_context>().id == id) {
     return true;
@@ -171,7 +171,7 @@ auto HasContext(const entt::registry& registry, const ContextID id) -> bool
   return false;
 }
 
-auto GetContext(entt::registry& registry, const ContextID id) -> comp::attribute_context&
+auto GetContext(entt::registry& registry, const context_id id) -> comp::attribute_context&
 {
   if (auto& context = registry.ctx<comp::attribute_context>(); context.id == id) {
     return context;
@@ -186,7 +186,7 @@ auto GetContext(entt::registry& registry, const ContextID id) -> comp::attribute
   ThrowTraced(TactileError{"No matching attribute context!"});
 }
 
-auto GetContext(const entt::registry& registry, const ContextID id)
+auto GetContext(const entt::registry& registry, const context_id id)
     -> const comp::attribute_context&
 {
   if (const auto& context = registry.ctx<comp::attribute_context>(); context.id == id) {
@@ -202,7 +202,7 @@ auto GetContext(const entt::registry& registry, const ContextID id)
   ThrowTraced(TactileError{"No matching attribute context!"});
 }
 
-auto GetCurrentContextId(const entt::registry& registry) -> ContextID
+auto GetCurrentContextId(const entt::registry& registry) -> context_id
 {
   const auto& context = GetCurrentContext(registry);
   return context.id;
@@ -247,12 +247,12 @@ void ResetNextContextId() noexcept
   gNextContextId = 1;
 }
 
-auto GetAndUpdateNextContextId() noexcept -> ContextID
+auto GetAndUpdateNextContextId() noexcept -> context_id
 {
   return gNextContextId++;
 }
 
-auto GetNextContextId() noexcept -> ContextID
+auto GetNextContextId() noexcept -> context_id
 {
   return gNextContextId;
 }

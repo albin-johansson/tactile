@@ -10,7 +10,7 @@ class Model;
 
 class ADialog {
  public:
-  explicit ADialog(CStr title);
+  explicit ADialog(c_str title);
 
   virtual ~ADialog() = default;
 
@@ -38,17 +38,17 @@ class ADialog {
 
   void Show();
 
-  void SetAcceptButtonLabel(CStr label);
+  void SetAcceptButtonLabel(c_str label);
 
-  void SetApplyButtonLabel(CStr label);
+  void SetApplyButtonLabel(c_str label);
 
-  void SetCloseButtonLabel(CStr label);
+  void SetCloseButtonLabel(c_str label);
 
  private:
-  CStr mTitle;
-  CStr mAcceptButtonLabel{"OK"};
-  CStr mApplyButtonLabel{}; /* By default, not shown (when null) */
-  CStr mCloseButtonLabel{"Cancel"};
+  c_str mTitle;
+  c_str mAcceptButtonLabel{"OK"};
+  c_str mApplyButtonLabel{}; /* By default, not shown (when null) */
+  c_str mCloseButtonLabel{"Cancel"};
   bool mShow{};
 };
 

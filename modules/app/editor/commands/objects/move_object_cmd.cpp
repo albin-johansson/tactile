@@ -5,7 +5,7 @@
 namespace tactile {
 
 MoveObjectCmd::MoveObjectCmd(RegistryRef registry,
-                             const ObjectID id,
+                             const object_id id,
                              const float oldX,
                              const float oldY,
                              const float newX,

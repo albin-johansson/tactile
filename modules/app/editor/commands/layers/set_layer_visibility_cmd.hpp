@@ -10,7 +10,7 @@ namespace tactile {
 
 class SetLayerVisibilityCmd final : public ACommand {
  public:
-  SetLayerVisibilityCmd(RegistryRef registry, LayerID id, bool visible);
+  SetLayerVisibilityCmd(RegistryRef registry, layer_id id, bool visible);
 
   void Undo() override;
 
@@ -23,9 +23,9 @@ class SetLayerVisibilityCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  LayerID mLayerId;
+  layer_id mLayerId;
   bool mVisible;
-  Maybe<bool> mPreviousVisibility;
+  maybe<bool> mPreviousVisibility;
 };
 
 }  // namespace tactile

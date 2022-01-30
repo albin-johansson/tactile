@@ -1,6 +1,8 @@
 #pragma once
 
+#include <concepts>    // same_as
 #include <filesystem>  // path
+#include <ostream>     // ostream
 #include <string>      // string
 #include <utility>     // move
 #include <variant>     // variant, get, get_if, holds_alternative
@@ -16,6 +18,54 @@ namespace tactile {
 
 /// \addtogroup core
 /// \{
+
+/**
+ * \brief Represents the different possible attributes types.
+ */
+enum class attribute_type {
+  string,    ///< A string property.
+  integer,   ///< An integer property.
+  floating,  ///< A floating-point property.
+  boolean,   ///< A boolean property.
+  file,      ///< A file path property.
+  color,     ///< A color property.
+  object     ///< An integer ID property, that refers to a map object.
+};
+
+inline auto operator<<(std::ostream& stream, const attribute_type type) -> std::ostream&
+{
+  switch (type) {
+    case attribute_type::string:
+      stream << "string";
+      break;
+
+    case attribute_type::integer:
+      stream << "int";
+      break;
+
+    case attribute_type::floating:
+      stream << "float";
+      break;
+
+    case attribute_type::boolean:
+      stream << "bool";
+      break;
+
+    case attribute_type::file:
+      stream << "file";
+      break;
+
+    case attribute_type::color:
+      stream << "color";
+      break;
+
+    case attribute_type::object:
+      stream << "object";
+      break;
+  }
+
+  return stream;
+}
 
 /**
  * \brief Strong type that represents object references.

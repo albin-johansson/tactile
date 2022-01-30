@@ -14,13 +14,13 @@ class LayerDock final {
  public:
   void Update(const Model& model, const Icons& icons, entt::dispatcher& dispatcher);
 
-  void ShowRenameLayerDialog(LayerID id);
+  void ShowRenameLayerDialog(layer_id id);
 
   [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
 
  private:
   RenameLayerDialog mRenameLayerDialog;
-  Maybe<LayerID> mRenameTarget;
+  maybe<layer_id> mRenameTarget;
   bool mHasFocus{};
 };
 

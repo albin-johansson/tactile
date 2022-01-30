@@ -35,7 +35,7 @@ namespace {
 
 }  // namespace
 
-auto get_object_layer(const entt::registry& registry, const LayerID id)
+auto get_object_layer(const entt::registry& registry, const layer_id id)
     -> std::pair<entt::entity, const comp::object_layer&>
 {
   const auto entity = find_layer(registry, id);
@@ -49,14 +49,14 @@ auto get_object_layer(const entt::registry& registry, const LayerID id)
 
 auto has_object(const entt::registry& registry,
                 const comp::object_layer& layer,
-                const ObjectID id) -> bool
+                const object_id id) -> bool
 {
   return find_object(registry, layer, id) != entt::null;
 }
 
 auto find_object(const entt::registry& registry,
                  const comp::object_layer& layer,
-                 const ObjectID id) -> entt::entity
+                 const object_id id) -> entt::entity
 {
   for (const auto objectEntity : layer.objects) {
     const auto& object = registry.get<comp::object>(objectEntity);

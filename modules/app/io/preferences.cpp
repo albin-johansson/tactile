@@ -22,7 +22,7 @@ namespace {
 constexpr Theme gThemeDef = Theme::Nocturnal;
 constexpr cen::color gViewportBackgroundDef{60, 60, 60};
 
-constexpr CStr gPreferredFormatDef = "YAML";
+constexpr c_str gPreferredFormatDef = "YAML";
 
 constexpr usize gCommandCapacityDef = 100;
 

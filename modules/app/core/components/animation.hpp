@@ -14,7 +14,7 @@ namespace tactile::comp {
  */
 struct animation_frame final
 {
-  TileID tile{};          ///< Tile that will be rendered during the frame.
+  tile_id tile{};         ///< Tile that will be rendered during the frame.
   cen::u32ms duration{};  ///< Duration of the frame.
 };
 

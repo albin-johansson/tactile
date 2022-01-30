@@ -10,7 +10,7 @@ namespace tactile {
 
 class SetObjectVisibilityCmd final : public AObjectCmd {
  public:
-  SetObjectVisibilityCmd(RegistryRef registry, ObjectID id, bool visible);
+  SetObjectVisibilityCmd(RegistryRef registry, object_id id, bool visible);
 
   void Undo() override;
 
@@ -23,7 +23,7 @@ class SetObjectVisibilityCmd final : public AObjectCmd {
 
  private:
   bool mVisible;
-  Maybe<bool> mPreviousVisibility;
+  maybe<bool> mPreviousVisibility;
 };
 
 }  // namespace tactile

@@ -28,10 +28,10 @@ class UpdatePropertyCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  ContextID mContextId;
+  context_id mContextId;
   std::string mName;
   attribute_value mNewValue;
-  Maybe<attribute_value> mOldValue;
+  maybe<attribute_value> mOldValue;
 };
 
 }  // namespace tactile

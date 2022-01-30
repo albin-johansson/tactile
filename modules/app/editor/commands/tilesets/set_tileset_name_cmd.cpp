@@ -9,7 +9,7 @@
 namespace tactile {
 
 SetTilesetNameCmd::SetTilesetNameCmd(RegistryRef registry,
-                                     const TilesetID id,
+                                     const tileset_id id,
                                      std::string name)
     : ACommand{"Set Tileset Name"}
     , mRegistry{registry}

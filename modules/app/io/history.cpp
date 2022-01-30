@@ -21,7 +21,7 @@ constexpr usize gMaxSize = 10;
 
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
-inline Maybe<std::string> gLastClosedFile;
+inline maybe<std::string> gLastClosedFile;
 inline std::deque<std::string> gHistory;
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&

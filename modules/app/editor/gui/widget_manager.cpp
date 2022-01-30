@@ -81,7 +81,7 @@ void WidgetManager::ShowAddTilesetDialog()
   mMenuBar->ShowAddTilesetDialog();
 }
 
-void WidgetManager::ShowRenameLayerDialog(const LayerID id)
+void WidgetManager::ShowRenameLayerDialog(const layer_id id)
 {
   mLayerDock->ShowRenameLayerDialog(id);
 }
@@ -169,12 +169,12 @@ auto WidgetManager::IsToolbarVisible() const -> bool
   return mToolbar->IsVisible();
 }
 
-auto WidgetManager::GetTilesetViewWidth() const -> Maybe<float>
+auto WidgetManager::GetTilesetViewWidth() const -> maybe<float>
 {
   return mTilesetDock->GetTilesetView().GetWidth();
 }
 
-auto WidgetManager::GetTilesetViewHeight() const -> Maybe<float>
+auto WidgetManager::GetTilesetViewHeight() const -> maybe<float>
 {
   return mTilesetDock->GetTilesetView().GetHeight();
 }

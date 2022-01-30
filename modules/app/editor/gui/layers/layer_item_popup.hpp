@@ -17,6 +17,6 @@ namespace tactile {
  */
 void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
-                          LayerID id);
+                          layer_id id);
 
 }  // namespace tactile

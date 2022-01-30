@@ -28,8 +28,8 @@ namespace comp {
  */
 struct component_def final
 {
-  ComponentID id{};  ///< Unique ID for the component definition.
-  std::string name;  ///< The human-readable component name, also unique.
+  component_id id{};  ///< Unique ID for the component definition.
+  std::string name;   ///< The human-readable component name, also unique.
   component_attribute_map attributes;
 };
 
@@ -38,7 +38,7 @@ struct component_def final
  */
 struct component final
 {
-  ComponentID type;                ///< The ID of the component definition type.
+  component_id type;               ///< The ID of the component definition type.
   component_attribute_map values;  ///< Current values.
 };
 

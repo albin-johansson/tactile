@@ -17,7 +17,7 @@ namespace {
 constexpr auto gTabBarFlags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
-void UpdateContextMenu(const TilesetID id,
+void UpdateContextMenu(const tileset_id id,
                        const entt::entity tilesetEntity,
                        entt::dispatcher& dispatcher)
 {

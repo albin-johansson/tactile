@@ -27,7 +27,7 @@ class EraserSequenceCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  LayerID mLayer;
+  layer_id mLayer;
   TileCache mOldState;
 };
 

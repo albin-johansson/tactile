@@ -15,7 +15,7 @@ namespace {
 
 }  // namespace
 
-auto get_tile_layer_entity(const entt::registry& registry, const LayerID id)
+auto get_tile_layer_entity(const entt::registry& registry, const layer_id id)
     -> entt::entity
 {
   const auto entity = sys::find_layer(registry, id);
@@ -27,7 +27,7 @@ auto get_tile_layer_entity(const entt::registry& registry, const LayerID id)
   }
 }
 
-void set_tile(comp::tile_layer& layer, const tile_position& position, const TileID tile)
+void set_tile(comp::tile_layer& layer, const tile_position& position, const tile_id tile)
 {
   const auto row = position.row_index();
   const auto col = position.col_index();
@@ -50,7 +50,7 @@ void set_tiles(comp::tile_layer& layer, const TileCache& tiles)
   }
 }
 
-auto get_tile(const comp::tile_layer& layer, const tile_position& position) -> TileID
+auto get_tile(const comp::tile_layer& layer, const tile_position& position) -> tile_id
 {
   const auto row = position.row_index();
   const auto col = position.col_index();
@@ -61,6 +61,22 @@ auto get_tile(const comp::tile_layer& layer, const tile_position& position) -> T
   else {
     return empty_tile;
   }
+}
+
+auto make_tile_row(const usize nCols) -> tile_row
+{
+  tile_row row;
+  row.reserve(nCols);
+  row.assign(nCols, 0);
+  return row;
+}
+
+auto make_tile_matrix(const usize nRows, const usize nCols) -> tile_matrix
+{
+  tile_matrix tiles;
+  tiles.reserve(nRows);
+  tiles.assign(nRows, make_tile_row(nCols));
+  return tiles;
 }
 
 }  // namespace tactile::sys

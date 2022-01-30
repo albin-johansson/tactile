@@ -4,6 +4,7 @@
 
 #include <entt/entt.hpp>  // registry
 
+#include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile_def.hpp"
@@ -25,7 +26,7 @@ class AddPropertyCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  ContextID mContextId;
+  context_id mContextId;
   std::string mName;
   attribute_type mType;
 };

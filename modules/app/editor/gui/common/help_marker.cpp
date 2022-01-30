@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-void HelpMarker(const NotNull<CStr> text)
+void HelpMarker(const c_str text)
 {
   TACTILE_ASSERT(text);
 

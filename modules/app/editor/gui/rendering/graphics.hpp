@@ -63,11 +63,11 @@ class Graphics final {
                              const ImVec2& position,
                              const ImVec2& uv);
 
-  void RenderText(CStr text, const ImVec2& position);
+  void RenderText(c_str text, const ImVec2& position);
 
-  void RenderTranslatedText(CStr text, const ImVec2& position);
+  void RenderTranslatedText(c_str text, const ImVec2& position);
 
-  void RenderCenteredText(CStr text, const ImVec2& center);
+  void RenderCenteredText(c_str text, const ImVec2& center);
 
   void RenderTranslatedGrid();
 

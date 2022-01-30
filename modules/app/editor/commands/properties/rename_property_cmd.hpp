@@ -25,7 +25,7 @@ class RenamePropertyCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  ContextID mContextId;
+  context_id mContextId;
   std::string mOldName;
   std::string mNewName;
 };

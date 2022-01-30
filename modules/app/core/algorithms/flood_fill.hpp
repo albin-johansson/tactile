@@ -21,7 +21,7 @@ namespace tactile {
 void flood(entt::registry& registry,
            entt::entity entity,
            const tile_position& origin,
-           TileID replacement,
+           tile_id replacement,
            std::vector<tile_position>& affected);
 
 }  // namespace tactile

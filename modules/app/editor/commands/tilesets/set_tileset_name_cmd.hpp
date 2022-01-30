@@ -12,7 +12,7 @@ namespace tactile {
 
 class SetTilesetNameCmd final : public ACommand {
  public:
-  SetTilesetNameCmd(RegistryRef registry, TilesetID id, std::string name);
+  SetTilesetNameCmd(RegistryRef registry, tileset_id id, std::string name);
 
   void Undo() override;
 
@@ -27,9 +27,9 @@ class SetTilesetNameCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  TilesetID mTilesetId;
+  tileset_id mTilesetId;
   std::string mNewName;
-  Maybe<std::string> mOldName;
+  maybe<std::string> mOldName;
 };
 
 }  // namespace tactile

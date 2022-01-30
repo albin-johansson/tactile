@@ -13,14 +13,14 @@ namespace tactile {
 
 class AStringInputDialog : public ADialog {
  public:
-  explicit AStringInputDialog(CStr title);
+  explicit AStringInputDialog(c_str title);
 
   void Show(std::string previous);
 
  protected:
   void UpdateContents(const Model& model, entt::dispatcher& dispatcher) final;
 
-  void SetInputHint(CStr hint);
+  void SetInputHint(c_str hint);
 
   [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool final;
 
@@ -32,7 +32,7 @@ class AStringInputDialog : public ADialog {
   [[nodiscard]] auto GetPreviousString() const -> const std::string&;
 
  private:
-  CStr mHint{};
+  c_str mHint{};
   std::string mPrevious;
   std::array<char, 128> mBuffer{};
   bool mShouldAcquireFocus{};

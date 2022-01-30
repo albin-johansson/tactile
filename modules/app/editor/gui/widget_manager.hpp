@@ -4,6 +4,7 @@
 
 #include <entt/entt.hpp>
 
+#include "core/attribute_value.hpp"
 #include "io/maps/parser/parse_error.hpp"
 #include "tactile_def.hpp"
 
@@ -39,7 +40,7 @@ class WidgetManager final {
 
   void ShowAddTilesetDialog();
 
-  void ShowRenameLayerDialog(LayerID id);
+  void ShowRenameLayerDialog(layer_id id);
 
   void ShowAddPropertyDialog();
 
@@ -67,8 +68,8 @@ class WidgetManager final {
 
   [[nodiscard]] auto IsToolbarVisible() const -> bool;
 
-  [[nodiscard]] auto GetTilesetViewWidth() const -> Maybe<float>;
-  [[nodiscard]] auto GetTilesetViewHeight() const -> Maybe<float>;
+  [[nodiscard]] auto GetTilesetViewWidth() const -> maybe<float>;
+  [[nodiscard]] auto GetTilesetViewHeight() const -> maybe<float>;
 
  private:
   std::unique_ptr<MenuBar> mMenuBar;

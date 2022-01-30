@@ -21,13 +21,13 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
 
 // TODO should verbose/debug options be disabled in release builds?
 [[nodiscard]] auto ShowLogLevelFilterCombo(const log_level currentLevel)
-    -> Maybe<log_level>
+    -> maybe<log_level>
 {
-  static constexpr CStr verboseFilter = "Everything";
-  static constexpr CStr debugFilter = "Debug / Information / Warnings / Errors";
-  static constexpr CStr infoFilter = "Information / Warnings / Errors";
-  static constexpr CStr warningFilter = "Warnings / Errors";
-  static constexpr CStr errorFilter = "Errors";
+  static constexpr c_str verboseFilter = "Everything";
+  static constexpr c_str debugFilter = "Debug / Information / Warnings / Errors";
+  static constexpr c_str infoFilter = "Information / Warnings / Errors";
+  static constexpr c_str warningFilter = "Warnings / Errors";
+  static constexpr c_str errorFilter = "Errors";
 
   static const auto comboWidth = ImGui::CalcTextSize(debugFilter).x * 1.2f;
 
@@ -36,7 +36,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
 
   ImGui::SameLine();
 
-  CStr filter = verboseFilter;
+  c_str filter = verboseFilter;
   switch (currentLevel) {
     case log_level::verbose:
       filter = verboseFilter;

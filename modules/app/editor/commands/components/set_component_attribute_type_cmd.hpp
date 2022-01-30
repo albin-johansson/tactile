@@ -11,7 +11,7 @@ namespace tactile {
 class SetComponentAttributeTypeCmd final : public ACommand {
  public:
   SetComponentAttributeTypeCmd(RegistryRef registry,
-                               ComponentID id,
+                               component_id id,
                                std::string attribute,
                                attribute_type type);
 
@@ -26,10 +26,10 @@ class SetComponentAttributeTypeCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  ComponentID mComponentId;
+  component_id mComponentId;
   std::string mAttributeName;
   attribute_type mNewType;
-  Maybe<attribute_value> mPreviousValue;
+  maybe<attribute_value> mPreviousValue;
 };
 
 }  // namespace tactile

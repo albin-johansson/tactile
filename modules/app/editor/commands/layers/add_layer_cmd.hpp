@@ -28,8 +28,8 @@ class AddLayerCmd final : public ACommand {
  private:
   RegistryRef mRegistry;
   layer_type mLayerType;
-  Maybe<LayerID> mLayerId;
-  Maybe<sys::LayerSnapshot> mLayerSnapshot;
+  maybe<layer_id> mLayerId;
+  maybe<sys::LayerSnapshot> mLayerSnapshot;
 };
 
 /// \} End of group commands

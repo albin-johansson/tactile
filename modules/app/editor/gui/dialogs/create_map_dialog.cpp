@@ -27,8 +27,8 @@ void CreateMapDialog::Open()
 void CreateMapDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
   {
-    CStr rowsLabel = "Rows:";
-    CStr columnsLabel = "Columns:";
+    c_str rowsLabel = "Rows:";
+    c_str columnsLabel = "Columns:";
     const auto offset = GetMinimumOffsetToAlign(rowsLabel, columnsLabel);
 
     ImGui::AlignTextToFramePadding();
@@ -45,8 +45,8 @@ void CreateMapDialog::UpdateContents(const Model&, entt::dispatcher&)
   ImGui::Separator();
 
   {
-    CStr tileWidthLabel = "Tile width:";
-    CStr tileHeightLabel = "Tile height:";
+    c_str tileWidthLabel = "Tile width:";
+    c_str tileHeightLabel = "Tile height:";
     const auto offset = GetMinimumOffsetToAlign(tileWidthLabel, tileHeightLabel);
 
     ImGui::AlignTextToFramePadding();

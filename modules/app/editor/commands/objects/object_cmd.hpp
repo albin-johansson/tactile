@@ -13,18 +13,18 @@ namespace tactile {
 
 class AObjectCmd : public ACommand {
  public:
-  AObjectCmd(std::string name, RegistryRef registry, ObjectID id);
+  AObjectCmd(std::string name, RegistryRef registry, object_id id);
 
  protected:
   [[nodiscard]] auto GetTargetObject() -> comp::object&;
 
   [[nodiscard]] auto GetTargetObjectContext() const -> comp::attribute_context&;
 
-  [[nodiscard]] auto GetTargetObjectId() const noexcept -> ObjectID { return mObjectId; }
+  [[nodiscard]] auto GetTargetObjectId() const noexcept -> object_id { return mObjectId; }
 
  private:
   RegistryRef mRegistry;
-  ObjectID mObjectId;
+  object_id mObjectId;
 };
 
 }  // namespace tactile

@@ -7,7 +7,7 @@ command types that override `MergeWith()`. See the in-source documentation for m
 
 ## Guidelines
 
-* Never store entity identifiers in commands, use dedicated identifiers such as `ObjectID` instead.
+* Never store entity identifiers in commands, use dedicated identifiers such as `object_id` instead.
 * Always take `RegistryRef` as the first command constructor parameter.
 * Use `GetId()` to perform initial type checks when overriding `MergeWith()`, but use `dynamic_cast` and
   not `static_cast` for the actual downcast.

@@ -21,7 +21,7 @@ void GroupLayerItem(const entt::registry& registry,
                     const entt::entity layerEntity,
                     const comp::layer& layer,
                     const ImGuiTreeNodeFlags flags,
-                    const CStr name)
+                    const c_str name)
 {
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
   if (scoped::TreeNode treeNode{"##GroupLayerTreeNode", flags, "%s", name};

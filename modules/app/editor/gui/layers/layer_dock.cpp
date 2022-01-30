@@ -32,7 +32,7 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
   const auto activeLayerEntity = registry.ctx<comp::active_layer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
-  Maybe<LayerID> activeLayerId;
+  maybe<layer_id> activeLayerId;
   if (hasActiveLayer) {
     const auto& layer = registry.get<comp::layer>(activeLayerEntity);
     activeLayerId = layer.id;
@@ -126,7 +126,7 @@ void LayerDock::Update(const Model& model,
   mRenameLayerDialog.Update(model, dispatcher);
 }
 
-void LayerDock::ShowRenameLayerDialog(const LayerID id)
+void LayerDock::ShowRenameLayerDialog(const layer_id id)
 {
   mRenameTarget = id;
 }

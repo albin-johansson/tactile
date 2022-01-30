@@ -10,7 +10,7 @@ namespace tactile {
 
 class MoveLayerUpCmd final : public ACommand {
  public:
-  MoveLayerUpCmd(RegistryRef registry, LayerID id);
+  MoveLayerUpCmd(RegistryRef registry, layer_id id);
 
   void Undo() override;
 
@@ -23,7 +23,7 @@ class MoveLayerUpCmd final : public ACommand {
 
  private:
   RegistryRef mRegistry;
-  LayerID mLayerId;
+  layer_id mLayerId;
 };
 
 }  // namespace tactile

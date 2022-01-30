@@ -14,6 +14,6 @@ namespace tactile {
  *
  * \return `true` if the button was pressed; `false` otherwise.
  */
-auto CenteredButton(NotNull<CStr> label, CStr tooltip = nullptr) -> bool;
+auto CenteredButton(c_str label, c_str tooltip = nullptr) -> bool;
 
 }  // namespace tactile

@@ -17,7 +17,7 @@ class texture_manager final {
 
   ~texture_manager();
 
-  [[nodiscard]] auto load(const std::filesystem::path& path) -> Maybe<comp::texture>;
+  [[nodiscard]] auto load(const std::filesystem::path& path) -> maybe<comp::texture>;
 
  private:
   std::vector<uint> mTextures;

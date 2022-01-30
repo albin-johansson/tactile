@@ -5,7 +5,7 @@
 
 namespace tactile {
 
-RemoveLayerCmd::RemoveLayerCmd(RegistryRef registry, const LayerID id)
+RemoveLayerCmd::RemoveLayerCmd(RegistryRef registry, const layer_id id)
     : ACommand{"Remove Layer"}
     , mRegistry{registry}
     , mLayerId{id}

@@ -15,7 +15,7 @@ CreateComponentAttributeDialog::CreateComponentAttributeDialog()
   SetInputHint("Attribute name");
 }
 
-void CreateComponentAttributeDialog::Open(const ComponentID id)
+void CreateComponentAttributeDialog::Open(const component_id id)
 {
   mComponentId = id;
   Show("");

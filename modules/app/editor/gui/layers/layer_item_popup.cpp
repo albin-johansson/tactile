@@ -14,7 +14,7 @@ namespace tactile {
 
 void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
-                          const LayerID id)
+                          const layer_id id)
 {
   if (auto popup = scoped::Popup::ForItem("##LayerItemPopup"); popup.IsOpen()) {
     const auto [entity, layer] = sys::get_layer(registry, id);

@@ -31,7 +31,7 @@ texture_manager::~texture_manager()
   mTextures.clear();
 }
 
-auto texture_manager::load(const std::filesystem::path& path) -> Maybe<comp::texture>
+auto texture_manager::load(const std::filesystem::path& path) -> maybe<comp::texture>
 {
   comp::texture texture;
   texture.path = path;

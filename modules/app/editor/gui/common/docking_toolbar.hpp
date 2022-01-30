@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-void BeginDockingToolbar(NotNull<CStr> name, int& axis);
+void BeginDockingToolbar(c_str name, int& axis);
 
 void EndDockingToolbar();
 

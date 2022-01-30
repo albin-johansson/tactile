@@ -7,7 +7,7 @@
 namespace tactile {
 
 DuplicateComponentAttributeCmd::DuplicateComponentAttributeCmd(RegistryRef registry,
-                                                               ComponentID componentId,
+                                                               component_id componentId,
                                                                std::string attribute)
     : ACommand{"Duplicate Component Attribute"}
     , mRegistry{registry}

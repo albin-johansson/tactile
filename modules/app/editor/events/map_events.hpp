@@ -37,7 +37,7 @@ struct CreateMapEvent final
 
 struct CloseMapEvent final
 {
-  MapID id;
+  map_id id;
 };
 
 struct OpenMapEvent final
@@ -47,7 +47,7 @@ struct OpenMapEvent final
 
 struct SelectMapEvent final
 {
-  MapID id;
+  map_id id;
 };
 
 struct ShowMapPropertiesEvent final

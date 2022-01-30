@@ -12,35 +12,36 @@
 namespace tactile {
 
 /// General purpose property value input component.
-[[nodiscard]] auto Input(CStr id, const attribute_value& value) -> Maybe<attribute_value>;
+[[nodiscard]] auto Input(c_str id, const attribute_value& value)
+    -> maybe<attribute_value>;
 
-[[nodiscard]] auto InputWidget(CStr id, int value) -> Maybe<int>;
+[[nodiscard]] auto InputWidget(c_str id, int value) -> maybe<int>;
 
-[[nodiscard]] auto InputWidget(CStr id, float value, float min = 0, float max = 0)
-    -> Maybe<float>;
+[[nodiscard]] auto InputWidget(c_str id, float value, float min = 0, float max = 0)
+    -> maybe<float>;
 
-[[nodiscard]] auto InputStringWithHint(CStr id,
-                                       CStr hint,
+[[nodiscard]] auto InputStringWithHint(c_str id,
+                                       c_str hint,
                                        const std::string& value,
-                                       CStr label = nullptr,
+                                       c_str label = nullptr,
                                        ImGuiInputTextFlags flags = 0,
                                        ImGuiInputTextCallback filter = nullptr)
-    -> Maybe<std::string>;
+    -> maybe<std::string>;
 
-[[nodiscard]] auto InputString(CStr id,
+[[nodiscard]] auto InputString(c_str id,
                                const std::string& value,
-                               CStr label = nullptr,
+                               c_str label = nullptr,
                                ImGuiInputTextFlags flags = 0,
                                ImGuiInputTextCallback filter = nullptr)
-    -> Maybe<std::string>;
+    -> maybe<std::string>;
 
-[[nodiscard]] auto InputWidget(CStr id, bool value) -> Maybe<bool>;
+[[nodiscard]] auto InputWidget(c_str id, bool value) -> maybe<bool>;
 
-[[nodiscard]] auto InputWidget(CStr id, object_t value) -> Maybe<object_t>;
+[[nodiscard]] auto InputWidget(c_str id, object_t value) -> maybe<object_t>;
 
-[[nodiscard]] auto InputWidget(CStr id, cen::color value) -> Maybe<cen::color>;
+[[nodiscard]] auto InputWidget(c_str id, cen::color value) -> maybe<cen::color>;
 
-[[nodiscard]] auto InputFile(CStr id, const std::filesystem::path& value)
-    -> Maybe<std::filesystem::path>;
+[[nodiscard]] auto InputFile(c_str id, const std::filesystem::path& value)
+    -> maybe<std::filesystem::path>;
 
 }  // namespace tactile

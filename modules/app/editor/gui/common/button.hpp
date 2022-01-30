@@ -15,8 +15,8 @@ namespace tactile {
  *
  * \return `true` if the button was pressed; `false` otherwise.
  */
-auto Button(NotNull<CStr> text,
-            CStr tooltip = nullptr,
+auto Button(c_str text,
+            c_str tooltip = nullptr,
             bool enabled = true,
             float width = 0,
             float height = 0) -> bool;

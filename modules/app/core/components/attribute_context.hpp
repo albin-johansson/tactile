@@ -11,7 +11,7 @@ namespace tactile::comp {
 
 struct attribute_context final
 {
-  ContextID id{};
+  context_id id{};
   std::string name;
   std::vector<entt::entity> properties;
   std::vector<entt::entity> components;

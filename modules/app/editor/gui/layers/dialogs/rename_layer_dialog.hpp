@@ -13,7 +13,7 @@ class RenameLayerDialog final : public AStringInputDialog {
 
   ~RenameLayerDialog() override = default;
 
-  void Show(LayerID id, std::string oldName);
+  void Show(layer_id id, std::string oldName);
 
  protected:
   void OnAccept(entt::dispatcher& dispatcher) override;
@@ -22,8 +22,8 @@ class RenameLayerDialog final : public AStringInputDialog {
       -> bool override;
 
  private:
-  Maybe<LayerID> mTargetId;
-  Maybe<std::string> mOldName;
+  maybe<layer_id> mTargetId;
+  maybe<std::string> mOldName;
 };
 
 }  // namespace tactile

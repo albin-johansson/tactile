@@ -11,8 +11,8 @@
 namespace tactile {
 
 class MapCommandCache final {
-  using TileCache = std::map<tile_position, TileID, std::less<>>;
-  using LayerCache = std::map<LayerID, TileCache, std::less<>>;
+  using TileCache = std::map<tile_position, tile_id, std::less<>>;
+  using LayerCache = std::map<layer_id, TileCache, std::less<>>;
 
  public:
   void Clear() noexcept;

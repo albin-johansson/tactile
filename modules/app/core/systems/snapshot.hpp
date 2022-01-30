@@ -17,7 +17,7 @@ namespace tactile::sys {
 
 struct PropertyContextSnapshot final
 {
-  ContextID id;
+  context_id id;
   std::string name;
   std::map<std::string, attribute_value, std::less<>> properties;
 };
@@ -42,10 +42,10 @@ struct LayerSnapshot final
   usize index{};
   comp::layer core;
   PropertyContextSnapshot context;
-  Maybe<LayerID> parent;
-  Maybe<TileMatrix> tiles;
-  Maybe<std::vector<ObjectSnapshot>> objects;
-  Maybe<std::vector<LayerSnapshot>> children;
+  maybe<layer_id> parent;
+  maybe<tile_matrix> tiles;
+  maybe<std::vector<ObjectSnapshot>> objects;
+  maybe<std::vector<LayerSnapshot>> children;
 };
 
 }  // namespace tactile::sys

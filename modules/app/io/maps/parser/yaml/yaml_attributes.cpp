@@ -11,7 +11,7 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_attribute_type(const std::string_view type)
-    -> Maybe<attribute_type>
+    -> maybe<attribute_type>
 {
   if (type == "string") {
     return attribute_type::string;
@@ -41,7 +41,7 @@ namespace {
 
 [[nodiscard]] auto _parse_attribute_value(const YAML::Node& value,
                                           const attribute_type type)
-    -> Maybe<attribute_value>
+    -> maybe<attribute_value>
 {
   switch (type) {
     case attribute_type::string:

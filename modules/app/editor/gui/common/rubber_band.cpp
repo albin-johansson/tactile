@@ -9,7 +9,7 @@
 
 namespace tactile {
 
-auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Region>
+auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> maybe<Region>
 {
   const auto toRow = [=](const float y) {
     const auto mod = y - std::fmod(y, tileSize.y);

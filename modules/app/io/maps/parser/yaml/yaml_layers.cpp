@@ -4,6 +4,7 @@
 #include <memory>     // make_unique
 #include <string>     // string
 
+#include "core/systems/layers/tile_layer_system.hpp"
 #include "core/utils/strings.hpp"
 #include "tactile_stdlib.hpp"
 #include "yaml_attributes.hpp"
@@ -22,7 +23,7 @@ namespace {
 {
   usize index = 0;
   for (const auto& token : split(tileData.c_str(), ' ')) {
-    if (const auto id = FromString<TileID>(token.c_str())) {
+    if (const auto id = FromString<tile_id>(token.c_str())) {
       const auto [row, col] = ToMatrixCoords(index, columns);
       layer.tiles[row][col] = *id;
       ++index;
@@ -43,7 +44,7 @@ namespace {
   data.type = layer_type::tile_layer;
 
   auto& tileLayer = data.data.emplace<ir::tile_layer_data>();
-  tileLayer.tiles = MakeTileMatrix(rows, columns);
+  tileLayer.tiles = sys::make_tile_matrix(rows, columns);
 
   if (auto tiles = node["data"]) {
     auto rawTiles = tiles.as<std::string>();
@@ -192,7 +193,7 @@ auto parse_object(const YAML::Node& node,
                   ir::object_data* object) -> parse_error
 {
   if (auto id = node["id"]) {
-    object->id = id.as<ObjectID>();
+    object->id = id.as<object_id>();
   }
   else {
     return parse_error::no_object_id;

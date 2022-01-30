@@ -6,6 +6,7 @@
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
 #include "core/map.hpp"
+#include "layers/tile_layer_system.hpp"
 #include "tactile_stdlib.hpp"
 
 namespace tactile::sys {
@@ -33,7 +34,7 @@ void add_row_to_map(entt::registry& registry)
   ++map.row_count;
 
   for (auto&& [entity, layer] : registry.view<comp::tile_layer>().each()) {
-    layer.matrix.push_back(MakeTileRow(map.column_count));
+    layer.matrix.push_back(sys::make_tile_row(map.column_count));
   }
 }
 

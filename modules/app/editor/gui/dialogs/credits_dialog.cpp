@@ -12,7 +12,7 @@ constexpr auto gTableFlags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
                              ImGuiTableFlags_Resizable |
                              ImGuiTableFlags_SizingStretchProp;
 
-void Row(const CStr lib, const CStr license)
+void Row(const c_str lib, const c_str license)
 {
   ImGui::TableNextRow();
 

@@ -16,7 +16,7 @@ class MapImportErrorDialog final : public ADialog {
   void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
 
  private:
-  Maybe<parsing::parse_error> mError;
+  maybe<parsing::parse_error> mError;
 };
 
 }  // namespace tactile

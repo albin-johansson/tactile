@@ -157,10 +157,10 @@ class CommandStack final {
   [[nodiscard]] auto GetSize() const noexcept -> usize { return mStack.size(); }
 
   /// Returns the current command index.
-  [[nodiscard]] auto GetIndex() const noexcept -> Maybe<usize> { return mIndex; }
+  [[nodiscard]] auto GetIndex() const noexcept -> maybe<usize> { return mIndex; }
 
   /// Returns the clean index, if there is one.
-  [[nodiscard]] auto GetCleanIndex() const noexcept -> Maybe<usize>
+  [[nodiscard]] auto GetCleanIndex() const noexcept -> maybe<usize>
   {
     return mCleanIndex;
   }
@@ -176,8 +176,8 @@ class CommandStack final {
 
  private:
   std::deque<std::unique_ptr<ACommand>> mStack;
-  Maybe<usize> mIndex;
-  Maybe<usize> mCleanIndex;
+  maybe<usize> mIndex;
+  maybe<usize> mCleanIndex;
   usize mCapacity;
 
   void RemoveOldestCommand();

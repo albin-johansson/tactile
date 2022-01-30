@@ -21,7 +21,7 @@ class formatted_string final {
     mSize = result.size;
   }
 
-  [[nodiscard]] auto data() const noexcept -> CStr { return mBuffer.data(); }
+  [[nodiscard]] auto data() const noexcept -> c_str { return mBuffer.data(); }
 
   [[nodiscard]] auto view() const noexcept -> std::string_view
   {

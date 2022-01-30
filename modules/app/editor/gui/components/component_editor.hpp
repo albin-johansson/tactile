@@ -24,17 +24,17 @@ class ComponentEditor final : public ADialog {
   CreateComponentAttributeDialog mCreateComponentAttributeDialog;
   RenameComponentDialog mRenameComponentDialog;
   RenameComponentAttributeDialog mRenameComponentAttributeDialog;
-  Maybe<ComponentID> mActiveComponent;
+  maybe<component_id> mActiveComponent;
 
   void ShowComponentComboPopup(const entt::registry& registry,
                                entt::dispatcher& dispatcher);
 
   void ShowComponentAttributes(const entt::registry& registry,
                                entt::dispatcher& dispatcher,
-                               ComponentID id);
+                               component_id id);
 
   void ShowComponentAttribute(entt::dispatcher& dispatcher,
-                              ComponentID id,
+                              component_id id,
                               const std::string& name,
                               const attribute_value& value);
 };

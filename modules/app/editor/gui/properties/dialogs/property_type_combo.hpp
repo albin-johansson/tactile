@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tactile_def.hpp"
+#include "core/attribute_value.hpp"
 
 namespace tactile {
 

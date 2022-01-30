@@ -120,7 +120,7 @@ void ComponentEditor::ShowComponentComboPopup(const entt::registry& registry,
 
 void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
                                               entt::dispatcher& dispatcher,
-                                              const ComponentID id)
+                                              const component_id id)
 {
   const auto& [defEntity, def] = sys::get_component_def(registry, id);
 
@@ -148,7 +148,7 @@ void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
 }
 
 void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
-                                             const ComponentID id,
+                                             const component_id id,
                                              const std::string& name,
                                              const attribute_value& value)
 {

@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-auto CenteredButton(const NotNull<CStr> text, const CStr tooltip) -> bool
+auto CenteredButton(const c_str text, const c_str tooltip) -> bool
 {
   TACTILE_ASSERT(text);
 

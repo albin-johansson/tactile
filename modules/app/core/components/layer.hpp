@@ -4,9 +4,15 @@
 
 #include <entt/entt.hpp>
 
+#include "core/layer_type.hpp"
 #include "tactile_def.hpp"
 
-namespace tactile::comp {
+namespace tactile {
+
+using tile_row = std::vector<tile_id>;
+using tile_matrix = std::vector<tile_row>;
+
+namespace comp {
 
 /**
  * \brief Context component that keeps track of the selected layer.
@@ -37,7 +43,7 @@ struct layer_tree_node final
  */
 struct layer final
 {
-  LayerID id{};         ///< Unique layer ID.
+  layer_id id{};        ///< Unique layer ID.
   layer_type type{};    ///< The specific layer type.
   float opacity{1.0f};  ///< Opacity of the layer, in the range [0, 1].
   bool visible{true};   ///< Whether or not the layer is rendered.
@@ -48,7 +54,7 @@ struct layer final
  */
 struct tile_layer final
 {
-  TileMatrix matrix;  ///< The associated matrix of tile identifiers.
+  tile_matrix matrix;  ///< The associated matrix of tile identifiers.
 };
 
 /**
@@ -67,4 +73,5 @@ struct object_layer final
 struct group_layer final
 {};
 
-}  // namespace tactile::comp
+}  // namespace comp
+}  // namespace tactile
