@@ -183,9 +183,8 @@ void _write_json(const std::filesystem::path& path, const nlohmann::json& json)
   return array;
 }
 
-[[nodiscard]] auto _emit_fancy_tile(const emit_info& info,
-                                    const tile_id id,
-                                    const ir::fancy_tile_data& data) -> nlohmann::json
+[[nodiscard]] auto _emit_fancy_tile(const tile_id id, const ir::fancy_tile_data& data)
+    -> nlohmann::json
 {
   auto json = nlohmann::json::object();
 
@@ -227,7 +226,7 @@ void _write_json(const std::filesystem::path& path, const nlohmann::json& json)
   auto json = nlohmann::json::array();
 
   for (const auto& [id, tileData] : data.fancy_tiles) {
-    json += _emit_fancy_tile(info, id, tileData);
+    json += _emit_fancy_tile(id, tileData);
   }
 
   return json;
