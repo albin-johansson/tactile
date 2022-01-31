@@ -154,7 +154,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
   graphics_ctx graphics{info};
 
   graphics.set_draw_color(get_preferences().viewport_bg());
-  graphics.Clear();
+  graphics.clear();
 
   graphics.push_clip();
 
