@@ -27,7 +27,7 @@ constexpr int gFormatVersion [[maybe_unused]] = 1;
 
 void restore_last_session(Model& model, texture_manager& textures)
 {
-  proto::Session session;
+  proto::session session;
 
   std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
@@ -49,7 +49,7 @@ void restore_last_session(Model& model, texture_manager& textures)
 
 void save_session(const Model& model)
 {
-  proto::Session session;
+  proto::session session;
   for (const auto& [id, document] : model) {
     if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);

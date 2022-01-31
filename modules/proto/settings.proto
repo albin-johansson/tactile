@@ -3,7 +3,7 @@ syntax = "proto3";
 package tactile.proto;
 
 /* Remember to keep these values synced with tactile::OverlayPos! */
-enum OverlayPos {
+enum overlay_pos {
   TOP_LEFT = 0;
   TOP_RIGHT = 1;
   BOTTOM_LEFT = 2;
@@ -11,7 +11,7 @@ enum OverlayPos {
 }
 
 /* Remember to keep these values synced with tactile::Theme! */
-enum Theme {
+enum theme {
   DEAR_DARK = 0;
   DEAR_LIGHT = 1;
   RUBY = 2;
@@ -23,20 +23,20 @@ enum Theme {
   ASH = 8;
 }
 
-message Color {
+message color {
   optional uint32 red = 1;
   optional uint32 green = 2;
   optional uint32 blue = 3;
   optional uint32 alpha = 4;
 }
 
-message Settings {
-  optional Theme theme = 1;
+message settings {
+  optional theme theme = 1;
 
   optional int32 preferred_tile_width = 2;
   optional int32 preferred_tile_height = 3;
 
-  optional Color viewport_background = 4;
+  optional color viewport_background = 4;
 
   optional string preferred_format = 16;
   optional uint64 command_capacity = 17;
@@ -56,5 +56,5 @@ message Settings {
   optional bool indent_output = 26;
   optional bool fold_tile_data = 28;
 
-  optional OverlayPos viewport_overlay_pos = 27;
+  optional overlay_pos viewport_overlay_pos = 27;
 }

@@ -2,6 +2,6 @@ syntax = "proto3";
 
 package tactile.proto;
 
-message Session {
+message session {
   repeated string files = 1;
 }
