@@ -16,7 +16,7 @@ class AddComponentCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::AddComponent;
+    return command_id::add_component;
   }
 
  private:

@@ -22,7 +22,7 @@ class SetTilesetNameCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::SetTilesetName;
+    return command_id::set_tileset_name;
   }
 
  private:

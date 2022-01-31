@@ -20,7 +20,7 @@ class RenamePropertyCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::RenameProperty;
+    return command_id::rename_property;
   }
 
  private:

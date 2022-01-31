@@ -22,7 +22,7 @@ class RemoveLayerCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::RemoveLayer;
+    return command_id::remove_layer;
   }
 
  private:

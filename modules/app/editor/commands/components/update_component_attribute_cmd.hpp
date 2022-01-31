@@ -24,7 +24,7 @@ class UpdateComponentAttributeCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::UpdateComponentAttribute;
+    return command_id::update_component_attribute;
   }
 
  private:

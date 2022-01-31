@@ -21,7 +21,7 @@ class SetComponentAttributeTypeCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::SetComponentAttributeType;
+    return command_id::set_component_attribute_type;
   }
 
  private:

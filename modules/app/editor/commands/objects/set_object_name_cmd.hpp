@@ -22,7 +22,7 @@ class SetObjectNameCmd final : public AObjectCmd {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::SetObjectName;
+    return command_id::set_object_name;
   }
 
  private:

@@ -21,7 +21,7 @@ class ChangePropertyTypeCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::ChangePropertyType;
+    return command_id::change_property_type;
   }
 
  private:

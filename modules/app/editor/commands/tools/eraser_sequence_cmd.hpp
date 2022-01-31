@@ -22,7 +22,7 @@ class EraserSequenceCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::EraserSequence;
+    return command_id::eraser_sequence;
   }
 
  private:

@@ -22,7 +22,7 @@ class SetObjectTagCmd final : public AObjectCmd {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::SetObjectTag;
+    return command_id::set_object_tag;
   }
 
  private:

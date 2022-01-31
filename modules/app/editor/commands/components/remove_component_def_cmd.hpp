@@ -18,7 +18,7 @@ class RemoveComponentDefCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::RemoveComponentDef;
+    return command_id::remove_component_def;
   }
 
  private:

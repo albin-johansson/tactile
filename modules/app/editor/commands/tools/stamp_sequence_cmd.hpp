@@ -22,7 +22,7 @@ class StampSequenceCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::StampSequence;
+    return command_id::stamp_sequence;
   }
 
  private:

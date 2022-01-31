@@ -18,7 +18,7 @@ class MoveLayerUpCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::MoveLayerUp;
+    return command_id::move_layer_up;
   }
 
  private:

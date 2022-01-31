@@ -23,7 +23,7 @@ class AddTilesetCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::AddTileset;
+    return command_id::add_tileset;
   }
 
  private:

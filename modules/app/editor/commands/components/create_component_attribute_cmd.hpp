@@ -18,7 +18,7 @@ class CreateComponentAttributeCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::CreateComponentDefAttribute;
+    return command_id::create_component_def_attribute;
   }
 
  private:

@@ -20,7 +20,7 @@ class SetLayerOpacityCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::SetLayerOpacity;
+    return command_id::set_layer_opacity;
   }
 
  private:

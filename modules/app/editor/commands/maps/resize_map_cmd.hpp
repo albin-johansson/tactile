@@ -19,7 +19,7 @@ class ResizeMapCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::ResizeMap;
+    return command_id::resize_map;
   }
 
  private:

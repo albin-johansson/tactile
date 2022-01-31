@@ -19,7 +19,7 @@ class RenameComponentCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::RenameComponent;
+    return command_id::rename_component;
   }
 
  private:

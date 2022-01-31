@@ -18,7 +18,7 @@ class SetObjectVisibilityCmd final : public AObjectCmd {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::SetObjectVisibility;
+    return command_id::set_object_visibility;
   }
 
  private:

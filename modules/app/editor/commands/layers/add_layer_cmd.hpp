@@ -22,7 +22,7 @@ class AddLayerCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::AddLayer;
+    return command_id::add_layer;
   }
 
  private:

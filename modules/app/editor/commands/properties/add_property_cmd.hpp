@@ -21,7 +21,7 @@ class AddPropertyCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::AddProperty;
+    return command_id::add_property;
   }
 
  private:

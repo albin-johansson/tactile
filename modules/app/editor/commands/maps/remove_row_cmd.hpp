@@ -21,7 +21,7 @@ class RemoveRowCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::RemoveRow;
+    return command_id::remove_row;
   }
 
  private:

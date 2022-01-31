@@ -21,7 +21,7 @@ class RenameComponentAttributeCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::RenameComponentAttribute;
+    return command_id::rename_component_attribute;
   }
 
  private:

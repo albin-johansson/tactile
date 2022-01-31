@@ -20,7 +20,7 @@ class AddColumnCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::AddColumn;
+    return command_id::add_column;
   }
 
  private:

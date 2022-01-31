@@ -20,7 +20,7 @@ class RenameLayerCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::RenameLayer;
+    return command_id::rename_layer;
   }
 
  private:

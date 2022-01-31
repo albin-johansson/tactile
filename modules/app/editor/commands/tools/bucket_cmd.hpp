@@ -22,7 +22,7 @@ class BucketCmd final : public command_base {
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::Bucket; }
+  [[nodiscard]] auto id() const noexcept -> int override { return command_id::bucket; }
 
  private:
   registry_ref mRegistry;

@@ -19,7 +19,7 @@ class CreateComponentDefCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return CommandId::CreateComponentDef;
+    return command_id::create_component_def;
   }
 
  private:
