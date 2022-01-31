@@ -6,27 +6,27 @@
 
 namespace tactile {
 
-CommandStack::CommandStack() : mCapacity{get_preferences().command_capacity()} {}
+command_stack::command_stack() : mCapacity{get_preferences().command_capacity()} {}
 
-void CommandStack::Clear()
+void command_stack::clear()
 {
   mStack.clear();
   mIndex.reset();
 }
 
-void CommandStack::MarkAsClean()
+void command_stack::mark_as_clean()
 {
   mCleanIndex = mIndex;
 }
 
-void CommandStack::ResetClean()
+void command_stack::reset_clean()
 {
   mCleanIndex.reset();
 }
 
-void CommandStack::Undo()
+void command_stack::undo()
 {
-  TACTILE_ASSERT(CanUndo());
+  TACTILE_ASSERT(can_undo());
 
   const auto& cmd = mStack.at(mIndex.value());
   cmd->undo();
@@ -39,9 +39,9 @@ void CommandStack::Undo()
   }
 }
 
-void CommandStack::Redo()
+void command_stack::redo()
 {
-  TACTILE_ASSERT(CanRedo());
+  TACTILE_ASSERT(can_redo());
 
   const auto index = mIndex ? *mIndex + 1 : 0;
 
@@ -51,49 +51,49 @@ void CommandStack::Redo()
   mIndex = index;
 }
 
-void CommandStack::SetCapacity(const usize capacity)
+void command_stack::set_capacity(usize capacity)
 {
   mCapacity = capacity;
 
-  const auto size = GetSize();
-  if (size > mCapacity) {
-    const auto n = size - mCapacity;
-    invoke_n(n, [this] { RemoveOldestCommand(); });
+  const auto count = size();
+  if (count > mCapacity) {
+    const auto n = count - mCapacity;
+    invoke_n(n, [this] { remove_oldest_command(); });
   }
 }
 
-auto CommandStack::IsClean() const -> bool
+auto command_stack::is_clean() const -> bool
 {
   return mStack.empty() || (mCleanIndex == mIndex);
 }
 
-auto CommandStack::CanUndo() const -> bool
+auto command_stack::can_undo() const -> bool
 {
   return !mStack.empty() && mIndex.has_value();
 }
 
-auto CommandStack::CanRedo() const -> bool
+auto command_stack::can_redo() const -> bool
 {
   return (!mStack.empty() && !mIndex) || (!mStack.empty() && mIndex < mStack.size() - 1);
 }
 
-auto CommandStack::GetUndoText() const -> const std::string&
+auto command_stack::get_undo_text() const -> const std::string&
 {
-  TACTILE_ASSERT(CanUndo());
+  TACTILE_ASSERT(can_undo());
 
   const auto& cmd = mStack.at(mIndex.value());
   return cmd->text();
 }
 
-auto CommandStack::GetRedoText() const -> const std::string&
+auto command_stack::get_redo_text() const -> const std::string&
 {
-  TACTILE_ASSERT(CanRedo());
+  TACTILE_ASSERT(can_redo());
 
   const auto& cmd = mStack.at(mIndex ? *mIndex + 1 : 0);
   return cmd->text();
 }
 
-void CommandStack::RemoveOldestCommand()
+void command_stack::remove_oldest_command()
 {
   mStack.pop_front();
 
@@ -111,7 +111,7 @@ void CommandStack::RemoveOldestCommand()
   }
 }
 
-void CommandStack::RemoveCommandsAfterCurrentIndex()
+void command_stack::remove_commands_after_current_index()
 {
   const auto startIndex = mIndex ? *mIndex + 1 : 0;
   const auto size = mStack.size();

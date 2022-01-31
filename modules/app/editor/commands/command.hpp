@@ -49,7 +49,7 @@ class command_base {
    * \details This function is called whenever a command is pushed onto the
    * command stack.
    *
-   * \see `CommandStack::Push`
+   * \see `command_stack::push`
    */
   virtual void redo() = 0;
 
@@ -58,11 +58,11 @@ class command_base {
    *
    * \details This function is mainly designed to be used when overriding the
    * `merge_with()` function, where it can be used to efficiently test if two
-   * commands are of the same type, since the parameter type is `ACommand`.
+   * commands are of the same type, since the parameter type is `command_base`.
    *
    * \return an identifier unique to the command class.
    *
-   * \see `CommandId`
+   * \see `command_id`
    */
   [[nodiscard]] virtual auto id() const -> int = 0;
 

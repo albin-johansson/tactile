@@ -14,12 +14,17 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class CommandStack final {
+/**
+ * \brief Manages a history of commands.
+ */
+class command_stack final {
  public:
-  CommandStack();
+  command_stack();
 
-  /// Clears the command stack of all commands.
-  void Clear();
+  /**
+   * \brief Clears the command stack of all commands.
+   */
+  void clear();
 
   /**
    * \brief Marks the current command stack state as "clean".
@@ -28,35 +33,35 @@ class CommandStack final {
    * saving of files, etc. For example, when a document is saved, it should be
    * marked as clean.
    */
-  void MarkAsClean();
+  void mark_as_clean();
 
   /**
    * \brief Resets any current clean state.
    */
-  void ResetClean();
+  void reset_clean();
 
   /**
    * \brief Undoes the current command.
    *
    * \pre There must be an undoable command.
    */
-  void Undo();
+  void undo();
 
   /**
    * \brief Redoes the current command.
    *
    * \pre There must be a redoable command.
    */
-  void Redo();
+  void redo();
 
   template <typename T, typename... Args, is_derived_from<command_base, T> = 0>
-  void PushWithoutRedo(Args&&... args)
+  void push_without_redo(Args&&... args)
   {
-    if (GetSize() == GetCapacity()) {
-      RemoveOldestCommand();
+    if (size() == capacity()) {
+      remove_oldest_command();
     }
 
-    RemoveCommandsAfterCurrentIndex();
+    remove_commands_after_current_index();
     auto cmd = std::make_unique<T>(std::forward<Args>(args)...);
     mIndex = mIndex ? *mIndex + 1 : 0;
     mStack.push_back(std::move(cmd));
@@ -76,13 +81,13 @@ class CommandStack final {
    * constructor.
    */
   template <typename T, typename... Args, is_derived_from<command_base, T> = 0>
-  void Push(Args&&... args)
+  void push(Args&&... args)
   {
-    if (GetSize() == GetCapacity()) {
-      RemoveOldestCommand();
+    if (size() == capacity()) {
+      remove_oldest_command();
     }
 
-    RemoveCommandsAfterCurrentIndex();
+    remove_commands_after_current_index();
 
     T cmd{std::forward<Args>(args)...};
     cmd.redo();
@@ -108,28 +113,28 @@ class CommandStack final {
    *
    * \param capacity the maximum amount of commands.
    */
-  void SetCapacity(usize capacity);
+  void set_capacity(usize capacity);
 
   /**
    * \brief Indicates whether or not the current command stack state is clean.
    *
    * \return `true` if the current state is clean; `false` otherwise.
    */
-  [[nodiscard]] auto IsClean() const -> bool;
+  [[nodiscard]] auto is_clean() const -> bool;
 
   /**
    * \brief Indicates whether or not the current command is undoable.
    *
    * \return `true` if undo is available; `false` otherwise.
    */
-  [[nodiscard]] auto CanUndo() const -> bool;
+  [[nodiscard]] auto can_undo() const -> bool;
 
   /**
    * \brief Indicates whether or not the current command is redoable.
    *
    * \return `true` if redo is available; `false` otherwise.
    */
-  [[nodiscard]] auto CanRedo() const -> bool;
+  [[nodiscard]] auto can_redo() const -> bool;
 
   /**
    * \brief Returns the text associated with the current undoable command.
@@ -138,7 +143,7 @@ class CommandStack final {
    *
    * \return the undoable command text.
    */
-  [[nodiscard]] auto GetUndoText() const -> const std::string&;
+  [[nodiscard]] auto get_undo_text() const -> const std::string&;
 
   /**
    * \brief Returns the text associated with the current redoable command.
@@ -147,26 +152,37 @@ class CommandStack final {
    *
    * \return the redoable command text.
    */
-  [[nodiscard]] auto GetRedoText() const -> const std::string&;
+  [[nodiscard]] auto get_redo_text() const -> const std::string&;
 
-  /// Returns the number of commands in the stack.
-  [[nodiscard]] auto GetSize() const noexcept -> usize { return mStack.size(); }
+  /**
+   * \brief Returns the number of commands on the stack.
+   *
+   * \return the amount of stack commands.
+   */
+  [[nodiscard]] auto size() const noexcept -> usize { return mStack.size(); }
 
-  /// Returns the current command index.
-  [[nodiscard]] auto GetIndex() const noexcept -> maybe<usize> { return mIndex; }
+  /**
+   * \brief Returns the current command index.
+   *
+   * \return the index of the current command;
+   *         an empty optional is returned is there is no such command.
+   */
+  [[nodiscard]] auto index() const noexcept -> maybe<usize> { return mIndex; }
 
-  /// Returns the clean index, if there is one.
-  [[nodiscard]] auto GetCleanIndex() const noexcept -> maybe<usize>
-  {
-    return mCleanIndex;
-  }
+  /**
+   * \brief Returns the clean index, if there is one.
+   *
+   * \return the index of the command considered to represent the clean state;
+   *         an empty optional is returned is there is no clean index.
+   */
+  [[nodiscard]] auto clean_index() const noexcept -> maybe<usize> { return mCleanIndex; }
 
   /**
    * \brief Returns the maximum amount of commands that the stack can hold.
    *
    * \return the stack capacity.
    */
-  [[nodiscard]] auto GetCapacity() const noexcept -> usize { return mCapacity; }
+  [[nodiscard]] auto capacity() const noexcept -> usize { return mCapacity; }
 
  private:
   std::deque<std::unique_ptr<command_base>> mStack;
@@ -174,9 +190,9 @@ class CommandStack final {
   maybe<usize> mCleanIndex;
   usize mCapacity;
 
-  void RemoveOldestCommand();
+  void remove_oldest_command();
 
-  void RemoveCommandsAfterCurrentIndex();
+  void remove_commands_after_current_index();
 };
 
 /// \} End of group commands

@@ -226,8 +226,8 @@ TEST(RestoreDocumentFromIR, Test)
   const auto document = restore_document_from_ir(parser.data(), textures);
 
   ASSERT_EQ(std::filesystem::absolute("test-resources/yaml/map.yaml"), document.path);
-  ASSERT_FALSE(document.commands.CanUndo());
-  ASSERT_FALSE(document.commands.CanRedo());
+  ASSERT_FALSE(document.commands.can_undo());
+  ASSERT_FALSE(document.commands.can_redo());
 
   const auto& registry = document.registry;
   _check_map_attributes(registry);

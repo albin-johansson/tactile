@@ -110,7 +110,7 @@ auto Model::CanSaveDocument() const -> bool
 {
   if (mActiveMap) {
     const auto& document = mDocuments.at(*mActiveMap);
-    return !document->commands.IsClean();
+    return !document->commands.is_clean();
   }
   else {
     return false;
@@ -190,35 +190,35 @@ auto Model::GetActiveRegistryRef() const -> const entt::registry&
 void Model::SetCommandCapacity(const usize capacity)
 {
   for (auto& [id, document] : mDocuments) {
-    document->commands.SetCapacity(capacity);
+    document->commands.set_capacity(capacity);
   }
 }
 
 auto Model::IsClean() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.IsClean();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.is_clean();
 }
 
 auto Model::CanUndo() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.CanUndo();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.can_undo();
 }
 
 auto Model::CanRedo() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.CanRedo();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.can_redo();
 }
 
 auto Model::GetUndoText() const -> const std::string&
 {
   TACTILE_ASSERT(CanUndo());
-  return mDocuments.at(mActiveMap.value())->commands.GetUndoText();
+  return mDocuments.at(mActiveMap.value())->commands.get_undo_text();
 }
 
 auto Model::GetRedoText() const -> const std::string&
 {
   TACTILE_ASSERT(CanRedo());
-  return mDocuments.at(mActiveMap.value())->commands.GetRedoText();
+  return mDocuments.at(mActiveMap.value())->commands.get_redo_text();
 }
 
 auto Model::IsStampActive() const -> bool

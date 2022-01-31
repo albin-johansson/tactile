@@ -48,239 +48,239 @@ class Bar : public command_base {
 
 TEST(CommandStack, Defaults)
 {
-  const CommandStack stack;
-  ASSERT_EQ(0, stack.GetSize());
-  ASSERT_EQ(get_preferences().command_capacity(), stack.GetCapacity());
-  ASSERT_FALSE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
-  ASSERT_TRUE(stack.IsClean());
+  const command_stack stack;
+  ASSERT_EQ(0, stack.size());
+  ASSERT_EQ(get_preferences().command_capacity(), stack.capacity());
+  ASSERT_FALSE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
+  ASSERT_TRUE(stack.is_clean());
 }
 
 TEST(CommandStack, Usage)
 {
-  CommandStack stack;
+  command_stack stack;
 
   // ^[ ] -> [ ^Foo ]
-  stack.Push<Foo>();
-  ASSERT_EQ(1, stack.GetSize());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
-  ASSERT_EQ("Foo", stack.GetUndoText());
+  stack.push<Foo>();
+  ASSERT_EQ(1, stack.size());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
+  ASSERT_EQ("Foo", stack.get_undo_text());
 
   // [ ^Foo ] -> [ Foo, ^Bar ]
-  stack.Push<Bar>();
-  ASSERT_EQ(2, stack.GetSize());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  stack.push<Bar>();
+  ASSERT_EQ(2, stack.size());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 
   // [ Foo, ^Bar ] -> [ ^Foo, Bar ]
-  stack.Undo();
-  ASSERT_EQ(2, stack.GetSize());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_TRUE(stack.CanRedo());
-  ASSERT_EQ("Foo", stack.GetUndoText());
-  ASSERT_EQ("Bar", stack.GetRedoText());
+  stack.undo();
+  ASSERT_EQ(2, stack.size());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_TRUE(stack.can_redo());
+  ASSERT_EQ("Foo", stack.get_undo_text());
+  ASSERT_EQ("Bar", stack.get_redo_text());
 
   // [ ^Foo, Bar ] -> ^[ Foo, Bar ]
-  stack.Undo();
-  ASSERT_EQ(2, stack.GetSize());
-  ASSERT_FALSE(stack.CanUndo());
-  ASSERT_TRUE(stack.CanRedo());
-  ASSERT_EQ("Foo", stack.GetRedoText());
+  stack.undo();
+  ASSERT_EQ(2, stack.size());
+  ASSERT_FALSE(stack.can_undo());
+  ASSERT_TRUE(stack.can_redo());
+  ASSERT_EQ("Foo", stack.get_redo_text());
 
   // ^[ Foo, Bar ] -> [ ^Foo, Bar ]
-  stack.Redo();
-  ASSERT_EQ(2, stack.GetSize());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_TRUE(stack.CanRedo());
-  ASSERT_EQ("Foo", stack.GetUndoText());
-  ASSERT_EQ("Bar", stack.GetRedoText());
+  stack.redo();
+  ASSERT_EQ(2, stack.size());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_TRUE(stack.can_redo());
+  ASSERT_EQ("Foo", stack.get_undo_text());
+  ASSERT_EQ("Bar", stack.get_redo_text());
 
   // [ ^Foo, Bar ] -> [ Foo, ^Bar ]
-  stack.Redo();
-  ASSERT_EQ(2, stack.GetSize());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  stack.redo();
+  ASSERT_EQ(2, stack.size());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 
   // [ Foo, ^Bar ] -> [ ^Foo, Bar ]
-  stack.Undo();
-  ASSERT_EQ(2, stack.GetSize());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_TRUE(stack.CanRedo());
-  ASSERT_EQ("Foo", stack.GetUndoText());
-  ASSERT_EQ("Bar", stack.GetRedoText());
+  stack.undo();
+  ASSERT_EQ(2, stack.size());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_TRUE(stack.can_redo());
+  ASSERT_EQ("Foo", stack.get_undo_text());
+  ASSERT_EQ("Bar", stack.get_redo_text());
 
   // [ ^Foo, Bar ] -> [ Foo, ^Foo ]
-  stack.Push<Foo>();
-  ASSERT_EQ(2, stack.GetSize());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
-  ASSERT_EQ("Foo", stack.GetUndoText());
+  stack.push<Foo>();
+  ASSERT_EQ(2, stack.size());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
+  ASSERT_EQ("Foo", stack.get_undo_text());
 
   // [ Foo, ^Foo ] -> ^[ Foo, Foo ]
-  stack.Undo();
-  stack.Undo();
-  ASSERT_EQ(2, stack.GetSize());
-  ASSERT_EQ("Foo", stack.GetRedoText());
+  stack.undo();
+  stack.undo();
+  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ("Foo", stack.get_redo_text());
 
   // ^[ Foo, Foo ] -> [ ^Bar ]
-  stack.Push<Bar>();
-  ASSERT_EQ(1, stack.GetSize());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  stack.push<Bar>();
+  ASSERT_EQ(1, stack.size());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 }
 
 TEST(CommandStack, Clean)
 {
-  CommandStack stack;
+  command_stack stack;
 
-  ASSERT_TRUE(stack.IsClean());
-  ASSERT_FALSE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
+  ASSERT_TRUE(stack.is_clean());
+  ASSERT_FALSE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
 
-  stack.MarkAsClean();
-  stack.Push<Foo>();
-  ASSERT_FALSE(stack.IsClean());
+  stack.mark_as_clean();
+  stack.push<Foo>();
+  ASSERT_FALSE(stack.is_clean());
 
-  stack.Undo();
-  ASSERT_TRUE(stack.IsClean());
+  stack.undo();
+  ASSERT_TRUE(stack.is_clean());
 
   // ^[ ] -> [ ^Foo ]
-  stack.Clear();
-  stack.ResetClean();
-  stack.Push<Foo>();
-  ASSERT_FALSE(stack.IsClean());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
+  stack.clear();
+  stack.reset_clean();
+  stack.push<Foo>();
+  ASSERT_FALSE(stack.is_clean());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
 
   // [ ^Foo ] -> [ Foo, ^Bar ]
-  stack.Push<Bar>();
-  ASSERT_FALSE(stack.IsClean());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
+  stack.push<Bar>();
+  ASSERT_FALSE(stack.is_clean());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
 
-  stack.MarkAsClean();
-  ASSERT_TRUE(stack.IsClean());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
+  stack.mark_as_clean();
+  ASSERT_TRUE(stack.is_clean());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
 
   // [ Foo, ^Bar ] -> [ ^Foo, Bar ]
-  stack.Undo();
-  ASSERT_FALSE(stack.IsClean());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_TRUE(stack.CanRedo());
+  stack.undo();
+  ASSERT_FALSE(stack.is_clean());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_TRUE(stack.can_redo());
 
   // [ ^Foo, Bar ] -> [ Foo, ^Bar ]
-  stack.Redo();
-  ASSERT_TRUE(stack.IsClean());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
+  stack.redo();
+  ASSERT_TRUE(stack.is_clean());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
 
   /* Here we test a special case when the clean state becomes invalidated */
   // [ Foo, ^Bar ] -Undo-> [ ^Foo, Bar ] -Push-> [ Foo, ^Foo ]
-  stack.Undo();
-  stack.Push<Foo>();
-  ASSERT_FALSE(stack.IsClean());
-  ASSERT_TRUE(stack.CanUndo());
-  ASSERT_FALSE(stack.CanRedo());
+  stack.undo();
+  stack.push<Foo>();
+  ASSERT_FALSE(stack.is_clean());
+  ASSERT_TRUE(stack.can_undo());
+  ASSERT_FALSE(stack.can_redo());
 
-  stack.MarkAsClean();
-  ASSERT_TRUE(stack.IsClean());
+  stack.mark_as_clean();
+  ASSERT_TRUE(stack.is_clean());
 
-  stack.ResetClean();
-  ASSERT_FALSE(stack.IsClean());
+  stack.reset_clean();
+  ASSERT_FALSE(stack.is_clean());
 }
 
 TEST(CommandStack, OverflowWithCleanIndex)
 {
-  CommandStack stack;
+  command_stack stack;
 
-  stack.SetCapacity(4);
-  ASSERT_EQ(4, stack.GetCapacity());
+  stack.set_capacity(4);
+  ASSERT_EQ(4, stack.capacity());
 
-  stack.Push<Foo>();
+  stack.push<Foo>();
 
-  stack.Push<Bar>();
-  stack.MarkAsClean();
+  stack.push<Bar>();
+  stack.mark_as_clean();
 
-  stack.Push<Bar>();
-  stack.Push<Bar>();
+  stack.push<Bar>();
+  stack.push<Bar>();
 
   //  ^[ ] -> [ Foo, _Bar_, Bar, ^Bar ]
-  ASSERT_EQ(4, stack.GetSize());
-  ASSERT_EQ(3, stack.GetIndex());
-  ASSERT_EQ(1, stack.GetCleanIndex());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  ASSERT_EQ(4, stack.size());
+  ASSERT_EQ(3, stack.index());
+  ASSERT_EQ(1, stack.clean_index());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 
   // [ Foo, _Bar_, Bar, ^Bar ] -> [ _Bar_, Bar, Bar, ^Foo ]
-  stack.Push<Foo>();
-  ASSERT_EQ(4, stack.GetSize());
-  ASSERT_EQ(3, stack.GetIndex());
-  ASSERT_EQ(0, stack.GetCleanIndex());
-  ASSERT_EQ("Foo", stack.GetUndoText());
+  stack.push<Foo>();
+  ASSERT_EQ(4, stack.size());
+  ASSERT_EQ(3, stack.index());
+  ASSERT_EQ(0, stack.clean_index());
+  ASSERT_EQ("Foo", stack.get_undo_text());
 
   // [ _Bar_, Bar, Bar, ^Foo ] -> [ Bar, Bar, Foo, ^Bar ]
-  stack.Push<Bar>();
-  ASSERT_EQ(4, stack.GetSize());
-  ASSERT_EQ(3, stack.GetIndex());
-  ASSERT_FALSE(stack.GetCleanIndex());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  stack.push<Bar>();
+  ASSERT_EQ(4, stack.size());
+  ASSERT_EQ(3, stack.index());
+  ASSERT_FALSE(stack.clean_index());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 }
 
 TEST(CommandStack, Overflow)
 {
-  CommandStack stack;
-  stack.Push<Foo>();
+  command_stack stack;
+  stack.push<Foo>();
 
-  ASSERT_EQ(1, stack.GetSize());
-  ASSERT_EQ(0, stack.GetIndex());
-  ASSERT_EQ("Foo", stack.GetUndoText());
+  ASSERT_EQ(1, stack.size());
+  ASSERT_EQ(0, stack.index());
+  ASSERT_EQ("Foo", stack.get_undo_text());
 
   // The stack should be full after this
-  for (auto index = 0u; index < (stack.GetCapacity() - 1); ++index) {
-    stack.Push<Bar>();
+  for (auto index = 0u; index < (stack.capacity() - 1); ++index) {
+    stack.push<Bar>();
   }
 
-  ASSERT_EQ(stack.GetCapacity(), stack.GetSize());
-  ASSERT_EQ(stack.GetCapacity() - 1, stack.GetIndex());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  ASSERT_EQ(stack.capacity(), stack.size());
+  ASSERT_EQ(stack.capacity() - 1, stack.index());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 
-  stack.Push<Foo>();  // This should cause the first command to get removed
-  ASSERT_EQ(stack.GetCapacity(), stack.GetSize());
+  stack.push<Foo>();  // This should cause the first command to get removed
+  ASSERT_EQ(stack.capacity(), stack.size());
 }
 
 TEST(CommandStack, SetCapacity)
 {
-  CommandStack stack;
+  command_stack stack;
 
-  stack.SetCapacity(5);
-  ASSERT_EQ(5, stack.GetCapacity());
+  stack.set_capacity(5);
+  ASSERT_EQ(5, stack.capacity());
 
   for (auto index = 0u; index < 5; ++index) {
-    stack.Push<Foo>();
+    stack.push<Foo>();
   }
-  ASSERT_EQ(5, stack.GetSize());
-  ASSERT_EQ("Foo", stack.GetUndoText());
+  ASSERT_EQ(5, stack.size());
+  ASSERT_EQ("Foo", stack.get_undo_text());
 
   // [ Foo, Foo, Foo, Foo, ^Foo ] -> [ Foo, Foo, Foo, Foo, ^Bar ]
-  stack.Push<Bar>();
-  ASSERT_EQ(5, stack.GetSize());
-  ASSERT_EQ(4, stack.GetIndex());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  stack.push<Bar>();
+  ASSERT_EQ(5, stack.size());
+  ASSERT_EQ(4, stack.index());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 
   // [ Foo, Foo, Foo, Foo, ^Bar ] -> [ Foo, Foo, ^Bar ]
-  stack.SetCapacity(3);
-  ASSERT_EQ(3, stack.GetCapacity());
-  ASSERT_EQ(3, stack.GetSize());
-  ASSERT_EQ(2, stack.GetIndex());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  stack.set_capacity(3);
+  ASSERT_EQ(3, stack.capacity());
+  ASSERT_EQ(3, stack.size());
+  ASSERT_EQ(2, stack.index());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 
-  stack.SetCapacity(10);
-  ASSERT_EQ(10, stack.GetCapacity());
-  ASSERT_EQ(3, stack.GetSize());
-  ASSERT_EQ(2, stack.GetIndex());
-  ASSERT_EQ("Bar", stack.GetUndoText());
+  stack.set_capacity(10);
+  ASSERT_EQ(10, stack.capacity());
+  ASSERT_EQ(3, stack.size());
+  ASSERT_EQ(2, stack.index());
+  ASSERT_EQ("Bar", stack.get_undo_text());
 }

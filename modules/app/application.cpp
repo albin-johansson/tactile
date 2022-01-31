@@ -40,7 +40,7 @@ void _execute(Model& model, Args&&... args)
 {
   if (auto* document = model.GetActiveDocument()) {
     auto& commands = document->commands;
-    commands.Push<Command>(document->registry, std::forward<Args>(args)...);
+    commands.push<Command>(document->registry, std::forward<Args>(args)...);
   }
   else {
     log_error("Could not execute a command due to no active document!");
@@ -52,7 +52,7 @@ void _register(Model& model, Args&&... args)
 {
   if (auto* document = model.GetActiveDocument()) {
     auto& commands = document->commands;
-    commands.PushWithoutRedo<Command>(document->registry, std::forward<Args>(args)...);
+    commands.push_without_redo<Command>(document->registry, std::forward<Args>(args)...);
   }
   else {
     log_error("Could not register a command due to no active document!");
@@ -212,14 +212,14 @@ void Application::UpdateFrame()
 void Application::OnUndo()
 {
   if (auto* document = mModel.GetActiveDocument()) {
-    document->commands.Undo();
+    document->commands.undo();
   }
 }
 
 void Application::OnRedo()
 {
   if (auto* document = mModel.GetActiveDocument()) {
-    document->commands.Redo();
+    document->commands.redo();
   }
 }
 
@@ -233,7 +233,7 @@ void Application::OnSave()
   if (auto* document = mModel.GetActiveDocument()) {
     if (!document->path.empty()) {
       save_document(*document);
-      document->commands.MarkAsClean();
+      document->commands.mark_as_clean();
 
       auto& context = document->registry.ctx<comp::attribute_context>();
       context.name = document->path.filename().string();
