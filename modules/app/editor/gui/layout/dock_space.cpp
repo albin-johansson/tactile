@@ -22,7 +22,8 @@ void UpdateDockSpace()
   if (!gInitialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
-      if (!prefs::GetRestoreLayout() || !std::filesystem::exists("imgui.ini")) {
+      const auto& prefs = get_preferences();
+      if (!prefs.will_restore_layout() || !std::filesystem::exists("imgui.ini")) {
         LoadDefaultLayout(gRootId.value(), false);
       }
       gInitialized = true;

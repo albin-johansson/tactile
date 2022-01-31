@@ -68,11 +68,13 @@ im_gui_context::im_gui_context(cen::window& window, cen::gl_context& context)
 
   ImGui::StyleColorsDark();
 
+  const auto& prefs = get_preferences();
   auto& style = ImGui::GetStyle();
-  ApplyStyle(style);
-  ApplyTheme(style, prefs::GetTheme());
 
-  style.WindowBorderSize = prefs::GetWindowBorder() ? 1.0f : 0.0f;
+  ApplyStyle(style);
+  ApplyTheme(style, prefs.get_theme());
+
+  style.WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
   if constexpr (on_osx) {

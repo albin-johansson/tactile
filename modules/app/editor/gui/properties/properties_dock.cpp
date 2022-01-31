@@ -13,14 +13,15 @@ namespace tactile {
 
 void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!prefs::GetShowPropertiesDock()) {
+  auto& prefs = get_preferences();
+  bool visible = prefs.is_properties_dock_visible();
+
+  if (!visible) {
     return;
   }
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-  bool isVisible = prefs::GetShowPropertiesDock();
-
-  scoped::Window dock{"Properties", flags, &isVisible};
+  scoped::Window dock{"Properties", flags, &visible};
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
@@ -32,7 +33,7 @@ void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
   mRenameDialog.Update(model, dispatcher);
   mChangeTypeDialog.Update(model, dispatcher);
 
-  prefs::SetShowPropertiesDock(isVisible);
+  prefs.set_properties_dock_visible(visible);
 }
 
 void PropertiesDock::ShowAddPropertyDialog()

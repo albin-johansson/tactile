@@ -23,24 +23,26 @@ void UpdateWidgetsMenu(const bool hasActiveMap)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Properties", nullptr, prefs::GetShowPropertiesDock())) {
-      prefs::SetShowPropertiesDock(!prefs::GetShowPropertiesDock());
+    auto& prefs = get_preferences();
+
+    if (ImGui::MenuItem("Properties", nullptr, prefs.is_properties_dock_visible())) {
+      prefs.set_properties_dock_visible(!prefs.is_properties_dock_visible());
     }
 
-    if (ImGui::MenuItem("Layers", nullptr, prefs::GetShowLayerDock())) {
-      prefs::SetShowLayerDock(!prefs::GetShowLayerDock());
+    if (ImGui::MenuItem("Layers", nullptr, prefs.is_layer_dock_visible())) {
+      prefs.set_layer_dock_visible(!prefs.is_layer_dock_visible());
     }
 
-    if (ImGui::MenuItem("Tilesets", nullptr, prefs::GetShowTilesetDock())) {
-      prefs::SetShowTilesetDock(!prefs::GetShowTilesetDock());
+    if (ImGui::MenuItem("Tilesets", nullptr, prefs.is_tileset_dock_visible())) {
+      prefs.set_tileset_dock_visible(!prefs.is_tileset_dock_visible());
     }
 
-    if (ImGui::MenuItem("Log", nullptr, prefs::GetShowLogDock())) {
-      prefs::SetShowLogDock(!prefs::GetShowLogDock());
+    if (ImGui::MenuItem("Log", nullptr, prefs.is_log_dock_visible())) {
+      prefs.set_log_dock_visible(!prefs.is_log_dock_visible());
     }
 
-    if (ImGui::MenuItem("Components", nullptr, prefs::GetShowComponentDock())) {
-      prefs::SetShowComponentDock(!prefs::GetShowComponentDock());
+    if (ImGui::MenuItem("Components", nullptr, prefs.is_component_dock_visible())) {
+      prefs.set_component_dock_visible(!prefs.is_component_dock_visible());
     }
   }
 }
@@ -64,11 +66,13 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (bool showGrid = prefs::GetShowGrid();
+    auto& prefs = get_preferences();
+
+    if (bool visible = prefs.is_grid_visible();
         ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid",
                         TACTILE_PRIMARY_MOD "+G",
-                        &showGrid)) {
-      prefs::SetShowGrid(showGrid);
+                        &visible)) {
+      prefs.set_grid_visible(visible);
     }
 
     ImGui::Separator();

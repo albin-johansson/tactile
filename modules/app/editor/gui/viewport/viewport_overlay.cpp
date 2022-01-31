@@ -26,11 +26,11 @@ void PreparePositionAndPivot()
   const auto pos = ImGui::GetWindowPos();
   const auto size = ImGui::GetWindowSize();
 
-  const auto corner = prefs::GetViewportOverlayPos();
+  const auto corner = get_preferences().viewport_overlay_pos();
   const bool isRight =
-      corner == OverlayPos::TopRight || corner == OverlayPos::BottomRight;
+      corner == overlay_pos::top_right || corner == overlay_pos::bottom_right;
   const bool isBottom =
-      corner == OverlayPos::BottomLeft || corner == OverlayPos::BottomRight;
+      corner == overlay_pos::bottom_left || corner == overlay_pos::bottom_right;
 
   const float padding = 10.0f;
 
@@ -105,22 +105,23 @@ void UpdateMouseTileLabels(const entt::registry& registry,
 void UpdateOverlayContextMenu()
 {
   if (auto popup = scoped::Popup::ForWindow("##ViewportOverlayPopup"); popup.IsOpen()) {
-    const auto corner = prefs::GetViewportOverlayPos();
+    auto& prefs = get_preferences();
+    const auto corner = prefs.viewport_overlay_pos();
 
-    if (ImGui::MenuItem("Top-left", nullptr, corner == OverlayPos::TopLeft)) {
-      prefs::SetViewportOverlayPos(OverlayPos::TopLeft);
+    if (ImGui::MenuItem("Top-left", nullptr, corner == overlay_pos::top_left)) {
+      prefs.set_viewport_overlay_pos(overlay_pos::top_left);
     }
 
-    if (ImGui::MenuItem("Top-right", nullptr, corner == OverlayPos::TopRight)) {
-      prefs::SetViewportOverlayPos(OverlayPos::TopRight);
+    if (ImGui::MenuItem("Top-right", nullptr, corner == overlay_pos::top_right)) {
+      prefs.set_viewport_overlay_pos(overlay_pos::top_right);
     }
 
-    if (ImGui::MenuItem("Bottom-left", nullptr, corner == OverlayPos::BottomLeft)) {
-      prefs::SetViewportOverlayPos(OverlayPos::BottomLeft);
+    if (ImGui::MenuItem("Bottom-left", nullptr, corner == overlay_pos::bottom_left)) {
+      prefs.set_viewport_overlay_pos(overlay_pos::bottom_left);
     }
 
-    if (ImGui::MenuItem("Bottom-right", nullptr, corner == OverlayPos::BottomRight)) {
-      prefs::SetViewportOverlayPos(OverlayPos::BottomRight);
+    if (ImGui::MenuItem("Bottom-right", nullptr, corner == overlay_pos::bottom_right)) {
+      prefs.set_viewport_overlay_pos(overlay_pos::bottom_right);
     }
   }
 }

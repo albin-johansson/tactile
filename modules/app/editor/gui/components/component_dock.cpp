@@ -131,13 +131,14 @@ void ShowAddComponentButtonPopupContent(const entt::registry& registry,
 
 void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  auto showDock = prefs::GetShowComponentDock();
+  auto& prefs = get_preferences();
+  auto visible = prefs.is_component_dock_visible();
 
-  if (!showDock) {
+  if (!visible) {
     return;
   }
 
-  scoped::Window dock{"Components", gWindowFlags, &showDock};
+  scoped::Window dock{"Components", gWindowFlags, &visible};
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
@@ -165,7 +166,7 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
     }
   }
 
-  prefs::SetShowComponentDock(showDock);
+  prefs.set_component_dock_visible(visible);
 }
 
 }  // namespace tactile

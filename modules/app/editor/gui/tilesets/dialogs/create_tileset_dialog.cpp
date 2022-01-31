@@ -18,8 +18,11 @@ void CreateTilesetDialog::Open()
 {
   zero_buffer(mPathPreviewBuffer);
   mFullImagePath.clear();
-  mTileWidth = prefs::GetPreferredTileWidth();
-  mTileHeight = prefs::GetPreferredTileHeight();
+
+  const auto& prefs = get_preferences();
+  mTileWidth = prefs.preferred_tile_width();
+  mTileHeight = prefs.preferred_tile_height();
+
   Show();
 }
 

@@ -30,8 +30,8 @@ class SettingsDialog final : public ADialog {
   void OnApply(entt::dispatcher& dispatcher) override;
 
  private:
-  Preferences mSnapshot;  ///< The original settings when the dialog was opened.
-  Preferences mSettings;  ///< The value of the settings in the GUI.
+  preference_state mSnapshot;     ///< The original settings when the dialog was opened.
+  preference_state mGuiSettings;  ///< The value of the settings in the GUI.
 
   void ApplySettings(entt::dispatcher& dispatcher);
 

@@ -73,12 +73,14 @@ void LayerDock::Update(const Model& model,
                        const Icons& icons,
                        entt::dispatcher& dispatcher)
 {
-  if (!prefs::GetShowLayerDock()) {
+  auto& prefs = get_preferences();
+  bool visible = prefs.is_layer_dock_visible();
+
+  if (!visible) {
     return;
   }
 
-  bool isVisible = prefs::GetShowLayerDock();
-  scoped::Window dock{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
+  scoped::Window dock{"Layers", ImGuiWindowFlags_NoCollapse, &visible};
   mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   const auto& registry = model.GetActiveRegistryRef();
@@ -109,7 +111,7 @@ void LayerDock::Update(const Model& model,
     }
   }
 
-  prefs::SetShowLayerDock(isVisible);
+  prefs.set_layer_dock_visible(visible);
 
   if (mRenameTarget.has_value()) {
     const auto target = *mRenameTarget;

@@ -152,11 +152,12 @@ void ShowLogContents(const log_level filter)
 
 void LogDock::Update()
 {
-  if (!prefs::GetShowLogDock()) {
+  auto& prefs = get_preferences();
+  bool visible = prefs.is_log_dock_visible();
+
+  if (!visible) {
     return;
   }
-
-  bool visible = prefs::GetShowLogDock();
 
   scoped::Window dock{"Log", gWindowFlags, &visible};
   mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
@@ -183,7 +184,7 @@ void LogDock::Update()
     }
   }
 
-  prefs::SetShowLogDock(visible);
+  prefs.set_log_dock_visible(visible);
 }
 
 }  // namespace tactile

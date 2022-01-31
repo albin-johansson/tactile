@@ -17,6 +17,9 @@ set(TACTILE_IO_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/session.cpp
     ${PROJECT_SOURCE_DIR}/session.hpp
 
+    ${PROJECT_SOURCE_DIR}/persistence/preference_state.cpp
+    ${PROJECT_SOURCE_DIR}/persistence/preference_state.hpp
+
     ${TACTILE_IO_MAPS_SOURCE_FILES}
 
     PARENT_SCOPE)

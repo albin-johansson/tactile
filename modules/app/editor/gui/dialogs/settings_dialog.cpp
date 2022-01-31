@@ -13,11 +13,10 @@
 namespace tactile {
 namespace {
 
-void UpdatePreviewSettings(const Preferences& prefs)
+void UpdatePreviewSettings(const preference_state& prefs)
 {
-  ApplyTheme(ImGui::GetStyle(), prefs.theme);
-  ImGui::GetStyle().WindowBorderSize =
-      (prefs.flags & Preferences::window_border) ? 1.0f : 0.0f;
+  ApplyTheme(ImGui::GetStyle(), prefs.get_theme());
+  ImGui::GetStyle().WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;
 }
 
 }  // namespace
@@ -29,8 +28,8 @@ SettingsDialog::SettingsDialog() : ADialog{"Settings"}
 
 void SettingsDialog::Open()
 {
-  mSnapshot = GetPreferences();
-  mSettings = mSnapshot;
+  mSnapshot = get_preferences();
+  mGuiSettings = mSnapshot;
   Show();
 }
 
@@ -46,26 +45,26 @@ void SettingsDialog::UpdateContents(const Model&, entt::dispatcher&)
 
 void SettingsDialog::OnCancel()
 {
-  UpdatePreviewSettings(GetPreferences());
+  UpdatePreviewSettings(get_preferences());
 }
 
 void SettingsDialog::OnAccept(entt::dispatcher& dispatcher)
 {
   ApplySettings(dispatcher);
-  UpdatePreviewSettings(GetPreferences());
+  UpdatePreviewSettings(get_preferences());
 }
 
 void SettingsDialog::OnApply(entt::dispatcher& dispatcher)
 {
   ApplySettings(dispatcher);
-  UpdatePreviewSettings(GetPreferences());
+  UpdatePreviewSettings(get_preferences());
 }
 
 void SettingsDialog::ApplySettings(entt::dispatcher& dispatcher)
 {
-  SetPreferences(mSettings);
-  if (mSettings.command_capacity != mSnapshot.command_capacity) {
-    dispatcher.enqueue<SetCommandCapacityEvent>(prefs::GetCommandCapacity());
+  set_preferences(mGuiSettings);
+  if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
+    dispatcher.enqueue<SetCommandCapacityEvent>(mGuiSettings.command_capacity());
   }
 }
 
@@ -74,28 +73,28 @@ void SettingsDialog::UpdateBehaviorTab()
   if (scoped::TabItem item{"Behavior"}; item.IsOpen()) {
     ImGui::Spacing();
     if (ImGui::Button("Restore Defaults")) {
-      prefs::ResetBehaviorPreferences(mSettings);
-      UpdatePreviewSettings(mSettings);
+      mGuiSettings.reset_behavior_preferences();
+      UpdatePreviewSettings(mGuiSettings);
     }
     ImGui::Spacing();
 
-    if (bool restore = mSettings.flags & Preferences::restore_last_session;
+    if (bool restore = mGuiSettings.will_restore_last_session();
         Checkbox("Restore last session on startup", &restore)) {
-      mSettings.SetFlag(Preferences::restore_last_session, restore);
+      mGuiSettings.set_will_restore_last_session(restore);
     }
 
-    if (auto width = mSettings.preferred_tile_width;
+    if (auto width = mGuiSettings.preferred_tile_width();
         ImGui::DragInt("Preferred tile width", &width, 1.0f, 1, 10'000)) {
-      mSettings.preferred_tile_width = width;
+      mGuiSettings.set_preferred_tile_width(width);
     }
 
     if (ImGui::IsItemHovered()) {
       ImGui::SetTooltip("The suggested tile width when creating maps");
     }
 
-    if (auto height = mSettings.preferred_tile_height;
+    if (auto height = mGuiSettings.preferred_tile_height();
         ImGui::DragInt("Preferred tile height", &height, 1.0f, 1, 10'000)) {
-      mSettings.preferred_tile_height = height;
+      mGuiSettings.set_preferred_tile_height(height);
     }
 
     if (ImGui::IsItemHovered()) {
@@ -104,9 +103,9 @@ void SettingsDialog::UpdateBehaviorTab()
 
     // TODO "RMB with stamp tool works as eraser"
 
-    if (auto capacity = static_cast<int>(mSettings.command_capacity);
+    if (auto capacity = static_cast<int>(mGuiSettings.command_capacity());
         ImGui::DragInt("Command capacity", &capacity, 1.0f, 10, 1'000)) {
-      mSettings.command_capacity = static_cast<usize>(capacity);
+      mGuiSettings.set_command_capacity(static_cast<usize>(capacity));
     }
 
     if (ImGui::IsItemHovered()) {
@@ -122,41 +121,42 @@ void SettingsDialog::UpdateAppearanceTab()
     ImGui::Spacing();
 
     if (ImGui::Button("Restore Defaults")) {
-      prefs::ResetAppearancePreferences(mSettings);
-      UpdatePreviewSettings(mSettings);
+      mGuiSettings.reset_appearance_preferences();
+      UpdatePreviewSettings(mGuiSettings);
     }
 
     ImGui::Spacing();
 
-    if (scoped::Combo theme{"Theme", magic_enum::enum_name(mSettings.theme).data()};
+    if (scoped::Combo theme{"Theme",
+                            magic_enum::enum_name(mGuiSettings.get_theme()).data()};
         theme.IsOpen()) {
       for (auto&& [name, value] : themes) {
         if (ImGui::Selectable(name)) {
-          mSettings.theme = value;
+          mGuiSettings.set_theme(value);
           ApplyTheme(ImGui::GetStyle(), value);
         }
       }
     }
 
-    if (auto arr = color_to_array(mSettings.viewport_background);
+    if (auto arr = color_to_array(mGuiSettings.viewport_bg());
         ImGui::ColorEdit3("Viewport background color",
                           arr.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
-      mSettings.viewport_background =
-          cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2));
+      mGuiSettings.set_viewport_bg(
+          cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2)));
     }
 
-    if (bool enabled = mSettings.flags & Preferences::window_border;
+    if (bool enabled = mGuiSettings.has_window_border();
         ImGui::Checkbox("Window border", &enabled)) {
-      mSettings.SetFlag(Preferences::window_border, enabled);
+      mGuiSettings.set_window_border(enabled);
       ImGui::GetStyle().WindowBorderSize = enabled ? 1.0f : 0.0f;
     }
 
-    if (bool restoreLayout = mSettings.flags & Preferences::restore_layout;
+    if (bool restore = mGuiSettings.will_restore_layout();
         Checkbox("Restore layout",
-                 &restoreLayout,
+                 &restore,
                  "Restore the previous layout of widgets at startup")) {
-      mSettings.SetFlag(Preferences::restore_layout, restoreLayout);
+      mGuiSettings.set_will_restore_layout(restore);
     }
   }
 }
@@ -167,24 +167,24 @@ void SettingsDialog::UpdateExportTab()
     ImGui::Spacing();
 
     if (ImGui::Button("Restore Defaults")) {
-      prefs::ResetExportPreferences(mSettings);
-      UpdatePreviewSettings(mSettings);
+      mGuiSettings.reset_export_preferences();
+      UpdatePreviewSettings(mGuiSettings);
     }
 
     ImGui::Spacing();
 
-    if (scoped::Combo format("Preferred Format", mSettings.preferred_format.c_str());
+    if (scoped::Combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
         format.IsOpen()) {
       if (ImGui::MenuItem("YAML")) {
-        mSettings.preferred_format = "YAML";
+        mGuiSettings.set_preferred_format("YAML");
       }
 
       if (ImGui::MenuItem("JSON")) {
-        mSettings.preferred_format = "JSON";
+        mGuiSettings.set_preferred_format("JSON");
       }
 
       if (ImGui::MenuItem("XML (TMX)")) {
-        mSettings.preferred_format = "XML";
+        mGuiSettings.set_preferred_format("XML");
       }
     }
 
@@ -193,23 +193,24 @@ void SettingsDialog::UpdateExportTab()
           "The save file format used if no file extension is specified when saving maps");
     }
 
-    if (bool embedTilesets = mSettings.flags & Preferences::embed_tilesets;
-        Checkbox("Embed tilesets", &embedTilesets, "Embed tileset data in map files")) {
-      mSettings.SetFlag(Preferences::embed_tilesets, embedTilesets);
+    if (bool embed = mGuiSettings.embed_tilesets();
+        Checkbox("Embed tilesets", &embed, "Embed tileset data in map files")) {
+      mGuiSettings.set_embed_tilesets(embed);
     }
 
-    if (bool indentOutput = mSettings.flags & Preferences::indent_output;
+    if (bool indent = mGuiSettings.indent_output();
         Checkbox("Indent output",
-                 &indentOutput,
+                 &indent,
                  "Controls whether or not save files are indented")) {
-      mSettings.SetFlag(Preferences::indent_output, indentOutput);
+      mGuiSettings.set_indent_output(indent);
     }
 
-    if (bool foldTileData = mSettings.flags & Preferences::fold_tile_data; Checkbox(
+    if (bool fold = mGuiSettings.fold_tile_data();  //
+        Checkbox(
             "Fold tile data",
-            &foldTileData,
+            &fold,
             "Make tile layer data easier for humans to edit, at the expense of space")) {
-      mSettings.SetFlag(Preferences::fold_tile_data, foldTileData);
+      mGuiSettings.set_fold_tile_data(fold);
     }
   }
 }

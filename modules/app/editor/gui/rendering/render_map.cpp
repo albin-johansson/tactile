@@ -52,7 +52,7 @@ void RenderMap(Graphics& graphics, const entt::registry& registry)
 
   graphics.SetLineThickness(1.0f);
 
-  if (prefs::GetShowGrid()) {
+  if (get_preferences().is_grid_visible()) {
     graphics.SetDrawColor(cen::colors::white.with_alpha(20));
     graphics.RenderTranslatedGrid();
   }

@@ -113,35 +113,35 @@ void ApplyThemeFromConfig(ImGuiStyle& style, const ThemeCfg& cfg)
 void ApplyTheme(ImGuiStyle& style, const Theme theme)
 {
   switch (theme) {
-    case Theme::DearDark:
+    case Theme::dear_dark:
       ImGui::StyleColorsDark(&style);
       break;
 
-    case Theme::DearLight:
+    case Theme::dear_light:
       ImGui::StyleColorsLight(&style);
       break;
 
-    case Theme::Ruby:
+    case Theme::ruby:
       ApplyThemeFromConfig(style, MakeThemeFromHue(0));
       break;
 
-    case Theme::Sapphire:
+    case Theme::sapphire:
       ApplyThemeFromConfig(style, MakeThemeFromHue(150));
       break;
 
-    case Theme::Emerald:
+    case Theme::emerald:
       ApplyThemeFromConfig(style, MakeThemeFromHue(100));
       break;
 
-    case Theme::Amethyst:
+    case Theme::amethyst:
       ApplyThemeFromConfig(style, MakeThemeFromHue(225));
       break;
 
-    case Theme::Amber:
+    case Theme::amber:
       ApplyThemeFromConfig(style, MakeThemeFromHue(272));
       break;
 
-    case Theme::Nocturnal:
+    case Theme::nocturnal:
       ApplyThemeFromConfig(style,
                            {.accent = {0.0f, 0.5f, 0.5f, gAccentOpacity},
                             .bg = {0.04f, 0.04f, 0.04f, gBgOpacity},
@@ -149,7 +149,7 @@ void ApplyTheme(ImGuiStyle& style, const Theme theme)
                             .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
-    case Theme::Ash:
+    case Theme::ash:
       ApplyThemeFromConfig(style,
                            {.accent = {0.4f, 0.4f, 0.4f, gAccentOpacity},
                             .bg = {0.04f, 0.04f, 0.04f, gBgOpacity},

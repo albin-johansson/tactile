@@ -60,7 +60,7 @@ app_configuration::app_configuration()
   log_debug("OpenGL version... {}", glGetString(GL_VERSION));
   log_debug("OpenGL renderer... {}", glGetString(GL_RENDERER));
 
-  LoadPreferences();
+  load_preferences();
 
   TACTILE_ASSERT(mOpenGL.has_value());
   mImGui.emplace(*mWindow, *mOpenGL);

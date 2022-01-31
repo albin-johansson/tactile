@@ -75,7 +75,7 @@ auto Application::Run() -> int
 
   load_file_history();
 
-  if (prefs::GetRestoreLastSession()) {
+  if (get_preferences().will_restore_last_session()) {
     restore_last_session(mModel, mTextures);
   }
 
@@ -115,7 +115,7 @@ auto Application::Run() -> int
 void Application::OnAboutToExit()
 {
   SaveCurrentFilesToHistory();
-  SavePreferences();
+  save_preferences();
   save_session(mModel);
   save_file_history();
 }
@@ -716,29 +716,32 @@ void Application::OnToggleUi()
   }
 
   static bool show = false;
+  auto& prefs = get_preferences();
 
   if (!show) {
-    mWidgetShowState.prev_show_layer_dock = prefs::GetShowLayerDock();
-    mWidgetShowState.prev_show_tileset_dock = prefs::GetShowTilesetDock();
-    mWidgetShowState.prev_show_properties_dock = prefs::GetShowPropertiesDock();
-    mWidgetShowState.prev_show_log_dock = prefs::GetShowLogDock();
-    mWidgetShowState.prev_show_component_dock = prefs::GetShowComponentDock();
+    mWidgetShowState.prev_show_layer_dock = prefs.is_layer_dock_visible();
+    mWidgetShowState.prev_show_tileset_dock = prefs.is_tileset_dock_visible();
+    mWidgetShowState.prev_show_properties_dock = prefs.is_properties_dock_visible();
+    mWidgetShowState.prev_show_log_dock = prefs.is_log_dock_visible();
+    mWidgetShowState.prev_show_component_dock = prefs.is_component_dock_visible();
     mWidgetShowState.prev_show_toolbar = mWidgets.IsToolbarVisible();
   }
 
-  prefs::SetShowLayerDock(show);
-  prefs::SetShowTilesetDock(show);
-  prefs::SetShowPropertiesDock(show);
-  prefs::SetShowLogDock(show);
-  prefs::SetShowComponentDock(show);
+  prefs.set_layer_dock_visible(show);
+  prefs.set_tileset_dock_visible(show);
+  prefs.set_properties_dock_visible(show);
+  prefs.set_component_dock_visible(show);
+  prefs.set_log_dock_visible(show);
+
   mWidgets.SetToolbarVisible(show);
 
   if (show) {
-    prefs::SetShowLayerDock(mWidgetShowState.prev_show_layer_dock);
-    prefs::SetShowTilesetDock(mWidgetShowState.prev_show_tileset_dock);
-    prefs::SetShowPropertiesDock(mWidgetShowState.prev_show_properties_dock);
-    prefs::SetShowLogDock(mWidgetShowState.prev_show_log_dock);
-    prefs::SetShowComponentDock(mWidgetShowState.prev_show_component_dock);
+    prefs.set_layer_dock_visible(mWidgetShowState.prev_show_layer_dock);
+    prefs.set_tileset_dock_visible(mWidgetShowState.prev_show_tileset_dock);
+    prefs.set_properties_dock_visible(mWidgetShowState.prev_show_properties_dock);
+    prefs.set_log_dock_visible(mWidgetShowState.prev_show_log_dock);
+    prefs.set_component_dock_visible(mWidgetShowState.prev_show_component_dock);
+
     mWidgets.SetToolbarVisible(mWidgetShowState.prev_show_toolbar);
   }
 

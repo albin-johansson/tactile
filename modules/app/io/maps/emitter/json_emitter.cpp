@@ -25,7 +25,7 @@ void _write_json(const std::filesystem::path& path, const nlohmann::json& json)
 {
   std::ofstream stream{path, std::ios::out};
 
-  if (prefs::GetIndentOutput()) {
+  if (get_preferences().indent_output()) {
     stream << std::setw(2);
   }
 
@@ -301,7 +301,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::tileset_data
 [[nodiscard]] auto _emit_tileset(const emit_info& info, const ir::tileset_data& data)
     -> nlohmann::json
 {
-  if (prefs::GetEmbedTilesets()) {
+  if (get_preferences().embed_tilesets()) {
     return _emit_embedded_tileset(info, data);
   }
   else {
