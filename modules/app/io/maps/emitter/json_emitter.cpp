@@ -11,7 +11,7 @@
 
 #include "emit_info.hpp"
 #include "io/maps/json_utils.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 #include "tactile_stdlib.hpp"
 

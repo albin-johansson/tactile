@@ -2,7 +2,7 @@
 
 #include <imgui_internal.h>
 
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 namespace tactile {
 

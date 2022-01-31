@@ -20,10 +20,7 @@ class AddLayerCmd final : public command_base {
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
-  {
-    return command_id::add_layer;
-  }
+  [[nodiscard]] auto id() const noexcept -> int override { return command_id::add_layer; }
 
  private:
   registry_ref mRegistry;

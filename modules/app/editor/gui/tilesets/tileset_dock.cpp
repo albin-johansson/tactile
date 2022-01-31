@@ -10,7 +10,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/scoped.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "tileset_tabs.hpp"
 
 namespace tactile {

@@ -20,7 +20,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "layer_item.hpp"
 #include "tactile_def.hpp"
 

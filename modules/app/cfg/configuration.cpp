@@ -7,7 +7,7 @@
 
 #include "assert.hpp"
 #include "build.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 #include "sdl_attributes.hpp"
 #include "tactile_stdlib.hpp"

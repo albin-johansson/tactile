@@ -4,7 +4,7 @@
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "mappings.hpp"
 
 namespace tactile {

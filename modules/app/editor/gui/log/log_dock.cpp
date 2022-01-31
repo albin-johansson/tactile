@@ -5,7 +5,7 @@
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 #include "tactile_def.hpp"
 #include "tactile_stdlib.hpp"

@@ -2,15 +2,15 @@
 
 The undo/redo support is provided using a typical command pattern architecture, where all commands are implemented as
 derived classes of the `ACommand` abstract class. All command implementations must provide `undo()`, `redo()`,
-and `id()` functions. Additionally, the command stack is able to merge consecutive commands of the same type for
-command types that override `merge_with()`. See the in-source documentation for more details regarding these functions.
+and `id()` functions. Additionally, the command stack is able to merge consecutive commands of the same type for command
+types that override `merge_with()`. See the in-source documentation for more details regarding these functions.
 
 ## Guidelines
 
 * Never store entity identifiers in commands, use dedicated identifiers such as `object_id` instead.
 * Always take `RegistryRef` as the first command constructor parameter.
-* Use `id()` to perform initial type checks when overriding `merge_with()`, but use `dynamic_cast` and
-  not `static_cast` for the actual downcast.
+* Use `id()` to perform initial type checks when overriding `merge_with()`, but use `dynamic_cast` and not `static_cast`
+  for the actual downcast.
 
 ## Adding a new command
 

@@ -10,15 +10,15 @@ set(TACTILE_IO_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/directories.hpp
     ${PROJECT_SOURCE_DIR}/file_dialog.cpp
     ${PROJECT_SOURCE_DIR}/file_dialog.hpp
-    ${PROJECT_SOURCE_DIR}/history.cpp
-    ${PROJECT_SOURCE_DIR}/history.hpp
-    ${PROJECT_SOURCE_DIR}/preferences.cpp
-    ${PROJECT_SOURCE_DIR}/preferences.hpp
-    ${PROJECT_SOURCE_DIR}/session.cpp
-    ${PROJECT_SOURCE_DIR}/session.hpp
 
+    ${PROJECT_SOURCE_DIR}/persistence/history.cpp
+    ${PROJECT_SOURCE_DIR}/persistence/history.hpp
     ${PROJECT_SOURCE_DIR}/persistence/preference_state.cpp
     ${PROJECT_SOURCE_DIR}/persistence/preference_state.hpp
+    ${PROJECT_SOURCE_DIR}/persistence/preferences.cpp
+    ${PROJECT_SOURCE_DIR}/persistence/preferences.hpp
+    ${PROJECT_SOURCE_DIR}/persistence/session.cpp
+    ${PROJECT_SOURCE_DIR}/persistence/session.hpp
 
     ${TACTILE_IO_MAPS_SOURCE_FILES}
 

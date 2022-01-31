@@ -4,11 +4,11 @@
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 
-#include "directories.hpp"
 #include "editor/model.hpp"
+#include "io/directories.hpp"
+#include "io/maps/parser/map_parser.hpp"
+#include "io/maps/restore_document_from_ir.hpp"
 #include "logging.hpp"
-#include "maps/parser/map_parser.hpp"
-#include "maps/restore_document_from_ir.hpp"
 #include "tactile_stdlib.hpp"
 #include <session.pb.h>
 

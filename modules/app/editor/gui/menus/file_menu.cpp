@@ -10,7 +10,7 @@
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "io/file_dialog.hpp"
-#include "io/history.hpp"
+#include "io/persistence/history.hpp"
 
 namespace tactile {
 

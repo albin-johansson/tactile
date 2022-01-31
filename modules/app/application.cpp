@@ -24,12 +24,12 @@
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
-#include "io/history.hpp"
 #include "io/maps/parser/map_parser.hpp"
 #include "io/maps/restore_document_from_ir.hpp"
 #include "io/maps/save_document.hpp"
-#include "io/preferences.hpp"
-#include "io/session.hpp"
+#include "io/persistence/history.hpp"
+#include "io/persistence/preferences.hpp"
+#include "io/persistence/session.hpp"
 #include "logging.hpp"
 
 namespace tactile {

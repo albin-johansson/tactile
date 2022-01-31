@@ -8,7 +8,7 @@
 #include "editor/gui/common/checkbox.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/themes.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 namespace tactile {
 namespace {

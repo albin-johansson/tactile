@@ -7,7 +7,7 @@
 #include "emitter/json_emitter.hpp"
 #include "emitter/yaml_emitter.hpp"
 #include "io/maps/convert_document_to_ir.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 #include "profile.hpp"
 

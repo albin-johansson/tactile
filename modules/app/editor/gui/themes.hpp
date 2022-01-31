@@ -3,7 +3,7 @@
 #include <array>    // array
 #include <utility>  // make_pair
 
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 struct ImGuiStyle;
 

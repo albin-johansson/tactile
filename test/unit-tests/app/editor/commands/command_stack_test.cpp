@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 using namespace tactile;
 

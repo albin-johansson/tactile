@@ -1,6 +1,6 @@
 #pragma once
 
-#include "persistence/preference_state.hpp"
+#include "preference_state.hpp"
 
 namespace tactile {
 

@@ -22,7 +22,7 @@
 #include "editor/gui/rendering/render_map.hpp"
 #include "editor/gui/rendering/render_stamp_preview.hpp"
 #include "editor/gui/scoped.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "viewport_cursor_info.hpp"
 #include "viewport_overlay.hpp"
 

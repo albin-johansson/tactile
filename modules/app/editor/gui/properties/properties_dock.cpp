@@ -7,7 +7,7 @@
 #include "dialogs/add_property_dialog.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 namespace tactile {
 

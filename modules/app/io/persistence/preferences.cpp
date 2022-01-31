@@ -3,7 +3,7 @@
 #include <filesystem>  // path, exists
 #include <utility>     // move
 
-#include "directories.hpp"
+#include "io/directories.hpp"
 #include "logging.hpp"
 
 namespace tactile {

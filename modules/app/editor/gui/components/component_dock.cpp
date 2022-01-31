@@ -13,7 +13,7 @@
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {

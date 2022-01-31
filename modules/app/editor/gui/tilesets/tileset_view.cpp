@@ -11,7 +11,7 @@
 #include "editor/gui/common/rubber_band.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_info.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 namespace tactile {
 namespace {

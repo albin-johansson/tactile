@@ -5,7 +5,7 @@
 #include "core/utils/buffers.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "io/file_dialog.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 namespace tactile {
 

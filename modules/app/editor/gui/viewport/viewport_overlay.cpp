@@ -7,7 +7,7 @@
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/gui/scoped.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "viewport_cursor_info.hpp"
 
 namespace tactile {

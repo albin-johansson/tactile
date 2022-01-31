@@ -6,7 +6,7 @@
 #include <ios>         // ios
 #include <utility>     // move
 
-#include "directories.hpp"
+#include "io/directories.hpp"
 #include "logging.hpp"
 #include "tactile_def.hpp"
 #include "tactile_stdlib.hpp"

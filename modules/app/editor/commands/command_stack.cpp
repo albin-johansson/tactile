@@ -2,7 +2,7 @@
 
 #include "assert.hpp"
 #include "core/algorithms/invoke_n.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 namespace tactile {
 

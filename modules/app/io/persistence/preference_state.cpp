@@ -79,7 +79,8 @@ auto preference_state::operator=(const preference_state& other) -> preference_st
   return *this;
 }
 
-auto preference_state::operator=(preference_state&&) noexcept -> preference_state& = default;
+auto preference_state::operator=(preference_state&&) noexcept
+    -> preference_state& = default;
 
 preference_state::~preference_state() noexcept = default;
 

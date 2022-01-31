@@ -4,7 +4,7 @@
 
 #include "editor/events/save_events.hpp"
 #include "io/file_dialog.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 
 namespace tactile {

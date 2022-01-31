@@ -4,7 +4,7 @@
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "graphics.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 #include "render_object_layer.hpp"
 #include "render_tile_layer.hpp"
 

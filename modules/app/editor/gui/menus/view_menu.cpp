@@ -9,7 +9,7 @@
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
-#include "io/preferences.hpp"
+#include "io/persistence/preferences.hpp"
 
 namespace tactile {
 namespace {
