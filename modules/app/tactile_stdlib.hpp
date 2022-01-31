@@ -5,6 +5,7 @@
 #include <string>      // string
 #include <utility>     // pair
 
+#include "core/utils/sfinae.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {
@@ -20,7 +21,7 @@ namespace tactile {
  *
  * \return a pair encoding the matrix coordinates as (row, column).
  */
-template <typename T>
+template <typename T, is_integral<T> = 0>
 [[nodiscard]] constexpr auto to_matrix_coords(const T index, const T nColumns)
     -> std::pair<T, T>
 {
