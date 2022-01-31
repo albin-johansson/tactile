@@ -2,23 +2,23 @@
 
 namespace tactile {
 
-RemoveComponentCmd::RemoveComponentCmd(RegistryRef registry,
+RemoveComponentCmd::RemoveComponentCmd(registry_ref registry,
                                        const context_id contextId,
                                        const component_id componentId)
-    : ACommand{"Remove Component"}
+    : command_base{"Remove Component"}
     , mRegistry{registry}
     , mContextId{contextId}
     , mComponentId{componentId}
 {}
 
-void RemoveComponentCmd::Undo()
+void RemoveComponentCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::restore_component(registry, mSnapshot.value());
   mSnapshot.reset();
 }
 
-void RemoveComponentCmd::Redo()
+void RemoveComponentCmd::redo()
 {
   auto& registry = mRegistry.get();
   mSnapshot = sys::remove_component(registry, mContextId, mComponentId);

@@ -5,24 +5,24 @@
 
 namespace tactile {
 
-AddColumnCmd::AddColumnCmd(RegistryRef registry)
-    : ACommand{"Add Column(s)"}
+AddColumnCmd::AddColumnCmd(registry_ref registry)
+    : command_base{"Add Column(s)"}
     , mRegistry{registry}
 {}
 
-void AddColumnCmd::Undo()
+void AddColumnCmd::undo()
 {
   invoke_n(mColumns, [this] { sys::remove_column_from_map(mRegistry); });
 }
 
-void AddColumnCmd::Redo()
+void AddColumnCmd::redo()
 {
   invoke_n(mColumns, [this] { sys::add_column_to_map(mRegistry); });
 }
 
-auto AddColumnCmd::MergeWith(const ACommand& cmd) -> bool
+auto AddColumnCmd::merge_with(const command_base& cmd) -> bool
 {
-  if (GetId() == cmd.GetId()) {
+  if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const AddColumnCmd&>(cmd);
     mColumns += other.mColumns;
     return true;

@@ -7,23 +7,23 @@
 
 namespace tactile {
 
-class RemoveComponentCmd final : public ACommand {
+class RemoveComponentCmd final : public command_base {
  public:
-  RemoveComponentCmd(RegistryRef registry,
+  RemoveComponentCmd(registry_ref registry,
                      context_id contextId,
                      component_id componentId);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::RemoveComponent;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
   maybe<sys::remove_component_result> mSnapshot;

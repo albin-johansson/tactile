@@ -9,27 +9,27 @@
 
 namespace tactile {
 
-class UpdateComponentCmd final : public ACommand {
+class UpdateComponentCmd final : public command_base {
  public:
-  UpdateComponentCmd(RegistryRef registry,
+  UpdateComponentCmd(registry_ref registry,
                      context_id contextId,
                      component_id componentId,
                      std::string attribute,
                      attribute_value value);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto MergeWith(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::UpdateComponent;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
   std::string mAttributeName;

@@ -12,21 +12,21 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class StampSequenceCmd final : public ACommand {
+class StampSequenceCmd final : public command_base {
  public:
-  StampSequenceCmd(RegistryRef registry, TileCache&& oldState, TileCache&& newState);
+  StampSequenceCmd(registry_ref registry, TileCache&& oldState, TileCache&& newState);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::StampSequence;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_id mLayer;
   TileCache mOldState;
   TileCache mNewState;

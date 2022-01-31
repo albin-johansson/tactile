@@ -2,16 +2,16 @@
 
 namespace tactile {
 
-ResetComponentCmd::ResetComponentCmd(RegistryRef registry,
+ResetComponentCmd::ResetComponentCmd(registry_ref registry,
                                      const context_id contextId,
                                      const component_id componentId)
-    : ACommand{"Reset Component Values"}
+    : command_base{"Reset Component Values"}
     , mRegistry{registry}
     , mContextId{contextId}
     , mComponentId{componentId}
 {}
 
-void ResetComponentCmd::Undo()
+void ResetComponentCmd::undo()
 {
   auto& registry = mRegistry.get();
   const auto& snapshot = mSnapshot.value();
@@ -23,7 +23,7 @@ void ResetComponentCmd::Undo()
   mSnapshot.reset();
 }
 
-void ResetComponentCmd::Redo()
+void ResetComponentCmd::redo()
 {
   auto& registry = mRegistry.get();
   mSnapshot = sys::reset_component(registry, mContextId, mComponentId);

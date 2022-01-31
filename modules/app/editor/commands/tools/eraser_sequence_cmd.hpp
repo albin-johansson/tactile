@@ -12,21 +12,21 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class EraserSequenceCmd final : public ACommand {
+class EraserSequenceCmd final : public command_base {
  public:
-  EraserSequenceCmd(RegistryRef registry, TileCache&& oldState);
+  EraserSequenceCmd(registry_ref registry, TileCache&& oldState);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::EraserSequence;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_id mLayer;
   TileCache mOldState;
 };

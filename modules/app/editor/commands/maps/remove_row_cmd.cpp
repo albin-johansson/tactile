@@ -6,18 +6,18 @@
 
 namespace tactile {
 
-RemoveRowCmd::RemoveRowCmd(RegistryRef registry)
-    : ACommand{"Remove Row(s)"}
+RemoveRowCmd::RemoveRowCmd(registry_ref registry)
+    : command_base{"Remove Row(s)"}
     , mRegistry{registry}
 {}
 
-void RemoveRowCmd::Undo()
+void RemoveRowCmd::undo()
 {
   invoke_n(mRows, [this] { sys::add_row_to_map(mRegistry); });
   mCache.RestoreTiles(mRegistry);
 }
 
-void RemoveRowCmd::Redo()
+void RemoveRowCmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -31,9 +31,9 @@ void RemoveRowCmd::Redo()
   invoke_n(mRows, [this] { sys::remove_row_from_map(mRegistry); });
 }
 
-auto RemoveRowCmd::MergeWith(const ACommand& cmd) -> bool
+auto RemoveRowCmd::merge_with(const command_base& cmd) -> bool
 {
-  if (GetId() == cmd.GetId()) {
+  if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const RemoveRowCmd&>(cmd);
 
     mRows += other.mRows;

@@ -8,23 +8,23 @@
 
 namespace tactile {
 
-class AddColumnCmd final : public ACommand {
+class AddColumnCmd final : public command_base {
  public:
-  explicit AddColumnCmd(RegistryRef registry);
+  explicit AddColumnCmd(registry_ref registry);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto MergeWith(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::AddColumn;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   usize mColumns{1};
 };
 

@@ -11,21 +11,21 @@
 
 namespace tactile {
 
-class AddPropertyCmd final : public ACommand {
+class AddPropertyCmd final : public command_base {
  public:
-  AddPropertyCmd(RegistryRef registry, std::string name, attribute_type type);
+  AddPropertyCmd(registry_ref registry, std::string name, attribute_type type);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::AddProperty;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   context_id mContextId;
   std::string mName;
   attribute_type mType;

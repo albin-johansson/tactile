@@ -12,21 +12,21 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class AddLayerCmd final : public ACommand {
+class AddLayerCmd final : public command_base {
  public:
-  AddLayerCmd(RegistryRef registry, layer_type type);
+  AddLayerCmd(registry_ref registry, layer_type type);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::AddLayer;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_type mLayerType;
   maybe<layer_id> mLayerId;
   maybe<sys::LayerSnapshot> mLayerSnapshot;

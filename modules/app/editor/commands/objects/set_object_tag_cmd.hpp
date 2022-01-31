@@ -12,15 +12,15 @@ namespace tactile {
 
 class SetObjectTagCmd final : public AObjectCmd {
  public:
-  SetObjectTagCmd(RegistryRef registry, object_id id, std::string tag);
+  SetObjectTagCmd(registry_ref registry, object_id id, std::string tag);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto MergeWith(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::SetObjectTag;
   }

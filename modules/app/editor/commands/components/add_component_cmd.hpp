@@ -6,21 +6,21 @@
 
 namespace tactile {
 
-class AddComponentCmd final : public ACommand {
+class AddComponentCmd final : public command_base {
  public:
-  AddComponentCmd(RegistryRef registry, context_id contextId, component_id componentId);
+  AddComponentCmd(registry_ref registry, context_id contextId, component_id componentId);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::AddComponent;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
 };

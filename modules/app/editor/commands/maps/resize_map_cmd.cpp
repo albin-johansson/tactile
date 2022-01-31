@@ -5,14 +5,14 @@
 
 namespace tactile {
 
-ResizeMapCmd::ResizeMapCmd(RegistryRef registry, const usize nRows, const usize nCols)
-    : ACommand{"Resize Map"}
+ResizeMapCmd::ResizeMapCmd(registry_ref registry, const usize nRows, const usize nCols)
+    : command_base{"Resize Map"}
     , mRegistry{registry}
     , mRows{nRows}
     , mCols{nCols}
 {}
 
-void ResizeMapCmd::Undo()
+void ResizeMapCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::resize_map(registry, mPrevRows.value(), mPrevCols.value());
@@ -22,7 +22,7 @@ void ResizeMapCmd::Undo()
   }
 }
 
-void ResizeMapCmd::Redo()
+void ResizeMapCmd::redo()
 {
   auto& registry = mRegistry.get();
 

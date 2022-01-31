@@ -8,24 +8,24 @@
 
 namespace tactile {
 
-class RenameComponentAttributeCmd final : public ACommand {
+class RenameComponentAttributeCmd final : public command_base {
  public:
-  RenameComponentAttributeCmd(RegistryRef registry,
+  RenameComponentAttributeCmd(registry_ref registry,
                               component_id id,
                               std::string previousName,
                               std::string updatedName);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::RenameComponentAttribute;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   component_id mComponentId{};
   std::string mPreviousName;
   std::string mUpdatedName;

@@ -6,23 +6,23 @@
 
 namespace tactile {
 
-DuplicateComponentAttributeCmd::DuplicateComponentAttributeCmd(RegistryRef registry,
+DuplicateComponentAttributeCmd::DuplicateComponentAttributeCmd(registry_ref registry,
                                                                component_id componentId,
                                                                std::string attribute)
-    : ACommand{"Duplicate Component Attribute"}
+    : command_base{"Duplicate Component Attribute"}
     , mRegistry{registry}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
 {}
 
-void DuplicateComponentAttributeCmd::Undo()
+void DuplicateComponentAttributeCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::remove_component_attribute(registry, mComponentId, mDuplicatedName.value());
   mDuplicatedName.reset();
 }
 
-void DuplicateComponentAttributeCmd::Redo()
+void DuplicateComponentAttributeCmd::redo()
 {
   auto& registry = mRegistry.get();
   mDuplicatedName =

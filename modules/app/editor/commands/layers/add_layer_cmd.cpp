@@ -6,13 +6,13 @@
 
 namespace tactile {
 
-AddLayerCmd::AddLayerCmd(RegistryRef registry, const layer_type type)
-    : ACommand{"Add Layer"}
+AddLayerCmd::AddLayerCmd(registry_ref registry, const layer_type type)
+    : command_base{"Add Layer"}
     , mRegistry{registry}
     , mLayerType{type}
 {}
 
-void AddLayerCmd::Undo()
+void AddLayerCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -23,7 +23,7 @@ void AddLayerCmd::Undo()
   mLayerSnapshot = sys::remove_layer(registry, entity);
 }
 
-void AddLayerCmd::Redo()
+void AddLayerCmd::redo()
 {
   if (mLayerSnapshot) {
     sys::restore_layer(mRegistry, *mLayerSnapshot);

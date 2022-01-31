@@ -8,23 +8,23 @@
 
 namespace tactile {
 
-class SetLayerOpacityCmd final : public ACommand {
+class SetLayerOpacityCmd final : public command_base {
  public:
-  SetLayerOpacityCmd(RegistryRef registry, layer_id id, float opacity);
+  SetLayerOpacityCmd(registry_ref registry, layer_id id, float opacity);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto MergeWith(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::SetLayerOpacity;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_id mLayerId;
   float mOpacity;
   maybe<float> mPreviousOpacity;

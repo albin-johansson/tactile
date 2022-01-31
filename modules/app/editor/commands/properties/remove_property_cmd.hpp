@@ -11,21 +11,21 @@
 
 namespace tactile {
 
-class RemovePropertyCmd final : public ACommand {
+class RemovePropertyCmd final : public command_base {
  public:
-  RemovePropertyCmd(RegistryRef registry, std::string name);
+  RemovePropertyCmd(registry_ref registry, std::string name);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::RemoveProperty;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   context_id mContextId;
   std::string mName;
   maybe<attribute_value> mPreviousValue;

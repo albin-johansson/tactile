@@ -4,6 +4,6 @@
 
 namespace tactile {
 
-ACommand::ACommand(std::string text) : mText{std::move(text)} {}
+command_base::command_base(std::string text) : mText{std::move(text)} {}
 
 }  // namespace tactile

@@ -4,16 +4,16 @@
 
 namespace tactile {
 
-SetLayerVisibilityCmd::SetLayerVisibilityCmd(RegistryRef registry,
+SetLayerVisibilityCmd::SetLayerVisibilityCmd(registry_ref registry,
                                              const layer_id id,
                                              const bool visible)
-    : ACommand{"Set Layer Visibility"}
+    : command_base{"Set Layer Visibility"}
     , mRegistry{registry}
     , mLayerId{id}
     , mVisible{visible}
 {}
 
-void SetLayerVisibilityCmd::Undo()
+void SetLayerVisibilityCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -23,7 +23,7 @@ void SetLayerVisibilityCmd::Undo()
   mPreviousVisibility.reset();
 }
 
-void SetLayerVisibilityCmd::Redo()
+void SetLayerVisibilityCmd::redo()
 {
   auto& registry = mRegistry.get();
 

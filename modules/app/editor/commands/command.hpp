@@ -11,31 +11,37 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-using RegistryRef = ref<entt::registry>;
+/**
+ * \brief All commands are expected to take this as their first constructor parameter.
+ */
+using registry_ref = ref<entt::registry>;
 
-class ACommand {
+/**
+ * \brief The abstract base class of all command implementations.
+ */
+class command_base {
  public:
-  TACTILE_DELETE_COPY(ACommand)
-  TACTILE_DEFAULT_MOVE(ACommand)
+  TACTILE_DELETE_COPY(command_base)
+  TACTILE_DEFAULT_MOVE(command_base)
 
-  ACommand() = default;
+  command_base() = default;
 
   /**
    * \brief Creates a command.
    *
    * \param text a short human-readable command name.
    */
-  explicit ACommand(std::string text);
+  explicit command_base(std::string text);
 
-  virtual ~ACommand() = default;
+  virtual ~command_base() = default;
 
   /**
    * \brief Reverts the effect of the command.
    *
    * \details This function should revert the effects of having previously
-   * called `Redo()`.
+   * called `redo()`.
    */
-  virtual void Undo() = 0;
+  virtual void undo() = 0;
 
   /**
    * \brief Applies the effects of the command.
@@ -45,20 +51,20 @@ class ACommand {
    *
    * \see `CommandStack::Push`
    */
-  virtual void Redo() = 0;
+  virtual void redo() = 0;
 
   /**
    * \brief Returns a identifier unique for the command type.
    *
    * \details This function is mainly designed to be used when overriding the
-   * `MergeWith()` function, where it can be used to efficiently test if two
+   * `merge_with()` function, where it can be used to efficiently test if two
    * commands are of the same type, since the parameter type is `ACommand`.
    *
    * \return an identifier unique to the command class.
    *
    * \see `CommandId`
    */
-  [[nodiscard]] virtual auto GetId() const -> int = 0;
+  [[nodiscard]] virtual auto id() const -> int = 0;
 
   /**
    * \brief Attempts to merge the supplied command into *this* command.
@@ -68,7 +74,7 @@ class ACommand {
    * commands of the same type together. For example, this is used to combine
    * consecutive "Add Row" commands.
    *
-   * \details Use the `GetId()` function to efficiently filter out commands of
+   * \details Use the `id()` function to efficiently filter out commands of
    * differing types.
    *
    * \note This function is only called on the command on top of the command
@@ -79,7 +85,7 @@ class ACommand {
    * \return `true` if the supplied command was merged into *this* command;
    * `false` otherwise.
    */
-  [[nodiscard]] virtual auto MergeWith([[maybe_unused]] const ACommand& cmd) -> bool
+  [[nodiscard]] virtual auto merge_with([[maybe_unused]] const command_base& cmd) -> bool
   {
     return false;
   }
@@ -89,7 +95,7 @@ class ACommand {
    *
    * \return the name of the command.
    */
-  [[nodiscard]] auto GetText() const -> const std::string& { return mText; }
+  [[nodiscard]] auto text() const -> const std::string& { return mText; }
 
  private:
   std::string mText;

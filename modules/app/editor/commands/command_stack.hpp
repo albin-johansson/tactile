@@ -49,7 +49,7 @@ class CommandStack final {
    */
   void Redo();
 
-  template <typename T, typename... Args, is_derived_from<ACommand, T> = 0>
+  template <typename T, typename... Args, is_derived_from<command_base, T> = 0>
   void PushWithoutRedo(Args&&... args)
   {
     if (GetSize() == GetCapacity()) {
@@ -75,7 +75,7 @@ class CommandStack final {
    * \param args the arguments that will be forwarded to the command
    * constructor.
    */
-  template <typename T, typename... Args, is_derived_from<ACommand, T> = 0>
+  template <typename T, typename... Args, is_derived_from<command_base, T> = 0>
   void Push(Args&&... args)
   {
     if (GetSize() == GetCapacity()) {
@@ -85,12 +85,12 @@ class CommandStack final {
     RemoveCommandsAfterCurrentIndex();
 
     T cmd{std::forward<Args>(args)...};
-    cmd.Redo();
+    cmd.redo();
 
     /* If the stack is empty, we simply push the command to the stack. However,
        if there are commands on the stack, we try to merge the command into the
        top of the stack and if that succeeds we discard the command. */
-    if (mStack.empty() || !mStack.back()->MergeWith(cmd)) {
+    if (mStack.empty() || !mStack.back()->merge_with(cmd)) {
       mIndex = mIndex ? *mIndex + 1 : 0;
       mStack.push_back(std::make_unique<T>(std::move(cmd)));
     }
@@ -169,7 +169,7 @@ class CommandStack final {
   [[nodiscard]] auto GetCapacity() const noexcept -> usize { return mCapacity; }
 
  private:
-  std::deque<std::unique_ptr<ACommand>> mStack;
+  std::deque<std::unique_ptr<command_base>> mStack;
   maybe<usize> mIndex;
   maybe<usize> mCleanIndex;
   usize mCapacity;

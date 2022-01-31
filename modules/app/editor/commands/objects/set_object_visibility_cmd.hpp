@@ -10,13 +10,13 @@ namespace tactile {
 
 class SetObjectVisibilityCmd final : public AObjectCmd {
  public:
-  SetObjectVisibilityCmd(RegistryRef registry, object_id id, bool visible);
+  SetObjectVisibilityCmd(registry_ref registry, object_id id, bool visible);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::SetObjectVisibility;
   }

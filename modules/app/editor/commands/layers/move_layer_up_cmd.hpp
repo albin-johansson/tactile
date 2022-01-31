@@ -8,21 +8,21 @@
 
 namespace tactile {
 
-class MoveLayerUpCmd final : public ACommand {
+class MoveLayerUpCmd final : public command_base {
  public:
-  MoveLayerUpCmd(RegistryRef registry, layer_id id);
+  MoveLayerUpCmd(registry_ref registry, layer_id id);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::MoveLayerUp;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_id mLayerId;
 };
 

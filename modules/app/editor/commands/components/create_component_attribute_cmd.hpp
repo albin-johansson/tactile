@@ -8,21 +8,21 @@
 
 namespace tactile {
 
-class CreateComponentAttributeCmd final : public ACommand {
+class CreateComponentAttributeCmd final : public command_base {
  public:
-  CreateComponentAttributeCmd(RegistryRef registry, component_id id, std::string name);
+  CreateComponentAttributeCmd(registry_ref registry, component_id id, std::string name);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::CreateComponentDefAttribute;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   component_id mComponentId{};
   std::string mName;
 };

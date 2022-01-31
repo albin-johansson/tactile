@@ -6,22 +6,22 @@
 
 namespace tactile {
 
-CreateComponentAttributeCmd::CreateComponentAttributeCmd(RegistryRef registry,
+CreateComponentAttributeCmd::CreateComponentAttributeCmd(registry_ref registry,
                                                          const component_id id,
                                                          std::string name)
-    : ACommand{"Create Component Attribute"}
+    : command_base{"Create Component Attribute"}
     , mRegistry{registry}
     , mComponentId{id}
     , mName{std::move(name)}
 {}
 
-void CreateComponentAttributeCmd::Undo()
+void CreateComponentAttributeCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::remove_component_attribute(registry, mComponentId, mName);
 }
 
-void CreateComponentAttributeCmd::Redo()
+void CreateComponentAttributeCmd::redo()
 {
   auto& registry = mRegistry.get();
   sys::make_component_attribute(registry, mComponentId, mName);

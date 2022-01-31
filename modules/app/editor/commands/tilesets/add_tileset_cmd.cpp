@@ -7,18 +7,18 @@
 
 namespace tactile {
 
-AddTilesetCmd::AddTilesetCmd(RegistryRef registry,
+AddTilesetCmd::AddTilesetCmd(registry_ref registry,
                              comp::texture texture,
                              const int tileWidth,
                              const int tileHeight)
-    : ACommand{"Add Tileset"}
+    : command_base{"Add Tileset"}
     , mRegistry{registry}
     , mTexture{std::move(texture)}
     , mTileWidth{tileWidth}
     , mTileHeight{tileHeight}
 {}
 
-void AddTilesetCmd::Undo()
+void AddTilesetCmd::undo()
 {
   auto& registry = mRegistry.get();
   const auto id = mTilesetId.value();
@@ -30,7 +30,7 @@ void AddTilesetCmd::Undo()
   sys::remove_tileset(registry, id);
 }
 
-void AddTilesetCmd::Redo()
+void AddTilesetCmd::redo()
 {
   auto& registry = mRegistry.get();
   if (!mSnapshot) {

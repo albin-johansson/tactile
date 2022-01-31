@@ -10,38 +10,38 @@ using namespace tactile;
 
 namespace {
 
-class Foo : public ACommand {
+class Foo : public command_base {
  public:
-  Foo() : ACommand{"Foo"} {}
+  Foo() : command_base{"Foo"} {}
 
-  void Undo() override
+  void undo() override
   {
     // std::cout << "Foo::Undo\n";
   }
 
-  void Redo() override
+  void redo() override
   {
     // std::cout << "Foo::Redo\n";
   }
 
-  [[nodiscard]] auto GetId() const -> int override { return 0; }
+  [[nodiscard]] auto id() const -> int override { return 0; }
 };
 
-class Bar : public ACommand {
+class Bar : public command_base {
  public:
-  Bar() : ACommand{"Bar"} {}
+  Bar() : command_base{"Bar"} {}
 
-  void Undo() override
+  void undo() override
   {
     // std::cout << "Bar::Undo\n";
   }
 
-  void Redo() override
+  void redo() override
   {
     // std::cout << "Bar::Redo\n";
   }
 
-  [[nodiscard]] auto GetId() const -> int override { return 1; }
+  [[nodiscard]] auto id() const -> int override { return 1; }
 };
 
 }  // namespace

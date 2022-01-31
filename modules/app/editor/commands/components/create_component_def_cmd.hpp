@@ -9,21 +9,21 @@
 
 namespace tactile {
 
-class CreateComponentDefCmd final : public ACommand {
+class CreateComponentDefCmd final : public command_base {
  public:
-  CreateComponentDefCmd(RegistryRef registry, std::string name);
+  CreateComponentDefCmd(registry_ref registry, std::string name);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::CreateComponentDef;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   std::string mName;
   maybe<component_id> mComponentId;
 };

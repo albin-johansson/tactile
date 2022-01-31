@@ -12,21 +12,21 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class RemoveLayerCmd final : public ACommand {
+class RemoveLayerCmd final : public command_base {
  public:
-  RemoveLayerCmd(RegistryRef registry, layer_id id);
+  RemoveLayerCmd(registry_ref registry, layer_id id);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::RemoveLayer;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_id mLayerId;
   maybe<sys::LayerSnapshot> mLayerSnapshot;
 };

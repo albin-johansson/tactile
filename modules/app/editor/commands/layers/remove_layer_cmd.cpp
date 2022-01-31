@@ -5,18 +5,18 @@
 
 namespace tactile {
 
-RemoveLayerCmd::RemoveLayerCmd(RegistryRef registry, const layer_id id)
-    : ACommand{"Remove Layer"}
+RemoveLayerCmd::RemoveLayerCmd(registry_ref registry, const layer_id id)
+    : command_base{"Remove Layer"}
     , mRegistry{registry}
     , mLayerId{id}
 {}
 
-void RemoveLayerCmd::Undo()
+void RemoveLayerCmd::undo()
 {
   sys::restore_layer(mRegistry, mLayerSnapshot.value());
 }
 
-void RemoveLayerCmd::Redo()
+void RemoveLayerCmd::redo()
 {
   const auto entity = sys::find_layer(mRegistry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);

@@ -9,21 +9,21 @@
 
 namespace tactile {
 
-class ResizeMapCmd final : public ACommand {
+class ResizeMapCmd final : public command_base {
  public:
-  ResizeMapCmd(RegistryRef registry, usize nRows, usize nCols);
+  ResizeMapCmd(registry_ref registry, usize nRows, usize nCols);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::ResizeMap;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   usize mRows{};
   usize mCols{};
   MapCommandCache mCache;

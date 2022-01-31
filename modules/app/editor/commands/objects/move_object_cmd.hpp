@@ -13,18 +13,18 @@ namespace tactile {
 
 class MoveObjectCmd final : public AObjectCmd {
  public:
-  MoveObjectCmd(RegistryRef registry,
+  MoveObjectCmd(registry_ref registry,
                 object_id id,
                 float oldX,
                 float oldY,
                 float newX,
                 float newY);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::MoveObject;
   }

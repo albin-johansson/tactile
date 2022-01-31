@@ -4,22 +4,22 @@
 
 namespace tactile {
 
-AddComponentCmd::AddComponentCmd(RegistryRef registry,
+AddComponentCmd::AddComponentCmd(registry_ref registry,
                                  const context_id contextId,
                                  const component_id componentId)
-    : ACommand{"Add Component"}
+    : command_base{"Add Component"}
     , mRegistry{registry}
     , mContextId{contextId}
     , mComponentId{componentId}
 {}
 
-void AddComponentCmd::Undo()
+void AddComponentCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::remove_component(registry, mContextId, mComponentId);
 }
 
-void AddComponentCmd::Redo()
+void AddComponentCmd::redo()
 {
   auto& registry = mRegistry.get();
   sys::add_component(registry, mContextId, mComponentId);

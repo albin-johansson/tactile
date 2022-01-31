@@ -6,29 +6,29 @@
 
 namespace tactile {
 
-SetObjectNameCmd::SetObjectNameCmd(RegistryRef registry,
+SetObjectNameCmd::SetObjectNameCmd(registry_ref registry,
                                    const object_id id,
                                    std::string name)
     : AObjectCmd{"Set Object Name", registry, id}
     , mNewName{std::move(name)}
 {}
 
-void SetObjectNameCmd::Undo()
+void SetObjectNameCmd::undo()
 {
   auto& context = GetTargetObjectContext();
   context.name = mOldName.value();
 }
 
-void SetObjectNameCmd::Redo()
+void SetObjectNameCmd::redo()
 {
   auto& context = GetTargetObjectContext();
   mOldName = context.name;
   context.name = mNewName;
 }
 
-auto SetObjectNameCmd::MergeWith(const ACommand& cmd) -> bool
+auto SetObjectNameCmd::merge_with(const command_base& cmd) -> bool
 {
-  if (GetId() == cmd.GetId()) {
+  if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const SetObjectNameCmd&>(cmd);
     if (GetTargetObjectId() == other.GetTargetObjectId()) {
       mNewName = other.mNewName;

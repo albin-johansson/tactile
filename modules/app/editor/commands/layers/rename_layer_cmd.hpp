@@ -10,21 +10,21 @@
 
 namespace tactile {
 
-class RenameLayerCmd final : public ACommand {
+class RenameLayerCmd final : public command_base {
  public:
-  RenameLayerCmd(RegistryRef registry, layer_id id, std::string name);
+  RenameLayerCmd(registry_ref registry, layer_id id, std::string name);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::RenameLayer;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_id mLayerId;
   std::string mName;
   maybe<std::string> mPreviousName;

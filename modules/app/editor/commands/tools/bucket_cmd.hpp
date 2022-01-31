@@ -14,18 +14,18 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class BucketCmd final : public ACommand {
+class BucketCmd final : public command_base {
  public:
-  BucketCmd(RegistryRef registry, tile_position origin, tile_id replacement);
+  BucketCmd(registry_ref registry, tile_position origin, tile_id replacement);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override { return CommandId::Bucket; }
+  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::Bucket; }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_id mLayer;
   tile_position mOrigin;
   tile_id mReplacement;

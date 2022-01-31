@@ -8,20 +8,20 @@
 
 namespace tactile {
 
-class AddRowCmd final : public ACommand {
+class AddRowCmd final : public command_base {
  public:
-  explicit AddRowCmd(RegistryRef registry);
+  explicit AddRowCmd(registry_ref registry);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto MergeWith(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override { return CommandId::AddRow; }
+  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::AddRow; }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   usize mRows{1};
 };
 

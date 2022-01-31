@@ -29,7 +29,7 @@ void CommandStack::Undo()
   TACTILE_ASSERT(CanUndo());
 
   const auto& cmd = mStack.at(mIndex.value());
-  cmd->Undo();
+  cmd->undo();
 
   if (mIndex == 0) {
     mIndex.reset();
@@ -46,7 +46,7 @@ void CommandStack::Redo()
   const auto index = mIndex ? *mIndex + 1 : 0;
 
   const auto& cmd = mStack.at(index);
-  cmd->Redo();
+  cmd->redo();
 
   mIndex = index;
 }
@@ -82,7 +82,7 @@ auto CommandStack::GetUndoText() const -> const std::string&
   TACTILE_ASSERT(CanUndo());
 
   const auto& cmd = mStack.at(mIndex.value());
-  return cmd->GetText();
+  return cmd->text();
 }
 
 auto CommandStack::GetRedoText() const -> const std::string&
@@ -90,7 +90,7 @@ auto CommandStack::GetRedoText() const -> const std::string&
   TACTILE_ASSERT(CanRedo());
 
   const auto& cmd = mStack.at(mIndex ? *mIndex + 1 : 0);
-  return cmd->GetText();
+  return cmd->text();
 }
 
 void CommandStack::RemoveOldestCommand()

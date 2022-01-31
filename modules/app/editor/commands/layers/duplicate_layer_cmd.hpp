@@ -8,21 +8,21 @@
 
 namespace tactile {
 
-class DuplicateLayerCmd final : public ACommand {
+class DuplicateLayerCmd final : public command_base {
  public:
-  DuplicateLayerCmd(RegistryRef registry, layer_id id);
+  DuplicateLayerCmd(registry_ref registry, layer_id id);
 
-  void Undo() override;
+  void undo() override;
 
-  void Redo() override;
+  void redo() override;
 
-  [[nodiscard]] auto GetId() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> int override
   {
     return CommandId::DuplicateLayer;
   }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   layer_id mLayerId;
   maybe<layer_id> mNewLayerId;
 };

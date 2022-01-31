@@ -11,9 +11,9 @@
 
 namespace tactile {
 
-class AObjectCmd : public ACommand {
+class AObjectCmd : public command_base {
  public:
-  AObjectCmd(std::string name, RegistryRef registry, object_id id);
+  AObjectCmd(std::string name, registry_ref registry, object_id id);
 
  protected:
   [[nodiscard]] auto GetTargetObject() -> comp::object&;
@@ -23,7 +23,7 @@ class AObjectCmd : public ACommand {
   [[nodiscard]] auto GetTargetObjectId() const noexcept -> object_id { return mObjectId; }
 
  private:
-  RegistryRef mRegistry;
+  registry_ref mRegistry;
   object_id mObjectId;
 };
 
