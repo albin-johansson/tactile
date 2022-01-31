@@ -16,13 +16,13 @@
 namespace tactile {
 namespace {
 
-constexpr int gFormatVersion = 1;
-constexpr usize gMaxSize = 10;
+// constexpr int _format_version = 1;
+constexpr usize _max_size = 10;
 
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
-inline maybe<std::string> gLastClosedFile;
-inline std::deque<std::string> gHistory;
+inline maybe<std::string> _last_closed_file;
+inline std::deque<std::string> _history;
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&
 {
@@ -40,12 +40,12 @@ void load_file_history()
   proto::History h;
   if (h.ParseFromIstream(&stream)) {
     if (h.has_last_opened_file()) {
-      gLastClosedFile = h.last_opened_file();
+      _last_closed_file = h.last_opened_file();
     }
 
     for (auto file : h.files()) {
       log_debug("Loaded '{}' from file history", file);
-      gHistory.push_back(std::move(file));
+      _history.push_back(std::move(file));
     }
   }
   else {
@@ -57,11 +57,11 @@ void save_file_history()
 {
   proto::History h;
 
-  if (gLastClosedFile) {
-    h.set_last_opened_file(*gLastClosedFile);
+  if (_last_closed_file) {
+    h.set_last_opened_file(*_last_closed_file);
   }
 
-  for (const auto& path : gHistory) {
+  for (const auto& path : _history) {
     log_debug("Saving '{}' to file history", path);
     h.add_files(path);
   }
@@ -78,18 +78,18 @@ void save_file_history()
 void clear_file_history()
 {
   log_verbose("Clearing file history...");
-  gHistory.clear();
+  _history.clear();
 }
 
 void add_file_to_history(const std::filesystem::path& path)
 {
   auto converted = convert_to_forward_slashes(path);
-  if (std::find(gHistory.begin(), gHistory.end(), converted) == gHistory.end()) {
+  if (std::find(_history.begin(), _history.end(), converted) == _history.end()) {
     log_debug("Adding '{}' to history...", converted);
-    gHistory.push_back(std::move(converted));
+    _history.push_back(std::move(converted));
 
-    if (gHistory.size() > gMaxSize) {
-      gHistory.pop_front();
+    if (_history.size() > _max_size) {
+      _history.pop_front();
     }
   }
   else {
@@ -99,26 +99,26 @@ void add_file_to_history(const std::filesystem::path& path)
 
 void set_last_closed_file(const std::filesystem::path& path)
 {
-  gLastClosedFile = convert_to_forward_slashes(path);
-  log_verbose("Last closed file is now '{}'", *gLastClosedFile);
+  _last_closed_file = convert_to_forward_slashes(path);
+  log_verbose("Last closed file is now '{}'", *_last_closed_file);
 
   add_file_to_history(path);
 }
 
 auto file_history() -> const std::deque<std::string>&
 {
-  return gHistory;
+  return _history;
 }
 
 auto is_last_closed_file_valid() -> bool
 {
-  return gLastClosedFile && std::filesystem::exists(*gLastClosedFile);
+  return _last_closed_file && std::filesystem::exists(*_last_closed_file);
 }
 
 auto last_closed_file() -> const std::string&
 {
   if (is_last_closed_file_valid()) {
-    return gLastClosedFile.value();
+    return _last_closed_file.value();
   }
   else {
     throw_traced(tactile_error{"Invalid last closed file!"});
