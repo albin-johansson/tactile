@@ -7,7 +7,7 @@ namespace tactile {
 
 struct command_id final
 {
-  enum Value {
+  enum value_t {
     add_row,
     add_column,
     remove_row,
