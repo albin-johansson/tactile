@@ -51,13 +51,13 @@ void RenderSelection(const Region& selection, const ImVec2& min, const ImVec2& t
                                             gRubberBandColor);
 }
 
-void RenderTilesetImage(Graphics& graphics,
+void RenderTilesetImage(graphics_ctx& graphics,
                         const comp::texture& texture,
                         const ImVec2& position)
 {
   const ImVec2 size = {static_cast<float>(texture.width),
                        static_cast<float>(texture.height)};
-  graphics.RenderImage(texture.id, position, size);
+  graphics.render_image(texture.id, position, size);
 }
 
 }  // namespace
@@ -74,9 +74,9 @@ void TilesetView::Update(const entt::registry& registry,
   mHeight = region.y;
 
   const auto info = GetRenderInfo(viewport, tileset);
-  Graphics graphics{info};
+  graphics_ctx graphics{info};
 
-  graphics.SetDrawColor(get_preferences().viewport_bg());
+  graphics.set_draw_color(get_preferences().viewport_bg());
   graphics.Clear();
 
   const auto offset = ImVec2{viewport.x_offset, viewport.y_offset};
@@ -89,7 +89,7 @@ void TilesetView::Update(const entt::registry& registry,
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
-  graphics.PushClip();
+  graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
   RenderTilesetImage(graphics, registry.get<comp::texture>(entity), position);
@@ -99,11 +99,11 @@ void TilesetView::Update(const entt::registry& registry,
     RenderSelection(*selection.region, position, tileSize);
   }
 
-  graphics.SetLineThickness(1);
-  graphics.SetDrawColor(gGridColor);
-  graphics.RenderTranslatedGrid();
+  graphics.set_line_thickness(1);
+  graphics.set_draw_color(gGridColor);
+  graphics.render_translated_grid();
 
-  graphics.PopClip();
+  graphics.pop_clip();
 }
 
 auto TilesetView::GetWidth() const -> maybe<float>

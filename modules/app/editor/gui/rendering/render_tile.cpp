@@ -10,7 +10,7 @@
 
 namespace tactile {
 
-void RenderTile(Graphics& graphics,
+void RenderTile(graphics_ctx& graphics,
                 const entt::registry& registry,
                 const tile_id tile,
                 const int32 row,
@@ -31,8 +31,8 @@ void RenderTile(Graphics& graphics,
                         static_cast<float>(sourceRect.height())};
     const ImVec2 uv{uvTileSize.width, uvTileSize.height};
 
-    const auto position = graphics.FromMatrixToAbsolute(row, column);
-    graphics.RenderTranslatedImage(texture.id, source, position, uv);
+    const auto position = graphics.from_matrix_to_absolute(row, column);
+    graphics.render_translated_image(texture.id, source, position, uv);
   }
 }
 

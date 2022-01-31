@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-void RenderTileLayer(Graphics& graphics,
+void RenderTileLayer(graphics_ctx& graphics,
                      const entt::registry& registry,
                      const entt::entity layerEntity,
                      const float parentOpacity)
@@ -16,9 +16,9 @@ void RenderTileLayer(Graphics& graphics,
   const auto& layer = registry.get<comp::layer>(layerEntity);
   const auto& tileLayer = registry.get<comp::tile_layer>(layerEntity);
 
-  graphics.SetOpacity(parentOpacity * layer.opacity);
+  graphics.set_opacity(parentOpacity * layer.opacity);
 
-  const auto bounds = graphics.GetBounds();
+  const auto bounds = graphics.bounds();
   const auto endRow = bounds.end.row();
   const auto endCol = bounds.end.col();
 

@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-class Graphics;
+class graphics_ctx;
 
 /**
  * \brief Renders a tile layer.
@@ -16,7 +16,7 @@ class Graphics;
  * \param layerEntity the entity that represents the tile layer.
  * \param parentOpacity the opacity of the parent layer.
  */
-void RenderTileLayer(Graphics& graphics,
+void RenderTileLayer(graphics_ctx& graphics,
                      const entt::registry& registry,
                      entt::entity layerEntity,
                      float parentOpacity);

@@ -13,37 +13,37 @@ struct RenderInfo;
 /**
  * \brief Provides a common simplified rendering API.
  */
-class Graphics final {
+class graphics_ctx final {
  public:
-  explicit Graphics(const RenderInfo& info);
+  explicit graphics_ctx(const RenderInfo& info);
 
-  void PushClip();
+  void push_clip();
 
-  void PopClip();
+  void pop_clip();
 
-  void Clear();
+  void clear();
 
-  void DrawRect(const ImVec2& position, const ImVec2& size);
+  void draw_rect(const ImVec2& position, const ImVec2& size);
 
-  void FillRect(const ImVec2& position, const ImVec2& size);
+  void fill_rect(const ImVec2& position, const ImVec2& size);
 
-  void DrawTranslatedRect(const ImVec2& position, const ImVec2& size);
+  void draw_translated_rect(const ImVec2& position, const ImVec2& size);
 
-  void FillTranslatedRect(const ImVec2& position, const ImVec2& size);
+  void fill_translated_rect(const ImVec2& position, const ImVec2& size);
 
-  void DrawRectWithShadow(const ImVec2& position, const ImVec2& size);
+  void draw_rect_with_shadow(const ImVec2& position, const ImVec2& size);
 
-  void DrawTranslatedRectWithShadow(const ImVec2& position, const ImVec2& size);
+  void draw_translated_rect_with_shadow(const ImVec2& position, const ImVec2& size);
 
-  void DrawCircleWithShadow(const ImVec2& center, float radius);
+  void draw_circle_with_shadow(const ImVec2& center, float radius);
 
-  void DrawTranslatedCircleWithShadow(const ImVec2& center, float radius);
+  void draw_translated_circle_with_shadow(const ImVec2& center, float radius);
 
-  void DrawEllipseWithShadow(const ImVec2& center, const ImVec2& radius);
+  void draw_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
 
-  void DrawTranslatedEllipseWithShadow(const ImVec2& center, const ImVec2& radius);
+  void draw_translated_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
 
-  void RenderImage(uint texture, const ImVec2& position, const ImVec2& size);
+  void render_image(uint texture, const ImVec2& position, const ImVec2& size);
 
   /**
    * \brief Renders a portion of a tileset texture.
@@ -53,48 +53,48 @@ class Graphics final {
    * \param position the position of the rendered image on the screen.
    * \param uv the ratio between the tileset tile size and the texture size.
    */
-  void RenderImage(uint texture,
-                   const ImVec4& source,
-                   const ImVec2& position,
-                   const ImVec2& uv);
+  void render_image(uint texture,
+                    const ImVec4& source,
+                    const ImVec2& position,
+                    const ImVec2& uv);
 
-  void RenderTranslatedImage(uint texture,
-                             const ImVec4& source,
-                             const ImVec2& position,
-                             const ImVec2& uv);
+  void render_translated_image(uint texture,
+                               const ImVec4& source,
+                               const ImVec2& position,
+                               const ImVec2& uv);
 
-  void RenderText(c_str text, const ImVec2& position);
+  void render_text(c_str text, const ImVec2& position);
 
-  void RenderTranslatedText(c_str text, const ImVec2& position);
+  void render_translated_text(c_str text, const ImVec2& position);
 
-  void RenderCenteredText(c_str text, const ImVec2& center);
+  void render_centered_text(c_str text, const ImVec2& center);
 
-  void RenderTranslatedGrid();
+  void render_translated_grid();
 
-  void SetDrawColor(const cen::color& color);
+  void set_draw_color(const cen::color& color);
 
-  void SetOpacity(float opacity);
+  void set_opacity(float opacity);
 
-  void SetLineThickness(float thickness);
+  void set_line_thickness(float thickness);
 
-  [[nodiscard]] auto FromMatrixToAbsolute(int32 row, int32 column) const -> ImVec2;
+  [[nodiscard]] auto from_matrix_to_absolute(int32 row, int32 column) const -> ImVec2;
 
-  [[nodiscard]] auto IsIntersectingBounds(const ImVec2& position,
-                                          const ImVec2& size) const -> bool;
+  [[nodiscard]] auto is_intersecting_bounds(const ImVec2& position,
+                                            const ImVec2& size) const -> bool;
 
-  [[nodiscard]] auto IsWithinTranslatedBounds(const ImVec2& position) const -> bool;
+  [[nodiscard]] auto is_within_translated_bounds(const ImVec2& position) const -> bool;
 
-  [[nodiscard]] auto Translate(const ImVec2& position) const -> ImVec2;
+  [[nodiscard]] auto translate(const ImVec2& position) const -> ImVec2;
 
-  [[nodiscard]] auto GetOrigin() const -> ImVec2 { return mOrigin; }
+  [[nodiscard]] auto origin() const -> ImVec2 { return mOrigin; }
 
-  [[nodiscard]] auto GetViewportTileSize() const -> ImVec2 { return mViewportTileSize; }
+  [[nodiscard]] auto viewport_tile_size() const -> ImVec2 { return mViewportTileSize; }
 
-  [[nodiscard]] auto GetLogicalTileSize() const -> ImVec2 { return mLogicalTileSize; }
+  [[nodiscard]] auto logical_tile_size() const -> ImVec2 { return mLogicalTileSize; }
 
-  [[nodiscard]] auto GetTileSizeRatio() const -> ImVec2 { return mTileSizeRatio; }
+  [[nodiscard]] auto tile_size_ratio() const -> ImVec2 { return mTileSizeRatio; }
 
-  [[nodiscard]] auto GetBounds() const -> Region { return mBounds; }
+  [[nodiscard]] auto bounds() const -> Region { return mBounds; }
 
  private:
   ImVec2 mCanvasTL;
@@ -109,9 +109,9 @@ class Graphics final {
   float mLineThickness{1};
   uint8 mOpacity{255};
 
-  [[nodiscard]] auto GetDrawColor() const -> uint32;
+  [[nodiscard]] auto get_draw_color() const -> uint32;
 
-  [[nodiscard]] auto GetShadowDrawColor() const -> uint32;
+  [[nodiscard]] auto get_shadow_draw_color() const -> uint32;
 };
 
 }  // namespace tactile

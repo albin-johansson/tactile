@@ -11,7 +11,7 @@
 namespace tactile {
 namespace {
 
-void RenderLayer(Graphics& graphics,
+void RenderLayer(graphics_ctx& graphics,
                  const entt::registry& registry,
                  const entt::entity layerEntity,
                  const comp::layer& layer,
@@ -27,7 +27,7 @@ void RenderLayer(Graphics& graphics,
 
 }  // namespace
 
-void RenderMap(Graphics& graphics, const entt::registry& registry)
+void RenderMap(graphics_ctx& graphics, const entt::registry& registry)
 {
   for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
     const auto& layer = registry.get<comp::layer>(entity);
@@ -50,11 +50,11 @@ void RenderMap(Graphics& graphics, const entt::registry& registry)
     RenderObject(graphics, registry, activeObject.entity, cen::colors::yellow);
   }
 
-  graphics.SetLineThickness(1.0f);
+  graphics.set_line_thickness(1.0f);
 
   if (get_preferences().is_grid_visible()) {
-    graphics.SetDrawColor(cen::colors::white.with_alpha(20));
-    graphics.RenderTranslatedGrid();
+    graphics.set_draw_color(cen::colors::white.with_alpha(20));
+    graphics.render_translated_grid();
   }
 }
 

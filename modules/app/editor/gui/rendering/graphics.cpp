@@ -90,7 +90,7 @@ void AddFilledEllipse(ImDrawList* self,
 
 }  // namespace
 
-Graphics::Graphics(const RenderInfo& info)
+graphics_ctx::graphics_ctx(const RenderInfo& info)
     : mCanvasTL{info.canvas_tl}
     , mCanvasBR{info.canvas_br}
     , mOrigin{info.origin}
@@ -101,114 +101,119 @@ Graphics::Graphics(const RenderInfo& info)
     , mBoundsRect{ConvertBoundsToRect(info)}
 {}
 
-void Graphics::PushClip()
+void graphics_ctx::push_clip()
 {
   auto* list = ImGui::GetWindowDrawList();
   list->PushClipRect(mCanvasTL, mCanvasBR, true);
 }
 
-void Graphics::PopClip()
+void graphics_ctx::pop_clip()
 {
   auto* list = ImGui::GetWindowDrawList();
   list->PopClipRect();
 }
 
-void Graphics::Clear()
+void graphics_ctx::clear()
 {
-  FillRect(mCanvasTL, mCanvasBR - mCanvasTL);
+  fill_rect(mCanvasTL, mCanvasBR - mCanvasTL);
 }
 
-void Graphics::DrawRect(const ImVec2& position, const ImVec2& size)
-{
-  auto* list = ImGui::GetWindowDrawList();
-  list->AddRect(position, position + size, GetDrawColor(), 0, 0, mLineThickness);
-}
-
-void Graphics::FillRect(const ImVec2& position, const ImVec2& size)
+void graphics_ctx::draw_rect(const ImVec2& position, const ImVec2& size)
 {
   auto* list = ImGui::GetWindowDrawList();
-  list->AddRectFilled(position, position + size, GetDrawColor());
+  list->AddRect(position, position + size, get_draw_color(), 0, 0, mLineThickness);
 }
 
-void Graphics::DrawTranslatedRect(const ImVec2& position, const ImVec2& size)
+void graphics_ctx::fill_rect(const ImVec2& position, const ImVec2& size)
 {
-  DrawRect(Translate(position), size);
+  auto* list = ImGui::GetWindowDrawList();
+  list->AddRectFilled(position, position + size, get_draw_color());
 }
 
-void Graphics::FillTranslatedRect(const ImVec2& position, const ImVec2& size)
+void graphics_ctx::draw_translated_rect(const ImVec2& position, const ImVec2& size)
 {
-  FillRect(Translate(position), size);
+  draw_rect(translate(position), size);
 }
 
-void Graphics::DrawRectWithShadow(const ImVec2& position, const ImVec2& size)
+void graphics_ctx::fill_translated_rect(const ImVec2& position, const ImVec2& size)
+{
+  fill_rect(translate(position), size);
+}
+
+void graphics_ctx::draw_rect_with_shadow(const ImVec2& position, const ImVec2& size)
 {
   auto* list = ImGui::GetWindowDrawList();
 
   const auto offsetPosition = position + ImVec2{mLineThickness, mLineThickness};
   list->AddRect(offsetPosition,
                 offsetPosition + size,
-                GetShadowDrawColor(),
+                get_shadow_draw_color(),
                 0,
                 0,
                 mLineThickness);
-  list->AddRect(position, position + size, GetDrawColor(), 0, 0, mLineThickness);
+  list->AddRect(position, position + size, get_draw_color(), 0, 0, mLineThickness);
 }
 
-void Graphics::DrawTranslatedRectWithShadow(const ImVec2& position, const ImVec2& size)
+void graphics_ctx::draw_translated_rect_with_shadow(const ImVec2& position,
+                                                    const ImVec2& size)
 {
-  DrawRectWithShadow(Translate(position), size);
+  draw_rect_with_shadow(translate(position), size);
 }
 
-void Graphics::DrawCircleWithShadow(const ImVec2& center, const float radius)
+void graphics_ctx::draw_circle_with_shadow(const ImVec2& center, const float radius)
 {
   auto* list = ImGui::GetWindowDrawList();
   list->AddCircle(center + ImVec2{0, mLineThickness},
                   radius,
-                  GetShadowDrawColor(),
+                  get_shadow_draw_color(),
                   0,
                   mLineThickness);
-  list->AddCircle(center, radius, GetDrawColor(), 0, mLineThickness);
+  list->AddCircle(center, radius, get_draw_color(), 0, mLineThickness);
 }
 
-void Graphics::DrawTranslatedCircleWithShadow(const ImVec2& center, const float radius)
+void graphics_ctx::draw_translated_circle_with_shadow(const ImVec2& center,
+                                                      const float radius)
 {
-  DrawCircleWithShadow(Translate(center), radius);
+  draw_circle_with_shadow(translate(center), radius);
 }
 
-void Graphics::DrawEllipseWithShadow(const ImVec2& center, const ImVec2& radius)
+void graphics_ctx::draw_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius)
 {
   constexpr int nSegments = 50;
 
   if (radius.x == radius.y) {
-    DrawCircleWithShadow(center, radius.x);
+    draw_circle_with_shadow(center, radius.x);
   }
   else {
     auto* list = ImGui::GetWindowDrawList();
     AddEllipse(list,
                center + ImVec2{0, mLineThickness},
                radius,
-               GetShadowDrawColor(),
+               get_shadow_draw_color(),
                nSegments,
                mLineThickness);
-    AddEllipse(list, center, radius, GetDrawColor(), nSegments, mLineThickness);
+    AddEllipse(list, center, radius, get_draw_color(), nSegments, mLineThickness);
   }
 }
 
-void Graphics::DrawTranslatedEllipseWithShadow(const ImVec2& center, const ImVec2& radius)
+void graphics_ctx::draw_translated_ellipse_with_shadow(const ImVec2& center,
+                                                       const ImVec2& radius)
 {
-  DrawEllipseWithShadow(Translate(center), radius);
+  draw_ellipse_with_shadow(translate(center), radius);
 }
 
-void Graphics::RenderImage(const uint texture, const ImVec2& position, const ImVec2& size)
+void graphics_ctx::render_image(const uint texture,
+                                const ImVec2& position,
+                                const ImVec2& size)
 {
   auto* list = ImGui::GetWindowDrawList();
   list->AddImage(ToTextureID(texture), position, position + size);
 }
 
-void Graphics::RenderImage(const uint texture,
-                           const ImVec4& source,
-                           const ImVec2& position,
-                           const ImVec2& uv)
+void graphics_ctx::render_image(const uint texture,
+                                const ImVec4& source,
+                                const ImVec2& position,
+                                const ImVec2& uv)
 {
   const auto row = source.y / source.w;
   const auto col = source.x / source.z;
@@ -225,26 +230,26 @@ void Graphics::RenderImage(const uint texture,
                  color_to_u32(cen::colors::white.with_alpha(mOpacity)));
 }
 
-void Graphics::RenderTranslatedImage(const uint texture,
-                                     const ImVec4& source,
-                                     const ImVec2& position,
-                                     const ImVec2& uv)
+void graphics_ctx::render_translated_image(const uint texture,
+                                           const ImVec4& source,
+                                           const ImVec2& position,
+                                           const ImVec2& uv)
 {
-  RenderImage(texture, source, Translate(position), uv);
+  render_image(texture, source, translate(position), uv);
 }
 
-void Graphics::RenderText(const c_str text, const ImVec2& position)
+void graphics_ctx::render_text(const c_str text, const ImVec2& position)
 {
   TACTILE_ASSERT(text);
-  ImGui::GetWindowDrawList()->AddText(position, GetDrawColor(), text);
+  ImGui::GetWindowDrawList()->AddText(position, get_draw_color(), text);
 }
 
-void Graphics::RenderTranslatedText(const c_str text, const ImVec2& position)
+void graphics_ctx::render_translated_text(const c_str text, const ImVec2& position)
 {
-  RenderText(text, Translate(position));
+  render_text(text, translate(position));
 }
 
-void Graphics::RenderCenteredText(const c_str text, const ImVec2& center)
+void graphics_ctx::render_centered_text(const c_str text, const ImVec2& center)
 {
   TACTILE_ASSERT(text);
 
@@ -253,66 +258,67 @@ void Graphics::RenderCenteredText(const c_str text, const ImVec2& center)
   const auto x = center.x - (size.x / 2.0f);
   const auto y = center.y + (size.y / 2.0f);
 
-  ImGui::GetWindowDrawList()->AddText({x, y}, GetDrawColor(), text);
+  ImGui::GetWindowDrawList()->AddText({x, y}, get_draw_color(), text);
 }
 
-void Graphics::RenderTranslatedGrid()
+void graphics_ctx::render_translated_grid()
 {
   const auto endRow = mBounds.end.row();
   const auto endCol = mBounds.end.col();
 
   for (auto row = mBounds.begin.row(); row < endRow; ++row) {
     for (auto col = mBounds.begin.col(); col < endCol; ++col) {
-      DrawTranslatedRect(FromMatrixToAbsolute(row, col), mViewportTileSize);
+      draw_translated_rect(from_matrix_to_absolute(row, col), mViewportTileSize);
     }
   }
 }
 
-void Graphics::SetDrawColor(const cen::color& color)
+void graphics_ctx::set_draw_color(const cen::color& color)
 {
   mDrawColor = color;
 }
 
-void Graphics::SetOpacity(const float opacity)
+void graphics_ctx::set_opacity(const float opacity)
 {
   mOpacity = static_cast<uint8>(255.0f * std::clamp(opacity, 0.0f, 1.0f));
 }
 
-void Graphics::SetLineThickness(const float thickness)
+void graphics_ctx::set_line_thickness(const float thickness)
 {
   mLineThickness = std::clamp(thickness, 0.0f, thickness);
 }
 
-auto Graphics::FromMatrixToAbsolute(const int32 row, const int32 column) const -> ImVec2
+auto graphics_ctx::from_matrix_to_absolute(const int32 row, const int32 column) const
+    -> ImVec2
 {
   return mViewportTileSize * ImVec2{static_cast<float>(column), static_cast<float>(row)};
 }
 
-auto Graphics::IsIntersectingBounds(const ImVec2& position, const ImVec2& size) const
-    -> bool
+auto graphics_ctx::is_intersecting_bounds(const ImVec2& position,
+                                          const ImVec2& size) const -> bool
 {
-  const auto translated = Translate(position);
+  const auto translated = translate(position);
   const cen::frect rect{translated.x, translated.y, size.x, size.y};
   return cen::intersects(mBoundsRect, rect);
 }
 
-auto Graphics::IsWithinTranslatedBounds(const ImVec2& position) const -> bool
+auto graphics_ctx::is_within_translated_bounds(const ImVec2& position) const -> bool
 {
-  const auto translated = Translate(position);
+  const auto translated = translate(position);
   return mBoundsRect.contains({translated.x, translated.y});
 }
 
-auto Graphics::Translate(const ImVec2& position) const -> ImVec2
+auto graphics_ctx::translate(const ImVec2& position) const -> ImVec2
 {
   return mOrigin + position;
 }
 
-auto Graphics::GetDrawColor() const -> uint32
+auto graphics_ctx::get_draw_color() const -> uint32
 {
   return color_to_u32(mDrawColor);
 }
 
-auto Graphics::GetShadowDrawColor() const -> uint32
+auto graphics_ctx::get_shadow_draw_color() const -> uint32
 {
   return color_to_u32(cen::colors::black.with_alpha(mOpacity));
 }

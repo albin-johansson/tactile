@@ -14,38 +14,38 @@
 namespace tactile {
 namespace {
 
-void RenderPointObject(Graphics& graphics,
+void RenderPointObject(graphics_ctx& graphics,
                        const entt::registry& registry,
                        const entt::entity objectEntity,
                        const ImVec2& position,
                        const cen::color& color)
 {
-  const float radius = std::min(graphics.GetViewportTileSize().x / 4.0f, 6.0f);
+  const float radius = std::min(graphics.viewport_tile_size().x / 4.0f, 6.0f);
 
   const auto& object = registry.get<comp::object>(objectEntity);
   TACTILE_ASSERT(object.type == object_type::point);
 
-  if (graphics.IsWithinTranslatedBounds(position)) {
-    graphics.SetDrawColor(color);
-    graphics.SetLineThickness(2.0f);
-    graphics.DrawTranslatedCircleWithShadow(position, radius);
+  if (graphics.is_within_translated_bounds(position)) {
+    graphics.set_draw_color(color);
+    graphics.set_line_thickness(2.0f);
+    graphics.draw_translated_circle_with_shadow(position, radius);
 
     const auto& context = registry.get<comp::attribute_context>(objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);
-      if (textSize.x <= graphics.GetViewportTileSize().x) {
+      if (textSize.x <= graphics.viewport_tile_size().x) {
         const auto textX = position.x - (textSize.x / 2.0f);
         const auto textY = position.y + radius + 4.0f;
 
-        graphics.SetDrawColor(cen::colors::white);
-        graphics.RenderTranslatedText(name, {textX, textY});
+        graphics.set_draw_color(cen::colors::white);
+        graphics.render_translated_text(name, {textX, textY});
       }
     }
   }
 }
 
-void RenderEllipseObject(Graphics& graphics,
+void RenderEllipseObject(graphics_ctx& graphics,
                          const entt::registry& registry,
                          const entt::entity objectEntity,
                          const ImVec2& position,
@@ -57,12 +57,12 @@ void RenderEllipseObject(Graphics& graphics,
 
   const ImVec2 size = {object.width, object.height};
 
-  const auto radius = ImVec2{0.5f, 0.5f} * size * graphics.GetTileSizeRatio();
+  const auto radius = ImVec2{0.5f, 0.5f} * size * graphics.tile_size_ratio();
   const auto center = position + radius;
 
-  graphics.SetDrawColor(color);
-  graphics.SetLineThickness(2);
-  graphics.DrawTranslatedEllipseWithShadow(center, radius);
+  graphics.set_draw_color(color);
+  graphics.set_line_thickness(2);
+  graphics.draw_translated_ellipse_with_shadow(center, radius);
 
   if (!context.name.empty()) {
     const c_str text = context.name.c_str();
@@ -71,13 +71,13 @@ void RenderEllipseObject(Graphics& graphics,
       const auto textX = center.x - (textSize.x / 2.0f);
       const auto textY = center.y + (textSize.y / 2.0f) + (radius.y);
 
-      graphics.SetDrawColor(cen::colors::white);
-      graphics.RenderTranslatedText(text, {textX, textY});
+      graphics.set_draw_color(cen::colors::white);
+      graphics.render_translated_text(text, {textX, textY});
     }
   }
 }
 
-void RenderRectangleObject(Graphics& graphics,
+void RenderRectangleObject(graphics_ctx& graphics,
                            const entt::registry& registry,
                            const entt::entity objectEntity,
                            const ImVec2& position,
@@ -86,12 +86,12 @@ void RenderRectangleObject(Graphics& graphics,
   const auto& object = registry.get<comp::object>(objectEntity);
   TACTILE_ASSERT(object.type == object_type::rect);
 
-  const auto size = ImVec2{object.width, object.height} * graphics.GetTileSizeRatio();
+  const auto size = ImVec2{object.width, object.height} * graphics.tile_size_ratio();
 
-  if (graphics.IsIntersectingBounds(position, size)) {
-    graphics.SetDrawColor(color);
-    graphics.SetLineThickness(2.0f);
-    graphics.DrawTranslatedRectWithShadow(position, size);
+  if (graphics.is_intersecting_bounds(position, size)) {
+    graphics.set_draw_color(color);
+    graphics.set_line_thickness(2.0f);
+    graphics.draw_translated_rect_with_shadow(position, size);
 
     const auto& context = registry.get<comp::attribute_context>(objectEntity);
     if (!context.name.empty()) {
@@ -100,8 +100,8 @@ void RenderRectangleObject(Graphics& graphics,
       if (textSize.x <= size.x) {
         const auto textX = (size.x - textSize.x) / 2.0f;
 
-        graphics.SetDrawColor(cen::colors::white.with_alpha(color.alpha()));
-        graphics.RenderTranslatedText(name, position + ImVec2{textX, size.y + 4.0f});
+        graphics.set_draw_color(cen::colors::white.with_alpha(color.alpha()));
+        graphics.render_translated_text(name, position + ImVec2{textX, size.y + 4.0f});
       }
     }
   }
@@ -109,7 +109,7 @@ void RenderRectangleObject(Graphics& graphics,
 
 }  // namespace
 
-void RenderObject(Graphics& graphics,
+void RenderObject(graphics_ctx& graphics,
                   const entt::registry& registry,
                   const entt::entity objectEntity,
                   const cen::color& color)
@@ -120,7 +120,7 @@ void RenderObject(Graphics& graphics,
     return;
   }
 
-  const auto position = ImVec2{object.x, object.y} * graphics.GetTileSizeRatio();
+  const auto position = ImVec2{object.x, object.y} * graphics.tile_size_ratio();
 
   switch (object.type) {
     case object_type::point:
@@ -137,7 +137,7 @@ void RenderObject(Graphics& graphics,
   }
 }
 
-void RenderObjectLayer(Graphics& graphics,
+void RenderObjectLayer(graphics_ctx& graphics,
                        const entt::registry& registry,
                        const entt::entity layerEntity,
                        const float parentOpacity)

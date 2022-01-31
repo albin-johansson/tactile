@@ -151,12 +151,12 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
   const auto info = GetRenderInfo(viewport, map);
   UpdateViewportOffset(info.canvas_br - info.canvas_tl, dispatcher);
 
-  Graphics graphics{info};
+  graphics_ctx graphics{info};
 
-  graphics.SetDrawColor(get_preferences().viewport_bg());
+  graphics.set_draw_color(get_preferences().viewport_bg());
   graphics.Clear();
 
-  graphics.PushClip();
+  graphics.push_clip();
 
   // TODO viewport should be centered by default
   if (gCenterViewport) {
@@ -175,7 +175,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
     UpdateCursorGizmos(registry, dispatcher, cursor, info);
   }
 
-  graphics.PopClip();
+  graphics.pop_clip();
 
   UpdateViewportOverlay(registry, cursor);
   UpdateContextMenu(registry, dispatcher, cursor);
