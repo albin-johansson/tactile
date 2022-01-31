@@ -77,7 +77,7 @@ void TilesetView::Update(const entt::registry& registry,
   graphics_ctx graphics{info};
 
   graphics.set_draw_color(get_preferences().viewport_bg());
-  graphics.Clear();
+  graphics.clear();
 
   const auto offset = ImVec2{viewport.x_offset, viewport.y_offset};
   const auto scroll = TrackScrollOffset(info.canvas_br - info.canvas_tl, offset);
