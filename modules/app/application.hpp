@@ -24,8 +24,10 @@ namespace tactile {
 
 class app_configuration;
 
-/// Tracks visibility of widgets for the "Toggle UI" feature.
-struct WidgetShowState final
+/**
+ * \brief Tracks visibility of widgets for the "Toggle UI" feature.
+ */
+struct widget_show_state final
 {
   bool prev_show_layer_dock{};
   bool prev_show_tileset_dock{};
@@ -35,139 +37,142 @@ struct WidgetShowState final
   bool prev_show_component_dock{};
 };
 
-class Application final {
-  friend void SubscribeToEvents(Application&);
+/**
+ * \brief Represents the heart of the Tactile application.
+ *
+ * \details This class handles the main poll/update/render application loop, along with
+ * the basic initialization and configuration of all aspects of the Tactile application.
+ */
+class application final {
+  friend void subscribe_to_events(application&);
 
  public:
-  explicit Application(app_configuration* configuration);
+  explicit application(app_configuration* configuration);
 
-  auto Run() -> int;
+  auto run() -> int;
 
  private:
   app_configuration* mConfiguration{}; /* Non-owning */
-
   entt::dispatcher mDispatcher;
   cen::keyboard mKeyboard;
-
   Model mModel;
   texture_manager mTextures;
   Icons mIcons;
-
   WidgetManager mWidgets;
-  WidgetShowState mWidgetShowState;
-
+  widget_show_state mWidgetShowState;
   bool mQuit{};
 
   template <typename Event, auto Slot>
-  void Connect()
+  void connect()
   {
     mDispatcher.sink<Event>().template connect<Slot>(this);
   }
 
-  void OnAboutToExit();
-  void SaveCurrentFilesToHistory();
+  void on_about_to_exit();
+  void save_current_files_to_history();
 
-  void PollEvents();
-  void OnKeyboardEvent(cen::keyboard_event event);
-  void OnMouseWheelEvent(const cen::mouse_wheel_event& event);
+  void poll_events();
+  void on_keyboard_event(cen::keyboard_event event);
+  void on_mouse_wheel_event(const cen::mouse_wheel_event& event);
 
-  void UpdateFrame();
+  void update_frame();
 
-  void OnUndo();
-  void OnRedo();
-  void OnSetCommandCapacity(const SetCommandCapacityEvent& event);
+  void on_undo();
+  void on_redo();
+  void on_set_command_capacity(const SetCommandCapacityEvent& event);
 
-  void OnSave();
-  void OnSaveAs(const SaveAsEvent& event);
-  void OnOpenSaveAsDialog();
-  void OnShowSettings();
+  void on_save();
+  void on_save_as(const SaveAsEvent& event);
+  void on_open_save_as_dialog();
+  void on_show_settings();
 
-  void OnShowNewMapDialog();
-  void OnShowOpenMapDialog();
-  void OnShowMapProperties();
-  void OnCreateMap(const CreateMapEvent& event);
-  void OnCloseMap(const CloseMapEvent& event);
-  void OnOpenMap(const OpenMapEvent& event);
-  void OnSelectMap(const SelectMapEvent& event);
+  void on_show_new_map_dialog();
+  void on_show_open_map_dialog();
+  void on_show_map_properties();
+  void on_create_map(const CreateMapEvent& event);
+  void on_close_map(const CloseMapEvent& event);
+  void on_open_map(const OpenMapEvent& event);
+  void on_select_map(const SelectMapEvent& event);
 
-  void OnSelectTool(const SelectToolEvent& event);
-  void OnMousePressed(const MousePressedEvent& event);
-  void OnMouseDrag(const MouseDragEvent& event);
-  void OnMouseReleased(const MouseReleasedEvent& event);
-  void OnStampSequence(StampSequenceEvent event);
-  void OnEraserSequence(EraserSequenceEvent event);
-  void OnFlood(const FloodEvent& event);
+  void on_select_tool(const SelectToolEvent& event);
+  void on_mouse_pressed(const MousePressedEvent& event);
+  void on_mouse_drag(const MouseDragEvent& event);
+  void on_mouse_released(const MouseReleasedEvent& event);
+  void on_stamp_sequence(StampSequenceEvent event);
+  void on_eraser_sequence(EraserSequenceEvent event);
+  void on_flood(const FloodEvent& event);
 
-  void OnCenterViewport();
-  void OnOffsetViewport(const OffsetViewportEvent& event);
-  void OnOffsetBoundViewport(const OffsetBoundViewportEvent& event);
-  void OnPanLeft();
-  void OnPanRight();
-  void OnPanUp();
-  void OnPanDown();
-  void OnIncreaseZoom();
-  void OnDecreaseZoom();
-  void OnResetZoom();
+  void on_center_viewport();
+  void on_offset_viewport(const OffsetViewportEvent& event);
+  void on_offset_bound_viewport(const OffsetBoundViewportEvent& event);
+  void on_pan_left();
+  void on_pan_right();
+  void on_pan_up();
+  void on_pan_down();
+  void on_increase_zoom();
+  void on_decrease_zoom();
+  void on_reset_zoom();
 
-  void OnShowAddTilesetDialog();
-  void OnAddTileset(const AddTilesetEvent& event);
-  void OnRemoveTileset(const RemoveTilesetEvent& event);
-  void OnSelectTileset(const SelectTilesetEvent& event);
-  void OnSetTilesetSelection(const SetTilesetSelectionEvent& event);
-  void OnSetTilesetName(const SetTilesetNameEvent& event);
+  void on_show_add_tileset_dialog();
+  void on_add_tileset(const AddTilesetEvent& event);
+  void on_remove_tileset(const RemoveTilesetEvent& event);
+  void on_select_tileset(const SelectTilesetEvent& event);
+  void on_set_tileset_selection(const SetTilesetSelectionEvent& event);
+  void on_set_tileset_name(const SetTilesetNameEvent& event);
 
-  void OnAddRow();
-  void OnAddColumn();
-  void OnRemoveRow();
-  void OnRemoveColumn();
-  void OnResizeMap(const ResizeMapEvent& event);
-  void OnOpenResizeMapDialog();
+  void on_add_row();
+  void on_add_column();
+  void on_remove_row();
+  void on_remove_column();
+  void on_resize_map(const ResizeMapEvent& event);
+  void on_open_resize_map_dialog();
 
-  void OnAddLayer(const AddLayerEvent& event);
-  void OnRemoveLayer(const RemoveLayerEvent& event);
-  void OnSelectLayer(const SelectLayerEvent& event);
-  void OnMoveLayerUp(const MoveLayerUpEvent& event);
-  void OnMoveLayerDown(const MoveLayerDownEvent& event);
-  void OnDuplicateLayer(const DuplicateLayerEvent& event);
-  void OnSetLayerOpacity(const SetLayerOpacityEvent& event);
-  void OnSetLayerVisible(const SetLayerVisibleEvent& event);
-  void OnOpenRenameLayerDialog(const OpenRenameLayerDialogEvent& event);
-  void OnRenameLayer(const RenameLayerEvent& event);
+  void on_add_layer(const AddLayerEvent& event);
+  void on_remove_layer(const RemoveLayerEvent& event);
+  void on_select_layer(const SelectLayerEvent& event);
+  void on_move_layer_up(const MoveLayerUpEvent& event);
+  void on_move_layer_down(const MoveLayerDownEvent& event);
+  void on_duplicate_layer(const DuplicateLayerEvent& event);
+  void on_set_layer_opacity(const SetLayerOpacityEvent& event);
+  void on_set_layer_visible(const SetLayerVisibleEvent& event);
+  void on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event);
+  void on_rename_layer(const RenameLayerEvent& event);
 
-  void OnSetObjectName(const SetObjectNameEvent& event);
-  void OnMoveObject(const MoveObjectEvent& event);
-  void OnSetObjectVisibility(const SetObjectVisibilityEvent& event);
-  void OnSetObjectTag(const SetObjectTagEvent& event);
-  void OnSpawnObjectContextMenu(const SpawnObjectContextMenuEvent& event);
+  void on_set_object_name(const SetObjectNameEvent& event);
+  void on_move_object(const MoveObjectEvent& event);
+  void on_set_object_visibility(const SetObjectVisibilityEvent& event);
+  void on_set_object_tag(const SetObjectTagEvent& event);
+  void on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event);
 
-  void OnShowAddPropertyDialog();
-  void OnShowRenamePropertyDialog(const ShowRenamePropertyDialogEvent& event);
-  void OnShowChangePropertyTypeDialog(const ShowChangePropertyTypeDialogEvent& event);
-  void OnAddProperty(const AddPropertyEvent& event);
-  void OnRemoveProperty(const RemovePropertyEvent& event);
-  void OnRenameProperty(const RenamePropertyEvent& event);
-  void OnUpdateProperty(const UpdatePropertyEvent& event);
-  void OnChangePropertyType(const ChangePropertyTypeEvent& event);
-  void OnInspectContext(const InspectContextEvent& event);
+  void on_show_add_property_dialog();
+  void on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event);
+  void on_show_change_property_type_dialog(
+      const ShowChangePropertyTypeDialogEvent& event);
+  void on_add_property(const AddPropertyEvent& event);
+  void on_remove_property(const RemovePropertyEvent& event);
+  void on_rename_property(const RenamePropertyEvent& event);
+  void on_update_property(const UpdatePropertyEvent& event);
+  void on_change_property_type(const ChangePropertyTypeEvent& event);
+  void on_inspect_context(const InspectContextEvent& event);
 
-  void OnOpenComponentEditor();
-  void OnCreateComponentDef(const CreateComponentDefEvent& event);
-  void OnRemoveComponentDef(const RemoveComponentDefEvent& event);
-  void OnRenameComponentDef(const RenameComponentDefEvent& event);
-  void OnCreateComponentAttribute(const CreateComponentAttributeEvent& event);
-  void OnRemoveComponentAttribute(const RemoveComponentAttributeEvent& event);
-  void OnRenameComponentAttribute(const RenameComponentAttributeEvent& event);
-  void OnDuplicateComponentAttribute(const DuplicateComponentAttributeEvent& event);
-  void OnSetComponentAttributeType(const SetComponentAttributeTypeEvent& event);
-  void OnUpdateComponentDefAttribute(const UpdateComponentDefAttributeEvent& event);
+  void on_open_component_editor();
+  void on_create_component_def(const CreateComponentDefEvent& event);
+  void on_remove_component_def(const RemoveComponentDefEvent& event);
+  void on_rename_component_def(const RenameComponentDefEvent& event);
+  void on_create_component_attribute(const CreateComponentAttributeEvent& event);
+  void on_remove_component_attribute(const RemoveComponentAttributeEvent& event);
+  void on_rename_component_attribute(const RenameComponentAttributeEvent& event);
+  void on_duplicate_component_attribute(const DuplicateComponentAttributeEvent& event);
+  void on_set_component_attribute_type(const SetComponentAttributeTypeEvent& event);
+  void on_update_component_def_attribute(const UpdateComponentDefAttributeEvent& event);
 
-  void OnAddComponent(const AddComponentEvent& event);
-  void OnRemoveComponent(const RemoveComponentEvent& event);
-  void OnUpdateComponent(const UpdateComponentEvent& event);
-  void OnResetComponentValues(const ResetComponentValuesEvent& event);
+  void on_add_component(const AddComponentEvent& event);
+  void on_remove_component(const RemoveComponentEvent& event);
+  void on_update_component(const UpdateComponentEvent& event);
+  void on_reset_component_values(const ResetComponentValuesEvent& event);
 
-  void OnToggleUi();
-  void OnQuit();
+  void on_toggle_ui();
+  void on_quit();
 };
 
 }  // namespace tactile
