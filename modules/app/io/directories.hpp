@@ -7,9 +7,9 @@ namespace tactile {
 /**
  * \brief Returns the path to the persistent file directory.
  *
- * \ingroup io
- *
  * \return the persistent file directory path.
+ *
+ * \ingroup io
  */
 [[nodiscard]] auto persistent_file_dir() -> const std::filesystem::path&;
 
