@@ -15,6 +15,7 @@ set(TEST_FILES
     unit-tests/app/core/tile_position_test.cpp
 
     unit-tests/app/core/algorithms/flood_fill_test.cpp
+    unit-tests/app/core/algorithms/invoke_n_test.cpp
 
     unit-tests/app/core/systems/component_system_test.cpp
     unit-tests/app/core/systems/layer_system_test.cpp
