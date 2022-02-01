@@ -225,21 +225,22 @@ TEST(PreferenceState, SetPreferredTileHeight)
 
 TEST(PreferenceState, EnsureThemeEnumsMatch)
 {
-  ASSERT_EQ(proto::DEAR_DARK, cen::to_underlying(Theme::dear_dark));
-  ASSERT_EQ(proto::DEAR_LIGHT, cen::to_underlying(Theme::dear_light));
-  ASSERT_EQ(proto::RUBY, cen::to_underlying(Theme::ruby));
-  ASSERT_EQ(proto::SAPPHIRE, cen::to_underlying(Theme::sapphire));
-  ASSERT_EQ(proto::EMERALD, cen::to_underlying(Theme::emerald));
-  ASSERT_EQ(proto::AMETHYST, cen::to_underlying(Theme::amethyst));
-  ASSERT_EQ(proto::AMBER, cen::to_underlying(Theme::amber));
-  ASSERT_EQ(proto::NOCTURNAL, cen::to_underlying(Theme::nocturnal));
-  ASSERT_EQ(proto::ASH, cen::to_underlying(Theme::ash));
+  ASSERT_EQ(proto::THEME_DEAR_DARK, cen::to_underlying(Theme::dear_dark));
+  ASSERT_EQ(proto::THEME_DEAR_LIGHT, cen::to_underlying(Theme::dear_light));
+  ASSERT_EQ(proto::THEME_RUBY, cen::to_underlying(Theme::ruby));
+  ASSERT_EQ(proto::THEME_SAPPHIRE, cen::to_underlying(Theme::sapphire));
+  ASSERT_EQ(proto::THEME_EMERALD, cen::to_underlying(Theme::emerald));
+  ASSERT_EQ(proto::THEME_AMETHYST, cen::to_underlying(Theme::amethyst));
+  ASSERT_EQ(proto::THEME_AMBER, cen::to_underlying(Theme::amber));
+  ASSERT_EQ(proto::THEME_NOCTURNAL, cen::to_underlying(Theme::nocturnal));
+  ASSERT_EQ(proto::THEME_ASH, cen::to_underlying(Theme::ash));
 }
 
 TEST(PreferenceState, EnsureOverlayPosEnumsMatch)
 {
-  ASSERT_EQ(proto::TOP_LEFT, cen::to_underlying(overlay_pos::top_left));
-  ASSERT_EQ(proto::TOP_RIGHT, cen::to_underlying(overlay_pos::top_right));
-  ASSERT_EQ(proto::BOTTOM_RIGHT, cen::to_underlying(overlay_pos::bottom_right));
-  ASSERT_EQ(proto::BOTTOM_LEFT, cen::to_underlying(overlay_pos::bottom_left));
+  ASSERT_EQ(proto::OVERLAY_POS_TOP_LEFT, cen::to_underlying(overlay_pos::top_left));
+  ASSERT_EQ(proto::OVERLAY_POS_TOP_RIGHT, cen::to_underlying(overlay_pos::top_right));
+  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_RIGHT,
+            cen::to_underlying(overlay_pos::bottom_right));
+  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_LEFT, cen::to_underlying(overlay_pos::bottom_left));
 }

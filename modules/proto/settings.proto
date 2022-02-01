@@ -4,23 +4,23 @@ package tactile.proto;
 
 /* Remember to keep these values synced with tactile::OverlayPos! */
 enum overlay_pos {
-  TOP_LEFT = 0;
-  TOP_RIGHT = 1;
-  BOTTOM_LEFT = 2;
-  BOTTOM_RIGHT = 3;
+  OVERLAY_POS_TOP_LEFT = 0;
+  OVERLAY_POS_TOP_RIGHT = 1;
+  OVERLAY_POS_BOTTOM_LEFT = 2;
+  OVERLAY_POS_BOTTOM_RIGHT = 3;
 }
 
 /* Remember to keep these values synced with tactile::Theme! */
 enum theme {
-  DEAR_DARK = 0;
-  DEAR_LIGHT = 1;
-  RUBY = 2;
-  SAPPHIRE = 3;
-  EMERALD = 4;
-  AMETHYST = 5;
-  AMBER = 6;
-  NOCTURNAL = 7;
-  ASH = 8;
+  THEME_DEAR_DARK = 0;
+  THEME_DEAR_LIGHT = 1;
+  THEME_RUBY = 2;
+  THEME_SAPPHIRE = 3;
+  THEME_EMERALD = 4;
+  THEME_AMETHYST = 5;
+  THEME_AMBER = 6;
+  THEME_NOCTURNAL = 7;
+  THEME_ASH = 8;
 }
 
 message color {
