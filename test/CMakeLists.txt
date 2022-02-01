@@ -26,6 +26,7 @@ set(TEST_FILES
 
     unit-tests/app/core/utils/buffers_test.cpp
     unit-tests/app/core/utils/colors_test.cpp
+    unit-tests/app/core/utils/formatted_string_test.cpp
     unit-tests/app/core/utils/strings_test.cpp
     unit-tests/app/core/utils/tiles_test.cpp
     unit-tests/app/core/utils/vector_map_test.cpp
