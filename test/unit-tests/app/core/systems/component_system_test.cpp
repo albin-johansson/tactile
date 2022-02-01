@@ -5,9 +5,7 @@
 #include <gtest/gtest.h>
 #include <tactile_stdlib.hpp>
 
-#include "core/components/attribute_context.hpp"
 #include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
 #include "core/systems/registry_system.hpp"
 
 using namespace tactile;
