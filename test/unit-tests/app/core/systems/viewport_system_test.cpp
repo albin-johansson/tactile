@@ -80,7 +80,7 @@ TEST_F(ViewportSystemTest, DecreaseViewportZoom)
   const auto width = viewport.tile_width;
   const auto height = viewport.tile_height;
 
-  sys::DecreaseViewportZoom(mRegistry);
+  sys::DecreaseViewportZoom(mRegistry, 0, 0);
 
   ASSERT_LT(viewport.tile_width, width);
   ASSERT_LT(viewport.tile_height, height);

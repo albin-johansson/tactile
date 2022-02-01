@@ -7,7 +7,6 @@
 #include "core/components/tileset.hpp"
 #include "core/components/tool.hpp"
 #include "core/map.hpp"
-#include "core/mouse_pos.hpp"
 #include "core/viewport.hpp"
 #include "property_system.hpp"
 
@@ -22,7 +21,6 @@ auto make_document_registry() -> entt::registry
   registry.set<comp::active_attribute_context>();
   registry.set<comp::active_tool>();
   registry.set<comp::active_object>();
-  registry.set<MousePos>();
 
   auto& map = registry.set<MapInfo>();
   map.row_count = 5;

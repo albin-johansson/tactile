@@ -7,7 +7,6 @@
 #include "assert.hpp"
 #include "core/components/texture.hpp"
 #include "core/map.hpp"
-#include "core/mouse_pos.hpp"
 #include "core/viewport.hpp"
 
 namespace tactile::sys {
@@ -91,16 +90,17 @@ void ResetViewportZoom(entt::registry& registry)
   viewport.tile_height = 2.0f * static_cast<float>(map.tile_height);
 }
 
-void DecreaseViewportZoom(entt::registry& registry)
+void DecreaseViewportZoom(entt::registry& registry,
+                          const float mouseX,
+                          const float mouseY)
 {
   TACTILE_ASSERT(CanDecreaseViewportZoom(registry));
 
   auto& viewport = registry.ctx<Viewport>();
-  const auto& mouse = registry.ctx<MousePos>();
 
   // Percentages of map to the left of and above the cursor
-  const auto px = (mouse.x - viewport.x_offset) / viewport.tile_width;
-  const auto py = (mouse.y - viewport.y_offset) / viewport.tile_height;
+  const auto px = (mouseX - viewport.x_offset) / viewport.tile_width;
+  const auto py = (mouseY - viewport.y_offset) / viewport.tile_height;
 
   {
     const auto ratio = viewport.tile_width / viewport.tile_height;
@@ -112,18 +112,19 @@ void DecreaseViewportZoom(entt::registry& registry)
     viewport.tile_height = std::max(gMinTileHeight, viewport.tile_height);
   }
 
-  viewport.x_offset = mouse.x - (px * viewport.tile_width);
-  viewport.y_offset = mouse.y - (py * viewport.tile_height);
+  viewport.x_offset = mouseX - (px * viewport.tile_width);
+  viewport.y_offset = mouseY - (py * viewport.tile_height);
 }
 
-void IncreaseViewportZoom(entt::registry& registry)
+void IncreaseViewportZoom(entt::registry& registry,
+                          const float mouseX,
+                          const float mouseY)
 {
   auto& viewport = registry.ctx<Viewport>();
-  const auto& mouse = registry.ctx<MousePos>();
 
   // Percentages of map to the left of and above the cursor
-  const auto px = (mouse.x - viewport.x_offset) / viewport.tile_width;
-  const auto py = (mouse.y - viewport.y_offset) / viewport.tile_height;
+  const auto px = (mouseX - viewport.x_offset) / viewport.tile_width;
+  const auto py = (mouseY - viewport.y_offset) / viewport.tile_height;
 
   {
     const auto ratio = viewport.tile_width / viewport.tile_height;
@@ -132,8 +133,8 @@ void IncreaseViewportZoom(entt::registry& registry)
     viewport.tile_height += dy;
   }
 
-  viewport.x_offset = mouse.x - (px * viewport.tile_width);
-  viewport.y_offset = mouse.y - (py * viewport.tile_height);
+  viewport.x_offset = mouseX - (px * viewport.tile_width);
+  viewport.y_offset = mouseY - (py * viewport.tile_height);
 }
 
 auto CanDecreaseViewportZoom(const entt::registry& registry) -> bool

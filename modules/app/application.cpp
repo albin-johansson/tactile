@@ -11,7 +11,6 @@
 #include "application_events.hpp"
 #include "cfg/configuration.hpp"
 #include "core/components/attribute_context.hpp"
-#include "core/mouse_pos.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
@@ -197,13 +196,6 @@ void Application::OnMouseWheelEvent(const cen::mouse_wheel_event& event)
 
 void Application::UpdateFrame()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
-    const auto position = ImGui::GetMousePos();
-    auto& mouse = registry->ctx<MousePos>();
-    mouse.x = position.x;
-    mouse.y = position.y;
-  }
-
   mDispatcher.update();
   mModel.Update();
   mWidgets.Update(mModel, mIcons, mDispatcher);
@@ -414,13 +406,15 @@ void Application::OnPanDown()
 void Application::OnIncreaseZoom()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  sys::IncreaseViewportZoom(registry);
+  const auto mousePos = ImGui::GetIO().MousePos;
+  sys::IncreaseViewportZoom(registry, mousePos.x, mousePos.y);
 }
 
 void Application::OnDecreaseZoom()
 {
   auto& registry = mModel.GetActiveRegistryRef();
-  sys::DecreaseViewportZoom(registry);
+  const auto mousePos = ImGui::GetIO().MousePos;
+  sys::DecreaseViewportZoom(registry, mousePos.x, mousePos.y);
 }
 
 void Application::OnResetZoom()

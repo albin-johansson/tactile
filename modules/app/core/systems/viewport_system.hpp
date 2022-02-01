@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry, entity
+#include <entt/entt.hpp>
 
 namespace tactile::sys {
 
@@ -16,11 +16,9 @@ struct ViewportScalingRatio final
 /**
  * \brief Offsets the current viewport.
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
  * \param dx the x-axis offset.
  * \param dy the y-axis offset.
- *
- * \since 0.2.0
  */
 void OffsetViewport(entt::registry& registry, float dx, float dy);
 
@@ -47,45 +45,35 @@ void OffsetBoundViewport(entt::registry& registry,
 /**
  * \brief Pans the viewport to the left.
  *
- * \param registry the associated registry.
- *
- * \since 0.2.0
+ * \param registry the document registry.
  */
 void PanViewportLeft(entt::registry& registry);
 
 /**
  * \brief Pans the viewport to the right.
  *
- * \param registry the associated registry.
- *
- * \since 0.2.0
+ * \param registry the document registry.
  */
 void PanViewportRight(entt::registry& registry);
 
 /**
  * \brief Pans the viewport upwards.
  *
- * \param registry the associated registry.
- *
- * \since 0.2.0
+ * \param registry the document registry.
  */
 void PanViewportUp(entt::registry& registry);
 
 /**
  * \brief Pans the viewport downwards.
  *
- * \param registry the associated registry.
- *
- * \since 0.2.0
+ * \param registry the document registry.
  */
 void PanViewportDown(entt::registry& registry);
 
 /**
  * \brief Resets the zoom (viewport tile size) to the default.
  *
- * \param registry the associated registry.
- *
- * \since 0.2.0
+ * \param registry the document registry.
  */
 void ResetViewportZoom(entt::registry& registry);
 
@@ -94,33 +82,31 @@ void ResetViewportZoom(entt::registry& registry);
  *
  * \pre The viewport tile size must be large enough to support a decrease.
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
+ * \param mouseX the mouse x-coordinate.
+ * \param mouseY the mouse y-coordinate
  *
  * \see `CanDecreaseViewportZoom()`
- *
- * \since 0.2.0
  */
-void DecreaseViewportZoom(entt::registry& registry);
+void DecreaseViewportZoom(entt::registry& registry, float mouseX, float mouseY);
 
 /**
  * \brief Increases the viewport zoom.
  *
- * \param registry the associated registry.
- *
- * \since 0.2.0
+ * \param registry the document registry.
+ * \param mouseX the mouse x-coordinate.
+ * \param mouseY the mouse y-coordinate
  */
-void IncreaseViewportZoom(entt::registry& registry);
+void IncreaseViewportZoom(entt::registry& registry, float mouseX, float mouseY);
 
 /**
  * \brief Indicates whether or not the viewport zoom can be decreased.
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
  *
  * \return `true` if the viewport zoom can be decreased; `false` otherwise.
  *
  * \see `DecreaseViewportZoom()`
- *
- * \since 0.2.0
  */
 [[nodiscard]] auto CanDecreaseViewportZoom(const entt::registry& registry) -> bool;
 
