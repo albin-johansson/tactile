@@ -8,12 +8,12 @@ namespace tactile::sys {
 
 void ObjectSelectionToolOnPressed(entt::registry& registry,
                                   entt::dispatcher& dispatcher,
-                                  const MouseInfo& mouse);
+                                  const mouse_info& mouse);
 
-void ObjectSelectionToolOnDragged(entt::registry& registry, const MouseInfo& mouse);
+void ObjectSelectionToolOnDragged(entt::registry& registry, const mouse_info& mouse);
 
 void ObjectSelectionToolOnReleased(entt::registry& registry,
                                    entt::dispatcher& dispatcher,
-                                   const MouseInfo& mouse);
+                                   const mouse_info& mouse);
 
 }  // namespace tactile::sys

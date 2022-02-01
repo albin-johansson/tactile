@@ -13,17 +13,17 @@ namespace tactile {
 
 struct MousePressedEvent final
 {
-  MouseInfo info;
+  mouse_info info;
 };
 
 struct MouseDragEvent final
 {
-  MouseInfo info;
+  mouse_info info;
 };
 
 struct MouseReleasedEvent final
 {
-  MouseInfo info;
+  mouse_info info;
 };
 
 struct SelectToolEvent final

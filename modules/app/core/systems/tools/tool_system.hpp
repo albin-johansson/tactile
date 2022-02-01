@@ -11,15 +11,15 @@ void SelectTool(entt::registry& registry, tool_type tool);
 
 void ToolOnPressed(entt::registry& registry,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse);
+                   const mouse_info& mouse);
 
 void ToolOnDragged(entt::registry& registry,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse);
+                   const mouse_info& mouse);
 
 void ToolOnReleased(entt::registry& registry,
                     entt::dispatcher& dispatcher,
-                    const MouseInfo& mouse);
+                    const mouse_info& mouse);
 
 [[nodiscard]] auto IsStampEnabled(const entt::registry& registry) -> bool;
 

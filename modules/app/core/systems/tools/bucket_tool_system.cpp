@@ -10,7 +10,7 @@ namespace tactile::sys {
 
 void BucketToolOnPressed(entt::registry& registry,
                          entt::dispatcher& dispatcher,
-                         const MouseInfo& mouse)
+                         const mouse_info& mouse)
 {
   if (is_tile_layer_active(registry) && is_single_tile_selected_in_tileset(registry) &&
       mouse.button == cen::mouse_button::left) {
@@ -21,7 +21,7 @@ void BucketToolOnPressed(entt::registry& registry,
     const auto position = selection.region->begin;
     const auto replacement = get_tile_from_tileset(registry, entity, position);
 
-    dispatcher.enqueue<FloodEvent>(mouse.position_in_map, replacement);
+    dispatcher.enqueue<FloodEvent>(mouse.position_in_viewport, replacement);
   }
 }
 

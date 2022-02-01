@@ -6,12 +6,12 @@
 
 namespace tactile::sys {
 
-void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse);
+void StampToolOnPressed(entt::registry& registry, const mouse_info& mouse);
 
-void StampToolOnDragged(entt::registry& registry, const MouseInfo& mouse);
+void StampToolOnDragged(entt::registry& registry, const mouse_info& mouse);
 
 void StampToolOnReleased(entt::registry& registry,
                          entt::dispatcher& dispatcher,
-                         const MouseInfo& mouse);
+                         const mouse_info& mouse);
 
 }  // namespace tactile::sys

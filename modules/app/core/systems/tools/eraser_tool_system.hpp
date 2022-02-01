@@ -6,12 +6,12 @@
 
 namespace tactile::sys {
 
-void EraserToolOnPressed(entt::registry& registry, const MouseInfo& mouse);
+void EraserToolOnPressed(entt::registry& registry, const mouse_info& mouse);
 
-void EraserToolOnDragged(entt::registry& registry, const MouseInfo& mouse);
+void EraserToolOnDragged(entt::registry& registry, const mouse_info& mouse);
 
 void EraserToolOnReleased(entt::registry& registry,
                           entt::dispatcher& dispatcher,
-                          const MouseInfo& mouse);
+                          const mouse_info& mouse);
 
 }  // namespace tactile::sys

@@ -15,7 +15,7 @@ namespace {
   return is_object_layer_active(registry);
 }
 
-[[nodiscard]] auto GetTargetObject(const entt::registry& registry, const MouseInfo& mouse)
+[[nodiscard]] auto GetTargetObject(const entt::registry& registry, const mouse_info& mouse)
     -> entt::entity
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
@@ -30,7 +30,7 @@ namespace {
 
 void ObjectSelectionToolOnPressed(entt::registry& registry,
                                   entt::dispatcher& dispatcher,
-                                  const MouseInfo& mouse)
+                                  const mouse_info& mouse)
 {
   if (IsUsable(registry)) {
     if (mouse.button == cen::mouse_button::left) {
@@ -70,7 +70,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
   }
 }
 
-void ObjectSelectionToolOnDragged(entt::registry& registry, const MouseInfo& mouse)
+void ObjectSelectionToolOnDragged(entt::registry& registry, const mouse_info& mouse)
 {
   const auto entity = GetTargetObject(registry, mouse);
   if (entity != entt::null) {
@@ -91,7 +91,7 @@ void ObjectSelectionToolOnDragged(entt::registry& registry, const MouseInfo& mou
 
 void ObjectSelectionToolOnReleased(entt::registry& registry,
                                    entt::dispatcher& dispatcher,
-                                   const MouseInfo& mouse)
+                                   const mouse_info& mouse)
 {
   const auto entity = GetTargetObject(registry, mouse);
   if (entity != entt::null) {

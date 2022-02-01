@@ -6,17 +6,17 @@
 
 namespace tactile {
 
-/// \addtogroup core
-/// \{
-
-struct MouseInfo final
+/**
+ * \brief Provides general information about the mouse, used in response to mouse events.
+ *
+ * \ingroup core
+ */
+struct mouse_info final
 {
-  float x{};
-  float y{};
-  tile_position position_in_map;
-  cen::mouse_button button{};
+  float x{};                           ///< The mouse x-coordinate.
+  float y{};                           ///< The mouse y-coordinate.
+  tile_position position_in_viewport;  ///< The hovered tile position.
+  cen::mouse_button button{};          ///< The activated mouse button.
 };
-
-/// \} End of group core
 
 }  // namespace tactile

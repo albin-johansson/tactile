@@ -40,10 +40,10 @@ void CheckFor(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&
   const auto mid = query(ImGuiMouseButton_Middle);
   const auto right = query(ImGuiMouseButton_Right);
   if (left || mid || right) {
-    MouseInfo info;
+    mouse_info info;
     info.x = cursor.raw_position.x;
     info.y = cursor.raw_position.y;
-    info.position_in_map = cursor.map_position;
+    info.position_in_viewport = cursor.map_position;
 
     if (left) {
       info.button = cen::mouse_button::left;

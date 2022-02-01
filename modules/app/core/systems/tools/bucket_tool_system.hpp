@@ -8,6 +8,6 @@ namespace tactile::sys {
 
 void BucketToolOnPressed(entt::registry& registry,
                          entt::dispatcher& dispatcher,
-                         const MouseInfo& mouse);
+                         const mouse_info& mouse);
 
 }  // namespace tactile::sys

@@ -67,26 +67,26 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 
 }  // namespace
 
-void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
+void StampToolOnPressed(entt::registry& registry, const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     gOldState.clear();
     gSequence.clear();
 
-    UpdateSequence(registry, mouse.position_in_map);
+    UpdateSequence(registry, mouse.position_in_viewport);
   }
 }
 
-void StampToolOnDragged(entt::registry& registry, const MouseInfo& mouse)
+void StampToolOnDragged(entt::registry& registry, const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    UpdateSequence(registry, mouse.position_in_map);
+    UpdateSequence(registry, mouse.position_in_viewport);
   }
 }
 
 void StampToolOnReleased(entt::registry& registry,
                          entt::dispatcher& dispatcher,
-                         const MouseInfo& mouse)
+                         const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     dispatcher.enqueue<StampSequenceEvent>(std::move(gOldState), std::move(gSequence));

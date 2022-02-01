@@ -16,7 +16,7 @@ void SelectTool(entt::registry& registry, const tool_type tool)
 
 void ToolOnPressed(entt::registry& registry,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse)
+                   const mouse_info& mouse)
 {
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
@@ -43,7 +43,7 @@ void ToolOnPressed(entt::registry& registry,
 
 void ToolOnDragged(entt::registry& registry,
                    [[maybe_unused]] entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse)
+                   const mouse_info& mouse)
 {
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
@@ -69,7 +69,7 @@ void ToolOnDragged(entt::registry& registry,
 
 void ToolOnReleased(entt::registry& registry,
                     entt::dispatcher& dispatcher,
-                    const MouseInfo& mouse)
+                    const mouse_info& mouse)
 {
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {

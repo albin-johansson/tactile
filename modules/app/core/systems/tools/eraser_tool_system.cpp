@@ -37,24 +37,24 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 
 }  // namespace
 
-void EraserToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
+void EraserToolOnPressed(entt::registry& registry, const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     gOldState.clear();
-    UpdateSequence(registry, mouse.position_in_map);
+    UpdateSequence(registry, mouse.position_in_viewport);
   }
 }
 
-void EraserToolOnDragged(entt::registry& registry, const MouseInfo& mouse)
+void EraserToolOnDragged(entt::registry& registry, const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    UpdateSequence(registry, mouse.position_in_map);
+    UpdateSequence(registry, mouse.position_in_viewport);
   }
 }
 
 void EraserToolOnReleased(entt::registry& registry,
                           entt::dispatcher& dispatcher,
-                          const MouseInfo& mouse)
+                          const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     dispatcher.enqueue<EraserSequenceEvent>(std::move(gOldState));
