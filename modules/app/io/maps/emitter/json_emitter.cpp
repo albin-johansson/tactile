@@ -331,7 +331,7 @@ void emit_json_map(const emit_info& info)
   const auto& data = info.data();
 
   if (!data.component_definitions.empty()) {
-    log_warning("Component data is ignored when saving maps as JSON!");
+    log_warning("Component data will be ignored when saving the map as JSON!");
   }
 
   json["type"] = "map";
