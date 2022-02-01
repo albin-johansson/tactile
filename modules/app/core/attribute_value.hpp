@@ -74,7 +74,7 @@ enum object_t : int32 {};
 
 template <typename T>
 concept is_attribute_type = std::same_as<T, std::string> ||  //
-    std::same_as<T, int> ||                                  //
+    std::same_as<T, int32> ||                                //
     std::same_as<T, float> ||                                //
     std::same_as<T, bool> ||                                 //
     std::same_as<T, cen::color> ||                           //
@@ -87,7 +87,7 @@ concept is_attribute_type = std::same_as<T, std::string> ||  //
 class attribute_value final {
  public:
   using string_type = std::string;
-  using integer_type = int;
+  using integer_type = int32;
   using float_type = float;
   using color_type = cen::color;
   using file_type = std::filesystem::path;
