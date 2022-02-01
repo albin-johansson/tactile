@@ -10,35 +10,35 @@ using namespace tactile;
 
 namespace {
 
-class Foo : public command_base {
- public:
-  Foo() : command_base{"Foo"} {}
+struct foo_cmd : command_base
+{
+  foo_cmd() : command_base{"foo_cmd"} {}
 
   void undo() override
   {
-    // std::cout << "Foo::Undo\n";
+    // std::cout << "foo_cmd::undo\n";
   }
 
   void redo() override
   {
-    // std::cout << "Foo::Redo\n";
+    // std::cout << "foo_cmd::redo\n";
   }
 
   [[nodiscard]] auto id() const -> int override { return 0; }
 };
 
-class Bar : public command_base {
- public:
-  Bar() : command_base{"Bar"} {}
+struct bar_cmd : command_base
+{
+  bar_cmd() : command_base{"bar_cmd"} {}
 
   void undo() override
   {
-    // std::cout << "Bar::Undo\n";
+    // std::cout << "bar_cmd::undo\n";
   }
 
   void redo() override
   {
-    // std::cout << "Bar::Redo\n";
+    // std::cout << "bar_cmd::redo\n";
   }
 
   [[nodiscard]] auto id() const -> int override { return 1; }
@@ -60,77 +60,77 @@ TEST(CommandStack, Usage)
 {
   command_stack stack;
 
-  // ^[ ] -> [ ^Foo ]
-  stack.push<Foo>();
+  // ^[ ] -> [ ^foo_cmd ]
+  stack.push<foo_cmd>();
   ASSERT_EQ(1, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
-  ASSERT_EQ("Foo", stack.get_undo_text());
+  ASSERT_EQ("foo_cmd", stack.get_undo_text());
 
-  // [ ^Foo ] -> [ Foo, ^Bar ]
-  stack.push<Bar>();
+  // [ ^foo_cmd ] -> [ foo_cmd, ^bar_cmd ]
+  stack.push<bar_cmd>();
   ASSERT_EQ(2, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 
-  // [ Foo, ^Bar ] -> [ ^Foo, Bar ]
+  // [ foo_cmd, ^bar_cmd ] -> [ ^foo_cmd, bar_cmd ]
   stack.undo();
   ASSERT_EQ(2, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
-  ASSERT_EQ("Foo", stack.get_undo_text());
-  ASSERT_EQ("Bar", stack.get_redo_text());
+  ASSERT_EQ("foo_cmd", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_redo_text());
 
-  // [ ^Foo, Bar ] -> ^[ Foo, Bar ]
+  // [ ^foo_cmd, bar_cmd ] -> ^[ foo_cmd, bar_cmd ]
   stack.undo();
   ASSERT_EQ(2, stack.size());
   ASSERT_FALSE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
-  ASSERT_EQ("Foo", stack.get_redo_text());
+  ASSERT_EQ("foo_cmd", stack.get_redo_text());
 
-  // ^[ Foo, Bar ] -> [ ^Foo, Bar ]
+  // ^[ foo_cmd, bar_cmd ] -> [ ^foo_cmd, bar_cmd ]
   stack.redo();
   ASSERT_EQ(2, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
-  ASSERT_EQ("Foo", stack.get_undo_text());
-  ASSERT_EQ("Bar", stack.get_redo_text());
+  ASSERT_EQ("foo_cmd", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_redo_text());
 
-  // [ ^Foo, Bar ] -> [ Foo, ^Bar ]
+  // [ ^foo_cmd, bar_cmd ] -> [ foo_cmd, ^bar_cmd ]
   stack.redo();
   ASSERT_EQ(2, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 
-  // [ Foo, ^Bar ] -> [ ^Foo, Bar ]
+  // [ foo_cmd, ^bar_cmd ] -> [ ^foo_cmd, bar_cmd ]
   stack.undo();
   ASSERT_EQ(2, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
-  ASSERT_EQ("Foo", stack.get_undo_text());
-  ASSERT_EQ("Bar", stack.get_redo_text());
+  ASSERT_EQ("foo_cmd", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_redo_text());
 
-  // [ ^Foo, Bar ] -> [ Foo, ^Foo ]
-  stack.push<Foo>();
+  // [ ^foo_cmd, bar_cmd ] -> [ foo_cmd, ^foo_cmd ]
+  stack.push<foo_cmd>();
   ASSERT_EQ(2, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
-  ASSERT_EQ("Foo", stack.get_undo_text());
+  ASSERT_EQ("foo_cmd", stack.get_undo_text());
 
-  // [ Foo, ^Foo ] -> ^[ Foo, Foo ]
+  // [ foo_cmd, ^foo_cmd ] -> ^[ foo_cmd, foo_cmd ]
   stack.undo();
   stack.undo();
   ASSERT_EQ(2, stack.size());
-  ASSERT_EQ("Foo", stack.get_redo_text());
+  ASSERT_EQ("foo_cmd", stack.get_redo_text());
 
-  // ^[ Foo, Foo ] -> [ ^Bar ]
-  stack.push<Bar>();
+  // ^[ foo_cmd, foo_cmd ] -> [ ^bar_cmd ]
+  stack.push<bar_cmd>();
   ASSERT_EQ(1, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 }
 
 TEST(CommandStack, Clean)
@@ -142,22 +142,22 @@ TEST(CommandStack, Clean)
   ASSERT_FALSE(stack.can_redo());
 
   stack.mark_as_clean();
-  stack.push<Foo>();
+  stack.push<foo_cmd>();
   ASSERT_FALSE(stack.is_clean());
 
   stack.undo();
   ASSERT_TRUE(stack.is_clean());
 
-  // ^[ ] -> [ ^Foo ]
+  // ^[ ] -> [ ^foo_cmd ]
   stack.clear();
   stack.reset_clean();
-  stack.push<Foo>();
+  stack.push<foo_cmd>();
   ASSERT_FALSE(stack.is_clean());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
 
-  // [ ^Foo ] -> [ Foo, ^Bar ]
-  stack.push<Bar>();
+  // [ ^foo_cmd ] -> [ foo_cmd, ^bar_cmd ]
+  stack.push<bar_cmd>();
   ASSERT_FALSE(stack.is_clean());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
@@ -167,22 +167,22 @@ TEST(CommandStack, Clean)
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
 
-  // [ Foo, ^Bar ] -> [ ^Foo, Bar ]
+  // [ foo_cmd, ^bar_cmd ] -> [ ^foo_cmd, bar_cmd ]
   stack.undo();
   ASSERT_FALSE(stack.is_clean());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
 
-  // [ ^Foo, Bar ] -> [ Foo, ^Bar ]
+  // [ ^foo_cmd, bar_cmd ] -> [ foo_cmd, ^bar_cmd ]
   stack.redo();
   ASSERT_TRUE(stack.is_clean());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
 
   /* Here we test a special case when the clean state becomes invalidated */
-  // [ Foo, ^Bar ] -Undo-> [ ^Foo, Bar ] -Push-> [ Foo, ^Foo ]
+  // [ foo_cmd, ^bar_cmd ] -Undo-> [ ^foo_cmd, bar_cmd ] -Push-> [ foo_cmd, ^foo_cmd ]
   stack.undo();
-  stack.push<Foo>();
+  stack.push<foo_cmd>();
   ASSERT_FALSE(stack.is_clean());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
@@ -201,54 +201,54 @@ TEST(CommandStack, OverflowWithCleanIndex)
   stack.set_capacity(4);
   ASSERT_EQ(4, stack.capacity());
 
-  stack.push<Foo>();
+  stack.push<foo_cmd>();
 
-  stack.push<Bar>();
+  stack.push<bar_cmd>();
   stack.mark_as_clean();
 
-  stack.push<Bar>();
-  stack.push<Bar>();
+  stack.push<bar_cmd>();
+  stack.push<bar_cmd>();
 
-  //  ^[ ] -> [ Foo, _Bar_, Bar, ^Bar ]
+  //  ^[ ] -> [ foo_cmd, _Bar_, bar_cmd, ^bar_cmd ]
   ASSERT_EQ(4, stack.size());
   ASSERT_EQ(3, stack.index());
   ASSERT_EQ(1, stack.clean_index());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 
-  // [ Foo, _Bar_, Bar, ^Bar ] -> [ _Bar_, Bar, Bar, ^Foo ]
-  stack.push<Foo>();
+  // [ foo_cmd, _Bar_, bar_cmd, ^bar_cmd ] -> [ _Bar_, bar_cmd, bar_cmd, ^foo_cmd ]
+  stack.push<foo_cmd>();
   ASSERT_EQ(4, stack.size());
   ASSERT_EQ(3, stack.index());
   ASSERT_EQ(0, stack.clean_index());
-  ASSERT_EQ("Foo", stack.get_undo_text());
+  ASSERT_EQ("foo_cmd", stack.get_undo_text());
 
-  // [ _Bar_, Bar, Bar, ^Foo ] -> [ Bar, Bar, Foo, ^Bar ]
-  stack.push<Bar>();
+  // [ _Bar_, bar_cmd, bar_cmd, ^foo_cmd ] -> [ bar_cmd, bar_cmd, foo_cmd, ^bar_cmd ]
+  stack.push<bar_cmd>();
   ASSERT_EQ(4, stack.size());
   ASSERT_EQ(3, stack.index());
   ASSERT_FALSE(stack.clean_index());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 }
 
 TEST(CommandStack, Overflow)
 {
   command_stack stack;
-  stack.push<Foo>();
+  stack.push<foo_cmd>();
 
   ASSERT_EQ(1, stack.size());
   ASSERT_EQ(0, stack.index());
-  ASSERT_EQ("Foo", stack.get_undo_text());
+  ASSERT_EQ("foo_cmd", stack.get_undo_text());
 
   // The stack should be full after this
   for (auto index = 0u; index < (stack.capacity() - 1); ++index) {
-    stack.push<Bar>();
+    stack.push<bar_cmd>();
   }
 
   ASSERT_EQ(stack.capacity(), stack.size());
   ASSERT_EQ(stack.capacity() - 1, stack.index());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 
-  stack.push<Foo>();  // This should cause the first command to get removed
+  stack.push<foo_cmd>();  // This should cause the first command to get removed
   ASSERT_EQ(stack.capacity(), stack.size());
 }
 
@@ -260,27 +260,27 @@ TEST(CommandStack, SetCapacity)
   ASSERT_EQ(5, stack.capacity());
 
   for (auto index = 0u; index < 5; ++index) {
-    stack.push<Foo>();
+    stack.push<foo_cmd>();
   }
   ASSERT_EQ(5, stack.size());
-  ASSERT_EQ("Foo", stack.get_undo_text());
+  ASSERT_EQ("foo_cmd", stack.get_undo_text());
 
-  // [ Foo, Foo, Foo, Foo, ^Foo ] -> [ Foo, Foo, Foo, Foo, ^Bar ]
-  stack.push<Bar>();
+  // [ foo_cmd, foo_cmd, foo_cmd, foo_cmd, ^foo_cmd ] -> [ foo_cmd, foo_cmd, foo_cmd, foo_cmd, ^bar_cmd ]
+  stack.push<bar_cmd>();
   ASSERT_EQ(5, stack.size());
   ASSERT_EQ(4, stack.index());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 
-  // [ Foo, Foo, Foo, Foo, ^Bar ] -> [ Foo, Foo, ^Bar ]
+  // [ foo_cmd, foo_cmd, foo_cmd, foo_cmd, ^bar_cmd ] -> [ foo_cmd, foo_cmd, ^bar_cmd ]
   stack.set_capacity(3);
   ASSERT_EQ(3, stack.capacity());
   ASSERT_EQ(3, stack.size());
   ASSERT_EQ(2, stack.index());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 
   stack.set_capacity(10);
   ASSERT_EQ(10, stack.capacity());
   ASSERT_EQ(3, stack.size());
   ASSERT_EQ(2, stack.index());
-  ASSERT_EQ("Bar", stack.get_undo_text());
+  ASSERT_EQ("bar_cmd", stack.get_undo_text());
 }
