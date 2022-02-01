@@ -32,6 +32,13 @@ class tactile_error : public std::exception {
 
 using trace_info = boost::error_info<struct ErrorInfoTag, boost::stacktrace::stacktrace>;
 
+/**
+ * \brief Throws an exception with associated call stack information.
+ *
+ * \param error the exception to throw.
+ *
+ * \see trace_info
+ */
 [[noreturn]] void throw_traced(const auto& error)
 {
   throw boost::enable_error_info(error) << trace_info{boost::stacktrace::stacktrace()};
