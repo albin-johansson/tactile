@@ -1,9 +1,7 @@
 #pragma once
 
-#include <functional>  // less
-#include <map>         // map
-#include <string>      // string
-#include <vector>      // vector
+#include <string>  // string
+#include <vector>  // vector
 
 #include "core/attribute_value.hpp"
 #include "core/components/layer.hpp"
@@ -15,11 +13,17 @@
 
 namespace tactile::sys {
 
-struct PropertyContextSnapshot final
+struct component_snapshot final
 {
-  context_id id;
+  tree_map<std::string, attribute_value> attributes;
+};
+
+struct attribute_context_snapshot final
+{
+  context_id id{};
   std::string name;
-  std::map<std::string, attribute_value, std::less<>> properties;
+  tree_map<std::string, attribute_value> properties;
+  tree_map<component_id, component_snapshot> components;
 };
 
 struct TilesetSnapshot final
@@ -28,20 +32,20 @@ struct TilesetSnapshot final
   comp::tileset_selection selection;
   comp::texture texture;
   comp::uv_tile_size uv;
-  PropertyContextSnapshot context;
+  attribute_context_snapshot context;
 };
 
 struct ObjectSnapshot final
 {
   comp::object core;
-  PropertyContextSnapshot context;
+  attribute_context_snapshot context;
 };
 
 struct LayerSnapshot final
 {
   usize index{};
   comp::layer core;
-  PropertyContextSnapshot context;
+  attribute_context_snapshot context;
   maybe<layer_id> parent;
   maybe<tile_matrix> tiles;
   maybe<std::vector<ObjectSnapshot>> objects;

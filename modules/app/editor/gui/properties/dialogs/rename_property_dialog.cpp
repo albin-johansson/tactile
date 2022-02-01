@@ -1,5 +1,6 @@
 #include "rename_property_dialog.hpp"
 
+#include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/model.hpp"
@@ -21,8 +22,8 @@ auto RenamePropertyDialog::Validate(const Model& model, std::string_view input) 
     -> bool
 {
   const auto& registry = model.GetActiveRegistryRef();
-  const auto& context = sys::GetCurrentContext(registry);
-  return !input.empty() && !sys::HasPropertyWithName(registry, context, input);
+  const auto& context = sys::current_context(registry);
+  return !input.empty() && !sys::has_property_with_name(registry, context, input);
 }
 
 }  // namespace tactile

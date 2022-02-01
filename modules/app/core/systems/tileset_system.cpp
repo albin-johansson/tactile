@@ -4,6 +4,7 @@
 #include <utility>        // move
 
 #include "assert.hpp"
+#include "context_system.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/fancy_tile.hpp"
@@ -133,7 +134,7 @@ auto make_tileset(entt::registry& registry,
   auto& cache = registry.emplace<comp::tileset_cache>(tilesetEntity);
   cache.source_rects = create_source_rect_cache(tileset);
 
-  auto& context = AddPropertyContext(registry, tilesetEntity);
+  auto& context = add_attribute_context(registry, tilesetEntity);
   context.name = texture.path.stem().string();
 
   registry.emplace<comp::tileset_selection>(tilesetEntity);
@@ -170,7 +171,7 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
   refresh_tileset_cache(registry, tilesetEntity);
   register_new_tiles_in_tile_context(registry, tilesetEntity);
 
-  RestorePropertyContext(registry, tilesetEntity, std::move(snapshot.context));
+  restore_attribute_context(registry, tilesetEntity, std::move(snapshot.context));
 
   return tilesetEntity;
 }
@@ -185,7 +186,7 @@ auto copy_tileset(const entt::registry& registry, const entt::entity source)
   snapshot.selection = registry.get<comp::tileset_selection>(source);
   snapshot.texture = registry.get<comp::texture>(source);
   snapshot.uv = registry.get<comp::uv_tile_size>(source);
-  snapshot.context = CopyPropertyContext(registry, source);
+  snapshot.context = copy_attribute_context(registry, source);
 
   return snapshot;
 }

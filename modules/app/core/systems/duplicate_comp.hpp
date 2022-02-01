@@ -2,6 +2,7 @@
 
 #include <entt/entt.hpp>  // registry, entity
 
+#include "context_system.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
@@ -26,7 +27,7 @@ inline auto DuplicateComp<comp::attribute_context>(entt::registry& registry,
                                                    const entt::entity destination)
     -> comp::attribute_context&
 {
-  auto& context = AddPropertyContext(registry, destination);
+  auto& context = add_attribute_context(registry, destination);
 
   const auto& srcContext = registry.get<comp::attribute_context>(source);
   context.name = srcContext.name;

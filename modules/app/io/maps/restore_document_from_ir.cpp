@@ -16,6 +16,7 @@
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/component_system.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/property_system.hpp"
@@ -90,7 +91,7 @@ auto _restore_object(entt::registry& registry, const ir::object_data& objectData
   object.tag = objectData.tag;
   object.visible = objectData.visible;
 
-  auto& context = sys::AddPropertyContext(registry, objectEntity);
+  auto& context = sys::add_attribute_context(registry, objectEntity);
   context.name = objectData.name;
 
   _restore_properties(registry, objectEntity, objectData.context);
@@ -228,7 +229,7 @@ void _restore_fancy_tiles(entt::registry& registry,
       _restore_fancy_tile_objects(registry, tile, tileData);
     }
 
-    auto& context = sys::AddPropertyContext(registry, tileEntity);
+    auto& context = sys::add_attribute_context(registry, tileEntity);
     context.name = fmt::format("Tile {}", tile.id);
 
     _restore_properties(registry, tileEntity, tileData.context);

@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/utils/buffers.hpp"
 #include "editor/events/property_events.hpp"
@@ -33,10 +34,10 @@ void AddPropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 auto AddPropertyDialog::IsCurrentInputValid(const Model& model) const -> bool
 {
   const auto& registry = model.GetActiveRegistryRef();
-  const auto& context = sys::GetCurrentContext(registry);
+  const auto& context = sys::current_context(registry);
 
   const auto name = create_string_view_from_buffer(mNameBuffer);
-  return !name.empty() && !sys::HasPropertyWithName(registry, context, name);
+  return !name.empty() && !sys::has_property_with_name(registry, context, name);
 }
 
 }  // namespace tactile

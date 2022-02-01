@@ -8,6 +8,8 @@ set(TACTILE_CORE_SYSTEM_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/animation_system.hpp
     ${PROJECT_SOURCE_DIR}/component_system.cpp
     ${PROJECT_SOURCE_DIR}/component_system.hpp
+    ${PROJECT_SOURCE_DIR}/context_system.cpp
+    ${PROJECT_SOURCE_DIR}/context_system.hpp
     ${PROJECT_SOURCE_DIR}/duplicate_comp.hpp
     ${PROJECT_SOURCE_DIR}/map_system.cpp
     ${PROJECT_SOURCE_DIR}/map_system.hpp

@@ -2,6 +2,7 @@
 
 #include <utility>  // move
 
+#include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 
 namespace tactile {
@@ -11,7 +12,7 @@ ChangePropertyTypeCmd::ChangePropertyTypeCmd(registry_ref registry,
                                              attribute_type type)
     : command_base{"Change Property Type"}
     , mRegistry{registry}
-    , mContextId{sys::GetCurrentContextId(mRegistry)}
+    , mContextId{sys::current_context_id(mRegistry)}
     , mName{std::move(name)}
     , mPropertyType{type}
 {}
@@ -21,18 +22,18 @@ void ChangePropertyTypeCmd::undo()
   const auto& value = mPreviousValue.value();
   const auto type = value.type();
 
-  auto& context = sys::GetContext(mRegistry, mContextId);
-  sys::ChangePropertyType(mRegistry, context, mName, type);
-  sys::UpdateProperty(mRegistry, context, mName, value);
+  auto& context = sys::get_context(mRegistry, mContextId);
+  sys::change_property_type(mRegistry, context, mName, type);
+  sys::update_property(mRegistry, context, mName, value);
 
   mPreviousValue.reset();
 }
 
 void ChangePropertyTypeCmd::redo()
 {
-  auto& context = sys::GetContext(mRegistry, mContextId);
-  mPreviousValue = sys::GetProperty(mRegistry, context, mName).value;
-  sys::ChangePropertyType(mRegistry, context, mName, mPropertyType);
+  auto& context = sys::get_context(mRegistry, mContextId);
+  mPreviousValue = sys::get_property(mRegistry, context, mName).value;
+  sys::change_property_type(mRegistry, context, mName, mPropertyType);
 }
 
 }  // namespace tactile

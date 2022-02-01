@@ -6,8 +6,9 @@
 #include <tactile_stdlib.hpp>
 
 #include "core/components/attribute_context.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
+#include "core/systems/registry_system.hpp"
 
 using namespace tactile;
 
@@ -18,7 +19,7 @@ constexpr entt::entity null_entity = entt::null;
 [[nodiscard]] auto CreateContext(entt::registry& registry) -> context_id
 {
   const auto entity = registry.create();
-  const auto& context = sys::AddPropertyContext(registry, entity);
+  const auto& context = sys::add_attribute_context(registry, entity);
   return context.id;
 }
 
@@ -220,10 +221,12 @@ TEST(ComponentSystem, SetComponentAttributeType)
   const auto def = sys::make_component_def(registry, "Def");
 
   sys::make_component_attribute(registry, def, "A");
-  ASSERT_EQ(attribute_type::string, sys::get_component_attribute_type(registry, def, "A"));
+  ASSERT_EQ(attribute_type::string,
+            sys::get_component_attribute_type(registry, def, "A"));
 
   sys::set_component_attribute_type(registry, def, "A", attribute_type::integer);
-  ASSERT_EQ(attribute_type::integer, sys::get_component_attribute_type(registry, def, "A"));
+  ASSERT_EQ(attribute_type::integer,
+            sys::get_component_attribute_type(registry, def, "A"));
 
   ASSERT_THROW(sys::get_component_attribute_type(registry, def, "B"), tactile_error);
 }

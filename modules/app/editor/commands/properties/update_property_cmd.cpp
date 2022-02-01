@@ -2,6 +2,7 @@
 
 #include <utility>  // move
 
+#include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 
 namespace tactile {
@@ -11,23 +12,23 @@ UpdatePropertyCmd::UpdatePropertyCmd(registry_ref registry,
                                      attribute_value value)
     : command_base{"Update Property"}
     , mRegistry{registry}
-    , mContextId{sys::GetCurrentContextId(mRegistry)}
+    , mContextId{sys::current_context_id(mRegistry)}
     , mName{std::move(name)}
     , mNewValue{std::move(value)}
 {}
 
 void UpdatePropertyCmd::undo()
 {
-  auto& context = sys::GetContext(mRegistry, mContextId);
-  sys::UpdateProperty(mRegistry, context, mName, mOldValue.value());
+  auto& context = sys::get_context(mRegistry, mContextId);
+  sys::update_property(mRegistry, context, mName, mOldValue.value());
   mOldValue.reset();
 }
 
 void UpdatePropertyCmd::redo()
 {
-  auto& context = sys::GetContext(mRegistry, mContextId);
-  mOldValue = sys::GetProperty(mRegistry, context, mName).value;
-  sys::UpdateProperty(mRegistry, context, mName, mNewValue);
+  auto& context = sys::get_context(mRegistry, mContextId);
+  mOldValue = sys::get_property(mRegistry, context, mName).value;
+  sys::update_property(mRegistry, context, mName, mNewValue);
 }
 
 auto UpdatePropertyCmd::merge_with(const command_base& cmd) -> bool

@@ -6,7 +6,7 @@
 
 #include "core/components/component.hpp"
 #include "core/systems/component_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/systems/context_system.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/centered_button.hpp"
@@ -142,7 +142,7 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
   mHasFocus = dock.IsFocused();
 
   if (dock.IsOpen()) {
-    const auto& context = sys::GetCurrentContext(registry);
+    const auto& context = sys::current_context(registry);
     ImGui::Text("Context: %s", context.name.c_str());
 
     if (scoped::Child pane{"##ComponentsChild"}; pane.IsOpen()) {

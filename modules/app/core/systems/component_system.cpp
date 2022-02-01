@@ -5,6 +5,7 @@
 #include <fmt/format.h>
 
 #include "assert.hpp"
+#include "context_system.hpp"
 #include "core/components/attribute_context.hpp"
 #include "logging.hpp"
 #include "property_system.hpp"
@@ -58,7 +59,7 @@ namespace {
                                 const context_id contextId,
                                 const component_id componentId) -> comp::component&
 {
-  auto& context = GetContext(registry, contextId);
+  auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
     auto& component = registry.get<comp::component>(componentEntity);
@@ -163,7 +164,7 @@ void restore_component_def(entt::registry& registry, remove_component_def_result
   for (auto&& [contextId, values] : snapshot.values) {
     log_verbose("Restoring component '{}' for context '{}'", snapshot.id, contextId);
 
-    auto& context = sys::GetContext(registry, contextId);
+    auto& context = sys::get_context(registry, contextId);
 
     const auto componentEntity = registry.create();
     auto& component = registry.emplace<comp::component>(componentEntity);
@@ -433,7 +434,7 @@ auto add_component(entt::registry& registry,
                    const context_id context,
                    const component_id component) -> comp::component&
 {
-  auto& ctx = GetContext(registry, context);
+  auto& ctx = get_context(registry, context);
 
   const auto componentEntity = registry.create();
   ctx.components.push_back(componentEntity);
@@ -455,7 +456,7 @@ auto remove_component(entt::registry& registry,
 
   log_debug("Removing component '{}' from context '{}'", componentId, contextId);
 
-  auto& context = GetContext(registry, contextId);
+  auto& context = get_context(registry, contextId);
   entt::entity match = entt::null;
 
   remove_component_result snapshot;
@@ -489,7 +490,7 @@ void restore_component(entt::registry& registry, remove_component_result snapsho
             snapshot.component_id,
             snapshot.context_id);
 
-  auto& context = GetContext(registry, snapshot.context_id);
+  auto& context = get_context(registry, snapshot.context_id);
 
   const auto componentEntity = registry.create();
   context.components.push_back(componentEntity);
@@ -535,7 +536,7 @@ auto has_component(const entt::registry& registry,
                    const context_id contextId,
                    const component_id componentId) -> bool
 {
-  const auto& context = GetContext(registry, contextId);
+  const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
     const auto& component = registry.get<comp::component>(componentEntity);
@@ -551,7 +552,7 @@ auto get_component(const entt::registry& registry,
                    const context_id contextId,
                    const component_id componentId) -> const comp::component&
 {
-  const auto& context = GetContext(registry, contextId);
+  const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
     const auto& component = registry.get<comp::component>(componentEntity);
@@ -568,7 +569,7 @@ auto get_component_attribute(const entt::registry& registry,
                              const component_id componentId,
                              const std::string_view attribute) -> const attribute_value&
 {
-  const auto& context = GetContext(registry, contextId);
+  const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
     const auto& component = registry.get<comp::component>(componentEntity);
@@ -586,7 +587,7 @@ auto get_component_attribute(const entt::registry& registry,
 auto get_component_count(const entt::registry& registry, const context_id contextId)
     -> usize
 {
-  return GetContext(registry, contextId).components.size();
+  return get_context(registry, contextId).components.size();
 }
 
 }  // namespace tactile::sys

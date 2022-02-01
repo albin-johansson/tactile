@@ -10,6 +10,7 @@
 #include "core/components/property.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/object_events.hpp"
@@ -234,7 +235,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
   const auto& current = registry.ctx<comp::active_attribute_context>();
-  const auto& context = sys::GetCurrentContext(registry);
+  const auto& context = sys::current_context(registry);
 
   if (scoped::Table table{"##PropertyTable", 2, flags}; table.IsOpen()) {
     if (current.entity == entt::null) {
@@ -277,7 +278,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
 
   if (mContextState.show_change_type_dialog) {
     const auto& name = mChangeTypeTarget.value();
-    const auto type = sys::GetProperty(registry, context, name).value.type();
+    const auto type = sys::get_property(registry, context, name).value.type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(name, type);
     mChangeTypeTarget.reset();
     mContextState.show_change_type_dialog = false;

@@ -1,5 +1,6 @@
 #include "registry_system.hpp"
 
+#include "context_system.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
@@ -34,7 +35,7 @@ auto make_document_registry() -> entt::registry
   viewport.y_offset = 0;
 
   auto& context = registry.set<comp::attribute_context>();
-  context.id = GetAndUpdateNextContextId();
+  context.id = get_and_update_next_context_id();
   context.name = "Map";
 
   auto& tilesets = registry.set<comp::tileset_context>();

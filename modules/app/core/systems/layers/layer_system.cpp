@@ -67,7 +67,7 @@ namespace {
   LayerSnapshot snapshot;
   snapshot.index = registry.get<comp::layer_tree_node>(source).index;
   snapshot.core = registry.get<comp::layer>(source);
-  snapshot.context = CopyPropertyContext(registry, source);
+  snapshot.context = copy_attribute_context(registry, source);
 
   const auto parentEntity = registry.get<comp::parent>(source).entity;
   if (parentEntity != entt::null) {
@@ -85,7 +85,7 @@ namespace {
       for (const auto objectEntity : registry.get<comp::object_layer>(source).objects) {
         auto& objectSnapshot = objects.emplace_back();
         objectSnapshot.core = registry.get<comp::object>(objectEntity);
-        objectSnapshot.context = CopyPropertyContext(registry, objectEntity);
+        objectSnapshot.context = copy_attribute_context(registry, objectEntity);
       }
 
       break;
@@ -152,7 +152,7 @@ auto make_basic_layer(entt::registry& registry,
   }
 
   {
-    auto& context = AddPropertyContext(registry, entity);
+    auto& context = add_attribute_context(registry, entity);
     context.name = std::move(name);
   }
 
@@ -253,7 +253,7 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
     layer.visible = snapshot.core.visible;
   }
 
-  RestorePropertyContext(registry, entity, std::move(snapshot.context));
+  restore_attribute_context(registry, entity, std::move(snapshot.context));
 
   switch (snapshot.core.type) {
     case layer_type::tile_layer: {
@@ -267,7 +267,9 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
         const auto objectEntity = registry.create();
 
         registry.emplace<comp::object>(objectEntity, std::move(objectSnapshot.core));
-        RestorePropertyContext(registry, objectEntity, std::move(objectSnapshot.context));
+        restore_attribute_context(registry,
+                                  objectEntity,
+                                  std::move(objectSnapshot.context));
 
         objectLayer.objects.push_back(objectEntity);
       }
