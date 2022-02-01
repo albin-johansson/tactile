@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "settings.pb.h"
+
 using namespace tactile;
 
 TEST(PreferenceState, Defaults)
@@ -219,4 +221,25 @@ TEST(PreferenceState, SetPreferredTileHeight)
   state.set_preferred_tile_height(853);
   ASSERT_EQ(32, state.preferred_tile_width());
   ASSERT_EQ(853, state.preferred_tile_height());
+}
+
+TEST(PreferenceState, EnsureThemeEnumsMatch)
+{
+  ASSERT_EQ(proto::DEAR_DARK, cen::to_underlying(Theme::dear_dark));
+  ASSERT_EQ(proto::DEAR_LIGHT, cen::to_underlying(Theme::dear_light));
+  ASSERT_EQ(proto::RUBY, cen::to_underlying(Theme::ruby));
+  ASSERT_EQ(proto::SAPPHIRE, cen::to_underlying(Theme::sapphire));
+  ASSERT_EQ(proto::EMERALD, cen::to_underlying(Theme::emerald));
+  ASSERT_EQ(proto::AMETHYST, cen::to_underlying(Theme::amethyst));
+  ASSERT_EQ(proto::AMBER, cen::to_underlying(Theme::amber));
+  ASSERT_EQ(proto::NOCTURNAL, cen::to_underlying(Theme::nocturnal));
+  ASSERT_EQ(proto::ASH, cen::to_underlying(Theme::ash));
+}
+
+TEST(PreferenceState, EnsureOverlayPosEnumsMatch)
+{
+  ASSERT_EQ(proto::TOP_LEFT, cen::to_underlying(overlay_pos::top_left));
+  ASSERT_EQ(proto::TOP_RIGHT, cen::to_underlying(overlay_pos::top_right));
+  ASSERT_EQ(proto::BOTTOM_RIGHT, cen::to_underlying(overlay_pos::bottom_right));
+  ASSERT_EQ(proto::BOTTOM_LEFT, cen::to_underlying(overlay_pos::bottom_left));
 }
