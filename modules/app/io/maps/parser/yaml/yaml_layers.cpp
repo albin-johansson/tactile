@@ -247,7 +247,7 @@ auto parse_object(const YAML::Node& node,
   }
 
   if (auto width = node["width"]) {
-    object->width = width.as<float>(0);
+    object->width = width.as<float>();
   }
   else {
     object->width = 0;
