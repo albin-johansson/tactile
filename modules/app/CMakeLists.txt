@@ -29,6 +29,8 @@ set(SOURCE_FILES
     assert.cpp
     assert.hpp
     build.hpp
+    crash.cpp
+    crash.hpp
     logging.cpp
     logging.hpp
     profile.hpp
