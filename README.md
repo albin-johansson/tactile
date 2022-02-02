@@ -51,16 +51,9 @@ you've installed Vcpkg. You can download Vcpkg through `git clone https://github
 downloaded Vcpkg, install it using the following command in the root of the downloaded repository.
 
 |   OS    | Command                       |
-| :-----: | :---------------------------- |
+|:-------:|:------------------------------|
 | Windows | `.\vcpkg\bootstrap-vcpkg.bat` |
 |  Unix   | `./vcpkg/bootstrap-vcpkg.sh`  |
-
-### Install Tactile triplet files (Optional)
-
-It is not necessary to use the custom Tactile triplet files, but they are available if you'd like to use them. However,
-if you use the triplet files you should be familiar with Vcpkg, and this little tutorial should be unnecessary for you.
-Basically, copy one of the triplet files in the `cmake` folder to `$VCPKG_ROOT/triplets/community`. Which triplet file
-you should copy depends on your operating system and architecture.
 
 ### Build the project
 
