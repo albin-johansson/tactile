@@ -4,6 +4,27 @@
 
 using namespace tactile;
 
+TEST(TileUtils, ToMatrixCoords)
+{
+  ASSERT_EQ(0, to_matrix_coords(0, 3).row);
+  ASSERT_EQ(0, to_matrix_coords(0, 3).col);
+
+  ASSERT_EQ(0, to_matrix_coords(1, 3).row);
+  ASSERT_EQ(1, to_matrix_coords(1, 3).col);
+
+  ASSERT_EQ(0, to_matrix_coords(2, 3).row);
+  ASSERT_EQ(2, to_matrix_coords(2, 3).col);
+
+  ASSERT_EQ(1, to_matrix_coords(3, 3).row);
+  ASSERT_EQ(0, to_matrix_coords(3, 3).col);
+
+  ASSERT_EQ(1, to_matrix_coords(4, 3).row);
+  ASSERT_EQ(1, to_matrix_coords(4, 3).col);
+
+  ASSERT_EQ(1, to_matrix_coords(5, 3).row);
+  ASSERT_EQ(2, to_matrix_coords(5, 3).col);
+}
+
 TEST(TileUtils, MakeTileRow)
 {
   const auto row = make_tile_row(10);

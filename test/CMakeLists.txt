@@ -9,8 +9,6 @@ find_package(GTest CONFIG REQUIRED)
 set(TEST_FILES
     unit-tests/test_main.cpp
 
-    unit-tests/app/tactile_stdlib_test.cpp
-
     unit-tests/app/core/attribute_value_test.cpp
     unit-tests/app/core/tile_position_test.cpp
 

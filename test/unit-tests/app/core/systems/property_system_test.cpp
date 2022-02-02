@@ -6,7 +6,6 @@
 
 #include "core/systems/context_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "tactile_stdlib.hpp"
 
 using namespace tactile;
 

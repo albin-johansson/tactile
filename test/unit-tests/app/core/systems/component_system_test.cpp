@@ -3,7 +3,6 @@
 #include <string>  // string
 
 #include <gtest/gtest.h>
-#include <tactile_stdlib.hpp>
 
 #include "core/systems/context_system.hpp"
 #include "core/systems/registry_system.hpp"
