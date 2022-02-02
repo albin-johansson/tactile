@@ -4,6 +4,7 @@
 #include <iomanip>  // setw
 #include <ios>      // ios
 
+#include "core/utils/strings.hpp"
 #include "io/persistence/preferences.hpp"
 #include "throw.hpp"
 
@@ -29,7 +30,7 @@ void to_json(nlohmann::json& json, const attribute_value& value)
       break;
 
     case attribute_type::file:
-      json = value.as_file();
+      json = convert_to_forward_slashes(value.as_file());
       break;
 
     case attribute_type::color:
