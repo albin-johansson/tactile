@@ -11,15 +11,13 @@
 
 #include "emit_info.hpp"
 #include "io/maps/json_utils.hpp"
+#include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 #include "tactile_stdlib.hpp"
 
 namespace tactile::emitter {
 namespace {
-
-constexpr c_str tiled_version = "1.7.0";  // TODO check
-constexpr c_str format_version = "1.6";   // TODO check
 
 void _write_json(const std::filesystem::path& path, const nlohmann::json& json)
 {
@@ -290,7 +288,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::tileset_data
 
   json["type"] = "tileset";
   json["tiledversion"] = tiled_version;
-  json["version"] = format_version;
+  json["version"] = tiled_json_format_version;
 
   const auto name = fmt::format("{}.json", data.name);
   const auto path = info.destination_dir() / name;
@@ -349,7 +347,7 @@ void emit_json_map(const emit_info& info)
   json["renderorder"] = "right-down";
   json["compressionlevel"] = -1;
   json["tiledversion"] = tiled_version;
-  json["version"] = format_version;
+  json["version"] = tiled_json_format_version;
 
   json["tilesets"] = _emit_tilesets(info);
   json["layers"] = _emit_layers(data);

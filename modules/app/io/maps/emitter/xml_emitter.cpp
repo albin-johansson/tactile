@@ -10,6 +10,7 @@
 #include <pugixml.hpp>
 
 #include "emit_info.hpp"
+#include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 #include "tactile_stdlib.hpp"
@@ -17,9 +18,6 @@
 
 namespace tactile::emitter {
 namespace {
-
-constexpr const char* _format_version = "?";
-constexpr const char* _tiled_version = "?";
 
 void _append_properties(pugi::xml_node node,
                         const ir::attribute_context_data& contextData)
@@ -301,8 +299,8 @@ void _emit_external_tileset_file(const std::filesystem::path& path,
   pugi::xml_document document;
 
   auto root = document.append_child("tileset");
-  root.append_attribute("version").set_value(_format_version);
-  root.append_attribute("tiledversion").set_value(_tiled_version);
+  root.append_attribute("version").set_value(tiled_xml_format_version);
+  root.append_attribute("tiledversion").set_value(tiled_version);
 
   _append_common_tileset_attributes(root, tilesetData, dir);
 
@@ -331,8 +329,8 @@ void _append_root(pugi::xml_document& document, const emit_info& info)
   const auto& mapData = info.data();
   auto root = document.append_child("map");
 
-  root.append_attribute("version").set_value(_format_version);
-  root.append_attribute("tiledversion").set_value(_tiled_version);
+  root.append_attribute("version").set_value(tiled_xml_format_version);
+  root.append_attribute("tiledversion").set_value(tiled_version);
 
   root.append_attribute("orientation").set_value("orthogonal");
   root.append_attribute("renderorder").set_value("right-down");
