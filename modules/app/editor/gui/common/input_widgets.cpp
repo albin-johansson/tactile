@@ -213,7 +213,7 @@ auto InputFile(const c_str id, const std::filesystem::path& value)
 
   auto str = value.filename().string();
 
-  ImGui::SetNextItemWidth(_min_float);
+  ImGui::SetNextItemWidth(min_float);
   ImGui::InputTextWithHint("##InputString[file]",
                            "N/A",
                            str.data(),
