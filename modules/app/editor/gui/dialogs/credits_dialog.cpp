@@ -55,7 +55,7 @@ void CreditsDialog::UpdateContents(const Model&, entt::dispatcher&)
     Row("IconFontCppHeaders", "Zlib");
     Row("JSON for Modern C++", "MIT");
     Row("Magic Enum C++", "MIT");
-    Row("nativefiledialog", "Zlib");
+    Row("tinyfiledialogs", "Zlib");
     Row("Protocol Buffers", "BSD");
     Row("pugixml", "MIT");
     Row("SDL2", "Zlib");

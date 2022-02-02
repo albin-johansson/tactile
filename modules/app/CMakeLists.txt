@@ -11,7 +11,7 @@ find_package(magic_enum CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(pugixml CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(unofficial-nativefiledialog CONFIG REQUIRED)
+find_package(tinyfiledialogs CONFIG REQUIRED)
 
 find_path(STB_INCLUDE_DIRS "stb.h")
 
@@ -72,7 +72,7 @@ target_link_libraries(${TACTILE_LIB}
                       yaml-cpp
                       nlohmann_json::nlohmann_json
                       pugixml::static
-                      unofficial::nativefiledialog::nfd
+                      tinyfiledialogs::tinyfiledialogs
                       GLEW::GLEW
                       OpenGL::GL
                       ${Boost_LIBRARIES}

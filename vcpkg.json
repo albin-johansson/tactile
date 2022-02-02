@@ -28,6 +28,6 @@
     "magic-enum",
     "stb",
     "gtest",
-    "nativefiledialog"
+    "tinyfiledialogs"
   ]
 }
