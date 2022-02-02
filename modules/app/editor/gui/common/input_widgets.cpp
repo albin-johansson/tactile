@@ -1,7 +1,6 @@
 #include "input_widgets.hpp"
 
 #include <array>    // array
-#include <limits>   // numeric_limits
 #include <utility>  // move
 
 #include "core/utils/buffers.hpp"
@@ -11,11 +10,6 @@
 #include "io/file_dialog.hpp"
 
 namespace tactile {
-namespace {
-
-constexpr float _min_float = -(std::numeric_limits<float>::min)();
-
-}  // namespace
 
 auto Input(const c_str id, const attribute_value& value) -> maybe<attribute_value>
 {
@@ -71,7 +65,7 @@ auto InputWidget(const c_str id, int value) -> maybe<int>
 {
   const scoped::ID scope{id};
 
-  ImGui::SetNextItemWidth(_min_float);
+  ImGui::SetNextItemWidth(min_float);
   if (ImGui::DragInt("##InputString[int]", &value)) {
     return value;
   }
@@ -88,7 +82,7 @@ auto InputWidget(const c_str id, float value, const float min, const float max)
 {
   const scoped::ID scope{id};
 
-  ImGui::SetNextItemWidth(_min_float);
+  ImGui::SetNextItemWidth(min_float);
 
   if (min != 0 || max != 0) {
     if (ImGui::SliderFloat("##InputString[float]", &value, min, max)) {
@@ -127,7 +121,7 @@ auto InputStringWithHint(const c_str id,
     ImGui::SameLine();
   }
   else {
-    ImGui::SetNextItemWidth(_min_float);
+    ImGui::SetNextItemWidth(min_float);
   }
 
   if (ImGui::InputTextWithHint("##InputString[string]",

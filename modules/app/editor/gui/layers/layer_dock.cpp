@@ -1,9 +1,5 @@
 #include "layer_dock.hpp"
 
-#define NOMINMAX
-
-#include <limits>  // numeric_limits
-
 #include <imgui.h>
 
 #include "add_layer_popup.hpp"
@@ -95,8 +91,7 @@ void LayerDock::Update(const Model& model,
       CenteredText("No available layers!");
     }
     else {
-      const ImVec2 size{-(std::numeric_limits<float>::min)(),
-                        -(std::numeric_limits<float>::min)()};
+      const ImVec2 size{min_float, min_float};
       if (scoped::ListBox list{"##LayerTreeNode", size}; list.IsOpen()) {
         for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include

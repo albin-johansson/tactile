@@ -2,18 +2,10 @@
 
 #include <algorithm>  // any_of
 #include <cstring>    // strcmp
-#include <limits>     // numeric_limits
 
 #include "assert.hpp"
 
 namespace tactile {
-namespace {
-
-constexpr auto _error_int = std::numeric_limits<int32>::max();
-constexpr auto _error_uint = std::numeric_limits<uint32>::max();
-constexpr auto _error_float = std::numeric_limits<float>::max();
-
-}  // namespace
 
 auto collect_children(pugi::xml_node source, const char* name)
     -> std::vector<pugi::xml_node>
@@ -57,9 +49,9 @@ auto int_attribute(pugi::xml_node node, const char* attributeName) -> maybe<int3
   TACTILE_ASSERT(attributeName);
 
   const auto attribute = node.attribute(attributeName);
-  const auto value = attribute.as_int(_error_int);
+  const auto value = attribute.as_int(max_int);
 
-  if (!attribute.empty() && value != _error_int) {
+  if (!attribute.empty() && value != max_int) {
     return value;
   }
   else {
@@ -72,9 +64,9 @@ auto uint_attribute(pugi::xml_node node, const char* attributeName) -> maybe<uin
   TACTILE_ASSERT(attributeName);
 
   const auto attribute = node.attribute(attributeName);
-  const auto value = attribute.as_uint(_error_uint);
+  const auto value = attribute.as_uint(max_uint);
 
-  if (!attribute.empty() && value != _error_uint) {
+  if (!attribute.empty() && value != max_uint) {
     return value;
   }
   else {
@@ -87,9 +79,9 @@ auto float_attribute(pugi::xml_node node, const char* attributeName) -> maybe<fl
   TACTILE_ASSERT(attributeName);
 
   const auto attribute = node.attribute(attributeName);
-  const auto value = attribute.as_float(_error_float);
+  const auto value = attribute.as_float(max_float);
 
-  if (!attribute.empty() && value != _error_float) {
+  if (!attribute.empty() && value != max_float) {
     return value;
   }
   else {

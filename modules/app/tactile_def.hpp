@@ -3,6 +3,7 @@
 #include <cstddef>        // size_t
 #include <cstdint>        // int{}_t, uint{}_t
 #include <functional>     // reference_wrapper, less
+#include <limits>         // numeric_limits
 #include <map>            // map
 #include <optional>       // optional, nullopt_t, nullopt
 #include <unordered_map>  // unordered_map
@@ -42,6 +43,14 @@ using int8 = std::int8_t;
 using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
+
+inline constexpr auto min_float = std::numeric_limits<float>::lowest();
+inline constexpr auto max_float = std::numeric_limits<float>::max();
+
+inline constexpr auto min_int = std::numeric_limits<int>::lowest();
+inline constexpr auto max_int = std::numeric_limits<int>::max();
+
+inline constexpr auto max_uint = std::numeric_limits<unsigned>::max();
 
 using context_id = int32;    /// Identifier for attribute contexts (not persistent).
 using component_id = int32;  /// Identifier for component definitions (not persistent).

@@ -1,6 +1,5 @@
 #include "component_editor.hpp"
 
-#include <limits>   // numeric_limits
 #include <string>   // string
 #include <utility>  // move
 
@@ -180,7 +179,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   }
 
   ImGui::TableNextColumn();
-  ImGui::SetNextItemWidth(-(std::numeric_limits<float>::min)());
+  ImGui::SetNextItemWidth(min_float);
 
   const auto type = value.type();
   attribute_type newType = type;
