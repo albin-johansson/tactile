@@ -116,6 +116,10 @@ void _convert_layer(ir::layer_data& data,
       auto& tileLayerData = data.data.emplace<ir::tile_layer_data>();
       tileLayerData.tiles = tileLayer.matrix;
 
+      const auto& mapInfo = registry.ctx<MapInfo>();
+      tileLayerData.row_count = mapInfo.row_count;
+      tileLayerData.col_count = mapInfo.column_count;
+
       break;
     }
     case layer_type::object_layer: {

@@ -32,39 +32,38 @@ enum class attribute_type {
   object     ///< An integer ID property, that refers to a map object.
 };
 
-inline auto operator<<(std::ostream& stream, const attribute_type type) -> std::ostream&
+[[nodiscard]] constexpr auto stringify(const attribute_type type) -> const char*
 {
   switch (type) {
     case attribute_type::string:
-      stream << "string";
-      break;
+      return "string";
 
     case attribute_type::integer:
-      stream << "int";
-      break;
+      return "int";
 
     case attribute_type::floating:
-      stream << "float";
-      break;
+      return "float";
 
     case attribute_type::boolean:
-      stream << "bool";
-      break;
+      return "bool";
 
     case attribute_type::file:
-      stream << "file";
-      break;
+      return "file";
 
     case attribute_type::color:
-      stream << "color";
-      break;
+      return "color";
 
     case attribute_type::object:
-      stream << "object";
-      break;
-  }
+      return "object";
 
-  return stream;
+    default:
+      throw_traced(tactile_error{"Invalid attribute type!"});
+  }
+}
+
+inline auto operator<<(std::ostream& stream, const attribute_type type) -> std::ostream&
+{
+  return stream << stringify(type);
 }
 
 /**

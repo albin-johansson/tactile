@@ -41,6 +41,9 @@ struct object_data final
 
 struct tile_layer_data final
 {
+  /* The sizes are provided for convenience, they should mirror the map_data values */
+  usize row_count{};
+  usize col_count{};
   std::vector<std::vector<tile_id>> tiles;
 };
 

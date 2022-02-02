@@ -8,6 +8,8 @@ set(TACTILE_IO_MAPS_EMITTER_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/emit_info.hpp
     ${PROJECT_SOURCE_DIR}/json_emitter.cpp
     ${PROJECT_SOURCE_DIR}/json_emitter.hpp
+    ${PROJECT_SOURCE_DIR}/xml_emitter.cpp
+    ${PROJECT_SOURCE_DIR}/xml_emitter.hpp
     ${PROJECT_SOURCE_DIR}/yaml_emitter.cpp
     ${PROJECT_SOURCE_DIR}/yaml_emitter.hpp
 
