@@ -20,7 +20,7 @@ void RenderPointObject(graphics_ctx& graphics,
                        const ImVec2& position,
                        const cen::color& color)
 {
-  const float radius = std::min(graphics.viewport_tile_size().x / 4.0f, 6.0f);
+  const float radius = (std::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
 
   const auto& object = registry.get<comp::object>(objectEntity);
   TACTILE_ASSERT(object.type == object_type::point);

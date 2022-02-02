@@ -20,7 +20,7 @@ class formatted_string final {
     const auto result =
         fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
     *result.out = '\0'; /* Ensure null-terminator */
-    mSize = (std::min)(result.size, Capacity);
+    mSize = ((std::min))(result.size, Capacity);
   }
 
   [[nodiscard]] auto data() const noexcept -> c_str { return mBuffer.data(); }

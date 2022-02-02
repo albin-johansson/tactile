@@ -17,7 +17,7 @@ constexpr float gMinTileHeight = 4;
 [[nodiscard]] auto GetViewportOffsetDelta(const float tileWidth, const float ratio)
     -> std::pair<float, float>
 {
-  const auto dx = std::round(std::max(2.0f, tileWidth * 0.05f));
+  const auto dx = std::round((std::max)(2.0f, tileWidth * 0.05f));
   const auto dy = dx / ratio;
 
   return {dx, dy};
@@ -47,15 +47,15 @@ void OffsetBoundViewport(entt::registry& registry,
   viewport.x_offset += dx;
   viewport.y_offset += dy;
 
-  viewport.x_offset = std::min(0.0f, viewport.x_offset);
-  viewport.y_offset = std::min(0.0f, viewport.y_offset);
+  viewport.x_offset = (std::min)(0.0f, viewport.x_offset);
+  viewport.y_offset = (std::min)(0.0f, viewport.y_offset);
 
   const auto& texture = registry.get<comp::texture>(entity);
   const auto textureWidth = static_cast<float>(texture.width);
   const auto textureHeight = static_cast<float>(texture.height);
 
-  viewport.x_offset = std::max(-textureWidth + viewWidth, viewport.x_offset);
-  viewport.y_offset = std::max(-textureHeight + viewHeight, viewport.y_offset);
+  viewport.x_offset = (std::max)(-textureWidth + viewWidth, viewport.x_offset);
+  viewport.y_offset = (std::max)(-textureHeight + viewHeight, viewport.y_offset);
 }
 
 void PanViewportLeft(entt::registry& registry)
@@ -108,8 +108,8 @@ void DecreaseViewportZoom(entt::registry& registry,
     viewport.tile_width -= dx;
     viewport.tile_height -= dy;
 
-    viewport.tile_width = std::max(gMinTileHeight * ratio, viewport.tile_width);
-    viewport.tile_height = std::max(gMinTileHeight, viewport.tile_height);
+    viewport.tile_width = (std::max)(gMinTileHeight * ratio, viewport.tile_width);
+    viewport.tile_height = (std::max)(gMinTileHeight, viewport.tile_height);
   }
 
   viewport.x_offset = mouseX - (px * viewport.tile_width);

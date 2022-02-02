@@ -21,11 +21,11 @@ auto GetRenderBounds(const ImVec2& tl,
   const auto begin = (tl - origin) / gridSize;
   const auto end = (br - origin) / gridSize;
 
-  const auto beginRow = std::max(0, static_cast<int32>(begin.y));
-  const auto beginCol = std::max(0, static_cast<int32>(begin.x));
+  const auto beginRow = (std::max)(0, static_cast<int32>(begin.y));
+  const auto beginCol = (std::max)(0, static_cast<int32>(begin.x));
 
-  const auto endRow = static_cast<int32>(std::min(rows, end.y + 1));
-  const auto endCol = static_cast<int32>(std::min(cols, end.x + 1));
+  const auto endRow = static_cast<int32>((std::min)(rows, end.y + 1));
+  const auto endCol = static_cast<int32>((std::min)(cols, end.x + 1));
 
   Region bounds;
 
