@@ -1,7 +1,6 @@
 #pragma once
 
-#include <boost/assert.hpp>
-
+#include "boost.hpp"
 #include "build.hpp"
 
 #if TACTILE_DEBUG

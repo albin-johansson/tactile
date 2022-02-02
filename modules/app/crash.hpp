@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/stacktrace.hpp>
+#include "boost.hpp"
 
 namespace tactile {
 

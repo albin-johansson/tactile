@@ -2,9 +2,7 @@
 
 #include <exception>  // exception
 
-#include <boost/exception/all.hpp>
-#include <boost/stacktrace.hpp>
-
+#include "boost.hpp"
 #include "build.hpp"
 
 namespace tactile {

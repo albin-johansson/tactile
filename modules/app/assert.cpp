@@ -2,8 +2,7 @@
 
 #include <cstdlib>  // abort
 
-#include <boost/stacktrace.hpp>
-
+#include "boost.hpp"
 #include "crash.hpp"
 #include "logging.hpp"
 

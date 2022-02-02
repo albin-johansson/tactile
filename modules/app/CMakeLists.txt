@@ -28,6 +28,7 @@ set(SOURCE_FILES
     application_events.hpp
     assert.cpp
     assert.hpp
+    boost.hpp
     build.hpp
     crash.cpp
     crash.hpp
