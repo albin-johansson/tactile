@@ -45,40 +45,7 @@ auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::E
 
 auto operator<<(YAML::Emitter& emitter, const attribute_type type) -> YAML::Emitter&
 {
-  switch (type) {
-    case attribute_type::string:
-      emitter << "string";
-      break;
-
-    case attribute_type::integer:
-      emitter << "int";
-      break;
-
-    case attribute_type::floating:
-      emitter << "float";
-      break;
-
-    case attribute_type::boolean:
-      emitter << "bool";
-      break;
-
-    case attribute_type::file:
-      emitter << "file";
-      break;
-
-    case attribute_type::color:
-      emitter << "color";
-      break;
-
-    case attribute_type::object:
-      emitter << "object";
-      break;
-
-    default:
-      throw_traced(tactile_error{"Invalid attribute type!"});
-  }
-
-  return emitter;
+  return emitter << stringify(type);
 }
 
 }  // namespace tactile
