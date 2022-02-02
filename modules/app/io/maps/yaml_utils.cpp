@@ -1,6 +1,6 @@
 #include "yaml_utils.hpp"
 
-#include "tactile_stdlib.hpp"
+#include "core/utils/strings.hpp"
 #include "throw.hpp"
 
 namespace tactile {
@@ -25,7 +25,7 @@ auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::E
       break;
 
     case attribute_type::file:
-      emitter << value.as_file().c_str();
+      emitter << convert_to_forward_slashes(value.as_file());
       break;
 
     case attribute_type::color:
