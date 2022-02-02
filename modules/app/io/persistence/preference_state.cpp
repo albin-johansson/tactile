@@ -233,7 +233,8 @@ void preference_state::save(const std::filesystem::path& path)
   cfg.set_show_log_dock(is_log_dock_visible());
   cfg.set_show_component_dock(is_component_dock_visible());
   cfg.set_restore_layout(will_restore_layout());
-  cfg.set_viewport_overlay_pos(proto::overlay_pos{viewport_overlay_pos()});
+  cfg.set_viewport_overlay_pos(
+      proto::overlay_pos{cen::to_underlying(viewport_overlay_pos())});
 
   std::ofstream stream{path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
