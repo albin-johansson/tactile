@@ -204,8 +204,7 @@ namespace {
   return json;
 }
 
-[[nodiscard]] auto _emit_fancy_tiles(const emit_info& info, const ir::tileset_data& data)
-    -> nlohmann::json
+[[nodiscard]] auto _emit_fancy_tiles(const ir::tileset_data& data) -> nlohmann::json
 {
   auto json = nlohmann::json::array();
 
@@ -238,7 +237,7 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   json["spacing"] = 0;
 
   if (!data.fancy_tiles.empty()) {
-    json["tiles"] = _emit_fancy_tiles(info, data);
+    json["tiles"] = _emit_fancy_tiles(data);
   }
 
   if (!data.context.properties.empty()) {
