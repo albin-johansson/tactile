@@ -183,8 +183,6 @@ auto parse_tileset(pugi::xml_node node,
   else {
     return _parse_common_attributes(node, tilesetData, dir);
   }
-
-  return parse_error::none;
 }
 
 }  // namespace tactile::parsing
