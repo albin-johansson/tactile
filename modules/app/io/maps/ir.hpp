@@ -56,6 +56,12 @@ struct layer_data;
 
 struct group_layer_data final
 {
+  group_layer_data() = default;
+  ~group_layer_data() noexcept = default;
+
+  TACTILE_DELETE_COPY(group_layer_data);
+  TACTILE_DEFAULT_MOVE(group_layer_data);
+
   std::vector<std::unique_ptr<layer_data>> children;
 };
 
