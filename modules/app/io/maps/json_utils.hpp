@@ -1,5 +1,7 @@
 #pragma once
 
+#include <filesystem>  // path
+
 #include <nlohmann/json.hpp>
 
 #include "core/attribute_value.hpp"
@@ -19,5 +21,7 @@ NLOHMANN_JSON_SERIALIZE_ENUM(attribute_type,
                              })
 
 void to_json(nlohmann::json& json, const attribute_value& value);
+
+void write_json(const nlohmann::json& json, const std::filesystem::path& path);
 
 }  // namespace tactile

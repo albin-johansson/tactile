@@ -1,8 +1,5 @@
 #include "json_emitter.hpp"
 
-#include <fstream>  // ofstream
-#include <iomanip>  // setw
-#include <ios>      // ios
 #include <utility>  // move
 #include <variant>  // get
 
@@ -18,17 +15,6 @@
 
 namespace tactile::emitter {
 namespace {
-
-void _write_json(const std::filesystem::path& path, const nlohmann::json& json)
-{
-  std::ofstream stream{path, std::ios::out};
-
-  if (get_preferences().indent_output()) {
-    stream << std::setw(2);
-  }
-
-  stream << json;
-}
 
 [[nodiscard]] auto _emit_properties(const ir::attribute_context_data& data)
     -> nlohmann::json
@@ -293,7 +279,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::tileset_data
   const auto name = fmt::format("{}.json", data.name);
   const auto path = info.destination_dir() / name;
 
-  _write_json(path, json);
+  write_json(json, path);
 }
 
 [[nodiscard]] auto _emit_tileset(const emit_info& info, const ir::tileset_data& data)
@@ -356,7 +342,7 @@ void emit_json_map(const emit_info& info)
     json["properties"] = _emit_properties(data.context);
   }
 
-  _write_json(info.destination_file(), json);
+  write_json(json, info.destination_file());
 }
 
 }  // namespace tactile::emitter

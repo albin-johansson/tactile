@@ -1,6 +1,10 @@
 #include "json_utils.hpp"
 
-#include "tactile_stdlib.hpp"
+#include <fstream>  // ofstream
+#include <iomanip>  // setw
+#include <ios>      // ios
+
+#include "io/persistence/preferences.hpp"
 #include "throw.hpp"
 
 namespace tactile {
@@ -39,6 +43,17 @@ void to_json(nlohmann::json& json, const attribute_value& value)
     default:
       throw_traced(tactile_error{"Invalid attribute type!"});
   }
+}
+
+void write_json(const nlohmann::json& json, const std::filesystem::path& path)
+{
+  std::ofstream stream{path, std::ios::out};
+
+  if (get_preferences().indent_output()) {
+    stream << std::setw(2);
+  }
+
+  stream << json;
 }
 
 }  // namespace tactile
