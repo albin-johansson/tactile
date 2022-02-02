@@ -28,6 +28,7 @@ void _emit_properties(YAML::Emitter& emitter, const ir::attribute_context_data& 
     for (const auto& [name, value] : context.properties) {
       emitter << YAML::BeginMap;
       emitter << YAML::Key << "name" << YAML::Value << name;
+      emitter << YAML::Key << "type" << YAML::Value << value.type();
       emitter << YAML::Key << "value" << YAML::Value << value;
       emitter << YAML::EndMap;
     }
@@ -64,6 +65,7 @@ void _emit_components(YAML::Emitter& emitter, const ir::attribute_context_data& 
 
 void _emit_object_data(YAML::Emitter& emitter, const ir::object_data& data)
 {
+  emitter << YAML::BeginMap;
   emitter << YAML::Key << "id" << YAML::Value << data.id;
 
   emitter << YAML::Key << "type";
@@ -111,6 +113,8 @@ void _emit_object_data(YAML::Emitter& emitter, const ir::object_data& data)
 
   _emit_properties(emitter, data.context);
   _emit_components(emitter, data.context);
+
+  emitter << YAML::EndMap;
 }
 
 void _emit_object_layer_data(YAML::Emitter& emitter, const ir::object_layer_data& data)
