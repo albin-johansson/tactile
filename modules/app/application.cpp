@@ -324,20 +324,23 @@ void application::on_select_tool(const SelectToolEvent& event)
 
 void application::on_mouse_pressed(const MousePressedEvent& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
-  sys::ToolOnPressed(registry, mDispatcher, event.info);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    sys::ToolOnPressed(*registry, mDispatcher, event.info);
+  }
 }
 
 void application::on_mouse_drag(const MouseDragEvent& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
-  sys::ToolOnDragged(registry, mDispatcher, event.info);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    sys::ToolOnDragged(*registry, mDispatcher, event.info);
+  }
 }
 
 void application::on_mouse_released(const MouseReleasedEvent& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
-  sys::ToolOnReleased(registry, mDispatcher, event.info);
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    sys::ToolOnReleased(*registry, mDispatcher, event.info);
+  }
 }
 
 void application::on_stamp_sequence(StampSequenceEvent event)
