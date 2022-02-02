@@ -6,7 +6,6 @@
 
 #include "core/utils/strings.hpp"
 #include "core/utils/tiles.hpp"
-#include "tactile_stdlib.hpp"
 #include "yaml_attributes.hpp"
 
 namespace tactile::parsing {

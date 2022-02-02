@@ -7,7 +7,6 @@
 #include "core/utils/sfinae.hpp"
 #include "core/utils/tiles.hpp"
 #include "layers/tile_layer_system.hpp"
-#include "tactile_stdlib.hpp"
 
 namespace tactile::sys {
 namespace {

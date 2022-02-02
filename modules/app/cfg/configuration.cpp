@@ -10,7 +10,6 @@
 #include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 #include "sdl_attributes.hpp"
-#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

@@ -35,8 +35,6 @@ set(SOURCE_FILES
     logging.cpp
     logging.hpp
     profile.hpp
-    tactile_def.hpp
-    tactile_stdlib.hpp
     throw.hpp
 
     ${TACTILE_CFG_SOURCE_FILES}

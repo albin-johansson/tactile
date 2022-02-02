@@ -11,7 +11,6 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {

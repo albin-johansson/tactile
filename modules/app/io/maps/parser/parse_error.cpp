@@ -2,7 +2,6 @@
 
 #include <magic_enum.hpp>
 
-#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile::parsing {

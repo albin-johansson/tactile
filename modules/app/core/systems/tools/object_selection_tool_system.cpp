@@ -15,8 +15,8 @@ namespace {
   return is_object_layer_active(registry);
 }
 
-[[nodiscard]] auto GetTargetObject(const entt::registry& registry, const mouse_info& mouse)
-    -> entt::entity
+[[nodiscard]] auto GetTargetObject(const entt::registry& registry,
+                                   const mouse_info& mouse) -> entt::entity
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     return registry.ctx<comp::active_object>().entity;

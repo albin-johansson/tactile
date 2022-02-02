@@ -16,7 +16,6 @@
 #include "core/systems/property_system.hpp"
 #include "core/utils/tiles.hpp"
 #include "layer_tree_system.hpp"
-#include "tactile_stdlib.hpp"
 #include "tile_layer_system.hpp"
 
 namespace tactile::sys {

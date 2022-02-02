@@ -11,10 +11,10 @@
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
+#include "core/utils/tiles.hpp"
 #include "core/viewport.hpp"
 #include "logging.hpp"
 #include "property_system.hpp"
-#include "tactile_stdlib.hpp"
 
 namespace tactile::sys {
 namespace {

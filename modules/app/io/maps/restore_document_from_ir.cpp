@@ -23,7 +23,6 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/utils/texture_manager.hpp"
-#include "tactile_stdlib.hpp"
 
 namespace tactile {
 namespace {

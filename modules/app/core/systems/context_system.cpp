@@ -5,7 +5,6 @@
 #include "assert.hpp"
 #include "component_system.hpp"
 #include "property_system.hpp"
-#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile::sys {

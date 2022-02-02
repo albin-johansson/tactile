@@ -11,7 +11,6 @@
 
 #include "assert.hpp"
 #include "tactile_def.hpp"
-#include "tactile_stdlib.hpp"
 #include "throw.hpp"
 
 namespace tactile {
