@@ -4,12 +4,12 @@
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 
+#include "core/utils/strings.hpp"
 #include "editor/model.hpp"
 #include "io/directories.hpp"
 #include "io/maps/parser/map_parser.hpp"
 #include "io/maps/restore_document_from_ir.hpp"
 #include "logging.hpp"
-#include "tactile_stdlib.hpp"
 #include <session.pb.h>
 
 namespace tactile {

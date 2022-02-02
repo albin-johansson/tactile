@@ -8,12 +8,12 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute_value.hpp"
+#include "core/utils/strings.hpp"
 #include "emit_info.hpp"
 #include "io/maps/yaml_utils.hpp"
 #include "io/persistence/preferences.hpp"
 #include "logging.hpp"
 #include "tactile_def.hpp"
-#include "tactile_stdlib.hpp"
 
 namespace tactile::emitter {
 namespace {

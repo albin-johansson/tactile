@@ -1,7 +1,8 @@
 #include "strings.hpp"
 
-#include <sstream>  // stringstream
-#include <utility>  // move
+#include <algorithm>  // replace
+#include <sstream>    // stringstream
+#include <utility>    // move
 
 namespace tactile {
 
@@ -18,6 +19,13 @@ auto split(const char* str, const char sep) -> std::vector<std::string>
   }
 
   return tokens;
+}
+
+auto convert_to_forward_slashes(const std::filesystem::path& path) -> std::string
+{
+  auto str = path.string();
+  std::replace(str.begin(), str.end(), '\\', '/');
+  return str;
 }
 
 }  // namespace tactile
