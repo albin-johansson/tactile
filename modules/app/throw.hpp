@@ -2,19 +2,10 @@
 
 #include <exception>  // exception
 
-#include "build.hpp"
-
-#if TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
-
 #include <boost/exception/all.hpp>
 #include <boost/stacktrace.hpp>
 
-#if TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
-#pragma GCC diagnostic pop
-#endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
+#include "build.hpp"
 
 namespace tactile {
 
@@ -30,7 +21,11 @@ class tactile_error : public std::exception {
   const char* mWhat{"N/A"};
 };
 
-using trace_info = boost::error_info<struct ErrorInfoTag, boost::stacktrace::stacktrace>;
+namespace tags {
+struct trace_info_tag;
+}  // namespace tags
+
+using trace_info = boost::error_info<tags::trace_info_tag, boost::stacktrace::stacktrace>;
 
 /**
  * \brief Throws an exception with associated call stack information.
