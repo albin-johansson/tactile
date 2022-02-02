@@ -17,6 +17,8 @@ set(TACTILE_IO_MAPS_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/save_document.cpp
     ${PROJECT_SOURCE_DIR}/save_document.hpp
     ${PROJECT_SOURCE_DIR}/tiled_info.hpp
+    ${PROJECT_SOURCE_DIR}/xml_utils.cpp
+    ${PROJECT_SOURCE_DIR}/xml_utils.hpp
     ${PROJECT_SOURCE_DIR}/yaml_utils.cpp
     ${PROJECT_SOURCE_DIR}/yaml_utils.hpp
 

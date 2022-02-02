@@ -6,6 +6,7 @@
 #include "logging.hpp"
 #include "profile.hpp"
 #include "throw.hpp"
+#include "xml/xml_parser.hpp"
 #include "yaml/yaml_parser.hpp"
 
 namespace tactile::parsing {
@@ -17,8 +18,19 @@ void map_parser::parse_map(const std::filesystem::path& path)
   try {
     TACTILE_PROFILE_START
 
-    // TODO determine extension and which parser to choose
-    mData = parse_yaml_map(path);
+    const auto ext = path.extension();
+    if (ext == ".yaml" || ext == ".yml") {
+      mData = parse_yaml_map(path);
+    }
+    else if (ext == ".xml" || ext == ".tmx") {
+      mData = parse_xml_map(path);
+    }
+    // TODO else if (ext == ".json") {}
+    else {
+      mData.set_error(parse_error::unsupported_map_extension);
+      log_error("Unsupported save file extension: {}", ext);
+      return;
+    }
 
     TACTILE_PROFILE_END("Parsed map")
   }
