@@ -460,8 +460,8 @@ auto remove_component(entt::registry& registry,
   entt::entity match = entt::null;
 
   remove_component_result snapshot;
-  snapshot.context_id = contextId;
-  snapshot.component_id = componentId;
+  snapshot.context = contextId;
+  snapshot.component = componentId;
 
   for (const auto componentEntity : context.components) {
     const auto& component = registry.get<comp::component>(componentEntity);
@@ -483,20 +483,20 @@ auto remove_component(entt::registry& registry,
 
 void restore_component(entt::registry& registry, remove_component_result snapshot)
 {
-  TACTILE_ASSERT(find_component_def(registry, snapshot.component_id) != entt::null);
-  TACTILE_ASSERT(!has_component(registry, snapshot.context_id, snapshot.component_id));
+  TACTILE_ASSERT(find_component_def(registry, snapshot.component) != entt::null);
+  TACTILE_ASSERT(!has_component(registry, snapshot.context, snapshot.component));
 
   log_debug("Restoring component '{}' for context '{}'",
-            snapshot.component_id,
-            snapshot.context_id);
+            snapshot.component,
+            snapshot.context);
 
-  auto& context = get_context(registry, snapshot.context_id);
+  auto& context = get_context(registry, snapshot.context);
 
   const auto componentEntity = registry.create();
   context.components.push_back(componentEntity);
 
   auto& comp = registry.emplace<comp::component>(componentEntity);
-  comp.type = snapshot.component_id;
+  comp.type = snapshot.component;
   comp.values = std::move(snapshot.values);
 }
 

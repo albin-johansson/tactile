@@ -31,8 +31,8 @@ struct remove_component_def_result final
 
 struct remove_component_result final
 {
-  context_id context_id{};         ///< Context from which component was removed.
-  component_id component_id{};     ///< Previous component ID.
+  context_id context{};            ///< Context from which component was removed.
+  component_id component{};        ///< Previous component ID.
   component_attribute_map values;  ///< Removed context attributes.
 };
 
