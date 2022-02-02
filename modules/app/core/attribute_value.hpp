@@ -32,6 +32,15 @@ enum class attribute_type {
   object     ///< An integer ID property, that refers to a map object.
 };
 
+/**
+ * \brief Returns the name of an attribute type for use in save files.
+ *
+ * \param type the type to query.
+ *
+ * \return the type name.
+ *
+ * \throws tactile_error if the type is invalid.
+ */
 [[nodiscard]] constexpr auto stringify(const attribute_type type) -> const char*
 {
   switch (type) {
