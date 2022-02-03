@@ -3,6 +3,7 @@
 #include <exception>  // exception
 
 #include "build.hpp"
+#include "json/json_parser.hpp"
 #include "logging.hpp"
 #include "profile.hpp"
 #include "throw.hpp"
@@ -25,7 +26,9 @@ void map_parser::parse_map(const std::filesystem::path& path)
     else if (ext == ".xml" || ext == ".tmx") {
       mData = parse_xml_map(path);
     }
-    // TODO else if (ext == ".json") {}
+    else if (ext == ".json") {
+      mData = parse_json_map(path);
+    }
     else {
       mData.set_error(parse_error::unsupported_map_extension);
       log_error("Unsupported save file extension: {}", ext);

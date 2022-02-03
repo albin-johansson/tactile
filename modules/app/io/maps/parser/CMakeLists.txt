@@ -11,6 +11,15 @@ set(TACTILE_IO_MAPS_PARSER_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/parse_error.cpp
     ${PROJECT_SOURCE_DIR}/parse_error.hpp
 
+    ${PROJECT_SOURCE_DIR}/json/json_attributes.cpp
+    ${PROJECT_SOURCE_DIR}/json/json_attributes.hpp
+    ${PROJECT_SOURCE_DIR}/json/json_layers.cpp
+    ${PROJECT_SOURCE_DIR}/json/json_layers.hpp
+    ${PROJECT_SOURCE_DIR}/json/json_parser.cpp
+    ${PROJECT_SOURCE_DIR}/json/json_parser.hpp
+    ${PROJECT_SOURCE_DIR}/json/json_tilesets.cpp
+    ${PROJECT_SOURCE_DIR}/json/json_tilesets.hpp
+
     ${PROJECT_SOURCE_DIR}/xml/xml_attributes.cpp
     ${PROJECT_SOURCE_DIR}/xml/xml_attributes.hpp
     ${PROJECT_SOURCE_DIR}/xml/xml_layers.cpp
