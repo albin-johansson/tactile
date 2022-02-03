@@ -41,11 +41,11 @@ constexpr std::array themes = {editor_theme::dear_dark,
                                editor_theme::emerald,
                                editor_theme::amethyst,
                                editor_theme::amber,
-                               editor_theme::nocturnal,
-                               editor_theme::ash,
                                editor_theme::diamond,
                                editor_theme::joker,
-                               editor_theme::raspberry};
+                               editor_theme::raspberry,
+                               editor_theme::nocturnal,
+                               editor_theme::ash};
 
 [[nodiscard]] auto human_readable_name(editor_theme theme) -> std::string_view;
 
