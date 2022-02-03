@@ -144,6 +144,11 @@ namespace {
     return parse_error::no_layer_type;
   }
 
+  if (const auto err = parse_properties(json, layerData.context);
+      err != parse_error::none) {
+    return err;
+  }
+
   return parse_error::none;
 }
 
