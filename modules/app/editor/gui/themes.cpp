@@ -24,7 +24,7 @@ struct theme_cfg final
 
   const auto h = hue / 255.0f;
   cfg.bg = ImColor::HSV(h, 0.20f, 0.08f, 1.00f);
-  cfg.area = ImColor::HSV(h, 0.40f, 0.40f, _area_opacity);
+  cfg.area = ImColor::HSV(h, 0.60f, 0.40f, _area_opacity);
   cfg.accent = ImColor::HSV(h, 0.70f, 0.60f, _accent_opacity);
   cfg.text = ImColor::HSV(h, 0.10f, 1.00f, 1.00f);
 
