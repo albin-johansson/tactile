@@ -125,7 +125,8 @@ namespace {
 
       usize childIndex = 0;
       for (const auto& [_, value] : json.at("layers").items()) {
-        auto& childLayerData = groupLayerData.children.emplace_back();
+        auto& childLayerData =
+            groupLayerData.children.emplace_back(std::make_unique<ir::layer_data>());
 
         if (const auto err = _parse_layer(value, *childLayerData, childIndex);
             err != parse_error::none) {
