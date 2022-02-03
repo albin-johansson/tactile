@@ -14,7 +14,7 @@ class AddPropertyDialog final : public ADialog {
 
   ~AddPropertyDialog() override = default;
 
-  using ADialog::Show;
+  void Open();
 
  protected:
   void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;

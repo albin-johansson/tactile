@@ -16,6 +16,13 @@ AddPropertyDialog::AddPropertyDialog() : ADialog{"Add Property"}
   SetAcceptButtonLabel("Add");
 }
 
+void AddPropertyDialog::Open()
+{
+  zero_buffer(mNameBuffer);
+  mPropertyType = attribute_type::string;
+  Show();
+}
+
 void AddPropertyDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
   ImGui::InputTextWithHint("##Name",

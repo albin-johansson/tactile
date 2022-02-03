@@ -38,7 +38,7 @@ void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
 
 void PropertiesDock::ShowAddPropertyDialog()
 {
-  mAddDialog.Show();
+  mAddDialog.Open();
 }
 
 void PropertiesDock::ShowRenamePropertyDialog(const std::string& name)
