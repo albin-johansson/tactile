@@ -43,6 +43,8 @@ namespace {
   data.type = layer_type::tile_layer;
 
   auto& tileLayer = data.data.emplace<ir::tile_layer_data>();
+  tileLayer.row_count = rows;
+  tileLayer.col_count = columns;
   tileLayer.tiles = make_tile_matrix(rows, columns);
 
   if (auto tiles = node["data"]) {
