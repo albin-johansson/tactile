@@ -1,11 +1,13 @@
 #pragma once
 
-#include <filesystem>  // path
-#include <memory>      // unique_ptr
-#include <string>      // string
+#include <filesystem>   // path
+#include <memory>       // unique_ptr
+#include <string>       // string
+#include <string_view>  // string_view
 
 #include <centurion.hpp>
 
+#include "editor/gui/themes.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {
@@ -22,25 +24,6 @@ enum class overlay_pos {
   top_right = 1,
   bottom_left = 2,
   bottom_right = 3
-};
-
-/**
- * \brief Represents the different available themes.
- *
- * \warning Do not change the enumerator values!
- *
- * \see proto::theme
- */
-enum class Theme {
-  dear_dark = 0,   ///< The standard Dear ImGui dark theme.
-  dear_light = 1,  ///< The standard Dear ImGui light theme.
-  ruby = 2,
-  sapphire = 3,
-  emerald = 4,
-  amethyst = 5,
-  amber = 6,
-  nocturnal = 7,
-  ash = 8
 };
 
 class preference_state final {

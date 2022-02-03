@@ -1,7 +1,6 @@
 #include "settings_dialog.hpp"
 
 #include <imgui.h>
-#include <magic_enum.hpp>
 
 #include "core/utils/colors.hpp"
 #include "editor/events/command_events.hpp"
@@ -127,13 +126,13 @@ void SettingsDialog::UpdateAppearanceTab()
 
     ImGui::Spacing();
 
-    if (scoped::Combo theme{"Theme",
-                            magic_enum::enum_name(mGuiSettings.get_theme()).data()};
-        theme.IsOpen()) {
-      for (auto&& [name, value] : themes) {
-        if (ImGui::Selectable(name)) {
-          mGuiSettings.set_theme(value);
-          ApplyTheme(ImGui::GetStyle(), value);
+    if (scoped::Combo combo{"Theme",
+                            human_readable_name(mGuiSettings.get_theme()).data()};
+        combo.IsOpen()) {
+      for (const auto theme : themes) {
+        if (ImGui::Selectable(human_readable_name(theme).data())) {
+          mGuiSettings.set_theme(theme);
+          ApplyTheme(ImGui::GetStyle(), theme);
         }
       }
     }

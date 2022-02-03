@@ -1,9 +1,6 @@
 #pragma once
 
-#include <array>    // array
-#include <utility>  // make_pair
-
-#include "io/persistence/preferences.hpp"
+#include <array>  // array
 
 struct ImGuiStyle;
 
@@ -15,17 +12,38 @@ namespace tactile {
 /// \name Theme API
 /// \{
 
-constexpr std::array themes = {
-    std::make_pair("Dear Dark", Theme::dear_dark),
-    std::make_pair("Dear Light", Theme::dear_light),
-    std::make_pair("Ruby", Theme::ruby),
-    std::make_pair("Sapphire", Theme::sapphire),
-    std::make_pair("Emerald", Theme::emerald),
-    std::make_pair("Amethyst", Theme::amethyst),
-    std::make_pair("Amber", Theme::amber),
-    std::make_pair("Nocturnal", Theme::nocturnal),
-    std::make_pair("Ash", Theme::ash),
+/**
+ * \brief Represents the different available themes.
+ *
+ * \warning Do not change the enumerator values!
+ *
+ * \see proto::theme
+ */
+enum class Theme {
+  dear_dark = 0,   ///< The standard Dear ImGui dark theme.
+  dear_light = 1,  ///< The standard Dear ImGui light theme.
+  ruby = 2,
+  sapphire = 3,
+  emerald = 4,
+  amethyst = 5,
+  amber = 6,
+  nocturnal = 7,
+  ash = 8
 };
+
+constexpr std::array themes = {
+    Theme::dear_dark,
+    Theme::dear_light,
+    Theme::ruby,
+    Theme::sapphire,
+    Theme::emerald,
+    Theme::amethyst,
+    Theme::amber,
+    Theme::nocturnal,
+    Theme::ash,
+};
+
+[[nodiscard]] auto human_readable_name(Theme theme) -> std::string_view;
 
 /**
  * \brief Applies a theme to the specified style.
