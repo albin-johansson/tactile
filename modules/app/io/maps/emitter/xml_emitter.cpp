@@ -205,6 +205,7 @@ void _append_layer(pugi::xml_node root, const ir::layer_data& layerData)
 
       auto collection = root.append_child("group");
       _append_common_layer_attributes(collection, layerData);
+      _append_properties(collection, layerData.context);
 
       for (const auto& childLayerData : groupLayerData.children) {
         _append_layer(collection, *childLayerData);
