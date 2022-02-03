@@ -138,16 +138,28 @@ void apply_theme(ImGuiStyle& style, editor_theme theme)
       _apply_theme_from_config(style, _theme_from_hue(0));
       break;
 
-    case editor_theme::sapphire:
-      _apply_theme_from_config(style, _theme_from_hue(150));
-      break;
-
     case editor_theme::emerald:
       _apply_theme_from_config(style, _theme_from_hue(100));
       break;
 
+    case editor_theme::diamond:
+      _apply_theme_from_config(style, _theme_from_hue(120));
+      break;
+
+    case editor_theme::sapphire:
+      _apply_theme_from_config(style, _theme_from_hue(150));
+      break;
+
+    case editor_theme::joker:
+      _apply_theme_from_config(style, _theme_from_hue(190));
+      break;
+
     case editor_theme::amethyst:
       _apply_theme_from_config(style, _theme_from_hue(225));
+      break;
+
+    case editor_theme::raspberry:
+      _apply_theme_from_config(style, _theme_from_hue(245));
       break;
 
     case editor_theme::amber:
@@ -201,6 +213,15 @@ auto human_readable_name(const editor_theme theme) -> std::string_view
 
     case editor_theme::ash:
       return "Ash";
+
+    case editor_theme::diamond:
+      return "Diamond";
+
+    case editor_theme::joker:
+      return "Joker";
+
+    case editor_theme::raspberry:
+      return "Raspberry";
 
     default:
       throw_traced(tactile_error{"Invalid theme enumerator!"});

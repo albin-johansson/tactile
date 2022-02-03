@@ -21,6 +21,9 @@ enum theme {
   THEME_AMBER = 6;
   THEME_NOCTURNAL = 7;
   THEME_ASH = 8;
+  THEME_DIAMOND = 9;
+  THEME_JOKER = 10;
+  THEME_RASPBERRY = 11;
 }
 
 message color {
