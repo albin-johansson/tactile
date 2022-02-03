@@ -207,7 +207,7 @@ class attribute_value final {
       return *obj == object_t{};
     }
     else if (const auto* color = std::get_if<color_type>(&mValue)) {
-      return *color == cen::colors::white;
+      return *color == cen::colors::black;
     }
     else {
       throw_traced(tactile_error{"Invalid property type!"});
