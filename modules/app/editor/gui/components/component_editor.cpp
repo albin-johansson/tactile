@@ -179,7 +179,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   }
 
   ImGui::TableNextColumn();
-  ImGui::SetNextItemWidth(min_float);
+  ImGui::SetNextItemWidth(-min_float);
 
   const auto type = value.type();
   attribute_type newType = type;

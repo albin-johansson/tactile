@@ -65,7 +65,7 @@ auto InputWidget(const c_str id, int value) -> maybe<int>
 {
   const scoped::ID scope{id};
 
-  ImGui::SetNextItemWidth(min_float);
+  ImGui::SetNextItemWidth(-min_float);
   if (ImGui::DragInt("##InputString[int]", &value)) {
     return value;
   }
@@ -82,7 +82,7 @@ auto InputWidget(const c_str id, float value, const float min, const float max)
 {
   const scoped::ID scope{id};
 
-  ImGui::SetNextItemWidth(min_float);
+  ImGui::SetNextItemWidth(-min_float);
 
   if (min != 0 || max != 0) {
     if (ImGui::SliderFloat("##InputString[float]", &value, min, max)) {
@@ -121,7 +121,7 @@ auto InputStringWithHint(const c_str id,
     ImGui::SameLine();
   }
   else {
-    ImGui::SetNextItemWidth(min_float);
+    ImGui::SetNextItemWidth(-min_float);
   }
 
   if (ImGui::InputTextWithHint("##InputString[string]",
@@ -213,7 +213,7 @@ auto InputFile(const c_str id, const std::filesystem::path& value)
 
   auto str = value.filename().string();
 
-  ImGui::SetNextItemWidth(min_float);
+  ImGui::SetNextItemWidth(-min_float);
   ImGui::InputTextWithHint("##InputString[file]",
                            "N/A",
                            str.data(),

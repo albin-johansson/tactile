@@ -44,10 +44,10 @@ using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
 
-inline constexpr auto min_float = std::numeric_limits<float>::lowest();
+inline constexpr auto min_float = (std::numeric_limits<float>::min)();
 inline constexpr auto max_float = (std::numeric_limits<float>::max)();
 
-inline constexpr auto min_int = std::numeric_limits<int>::lowest();
+inline constexpr auto min_int = (std::numeric_limits<int>::min)();
 inline constexpr auto max_int = (std::numeric_limits<int>::max)();
 
 inline constexpr auto max_uint = (std::numeric_limits<unsigned>::max)();
