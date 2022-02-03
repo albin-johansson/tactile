@@ -54,8 +54,8 @@ class preference_state final {
 
   void reset_dock_visibilities();
 
-  void set_theme(Theme theme);
-  [[nodiscard]] auto get_theme() const -> Theme;
+  void set_theme(editor_theme theme);
+  [[nodiscard]] auto get_theme() const -> editor_theme;
 
   void set_viewport_bg(const cen::color& bg);
   [[nodiscard]] auto viewport_bg() const -> const cen::color&;

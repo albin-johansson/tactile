@@ -12,7 +12,7 @@
 namespace tactile {
 namespace {
 
-constexpr Theme _def_theme = Theme::nocturnal;
+constexpr editor_theme _def_theme = editor_theme::nocturnal;
 constexpr cen::color _def_viewport_bg{60, 60, 60};
 
 constexpr c_str _def_preferred_format = "YAML";
@@ -49,7 +49,7 @@ struct preference_state::preferences_data
 {
   std::string preferred_format{_def_preferred_format};
 
-  Theme theme{_def_theme};
+  editor_theme theme{_def_theme};
   cen::color viewport_background{_def_viewport_bg};
 
   usize command_capacity{_def_command_capacity};
@@ -119,7 +119,7 @@ void preference_state::parse(const std::filesystem::path& path)
   proto::settings cfg;
   if (cfg.ParseFromIstream(&stream)) {
     if (cfg.has_theme()) {
-      mData->theme = static_cast<Theme>(cfg.theme());
+      mData->theme = static_cast<editor_theme>(cfg.theme());
     }
 
     if (cfg.has_viewport_background()) {
@@ -279,12 +279,12 @@ void preference_state::reset_dock_visibilities()
   reset_flag(_bit_show_log_dock);
 }
 
-void preference_state::set_theme(const Theme theme)
+void preference_state::set_theme(const editor_theme theme)
 {
   mData->theme = theme;
 }
 
-auto preference_state::get_theme() const -> Theme
+auto preference_state::get_theme() const -> editor_theme
 {
   return mData->theme;
 }

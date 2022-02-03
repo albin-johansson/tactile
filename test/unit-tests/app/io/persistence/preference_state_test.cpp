@@ -10,7 +10,7 @@ TEST(PreferenceState, Defaults)
 {
   const preference_state state;
 
-  ASSERT_EQ(Theme::nocturnal, state.get_theme());
+  ASSERT_EQ(editor_theme::nocturnal, state.get_theme());
 
   ASSERT_TRUE(state.is_grid_visible());
   ASSERT_FALSE(state.has_window_border());
@@ -37,8 +37,8 @@ TEST(PreferenceState, SetTheme)
 {
   preference_state state;
 
-  state.set_theme(Theme::amber);
-  ASSERT_EQ(Theme::amber, state.get_theme());
+  state.set_theme(editor_theme::amber);
+  ASSERT_EQ(editor_theme::amber, state.get_theme());
 }
 
 TEST(PreferenceState, SetViewportBg)
@@ -225,15 +225,15 @@ TEST(PreferenceState, SetPreferredTileHeight)
 
 TEST(PreferenceState, EnsureThemeEnumsMatch)
 {
-  ASSERT_EQ(proto::THEME_DEAR_DARK, cen::to_underlying(Theme::dear_dark));
-  ASSERT_EQ(proto::THEME_DEAR_LIGHT, cen::to_underlying(Theme::dear_light));
-  ASSERT_EQ(proto::THEME_RUBY, cen::to_underlying(Theme::ruby));
-  ASSERT_EQ(proto::THEME_SAPPHIRE, cen::to_underlying(Theme::sapphire));
-  ASSERT_EQ(proto::THEME_EMERALD, cen::to_underlying(Theme::emerald));
-  ASSERT_EQ(proto::THEME_AMETHYST, cen::to_underlying(Theme::amethyst));
-  ASSERT_EQ(proto::THEME_AMBER, cen::to_underlying(Theme::amber));
-  ASSERT_EQ(proto::THEME_NOCTURNAL, cen::to_underlying(Theme::nocturnal));
-  ASSERT_EQ(proto::THEME_ASH, cen::to_underlying(Theme::ash));
+  ASSERT_EQ(proto::THEME_DEAR_DARK, cen::to_underlying(editor_theme::dear_dark));
+  ASSERT_EQ(proto::THEME_DEAR_LIGHT, cen::to_underlying(editor_theme::dear_light));
+  ASSERT_EQ(proto::THEME_RUBY, cen::to_underlying(editor_theme::ruby));
+  ASSERT_EQ(proto::THEME_SAPPHIRE, cen::to_underlying(editor_theme::sapphire));
+  ASSERT_EQ(proto::THEME_EMERALD, cen::to_underlying(editor_theme::emerald));
+  ASSERT_EQ(proto::THEME_AMETHYST, cen::to_underlying(editor_theme::amethyst));
+  ASSERT_EQ(proto::THEME_AMBER, cen::to_underlying(editor_theme::amber));
+  ASSERT_EQ(proto::THEME_NOCTURNAL, cen::to_underlying(editor_theme::nocturnal));
+  ASSERT_EQ(proto::THEME_ASH, cen::to_underlying(editor_theme::ash));
 }
 
 TEST(PreferenceState, EnsureOverlayPosEnumsMatch)

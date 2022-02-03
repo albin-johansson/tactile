@@ -14,7 +14,7 @@ namespace {
 
 void UpdatePreviewSettings(const preference_state& prefs)
 {
-  ApplyTheme(ImGui::GetStyle(), prefs.get_theme());
+  apply_theme(ImGui::GetStyle(), prefs.get_theme());
   ImGui::GetStyle().WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;
 }
 
@@ -132,7 +132,7 @@ void SettingsDialog::UpdateAppearanceTab()
       for (const auto theme : themes) {
         if (ImGui::Selectable(human_readable_name(theme).data())) {
           mGuiSettings.set_theme(theme);
-          ApplyTheme(ImGui::GetStyle(), theme);
+          apply_theme(ImGui::GetStyle(), theme);
         }
       }
     }

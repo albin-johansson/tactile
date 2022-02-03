@@ -7,11 +7,10 @@
 namespace tactile {
 namespace {
 
-constexpr float gAccentOpacity = 0.65f;
-constexpr float gBgOpacity = 0.15f;
-constexpr float gAreaOpacity = 0.40f;
+constexpr float _accent_opacity = 0.65f;
+constexpr float _area_opacity = 0.40f;
 
-struct ThemeCfg final
+struct theme_cfg final
 {
   ImVec4 accent{};
   ImVec4 bg{};
@@ -19,176 +18,188 @@ struct ThemeCfg final
   ImVec4 text{};
 };
 
-[[nodiscard]] auto MakeThemeFromHue(const float hue) -> ThemeCfg
+[[nodiscard]] auto _theme_from_hue(const float hue) -> theme_cfg
 {
-  ThemeCfg cfg;
+  theme_cfg cfg;
 
-  // clang-format off
-  cfg.accent  = ImColor::HSV(hue / 255.0f, 0.70f, gAccentOpacity);
-  cfg.bg      = ImColor::HSV(hue / 255.0f, 0.25f, gBgOpacity);
-  cfg.area    = ImColor::HSV(hue / 255.0f, 0.50f, gAreaOpacity);
-  cfg.text    = ImColor::HSV(hue / 255.0f, 0.10f, 1.00f);
-  // clang-format on
+  const auto h = hue / 255.0f;
+  cfg.bg = ImColor::HSV(h, 0.20f, 0.08f, 1.00f);
+  cfg.area = ImColor::HSV(h, 0.40f, 0.40f, _area_opacity);
+  cfg.accent = ImColor::HSV(h, 0.70f, 0.60f, _accent_opacity);
+  cfg.text = ImColor::HSV(h, 0.10f, 1.00f, 1.00f);
 
   return cfg;
 }
 
-void ApplyThemeFromConfig(ImGuiStyle& style, const ThemeCfg& cfg)
+[[nodiscard]] auto _with_alpha(const ImVec4& color, const float alpha) -> ImVec4
 {
-  // clang-format off
-  style.Colors[ImGuiCol_Text]           = {cfg.text.x, cfg.text.y, cfg.text.z, 1.00f};
-  style.Colors[ImGuiCol_TextDisabled]   = {cfg.text.x, cfg.text.y, cfg.text.z, 0.60f};
-  style.Colors[ImGuiCol_TextSelectedBg] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.43f};
+  return {color.x, color.y, color.z, alpha};
+}
 
-  style.Colors[ImGuiCol_WindowBg] = {cfg.bg.x, cfg.bg.y, cfg.bg.z, 1.00f};
-  style.Colors[ImGuiCol_PopupBg]  = {cfg.bg.x, cfg.bg.y, cfg.bg.z, 0.95f};
-  style.Colors[ImGuiCol_ChildBg]  = {cfg.area.x, cfg.area.y, cfg.area.z, 0.10f};
+void _apply_theme_from_config(ImGuiStyle& style, const theme_cfg& cfg)
+{
+  const auto set = [&style](const ImGuiCol_ index, const ImVec4& color) {
+    style.Colors[index] = color;
+  };
 
-  style.Colors[ImGuiCol_Border]       = {cfg.text.x, cfg.text.y, cfg.text.z, 0.30f};
-  style.Colors[ImGuiCol_BorderShadow] = {0.00f, 0.00f, 0.00f, 0.00f};
+  const ImVec4 transparent{0, 0, 0, 0};
+  //  const ImVec4 magenta{1.0f, 0.2f, 1.0f, 1.0f};
+  //  const ImVec4 cyan{0.2f, 0.8f, 0.8f, 1.0f};
+  //  const ImVec4 red{1.0f, 0.0f, 0.0f, 1.0f};
+  //  const ImVec4 green{0.0f, 1.0f, 0.0f, 1.0f};
+  //  const ImVec4 blue{0.0f, 0.0f, 1.0f, 1.0f};
 
-  style.Colors[ImGuiCol_FrameBg]        = {cfg.area.x, cfg.area.y, cfg.area.z, 0.70f};
-  style.Colors[ImGuiCol_FrameBgHovered] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.70f};
-  style.Colors[ImGuiCol_FrameBgActive]  = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.70f};
+  const auto component = _with_alpha(cfg.accent, 0.60f);
+  const auto componentActive = _with_alpha(component, 1.00f);
+  const auto componentHover = _with_alpha(component, 0.80f);
 
-  style.Colors[ImGuiCol_TitleBg]          = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.45f};
-  style.Colors[ImGuiCol_TitleBgActive]    = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.78f};
-  style.Colors[ImGuiCol_TitleBgCollapsed] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.35f};
+  set(ImGuiCol_Text, cfg.text);
+  set(ImGuiCol_TextDisabled, _with_alpha(cfg.text, 0.60f));
+  set(ImGuiCol_TextSelectedBg, _with_alpha(cfg.accent, 0.40f));
 
-  style.Colors[ImGuiCol_MenuBarBg]            = {cfg.area.x, cfg.area.y, cfg.area.z, 0.57f};
-  style.Colors[ImGuiCol_ScrollbarBg]          = {cfg.area.x, cfg.area.y, cfg.area.z, 1.00f};
-  style.Colors[ImGuiCol_ScrollbarGrab]        = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.31f};
-  style.Colors[ImGuiCol_ScrollbarGrabHovered] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.78f};
-  style.Colors[ImGuiCol_ScrollbarGrabActive]  = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
+  set(ImGuiCol_Border, _with_alpha(cfg.accent, 0.50f));
+  set(ImGuiCol_BorderShadow, transparent);
 
-  style.Colors[ImGuiCol_CheckMark]        = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
-  style.Colors[ImGuiCol_SliderGrab]       = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.24f};
-  style.Colors[ImGuiCol_SliderGrabActive] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
+  set(ImGuiCol_Separator, _with_alpha(cfg.accent, 0.15f));
+  set(ImGuiCol_SeparatorHovered, _with_alpha(cfg.accent, 0.15f));
+  set(ImGuiCol_SeparatorActive, _with_alpha(cfg.accent, 0.15f));
 
-  style.Colors[ImGuiCol_Button]        = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.44f};
-  style.Colors[ImGuiCol_ButtonHovered] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.86f};
-  style.Colors[ImGuiCol_ButtonActive]  = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
+  set(ImGuiCol_WindowBg, cfg.bg);
+  set(ImGuiCol_PopupBg, _with_alpha(cfg.bg, 0.95f));
+  set(ImGuiCol_ChildBg, _with_alpha(cfg.area, 0.10f));
 
-  style.Colors[ImGuiCol_Header]        = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.76f};
-  style.Colors[ImGuiCol_HeaderHovered] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.86f};
-  style.Colors[ImGuiCol_HeaderActive]  = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
+  set(ImGuiCol_FrameBg, _with_alpha(cfg.area, 0.70f));
+  set(ImGuiCol_FrameBgHovered, _with_alpha(cfg.accent, 0.70f));
+  set(ImGuiCol_FrameBgActive, _with_alpha(cfg.accent, 0.70f));
 
-  style.Colors[ImGuiCol_Separator]        = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
-  style.Colors[ImGuiCol_SeparatorHovered] = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
-  style.Colors[ImGuiCol_SeparatorActive]  = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
+  set(ImGuiCol_TitleBg, _with_alpha(cfg.area, 1.00f));
+  set(ImGuiCol_TitleBgActive, _with_alpha(cfg.area, 1.00f));
+  set(ImGuiCol_TitleBgCollapsed, _with_alpha(cfg.area, 1.00f));
 
-  style.Colors[ImGuiCol_ResizeGrip]        = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.20f};
-  style.Colors[ImGuiCol_ResizeGripHovered] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.78f};
-  style.Colors[ImGuiCol_ResizeGripActive]  = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
+  set(ImGuiCol_Button, component);
+  set(ImGuiCol_ButtonHovered, componentHover);
+  set(ImGuiCol_ButtonActive, componentActive);
 
-  style.Colors[ImGuiCol_Tab]                = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.80f};
-  style.Colors[ImGuiCol_TabHovered]         = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
-  style.Colors[ImGuiCol_TabActive]          = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.95f};
-  style.Colors[ImGuiCol_TabUnfocused]       = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.60f};
-  style.Colors[ImGuiCol_TabUnfocusedActive] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.80f};
+  set(ImGuiCol_MenuBarBg, _with_alpha(cfg.area, 0.57f));
+  set(ImGuiCol_ScrollbarBg, _with_alpha(cfg.area, 1.00f));
+  set(ImGuiCol_ScrollbarGrab, _with_alpha(cfg.accent, 0.31f));
+  set(ImGuiCol_ScrollbarGrabHovered, _with_alpha(cfg.accent, 0.78f));
+  set(ImGuiCol_ScrollbarGrabActive, _with_alpha(cfg.accent, 1.00f));
 
-  style.Colors[ImGuiCol_DockingPreview] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.80f};
-  style.Colors[ImGuiCol_DockingEmptyBg] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 0.80f};
+  set(ImGuiCol_CheckMark, _with_alpha(cfg.accent, 1.00f));
+  set(ImGuiCol_SliderGrab, _with_alpha(cfg.accent, 0.24f));
+  set(ImGuiCol_SliderGrabActive, _with_alpha(cfg.accent, 1.00f));
 
-  style.Colors[ImGuiCol_PlotLines]            = {cfg.text.x, cfg.text.y, cfg.text.z, 0.63f};
-  style.Colors[ImGuiCol_PlotLinesHovered]     = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
-  style.Colors[ImGuiCol_PlotHistogram]        = {cfg.text.x, cfg.text.y, cfg.text.z, 0.63f};
-  style.Colors[ImGuiCol_PlotHistogramHovered] = {cfg.accent.x, cfg.accent.y, cfg.accent.z, 1.00f};
+  set(ImGuiCol_Header, _with_alpha(cfg.accent, 0.70f));
+  set(ImGuiCol_HeaderHovered, _with_alpha(cfg.accent, 0.80f));
+  set(ImGuiCol_HeaderActive, _with_alpha(cfg.accent, 1.00f));
 
-  style.Colors[ImGuiCol_TableHeaderBg]     = {cfg.area.x, cfg.area.y, cfg.area.z, 1.00f};
-  style.Colors[ImGuiCol_TableRowBg]        = {cfg.area.x, cfg.area.y, cfg.area.z, 0.10f};
-  style.Colors[ImGuiCol_TableRowBgAlt]     = {cfg.area.x, cfg.area.y, cfg.area.z, 0.30f};
-  style.Colors[ImGuiCol_TableBorderStrong] = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
-  style.Colors[ImGuiCol_TableBorderLight]  = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
+  set(ImGuiCol_TabActive, component);
+  set(ImGuiCol_TabUnfocusedActive, _with_alpha(component, 0.80f));
+  set(ImGuiCol_Tab, _with_alpha(component, 0.25f));
+  set(ImGuiCol_TabUnfocused, _with_alpha(component, 0.25f));
+  set(ImGuiCol_TabHovered, componentHover);
 
-  style.Colors[ImGuiCol_ModalWindowDimBg] = {0.50f, 0.50f, 0.50f, 0.3f};
+  set(ImGuiCol_TableHeaderBg, _with_alpha(cfg.area, 1.00f));
+  set(ImGuiCol_TableRowBg, cfg.bg);
+  set(ImGuiCol_TableRowBgAlt, _with_alpha(cfg.area, 0.15f));
+  set(ImGuiCol_TableBorderStrong, _with_alpha(cfg.text, 0.10f));
+  set(ImGuiCol_TableBorderLight, _with_alpha(cfg.text, 0.10f));
 
-  // style.Colors[ImGuiCol_DragDropTarget]        = {area.x, area.y, area.z, 0.80f};
-  // style.Colors[ImGuiCol_NavHighlight]          = {area.x, area.y, area.z, 0.80f};
-  // style.Colors[ImGuiCol_NavWindowingHighlight] = {area.x, area.y, area.z, 0.80f};
-  // style.Colors[ImGuiCol_NavWindowingDimBg]     = {area.x, area.y, area.z, 0.80f};
-  // clang-format on
+  set(ImGuiCol_DockingPreview, _with_alpha(cfg.accent, 0.80f));
+  set(ImGuiCol_DockingEmptyBg, _with_alpha(cfg.accent, 0.80f));
+
+  set(ImGuiCol_ResizeGrip, _with_alpha(cfg.accent, 0.20f));
+  set(ImGuiCol_ResizeGripHovered, _with_alpha(cfg.accent, 0.78f));
+  set(ImGuiCol_ResizeGripActive, _with_alpha(cfg.accent, 1.00f));
+
+  set(ImGuiCol_PlotLines, _with_alpha(cfg.text, 0.63f));
+  set(ImGuiCol_PlotHistogram, _with_alpha(cfg.text, 0.63f));
+  set(ImGuiCol_PlotLinesHovered, _with_alpha(cfg.accent, 1.00f));
+  set(ImGuiCol_PlotHistogramHovered, _with_alpha(cfg.accent, 1.00f));
+
+  set(ImGuiCol_ModalWindowDimBg, {0.50f, 0.50f, 0.50f, 0.3f});
 }
 
 }  // namespace
 
-void ApplyTheme(ImGuiStyle& style, const Theme theme)
+void apply_theme(ImGuiStyle& style, editor_theme theme)
 {
   switch (theme) {
-    case Theme::dear_dark:
+    case editor_theme::dear_dark:
       ImGui::StyleColorsDark(&style);
       break;
 
-    case Theme::dear_light:
+    case editor_theme::dear_light:
       ImGui::StyleColorsLight(&style);
       break;
 
-    case Theme::ruby:
-      ApplyThemeFromConfig(style, MakeThemeFromHue(0));
+    case editor_theme::ruby:
+      _apply_theme_from_config(style, _theme_from_hue(0));
       break;
 
-    case Theme::sapphire:
-      ApplyThemeFromConfig(style, MakeThemeFromHue(150));
+    case editor_theme::sapphire:
+      _apply_theme_from_config(style, _theme_from_hue(150));
       break;
 
-    case Theme::emerald:
-      ApplyThemeFromConfig(style, MakeThemeFromHue(100));
+    case editor_theme::emerald:
+      _apply_theme_from_config(style, _theme_from_hue(100));
       break;
 
-    case Theme::amethyst:
-      ApplyThemeFromConfig(style, MakeThemeFromHue(225));
+    case editor_theme::amethyst:
+      _apply_theme_from_config(style, _theme_from_hue(225));
       break;
 
-    case Theme::amber:
-      ApplyThemeFromConfig(style, MakeThemeFromHue(272));
+    case editor_theme::amber:
+      _apply_theme_from_config(style, _theme_from_hue(272));
       break;
 
-    case Theme::nocturnal:
-      ApplyThemeFromConfig(style,
-                           {.accent = {0.0f, 0.5f, 0.5f, gAccentOpacity},
-                            .bg = {0.04f, 0.04f, 0.04f, gBgOpacity},
-                            .area = {0.15f, 0.15f, 0.15f, gAreaOpacity},
-                            .text = {1.0f, 1.0f, 1.0f, 1.0f}});
+    case editor_theme::nocturnal:
+      _apply_theme_from_config(style,
+                               {.accent = {0.0f, 0.5f, 0.5f, _accent_opacity},
+                                .bg = {0.04f, 0.04f, 0.04f, 1.00f},
+                                .area = {0.15f, 0.15f, 0.15f, _area_opacity},
+                                .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
-    case Theme::ash:
-      ApplyThemeFromConfig(style,
-                           {.accent = {0.4f, 0.4f, 0.4f, gAccentOpacity},
-                            .bg = {0.04f, 0.04f, 0.04f, gBgOpacity},
-                            .area = {0.15f, 0.15f, 0.15f, gAreaOpacity},
-                            .text = {1.0f, 1.0f, 1.0f, 1.0f}});
+    case editor_theme::ash:
+      _apply_theme_from_config(style,
+                               {.accent = {0.4f, 0.4f, 0.4f, _accent_opacity},
+                                .bg = {0.04f, 0.04f, 0.04f, 1.00f},
+                                .area = {0.15f, 0.15f, 0.15f, _area_opacity},
+                                .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
   }
 }
 
-auto human_readable_name(const Theme theme) -> std::string_view
+auto human_readable_name(const editor_theme theme) -> std::string_view
 {
   switch (theme) {
-    case Theme::dear_dark:
+    case editor_theme::dear_dark:
       return "Dear Dark";
 
-    case Theme::dear_light:
+    case editor_theme::dear_light:
       return "Dear Light";
 
-    case Theme::ruby:
+    case editor_theme::ruby:
       return "Ruby";
 
-    case Theme::sapphire:
+    case editor_theme::sapphire:
       return "Sapphire";
 
-    case Theme::emerald:
+    case editor_theme::emerald:
       return "Emerald";
 
-    case Theme::amethyst:
+    case editor_theme::amethyst:
       return "Amethyst";
 
-    case Theme::amber:
+    case editor_theme::amber:
       return "Amber";
 
-    case Theme::nocturnal:
+    case editor_theme::nocturnal:
       return "Nocturnal";
 
-    case Theme::ash:
+    case editor_theme::ash:
       return "Ash";
 
     default:

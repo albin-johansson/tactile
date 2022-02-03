@@ -19,7 +19,7 @@ namespace tactile {
  *
  * \see proto::theme
  */
-enum class Theme {
+enum class editor_theme {
   dear_dark = 0,   ///< The standard Dear ImGui dark theme.
   dear_light = 1,  ///< The standard Dear ImGui light theme.
   ruby = 2,
@@ -32,26 +32,26 @@ enum class Theme {
 };
 
 constexpr std::array themes = {
-    Theme::dear_dark,
-    Theme::dear_light,
-    Theme::ruby,
-    Theme::sapphire,
-    Theme::emerald,
-    Theme::amethyst,
-    Theme::amber,
-    Theme::nocturnal,
-    Theme::ash,
+    editor_theme::dear_dark,
+    editor_theme::dear_light,
+    editor_theme::ruby,
+    editor_theme::sapphire,
+    editor_theme::emerald,
+    editor_theme::amethyst,
+    editor_theme::amber,
+    editor_theme::nocturnal,
+    editor_theme::ash,
 };
 
-[[nodiscard]] auto human_readable_name(Theme theme) -> std::string_view;
+[[nodiscard]] auto human_readable_name(editor_theme theme) -> std::string_view;
 
 /**
- * \brief Applies a theme to the specified style.
+ * \brief Applies a theme to a style.
  *
  * \param style the style that will be affected.
  * \param theme the theme that will be applied to the style.
  */
-void ApplyTheme(ImGuiStyle& style, Theme theme);
+void apply_theme(ImGuiStyle& style, editor_theme theme);
 
 /// \} End of theme API
 
