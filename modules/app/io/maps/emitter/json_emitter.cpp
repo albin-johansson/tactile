@@ -88,8 +88,8 @@ namespace {
       const auto& tileLayerData = std::get<ir::tile_layer_data>(data.data);
 
       json["type"] = "tilelayer";
-      json["width"] = rows;
-      json["height"] = columns;
+      json["width"] = columns;
+      json["height"] = rows;
 
       auto tiles = nlohmann::json::array();
 
