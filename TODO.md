@@ -9,6 +9,10 @@ This document provides a brief outline of planned features for the Tactile edito
 * Minimap widget
 * Custom themes?
 
+## Tiled compatibility
+
+* Tiled allows color properties to be unset, in which case the colors are exported as empty strings, make sure that the parsers can handle this.
+
 ## Performance
 
 * Cache the associated tileset entities with tiles to improve tile rendering performance
