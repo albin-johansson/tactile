@@ -1,0 +1,10 @@
+version: 1
+row-count: 5
+column-count: 5
+tile-width: 32
+tile-height: 32
+next-layer-id: 1
+next-object-id: 1
+layers:
+  - id: 1
+    name: Layer

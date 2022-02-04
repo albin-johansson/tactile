@@ -81,7 +81,7 @@ auto to_cause(const parse_error error) -> std::string_view
     case parse_error::external_tileset_does_not_exist:
       return "A referenced external tileset does not exist!";
 
-    case parse_error::could_not_read_external_tileset:
+    case parse_error::unknown_external_tileset_error:
       return "Could not read an external tileset!";
 
     case parse_error::no_tileset_first_tile_id:
@@ -123,7 +123,7 @@ auto to_cause(const parse_error error) -> std::string_view
     case parse_error::unsupported_tileset_version:
       return "A tileset is of an unsupported format version!";
 
-    case parse_error::could_not_parse_property:
+    case parse_error::corrupt_property_value:
       return "A property value is invalid!";
 
     case parse_error::no_property_name:
@@ -147,7 +147,7 @@ auto to_cause(const parse_error error) -> std::string_view
     case parse_error::unsupported_component_def_attribute_type:
       return "A component definition attribute is of an unsupported type!";
 
-    case parse_error::unsupported_component_def_attribute_value:
+    case parse_error::corrupt_component_def_attribute_value:
       return "A component definition attribute has an unsupported value!";
 
     case parse_error::no_component_type:
@@ -159,7 +159,7 @@ auto to_cause(const parse_error error) -> std::string_view
     case parse_error::no_component_attribute_value:
       return "A component attribute has no value!";
 
-    case parse_error::unsupported_component_attribute_value:
+    case parse_error::corrupt_component_attribute_value:
       return "A component attribute has an invalid value!";
 
     case parse_error::no_object_id:

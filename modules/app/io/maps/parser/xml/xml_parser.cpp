@@ -1,6 +1,6 @@
 #include "xml_parser.hpp"
 
-#include <filesystem>  // path, exists
+#include <filesystem>  // path
 
 #include <pugixml.hpp>
 
@@ -28,10 +28,6 @@ namespace {
 [[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::map_data& data)
     -> parse_error
 {
-  if (!std::filesystem::exists(path)) {
-    return parse_error::map_does_not_exist;
-  }
-
   pugi::xml_document document;
   if (!document.load_file(path.c_str())) {
     return parse_error::could_not_read_file;

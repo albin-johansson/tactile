@@ -133,7 +133,7 @@ namespace {
           value = *color;
         }
         else {
-          return parse_error::unsupported_component_def_attribute_value;
+          return parse_error::corrupt_component_def_attribute_value;
         }
         break;
       }
@@ -199,7 +199,12 @@ namespace {
 
       if (auto value = valueNode["value"]) {
         const auto attrType = prototype.at(attr).type();
-        attributes[attr] = _parse_attribute_value(value, attrType).value();
+        if (auto attributeValue = _parse_attribute_value(value, attrType)) {
+          attributes[attr] = std::move(*attributeValue);
+        }
+        else {
+          return parse_error::corrupt_component_attribute_value;
+        }
       }
       else {
         return parse_error::no_component_attribute_value;
@@ -275,11 +280,11 @@ auto parse_properties(const YAML::Node& node, ir::attribute_context_data& data)
           data.properties[std::move(propertyName)] = std::move(*value);
         }
         else {
-          return parse_error::could_not_parse_property;
+          return parse_error::corrupt_property_value;
         }
       }
       else {
-        return parse_error::could_not_parse_property;  // TODO no_property_value
+        return parse_error::corrupt_property_value;  // TODO no_property_value
       }
     }
   }

@@ -185,7 +185,7 @@ namespace {
     return _parse_common_tileset_attributes(*external, tilesetData, dir);
   }
   else {
-    return parse_error::could_not_read_external_tileset;
+    return parse_error::unknown_external_tileset_error;
   }
 }
 

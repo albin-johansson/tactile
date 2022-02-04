@@ -40,8 +40,8 @@ enum class parse_error {
   corrupt_tile_layer_data,
   unsupported_tile_layer_encoding,
 
+  unknown_external_tileset_error,
   external_tileset_does_not_exist,
-  could_not_read_external_tileset,  // TODO unknown_external_tileset_error
   no_tileset_first_tile_id,
   no_tileset_tile_width,
   no_tileset_tile_height,
@@ -56,7 +56,7 @@ enum class parse_error {
   tileset_image_does_not_exist,
   unsupported_tileset_version,  // Tactile YAML only
 
-  could_not_parse_property,
+  corrupt_property_value,
   no_property_name,
   no_property_type,  // Not used by Tiled XML
   unsupported_property_type,
@@ -65,12 +65,12 @@ enum class parse_error {
   no_component_def_attribute_name,            // Tactile YAML only
   no_component_def_attribute_type,            // Tactile YAML only
   unsupported_component_def_attribute_type,   // Tactile YAML only
-  unsupported_component_def_attribute_value,  // Tactile YAML only
+  corrupt_component_def_attribute_value,  // Tactile YAML only
 
-  no_component_type,                      // Tactile YAML only
-  no_component_attribute_name,            // Tactile YAML only
-  no_component_attribute_value,           // Tactile YAML only
-  unsupported_component_attribute_value,  // Tactile YAML only (TODO corrupt_?)
+  no_component_type,                  // Tactile YAML only
+  no_component_attribute_name,        // Tactile YAML only
+  no_component_attribute_value,       // Tactile YAML only
+  corrupt_component_attribute_value,  // Tactile YAML only
 
   no_object_id,
   no_object_type,           // Tactile YAML only

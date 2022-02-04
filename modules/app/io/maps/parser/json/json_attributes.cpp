@@ -41,7 +41,7 @@ namespace {
       value = *color;
     }
     else {
-      return parse_error::could_not_parse_property;
+      return parse_error::corrupt_property_value;
     }
   }
   else {

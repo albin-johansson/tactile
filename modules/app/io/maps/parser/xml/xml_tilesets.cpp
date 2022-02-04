@@ -158,7 +158,7 @@ namespace {
 
   pugi::xml_document document;
   if (!document.load_file(sourcePath.c_str())) {
-    return parse_error::could_not_read_external_tileset;
+    return parse_error::unknown_external_tileset_error;
   }
 
   return _parse_common_attributes(document.child("tileset"), tilesetData, dir);

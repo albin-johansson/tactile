@@ -112,7 +112,7 @@ constexpr int32 _tileset_file_version = 1;
   try {
     const auto node = YAML::LoadFile(source.string());
     if (!node) {
-      return parse_error::could_not_read_external_tileset;
+      return parse_error::unknown_external_tileset_error;
     }
 
     const auto dir = source.parent_path();
@@ -211,7 +211,7 @@ constexpr int32 _tileset_file_version = 1;
     return parse_error::none;
   }
   catch (...) {
-    return parse_error::could_not_read_external_tileset;
+    return parse_error::unknown_external_tileset_error;
   }
 }
 

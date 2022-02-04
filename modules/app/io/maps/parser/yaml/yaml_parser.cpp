@@ -1,7 +1,5 @@
 #include "yaml_parser.hpp"
 
-#include <filesystem>  // exists
-
 #include <yaml-cpp/yaml.h>
 
 #include "yaml_attributes.hpp"
@@ -14,10 +12,6 @@ namespace {
 [[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::map_data& data)
     -> parse_error
 {
-  if (!std::filesystem::exists(path)) {
-    return parse_error::map_does_not_exist;
-  }
-
   const auto node = YAML::LoadFile(path.string());
   if (!node) {
     return parse_error::could_not_read_file;

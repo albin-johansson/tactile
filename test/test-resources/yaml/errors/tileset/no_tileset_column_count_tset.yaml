@@ -1,0 +1,8 @@
+version: 1
+name: Tileset
+tile-width: 32
+tile-height: 32
+tile-count: 1024
+image-path: ../../../terrain.png
+image-width: 1024
+image-height: 1024

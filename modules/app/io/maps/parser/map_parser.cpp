@@ -19,6 +19,11 @@ void map_parser::parse_map(const std::filesystem::path& path)
   try {
     TACTILE_PROFILE_START
 
+    if (!std::filesystem::exists(path)) {
+      mData.set_error(parse_error::map_does_not_exist);
+      return;
+    }
+
     const auto ext = path.extension();
     if (ext == ".yaml" || ext == ".yml") {
       mData = parse_yaml_map(path);
