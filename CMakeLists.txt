@@ -70,6 +70,6 @@ function(tactile_set_compile_options target)
   endif ()
 endfunction()
 
-add_subdirectory(modules/proto)
-add_subdirectory(modules/app)
+add_subdirectory(source/proto)
+add_subdirectory(source/app)
 add_subdirectory(test)
