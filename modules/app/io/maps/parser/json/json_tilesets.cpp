@@ -38,14 +38,16 @@ namespace {
     }
   }
 
-  if (const auto iter = json.find("objectgroup"); iter != json.end()) {
-    tileData.objects.reserve(iter->size());
-
-    for (const auto& [_, objectJson] : iter->items()) {
-      auto& objectData = tileData.objects.emplace_back();
-      if (const auto err = parse_object(objectJson, objectData);
-          err != parse_error::none) {
-        return err;
+  if (const auto layerIter = json.find("objectgroup"); layerIter != json.end()) {
+    if (const auto objectsIter = layerIter->find("objects");
+        objectsIter != layerIter->end()) {
+      tileData.objects.reserve(objectsIter->size());
+      for (const auto& [_, objectJson] : objectsIter->items()) {
+        auto& objectData = tileData.objects.emplace_back();
+        if (const auto err = parse_object(objectJson, objectData);
+            err != parse_error::none) {
+          return err;
+        }
       }
     }
   }
