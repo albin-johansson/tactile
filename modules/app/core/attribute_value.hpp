@@ -11,7 +11,6 @@
 
 #include "assert.hpp"
 #include "tactile_def.hpp"
-#include "throw.hpp"
 
 namespace tactile {
 
@@ -40,39 +39,9 @@ enum class attribute_type {
  *
  * \throws tactile_error if the type is invalid.
  */
-[[nodiscard]] constexpr auto stringify(const attribute_type type) -> const char*
-{
-  switch (type) {
-    case attribute_type::string:
-      return "string";
+[[nodiscard]] auto stringify(attribute_type type) -> const char*;
 
-    case attribute_type::integer:
-      return "int";
-
-    case attribute_type::floating:
-      return "float";
-
-    case attribute_type::boolean:
-      return "bool";
-
-    case attribute_type::file:
-      return "file";
-
-    case attribute_type::color:
-      return "color";
-
-    case attribute_type::object:
-      return "object";
-
-    default:
-      throw_traced(tactile_error{"Invalid attribute type!"});
-  }
-}
-
-inline auto operator<<(std::ostream& stream, const attribute_type type) -> std::ostream&
-{
-  return stream << stringify(type);
-}
+auto operator<<(std::ostream& stream, attribute_type type) -> std::ostream&;
 
 /**
  * \brief Strong type that represents object references.
@@ -151,33 +120,7 @@ class attribute_value final {
    *
    * \param type the new value type.
    */
-  void reset_to_default(const attribute_type type)
-  {
-    if (type == attribute_type::integer) {
-      set_value<integer_type>(0);
-    }
-    else if (type == attribute_type::floating) {
-      set_value<float_type>(0);
-    }
-    else if (type == attribute_type::boolean) {
-      set_value<bool>(false);
-    }
-    else if (type == attribute_type::string) {
-      set_value<string_type>(string_type{});
-    }
-    else if (type == attribute_type::color) {
-      set_value<color_type>(cen::colors::black);
-    }
-    else if (type == attribute_type::object) {
-      set_value<object_t>(object_t{});
-    }
-    else if (type == attribute_type::file) {
-      set_value<file_type>(file_type{});
-    }
-    else {
-      throw_traced(tactile_error{"Invalid attribute type!"});
-    }
-  }
+  void reset_to_default(attribute_type type);
 
   /**
    * \brief Indicates whether the stored value is the default one.
@@ -186,33 +129,7 @@ class attribute_value final {
    *
    * \return `true` if the attribute stores a default value; `false` otherwise.
    */
-  [[nodiscard]] auto has_default_value() const -> bool
-  {
-    if (const auto* str = std::get_if<string_type>(&mValue)) {
-      return str->empty();
-    }
-    else if (const auto* i = std::get_if<integer_type>(&mValue)) {
-      return *i == 0;
-    }
-    else if (const auto* f = std::get_if<float_type>(&mValue)) {
-      return *f == 0;
-    }
-    else if (const auto* b = std::get_if<bool>(&mValue)) {
-      return !*b;
-    }
-    else if (const auto* path = std::get_if<file_type>(&mValue)) {
-      return path->empty();
-    }
-    else if (const auto* obj = std::get_if<object_t>(&mValue)) {
-      return *obj == object_t{};
-    }
-    else if (const auto* color = std::get_if<color_type>(&mValue)) {
-      return *color == cen::colors::black;
-    }
-    else {
-      throw_traced(tactile_error{"Invalid property type!"});
-    }
-  }
+  [[nodiscard]] auto has_default_value() const -> bool;
 
   /// \} End of value functions
 
@@ -325,36 +242,78 @@ class attribute_value final {
   /// \name Non-throwing value retrieval
   /// \{
 
+  /**
+   * \brief Attempts to return the attribute value as a string.
+   *
+   * \return a pointer to the stored value;
+   *         a null pointer if the internal value is of another type.
+   */
   [[nodiscard]] auto try_as_string() const noexcept -> const string_type*
   {
     return get_if<string_type>();
   }
 
+  /**
+   * \brief Attempts to return the attribute value as an integer.
+   *
+   * \return a pointer to the stored value;
+   *         a null pointer if the internal value is of another type.
+   */
   [[nodiscard]] auto try_as_int() const noexcept -> const integer_type*
   {
     return get_if<integer_type>();
   }
 
+  /**
+   * \brief Attempts to return the attribute value as a float.
+   *
+   * \return a pointer to the stored value;
+   *         a null pointer if the internal value is of another type.
+   */
   [[nodiscard]] auto try_as_float() const noexcept -> const float_type*
   {
     return get_if<float_type>();
   }
 
+  /**
+   * \brief Attempts to return the attribute value as a boolean.
+   *
+   * \return a pointer to the stored value;
+   *         a null pointer if the internal value is of another type.
+   */
   [[nodiscard]] auto try_as_bool() const noexcept -> const bool*
   {
     return get_if<bool>();
   }
 
+  /**
+   * \brief Attempts to return the attribute value as a file path.
+   *
+   * \return a pointer to the stored value;
+   *         a null pointer if the internal value is of another type.
+   */
   [[nodiscard]] auto try_as_file() const noexcept -> const file_type*
   {
     return get_if<file_type>();
   }
 
+  /**
+   * \brief Attempts to return the attribute value as an object reference.
+   *
+   * \return a pointer to the stored value;
+   *         a null pointer if the internal value is of another type.
+   */
   [[nodiscard]] auto try_as_object() const noexcept -> const object_t*
   {
     return get_if<object_t>();
   }
 
+  /**
+   * \brief Attempts to return the attribute value as a color.
+   *
+   * \return a pointer to the stored value;
+   *         a null pointer if the internal value is of another type.
+   */
   [[nodiscard]] auto try_as_color() const noexcept -> const color_type*
   {
     return get_if<color_type>();
@@ -372,15 +331,7 @@ class attribute_value final {
    *
    * \throws TactileError if the attribute isn't a string.
    */
-  [[nodiscard]] auto as_string() const -> const string_type&
-  {
-    if (const auto* str = get_if<string_type>()) {
-      return *str;
-    }
-    else {
-      throw_traced(tactile_error{"Attribute was not a string!"});
-    }
-  }
+  [[nodiscard]] auto as_string() const -> const string_type&;
 
   /**
    * \brief Returns the attribute's integer value.
@@ -389,15 +340,7 @@ class attribute_value final {
    *
    * \throws TactileError if the attribute isn't an integer.
    */
-  [[nodiscard]] auto as_int() const -> integer_type
-  {
-    if (const auto* i = get_if<integer_type>()) {
-      return *i;
-    }
-    else {
-      throw_traced(tactile_error{"Attribute was not an integer!"});
-    }
-  }
+  [[nodiscard]] auto as_int() const -> integer_type;
 
   /**
    * \brief Returns the attribute's float value.
@@ -406,15 +349,7 @@ class attribute_value final {
    *
    * \throws TactileError if the attribute isn't a float.
    */
-  [[nodiscard]] auto as_float() const -> float_type
-  {
-    if (const auto* f = get_if<float_type>()) {
-      return *f;
-    }
-    else {
-      throw_traced(tactile_error{"Attribute was not a float!"});
-    }
-  }
+  [[nodiscard]] auto as_float() const -> float_type;
 
   /**
    * \brief Returns the attribute's boolean value.
@@ -423,15 +358,7 @@ class attribute_value final {
    *
    * \throws TactileError if the attribute isn't a boolean.
    */
-  [[nodiscard]] auto as_bool() const -> bool
-  {
-    if (const auto* b = get_if<bool>()) {
-      return *b;
-    }
-    else {
-      throw_traced(tactile_error{"Attribute was not a boolean!"});
-    }
-  }
+  [[nodiscard]] auto as_bool() const -> bool;
 
   /**
    * \brief Returns the attribute's file value.
@@ -440,15 +367,7 @@ class attribute_value final {
    *
    * \throws TactileError if the attribute isn't a file.
    */
-  [[nodiscard]] auto as_file() const -> const file_type&
-  {
-    if (const auto* file = get_if<file_type>()) {
-      return *file;
-    }
-    else {
-      throw_traced(tactile_error{"Attribute was not a file!"});
-    }
-  }
+  [[nodiscard]] auto as_file() const -> const file_type&;
 
   /**
    * \brief Returns the attribute's object reference value.
@@ -457,15 +376,7 @@ class attribute_value final {
    *
    * \throws TactileError if the attribute isn't an object reference.
    */
-  [[nodiscard]] auto as_object() const -> object_t
-  {
-    if (const auto* obj = get_if<object_t>()) {
-      return *obj;
-    }
-    else {
-      throw_traced(tactile_error{"Attribute was not an object reference!"});
-    }
-  }
+  [[nodiscard]] auto as_object() const -> object_t;
 
   /**
    * \brief Returns the attribute's color value.
@@ -474,19 +385,11 @@ class attribute_value final {
    *
    * \throws TactileError if the attribute isn't a color.
    */
-  [[nodiscard]] auto as_color() const -> const color_type&
-  {
-    if (const auto* color = get_if<color_type>()) {
-      return *color;
-    }
-    else {
-      throw_traced(tactile_error{"Attribute was not a color!"});
-    }
-  }
-
-  [[nodiscard]] auto operator==(const attribute_value&) const -> bool = default;
+  [[nodiscard]] auto as_color() const -> const color_type&;
 
   /// \} End of checked value retrieval
+
+  [[nodiscard]] auto operator==(const attribute_value&) const -> bool = default;
 
  private:
   value_type mValue;
@@ -504,35 +407,7 @@ class attribute_value final {
   }
 };
 
-inline auto operator<<(std::ostream& stream, const attribute_value& value)
-    -> std::ostream&
-{
-  switch (value.type()) {
-    case attribute_type::string:
-      return stream << value.as_string();
-
-    case attribute_type::integer:
-      return stream << value.as_int();
-
-    case attribute_type::floating:
-      return stream << value.as_float();
-
-    case attribute_type::boolean:
-      return stream << value.as_bool();
-
-    case attribute_type::file:
-      return stream << value.as_file();
-
-    case attribute_type::color:
-      return stream << value.as_color().as_rgba();
-
-    case attribute_type::object:
-      return stream << "object '" << value.as_object() << "'";
-
-    default:
-      throw_traced(tactile_error{"Invalid attribute type!"});
-  }
-}
+auto operator<<(std::ostream& stream, const attribute_value& value) -> std::ostream&;
 
 /// \} End of group core
 

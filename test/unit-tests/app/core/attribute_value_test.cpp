@@ -1,5 +1,8 @@
-#include <core/attribute_value.hpp>
+#include "core/attribute_value.hpp"
+
 #include <gtest/gtest.h>
+
+#include "throw.hpp"
 
 using namespace tactile;
 using namespace std::string_literals;

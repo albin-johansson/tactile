@@ -15,6 +15,7 @@
 #include "core/viewport.hpp"
 #include "logging.hpp"
 #include "property_system.hpp"
+#include "throw.hpp"
 
 namespace tactile::sys {
 namespace {

@@ -4,6 +4,7 @@
 #include "core/map.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "layer_system.hpp"
+#include "throw.hpp"
 
 namespace tactile::sys {
 namespace {
