@@ -1,0 +1,132 @@
+version: 1
+row-count: 8
+column-count: 10
+tile-width: 32
+tile-height: 24
+next-layer-id: 6
+next-object-id: 4
+component-definitions:
+  - name: GameObject
+    attributes:
+      - name: uuid
+        type: int
+  - name: Physics
+    attributes:
+      - name: collision-detection
+        type: string
+        default: discrete
+      - name: is-simulated
+        type: bool
+  - name: Movable
+    attributes:
+      - name: x
+        type: float
+      - name: y
+        type: float
+      - name: enabled
+        type: bool
+        default: true
+  - name: Drawable
+    attributes:
+      - name: tint
+        type: color
+        default: "#F148BAFE"
+      - name: depth
+        type: int
+        default: 5
+tilesets:
+  - first-global-id: 1026
+    path: outside.yaml
+  - first-global-id: 1
+    path: terrain.yaml
+layers:
+  - name: Ground
+    id: 1
+    type: tile-layer
+    data: 360 361 361 359 360 361 361 189 188 190 360 361 360 359 360 361 359 360 361 189 359 359 360 361 360 361 359 360 361 361 359 360 361 359 360 361 360 361 359 360 360 361 359 360 359 359 359 360 361 360 360 359 359 360 361 359 360 361 359 360 359 359 360 361 359 359 360 359 360 361 359 360 361 359 359 359 359 360 361 361
+    properties:
+      - name: is-ground
+        type: bool
+        value: true
+      - name: ratio
+        type: float
+        value: 0.5
+  - name: Tile Objects
+    id: 3
+    type: group-layer
+    layers:
+      - name: Details 1
+        id: 4
+        opacity: 0.9
+        type: tile-layer
+        data: 1941 1942 1943 1944 0 156 30 0 0 0 1973 1974 1975 1976 1557 0 156 157 30 0 0 0 0 0 0 1524 0 0 156 157 0 1509 1510 1511 0 0 1294 1295 1296 0 0 1541 1542 1543 1553 1554 1326 1327 1328 0 0 1835 1836 0 1585 1586 1358 1359 1360 0 0 1867 1868 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+        properties:
+          - name: path
+            type: file
+            value: /Users/albin-johansson/Documents/GitHub/tactile/test/test-resources/exterior.png
+      - name: Details 2
+        id: 5
+        type: tile-layer
+        data: 0 0 0 0 0 0 0 0 0 0 0 1128 1129 1130 0 0 0 0 0 0 0 1160 1161 1162 0 0 0 0 0 0 0 1192 1193 1194 0 0 0 0 0 0 0 0 0 0 0 0 0 1329 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+        properties:
+          - name: answer
+            type: int
+            value: 42
+          - name: hello
+            type: string
+            value: world
+    properties:
+      - name: tint
+        type: color
+        value: "#1DDC74FF"
+  - name: Objects
+    id: 2
+    type: object-layer
+    objects:
+      - id: 1
+        type: point
+        name: Location
+        tag: this-is-a-tag
+        x: 42
+        y: 185
+        components:
+          - type: Drawable
+            values:
+              - name: tint
+                value: "#1A2B3C4D"
+              - name: depth
+                value: 4
+      - id: 2
+        type: rect
+        name: Area
+        x: 300
+        y: 214
+        width: 85
+        height: 43
+        properties:
+          - name: coolness
+            type: int
+            value: 9000
+      - id: 3
+        type: ellipse
+        name: Around the world
+        x: 232
+        y: 543
+        width: 34
+        height: 29
+    properties:
+      - name: favorite-color
+        type: color
+        value: "#4BADE3FF"
+components:
+  - type: GameObject
+    values:
+      - name: uuid
+        value: 1
+properties:
+  - name: map-id
+    type: int
+    value: 123
+  - name: is-outside
+    type: bool
+    value: true

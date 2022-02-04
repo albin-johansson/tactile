@@ -1,9 +1,25 @@
 version: 1
 name: terrain
-tile-count: 1024
 tile-width: 32
 tile-height: 32
+tile-count: 1024
 column-count: 32
 image-path: ../terrain.png
 image-width: 1024
 image-height: 1024
+tiles:
+  - id: 155
+    animation:
+      - tile: 155
+        duration: 150
+      - tile: 156
+        duration: 120
+      - tile: 157
+        duration: 145
+properties:
+  - name: is-tileset
+    type: bool
+    value: true
+  - name: user-id
+    type: int
+    value: 74
