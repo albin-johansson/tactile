@@ -354,7 +354,7 @@ constexpr usize _col_count = 13;
   data.tile_count = 768;
   data.column_count = 28;
 
-  data.image_path = "test-resources/terrain.png";
+  data.image_path = std::filesystem::current_path() / "test-resources/terrain.png";
   data.image_width = 1'024;
   data.image_width = 1'023;
 
