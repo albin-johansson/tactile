@@ -356,7 +356,7 @@ constexpr usize _col_count = 13;
 
   data.image_path = std::filesystem::current_path() / "test-resources/terrain.png";
   data.image_width = 1'024;
-  data.image_width = 1'023;
+  data.image_height = 1'023;
 
   data.fancy_tiles[155].frames = {{.local_id = 155, .duration_ms = 150},
                                   {.local_id = 156, .duration_ms = 120},
