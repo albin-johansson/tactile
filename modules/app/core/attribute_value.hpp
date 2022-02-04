@@ -484,6 +484,8 @@ class attribute_value final {
     }
   }
 
+  [[nodiscard]] auto operator==(const attribute_value&) const -> bool = default;
+
   /// \} End of checked value retrieval
 
  private:
@@ -501,6 +503,36 @@ class attribute_value final {
     return std::get_if<T>(&mValue);
   }
 };
+
+inline auto operator<<(std::ostream& stream, const attribute_value& value)
+    -> std::ostream&
+{
+  switch (value.type()) {
+    case attribute_type::string:
+      return stream << value.as_string();
+
+    case attribute_type::integer:
+      return stream << value.as_int();
+
+    case attribute_type::floating:
+      return stream << value.as_float();
+
+    case attribute_type::boolean:
+      return stream << value.as_bool();
+
+    case attribute_type::file:
+      return stream << value.as_file();
+
+    case attribute_type::color:
+      return stream << value.as_color().as_rgba();
+
+    case attribute_type::object:
+      return stream << "object '" << value.as_object() << "'";
+
+    default:
+      throw_traced(tactile_error{"Invalid attribute type!"});
+  }
+}
 
 /// \} End of group core
 
