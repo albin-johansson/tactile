@@ -259,9 +259,11 @@ void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::tileset_data& tileset
     }
 
     if (!tile.objects.empty()) {
+      emitter << YAML::Key << "objects" << YAML::BeginSeq;
       for (const auto& objectData : tile.objects) {
         _emit_object_data(emitter, objectData);
       }
+      emitter << YAML::EndSeq;
     }
 
     _emit_properties(emitter, tile.context);
