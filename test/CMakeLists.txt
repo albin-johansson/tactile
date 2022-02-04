@@ -33,6 +33,7 @@ set(TEST_FILES
     unit-tests/app/editor/commands/command_stack_test.cpp
 
     unit-tests/app/io/maps/restore_document_from_ir_test.cpp
+    unit-tests/app/io/maps/round_trip_test.cpp
 
     unit-tests/app/io/persistence/preference_state_test.cpp
     )
