@@ -19,6 +19,8 @@ set(TACTILE_EDITOR_GUI_SOURCE_FILES
 
     ${PROJECT_SOURCE_DIR}/alignment.cpp
     ${PROJECT_SOURCE_DIR}/alignment.hpp
+    ${PROJECT_SOURCE_DIR}/dock_widget.cpp
+    ${PROJECT_SOURCE_DIR}/dock_widget.hpp
     ${PROJECT_SOURCE_DIR}/icons.cpp
     ${PROJECT_SOURCE_DIR}/icons.hpp
     ${PROJECT_SOURCE_DIR}/scoped.hpp

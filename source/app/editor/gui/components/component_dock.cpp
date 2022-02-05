@@ -21,7 +21,7 @@ namespace {
 
 constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
-[[nodiscard]] auto TrailingComponentButton() -> bool
+[[nodiscard]] auto _show_trailing_component_button() -> bool
 {
   ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32_BLACK_TRANS);
   ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS);
@@ -35,9 +35,9 @@ constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoS
   return pressed;
 }
 
-void ShowComponentPopupContent(entt::dispatcher& dispatcher,
-                               const context_id contextId,
-                               const component_id componentId)
+void _show_component_popup_content(entt::dispatcher& dispatcher,
+                                   const context_id contextId,
+                                   const component_id componentId)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
     dispatcher.enqueue<reset_component_values_event>(contextId, componentId);
@@ -56,10 +56,10 @@ void ShowComponentPopupContent(entt::dispatcher& dispatcher,
   }
 }
 
-void ShowComponent(entt::dispatcher& dispatcher,
-                   const context_id contextId,
-                   const c_str name,
-                   const comp::component& component)
+void _show_component(entt::dispatcher& dispatcher,
+                     const context_id contextId,
+                     const char* name,
+                     const comp::component& component)
 {
   const scoped::id componentScope{name};
 
@@ -68,12 +68,12 @@ void ShowComponent(entt::dispatcher& dispatcher,
 
   if (scoped::tree_node node{name, headerFlags}; node.is_open()) {
     ImGui::SameLine();
-    if (TrailingComponentButton()) {
+    if (_show_trailing_component_button()) {
       ImGui::OpenPopup("##ComponentPopup");
     }
 
     if (const auto popup = scoped::popup::for_item("##ComponentPopup"); popup.is_open()) {
-      ShowComponentPopupContent(dispatcher, contextId, component.type);
+      _show_component_popup_content(dispatcher, contextId, component.type);
     }
 
     constexpr auto tableFlags =
@@ -103,9 +103,9 @@ void ShowComponent(entt::dispatcher& dispatcher,
   }
 }
 
-void ShowAddComponentButtonPopupContent(const entt::registry& registry,
-                                        entt::dispatcher& dispatcher,
-                                        const context_id contextId)
+void _show_add_component_button_popup_content(const entt::registry& registry,
+                                              entt::dispatcher& dispatcher,
+                                              const context_id contextId)
 {
   const auto view = registry.view<comp::component_def>();
   if (view.empty()) {
@@ -130,44 +130,47 @@ void ShowAddComponentButtonPopupContent(const entt::registry& registry,
 
 }  // namespace
 
-void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
+component_dock::component_dock() : dock_widget{"Components", gWindowFlags}
 {
-  auto& prefs = get_preferences();
-  auto visible = prefs.is_component_dock_visible();
+  set_close_button_enabled(true);
+}
 
-  if (!visible) {
-    return;
-  }
+void component_dock::on_update(const entt::registry& registry,
+                               entt::dispatcher& dispatcher)
+{
+  const auto& context = sys::current_context(registry);
+  ImGui::Text("Context: %s", context.name.c_str());
 
-  scoped::window dock{"Components", gWindowFlags, &visible};
-  mHasFocus = dock.has_focus();
-
-  if (dock.is_open()) {
-    const auto& context = sys::current_context(registry);
-    ImGui::Text("Context: %s", context.name.c_str());
-
-    if (scoped::child pane{"##ComponentsChild"}; pane.is_open()) {
-      for (const auto componentEntity : context.components) {
-        const auto& component = registry.get<comp::component>(componentEntity);
-        const auto& name = sys::get_component_def_name(registry, component.type);
-
-        ImGui::Separator();
-        ShowComponent(dispatcher, context.id, name.c_str(), component);
-      }
+  if (scoped::child pane{"##ComponentsChild"}; pane.is_open()) {
+    for (const auto componentEntity : context.components) {
+      const auto& component = registry.get<comp::component>(componentEntity);
+      const auto& name = sys::get_component_def_name(registry, component.type);
 
       ImGui::Separator();
+      _show_component(dispatcher, context.id, name.c_str(), component);
+    }
 
-      if (centered_button(TAC_ICON_ADD, "Add component")) {
-        ImGui::OpenPopup("##AddComponentButtonPopup");
-      }
+    ImGui::Separator();
 
-      if (scoped::popup popup{"##AddComponentButtonPopup"}; popup.is_open()) {
-        ShowAddComponentButtonPopupContent(registry, dispatcher, context.id);
-      }
+    if (centered_button(TAC_ICON_ADD, "Add component")) {
+      ImGui::OpenPopup("##AddComponentButtonPopup");
+    }
+
+    if (scoped::popup popup{"##AddComponentButtonPopup"}; popup.is_open()) {
+      _show_add_component_button_popup_content(registry, dispatcher, context.id);
     }
   }
+}
 
+void component_dock::set_visible(const bool visible)
+{
+  auto& prefs = get_preferences();
   prefs.set_component_dock_visible(visible);
+}
+
+auto component_dock::is_visible() const -> bool
+{
+  return get_preferences().is_component_dock_visible();
 }
 
 }  // namespace tactile

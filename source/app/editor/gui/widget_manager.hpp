@@ -19,7 +19,7 @@ class Toolbar;
 class TilesetDock;
 class LayerDock;
 class PropertiesDock;
-class ComponentDock;
+class component_dock;
 class LogDock;
 
 class ResizeMapDialog;
@@ -91,7 +91,7 @@ class widget_manager final
   std::unique_ptr<TilesetDock> mTilesetDock;
   std::unique_ptr<LayerDock> mLayerDock;
   std::unique_ptr<PropertiesDock> mPropertiesDock;
-  std::unique_ptr<ComponentDock> mComponentDock;
+  std::unique_ptr<component_dock> mComponentDock;
   std::unique_ptr<LogDock> mLogDock;
 
   std::unique_ptr<ResizeMapDialog> mResizeMapDialog;

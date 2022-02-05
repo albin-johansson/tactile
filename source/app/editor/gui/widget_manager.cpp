@@ -25,7 +25,7 @@ widget_manager::widget_manager()
     , mTilesetDock{std::make_unique<TilesetDock>()}
     , mLayerDock{std::make_unique<LayerDock>()}
     , mPropertiesDock{std::make_unique<PropertiesDock>()}
-    , mComponentDock{std::make_unique<ComponentDock>()}
+    , mComponentDock{std::make_unique<component_dock>()}
     , mLogDock{std::make_unique<LogDock>()}
     , mResizeMapDialog{std::make_unique<ResizeMapDialog>()}
     , mMapImportErrorDialog{std::make_unique<MapImportErrorDialog>()}
@@ -51,7 +51,7 @@ void widget_manager::update(const Model& model,
   if (const auto* registry = model.GetActiveRegistry()) {
     UpdateMapViewObjectContextMenu(*registry, dispatcher);
 
-    mComponentDock->Update(*registry, dispatcher);
+    mComponentDock->update(*registry, dispatcher);
     mTilesetDock->Update(*registry, dispatcher);
 
     mLogDock->Update();
