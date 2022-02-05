@@ -5,7 +5,6 @@
 #include <IconsFontAwesome5.h>
 #include <imgui.h>
 
-#include "editor/gui/style.hpp"
 #include "editor/gui/themes.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -71,7 +70,7 @@ im_gui_context::im_gui_context(cen::window& window, cen::gl_context& context)
   const auto& prefs = get_preferences();
   auto& style = ImGui::GetStyle();
 
-  ApplyStyle(style);
+  apply_style(style);
   apply_theme(style, prefs.get_theme());
 
   style.WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;

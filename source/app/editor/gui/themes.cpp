@@ -123,6 +123,77 @@ void _apply_theme_from_config(ImGuiStyle& style, const theme_cfg& cfg)
 
 }  // namespace
 
+auto human_readable_name(const editor_theme theme) -> std::string_view
+{
+  switch (theme) {
+    case editor_theme::dear_dark:
+      return "Dear Dark";
+
+    case editor_theme::dear_light:
+      return "Dear Light";
+
+    case editor_theme::ruby:
+      return "Ruby";
+
+    case editor_theme::sapphire:
+      return "Sapphire";
+
+    case editor_theme::emerald:
+      return "Emerald";
+
+    case editor_theme::amethyst:
+      return "Amethyst";
+
+    case editor_theme::amber:
+      return "Amber";
+
+    case editor_theme::nocturnal:
+      return "Nocturnal";
+
+    case editor_theme::ash:
+      return "Ash";
+
+    case editor_theme::diamond:
+      return "Diamond";
+
+    case editor_theme::joker:
+      return "Joker";
+
+    case editor_theme::raspberry:
+      return "Raspberry";
+
+    default:
+      throw_traced(tactile_error{"Invalid theme enumerator!"});
+  }
+}
+
+void apply_style(ImGuiStyle& style)
+{
+  style.WindowMenuButtonPosition = ImGuiDir_Right;
+  style.WindowBorderSize = 0;
+
+  style.WindowPadding = ImVec2{10, 10};
+  style.FramePadding = ImVec2{5, 5};
+  style.CellPadding = ImVec2{4, 4};
+
+  style.ItemSpacing = ImVec2{12, 8};
+  style.ItemInnerSpacing = ImVec2{4, 6};
+  style.IndentSpacing = 15;
+
+  style.GrabMinSize = 6;
+  style.ScrollbarSize = 10;
+
+  constexpr float rounding = 4;
+  style.ChildRounding = 2;
+  style.WindowRounding = rounding;
+  style.FrameRounding = rounding;
+  style.PopupRounding = rounding;
+  style.ScrollbarRounding = rounding;
+  style.GrabRounding = rounding;
+  style.LogSliderDeadzone = rounding;
+  style.TabRounding = rounding;
+}
+
 void apply_theme(ImGuiStyle& style, editor_theme theme)
 {
   switch (theme) {
@@ -181,50 +252,6 @@ void apply_theme(ImGuiStyle& style, editor_theme theme)
                                 .area = {0.15f, 0.15f, 0.15f, _area_opacity},
                                 .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
-  }
-}
-
-auto human_readable_name(const editor_theme theme) -> std::string_view
-{
-  switch (theme) {
-    case editor_theme::dear_dark:
-      return "Dear Dark";
-
-    case editor_theme::dear_light:
-      return "Dear Light";
-
-    case editor_theme::ruby:
-      return "Ruby";
-
-    case editor_theme::sapphire:
-      return "Sapphire";
-
-    case editor_theme::emerald:
-      return "Emerald";
-
-    case editor_theme::amethyst:
-      return "Amethyst";
-
-    case editor_theme::amber:
-      return "Amber";
-
-    case editor_theme::nocturnal:
-      return "Nocturnal";
-
-    case editor_theme::ash:
-      return "Ash";
-
-    case editor_theme::diamond:
-      return "Diamond";
-
-    case editor_theme::joker:
-      return "Joker";
-
-    case editor_theme::raspberry:
-      return "Raspberry";
-
-    default:
-      throw_traced(tactile_error{"Invalid theme enumerator!"});
   }
 }
 
