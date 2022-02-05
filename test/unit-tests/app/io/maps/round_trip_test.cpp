@@ -416,7 +416,7 @@ constexpr usize _col_count = 13;
     data.component_definitions["long-component"]["path-v"] =
         std::filesystem::path{"../foo.txt"};
 
-    data.component_definitions["long-component"]["col"] = cen::colors::white;
+    data.component_definitions["long-component"]["col"] = cen::colors::black;
     data.component_definitions["long-component"]["col-v"] = cen::colors::indigo;
   }
 
