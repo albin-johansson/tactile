@@ -354,7 +354,7 @@ constexpr usize _col_count = 13;
   data.tile_count = 768;
   data.column_count = 28;
 
-  data.image_path = std::filesystem::current_path() / "test-resources/terrain.png";
+  data.image_path = "test-resources/terrain.png";
   data.image_width = 1'024;
   data.image_height = 1'023;
 
@@ -447,7 +447,8 @@ constexpr usize _col_count = 13;
 
 TEST(RoundTrip, YAML)
 {
-  const emitter::emit_info emitter{"test_map.yaml", _create_source_data(true)};
+  const emitter::emit_info emitter{std::filesystem::absolute("test_map.yaml"),
+                                   _create_source_data(true)};
   emitter::emit_yaml_map(emitter);
 
   parsing::map_parser parser;
@@ -467,7 +468,8 @@ TEST(RoundTrip, YAML)
 
 TEST(RoundTrip, JSON)
 {
-  const emitter::emit_info emitter{"test_map.json", _create_source_data(false)};
+  const emitter::emit_info emitter{std::filesystem::absolute("test_map.json"),
+                                   _create_source_data(false)};
   emitter::emit_json_map(emitter);
 
   parsing::map_parser parser;
@@ -486,7 +488,8 @@ TEST(RoundTrip, JSON)
 
 TEST(RoundTrip, XML)
 {
-  const emitter::emit_info emitter{"test_map.tmx", _create_source_data(false)};
+  const emitter::emit_info emitter{std::filesystem::absolute("test_map.tmx"),
+                                   _create_source_data(false)};
   emitter::emit_xml_map(emitter);
 
   parsing::map_parser parser;

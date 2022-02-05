@@ -263,7 +263,8 @@ void _append_common_tileset_attributes(pugi::xml_node node,
   {
     auto imageNode = node.append_child("image");
 
-    const auto source = std::filesystem::relative(tilesetData.image_path, dir);
+    const auto source = convert_to_forward_slashes(
+        std::filesystem::relative(tilesetData.image_path, dir));
     imageNode.append_attribute("source").set_value(source.c_str());
 
     imageNode.append_attribute("width").set_value(tilesetData.image_width);
