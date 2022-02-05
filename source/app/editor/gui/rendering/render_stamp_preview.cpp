@@ -8,7 +8,7 @@
 #include "core/components/uv_tile_size.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/tile_position.hpp"
-#include "editor/gui/texture_utils.hpp"
+#include "editor/gui/textures.hpp"
 #include "misc/assert.hpp"
 #include "render_info.hpp"
 #include "tactile.hpp"
@@ -92,7 +92,7 @@ void RenderStampPreview(const entt::registry& registry,
   const auto& uv = registry.get<comp::uv_tile_size>(tilesetEntity);
 
   PreviewInfo info;
-  info.texture_id = ToTextureID(texture.id);
+  info.texture_id = to_texture_id(texture.id);
 
   info.map_pos = renderInfo.origin;
   info.grid_size = renderInfo.grid_size;

@@ -11,10 +11,10 @@ namespace tactile {
  *
  * \ingroup gui
  *
- * \param texture the OpenGL texture identifier that will be converted.
+ * \param texture the source OpenGL texture identifier.
  *
- * \return a corresponding Dear ImGui texture identifier.
+ * \return a Dear ImGui texture identifier.
  */
-[[nodiscard]] auto ToTextureID(uint texture) -> ImTextureID;
+[[nodiscard]] auto to_texture_id(uint texture) noexcept -> ImTextureID;
 
 }  // namespace tactile

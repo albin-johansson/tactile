@@ -7,7 +7,7 @@
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/centered_button.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/texture_utils.hpp"
+#include "editor/gui/textures.hpp"
 
 namespace tactile {
 
@@ -18,7 +18,7 @@ void UpdateHomePageContent(const icon_manager& icons, entt::dispatcher& dispatch
   ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2{0, 64});
 
   AlignNextItemCenteredHorizontally(128);
-  ImGui::Image(ToTextureID(icons.tactile_icon()), {128, 128});
+  ImGui::Image(to_texture_id(icons.tactile_icon()), {128, 128});
 
   ImGui::Spacing();
   ImGui::Spacing();

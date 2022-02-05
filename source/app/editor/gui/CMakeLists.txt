@@ -24,8 +24,8 @@ set(TACTILE_EDITOR_GUI_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/scoped.hpp
     ${PROJECT_SOURCE_DIR}/style.cpp
     ${PROJECT_SOURCE_DIR}/style.hpp
-    ${PROJECT_SOURCE_DIR}/texture_utils.cpp
-    ${PROJECT_SOURCE_DIR}/texture_utils.hpp
+    ${PROJECT_SOURCE_DIR}/textures.cpp
+    ${PROJECT_SOURCE_DIR}/textures.hpp
     ${PROJECT_SOURCE_DIR}/themes.cpp
     ${PROJECT_SOURCE_DIR}/themes.hpp
     ${PROJECT_SOURCE_DIR}/widget_manager.cpp
