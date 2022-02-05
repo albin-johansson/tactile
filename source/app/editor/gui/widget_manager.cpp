@@ -19,17 +19,21 @@
 
 namespace tactile {
 
-widget_manager::widget_manager()
-    : mMenuBar{std::make_unique<MenuBar>()}
-    , mToolbar{std::make_unique<Toolbar>()}
-    , mTilesetDock{std::make_unique<TilesetDock>()}
-    , mLayerDock{std::make_unique<LayerDock>()}
-    , mPropertiesDock{std::make_unique<PropertiesDock>()}
-    , mComponentDock{std::make_unique<component_dock>()}
-    , mLogDock{std::make_unique<LogDock>()}
-    , mResizeMapDialog{std::make_unique<ResizeMapDialog>()}
-    , mMapImportErrorDialog{std::make_unique<MapImportErrorDialog>()}
-{}
+struct widget_manager::widgets final
+{
+  MenuBar mMenuBar;
+  Toolbar mToolbar;
+  TilesetDock mTilesetDock;
+  LayerDock mLayerDock;
+  PropertiesDock mPropertiesDock;
+  component_dock mComponentDock;
+  LogDock mLogDock;
+
+  ResizeMapDialog mResizeMapDialog;
+  MapImportErrorDialog mMapImportErrorDialog;
+};
+
+widget_manager::widget_manager() : mWidgets{std::make_unique<widgets>()} {}
 
 widget_manager::~widget_manager() noexcept = default;
 
@@ -37,13 +41,13 @@ void widget_manager::update(const Model& model,
                             const icon_manager& icons,
                             entt::dispatcher& dispatcher)
 {
-  mMenuBar->Update(model, dispatcher);
+  mWidgets->mMenuBar.Update(model, dispatcher);
   UpdateDockSpace();
 
   if (model.HasActiveDocument()) {
-    mToolbar->Update(model, dispatcher);
-    mLayerDock->Update(model, icons, dispatcher);
-    mPropertiesDock->Update(model, dispatcher);
+    mWidgets->mToolbar.Update(model, dispatcher);
+    mWidgets->mLayerDock.Update(model, icons, dispatcher);
+    mWidgets->mPropertiesDock.Update(model, dispatcher);
   }
 
   UpdateViewportWidget(model, icons, dispatcher);
@@ -51,76 +55,76 @@ void widget_manager::update(const Model& model,
   if (const auto* registry = model.GetActiveRegistry()) {
     UpdateMapViewObjectContextMenu(*registry, dispatcher);
 
-    mComponentDock->update(*registry, dispatcher);
-    mTilesetDock->Update(*registry, dispatcher);
+    mWidgets->mComponentDock.update(*registry, dispatcher);
+    mWidgets->mTilesetDock.Update(*registry, dispatcher);
 
-    mLogDock->Update();
+    mWidgets->mLogDock.Update();
   }
 
-  mResizeMapDialog->Update(model, dispatcher);
-  mMapImportErrorDialog->Update(model, dispatcher);
+  mWidgets->mResizeMapDialog.Update(model, dispatcher);
+  mWidgets->mMapImportErrorDialog.Update(model, dispatcher);
 }
 
 void widget_manager::show_settings()
 {
-  mMenuBar->ShowSettings();
+  mWidgets->mMenuBar.ShowSettings();
 }
 
 void widget_manager::show_new_map_dialog()
 {
-  mMenuBar->ShowNewMapDialog();
+  mWidgets->mMenuBar.ShowNewMapDialog();
 }
 
 void widget_manager::show_open_map_dialog()
 {
-  mMenuBar->ShowOpenMapDialog();
+  mWidgets->mMenuBar.ShowOpenMapDialog();
 }
 
 void widget_manager::show_add_tileset_dialog()
 {
-  mMenuBar->ShowAddTilesetDialog();
+  mWidgets->mMenuBar.ShowAddTilesetDialog();
 }
 
 void widget_manager::show_rename_layer_dialog(const layer_id id)
 {
-  mLayerDock->ShowRenameLayerDialog(id);
+  mWidgets->mLayerDock.ShowRenameLayerDialog(id);
 }
 
 void widget_manager::show_add_property_dialog()
 {
-  mPropertiesDock->ShowAddPropertyDialog();
+  mWidgets->mPropertiesDock.ShowAddPropertyDialog();
 }
 
 void widget_manager::show_rename_property_dialog(const std::string& name)
 {
-  mPropertiesDock->ShowRenamePropertyDialog(name);
+  mWidgets->mPropertiesDock.ShowRenamePropertyDialog(name);
 }
 
 void widget_manager::show_change_property_type_dialog(std::string name,
                                                       const attribute_type type)
 {
-  mPropertiesDock->ShowChangePropertyTypeDialog(std::move(name), type);
+  mWidgets->mPropertiesDock.ShowChangePropertyTypeDialog(std::move(name), type);
 }
 
 void widget_manager::show_resize_map_dialog(const usize currentRows,
                                             const usize currentColumns)
 {
-  mResizeMapDialog->Show(currentRows, currentColumns);
+  mWidgets->mResizeMapDialog.Show(currentRows, currentColumns);
 }
 
 void widget_manager::show_map_import_error_dialog(parsing::parse_error error)
 {
-  mMapImportErrorDialog->Open(error);
+  mWidgets->mMapImportErrorDialog.Open(error);
 }
 
 void widget_manager::show_component_editor(const Model& model)
 {
-  mMenuBar->ShowComponentEditor(model);
+  mWidgets->mMenuBar.ShowComponentEditor(model);
 }
 
 void widget_manager::set_toolbar_visible(const bool visible)
 {
-  mToolbar->SetVisible(visible);
+  mWidgets->mToolbar.SetVisible(visible);
 }
 
 auto widget_manager::is_editor_focused() const -> bool
@@ -132,7 +136,7 @@ auto widget_manager::is_editor_focused() const -> bool
 
 auto widget_manager::is_toolbar_focused() const -> bool
 {
-  return mToolbar->IsFocused();
+  return mWidgets->mToolbar.IsFocused();
 }
 
 auto widget_manager::is_viewport_focused() const -> bool
@@ -142,42 +146,42 @@ auto widget_manager::is_viewport_focused() const -> bool
 
 auto widget_manager::is_layer_dock_focused() const -> bool
 {
-  return mLayerDock->IsFocused();
+  return mWidgets->mLayerDock.IsFocused();
 }
 
 auto widget_manager::is_tileset_dock_focused() const -> bool
 {
-  return mTilesetDock->IsFocused();
+  return mWidgets->mTilesetDock.IsFocused();
 }
 
 auto widget_manager::is_properties_dock_focused() const -> bool
 {
-  return mPropertiesDock->IsFocused();
+  return mWidgets->mPropertiesDock.IsFocused();
 }
 
 auto widget_manager::is_log_dock_focused() const -> bool
 {
-  return mLogDock->IsFocused();
+  return mWidgets->mLogDock.IsFocused();
 }
 
 auto widget_manager::is_tileset_dock_hovered() const -> bool
 {
-  return mTilesetDock->IsHovered();
+  return mWidgets->mTilesetDock.IsHovered();
 }
 
 auto widget_manager::is_toolbar_visible() const -> bool
 {
-  return mToolbar->IsVisible();
+  return mWidgets->mToolbar.IsVisible();
 }
 
 auto widget_manager::tileset_view_width() const -> maybe<float>
 {
-  return mTilesetDock->GetTilesetView().GetWidth();
+  return mWidgets->mTilesetDock.GetTilesetView().GetWidth();
 }
 
 auto widget_manager::tileset_view_height() const -> maybe<float>
 {
-  return mTilesetDock->GetTilesetView().GetHeight();
+  return mWidgets->mTilesetDock.GetTilesetView().GetHeight();
 }
 
 }  // namespace tactile

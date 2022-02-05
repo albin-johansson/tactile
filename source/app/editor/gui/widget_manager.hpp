@@ -14,17 +14,6 @@ namespace tactile {
 class Model;
 class icon_manager;
 
-class MenuBar;
-class Toolbar;
-class TilesetDock;
-class LayerDock;
-class PropertiesDock;
-class component_dock;
-class LogDock;
-
-class ResizeMapDialog;
-class MapImportErrorDialog;
-
 class widget_manager final
 {
  public:
@@ -86,16 +75,8 @@ class widget_manager final
   [[nodiscard]] auto tileset_view_height() const -> maybe<float>;
 
  private:
-  std::unique_ptr<MenuBar> mMenuBar;
-  std::unique_ptr<Toolbar> mToolbar;
-  std::unique_ptr<TilesetDock> mTilesetDock;
-  std::unique_ptr<LayerDock> mLayerDock;
-  std::unique_ptr<PropertiesDock> mPropertiesDock;
-  std::unique_ptr<component_dock> mComponentDock;
-  std::unique_ptr<LogDock> mLogDock;
-
-  std::unique_ptr<ResizeMapDialog> mResizeMapDialog;
-  std::unique_ptr<MapImportErrorDialog> mMapImportErrorDialog;
+  struct widgets;
+  std::unique_ptr<widgets> mWidgets;
 };
 
 }  // namespace tactile
