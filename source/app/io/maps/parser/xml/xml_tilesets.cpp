@@ -28,8 +28,20 @@ namespace {
 
     for (auto frameNode : tileNode.child("animation").children("frame")) {
       auto& frameData = tileData.frames.emplace_back();
-      frameData.local_id = int_attribute(frameNode, "tileid").value();
-      frameData.duration_ms = uint_attribute(frameNode, "duration").value();
+
+      if (const auto localId = int_attribute(frameNode, "tileid")) {
+        frameData.local_id = *localId;
+      }
+      else {
+        return parse_error::no_animation_frame_tile;
+      }
+
+      if (const auto duration = uint_attribute(frameNode, "duration")) {
+        frameData.duration_ms = *duration;
+      }
+      else {
+        return parse_error::no_animation_frame_duration;
+      }
     }
 
     for (auto objectNode : tileNode.child("objectgroup").children("object")) {
