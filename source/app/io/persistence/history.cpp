@@ -10,8 +10,8 @@
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
+#include "proto.hpp"
 #include "tactile_def.hpp"
-#include <history.pb.h>
 
 namespace tactile {
 namespace {

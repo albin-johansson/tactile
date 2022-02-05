@@ -7,7 +7,7 @@
 #include <magic_enum.hpp>
 
 #include "misc/logging.hpp"
-#include "settings.pb.h"
+#include "proto.hpp"
 
 namespace tactile {
 namespace {

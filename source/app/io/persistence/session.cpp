@@ -10,7 +10,7 @@
 #include "io/maps/parser/parse_map.hpp"
 #include "io/maps/restore_document_from_ir.hpp"
 #include "misc/logging.hpp"
-#include <session.pb.h>
+#include "proto.hpp"
 
 namespace tactile {
 namespace {

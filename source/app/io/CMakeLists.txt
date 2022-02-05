@@ -17,6 +17,7 @@ set(TACTILE_IO_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/persistence/preference_state.hpp
     ${PROJECT_SOURCE_DIR}/persistence/preferences.cpp
     ${PROJECT_SOURCE_DIR}/persistence/preferences.hpp
+    ${PROJECT_SOURCE_DIR}/persistence/proto.hpp
     ${PROJECT_SOURCE_DIR}/persistence/session.cpp
     ${PROJECT_SOURCE_DIR}/persistence/session.hpp
 
