@@ -158,12 +158,12 @@ class application final {
   void on_create_component_def(const create_component_def_event& event);
   void on_remove_component_def(const remove_component_def_event& event);
   void on_rename_component_def(const rename_component_def_event& event);
-  void on_create_component_attribute(const create_component_attr_event& event);
-  void on_remove_component_attribute(const remove_component_attr_event& event);
-  void on_rename_component_attribute(const rename_component_attr_event& event);
-  void on_duplicate_component_attribute(const duplicate_component_attr_event& event);
-  void on_set_component_attribute_type(const set_component_attr_type_event& event);
-  void on_update_component_def_attribute(const update_component_def_attr_event& event);
+  void on_create_component_attr(const create_component_attr_event& event);
+  void on_remove_component_attr(const remove_component_attr_event& event);
+  void on_rename_component_attr(const rename_component_attr_event& event);
+  void on_duplicate_component_attr(const duplicate_component_attr_event& event);
+  void on_set_component_attr_type(const set_component_attr_type_event& event);
+  void on_update_component_def_attr(const update_component_def_attr_event& event);
 
   void on_add_component(const add_component_event& event);
   void on_remove_component(const remove_component_event& event);

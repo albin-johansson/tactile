@@ -649,34 +649,32 @@ void application::on_rename_component_def(const rename_component_def_event& even
   _execute<rename_component_cmd>(mModel, event.id, event.name);
 }
 
-void application::on_create_component_attribute(const create_component_attr_event& event)
+void application::on_create_component_attr(const create_component_attr_event& event)
 {
   _execute<create_component_attr_cmd>(mModel, event.id, event.name);
 }
 
-void application::on_remove_component_attribute(const remove_component_attr_event& event)
+void application::on_remove_component_attr(const remove_component_attr_event& event)
 {
   _execute<remove_component_attr_cmd>(mModel, event.id, event.name);
 }
 
-void application::on_rename_component_attribute(const rename_component_attr_event& event)
+void application::on_rename_component_attr(const rename_component_attr_event& event)
 {
   _execute<rename_component_attr_cmd>(mModel, event.id, event.previous, event.updated);
 }
 
-void application::on_duplicate_component_attribute(
-    const duplicate_component_attr_event& event)
+void application::on_duplicate_component_attr(const duplicate_component_attr_event& event)
 {
   _execute<duplicate_component_attr_cmd>(mModel, event.id, event.attribute);
 }
 
-void application::on_set_component_attribute_type(
-    const set_component_attr_type_event& event)
+void application::on_set_component_attr_type(const set_component_attr_type_event& event)
 {
   _execute<set_component_attr_type_cmd>(mModel, event.id, event.attribute, event.type);
 }
 
-void application::on_update_component_def_attribute(
+void application::on_update_component_def_attr(
     const update_component_def_attr_event& event)
 {
   _execute<update_component_attr_cmd>(mModel, event.id, event.attribute, event.value);

@@ -94,13 +94,12 @@ void subscribe_to_events(appl& app)
   app.connect<create_component_def_event, &appl::on_create_component_def>();
   app.connect<remove_component_def_event, &appl::on_remove_component_def>();
   app.connect<rename_component_def_event, &appl::on_rename_component_def>();
-  app.connect<create_component_attr_event, &appl::on_create_component_attribute>();
-  app.connect<remove_component_attr_event, &appl::on_remove_component_attribute>();
-  app.connect<rename_component_attr_event, &appl::on_rename_component_attribute>();
-  app.connect<duplicate_component_attr_event, &appl::on_duplicate_component_attribute>();
-  app.connect<set_component_attr_type_event, &appl::on_set_component_attribute_type>();
-  app.connect<update_component_def_attr_event,
-              &appl::on_update_component_def_attribute>();
+  app.connect<create_component_attr_event, &appl::on_create_component_attr>();
+  app.connect<remove_component_attr_event, &appl::on_remove_component_attr>();
+  app.connect<rename_component_attr_event, &appl::on_rename_component_attr>();
+  app.connect<duplicate_component_attr_event, &appl::on_duplicate_component_attr>();
+  app.connect<set_component_attr_type_event, &appl::on_set_component_attr_type>();
+  app.connect<update_component_def_attr_event, &appl::on_update_component_def_attr>();
 
   app.connect<add_component_event, &appl::on_add_component>();
   app.connect<remove_component_event, &appl::on_remove_component>();
