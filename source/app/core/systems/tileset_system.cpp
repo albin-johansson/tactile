@@ -12,8 +12,8 @@
 #include "core/components/uv_tile_size.hpp"
 #include "core/utils/tiles.hpp"
 #include "core/viewport.hpp"
-#include "logging.hpp"
 #include "misc/assert.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 #include "property_system.hpp"
 

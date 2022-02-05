@@ -3,7 +3,7 @@
 #include <centurion.hpp>
 
 #include "build.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 
 #if TACTILE_RELEASE
 #define TACTILE_PROFILE_START

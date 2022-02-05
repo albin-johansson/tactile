@@ -3,7 +3,7 @@
 #include "core/utils/tiles.hpp"
 #include "io/maps/json_utils.hpp"
 #include "json_attribute_parser.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile::parsing {
 namespace {

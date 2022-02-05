@@ -11,7 +11,7 @@
 #include "io/maps/json_utils.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile::emitter {
 namespace {

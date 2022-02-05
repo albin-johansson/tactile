@@ -6,8 +6,8 @@
 
 #include "context_system.hpp"
 #include "core/components/attribute_context.hpp"
-#include "logging.hpp"
 #include "misc/assert.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 #include "property_system.hpp"
 

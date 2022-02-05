@@ -6,9 +6,9 @@
 #include <GL/glew.h>
 
 #include "io/persistence/preferences.hpp"
-#include "logging.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 #include "sdl_attributes.hpp"
 

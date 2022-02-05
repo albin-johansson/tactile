@@ -8,9 +8,9 @@
 #include "emitter/yaml_emitter.hpp"
 #include "io/maps/convert_document_to_ir.hpp"
 #include "io/persistence/preferences.hpp"
-#include "logging.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile {
 

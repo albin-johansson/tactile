@@ -4,7 +4,7 @@
 #include <utility>     // move
 
 #include "io/directories.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile {
 namespace {

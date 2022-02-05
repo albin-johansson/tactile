@@ -3,8 +3,8 @@
 
 #include "application.hpp"
 #include "cfg/configuration.hpp"
-#include "logging.hpp"
 #include "misc/crash.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 
 auto main(int, char**) -> int

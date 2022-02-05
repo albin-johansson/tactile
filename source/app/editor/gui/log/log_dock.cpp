@@ -6,7 +6,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 #include "tactile_def.hpp"
 

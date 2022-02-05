@@ -3,9 +3,9 @@
 #include <exception>  // exception
 
 #include "json/json_parser.hpp"
-#include "logging.hpp"
 #include "meta/build.hpp"
 #include "meta/profile.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 #include "xml/xml_parser.hpp"
 #include "yaml/yaml_parser.hpp"

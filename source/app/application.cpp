@@ -29,7 +29,7 @@
 #include "io/persistence/history.hpp"
 #include "io/persistence/preferences.hpp"
 #include "io/persistence/session.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile {
 namespace {

@@ -12,7 +12,7 @@
 #include "emit_info.hpp"
 #include "io/maps/yaml_utils.hpp"
 #include "io/persistence/preferences.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile::emitter {

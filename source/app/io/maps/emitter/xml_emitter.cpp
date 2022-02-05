@@ -13,7 +13,7 @@
 #include "emit_info.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::emitter {

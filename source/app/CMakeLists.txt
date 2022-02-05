@@ -27,8 +27,6 @@ set(SOURCE_FILES
     application_events.cpp
     application_events.hpp
     boost.hpp
-    logging.cpp
-    logging.hpp
 
     meta/build.hpp
     meta/profile.hpp
@@ -37,6 +35,8 @@ set(SOURCE_FILES
     misc/assert.hpp
     misc/crash.cpp
     misc/crash.hpp
+    misc/logging.cpp
+    misc/logging.hpp
     misc/throw.hpp
 
     ${TACTILE_CFG_SOURCE_FILES}

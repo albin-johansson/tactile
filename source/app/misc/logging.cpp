@@ -6,7 +6,7 @@
 #include <fmt/chrono.h>
 #include <fmt/core.h>
 
-#include "misc/throw.hpp"
+#include "throw.hpp"
 
 namespace tactile {
 namespace {

@@ -7,7 +7,7 @@
 #include <GL/glew.h>
 #include <stb_image.h>
 
-#include "logging.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile {
 namespace {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "logging.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile {
 

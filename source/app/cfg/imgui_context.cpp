@@ -10,8 +10,8 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "io/persistence/preferences.hpp"
-#include "logging.hpp"
 #include "meta/build.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile {
 namespace {

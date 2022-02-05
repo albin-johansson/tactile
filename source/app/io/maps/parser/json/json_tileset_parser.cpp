@@ -9,8 +9,8 @@
 #include "io/maps/json_utils.hpp"
 #include "json_attribute_parser.hpp"
 #include "json_layer_parser.hpp"
-#include "logging.hpp"
 #include "misc/assert.hpp"
+#include "misc/logging.hpp"
 
 namespace tactile::parsing {
 namespace {

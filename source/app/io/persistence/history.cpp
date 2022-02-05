@@ -8,7 +8,7 @@
 
 #include "core/utils/strings.hpp"
 #include "io/directories.hpp"
-#include "logging.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 #include "tactile_def.hpp"
 #include <history.pb.h>
