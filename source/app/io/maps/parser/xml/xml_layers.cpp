@@ -8,6 +8,7 @@
 #include "core/utils/strings.hpp"
 #include "core/utils/tiles.hpp"
 #include "io/maps/xml_utils.hpp"
+#include "throw.hpp"
 #include "xml_attributes.hpp"
 
 namespace tactile::parsing {
@@ -66,6 +67,10 @@ namespace {
                                     ir::tile_layer_data& layerData) -> parse_error
 {
   const auto data = layerNode.child("data");
+
+  if (data.empty() || data.text().empty()) {
+    return parse_error::no_tile_layer_data;
+  }
 
   /* The encoding attribute is optional, if it is missing then the tile data is
      stored as individual "tile" nodes. */
@@ -186,7 +191,8 @@ namespace {
     }
   }
   else {
-    return parse_error::unsupported_layer_type;
+    /* If we enter this branch, then the layer collection is broken */
+    throw_traced(tactile_error{"Collected invalid layer node!"});
   }
 
   if (const auto err = parse_properties(layerNode, layerData.context);
