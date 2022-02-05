@@ -7,8 +7,8 @@
 
 #include <centurion.hpp>
 
-#include "assert.hpp"
 #include "io/maps/xml_utils.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::parsing {
 namespace {

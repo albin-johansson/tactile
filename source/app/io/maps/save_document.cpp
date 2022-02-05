@@ -2,7 +2,6 @@
 
 #include <filesystem>  // absolute
 
-#include "assert.hpp"
 #include "emitter/emit_info.hpp"
 #include "emitter/json_emitter.hpp"
 #include "emitter/xml_emitter.hpp"
@@ -10,7 +9,8 @@
 #include "io/maps/convert_document_to_ir.hpp"
 #include "io/persistence/preferences.hpp"
 #include "logging.hpp"
-#include "profile.hpp"
+#include "meta/profile.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

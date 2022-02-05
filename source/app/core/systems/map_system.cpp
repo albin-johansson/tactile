@@ -1,12 +1,12 @@
 #include "map_system.hpp"
 
-#include "assert.hpp"
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
 #include "core/map.hpp"
 #include "core/utils/sfinae.hpp"
 #include "core/utils/tiles.hpp"
 #include "layers/tile_layer_system.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::sys {
 namespace {

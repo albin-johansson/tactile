@@ -1,7 +1,7 @@
 #include "yaml_utils.hpp"
 
 #include "core/utils/strings.hpp"
-#include "throw.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
 

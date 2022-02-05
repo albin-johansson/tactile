@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "throw.hpp"
+#include "misc/throw.hpp"
 
 using namespace tactile;
 using namespace std::string_literals;

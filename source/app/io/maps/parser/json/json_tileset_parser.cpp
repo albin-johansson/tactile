@@ -6,11 +6,11 @@
 
 #include <nlohmann/json.hpp>
 
-#include "assert.hpp"
 #include "io/maps/json_utils.hpp"
 #include "json_attribute_parser.hpp"
 #include "json_layer_parser.hpp"
 #include "logging.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::parsing {
 namespace {

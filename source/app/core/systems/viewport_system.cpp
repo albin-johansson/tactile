@@ -4,10 +4,10 @@
 #include <cmath>      // round
 #include <utility>    // pair
 
-#include "assert.hpp"
 #include "core/components/texture.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::sys {
 namespace {

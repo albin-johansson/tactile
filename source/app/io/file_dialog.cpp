@@ -2,7 +2,7 @@
 
 #include <tinyfiledialogs.h>
 
-#include "assert.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 namespace {

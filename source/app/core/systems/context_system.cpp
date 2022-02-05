@@ -2,10 +2,10 @@
 
 #include <utility>  // move
 
-#include "assert.hpp"
 #include "component_system.hpp"
+#include "misc/assert.hpp"
+#include "misc/throw.hpp"
 #include "property_system.hpp"
-#include "throw.hpp"
 
 namespace tactile::sys {
 namespace {

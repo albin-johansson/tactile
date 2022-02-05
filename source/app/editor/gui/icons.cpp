@@ -4,7 +4,7 @@
 
 #include <GL/glew.h>
 
-#include "throw.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
 

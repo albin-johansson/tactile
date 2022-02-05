@@ -2,10 +2,10 @@
 
 #include <utility>  // move
 
-#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

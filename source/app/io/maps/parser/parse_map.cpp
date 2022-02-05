@@ -2,11 +2,11 @@
 
 #include <exception>  // exception
 
-#include "build.hpp"
 #include "json/json_parser.hpp"
 #include "logging.hpp"
-#include "profile.hpp"
-#include "throw.hpp"
+#include "meta/build.hpp"
+#include "meta/profile.hpp"
+#include "misc/throw.hpp"
 #include "xml/xml_parser.hpp"
 #include "yaml/yaml_parser.hpp"
 

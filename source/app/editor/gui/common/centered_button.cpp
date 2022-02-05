@@ -1,8 +1,8 @@
 #include "centered_button.hpp"
 
-#include "assert.hpp"
 #include "button.hpp"
 #include "editor/gui/alignment.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

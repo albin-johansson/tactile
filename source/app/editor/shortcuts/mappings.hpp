@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>
 
-#include "build.hpp"
+#include "meta/build.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {

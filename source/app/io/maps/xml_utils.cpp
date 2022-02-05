@@ -3,7 +3,7 @@
 #include <algorithm>  // any_of
 #include <cstring>    // strcmp
 
-#include "assert.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

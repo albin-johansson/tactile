@@ -8,8 +8,8 @@
 #include <imgui.h>
 
 #include "editor/gui/scoped.hpp"
+#include "misc/throw.hpp"
 #include "tactile_def.hpp"
-#include "throw.hpp"
 
 namespace tactile {
 namespace {

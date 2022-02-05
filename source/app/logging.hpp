@@ -8,7 +8,7 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>  // included so that formatting types like std::filesystem::path works
 
-#include "build.hpp"
+#include "meta/build.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {

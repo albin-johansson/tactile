@@ -6,7 +6,6 @@
 
 #include <fmt/format.h>  // format
 
-#include "assert.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
@@ -16,6 +15,7 @@
 #include "core/systems/property_system.hpp"
 #include "core/utils/tiles.hpp"
 #include "layer_tree_system.hpp"
+#include "misc/assert.hpp"
 #include "tile_layer_system.hpp"
 
 namespace tactile::sys {

@@ -3,13 +3,13 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "assert.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/tile_position.hpp"
 #include "editor/gui/texture_utils.hpp"
+#include "misc/assert.hpp"
 #include "render_info.hpp"
 #include "tactile_def.hpp"
 

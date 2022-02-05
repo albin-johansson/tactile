@@ -9,7 +9,7 @@
 
 #include <centurion.hpp>
 
-#include "assert.hpp"
+#include "misc/assert.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {

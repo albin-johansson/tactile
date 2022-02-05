@@ -5,11 +5,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "assert.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "graphics.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 namespace {

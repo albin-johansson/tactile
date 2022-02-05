@@ -1,7 +1,7 @@
 #include "remove_tileset_cmd.hpp"
 
-#include "assert.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

@@ -4,12 +4,12 @@
 
 #include <fmt/format.h>
 
-#include "assert.hpp"
 #include "context_system.hpp"
 #include "core/components/attribute_context.hpp"
 #include "logging.hpp"
+#include "misc/assert.hpp"
+#include "misc/throw.hpp"
 #include "property_system.hpp"
-#include "throw.hpp"
 
 namespace tactile::sys {
 namespace {

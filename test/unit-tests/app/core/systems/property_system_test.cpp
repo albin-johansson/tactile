@@ -6,7 +6,7 @@
 
 #include "core/systems/context_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "throw.hpp"
+#include "misc/throw.hpp"
 
 using namespace tactile;
 

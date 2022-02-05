@@ -2,10 +2,10 @@
 
 #include <entt/entt.hpp>
 
-#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/tile_cache.hpp"
 #include "core/tile_position.hpp"
+#include "misc/assert.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile::sys {

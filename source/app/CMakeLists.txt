@@ -26,16 +26,18 @@ set(SOURCE_FILES
     application.hpp
     application_events.cpp
     application_events.hpp
-    assert.cpp
-    assert.hpp
     boost.hpp
-    build.hpp
-    crash.cpp
-    crash.hpp
     logging.cpp
     logging.hpp
-    profile.hpp
-    throw.hpp
+
+    meta/build.hpp
+    meta/profile.hpp
+
+    misc/assert.cpp
+    misc/assert.hpp
+    misc/crash.cpp
+    misc/crash.hpp
+    misc/throw.hpp
 
     ${TACTILE_CFG_SOURCE_FILES}
     ${TACTILE_CORE_SOURCE_FILES}

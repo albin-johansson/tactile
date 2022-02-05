@@ -3,8 +3,8 @@
 #include <utility>  // move
 #include <vector>   // erase
 
-#include "assert.hpp"
-#include "throw.hpp"
+#include "misc/assert.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile::sys {
 

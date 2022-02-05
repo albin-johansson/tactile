@@ -5,7 +5,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
@@ -23,6 +22,7 @@
 #include "editor/gui/rendering/render_stamp_preview.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
+#include "misc/assert.hpp"
 #include "viewport_cursor_info.hpp"
 #include "viewport_overlay.hpp"
 

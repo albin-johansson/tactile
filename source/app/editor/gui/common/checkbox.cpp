@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "assert.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

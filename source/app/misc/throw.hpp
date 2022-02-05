@@ -3,7 +3,7 @@
 #include <exception>  // exception
 
 #include "boost.hpp"
-#include "build.hpp"
+#include "meta/build.hpp"
 
 namespace tactile {
 

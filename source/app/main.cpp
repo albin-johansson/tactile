@@ -3,9 +3,9 @@
 
 #include "application.hpp"
 #include "cfg/configuration.hpp"
-#include "crash.hpp"
 #include "logging.hpp"
-#include "throw.hpp"
+#include "misc/crash.hpp"
+#include "misc/throw.hpp"
 
 auto main(int, char**) -> int
 {

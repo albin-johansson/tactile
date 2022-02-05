@@ -1,8 +1,8 @@
 #include "command_stack.hpp"
 
-#include "assert.hpp"
 #include "core/algorithms/invoke_n.hpp"
 #include "io/persistence/preferences.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

@@ -8,7 +8,7 @@
 #include "core/utils/strings.hpp"
 #include "core/utils/tiles.hpp"
 #include "io/maps/xml_utils.hpp"
-#include "throw.hpp"
+#include "misc/throw.hpp"
 #include "xml_attribute_parser.hpp"
 
 namespace tactile::parsing {

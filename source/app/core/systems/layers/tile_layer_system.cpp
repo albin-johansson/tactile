@@ -1,7 +1,7 @@
 #include "tile_layer_system.hpp"
 
 #include "layer_system.hpp"
-#include "throw.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile::sys {
 namespace {

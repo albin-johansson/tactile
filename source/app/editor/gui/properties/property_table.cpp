@@ -4,7 +4,6 @@
 
 #include <imgui.h>
 
-#include "build.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property.hpp"
@@ -19,6 +18,7 @@
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "meta/build.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {

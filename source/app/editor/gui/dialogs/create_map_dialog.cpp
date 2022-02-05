@@ -2,10 +2,10 @@
 
 #include <imgui.h>
 
-#include "assert.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "io/persistence/preferences.hpp"
+#include "misc/assert.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {

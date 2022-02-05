@@ -2,9 +2,9 @@
 
 #include <utility>  // swap
 
-#include "assert.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::sys {
 namespace {

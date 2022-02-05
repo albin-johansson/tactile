@@ -6,7 +6,7 @@
 
 #include "core/utils/strings.hpp"
 #include "io/persistence/preferences.hpp"
-#include "throw.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
 namespace {

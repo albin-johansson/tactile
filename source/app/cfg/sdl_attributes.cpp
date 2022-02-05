@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <centurion.hpp>
 
-#include "build.hpp"
+#include "meta/build.hpp"
 
 namespace tactile {
 

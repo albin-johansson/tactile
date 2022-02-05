@@ -1,6 +1,6 @@
 #include "attribute_value.hpp"
 
-#include "throw.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
 

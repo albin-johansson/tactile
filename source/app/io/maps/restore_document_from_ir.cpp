@@ -5,7 +5,6 @@
 #include <entt/entt.hpp>
 #include <fmt/format.h>
 
-#include "assert.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/component.hpp"
@@ -23,6 +22,7 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/utils/texture_manager.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 namespace {

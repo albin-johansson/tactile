@@ -1,7 +1,7 @@
 #include "duplicate_layer_cmd.hpp"
 
-#include "assert.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

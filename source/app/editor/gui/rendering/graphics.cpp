@@ -5,10 +5,10 @@
 
 #include <imgui_internal.h>
 
-#include "assert.hpp"
 #include "core/region.hpp"
 #include "core/utils/colors.hpp"
 #include "editor/gui/texture_utils.hpp"
+#include "misc/assert.hpp"
 #include "render_info.hpp"
 
 namespace tactile {

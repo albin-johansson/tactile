@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-#include "assert.hpp"
 #include "editor/gui/scoped.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

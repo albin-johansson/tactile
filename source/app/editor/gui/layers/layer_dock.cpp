@@ -3,7 +3,6 @@
 #include <imgui.h>
 
 #include "add_layer_popup.hpp"
-#include "assert.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
@@ -18,6 +17,7 @@
 #include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 #include "layer_item.hpp"
+#include "misc/assert.hpp"
 #include "tactile_def.hpp"
 
 namespace tactile {

@@ -5,12 +5,12 @@
 
 #include <GL/glew.h>
 
-#include "assert.hpp"
-#include "build.hpp"
 #include "io/persistence/preferences.hpp"
 #include "logging.hpp"
+#include "meta/build.hpp"
+#include "misc/assert.hpp"
+#include "misc/throw.hpp"
 #include "sdl_attributes.hpp"
-#include "throw.hpp"
 
 namespace tactile {
 namespace {
