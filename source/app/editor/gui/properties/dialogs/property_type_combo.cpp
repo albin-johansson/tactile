@@ -9,7 +9,7 @@
 
 #include "editor/gui/scoped.hpp"
 #include "misc/throw.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

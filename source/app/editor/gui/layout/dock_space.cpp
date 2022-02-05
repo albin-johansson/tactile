@@ -6,7 +6,7 @@
 
 #include "io/persistence/preferences.hpp"
 #include "load_default_layout.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

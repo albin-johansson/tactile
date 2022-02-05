@@ -10,7 +10,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "layer_item_popup.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

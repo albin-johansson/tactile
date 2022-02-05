@@ -4,7 +4,7 @@
 #include <vector>      // vector
 
 #include "core/components/texture.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

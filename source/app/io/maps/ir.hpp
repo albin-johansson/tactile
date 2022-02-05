@@ -9,7 +9,7 @@
 #include "core/attribute_value.hpp"
 #include "core/layer_type.hpp"
 #include "core/object_type.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::ir {
 

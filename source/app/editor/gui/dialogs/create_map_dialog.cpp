@@ -6,7 +6,7 @@
 #include "editor/gui/alignment.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

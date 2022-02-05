@@ -1,7 +1,7 @@
 #pragma once
 
 #include "editor/gui/dialogs/string_input_dialog.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

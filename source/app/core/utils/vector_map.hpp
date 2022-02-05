@@ -6,7 +6,7 @@
 #include <vector>     // vector
 
 #include "misc/throw.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

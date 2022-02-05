@@ -11,7 +11,7 @@
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
 #include "proto.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

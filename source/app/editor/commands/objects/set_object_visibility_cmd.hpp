@@ -4,7 +4,7 @@
 
 #include "editor/commands/command_id.hpp"
 #include "object_cmd.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

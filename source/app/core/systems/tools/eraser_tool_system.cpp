@@ -8,7 +8,7 @@
 #include "core/tile_position.hpp"
 #include "editor/events/tool_events.hpp"
 #include "misc/assert.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::sys {
 namespace {

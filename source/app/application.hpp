@@ -18,7 +18,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

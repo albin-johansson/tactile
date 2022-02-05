@@ -7,7 +7,7 @@
 
 #include "command.hpp"
 #include "core/utils/sfinae.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

@@ -8,7 +8,7 @@
 #include "core/components/layer.hpp"
 #include "core/map.hpp"
 #include "core/systems/snapshot.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::sys {
 

@@ -19,7 +19,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "meta/build.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

@@ -5,7 +5,7 @@
 #include <entt/entt.hpp>
 
 #include "core/tile_position.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

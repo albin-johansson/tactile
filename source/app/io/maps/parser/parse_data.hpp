@@ -4,7 +4,7 @@
 
 #include "io/maps/ir.hpp"
 #include "parse_error.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::parsing {
 

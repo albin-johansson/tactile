@@ -9,7 +9,7 @@
 #include "document.hpp"
 #include "events/command_events.hpp"
 #include "events/tool_events.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

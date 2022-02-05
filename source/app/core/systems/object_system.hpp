@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::sys {
 

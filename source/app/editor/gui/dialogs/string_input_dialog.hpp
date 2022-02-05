@@ -7,7 +7,7 @@
 #include <entt/entt.hpp>
 
 #include "dialog.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

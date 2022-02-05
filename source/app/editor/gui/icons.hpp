@@ -4,7 +4,7 @@
 
 #include "core/layer_type.hpp"
 #include "core/utils/texture_manager.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 /// \addtogroup gui
 /// \{

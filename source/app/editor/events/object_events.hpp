@@ -4,7 +4,7 @@
 
 #include <entt/entt.hpp>  // entity, null
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

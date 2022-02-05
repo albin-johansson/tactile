@@ -11,7 +11,7 @@
 #include "editor/gui/texture_utils.hpp"
 #include "misc/assert.hpp"
 #include "render_info.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

@@ -18,7 +18,7 @@
 #include "io/persistence/preferences.hpp"
 #include "layer_item.hpp"
 #include "misc/assert.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

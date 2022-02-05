@@ -4,7 +4,7 @@
 
 #include "imgui_context.hpp"
 #include "protobuf_context.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

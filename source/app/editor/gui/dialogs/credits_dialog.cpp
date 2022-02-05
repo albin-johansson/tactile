@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "editor/gui/scoped.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

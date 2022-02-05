@@ -14,7 +14,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {

@@ -2,7 +2,7 @@
 
 #include "dialog.hpp"
 #include "io/maps/parser/parse_error.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

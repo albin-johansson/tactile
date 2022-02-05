@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 #include "tileset_tabs.hpp"
 
 namespace tactile {

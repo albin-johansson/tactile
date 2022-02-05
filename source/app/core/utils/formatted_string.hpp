@@ -7,7 +7,7 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
