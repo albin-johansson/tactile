@@ -219,8 +219,6 @@ namespace {
   else {
     return _parse_common_tileset_attributes(json, tilesetData, dir);
   }
-
-  return parse_error::none;
 }
 
 }  // namespace
