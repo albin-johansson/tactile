@@ -18,13 +18,12 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
   center_next_window_on_appearance();
 
   constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  scoped::modal modal{mTitle, flags};
-  if (modal.is_open()) {
+  if (scoped::modal modal{mTitle, flags}; modal.is_open()) {
     UpdateContents(model, dispatcher);
 
     ImGui::Spacing();
 
-    if (mCloseButtonLabel && ImGui::Button(mCloseButtonLabel)) {
+    if (mCloseButtonLabel && button(mCloseButtonLabel)) {
       OnCancel();
       ImGui::CloseCurrentPopup();
     }
@@ -36,7 +35,7 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
         ImGui::SameLine();
       }
 
-      if (Button(mAcceptButtonLabel, nullptr, valid)) {
+      if (button(mAcceptButtonLabel, nullptr, valid)) {
         OnAccept(dispatcher);
         ImGui::CloseCurrentPopup();
       }
@@ -46,7 +45,7 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
       if (mCloseButtonLabel || mAcceptButtonLabel) {
         ImGui::SameLine();
       }
-      if (Button(mApplyButtonLabel, nullptr, valid)) {
+      if (button(mApplyButtonLabel, nullptr, valid)) {
         OnApply(dispatcher);
       }
     }

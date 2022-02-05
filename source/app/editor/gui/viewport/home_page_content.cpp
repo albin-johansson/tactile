@@ -5,7 +5,7 @@
 
 #include "editor/events/map_events.hpp"
 #include "editor/gui/alignment.hpp"
-#include "editor/gui/common/centered_button.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/textures.hpp"
 
@@ -23,12 +23,12 @@ void UpdateHomePageContent(const icon_manager& icons, entt::dispatcher& dispatch
   ImGui::Spacing();
   ImGui::Spacing();
 
-  if (CenteredButton("Create new map")) {
+  if (centered_button("Create new map")) {
     dispatcher.enqueue<show_new_map_dialog_event>();
   }
 
   ImGui::Spacing();
-  if (CenteredButton("Open existing map")) {
+  if (centered_button("Open existing map")) {
     dispatcher.enqueue<show_open_map_dialog_event>();
   }
 }

@@ -5,7 +5,7 @@
 #include "core/components/tileset.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/alignment.hpp"
-#include "editor/gui/common/centered_button.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/menus/map_menu.hpp"
@@ -43,7 +43,7 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
       prepare_vertical_alignment_center(2);
       CenteredText("Current map has no tilesets!");
       ImGui::Spacing();
-      if (CenteredButton(TAC_ICON_TILESET " Create tileset...")) {
+      if (centered_button(TAC_ICON_TILESET " Create tileset...")) {
         dispatcher.enqueue<show_add_tileset_dialog_event>();
       }
     }

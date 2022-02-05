@@ -44,7 +44,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
   };
 
-  if (Button(TAC_ICON_FILE, "Create new map", bw, bh)) {
+  if (button(TAC_ICON_FILE, "Create new map", bw, bh)) {
     dispatcher.enqueue<show_new_map_dialog_event>();
   }
 
@@ -52,7 +52,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_OPEN, "Open map", bw, bh)) {
+  if (button(TAC_ICON_OPEN, "Open map", bw, bh)) {
     dispatcher.enqueue<show_open_map_dialog_event>();
   }
 
@@ -60,7 +60,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_SAVE, "Save", !model.IsClean(), bw, bh)) {
+  if (button(TAC_ICON_SAVE, "Save", !model.IsClean(), bw, bh)) {
     dispatcher.enqueue<save_event>();
   }
 
@@ -70,7 +70,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_UNDO, "Undo", model.CanUndo(), bw, bh)) {
+  if (button(TAC_ICON_UNDO, "Undo", model.CanUndo(), bw, bh)) {
     dispatcher.enqueue<undo_event>();
   }
 
@@ -78,7 +78,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_REDO, "Redo", model.CanRedo(), bw, bh)) {
+  if (button(TAC_ICON_REDO, "Redo", model.CanRedo(), bw, bh)) {
     dispatcher.enqueue<redo_event>();
   }
 
@@ -88,7 +88,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_CENTER, "Center viewport", true, bw, bh)) {
+  if (button(TAC_ICON_CENTER, "Center viewport", true, bw, bh)) {
     dispatcher.enqueue<CenterViewportEvent>();
   }
 
@@ -96,7 +96,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_RESIZE, "Resize map", true, bw, bh)) {
+  if (button(TAC_ICON_RESIZE, "Resize map", true, bw, bh)) {
     dispatcher.enqueue<open_resize_map_dialog_event>();
   }
 
@@ -110,7 +110,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_TILESET, "Create tileset", true, bw, bh)) {
+  if (button(TAC_ICON_TILESET, "Create tileset", true, bw, bh)) {
     dispatcher.enqueue<show_add_tileset_dialog_event>();
   }
 

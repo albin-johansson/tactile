@@ -18,7 +18,7 @@ auto ToolButton(const c_str label,
     ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_TabActive]);
   }
 
-  const auto pressed = Button(label, tooltip, enabled, width, height);
+  const auto pressed = button(label, tooltip, enabled, width, height);
 
   if (selected) {
     ImGui::PopStyleColor();

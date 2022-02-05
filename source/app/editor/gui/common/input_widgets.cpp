@@ -5,6 +5,7 @@
 
 #include "core/utils/buffers.hpp"
 #include "core/utils/colors.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/file_dialog.hpp"
@@ -202,7 +203,7 @@ auto InputFile(const c_str id, const std::filesystem::path& value)
 {
   const scoped::id scope{id};
 
-  if (ImGui::Button(TAC_ICON_THREE_DOTS)) {
+  if (button(TAC_ICON_THREE_DOTS)) {
     auto dialog = file_dialog::open_file();
     if (dialog.is_okay()) {
       return dialog.path();

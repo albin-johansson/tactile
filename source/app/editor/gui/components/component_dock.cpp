@@ -9,7 +9,7 @@
 #include "core/systems/context_system.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/gui/alignment.hpp"
-#include "editor/gui/common/centered_button.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
@@ -157,7 +157,7 @@ void ComponentDock::Update(const entt::registry& registry, entt::dispatcher& dis
 
       ImGui::Separator();
 
-      if (CenteredButton(TAC_ICON_ADD, "Add component")) {
+      if (centered_button(TAC_ICON_ADD, "Add component")) {
         ImGui::OpenPopup("##AddComponentButtonPopup");
       }
 

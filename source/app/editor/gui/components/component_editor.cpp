@@ -11,7 +11,7 @@
 #include "editor/events/component_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
-#include "editor/gui/common/centered_button.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
@@ -46,7 +46,7 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
   if (registry.storage<comp::component_def>().empty()) {
     ImGui::TextUnformatted("There are no available components for the current map.");
 
-    if (CenteredButton(TAC_ICON_ADD, "Create Component")) {
+    if (centered_button(TAC_ICON_ADD, "Create Component")) {
       mCreateComponentDialog.Open();
     }
   }
@@ -71,13 +71,13 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
 
     ImGui::SameLine();
 
-    if (Button(TAC_ICON_ADD, "Create Component")) {
+    if (button(TAC_ICON_ADD, "Create Component")) {
       mCreateComponentDialog.Open();
     }
 
     ImGui::SameLine();
 
-    if (Button(TAC_ICON_THREE_DOTS, "Show Component Actions")) {
+    if (button(TAC_ICON_THREE_DOTS, "Show Component Actions")) {
       ImGui::OpenPopup("##ComponentEditorPopup");
     }
 
@@ -141,7 +141,7 @@ void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
     }
   }
 
-  if (CenteredButton("Create Attribute")) {
+  if (centered_button("Create Attribute")) {
     mCreateComponentAttributeDialog.Open(*mActiveComponent);
   }
 }

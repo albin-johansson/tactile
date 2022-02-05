@@ -4,6 +4,7 @@
 
 #include "core/utils/colors.hpp"
 #include "editor/events/command_events.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/common/checkbox.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/themes.hpp"
@@ -71,7 +72,7 @@ void SettingsDialog::UpdateBehaviorTab()
 {
   if (scoped::tab_item item{"Behavior"}; item.is_open()) {
     ImGui::Spacing();
-    if (ImGui::Button("Restore Defaults")) {
+    if (button("Restore Defaults")) {
       mGuiSettings.reset_behavior_preferences();
       UpdatePreviewSettings(mGuiSettings);
     }
@@ -119,7 +120,7 @@ void SettingsDialog::UpdateAppearanceTab()
   if (scoped::tab_item item{"Appearance"}; item.is_open()) {
     ImGui::Spacing();
 
-    if (ImGui::Button("Restore Defaults")) {
+    if (button("Restore Defaults")) {
       mGuiSettings.reset_appearance_preferences();
       UpdatePreviewSettings(mGuiSettings);
     }
@@ -165,7 +166,7 @@ void SettingsDialog::UpdateExportTab()
   if (scoped::tab_item item{"Export"}; item.is_open()) {
     ImGui::Spacing();
 
-    if (ImGui::Button("Restore Defaults")) {
+    if (button("Restore Defaults")) {
       mGuiSettings.reset_export_preferences();
       UpdatePreviewSettings(mGuiSettings);
     }

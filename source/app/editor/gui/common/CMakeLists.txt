@@ -6,8 +6,6 @@ set(TACTILE_EDITOR_GUI_COMMON_SOURCE_FILES
 
     ${PROJECT_SOURCE_DIR}/button.cpp
     ${PROJECT_SOURCE_DIR}/button.hpp
-    ${PROJECT_SOURCE_DIR}/centered_button.cpp
-    ${PROJECT_SOURCE_DIR}/centered_button.hpp
     ${PROJECT_SOURCE_DIR}/centered_text.cpp
     ${PROJECT_SOURCE_DIR}/centered_text.hpp
     ${PROJECT_SOURCE_DIR}/checkbox.cpp

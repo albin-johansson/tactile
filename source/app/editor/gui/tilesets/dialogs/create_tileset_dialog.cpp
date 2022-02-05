@@ -4,6 +4,7 @@
 
 #include "core/utils/buffers.hpp"
 #include "editor/events/tileset_events.hpp"
+#include "editor/gui/common/button.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"
 
@@ -31,7 +32,7 @@ void CreateTilesetDialog::UpdateContents(const Model&, entt::dispatcher&)
   ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
   ImGui::Spacing();
 
-  if (ImGui::Button("Select image...")) {
+  if (button("Select image...")) {
     ShowImageFileDialog();
   }
 
