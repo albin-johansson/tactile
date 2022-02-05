@@ -12,7 +12,7 @@ class ADialog {
  public:
   explicit ADialog(c_str title);
 
-  virtual ~ADialog() = default;
+  virtual ~ADialog() noexcept = default;
 
   void Update(const Model& model, entt::dispatcher& dispatcher);
 

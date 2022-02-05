@@ -3,14 +3,15 @@
 #include <string>   // string
 #include <utility>  // move
 
-#include <centurion.hpp>
 #include <imgui.h>
 
 #include "core/components/component.hpp"
 #include "core/systems/component_system.hpp"
+#include "dialogs/create_component_attribute_dialog.hpp"
+#include "dialogs/create_component_dialog.hpp"
+#include "dialogs/rename_component_attribute_dialog.hpp"
+#include "dialogs/rename_component_dialog.hpp"
 #include "editor/events/component_events.hpp"
-#include "editor/gui/alignment.hpp"
-#include "editor/gui/common/button.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/common/input_widgets.hpp"
@@ -21,33 +22,48 @@
 
 namespace tactile {
 
-ComponentEditor::ComponentEditor() : ADialog{"Component Editor"}
+struct component_editor::component_editor_data final
+{
+  CreateComponentDialog create_component;
+  CreateComponentAttributeDialog create_component_attr;
+  RenameComponentDialog rename_component;
+  RenameComponentAttributeDialog rename_component_attr;
+  maybe<component_id> active_component;
+};
+
+component_editor::component_editor()
+    : ADialog{"Component Editor"}
+    , mData{std::make_unique<component_editor_data>()}
 {
   SetAcceptButtonLabel(nullptr);
   SetCloseButtonLabel("Close");
 }
 
-void ComponentEditor::Open(const Model& model)
+component_editor::~component_editor() noexcept = default;
+
+void component_editor::Open(const Model& model)
 {
   const auto& registry = model.GetActiveRegistryRef();
-  mActiveComponent = sys::get_first_available_component_def(registry);
+  mData->active_component = sys::get_first_available_component_def(registry);
   Show();
 }
 
-void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispatcher)
+void component_editor::UpdateContents(const Model& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.GetActiveRegistryRef();
+  auto& data = *mData;
 
   /* Ensure that the active component ID hasn't been invalidated */
-  if (mActiveComponent && !sys::is_valid_component(registry, *mActiveComponent)) {
-    mActiveComponent.reset();
+  if (data.active_component &&
+      !sys::is_valid_component(registry, *data.active_component)) {
+    data.active_component.reset();
   }
 
   if (registry.storage<comp::component_def>().empty()) {
     ImGui::TextUnformatted("There are no available components for the current map.");
 
     if (centered_button(TAC_ICON_ADD, "Create Component")) {
-      mCreateComponentDialog.Open();
+      data.create_component.Open();
     }
   }
   else {
@@ -55,16 +71,17 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
     ImGui::TextUnformatted("Component:");
     ImGui::SameLine();
 
-    if (!mActiveComponent) {
+    if (!data.active_component) {
       const auto entity = registry.view<comp::component_def>().front();
-      mActiveComponent = registry.get<comp::component_def>(entity).id;
+      data.active_component = registry.get<comp::component_def>(entity).id;
     }
 
-    const auto& name = sys::get_component_def_name(registry, mActiveComponent.value());
+    const auto& name =
+        sys::get_component_def_name(registry, data.active_component.value());
     if (scoped::combo combo{"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
       for (auto&& [entity, component] : registry.view<comp::component_def>().each()) {
         if (ImGui::Selectable(component.name.c_str())) {
-          mActiveComponent = component.id;
+          data.active_component = component.id;
         }
       }
     }
@@ -72,7 +89,7 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
     ImGui::SameLine();
 
     if (button(TAC_ICON_ADD, "Create Component")) {
-      mCreateComponentDialog.Open();
+      data.create_component.Open();
     }
 
     ImGui::SameLine();
@@ -81,46 +98,48 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
       ImGui::OpenPopup("##ComponentEditorPopup");
     }
 
-    ShowComponentComboPopup(registry, dispatcher);
+    show_component_combo_popup(registry, dispatcher);
 
     ImGui::Separator();
   }
 
-  if (mActiveComponent) {
-    ShowComponentAttributes(registry, dispatcher, *mActiveComponent);
+  if (data.active_component) {
+    show_component_attributes(registry, dispatcher, *data.active_component);
   }
 
-  mCreateComponentDialog.Update(model, dispatcher);
-  mCreateComponentAttributeDialog.Update(model, dispatcher);
-  mRenameComponentDialog.Update(model, dispatcher);
-  mRenameComponentAttributeDialog.Update(model, dispatcher);
+  data.create_component.Update(model, dispatcher);
+  data.create_component_attr.Update(model, dispatcher);
+  data.rename_component.Update(model, dispatcher);
+  data.rename_component_attr.Update(model, dispatcher);
 
   ImGui::Spacing();
   ImGui::Separator();
 }
 
-void ComponentEditor::ShowComponentComboPopup(const entt::registry& registry,
-                                              entt::dispatcher& dispatcher)
+void component_editor::show_component_combo_popup(const entt::registry& registry,
+                                                  entt::dispatcher& dispatcher)
 {
+  auto& data = *mData;
   if (scoped::popup popup{"##ComponentEditorPopup"}; popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
-      const auto id = mActiveComponent.value();
-      mRenameComponentDialog.Open(sys::get_component_def_name(registry, id), id);
+      const auto id = data.active_component.value();
+      data.rename_component.Open(sys::get_component_def_name(registry, id), id);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Component")) {
-      dispatcher.enqueue<remove_component_def_event>(mActiveComponent.value());
-      mActiveComponent.reset();
+      dispatcher.enqueue<remove_component_def_event>(data.active_component.value());
+      data.active_component.reset();
     }
   }
 }
 
-void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
-                                              entt::dispatcher& dispatcher,
-                                              const component_id id)
+void component_editor::show_component_attributes(const entt::registry& registry,
+                                                 entt::dispatcher& dispatcher,
+                                                 component_id id)
 {
+  auto& data = *mData;
   const auto& [defEntity, def] = sys::get_component_def(registry, id);
 
   if (def.attributes.empty()) {
@@ -136,21 +155,22 @@ void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
       ImGui::TableHeadersRow();
 
       for (const auto& [name, attr] : def.attributes) {
-        ShowComponentAttribute(dispatcher, id, name, attr);
+        show_component_attribute(dispatcher, id, name, attr);
       }
     }
   }
 
   if (centered_button("Create Attribute")) {
-    mCreateComponentAttributeDialog.Open(*mActiveComponent);
+    data.create_component_attr.Open(*data.active_component);
   }
 }
 
-void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
-                                             const component_id id,
-                                             const std::string& name,
-                                             const attribute_value& value)
+void component_editor::show_component_attribute(entt::dispatcher& dispatcher,
+                                                component_id id,
+                                                const std::string& name,
+                                                const attribute_value& value)
 {
+  auto& data = *mData;
   const scoped::id scope{name.c_str()};
 
   ImGui::TableNextRow();
@@ -162,7 +182,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   if (auto popup = scoped::popup::for_item("##ComponentAttributeNameContext");
       popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Attribute")) {
-      mRenameComponentAttributeDialog.Open(name, mActiveComponent.value());
+      data.rename_component_attr.Open(name, data.active_component.value());
     }
 
     ImGui::Separator();

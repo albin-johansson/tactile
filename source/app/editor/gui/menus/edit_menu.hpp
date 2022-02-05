@@ -25,7 +25,7 @@ class EditMenu final {
 
  private:
   SettingsDialog mSettingsDialog;
-  ComponentEditor mComponentEditor;
+  component_editor mComponentEditor;
 };
 
 /// \} End of group gui
