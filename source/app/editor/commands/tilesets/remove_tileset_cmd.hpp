@@ -7,7 +7,8 @@
 
 namespace tactile {
 
-class remove_tileset_cmd final : public command_base {
+class remove_tileset_cmd final : public command_base
+{
  public:
   remove_tileset_cmd(registry_ref registry, tileset_id id);
 

@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class add_component_cmd final : public command_base {
+class add_component_cmd final : public command_base
+{
  public:
   add_component_cmd(registry_ref registry,
                     context_id contextId,

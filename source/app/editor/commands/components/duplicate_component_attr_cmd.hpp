@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class duplicate_component_attr_cmd final : public command_base {
+class duplicate_component_attr_cmd final : public command_base
+{
  public:
   duplicate_component_attr_cmd(registry_ref registry,
                                component_id componentId,

@@ -5,7 +5,8 @@
 
 namespace tactile {
 
-class AComponentNameDialog : public AStringInputDialog {
+class AComponentNameDialog : public AStringInputDialog
+{
  protected:
   using AStringInputDialog::AStringInputDialog;
 

@@ -9,7 +9,8 @@ namespace tactile {
 /**
  * \brief Represents the different available map object types.
  */
-enum class object_type {
+enum class object_type
+{
   point,
   rect,
   ellipse

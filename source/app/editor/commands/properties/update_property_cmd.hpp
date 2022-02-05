@@ -9,7 +9,8 @@
 
 namespace tactile {
 
-class update_property_cmd final : public command_base {
+class update_property_cmd final : public command_base
+{
  public:
   update_property_cmd(registry_ref registry, std::string name, attribute_value value);
 

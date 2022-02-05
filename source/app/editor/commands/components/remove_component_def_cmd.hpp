@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class remove_component_def_cmd final : public command_base {
+class remove_component_def_cmd final : public command_base
+{
  public:
   remove_component_def_cmd(registry_ref registry, component_id id);
 

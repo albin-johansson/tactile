@@ -7,7 +7,8 @@
 
 namespace tactile {
 
-class remove_column_cmd final : public command_base {
+class remove_column_cmd final : public command_base
+{
  public:
   explicit remove_column_cmd(registry_ref registry);
 

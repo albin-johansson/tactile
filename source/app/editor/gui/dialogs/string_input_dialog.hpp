@@ -11,7 +11,8 @@
 
 namespace tactile {
 
-class AStringInputDialog : public ADialog {
+class AStringInputDialog : public ADialog
+{
  public:
   explicit AStringInputDialog(c_str title);
 

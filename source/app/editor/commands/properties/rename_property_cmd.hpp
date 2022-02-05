@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class rename_property_cmd final : public command_base {
+class rename_property_cmd final : public command_base
+{
  public:
   rename_property_cmd(registry_ref registry, std::string oldName, std::string newName);
 

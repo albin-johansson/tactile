@@ -22,7 +22,8 @@ void log_error_v(std::string_view fmt, fmt::format_args args);
 
 }  // namespace logger
 
-enum class log_level {
+enum class log_level
+{
   verbose,  ///< Logs everything.
   debug,    ///< Logs stuff that a developer might be interested in.
   info,     ///< Default log level, emit informational stuff for ordinary users.

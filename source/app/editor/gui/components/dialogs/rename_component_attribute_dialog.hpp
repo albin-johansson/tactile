@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class RenameComponentAttributeDialog final : public AStringInputDialog {
+class RenameComponentAttributeDialog final : public AStringInputDialog
+{
  public:
   RenameComponentAttributeDialog();
 

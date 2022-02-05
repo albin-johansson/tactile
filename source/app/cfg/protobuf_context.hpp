@@ -7,7 +7,8 @@ namespace tactile {
  *
  * \ingroup cfg
  */
-class protobuf_context final {
+class protobuf_context final
+{
  public:
   protobuf_context();
 

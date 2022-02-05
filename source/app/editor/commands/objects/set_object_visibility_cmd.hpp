@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class set_object_visibility_cmd final : public object_cmd {
+class set_object_visibility_cmd final : public object_cmd
+{
  public:
   set_object_visibility_cmd(registry_ref registry, object_id id, bool visible);
 

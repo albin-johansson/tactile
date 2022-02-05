@@ -4,7 +4,8 @@
 
 namespace tactile {
 
-class CreditsDialog final : public ADialog {
+class CreditsDialog final : public ADialog
+{
  public:
   CreditsDialog();
 

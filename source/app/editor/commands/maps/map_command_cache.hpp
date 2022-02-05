@@ -7,7 +7,8 @@
 
 namespace tactile {
 
-class map_command_cache final {
+class map_command_cache final
+{
   using tile_cache = tree_map<tile_position, tile_id>;
   using layer_cache = tree_map<layer_id, tile_cache>;
 

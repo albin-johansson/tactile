@@ -85,7 +85,8 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class icon_manager final {
+class icon_manager final
+{
  public:
   explicit icon_manager(texture_manager& textures);
 

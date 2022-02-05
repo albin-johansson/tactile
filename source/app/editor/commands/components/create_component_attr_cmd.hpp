@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class create_component_attr_cmd final : public command_base {
+class create_component_attr_cmd final : public command_base
+{
  public:
   create_component_attr_cmd(registry_ref registry, component_id id, std::string name);
 

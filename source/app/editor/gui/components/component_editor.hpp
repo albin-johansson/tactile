@@ -12,7 +12,8 @@ namespace tactile {
 
 class Model;
 
-class component_editor final : public ADialog {
+class component_editor final : public ADialog
+{
  public:
   TACTILE_DEFAULT_MOVE(component_editor)
   TACTILE_DELETE_COPY(component_editor)

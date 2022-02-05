@@ -9,7 +9,8 @@ namespace tactile {
 
 class Model;
 
-class HelpMenu final {
+class HelpMenu final
+{
  public:
   void Update(const Model& model, entt::dispatcher& dispatcher);
 

@@ -10,7 +10,8 @@
 
 namespace tactile {
 
-class PropertyTable final {
+class PropertyTable final
+{
  public:
   void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
 

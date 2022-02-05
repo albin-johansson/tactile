@@ -2,7 +2,8 @@
 
 namespace tactile {
 
-class DebugMenu final {
+class DebugMenu final
+{
  public:
   void Update();
 

@@ -5,7 +5,8 @@
 
 namespace tactile {
 
-class CreateComponentAttributeDialog final : public AStringInputDialog {
+class CreateComponentAttributeDialog final : public AStringInputDialog
+{
  public:
   CreateComponentAttributeDialog();
 

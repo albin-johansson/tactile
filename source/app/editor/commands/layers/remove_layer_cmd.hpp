@@ -10,7 +10,8 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class remove_layer_cmd final : public command_base {
+class remove_layer_cmd final : public command_base
+{
  public:
   remove_layer_cmd(registry_ref registry, layer_id id);
 

@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class add_column_cmd final : public command_base {
+class add_column_cmd final : public command_base
+{
  public:
   explicit add_column_cmd(registry_ref registry);
 

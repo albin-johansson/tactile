@@ -16,7 +16,8 @@ namespace tactile {
  *
  * \ingroup commands
  */
-class command_stack final {
+class command_stack final
+{
  public:
   command_stack();
 

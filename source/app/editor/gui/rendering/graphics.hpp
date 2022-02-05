@@ -13,7 +13,8 @@ struct RenderInfo;
 /**
  * \brief Provides a common simplified rendering API.
  */
-class graphics_ctx final {
+class graphics_ctx final
+{
  public:
   explicit graphics_ctx(const RenderInfo& info);
 

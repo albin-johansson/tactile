@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class TilesetTabWidget final {
+class TilesetTabWidget final
+{
  public:
   void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
 

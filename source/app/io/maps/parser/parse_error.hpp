@@ -10,7 +10,8 @@ namespace tactile::parsing {
  *
  * \see `to_cause(parse_error)`
  */
-enum class parse_error {
+enum class parse_error
+{
   none,
   unknown,
 

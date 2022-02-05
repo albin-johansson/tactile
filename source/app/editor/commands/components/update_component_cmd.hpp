@@ -9,7 +9,8 @@
 
 namespace tactile {
 
-class update_component_cmd final : public command_base {
+class update_component_cmd final : public command_base
+{
  public:
   update_component_cmd(registry_ref registry,
                        context_id contextId,

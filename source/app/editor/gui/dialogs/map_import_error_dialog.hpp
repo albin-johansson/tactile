@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class MapImportErrorDialog final : public ADialog {
+class MapImportErrorDialog final : public ADialog
+{
  public:
   MapImportErrorDialog();
 

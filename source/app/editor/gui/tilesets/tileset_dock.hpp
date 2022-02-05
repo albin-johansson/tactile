@@ -7,7 +7,8 @@
 
 namespace tactile {
 
-class TilesetDock final {
+class TilesetDock final
+{
  public:
   void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
 

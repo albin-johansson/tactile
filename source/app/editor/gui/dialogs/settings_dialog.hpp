@@ -9,7 +9,8 @@ namespace tactile {
 /// \addtogroup gui
 /// \{
 
-class SettingsDialog final : public ADialog {
+class SettingsDialog final : public ADialog
+{
  public:
   TACTILE_DEFAULT_COPY(SettingsDialog)
   TACTILE_DEFAULT_MOVE(SettingsDialog)

@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class ChangePropertyTypeDialog final : public ADialog {
+class ChangePropertyTypeDialog final : public ADialog
+{
  public:
   ChangePropertyTypeDialog();
 

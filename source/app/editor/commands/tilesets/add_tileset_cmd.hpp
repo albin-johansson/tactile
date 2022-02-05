@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class add_tileset_cmd final : public command_base {
+class add_tileset_cmd final : public command_base
+{
  public:
   add_tileset_cmd(registry_ref registry,
                   comp::texture texture,

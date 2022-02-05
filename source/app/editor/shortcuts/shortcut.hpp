@@ -10,7 +10,8 @@ namespace tactile {
 class Model;
 class widget_manager;
 
-class AShortcut {
+class AShortcut
+{
  public:
   explicit AShortcut(const cen::scan_code key,
                      const cen::key_mod modifiers = cen::key_mod::none)

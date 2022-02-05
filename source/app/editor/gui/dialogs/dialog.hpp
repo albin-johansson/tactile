@@ -8,7 +8,8 @@ namespace tactile {
 
 class Model;
 
-class ADialog {
+class ADialog
+{
  public:
   explicit ADialog(c_str title);
 

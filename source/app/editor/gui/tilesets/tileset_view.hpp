@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class TilesetView final {
+class TilesetView final
+{
  public:
   void Update(const entt::registry& registry,
               entt::entity entity,

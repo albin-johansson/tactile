@@ -42,7 +42,8 @@ struct tooltip final
   ~tooltip() { ImGui::EndTooltip(); }
 };
 
-class style_var final {
+class style_var final
+{
  public:
   TACTILE_DEFAULT_COPY(style_var)
   TACTILE_DEFAULT_MOVE(style_var)
@@ -71,7 +72,8 @@ class style_var final {
   bool mPopped{};
 };
 
-class style_color final {
+class style_color final
+{
  public:
   TACTILE_DEFAULT_COPY(style_color)
   TACTILE_DEFAULT_MOVE(style_color)
@@ -110,7 +112,8 @@ struct group final
   ~group() { ImGui::EndGroup(); }
 };
 
-class child final {
+class child final
+{
  public:
   TACTILE_DEFAULT_COPY(child)
   TACTILE_DEFAULT_MOVE(child)
@@ -130,7 +133,8 @@ class child final {
   bool mOpen{};
 };
 
-class combo final {
+class combo final
+{
  public:
   TACTILE_DEFAULT_COPY(combo)
   TACTILE_DEFAULT_MOVE(combo)
@@ -151,7 +155,8 @@ class combo final {
   bool mOpen{};
 };
 
-class tab_bar final {
+class tab_bar final
+{
  public:
   TACTILE_DEFAULT_COPY(tab_bar)
   TACTILE_DEFAULT_MOVE(tab_bar)
@@ -173,7 +178,8 @@ class tab_bar final {
   bool mOpen{};
 };
 
-class tab_item final {
+class tab_item final
+{
  public:
   TACTILE_DEFAULT_COPY(tab_item)
   TACTILE_DEFAULT_MOVE(tab_item)
@@ -197,7 +203,8 @@ class tab_item final {
   bool mOpen{};
 };
 
-class table final {
+class table final
+{
  public:
   TACTILE_DEFAULT_COPY(table)
   TACTILE_DEFAULT_MOVE(table)
@@ -219,7 +226,8 @@ class table final {
   bool mOpen{};
 };
 
-class popup final {
+class popup final
+{
  public:
   TACTILE_DEFAULT_COPY(popup)
   TACTILE_DEFAULT_MOVE(popup)
@@ -255,7 +263,8 @@ class popup final {
   explicit popup(const bool open) : mOpen{open} {}
 };
 
-class list_box final {
+class list_box final
+{
  public:
   TACTILE_DEFAULT_COPY(list_box)
   TACTILE_DEFAULT_MOVE(list_box)
@@ -277,7 +286,8 @@ class list_box final {
   bool mOpen{};
 };
 
-class menu final {
+class menu final
+{
  public:
   TACTILE_DEFAULT_COPY(menu)
   TACTILE_DEFAULT_MOVE(menu)
@@ -299,7 +309,8 @@ class menu final {
   bool mOpen{};
 };
 
-class modal final {
+class modal final
+{
  public:
   TACTILE_DEFAULT_COPY(modal)
   TACTILE_DEFAULT_MOVE(modal)
@@ -321,7 +332,8 @@ class modal final {
   bool mOpen{};
 };
 
-class window final {
+class window final
+{
  public:
   TACTILE_DEFAULT_COPY(window)
   TACTILE_DEFAULT_MOVE(window)
@@ -352,7 +364,8 @@ class window final {
   bool mOpen{};
 };
 
-class tree_node final {
+class tree_node final
+{
  public:
   TACTILE_DEFAULT_COPY(tree_node)
   TACTILE_DEFAULT_MOVE(tree_node)

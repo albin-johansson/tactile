@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class add_row_cmd final : public command_base {
+class add_row_cmd final : public command_base
+{
  public:
   explicit add_row_cmd(registry_ref registry);
 

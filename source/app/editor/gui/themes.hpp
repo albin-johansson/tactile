@@ -19,7 +19,8 @@ namespace tactile {
  *
  * \see proto::theme
  */
-enum class editor_theme {
+enum class editor_theme
+{
   dear_dark = 0,   ///< The standard Dear ImGui dark theme.
   dear_light = 1,  ///< The standard Dear ImGui light theme.
   ruby = 2,

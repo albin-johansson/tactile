@@ -12,7 +12,8 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class bucket_cmd final : public command_base {
+class bucket_cmd final : public command_base
+{
  public:
   bucket_cmd(registry_ref registry, tile_position origin, tile_id replacement);
 

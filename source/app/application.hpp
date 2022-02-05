@@ -42,7 +42,8 @@ struct widget_show_state final
  * \details This class handles the main poll/update/render application loop, along with
  * the basic initialization and configuration of all aspects of the Tactile application.
  */
-class application final {
+class application final
+{
   friend void subscribe_to_events(application&);
 
  public:

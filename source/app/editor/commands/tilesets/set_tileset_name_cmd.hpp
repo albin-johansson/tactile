@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class set_tileset_name_cmd final : public command_base {
+class set_tileset_name_cmd final : public command_base
+{
  public:
   set_tileset_name_cmd(registry_ref registry, tileset_id id, std::string name);
 

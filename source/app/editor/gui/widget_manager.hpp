@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>  // string
 #include <memory>  // unique_ptr
+#include <string>  // string
 
 #include <entt/entt.hpp>
 
@@ -25,7 +25,8 @@ class LogDock;
 class ResizeMapDialog;
 class MapImportErrorDialog;
 
-class widget_manager final {
+class widget_manager final
+{
  public:
   TACTILE_DELETE_COPY(widget_manager)
   TACTILE_DEFAULT_MOVE(widget_manager)

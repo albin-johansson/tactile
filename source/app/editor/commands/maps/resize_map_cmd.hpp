@@ -7,7 +7,8 @@
 
 namespace tactile {
 
-class resize_map_cmd final : public command_base {
+class resize_map_cmd final : public command_base
+{
  public:
   resize_map_cmd(registry_ref registry, usize nRows, usize nCols);
 

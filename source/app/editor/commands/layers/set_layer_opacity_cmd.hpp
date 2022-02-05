@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class set_layer_opacity_cmd final : public command_base {
+class set_layer_opacity_cmd final : public command_base
+{
  public:
   set_layer_opacity_cmd(registry_ref registry, layer_id id, float opacity);
 

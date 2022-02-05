@@ -6,7 +6,8 @@
 
 namespace tactile {
 
-class move_layer_down_cmd final : public command_base {
+class move_layer_down_cmd final : public command_base
+{
  public:
   move_layer_down_cmd(registry_ref registry, layer_id id);
 

@@ -10,9 +10,12 @@ namespace tactile {
 class Model;
 class icon_manager;
 
-class LayerDock final {
+class LayerDock final
+{
  public:
-  void Update(const Model& model, const icon_manager& icons, entt::dispatcher& dispatcher);
+  void Update(const Model& model,
+              const icon_manager& icons,
+              entt::dispatcher& dispatcher);
 
   void ShowRenameLayerDialog(layer_id id);
 

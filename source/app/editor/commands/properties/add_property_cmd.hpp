@@ -9,7 +9,8 @@
 
 namespace tactile {
 
-class add_property_cmd final : public command_base {
+class add_property_cmd final : public command_base
+{
  public:
   add_property_cmd(registry_ref registry, std::string name, attribute_type type);
 

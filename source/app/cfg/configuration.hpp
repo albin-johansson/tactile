@@ -13,7 +13,8 @@ namespace tactile {
  *
  * \ingroup cfg
  */
-class app_configuration final {
+class app_configuration final
+{
  public:
   app_configuration();
 

@@ -20,7 +20,8 @@ namespace tactile {
  * than managing documents, this class provides several utilities for querying the state
  * of the core model from the perspective of the editor (GUI).
  */
-class Model final {
+class Model final
+{
  public:
   // Store documents on the heap to ensure stability, which is important for commands
   using document_map = vector_map<map_id, std::unique_ptr<Document>>;

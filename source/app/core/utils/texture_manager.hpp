@@ -8,7 +8,8 @@
 
 namespace tactile {
 
-class texture_manager final {
+class texture_manager final
+{
  public:
   TACTILE_DEFAULT_COPY(texture_manager)
   TACTILE_DEFAULT_MOVE(texture_manager)

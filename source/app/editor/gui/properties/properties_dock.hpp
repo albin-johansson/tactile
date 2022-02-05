@@ -14,7 +14,8 @@ namespace tactile {
 
 class Model;
 
-class PropertiesDock final {
+class PropertiesDock final
+{
  public:
   void Update(const Model& model, entt::dispatcher& dispatcher);
 

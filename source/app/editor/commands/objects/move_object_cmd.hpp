@@ -11,7 +11,8 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class move_object_cmd final : public object_cmd {
+class move_object_cmd final : public object_cmd
+{
  public:
   move_object_cmd(registry_ref registry,
                   object_id id,
