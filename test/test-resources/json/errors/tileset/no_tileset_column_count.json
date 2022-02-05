@@ -1,0 +1,26 @@
+{
+  "tiledversion": "1.7.0",
+  "version": "1.6",
+  "orientation": "orthogonal",
+  "nextlayerid": 1,
+  "nextobjectid": 1,
+  "tilewidth": 32,
+  "tileheight": 32,
+  "width": 5,
+  "height": 5,
+  "tilesets": [
+    {
+      "name": "Tileset",
+      "firstgid": 1,
+      "tilewidth": 32,
+      "tileheight": 32,
+      "tilecount": 1024,
+      "image": "../../../terrain.png",
+      "imagewidth": 1024,
+      "imageheight": 1024,
+      "margin": 0,
+      "spacing": 0
+    }
+  ],
+  "layers": []
+}

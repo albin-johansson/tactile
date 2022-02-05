@@ -1,0 +1,24 @@
+{
+  "tiledversion": "1.7.0",
+  "version": "1.6",
+  "orientation": "orthogonal",
+  "nextlayerid": 1,
+  "nextobjectid": 1,
+  "tilewidth": 32,
+  "tileheight": 32,
+  "width": 5,
+  "height": 5,
+  "tilesets": [],
+  "layers": [
+    {
+      "name": "Layer",
+      "type": "tilelayer",
+      "data": [ 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+      "width": 5,
+      "height": 5,
+      "opacity": 1.0,
+      "x": 0,
+      "y": 0
+    }
+  ]
+}
