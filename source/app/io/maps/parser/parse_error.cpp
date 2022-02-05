@@ -48,12 +48,6 @@ auto to_cause(const parse_error error) -> std::string_view
     case parse_error::no_map_next_object_id:
       return "The map features no next object identifier attribute!";
 
-    case parse_error::no_map_tilesets:
-      return "The map features no tilesets attribute!";
-
-    case parse_error::no_map_layers:
-      return "The map features no layers attribute!";
-
     case parse_error::unsupported_layer_type:
       return "A layer is of an unsupported type!";
 
@@ -185,7 +179,7 @@ auto to_cause(const parse_error error) -> std::string_view
   }
 }
 
-auto operator<<(std::ostream& stream, parse_error error) -> std::ostream&
+auto operator<<(std::ostream& stream, const parse_error error) -> std::ostream&
 {
   return stream << magic_enum::enum_name<parse_error>(error);
 }

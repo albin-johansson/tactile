@@ -3,6 +3,7 @@
 #include "core/utils/tiles.hpp"
 #include "io/maps/json_utils.hpp"
 #include "json_attributes.hpp"
+#include "logging.hpp"
 
 namespace tactile::parsing {
 namespace {
@@ -200,7 +201,8 @@ auto parse_layers(const nlohmann::json& json, ir::map_data& mapData) -> parse_er
   const auto iter = json.find("layers");
 
   if (iter == json.end()) {
-    return parse_error::no_map_layers;
+    log_warning("JSON map has no \"layers\" attribute, which is required!");
+    return parse_error::none;
   }
 
   mapData.layers.reserve(iter->size());

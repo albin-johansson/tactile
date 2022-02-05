@@ -28,8 +28,6 @@ enum class parse_error {
   no_map_tile_height,
   no_map_next_layer_id,
   no_map_next_object_id,
-  no_map_tilesets,  // Tiled JSON only (TODO warning only?)
-  no_map_layers,    // Tiled JSON only (TODO warning only?)
 
   unsupported_layer_type,  // YAML/JSON only
   no_layer_id,

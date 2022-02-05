@@ -10,6 +10,7 @@
 #include "io/maps/json_utils.hpp"
 #include "json_attributes.hpp"
 #include "json_layers.hpp"
+#include "logging.hpp"
 
 namespace tactile::parsing {
 namespace {
@@ -231,7 +232,8 @@ auto parse_tilesets(const nlohmann::json& json,
   const auto iter = json.find("tilesets");
 
   if (iter == json.end()) {
-    return parse_error::no_map_tilesets;
+    log_warning("JSON map has no \"tilesets\" attribute, which is required!");
+    return parse_error::none;
   }
 
   mapData.tilesets.reserve(iter->size());
