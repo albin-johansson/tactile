@@ -451,14 +451,11 @@ TEST(RoundTrip, YAML)
                                    _create_source_data(true)};
   emitter::emit_yaml_map(emitter);
 
-  parsing::map_parser parser;
-  parser.parse_map("test_map.yaml");
-
-  ASSERT_EQ(parsing::parse_error::none, parser.error());
-  ASSERT_TRUE(parser.is_okay());
+  const auto result = parsing::parse_map("test_map.yaml");
+  ASSERT_EQ(parsing::parse_error::none, result.error());
 
   const auto& source = emitter.data();
-  const auto& restored = parser.data().data();
+  const auto& restored = result.data();
 
   _validate_basic_map_info(source, restored);
   _validate_component_definitions(source, restored);
@@ -472,14 +469,13 @@ TEST(RoundTrip, JSON)
                                    _create_source_data(false)};
   emitter::emit_json_map(emitter);
 
-  parsing::map_parser parser;
-  parser.parse_map("test_map.json");
+  const auto result = parsing::parse_map("test_map.json");
+  ASSERT_EQ(parsing::parse_error::none, result.error());
 
-  ASSERT_EQ(parsing::parse_error::none, parser.error());
-  ASSERT_TRUE(parser.is_okay());
+  ASSERT_EQ(parsing::parse_error::none, result.error());
 
   const auto& source = emitter.data();
-  const auto& restored = parser.data().data();
+  const auto& restored = result.data();
 
   _validate_basic_map_info(source, restored);
   _validate_tilesets(source, restored);
@@ -492,14 +488,11 @@ TEST(RoundTrip, XML)
                                    _create_source_data(false)};
   emitter::emit_xml_map(emitter);
 
-  parsing::map_parser parser;
-  parser.parse_map("test_map.tmx");
-
-  ASSERT_EQ(parsing::parse_error::none, parser.error());
-  ASSERT_TRUE(parser.is_okay());
+  const auto result = parsing::parse_map("test_map.tmx");
+  ASSERT_EQ(parsing::parse_error::none, result.error());
 
   const auto& source = emitter.data();
-  const auto& restored = parser.data().data();
+  const auto& restored = result.data();
 
   _validate_basic_map_info(source, restored);
   _validate_tilesets(source, restored);
