@@ -3,7 +3,7 @@
 namespace tactile {
 
 void AShortcut::Poll(const Model& model,
-                     const WidgetManager& widgets,
+                     const widget_manager& widgets,
                      const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher)
 {

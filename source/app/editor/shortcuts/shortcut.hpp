@@ -8,7 +8,7 @@
 namespace tactile {
 
 class Model;
-class WidgetManager;
+class widget_manager;
 
 class AShortcut {
  public:
@@ -21,7 +21,7 @@ class AShortcut {
   virtual ~AShortcut() noexcept = default;
 
   void Poll(const Model& model,
-            const WidgetManager& widgets,
+            const widget_manager& widgets,
             const cen::keyboard_event& event,
             entt::dispatcher& dispatcher);
 
@@ -29,7 +29,7 @@ class AShortcut {
 
   [[nodiscard]] virtual auto IsEnabled(
       [[maybe_unused]] const Model& model,
-      [[maybe_unused]] const WidgetManager& widgets) const -> bool
+      [[maybe_unused]] const widget_manager& widgets) const -> bool
   {
     return true;
   }

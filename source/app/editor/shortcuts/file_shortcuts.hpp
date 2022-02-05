@@ -31,7 +31,7 @@ struct SaveShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const WidgetManager& widgets) const
+  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
       -> bool override;
 };
 
@@ -41,7 +41,7 @@ struct SaveAsShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const WidgetManager& widgets) const
+  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
       -> bool override;
 };
 

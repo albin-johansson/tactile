@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>  // string
 #include <memory>  // unique_ptr
 
 #include <entt/entt.hpp>
@@ -24,52 +25,64 @@ class LogDock;
 class ResizeMapDialog;
 class MapImportErrorDialog;
 
-class WidgetManager final {
+class widget_manager final {
  public:
-  WidgetManager();
+  TACTILE_DELETE_COPY(widget_manager)
+  TACTILE_DEFAULT_MOVE(widget_manager)
 
-  ~WidgetManager() noexcept;
+  widget_manager();
 
-  void Update(const Model& model, const icon_manager& icons, entt::dispatcher& dispatcher);
+  ~widget_manager() noexcept;
 
-  void ShowSettings();
+  void update(const Model& model,
+              const icon_manager& icons,
+              entt::dispatcher& dispatcher);
 
-  void ShowNewMapDialog();
+  void show_settings();
 
-  void ShowOpenMapDialog();
+  void show_new_map_dialog();
 
-  void ShowAddTilesetDialog();
+  void show_open_map_dialog();
 
-  void ShowRenameLayerDialog(layer_id id);
+  void show_add_tileset_dialog();
 
-  void ShowAddPropertyDialog();
+  void show_rename_layer_dialog(layer_id id);
 
-  void ShowRenamePropertyDialog(const std::string& name);
+  void show_add_property_dialog();
 
-  void ShowChangePropertyTypeDialog(std::string name, attribute_type type);
+  void show_rename_property_dialog(const std::string& name);
 
-  void ShowResizeMapDialog(usize currentRows, usize currentColumns);
+  void show_change_property_type_dialog(std::string name, attribute_type type);
 
-  void ShowMapImportErrorDialog(parsing::parse_error error);
+  void show_resize_map_dialog(usize currentRows, usize currentColumns);
 
-  void ShowComponentEditor(const Model& model);
+  void show_map_import_error_dialog(parsing::parse_error error);
 
-  void SetToolbarVisible(bool visible);
+  void show_component_editor(const Model& model);
 
-  [[nodiscard]] auto IsEditorFocused() const -> bool;
-  [[nodiscard]] auto IsToolbarFocused() const -> bool;
-  [[nodiscard]] auto IsViewportFocused() const -> bool;
-  [[nodiscard]] auto IsLayerDockFocused() const -> bool;
-  [[nodiscard]] auto IsTilesetDockFocused() const -> bool;
-  [[nodiscard]] auto IsPropertiesDockFocused() const -> bool;
-  [[nodiscard]] auto IsLogDockFocused() const -> bool;
+  void set_toolbar_visible(bool visible);
 
-  [[nodiscard]] auto IsTilesetDockHovered() const -> bool;
+  [[nodiscard]] auto is_editor_focused() const -> bool;
 
-  [[nodiscard]] auto IsToolbarVisible() const -> bool;
+  [[nodiscard]] auto is_toolbar_focused() const -> bool;
 
-  [[nodiscard]] auto GetTilesetViewWidth() const -> maybe<float>;
-  [[nodiscard]] auto GetTilesetViewHeight() const -> maybe<float>;
+  [[nodiscard]] auto is_viewport_focused() const -> bool;
+
+  [[nodiscard]] auto is_layer_dock_focused() const -> bool;
+
+  [[nodiscard]] auto is_tileset_dock_focused() const -> bool;
+
+  [[nodiscard]] auto is_properties_dock_focused() const -> bool;
+
+  [[nodiscard]] auto is_log_dock_focused() const -> bool;
+
+  [[nodiscard]] auto is_tileset_dock_hovered() const -> bool;
+
+  [[nodiscard]] auto is_toolbar_visible() const -> bool;
+
+  [[nodiscard]] auto tileset_view_width() const -> maybe<float>;
+
+  [[nodiscard]] auto tileset_view_height() const -> maybe<float>;
 
  private:
   std::unique_ptr<MenuBar> mMenuBar;

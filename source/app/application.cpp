@@ -177,9 +177,9 @@ void application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
       const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
       mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
     }
-    else if (mWidgets.IsTilesetDockHovered()) {
-      const auto width = mWidgets.GetTilesetViewWidth();
-      const auto height = mWidgets.GetTilesetViewHeight();
+    else if (mWidgets.is_tileset_dock_hovered()) {
+      const auto width = mWidgets.tileset_view_width();
+      const auto height = mWidgets.tileset_view_height();
       if (width && height) {
         const auto entity = sys::find_active_tileset(*registry);
         TACTILE_ASSERT(entity != entt::null);
@@ -198,7 +198,7 @@ void application::update_frame()
 {
   mDispatcher.update();
   mModel.Update();
-  mWidgets.Update(mModel, mIcons, mDispatcher);
+  mWidgets.update(mModel, mIcons, mDispatcher);
 }
 
 void application::on_undo()
@@ -253,17 +253,17 @@ void application::on_open_save_as_dialog()
 
 void application::on_show_settings()
 {
-  mWidgets.ShowSettings();
+  mWidgets.show_settings();
 }
 
 void application::on_show_new_map_dialog()
 {
-  mWidgets.ShowNewMapDialog();
+  mWidgets.show_new_map_dialog();
 }
 
 void application::on_show_open_map_dialog()
 {
-  mWidgets.ShowOpenMapDialog();
+  mWidgets.show_open_map_dialog();
 }
 
 void application::on_show_map_properties()
@@ -305,7 +305,7 @@ void application::on_open_map(const open_map_event& event)
     add_file_to_history(event.path);
   }
   else {
-    mWidgets.ShowMapImportErrorDialog(ir.error());
+    mWidgets.show_map_import_error_dialog(ir.error());
   }
 }
 
@@ -426,7 +426,7 @@ void application::on_reset_zoom()
 
 void application::on_show_add_tileset_dialog()
 {
-  mWidgets.ShowAddTilesetDialog();
+  mWidgets.show_add_tileset_dialog();
 }
 
 void application::on_add_tileset(const add_tileset_event& event)
@@ -493,7 +493,7 @@ void application::on_open_resize_map_dialog()
 {
   if (auto* registry = mModel.GetActiveRegistry()) {
     const auto& map = registry->ctx<MapInfo>();
-    mWidgets.ShowResizeMapDialog(map.row_count, map.column_count);
+    mWidgets.show_resize_map_dialog(map.row_count, map.column_count);
   }
 }
 
@@ -542,7 +542,7 @@ void application::on_set_layer_visible(const set_layer_visible_event& event)
 
 void application::on_open_rename_layer_dialog(const open_rename_layer_dialog_event& event)
 {
-  mWidgets.ShowRenameLayerDialog(event.id);
+  mWidgets.show_rename_layer_dialog(event.id);
 }
 
 void application::on_rename_layer(const rename_layer_event& event)
@@ -582,19 +582,19 @@ void application::on_spawn_object_context_menu(const spawn_object_context_menu_e
 
 void application::on_show_add_property_dialog()
 {
-  mWidgets.ShowAddPropertyDialog();
+  mWidgets.show_add_property_dialog();
 }
 
 void application::on_show_rename_property_dialog(
     const show_rename_property_dialog_event& event)
 {
-  mWidgets.ShowRenamePropertyDialog(event.name);
+  mWidgets.show_rename_property_dialog(event.name);
 }
 
 void application::on_show_change_property_type_dialog(
     const show_change_property_type_dialog_event& event)
 {
-  mWidgets.ShowChangePropertyTypeDialog(event.name, event.current_type);
+  mWidgets.show_change_property_type_dialog(event.name, event.current_type);
 }
 
 void application::on_add_property(const add_property_event& event)
@@ -631,7 +631,7 @@ void application::on_inspect_context(const inspect_context_event& event)
 
 void application::on_open_component_editor()
 {
-  mWidgets.ShowComponentEditor(mModel);
+  mWidgets.show_component_editor(mModel);
 }
 
 void application::on_create_component_def(const create_component_def_event& event)
@@ -719,7 +719,7 @@ void application::on_toggle_ui()
     mWidgetShowState.prev_show_properties_dock = prefs.is_properties_dock_visible();
     mWidgetShowState.prev_show_log_dock = prefs.is_log_dock_visible();
     mWidgetShowState.prev_show_component_dock = prefs.is_component_dock_visible();
-    mWidgetShowState.prev_show_toolbar = mWidgets.IsToolbarVisible();
+    mWidgetShowState.prev_show_toolbar = mWidgets.is_toolbar_visible();
   }
 
   prefs.set_layer_dock_visible(show);
@@ -728,7 +728,7 @@ void application::on_toggle_ui()
   prefs.set_component_dock_visible(show);
   prefs.set_log_dock_visible(show);
 
-  mWidgets.SetToolbarVisible(show);
+  mWidgets.set_toolbar_visible(show);
 
   if (show) {
     prefs.set_layer_dock_visible(mWidgetShowState.prev_show_layer_dock);
@@ -737,7 +737,7 @@ void application::on_toggle_ui()
     prefs.set_log_dock_visible(mWidgetShowState.prev_show_log_dock);
     prefs.set_component_dock_visible(mWidgetShowState.prev_show_component_dock);
 
-    mWidgets.SetToolbarVisible(mWidgetShowState.prev_show_toolbar);
+    mWidgets.set_toolbar_visible(mWidgetShowState.prev_show_toolbar);
   }
 
   show = !show;

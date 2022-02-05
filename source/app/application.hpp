@@ -57,7 +57,7 @@ class application final {
   Model mModel;
   texture_manager mTextures;
   icon_manager mIcons;
-  WidgetManager mWidgets;
+  widget_manager mWidgets;
   widget_show_state mWidgetShowState;
   bool mQuit{};
 
