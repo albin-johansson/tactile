@@ -1,16 +1,14 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class SetLayerOpacityCmd final : public command_base {
+class set_layer_opacity_cmd final : public command_base {
  public:
-  SetLayerOpacityCmd(registry_ref registry, layer_id id, float opacity);
+  set_layer_opacity_cmd(registry_ref registry, layer_id id, float opacity);
 
   void undo() override;
 

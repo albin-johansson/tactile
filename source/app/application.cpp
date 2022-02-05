@@ -499,12 +499,12 @@ void application::on_open_resize_map_dialog()
 
 void application::on_add_layer(const AddLayerEvent& event)
 {
-  _execute<AddLayerCmd>(mModel, event.type);
+  _execute<add_layer_cmd>(mModel, event.type);
 }
 
 void application::on_remove_layer(const RemoveLayerEvent& event)
 {
-  _execute<RemoveLayerCmd>(mModel, event.id);
+  _execute<remove_layer_cmd>(mModel, event.id);
 }
 
 void application::on_select_layer(const SelectLayerEvent& event)
@@ -517,27 +517,27 @@ void application::on_select_layer(const SelectLayerEvent& event)
 
 void application::on_move_layer_up(const MoveLayerUpEvent& event)
 {
-  _execute<MoveLayerUpCmd>(mModel, event.id);
+  _execute<move_layer_up_cmd>(mModel, event.id);
 }
 
 void application::on_move_layer_down(const MoveLayerDownEvent& event)
 {
-  _execute<MoveLayerDownCmd>(mModel, event.id);
+  _execute<move_layer_down_cmd>(mModel, event.id);
 }
 
 void application::on_duplicate_layer(const DuplicateLayerEvent& event)
 {
-  _execute<DuplicateLayerCmd>(mModel, event.id);
+  _execute<duplicate_layer_cmd>(mModel, event.id);
 }
 
 void application::on_set_layer_opacity(const SetLayerOpacityEvent& event)
 {
-  _execute<SetLayerOpacityCmd>(mModel, event.id, event.opacity);
+  _execute<set_layer_opacity_cmd>(mModel, event.id, event.opacity);
 }
 
 void application::on_set_layer_visible(const SetLayerVisibleEvent& event)
 {
-  _execute<SetLayerVisibilityCmd>(mModel, event.id, event.visible);
+  _execute<set_layer_visibility_cmd>(mModel, event.id, event.visible);
 }
 
 void application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
@@ -547,7 +547,7 @@ void application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& 
 
 void application::on_rename_layer(const RenameLayerEvent& event)
 {
-  _execute<RenameLayerCmd>(mModel, event.id, event.name);
+  _execute<rename_layer_cmd>(mModel, event.id, event.name);
 }
 
 void application::on_set_object_name(const SetObjectNameEvent& event)

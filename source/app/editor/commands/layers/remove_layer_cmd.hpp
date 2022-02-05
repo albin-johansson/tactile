@@ -1,7 +1,5 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -12,9 +10,9 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class RemoveLayerCmd final : public command_base {
+class remove_layer_cmd final : public command_base {
  public:
-  RemoveLayerCmd(registry_ref registry, layer_id id);
+  remove_layer_cmd(registry_ref registry, layer_id id);
 
   void undo() override;
 

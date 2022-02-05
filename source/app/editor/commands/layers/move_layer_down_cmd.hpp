@@ -1,16 +1,14 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class MoveLayerDownCmd final : public command_base {
+class move_layer_down_cmd final : public command_base {
  public:
-  MoveLayerDownCmd(registry_ref registry, layer_id id);
+  move_layer_down_cmd(registry_ref registry, layer_id id);
 
   void undo() override;
 
