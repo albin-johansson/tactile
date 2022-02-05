@@ -11,11 +11,10 @@
 
 namespace tactile {
 
-/// \addtogroup commands
-/// \{
-
 /**
  * \brief Manages a history of commands.
+ *
+ * \ingroup commands
  */
 class command_stack final {
  public:
@@ -194,7 +193,5 @@ class command_stack final {
 
   void remove_commands_after_current_index();
 };
-
-/// \} End of group commands
 
 }  // namespace tactile
