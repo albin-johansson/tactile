@@ -5,12 +5,12 @@
 namespace tactile {
 
 /**
- * \brief Shows a label that is centered in the parent region.
+ * \brief Shows a centered label.
  *
  * \ingroup gui
  *
- * \param text the text that will be displayed.
+ * \param text the label text.
  */
-void CenteredText(c_str text);
+void centered_text(const char* text);
 
 }  // namespace tactile

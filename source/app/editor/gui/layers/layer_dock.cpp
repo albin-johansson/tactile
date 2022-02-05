@@ -88,7 +88,7 @@ void LayerDock::Update(const Model& model,
     scoped::group group;
     if (registry.view<comp::layer>().empty()) {
       prepare_vertical_alignment_center(1);
-      CenteredText("No available layers!");
+      centered_text("No available layers!");
     }
     else {
       const ImVec2 size{-min_float, -min_float};

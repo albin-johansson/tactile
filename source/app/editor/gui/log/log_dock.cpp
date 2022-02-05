@@ -173,7 +173,7 @@ void LogDock::Update()
       ShowLogContents(mLogLevel);
     }
     else {
-      CenteredText("No logged messages match the current filter.");
+      centered_text("No logged messages match the current filter.");
     }
 
     if (auto popup = scoped::popup::for_window("##LogDockContext"); popup.is_open()) {

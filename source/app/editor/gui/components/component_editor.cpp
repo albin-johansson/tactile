@@ -124,7 +124,7 @@ void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
   const auto& [defEntity, def] = sys::get_component_def(registry, id);
 
   if (def.attributes.empty()) {
-    CenteredText("There are no attributes defined for the current component.");
+    centered_text("There are no attributes defined for the current component.");
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;

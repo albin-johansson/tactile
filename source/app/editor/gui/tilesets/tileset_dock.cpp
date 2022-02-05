@@ -41,7 +41,7 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
     }
     else {
       prepare_vertical_alignment_center(2);
-      CenteredText("Current map has no tilesets!");
+      centered_text("Current map has no tilesets!");
       ImGui::Spacing();
       if (centered_button(TAC_ICON_TILESET " Create tileset...")) {
         dispatcher.enqueue<show_add_tileset_dialog_event>();
