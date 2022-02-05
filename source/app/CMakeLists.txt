@@ -26,13 +26,13 @@ set(SOURCE_FILES
     application.hpp
     application_events.cpp
     application_events.hpp
-    boost.hpp
 
     meta/build.hpp
     meta/profile.hpp
 
     misc/assert.cpp
     misc/assert.hpp
+    misc/boost.hpp
     misc/crash.cpp
     misc/crash.hpp
     misc/logging.cpp
