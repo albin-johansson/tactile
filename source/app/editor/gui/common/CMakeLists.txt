@@ -12,8 +12,6 @@ set(TACTILE_EDITOR_GUI_COMMON_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/checkbox.hpp
     ${PROJECT_SOURCE_DIR}/docking_toolbar.cpp
     ${PROJECT_SOURCE_DIR}/docking_toolbar.hpp
-    ${PROJECT_SOURCE_DIR}/help_marker.cpp
-    ${PROJECT_SOURCE_DIR}/help_marker.hpp
     ${PROJECT_SOURCE_DIR}/input_widgets.cpp
     ${PROJECT_SOURCE_DIR}/input_widgets.hpp
     ${PROJECT_SOURCE_DIR}/mouse_tracker.cpp
