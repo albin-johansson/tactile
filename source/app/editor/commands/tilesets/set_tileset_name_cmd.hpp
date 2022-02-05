@@ -2,17 +2,15 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class SetTilesetNameCmd final : public command_base {
+class set_tileset_name_cmd final : public command_base {
  public:
-  SetTilesetNameCmd(registry_ref registry, tileset_id id, std::string name);
+  set_tileset_name_cmd(registry_ref registry, tileset_id id, std::string name);
 
   void undo() override;
 

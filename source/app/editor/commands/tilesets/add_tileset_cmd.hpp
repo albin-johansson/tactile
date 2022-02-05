@@ -1,7 +1,5 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/components/texture.hpp"
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
@@ -10,12 +8,12 @@
 
 namespace tactile {
 
-class AddTilesetCmd final : public command_base {
+class add_tileset_cmd final : public command_base {
  public:
-  AddTilesetCmd(registry_ref registry,
-                comp::texture texture,
-                int tileWidth,
-                int tileHeight);
+  add_tileset_cmd(registry_ref registry,
+                  comp::texture texture,
+                  int32 tileWidth,
+                  int32 tileHeight);
 
   void undo() override;
 
@@ -29,8 +27,8 @@ class AddTilesetCmd final : public command_base {
  private:
   registry_ref mRegistry;
   comp::texture mTexture;
-  int mTileWidth;
-  int mTileHeight;
+  int32 mTileWidth;
+  int32 mTileHeight;
   maybe<tileset_id> mTilesetId;
   maybe<sys::TilesetSnapshot> mSnapshot;
 };

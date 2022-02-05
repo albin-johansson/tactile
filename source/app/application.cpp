@@ -432,7 +432,7 @@ void application::on_show_add_tileset_dialog()
 void application::on_add_tileset(const AddTilesetEvent& event)
 {
   if (auto info = mTextures.load(event.path)) {
-    _execute<AddTilesetCmd>(mModel,
+    _execute<add_tileset_cmd>(mModel,
                             std::move(*info),
                             event.tile_width,
                             event.tile_height);
@@ -444,7 +444,7 @@ void application::on_add_tileset(const AddTilesetEvent& event)
 
 void application::on_remove_tileset(const RemoveTilesetEvent& event)
 {
-  _execute<RemoveTilesetCmd>(mModel, event.id);
+  _execute<remove_tileset_cmd>(mModel, event.id);
 }
 
 void application::on_select_tileset(const SelectTilesetEvent& event)
@@ -461,7 +461,7 @@ void application::on_set_tileset_selection(const SetTilesetSelectionEvent& event
 
 void application::on_set_tileset_name(const SetTilesetNameEvent& event)
 {
-  _execute<SetTilesetNameCmd>(mModel, event.id, event.name);
+  _execute<set_tileset_name_cmd>(mModel, event.id, event.name);
 }
 
 void application::on_add_row()
