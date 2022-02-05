@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map tiledversion="1.7.0" version="1.5" orientation="orthogonal"
+     width="7" height="5"
+     tilewidth="32" tileheight="32"
+     nextlayerid="4" nextobjectid="3">
+  <tileset tiledversion="1.7.0" version="1.5"
+           firstgid="1"
+           tilewidth="32" tileheight="32" tilecount="768" columns="28"/>
+</map>
