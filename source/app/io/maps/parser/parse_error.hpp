@@ -8,8 +8,6 @@ namespace tactile::parsing {
 /**
  * \brief Represents various possible errors related to map parsing.
  *
- * \todo Split into errors/"soft" errors, e.g. `parse_warning`?
- *
  * \see `to_cause(parse_error)`
  */
 enum class parse_error {
