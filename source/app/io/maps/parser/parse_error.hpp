@@ -31,9 +31,9 @@ enum class parse_error {
   no_map_tilesets,  // Tiled JSON only (TODO warning only?)
   no_map_layers,    // Tiled JSON only (TODO warning only?)
 
-  unsupported_layer_type,
+  unsupported_layer_type,  // YAML/JSON only
   no_layer_id,
-  no_layer_type,
+  no_layer_type,         // YAML/JSON only
   no_tile_layer_width,   // TODO warning only?
   no_tile_layer_height,  // TODO warning only?
   no_tile_layer_data,
@@ -61,11 +61,11 @@ enum class parse_error {
   no_property_type,  // Not used by Tiled XML
   unsupported_property_type,
 
-  no_component_def_name,                      // Tactile YAML only
-  no_component_def_attribute_name,            // Tactile YAML only
-  no_component_def_attribute_type,            // Tactile YAML only
-  unsupported_component_def_attribute_type,   // Tactile YAML only
-  corrupt_component_def_attribute_value,  // Tactile YAML only
+  no_component_def_name,                     // Tactile YAML only
+  no_component_def_attribute_name,           // Tactile YAML only
+  no_component_def_attribute_type,           // Tactile YAML only
+  unsupported_component_def_attribute_type,  // Tactile YAML only
+  corrupt_component_def_attribute_value,     // Tactile YAML only
 
   no_component_type,                  // Tactile YAML only
   no_component_attribute_name,        // Tactile YAML only
