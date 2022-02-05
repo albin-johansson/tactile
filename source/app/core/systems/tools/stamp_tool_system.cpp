@@ -89,7 +89,7 @@ void StampToolOnReleased(entt::registry& registry,
                          const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    dispatcher.enqueue<StampSequenceEvent>(std::move(gOldState), std::move(gSequence));
+    dispatcher.enqueue<stamp_sequence_event>(std::move(gOldState), std::move(gSequence));
   }
 }
 

@@ -43,23 +43,23 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
   UpdateAddLayerPopup(dispatcher);
 
   if (Button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
-    dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
+    dispatcher.enqueue<remove_layer_event>(*activeLayerId);
   }
 
   if (Button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
-    dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
+    dispatcher.enqueue<duplicate_layer_event>(*activeLayerId);
   }
 
   if (Button(TAC_ICON_MOVE_UP,
              "Move layer up",
              hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
-    dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
+    dispatcher.enqueue<move_layer_up_event>(*activeLayerId);
   }
 
   if (Button(TAC_ICON_MOVE_DOWN,
              "Move layer down",
              hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
-    dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
+    dispatcher.enqueue<move_layer_down_event>(*activeLayerId);
   }
 }
 

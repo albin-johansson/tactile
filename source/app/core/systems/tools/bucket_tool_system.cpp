@@ -21,7 +21,7 @@ void BucketToolOnPressed(entt::registry& registry,
     const auto position = selection.region->begin;
     const auto replacement = get_tile_from_tileset(registry, entity, position);
 
-    dispatcher.enqueue<FloodEvent>(mouse.position_in_viewport, replacement);
+    dispatcher.enqueue<flood_event>(mouse.position_in_viewport, replacement);
   }
 }
 

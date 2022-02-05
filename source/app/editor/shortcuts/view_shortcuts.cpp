@@ -123,7 +123,7 @@ ToggleUiShortcut::ToggleUiShortcut() : AShortcut{cen::scancodes::tab} {}
 
 void ToggleUiShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<ToggleUiEvent>();
+  dispatcher.enqueue<toggle_ui_event>();
 }
 
 auto ToggleUiShortcut::IsEnabled(const Model& model, const WidgetManager& widgets) const

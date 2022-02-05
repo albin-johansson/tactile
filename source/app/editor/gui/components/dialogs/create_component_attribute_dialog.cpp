@@ -31,8 +31,8 @@ auto CreateComponentAttributeDialog::Validate(const Model& model,
 
 void CreateComponentAttributeDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<CreateComponentAttributeEvent>(mComponentId,
-                                                    std::string{GetCurrentInput()});
+  dispatcher.enqueue<create_component_attr_event>(mComponentId,
+                                                  std::string{GetCurrentInput()});
 }
 
 }  // namespace tactile

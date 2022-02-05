@@ -27,11 +27,11 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
                                     canRedo ? model.GetRedoText() : ""};
 
     if (ImGui::MenuItem(undoText.data(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
-      dispatcher.enqueue<UndoEvent>();
+      dispatcher.enqueue<undo_event>();
     }
 
     if (ImGui::MenuItem(redoText.data(), TACTILE_PRIMARY_MOD "+Y", false, canRedo)) {
-      dispatcher.enqueue<RedoEvent>();
+      dispatcher.enqueue<redo_event>();
     }
 
     ImGui::Separator();
@@ -40,28 +40,28 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
                         "S",
                         model.IsStampActive(),
                         model.IsStampPossible())) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
+      dispatcher.enqueue<select_tool_event>(tool_type::stamp);
     }
 
     if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket",
                         "B",
                         model.IsBucketActive(),
                         model.IsBucketPossible())) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
+      dispatcher.enqueue<select_tool_event>(tool_type::bucket);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser",
                         "E",
                         model.IsEraserActive(),
                         model.IsEraserPossible())) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
+      dispatcher.enqueue<select_tool_event>(tool_type::eraser);
     }
 
     if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection",
                         "Q",
                         model.IsObjectSelectionActive(),
                         model.IsObjectSelectionPossible())) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
+      dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
     }
 
     ImGui::Separator();

@@ -40,7 +40,7 @@ void ShowComponentPopupContent(entt::dispatcher& dispatcher,
                                const component_id componentId)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
-    dispatcher.enqueue<ResetComponentValuesEvent>(contextId, componentId);
+    dispatcher.enqueue<reset_component_values_event>(contextId, componentId);
   }
 
   ImGui::Separator();
@@ -52,7 +52,7 @@ void ShowComponentPopupContent(entt::dispatcher& dispatcher,
   ImGui::Separator();
 
   if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Component")) {
-    dispatcher.enqueue<RemoveComponentEvent>(contextId, componentId);
+    dispatcher.enqueue<remove_component_event>(contextId, componentId);
   }
 }
 
@@ -92,10 +92,10 @@ void ShowComponent(entt::dispatcher& dispatcher,
         ImGui::TableNextColumn();
 
         if (auto value = Input("##ComponentAttributeTableValue", attribute)) {
-          dispatcher.enqueue<UpdateComponentEvent>(contextId,
-                                                   component.type,
-                                                   attributeName,
-                                                   std::move(*value));
+          dispatcher.enqueue<update_component_event>(contextId,
+                                                     component.type,
+                                                     attributeName,
+                                                     std::move(*value));
         }
       }
     }
@@ -116,14 +116,14 @@ void ShowAddComponentButtonPopupContent(const entt::registry& registry,
       scoped::Disable disable{sys::has_component(registry, contextId, def.id)};
 
       if (ImGui::MenuItem(def.name.c_str())) {
-        dispatcher.enqueue<AddComponentEvent>(contextId, def.id);
+        dispatcher.enqueue<add_component_event>(contextId, def.id);
       }
     }
   }
 
   ImGui::Separator();
   if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...")) {
-    dispatcher.enqueue<OpenComponentEditorEvent>();
+    dispatcher.enqueue<open_component_editor_event>();
   }
 }
 

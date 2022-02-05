@@ -111,7 +111,7 @@ void ComponentEditor::ShowComponentComboPopup(const entt::registry& registry,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Component")) {
-      dispatcher.enqueue<RemoveComponentDefEvent>(mActiveComponent.value());
+      dispatcher.enqueue<remove_component_def_event>(mActiveComponent.value());
       mActiveComponent.reset();
     }
   }
@@ -168,13 +168,13 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Attribute")) {
-      dispatcher.enqueue<DuplicateComponentAttributeEvent>(id, name);
+      dispatcher.enqueue<duplicate_component_attr_event>(id, name);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Attribute")) {
-      dispatcher.enqueue<RemoveComponentAttributeEvent>(id, name);
+      dispatcher.enqueue<remove_component_attr_event>(id, name);
     }
   }
 
@@ -185,13 +185,13 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   attribute_type newType = type;
   PropertyTypeCombo(type, newType);
   if (newType != type) {
-    dispatcher.enqueue<SetComponentAttributeTypeEvent>(id, name, newType);
+    dispatcher.enqueue<set_component_attr_type_event>(id, name, newType);
   }
 
   ImGui::TableNextColumn();
 
   if (auto updated = Input("##DefaultValue", value)) {
-    dispatcher.enqueue<UpdateComponentDefAttributeEvent>(id, name, std::move(*updated));
+    dispatcher.enqueue<update_component_def_attr_event>(id, name, std::move(*updated));
   }
 }
 

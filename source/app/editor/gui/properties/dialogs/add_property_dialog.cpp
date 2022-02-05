@@ -34,8 +34,8 @@ void AddPropertyDialog::UpdateContents(const Model&, entt::dispatcher&)
 
 void AddPropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<AddPropertyEvent>(create_string_from_buffer(mNameBuffer),
-                                       mPropertyType);
+  dispatcher.enqueue<add_property_event>(create_string_from_buffer(mNameBuffer),
+                                         mPropertyType);
 }
 
 auto AddPropertyDialog::IsCurrentInputValid(const Model& model) const -> bool

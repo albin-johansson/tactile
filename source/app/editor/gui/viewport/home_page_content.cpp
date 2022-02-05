@@ -24,12 +24,12 @@ void UpdateHomePageContent(const Icons& icons, entt::dispatcher& dispatcher)
   ImGui::Spacing();
 
   if (CenteredButton("Create new map")) {
-    dispatcher.enqueue<ShowNewMapDialogEvent>();
+    dispatcher.enqueue<show_new_map_dialog_event>();
   }
 
   ImGui::Spacing();
   if (CenteredButton("Open existing map")) {
-    dispatcher.enqueue<ShowOpenMapDialogEvent>();
+    dispatcher.enqueue<show_open_map_dialog_event>();
   }
 }
 

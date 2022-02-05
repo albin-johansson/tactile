@@ -21,7 +21,8 @@ void RenameLayerDialog::Show(const layer_id id, std::string oldName)
 
 void RenameLayerDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RenameLayerEvent>(mTargetId.value(), std::string{GetCurrentInput()});
+  dispatcher.enqueue<rename_layer_event>(mTargetId.value(),
+                                         std::string{GetCurrentInput()});
 }
 
 auto RenameLayerDialog::Validate(const Model&, const std::string_view input) const -> bool

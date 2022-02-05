@@ -12,53 +12,52 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
-struct ShowAddPropertyDialogEvent final
+struct show_add_property_dialog_event final
 {};
 
-struct ShowChangePropertyTypeDialogEvent final
+struct show_change_property_type_dialog_event final
 {
   std::string name;
-  attribute_type current_type;
+  attribute_type current_type{};
 };
 
-struct ShowRenamePropertyDialogEvent final
+struct show_rename_property_dialog_event final
 {
   std::string name;
 };
 
-struct AddPropertyEvent final
+struct add_property_event final
 {
-  std::string name;     ///< The chosen name.
-  attribute_type type;  ///< The chosen type.
+  std::string name;       ///< The chosen name.
+  attribute_type type{};  ///< The chosen type.
 };
 
-struct RemovePropertyEvent final
+struct remove_property_event final
 {
   std::string name;  ///< Name of the property in the current context.
 };
 
-struct RenamePropertyEvent final
+struct rename_property_event final
 {
   std::string old_name;  ///< Current property name.
   std::string new_name;  ///< Requested new property name.
 };
 
-struct UpdatePropertyEvent final
+struct update_property_event final
 {
   std::string name;       ///< Name of property to modify.
   attribute_value value;  ///< Updated value of the property.
 };
 
-struct ChangePropertyTypeEvent final
+struct change_property_type_event final
 {
-  std::string name;     ///< Name of property to modify.
-  attribute_type type;  ///< Requested new property type.
+  std::string name;       ///< Name of property to modify.
+  attribute_type type{};  ///< Requested new property type.
 };
 
-struct InspectContextEvent final
+struct inspect_context_event final
 {
-  entt::entity entity{
-      entt::null};  ///< Entity that features `attribute_context` component.
+  entt::entity entity{entt::null};  ///< Potentially null attribute context.
 };
 
 /// \} End of group events

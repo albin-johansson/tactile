@@ -30,7 +30,7 @@ void GroupLayerItem(const entt::registry& registry,
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+      dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
@@ -46,7 +46,7 @@ void GroupLayerItem(const entt::registry& registry,
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+      dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
@@ -78,12 +78,12 @@ void LayerItem(const entt::registry& registry,
 
   if (layer.type != layer_type::group_layer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+      dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
     /* Make sure to select the layer item when right-clicked as well */
     if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+      dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);

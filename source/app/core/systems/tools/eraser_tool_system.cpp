@@ -57,7 +57,7 @@ void EraserToolOnReleased(entt::registry& registry,
                           const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    dispatcher.enqueue<EraserSequenceEvent>(std::move(gOldState));
+    dispatcher.enqueue<eraser_sequence_event>(std::move(gOldState));
   }
 }
 

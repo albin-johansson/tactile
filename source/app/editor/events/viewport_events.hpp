@@ -25,7 +25,9 @@ struct OffsetViewportEvent final
   float dy{};
 };
 
-/* Offset a viewport that cannot exceed the bounds of the shown content */
+/**
+ * \brief Offset a viewport that cannot exceed the bounds of the shown content.
+ */
 struct OffsetBoundViewportEvent final
 {
   entt::entity entity{entt::null};

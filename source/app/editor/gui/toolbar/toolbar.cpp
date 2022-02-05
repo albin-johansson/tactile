@@ -45,7 +45,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   };
 
   if (Button(TAC_ICON_FILE, "Create new map", bw, bh)) {
-    dispatcher.enqueue<ShowNewMapDialogEvent>();
+    dispatcher.enqueue<show_new_map_dialog_event>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -53,7 +53,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   if (Button(TAC_ICON_OPEN, "Open map", bw, bh)) {
-    dispatcher.enqueue<ShowOpenMapDialogEvent>();
+    dispatcher.enqueue<show_open_map_dialog_event>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -61,7 +61,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   if (Button(TAC_ICON_SAVE, "Save", !model.IsClean(), bw, bh)) {
-    dispatcher.enqueue<SaveEvent>();
+    dispatcher.enqueue<save_event>();
   }
 
   separate();
@@ -71,7 +71,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   if (Button(TAC_ICON_UNDO, "Undo", model.CanUndo(), bw, bh)) {
-    dispatcher.enqueue<UndoEvent>();
+    dispatcher.enqueue<undo_event>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -79,7 +79,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   if (Button(TAC_ICON_REDO, "Redo", model.CanRedo(), bw, bh)) {
-    dispatcher.enqueue<RedoEvent>();
+    dispatcher.enqueue<redo_event>();
   }
 
   separate();
@@ -97,7 +97,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   if (Button(TAC_ICON_RESIZE, "Resize map", true, bw, bh)) {
-    dispatcher.enqueue<OpenResizeMapDialogEvent>();
+    dispatcher.enqueue<open_resize_map_dialog_event>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -111,7 +111,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   if (Button(TAC_ICON_TILESET, "Create tileset", true, bw, bh)) {
-    dispatcher.enqueue<ShowAddTilesetDialogEvent>();
+    dispatcher.enqueue<show_add_tileset_dialog_event>();
   }
 
   separate();
@@ -126,7 +126,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsStampPossible(),
                  bw,
                  bh)) {
-    dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
+    dispatcher.enqueue<select_tool_event>(tool_type::stamp);
   }
 
   if (axis == ImGuiAxis_X) {
@@ -139,7 +139,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsBucketPossible(),
                  bw,
                  bh)) {
-    dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
+    dispatcher.enqueue<select_tool_event>(tool_type::bucket);
   }
 
   if (axis == ImGuiAxis_X) {
@@ -152,7 +152,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsEraserPossible(),
                  bw,
                  bh)) {
-    dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
+    dispatcher.enqueue<select_tool_event>(tool_type::eraser);
   }
 
   separate();
@@ -167,7 +167,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
                  model.IsObjectSelectionPossible(),
                  bw,
                  bh)) {
-    dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
+    dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
   }
 
   EndDockingToolbar();

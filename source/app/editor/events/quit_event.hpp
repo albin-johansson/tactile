@@ -5,7 +5,7 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
-struct QuitEvent final
+struct quit_event final
 {};
 
 /// \} End of group events

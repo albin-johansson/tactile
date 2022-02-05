@@ -14,8 +14,8 @@ RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog{"Rename Proper
 
 void RenamePropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RenamePropertyEvent>(GetPreviousString(),
-                                          std::string{GetCurrentInput()});
+  dispatcher.enqueue<rename_property_event>(GetPreviousString(),
+                                            std::string{GetCurrentInput()});
 }
 
 auto RenamePropertyDialog::Validate(const Model& model, std::string_view input) const

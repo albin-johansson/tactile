@@ -19,8 +19,8 @@ void RenameComponentDialog::Open(std::string previousName, const component_id id
 
 void RenameComponentDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RenameComponentDefEvent>(mComponentId.value(),
-                                              std::string{GetCurrentInput()});
+  dispatcher.enqueue<rename_component_def_event>(mComponentId.value(),
+                                                 std::string{GetCurrentInput()});
 }
 
 }  // namespace tactile

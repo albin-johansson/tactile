@@ -63,7 +63,7 @@ void SettingsDialog::ApplySettings(entt::dispatcher& dispatcher)
 {
   set_preferences(mGuiSettings);
   if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
-    dispatcher.enqueue<SetCommandCapacityEvent>(mGuiSettings.command_capacity());
+    dispatcher.enqueue<set_command_capacity_event>(mGuiSettings.command_capacity());
   }
 }
 

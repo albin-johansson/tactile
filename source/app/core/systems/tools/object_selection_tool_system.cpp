@@ -51,7 +51,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
         drag.last_mouse_y = mouse.y;
 
         active.entity = objectEntity;
-        dispatcher.enqueue<InspectContextEvent>(objectEntity);
+        dispatcher.enqueue<inspect_context_event>(objectEntity);
       }
     }
     else if (mouse.button == cen::mouse_button::right) {
@@ -64,7 +64,7 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
       const auto objectEntity = find_object(registry, layer, mouse.x, mouse.y);
       if (objectEntity != entt::null) {
         active.entity = objectEntity;
-        dispatcher.enqueue<SpawnObjectContextMenuEvent>(objectEntity);
+        dispatcher.enqueue<spawn_object_context_menu_event>(objectEntity);
       }
     }
   }
@@ -100,11 +100,11 @@ void ObjectSelectionToolOnReleased(entt::registry& registry,
 
       /* Only emit an event if the object has been moved along any axis */
       if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
-        dispatcher.enqueue<MoveObjectEvent>(object.id,
-                                            drag->origin_object_x,
-                                            drag->origin_object_y,
-                                            object.x,
-                                            object.y);
+        dispatcher.enqueue<move_object_event>(object.id,
+                                              drag->origin_object_x,
+                                              drag->origin_object_y,
+                                              object.x,
+                                              object.y);
       }
     }
 

@@ -7,16 +7,16 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
-struct SaveEvent final
+struct save_event final
 {};
 
-struct OpenSaveAsDialogEvent final
-{};
-
-struct SaveAsEvent final
+struct save_as_event final
 {
   std::filesystem::path path;
 };
+
+struct open_save_as_dialog_event final
+{};
 
 /// \} End of group events
 

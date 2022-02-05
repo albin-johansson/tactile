@@ -23,9 +23,9 @@ void RenameComponentAttributeDialog::Open(std::string previousName, const compon
 
 void RenameComponentAttributeDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RenameComponentAttributeEvent>(mComponentId.value(),
-                                                    GetPreviousString(),
-                                                    std::string{GetCurrentInput()});
+  dispatcher.enqueue<rename_component_attr_event>(mComponentId.value(),
+                                                  GetPreviousString(),
+                                                  std::string{GetCurrentInput()});
 }
 
 auto RenameComponentAttributeDialog::Validate(const Model& model,
