@@ -8,46 +8,58 @@
 
 namespace tactile::scoped {
 
-struct ID final
+struct id final
 {
-  explicit ID(const void* ptr) { ImGui::PushID(ptr); }
+  TACTILE_DEFAULT_COPY(id)
+  TACTILE_DEFAULT_MOVE(id)
 
-  explicit ID(const c_str str) { ImGui::PushID(str); }
+  explicit id(const void* ptr) { ImGui::PushID(ptr); }
 
-  explicit ID(const int id) { ImGui::PushID(id); }
+  explicit id(const char* str) { ImGui::PushID(str); }
 
-  ~ID() { ImGui::PopID(); }
+  explicit id(const int id) { ImGui::PushID(id); }
+
+  ~id() { ImGui::PopID(); }
 };
 
-struct Disable final
+struct disable final
 {
-  explicit Disable(const bool disable = true) { ImGui::BeginDisabled(disable); }
+  TACTILE_DEFAULT_COPY(disable)
+  TACTILE_DEFAULT_MOVE(disable)
 
-  ~Disable() { ImGui::EndDisabled(); }
+  explicit disable(const bool disable = true) { ImGui::BeginDisabled(disable); }
+
+  ~disable() { ImGui::EndDisabled(); }
 };
 
-struct Tooltip final
+struct tooltip final
 {
-  Tooltip() { ImGui::BeginTooltip(); }
+  TACTILE_DEFAULT_COPY(tooltip)
+  TACTILE_DEFAULT_MOVE(tooltip)
 
-  ~Tooltip() { ImGui::EndTooltip(); }
+  tooltip() { ImGui::BeginTooltip(); }
+
+  ~tooltip() { ImGui::EndTooltip(); }
 };
 
-class StyleVar final {
+class style_var final {
  public:
-  StyleVar(const ImGuiStyleVar index, const ImVec2& value)
+  TACTILE_DEFAULT_COPY(style_var)
+  TACTILE_DEFAULT_MOVE(style_var)
+
+  style_var(const ImGuiStyleVar index, const ImVec2& value)
   {
     ImGui::PushStyleVar(index, value);
   }
 
-  StyleVar(const ImGuiStyleVar index, const float value)
+  style_var(const ImGuiStyleVar index, const float value)
   {
     ImGui::PushStyleVar(index, value);
   }
 
-  ~StyleVar() { Pop(); }
+  ~style_var() { pop(); }
 
-  void Pop()
+  void pop()
   {
     if (!mPopped) {
       ImGui::PopStyleVar();
@@ -59,21 +71,24 @@ class StyleVar final {
   bool mPopped{};
 };
 
-class StyleColor final {
+class style_color final {
  public:
-  StyleColor(const ImGuiCol index, const ImVec4& color)
+  TACTILE_DEFAULT_COPY(style_color)
+  TACTILE_DEFAULT_MOVE(style_color)
+
+  style_color(const ImGuiCol index, const ImVec4& color)
   {
     ImGui::PushStyleColor(index, color);
   }
 
-  StyleColor(const ImGuiCol index, const uint32 value)
+  style_color(const ImGuiCol index, const uint32 value)
   {
     ImGui::PushStyleColor(index, value);
   }
 
-  ~StyleColor() { Pop(); }
+  ~style_color() { pop(); }
 
-  void Pop()
+  void pop()
   {
     if (!mPopped) {
       ImGui::PopStyleColor();
@@ -85,215 +100,248 @@ class StyleColor final {
   bool mPopped{};
 };
 
-class Group final {
- public:
-  Group() { ImGui::BeginGroup(); }
+struct group final
+{
+  TACTILE_DEFAULT_COPY(group)
+  TACTILE_DEFAULT_MOVE(group)
 
-  ~Group() { ImGui::EndGroup(); }
+  group() { ImGui::BeginGroup(); }
+
+  ~group() { ImGui::EndGroup(); }
 };
 
-class Child final {
+class child final {
  public:
-  explicit Child(const c_str id,
+  TACTILE_DEFAULT_COPY(child)
+  TACTILE_DEFAULT_MOVE(child)
+
+  explicit child(const char* id,
                  const ImVec2& size = {0, 0},
                  const bool border = false,
                  const ImGuiWindowFlags flags = 0)
       : mOpen{ImGui::BeginChild(id, size, border, flags)}
   {}
 
-  ~Child() { ImGui::EndChild(); }
+  ~child() { ImGui::EndChild(); }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 };
 
-class Combo final {
+class combo final {
  public:
-  Combo(const c_str name, const c_str current) : mOpen{ImGui::BeginCombo(name, current)}
+  TACTILE_DEFAULT_COPY(combo)
+  TACTILE_DEFAULT_MOVE(combo)
+
+  combo(const char* name, const char* current) : mOpen{ImGui::BeginCombo(name, current)}
   {}
 
-  ~Combo()
+  ~combo()
   {
     if (mOpen) {
       ImGui::EndCombo();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 };
 
-class TabBar final {
+class tab_bar final {
  public:
-  explicit TabBar(const c_str name, const ImGuiTabBarFlags flags = 0)
+  TACTILE_DEFAULT_COPY(tab_bar)
+  TACTILE_DEFAULT_MOVE(tab_bar)
+
+  explicit tab_bar(const char* name, const ImGuiTabBarFlags flags = 0)
       : mOpen{ImGui::BeginTabBar(name, flags)}
   {}
 
-  ~TabBar()
+  ~tab_bar()
   {
     if (mOpen) {
       ImGui::EndTabBar();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 };
 
-class TabItem final {
+class tab_item final {
  public:
-  explicit TabItem(const c_str name,
-                   bool* open = nullptr,
-                   const ImGuiTabItemFlags flags = 0)
+  TACTILE_DEFAULT_COPY(tab_item)
+  TACTILE_DEFAULT_MOVE(tab_item)
+
+  explicit tab_item(const char* name,
+                    bool* open = nullptr,
+                    const ImGuiTabItemFlags flags = 0)
       : mOpen{ImGui::BeginTabItem(name, open, flags)}
   {}
 
-  ~TabItem()
+  ~tab_item()
   {
     if (mOpen) {
       ImGui::EndTabItem();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 };
 
-class Table final {
+class table final {
  public:
-  Table(const c_str name, const int nColumns, const ImGuiTableFlags flags = 0)
+  TACTILE_DEFAULT_COPY(table)
+  TACTILE_DEFAULT_MOVE(table)
+
+  table(const char* name, const int nColumns, const ImGuiTableFlags flags = 0)
       : mOpen{ImGui::BeginTable(name, nColumns, flags)}
   {}
 
-  ~Table()
+  ~table()
   {
     if (mOpen) {
       ImGui::EndTable();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 };
 
-class Popup final {
+class popup final {
  public:
-  explicit Popup(const c_str name, const ImGuiWindowFlags flags = 0)
+  TACTILE_DEFAULT_COPY(popup)
+  TACTILE_DEFAULT_MOVE(popup)
+
+  explicit popup(const char* name, const ImGuiWindowFlags flags = 0)
       : mOpen{ImGui::BeginPopup(name, flags)}
   {}
 
-  [[nodiscard]] static auto ForItem(const c_str name, const ImGuiPopupFlags flags = 1)
-      -> Popup
-  {
-    return Popup{ImGui::BeginPopupContextItem(name, flags)};
-  }
-
-  [[nodiscard]] static auto ForWindow(const c_str name, const ImGuiPopupFlags flags = 1)
-      -> Popup
-  {
-    return Popup{ImGui::BeginPopupContextWindow(name, flags)};
-  }
-
-  ~Popup()
+  ~popup()
   {
     if (mOpen) {
       ImGui::EndPopup();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] static auto for_item(const char* name, const ImGuiPopupFlags flags = 1)
+      -> popup
+  {
+    return popup{ImGui::BeginPopupContextItem(name, flags)};
+  }
+
+  [[nodiscard]] static auto for_window(const char* name, const ImGuiPopupFlags flags = 1)
+      -> popup
+  {
+    return popup{ImGui::BeginPopupContextWindow(name, flags)};
+  }
+
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 
-  explicit Popup(const bool open) : mOpen{open} {}
+  explicit popup(const bool open) : mOpen{open} {}
 };
 
-class ListBox final {
+class list_box final {
  public:
-  explicit ListBox(const c_str label, const ImVec2& size = {0, 0})
+  TACTILE_DEFAULT_COPY(list_box)
+  TACTILE_DEFAULT_MOVE(list_box)
+
+  explicit list_box(const char* label, const ImVec2& size = {0, 0})
       : mOpen{ImGui::BeginListBox(label, size)}
   {}
 
-  ~ListBox()
+  ~list_box()
   {
     if (mOpen) {
       ImGui::EndListBox();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 };
 
-class Menu final {
+class menu final {
  public:
-  explicit Menu(const c_str name, const bool enabled = true)
+  TACTILE_DEFAULT_COPY(menu)
+  TACTILE_DEFAULT_MOVE(menu)
+
+  explicit menu(const char* name, const bool enabled = true)
       : mOpen{ImGui::BeginMenu(name, enabled)}
   {}
 
-  ~Menu()
+  ~menu()
   {
     if (mOpen) {
       ImGui::EndMenu();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 };
 
-class Modal final {
+class modal final {
  public:
-  explicit Modal(const c_str name, const ImGuiWindowFlags flags = 0, bool* open = nullptr)
+  TACTILE_DEFAULT_COPY(modal)
+  TACTILE_DEFAULT_MOVE(modal)
+
+  explicit modal(const char* name, const ImGuiWindowFlags flags = 0, bool* open = nullptr)
       : mOpen{ImGui::BeginPopupModal(name, open, flags)}
   {}
 
-  ~Modal()
+  ~modal()
   {
     if (mOpen) {
       ImGui::EndPopup();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};
 };
 
-class Window final {
+class window final {
  public:
-  explicit Window(const c_str label,
+  TACTILE_DEFAULT_COPY(window)
+  TACTILE_DEFAULT_MOVE(window)
+
+  explicit window(const char* label,
                   const ImGuiWindowFlags flags = 0,
                   bool* open = nullptr)
       : mOpen{ImGui::Begin(label, open, flags)}
   {}
 
-  ~Window() { ImGui::End(); }
+  ~window() { ImGui::End(); }
 
-  [[nodiscard]] auto IsFocused(const ImGuiFocusedFlags flags = 0) const -> bool
+  [[nodiscard]] auto has_focus(const ImGuiFocusedFlags flags = 0) const -> bool
   {
     return mOpen && ImGui::IsWindowFocused(flags);
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
-  [[nodiscard]] static auto CurrentWindowContainsMouse() -> bool
+  [[nodiscard]] static auto current_window_contains_mouse() -> bool
   {
     const auto min = ImGui::GetWindowContentRegionMin();
     const auto max = ImGui::GetWindowContentRegionMax();
@@ -304,28 +352,31 @@ class Window final {
   bool mOpen{};
 };
 
-class TreeNode final {
+class tree_node final {
  public:
-  explicit TreeNode(const c_str id, const ImGuiTreeNodeFlags flags = 0)
+  TACTILE_DEFAULT_COPY(tree_node)
+  TACTILE_DEFAULT_MOVE(tree_node)
+
+  explicit tree_node(const char* id, const ImGuiTreeNodeFlags flags = 0)
       : mOpen{ImGui::TreeNodeEx(id, flags)}
   {}
 
   template <typename... Args>
-  explicit TreeNode(const c_str id,
-                    const ImGuiTreeNodeFlags flags,
-                    const c_str fmt,
-                    Args&&... args)
+  explicit tree_node(const char* id,
+                     const ImGuiTreeNodeFlags flags,
+                     const char* fmt,
+                     Args&&... args)
       : mOpen{ImGui::TreeNodeEx(id, flags, fmt, std::forward<Args>(args)...)}
   {}
 
-  ~TreeNode()
+  ~tree_node()
   {
     if (mOpen) {
       ImGui::TreePop();
     }
   }
 
-  [[nodiscard]] auto IsOpen() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen{};

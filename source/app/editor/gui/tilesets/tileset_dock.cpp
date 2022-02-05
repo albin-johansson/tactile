@@ -31,8 +31,8 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
     return;
   }
 
-  scoped::Window window{"Tilesets", gWindowFlags, &visible};
-  if (window.IsOpen()) {
+  scoped::window window{"Tilesets", gWindowFlags, &visible};
+  if (window.is_open()) {
     mHasFocus = ImGui::IsWindowFocused();
     mWindowContainsMouse = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 

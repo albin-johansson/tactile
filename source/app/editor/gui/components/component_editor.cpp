@@ -61,7 +61,7 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
     }
 
     const auto& name = sys::get_component_def_name(registry, mActiveComponent.value());
-    if (scoped::Combo combo{"##ComponentEditorCombo", name.c_str()}; combo.IsOpen()) {
+    if (scoped::combo combo{"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
       for (auto&& [entity, component] : registry.view<comp::component_def>().each()) {
         if (ImGui::Selectable(component.name.c_str())) {
           mActiveComponent = component.id;
@@ -102,7 +102,7 @@ void ComponentEditor::UpdateContents(const Model& model, entt::dispatcher& dispa
 void ComponentEditor::ShowComponentComboPopup(const entt::registry& registry,
                                               entt::dispatcher& dispatcher)
 {
-  if (scoped::Popup popup{"##ComponentEditorPopup"}; popup.IsOpen()) {
+  if (scoped::popup popup{"##ComponentEditorPopup"}; popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
       const auto id = mActiveComponent.value();
       mRenameComponentDialog.Open(sys::get_component_def_name(registry, id), id);
@@ -128,8 +128,8 @@ void ComponentEditor::ShowComponentAttributes(const entt::registry& registry,
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
-    if (scoped::Table table{"##ComponentAttributeTable", 3, table_flags};
-        table.IsOpen()) {
+    if (scoped::table table{"##ComponentAttributeTable", 3, table_flags};
+        table.is_open()) {
       ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn("Default", ImGuiTableColumnFlags_WidthStretch);
@@ -151,7 +151,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
                                              const std::string& name,
                                              const attribute_value& value)
 {
-  const scoped::ID scope{name.c_str()};
+  const scoped::id scope{name.c_str()};
 
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
@@ -159,8 +159,8 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(name.c_str());
 
-  if (auto popup = scoped::Popup::ForItem("##ComponentAttributeNameContext");
-      popup.IsOpen()) {
+  if (auto popup = scoped::popup::for_item("##ComponentAttributeNameContext");
+      popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Attribute")) {
       mRenameComponentAttributeDialog.Open(name, mActiveComponent.value());
     }

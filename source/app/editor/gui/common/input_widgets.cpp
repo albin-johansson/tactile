@@ -63,7 +63,7 @@ auto Input(const c_str id, const attribute_value& value) -> maybe<attribute_valu
 
 auto InputWidget(const c_str id, int value) -> maybe<int>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   ImGui::SetNextItemWidth(-min_float);
   if (ImGui::DragInt("##InputString[int]", &value)) {
@@ -80,7 +80,7 @@ auto InputWidget(const c_str id, int value) -> maybe<int>
 auto InputWidget(const c_str id, float value, const float min, const float max)
     -> maybe<float>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   ImGui::SetNextItemWidth(-min_float);
 
@@ -109,7 +109,7 @@ auto InputStringWithHint(const c_str id,
                          const ImGuiInputTextFlags flags,
                          const ImGuiInputTextCallback filter) -> maybe<std::string>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   std::array<char, 100> buffer;  // NOLINT safely uninitialized
   copy_string_into_buffer(buffer, value);
@@ -151,7 +151,7 @@ auto InputString(const c_str id,
 
 auto InputWidget(const c_str id, bool value) -> maybe<bool>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   if (ImGui::Checkbox("##InputString[bool]", &value)) {
     return value;
@@ -166,7 +166,7 @@ auto InputWidget(const c_str id, bool value) -> maybe<bool>
 
 auto InputWidget(const c_str id, const object_t value) -> maybe<object_t>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   // TODO
   ImGui::Text("%i", value);
@@ -183,7 +183,7 @@ auto InputWidget(const c_str id, const cen::color value) -> maybe<cen::color>
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
 
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   auto arr = color_to_array(value);
   if (ImGui::ColorEdit4("##InputString[color]", arr.data(), flags)) {
@@ -200,7 +200,7 @@ auto InputWidget(const c_str id, const cen::color value) -> maybe<cen::color>
 auto InputFile(const c_str id, const std::filesystem::path& value)
     -> maybe<std::filesystem::path>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   if (ImGui::Button(TAC_ICON_THREE_DOTS)) {
     auto dialog = file_dialog::open_file();

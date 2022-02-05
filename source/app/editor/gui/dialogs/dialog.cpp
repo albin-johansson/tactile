@@ -18,8 +18,8 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
   center_next_window_on_appearance();
 
   constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  scoped::Modal modal{mTitle, flags};
-  if (modal.IsOpen()) {
+  scoped::modal modal{mTitle, flags};
+  if (modal.is_open()) {
     UpdateContents(model, dispatcher);
 
     ImGui::Spacing();

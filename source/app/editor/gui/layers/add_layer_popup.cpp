@@ -10,7 +10,7 @@ namespace tactile {
 
 void UpdateAddLayerPopup(entt::dispatcher& dispatcher)
 {
-  if (scoped::Popup popup{"AddLayerPopup"}; popup.IsOpen()) {
+  if (scoped::popup popup{"AddLayerPopup"}; popup.is_open()) {
     if (ImGui::Selectable(TAC_ICON_TILE_LAYER " Tile layer")) {
       dispatcher.enqueue<add_layer_event>(layer_type::tile_layer);
     }

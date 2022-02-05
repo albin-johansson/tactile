@@ -16,7 +16,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           const layer_id id)
 {
-  if (auto popup = scoped::Popup::ForItem("##LayerItemPopup"); popup.IsOpen()) {
+  if (auto popup = scoped::popup::for_item("##LayerItemPopup"); popup.is_open()) {
     const auto [entity, layer] = sys::get_layer(registry, id);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {

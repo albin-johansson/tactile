@@ -17,7 +17,7 @@ namespace tactile {
 
 void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::Menu menu{"Edit"}; menu.IsOpen()) {
+  if (scoped::menu menu{"Edit"}; menu.is_open()) {
     const auto canUndo = model.CanUndo();
     const auto canRedo = model.CanRedo();
 

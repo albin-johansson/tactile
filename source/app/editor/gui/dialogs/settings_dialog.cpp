@@ -34,8 +34,8 @@ void SettingsDialog::Open()
 
 void SettingsDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
-  scoped::TabBar bar{"##SettingsTabBar"};
-  if (bar.IsOpen()) {
+  scoped::tab_bar bar{"##SettingsTabBar"};
+  if (bar.is_open()) {
     UpdateBehaviorTab();
     UpdateAppearanceTab();
     UpdateExportTab();
@@ -69,7 +69,7 @@ void SettingsDialog::ApplySettings(entt::dispatcher& dispatcher)
 
 void SettingsDialog::UpdateBehaviorTab()
 {
-  if (scoped::TabItem item{"Behavior"}; item.IsOpen()) {
+  if (scoped::tab_item item{"Behavior"}; item.is_open()) {
     ImGui::Spacing();
     if (ImGui::Button("Restore Defaults")) {
       mGuiSettings.reset_behavior_preferences();
@@ -116,7 +116,7 @@ void SettingsDialog::UpdateBehaviorTab()
 
 void SettingsDialog::UpdateAppearanceTab()
 {
-  if (scoped::TabItem item{"Appearance"}; item.IsOpen()) {
+  if (scoped::tab_item item{"Appearance"}; item.is_open()) {
     ImGui::Spacing();
 
     if (ImGui::Button("Restore Defaults")) {
@@ -126,9 +126,9 @@ void SettingsDialog::UpdateAppearanceTab()
 
     ImGui::Spacing();
 
-    if (scoped::Combo combo{"Theme",
+    if (scoped::combo combo{"Theme",
                             human_readable_name(mGuiSettings.get_theme()).data()};
-        combo.IsOpen()) {
+        combo.is_open()) {
       for (const auto theme : themes) {
         if (ImGui::Selectable(human_readable_name(theme).data())) {
           mGuiSettings.set_theme(theme);
@@ -162,7 +162,7 @@ void SettingsDialog::UpdateAppearanceTab()
 
 void SettingsDialog::UpdateExportTab()
 {
-  if (scoped::TabItem item{"Export"}; item.IsOpen()) {
+  if (scoped::tab_item item{"Export"}; item.is_open()) {
     ImGui::Spacing();
 
     if (ImGui::Button("Restore Defaults")) {
@@ -172,8 +172,8 @@ void SettingsDialog::UpdateExportTab()
 
     ImGui::Spacing();
 
-    if (scoped::Combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
-        format.IsOpen()) {
+    if (scoped::combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
+        format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
         mGuiSettings.set_preferred_format("YAML");
       }
