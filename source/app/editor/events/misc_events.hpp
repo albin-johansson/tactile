@@ -7,6 +7,15 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
+struct quit_event final
+{};
+
+struct toggle_ui_event final
+{};
+
+struct show_settings_event final
+{};
+
 struct save_event final
 {};
 

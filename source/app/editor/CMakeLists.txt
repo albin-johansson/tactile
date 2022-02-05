@@ -10,6 +10,7 @@ add_subdirectory(shortcuts)
 set(TACTILE_EDITOR_SOURCE_FILES
 
     ${PROJECT_SOURCE_DIR}/document.hpp
+    ${PROJECT_SOURCE_DIR}/events.hpp
     ${PROJECT_SOURCE_DIR}/model.cpp
     ${PROJECT_SOURCE_DIR}/model.hpp
 

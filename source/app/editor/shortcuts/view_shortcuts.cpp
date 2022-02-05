@@ -1,6 +1,6 @@
 #include "view_shortcuts.hpp"
 
-#include "editor/events/view_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"

@@ -3,8 +3,7 @@
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"
-#include "editor/events/quit_event.hpp"
-#include "editor/events/save_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"

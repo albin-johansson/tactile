@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "editor/events/view_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/layout/dock_space.hpp"

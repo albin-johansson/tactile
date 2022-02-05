@@ -1,12 +1,12 @@
 #pragma once
 
+#include "tactile.hpp"
+
 namespace tactile {
 
 /// \addtogroup events
 /// \{
 
-struct quit_event final
-{};
 
 /// \} End of group events
 
