@@ -37,6 +37,10 @@ namespace {
     }
   }
 
+  if (!json.contains("data")) {
+    return parse_error::no_tile_layer_data;
+  }
+
   const auto data = json.at("data");
   if (!data.is_array()) {
     return parse_error::corrupt_tile_layer_data;
