@@ -79,7 +79,7 @@ void SettingsDialog::UpdateBehaviorTab()
     ImGui::Spacing();
 
     if (bool restore = mGuiSettings.will_restore_last_session();
-        Checkbox("Restore last session on startup", &restore)) {
+        checkbox("Restore last session on startup", &restore)) {
       mGuiSettings.set_will_restore_last_session(restore);
     }
 
@@ -153,7 +153,7 @@ void SettingsDialog::UpdateAppearanceTab()
     }
 
     if (bool restore = mGuiSettings.will_restore_layout();
-        Checkbox("Restore layout",
+        checkbox("Restore layout",
                  &restore,
                  "Restore the previous layout of widgets at startup")) {
       mGuiSettings.set_will_restore_layout(restore);
@@ -194,19 +194,19 @@ void SettingsDialog::UpdateExportTab()
     }
 
     if (bool embed = mGuiSettings.embed_tilesets();
-        Checkbox("Embed tilesets", &embed, "Embed tileset data in map files")) {
+        checkbox("Embed tilesets", &embed, "Embed tileset data in map files")) {
       mGuiSettings.set_embed_tilesets(embed);
     }
 
     if (bool indent = mGuiSettings.indent_output();
-        Checkbox("Indent output",
+        checkbox("Indent output",
                  &indent,
                  "Controls whether or not save files are indented")) {
       mGuiSettings.set_indent_output(indent);
     }
 
     if (bool fold = mGuiSettings.fold_tile_data();  //
-        Checkbox(
+        checkbox(
             "Fold tile data",
             &fold,
             "Make tile layer data easier for humans to edit, at the expense of space")) {
