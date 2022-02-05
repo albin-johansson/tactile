@@ -16,7 +16,7 @@ namespace tactile {
 namespace {
 
 void GroupLayerItem(const entt::registry& registry,
-                    const Icons& icons,
+                    const icon_manager& icons,
                     entt::dispatcher& dispatcher,
                     const entt::entity layerEntity,
                     const comp::layer& layer,
@@ -56,7 +56,7 @@ void GroupLayerItem(const entt::registry& registry,
 }  // namespace
 
 void LayerItem(const entt::registry& registry,
-               const Icons& icons,
+               const icon_manager& icons,
                entt::dispatcher& dispatcher,
                const entt::entity layerEntity,
                const comp::layer& layer)
@@ -74,7 +74,7 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<comp::attribute_context>(layerEntity);
-  formatted_string name{"{} {}", icons.GetIcon(layer.type), context.name};
+  formatted_string name{"{} {}", icons.get_icon(layer.type), context.name};
 
   if (layer.type != layer_type::group_layer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {

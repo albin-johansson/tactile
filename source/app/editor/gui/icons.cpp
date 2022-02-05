@@ -1,18 +1,14 @@
 #include "icons.hpp"
 
-#include <filesystem>  // path
-
-#include <GL/glew.h>
-
 #include "misc/throw.hpp"
 
 namespace tactile {
 
-Icons::Icons(texture_manager& textures)
+icon_manager::icon_manager(texture_manager& textures)
     : mTactileIcon{textures.load("resources/icon.png").value().id}
 {}
 
-auto Icons::GetIcon(const layer_type type) const -> c_str
+auto icon_manager::get_icon(const layer_type type) const -> c_str
 {
   switch (type) {
     case layer_type::tile_layer:

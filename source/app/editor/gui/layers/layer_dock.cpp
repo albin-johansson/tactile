@@ -66,7 +66,7 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
 }  // namespace
 
 void LayerDock::Update(const Model& model,
-                       const Icons& icons,
+                       const icon_manager& icons,
                        entt::dispatcher& dispatcher)
 {
   auto& prefs = get_preferences();

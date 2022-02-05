@@ -34,7 +34,7 @@ WidgetManager::WidgetManager()
 WidgetManager::~WidgetManager() noexcept = default;
 
 void WidgetManager::Update(const Model& model,
-                           const Icons& icons,
+                           const icon_manager& icons,
                            entt::dispatcher& dispatcher)
 {
   mMenuBar->Update(model, dispatcher);

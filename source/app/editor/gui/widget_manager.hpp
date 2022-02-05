@@ -11,7 +11,7 @@
 namespace tactile {
 
 class Model;
-class Icons;
+class icon_manager;
 
 class MenuBar;
 class Toolbar;
@@ -30,7 +30,7 @@ class WidgetManager final {
 
   ~WidgetManager() noexcept;
 
-  void Update(const Model& model, const Icons& icons, entt::dispatcher& dispatcher);
+  void Update(const Model& model, const icon_manager& icons, entt::dispatcher& dispatcher);
 
   void ShowSettings();
 

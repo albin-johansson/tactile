@@ -25,7 +25,7 @@ void RemoveTabBarFromNextWindow()
 }  // namespace
 
 void UpdateViewportWidget(const Model& model,
-                          const Icons& icons,
+                          const icon_manager& icons,
                           entt::dispatcher& dispatcher)
 {
   scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {4, 4}};
