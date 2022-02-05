@@ -86,7 +86,7 @@ struct layer_data final
 struct fancy_animation_frame_data final
 {
   tile_id local_id{};
-  uint32 duration_ms{};
+  uint64 duration_ms{};
 };
 
 struct fancy_tile_data final

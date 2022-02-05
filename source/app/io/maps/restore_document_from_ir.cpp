@@ -188,7 +188,7 @@ void _restore_tile_animation(entt::registry& registry,
 
     auto& frame = registry.emplace<comp::animation_frame>(frameEntity);
     frame.tile = firstGlobalId + frameData.local_id;
-    frame.duration = cen::u32ms{frameData.duration_ms};
+    frame.duration = cen::u64ms{frameData.duration_ms};
 
     animation.frames.push_back(frameEntity);
   }

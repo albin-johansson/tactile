@@ -16,7 +16,7 @@ constexpr int32 _tileset_file_version = 1;
                                           ir::fancy_tile_data& tile) -> parse_error
 {
   tile_id frameTile{};
-  uint32 frameDuration{};
+  uint64 frameDuration{};
 
   if (auto id = node["tile"]) {
     frameTile = id.as<tile_id>();
@@ -26,7 +26,7 @@ constexpr int32 _tileset_file_version = 1;
   }
 
   if (auto duration = node["duration"]) {
-    frameDuration = duration.as<uint32>();
+    frameDuration = duration.as<uint64>();
   }
   else {
     return parse_error::no_animation_frame_duration;
