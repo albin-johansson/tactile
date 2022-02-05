@@ -12,7 +12,7 @@ namespace tactile {
  * https://github.com/ocornut/imgui/issues/2648.
  */
 
-void BeginDockingToolbar(c_str name, int& toolbarAxis)
+void begin_docking_toolbar(const char* name, int& toolbarAxis)
 {
   TACTILE_ASSERT(name);
 
@@ -61,7 +61,7 @@ void BeginDockingToolbar(c_str name, int& toolbarAxis)
   }
 }
 
-void EndDockingToolbar()
+void end_docking_toolbar()
 {
   ImGui::End();
 }

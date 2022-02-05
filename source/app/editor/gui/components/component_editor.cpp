@@ -190,7 +190,7 @@ void ComponentEditor::ShowComponentAttribute(entt::dispatcher& dispatcher,
 
   ImGui::TableNextColumn();
 
-  if (auto updated = Input("##DefaultValue", value)) {
+  if (auto updated = input_attribute("##DefaultValue", value)) {
     dispatcher.enqueue<update_component_def_attr_event>(id, name, std::move(*updated));
   }
 }

@@ -92,7 +92,7 @@ void ShowComponent(entt::dispatcher& dispatcher,
 
         ImGui::TableNextColumn();
 
-        if (auto value = Input("##ComponentAttributeTableValue", attribute)) {
+        if (auto value = input_attribute("##ComponentAttributeTableValue", attribute)) {
           dispatcher.enqueue<update_component_event>(contextId,
                                                      component.type,
                                                      attributeName,

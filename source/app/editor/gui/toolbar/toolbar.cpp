@@ -29,7 +29,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
   constexpr auto bw = 24;
   constexpr auto bh = 24;
 
-  BeginDockingToolbar("Toolbar", axis);
+  begin_docking_toolbar("Toolbar", axis);
   mHasFocus = ImGui::IsWindowFocused();
 
   auto separate = [] {
@@ -170,7 +170,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
   }
 
-  EndDockingToolbar();
+  end_docking_toolbar();
 }
 
 void Toolbar::SetVisible(const bool visible)

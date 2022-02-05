@@ -60,10 +60,10 @@ void PrepareTableRow(const c_str label)
       }
     };
 
-    return InputString("##NativeNameRowInput", name, nullptr, flags, filter);
+    return input_string("##NativeNameRowInput", name, nullptr, flags, filter);
   }
   else {
-    return InputString("##NativeNameRowInput", name, nullptr, flags);
+    return input_string("##NativeNameRowInput", name, nullptr, flags);
   }
 }
 
@@ -72,7 +72,7 @@ void PrepareTableRow(const c_str label)
   PrepareTableRow("Opacity");
 
   ImGui::TableNextColumn();
-  return InputWidget("##NativeOpacityRow", opacity, 0.0f, 1.0f);
+  return input_float("##NativeOpacityRow", opacity, 0.0f, 1.0f);
 }
 
 [[nodiscard]] auto NativeVisibilityRow(const bool visible) -> maybe<bool>
@@ -80,7 +80,7 @@ void PrepareTableRow(const c_str label)
   PrepareTableRow("Visible");
 
   ImGui::TableNextColumn();
-  return InputWidget("##NativeVisibilityRow", visible);
+  return input_bool("##NativeVisibilityRow", visible);
 }
 
 void NativeReadOnlyRow(const c_str label, const c_str value)
@@ -222,7 +222,7 @@ void ShowNativeObjectProperties(const std::string& name,
   PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
-  if (const auto tag = InputString("##NativeObjectTagInput", object.tag)) {
+  if (const auto tag = input_string("##NativeObjectTagInput", object.tag)) {
     dispatcher.enqueue<set_object_tag_event>(object.id, *tag);
   }
 }
@@ -329,37 +329,37 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
     }
 
     if (value.is_string()) {
-      if (const auto updated = InputString("##CustomPropertyInput", value.as_string())) {
+      if (const auto updated = input_string("##CustomPropertyInput", value.as_string())) {
         dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_int()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_int())) {
+      if (const auto updated = input_int("##CustomPropertyInput", value.as_int())) {
         dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_float()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_float())) {
+      if (const auto updated = input_float("##CustomPropertyInput", value.as_float())) {
         dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_bool()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_bool())) {
+      if (const auto updated = input_bool("##CustomPropertyInput", value.as_bool())) {
         dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_color()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_color())) {
+      if (const auto updated = input_color("##CustomPropertyInput", value.as_color())) {
         dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_object()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_object())) {
+      if (const auto updated = input_object("##CustomPropertyInput", value.as_object())) {
         dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_file()) {
-      if (const auto updated = InputFile("##CustomPropertyInput", value.as_file())) {
+      if (const auto updated = input_file("##CustomPropertyInput", value.as_file())) {
         dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
