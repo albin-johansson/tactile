@@ -1,12 +1,12 @@
-#include "xml_tilesets.hpp"
+#include "xml_tileset_parser.hpp"
 
 #include <filesystem>  // weakly_canonical, exists
 #include <utility>     // move
 
 #include "assert.hpp"
 #include "io/maps/xml_utils.hpp"
-#include "xml_attributes.hpp"
-#include "xml_layers.hpp"
+#include "xml_attribute_parser.hpp"
+#include "xml_layer_parser.hpp"
 
 namespace tactile::parsing {
 namespace {

@@ -11,31 +11,31 @@ set(TACTILE_IO_MAPS_PARSER_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/parse_error.cpp
     ${PROJECT_SOURCE_DIR}/parse_error.hpp
 
-    ${PROJECT_SOURCE_DIR}/json/json_attributes.cpp
-    ${PROJECT_SOURCE_DIR}/json/json_attributes.hpp
-    ${PROJECT_SOURCE_DIR}/json/json_layers.cpp
-    ${PROJECT_SOURCE_DIR}/json/json_layers.hpp
+    ${PROJECT_SOURCE_DIR}/json/json_attribute_parser.cpp
+    ${PROJECT_SOURCE_DIR}/json/json_attribute_parser.hpp
+    ${PROJECT_SOURCE_DIR}/json/json_layer_parser.cpp
+    ${PROJECT_SOURCE_DIR}/json/json_layer_parser.hpp
     ${PROJECT_SOURCE_DIR}/json/json_parser.cpp
     ${PROJECT_SOURCE_DIR}/json/json_parser.hpp
-    ${PROJECT_SOURCE_DIR}/json/json_tilesets.cpp
-    ${PROJECT_SOURCE_DIR}/json/json_tilesets.hpp
+    ${PROJECT_SOURCE_DIR}/json/json_tileset_parser.cpp
+    ${PROJECT_SOURCE_DIR}/json/json_tileset_parser.hpp
 
-    ${PROJECT_SOURCE_DIR}/xml/xml_attributes.cpp
-    ${PROJECT_SOURCE_DIR}/xml/xml_attributes.hpp
-    ${PROJECT_SOURCE_DIR}/xml/xml_layers.cpp
-    ${PROJECT_SOURCE_DIR}/xml/xml_layers.hpp
+    ${PROJECT_SOURCE_DIR}/xml/xml_attribute_parser.cpp
+    ${PROJECT_SOURCE_DIR}/xml/xml_attribute_parser.hpp
+    ${PROJECT_SOURCE_DIR}/xml/xml_layer_parser.cpp
+    ${PROJECT_SOURCE_DIR}/xml/xml_layer_parser.hpp
     ${PROJECT_SOURCE_DIR}/xml/xml_parser.cpp
     ${PROJECT_SOURCE_DIR}/xml/xml_parser.hpp
-    ${PROJECT_SOURCE_DIR}/xml/xml_tilesets.cpp
-    ${PROJECT_SOURCE_DIR}/xml/xml_tilesets.hpp
+    ${PROJECT_SOURCE_DIR}/xml/xml_tileset_parser.cpp
+    ${PROJECT_SOURCE_DIR}/xml/xml_tileset_parser.hpp
 
-    ${PROJECT_SOURCE_DIR}/yaml/yaml_attributes.cpp
-    ${PROJECT_SOURCE_DIR}/yaml/yaml_attributes.hpp
-    ${PROJECT_SOURCE_DIR}/yaml/yaml_layers.cpp
-    ${PROJECT_SOURCE_DIR}/yaml/yaml_layers.hpp
+    ${PROJECT_SOURCE_DIR}/yaml/yaml_attribute_parser.cpp
+    ${PROJECT_SOURCE_DIR}/yaml/yaml_attribute_parser.hpp
+    ${PROJECT_SOURCE_DIR}/yaml/yaml_layer_parser.cpp
+    ${PROJECT_SOURCE_DIR}/yaml/yaml_layer_parser.hpp
     ${PROJECT_SOURCE_DIR}/yaml/yaml_parser.cpp
     ${PROJECT_SOURCE_DIR}/yaml/yaml_parser.hpp
-    ${PROJECT_SOURCE_DIR}/yaml/yaml_tilesets.cpp
-    ${PROJECT_SOURCE_DIR}/yaml/yaml_tilesets.hpp
+    ${PROJECT_SOURCE_DIR}/yaml/yaml_tileset_parser.cpp
+    ${PROJECT_SOURCE_DIR}/yaml/yaml_tileset_parser.hpp
 
     PARENT_SCOPE)

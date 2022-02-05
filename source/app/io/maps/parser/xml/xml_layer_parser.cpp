@@ -1,4 +1,4 @@
-#include "xml_layers.hpp"
+#include "xml_layer_parser.hpp"
 
 #include <cstring>  // strcmp
 #include <memory>   // make_unique
@@ -9,7 +9,7 @@
 #include "core/utils/tiles.hpp"
 #include "io/maps/xml_utils.hpp"
 #include "throw.hpp"
-#include "xml_attributes.hpp"
+#include "xml_attribute_parser.hpp"
 
 namespace tactile::parsing {
 namespace {

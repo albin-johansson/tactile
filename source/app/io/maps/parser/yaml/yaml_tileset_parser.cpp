@@ -1,11 +1,11 @@
-#include "yaml_tilesets.hpp"
+#include "yaml_tileset_parser.hpp"
 
 #include <filesystem>  // exists, weakly_canonical
 #include <string>      // string
 #include <utility>     // move
 
-#include "yaml_attributes.hpp"
-#include "yaml_layers.hpp"
+#include "yaml_attribute_parser.hpp"
+#include "yaml_layer_parser.hpp"
 
 namespace tactile::parsing {
 namespace {

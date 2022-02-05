@@ -1,4 +1,4 @@
-#include "json_tilesets.hpp"
+#include "json_tileset_parser.hpp"
 
 #include <filesystem>  // weakly_canonical, exists
 #include <string>      // string
@@ -8,8 +8,8 @@
 
 #include "assert.hpp"
 #include "io/maps/json_utils.hpp"
-#include "json_attributes.hpp"
-#include "json_layers.hpp"
+#include "json_attribute_parser.hpp"
+#include "json_layer_parser.hpp"
 #include "logging.hpp"
 
 namespace tactile::parsing {

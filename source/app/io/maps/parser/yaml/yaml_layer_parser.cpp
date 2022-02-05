@@ -1,4 +1,4 @@
-#include "yaml_layers.hpp"
+#include "yaml_layer_parser.hpp"
 
 #include <algorithm>  // replace
 #include <memory>     // make_unique
@@ -6,7 +6,7 @@
 
 #include "core/utils/strings.hpp"
 #include "core/utils/tiles.hpp"
-#include "yaml_attributes.hpp"
+#include "yaml_attribute_parser.hpp"
 
 namespace tactile::parsing {
 namespace {

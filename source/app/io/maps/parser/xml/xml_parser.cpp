@@ -5,9 +5,9 @@
 #include <pugixml.hpp>
 
 #include "io/maps/xml_utils.hpp"
-#include "xml_attributes.hpp"
-#include "xml_layers.hpp"
-#include "xml_tilesets.hpp"
+#include "xml_attribute_parser.hpp"
+#include "xml_layer_parser.hpp"
+#include "xml_tileset_parser.hpp"
 
 namespace tactile::parsing {
 namespace {
