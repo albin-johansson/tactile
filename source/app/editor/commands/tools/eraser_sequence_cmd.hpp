@@ -1,7 +1,5 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/tile_cache.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -12,9 +10,9 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class EraserSequenceCmd final : public command_base {
+class eraser_sequence_cmd final : public command_base {
  public:
-  EraserSequenceCmd(registry_ref registry, TileCache&& oldState);
+  eraser_sequence_cmd(registry_ref registry, TileCache&& oldState);
 
   void undo() override;
 

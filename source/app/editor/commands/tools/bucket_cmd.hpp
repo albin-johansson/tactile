@@ -2,8 +2,6 @@
 
 #include <vector>  // vector
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/tile_position.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -14,9 +12,9 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class BucketCmd final : public command_base {
+class bucket_cmd final : public command_base {
  public:
-  BucketCmd(registry_ref registry, tile_position origin, tile_id replacement);
+  bucket_cmd(registry_ref registry, tile_position origin, tile_id replacement);
 
   void undo() override;
 

@@ -343,19 +343,19 @@ void application::on_mouse_released(const MouseReleasedEvent& event)
 
 void application::on_stamp_sequence(StampSequenceEvent event)
 {
-  _register<StampSequenceCmd>(mModel,
+  _register<stamp_sequence_cmd>(mModel,
                               std::move(event.old_state),
                               std::move(event.sequence));
 }
 
 void application::on_eraser_sequence(EraserSequenceEvent event)
 {
-  _register<EraserSequenceCmd>(mModel, std::move(event.old_state));
+  _register<eraser_sequence_cmd>(mModel, std::move(event.old_state));
 }
 
 void application::on_flood(const FloodEvent& event)
 {
-  _execute<BucketCmd>(mModel, event.origin, event.replacement);
+  _execute<bucket_cmd>(mModel, event.origin, event.replacement);
 }
 
 void application::on_center_viewport()

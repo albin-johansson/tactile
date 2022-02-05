@@ -8,9 +8,9 @@
 
 namespace tactile {
 
-StampSequenceCmd::StampSequenceCmd(registry_ref registry,
-                                   TileCache&& oldState,
-                                   TileCache&& newState)
+stamp_sequence_cmd::stamp_sequence_cmd(registry_ref registry,
+                                       TileCache&& oldState,
+                                       TileCache&& newState)
     : command_base{"Stamp Sequence"}
     , mRegistry{registry}
     , mLayer{sys::get_active_layer_id(registry).value()}
@@ -18,17 +18,17 @@ StampSequenceCmd::StampSequenceCmd(registry_ref registry,
     , mNewState{std::move(newState)}
 {}
 
-void StampSequenceCmd::undo()
+void stamp_sequence_cmd::undo()
 {
   ApplySequence(mOldState);
 }
 
-void StampSequenceCmd::redo()
+void stamp_sequence_cmd::redo()
 {
   ApplySequence(mNewState);
 }
 
-void StampSequenceCmd::ApplySequence(const TileCache& cache)
+void stamp_sequence_cmd::ApplySequence(const TileCache& cache)
 {
   auto& registry = mRegistry.get();
 

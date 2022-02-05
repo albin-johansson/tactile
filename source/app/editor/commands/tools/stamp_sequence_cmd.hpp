@@ -1,7 +1,5 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/tile_cache.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -12,9 +10,9 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class StampSequenceCmd final : public command_base {
+class stamp_sequence_cmd final : public command_base {
  public:
-  StampSequenceCmd(registry_ref registry, TileCache&& oldState, TileCache&& newState);
+  stamp_sequence_cmd(registry_ref registry, TileCache&& oldState, TileCache&& newState);
 
   void undo() override;
 
