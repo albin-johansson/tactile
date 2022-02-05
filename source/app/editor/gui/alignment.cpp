@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-void CenterNextWindowOnAppearance()
+void center_next_window_on_appearance()
 {
   const auto* viewport = ImGui::GetMainViewport();
   const auto pos = viewport->WorkPos;
@@ -18,7 +18,14 @@ void CenterNextWindowOnAppearance()
   ImGui::SetNextWindowPos(next_pos, ImGuiCond_Appearing, next_pivot);
 }
 
-void PrepareVerticalAlignmentCenter(const float count)
+void center_next_item_horizontally(const float width)
+{
+  const auto region = ImGui::GetContentRegionAvail();
+  const auto halfRegion = region / ImVec2{2.0f, 2.0f};
+  ImGui::SetCursorPos(ImGui::GetCursorPos() + ImVec2{halfRegion.x - (width / 2.0f), 0});
+}
+
+void prepare_vertical_alignment_center(const float count)
 {
   const auto fontSize = ImGui::GetFontSize();
 
@@ -32,26 +39,19 @@ void PrepareVerticalAlignmentCenter(const float count)
   ImGui::SetCursorPos(cursorPos + ImVec2{0, halfRegion.y - (height / 2.0f)});
 }
 
-void AlignNextItemCenteredHorizontally(const float width)
-{
-  const auto region = ImGui::GetContentRegionAvail();
-  const auto halfRegion = region / ImVec2{2.0f, 2.0f};
-  ImGui::SetCursorPos(ImGui::GetCursorPos() + ImVec2{halfRegion.x - (width / 2.0f), 0});
-}
-
-auto AlignNextItemToTheRight(const float width) -> float
+auto right_align_next_item(const float width) -> float
 {
   const auto x = ImGui::GetCursorPosX() + (ImGui::GetContentRegionAvail().x - width);
   ImGui::SetCursorPosX(x);
   return x;
 }
 
-auto AlignNextItemToTheRight(const c_str text) -> float
+auto right_align_next_item(const char* text) -> float
 {
-  return AlignNextItemToTheRight(GetStandardComponentWidth(text));
+  return right_align_next_item(standard_component_width(text));
 }
 
-auto GetStandardComponentWidth(const char* text) -> float
+auto standard_component_width(const char* text) -> float
 {
   TACTILE_ASSERT(text);
   return ImGui::CalcTextSize(text).x + (ImGui::GetStyle().FramePadding.x * 2.0f);

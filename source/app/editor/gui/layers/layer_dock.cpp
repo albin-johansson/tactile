@@ -87,7 +87,7 @@ void LayerDock::Update(const Model& model,
 
     scoped::Group group;
     if (registry.view<comp::layer>().empty()) {
-      PrepareVerticalAlignmentCenter(1);
+      prepare_vertical_alignment_center(1);
       CenteredText("No available layers!");
     }
     else {

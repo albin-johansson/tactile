@@ -10,8 +10,8 @@ auto CenteredButton(const c_str text, const c_str tooltip) -> bool
 {
   TACTILE_ASSERT(text);
 
-  const auto width = GetStandardComponentWidth(text);
-  AlignNextItemCenteredHorizontally(width);
+  const auto width = standard_component_width(text);
+  center_next_item_horizontally(width);
 
   return Button(text, tooltip);
 }

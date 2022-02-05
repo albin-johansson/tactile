@@ -27,7 +27,7 @@ constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoS
   ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS);
   ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS);
 
-  AlignNextItemToTheRight(TAC_ICON_THREE_DOTS);
+  right_align_next_item(TAC_ICON_THREE_DOTS);
   const auto pressed = ImGui::SmallButton(TAC_ICON_THREE_DOTS);
 
   ImGui::PopStyleColor(3);

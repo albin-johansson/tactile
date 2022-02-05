@@ -40,7 +40,7 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
       mTabWidget.Update(registry, dispatcher);
     }
     else {
-      PrepareVerticalAlignmentCenter(2);
+      prepare_vertical_alignment_center(2);
       CenteredText("Current map has no tilesets!");
       ImGui::Spacing();
       if (CenteredButton(TAC_ICON_TILESET " Create tileset...")) {

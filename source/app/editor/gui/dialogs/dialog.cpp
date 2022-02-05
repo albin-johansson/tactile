@@ -15,7 +15,7 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
     mShow = false;
   }
 
-  CenterNextWindowOnAppearance();
+  center_next_window_on_appearance();
 
   constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
   scoped::Modal modal{mTitle, flags};

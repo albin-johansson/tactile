@@ -26,7 +26,7 @@ void DebugMenu::Update()
 void DebugMenu::UpdateWindows()
 {
   if (mShowMetrics) {
-    CenterNextWindowOnAppearance();
+    center_next_window_on_appearance();
     ImGui::ShowMetricsWindow(&mShowMetrics);
   }
 

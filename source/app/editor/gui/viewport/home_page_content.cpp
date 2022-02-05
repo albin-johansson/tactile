@@ -13,11 +13,11 @@ namespace tactile {
 
 void UpdateHomePageContent(const icon_manager& icons, entt::dispatcher& dispatcher)
 {
-  PrepareVerticalAlignmentCenter(4);
+  prepare_vertical_alignment_center(4);
 
   ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2{0, 64});
 
-  AlignNextItemCenteredHorizontally(128);
+  center_next_item_horizontally(128);
   ImGui::Image(to_texture_id(icons.tactile_icon()), {128, 128});
 
   ImGui::Spacing();

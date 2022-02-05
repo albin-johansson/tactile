@@ -38,7 +38,7 @@ void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 void HelpMenu::UpdateWindows()
 {
   if (mShowAboutImGui) {
-    CenterNextWindowOnAppearance();
+    center_next_window_on_appearance();
     ImGui::ShowAboutWindow(&mShowAboutImGui);
   }
 }
