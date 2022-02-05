@@ -27,7 +27,6 @@
 namespace tactile {
 
 using c_str = const char*;
-using c_str = const char*;
 
 using uchar = unsigned char;
 using uint = unsigned int;
