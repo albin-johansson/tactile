@@ -9,12 +9,12 @@
 
 namespace tactile {
 
-class UpdateComponentAttributeCmd final : public command_base {
+class update_component_attr_cmd final : public command_base {
  public:
-  UpdateComponentAttributeCmd(registry_ref registry,
-                              component_id id,
-                              std::string attribute,
-                              attribute_value value);
+  update_component_attr_cmd(registry_ref registry,
+                            component_id id,
+                            std::string attribute,
+                            attribute_value value);
 
   void undo() override;
 

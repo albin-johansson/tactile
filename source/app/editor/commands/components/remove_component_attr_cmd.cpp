@@ -1,4 +1,4 @@
-#include "remove_component_attribute_cmd.hpp"
+#include "remove_component_attr_cmd.hpp"
 
 #include <utility>  // move
 
@@ -6,16 +6,16 @@
 
 namespace tactile {
 
-RemoveComponentAttributeCmd::RemoveComponentAttributeCmd(registry_ref registry,
-                                                         const component_id componentId,
-                                                         std::string attribute)
+remove_component_attr_cmd::remove_component_attr_cmd(registry_ref registry,
+                                                     const component_id componentId,
+                                                     std::string attribute)
     : command_base{"Remove Component Attribute"}
     , mRegistry{registry}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
 {}
 
-void RemoveComponentAttributeCmd::undo()
+void remove_component_attr_cmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::make_component_attribute(registry,
@@ -25,7 +25,7 @@ void RemoveComponentAttributeCmd::undo()
   mPreviousDefault.reset();
 }
 
-void RemoveComponentAttributeCmd::redo()
+void remove_component_attr_cmd::redo()
 {
   auto& registry = mRegistry.get();
   mPreviousDefault =

@@ -636,77 +636,77 @@ void application::on_open_component_editor()
 
 void application::on_create_component_def(const CreateComponentDefEvent& event)
 {
-  _execute<CreateComponentDefCmd>(mModel, event.name);
+  _execute<create_component_def_cmd>(mModel, event.name);
 }
 
 void application::on_remove_component_def(const RemoveComponentDefEvent& event)
 {
-  _execute<RemoveComponentDefCmd>(mModel, event.id);
+  _execute<remove_component_def_cmd>(mModel, event.id);
 }
 
 void application::on_rename_component_def(const RenameComponentDefEvent& event)
 {
-  _execute<RenameComponentCmd>(mModel, event.id, event.name);
+  _execute<rename_component_cmd>(mModel, event.id, event.name);
 }
 
 void application::on_create_component_attribute(
     const CreateComponentAttributeEvent& event)
 {
-  _execute<CreateComponentAttributeCmd>(mModel, event.id, event.name);
+  _execute<create_component_attr_cmd>(mModel, event.id, event.name);
 }
 
 void application::on_remove_component_attribute(
     const RemoveComponentAttributeEvent& event)
 {
-  _execute<RemoveComponentAttributeCmd>(mModel, event.id, event.name);
+  _execute<remove_component_attr_cmd>(mModel, event.id, event.name);
 }
 
 void application::on_rename_component_attribute(
     const RenameComponentAttributeEvent& event)
 {
-  _execute<RenameComponentAttributeCmd>(mModel, event.id, event.previous, event.updated);
+  _execute<rename_component_attr_cmd>(mModel, event.id, event.previous, event.updated);
 }
 
 void application::on_duplicate_component_attribute(
     const DuplicateComponentAttributeEvent& event)
 {
-  _execute<DuplicateComponentAttributeCmd>(mModel, event.id, event.attribute);
+  _execute<duplicate_component_attr_cmd>(mModel, event.id, event.attribute);
 }
 
 void application::on_set_component_attribute_type(
     const SetComponentAttributeTypeEvent& event)
 {
-  _execute<SetComponentAttributeTypeCmd>(mModel, event.id, event.attribute, event.type);
+  _execute<set_component_attr_type_cmd>(mModel, event.id, event.attribute, event.type);
 }
 
 void application::on_update_component_def_attribute(
     const UpdateComponentDefAttributeEvent& event)
 {
-  _execute<UpdateComponentAttributeCmd>(mModel, event.id, event.attribute, event.value);
+  _execute<update_component_attr_cmd>(mModel, event.id, event.attribute, event.value);
 }
 
 void application::on_add_component(const AddComponentEvent& event)
 {
-  _execute<AddComponentCmd>(mModel, event.context, event.component);
+  _execute<add_component_cmd>(mModel, event.context, event.component);
 }
 
 void application::on_remove_component(const RemoveComponentEvent& event)
 {
-  _execute<RemoveComponentCmd>(mModel, event.context, event.component);
+  _execute<remove_component_cmd>(mModel, event.context, event.component);
 }
 
 void application::on_update_component(const UpdateComponentEvent& event)
 {
-  _execute<UpdateComponentCmd>(mModel,
-                               event.context,
-                               event.component,
-                               event.attribute,
-                               event.value);
+  _execute<update_component_cmd>(mModel,
+                                 event.context,
+                                 event.component,
+                                 event.attribute,
+                                 event.value);
 }
 
 void application::on_reset_component_values(const ResetComponentValuesEvent& event)
 {
-  _execute<ResetComponentCmd>(mModel, event.context, event.component);
+  _execute<reset_component_cmd>(mModel, event.context, event.component);
 }
 
 void application::on_toggle_ui()

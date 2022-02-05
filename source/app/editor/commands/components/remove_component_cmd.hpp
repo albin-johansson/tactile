@@ -7,11 +7,11 @@
 
 namespace tactile {
 
-class RemoveComponentCmd final : public command_base {
+class remove_component_cmd final : public command_base {
  public:
-  RemoveComponentCmd(registry_ref registry,
-                     context_id contextId,
-                     component_id componentId);
+  remove_component_cmd(registry_ref registry,
+                       context_id contextId,
+                       component_id componentId);
 
   void undo() override;
 

@@ -9,9 +9,9 @@
 
 namespace tactile {
 
-class RenameComponentCmd final : public command_base {
+class rename_component_cmd final : public command_base {
  public:
-  RenameComponentCmd(registry_ref registry, component_id id, std::string name);
+  rename_component_cmd(registry_ref registry, component_id id, std::string name);
 
   void undo() override;
 

@@ -13,28 +13,28 @@ set(TACTILE_EDITOR_COMMAND_SOURCE_FILES
 
     ${PROJECT_SOURCE_DIR}/components/add_component_cmd.cpp
     ${PROJECT_SOURCE_DIR}/components/add_component_cmd.hpp
-    ${PROJECT_SOURCE_DIR}/components/create_component_attribute_cmd.cpp
-    ${PROJECT_SOURCE_DIR}/components/create_component_attribute_cmd.hpp
+    ${PROJECT_SOURCE_DIR}/components/create_component_attr_cmd.cpp
+    ${PROJECT_SOURCE_DIR}/components/create_component_attr_cmd.hpp
     ${PROJECT_SOURCE_DIR}/components/create_component_def_cmd.cpp
     ${PROJECT_SOURCE_DIR}/components/create_component_def_cmd.hpp
-    ${PROJECT_SOURCE_DIR}/components/duplicate_component_attribute_cmd.cpp
-    ${PROJECT_SOURCE_DIR}/components/duplicate_component_attribute_cmd.hpp
-    ${PROJECT_SOURCE_DIR}/components/remove_component_attribute_cmd.cpp
-    ${PROJECT_SOURCE_DIR}/components/remove_component_attribute_cmd.hpp
+    ${PROJECT_SOURCE_DIR}/components/duplicate_component_attr_cmd.cpp
+    ${PROJECT_SOURCE_DIR}/components/duplicate_component_attr_cmd.hpp
+    ${PROJECT_SOURCE_DIR}/components/remove_component_attr_cmd.cpp
+    ${PROJECT_SOURCE_DIR}/components/remove_component_attr_cmd.hpp
     ${PROJECT_SOURCE_DIR}/components/remove_component_cmd.cpp
     ${PROJECT_SOURCE_DIR}/components/remove_component_cmd.hpp
     ${PROJECT_SOURCE_DIR}/components/remove_component_def_cmd.cpp
     ${PROJECT_SOURCE_DIR}/components/remove_component_def_cmd.hpp
-    ${PROJECT_SOURCE_DIR}/components/rename_component_attribute_cmd.cpp
-    ${PROJECT_SOURCE_DIR}/components/rename_component_attribute_cmd.hpp
+    ${PROJECT_SOURCE_DIR}/components/rename_component_attr_cmd.cpp
+    ${PROJECT_SOURCE_DIR}/components/rename_component_attr_cmd.hpp
     ${PROJECT_SOURCE_DIR}/components/rename_component_cmd.cpp
     ${PROJECT_SOURCE_DIR}/components/rename_component_cmd.hpp
     ${PROJECT_SOURCE_DIR}/components/reset_component_cmd.cpp
     ${PROJECT_SOURCE_DIR}/components/reset_component_cmd.hpp
-    ${PROJECT_SOURCE_DIR}/components/set_component_attribute_type_cmd.cpp
-    ${PROJECT_SOURCE_DIR}/components/set_component_attribute_type_cmd.hpp
-    ${PROJECT_SOURCE_DIR}/components/update_component_attribute_cmd.cpp
-    ${PROJECT_SOURCE_DIR}/components/update_component_attribute_cmd.hpp
+    ${PROJECT_SOURCE_DIR}/components/set_component_attr_type_cmd.cpp
+    ${PROJECT_SOURCE_DIR}/components/set_component_attr_type_cmd.hpp
+    ${PROJECT_SOURCE_DIR}/components/update_component_attr_cmd.cpp
+    ${PROJECT_SOURCE_DIR}/components/update_component_attr_cmd.hpp
     ${PROJECT_SOURCE_DIR}/components/update_component_cmd.cpp
     ${PROJECT_SOURCE_DIR}/components/update_component_cmd.hpp
 

@@ -7,11 +7,11 @@
 
 namespace tactile {
 
-class ResetComponentCmd final : public command_base {
+class reset_component_cmd final : public command_base {
  public:
-  ResetComponentCmd(registry_ref registry,
-                    context_id contextId,
-                    component_id componentId);
+  reset_component_cmd(registry_ref registry,
+                      context_id contextId,
+                      component_id componentId);
 
   void undo() override;
 

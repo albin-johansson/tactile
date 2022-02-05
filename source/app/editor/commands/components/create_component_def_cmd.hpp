@@ -9,9 +9,9 @@
 
 namespace tactile {
 
-class CreateComponentDefCmd final : public command_base {
+class create_component_def_cmd final : public command_base {
  public:
-  CreateComponentDefCmd(registry_ref registry, std::string name);
+  create_component_def_cmd(registry_ref registry, std::string name);
 
   void undo() override;
 
