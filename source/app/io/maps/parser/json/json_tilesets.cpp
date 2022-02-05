@@ -33,8 +33,20 @@ namespace {
 
     for (const auto& [_, frameJson] : iter->items()) {
       auto& frameData = tileData.frames.emplace_back();
-      frameData.local_id = as_int(frameJson, "tileid").value();
-      frameData.duration_ms = as_uint(frameJson, "duration").value();
+
+      if (const auto localId = as_int(frameJson, "tileid")) {
+        frameData.local_id = *localId;
+      }
+      else {
+        return parse_error::no_animation_frame_tile;
+      }
+
+      if (const auto duration = as_uint(frameJson, "duration")) {
+        frameData.duration_ms = *duration;
+      }
+      else {
+        return parse_error::no_animation_frame_duration;
+      }
     }
   }
 
