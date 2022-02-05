@@ -2,8 +2,6 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -11,9 +9,9 @@
 
 namespace tactile {
 
-class ChangePropertyTypeCmd final : public command_base {
+class change_property_type_cmd final : public command_base {
  public:
-  ChangePropertyTypeCmd(registry_ref registry, std::string name, attribute_type type);
+  change_property_type_cmd(registry_ref registry, std::string name, attribute_type type);
 
   void undo() override;
 

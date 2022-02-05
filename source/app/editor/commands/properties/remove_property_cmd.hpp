@@ -2,8 +2,6 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -11,9 +9,9 @@
 
 namespace tactile {
 
-class RemovePropertyCmd final : public command_base {
+class remove_property_cmd final : public command_base {
  public:
-  RemovePropertyCmd(registry_ref registry, std::string name);
+  remove_property_cmd(registry_ref registry, std::string name);
 
   void undo() override;
 

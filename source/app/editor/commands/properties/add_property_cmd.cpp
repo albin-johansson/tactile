@@ -7,9 +7,9 @@
 
 namespace tactile {
 
-AddPropertyCmd::AddPropertyCmd(registry_ref registry,
-                               std::string name,
-                               const attribute_type type)
+add_property_cmd::add_property_cmd(registry_ref registry,
+                                   std::string name,
+                                   const attribute_type type)
     : command_base{"Add Property"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}
@@ -17,13 +17,13 @@ AddPropertyCmd::AddPropertyCmd(registry_ref registry,
     , mType{type}
 {}
 
-void AddPropertyCmd::undo()
+void add_property_cmd::undo()
 {
   auto& context = sys::get_context(mRegistry, mContextId);
   sys::remove_property(mRegistry, context, mName);
 }
 
-void AddPropertyCmd::redo()
+void add_property_cmd::redo()
 {
   auto& context = sys::get_context(mRegistry, mContextId);
   sys::add_property(mRegistry, context, mName, mType);
