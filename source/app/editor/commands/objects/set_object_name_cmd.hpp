@@ -2,17 +2,15 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command_id.hpp"
 #include "object_cmd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class SetObjectNameCmd final : public AObjectCmd {
+class set_object_name_cmd final : public object_cmd {
  public:
-  SetObjectNameCmd(registry_ref registry, object_id id, std::string name);
+  set_object_name_cmd(registry_ref registry, object_id id, std::string name);
 
   void undo() override;
 

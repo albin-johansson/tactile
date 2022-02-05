@@ -552,12 +552,12 @@ void application::on_rename_layer(const RenameLayerEvent& event)
 
 void application::on_set_object_name(const SetObjectNameEvent& event)
 {
-  _execute<SetObjectNameCmd>(mModel, event.id, event.name);
+  _execute<set_object_name_cmd>(mModel, event.id, event.name);
 }
 
 void application::on_move_object(const MoveObjectEvent& event)
 {
-  _register<MoveObjectCmd>(mModel,
+  _register<move_object_cmd>(mModel,
                            event.id,
                            event.old_x,
                            event.old_y,
@@ -567,12 +567,12 @@ void application::on_move_object(const MoveObjectEvent& event)
 
 void application::on_set_object_visibility(const SetObjectVisibilityEvent& event)
 {
-  _execute<SetObjectVisibilityCmd>(mModel, event.id, event.visible);
+  _execute<set_object_visibility_cmd>(mModel, event.id, event.visible);
 }
 
 void application::on_set_object_tag(const SetObjectTagEvent& event)
 {
-  _execute<SetObjectTagCmd>(mModel, event.id, event.tag);
+  _execute<set_object_tag_cmd>(mModel, event.id, event.tag);
 }
 
 void application::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)

@@ -8,13 +8,13 @@
 
 namespace tactile {
 
-AObjectCmd::AObjectCmd(std::string name, registry_ref registry, const object_id id)
+object_cmd::object_cmd(std::string name, registry_ref registry, const object_id id)
     : command_base{std::move(name)}
     , mRegistry{registry}
     , mObjectId{id}
 {}
 
-auto AObjectCmd::GetTargetObjectContext() const -> comp::attribute_context&
+auto object_cmd::target_object_context() const -> comp::attribute_context&
 {
   auto& registry = mRegistry.get();
 
@@ -24,7 +24,7 @@ auto AObjectCmd::GetTargetObjectContext() const -> comp::attribute_context&
   return registry.get<comp::attribute_context>(entity);
 }
 
-auto AObjectCmd::GetTargetObject() -> comp::object&
+auto object_cmd::target_object() -> comp::object&
 {
   auto& registry = mRegistry.get();
 

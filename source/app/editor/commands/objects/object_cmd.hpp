@@ -2,8 +2,6 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
-
 #include "core/components/attribute_context.hpp"
 #include "core/components/object.hpp"
 #include "editor/commands/command.hpp"
@@ -11,16 +9,16 @@
 
 namespace tactile {
 
-class AObjectCmd : public command_base {
+class object_cmd : public command_base {
  public:
-  AObjectCmd(std::string name, registry_ref registry, object_id id);
+  object_cmd(std::string name, registry_ref registry, object_id id);
 
  protected:
-  [[nodiscard]] auto GetTargetObject() -> comp::object&;
+  [[nodiscard]] auto target_object() -> comp::object&;
 
-  [[nodiscard]] auto GetTargetObjectContext() const -> comp::attribute_context&;
+  [[nodiscard]] auto target_object_context() const -> comp::attribute_context&;
 
-  [[nodiscard]] auto GetTargetObjectId() const noexcept -> object_id { return mObjectId; }
+  [[nodiscard]] auto target_object_id() const noexcept -> object_id { return mObjectId; }
 
  private:
   registry_ref mRegistry;
