@@ -1,8 +1,5 @@
 #pragma once
 
-#include <functional>  // less
-#include <map>         // map
-
 #include <entt/entt.hpp>  // registry
 
 #include "core/tile_position.hpp"
@@ -10,21 +7,23 @@
 
 namespace tactile {
 
-class MapCommandCache final {
-  using TileCache = std::map<tile_position, tile_id, std::less<>>;
-  using LayerCache = std::map<layer_id, TileCache, std::less<>>;
+class map_command_cache final {
+  using tile_cache = tree_map<tile_position, tile_id>;
+  using layer_cache = tree_map<layer_id, tile_cache>;
 
  public:
-  void Clear() noexcept;
+  void clear() noexcept;
 
-  void RestoreTiles(entt::registry& registry);
+  void restore_tiles(entt::registry& registry);
 
-  void SaveTiles(const entt::registry& registry, tile_position begin, tile_position end);
+  void save_tiles(const entt::registry& registry,
+                  const tile_position& begin,
+                  const tile_position& end);
 
-  void MergeWith(const MapCommandCache& other);
+  void merge_with(const map_command_cache& other);
 
  private:
-  LayerCache mCache;
+  layer_cache mCache;
 };
 
 }  // namespace tactile

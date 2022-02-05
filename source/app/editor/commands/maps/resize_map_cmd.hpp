@@ -1,7 +1,5 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "map_command_cache.hpp"
@@ -9,9 +7,9 @@
 
 namespace tactile {
 
-class ResizeMapCmd final : public command_base {
+class resize_map_cmd final : public command_base {
  public:
-  ResizeMapCmd(registry_ref registry, usize nRows, usize nCols);
+  resize_map_cmd(registry_ref registry, usize nRows, usize nCols);
 
   void undo() override;
 
@@ -26,11 +24,11 @@ class ResizeMapCmd final : public command_base {
   registry_ref mRegistry;
   usize mRows{};
   usize mCols{};
-  MapCommandCache mCache;
+  map_command_cache mCache;
   maybe<usize> mPrevRows{};
   maybe<usize> mPrevCols{};
 
-  [[nodiscard]] auto IsLossyResize() const -> bool;
+  [[nodiscard]] auto is_lossy_resize() const -> bool;
 };
 
 }  // namespace tactile

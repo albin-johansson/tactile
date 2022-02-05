@@ -5,24 +5,26 @@
 
 namespace tactile {
 
-ResizeMapCmd::ResizeMapCmd(registry_ref registry, const usize nRows, const usize nCols)
+resize_map_cmd::resize_map_cmd(registry_ref registry,
+                               const usize nRows,
+                               const usize nCols)
     : command_base{"Resize Map"}
     , mRegistry{registry}
     , mRows{nRows}
     , mCols{nCols}
 {}
 
-void ResizeMapCmd::undo()
+void resize_map_cmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::resize_map(registry, mPrevRows.value(), mPrevCols.value());
 
-  if (IsLossyResize()) {
-    mCache.RestoreTiles(registry);
+  if (is_lossy_resize()) {
+    mCache.restore_tiles(registry);
   }
 }
 
-void ResizeMapCmd::redo()
+void resize_map_cmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -30,23 +32,23 @@ void ResizeMapCmd::redo()
   mPrevRows = map.row_count;
   mPrevCols = map.column_count;
 
-  if (IsLossyResize()) {
+  if (is_lossy_resize()) {
     const auto rows = map.row_count;
     const auto cols = map.column_count;
 
-    mCache.Clear();
-    mCache.SaveTiles(registry,
-                     tile_position::from(rows - (mPrevRows.value() - mRows), 0u),
-                     tile_position::from(rows, cols));
-    mCache.SaveTiles(registry,
-                     tile_position::from(0u, cols - (mPrevCols.value() - mCols)),
-                     tile_position::from(rows, cols));
+    mCache.clear();
+    mCache.save_tiles(registry,
+                      tile_position::from(rows - (mPrevRows.value() - mRows), 0u),
+                      tile_position::from(rows, cols));
+    mCache.save_tiles(registry,
+                      tile_position::from(0u, cols - (mPrevCols.value() - mCols)),
+                      tile_position::from(rows, cols));
   }
 
   sys::resize_map(registry, mRows, mCols);
 }
 
-auto ResizeMapCmd::IsLossyResize() const -> bool
+auto resize_map_cmd::is_lossy_resize() const -> bool
 {
   return mPrevRows > mRows || mPrevCols > mCols;
 }
