@@ -4,12 +4,12 @@
  * related to validating the behavior of the emitters and parsers.
  */
 
-#include "io/maps/parser/map_parser.hpp"
-
 #include <string_view>  // string_view
 #include <utility>      // pair
 
 #include <gtest/gtest.h>
+
+#include "io/maps/parser/parse_map.hpp"
 
 #define YAML_DIR "test-resources/yaml/"
 #define YAML_ERR "test-resources/yaml/errors/"
@@ -203,10 +203,8 @@ TEST_P(MapParserTest, Parsing)
 {
   const auto [path, expected] = GetParam();
 
-  parsing::map_parser parser;
-  parser.parse_map(path);
-
-  ASSERT_EQ(expected, parser.error());
+  const auto result = parsing::parse_map(path);
+  ASSERT_EQ(expected, result.error());
 }
 
 INSTANTIATE_TEST_SUITE_P(MapParserTests, MapParserTest, cases);

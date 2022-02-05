@@ -23,7 +23,7 @@
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
-#include "io/maps/parser/map_parser.hpp"
+#include "io/maps/parser/parse_map.hpp"
 #include "io/maps/restore_document_from_ir.hpp"
 #include "io/maps/save_document.hpp"
 #include "io/persistence/history.hpp"
@@ -299,15 +299,13 @@ void application::on_open_map(const OpenMapEvent& event)
     return;
   }
 
-  parsing::map_parser parser;
-  parser.parse_map(event.path);
-
-  if (parser.is_okay()) {
-    mModel.AddMap(restore_document_from_ir(parser.data(), mTextures));
+  const auto ir = parsing::parse_map(event.path);
+  if (ir.error() == parsing::parse_error::none) {
+    mModel.AddMap(restore_document_from_ir(ir, mTextures));
     add_file_to_history(event.path);
   }
   else {
-    mWidgets.ShowMapImportErrorDialog(parser.error());
+    mWidgets.ShowMapImportErrorDialog(ir.error());
   }
 }
 

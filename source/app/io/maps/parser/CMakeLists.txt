@@ -4,12 +4,12 @@ project(tactile-app-io-maps-parser CXX)
 
 set(TACTILE_IO_MAPS_PARSER_SOURCE_FILES
 
-    ${PROJECT_SOURCE_DIR}/map_parser.cpp
-    ${PROJECT_SOURCE_DIR}/map_parser.hpp
     ${PROJECT_SOURCE_DIR}/parse_data.cpp
     ${PROJECT_SOURCE_DIR}/parse_data.hpp
     ${PROJECT_SOURCE_DIR}/parse_error.cpp
     ${PROJECT_SOURCE_DIR}/parse_error.hpp
+    ${PROJECT_SOURCE_DIR}/parse_map.cpp
+    ${PROJECT_SOURCE_DIR}/parse_map.hpp
 
     ${PROJECT_SOURCE_DIR}/json/json_attribute_parser.cpp
     ${PROJECT_SOURCE_DIR}/json/json_attribute_parser.hpp

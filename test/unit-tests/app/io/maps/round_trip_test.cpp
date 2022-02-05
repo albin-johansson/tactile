@@ -15,7 +15,7 @@
 #include "io/maps/emitter/json_emitter.hpp"
 #include "io/maps/emitter/xml_emitter.hpp"
 #include "io/maps/emitter/yaml_emitter.hpp"
-#include "io/maps/parser/map_parser.hpp"
+#include "io/maps/parser/parse_map.hpp"
 
 using namespace tactile;
 using namespace std::string_literals;
