@@ -1,17 +1,16 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "map_command_cache.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class RemoveColumnCmd final : public command_base {
+class remove_column_cmd final : public command_base
+{
  public:
-  explicit RemoveColumnCmd(registry_ref registry);
+  explicit remove_column_cmd(registry_ref registry);
 
   void undo() override;
 
@@ -26,7 +25,7 @@ class RemoveColumnCmd final : public command_base {
 
  private:
   registry_ref mRegistry;
-  MapCommandCache mCache;
+  map_command_cache mCache;
   usize mColumns{1};
 };
 

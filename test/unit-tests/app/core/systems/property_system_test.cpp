@@ -10,7 +10,8 @@
 
 using namespace tactile;
 
-class PropertySystemTest : public testing::Test {
+class PropertySystemTest : public testing::Test
+{
  protected:
   void SetUp() override
   {

@@ -4,7 +4,7 @@
 
 #include "core/layer_type.hpp"
 #include "core/utils/texture_manager.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 /// \addtogroup gui
 /// \{
@@ -80,40 +80,36 @@
 
 namespace tactile {
 
-/// \addtogroup gui
-/// \{
-
-/// \name Icon API
-/// \{
-
-class Icons final {
+/**
+ * \brief Manages the few icons that are actually loaded as textures.
+ *
+ * \ingroup gui
+ */
+class icon_manager final
+{
  public:
-  explicit Icons(texture_manager& textures);
+  explicit icon_manager(texture_manager& textures);
 
   /**
    * \brief Returns the icon string literal for the specified layer type.
    *
    * \param type the layer type to obtain the icon for.
    *
-   * \return an icon literal for the specified layer type.
+   * \return a string icon value.
    *
-   * \throws TactileError if the layer type isn't recognized.
+   * \throws tactile_error if the layer type is invalid.
    */
-  [[nodiscard]] auto GetIcon(layer_type type) const -> c_str;
+  [[nodiscard]] auto get_icon(layer_type type) const -> c_str;
 
   /**
    * \brief Returns the texture identifier for the Tactile icon.
    *
-   * \return the OpenGL texture ID for the Tactile icon.
+   * \return a texture identifier.
    */
-  [[nodiscard]] auto GetTactileIcon() const noexcept -> uint { return mTactileIcon; }
+  [[nodiscard]] auto tactile_icon() const noexcept -> uint { return mTactileIcon; }
 
  private:
   uint mTactileIcon{};
 };
-
-/// \} End of icon API
-
-/// \} End of group gui
 
 }  // namespace tactile

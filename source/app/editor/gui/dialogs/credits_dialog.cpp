@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "editor/gui/scoped.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {
@@ -42,7 +42,7 @@ void CreditsDialog::UpdateContents(const Model&, entt::dispatcher&)
       "Tactile is developed using the following open-source libraries.");
   ImGui::Spacing();
 
-  if (scoped::Table table{"##CreditsTable", 2, gTableFlags}; table.IsOpen()) {
+  if (scoped::table table{"##CreditsTable", 2, gTableFlags}; table.is_open()) {
     ImGui::TableSetupColumn("Library");
     ImGui::TableSetupColumn("License");
     ImGui::TableHeadersRow();

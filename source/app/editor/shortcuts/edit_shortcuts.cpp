@@ -16,10 +16,10 @@ UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, gPrimaryModifier} {}
 
 void UndoShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<UndoEvent>();
+  dispatcher.enqueue<undo_event>();
 }
 
-auto UndoShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
+auto UndoShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
   return model.CanUndo();
 }
@@ -28,10 +28,10 @@ RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, gPrimaryModifier} {}
 
 void RedoShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RedoEvent>();
+  dispatcher.enqueue<redo_event>();
 }
 
-auto RedoShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
+auto RedoShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
   return model.CanRedo();
 }
@@ -40,10 +40,10 @@ AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, gSecondaryModifi
 
 void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<AddRowEvent>();
+  dispatcher.enqueue<add_row_event>();
 }
 
-auto AddRowShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
+auto AddRowShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -53,10 +53,10 @@ AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, gSecondary
 
 void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<AddColumnEvent>();
+  dispatcher.enqueue<add_column_event>();
 }
 
-auto AddColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
+auto AddColumnShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
   return model.HasActiveDocument();
 }
@@ -67,10 +67,10 @@ RemoveRowShortcut::RemoveRowShortcut()
 
 void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RemoveRowEvent>();
+  dispatcher.enqueue<remove_row_event>();
 }
 
-auto RemoveRowShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
+auto RemoveRowShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
   if (const auto* registry = model.GetActiveRegistry()) {
     const auto& map = registry->ctx<MapInfo>();
@@ -87,10 +87,10 @@ RemoveColumnShortcut::RemoveColumnShortcut()
 
 void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RemoveColumnEvent>();
+  dispatcher.enqueue<remove_column_event>();
 }
 
-auto RemoveColumnShortcut::IsEnabled(const Model& model, const WidgetManager&) const
+auto RemoveColumnShortcut::IsEnabled(const Model& model, const widget_manager&) const
     -> bool
 {
   if (const auto* registry = model.GetActiveRegistry()) {
@@ -107,10 +107,11 @@ AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, gPrimary
 
 void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<ShowAddTilesetDialogEvent>();
+  dispatcher.enqueue<show_add_tileset_dialog_event>();
 }
 
-auto AddTilesetShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
+auto AddTilesetShortcut::IsEnabled(const Model& model, const widget_manager&) const
+    -> bool
 {
   return model.HasActiveDocument();
 }
@@ -119,39 +120,39 @@ EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}
 
 void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
+  dispatcher.enqueue<select_tool_event>(tool_type::bucket);
 }
 
 auto EnableBucketShortcut::IsEnabled(const Model& model,
-                                     const WidgetManager& widgets) const -> bool
+                                     const widget_manager& widgets) const -> bool
 {
-  return model.IsBucketPossible() && widgets.IsEditorFocused();
+  return model.IsBucketPossible() && widgets.is_editor_focused();
 }
 
 EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
 
 void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
+  dispatcher.enqueue<select_tool_event>(tool_type::eraser);
 }
 
 auto EnableEraserShortcut::IsEnabled(const Model& model,
-                                     const WidgetManager& widgets) const -> bool
+                                     const widget_manager& widgets) const -> bool
 {
-  return model.IsEraserPossible() && widgets.IsEditorFocused();
+  return model.IsEraserPossible() && widgets.is_editor_focused();
 }
 
 EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
 
 void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
+  dispatcher.enqueue<select_tool_event>(tool_type::stamp);
 }
 
 auto EnableStampShortcut::IsEnabled(const Model& model,
-                                    const WidgetManager& widgets) const -> bool
+                                    const widget_manager& widgets) const -> bool
 {
-  return model.IsStampPossible() && widgets.IsEditorFocused();
+  return model.IsStampPossible() && widgets.is_editor_focused();
 }
 
 EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
@@ -160,13 +161,13 @@ EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
 
 void EnableObjectSelectionShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
+  dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
 }
 
 auto EnableObjectSelectionShortcut::IsEnabled(const Model& model,
-                                              const WidgetManager& widgets) const -> bool
+                                              const widget_manager& widgets) const -> bool
 {
-  return model.IsObjectSelectionPossible() && widgets.IsEditorFocused();
+  return model.IsObjectSelectionPossible() && widgets.is_editor_focused();
 }
 
 }  // namespace tactile

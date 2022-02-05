@@ -19,7 +19,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "meta/build.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {
@@ -60,10 +60,10 @@ void PrepareTableRow(const c_str label)
       }
     };
 
-    return InputString("##NativeNameRowInput", name, nullptr, flags, filter);
+    return input_string("##NativeNameRowInput", name, nullptr, flags, filter);
   }
   else {
-    return InputString("##NativeNameRowInput", name, nullptr, flags);
+    return input_string("##NativeNameRowInput", name, nullptr, flags);
   }
 }
 
@@ -72,7 +72,7 @@ void PrepareTableRow(const c_str label)
   PrepareTableRow("Opacity");
 
   ImGui::TableNextColumn();
-  return InputWidget("##NativeOpacityRow", opacity, 0.0f, 1.0f);
+  return input_float("##NativeOpacityRow", opacity, 0.0f, 1.0f);
 }
 
 [[nodiscard]] auto NativeVisibilityRow(const bool visible) -> maybe<bool>
@@ -80,7 +80,7 @@ void PrepareTableRow(const c_str label)
   PrepareTableRow("Visible");
 
   ImGui::TableNextColumn();
-  return InputWidget("##NativeVisibilityRow", visible);
+  return input_bool("##NativeVisibilityRow", visible);
 }
 
 void NativeReadOnlyRow(const c_str label, const c_str value)
@@ -139,7 +139,7 @@ void ShowNativeTilesetProperties(const std::string& name,
 
   if (const auto updatedName = NativeNameRow(name, true);
       updatedName && !updatedName->empty()) {
-    dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
+    dispatcher.enqueue<set_tileset_name_event>(tileset.id, *updatedName);
   }
 
   NativeReadOnlyRow("First tile ID", tileset.first_id);
@@ -173,11 +173,11 @@ void ShowNativeLayerProperties(const comp::layer& layer, entt::dispatcher& dispa
   }
 
   if (const auto value = NativeOpacityRow(layer.opacity)) {
-    dispatcher.enqueue<SetLayerOpacityEvent>(layer.id, *value);
+    dispatcher.enqueue<set_layer_opacity_event>(layer.id, *value);
   }
 
   if (const auto value = NativeVisibilityRow(layer.visible)) {
-    dispatcher.enqueue<SetLayerVisibleEvent>(layer.id, *value);
+    dispatcher.enqueue<set_layer_visible_event>(layer.id, *value);
   }
 }
 
@@ -204,7 +204,7 @@ void ShowNativeObjectProperties(const std::string& name,
   }
 
   if (const auto updatedName = NativeNameRow(name)) {
-    dispatcher.enqueue<SetObjectNameEvent>(object.id, *updatedName);
+    dispatcher.enqueue<set_object_name_event>(object.id, *updatedName);
   }
 
   NativeReadOnlyRow("X", object.x);
@@ -216,14 +216,14 @@ void ShowNativeObjectProperties(const std::string& name,
   }
 
   if (const auto visible = NativeVisibilityRow(object.visible)) {
-    dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, *visible);
+    dispatcher.enqueue<set_object_visibility_event>(object.id, *visible);
   }
 
   PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
-  if (const auto tag = InputString("##NativeObjectTagInput", object.tag)) {
-    dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
+  if (const auto tag = input_string("##NativeObjectTagInput", object.tag)) {
+    dispatcher.enqueue<set_object_tag_event>(object.id, *tag);
   }
 }
 
@@ -237,7 +237,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   const auto& current = registry.ctx<comp::active_attribute_context>();
   const auto& context = sys::current_context(registry);
 
-  if (scoped::Table table{"##PropertyTable", 2, flags}; table.IsOpen()) {
+  if (scoped::table table{"##PropertyTable", 2, flags}; table.is_open()) {
     if (current.entity == entt::null) {
       ShowNativeMapProperties(context.name, registry.ctx<MapInfo>());
     }
@@ -257,8 +257,8 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
     ShowCustomProperties(registry, dispatcher, context, isItemContextOpen);
 
     if (!isItemContextOpen) {
-      if (auto popup = scoped::Popup::ForWindow("##PropertyTableContext");
-          popup.IsOpen()) {
+      if (auto popup = scoped::popup::for_window("##PropertyTableContext");
+          popup.is_open()) {
         mContextState.show_add_dialog =
             ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
       }
@@ -266,12 +266,12 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   }
 
   if (mContextState.show_add_dialog) {
-    dispatcher.enqueue<ShowAddPropertyDialogEvent>();
+    dispatcher.enqueue<show_add_property_dialog_event>();
     mContextState.show_add_dialog = false;
   }
 
   if (mContextState.show_rename_dialog) {
-    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(mRenameTarget.value());
+    dispatcher.enqueue<show_rename_property_dialog_event>(mRenameTarget.value());
     mRenameTarget.reset();
     mContextState.show_rename_dialog = false;
   }
@@ -279,7 +279,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   if (mContextState.show_change_type_dialog) {
     const auto& name = mChangeTypeTarget.value();
     const auto type = sys::get_property(registry, context, name).value.type();
-    dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(name, type);
+    dispatcher.enqueue<show_change_property_type_dialog_event>(name, type);
     mChangeTypeTarget.reset();
     mContextState.show_change_type_dialog = false;
   }
@@ -298,7 +298,7 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
     const auto& name = property.name;
     const auto& value = property.value;
 
-    const scoped::ID scope{name.c_str()};
+    const scoped::id scope{name.c_str()};
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();
@@ -329,38 +329,38 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
     }
 
     if (value.is_string()) {
-      if (const auto updated = InputString("##CustomPropertyInput", value.as_string())) {
-        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+      if (const auto updated = input_string("##CustomPropertyInput", value.as_string())) {
+        dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_int()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_int())) {
-        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+      if (const auto updated = input_int("##CustomPropertyInput", value.as_int())) {
+        dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_float()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_float())) {
-        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+      if (const auto updated = input_float("##CustomPropertyInput", value.as_float())) {
+        dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_bool()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_bool())) {
-        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+      if (const auto updated = input_bool("##CustomPropertyInput", value.as_bool())) {
+        dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_color()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_color())) {
-        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+      if (const auto updated = input_color("##CustomPropertyInput", value.as_color())) {
+        dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_object()) {
-      if (const auto updated = InputWidget("##CustomPropertyInput", value.as_object())) {
-        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+      if (const auto updated = input_object("##CustomPropertyInput", value.as_object())) {
+        dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
     else if (value.is_file()) {
-      if (const auto updated = InputFile("##CustomPropertyInput", value.as_file())) {
-        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+      if (const auto updated = input_file("##CustomPropertyInput", value.as_file())) {
+        dispatcher.enqueue<update_property_event>(name, *updated);
       }
     }
 

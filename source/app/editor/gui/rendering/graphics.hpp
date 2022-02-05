@@ -4,7 +4,7 @@
 #include <imgui.h>
 
 #include "core/region.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
@@ -13,7 +13,8 @@ struct RenderInfo;
 /**
  * \brief Provides a common simplified rendering API.
  */
-class graphics_ctx final {
+class graphics_ctx final
+{
  public:
   explicit graphics_ctx(const RenderInfo& info);
 

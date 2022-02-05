@@ -3,63 +3,63 @@
 #include <string>  // string
 
 #include "core/layer_type.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 /// \addtogroup events
 /// \{
 
-struct AddLayerEvent final
+struct add_layer_event final
 {
-  layer_type type;
+  layer_type type{};
 };
 
-struct RemoveLayerEvent final
+struct remove_layer_event final
 {
-  layer_id id;
+  layer_id id{};
 };
 
-struct DuplicateLayerEvent final
+struct duplicate_layer_event final
 {
-  layer_id id;
+  layer_id id{};
 };
 
-struct SelectLayerEvent final
+struct select_layer_event final
 {
-  layer_id id;
+  layer_id id{};
 };
 
-struct MoveLayerUpEvent final
+struct move_layer_up_event final
 {
-  layer_id id;
+  layer_id id{};
 };
 
-struct MoveLayerDownEvent final
+struct move_layer_down_event final
 {
-  layer_id id;
+  layer_id id{};
 };
 
-struct SetLayerOpacityEvent final
+struct set_layer_opacity_event final
 {
-  layer_id id;
+  layer_id id{};
   float opacity{};
 };
 
-struct SetLayerVisibleEvent final
+struct set_layer_visible_event final
 {
-  layer_id id;
+  layer_id id{};
   bool visible{};
 };
 
-struct OpenRenameLayerDialogEvent final
+struct open_rename_layer_dialog_event final
 {
-  layer_id id;
+  layer_id id{};
 };
 
-struct RenameLayerEvent final
+struct rename_layer_event final
 {
-  layer_id id;
+  layer_id id{};
   std::string name;
 };
 

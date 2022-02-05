@@ -18,7 +18,7 @@
 #include "io/persistence/preferences.hpp"
 #include "layer_item.hpp"
 #include "misc/assert.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {
@@ -34,39 +34,39 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
     activeLayerId = layer.id;
   }
 
-  scoped::Group group;
+  scoped::group group;
 
-  if (Button(TAC_ICON_ADD, "Add new layer")) {
+  if (button(TAC_ICON_ADD, "Add new layer")) {
     OpenAddLayerPopup();
   }
 
   UpdateAddLayerPopup(dispatcher);
 
-  if (Button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
-    dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
+  if (button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
+    dispatcher.enqueue<remove_layer_event>(*activeLayerId);
   }
 
-  if (Button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
-    dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
+  if (button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
+    dispatcher.enqueue<duplicate_layer_event>(*activeLayerId);
   }
 
-  if (Button(TAC_ICON_MOVE_UP,
+  if (button(TAC_ICON_MOVE_UP,
              "Move layer up",
              hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
-    dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
+    dispatcher.enqueue<move_layer_up_event>(*activeLayerId);
   }
 
-  if (Button(TAC_ICON_MOVE_DOWN,
+  if (button(TAC_ICON_MOVE_DOWN,
              "Move layer down",
              hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
-    dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
+    dispatcher.enqueue<move_layer_down_event>(*activeLayerId);
   }
 }
 
 }  // namespace
 
 void LayerDock::Update(const Model& model,
-                       const Icons& icons,
+                       const icon_manager& icons,
                        entt::dispatcher& dispatcher)
 {
   auto& prefs = get_preferences();
@@ -76,23 +76,23 @@ void LayerDock::Update(const Model& model,
     return;
   }
 
-  scoped::Window dock{"Layers", ImGuiWindowFlags_NoCollapse, &visible};
-  mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
+  scoped::window dock{"Layers", ImGuiWindowFlags_NoCollapse, &visible};
+  mHasFocus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   const auto& registry = model.GetActiveRegistryRef();
 
-  if (dock.IsOpen()) {
+  if (dock.is_open()) {
     UpdateLayerDockButtons(registry, dispatcher);
     ImGui::SameLine();
 
-    scoped::Group group;
+    scoped::group group;
     if (registry.view<comp::layer>().empty()) {
-      PrepareVerticalAlignmentCenter(1);
-      CenteredText("No available layers!");
+      prepare_vertical_alignment_center(1);
+      centered_text("No available layers!");
     }
     else {
       const ImVec2 size{-min_float, -min_float};
-      if (scoped::ListBox list{"##LayerTreeNode", size}; list.IsOpen()) {
+      if (scoped::list_box list{"##LayerTreeNode", size}; list.is_open()) {
         for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
           /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
              other components in the view query directly. */

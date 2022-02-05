@@ -9,7 +9,8 @@ namespace tactile {
 class Model;
 class CreateTilesetDialog;
 
-class MapMenu final {
+class MapMenu final
+{
  public:
   MapMenu();
 

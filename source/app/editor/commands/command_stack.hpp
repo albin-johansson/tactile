@@ -7,17 +7,17 @@
 
 #include "command.hpp"
 #include "core/utils/sfinae.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-/// \addtogroup commands
-/// \{
-
 /**
  * \brief Manages a history of commands.
+ *
+ * \ingroup commands
  */
-class command_stack final {
+class command_stack final
+{
  public:
   command_stack();
 
@@ -194,7 +194,5 @@ class command_stack final {
 
   void remove_commands_after_current_index();
 };
-
-/// \} End of group commands
 
 }  // namespace tactile

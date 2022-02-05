@@ -4,11 +4,12 @@
 
 #include "core/attribute_value.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class AddPropertyDialog final : public ADialog {
+class AddPropertyDialog final : public ADialog
+{
  public:
   AddPropertyDialog();
 

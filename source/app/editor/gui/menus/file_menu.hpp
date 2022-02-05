@@ -11,7 +11,8 @@ class Model;
 /// \addtogroup gui
 /// \{
 
-class FileMenu final {
+class FileMenu final
+{
  public:
   void Update(const Model& model, entt::dispatcher& dispatcher);
 

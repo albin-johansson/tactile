@@ -4,15 +4,16 @@
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class DuplicateComponentAttributeCmd final : public command_base {
+class duplicate_component_attr_cmd final : public command_base
+{
  public:
-  DuplicateComponentAttributeCmd(registry_ref registry,
-                                 component_id componentId,
-                                 std::string attribute);
+  duplicate_component_attr_cmd(registry_ref registry,
+                               component_id componentId,
+                               std::string attribute);
 
   void undo() override;
 

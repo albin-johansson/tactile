@@ -10,7 +10,7 @@
 #include <centurion.hpp>
 
 #include "misc/assert.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
@@ -20,7 +20,8 @@ namespace tactile {
 /**
  * \brief Represents the different possible attributes types.
  */
-enum class attribute_type {
+enum class attribute_type
+{
   string,    ///< A string property.
   integer,   ///< An integer property.
   floating,  ///< A floating-point property.
@@ -60,7 +61,8 @@ concept is_attribute_type = std::same_as<T, std::string> ||  //
 /**
  * \brief Represents an "attribute" value, used by both property and component facilities.
  */
-class attribute_value final {
+class attribute_value final
+{
  public:
   using string_type = std::string;
   using integer_type = int32;

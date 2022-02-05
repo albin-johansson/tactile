@@ -5,25 +5,25 @@
 
 namespace tactile {
 
-AddRowCmd::AddRowCmd(registry_ref registry)
+add_row_cmd::add_row_cmd(registry_ref registry)
     : command_base{"Add Row(s)"}
     , mRegistry{registry}
 {}
 
-void AddRowCmd::undo()
+void add_row_cmd::undo()
 {
   invoke_n(mRows, [this] { sys::remove_row_from_map(mRegistry); });
 }
 
-void AddRowCmd::redo()
+void add_row_cmd::redo()
 {
   invoke_n(mRows, [this] { sys::add_row_to_map(mRegistry); });
 }
 
-auto AddRowCmd::merge_with(const command_base& cmd) -> bool
+auto add_row_cmd::merge_with(const command_base& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const AddRowCmd&>(cmd);
+    const auto& other = dynamic_cast<const add_row_cmd&>(cmd);
     mRows += other.mRows;
     return true;
   }

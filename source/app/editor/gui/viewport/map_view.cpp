@@ -96,15 +96,15 @@ void UpdateCursorGizmos(const entt::registry& registry,
 
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(),
                                  ImGui::GetWindowPos() + ImGui::GetWindowSize())) {
-    CheckFor<MousePressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    CheckFor<mouse_pressed_event>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseClicked(button);
     });
 
-    CheckFor<MouseDragEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    CheckFor<mouse_drag_event>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseDragging(button);
     });
 
-    CheckFor<MouseReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    CheckFor<mouse_released_event>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseReleased(button);
     });
   }
@@ -121,10 +121,10 @@ void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
 
-  if (const auto popup = scoped::Popup::ForItem("##MapViewContextMenu", flags);
-      popup.IsOpen()) {
+  if (const auto popup = scoped::popup::for_item("##MapViewContextMenu", flags);
+      popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
-      dispatcher.enqueue<ShowMapPropertiesEvent>();
+      dispatcher.enqueue<inspect_map_event>();
     }
 
     ImGui::Separator();
@@ -184,36 +184,36 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 void UpdateMapViewObjectContextMenu(const entt::registry& registry,
                                     entt::dispatcher& dispatcher)
 {
-  if (scoped::Popup popup{"##MapViewObjectContextMenu"}; popup.IsOpen()) {
+  if (scoped::popup popup{"##MapViewObjectContextMenu"}; popup.is_open()) {
     const auto active = registry.ctx<comp::active_object>();
 
     TACTILE_ASSERT(active.entity != entt::null);
     const auto& object = registry.get<comp::object>(active.entity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
-      dispatcher.enqueue<InspectContextEvent>(active.entity);
+      dispatcher.enqueue<inspect_context_event>(active.entity);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Object Visibility",
                         nullptr,
                         object.visible)) {
-      dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, !object.visible);
+      dispatcher.enqueue<set_object_visibility_event>(object.id, !object.visible);
     }
 
     // TODO implement the object actions
-    scoped::Disable disable;
+    scoped::disable disable;
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
-      dispatcher.enqueue<DuplicateObjectEvent>(object.id);
+      dispatcher.enqueue<duplicate_object_event>(object.id);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
-      dispatcher.enqueue<RemoveObjectEvent>(object.id);
+      dispatcher.enqueue<remove_object_event>(object.id);
     }
   }
 }

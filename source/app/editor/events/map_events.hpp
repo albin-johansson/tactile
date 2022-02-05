@@ -2,32 +2,32 @@
 
 #include <filesystem>  // path
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 /// \addtogroup events
 /// \{
 
-struct ShowNewMapDialogEvent final
+struct show_new_map_dialog_event final
 {};
 
-struct ShowOpenMapDialogEvent final
+struct show_open_map_dialog_event final
 {};
 
-struct AddRowEvent final
+struct add_row_event final
 {};
 
-struct AddColumnEvent final
+struct add_column_event final
 {};
 
-struct RemoveRowEvent final
+struct remove_row_event final
 {};
 
-struct RemoveColumnEvent final
+struct remove_column_event final
 {};
 
-struct CreateMapEvent final
+struct create_map_event final
 {
   int32 tile_width{};
   int32 tile_height{};
@@ -35,28 +35,28 @@ struct CreateMapEvent final
   usize column_count{};
 };
 
-struct CloseMapEvent final
+struct close_map_event final
 {
-  map_id id;
+  map_id id{};
 };
 
-struct OpenMapEvent final
+struct open_map_event final
 {
   std::filesystem::path path;
 };
 
-struct SelectMapEvent final
+struct select_map_event final
 {
   map_id id;
 };
 
-struct ShowMapPropertiesEvent final
+struct inspect_map_event final
 {};
 
-struct OpenResizeMapDialogEvent final
+struct open_resize_map_dialog_event final
 {};
 
-struct ResizeMapEvent final
+struct resize_map_event final
 {
   usize row_count{};
   usize col_count{};

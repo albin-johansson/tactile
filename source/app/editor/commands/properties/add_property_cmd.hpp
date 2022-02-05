@@ -2,18 +2,17 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class AddPropertyCmd final : public command_base {
+class add_property_cmd final : public command_base
+{
  public:
-  AddPropertyCmd(registry_ref registry, std::string name, attribute_type type);
+  add_property_cmd(registry_ref registry, std::string name, attribute_type type);
 
   void undo() override;
 

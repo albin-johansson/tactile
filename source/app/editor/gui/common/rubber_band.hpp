@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/region.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 struct ImVec2;
 
@@ -17,7 +17,7 @@ namespace tactile {
  *
  * \return the current selection; `nothing` if there is none.
  */
-[[nodiscard]] auto RubberBand(const ImVec2& offset, const ImVec2& tileSize)
+[[nodiscard]] auto rubber_band(const ImVec2& offset, const ImVec2& tileSize)
     -> maybe<Region>;
 
 }  // namespace tactile

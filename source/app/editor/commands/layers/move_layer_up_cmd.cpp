@@ -5,13 +5,13 @@
 
 namespace tactile {
 
-MoveLayerUpCmd::MoveLayerUpCmd(registry_ref registry, const layer_id id)
+move_layer_up_cmd::move_layer_up_cmd(registry_ref registry, const layer_id id)
     : command_base{"Move Layer Up"}
     , mRegistry{registry}
     , mLayerId{id}
 {}
 
-void MoveLayerUpCmd::undo()
+void move_layer_up_cmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -19,7 +19,7 @@ void MoveLayerUpCmd::undo()
   sys::move_layer_down(registry, entity);
 }
 
-void MoveLayerUpCmd::redo()
+void move_layer_up_cmd::redo()
 {
   auto& registry = mRegistry.get();
 

@@ -6,7 +6,8 @@ namespace tactile {
 
 class Model;
 
-class Toolbar final {
+class Toolbar final
+{
  public:
   void Update(const Model& model, entt::dispatcher& dispatcher);
 

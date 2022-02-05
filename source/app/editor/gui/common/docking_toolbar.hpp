@@ -1,11 +1,11 @@
 #pragma once
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-void BeginDockingToolbar(c_str name, int& axis);
+void begin_docking_toolbar(const char* name, int& axis);
 
-void EndDockingToolbar();
+void end_docking_toolbar();
 
 }  // namespace tactile

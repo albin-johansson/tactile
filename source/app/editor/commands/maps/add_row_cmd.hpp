@@ -1,16 +1,15 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class AddRowCmd final : public command_base {
+class add_row_cmd final : public command_base
+{
  public:
-  explicit AddRowCmd(registry_ref registry);
+  explicit add_row_cmd(registry_ref registry);
 
   void undo() override;
 

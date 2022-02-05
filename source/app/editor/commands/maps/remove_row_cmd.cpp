@@ -6,18 +6,18 @@
 
 namespace tactile {
 
-RemoveRowCmd::RemoveRowCmd(registry_ref registry)
+remove_row_cmd::remove_row_cmd(registry_ref registry)
     : command_base{"Remove Row(s)"}
     , mRegistry{registry}
 {}
 
-void RemoveRowCmd::undo()
+void remove_row_cmd::undo()
 {
   invoke_n(mRows, [this] { sys::add_row_to_map(mRegistry); });
-  mCache.RestoreTiles(mRegistry);
+  mCache.restore_tiles(mRegistry);
 }
 
-void RemoveRowCmd::redo()
+void remove_row_cmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -25,19 +25,19 @@ void RemoveRowCmd::redo()
   const auto begin = tile_position::from(map.row_count - mRows - 1u, 0u);
   const auto end = tile_position::from(map.row_count, map.column_count);
 
-  mCache.Clear();
-  mCache.SaveTiles(mRegistry, begin, end);
+  mCache.clear();
+  mCache.save_tiles(mRegistry, begin, end);
 
   invoke_n(mRows, [this] { sys::remove_row_from_map(mRegistry); });
 }
 
-auto RemoveRowCmd::merge_with(const command_base& cmd) -> bool
+auto remove_row_cmd::merge_with(const command_base& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const RemoveRowCmd&>(cmd);
+    const auto& other = dynamic_cast<const remove_row_cmd&>(cmd);
 
     mRows += other.mRows;
-    mCache.MergeWith(other.mCache);
+    mCache.merge_with(other.mCache);
 
     return true;
   }

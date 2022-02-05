@@ -4,48 +4,48 @@
 #include "core/tile_cache.hpp"
 #include "core/tile_position.hpp"
 #include "core/tool_type.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 /// \addtogroup events
 /// \{
 
-struct MousePressedEvent final
+struct mouse_pressed_event final
 {
   mouse_info info;
 };
 
-struct MouseDragEvent final
+struct mouse_drag_event final
 {
   mouse_info info;
 };
 
-struct MouseReleasedEvent final
+struct mouse_released_event final
 {
   mouse_info info;
 };
 
-struct SelectToolEvent final
+struct select_tool_event final
 {
-  tool_type type;
+  tool_type type{};
 };
 
-struct StampSequenceEvent final
+struct stamp_sequence_event final
 {
   TileCache old_state;
   TileCache sequence;
 };
 
-struct EraserSequenceEvent final
+struct eraser_sequence_event final
 {
   TileCache old_state;
 };
 
-struct FloodEvent final
+struct flood_event final
 {
   tile_position origin;
-  tile_id replacement;
+  tile_id replacement{};
 };
 
 /// \} End of group events

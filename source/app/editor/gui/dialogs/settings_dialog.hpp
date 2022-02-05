@@ -2,14 +2,15 @@
 
 #include "dialog.hpp"
 #include "io/persistence/preferences.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 /// \addtogroup gui
 /// \{
 
-class SettingsDialog final : public ADialog {
+class SettingsDialog final : public ADialog
+{
  public:
   TACTILE_DEFAULT_COPY(SettingsDialog)
   TACTILE_DEFAULT_MOVE(SettingsDialog)

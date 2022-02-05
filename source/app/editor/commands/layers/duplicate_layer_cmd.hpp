@@ -1,16 +1,15 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class DuplicateLayerCmd final : public command_base {
+class duplicate_layer_cmd final : public command_base
+{
  public:
-  DuplicateLayerCmd(registry_ref registry, layer_id id);
+  duplicate_layer_cmd(registry_ref registry, layer_id id);
 
   void undo() override;
 

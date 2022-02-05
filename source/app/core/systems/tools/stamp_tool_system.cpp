@@ -12,7 +12,7 @@
 #include "core/tile_position.hpp"
 #include "editor/events/tool_events.hpp"
 #include "misc/assert.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -89,7 +89,7 @@ void StampToolOnReleased(entt::registry& registry,
                          const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    dispatcher.enqueue<StampSequenceEvent>(std::move(gOldState), std::move(gSequence));
+    dispatcher.enqueue<stamp_sequence_event>(std::move(gOldState), std::move(gSequence));
   }
 }
 

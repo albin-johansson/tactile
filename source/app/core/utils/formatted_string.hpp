@@ -7,12 +7,13 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 template <usize Capacity = 128>
-class formatted_string final {
+class formatted_string final
+{
  public:
   template <typename... Args>
   explicit formatted_string(const std::string_view fmt, const Args&... args)

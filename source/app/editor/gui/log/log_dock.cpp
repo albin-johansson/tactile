@@ -8,7 +8,7 @@
 #include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {
@@ -59,7 +59,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
   }
 
   ImGui::SetNextItemWidth(comboWidth);
-  if (scoped::Combo filterCombo{"##LogFilterCombo", filter}; filterCombo.IsOpen()) {
+  if (scoped::combo filterCombo{"##LogFilterCombo", filter}; filterCombo.is_open()) {
     if (ImGui::MenuItem(verboseFilter)) {
       return log_level::verbose;
     }
@@ -112,8 +112,8 @@ void ShowColorLegendHint()
   ImGui::TextDisabled("(?)");
 
   if (ImGui::IsItemHovered()) {
-    scoped::StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
-    scoped::Tooltip tooltip;
+    scoped::style_color bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+    scoped::tooltip tooltip;
 
     static const auto verboseColor = GetColorForLevel(log_level::verbose);
     static const auto debugColor = GetColorForLevel(log_level::debug);
@@ -131,9 +131,9 @@ void ShowColorLegendHint()
 
 void ShowLogContents(const log_level filter)
 {
-  scoped::StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+  scoped::style_color childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
-  if (scoped::Child pane{"##LogPane", {}, true, gChildFlags}; pane.IsOpen()) {
+  if (scoped::child pane{"##LogPane", {}, true, gChildFlags}; pane.is_open()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(log_size(filter)));
 
@@ -158,10 +158,10 @@ void LogDock::Update()
     return;
   }
 
-  scoped::Window dock{"Log", gWindowFlags, &visible};
-  mHasFocus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
+  scoped::window dock{"Log", gWindowFlags, &visible};
+  mHasFocus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
-  if (dock.IsOpen()) {
+  if (dock.is_open()) {
     if (const auto level = ShowLogLevelFilterCombo(mLogLevel)) {
       mLogLevel = *level;
     }
@@ -173,10 +173,10 @@ void LogDock::Update()
       ShowLogContents(mLogLevel);
     }
     else {
-      CenteredText("No logged messages match the current filter.");
+      centered_text("No logged messages match the current filter.");
     }
 
-    if (auto popup = scoped::Popup::ForWindow("##LogDockContext"); popup.IsOpen()) {
+    if (auto popup = scoped::popup::for_window("##LogDockContext"); popup.is_open()) {
       if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
         clear_log_history();
       }

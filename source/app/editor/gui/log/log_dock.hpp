@@ -4,7 +4,8 @@
 
 namespace tactile {
 
-class LogDock final {
+class LogDock final
+{
  public:
   void Update();
 

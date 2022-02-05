@@ -13,7 +13,7 @@ namespace tactile {
 
 void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::Menu menu{"Help"}; menu.IsOpen()) {
+  if (scoped::menu menu{"Help"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
       mAboutDialog.Open();
     }
@@ -38,7 +38,7 @@ void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 void HelpMenu::UpdateWindows()
 {
   if (mShowAboutImGui) {
-    CenterNextWindowOnAppearance();
+    center_next_window_on_appearance();
     ImGui::ShowAboutWindow(&mShowAboutImGui);
   }
 }

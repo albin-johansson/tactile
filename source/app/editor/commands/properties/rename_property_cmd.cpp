@@ -7,9 +7,9 @@
 
 namespace tactile {
 
-RenamePropertyCmd::RenamePropertyCmd(registry_ref registry,
-                                     std::string oldName,
-                                     std::string newName)
+rename_property_cmd::rename_property_cmd(registry_ref registry,
+                                         std::string oldName,
+                                         std::string newName)
     : command_base{"Rename Property"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}
@@ -17,13 +17,13 @@ RenamePropertyCmd::RenamePropertyCmd(registry_ref registry,
     , mNewName{std::move(newName)}
 {}
 
-void RenamePropertyCmd::undo()
+void rename_property_cmd::undo()
 {
   auto& context = sys::get_context(mRegistry, mContextId);
   sys::rename_property(mRegistry, context, mNewName, mOldName);
 }
 
-void RenamePropertyCmd::redo()
+void rename_property_cmd::redo()
 {
   auto& context = sys::get_context(mRegistry, mContextId);
   sys::rename_property(mRegistry, context, mOldName, mNewName);

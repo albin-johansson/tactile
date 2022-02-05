@@ -8,12 +8,13 @@
 
 namespace tactile {
 
-class SetComponentAttributeTypeCmd final : public command_base {
+class set_component_attr_type_cmd final : public command_base
+{
  public:
-  SetComponentAttributeTypeCmd(registry_ref registry,
-                               component_id id,
-                               std::string attribute,
-                               attribute_type type);
+  set_component_attr_type_cmd(registry_ref registry,
+                              component_id id,
+                              std::string attribute,
+                              attribute_type type);
 
   void undo() override;
 

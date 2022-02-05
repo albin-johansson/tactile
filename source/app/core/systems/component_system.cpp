@@ -115,6 +115,7 @@ auto remove_component_def(entt::registry& registry, const component_id id)
   const auto [defEntity, def] = get_component_def(registry, id);
 
   remove_component_def_result result;
+  result.id = id;
   result.name = def.name;
   result.attributes = def.attributes;
 

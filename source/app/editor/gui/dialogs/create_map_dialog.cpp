@@ -6,7 +6,7 @@
 #include "editor/gui/alignment.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
@@ -32,7 +32,7 @@ void CreateMapDialog::UpdateContents(const Model&, entt::dispatcher&)
   {
     c_str rowsLabel = "Rows:";
     c_str columnsLabel = "Columns:";
-    const auto offset = GetMinimumOffsetToAlign(rowsLabel, columnsLabel);
+    const auto offset = minimum_offset_to_align(rowsLabel, columnsLabel);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(rowsLabel);
@@ -50,7 +50,7 @@ void CreateMapDialog::UpdateContents(const Model&, entt::dispatcher&)
   {
     c_str tileWidthLabel = "Tile width:";
     c_str tileHeightLabel = "Tile height:";
-    const auto offset = GetMinimumOffsetToAlign(tileWidthLabel, tileHeightLabel);
+    const auto offset = minimum_offset_to_align(tileWidthLabel, tileHeightLabel);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tileWidthLabel);
@@ -70,10 +70,10 @@ void CreateMapDialog::OnAccept(entt::dispatcher& dispatcher)
   TACTILE_ASSERT(mTileHeight > 0);
   TACTILE_ASSERT(mRows > 0);
   TACTILE_ASSERT(mColumns > 0);
-  dispatcher.enqueue<CreateMapEvent>(mTileWidth,
-                                     mTileHeight,
-                                     static_cast<usize>(mRows),
-                                     static_cast<usize>(mColumns));
+  dispatcher.enqueue<create_map_event>(mTileWidth,
+                                       mTileHeight,
+                                       static_cast<usize>(mRows),
+                                       static_cast<usize>(mColumns));
 }
 
 auto CreateMapDialog::IsCurrentInputValid(const Model&) const -> bool

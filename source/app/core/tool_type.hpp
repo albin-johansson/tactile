@@ -7,7 +7,8 @@ namespace tactile {
  *
  * \ingroup core
  */
-enum class tool_type {
+enum class tool_type
+{
   none,
   stamp,
   eraser,

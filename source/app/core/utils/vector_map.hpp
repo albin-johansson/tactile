@@ -6,12 +6,13 @@
 #include <vector>     // vector
 
 #include "misc/throw.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 template <typename K, typename V>
-class vector_map final {
+class vector_map final
+{
  public:
   using key_type = K;
   using mapped_type = V;

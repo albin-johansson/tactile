@@ -2,17 +2,19 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>  // entity, null
+#include <entt/entt.hpp>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 /// \addtogroup events
 /// \{
 
-/// \brief Emitted *after* an object has been moved.
-struct MoveObjectEvent final
+/**
+ * \brief Emitted after an object has been moved.
+ */
+struct move_object_event final
 {
   object_id id{};  ///< ID of object to move.
   float old_x{};   ///< Previous x-coordinate of the object.
@@ -21,38 +23,44 @@ struct MoveObjectEvent final
   float new_y{};   ///< Updated y-coordinate of the object.
 };
 
-/// \brief Emitted when the visibility of an object should be changed.
-struct SetObjectVisibilityEvent final
+/**
+ * \brief Emitted when the visibility of an object should be changed.
+ */
+struct set_object_visibility_event final
 {
   object_id id{};  ///< ID of target object.
   bool visible{};  ///< New visibility state.
 };
 
-/// \brief Emitted when the tag of an object should be changed.
-struct SetObjectTagEvent final
+/**
+ * \brief Emitted when the tag of an object should be changed.
+ */
+struct set_object_tag_event final
 {
   object_id id{};   ///< ID of target object.
   std::string tag;  ///< The new object tag.
 };
 
-/// \brief Emitted when the name of an object should be changed.
-struct SetObjectNameEvent final
+/**
+ * \brief Emitted when the name of an object should be changed.
+ */
+struct set_object_name_event final
 {
   object_id id{};    ///< ID of target object.
   std::string name;  ///< The new object name.
 };
 
-struct DuplicateObjectEvent final
+struct duplicate_object_event final
 {
   object_id id{};  ///< ID of the target object.
 };
 
-struct RemoveObjectEvent final
+struct remove_object_event final
 {
   object_id id{};  ///< ID of the target object.
 };
 
-struct SpawnObjectContextMenuEvent final
+struct spawn_object_context_menu_event final
 {
   entt::entity object_entity{entt::null};
 };

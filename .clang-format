@@ -41,7 +41,7 @@ BreakBeforeConceptDeclarations: true
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel: false
-  AfterClass: false
+  AfterClass: true
   AfterStruct: true
   AfterControlStatement: Never
   AfterEnum: false

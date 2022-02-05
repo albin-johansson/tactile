@@ -5,53 +5,55 @@
 
 #include "core/utils/buffers.hpp"
 #include "core/utils/colors.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/file_dialog.hpp"
 
 namespace tactile {
 
-auto Input(const c_str id, const attribute_value& value) -> maybe<attribute_value>
+auto input_attribute(const char* id, const attribute_value& value)
+    -> maybe<attribute_value>
 {
   switch (value.type()) {
     case attribute_type::string: {
-      if (auto updated = InputStringWithHint(id, "Empty", value.as_string())) {
+      if (auto updated = input_string_with_hint(id, "Empty", value.as_string())) {
         return std::move(updated);
       }
       break;
     }
     case attribute_type::integer: {
-      if (const auto updated = InputWidget(id, value.as_int())) {
+      if (const auto updated = input_int(id, value.as_int())) {
         return updated;
       }
       break;
     }
     case attribute_type::floating: {
-      if (const auto updated = InputWidget(id, value.as_float())) {
+      if (const auto updated = input_float(id, value.as_float())) {
         return updated;
       }
       break;
     }
     case attribute_type::boolean: {
-      if (const auto updated = InputWidget(id, value.as_bool())) {
+      if (const auto updated = input_bool(id, value.as_bool())) {
         return updated;
       }
       break;
     }
     case attribute_type::file: {
-      if (auto updated = InputFile(id, value.as_file())) {
+      if (auto updated = input_file(id, value.as_file())) {
         return std::move(updated);
       }
       break;
     }
     case attribute_type::color: {
-      if (const auto updated = InputWidget(id, value.as_color())) {
+      if (const auto updated = input_color(id, value.as_color())) {
         return updated;
       }
       break;
     }
     case attribute_type::object: {
-      if (const auto updated = InputWidget(id, value.as_object())) {
+      if (const auto updated = input_object(id, value.as_object())) {
         return updated;
       }
       break;
@@ -61,12 +63,12 @@ auto Input(const c_str id, const attribute_value& value) -> maybe<attribute_valu
   return nothing;
 }
 
-auto InputWidget(const c_str id, int value) -> maybe<int>
+auto input_int(const char* id, int value) -> maybe<int>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   ImGui::SetNextItemWidth(-min_float);
-  if (ImGui::DragInt("##InputString[int]", &value)) {
+  if (ImGui::DragInt("##input_int", &value)) {
     return value;
   }
 
@@ -77,20 +79,20 @@ auto InputWidget(const c_str id, int value) -> maybe<int>
   return nothing;
 }
 
-auto InputWidget(const c_str id, float value, const float min, const float max)
+auto input_float(const char* id, float value, const float min, const float max)
     -> maybe<float>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   ImGui::SetNextItemWidth(-min_float);
 
   if (min != 0 || max != 0) {
-    if (ImGui::SliderFloat("##InputString[float]", &value, min, max)) {
+    if (ImGui::SliderFloat("##input_float", &value, min, max)) {
       return value;
     }
   }
   else {
-    if (ImGui::DragFloat("##InputString[float]", &value)) {
+    if (ImGui::DragFloat("##input_float", &value)) {
       return value;
     }
   }
@@ -102,14 +104,14 @@ auto InputWidget(const c_str id, float value, const float min, const float max)
   return nothing;
 }
 
-auto InputStringWithHint(const c_str id,
-                         const c_str hint,
-                         const std::string& value,
-                         const c_str label,
-                         const ImGuiInputTextFlags flags,
-                         const ImGuiInputTextCallback filter) -> maybe<std::string>
+auto input_string_with_hint(const char* id,
+                            const char* hint,
+                            const std::string& value,
+                            const char* label,
+                            const ImGuiInputTextFlags flags,
+                            const ImGuiInputTextCallback filter) -> maybe<std::string>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   std::array<char, 100> buffer;  // NOLINT safely uninitialized
   copy_string_into_buffer(buffer, value);
@@ -124,7 +126,7 @@ auto InputStringWithHint(const c_str id,
     ImGui::SetNextItemWidth(-min_float);
   }
 
-  if (ImGui::InputTextWithHint("##InputString[string]",
+  if (ImGui::InputTextWithHint("##input_string_with_hint",
                                hint ? hint : "",
                                buffer.data(),
                                sizeof buffer,
@@ -140,20 +142,20 @@ auto InputStringWithHint(const c_str id,
   return nothing;
 }
 
-auto InputString(const c_str id,
-                 const std::string& value,
-                 const c_str label,
-                 const ImGuiInputTextFlags flags,
-                 const ImGuiInputTextCallback filter) -> maybe<std::string>
+auto input_string(const char* id,
+                  const std::string& value,
+                  const char* label,
+                  const ImGuiInputTextFlags flags,
+                  const ImGuiInputTextCallback filter) -> maybe<std::string>
 {
-  return InputStringWithHint(id, nullptr, value, label, flags, filter);
+  return input_string_with_hint(id, nullptr, value, label, flags, filter);
 }
 
-auto InputWidget(const c_str id, bool value) -> maybe<bool>
+auto input_bool(const char* id, bool value) -> maybe<bool>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
-  if (ImGui::Checkbox("##InputString[bool]", &value)) {
+  if (ImGui::Checkbox("##input_bool", &value)) {
     return value;
   }
 
@@ -164,9 +166,9 @@ auto InputWidget(const c_str id, bool value) -> maybe<bool>
   return nothing;
 }
 
-auto InputWidget(const c_str id, const object_t value) -> maybe<object_t>
+auto input_object(const char* id, object_t value) -> maybe<object_t>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   // TODO
   ImGui::Text("%i", value);
@@ -178,15 +180,15 @@ auto InputWidget(const c_str id, const object_t value) -> maybe<object_t>
   return nothing;
 }
 
-auto InputWidget(const c_str id, const cen::color value) -> maybe<cen::color>
+auto input_color(const char* id, const cen::color value) -> maybe<cen::color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
 
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
   auto arr = color_to_array(value);
-  if (ImGui::ColorEdit4("##InputString[color]", arr.data(), flags)) {
+  if (ImGui::ColorEdit4("##input_color", arr.data(), flags)) {
     return cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
   }
 
@@ -197,12 +199,12 @@ auto InputWidget(const c_str id, const cen::color value) -> maybe<cen::color>
   return nothing;
 }
 
-auto InputFile(const c_str id, const std::filesystem::path& value)
+auto input_file(const char* id, const std::filesystem::path& value)
     -> maybe<std::filesystem::path>
 {
-  const scoped::ID scope{id};
+  const scoped::id scope{id};
 
-  if (ImGui::Button(TAC_ICON_THREE_DOTS)) {
+  if (button(TAC_ICON_THREE_DOTS)) {
     auto dialog = file_dialog::open_file();
     if (dialog.is_okay()) {
       return dialog.path();
@@ -214,7 +216,7 @@ auto InputFile(const c_str id, const std::filesystem::path& value)
   auto str = value.filename().string();
 
   ImGui::SetNextItemWidth(-min_float);
-  ImGui::InputTextWithHint("##InputString[file]",
+  ImGui::InputTextWithHint("##input_file",
                            "N/A",
                            str.data(),
                            str.capacity(),

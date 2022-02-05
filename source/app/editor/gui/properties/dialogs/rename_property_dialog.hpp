@@ -4,7 +4,8 @@
 
 namespace tactile {
 
-class RenamePropertyDialog final : public AStringInputDialog {
+class RenamePropertyDialog final : public AStringInputDialog
+{
  public:
   RenamePropertyDialog();
 

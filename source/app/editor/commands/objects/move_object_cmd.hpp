@@ -4,21 +4,22 @@
 
 #include "editor/commands/command_id.hpp"
 #include "object_cmd.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 /// \addtogroup commands
 /// \{
 
-class MoveObjectCmd final : public AObjectCmd {
+class move_object_cmd final : public object_cmd
+{
  public:
-  MoveObjectCmd(registry_ref registry,
-                object_id id,
-                float oldX,
-                float oldY,
-                float newX,
-                float newY);
+  move_object_cmd(registry_ref registry,
+                  object_id id,
+                  float oldX,
+                  float oldY,
+                  float newX,
+                  float newY);
 
   void undo() override;
 

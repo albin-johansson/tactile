@@ -5,7 +5,7 @@
 #include "core/components/tileset.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/alignment.hpp"
-#include "editor/gui/common/centered_button.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/menus/map_menu.hpp"
@@ -31,8 +31,8 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
     return;
   }
 
-  scoped::Window window{"Tilesets", gWindowFlags, &visible};
-  if (window.IsOpen()) {
+  scoped::window window{"Tilesets", gWindowFlags, &visible};
+  if (window.is_open()) {
     mHasFocus = ImGui::IsWindowFocused();
     mWindowContainsMouse = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
@@ -40,11 +40,11 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
       mTabWidget.Update(registry, dispatcher);
     }
     else {
-      PrepareVerticalAlignmentCenter(2);
-      CenteredText("Current map has no tilesets!");
+      prepare_vertical_alignment_center(2);
+      centered_text("Current map has no tilesets!");
       ImGui::Spacing();
-      if (CenteredButton(TAC_ICON_TILESET " Create tileset...")) {
-        dispatcher.enqueue<ShowAddTilesetDialogEvent>();
+      if (centered_button(TAC_ICON_TILESET " Create tileset...")) {
+        dispatcher.enqueue<show_add_tileset_dialog_event>();
       }
     }
   }

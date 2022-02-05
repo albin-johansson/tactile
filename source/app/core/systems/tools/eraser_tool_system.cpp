@@ -8,7 +8,7 @@
 #include "core/tile_position.hpp"
 #include "editor/events/tool_events.hpp"
 #include "misc/assert.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -57,7 +57,7 @@ void EraserToolOnReleased(entt::registry& registry,
                           const mouse_info& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    dispatcher.enqueue<EraserSequenceEvent>(std::move(gOldState));
+    dispatcher.enqueue<eraser_sequence_event>(std::move(gOldState));
   }
 }
 

@@ -13,7 +13,8 @@ namespace tactile {
 
 class Model;
 
-class MenuBar final {
+class MenuBar final
+{
  public:
   /**
    * \brief Updates the state of the menu bar.

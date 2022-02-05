@@ -5,7 +5,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/uv_tile_size.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "editor/gui/texture_utils.hpp"
+#include "editor/gui/textures.hpp"
 #include "graphics.hpp"
 
 namespace tactile {

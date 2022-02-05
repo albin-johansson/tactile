@@ -12,7 +12,8 @@ class Model;
 /// \addtogroup gui
 /// \{
 
-class EditMenu final {
+class EditMenu final
+{
  public:
   void Update(const Model& model, entt::dispatcher& dispatcher);
 
@@ -25,7 +26,7 @@ class EditMenu final {
 
  private:
   SettingsDialog mSettingsDialog;
-  ComponentEditor mComponentEditor;
+  component_editor mComponentEditor;
 };
 
 /// \} End of group gui

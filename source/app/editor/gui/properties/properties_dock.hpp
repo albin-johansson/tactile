@@ -8,13 +8,14 @@
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
 #include "property_table.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 class Model;
 
-class PropertiesDock final {
+class PropertiesDock final
+{
  public:
   void Update(const Model& model, entt::dispatcher& dispatcher);
 

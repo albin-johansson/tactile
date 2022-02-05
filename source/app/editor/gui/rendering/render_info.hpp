@@ -16,8 +16,6 @@ struct MapInfo;
 /**
  * \brief Provides useful information about a rendering context.
  *
- * \todo Make this work for non-map contexts.
- *
  * \see `GetRenderInfo()`
  */
 struct RenderInfo final

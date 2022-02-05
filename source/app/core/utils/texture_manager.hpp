@@ -4,11 +4,12 @@
 #include <vector>      // vector
 
 #include "core/components/texture.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class texture_manager final {
+class texture_manager final
+{
  public:
   TACTILE_DEFAULT_COPY(texture_manager)
   TACTILE_DEFAULT_MOVE(texture_manager)

@@ -8,11 +8,10 @@
 
 namespace tactile {
 
-class RemoveComponentAttributeCmd final : public command_base {
+class create_component_attr_cmd final : public command_base
+{
  public:
-  RemoveComponentAttributeCmd(registry_ref registry,
-                              component_id componentId,
-                              std::string attribute);
+  create_component_attr_cmd(registry_ref registry, component_id id, std::string name);
 
   void undo() override;
 
@@ -20,14 +19,13 @@ class RemoveComponentAttributeCmd final : public command_base {
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::remove_component_attribute;
+    return command_id::create_component_def_attribute;
   }
 
  private:
   registry_ref mRegistry;
   component_id mComponentId{};
-  std::string mAttributeName;
-  maybe<attribute_value> mPreviousDefault;
+  std::string mName;
 };
 
 }  // namespace tactile

@@ -29,7 +29,7 @@ void ResizeMapDialog::UpdateContents(const Model&, entt::dispatcher&)
 
 void ResizeMapDialog::OnAccept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<ResizeMapEvent>(mRows, mColumns);
+  dispatcher.enqueue<resize_map_event>(mRows, mColumns);
 }
 
 }  // namespace tactile

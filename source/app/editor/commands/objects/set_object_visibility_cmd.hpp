@@ -1,16 +1,15 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command_id.hpp"
 #include "object_cmd.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class SetObjectVisibilityCmd final : public AObjectCmd {
+class set_object_visibility_cmd final : public object_cmd
+{
  public:
-  SetObjectVisibilityCmd(registry_ref registry, object_id id, bool visible);
+  set_object_visibility_cmd(registry_ref registry, object_id id, bool visible);
 
   void undo() override;
 

@@ -4,22 +4,22 @@
 
 namespace tactile {
 
-SetObjectVisibilityCmd::SetObjectVisibilityCmd(registry_ref registry,
-                                               const object_id id,
-                                               const bool visible)
-    : AObjectCmd{"Set Object Visibility", registry, id}
+set_object_visibility_cmd::set_object_visibility_cmd(registry_ref registry,
+                                                     const object_id id,
+                                                     const bool visible)
+    : object_cmd{"Set Object Visibility", registry, id}
     , mVisible{visible}
 {}
 
-void SetObjectVisibilityCmd::undo()
+void set_object_visibility_cmd::undo()
 {
-  auto& object = GetTargetObject();
+  auto& object = target_object();
   object.visible = mPreviousVisibility.value();
 }
 
-void SetObjectVisibilityCmd::redo()
+void set_object_visibility_cmd::redo()
 {
-  auto& object = GetTargetObject();
+  auto& object = target_object();
   mPreviousVisibility = object.visible;
   object.visible = mVisible;
 }

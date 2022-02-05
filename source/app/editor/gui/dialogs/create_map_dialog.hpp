@@ -7,7 +7,8 @@ namespace tactile {
 /// \addtogroup gui
 /// \{
 
-class CreateMapDialog final : public ADialog {
+class CreateMapDialog final : public ADialog
+{
  public:
   CreateMapDialog();
 

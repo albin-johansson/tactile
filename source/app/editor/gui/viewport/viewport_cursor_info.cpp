@@ -14,6 +14,7 @@ auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
 
   const auto mouse = ImGui::GetMousePos();
   cursor.raw_position = mouse - info.origin;
+  cursor.scaled_position = cursor.raw_position / info.ratio;
 
   const auto index = cursor.raw_position / info.grid_size;
   const auto row = std::trunc(index.y);

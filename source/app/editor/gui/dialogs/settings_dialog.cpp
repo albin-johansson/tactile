@@ -4,6 +4,7 @@
 
 #include "core/utils/colors.hpp"
 #include "editor/events/command_events.hpp"
+#include "editor/gui/common/button.hpp"
 #include "editor/gui/common/checkbox.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/themes.hpp"
@@ -34,8 +35,8 @@ void SettingsDialog::Open()
 
 void SettingsDialog::UpdateContents(const Model&, entt::dispatcher&)
 {
-  scoped::TabBar bar{"##SettingsTabBar"};
-  if (bar.IsOpen()) {
+  scoped::tab_bar bar{"##SettingsTabBar"};
+  if (bar.is_open()) {
     UpdateBehaviorTab();
     UpdateAppearanceTab();
     UpdateExportTab();
@@ -63,22 +64,22 @@ void SettingsDialog::ApplySettings(entt::dispatcher& dispatcher)
 {
   set_preferences(mGuiSettings);
   if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
-    dispatcher.enqueue<SetCommandCapacityEvent>(mGuiSettings.command_capacity());
+    dispatcher.enqueue<set_command_capacity_event>(mGuiSettings.command_capacity());
   }
 }
 
 void SettingsDialog::UpdateBehaviorTab()
 {
-  if (scoped::TabItem item{"Behavior"}; item.IsOpen()) {
+  if (scoped::tab_item item{"Behavior"}; item.is_open()) {
     ImGui::Spacing();
-    if (ImGui::Button("Restore Defaults")) {
+    if (button("Restore Defaults")) {
       mGuiSettings.reset_behavior_preferences();
       UpdatePreviewSettings(mGuiSettings);
     }
     ImGui::Spacing();
 
     if (bool restore = mGuiSettings.will_restore_last_session();
-        Checkbox("Restore last session on startup", &restore)) {
+        checkbox("Restore last session on startup", &restore)) {
       mGuiSettings.set_will_restore_last_session(restore);
     }
 
@@ -116,19 +117,19 @@ void SettingsDialog::UpdateBehaviorTab()
 
 void SettingsDialog::UpdateAppearanceTab()
 {
-  if (scoped::TabItem item{"Appearance"}; item.IsOpen()) {
+  if (scoped::tab_item item{"Appearance"}; item.is_open()) {
     ImGui::Spacing();
 
-    if (ImGui::Button("Restore Defaults")) {
+    if (button("Restore Defaults")) {
       mGuiSettings.reset_appearance_preferences();
       UpdatePreviewSettings(mGuiSettings);
     }
 
     ImGui::Spacing();
 
-    if (scoped::Combo combo{"Theme",
+    if (scoped::combo combo{"Theme",
                             human_readable_name(mGuiSettings.get_theme()).data()};
-        combo.IsOpen()) {
+        combo.is_open()) {
       for (const auto theme : themes) {
         if (ImGui::Selectable(human_readable_name(theme).data())) {
           mGuiSettings.set_theme(theme);
@@ -152,7 +153,7 @@ void SettingsDialog::UpdateAppearanceTab()
     }
 
     if (bool restore = mGuiSettings.will_restore_layout();
-        Checkbox("Restore layout",
+        checkbox("Restore layout",
                  &restore,
                  "Restore the previous layout of widgets at startup")) {
       mGuiSettings.set_will_restore_layout(restore);
@@ -162,18 +163,18 @@ void SettingsDialog::UpdateAppearanceTab()
 
 void SettingsDialog::UpdateExportTab()
 {
-  if (scoped::TabItem item{"Export"}; item.IsOpen()) {
+  if (scoped::tab_item item{"Export"}; item.is_open()) {
     ImGui::Spacing();
 
-    if (ImGui::Button("Restore Defaults")) {
+    if (button("Restore Defaults")) {
       mGuiSettings.reset_export_preferences();
       UpdatePreviewSettings(mGuiSettings);
     }
 
     ImGui::Spacing();
 
-    if (scoped::Combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
-        format.IsOpen()) {
+    if (scoped::combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
+        format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
         mGuiSettings.set_preferred_format("YAML");
       }
@@ -193,19 +194,19 @@ void SettingsDialog::UpdateExportTab()
     }
 
     if (bool embed = mGuiSettings.embed_tilesets();
-        Checkbox("Embed tilesets", &embed, "Embed tileset data in map files")) {
+        checkbox("Embed tilesets", &embed, "Embed tileset data in map files")) {
       mGuiSettings.set_embed_tilesets(embed);
     }
 
     if (bool indent = mGuiSettings.indent_output();
-        Checkbox("Indent output",
+        checkbox("Indent output",
                  &indent,
                  "Controls whether or not save files are indented")) {
       mGuiSettings.set_indent_output(indent);
     }
 
     if (bool fold = mGuiSettings.fold_tile_data();  //
-        Checkbox(
+        checkbox(
             "Fold tile data",
             &fold,
             "Make tile layer data easier for humans to edit, at the expense of space")) {

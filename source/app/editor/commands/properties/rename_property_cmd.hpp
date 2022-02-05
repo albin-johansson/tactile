@@ -2,17 +2,16 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class RenamePropertyCmd final : public command_base {
+class rename_property_cmd final : public command_base
+{
  public:
-  RenamePropertyCmd(registry_ref registry, std::string oldName, std::string newName);
+  rename_property_cmd(registry_ref registry, std::string oldName, std::string newName);
 
   void undo() override;
 

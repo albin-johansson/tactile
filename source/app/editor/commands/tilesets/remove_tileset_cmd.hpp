@@ -1,17 +1,16 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class RemoveTilesetCmd final : public command_base {
+class remove_tileset_cmd final : public command_base
+{
  public:
-  RemoveTilesetCmd(registry_ref registry, tileset_id id);
+  remove_tileset_cmd(registry_ref registry, tileset_id id);
 
   void undo() override;
 

@@ -4,7 +4,7 @@
 
 #include <entt/entt.hpp>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
@@ -19,7 +19,8 @@ using registry_ref = ref<entt::registry>;
 /**
  * \brief The abstract base class of all command implementations.
  */
-class command_base {
+class command_base
+{
  public:
   TACTILE_DELETE_COPY(command_base)
   TACTILE_DEFAULT_MOVE(command_base)

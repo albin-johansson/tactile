@@ -4,8 +4,8 @@
 
 namespace tactile {
 
-class Icons;
+class icon_manager;
 
-void UpdateHomePageContent(const Icons& icons, entt::dispatcher& dispatcher);
+void UpdateHomePageContent(const icon_manager& icons, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

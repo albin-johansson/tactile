@@ -4,7 +4,8 @@
 
 namespace tactile {
 
-class AboutDialog final : public ADialog {
+class AboutDialog final : public ADialog
+{
  public:
   AboutDialog();
 

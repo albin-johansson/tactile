@@ -8,14 +8,16 @@
 
 namespace tactile {
 
-RenameLayerCmd::RenameLayerCmd(registry_ref registry, const layer_id id, std::string name)
+rename_layer_cmd::rename_layer_cmd(registry_ref registry,
+                                   const layer_id id,
+                                   std::string name)
     : command_base{"Rename Layer"}
     , mRegistry{registry}
     , mLayerId{id}
     , mName{std::move(name)}
 {}
 
-void RenameLayerCmd::undo()
+void rename_layer_cmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -28,7 +30,7 @@ void RenameLayerCmd::undo()
   mPreviousName.reset();
 }
 
-void RenameLayerCmd::redo()
+void rename_layer_cmd::redo()
 {
   auto& registry = mRegistry.get();
 

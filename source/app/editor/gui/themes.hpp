@@ -19,7 +19,8 @@ namespace tactile {
  *
  * \see proto::theme
  */
-enum class editor_theme {
+enum class editor_theme
+{
   dear_dark = 0,   ///< The standard Dear ImGui dark theme.
   dear_light = 1,  ///< The standard Dear ImGui light theme.
   ruby = 2,
@@ -48,6 +49,15 @@ constexpr std::array themes = {editor_theme::dear_dark,
                                editor_theme::ash};
 
 [[nodiscard]] auto human_readable_name(editor_theme theme) -> std::string_view;
+
+/**
+ * \brief Applies the styling used by Tactile to a style instance.
+ *
+ * \note This function does not affect the colors of the style.
+ *
+ * \param style the style that will be updated.
+ */
+void apply_style(ImGuiStyle& style);
 
 /**
  * \brief Applies a theme to a style.

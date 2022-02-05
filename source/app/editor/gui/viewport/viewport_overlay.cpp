@@ -50,8 +50,7 @@ void PreparePositionAndPivot()
 void UpdateMouseCoordinateLabels(const ViewportCursorInfo& cursor)
 {
   if (ImGui::IsMousePosValid()) {
-    // FIXME incorrect when zoomed in
-    ImGui::Text("X/Y: (%.0f, %.0f)", cursor.raw_position.x, cursor.raw_position.y);
+    ImGui::Text("X/Y: (%.0f, %.0f)", cursor.scaled_position.x, cursor.scaled_position.y);
   }
   else {
     ImGui::TextUnformatted("X/Y: N/A");
@@ -104,7 +103,7 @@ void UpdateMouseTileLabels(const entt::registry& registry,
 
 void UpdateOverlayContextMenu()
 {
-  if (auto popup = scoped::Popup::ForWindow("##ViewportOverlayPopup"); popup.IsOpen()) {
+  if (auto popup = scoped::popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     auto& prefs = get_preferences();
     const auto corner = prefs.viewport_overlay_pos();
 
@@ -134,9 +133,9 @@ void UpdateViewportOverlay(const entt::registry& registry,
   PreparePositionAndPivot();
 
   ImGui::SetNextWindowBgAlpha(gOpacity);
-  scoped::Window window{"##ViewportOverlay", gFlags};
+  scoped::window window{"##ViewportOverlay", gFlags};
 
-  if (window.IsOpen()) {
+  if (window.is_open()) {
     UpdateMouseCoordinateLabels(cursor);
     UpdateMouseRowColumnLabels(cursor);
     UpdateMouseTileLabels(registry, cursor);

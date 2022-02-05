@@ -6,7 +6,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 

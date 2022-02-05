@@ -26,6 +26,7 @@ set(SOURCE_FILES
     application.hpp
     application_events.cpp
     application_events.hpp
+    tactile.hpp
 
     meta/build.hpp
     meta/profile.hpp

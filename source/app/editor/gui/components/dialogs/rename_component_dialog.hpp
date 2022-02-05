@@ -4,11 +4,12 @@
 
 #include "component_name_dialog.hpp"
 #include "core/components/component.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class RenameComponentDialog final : public AComponentNameDialog {
+class RenameComponentDialog final : public AComponentNameDialog
+{
  public:
   RenameComponentDialog();
 

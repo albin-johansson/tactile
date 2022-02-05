@@ -3,11 +3,12 @@
 #include <filesystem>  // path
 
 #include "io/maps/ir.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::emitter {
 
-class emit_info final {
+class emit_info final
+{
  public:
   explicit emit_info(std::filesystem::path destination, ir::map_data data);
 

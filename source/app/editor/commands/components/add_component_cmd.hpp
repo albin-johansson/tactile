@@ -2,13 +2,16 @@
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class AddComponentCmd final : public command_base {
+class add_component_cmd final : public command_base
+{
  public:
-  AddComponentCmd(registry_ref registry, context_id contextId, component_id componentId);
+  add_component_cmd(registry_ref registry,
+                    context_id contextId,
+                    component_id componentId);
 
   void undo() override;
 

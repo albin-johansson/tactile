@@ -4,7 +4,7 @@
 
 #include "core/components/attribute_context.hpp"
 #include "snapshot.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::sys {
 

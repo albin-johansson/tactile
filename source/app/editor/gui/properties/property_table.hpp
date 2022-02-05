@@ -6,11 +6,12 @@
 
 #include "core/components/attribute_context.hpp"
 #include "items/property_item_context_menu.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class PropertyTable final {
+class PropertyTable final
+{
  public:
   void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
 

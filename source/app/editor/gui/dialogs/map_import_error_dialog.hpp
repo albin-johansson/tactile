@@ -2,11 +2,12 @@
 
 #include "dialog.hpp"
 #include "io/maps/parser/parse_error.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class MapImportErrorDialog final : public ADialog {
+class MapImportErrorDialog final : public ADialog
+{
  public:
   MapImportErrorDialog();
 

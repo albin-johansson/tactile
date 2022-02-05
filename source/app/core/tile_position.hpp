@@ -2,7 +2,7 @@
 
 #include <compare>  // <=>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
@@ -14,7 +14,8 @@ namespace tactile {
  *
  * \note This class may represent positions with negative indices.
  */
-class tile_position final {
+class tile_position final
+{
  public:
   /**
    * \brief Creates a tile position at origin, (0, 0).

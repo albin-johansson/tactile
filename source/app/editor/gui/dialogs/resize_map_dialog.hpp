@@ -3,11 +3,12 @@
 #include <entt/entt.hpp>
 
 #include "dialog.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class ResizeMapDialog final : public ADialog {
+class ResizeMapDialog final : public ADialog
+{
  public:
   TACTILE_DEFAULT_COPY(ResizeMapDialog)
   TACTILE_DEFAULT_MOVE(ResizeMapDialog)

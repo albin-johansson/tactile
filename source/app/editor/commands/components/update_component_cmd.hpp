@@ -5,17 +5,18 @@
 #include "core/attribute_value.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class UpdateComponentCmd final : public command_base {
+class update_component_cmd final : public command_base
+{
  public:
-  UpdateComponentCmd(registry_ref registry,
-                     context_id contextId,
-                     component_id componentId,
-                     std::string attribute,
-                     attribute_value value);
+  update_component_cmd(registry_ref registry,
+                       context_id contextId,
+                       component_id componentId,
+                       std::string attribute,
+                       attribute_value value);
 
   void undo() override;
 

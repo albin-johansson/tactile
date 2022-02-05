@@ -3,11 +3,11 @@
 #include <entt/entt.hpp>  // registry, entity, dispatcher
 
 #include "core/components/layer.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class Icons;
+class icon_manager;
 
 /**
  * \brief Shows a layer item that represents a layer in a map.
@@ -21,7 +21,7 @@ class Icons;
  * \param layer the associated layer.
  */
 void LayerItem(const entt::registry& registry,
-               const Icons& icons,
+               const icon_manager& icons,
                entt::dispatcher& dispatcher,
                entt::entity layerEntity,
                const comp::layer& layer);

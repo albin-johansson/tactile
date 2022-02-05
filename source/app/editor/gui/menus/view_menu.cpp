@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "editor/events/view_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/layout/dock_space.hpp"
@@ -16,7 +16,7 @@ namespace {
 
 void UpdateWidgetsMenu(const bool hasActiveMap)
 {
-  if (scoped::Menu menu{"Widgets", hasActiveMap}; menu.IsOpen()) {
+  if (scoped::menu menu{"Widgets", hasActiveMap}; menu.is_open()) {
     if (ImGui::MenuItem("Reset Layout")) {
       ResetLayout();
     }
@@ -51,7 +51,7 @@ void UpdateWidgetsMenu(const bool hasActiveMap)
 
 void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::Menu menu{"View"}; menu.IsOpen()) {
+  if (scoped::menu menu{"View"}; menu.is_open()) {
     const auto hasActiveDocument = model.HasActiveDocument();
     UpdateWidgetsMenu(hasActiveDocument);
 
@@ -131,7 +131,7 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument)) {
-      dispatcher.enqueue<ToggleUiEvent>();
+      dispatcher.enqueue<toggle_ui_event>();
     }
   }
 }

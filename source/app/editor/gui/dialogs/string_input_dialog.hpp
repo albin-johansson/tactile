@@ -7,11 +7,12 @@
 #include <entt/entt.hpp>
 
 #include "dialog.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class AStringInputDialog : public ADialog {
+class AStringInputDialog : public ADialog
+{
  public:
   explicit AStringInputDialog(c_str title);
 

@@ -34,7 +34,7 @@ void AboutDialog::UpdateContents(const Model&, entt::dispatcher&)
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted("Source code: " TACTILE_URL);
   ImGui::SameLine();
-  if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser")) {
+  if (button(TAC_ICON_LINK, "Open the GitHub repository in your browser")) {
     cen::open_url(TACTILE_URL);
   }
 

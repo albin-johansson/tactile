@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
@@ -12,7 +12,8 @@ namespace tactile {
  * \details This class is a simple wrapper around the native-file-dialogs library, with
  * some additional utilities for dealing with map and image files, etc.
  */
-class file_dialog final {
+class file_dialog final
+{
  public:
   [[nodiscard]] static auto open_file() -> file_dialog;
 

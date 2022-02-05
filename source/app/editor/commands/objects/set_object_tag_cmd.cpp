@@ -6,31 +6,31 @@
 
 namespace tactile {
 
-SetObjectTagCmd::SetObjectTagCmd(registry_ref registry,
-                                 const object_id id,
-                                 std::string tag)
-    : AObjectCmd{"Set Object Tag", registry, id}
+set_object_tag_cmd::set_object_tag_cmd(registry_ref registry,
+                                       const object_id id,
+                                       std::string tag)
+    : object_cmd{"Set Object Tag", registry, id}
     , mNewTag{std::move(tag)}
 {}
 
-void SetObjectTagCmd::undo()
+void set_object_tag_cmd::undo()
 {
-  auto& object = GetTargetObject();
+  auto& object = target_object();
   object.tag = mOldTag.value();
 }
 
-void SetObjectTagCmd::redo()
+void set_object_tag_cmd::redo()
 {
-  auto& object = GetTargetObject();
+  auto& object = target_object();
   mOldTag = object.tag;
   object.tag = mNewTag;
 }
 
-auto SetObjectTagCmd::merge_with(const command_base& cmd) -> bool
+auto set_object_tag_cmd::merge_with(const command_base& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const SetObjectTagCmd&>(cmd);
-    if (GetTargetObjectId() == other.GetTargetObjectId()) {
+    const auto& other = dynamic_cast<const set_object_tag_cmd&>(cmd);
+    if (target_object_id() == other.target_object_id()) {
       mNewTag = other.mNewTag;
       return true;
     }

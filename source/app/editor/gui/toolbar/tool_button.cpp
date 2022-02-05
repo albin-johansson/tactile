@@ -15,10 +15,10 @@ auto ToolButton(const c_str label,
 {
   if (selected) {
     const auto& style = ImGui::GetStyle();
-    ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_TabActive]);
+    ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_HeaderActive]);
   }
 
-  const auto pressed = Button(label, tooltip, enabled, width, height);
+  const auto pressed = button(label, tooltip, enabled, width, height);
 
   if (selected) {
     ImGui::PopStyleColor();

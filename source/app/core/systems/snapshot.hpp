@@ -9,7 +9,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile::sys {
 

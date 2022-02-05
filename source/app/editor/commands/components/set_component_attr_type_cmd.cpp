@@ -1,4 +1,4 @@
-#include "set_component_attribute_type_cmd.hpp"
+#include "set_component_attr_type_cmd.hpp"
 
 #include <utility>  // move
 
@@ -6,10 +6,10 @@
 
 namespace tactile {
 
-SetComponentAttributeTypeCmd::SetComponentAttributeTypeCmd(registry_ref registry,
-                                                           const component_id id,
-                                                           std::string attribute,
-                                                           const attribute_type type)
+set_component_attr_type_cmd::set_component_attr_type_cmd(registry_ref registry,
+                                                         const component_id id,
+                                                         std::string attribute,
+                                                         const attribute_type type)
     : command_base{"Set Component Attribute Type"}
     , mRegistry{registry}
     , mComponentId{id}
@@ -17,7 +17,7 @@ SetComponentAttributeTypeCmd::SetComponentAttributeTypeCmd(registry_ref registry
     , mNewType{type}
 {}
 
-void SetComponentAttributeTypeCmd::undo()
+void set_component_attr_type_cmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -30,7 +30,7 @@ void SetComponentAttributeTypeCmd::undo()
   sys::set_component_attribute_value(registry, mComponentId, mAttributeName, previous);
 }
 
-void SetComponentAttributeTypeCmd::redo()
+void set_component_attr_type_cmd::redo()
 {
   auto& registry = mRegistry.get();
 

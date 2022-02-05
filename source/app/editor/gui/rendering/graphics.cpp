@@ -7,7 +7,7 @@
 
 #include "core/region.hpp"
 #include "core/utils/colors.hpp"
-#include "editor/gui/texture_utils.hpp"
+#include "editor/gui/textures.hpp"
 #include "misc/assert.hpp"
 #include "render_info.hpp"
 
@@ -207,7 +207,7 @@ void graphics_ctx::render_image(const uint texture,
                                 const ImVec2& size)
 {
   auto* list = ImGui::GetWindowDrawList();
-  list->AddImage(ToTextureID(texture), position, position + size);
+  list->AddImage(to_texture_id(texture), position, position + size);
 }
 
 void graphics_ctx::render_image(const uint texture,
@@ -222,7 +222,7 @@ void graphics_ctx::render_image(const uint texture,
   const auto uvMax = uvMin + ImVec2{uv.x, uv.y};
 
   auto* list = ImGui::GetWindowDrawList();
-  list->AddImage(ToTextureID(texture),
+  list->AddImage(to_texture_id(texture),
                  position,
                  position + mViewportTileSize,
                  uvMin,

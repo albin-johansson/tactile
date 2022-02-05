@@ -2,12 +2,13 @@
 
 #include <entt/entt.hpp>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 #include "tileset_tabs.hpp"
 
 namespace tactile {
 
-class TilesetDock final {
+class TilesetDock final
+{
  public:
   void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
 

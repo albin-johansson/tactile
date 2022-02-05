@@ -1,16 +1,15 @@
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class SetLayerVisibilityCmd final : public command_base {
+class set_layer_visibility_cmd final : public command_base
+{
  public:
-  SetLayerVisibilityCmd(registry_ref registry, layer_id id, bool visible);
+  set_layer_visibility_cmd(registry_ref registry, layer_id id, bool visible);
 
   void undo() override;
 

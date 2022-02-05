@@ -1,18 +1,26 @@
 #pragma once
 
-#include "core/components/component.hpp"
-#include "dialogs/create_component_attribute_dialog.hpp"
-#include "dialogs/create_component_dialog.hpp"
-#include "dialogs/rename_component_attribute_dialog.hpp"
-#include "dialogs/rename_component_dialog.hpp"
+#include <memory>  // unique_ptr
+
+#include <entt/entt.hpp>
+
+#include "core/attribute_value.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
-class ComponentEditor final : public ADialog {
+class Model;
+
+class component_editor final : public ADialog
+{
  public:
-  ComponentEditor();
+  TACTILE_DEFAULT_MOVE(component_editor)
+  TACTILE_DELETE_COPY(component_editor)
+
+  component_editor();
+
+  ~component_editor() noexcept override;
 
   void Open(const Model& model);
 
@@ -20,23 +28,20 @@ class ComponentEditor final : public ADialog {
   void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
 
  private:
-  CreateComponentDialog mCreateComponentDialog;
-  CreateComponentAttributeDialog mCreateComponentAttributeDialog;
-  RenameComponentDialog mRenameComponentDialog;
-  RenameComponentAttributeDialog mRenameComponentAttributeDialog;
-  maybe<component_id> mActiveComponent;
+  struct component_editor_data;
+  std::unique_ptr<component_editor_data> mData;
 
-  void ShowComponentComboPopup(const entt::registry& registry,
-                               entt::dispatcher& dispatcher);
+  void show_component_combo_popup(const entt::registry& registry,
+                                  entt::dispatcher& dispatcher);
 
-  void ShowComponentAttributes(const entt::registry& registry,
-                               entt::dispatcher& dispatcher,
-                               component_id id);
+  void show_component_attributes(const entt::registry& registry,
+                                 entt::dispatcher& dispatcher,
+                                 component_id id);
 
-  void ShowComponentAttribute(entt::dispatcher& dispatcher,
-                              component_id id,
-                              const std::string& name,
-                              const attribute_value& value);
+  void show_component_attribute(entt::dispatcher& dispatcher,
+                                component_id id,
+                                const std::string& name,
+                                const attribute_value& value);
 };
 
 }  // namespace tactile

@@ -4,16 +4,16 @@
 
 namespace tactile {
 
-SetLayerOpacityCmd::SetLayerOpacityCmd(registry_ref registry,
-                                       const layer_id id,
-                                       const float opacity)
+set_layer_opacity_cmd::set_layer_opacity_cmd(registry_ref registry,
+                                             const layer_id id,
+                                             const float opacity)
     : command_base{"Set Layer Opacity"}
     , mRegistry{registry}
     , mLayerId{id}
     , mOpacity{opacity}
 {}
 
-void SetLayerOpacityCmd::undo()
+void set_layer_opacity_cmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -23,7 +23,7 @@ void SetLayerOpacityCmd::undo()
   mPreviousOpacity.reset();
 }
 
-void SetLayerOpacityCmd::redo()
+void set_layer_opacity_cmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -33,10 +33,10 @@ void SetLayerOpacityCmd::redo()
   layer.opacity = mOpacity;
 }
 
-auto SetLayerOpacityCmd::merge_with(const command_base& cmd) -> bool
+auto set_layer_opacity_cmd::merge_with(const command_base& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const SetLayerOpacityCmd&>(cmd);
+    const auto& other = dynamic_cast<const set_layer_opacity_cmd&>(cmd);
     if (mLayerId == other.mLayerId) {
       mOpacity = other.mOpacity;
       return true;

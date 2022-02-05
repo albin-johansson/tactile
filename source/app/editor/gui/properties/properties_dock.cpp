@@ -21,10 +21,10 @@ void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
   }
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-  scoped::Window dock{"Properties", flags, &visible};
-  mHasFocus = dock.IsFocused();
+  scoped::window dock{"Properties", flags, &visible};
+  mHasFocus = dock.has_focus();
 
-  if (dock.IsOpen()) {
+  if (dock.is_open()) {
     const auto& registry = model.GetActiveRegistryRef();
     mPropertyTable.Update(registry, dispatcher);
   }

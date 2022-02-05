@@ -1,8 +1,7 @@
 #include "file_shortcuts.hpp"
 
-#include "editor/events/edit_events.hpp"
 #include "editor/events/map_events.hpp"
-#include "editor/events/save_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
@@ -14,14 +13,14 @@ NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, gPrimaryModifier
 
 void NewMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<ShowNewMapDialogEvent>();
+  dispatcher.enqueue<show_new_map_dialog_event>();
 }
 
 OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, gPrimaryModifier} {}
 
 void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<ShowOpenMapDialogEvent>();
+  dispatcher.enqueue<show_open_map_dialog_event>();
 }
 
 OpenSettingsShortcut::OpenSettingsShortcut()
@@ -30,17 +29,17 @@ OpenSettingsShortcut::OpenSettingsShortcut()
 
 void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<ShowSettingsEvent>();
+  dispatcher.enqueue<show_settings_event>();
 }
 
 SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, gPrimaryModifier} {}
 
 void SaveShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SaveEvent>();
+  dispatcher.enqueue<save_event>();
 }
 
-auto SaveShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
+auto SaveShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
   return model.CanSaveDocument();
 }
@@ -51,10 +50,10 @@ SaveAsShortcut::SaveAsShortcut()
 
 void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<OpenSaveAsDialogEvent>();
+  dispatcher.enqueue<open_save_as_dialog_event>();
 }
 
-auto SaveAsShortcut::IsEnabled(const Model& model, const WidgetManager&) const -> bool
+auto SaveAsShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
   return model.CanSaveDocument();
 }

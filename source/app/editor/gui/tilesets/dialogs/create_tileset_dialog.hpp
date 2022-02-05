@@ -7,7 +7,8 @@
 
 namespace tactile {
 
-class CreateTilesetDialog final : public ADialog {
+class CreateTilesetDialog final : public ADialog
+{
  public:
   CreateTilesetDialog();
 

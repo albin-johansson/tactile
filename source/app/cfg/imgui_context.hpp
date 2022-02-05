@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>
 
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
@@ -11,7 +11,8 @@ namespace tactile {
  *
  * \ingroup cfg
  */
-class im_gui_context final {
+class im_gui_context final
+{
  public:
   im_gui_context(cen::window& window, cen::gl_context& context);
 

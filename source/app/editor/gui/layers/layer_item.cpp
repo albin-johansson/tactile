@@ -10,13 +10,13 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "layer_item_popup.hpp"
-#include "tactile_def.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 namespace {
 
 void GroupLayerItem(const entt::registry& registry,
-                    const Icons& icons,
+                    const icon_manager& icons,
                     entt::dispatcher& dispatcher,
                     const entt::entity layerEntity,
                     const comp::layer& layer,
@@ -24,13 +24,13 @@ void GroupLayerItem(const entt::registry& registry,
                     const c_str name)
 {
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-  if (scoped::TreeNode treeNode{"##GroupLayerTreeNode", flags, "%s", name};
-      treeNode.IsOpen()) {
+  if (scoped::tree_node treeNode{"##GroupLayerTreeNode", flags, "%s", name};
+      treeNode.is_open()) {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+      dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
@@ -46,7 +46,7 @@ void GroupLayerItem(const entt::registry& registry,
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+      dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
@@ -56,12 +56,12 @@ void GroupLayerItem(const entt::registry& registry,
 }  // namespace
 
 void LayerItem(const entt::registry& registry,
-               const Icons& icons,
+               const icon_manager& icons,
                entt::dispatcher& dispatcher,
                const entt::entity layerEntity,
                const comp::layer& layer)
 {
-  const scoped::ID scope{layer.id};
+  const scoped::id scope{layer.id};
 
   const auto& activeLayer = registry.ctx<comp::active_layer>();
   const auto isActiveLayer = layerEntity == activeLayer.entity;
@@ -74,16 +74,16 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<comp::attribute_context>(layerEntity);
-  formatted_string name{"{} {}", icons.GetIcon(layer.type), context.name};
+  formatted_string name{"{} {}", icons.get_icon(layer.type), context.name};
 
   if (layer.type != layer_type::group_layer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+      dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
     /* Make sure to select the layer item when right-clicked as well */
     if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+      dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);

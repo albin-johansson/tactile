@@ -3,8 +3,7 @@
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"
-#include "editor/events/quit_event.hpp"
-#include "editor/events/save_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -16,7 +15,7 @@ namespace tactile {
 
 void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::Menu menu{"File"}; menu.IsOpen()) {
+  if (scoped::menu menu{"File"}; menu.is_open()) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
     if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
@@ -34,26 +33,26 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
                         TACTILE_PRIMARY_MOD "+S",
                         false,
                         model.CanSaveDocument())) {
-      dispatcher.enqueue<SaveEvent>();
+      dispatcher.enqueue<save_event>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save As...",
                         TACTILE_PRIMARY_MOD "+Shift+S",
                         false,
                         hasActiveDocument)) {
-      dispatcher.enqueue<OpenSaveAsDialogEvent>();
+      dispatcher.enqueue<open_save_as_dialog_event>();
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Map", nullptr, false, hasActiveDocument)) {
-      dispatcher.enqueue<CloseMapEvent>(model.GetActiveMapId().value());
+      dispatcher.enqueue<close_map_event>(model.GetActiveMapId().value());
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_EXIT " Exit")) {
-      dispatcher.enqueue<QuitEvent>();
+      dispatcher.enqueue<quit_event>();
     }
   }
 }
@@ -79,13 +78,13 @@ void FileMenu::ShowOpenMapDialog()
 
 void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 {
-  if (scoped::Menu menu{TAC_ICON_HISTORY " Recent Files"}; menu.IsOpen()) {
+  if (scoped::menu menu{TAC_ICON_HISTORY " Recent Files"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
                         nullptr,
                         false,
                         is_last_closed_file_valid())) {
       // TODO this will need to be tweaked if tileset documents viewing will be supported
-      dispatcher.enqueue<OpenMapEvent>(last_closed_file());
+      dispatcher.enqueue<open_map_event>(last_closed_file());
     }
 
     const auto& history = file_history();
@@ -97,7 +96,7 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
     for (const auto& path : history) {
       if (ImGui::MenuItem(path.c_str())) {
         /* It's fine if the file doesn't exist anymore, the parser handles that */
-        dispatcher.enqueue<OpenMapEvent>(path);
+        dispatcher.enqueue<open_map_event>(path);
       }
     }
 
@@ -117,7 +116,7 @@ void FileMenu::UpdateMapFileDialog(entt::dispatcher& dispatcher)
   auto dialog = file_dialog::open_map();
 
   if (dialog.is_okay()) {
-    dispatcher.enqueue<OpenMapEvent>(dialog.path());
+    dispatcher.enqueue<open_map_event>(dialog.path());
   }
 
   mShowOpenMapDialog = false;
