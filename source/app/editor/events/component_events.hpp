@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include "core/attribute_value.hpp"
+#include "core/attribute.hpp"
 #include "core/components/component.hpp"
 #include "tactile.hpp"
 

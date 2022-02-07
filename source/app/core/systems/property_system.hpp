@@ -5,7 +5,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/attribute_value.hpp"
+#include "core/attribute.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/property.hpp"
 #include "snapshot.hpp"

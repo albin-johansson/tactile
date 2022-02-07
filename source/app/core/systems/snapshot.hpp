@@ -3,7 +3,7 @@
 #include <string>  // string
 #include <vector>  // vector
 
-#include "core/attribute_value.hpp"
+#include "core/attribute.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/texture.hpp"

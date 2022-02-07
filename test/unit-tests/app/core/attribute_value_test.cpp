@@ -1,4 +1,4 @@
-#include "core/attribute_value.hpp"
+#include "core/attribute.hpp"
 
 #include <gtest/gtest.h>
 

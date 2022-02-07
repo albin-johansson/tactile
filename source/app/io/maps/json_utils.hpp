@@ -6,7 +6,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "core/attribute_value.hpp"
+#include "core/attribute.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

@@ -6,7 +6,7 @@
 #include <centurion.hpp>
 #include <imgui.h>
 
-#include "core/attribute_value.hpp"
+#include "core/attribute.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

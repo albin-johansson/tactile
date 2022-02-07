@@ -5,7 +5,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/attribute_value.hpp"
+#include "core/attribute.hpp"
 #include "io/maps/parser/parse_error.hpp"
 #include "tactile.hpp"
 

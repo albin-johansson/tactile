@@ -4,7 +4,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/attribute_value.hpp"
+#include "core/attribute.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 #include "tactile.hpp"
 

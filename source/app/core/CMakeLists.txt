@@ -9,8 +9,8 @@ add_subdirectory(utils)
 
 set(TACTILE_CORE_SOURCE_FILES
 
-    ${PROJECT_SOURCE_DIR}/attribute_value.cpp
-    ${PROJECT_SOURCE_DIR}/attribute_value.hpp
+    ${PROJECT_SOURCE_DIR}/attribute.cpp
+    ${PROJECT_SOURCE_DIR}/attribute.hpp
     ${PROJECT_SOURCE_DIR}/layer_type.hpp
     ${PROJECT_SOURCE_DIR}/map.hpp
     ${PROJECT_SOURCE_DIR}/mouse_info.hpp
