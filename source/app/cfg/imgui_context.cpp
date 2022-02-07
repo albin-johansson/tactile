@@ -18,24 +18,29 @@ void load_fonts()
   auto& io = ImGui::GetIO();
   io.Fonts->Clear();
 
-  constexpr float font_size = 13.0f;
+  constexpr float size = on_osx ? 13.0f : 11.0f;
   constexpr float scale = on_osx ? 2.0f : 1.0f;  // io.DisplayFramebufferScale
 
   io.FontGlobalScale = 1.0f / scale;
 
-  io.Fonts->AddFontFromFileTTF("resources/fonts/roboto/Roboto-Regular.ttf",
-                               font_size * scale);
+  if constexpr (on_osx) {
+    io.Fonts->AddFontFromFileTTF("resources/fonts/roboto/Roboto-Regular.ttf",
+                                 size * scale);
+  }
+  else {
+    io.Fonts->AddFontDefault();
+  }
 
   ImFontConfig config{};
   config.MergeMode = true;
   config.PixelSnapH = true;
-  config.GlyphOffset = {0, 2};
-  config.GlyphMinAdvanceX = font_size * scale;
+  config.GlyphOffset = {0, 1.5f};
+  config.GlyphMinAdvanceX = size * scale;
   config.GlyphMaxAdvanceX = config.GlyphMinAdvanceX;
 
   static constexpr ImWchar icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
   io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
-                               font_size * scale,
+                               size * scale,
                                &config,
                                icon_range);
 
