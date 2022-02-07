@@ -13,6 +13,7 @@ constexpr float _area_opacity = 0.40f;
 struct theme_cfg final
 {
   ImVec4 accent{};
+  ImVec4 selection{};
   ImVec4 bg{};
   ImVec4 area{};
   ImVec4 text{};
@@ -25,7 +26,10 @@ struct theme_cfg final
   const auto h = hue / 255.0f;
   cfg.bg = ImColor::HSV(h, 0.20f, 0.08f, 1.00f);
   cfg.area = ImColor::HSV(h, 0.60f, 0.40f, _area_opacity);
+
   cfg.accent = ImColor::HSV(h, 0.70f, 0.60f, _accent_opacity);
+  cfg.selection = ImColor::HSV(h + 0.05f, 0.70f, 0.93f, _accent_opacity);
+
   cfg.text = ImColor::HSV(h, 0.10f, 1.00f, 1.00f);
 
   return cfg;
@@ -51,7 +55,7 @@ void _apply_theme_from_config(ImGuiStyle& style, const theme_cfg& cfg)
 
   const auto component = _with_alpha(cfg.accent, 0.60f);
   const auto componentActive = _with_alpha(component, 1.00f);
-  const auto componentHover = _with_alpha(component, 0.80f);
+  const auto componentHover = _with_alpha(cfg.selection, 0.80f);
 
   set(ImGuiCol_Text, cfg.text);
   set(ImGuiCol_TextDisabled, _with_alpha(cfg.text, 0.60f));
@@ -92,10 +96,10 @@ void _apply_theme_from_config(ImGuiStyle& style, const theme_cfg& cfg)
 
   set(ImGuiCol_Header, _with_alpha(cfg.accent, 0.70f));
   set(ImGuiCol_HeaderHovered, _with_alpha(cfg.accent, 0.80f));
-  set(ImGuiCol_HeaderActive, _with_alpha(cfg.accent, 1.00f));
+  set(ImGuiCol_HeaderActive, cfg.selection);
 
-  set(ImGuiCol_TabActive, component);
-  set(ImGuiCol_TabUnfocusedActive, _with_alpha(component, 0.80f));
+  set(ImGuiCol_TabActive, cfg.selection);
+  set(ImGuiCol_TabUnfocusedActive, _with_alpha(cfg.selection, 0.80f));
   set(ImGuiCol_Tab, _with_alpha(component, 0.25f));
   set(ImGuiCol_TabUnfocused, _with_alpha(component, 0.25f));
   set(ImGuiCol_TabHovered, componentHover);
@@ -109,9 +113,9 @@ void _apply_theme_from_config(ImGuiStyle& style, const theme_cfg& cfg)
   set(ImGuiCol_DockingPreview, _with_alpha(cfg.accent, 0.80f));
   set(ImGuiCol_DockingEmptyBg, _with_alpha(cfg.accent, 0.80f));
 
-  set(ImGuiCol_ResizeGrip, _with_alpha(cfg.accent, 0.20f));
-  set(ImGuiCol_ResizeGripHovered, _with_alpha(cfg.accent, 0.78f));
-  set(ImGuiCol_ResizeGripActive, _with_alpha(cfg.accent, 1.00f));
+  set(ImGuiCol_ResizeGrip, _with_alpha(cfg.selection, 0.20f));
+  set(ImGuiCol_ResizeGripHovered, _with_alpha(cfg.selection, 0.78f));
+  set(ImGuiCol_ResizeGripActive, _with_alpha(cfg.selection, 1.00f));
 
   set(ImGuiCol_PlotLines, _with_alpha(cfg.text, 0.63f));
   set(ImGuiCol_PlotHistogram, _with_alpha(cfg.text, 0.63f));
@@ -194,7 +198,7 @@ void apply_style(ImGuiStyle& style)
   style.TabRounding = rounding;
 }
 
-void apply_theme(ImGuiStyle& style, editor_theme theme)
+void apply_theme(ImGuiStyle& style, const editor_theme theme)
 {
   switch (theme) {
     case editor_theme::dear_dark:
@@ -240,6 +244,7 @@ void apply_theme(ImGuiStyle& style, editor_theme theme)
     case editor_theme::nocturnal:
       _apply_theme_from_config(style,
                                {.accent = {0.0f, 0.5f, 0.5f, _accent_opacity},
+                                .selection = {0.0f, 0.6f, 0.6f, 0.9f},
                                 .bg = {0.04f, 0.04f, 0.04f, 1.00f},
                                 .area = {0.15f, 0.15f, 0.15f, _area_opacity},
                                 .text = {1.0f, 1.0f, 1.0f, 1.0f}});
@@ -248,6 +253,7 @@ void apply_theme(ImGuiStyle& style, editor_theme theme)
     case editor_theme::ash:
       _apply_theme_from_config(style,
                                {.accent = {0.4f, 0.4f, 0.4f, _accent_opacity},
+                                .selection = {0.5f, 0.5f, 0.5f, 0.9f},
                                 .bg = {0.04f, 0.04f, 0.04f, 1.00f},
                                 .area = {0.15f, 0.15f, 0.15f, _area_opacity},
                                 .text = {1.0f, 1.0f, 1.0f, 1.0f}});
