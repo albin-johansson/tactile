@@ -24,7 +24,7 @@ class FileMenu final
   void ShowOpenMapDialog();
 
  private:
-  CreateMapDialog mCreateMapDialog;
+  create_map_dialog mCreateMapDialog;
   bool mShowOpenMapDialog{};
 
   void UpdateRecentFilesMenu(entt::dispatcher& dispatcher);

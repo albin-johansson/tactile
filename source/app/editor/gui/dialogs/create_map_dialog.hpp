@@ -4,17 +4,17 @@
 
 namespace tactile {
 
-/// \addtogroup gui
-/// \{
-
-class CreateMapDialog final : public dialog_base
+/**
+ * \brief Represents the dialog used to create new tilemaps.
+ *
+ * \ingroup gui
+ */
+class create_map_dialog final : public dialog_base
 {
  public:
-  CreateMapDialog();
+  create_map_dialog();
 
-  ~CreateMapDialog() override = default;
-
-  void Open();
+  void show();
 
  protected:
   void on_update(const Model& model, entt::dispatcher& dispatcher) override;
@@ -29,7 +29,5 @@ class CreateMapDialog final : public dialog_base
   int mRows{};
   int mColumns{};
 };
-
-/// \} End of group gui
 
 }  // namespace tactile

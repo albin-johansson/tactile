@@ -19,7 +19,7 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     const auto hasActiveDocument = model.has_active_document();
 
     if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
-      mCreateMapDialog.Open();
+      mCreateMapDialog.show();
     }
 
     mShowOpenMapDialog =
@@ -68,7 +68,7 @@ void FileMenu::UpdateWindows(const Model& model, entt::dispatcher& dispatcher)
 
 void FileMenu::ShowNewMapDialog()
 {
-  mCreateMapDialog.Open();
+  mCreateMapDialog.show();
 }
 
 void FileMenu::ShowOpenMapDialog()
