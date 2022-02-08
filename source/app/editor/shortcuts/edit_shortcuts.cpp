@@ -126,7 +126,7 @@ void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
 auto EnableBucketShortcut::IsEnabled(const Model& model,
                                      const widget_manager& widgets) const -> bool
 {
-  return model.IsBucketPossible() && widgets.is_editor_focused();
+  return model.is_tool_possible(tool_type::bucket) && widgets.is_editor_focused();
 }
 
 EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
@@ -139,7 +139,7 @@ void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 auto EnableEraserShortcut::IsEnabled(const Model& model,
                                      const widget_manager& widgets) const -> bool
 {
-  return model.IsEraserPossible() && widgets.is_editor_focused();
+  return model.is_tool_possible(tool_type::eraser) && widgets.is_editor_focused();
 }
 
 EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
@@ -152,7 +152,7 @@ void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
 auto EnableStampShortcut::IsEnabled(const Model& model,
                                     const widget_manager& widgets) const -> bool
 {
-  return model.IsStampPossible() && widgets.is_editor_focused();
+  return model.is_tool_possible(tool_type::stamp) && widgets.is_editor_focused();
 }
 
 EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
@@ -167,7 +167,8 @@ void EnableObjectSelectionShortcut::Activate(entt::dispatcher& dispatcher)
 auto EnableObjectSelectionShortcut::IsEnabled(const Model& model,
                                               const widget_manager& widgets) const -> bool
 {
-  return model.IsObjectSelectionPossible() && widgets.is_editor_focused();
+  return model.is_tool_possible(tool_type::object_selection) &&
+         widgets.is_editor_focused();
 }
 
 }  // namespace tactile

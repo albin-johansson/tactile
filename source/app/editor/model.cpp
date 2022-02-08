@@ -220,84 +220,37 @@ auto Model::GetRedoText() const -> const std::string&
   return mDocuments.at(mActiveMap.value())->commands.get_redo_text();
 }
 
-auto Model::IsStampActive() const -> bool
+auto Model::is_tool_active(const tool_type tool) const -> bool
 {
-  if (const auto* registry = GetActiveRegistry()) {
-    return sys::IsStampEnabled(*registry);
-  }
-  else {
-    return false;
-  }
+  const auto* registry = GetActiveRegistry();
+  return registry && sys::is_tool_enabled(*registry, tool);
 }
 
-auto Model::IsEraserActive() const -> bool
+auto Model::is_tool_possible(const tool_type tool) const -> bool
 {
-  if (const auto* registry = GetActiveRegistry()) {
-    return sys::IsEraserEnabled(*registry);
-  }
-  else {
-    return false;
-  }
-}
+  const auto* registry = GetActiveRegistry();
 
-auto Model::IsBucketActive() const -> bool
-{
-  if (const auto* registry = GetActiveRegistry()) {
-    return sys::IsBucketEnabled(*registry);
-  }
-  else {
+  if (!registry) {
     return false;
   }
-}
 
-auto Model::IsObjectSelectionActive() const -> bool
-{
-  if (const auto* registry = GetActiveRegistry()) {
-    return sys::IsObjectSelectionEnabled(*registry);
-  }
-  else {
-    return false;
-  }
-}
+  switch (tool) {
+    case tool_type::stamp:
+    case tool_type::eraser:
+      return sys::is_tile_layer_active(*registry);
 
-auto Model::IsStampPossible() const -> bool
-{
-  if (const auto* registry = GetActiveRegistry()) {
-    return sys::is_tile_layer_active(*registry);
-  }
-  else {
-    return false;
-  }
-}
+    case tool_type::bucket:
+      return sys::is_tile_layer_active(*registry) &&
+             sys::is_single_tile_selected_in_tileset(*registry);
 
-auto Model::IsEraserPossible() const -> bool
-{
-  if (const auto* registry = GetActiveRegistry()) {
-    return sys::is_tile_layer_active(*registry);
-  }
-  else {
-    return false;
-  }
-}
+    case tool_type::object_selection:
+    case tool_type::rectangle:
+    case tool_type::ellipse:
+    case tool_type::point:
+      return sys::is_object_layer_active(*registry);
 
-auto Model::IsBucketPossible() const -> bool
-{
-  if (const auto* registry = GetActiveRegistry()) {
-    return sys::is_tile_layer_active(*registry) &&
-           sys::is_single_tile_selected_in_tileset(*registry);
-  }
-  else {
-    return false;
-  }
-}
-
-auto Model::IsObjectSelectionPossible() const -> bool
-{
-  if (const auto* registry = GetActiveRegistry()) {
-    return sys::is_object_layer_active(*registry);
-  }
-  else {
-    return false;
+    default:
+      return false;
   }
 }
 

@@ -231,76 +231,22 @@ class Model final
   /// \{
 
   /**
-   * \brief Indicates whether the stamp tool is active.
+   * \brief Indicates whether a specific mouse tool is active.
    *
    * \details This function can safely be called without an active registry.
    *
-   * \return `true` if the stamp tool is active; `false` otherwise.
+   * \return `true` if the tool is active; `false` otherwise.
    */
-  [[nodiscard]] auto IsStampActive() const -> bool;
+  [[nodiscard]] auto is_tool_active(tool_type tool) const -> bool;
 
   /**
-   * \brief Indicates whether the eraser tool is active.
+   * \brief Indicates whether a specific mouse tool is usable.
    *
    * \details This function can safely be called without an active registry.
    *
-   * \return `true` if the eraser tool is active; `false` otherwise.
+   * \return `true` if the tool is usable; `false` otherwise.
    */
-  [[nodiscard]] auto IsEraserActive() const -> bool;
-
-  /**
-   * \brief Indicates whether the bucket tool is active.
-   *
-   * \details This function can safely be called without an active registry.
-   *
-   * \return `true` if the bucket tool is active; `false` otherwise.
-   */
-  [[nodiscard]] auto IsBucketActive() const -> bool;
-
-  /**
-   * \brief Indicates whether the object selection tool is active.
-   *
-   * \details This function can safely be called without an active registry.
-   *
-   * \return `true` if the object selection tool is active; `false` otherwise.
-   */
-  [[nodiscard]] auto IsObjectSelectionActive() const -> bool;
-
-  /**
-   * \brief Indicates whether the stamp tool is usable.
-   *
-   * \details This function can safely be called without an active registry.
-   *
-   * \return `true` if the stamp tool is usable; `false` otherwise.
-   */
-  [[nodiscard]] auto IsStampPossible() const -> bool;
-
-  /**
-   * \brief Indicates whether the eraser tool is usable.
-   *
-   * \details This function can safely be called without an active registry.
-   *
-   * \return `true` if the eraser tool is usable; `false` otherwise.
-   */
-  [[nodiscard]] auto IsEraserPossible() const -> bool;
-
-  /**
-   * \brief Indicates whether the bucket tool is usable.
-   *
-   * \details This function can safely be called without an active registry.
-   *
-   * \return `true` if the bucket tool is usable; `false` otherwise.
-   */
-  [[nodiscard]] auto IsBucketPossible() const -> bool;
-
-  /**
-   * \brief Indicates whether the object selection tool is usable.
-   *
-   * \details This function can safely be called without an active registry.
-   *
-   * \return `true` if the object selection tool is usable; `false` otherwise.
-   */
-  [[nodiscard]] auto IsObjectSelectionPossible() const -> bool;
+  [[nodiscard]] auto is_tool_possible(tool_type tool) const -> bool;
 
   /// \} End of mouse tool functions
 

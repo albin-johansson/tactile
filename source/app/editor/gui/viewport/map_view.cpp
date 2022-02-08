@@ -109,7 +109,8 @@ void UpdateCursorGizmos(const entt::registry& registry,
     });
   }
 
-  if (sys::IsStampEnabled(registry) && sys::is_tileset_selection_not_empty(registry)) {
+  if (sys::is_tool_enabled(registry, tool_type::stamp) &&
+      sys::is_tileset_selection_not_empty(registry)) {
     RenderStampPreview(registry, cursor.map_position, info);
   }
 }

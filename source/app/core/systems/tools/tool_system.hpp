@@ -21,12 +21,7 @@ void ToolOnReleased(entt::registry& registry,
                     entt::dispatcher& dispatcher,
                     const mouse_info& mouse);
 
-[[nodiscard]] auto IsStampEnabled(const entt::registry& registry) -> bool;
-
-[[nodiscard]] auto IsEraserEnabled(const entt::registry& registry) -> bool;
-
-[[nodiscard]] auto IsBucketEnabled(const entt::registry& registry) -> bool;
-
-[[nodiscard]] auto IsObjectSelectionEnabled(const entt::registry& registry) -> bool;
+[[nodiscard]] auto is_tool_enabled(const entt::registry& registry, tool_type tool)
+    -> bool;
 
 }  // namespace tactile::sys
