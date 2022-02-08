@@ -25,7 +25,7 @@ class EditMenu final
   void ShowComponentEditor(const Model& model);
 
  private:
-  SettingsDialog mSettingsDialog;
+  settings_dialog mSettingsDialog;
   component_editor mComponentEditor;
 };
 

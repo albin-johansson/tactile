@@ -6,20 +6,22 @@
 
 namespace tactile {
 
-/// \addtogroup gui
-/// \{
-
-class SettingsDialog final : public dialog_base
+/**
+ * \brief Provides the interface for all available persistent settings.
+ *
+ * \ingroup gui
+ */
+class settings_dialog final : public dialog_base
 {
  public:
-  TACTILE_DEFAULT_COPY(SettingsDialog)
-  TACTILE_DEFAULT_MOVE(SettingsDialog)
+  TACTILE_DEFAULT_COPY(settings_dialog)
+  TACTILE_DEFAULT_MOVE(settings_dialog)
 
-  SettingsDialog();
+  settings_dialog();
 
-  ~SettingsDialog() override = default;
+  ~settings_dialog() override = default;
 
-  void Open();
+  void show();
 
  protected:
   void on_update(const Model& model, entt::dispatcher& dispatcher) override;
@@ -34,15 +36,13 @@ class SettingsDialog final : public dialog_base
   preference_state mSnapshot;     ///< The original settings when the dialog was opened.
   preference_state mGuiSettings;  ///< The value of the settings in the GUI.
 
-  void ApplySettings(entt::dispatcher& dispatcher);
+  void apply_settings(entt::dispatcher& dispatcher);
 
-  void UpdateBehaviorTab();
+  void update_behavior_tab();
 
-  void UpdateAppearanceTab();
+  void update_appearance_tab();
 
-  void UpdateExportTab();
+  void update_export_tab();
 };
-
-/// \} End of group gui
 
 }  // namespace tactile

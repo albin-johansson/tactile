@@ -13,7 +13,7 @@
 namespace tactile {
 namespace {
 
-void UpdatePreviewSettings(const preference_state& prefs)
+void _update_preview_settings(const preference_state& prefs)
 {
   apply_theme(ImGui::GetStyle(), prefs.get_theme());
   ImGui::GetStyle().WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;
@@ -21,46 +21,46 @@ void UpdatePreviewSettings(const preference_state& prefs)
 
 }  // namespace
 
-SettingsDialog::SettingsDialog() : dialog_base{"Settings"}
+settings_dialog::settings_dialog() : dialog_base{"Settings"}
 {
   use_apply_button();
 }
 
-void SettingsDialog::Open()
+void settings_dialog::show()
 {
   mSnapshot = get_preferences();
   mGuiSettings = mSnapshot;
   make_visible();
 }
 
-void SettingsDialog::on_update(const Model&, entt::dispatcher&)
+void settings_dialog::on_update(const Model&, entt::dispatcher&)
 {
-  scoped::tab_bar bar{"##SettingsTabBar"};
-  if (bar.is_open()) {
-    UpdateBehaviorTab();
-    UpdateAppearanceTab();
-    UpdateExportTab();
+  if (scoped::tab_bar bar{"##SettingsTabBar"}; bar.is_open()) {
+    update_behavior_tab();
+    update_appearance_tab();
+    update_export_tab();
   }
 }
 
-void SettingsDialog::on_cancel()
+void settings_dialog::on_cancel()
 {
-  UpdatePreviewSettings(get_preferences());
+  /* Reset any changes we made for preview purposes */
+  _update_preview_settings(get_preferences());
 }
 
-void SettingsDialog::on_accept(entt::dispatcher& dispatcher)
+void settings_dialog::on_accept(entt::dispatcher& dispatcher)
 {
-  ApplySettings(dispatcher);
-  UpdatePreviewSettings(get_preferences());
+  apply_settings(dispatcher);
+  _update_preview_settings(get_preferences());
 }
 
-void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
+void settings_dialog::on_apply(entt::dispatcher& dispatcher)
 {
-  ApplySettings(dispatcher);
-  UpdatePreviewSettings(get_preferences());
+  apply_settings(dispatcher);
+  _update_preview_settings(get_preferences());
 }
 
-void SettingsDialog::ApplySettings(entt::dispatcher& dispatcher)
+void settings_dialog::apply_settings(entt::dispatcher& dispatcher)
 {
   set_preferences(mGuiSettings);
   if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
@@ -68,13 +68,13 @@ void SettingsDialog::ApplySettings(entt::dispatcher& dispatcher)
   }
 }
 
-void SettingsDialog::UpdateBehaviorTab()
+void settings_dialog::update_behavior_tab()
 {
   if (scoped::tab_item item{"Behavior"}; item.is_open()) {
     ImGui::Spacing();
     if (button("Restore Defaults")) {
       mGuiSettings.reset_behavior_preferences();
-      UpdatePreviewSettings(mGuiSettings);
+      _update_preview_settings(mGuiSettings);
     }
     ImGui::Spacing();
 
@@ -115,14 +115,14 @@ void SettingsDialog::UpdateBehaviorTab()
   }
 }
 
-void SettingsDialog::UpdateAppearanceTab()
+void settings_dialog::update_appearance_tab()
 {
   if (scoped::tab_item item{"Appearance"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
       mGuiSettings.reset_appearance_preferences();
-      UpdatePreviewSettings(mGuiSettings);
+      _update_preview_settings(mGuiSettings);
     }
 
     ImGui::Spacing();
@@ -161,14 +161,14 @@ void SettingsDialog::UpdateAppearanceTab()
   }
 }
 
-void SettingsDialog::UpdateExportTab()
+void settings_dialog::update_export_tab()
 {
   if (scoped::tab_item item{"Export"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
       mGuiSettings.reset_export_preferences();
-      UpdatePreviewSettings(mGuiSettings);
+      _update_preview_settings(mGuiSettings);
     }
 
     ImGui::Spacing();
