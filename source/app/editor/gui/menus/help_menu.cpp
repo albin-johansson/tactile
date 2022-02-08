@@ -27,7 +27,7 @@ void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
     if (ImGui::MenuItem("Credits...")) {
-      mCreditsDialog.Open();
+      mCreditsDialog.show();
     }
   }
 

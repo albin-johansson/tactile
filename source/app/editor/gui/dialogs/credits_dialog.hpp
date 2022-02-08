@@ -4,12 +4,15 @@
 
 namespace tactile {
 
-class CreditsDialog final : public dialog_base
+/**
+ * \brief Provides information about third-party dependencies.
+ */
+class credits_dialog final : public dialog_base
 {
  public:
-  CreditsDialog();
+  credits_dialog();
 
-  void Open();
+  void show();
 
  protected:
   void on_update(const Model& model, entt::dispatcher& dispatcher) override;
