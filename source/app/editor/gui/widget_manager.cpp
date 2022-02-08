@@ -3,7 +3,7 @@
 #include <utility>  // move
 
 #include "components/component_dock.hpp"
-#include "dialogs/map_import_error_dialog.hpp"
+#include "dialogs/map_parse_error_dialog.hpp"
 #include "dialogs/resize_map_dialog.hpp"
 #include "editor/model.hpp"
 #include "icons.hpp"
@@ -30,7 +30,7 @@ struct widget_manager::widgets final
   LogDock mLogDock;
 
   ResizeMapDialog mResizeMapDialog;
-  MapImportErrorDialog mMapImportErrorDialog;
+  map_parse_error_dialog mMapParseErrorDialog;
 };
 
 widget_manager::widget_manager() : mWidgets{std::make_unique<widgets>()} {}
@@ -62,7 +62,7 @@ void widget_manager::update(const Model& model,
   }
 
   mWidgets->mResizeMapDialog.update(model, dispatcher);
-  mWidgets->mMapImportErrorDialog.update(model, dispatcher);
+  mWidgets->mMapParseErrorDialog.update(model, dispatcher);
 }
 
 void widget_manager::show_settings()
@@ -114,7 +114,7 @@ void widget_manager::show_resize_map_dialog(const usize currentRows,
 
 void widget_manager::show_map_import_error_dialog(parsing::parse_error error)
 {
-  mWidgets->mMapImportErrorDialog.Open(error);
+  mWidgets->mMapParseErrorDialog.show(error);
 }
 
 void widget_manager::show_component_editor(const Model& model)

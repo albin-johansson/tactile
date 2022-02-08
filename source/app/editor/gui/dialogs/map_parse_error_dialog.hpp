@@ -6,12 +6,12 @@
 
 namespace tactile {
 
-class MapImportErrorDialog final : public dialog_base
+class map_parse_error_dialog final : public dialog_base
 {
  public:
-  MapImportErrorDialog();
+  map_parse_error_dialog();
 
-  void Open(parsing::parse_error error);
+  void show(parsing::parse_error error);
 
  protected:
   void on_update(const Model& model, entt::dispatcher& dispatcher) override;
