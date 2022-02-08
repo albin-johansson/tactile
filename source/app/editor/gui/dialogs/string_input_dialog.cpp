@@ -5,35 +5,12 @@
 #include <imgui.h>
 
 #include "core/utils/buffers.hpp"
-#include "editor/gui/common/button.hpp"
 
 namespace tactile {
 
-AStringInputDialog::AStringInputDialog(const c_str title) : dialog_base{title} {}
+string_input_dialog::string_input_dialog(const char* title) : dialog_base{title} {}
 
-void AStringInputDialog::on_update(const Model&, entt::dispatcher&)
-{
-  if (mShouldAcquireFocus) {
-    ImGui::SetKeyboardFocusHere();
-    mShouldAcquireFocus = false;
-  }
-  ImGui::InputTextWithHint("##AStringInputDialogInput",
-                           mHint ? mHint : "",
-                           mBuffer.data(),
-                           sizeof mBuffer);
-}
-
-void AStringInputDialog::SetInputHint(const c_str hint)
-{
-  mHint = hint;
-}
-
-auto AStringInputDialog::is_current_input_valid(const Model& model) const -> bool
-{
-  return Validate(model, GetCurrentInput());
-}
-
-void AStringInputDialog::Show(std::string previous)
+void string_input_dialog::show(std::string previous)
 {
   mShouldAcquireFocus = true;
   mPrevious = std::move(previous);
@@ -41,12 +18,34 @@ void AStringInputDialog::Show(std::string previous)
   make_visible();
 }
 
-auto AStringInputDialog::GetCurrentInput() const -> std::string_view
+void string_input_dialog::set_input_hint(const char* hint)
+{
+  mHint = hint;
+}
+
+void string_input_dialog::on_update(const Model&, entt::dispatcher&)
+{
+  if (mShouldAcquireFocus) {
+    ImGui::SetKeyboardFocusHere();
+    mShouldAcquireFocus = false;
+  }
+  ImGui::InputTextWithHint("##string_input_dialog_input",
+                           mHint ? mHint : "",
+                           mBuffer.data(),
+                           sizeof mBuffer);
+}
+
+auto string_input_dialog::is_current_input_valid(const Model& model) const -> bool
+{
+  return validate(model, current_input());
+}
+
+auto string_input_dialog::current_input() const -> std::string_view
 {
   return create_string_view_from_buffer(mBuffer);
 }
 
-auto AStringInputDialog::GetPreviousString() const -> const std::string&
+auto string_input_dialog::previous_input() const -> const std::string&
 {
   return mPrevious;
 }

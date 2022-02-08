@@ -9,20 +9,20 @@
 namespace tactile {
 
 CreateComponentAttributeDialog::CreateComponentAttributeDialog()
-    : AStringInputDialog{"Create Attribute"}
+    : string_input_dialog{"Create Attribute"}
 {
   set_accept_button_label("Create");
-  SetInputHint("Attribute name");
+  set_input_hint("Attribute name");
 }
 
 void CreateComponentAttributeDialog::Open(const component_id id)
 {
   mComponentId = id;
-  Show("");
+  show("");
 }
 
-auto CreateComponentAttributeDialog::Validate(const Model& model,
-                                              const std::string_view input) const -> bool
+auto CreateComponentAttributeDialog::validate(const Model& model,
+                                              std::string_view input) const -> bool
 {
   const auto& registry = model.get_active_registry();
   return !input.empty() &&
@@ -32,7 +32,7 @@ auto CreateComponentAttributeDialog::Validate(const Model& model,
 void CreateComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<create_component_attr_event>(mComponentId,
-                                                  std::string{GetCurrentInput()});
+                                                  std::string{current_input()});
 }
 
 }  // namespace tactile

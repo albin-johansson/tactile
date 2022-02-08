@@ -97,7 +97,7 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,")) {
-      mSettingsDialog.Open();
+      mSettingsDialog.show();
     }
   }
 }
@@ -110,7 +110,7 @@ void EditMenu::UpdateWindows(const Model& model, entt::dispatcher& dispatcher)
 
 void EditMenu::OpenSettingsModal()
 {
-  mSettingsDialog.Open();
+  mSettingsDialog.show();
 }
 
 void EditMenu::ShowComponentEditor(const Model& model)

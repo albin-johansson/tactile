@@ -9,17 +9,17 @@ namespace tactile {
 CreateComponentDialog::CreateComponentDialog() : AComponentNameDialog{"Create Component"}
 {
   set_accept_button_label("Create");
-  SetInputHint("Component name");
+  set_input_hint("Component name");
 }
 
 void CreateComponentDialog::Open()
 {
-  Show("");
+  show("");
 }
 
 void CreateComponentDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<create_component_def_event>(std::string{GetCurrentInput()});
+  dispatcher.enqueue<create_component_def_event>(std::string{current_input()});
 }
 
 }  // namespace tactile

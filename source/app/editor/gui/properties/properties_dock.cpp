@@ -43,7 +43,7 @@ void PropertiesDock::ShowAddPropertyDialog()
 
 void PropertiesDock::ShowRenamePropertyDialog(const std::string& name)
 {
-  mRenameDialog.Show(name);
+  mRenameDialog.show(name);
 }
 
 void PropertiesDock::ShowChangePropertyTypeDialog(std::string name,

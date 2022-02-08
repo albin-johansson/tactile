@@ -7,18 +7,18 @@
 
 namespace tactile {
 
-RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog{"Rename Property"}
+RenamePropertyDialog::RenamePropertyDialog() : string_input_dialog{"Rename Property"}
 {
   set_accept_button_label("Rename");
 }
 
 void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<rename_property_event>(GetPreviousString(),
-                                            std::string{GetCurrentInput()});
+  dispatcher.enqueue<rename_property_event>(previous_input(),
+                                            std::string{current_input()});
 }
 
-auto RenamePropertyDialog::Validate(const Model& model, std::string_view input) const
+auto RenamePropertyDialog::validate(const Model& model, std::string_view input) const
     -> bool
 {
   const auto& registry = model.get_active_registry();

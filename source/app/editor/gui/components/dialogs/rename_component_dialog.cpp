@@ -14,13 +14,13 @@ RenameComponentDialog::RenameComponentDialog() : AComponentNameDialog{"Rename Co
 void RenameComponentDialog::Open(std::string previousName, const component_id id)
 {
   mComponentId = id;
-  Show(std::move(previousName));
+  show(std::move(previousName));
 }
 
 void RenameComponentDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<rename_component_def_event>(mComponentId.value(),
-                                                 std::string{GetCurrentInput()});
+                                                 std::string{current_input()});
 }
 
 }  // namespace tactile

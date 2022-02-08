@@ -5,7 +5,7 @@
 
 namespace tactile {
 
-class CreateComponentAttributeDialog final : public AStringInputDialog
+class CreateComponentAttributeDialog final : public string_input_dialog
 {
  public:
   CreateComponentAttributeDialog();
@@ -13,7 +13,7 @@ class CreateComponentAttributeDialog final : public AStringInputDialog
   void Open(component_id id);
 
  protected:
-  [[nodiscard]] auto Validate(const Model& model, std::string_view input) const
+  [[nodiscard]] auto validate(const Model& model, std::string_view input) const
       -> bool override;
 
   void on_accept(entt::dispatcher& dispatcher) override;

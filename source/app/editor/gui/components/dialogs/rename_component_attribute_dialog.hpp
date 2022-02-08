@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-class RenameComponentAttributeDialog final : public AStringInputDialog
+class RenameComponentAttributeDialog final : public string_input_dialog
 {
  public:
   RenameComponentAttributeDialog();
@@ -16,7 +16,7 @@ class RenameComponentAttributeDialog final : public AStringInputDialog
   void Open(std::string previousName, component_id id);
 
  protected:
-  [[nodiscard]] auto Validate(const Model& model, std::string_view input) const
+  [[nodiscard]] auto validate(const Model& model, std::string_view input) const
       -> bool override;
   void on_accept(entt::dispatcher& dispatcher) override;
 
