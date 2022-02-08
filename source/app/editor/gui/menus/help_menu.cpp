@@ -15,7 +15,7 @@ void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   if (scoped::menu menu{"Help"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
-      mAboutDialog.Open();
+      mAboutDialog.show();
     }
 
     mShowAboutImGui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");

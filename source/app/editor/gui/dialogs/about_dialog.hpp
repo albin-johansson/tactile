@@ -4,12 +4,15 @@
 
 namespace tactile {
 
-class AboutDialog final : public dialog_base
+/**
+ * \brief Provides information about the application.
+ */
+class about_dialog final : public dialog_base
 {
  public:
-  AboutDialog();
+  about_dialog();
 
-  void Open();
+  void show();
 
  protected:
   void on_update(const Model& model, entt::dispatcher& dispatcher) override;
