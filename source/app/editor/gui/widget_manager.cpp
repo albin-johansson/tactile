@@ -29,7 +29,7 @@ struct widget_manager::widgets final
   component_dock mComponentDock;
   LogDock mLogDock;
 
-  ResizeMapDialog mResizeMapDialog;
+  resize_map_dialog mResizeMapDialog;
   map_parse_error_dialog mMapParseErrorDialog;
 };
 
@@ -109,10 +109,10 @@ void widget_manager::show_change_property_type_dialog(std::string name,
 void widget_manager::show_resize_map_dialog(const usize currentRows,
                                             const usize currentColumns)
 {
-  mWidgets->mResizeMapDialog.Show(currentRows, currentColumns);
+  mWidgets->mResizeMapDialog.show(currentRows, currentColumns);
 }
 
-void widget_manager::show_map_import_error_dialog(parsing::parse_error error)
+void widget_manager::show_map_import_error_dialog(const parsing::parse_error error)
 {
   mWidgets->mMapParseErrorDialog.show(error);
 }
