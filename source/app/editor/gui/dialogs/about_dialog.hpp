@@ -6,6 +6,8 @@ namespace tactile {
 
 /**
  * \brief Provides information about the application.
+ *
+ * \ingroup gui
  */
 class about_dialog final : public dialog_base
 {
