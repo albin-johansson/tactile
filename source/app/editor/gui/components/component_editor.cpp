@@ -43,14 +43,14 @@ component_editor::~component_editor() noexcept = default;
 
 void component_editor::Open(const Model& model)
 {
-  const auto& registry = model.GetActiveRegistryRef();
+  const auto& registry = model.get_active_registry();
   mData->active_component = sys::get_first_available_component_def(registry);
   Show();
 }
 
 void component_editor::UpdateContents(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto& registry = model.GetActiveRegistryRef();
+  const auto& registry = model.get_active_registry();
   auto& data = *mData;
 
   /* Ensure that the active component ID hasn't been invalidated */

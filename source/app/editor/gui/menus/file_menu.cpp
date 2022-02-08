@@ -16,7 +16,7 @@ namespace tactile {
 void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   if (scoped::menu menu{"File"}; menu.is_open()) {
-    const auto hasActiveDocument = model.HasActiveDocument();
+    const auto hasActiveDocument = model.has_active_document();
 
     if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
       mCreateMapDialog.Open();
@@ -32,7 +32,7 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
                         TACTILE_PRIMARY_MOD "+S",
                         false,
-                        model.CanSaveDocument())) {
+                        model.is_save_possible())) {
       dispatcher.enqueue<save_event>();
     }
 
@@ -46,7 +46,7 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Map", nullptr, false, hasActiveDocument)) {
-      dispatcher.enqueue<close_map_event>(model.GetActiveMapId().value());
+      dispatcher.enqueue<close_map_event>(model.active_map_id().value());
     }
 
     ImGui::Separator();

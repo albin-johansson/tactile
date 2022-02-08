@@ -44,7 +44,7 @@ class Model final
    *
    * \return the unique identifier assigned to the map.
    */
-  auto AddMap(Document document) -> map_id;
+  auto add_map(Document document) -> map_id;
 
   /**
    * \brief Creates an empty map with the specified attributes.
@@ -56,7 +56,7 @@ class Model final
    *
    * \return the unique identifier assigned to the map.
    */
-  auto AddMap(int tileWidth, int tileHeight, usize rows, usize columns) -> map_id;
+  auto add_map(int32 tileWidth, int32 tileHeight, usize rows, usize columns) -> map_id;
 
   /**
    * \brief Makes a specific map active.
@@ -65,7 +65,7 @@ class Model final
    *
    * \param id the identifier of the map that will be selected.
    */
-  void SelectMap(map_id id);
+  void select_map(map_id id);
 
   /**
    * \brief Closes a currently open map.
@@ -77,7 +77,7 @@ class Model final
    *
    * \param id the identifier of the map that will be closed.
    */
-  void RemoveMap(map_id id);
+  void remove_map(map_id id);
 
   /**
    * \brief Indicates whether a specific map has an associated file path.
@@ -88,7 +88,7 @@ class Model final
    *
    * \return `true` if the map has a file path; `false` otherwise.
    */
-  [[nodiscard]] auto HasPath(map_id id) const -> bool;
+  [[nodiscard]] auto has_path(map_id id) const -> bool;
 
   /**
    * \brief Returns the (potentially empty) file path associated with a map.
@@ -99,7 +99,7 @@ class Model final
    *
    * \return the associated file path.
    */
-  [[nodiscard]] auto GetPath(map_id id) const -> const std::filesystem::path&;
+  [[nodiscard]] auto get_path(map_id id) const -> const std::filesystem::path&;
 
   /**
    * \brief Indicates whether there is an open document associated with a file path.
@@ -109,21 +109,22 @@ class Model final
    * \return `true` if there is a document associated with the file path; `false`
    * otherwise.
    */
-  [[nodiscard]] auto HasDocumentWithPath(const std::filesystem::path& path) const -> bool;
+  [[nodiscard]] auto has_document_with_path(const std::filesystem::path& path) const
+      -> bool;
 
   /**
    * \brief Indicates whether there is an active document.
    *
    * \return `true` if there is an active document; `false` otherwise.
    */
-  [[nodiscard]] auto HasActiveDocument() const -> bool;
+  [[nodiscard]] auto has_active_document() const -> bool;
 
   /**
    * \brief Indicates whether the current document can be saved.
    *
    * \return `true` if the document can be saved; `false` otherwise.
    */
-  [[nodiscard]] auto CanSaveDocument() const -> bool;
+  [[nodiscard]] auto is_save_possible() const -> bool;
 
   /**
    * \brief Indicates whether the viewport tile size can be decreased in the current
@@ -131,34 +132,34 @@ class Model final
    *
    * \return `true` if the viewport tile size can be decreased; `false` otherwise.
    */
-  [[nodiscard]] auto CanDecreaseViewportTileSize() const -> bool;
+  [[nodiscard]] auto can_decrease_viewport_tile_size() const -> bool;
 
   /**
    * \brief Returns the identifier of the currently active map, if there is one.
    *
    * \return the identifier of the active map.
    */
-  [[nodiscard]] auto GetActiveMapId() const -> maybe<map_id>;
+  [[nodiscard]] auto active_map_id() const -> maybe<map_id>;
 
   /**
    * \brief Returns the currently active document, if there is one.
    *
    * \return a (potentially null) pointer to the active document.
    */
-  [[nodiscard]] auto GetActiveDocument() -> Document*;
+  [[nodiscard]] auto active_document() -> Document*;
 
-  /// \copydoc GetActiveDocument()
-  [[nodiscard]] auto GetActiveDocument() const -> const Document*;
+  /// \copydoc active_document()
+  [[nodiscard]] auto active_document() const -> const Document*;
 
   /**
    * \brief Returns the currently active registry, if there is one.
    *
    * \return a (potentially null) pointer to the active registry.
    */
-  [[nodiscard]] auto GetActiveRegistry() -> entt::registry*;
+  [[nodiscard]] auto active_registry() -> entt::registry*;
 
-  /// \copydoc GetActiveRegistry()
-  [[nodiscard]] auto GetActiveRegistry() const -> const entt::registry*;
+  /// \copydoc active_registry()
+  [[nodiscard]] auto active_registry() const -> const entt::registry*;
 
   /**
    * \brief Returns the currently active registry.
@@ -167,10 +168,10 @@ class Model final
    *
    * \throws TactileError if there is no active registry.
    */
-  [[nodiscard]] auto GetActiveRegistryRef() -> entt::registry&;
+  [[nodiscard]] auto get_active_registry() -> entt::registry&;
 
-  /// \copydoc GetActiveRegistryRef()
-  [[nodiscard]] auto GetActiveRegistryRef() const -> const entt::registry&;
+  /// \copydoc get_active_registry()
+  [[nodiscard]] auto get_active_registry() const -> const entt::registry&;
 
   /// \} End of document functions
 
@@ -184,28 +185,28 @@ class Model final
    *
    * \param capacity the new command stack capacity.
    */
-  void SetCommandCapacity(usize capacity);
+  void set_command_capacity(usize capacity);
 
   /**
    * \brief Indicates whether the current command stack state is "clean".
    *
    * \return `true` if the command stack is clean; `false` otherwise.
    */
-  [[nodiscard]] auto IsClean() const -> bool;
+  [[nodiscard]] auto is_clean() const -> bool;
 
   /**
    * \brief Indicates whether the current command stack has an undoable command.
    *
    * \return `true` if there is an undoable command; `false` otherwise.
    */
-  [[nodiscard]] auto CanUndo() const -> bool;
+  [[nodiscard]] auto can_undo() const -> bool;
 
   /**
    * \brief Indicates whether the current command stack has an redoable command.
    *
    * \return `true` if there is an redoable command; `false` otherwise.
    */
-  [[nodiscard]] auto CanRedo() const -> bool;
+  [[nodiscard]] auto can_redo() const -> bool;
 
   /**
    * \brief Returns the text associated with the current undoable command.
@@ -214,7 +215,7 @@ class Model final
    *
    * \return the command text.
    */
-  [[nodiscard]] auto GetUndoText() const -> const std::string&;
+  [[nodiscard]] auto get_undo_text() const -> const std::string&;
 
   /**
    * \brief Returns the text associated with the current redoable command.
@@ -223,7 +224,7 @@ class Model final
    *
    * \return the command text.
    */
-  [[nodiscard]] auto GetRedoText() const -> const std::string&;
+  [[nodiscard]] auto get_redo_text() const -> const std::string&;
 
   /// \} End of command stack functions
 

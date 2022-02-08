@@ -34,7 +34,7 @@ void restore_last_session(Model& model, texture_manager& textures)
     for (const auto& file : session.files()) {
       const auto ir = parsing::parse_map(file);
       if (ir.error() == parsing::parse_error::none) {
-        model.AddMap(restore_document_from_ir(ir, textures));
+        model.add_map(restore_document_from_ir(ir, textures));
       }
       else {
         log_warning("Failed to restore map from last session!");

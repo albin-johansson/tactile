@@ -25,7 +25,7 @@ void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
   mHasFocus = dock.has_focus();
 
   if (dock.is_open()) {
-    const auto& registry = model.GetActiveRegistryRef();
+    const auto& registry = model.get_active_registry();
     mPropertyTable.Update(registry, dispatcher);
   }
 

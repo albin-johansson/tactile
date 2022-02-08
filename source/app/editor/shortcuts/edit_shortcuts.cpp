@@ -21,7 +21,7 @@ void UndoShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto UndoShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
-  return model.CanUndo();
+  return model.can_undo();
 }
 
 RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, gPrimaryModifier} {}
@@ -33,7 +33,7 @@ void RedoShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto RedoShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
-  return model.CanRedo();
+  return model.can_redo();
 }
 
 AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, gSecondaryModifier} {}
@@ -45,7 +45,7 @@ void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto AddRowShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
-  return model.HasActiveDocument();
+  return model.has_active_document();
 }
 
 AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, gSecondaryModifier}
@@ -58,7 +58,7 @@ void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto AddColumnShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
-  return model.HasActiveDocument();
+  return model.has_active_document();
 }
 
 RemoveRowShortcut::RemoveRowShortcut()
@@ -72,7 +72,7 @@ void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto RemoveRowShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
 {
-  if (const auto* registry = model.GetActiveRegistry()) {
+  if (const auto* registry = model.active_registry()) {
     const auto& map = registry->ctx<MapInfo>();
     return map.row_count > 1;
   }
@@ -93,7 +93,7 @@ void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
 auto RemoveColumnShortcut::IsEnabled(const Model& model, const widget_manager&) const
     -> bool
 {
-  if (const auto* registry = model.GetActiveRegistry()) {
+  if (const auto* registry = model.active_registry()) {
     const auto& map = registry->ctx<MapInfo>();
     return map.column_count > 1;
   }
@@ -113,7 +113,7 @@ void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
 auto AddTilesetShortcut::IsEnabled(const Model& model, const widget_manager&) const
     -> bool
 {
-  return model.HasActiveDocument();
+  return model.has_active_document();
 }
 
 EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}

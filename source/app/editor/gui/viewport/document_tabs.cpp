@@ -18,12 +18,12 @@ void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher)
       const scoped::id scope{id};
 
       ImGuiTabItemFlags flags = 0;
-      const auto isActive = model.GetActiveMapId() == id;
+      const auto isActive = model.active_map_id() == id;
 
       if (isActive) {
         flags |= ImGuiTabItemFlags_SetSelected;
 
-        if (!model.IsClean()) {
+        if (!model.is_clean()) {
           flags |= ImGuiTabItemFlags_UnsavedDocument;
         }
       }

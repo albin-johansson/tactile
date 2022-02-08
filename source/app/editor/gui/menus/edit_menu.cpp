@@ -18,13 +18,13 @@ namespace tactile {
 void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
   if (scoped::menu menu{"Edit"}; menu.is_open()) {
-    const auto canUndo = model.CanUndo();
-    const auto canRedo = model.CanRedo();
+    const auto canUndo = model.can_undo();
+    const auto canRedo = model.can_redo();
 
     const formatted_string undoText{TAC_ICON_UNDO " Undo {}",
-                                    canUndo ? model.GetUndoText() : ""};
+                                    canUndo ? model.get_undo_text() : ""};
     const formatted_string redoText{TAC_ICON_REDO " Redo {}",
-                                    canRedo ? model.GetRedoText() : ""};
+                                    canRedo ? model.get_redo_text() : ""};
 
     if (ImGui::MenuItem(undoText.data(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
       dispatcher.enqueue<undo_event>();
@@ -90,7 +90,7 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...",
                         nullptr,
                         false,
-                        model.HasActiveDocument())) {
+                        model.has_active_document())) {
       mComponentEditor.Open(model);
     }
 

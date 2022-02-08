@@ -37,7 +37,7 @@ void UpdateViewportWidget(const Model& model,
     gHasFocus = ImGui::IsWindowFocused();
     gMouseWithinWindow = scoped::window::current_window_contains_mouse();
 
-    if (model.HasActiveDocument()) {
+    if (model.has_active_document()) {
       UpdateDocumentTabs(model, dispatcher);
     }
     else {

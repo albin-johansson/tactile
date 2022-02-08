@@ -40,7 +40,7 @@ void AddPropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 
 auto AddPropertyDialog::IsCurrentInputValid(const Model& model) const -> bool
 {
-  const auto& registry = model.GetActiveRegistryRef();
+  const auto& registry = model.get_active_registry();
   const auto& context = sys::current_context(registry);
 
   const auto name = create_string_view_from_buffer(mNameBuffer);

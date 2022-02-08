@@ -44,7 +44,7 @@ void widget_manager::update(const Model& model,
   mWidgets->mMenuBar.Update(model, dispatcher);
   UpdateDockSpace();
 
-  if (model.HasActiveDocument()) {
+  if (model.has_active_document()) {
     mWidgets->mToolbar.Update(model, dispatcher);
     mWidgets->mLayerDock.Update(model, icons, dispatcher);
     mWidgets->mPropertiesDock.Update(model, dispatcher);
@@ -52,7 +52,7 @@ void widget_manager::update(const Model& model,
 
   UpdateViewportWidget(model, icons, dispatcher);
 
-  if (const auto* registry = model.GetActiveRegistry()) {
+  if (const auto* registry = model.active_registry()) {
     UpdateMapViewObjectContextMenu(*registry, dispatcher);
 
     mWidgets->mComponentDock.update(*registry, dispatcher);

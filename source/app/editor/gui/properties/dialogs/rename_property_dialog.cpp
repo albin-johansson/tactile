@@ -21,7 +21,7 @@ void RenamePropertyDialog::OnAccept(entt::dispatcher& dispatcher)
 auto RenamePropertyDialog::Validate(const Model& model, std::string_view input) const
     -> bool
 {
-  const auto& registry = model.GetActiveRegistryRef();
+  const auto& registry = model.get_active_registry();
   const auto& context = sys::current_context(registry);
   return !input.empty() && !sys::has_property_with_name(registry, context, input);
 }

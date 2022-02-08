@@ -60,7 +60,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (button(TAC_ICON_SAVE, "Save", !model.IsClean(), bw, bh)) {
+  if (button(TAC_ICON_SAVE, "Save", !model.is_clean(), bw, bh)) {
     dispatcher.enqueue<save_event>();
   }
 
@@ -70,7 +70,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (button(TAC_ICON_UNDO, "Undo", model.CanUndo(), bw, bh)) {
+  if (button(TAC_ICON_UNDO, "Undo", model.can_undo(), bw, bh)) {
     dispatcher.enqueue<undo_event>();
   }
 
@@ -78,7 +78,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (button(TAC_ICON_REDO, "Redo", model.CanRedo(), bw, bh)) {
+  if (button(TAC_ICON_REDO, "Redo", model.can_redo(), bw, bh)) {
     dispatcher.enqueue<redo_event>();
   }
 

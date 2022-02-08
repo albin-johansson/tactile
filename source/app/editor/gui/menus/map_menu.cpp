@@ -17,7 +17,7 @@ MapMenu::~MapMenu() noexcept = default;
 
 void MapMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 {
-  scoped::disable disable{!model.HasActiveDocument()};
+  scoped::disable disable{!model.has_active_document()};
   if (scoped::menu menu{"Map"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
       dispatcher.enqueue<inspect_map_event>();

@@ -79,7 +79,7 @@ void LayerDock::Update(const Model& model,
   scoped::window dock{"Layers", ImGuiWindowFlags_NoCollapse, &visible};
   mHasFocus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
-  const auto& registry = model.GetActiveRegistryRef();
+  const auto& registry = model.get_active_registry();
 
   if (dock.is_open()) {
     UpdateLayerDockButtons(registry, dispatcher);
