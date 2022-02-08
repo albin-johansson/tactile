@@ -247,7 +247,7 @@ void application::on_save_as(const save_as_event& event)
 void application::on_open_save_as_dialog()
 {
   if (mModel.has_active_document()) {
-    OpenSaveAsDialog(mDispatcher);
+    show_save_as_dialog(mDispatcher);
   }
 }
 
