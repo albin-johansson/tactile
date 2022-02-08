@@ -1,13 +1,18 @@
 #include "dock_widget.hpp"
 
 #include "editor/gui/scoped.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
 
 dock_widget::dock_widget(const char* title, const ImGuiWindowFlags flags)
     : mTitle{title}
     , mFlags{flags}
-{}
+{
+  if (!mTitle) {
+    throw_traced(tactile_error{"Invalid null dock widget title!"});
+  }
+}
 
 void dock_widget::update(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
