@@ -9,7 +9,7 @@ namespace tactile {
 
 RenameLayerDialog::RenameLayerDialog() : AStringInputDialog{"Rename Layer"}
 {
-  SetAcceptButtonLabel("Rename");
+  set_accept_button_label("Rename");
 }
 
 void RenameLayerDialog::Show(const layer_id id, std::string oldName)
@@ -19,7 +19,7 @@ void RenameLayerDialog::Show(const layer_id id, std::string oldName)
   AStringInputDialog::Show(*mOldName);
 }
 
-void RenameLayerDialog::OnAccept(entt::dispatcher& dispatcher)
+void RenameLayerDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<rename_layer_event>(mTargetId.value(),
                                          std::string{GetCurrentInput()});

@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-class ChangePropertyTypeDialog final : public ADialog
+class ChangePropertyTypeDialog final : public dialog_base
 {
  public:
   ChangePropertyTypeDialog();
@@ -18,11 +18,11 @@ class ChangePropertyTypeDialog final : public ADialog
   void Show(std::string name, attribute_type type);
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
 
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool override;
+  [[nodiscard]] auto is_current_input_valid(const Model& model) const -> bool override;
 
  private:
   attribute_type mCurrentType{attribute_type::string};

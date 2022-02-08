@@ -7,7 +7,7 @@ namespace tactile {
 /// \addtogroup gui
 /// \{
 
-class CreateMapDialog final : public ADialog
+class CreateMapDialog final : public dialog_base
 {
  public:
   CreateMapDialog();
@@ -17,11 +17,11 @@ class CreateMapDialog final : public ADialog
   void Open();
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
 
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool override;
+  [[nodiscard]] auto is_current_input_valid(const Model& model) const -> bool override;
 
  private:
   int mTileWidth{};

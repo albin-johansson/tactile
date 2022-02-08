@@ -32,11 +32,11 @@ struct component_editor::component_editor_data final
 };
 
 component_editor::component_editor()
-    : ADialog{"Component Editor"}
+    : dialog_base{"Component Editor"}
     , mData{std::make_unique<component_editor_data>()}
 {
-  SetAcceptButtonLabel(nullptr);
-  SetCloseButtonLabel("Close");
+  set_accept_button_label(nullptr);
+  set_close_button_label("Close");
 }
 
 component_editor::~component_editor() noexcept = default;
@@ -45,10 +45,10 @@ void component_editor::Open(const Model& model)
 {
   const auto& registry = model.get_active_registry();
   mData->active_component = sys::get_first_available_component_def(registry);
-  Show();
+  make_visible();
 }
 
-void component_editor::UpdateContents(const Model& model, entt::dispatcher& dispatcher)
+void component_editor::on_update(const Model& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
   auto& data = *mData;
@@ -107,10 +107,10 @@ void component_editor::UpdateContents(const Model& model, entt::dispatcher& disp
     show_component_attributes(registry, dispatcher, *data.active_component);
   }
 
-  data.create_component.Update(model, dispatcher);
-  data.create_component_attr.Update(model, dispatcher);
-  data.rename_component.Update(model, dispatcher);
-  data.rename_component_attr.Update(model, dispatcher);
+  data.create_component.update(model, dispatcher);
+  data.create_component_attr.update(model, dispatcher);
+  data.rename_component.update(model, dispatcher);
+  data.rename_component_attr.update(model, dispatcher);
 
   ImGui::Spacing();
   ImGui::Separator();

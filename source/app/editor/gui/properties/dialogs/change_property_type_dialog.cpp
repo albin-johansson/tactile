@@ -10,9 +10,9 @@
 
 namespace tactile {
 
-ChangePropertyTypeDialog::ChangePropertyTypeDialog() : ADialog{"Change Property Type"}
+ChangePropertyTypeDialog::ChangePropertyTypeDialog() : dialog_base{"Change Property Type"}
 {
-  SetAcceptButtonLabel("Change");
+  set_accept_button_label("Change");
 }
 
 void ChangePropertyTypeDialog::Show(std::string name, const attribute_type type)
@@ -20,10 +20,10 @@ void ChangePropertyTypeDialog::Show(std::string name, const attribute_type type)
   mPropertyName = std::move(name);
   mCurrentType = type;
   mPreviousType = type;
-  ADialog::Show();
+  make_visible();
 }
 
-void ChangePropertyTypeDialog::UpdateContents(const Model&, entt::dispatcher&)
+void ChangePropertyTypeDialog::on_update(const Model&, entt::dispatcher&)
 {
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted("Type: ");
@@ -32,12 +32,12 @@ void ChangePropertyTypeDialog::UpdateContents(const Model&, entt::dispatcher&)
   PropertyTypeCombo(mPreviousType.value(), mCurrentType);
 }
 
-void ChangePropertyTypeDialog::OnAccept(entt::dispatcher& dispatcher)
+void ChangePropertyTypeDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<change_property_type_event>(mPropertyName.value(), mCurrentType);
 }
 
-auto ChangePropertyTypeDialog::IsCurrentInputValid(const Model&) const -> bool
+auto ChangePropertyTypeDialog::is_current_input_valid(const Model&) const -> bool
 {
   return mCurrentType != mPreviousType.value();
 }

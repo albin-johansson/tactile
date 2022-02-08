@@ -29,9 +29,9 @@ void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
     mPropertyTable.Update(registry, dispatcher);
   }
 
-  mAddDialog.Update(model, dispatcher);
-  mRenameDialog.Update(model, dispatcher);
-  mChangeTypeDialog.Update(model, dispatcher);
+  mAddDialog.update(model, dispatcher);
+  mRenameDialog.update(model, dispatcher);
+  mChangeTypeDialog.update(model, dispatcher);
 
   prefs.set_properties_dock_visible(visible);
 }

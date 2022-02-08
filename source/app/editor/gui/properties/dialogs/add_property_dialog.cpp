@@ -11,19 +11,19 @@
 
 namespace tactile {
 
-AddPropertyDialog::AddPropertyDialog() : ADialog{"Add Property"}
+AddPropertyDialog::AddPropertyDialog() : dialog_base{"Add Property"}
 {
-  SetAcceptButtonLabel("Add");
+  set_accept_button_label("Add");
 }
 
 void AddPropertyDialog::Open()
 {
   zero_buffer(mNameBuffer);
   mPropertyType = attribute_type::string;
-  Show();
+  make_visible();
 }
 
-void AddPropertyDialog::UpdateContents(const Model&, entt::dispatcher&)
+void AddPropertyDialog::on_update(const Model&, entt::dispatcher&)
 {
   ImGui::InputTextWithHint("##Name",
                            "Unique property name...",
@@ -32,13 +32,13 @@ void AddPropertyDialog::UpdateContents(const Model&, entt::dispatcher&)
   PropertyTypeCombo(mPropertyType);
 }
 
-void AddPropertyDialog::OnAccept(entt::dispatcher& dispatcher)
+void AddPropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<add_property_event>(create_string_from_buffer(mNameBuffer),
                                          mPropertyType);
 }
 
-auto AddPropertyDialog::IsCurrentInputValid(const Model& model) const -> bool
+auto AddPropertyDialog::is_current_input_valid(const Model& model) const -> bool
 {
   const auto& registry = model.get_active_registry();
   const auto& context = sys::current_context(registry);

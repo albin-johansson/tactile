@@ -17,7 +17,7 @@ class RenameLayerDialog final : public AStringInputDialog
   void Show(layer_id id, std::string oldName);
 
  protected:
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
   [[nodiscard]] auto Validate(const Model& model, std::string_view input) const
       -> bool override;

@@ -9,9 +9,9 @@
 
 namespace tactile {
 
-AStringInputDialog::AStringInputDialog(const c_str title) : ADialog{title} {}
+AStringInputDialog::AStringInputDialog(const c_str title) : dialog_base{title} {}
 
-void AStringInputDialog::UpdateContents(const Model&, entt::dispatcher&)
+void AStringInputDialog::on_update(const Model&, entt::dispatcher&)
 {
   if (mShouldAcquireFocus) {
     ImGui::SetKeyboardFocusHere();
@@ -28,7 +28,7 @@ void AStringInputDialog::SetInputHint(const c_str hint)
   mHint = hint;
 }
 
-auto AStringInputDialog::IsCurrentInputValid(const Model& model) const -> bool
+auto AStringInputDialog::is_current_input_valid(const Model& model) const -> bool
 {
   return Validate(model, GetCurrentInput());
 }
@@ -38,7 +38,7 @@ void AStringInputDialog::Show(std::string previous)
   mShouldAcquireFocus = true;
   mPrevious = std::move(previous);
   copy_string_into_buffer(mBuffer, mPrevious);
-  ADialog::Show();
+  make_visible();
 }
 
 auto AStringInputDialog::GetCurrentInput() const -> std::string_view

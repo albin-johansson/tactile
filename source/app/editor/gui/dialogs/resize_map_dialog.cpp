@@ -7,16 +7,16 @@
 
 namespace tactile {
 
-ResizeMapDialog::ResizeMapDialog() : ADialog{"Resize Map"} {}
+ResizeMapDialog::ResizeMapDialog() : dialog_base{"Resize Map"} {}
 
 void ResizeMapDialog::Show(const usize nCurrentRows, const usize nCurrentColumns)
 {
   mRows = nCurrentRows;
   mColumns = nCurrentColumns;
-  ADialog::Show();
+  make_visible();
 }
 
-void ResizeMapDialog::UpdateContents(const Model&, entt::dispatcher&)
+void ResizeMapDialog::on_update(const Model&, entt::dispatcher&)
 {
   auto rows = static_cast<int>(mRows);
   ImGui::DragInt("Rows", &rows, 1.0f, 1, 10'000);
@@ -27,7 +27,7 @@ void ResizeMapDialog::UpdateContents(const Model&, entt::dispatcher&)
   mColumns = static_cast<usize>(cols);
 }
 
-void ResizeMapDialog::OnAccept(entt::dispatcher& dispatcher)
+void ResizeMapDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<resize_map_event>(mRows, mColumns);
 }

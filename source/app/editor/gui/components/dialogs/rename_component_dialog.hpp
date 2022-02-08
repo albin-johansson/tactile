@@ -16,7 +16,7 @@ class RenameComponentDialog final : public AComponentNameDialog
   void Open(std::string previousName, component_id id);
 
  protected:
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
   maybe<component_id> mComponentId;

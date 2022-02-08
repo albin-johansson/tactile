@@ -31,8 +31,8 @@ void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     }
   }
 
-  mAboutDialog.Update(model, dispatcher);
-  mCreditsDialog.Update(model, dispatcher);
+  mAboutDialog.update(model, dispatcher);
+  mCreditsDialog.update(model, dispatcher);
 }
 
 void HelpMenu::UpdateWindows()

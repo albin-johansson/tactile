@@ -7,7 +7,7 @@
 
 namespace tactile {
 
-class ResizeMapDialog final : public ADialog
+class ResizeMapDialog final : public dialog_base
 {
  public:
   TACTILE_DEFAULT_COPY(ResizeMapDialog)
@@ -20,9 +20,9 @@ class ResizeMapDialog final : public ADialog
   void Show(usize nCurrentRows, usize nCurrentColumns);
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
 
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
   usize mRows{};

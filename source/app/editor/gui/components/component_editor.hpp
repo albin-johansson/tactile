@@ -12,7 +12,7 @@ namespace tactile {
 
 class Model;
 
-class component_editor final : public ADialog
+class component_editor final : public dialog_base
 {
  public:
   TACTILE_DEFAULT_MOVE(component_editor)
@@ -25,7 +25,7 @@ class component_editor final : public ADialog
   void Open(const Model& model);
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
 
  private:
   struct component_editor_data;

@@ -59,7 +59,7 @@ void FileMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
 void FileMenu::UpdateWindows(const Model& model, entt::dispatcher& dispatcher)
 {
-  mCreateMapDialog.Update(model, dispatcher);
+  mCreateMapDialog.update(model, dispatcher);
 
   if (mShowOpenMapDialog) {
     UpdateMapFileDialog(dispatcher);

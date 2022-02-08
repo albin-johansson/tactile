@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-class AboutDialog final : public ADialog
+class AboutDialog final : public dialog_base
 {
  public:
   AboutDialog();
@@ -12,7 +12,7 @@ class AboutDialog final : public ADialog
   void Open();
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
 };
 
 }  // namespace tactile

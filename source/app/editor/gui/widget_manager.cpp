@@ -61,8 +61,8 @@ void widget_manager::update(const Model& model,
     mWidgets->mLogDock.Update();
   }
 
-  mWidgets->mResizeMapDialog.Update(model, dispatcher);
-  mWidgets->mMapImportErrorDialog.Update(model, dispatcher);
+  mWidgets->mResizeMapDialog.update(model, dispatcher);
+  mWidgets->mMapImportErrorDialog.update(model, dispatcher);
 }
 
 void widget_manager::show_settings()

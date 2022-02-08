@@ -10,7 +10,7 @@ namespace tactile {
 update_property_cmd::update_property_cmd(registry_ref registry,
                                          std::string name,
                                          attribute_value value)
-    : command_base{"Update Property"}
+    : command_base{"update Property"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}
     , mName{std::move(name)}

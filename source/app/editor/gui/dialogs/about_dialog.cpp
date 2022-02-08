@@ -12,18 +12,18 @@
 
 namespace tactile {
 
-AboutDialog::AboutDialog() : ADialog{"About Tactile"}
+AboutDialog::AboutDialog() : dialog_base{"About Tactile"}
 {
-  SetAcceptButtonLabel(nullptr);
-  SetCloseButtonLabel("Close");
+  set_accept_button_label(nullptr);
+  set_close_button_label("Close");
 }
 
 void AboutDialog::Open()
 {
-  Show();
+  make_visible();
 }
 
-void AboutDialog::UpdateContents(const Model&, entt::dispatcher&)
+void AboutDialog::on_update(const Model&, entt::dispatcher&)
 {
   ImGui::TextUnformatted("Tactile " TACTILE_VER " (C) Albin Johansson 2020-2022");
   ImGui::Separator();

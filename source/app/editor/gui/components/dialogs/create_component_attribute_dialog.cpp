@@ -11,7 +11,7 @@ namespace tactile {
 CreateComponentAttributeDialog::CreateComponentAttributeDialog()
     : AStringInputDialog{"Create Attribute"}
 {
-  SetAcceptButtonLabel("Create");
+  set_accept_button_label("Create");
   SetInputHint("Attribute name");
 }
 
@@ -29,7 +29,7 @@ auto CreateComponentAttributeDialog::Validate(const Model& model,
          !sys::is_component_attribute_name_taken(registry, mComponentId, input);
 }
 
-void CreateComponentAttributeDialog::OnAccept(entt::dispatcher& dispatcher)
+void CreateComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<create_component_attr_event>(mComponentId,
                                                   std::string{GetCurrentInput()});

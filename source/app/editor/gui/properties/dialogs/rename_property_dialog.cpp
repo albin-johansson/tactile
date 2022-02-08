@@ -9,10 +9,10 @@ namespace tactile {
 
 RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog{"Rename Property"}
 {
-  SetAcceptButtonLabel("Rename");
+  set_accept_button_label("Rename");
 }
 
-void RenamePropertyDialog::OnAccept(entt::dispatcher& dispatcher)
+void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<rename_property_event>(GetPreviousString(),
                                             std::string{GetCurrentInput()});

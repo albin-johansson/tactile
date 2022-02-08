@@ -18,7 +18,7 @@ class RenameComponentAttributeDialog final : public AStringInputDialog
  protected:
   [[nodiscard]] auto Validate(const Model& model, std::string_view input) const
       -> bool override;
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
   maybe<component_id> mComponentId;

@@ -11,7 +11,7 @@ update_component_cmd::update_component_cmd(registry_ref registry,
                                            const component_id componentId,
                                            std::string attribute,
                                            attribute_value value)
-    : command_base{"Update Component Value"}
+    : command_base{"update Component Value"}
     , mRegistry{registry}
     , mContextId{contextId}
     , mComponentId{componentId}

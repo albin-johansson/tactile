@@ -54,7 +54,7 @@ void MapMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     }
   }
 
-  mCreateTilesetDialog->Update(model, dispatcher);
+  mCreateTilesetDialog->update(model, dispatcher);
 }
 
 void MapMenu::ShowAddTilesetDialog()

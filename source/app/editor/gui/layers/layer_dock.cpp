@@ -120,7 +120,7 @@ void LayerDock::Update(const Model& model,
     mRenameTarget.reset();
   }
 
-  mRenameLayerDialog.Update(model, dispatcher);
+  mRenameLayerDialog.update(model, dispatcher);
 }
 
 void LayerDock::ShowRenameLayerDialog(const layer_id id)

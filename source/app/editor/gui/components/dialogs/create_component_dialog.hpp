@@ -12,7 +12,7 @@ class CreateComponentDialog final : public AComponentNameDialog
   void Open();
 
  protected:
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 };
 
 }  // namespace tactile

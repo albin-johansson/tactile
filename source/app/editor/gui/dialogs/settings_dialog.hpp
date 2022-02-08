@@ -9,7 +9,7 @@ namespace tactile {
 /// \addtogroup gui
 /// \{
 
-class SettingsDialog final : public ADialog
+class SettingsDialog final : public dialog_base
 {
  public:
   TACTILE_DEFAULT_COPY(SettingsDialog)
@@ -22,13 +22,13 @@ class SettingsDialog final : public ADialog
   void Open();
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
 
-  void OnCancel() override;
+  void on_cancel() override;
 
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
-  void OnApply(entt::dispatcher& dispatcher) override;
+  void on_apply(entt::dispatcher& dispatcher) override;
 
  private:
   preference_state mSnapshot;     ///< The original settings when the dialog was opened.

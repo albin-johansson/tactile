@@ -21,19 +21,19 @@ void UpdatePreviewSettings(const preference_state& prefs)
 
 }  // namespace
 
-SettingsDialog::SettingsDialog() : ADialog{"Settings"}
+SettingsDialog::SettingsDialog() : dialog_base{"Settings"}
 {
-  SetApplyButtonLabel("Apply");
+  use_apply_button();
 }
 
 void SettingsDialog::Open()
 {
   mSnapshot = get_preferences();
   mGuiSettings = mSnapshot;
-  Show();
+  make_visible();
 }
 
-void SettingsDialog::UpdateContents(const Model&, entt::dispatcher&)
+void SettingsDialog::on_update(const Model&, entt::dispatcher&)
 {
   scoped::tab_bar bar{"##SettingsTabBar"};
   if (bar.is_open()) {
@@ -43,18 +43,18 @@ void SettingsDialog::UpdateContents(const Model&, entt::dispatcher&)
   }
 }
 
-void SettingsDialog::OnCancel()
+void SettingsDialog::on_cancel()
 {
   UpdatePreviewSettings(get_preferences());
 }
 
-void SettingsDialog::OnAccept(entt::dispatcher& dispatcher)
+void SettingsDialog::on_accept(entt::dispatcher& dispatcher)
 {
   ApplySettings(dispatcher);
   UpdatePreviewSettings(get_preferences());
 }
 
-void SettingsDialog::OnApply(entt::dispatcher& dispatcher)
+void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
 {
   ApplySettings(dispatcher);
   UpdatePreviewSettings(get_preferences());

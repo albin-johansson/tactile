@@ -11,7 +11,7 @@
 
 namespace tactile {
 
-class AStringInputDialog : public ADialog
+class AStringInputDialog : public dialog_base
 {
  public:
   explicit AStringInputDialog(c_str title);
@@ -19,11 +19,11 @@ class AStringInputDialog : public ADialog
   void Show(std::string previous);
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) final;
+  void on_update(const Model& model, entt::dispatcher& dispatcher) final;
 
   void SetInputHint(c_str hint);
 
-  [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool final;
+  [[nodiscard]] auto is_current_input_valid(const Model& model) const -> bool final;
 
   [[nodiscard]] virtual auto Validate(const Model& model, std::string_view input) const
       -> bool = 0;

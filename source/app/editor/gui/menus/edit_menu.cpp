@@ -104,8 +104,8 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
 void EditMenu::UpdateWindows(const Model& model, entt::dispatcher& dispatcher)
 {
-  mSettingsDialog.Update(model, dispatcher);
-  mComponentEditor.Update(model, dispatcher);
+  mSettingsDialog.update(model, dispatcher);
+  mComponentEditor.update(model, dispatcher);
 }
 
 void EditMenu::OpenSettingsModal()

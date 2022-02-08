@@ -8,7 +8,7 @@ namespace tactile {
 
 CreateComponentDialog::CreateComponentDialog() : AComponentNameDialog{"Create Component"}
 {
-  SetAcceptButtonLabel("Create");
+  set_accept_button_label("Create");
   SetInputHint("Component name");
 }
 
@@ -17,7 +17,7 @@ void CreateComponentDialog::Open()
   Show("");
 }
 
-void CreateComponentDialog::OnAccept(entt::dispatcher& dispatcher)
+void CreateComponentDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<create_component_def_event>(std::string{GetCurrentInput()});
 }
