@@ -91,7 +91,7 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
                         nullptr,
                         false,
                         model.has_active_document())) {
-      mComponentEditor.Open(model);
+      mComponentEditor.show(model);
     }
 
     ImGui::Separator();
@@ -115,7 +115,7 @@ void EditMenu::OpenSettingsModal()
 
 void EditMenu::ShowComponentEditor(const Model& model)
 {
-  mComponentEditor.Open(model);
+  mComponentEditor.show(model);
 }
 
 }  // namespace tactile

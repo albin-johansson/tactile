@@ -8,12 +8,17 @@
 
 namespace tactile {
 
-class RenameComponentDialog final : public AComponentNameDialog
+/**
+ * \brief Used to change the name of a component definition.
+ *
+ * \ingroup gui
+ */
+class rename_component_dialog final : public component_name_dialog
 {
  public:
-  RenameComponentDialog();
+  rename_component_dialog();
 
-  void Open(std::string previousName, component_id id);
+  void show(std::string previousName, component_id id);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;

@@ -24,10 +24,10 @@ namespace tactile {
 
 struct component_editor::component_editor_data final
 {
-  CreateComponentDialog create_component;
-  CreateComponentAttributeDialog create_component_attr;
-  RenameComponentDialog rename_component;
-  RenameComponentAttributeDialog rename_component_attr;
+  create_component_dialog create_component;
+  create_component_attribute_dialog create_component_attr;
+  rename_component_dialog rename_component;
+  rename_component_attribute_dialog rename_component_attr;
   maybe<component_id> active_component;
 };
 
@@ -41,7 +41,7 @@ component_editor::component_editor()
 
 component_editor::~component_editor() noexcept = default;
 
-void component_editor::Open(const Model& model)
+void component_editor::show(const Model& model)
 {
   const auto& registry = model.get_active_registry();
   mData->active_component = sys::get_first_available_component_def(registry);
@@ -63,7 +63,7 @@ void component_editor::on_update(const Model& model, entt::dispatcher& dispatche
     ImGui::TextUnformatted("There are no available components for the current map.");
 
     if (centered_button(TAC_ICON_ADD, "Create Component")) {
-      data.create_component.Open();
+      data.create_component.show();
     }
   }
   else {
@@ -89,7 +89,7 @@ void component_editor::on_update(const Model& model, entt::dispatcher& dispatche
     ImGui::SameLine();
 
     if (button(TAC_ICON_ADD, "Create Component")) {
-      data.create_component.Open();
+      data.create_component.show();
     }
 
     ImGui::SameLine();
@@ -123,7 +123,7 @@ void component_editor::show_component_combo_popup(const entt::registry& registry
   if (scoped::popup popup{"##ComponentEditorPopup"}; popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
       const auto id = data.active_component.value();
-      data.rename_component.Open(sys::get_component_def_name(registry, id), id);
+      data.rename_component.show(sys::get_component_def_name(registry, id), id);
     }
 
     ImGui::Separator();
@@ -161,7 +161,7 @@ void component_editor::show_component_attributes(const entt::registry& registry,
   }
 
   if (centered_button("Create Attribute")) {
-    data.create_component_attr.Open(*data.active_component);
+    data.create_component_attr.show(*data.active_component);
   }
 }
 
@@ -182,7 +182,7 @@ void component_editor::show_component_attribute(entt::dispatcher& dispatcher,
   if (auto popup = scoped::popup::for_item("##ComponentAttributeNameContext");
       popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Attribute")) {
-      data.rename_component_attr.Open(name, data.active_component.value());
+      data.rename_component_attr.show(name, data.active_component.value());
     }
 
     ImGui::Separator();

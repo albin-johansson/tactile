@@ -8,17 +8,23 @@
 
 namespace tactile {
 
-class RenameComponentAttributeDialog final : public string_input_dialog
+/**
+ * \brief Used to rename an attribute in a component definition.
+ *
+ * \ingroup gui
+ */
+class rename_component_attribute_dialog final : public string_input_dialog
 {
  public:
-  RenameComponentAttributeDialog();
+  rename_component_attribute_dialog();
 
-  void Open(std::string previousName, component_id id);
+  void show(std::string previousName, component_id id);
 
  protected:
+  void on_accept(entt::dispatcher& dispatcher) override;
+
   [[nodiscard]] auto validate(const Model& model, std::string_view input) const
       -> bool override;
-  void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
   maybe<component_id> mComponentId;

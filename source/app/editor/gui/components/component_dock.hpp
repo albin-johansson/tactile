@@ -4,6 +4,11 @@
 
 namespace tactile {
 
+/**
+ * \brief Used to manage the components associated with attribute contexts.
+ *
+ * \ingroup gui
+ */
 class component_dock final : public dock_widget
 {
  public:

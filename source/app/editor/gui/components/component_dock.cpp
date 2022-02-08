@@ -19,7 +19,7 @@
 namespace tactile {
 namespace {
 
-constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
 [[nodiscard]] auto _show_trailing_component_button() -> bool
 {
@@ -130,7 +130,7 @@ void _show_add_component_button_popup_content(const entt::registry& registry,
 
 }  // namespace
 
-component_dock::component_dock() : dock_widget{"Components", gWindowFlags}
+component_dock::component_dock() : dock_widget{"Components", _window_flags}
 {
   set_close_button_enabled(true);
 }
