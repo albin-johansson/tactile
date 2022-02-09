@@ -11,7 +11,7 @@
 
 namespace tactile {
 
-void HelpMenu::Update(const Model& model, entt::dispatcher& dispatcher)
+void HelpMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
 {
   if (scoped::menu menu{"Help"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {

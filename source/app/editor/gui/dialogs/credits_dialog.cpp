@@ -37,7 +37,7 @@ void credits_dialog::show()
   make_visible();
 }
 
-void credits_dialog::on_update(const Model&, entt::dispatcher&)
+void credits_dialog::on_update(const document_model&, entt::dispatcher&)
 {
   ImGui::TextUnformatted(
       "Tactile is developed using the following open-source libraries.");

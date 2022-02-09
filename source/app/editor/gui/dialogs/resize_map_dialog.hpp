@@ -23,7 +23,7 @@ class resize_map_dialog final : public dialog_base
   void show(usize nCurrentRows, usize nCurrentColumns);
 
  protected:
-  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 
   void on_accept(entt::dispatcher& dispatcher) override;
 

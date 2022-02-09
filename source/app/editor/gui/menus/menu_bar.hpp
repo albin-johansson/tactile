@@ -11,7 +11,7 @@
 
 namespace tactile {
 
-class Model;
+class document_model;
 
 class MenuBar final
 {
@@ -22,7 +22,7 @@ class MenuBar final
    * \param model the associated model.
    * \param dispatcher the event dispatcher that will be used.
    */
-  void Update(const Model& model, entt::dispatcher& dispatcher);
+  void Update(const document_model& model, entt::dispatcher& dispatcher);
 
   void ShowSettings();
 
@@ -32,7 +32,7 @@ class MenuBar final
 
   void ShowAddTilesetDialog();
 
-  void ShowComponentEditor(const Model& model);
+  void ShowComponentEditor(const document_model& model);
 
  private:
   FileMenu mFileMenu;

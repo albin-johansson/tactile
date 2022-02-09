@@ -23,7 +23,7 @@ void AddPropertyDialog::Open()
   make_visible();
 }
 
-void AddPropertyDialog::on_update(const Model&, entt::dispatcher&)
+void AddPropertyDialog::on_update(const document_model&, entt::dispatcher&)
 {
   ImGui::InputTextWithHint("##Name",
                            "Unique property name...",
@@ -38,7 +38,7 @@ void AddPropertyDialog::on_accept(entt::dispatcher& dispatcher)
                                          mPropertyType);
 }
 
-auto AddPropertyDialog::is_current_input_valid(const Model& model) const -> bool
+auto AddPropertyDialog::is_current_input_valid(const document_model& model) const -> bool
 {
   const auto& registry = model.get_active_registry();
   const auto& context = sys::current_context(registry);

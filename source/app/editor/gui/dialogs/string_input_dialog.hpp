@@ -29,9 +29,10 @@ class string_input_dialog : public dialog_base
    */
   void set_input_hint(const char* hint);
 
-  void on_update(const Model& model, entt::dispatcher& dispatcher) final;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) final;
 
-  [[nodiscard]] auto is_current_input_valid(const Model& model) const -> bool final;
+  [[nodiscard]] auto is_current_input_valid(const document_model& model) const
+      -> bool final;
 
   /**
    * \brief Validates an input string.
@@ -41,8 +42,8 @@ class string_input_dialog : public dialog_base
    *
    * \return `true` if the input string is valid; `false` otherwise.
    */
-  [[nodiscard]] virtual auto validate(const Model& model, std::string_view input) const
-      -> bool = 0;
+  [[nodiscard]] virtual auto validate(const document_model& model,
+                                      std::string_view input) const -> bool = 0;
 
   /**
    * \brief Returns the current string input.

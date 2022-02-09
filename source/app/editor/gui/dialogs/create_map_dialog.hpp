@@ -17,11 +17,12 @@ class create_map_dialog final : public dialog_base
   void show();
 
  protected:
-  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 
   void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_current_input_valid(const Model& model) const -> bool override;
+  [[nodiscard]] auto is_current_input_valid(const document_model& model) const
+      -> bool override;
 
  private:
   int mTileWidth{};

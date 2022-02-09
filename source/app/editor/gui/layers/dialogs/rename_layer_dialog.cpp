@@ -24,7 +24,8 @@ void RenameLayerDialog::on_accept(entt::dispatcher& dispatcher)
   dispatcher.enqueue<rename_layer_event>(mTargetId.value(), std::string{current_input()});
 }
 
-auto RenameLayerDialog::validate(const Model&, std::string_view input) const -> bool
+auto RenameLayerDialog::validate(const document_model&, std::string_view input) const
+    -> bool
 {
   return !input.empty() && mOldName != input;
 }

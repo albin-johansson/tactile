@@ -15,7 +15,7 @@ MapMenu::MapMenu() : mCreateTilesetDialog{std::make_unique<CreateTilesetDialog>(
 
 MapMenu::~MapMenu() noexcept = default;
 
-void MapMenu::Update(const Model& model, entt::dispatcher& dispatcher)
+void MapMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
 {
   scoped::disable disable{!model.has_active_document()};
   if (scoped::menu menu{"Map"}; menu.is_open()) {

@@ -3,7 +3,7 @@
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
 
-#include <entt/entt.hpp>  // registry
+#include <entt/entt.hpp>
 
 #include "core/utils/vector_map.hpp"
 #include "document.hpp"
@@ -20,7 +20,7 @@ namespace tactile {
  * than managing documents, this class provides several utilities for querying the state
  * of the core model from the perspective of the editor (GUI).
  */
-class Model final
+class document_model final
 {
  public:
   // Store documents on the heap to ensure stability, which is important for commands
@@ -30,7 +30,7 @@ class Model final
   /**
    * \brief Updates systems that need to be consistently updated, e.g. animations.
    */
-  void Update();
+  void update();
 
   /// \name Document functions
   /// \{

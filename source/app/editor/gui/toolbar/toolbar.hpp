@@ -4,12 +4,12 @@
 
 namespace tactile {
 
-class Model;
+class document_model;
 
 class Toolbar final
 {
  public:
-  void Update(const Model& model, entt::dispatcher& dispatcher);
+  void Update(const document_model& model, entt::dispatcher& dispatcher);
 
   void SetVisible(bool visible);
 

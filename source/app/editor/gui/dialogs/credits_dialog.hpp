@@ -15,7 +15,7 @@ class credits_dialog final : public dialog_base
   void show();
 
  protected:
-  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 };
 
 }  // namespace tactile

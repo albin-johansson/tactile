@@ -18,8 +18,8 @@ void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
                                             std::string{current_input()});
 }
 
-auto RenamePropertyDialog::validate(const Model& model, std::string_view input) const
-    -> bool
+auto RenamePropertyDialog::validate(const document_model& model,
+                                    std::string_view input) const -> bool
 {
   const auto& registry = model.get_active_registry();
   const auto& context = sys::current_context(registry);

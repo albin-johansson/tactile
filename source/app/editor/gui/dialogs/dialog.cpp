@@ -14,7 +14,7 @@ dialog_base::dialog_base(const c_str title) : mTitle{title}
   }
 }
 
-void dialog_base::update(const Model& model, entt::dispatcher& dispatcher)
+void dialog_base::update(const document_model& model, entt::dispatcher& dispatcher)
 {
   if (mShow) {
     ImGui::OpenPopup(mTitle);

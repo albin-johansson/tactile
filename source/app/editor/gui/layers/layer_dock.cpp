@@ -23,7 +23,8 @@
 namespace tactile {
 namespace {
 
-void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& dispatcher)
+void _update_layer_dock_buttons(const entt::registry& registry,
+                                entt::dispatcher& dispatcher)
 {
   const auto activeLayerEntity = registry.ctx<comp::active_layer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
@@ -65,24 +66,23 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
 
 }  // namespace
 
-void LayerDock::Update(const Model& model,
-                       const icon_manager& icons,
-                       entt::dispatcher& dispatcher)
+layer_dock::layer_dock() : dock_widget{"Layers", ImGuiWindowFlags_NoCollapse}
 {
-  auto& prefs = get_preferences();
-  bool visible = prefs.is_layer_dock_visible();
+  set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
+}
 
-  if (!visible) {
-    return;
-  }
+void layer_dock::show_rename_layer_dialog(const layer_id id)
+{
+  mRenameTarget = id;
+}
 
-  scoped::window dock{"Layers", ImGuiWindowFlags_NoCollapse, &visible};
-  mHasFocus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
-
+void layer_dock::on_update(const document_model& model, entt::dispatcher& dispatcher)
+{
+  TACTILE_ASSERT(model.has_active_document());
   const auto& registry = model.get_active_registry();
 
-  if (dock.is_open()) {
-    UpdateLayerDockButtons(registry, dispatcher);
+  {
+    _update_layer_dock_buttons(registry, dispatcher);
     ImGui::SameLine();
 
     scoped::group group;
@@ -94,19 +94,16 @@ void LayerDock::Update(const Model& model,
       const ImVec2 size{-min_float, -min_float};
       if (scoped::list_box list{"##LayerTreeNode", size}; list.is_open()) {
         for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
-          /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
+          /* Note, we rely on the layer_tree_node pool being sorted, so we can't include
              other components in the view query directly. */
-          const auto& layer = registry.get<comp::layer>(entity);
           const auto& parent = registry.get<comp::parent>(entity);
           if (parent.entity == entt::null) {
-            LayerItem(registry, icons, dispatcher, entity, layer);
+            show_layer_item(registry, dispatcher, entity);
           }
         }
       }
     }
   }
-
-  prefs.set_layer_dock_visible(visible);
 
   if (mRenameTarget.has_value()) {
     const auto target = *mRenameTarget;
@@ -123,9 +120,16 @@ void LayerDock::Update(const Model& model,
   mRenameLayerDialog.update(model, dispatcher);
 }
 
-void LayerDock::ShowRenameLayerDialog(const layer_id id)
+void layer_dock::set_visible(const bool visible)
 {
-  mRenameTarget = id;
+  auto& prefs = get_preferences();
+  prefs.set_layer_dock_visible(visible);
+}
+
+auto layer_dock::is_visible() const -> bool
+{
+  const auto& prefs = get_preferences();
+  return prefs.is_layer_dock_visible();
 }
 
 }  // namespace tactile

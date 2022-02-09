@@ -59,7 +59,7 @@ void LoadDefaultShortcuts()
   LoadShortcut<PanDownShortcut>();
 }
 
-void UpdateShortcuts(const Model& model,
+void UpdateShortcuts(const document_model& model,
                      const widget_manager& widgets,
                      const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher)

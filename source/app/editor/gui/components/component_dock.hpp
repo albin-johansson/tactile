@@ -15,7 +15,7 @@ class component_dock final : public dock_widget
   component_dock();
 
  protected:
-  void on_update(const entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 
   void set_visible(bool visible) override;
 

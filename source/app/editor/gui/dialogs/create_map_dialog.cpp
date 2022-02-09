@@ -27,7 +27,7 @@ void create_map_dialog::show()
   make_visible();
 }
 
-void create_map_dialog::on_update(const Model&, entt::dispatcher&)
+void create_map_dialog::on_update(const document_model&, entt::dispatcher&)
 {
   {
     const char* rowsLabel = "Rows:";
@@ -76,7 +76,7 @@ void create_map_dialog::on_accept(entt::dispatcher& dispatcher)
                                        static_cast<usize>(mColumns));
 }
 
-auto create_map_dialog::is_current_input_valid(const Model&) const -> bool
+auto create_map_dialog::is_current_input_valid(const document_model&) const -> bool
 {
   return (mTileWidth > 0) && (mTileHeight > 0) && (mRows > 0) && (mColumns > 0);
 }

@@ -13,7 +13,7 @@ class create_component_attribute_dialog final : public string_input_dialog
   void show(component_id id);
 
  protected:
-  [[nodiscard]] auto validate(const Model& model, std::string_view input) const
+  [[nodiscard]] auto validate(const document_model& model, std::string_view input) const
       -> bool override;
 
   void on_accept(entt::dispatcher& dispatcher) override;

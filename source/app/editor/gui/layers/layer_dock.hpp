@@ -3,28 +3,30 @@
 #include <entt/entt.hpp>
 
 #include "dialogs/rename_layer_dialog.hpp"
+#include "editor/gui/dock_widget.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class Model;
-class icon_manager;
+class document_model;
 
-class LayerDock final
+class layer_dock final : public dock_widget
 {
  public:
-  void Update(const Model& model,
-              const icon_manager& icons,
-              entt::dispatcher& dispatcher);
+  layer_dock();
 
-  void ShowRenameLayerDialog(layer_id id);
+  void show_rename_layer_dialog(layer_id id);
 
-  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+ protected:
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
+
+  void set_visible(bool visible) override;
+
+  [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
   RenameLayerDialog mRenameLayerDialog;
   maybe<layer_id> mRenameTarget;
-  bool mHasFocus{};
 };
 
 }  // namespace tactile

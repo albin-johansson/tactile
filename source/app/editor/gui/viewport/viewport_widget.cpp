@@ -24,7 +24,7 @@ void RemoveTabBarFromNextWindow()
 
 }  // namespace
 
-void UpdateViewportWidget(const Model& model,
+void UpdateViewportWidget(const document_model& model,
                           const icon_manager& icons,
                           entt::dispatcher& dispatcher)
 {

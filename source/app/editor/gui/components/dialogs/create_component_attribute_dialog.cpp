@@ -21,7 +21,7 @@ void create_component_attribute_dialog::show(const component_id id)
   string_input_dialog::show("");
 }
 
-auto create_component_attribute_dialog::validate(const Model& model,
+auto create_component_attribute_dialog::validate(const document_model& model,
                                                  std::string_view input) const -> bool
 {
   const auto& registry = model.get_active_registry();

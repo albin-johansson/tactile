@@ -23,7 +23,7 @@ void about_dialog::show()
   make_visible();
 }
 
-void about_dialog::on_update(const Model&, entt::dispatcher&)
+void about_dialog::on_update(const document_model&, entt::dispatcher&)
 {
   ImGui::TextUnformatted("Tactile " TAC_VER " (C) Albin Johansson 2020-2022");
   ImGui::Separator();

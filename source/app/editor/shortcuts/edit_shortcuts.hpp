@@ -10,8 +10,8 @@ struct UndoShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct RedoShortcut final : AShortcut
@@ -20,8 +20,8 @@ struct RedoShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct AddRowShortcut final : AShortcut
@@ -30,8 +30,8 @@ struct AddRowShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct AddColumnShortcut final : AShortcut
@@ -40,8 +40,8 @@ struct AddColumnShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct RemoveRowShortcut final : AShortcut
@@ -50,8 +50,8 @@ struct RemoveRowShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct RemoveColumnShortcut final : AShortcut
@@ -60,8 +60,8 @@ struct RemoveColumnShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct AddTilesetShortcut final : AShortcut
@@ -70,8 +70,8 @@ struct AddTilesetShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct EnableBucketShortcut final : AShortcut
@@ -80,8 +80,8 @@ struct EnableBucketShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct EnableEraserShortcut final : AShortcut
@@ -90,8 +90,8 @@ struct EnableEraserShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct EnableStampShortcut final : AShortcut
@@ -100,8 +100,8 @@ struct EnableStampShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct EnableObjectSelectionShortcut final : AShortcut
@@ -110,8 +110,8 @@ struct EnableObjectSelectionShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 }  // namespace tactile

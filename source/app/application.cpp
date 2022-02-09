@@ -35,7 +35,7 @@ namespace tactile {
 namespace {
 
 template <typename Command, typename... Args>
-void _execute(Model& model, Args&&... args)
+void _execute(document_model& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
     auto& commands = document->commands;
@@ -47,7 +47,7 @@ void _execute(Model& model, Args&&... args)
 }
 
 template <typename Command, typename... Args>
-void _register(Model& model, Args&&... args)
+void _register(document_model& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
     auto& commands = document->commands;
@@ -197,7 +197,7 @@ void application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 void application::update_frame()
 {
   mDispatcher.update();
-  mModel.Update();
+  mModel.update();
   mWidgets.update(mModel, mIcons, mDispatcher);
 }
 

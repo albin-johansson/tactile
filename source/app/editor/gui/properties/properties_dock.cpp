@@ -11,7 +11,7 @@
 
 namespace tactile {
 
-void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
+void PropertiesDock::Update(const document_model& model, entt::dispatcher& dispatcher)
 {
   auto& prefs = get_preferences();
   bool visible = prefs.is_properties_dock_visible();

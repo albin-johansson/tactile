@@ -17,7 +17,7 @@ class map_parse_error_dialog final : public dialog_base
   void show(parsing::parse_error error);
 
  protected:
-  void on_update(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 
  private:
   maybe<parsing::parse_error> mError;

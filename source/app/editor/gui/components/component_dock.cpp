@@ -13,6 +13,7 @@
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 #include "tactile.hpp"
 
@@ -135,9 +136,10 @@ component_dock::component_dock() : dock_widget{"Components", _window_flags}
   set_close_button_enabled(true);
 }
 
-void component_dock::on_update(const entt::registry& registry,
-                               entt::dispatcher& dispatcher)
+void component_dock::on_update(const document_model& model, entt::dispatcher& dispatcher)
 {
+  const auto& registry = model.get_active_registry();
+
   const auto& context = sys::current_context(registry);
   ImGui::Text("Context: %s", context.name.c_str());
 

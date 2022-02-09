@@ -94,17 +94,6 @@ class icon_manager final
   explicit icon_manager(texture_manager& textures);
 
   /**
-   * \brief Returns the icon string literal for the specified layer type.
-   *
-   * \param type the layer type to obtain the icon for.
-   *
-   * \return a string icon value.
-   *
-   * \throws tactile_error if the layer type is invalid.
-   */
-  [[nodiscard]] auto get_icon(layer_type type) const -> c_str;
-
-  /**
    * \brief Returns the texture identifier for the Tactile icon.
    *
    * \return a texture identifier.
@@ -114,5 +103,16 @@ class icon_manager final
  private:
   uint mTactileIcon{};
 };
+
+/**
+ * \brief Returns the icon string literal for the specified layer type.
+ *
+ * \param type the layer type to obtain the icon for.
+ *
+ * \return a string icon value.
+ *
+ * \throws tactile_error if the layer type is invalid.
+ */
+[[nodiscard]] auto get_icon(layer_type type) -> const char*;
 
 }  // namespace tactile
