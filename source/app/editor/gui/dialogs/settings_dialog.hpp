@@ -6,43 +6,43 @@
 
 namespace tactile {
 
-/// \addtogroup gui
-/// \{
-
-class SettingsDialog final : public ADialog
+/**
+ * \brief Provides the interface for all available persistent settings.
+ *
+ * \ingroup gui
+ */
+class settings_dialog final : public dialog_base
 {
  public:
-  TACTILE_DEFAULT_COPY(SettingsDialog)
-  TACTILE_DEFAULT_MOVE(SettingsDialog)
+  TACTILE_DEFAULT_COPY(settings_dialog)
+  TACTILE_DEFAULT_MOVE(settings_dialog)
 
-  SettingsDialog();
+  settings_dialog();
 
-  ~SettingsDialog() override = default;
+  ~settings_dialog() override = default;
 
-  void Open();
+  void show();
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 
-  void OnCancel() override;
+  void on_cancel() override;
 
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
-  void OnApply(entt::dispatcher& dispatcher) override;
+  void on_apply(entt::dispatcher& dispatcher) override;
 
  private:
   preference_state mSnapshot;     ///< The original settings when the dialog was opened.
   preference_state mGuiSettings;  ///< The value of the settings in the GUI.
 
-  void ApplySettings(entt::dispatcher& dispatcher);
+  void apply_settings(entt::dispatcher& dispatcher);
 
-  void UpdateBehaviorTab();
+  void update_behavior_tab();
 
-  void UpdateAppearanceTab();
+  void update_appearance_tab();
 
-  void UpdateExportTab();
+  void update_export_tab();
 };
-
-/// \} End of group gui
 
 }  // namespace tactile

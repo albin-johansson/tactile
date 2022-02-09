@@ -11,7 +11,7 @@
 
 namespace tactile {
 
-void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
+void PropertiesDock::Update(const document_model& model, entt::dispatcher& dispatcher)
 {
   auto& prefs = get_preferences();
   bool visible = prefs.is_properties_dock_visible();
@@ -25,13 +25,13 @@ void PropertiesDock::Update(const Model& model, entt::dispatcher& dispatcher)
   mHasFocus = dock.has_focus();
 
   if (dock.is_open()) {
-    const auto& registry = model.GetActiveRegistryRef();
+    const auto& registry = model.get_active_registry();
     mPropertyTable.Update(registry, dispatcher);
   }
 
-  mAddDialog.Update(model, dispatcher);
-  mRenameDialog.Update(model, dispatcher);
-  mChangeTypeDialog.Update(model, dispatcher);
+  mAddDialog.update(model, dispatcher);
+  mRenameDialog.update(model, dispatcher);
+  mChangeTypeDialog.update(model, dispatcher);
 
   prefs.set_properties_dock_visible(visible);
 }
@@ -43,7 +43,7 @@ void PropertiesDock::ShowAddPropertyDialog()
 
 void PropertiesDock::ShowRenamePropertyDialog(const std::string& name)
 {
-  mRenameDialog.Show(name);
+  mRenameDialog.show(name);
 }
 
 void PropertiesDock::ShowChangePropertyTypeDialog(std::string name,

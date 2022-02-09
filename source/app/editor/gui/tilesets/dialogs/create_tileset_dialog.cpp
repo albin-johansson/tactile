@@ -10,9 +10,9 @@
 
 namespace tactile {
 
-CreateTilesetDialog::CreateTilesetDialog() : ADialog{"Create tileset"}
+CreateTilesetDialog::CreateTilesetDialog() : dialog_base{"Create tileset"}
 {
-  SetAcceptButtonLabel("Create");
+  set_accept_button_label("Create");
 }
 
 void CreateTilesetDialog::Open()
@@ -24,10 +24,10 @@ void CreateTilesetDialog::Open()
   mTileWidth = prefs.preferred_tile_width();
   mTileHeight = prefs.preferred_tile_height();
 
-  Show();
+  make_visible();
 }
 
-void CreateTilesetDialog::UpdateContents(const Model&, entt::dispatcher&)
+void CreateTilesetDialog::on_update(const document_model&, entt::dispatcher&)
 {
   ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
   ImGui::Spacing();
@@ -47,12 +47,12 @@ void CreateTilesetDialog::UpdateContents(const Model&, entt::dispatcher&)
   ImGui::DragInt("Tile height", &mTileHeight, 1.0f, 1, 10'000);
 }
 
-void CreateTilesetDialog::OnAccept(entt::dispatcher& dispatcher)
+void CreateTilesetDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<add_tileset_event>(mFullImagePath, mTileWidth, mTileHeight);
 }
 
-auto CreateTilesetDialog::IsCurrentInputValid(const Model&) const -> bool
+auto CreateTilesetDialog::is_current_input_valid(const document_model&) const -> bool
 {
   return mPathPreviewBuffer.front() != '\0' && mTileWidth > 0 && mTileHeight > 0;
 }

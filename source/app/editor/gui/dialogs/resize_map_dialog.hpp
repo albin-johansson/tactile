@@ -7,22 +7,25 @@
 
 namespace tactile {
 
-class ResizeMapDialog final : public ADialog
+/**
+ * \brief Used to change the dimensions of a tilemap.
+ */
+class resize_map_dialog final : public dialog_base
 {
  public:
-  TACTILE_DEFAULT_COPY(ResizeMapDialog)
-  TACTILE_DEFAULT_MOVE(ResizeMapDialog)
+  TACTILE_DEFAULT_COPY(resize_map_dialog)
+  TACTILE_DEFAULT_MOVE(resize_map_dialog)
 
-  ResizeMapDialog();
+  resize_map_dialog();
 
-  ~ResizeMapDialog() override = default;
+  ~resize_map_dialog() override = default;
 
-  void Show(usize nCurrentRows, usize nCurrentColumns);
+  void show(usize nCurrentRows, usize nCurrentColumns);
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
   usize mRows{};

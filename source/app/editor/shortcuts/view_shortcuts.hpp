@@ -10,8 +10,8 @@ struct CenterViewportShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct DecreaseViewportZoomShortcut final : AShortcut
@@ -20,8 +20,8 @@ struct DecreaseViewportZoomShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct IncreaseViewportZoomShortcut final : AShortcut
@@ -30,8 +30,8 @@ struct IncreaseViewportZoomShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct PanUpShortcut final : AShortcut
@@ -40,8 +40,8 @@ struct PanUpShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct PanDownShortcut final : AShortcut
@@ -50,8 +50,8 @@ struct PanDownShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct PanLeftShortcut final : AShortcut
@@ -60,8 +60,8 @@ struct PanLeftShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct PanRightShortcut final : AShortcut
@@ -70,8 +70,8 @@ struct PanRightShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 struct ToggleGridShortcut final : AShortcut
@@ -87,8 +87,8 @@ struct ToggleUiShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const Model& model, const widget_manager& widgets) const
-      -> bool override;
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
 };
 
 }  // namespace tactile

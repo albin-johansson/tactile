@@ -7,7 +7,7 @@
 
 namespace tactile {
 
-class CreateTilesetDialog final : public ADialog
+class CreateTilesetDialog final : public dialog_base
 {
  public:
   CreateTilesetDialog();
@@ -15,11 +15,12 @@ class CreateTilesetDialog final : public ADialog
   void Open();
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsCurrentInputValid(const Model& model) const -> bool override;
+  [[nodiscard]] auto is_current_input_valid(const document_model& model) const
+      -> bool override;
 
  private:
   std::filesystem::path mFullImagePath;

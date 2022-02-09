@@ -35,9 +35,9 @@ namespace tactile {
 namespace {
 
 template <typename Command, typename... Args>
-void _execute(Model& model, Args&&... args)
+void _execute(document_model& model, Args&&... args)
 {
-  if (auto* document = model.GetActiveDocument()) {
+  if (auto* document = model.active_document()) {
     auto& commands = document->commands;
     commands.push<Command>(document->registry, std::forward<Args>(args)...);
   }
@@ -47,9 +47,9 @@ void _execute(Model& model, Args&&... args)
 }
 
 template <typename Command, typename... Args>
-void _register(Model& model, Args&&... args)
+void _register(document_model& model, Args&&... args)
 {
-  if (auto* document = model.GetActiveDocument()) {
+  if (auto* document = model.active_document()) {
     auto& commands = document->commands;
     commands.push_without_redo<Command>(document->registry, std::forward<Args>(args)...);
   }
@@ -169,7 +169,7 @@ void application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
   constexpr float scaling = 4.0f;
 
-  const auto* registry = mModel.GetActiveRegistry();
+  const auto* registry = mModel.active_registry();
   if (registry && !ImGui::GetTopMostPopupModal()) {
     if (IsMouseWithinViewport()) {
       const auto& viewport = registry->ctx<Viewport>();
@@ -197,32 +197,32 @@ void application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 void application::update_frame()
 {
   mDispatcher.update();
-  mModel.Update();
+  mModel.update();
   mWidgets.update(mModel, mIcons, mDispatcher);
 }
 
 void application::on_undo()
 {
-  if (auto* document = mModel.GetActiveDocument()) {
+  if (auto* document = mModel.active_document()) {
     document->commands.undo();
   }
 }
 
 void application::on_redo()
 {
-  if (auto* document = mModel.GetActiveDocument()) {
+  if (auto* document = mModel.active_document()) {
     document->commands.redo();
   }
 }
 
 void application::on_set_command_capacity(const set_command_capacity_event& event)
 {
-  mModel.SetCommandCapacity(event.capacity);
+  mModel.set_command_capacity(event.capacity);
 }
 
 void application::on_save()
 {
-  if (auto* document = mModel.GetActiveDocument()) {
+  if (auto* document = mModel.active_document()) {
     if (!document->path.empty()) {
       save_document(*document);
       document->commands.mark_as_clean();
@@ -238,7 +238,7 @@ void application::on_save()
 
 void application::on_save_as(const save_as_event& event)
 {
-  if (auto* document = mModel.GetActiveDocument()) {
+  if (auto* document = mModel.active_document()) {
     document->path = event.path;
     on_save();
   }
@@ -246,8 +246,8 @@ void application::on_save_as(const save_as_event& event)
 
 void application::on_open_save_as_dialog()
 {
-  if (mModel.HasActiveDocument()) {
-    OpenSaveAsDialog(mDispatcher);
+  if (mModel.has_active_document()) {
+    show_save_as_dialog(mDispatcher);
   }
 }
 
@@ -268,7 +268,7 @@ void application::on_show_open_map_dialog()
 
 void application::on_show_map_properties()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
+  if (auto* registry = mModel.active_registry()) {
     auto& current = registry->ctx<comp::active_attribute_context>();
     current.entity = entt::null;
   }
@@ -276,32 +276,32 @@ void application::on_show_map_properties()
 
 void application::on_create_map(const create_map_event& event)
 {
-  const auto id = mModel.AddMap(event.tile_width,
-                                event.tile_height,
-                                event.row_count,
-                                event.column_count);
-  mModel.SelectMap(id);
+  const auto id = mModel.add_map(event.tile_width,
+                                 event.tile_height,
+                                 event.row_count,
+                                 event.column_count);
+  mModel.select_map(id);
 }
 
 void application::on_close_map(const close_map_event& event)
 {
-  if (mModel.HasPath(event.id)) {
-    set_last_closed_file(mModel.GetPath(event.id));
+  if (mModel.has_path(event.id)) {
+    set_last_closed_file(mModel.get_path(event.id));
   }
-  mModel.RemoveMap(event.id);
+  mModel.remove_map(event.id);
 }
 
 void application::on_open_map(const open_map_event& event)
 {
   /* Just silently ignore the request if the map is already open */
-  if (mModel.HasDocumentWithPath(event.path)) {
+  if (mModel.has_document_with_path(event.path)) {
     log_warning("Tried to open map that was already open!");
     return;
   }
 
   const auto ir = parsing::parse_map(event.path);
   if (ir.error() == parsing::parse_error::none) {
-    mModel.AddMap(restore_document_from_ir(ir, mTextures));
+    mModel.add_map(restore_document_from_ir(ir, mTextures));
     add_file_to_history(event.path);
   }
   else {
@@ -311,32 +311,32 @@ void application::on_open_map(const open_map_event& event)
 
 void application::on_select_map(const select_map_event& event)
 {
-  mModel.SelectMap(event.id);
+  mModel.select_map(event.id);
 }
 
 void application::on_select_tool(const select_tool_event& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::SelectTool(registry, event.type);
 }
 
 void application::on_mouse_pressed(const mouse_pressed_event& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
+  if (auto* registry = mModel.active_registry()) {
     sys::ToolOnPressed(*registry, mDispatcher, event.info);
   }
 }
 
 void application::on_mouse_drag(const mouse_drag_event& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
+  if (auto* registry = mModel.active_registry()) {
     sys::ToolOnDragged(*registry, mDispatcher, event.info);
   }
 }
 
 void application::on_mouse_released(const mouse_released_event& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
+  if (auto* registry = mModel.active_registry()) {
     sys::ToolOnReleased(*registry, mDispatcher, event.info);
   }
 }
@@ -365,13 +365,13 @@ void application::on_center_viewport()
 
 void application::on_offset_viewport(const OffsetViewportEvent& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::OffsetViewport(registry, event.dx, event.dy);
 }
 
 void application::on_offset_bound_viewport(const OffsetBoundViewportEvent& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::OffsetBoundViewport(registry,
                            event.entity,
                            event.dx,
@@ -382,45 +382,45 @@ void application::on_offset_bound_viewport(const OffsetBoundViewportEvent& event
 
 void application::on_pan_left()
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::PanViewportLeft(registry);
 }
 
 void application::on_pan_right()
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::PanViewportRight(registry);
 }
 
 void application::on_pan_up()
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::PanViewportUp(registry);
 }
 
 void application::on_pan_down()
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::PanViewportDown(registry);
 }
 
 void application::on_increase_zoom()
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   const auto mousePos = ImGui::GetIO().MousePos;
   sys::IncreaseViewportZoom(registry, mousePos.x, mousePos.y);
 }
 
 void application::on_decrease_zoom()
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   const auto mousePos = ImGui::GetIO().MousePos;
   sys::DecreaseViewportZoom(registry, mousePos.x, mousePos.y);
 }
 
 void application::on_reset_zoom()
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::ResetViewportZoom(registry);
 }
 
@@ -449,13 +449,13 @@ void application::on_remove_tileset(const remove_tileset_event& event)
 
 void application::on_select_tileset(const select_tileset_event& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::select_tileset(registry, event.id);
 }
 
 void application::on_set_tileset_selection(const set_tileset_selection_event& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   sys::update_tileset_selection(registry, event.selection);
 }
 
@@ -491,7 +491,7 @@ void application::on_resize_map(const resize_map_event& event)
 
 void application::on_open_resize_map_dialog()
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
+  if (auto* registry = mModel.active_registry()) {
     const auto& map = registry->ctx<MapInfo>();
     mWidgets.show_resize_map_dialog(map.row_count, map.column_count);
   }
@@ -509,7 +509,7 @@ void application::on_remove_layer(const remove_layer_event& event)
 
 void application::on_select_layer(const select_layer_event& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry()) {
+  if (auto* registry = mModel.active_registry()) {
     auto& active = registry->ctx<comp::active_layer>();
     active.entity = sys::find_layer(*registry, event.id);
   }
@@ -624,7 +624,7 @@ void application::on_change_property_type(const change_property_type_event& even
 
 void application::on_inspect_context(const inspect_context_event& event)
 {
-  auto& registry = mModel.GetActiveRegistryRef();
+  auto& registry = mModel.get_active_registry();
   auto& current = registry.ctx<comp::active_attribute_context>();
   current.entity = event.entity;
 }

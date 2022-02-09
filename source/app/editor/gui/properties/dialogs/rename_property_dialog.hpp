@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-class RenamePropertyDialog final : public AStringInputDialog
+class RenamePropertyDialog final : public string_input_dialog
 {
  public:
   RenamePropertyDialog();
@@ -12,9 +12,9 @@ class RenamePropertyDialog final : public AStringInputDialog
   ~RenamePropertyDialog() override = default;
 
  protected:
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto Validate(const Model& model, std::string_view input) const
+  [[nodiscard]] auto validate(const document_model& model, std::string_view input) const
       -> bool override;
 };
 

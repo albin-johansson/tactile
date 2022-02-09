@@ -49,10 +49,10 @@ void UpdateWidgetsMenu(const bool hasActiveMap)
 
 }  // namespace
 
-void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
+void ViewMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
 {
   if (scoped::menu menu{"View"}; menu.is_open()) {
-    const auto hasActiveDocument = model.HasActiveDocument();
+    const auto hasActiveDocument = model.has_active_document();
     UpdateWidgetsMenu(hasActiveDocument);
 
     ImGui::Separator();
@@ -87,7 +87,7 @@ void ViewMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease Zoom",
                         TACTILE_PRIMARY_MOD "+Minus",
                         false,
-                        model.CanDecreaseViewportTileSize())) {
+                        model.can_decrease_viewport_tile_size())) {
       dispatcher.enqueue<DecreaseZoomEvent>();
     }
 

@@ -1,30 +1,40 @@
 #pragma once
 
+#include <memory>  // unique_ptr
+
 #include <entt/entt.hpp>
 
 #include "dialogs/rename_layer_dialog.hpp"
+#include "editor/gui/dock_widget.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class Model;
-class icon_manager;
+class document_model;
 
-class LayerDock final
+class layer_dock final : public dock_widget
 {
  public:
-  void Update(const Model& model,
-              const icon_manager& icons,
-              entt::dispatcher& dispatcher);
+  layer_dock();
 
-  void ShowRenameLayerDialog(layer_id id);
+  ~layer_dock() noexcept override;
 
-  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+  void show_rename_layer_dialog(layer_id id);
+
+ protected:
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
+
+  void set_visible(bool visible) override;
+
+  [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
-  RenameLayerDialog mRenameLayerDialog;
-  maybe<layer_id> mRenameTarget;
-  bool mHasFocus{};
+  struct layer_dock_data;
+  std::unique_ptr<layer_dock_data> mData;
+
+  void update_buttons(const document_model& model,
+                      const entt::registry& registry,
+                      entt::dispatcher& dispatcher);
 };
 
 }  // namespace tactile

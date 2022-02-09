@@ -10,22 +10,27 @@
 
 namespace tactile {
 
-class Model;
+class document_model;
 
-class component_editor final : public ADialog
+/**
+ * \brief Used to manage the available component definitions.
+ *
+ * \ingroup gui
+ */
+class component_editor final : public dialog_base
 {
  public:
-  TACTILE_DEFAULT_MOVE(component_editor)
   TACTILE_DELETE_COPY(component_editor)
+  TACTILE_DEFAULT_MOVE(component_editor)
 
   component_editor();
 
   ~component_editor() noexcept override;
 
-  void Open(const Model& model);
+  void show(const document_model& model);
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 
  private:
   struct component_editor_data;

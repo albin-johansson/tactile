@@ -10,7 +10,7 @@ update_component_attr_cmd::update_component_attr_cmd(registry_ref registry,
                                                      const component_id id,
                                                      std::string attribute,
                                                      attribute_value value)
-    : command_base{"Update Component Attribute"}
+    : command_base{"update Component Attribute"}
     , mRegistry{registry}
     , mComponentId{id}
     , mAttributeName{std::move(attribute)}

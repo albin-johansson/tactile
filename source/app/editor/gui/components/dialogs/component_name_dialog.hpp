@@ -5,12 +5,12 @@
 
 namespace tactile {
 
-class AComponentNameDialog : public AStringInputDialog
+class component_name_dialog : public string_input_dialog
 {
  protected:
-  using AStringInputDialog::AStringInputDialog;
+  using string_input_dialog::string_input_dialog;
 
-  [[nodiscard]] auto Validate(const Model& model, std::string_view input) const
+  [[nodiscard]] auto validate(const document_model& model, std::string_view input) const
       -> bool final;
 };
 

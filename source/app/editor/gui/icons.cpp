@@ -8,7 +8,7 @@ icon_manager::icon_manager(texture_manager& textures)
     : mTactileIcon{textures.load("resources/icon.png").value().id}
 {}
 
-auto icon_manager::get_icon(const layer_type type) const -> c_str
+auto get_icon(const layer_type type) -> const char*
 {
   switch (type) {
     case layer_type::tile_layer:

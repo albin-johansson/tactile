@@ -39,9 +39,10 @@ void SaveShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<save_event>();
 }
 
-auto SaveShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
+auto SaveShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+    -> bool
 {
-  return model.CanSaveDocument();
+  return model.is_save_possible();
 }
 
 SaveAsShortcut::SaveAsShortcut()
@@ -53,9 +54,10 @@ void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<open_save_as_dialog_event>();
 }
 
-auto SaveAsShortcut::IsEnabled(const Model& model, const widget_manager&) const -> bool
+auto SaveAsShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+    -> bool
 {
-  return model.CanSaveDocument();
+  return model.is_save_possible();
 }
 
 }  // namespace tactile

@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-class Model;
+class document_model;
 
 /// \addtogroup gui
 /// \{
@@ -14,17 +14,17 @@ class Model;
 class FileMenu final
 {
  public:
-  void Update(const Model& model, entt::dispatcher& dispatcher);
+  void Update(const document_model& model, entt::dispatcher& dispatcher);
 
   /* Updates all associated windows. */
-  void UpdateWindows(const Model& model, entt::dispatcher& dispatcher);
+  void UpdateWindows(const document_model& model, entt::dispatcher& dispatcher);
 
   void ShowNewMapDialog();
 
   void ShowOpenMapDialog();
 
  private:
-  CreateMapDialog mCreateMapDialog;
+  create_map_dialog mCreateMapDialog;
   bool mShowOpenMapDialog{};
 
   void UpdateRecentFilesMenu(entt::dispatcher& dispatcher);

@@ -1,25 +1,25 @@
 #pragma once
 
-#include <entt/entt.hpp>
-
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class RenameLayerDialog final : public AStringInputDialog
+/**
+ * \brief Used to change the name of an existing layer.
+ * \ingroup gui
+ */
+class rename_layer_dialog final : public string_input_dialog
 {
  public:
-  RenameLayerDialog();
+  rename_layer_dialog();
 
-  ~RenameLayerDialog() override = default;
-
-  void Show(layer_id id, std::string oldName);
+  void show(layer_id id, std::string oldName);
 
  protected:
-  void OnAccept(entt::dispatcher& dispatcher) override;
+  void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto Validate(const Model& model, std::string_view input) const
+  [[nodiscard]] auto validate(const document_model& model, std::string_view input) const
       -> bool override;
 
  private:

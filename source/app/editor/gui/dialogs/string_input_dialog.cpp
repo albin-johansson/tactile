@@ -5,48 +5,48 @@
 #include <imgui.h>
 
 #include "core/utils/buffers.hpp"
-#include "editor/gui/common/button.hpp"
 
 namespace tactile {
 
-AStringInputDialog::AStringInputDialog(const c_str title) : ADialog{title} {}
+string_input_dialog::string_input_dialog(const char* title) : dialog_base{title} {}
 
-void AStringInputDialog::UpdateContents(const Model&, entt::dispatcher&)
+void string_input_dialog::show(std::string previous)
+{
+  mShouldAcquireFocus = true;
+  mPrevious = std::move(previous);
+  copy_string_into_buffer(mBuffer, mPrevious);
+  make_visible();
+}
+
+void string_input_dialog::set_input_hint(const char* hint)
+{
+  mHint = hint;
+}
+
+void string_input_dialog::on_update(const document_model&, entt::dispatcher&)
 {
   if (mShouldAcquireFocus) {
     ImGui::SetKeyboardFocusHere();
     mShouldAcquireFocus = false;
   }
-  ImGui::InputTextWithHint("##AStringInputDialogInput",
+  ImGui::InputTextWithHint("##string_input_dialog_input",
                            mHint ? mHint : "",
                            mBuffer.data(),
                            sizeof mBuffer);
 }
 
-void AStringInputDialog::SetInputHint(const c_str hint)
+auto string_input_dialog::is_current_input_valid(const document_model& model) const
+    -> bool
 {
-  mHint = hint;
+  return validate(model, current_input());
 }
 
-auto AStringInputDialog::IsCurrentInputValid(const Model& model) const -> bool
-{
-  return Validate(model, GetCurrentInput());
-}
-
-void AStringInputDialog::Show(std::string previous)
-{
-  mShouldAcquireFocus = true;
-  mPrevious = std::move(previous);
-  copy_string_into_buffer(mBuffer, mPrevious);
-  ADialog::Show();
-}
-
-auto AStringInputDialog::GetCurrentInput() const -> std::string_view
+auto string_input_dialog::current_input() const -> std::string_view
 {
   return create_string_view_from_buffer(mBuffer);
 }
 
-auto AStringInputDialog::GetPreviousString() const -> const std::string&
+auto string_input_dialog::previous_input() const -> const std::string&
 {
   return mPrevious;
 }

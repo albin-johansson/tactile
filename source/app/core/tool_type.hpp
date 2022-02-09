@@ -13,7 +13,10 @@ enum class tool_type
   stamp,
   eraser,
   bucket,
-  object_selection
+  object_selection,
+  rectangle,
+  ellipse,
+  point
 };
 
 }  // namespace tactile

@@ -4,15 +4,20 @@
 
 namespace tactile {
 
-class AboutDialog final : public ADialog
+/**
+ * \brief Provides information about the application.
+ *
+ * \ingroup gui
+ */
+class about_dialog final : public dialog_base
 {
  public:
-  AboutDialog();
+  about_dialog();
 
-  void Open();
+  void show();
 
  protected:
-  void UpdateContents(const Model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
 };
 
 }  // namespace tactile

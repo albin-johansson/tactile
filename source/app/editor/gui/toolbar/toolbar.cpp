@@ -19,7 +19,7 @@
 
 namespace tactile {
 
-void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
+void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
 {
   if (!mVisible) {
     return;
@@ -60,7 +60,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (button(TAC_ICON_SAVE, "Save", !model.IsClean(), bw, bh)) {
+  if (button(TAC_ICON_SAVE, "Save", !model.is_clean(), bw, bh)) {
     dispatcher.enqueue<save_event>();
   }
 
@@ -70,7 +70,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (button(TAC_ICON_UNDO, "Undo", model.CanUndo(), bw, bh)) {
+  if (button(TAC_ICON_UNDO, "Undo", model.can_undo(), bw, bh)) {
     dispatcher.enqueue<undo_event>();
   }
 
@@ -78,7 +78,7 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (button(TAC_ICON_REDO, "Redo", model.CanRedo(), bw, bh)) {
+  if (button(TAC_ICON_REDO, "Redo", model.can_redo(), bw, bh)) {
     dispatcher.enqueue<redo_event>();
   }
 
@@ -122,8 +122,8 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
 
   if (ToolButton(TAC_ICON_STAMP,
                  "Stamp tool",
-                 model.IsStampActive(),
-                 model.IsStampPossible(),
+                 model.is_tool_active(tool_type::stamp),
+                 model.is_tool_possible(tool_type::stamp),
                  bw,
                  bh)) {
     dispatcher.enqueue<select_tool_event>(tool_type::stamp);
@@ -135,8 +135,8 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
 
   if (ToolButton(TAC_ICON_BUCKET,
                  "Bucket tool",
-                 model.IsBucketActive(),
-                 model.IsBucketPossible(),
+                 model.is_tool_active(tool_type::bucket),
+                 model.is_tool_possible(tool_type::bucket),
                  bw,
                  bh)) {
     dispatcher.enqueue<select_tool_event>(tool_type::bucket);
@@ -148,8 +148,8 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
 
   if (ToolButton(TAC_ICON_ERASER,
                  "Eraser tool",
-                 model.IsEraserActive(),
-                 model.IsEraserPossible(),
+                 model.is_tool_active(tool_type::eraser),
+                 model.is_tool_possible(tool_type::eraser),
                  bw,
                  bh)) {
     dispatcher.enqueue<select_tool_event>(tool_type::eraser);
@@ -163,11 +163,38 @@ void Toolbar::Update(const Model& model, entt::dispatcher& dispatcher)
 
   if (ToolButton(TAC_ICON_OBJECT_SELECTION,
                  "Object selection tool",
-                 model.IsObjectSelectionActive(),
-                 model.IsObjectSelectionPossible(),
+                 model.is_tool_active(tool_type::object_selection),
+                 model.is_tool_possible(tool_type::object_selection),
                  bw,
                  bh)) {
     dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
+  }
+
+  if (ToolButton(TAC_ICON_RECTANGLE,
+                 "Rectangle tool",
+                 model.is_tool_active(tool_type::rectangle),
+                 model.is_tool_possible(tool_type::rectangle),
+                 bw,
+                 bh)) {
+    dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
+  }
+
+  if (ToolButton(TAC_ICON_ELLIPSE,
+                 "Ellipse tool",
+                 model.is_tool_active(tool_type::ellipse),
+                 model.is_tool_possible(tool_type::ellipse),
+                 bw,
+                 bh)) {
+    dispatcher.enqueue<select_tool_event>(tool_type::ellipse);
+  }
+
+  if (ToolButton(TAC_ICON_POINT,
+                 "Point tool",
+                 model.is_tool_active(tool_type::point),
+                 model.is_tool_possible(tool_type::point),
+                 bw,
+                 bh)) {
+    dispatcher.enqueue<select_tool_event>(tool_type::point);
   }
 
   end_docking_toolbar();

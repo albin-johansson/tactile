@@ -25,7 +25,7 @@ constexpr int _format_version [[maybe_unused]] = 1;
 
 }  // namespace
 
-void restore_last_session(Model& model, texture_manager& textures)
+void restore_last_session(document_model& model, texture_manager& textures)
 {
   proto::session session;
 
@@ -34,7 +34,7 @@ void restore_last_session(Model& model, texture_manager& textures)
     for (const auto& file : session.files()) {
       const auto ir = parsing::parse_map(file);
       if (ir.error() == parsing::parse_error::none) {
-        model.AddMap(restore_document_from_ir(ir, textures));
+        model.add_map(restore_document_from_ir(ir, textures));
       }
       else {
         log_warning("Failed to restore map from last session!");
@@ -46,7 +46,7 @@ void restore_last_session(Model& model, texture_manager& textures)
   }
 }
 
-void save_session(const Model& model)
+void save_session(const document_model& model)
 {
   proto::session session;
   for (const auto& [id, document] : model) {

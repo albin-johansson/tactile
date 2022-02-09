@@ -7,7 +7,7 @@
 
 namespace tactile {
 
-class Model;
+class document_model;
 
 /// \addtogroup gui
 /// \{
@@ -15,17 +15,17 @@ class Model;
 class EditMenu final
 {
  public:
-  void Update(const Model& model, entt::dispatcher& dispatcher);
+  void Update(const document_model& model, entt::dispatcher& dispatcher);
 
   /* Updates all associated windows. */
-  void UpdateWindows(const Model& model, entt::dispatcher& dispatcher);
+  void UpdateWindows(const document_model& model, entt::dispatcher& dispatcher);
 
   void OpenSettingsModal();
 
-  void ShowComponentEditor(const Model& model);
+  void ShowComponentEditor(const document_model& model);
 
  private:
-  SettingsDialog mSettingsDialog;
+  settings_dialog mSettingsDialog;
   component_editor mComponentEditor;
 };
 

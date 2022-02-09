@@ -3,12 +3,18 @@
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/scoped.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
 
-ADialog::ADialog(const c_str title) : mTitle{title} {}
+dialog_base::dialog_base(const c_str title) : mTitle{title}
+{
+  if (!mTitle) {
+    throw_traced(tactile_error{"Invalid null dialog title!"});
+  }
+}
 
-void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
+void dialog_base::update(const document_model& model, entt::dispatcher& dispatcher)
 {
   if (mShow) {
     ImGui::OpenPopup(mTitle);
@@ -19,16 +25,16 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
 
   constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
   if (scoped::modal modal{mTitle, flags}; modal.is_open()) {
-    UpdateContents(model, dispatcher);
+    on_update(model, dispatcher);
 
     ImGui::Spacing();
 
     if (mCloseButtonLabel && button(mCloseButtonLabel)) {
-      OnCancel();
+      on_cancel();
       ImGui::CloseCurrentPopup();
     }
 
-    const auto valid = IsCurrentInputValid(model);
+    const auto valid = is_current_input_valid(model);
 
     if (mAcceptButtonLabel) {
       if (mCloseButtonLabel) {
@@ -36,38 +42,38 @@ void ADialog::Update(const Model& model, entt::dispatcher& dispatcher)
       }
 
       if (button(mAcceptButtonLabel, nullptr, valid)) {
-        OnAccept(dispatcher);
+        on_accept(dispatcher);
         ImGui::CloseCurrentPopup();
       }
     }
 
-    if (mApplyButtonLabel) {
+    if (mUseApplyButton) {
       if (mCloseButtonLabel || mAcceptButtonLabel) {
         ImGui::SameLine();
       }
-      if (button(mApplyButtonLabel, nullptr, valid)) {
-        OnApply(dispatcher);
+      if (button("Apply", nullptr, valid)) {
+        on_apply(dispatcher);
       }
     }
   }
 }
 
-void ADialog::Show()
+void dialog_base::make_visible()
 {
   mShow = true;
 }
 
-void ADialog::SetAcceptButtonLabel(const c_str label)
+void dialog_base::use_apply_button()
+{
+  mUseApplyButton = true;
+}
+
+void dialog_base::set_accept_button_label(const c_str label)
 {
   mAcceptButtonLabel = label;
 }
 
-void ADialog::SetApplyButtonLabel(const c_str label)
-{
-  mApplyButtonLabel = label;
-}
-
-void ADialog::SetCloseButtonLabel(const c_str label)
+void dialog_base::set_close_button_label(const c_str label)
 {
   mCloseButtonLabel = label;
 }

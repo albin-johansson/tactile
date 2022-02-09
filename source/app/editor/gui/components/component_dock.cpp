@@ -13,13 +13,14 @@
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 namespace {
 
-constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
 [[nodiscard]] auto _show_trailing_component_button() -> bool
 {
@@ -130,14 +131,15 @@ void _show_add_component_button_popup_content(const entt::registry& registry,
 
 }  // namespace
 
-component_dock::component_dock() : dock_widget{"Components", gWindowFlags}
+component_dock::component_dock() : dock_widget{"Components", _window_flags}
 {
   set_close_button_enabled(true);
 }
 
-void component_dock::on_update(const entt::registry& registry,
-                               entt::dispatcher& dispatcher)
+void component_dock::on_update(const document_model& model, entt::dispatcher& dispatcher)
 {
+  const auto& registry = model.get_active_registry();
+
   const auto& context = sys::current_context(registry);
   ImGui::Text("Context: %s", context.name.c_str());
 

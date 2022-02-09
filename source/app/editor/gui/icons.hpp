@@ -53,6 +53,9 @@
 #define TAC_ICON_BUCKET ICON_FA_FILL
 #define TAC_ICON_ERASER ICON_FA_ERASER
 #define TAC_ICON_OBJECT_SELECTION ICON_FA_OBJECT_GROUP
+#define TAC_ICON_RECTANGLE ICON_FA_SQUARE
+#define TAC_ICON_ELLIPSE ICON_FA_CIRCLE
+#define TAC_ICON_POINT ICON_FA_MAP_MARKER
 
 #define TAC_ICON_TILESET ICON_FA_IMAGE
 #define TAC_ICON_GRID ICON_FA_TH
@@ -91,17 +94,6 @@ class icon_manager final
   explicit icon_manager(texture_manager& textures);
 
   /**
-   * \brief Returns the icon string literal for the specified layer type.
-   *
-   * \param type the layer type to obtain the icon for.
-   *
-   * \return a string icon value.
-   *
-   * \throws tactile_error if the layer type is invalid.
-   */
-  [[nodiscard]] auto get_icon(layer_type type) const -> c_str;
-
-  /**
    * \brief Returns the texture identifier for the Tactile icon.
    *
    * \return a texture identifier.
@@ -111,5 +103,16 @@ class icon_manager final
  private:
   uint mTactileIcon{};
 };
+
+/**
+ * \brief Returns the icon string literal for the specified layer type.
+ *
+ * \param type the layer type to obtain the icon for.
+ *
+ * \return a string icon value.
+ *
+ * \throws tactile_error if the layer type is invalid.
+ */
+[[nodiscard]] auto get_icon(layer_type type) -> const char*;
 
 }  // namespace tactile

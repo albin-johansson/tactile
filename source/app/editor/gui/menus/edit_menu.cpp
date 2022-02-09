@@ -15,16 +15,16 @@
 
 namespace tactile {
 
-void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
+void EditMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
 {
   if (scoped::menu menu{"Edit"}; menu.is_open()) {
-    const auto canUndo = model.CanUndo();
-    const auto canRedo = model.CanRedo();
+    const auto canUndo = model.can_undo();
+    const auto canRedo = model.can_redo();
 
     const formatted_string undoText{TAC_ICON_UNDO " Undo {}",
-                                    canUndo ? model.GetUndoText() : ""};
+                                    canUndo ? model.get_undo_text() : ""};
     const formatted_string redoText{TAC_ICON_REDO " Redo {}",
-                                    canRedo ? model.GetRedoText() : ""};
+                                    canRedo ? model.get_redo_text() : ""};
 
     if (ImGui::MenuItem(undoText.data(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
       dispatcher.enqueue<undo_event>();
@@ -36,32 +36,53 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp",
+    if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp Tool",
                         "S",
-                        model.IsStampActive(),
-                        model.IsStampPossible())) {
+                        model.is_tool_active(tool_type::stamp),
+                        model.is_tool_possible(tool_type::stamp))) {
       dispatcher.enqueue<select_tool_event>(tool_type::stamp);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket",
+    if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket Tool",
                         "B",
-                        model.IsBucketActive(),
-                        model.IsBucketPossible())) {
+                        model.is_tool_active(tool_type::bucket),
+                        model.is_tool_possible(tool_type::bucket))) {
       dispatcher.enqueue<select_tool_event>(tool_type::bucket);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser",
+    if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser Tool",
                         "E",
-                        model.IsEraserActive(),
-                        model.IsEraserPossible())) {
+                        model.is_tool_active(tool_type::eraser),
+                        model.is_tool_possible(tool_type::eraser))) {
       dispatcher.enqueue<select_tool_event>(tool_type::eraser);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection",
+    if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection Tool",
                         "Q",
-                        model.IsObjectSelectionActive(),
-                        model.IsObjectSelectionPossible())) {
+                        model.is_tool_active(tool_type::object_selection),
+                        model.is_tool_possible(tool_type::object_selection))) {
       dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
+    }
+
+    if (ImGui::MenuItem(TAC_ICON_RECTANGLE " Rectangle Tool",
+                        "R",
+                        model.is_tool_active(tool_type::rectangle),
+                        model.is_tool_possible(tool_type::rectangle))) {
+      dispatcher.enqueue<select_tool_event>(tool_type::rectangle);
+    }
+
+    if (ImGui::MenuItem(TAC_ICON_ELLIPSE " Ellipse Tool",
+                        "T",
+                        model.is_tool_active(tool_type::ellipse),
+                        model.is_tool_possible(tool_type::ellipse))) {
+      dispatcher.enqueue<select_tool_event>(tool_type::ellipse);
+    }
+
+    if (ImGui::MenuItem(TAC_ICON_POINT " Point Tool",
+                        "Y",
+                        model.is_tool_active(tool_type::point),
+                        model.is_tool_possible(tool_type::point))) {
+      dispatcher.enqueue<select_tool_event>(tool_type::point);
     }
 
     ImGui::Separator();
@@ -69,32 +90,32 @@ void EditMenu::Update(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...",
                         nullptr,
                         false,
-                        model.HasActiveDocument())) {
-      mComponentEditor.Open(model);
+                        model.has_active_document())) {
+      mComponentEditor.show(model);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,")) {
-      mSettingsDialog.Open();
+      mSettingsDialog.show();
     }
   }
 }
 
-void EditMenu::UpdateWindows(const Model& model, entt::dispatcher& dispatcher)
+void EditMenu::UpdateWindows(const document_model& model, entt::dispatcher& dispatcher)
 {
-  mSettingsDialog.Update(model, dispatcher);
-  mComponentEditor.Update(model, dispatcher);
+  mSettingsDialog.update(model, dispatcher);
+  mComponentEditor.update(model, dispatcher);
 }
 
 void EditMenu::OpenSettingsModal()
 {
-  mSettingsDialog.Open();
+  mSettingsDialog.show();
 }
 
-void EditMenu::ShowComponentEditor(const Model& model)
+void EditMenu::ShowComponentEditor(const document_model& model)
 {
-  mComponentEditor.Open(model);
+  mComponentEditor.show(model);
 }
 
 }  // namespace tactile

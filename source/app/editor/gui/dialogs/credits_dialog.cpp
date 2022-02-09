@@ -8,11 +8,12 @@
 namespace tactile {
 namespace {
 
-constexpr auto gTableFlags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
-                             ImGuiTableFlags_Resizable |
-                             ImGuiTableFlags_SizingStretchProp;
+constexpr auto _table_flags = ImGuiTableFlags_RowBg |      //
+                              ImGuiTableFlags_Borders |    //
+                              ImGuiTableFlags_Resizable |  //
+                              ImGuiTableFlags_SizingStretchProp;
 
-void Row(const c_str lib, const c_str license)
+void _row(const c_str lib, const c_str license)
 {
   ImGui::TableNextRow();
 
@@ -25,44 +26,44 @@ void Row(const c_str lib, const c_str license)
 
 }  // namespace
 
-CreditsDialog::CreditsDialog() : ADialog{"Credits"}
+credits_dialog::credits_dialog() : dialog_base{"Credits"}
 {
-  SetAcceptButtonLabel(nullptr);
-  SetCloseButtonLabel("Close");
+  set_accept_button_label(nullptr);
+  set_close_button_label("Close");
 }
 
-void CreditsDialog::Open()
+void credits_dialog::show()
 {
-  Show();
+  make_visible();
 }
 
-void CreditsDialog::UpdateContents(const Model&, entt::dispatcher&)
+void credits_dialog::on_update(const document_model&, entt::dispatcher&)
 {
   ImGui::TextUnformatted(
       "Tactile is developed using the following open-source libraries.");
   ImGui::Spacing();
 
-  if (scoped::table table{"##CreditsTable", 2, gTableFlags}; table.is_open()) {
+  if (scoped::table table{"##CreditsTable", 2, _table_flags}; table.is_open()) {
     ImGui::TableSetupColumn("Library");
     ImGui::TableSetupColumn("License");
     ImGui::TableHeadersRow();
 
-    Row("Centurion", "MIT");
-    Row("Dear ImGui", "MIT");
-    Row("EnTT", "MIT");
-    Row("fmt", "MIT");
-    Row("GLEW", "BSD/MIT");
-    Row("IconFontCppHeaders", "Zlib");
-    Row("JSON for Modern C++", "MIT");
-    Row("Magic Enum C++", "MIT");
-    Row("tinyfiledialogs", "Zlib");
-    Row("Protocol Buffers", "BSD");
-    Row("pugixml", "MIT");
-    Row("SDL2", "Zlib");
-    Row("SDL2_image", "Zlib");
-    Row("stb_image", "MIT");
-    Row("yaml-cpp", "MIT");
-    Row("googletest", "BSD");
+    _row("Centurion", "MIT");
+    _row("Dear ImGui", "MIT");
+    _row("EnTT", "MIT");
+    _row("fmt", "MIT");
+    _row("GLEW", "BSD/MIT");
+    _row("IconFontCppHeaders", "Zlib");
+    _row("JSON for Modern C++", "MIT");
+    _row("Magic Enum C++", "MIT");
+    _row("tinyfiledialogs", "Zlib");
+    _row("Protocol Buffers", "BSD");
+    _row("pugixml", "MIT");
+    _row("SDL2", "Zlib");
+    _row("SDL2_image", "Zlib");
+    _row("stb_image", "MIT");
+    _row("yaml-cpp", "MIT");
+    _row("googletest", "BSD");
   }
 }
 

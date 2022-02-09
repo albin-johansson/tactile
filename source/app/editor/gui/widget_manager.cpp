@@ -3,7 +3,7 @@
 #include <utility>  // move
 
 #include "components/component_dock.hpp"
-#include "dialogs/map_import_error_dialog.hpp"
+#include "dialogs/map_parse_error_dialog.hpp"
 #include "dialogs/resize_map_dialog.hpp"
 #include "editor/model.hpp"
 #include "icons.hpp"
@@ -24,45 +24,43 @@ struct widget_manager::widgets final
   MenuBar mMenuBar;
   Toolbar mToolbar;
   TilesetDock mTilesetDock;
-  LayerDock mLayerDock;
+  layer_dock mLayerDock;
   PropertiesDock mPropertiesDock;
   component_dock mComponentDock;
   LogDock mLogDock;
 
-  ResizeMapDialog mResizeMapDialog;
-  MapImportErrorDialog mMapImportErrorDialog;
+  resize_map_dialog mResizeMapDialog;
+  map_parse_error_dialog mMapParseErrorDialog;
 };
 
 widget_manager::widget_manager() : mWidgets{std::make_unique<widgets>()} {}
 
 widget_manager::~widget_manager() noexcept = default;
 
-void widget_manager::update(const Model& model,
+void widget_manager::update(const document_model& model,
                             const icon_manager& icons,
                             entt::dispatcher& dispatcher)
 {
   mWidgets->mMenuBar.Update(model, dispatcher);
   UpdateDockSpace();
 
-  if (model.HasActiveDocument()) {
+  if (model.has_active_document()) {
     mWidgets->mToolbar.Update(model, dispatcher);
-    mWidgets->mLayerDock.Update(model, icons, dispatcher);
+    mWidgets->mLayerDock.update(model, dispatcher);
     mWidgets->mPropertiesDock.Update(model, dispatcher);
+    mWidgets->mComponentDock.update(model, dispatcher);
   }
 
   UpdateViewportWidget(model, icons, dispatcher);
 
-  if (const auto* registry = model.GetActiveRegistry()) {
+  if (const auto* registry = model.active_registry()) {
     UpdateMapViewObjectContextMenu(*registry, dispatcher);
-
-    mWidgets->mComponentDock.update(*registry, dispatcher);
     mWidgets->mTilesetDock.Update(*registry, dispatcher);
-
     mWidgets->mLogDock.Update();
   }
 
-  mWidgets->mResizeMapDialog.Update(model, dispatcher);
-  mWidgets->mMapImportErrorDialog.Update(model, dispatcher);
+  mWidgets->mResizeMapDialog.update(model, dispatcher);
+  mWidgets->mMapParseErrorDialog.update(model, dispatcher);
 }
 
 void widget_manager::show_settings()
@@ -87,7 +85,7 @@ void widget_manager::show_add_tileset_dialog()
 
 void widget_manager::show_rename_layer_dialog(const layer_id id)
 {
-  mWidgets->mLayerDock.ShowRenameLayerDialog(id);
+  mWidgets->mLayerDock.show_rename_layer_dialog(id);
 }
 
 void widget_manager::show_add_property_dialog()
@@ -109,15 +107,15 @@ void widget_manager::show_change_property_type_dialog(std::string name,
 void widget_manager::show_resize_map_dialog(const usize currentRows,
                                             const usize currentColumns)
 {
-  mWidgets->mResizeMapDialog.Show(currentRows, currentColumns);
+  mWidgets->mResizeMapDialog.show(currentRows, currentColumns);
 }
 
-void widget_manager::show_map_import_error_dialog(parsing::parse_error error)
+void widget_manager::show_map_import_error_dialog(const parsing::parse_error error)
 {
-  mWidgets->mMapImportErrorDialog.Open(error);
+  mWidgets->mMapParseErrorDialog.show(error);
 }
 
-void widget_manager::show_component_editor(const Model& model)
+void widget_manager::show_component_editor(const document_model& model)
 {
   mWidgets->mMenuBar.ShowComponentEditor(model);
 }
@@ -146,7 +144,7 @@ auto widget_manager::is_viewport_focused() const -> bool
 
 auto widget_manager::is_layer_dock_focused() const -> bool
 {
-  return mWidgets->mLayerDock.IsFocused();
+  return mWidgets->mLayerDock.has_focus();
 }
 
 auto widget_manager::is_tileset_dock_focused() const -> bool

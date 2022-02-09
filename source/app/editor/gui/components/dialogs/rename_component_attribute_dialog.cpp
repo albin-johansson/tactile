@@ -8,30 +8,32 @@
 
 namespace tactile {
 
-RenameComponentAttributeDialog::RenameComponentAttributeDialog()
-    : AStringInputDialog{"Rename Component Attribute"}
+rename_component_attribute_dialog::rename_component_attribute_dialog()
+    : string_input_dialog{"Rename Component Attribute"}
 {
-  SetAcceptButtonLabel("Rename");
-  SetInputHint("Attribute name");
+  set_accept_button_label("Rename");
+  set_input_hint("Attribute name");
 }
 
-void RenameComponentAttributeDialog::Open(std::string previousName, const component_id id)
+void rename_component_attribute_dialog::show(std::string previousName,
+                                             const component_id id)
 {
   mComponentId = id;
-  Show(std::move(previousName));
+  string_input_dialog::show(std::move(previousName));
 }
 
-void RenameComponentAttributeDialog::OnAccept(entt::dispatcher& dispatcher)
+void rename_component_attribute_dialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<rename_component_attr_event>(mComponentId.value(),
-                                                  GetPreviousString(),
-                                                  std::string{GetCurrentInput()});
+                                                  previous_input(),
+                                                  std::string{current_input()});
 }
 
-auto RenameComponentAttributeDialog::Validate(const Model& model,
-                                              const std::string_view input) const -> bool
+auto rename_component_attribute_dialog::validate(const document_model& model,
+                                                 const std::string_view input) const
+    -> bool
 {
-  const auto& registry = model.GetActiveRegistryRef();
+  const auto& registry = model.get_active_registry();
   return !input.empty() &&
          !sys::is_component_attribute_name_taken(registry, mComponentId.value(), input);
 }

@@ -5,23 +5,82 @@
 #include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/layer_tree_system.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/events/layer_events.hpp"
+#include "editor/events/property_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "layer_item_popup.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 namespace {
 
-void GroupLayerItem(const entt::registry& registry,
-                    const icon_manager& icons,
-                    entt::dispatcher& dispatcher,
-                    const entt::entity layerEntity,
-                    const comp::layer& layer,
-                    const ImGuiTreeNodeFlags flags,
-                    const c_str name)
+constexpr int _base_node_flags =
+    ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |
+    ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth |
+    ImGuiTreeNodeFlags_SpanFullWidth;
+
+void _update_layer_item_popup(const entt::registry& registry,
+                              entt::dispatcher& dispatcher,
+                              const layer_id id)
+{
+  if (auto popup = scoped::popup::for_item("##LayerItemPopup"); popup.is_open()) {
+    const auto [entity, layer] = sys::get_layer(registry, id);
+
+    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
+      dispatcher.enqueue<inspect_context_event>(entity);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Layer")) {
+      dispatcher.enqueue<open_rename_layer_dialog_event>(id);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Layer")) {
+      dispatcher.enqueue<duplicate_layer_event>(id);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Layer")) {
+      dispatcher.enqueue<remove_layer_event>(id);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Layer Visibility",
+                        nullptr,
+                        layer.visible)) {
+      dispatcher.enqueue<set_layer_visible_event>(id, !layer.visible);
+    }
+
+    if (auto opacity = layer.opacity; ImGui::SliderFloat("Opacity", &opacity, 0, 1.0f)) {
+      dispatcher.enqueue<set_layer_opacity_event>(id, opacity);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move Layer Up",
+                        nullptr,
+                        false,
+                        sys::can_move_layer_up(registry, entity))) {
+      dispatcher.enqueue<move_layer_up_event>(id);
+    }
+
+    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move Layer Down",
+                        nullptr,
+                        false,
+                        sys::can_move_layer_down(registry, entity))) {
+      dispatcher.enqueue<move_layer_down_event>(id);
+    }
+  }
+}
+
+void _show_group_layer_item(const entt::registry& registry,
+                            entt::dispatcher& dispatcher,
+                            const entt::entity layerEntity,
+                            const comp::layer& layer,
+                            const ImGuiTreeNodeFlags flags,
+                            const char* name)
 {
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
   if (scoped::tree_node treeNode{"##GroupLayerTreeNode", flags, "%s", name};
@@ -33,12 +92,11 @@ void GroupLayerItem(const entt::registry& registry,
       dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
-    UpdateLayerItemPopup(registry, dispatcher, layer.id);
+    _update_layer_item_popup(registry, dispatcher, layer.id);
 
     const auto& node = registry.get<comp::layer_tree_node>(layerEntity);
     for (const auto child : node.children) {
-      const auto& childLayer = registry.get<comp::layer>(child);
-      LayerItem(registry, icons, dispatcher, child, childLayer);
+      show_layer_item(registry, dispatcher, child);
     }
   }
   else {
@@ -49,32 +107,27 @@ void GroupLayerItem(const entt::registry& registry,
       dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
-    UpdateLayerItemPopup(registry, dispatcher, layer.id);
+    _update_layer_item_popup(registry, dispatcher, layer.id);
   }
 }
 
 }  // namespace
 
-void LayerItem(const entt::registry& registry,
-               const icon_manager& icons,
-               entt::dispatcher& dispatcher,
-               const entt::entity layerEntity,
-               const comp::layer& layer)
+void show_layer_item(const entt::registry& registry,
+                     entt::dispatcher& dispatcher,
+                     const entt::entity layerEntity)
 {
+  const auto& layer = registry.get<comp::layer>(layerEntity);
+  const auto& activeLayer = registry.ctx<comp::active_layer>();
+
   const scoped::id scope{layer.id};
 
-  const auto& activeLayer = registry.ctx<comp::active_layer>();
   const auto isActiveLayer = layerEntity == activeLayer.entity;
-
-  auto flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |
-               ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth |
-               ImGuiTreeNodeFlags_SpanFullWidth;
-  if (isActiveLayer) {
-    flags |= ImGuiTreeNodeFlags_Selected;
-  }
+  const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
+                                   : _base_node_flags;
 
   const auto& context = registry.get<comp::attribute_context>(layerEntity);
-  formatted_string name{"{} {}", icons.get_icon(layer.type), context.name};
+  formatted_string name{"{} {}", get_icon(layer.type), context.name};
 
   if (layer.type != layer_type::group_layer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
@@ -86,10 +139,10 @@ void LayerItem(const entt::registry& registry,
       dispatcher.enqueue<select_layer_event>(layer.id);
     }
 
-    UpdateLayerItemPopup(registry, dispatcher, layer.id);
+    _update_layer_item_popup(registry, dispatcher, layer.id);
   }
   else {
-    GroupLayerItem(registry, icons, dispatcher, layerEntity, layer, flags, name.data());
+    _show_group_layer_item(registry, dispatcher, layerEntity, layer, flags, name.data());
   }
 }
 

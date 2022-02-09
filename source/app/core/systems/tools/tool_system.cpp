@@ -38,6 +38,12 @@ void ToolOnPressed(entt::registry& registry,
     case tool_type::object_selection:
       ObjectSelectionToolOnPressed(registry, dispatcher, mouse);
       break;
+
+    case tool_type::rectangle:
+    case tool_type::ellipse:
+    case tool_type::point:
+      // TODO
+      break;
   }
 }
 
@@ -63,6 +69,12 @@ void ToolOnDragged(entt::registry& registry,
 
     case tool_type::object_selection:
       ObjectSelectionToolOnDragged(registry, mouse);
+      break;
+
+    case tool_type::rectangle:
+    case tool_type::ellipse:
+    case tool_type::point:
+      // TODO
       break;
   }
 }
@@ -90,31 +102,19 @@ void ToolOnReleased(entt::registry& registry,
     case tool_type::object_selection:
       ObjectSelectionToolOnReleased(registry, dispatcher, mouse);
       break;
+
+    case tool_type::rectangle:
+    case tool_type::ellipse:
+    case tool_type::point:
+      // TODO
+      break;
   }
 }
 
-auto IsStampEnabled(const entt::registry& registry) -> bool
+auto is_tool_enabled(const entt::registry& registry, const tool_type tool) -> bool
 {
   const auto& active = registry.ctx<comp::active_tool>();
-  return active.tool == tool_type::stamp;
-}
-
-auto IsEraserEnabled(const entt::registry& registry) -> bool
-{
-  const auto& active = registry.ctx<comp::active_tool>();
-  return active.tool == tool_type::eraser;
-}
-
-auto IsBucketEnabled(const entt::registry& registry) -> bool
-{
-  const auto& active = registry.ctx<comp::active_tool>();
-  return active.tool == tool_type::bucket;
-}
-
-auto IsObjectSelectionEnabled(const entt::registry& registry) -> bool
-{
-  const auto& active = registry.ctx<comp::active_tool>();
-  return active.tool == tool_type::object_selection;
+  return active.tool == tool;
 }
 
 }  // namespace tactile::sys
