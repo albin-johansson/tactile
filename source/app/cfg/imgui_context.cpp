@@ -40,7 +40,7 @@ void load_fonts()
 
   static constexpr ImWchar icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
   io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
-                               size * scale,
+                               13.0f * scale,
                                &config,
                                icon_range);
 
