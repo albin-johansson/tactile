@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>  // unique_ptr
+
 #include <entt/entt.hpp>
 
 #include "dialogs/rename_layer_dialog.hpp"
@@ -15,6 +17,8 @@ class layer_dock final : public dock_widget
  public:
   layer_dock();
 
+  ~layer_dock() noexcept override;
+
   void show_rename_layer_dialog(layer_id id);
 
  protected:
@@ -25,8 +29,12 @@ class layer_dock final : public dock_widget
   [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
-  RenameLayerDialog mRenameLayerDialog;
-  maybe<layer_id> mRenameTarget;
+  struct layer_dock_data;
+  std::unique_ptr<layer_dock_data> mData;
+
+  void update_buttons(const document_model& model,
+                      const entt::registry& registry,
+                      entt::dispatcher& dispatcher);
 };
 
 }  // namespace tactile

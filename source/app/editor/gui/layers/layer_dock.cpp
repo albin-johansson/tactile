@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "add_layer_popup.hpp"
+#include "add_layer_context_menu.hpp"
 #include "core/components/attribute_context.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
@@ -21,68 +21,34 @@
 #include "tactile.hpp"
 
 namespace tactile {
-namespace {
 
-void _update_layer_dock_buttons(const entt::registry& registry,
-                                entt::dispatcher& dispatcher)
+struct layer_dock::layer_dock_data final
 {
-  const auto activeLayerEntity = registry.ctx<comp::active_layer>().entity;
-  const auto hasActiveLayer = activeLayerEntity != entt::null;
+  rename_layer_dialog mRenameLayerDialog;
+  add_layer_context_menu mAddLayerContextMenu;
+  maybe<layer_id> mRenameTarget;
+};
 
-  maybe<layer_id> activeLayerId;
-  if (hasActiveLayer) {
-    const auto& layer = registry.get<comp::layer>(activeLayerEntity);
-    activeLayerId = layer.id;
-  }
-
-  scoped::group group;
-
-  if (button(TAC_ICON_ADD, "Add new layer")) {
-    OpenAddLayerPopup();
-  }
-
-  UpdateAddLayerPopup(dispatcher);
-
-  if (button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
-    dispatcher.enqueue<remove_layer_event>(*activeLayerId);
-  }
-
-  if (button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
-    dispatcher.enqueue<duplicate_layer_event>(*activeLayerId);
-  }
-
-  if (button(TAC_ICON_MOVE_UP,
-             "Move layer up",
-             hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
-    dispatcher.enqueue<move_layer_up_event>(*activeLayerId);
-  }
-
-  if (button(TAC_ICON_MOVE_DOWN,
-             "Move layer down",
-             hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
-    dispatcher.enqueue<move_layer_down_event>(*activeLayerId);
-  }
-}
-
-}  // namespace
-
-layer_dock::layer_dock() : dock_widget{"Layers", ImGuiWindowFlags_NoCollapse}
+layer_dock::layer_dock()
+    : dock_widget{"Layers", ImGuiWindowFlags_NoCollapse}
+    , mData{std::make_unique<layer_dock_data>()}
 {
   set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
 }
 
+layer_dock::~layer_dock() noexcept = default;
+
 void layer_dock::show_rename_layer_dialog(const layer_id id)
 {
-  mRenameTarget = id;
+  mData->mRenameTarget = id;
 }
 
 void layer_dock::on_update(const document_model& model, entt::dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(model.has_active_document());
   const auto& registry = model.get_active_registry();
 
   {
-    _update_layer_dock_buttons(registry, dispatcher);
+    update_buttons(model, registry, dispatcher);
     ImGui::SameLine();
 
     scoped::group group;
@@ -105,19 +71,22 @@ void layer_dock::on_update(const document_model& model, entt::dispatcher& dispat
     }
   }
 
-  if (mRenameTarget.has_value()) {
-    const auto target = *mRenameTarget;
+  auto& renameTarget = mData->mRenameTarget;
+  auto& renameLayerDialog = mData->mRenameLayerDialog;
+
+  if (renameTarget.has_value()) {
+    const auto target = *renameTarget;
 
     const auto entity = sys::find_layer(registry, target);
     TACTILE_ASSERT(entity != entt::null);
 
     const auto& context = registry.get<comp::attribute_context>(entity);
 
-    mRenameLayerDialog.Show(target, context.name);
-    mRenameTarget.reset();
+    renameLayerDialog.show(target, context.name);
+    renameTarget.reset();
   }
 
-  mRenameLayerDialog.update(model, dispatcher);
+  renameLayerDialog.update(model, dispatcher);
 }
 
 void layer_dock::set_visible(const bool visible)
@@ -130,6 +99,48 @@ auto layer_dock::is_visible() const -> bool
 {
   const auto& prefs = get_preferences();
   return prefs.is_layer_dock_visible();
+}
+
+void layer_dock::update_buttons(const document_model& model,
+                                const entt::registry& registry,
+                                entt::dispatcher& dispatcher)
+{
+  const auto activeLayerEntity = registry.ctx<comp::active_layer>().entity;
+  const auto hasActiveLayer = activeLayerEntity != entt::null;
+
+  maybe<layer_id> activeLayerId;
+  if (hasActiveLayer) {
+    const auto& layer = registry.get<comp::layer>(activeLayerEntity);
+    activeLayerId = layer.id;
+  }
+
+  scoped::group group;
+
+  if (button(TAC_ICON_ADD, "Add new layer")) {
+    mData->mAddLayerContextMenu.show();
+  }
+
+  mData->mAddLayerContextMenu.update(model, dispatcher);
+
+  if (button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
+    dispatcher.enqueue<remove_layer_event>(*activeLayerId);
+  }
+
+  if (button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
+    dispatcher.enqueue<duplicate_layer_event>(*activeLayerId);
+  }
+
+  if (button(TAC_ICON_MOVE_UP,
+             "Move layer up",
+             hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
+    dispatcher.enqueue<move_layer_up_event>(*activeLayerId);
+  }
+
+  if (button(TAC_ICON_MOVE_DOWN,
+             "Move layer down",
+             hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
+    dispatcher.enqueue<move_layer_down_event>(*activeLayerId);
+  }
 }
 
 }  // namespace tactile

@@ -10,6 +10,8 @@ set(TACTILE_EDITOR_GUI_COMMON_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/centered_text.hpp
     ${PROJECT_SOURCE_DIR}/checkbox.cpp
     ${PROJECT_SOURCE_DIR}/checkbox.hpp
+    ${PROJECT_SOURCE_DIR}/context_menu.cpp
+    ${PROJECT_SOURCE_DIR}/context_menu.hpp
     ${PROJECT_SOURCE_DIR}/docking_toolbar.cpp
     ${PROJECT_SOURCE_DIR}/docking_toolbar.hpp
     ${PROJECT_SOURCE_DIR}/input_widgets.cpp
