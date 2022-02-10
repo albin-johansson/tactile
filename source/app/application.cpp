@@ -167,31 +167,33 @@ void application::on_keyboard_event(cen::keyboard_event event)
 
 void application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
-  constexpr float scaling = 4.0f;
-
-  const auto* registry = mModel.active_registry();
-  if (registry && !ImGui::GetTopMostPopupModal()) {
-    if (IsMouseWithinViewport()) {
-      const auto& viewport = registry->ctx<Viewport>();
-      const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
-      const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
-      mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
-    }
-    else if (mWidgets.is_tileset_dock_hovered()) {
-      const auto width = mWidgets.tileset_view_width();
-      const auto height = mWidgets.tileset_view_height();
-      if (width && height) {
-        const auto entity = sys::find_active_tileset(*registry);
-        TACTILE_ASSERT(entity != entt::null);
-
-        const auto& viewport = registry->get<Viewport>(entity);
-
-        const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
-        const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
-        mDispatcher.enqueue<OffsetBoundViewportEvent>(entity, -dx, dy, *width, *height);
-      }
-    }
-  }
+  //  constexpr float scaling = 4.0f;
+  //
+  //  const auto* registry = mModel.GetActiveRegistry();
+  //  if (registry && !ImGui::GetTopMostPopupModal()) {
+  //    if (IsMouseWithinViewport()) {
+  //      const auto& viewport = registry->ctx<Viewport>();
+  //      const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
+  //      const auto dy = static_cast<float>(event.y()) * (viewport.tile_height /
+  //      scaling); mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+  //    }
+  //    else if (mWidgets.is_tileset_dock_hovered()) {
+  //      const auto width = mWidgets.tileset_view_width();
+  //      const auto height = mWidgets.tileset_view_height();
+  //      if (width && height) {
+  //        const auto entity = sys::find_active_tileset(*registry);
+  //        TACTILE_ASSERT(entity != entt::null);
+  //
+  //        const auto& viewport = registry->get<Viewport>(entity);
+  //
+  //        const auto dx = static_cast<float>(event.x()) * (viewport.tile_width /
+  //        scaling); const auto dy = static_cast<float>(event.y()) *
+  //        (viewport.tile_height / scaling);
+  //        mDispatcher.enqueue<OffsetBoundViewportEvent>(entity, -dx, dy, *width,
+  //        *height);
+  //      }
+  //    }
+  //  }
 }
 
 void application::update_frame()
