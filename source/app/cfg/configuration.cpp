@@ -12,10 +12,17 @@
 #include "misc/throw.hpp"
 #include "sdl_attributes.hpp"
 
+#if TACTILE_PLATFORM_WINDOWS
+
+#include <SDL_syswm.h>
+#include <dwmapi.h>
+
+#endif  // TACTILE_PLATFORM_WINDOWS
+
 namespace tactile {
 namespace {
 
-[[nodiscard]] consteval auto get_window_flags() noexcept -> uint32
+[[nodiscard]] consteval auto _get_window_flags() noexcept -> uint32
 {
   auto flags = cen::window::hidden | cen::window::resizable | cen::window::opengl;
 
@@ -24,6 +31,29 @@ namespace {
   }
 
   return flags;
+}
+
+void _win32_use_immersive_dark_mode([[maybe_unused]] cen::window& window)
+{
+#if TACTILE_PLATFORM_WINDOWS
+  SDL_SysWMinfo wm{};
+  SDL_VERSION(&wm.version);
+  if (SDL_GetWindowWMInfo(window.get(), &wm)) {
+    HWND hwnd = wm.info.win.window;
+
+    cen::shared_object dwmapi{"dwmapi.dll"};
+
+    using signature = HRESULT(HWND, DWORD, LPCVOID, DWORD);
+    auto* setAttribute = dwmapi.load_function<signature>("DwmSetWindowAttribute");
+
+    if (!setAttribute) {
+      return;
+    }
+
+    BOOL mode = 1;
+    setAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &mode, sizeof mode);
+  }
+#endif  // TACTILE_PLATFORM_WINDOWS
 }
 
 }  // namespace
@@ -42,10 +72,12 @@ app_configuration::app_configuration()
 
   init_sdl_attributes();
 
-  mWindow.emplace("Tactile", cen::window::default_size(), get_window_flags());
+  mWindow.emplace("Tactile", cen::window::default_size(), _get_window_flags());
+  TACTILE_ASSERT(mWindow.has_value());
+
+  _win32_use_immersive_dark_mode(*mWindow);
   mWindow->set_icon(cen::surface{"resources/icon.png"});
 
-  TACTILE_ASSERT(mWindow.has_value());
   mOpenGL.emplace(*mWindow);
   mOpenGL->make_current(*mWindow);
 
