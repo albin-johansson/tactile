@@ -28,6 +28,8 @@ set(TACTILE_EDITOR_GUI_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/textures.hpp
     ${PROJECT_SOURCE_DIR}/themes.cpp
     ${PROJECT_SOURCE_DIR}/themes.hpp
+    ${PROJECT_SOURCE_DIR}/viewport_area.cpp
+    ${PROJECT_SOURCE_DIR}/viewport_area.hpp
     ${PROJECT_SOURCE_DIR}/widget_manager.cpp
     ${PROJECT_SOURCE_DIR}/widget_manager.hpp
 
