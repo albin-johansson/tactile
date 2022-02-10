@@ -17,7 +17,13 @@ void RenderTile(graphics_ctx& graphics,
                 const int32 column)
 {
   const auto& context = registry.ctx<comp::tileset_context>();
-  const auto tilesetEntity = context.tile_to_tileset.at(tile);
+  auto iter = context.tile_to_tileset.find(tile);
+
+  if (iter == context.tile_to_tileset.end()) {
+    return;
+  }
+
+  const auto tilesetEntity = iter->second;
   if (tilesetEntity != entt::null) {
     const auto& texture = registry.get<comp::texture>(tilesetEntity);
     const auto& uvTileSize = registry.get<comp::uv_tile_size>(tilesetEntity);
