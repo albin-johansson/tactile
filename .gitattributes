@@ -1,0 +1,6 @@
+* text=auto
+
+doxygen/** linguist-documentation
+docs/** linguist-documentation
+
+lib/** linguist-vendored
