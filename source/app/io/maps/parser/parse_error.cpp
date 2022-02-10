@@ -57,12 +57,6 @@ auto to_cause(const parse_error error) -> std::string_view
     case parse_error::no_layer_type:
       return "A layer is missing a type!";
 
-    case parse_error::no_tile_layer_width:
-      return "A tile layer is missing a width attribute!";
-
-    case parse_error::no_tile_layer_height:
-      return "A tile layer is missing a height attribute!";
-
     case parse_error::no_tile_layer_data:
       return "A tile layer has no tile data!";
 
@@ -76,7 +70,7 @@ auto to_cause(const parse_error error) -> std::string_view
       return "A referenced external tileset does not exist!";
 
     case parse_error::unknown_external_tileset_error:
-      return "Could not read an external tileset!";
+      return "Something went wrong when trying to read an external tileset!";
 
     case parse_error::no_tileset_first_tile_id:
       return "A tileset has no associated first tile attribute!";
@@ -109,7 +103,7 @@ auto to_cause(const parse_error error) -> std::string_view
       return "A tileset has no version attribute!";
 
     case parse_error::no_external_tileset_path:
-      return "A referenced external tileset has no source path attribute!";
+      return "An external tileset reference is missing a source path attribute!";
 
     case parse_error::tileset_image_does_not_exist:
       return "A referenced tileset image does not exist!";

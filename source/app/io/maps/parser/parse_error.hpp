@@ -8,7 +8,7 @@ namespace tactile::parsing {
 /**
  * \brief Represents various possible errors related to map parsing.
  *
- * \see `to_cause(parse_error)`
+ * \see to_cause(parse_error)
  */
 enum class parse_error
 {
@@ -30,9 +30,7 @@ enum class parse_error
 
   unsupported_layer_type,  // YAML/JSON only
   no_layer_id,
-  no_layer_type,         // YAML/JSON only
-  no_tile_layer_width,   // TODO warning only?
-  no_tile_layer_height,  // TODO warning only?
+  no_layer_type,  // YAML/JSON only
   no_tile_layer_data,
   corrupt_tile_layer_data,
   unsupported_tile_layer_encoding,
@@ -78,6 +76,13 @@ enum class parse_error
   no_animation_frame_duration
 };
 
+/**
+ * \brief Returns a short human-readable message that provides a cause for an error.
+ *
+ * \param error the parse error to retrieve the cause for.
+ *
+ * \return an error cause message.
+ */
 [[nodiscard]] auto to_cause(parse_error error) -> std::string_view;
 
 auto operator<<(std::ostream& stream, parse_error error) -> std::ostream&;

@@ -8,6 +8,7 @@
 #include "core/utils/strings.hpp"
 #include "core/utils/tiles.hpp"
 #include "io/maps/xml_utils.hpp"
+#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 #include "xml_attribute_parser.hpp"
 
@@ -97,23 +98,39 @@ namespace {
   return parse_error::none;
 }
 
-[[nodiscard]] auto _parse_tile_layer(pugi::xml_node layerNode, ir::layer_data& layerData)
-    -> parse_error
+[[nodiscard]] auto _parse_tile_layer(pugi::xml_node layerNode,
+                                     ir::layer_data& layerData,
+                                     const usize rows,
+                                     const usize columns) -> parse_error
 {
   auto& tileLayerData = layerData.data.emplace<ir::tile_layer_data>();
 
   if (const auto width = uint_attribute(layerNode, "width")) {
     tileLayerData.col_count = *width;
+
+    if (tileLayerData.col_count != columns) {
+      log_warning("XML tile layer width does not match map width, '{}' vs '{}'",
+                  tileLayerData.col_count,
+                  columns);
+    }
   }
   else {
-    return parse_error::no_tile_layer_width;
+    log_warning("XML tile layer has no width information, assuming map width...");
+    tileLayerData.col_count = columns;
   }
 
   if (const auto height = uint_attribute(layerNode, "height")) {
     tileLayerData.row_count = *height;
+
+    if (tileLayerData.row_count != rows) {
+      log_warning("XML tile layer height does not match map height, '{}' vs '{}'",
+                  tileLayerData.row_count,
+                  rows);
+    }
   }
   else {
-    return parse_error::no_tile_layer_height;
+    log_warning("XML tile layer has no height information, assuming map height...");
+    tileLayerData.row_count = rows;
   }
 
   tileLayerData.tiles =
@@ -144,7 +161,9 @@ namespace {
 
 [[nodiscard]] auto _parse_layer(pugi::xml_node layerNode,
                                 ir::layer_data& layerData,
-                                const usize index) -> parse_error
+                                const usize index,
+                                const usize rows,
+                                const usize columns) -> parse_error
 {
   layerData.index = index;
 
@@ -161,7 +180,7 @@ namespace {
 
   if (std::strcmp(layerNode.name(), "layer") == 0) {
     layerData.type = layer_type::tile_layer;
-    if (const auto err = _parse_tile_layer(layerNode, layerData);
+    if (const auto err = _parse_tile_layer(layerNode, layerData, rows, columns);
         err != parse_error::none) {
       return err;
     }
@@ -182,7 +201,8 @@ namespace {
       auto& childLayerData =
           groupData.children.emplace_back(std::make_unique<ir::layer_data>());
 
-      if (const auto err = _parse_layer(childLayerNode, *childLayerData, childIndex);
+      if (const auto err =
+              _parse_layer(childLayerNode, *childLayerData, childIndex, rows, columns);
           err != parse_error::none) {
         return err;
       }
@@ -248,7 +268,11 @@ auto parse_layers(pugi::xml_node mapNode, ir::map_data& mapData) -> parse_error
   for (const auto layerNode : _collect_layer_nodes(mapNode)) {
     auto& layerData = mapData.layers.emplace_back();
 
-    if (const auto err = _parse_layer(layerNode, layerData, index);
+    if (const auto err = _parse_layer(layerNode,
+                                      layerData,
+                                      index,
+                                      mapData.row_count,
+                                      mapData.col_count);
         err != parse_error::none) {
       return err;
     }
