@@ -9,20 +9,22 @@ required may be omitted from save files.
 
 The root node in the Tactile YAML format provides general information about the tilemap.
 
-|               Attribute |   Type   | Required | Description                           |
-|------------------------:|:--------:|:--------:|:--------------------------------------|
-|               `version` |  `int`   |   Yes    | The version of the YAML map format.   |
-|             `row-count` |  `int`   |   Yes    | The number of rows in the tilemap.    |
-|          `column-count` |  `int`   |   Yes    | The number of columns in the tilemap. |
-|            `tile-width` |  `int`   |   Yes    | The width of tiles in the tilemap.    |
-|           `tile-height` |  `int`   |   Yes    | The height of tiles in the tilemap.   |
-|         `next-layer-id` |  `int`   |   Yes    | The next available layer ID.          |
-|        `next-object-id` |  `int`   |   Yes    | The next available object ID.         |
-|                `layers` | Sequence |    No    | A sequence of `Layer` nodes.          |
-|              `tilesets` | Sequence |    No    | A sequence of `TilesetRef` nodes.     |
-|            `properties` | Sequence |    No    | A sequence of `Property` nodes.       |
-| `component-definitions` | Sequence |    No    | A sequence of `ComponentDef` nodes.   |
-|            `components` | Sequence |    No    | A sequence of `Component` nodes.      |
+|               Attribute |          Type           | Required | Description                           |
+|------------------------:|:-----------------------:|:--------:|:--------------------------------------|
+|               `version` |          `int`          |   Yes    | The version of the YAML map format.   |
+|             `row-count` |          `int`          |   Yes    | The number of rows in the tilemap.    |
+|          `column-count` |          `int`          |   Yes    | The number of columns in the tilemap. |
+|            `tile-width` |          `int`          |   Yes    | The width of tiles in the tilemap.    |
+|           `tile-height` |          `int`          |   Yes    | The height of tiles in the tilemap.   |
+|         `next-layer-id` |          `int`          |   Yes    | The next available layer ID.          |
+|        `next-object-id` |          `int`          |   Yes    | The next available object ID.         |
+|         `tile-encoding` | One of `none`, `base64` |    No    | Tile layer data encoding.             |
+|      `tile-compression` |  One of `none`, `zlib`  |    No    | Tile layer data compression mode.     |
+|                `layers` |        Sequence         |    No    | A sequence of `Layer` nodes.          |
+|              `tilesets` |        Sequence         |    No    | A sequence of `TilesetRef` nodes.     |
+|            `properties` |        Sequence         |    No    | A sequence of `Property` nodes.       |
+| `component-definitions` |        Sequence         |    No    | A sequence of `ComponentDef` nodes.   |
+|            `components` |        Sequence         |    No    | A sequence of `Component` nodes.      |
 
 ---
 
