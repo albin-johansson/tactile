@@ -13,7 +13,10 @@ find_package(pugixml CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(tinyfiledialogs CONFIG REQUIRED)
 
+find_package(ZLIB REQUIRED)
+
 find_path(STB_INCLUDE_DIRS "stb.h")
+find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 
 add_subdirectory(cfg)
 add_subdirectory(core)
@@ -59,6 +62,7 @@ target_include_directories(${TACTILE_LIB}
                            ${LIBRARY_DIR}/centurion
                            ${LIBRARY_DIR}/fontawesome
                            ${STB_INCLUDE_DIRS}
+                           ${CPPCODEC_INCLUDE_DIRS}
                            ${Boost_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
                            )
@@ -77,6 +81,7 @@ target_link_libraries(${TACTILE_LIB}
                       nlohmann_json::nlohmann_json
                       pugixml::static
                       tinyfiledialogs::tinyfiledialogs
+                      ZLIB::ZLIB
                       GLEW::GLEW
                       OpenGL::GL
                       ${Boost_LIBRARIES}

@@ -28,6 +28,8 @@
     "magic-enum",
     "stb",
     "gtest",
-    "tinyfiledialogs"
+    "tinyfiledialogs",
+    "cppcodec",
+    "zlib"
   ]
 }

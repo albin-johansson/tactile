@@ -49,6 +49,7 @@ void credits_dialog::on_update(const document_model&, entt::dispatcher&)
     ImGui::TableHeadersRow();
 
     _row("Centurion", "MIT");
+    _row("cpp-codec", "MIT");
     _row("Dear ImGui", "MIT");
     _row("EnTT", "MIT");
     _row("fmt", "MIT");
@@ -64,6 +65,7 @@ void credits_dialog::on_update(const document_model&, entt::dispatcher&)
     _row("stb_image", "MIT");
     _row("yaml-cpp", "MIT");
     _row("googletest", "BSD");
+    _row("Zlib", "Zlib");
   }
 }
 
