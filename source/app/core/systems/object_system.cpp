@@ -16,7 +16,7 @@ auto find_object(const entt::registry& registry, const object_id id) -> entt::en
   return entt::null;
 }
 
-auto get_object(const entt::registry& registry, object_id id) -> entt::entity
+auto get_object(const entt::registry& registry, const object_id id) -> entt::entity
 {
   const auto entity = find_object(registry, id);
   if (entity != entt::null) {
