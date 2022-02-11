@@ -14,7 +14,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto ConvertBoundsToRect(const RenderInfo& info) -> cen::frect
+[[nodiscard]] auto ConvertBoundsToRect(const render_info& info) -> cen::frect
 {
   const auto begin = info.bounds.begin;
 
@@ -90,7 +90,7 @@ void AddFilledEllipse(ImDrawList* self,
 
 }  // namespace
 
-graphics_ctx::graphics_ctx(const RenderInfo& info)
+graphics_ctx::graphics_ctx(const render_info& info)
     : mCanvasTL{info.canvas_tl}
     , mCanvasBR{info.canvas_br}
     , mOrigin{info.origin}

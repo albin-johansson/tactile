@@ -11,12 +11,12 @@
 namespace tactile {
 namespace {
 
-auto GetRenderBounds(const ImVec2& tl,
-                     const ImVec2& br,
-                     const ImVec2& origin,
-                     const ImVec2& gridSize,
-                     const float rows,
-                     const float cols) -> Region
+[[nodiscard]] auto _get_render_bounds(const ImVec2& tl,
+                                      const ImVec2& br,
+                                      const ImVec2& origin,
+                                      const ImVec2& gridSize,
+                                      const float rows,
+                                      const float cols) -> Region
 {
   const auto begin = (tl - origin) / gridSize;
   const auto end = (br - origin) / gridSize;
@@ -35,12 +35,12 @@ auto GetRenderBounds(const ImVec2& tl,
   return bounds;
 }
 
-auto GetRenderInfo(const Viewport& viewport,
-                   const ImVec2& logicalTileSize,
-                   const int32 rows,
-                   const int32 columns) -> RenderInfo
+[[nodiscard]] auto _get_render_info(const Viewport& viewport,
+                                    const ImVec2& logicalTileSize,
+                                    const int32 rows,
+                                    const int32 columns) -> render_info
 {
-  RenderInfo info;
+  render_info info;
 
   info.canvas_tl = ImGui::GetCursorScreenPos();
   info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
@@ -54,33 +54,34 @@ auto GetRenderInfo(const Viewport& viewport,
   info.row_count = static_cast<float>(rows);
   info.col_count = static_cast<float>(columns);
 
-  info.bounds = GetRenderBounds(info.canvas_tl,
-                                info.canvas_br,
-                                info.origin,
-                                info.grid_size,
-                                info.row_count,
-                                info.col_count);
+  info.bounds = _get_render_bounds(info.canvas_tl,
+                                   info.canvas_br,
+                                   info.origin,
+                                   info.grid_size,
+                                   info.row_count,
+                                   info.col_count);
 
   return info;
 }
 
 }  // namespace
 
-auto GetRenderInfo(const Viewport& viewport, const MapInfo& map) -> RenderInfo
+auto get_render_info(const Viewport& viewport, const MapInfo& map) -> render_info
 {
   const ImVec2 tileSize{static_cast<float>(map.tile_width),
                         static_cast<float>(map.tile_height)};
-  return GetRenderInfo(viewport,
-                       tileSize,
-                       static_cast<int32>(map.row_count),
-                       static_cast<int32>(map.column_count));
+  return _get_render_info(viewport,
+                          tileSize,
+                          static_cast<int32>(map.row_count),
+                          static_cast<int32>(map.column_count));
 }
 
-auto GetRenderInfo(const Viewport& viewport, const comp::tileset& tileset) -> RenderInfo
+auto get_render_info(const Viewport& viewport, const comp::tileset& tileset)
+    -> render_info
 {
   const ImVec2 tileSize{static_cast<float>(tileset.tile_width),
                         static_cast<float>(tileset.tile_height)};
-  return GetRenderInfo(viewport, tileSize, tileset.row_count, tileset.column_count);
+  return _get_render_info(viewport, tileSize, tileset.row_count, tileset.column_count);
 }
 
 }  // namespace tactile

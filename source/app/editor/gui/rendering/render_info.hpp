@@ -16,9 +16,9 @@ struct MapInfo;
 /**
  * \brief Provides useful information about a rendering context.
  *
- * \see `GetRenderInfo()`
+ * \see get_render_info()
  */
-struct RenderInfo final
+struct render_info final
 {
   ImVec2 canvas_tl{};  ///< Top-left point of the canvas.
   ImVec2 canvas_br{};  ///< Bottom-right point of the canvas.
@@ -34,11 +34,11 @@ struct RenderInfo final
   float col_count{};  ///< Total amount of columns.
 };
 
-[[nodiscard]] auto GetRenderInfo(const Viewport& viewport, const MapInfo& map)
-    -> RenderInfo;
+[[nodiscard]] auto get_render_info(const Viewport& viewport, const MapInfo& map)
+    -> render_info;
 
-[[nodiscard]] auto GetRenderInfo(const Viewport& viewport, const comp::tileset& tileset)
-    -> RenderInfo;
+[[nodiscard]] auto get_render_info(const Viewport& viewport, const comp::tileset& tileset)
+    -> render_info;
 
 /// \} End of group rendering
 

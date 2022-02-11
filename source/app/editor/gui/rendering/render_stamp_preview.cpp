@@ -75,7 +75,7 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
 
 void RenderStampPreview(const entt::registry& registry,
                         const tile_position& mousePos,
-                        const RenderInfo& renderInfo)
+                        const render_info& renderInfo)
 {
   const auto& activeTileset = registry.ctx<comp::active_tileset>();
 

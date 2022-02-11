@@ -5,10 +5,10 @@
 namespace tactile {
 
 class tile_position;
-struct RenderInfo;
+struct render_info;
 
 void RenderStampPreview(const entt::registry& registry,
                         const tile_position& mousePos,
-                        const RenderInfo& info);
+                        const render_info& info);
 
 }  // namespace tactile

@@ -73,7 +73,7 @@ void TilesetView::Update(const entt::registry& registry,
   mWidth = region.x;
   mHeight = region.y;
 
-  const auto info = GetRenderInfo(viewport, tileset);
+  const auto info = get_render_info(viewport, tileset);
   graphics_ctx graphics{info};
 
   graphics.set_draw_color(get_preferences().viewport_bg());

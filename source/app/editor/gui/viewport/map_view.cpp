@@ -77,7 +77,7 @@ void CenterViewport(entt::dispatcher& dispatcher,
 void UpdateCursorGizmos(const entt::registry& registry,
                         entt::dispatcher& dispatcher,
                         const ViewportCursorInfo& cursor,
-                        const RenderInfo& info)
+                        const render_info& info)
 {
   TACTILE_ASSERT(cursor.is_within_map);
 
@@ -149,7 +149,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
   const auto& viewport = registry.ctx<Viewport>();
   const auto& map = registry.ctx<MapInfo>();
 
-  const auto info = GetRenderInfo(viewport, map);
+  const auto info = get_render_info(viewport, map);
   UpdateViewportOffset(info.canvas_br - info.canvas_tl, dispatcher);
 
   graphics_ctx graphics{info};
