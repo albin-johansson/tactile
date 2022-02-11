@@ -38,7 +38,8 @@ namespace cen {
 /**
  * \brief Represents the various supported music types.
  */
-enum class music_type {
+enum class music_type
+{
   none = MUS_NONE,
   mp3 = MUS_MP3,
   wav = MUS_WAV,
@@ -98,7 +99,8 @@ inline auto operator<<(std::ostream& stream, const music_type type) -> std::ostr
 /**
  * \brief Represents different playback states.
  */
-enum class fade_status {
+enum class fade_status
+{
   none = MIX_NO_FADING,
   in = MIX_FADING_IN,
   out = MIX_FADING_OUT
@@ -149,8 +151,10 @@ inline auto operator<<(std::ostream& stream, const fade_status status) -> std::o
  *
  * \see `sound_effect`
  */
-class music final {
+class music final
+{
  public:
+  using channel_index = int;
   using ms_type = millis<int>;
   using music_hook_callback = void (*)(void*, uint8*, int);
 
@@ -199,7 +203,7 @@ class music final {
    *
    * \see `music::forever`
    */
-  auto play(const int iterations = 0) noexcept -> std::optional<int>
+  auto play(const int iterations = 0) noexcept -> std::optional<channel_index>
   {
     const auto channel = Mix_PlayMusic(mMusic.get(), detail::max(iterations, forever));
     if (channel != -1) {
@@ -332,8 +336,25 @@ class music final {
     return status == fade_status::in || status == fade_status::out;
   }
 
-  // TODO is_fading_in()
-  // TODO is_fading_out()
+  /**
+   * \brief Indicates whether any music is currently being faded in.
+   *
+   * \return `true` if music is being faded in; `false` otherwise.
+   */
+  [[nodiscard]] static auto is_fading_in() noexcept -> bool
+  {
+    return get_fade_status() == fade_status::in;
+  }
+
+  /**
+   * \brief Indicates whether any music is currently being faded out.
+   *
+   * \return `true` if music is being faded out; `false` otherwise.
+   */
+  [[nodiscard]] static auto is_fading_out() noexcept -> bool
+  {
+    return get_fade_status() == fade_status::out;
+  }
 
   /// \} End of fade functions
 
@@ -538,10 +559,13 @@ using sound_effect_handle = basic_sound_effect<detail::handle_tag>;  ///< A non-
  * \see `get_sound()`
  */
 template <typename T>
-class basic_sound_effect final {
+class basic_sound_effect final
+{
  public:
+  using channel_index = int;
   using ms_type = millis<int>;
 
+  inline constexpr static channel_index undefined_channel = -1;
   inline constexpr static int forever = -1;  ///< Used to play sounds indefinitely.
 
   /// \name Construction
@@ -618,7 +642,7 @@ class basic_sound_effect final {
   {
     if (is_playing()) {
       Mix_Pause(mChannel);
-      mChannel = undefined_channel();
+      mChannel = undefined_channel;
     }
   }
 
@@ -629,7 +653,7 @@ class basic_sound_effect final {
    */
   [[nodiscard]] auto is_playing() const noexcept -> bool
   {
-    return (mChannel != undefined_channel()) && Mix_Playing(mChannel);
+    return (mChannel != undefined_channel) && Mix_Playing(mChannel);
   }
 
   /**
@@ -640,7 +664,7 @@ class basic_sound_effect final {
   template <typename TT = T, detail::enable_for_owner<TT> = 0>
   [[nodiscard]] static auto is_any_playing() noexcept -> bool
   {
-    return Mix_Playing(undefined_channel());
+    return Mix_Playing(undefined_channel);
   }
 
   /// \} End of ordinary playback functions
@@ -785,9 +809,9 @@ class basic_sound_effect final {
    * \return the channel currently associated with the sound effect; an empty optional is
    * returned if there is none.
    */
-  [[nodiscard]] auto channel() const noexcept -> std::optional<int>
+  [[nodiscard]] auto channel() const noexcept -> std::optional<channel_index>
   {
-    if (mChannel != undefined_channel()) {
+    if (mChannel != undefined_channel) {
       return mChannel;
     }
     else {
@@ -801,14 +825,12 @@ class basic_sound_effect final {
 
  private:
   detail::pointer<T, Mix_Chunk> mChunk;
-  int mChannel{undefined_channel()};
-
-  [[nodiscard]] constexpr static auto undefined_channel() noexcept -> int { return -1; }
+  channel_index mChannel{undefined_channel};
 
 #ifdef CENTURION_MOCK_FRIENDLY_MODE
 
  public:
-  void set_channel(const int channel) noexcept { mChannel = channel; }
+  void set_channel(const channel_index channel) noexcept { mChannel = channel; }
 
 #endif  // CENTURION_MOCK_FRIENDLY_MODE
 };

@@ -47,9 +47,6 @@
 
 namespace cen {
 
-/// \addtogroup common
-/// \{
-
 /// \name Centurion version queries
 /// \{
 
@@ -58,7 +55,8 @@ namespace cen {
  *
  * \ingroup versioning
  */
-struct version final {
+struct version final
+{
   int major{};
   int minor{};
   int patch{};
@@ -210,8 +208,6 @@ struct version final {
 #endif  // CENTURION_NO_SDL_TTF
 
 /// \} End of SDL version queries
-
-/// \} End of group common
 
 }  // namespace cen
 
