@@ -6,8 +6,6 @@ set(TACTILE_EDITOR_GUI_RENDERING_SOURCE_FILES
 
     ${PROJECT_SOURCE_DIR}/graphics.cpp
     ${PROJECT_SOURCE_DIR}/graphics.hpp
-    ${PROJECT_SOURCE_DIR}/render_bounds.cpp
-    ${PROJECT_SOURCE_DIR}/render_bounds.hpp
     ${PROJECT_SOURCE_DIR}/render_info.cpp
     ${PROJECT_SOURCE_DIR}/render_info.hpp
     ${PROJECT_SOURCE_DIR}/render_map.cpp
