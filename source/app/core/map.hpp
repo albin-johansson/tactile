@@ -5,6 +5,24 @@
 namespace tactile {
 
 /**
+ * \brief Represents the different supported tile layer data encodings.
+ */
+enum class tile_encoding
+{
+  plain,  ///< Encode the tile layer data in ordinary plain text.
+  base64  ///< Use Base64 encoding.
+};
+
+/**
+ * \brief Represents the different supported tile data compression methods.
+ */
+enum class tile_compression
+{
+  none,  ///< Apply no compression to tile layer data.
+  zlib   ///< Compress tile layer data using the Zlib library.
+};
+
+/**
  * \brief Provides information about a map context.
  */
 struct MapInfo final
@@ -21,6 +39,9 @@ struct MapInfo final
   int32 tile_layer_suffix{1};    ///< Incrementing tile layer suffix.
   int32 object_layer_suffix{1};  ///< Incrementing object layer suffix.
   int32 group_layer_suffix{1};   ///< Incrementing group layer suffix.
+
+  tile_encoding encoding{tile_encoding::plain};          ///< Tile layer data encoding.
+  tile_compression compression{tile_compression::none};  ///< Tile layer data compression.
 };
 
 }  // namespace tactile
