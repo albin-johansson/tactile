@@ -9,6 +9,11 @@ required may be omitted from save files.
 
 The root node in the Tactile YAML format provides general information about the tilemap.
 
+Using a `tile-encoding` other than `plain` leads to the tile data being encoded as a one-dimensional array of 32-bit
+signed integers. The emitter works by first compressing the tile data, unless `tile-compression` is set to `none`, and
+subsequently encodes the tile data. Omitting `tile-encoding` or setting it to `plain` leads to tile layer data to be
+simply stored as a string of integers separated by spaces (potentially formatted with newlines).
+
 |               Attribute |           Type           | Required | Description                           |
 |------------------------:|:------------------------:|:--------:|:--------------------------------------|
 |               `version` |          `int`           |   Yes    | The version of the YAML map format.   |
