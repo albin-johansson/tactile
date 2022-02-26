@@ -69,8 +69,8 @@ TEST(ContextSystem, CopyAttributeContext)
   ASSERT_EQ(123, snapshot.properties.at("A").as_int());
   ASSERT_EQ("abc", snapshot.properties.at("B").as_string());
 
-  ASSERT_EQ(1'337, snapshot.components.at("Component").attributes.at("number"));
-  ASSERT_EQ("hello", snapshot.components.at("Component").attributes.at("str"));
+  ASSERT_EQ(1'337, snapshot.components.at(componentId).attributes.at("number"));
+  ASSERT_EQ("hello"s, snapshot.components.at(componentId).attributes.at("str"));
 }
 
 TEST(ContextSystem, RestoreAttributeContext)
