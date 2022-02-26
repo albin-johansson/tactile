@@ -4,8 +4,6 @@ project(tactile-test CXX)
 
 enable_testing()
 
-find_package(GTest CONFIG REQUIRED)
-
 set(TEST_FILES
     unit-tests/test_main.cpp
 

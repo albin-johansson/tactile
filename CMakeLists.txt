@@ -37,12 +37,25 @@ else ()
   message(FATAL_ERROR "[Tactile]: Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
 endif ()
 
+# These are not acquired using vcpkg
+find_package(OpenGL REQUIRED)
+find_package(Boost REQUIRED)
+
+find_package(GLEW CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2-image CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
+find_package(yaml-cpp CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(pugixml CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
+find_package(tinyfiledialogs CONFIG REQUIRED)
+find_package(GTest CONFIG REQUIRED)
 
-find_package(Boost REQUIRED)
+find_path(STB_INCLUDE_DIRS "stb.h")
 
 include(Utilities)
 
