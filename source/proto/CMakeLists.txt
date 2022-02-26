@@ -2,10 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(tactile-proto CXX)
 
-set(PROTO_FILES
-    history.proto
-    session.proto
-    settings.proto)
+file(GLOB_RECURSE PROTO_FILES CONFIGURE_DEPENDS *.proto)
 
 protobuf_generate_cpp(PROTO_SOURCES PROTO_HEADERS ${PROTO_FILES})
 

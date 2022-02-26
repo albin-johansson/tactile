@@ -15,36 +15,13 @@ find_package(tinyfiledialogs CONFIG REQUIRED)
 
 find_path(STB_INCLUDE_DIRS "stb.h")
 
-add_subdirectory(cfg)
-add_subdirectory(core)
-add_subdirectory(editor)
-add_subdirectory(io)
-
-set(SOURCE_FILES
-
-    application.cpp
-    application.hpp
-    application_events.cpp
-    application_events.hpp
-    tactile.hpp
-
-    meta/build.hpp
-    meta/profile.hpp
-
-    misc/assert.cpp
-    misc/assert.hpp
-    misc/boost.hpp
-    misc/crash.cpp
-    misc/crash.hpp
-    misc/logging.cpp
-    misc/logging.hpp
-    misc/throw.hpp
-
-    ${TACTILE_CFG_SOURCE_FILES}
-    ${TACTILE_CORE_SOURCE_FILES}
-    ${TACTILE_EDITOR_SOURCE_FILES}
-    ${TACTILE_IO_SOURCE_FILES}
-    )
+file(GLOB_RECURSE SOURCE_FILES
+     CONFIGURE_DEPENDS
+     **/*.cpp
+     **/*.hpp
+     *.cpp
+     *.hpp
+     )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 
