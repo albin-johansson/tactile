@@ -317,27 +317,27 @@ void application::on_select_map(const select_map_event& event)
 void application::on_select_tool(const select_tool_event& event)
 {
   auto& registry = mModel.get_active_registry();
-  sys::SelectTool(registry, event.type);
+  sys::select_tool(registry, event.type);
 }
 
 void application::on_mouse_pressed(const mouse_pressed_event& event)
 {
   if (auto* registry = mModel.active_registry()) {
-    sys::ToolOnPressed(*registry, mDispatcher, event.info);
+    sys::tool_on_pressed(*registry, mDispatcher, event.info);
   }
 }
 
 void application::on_mouse_drag(const mouse_drag_event& event)
 {
   if (auto* registry = mModel.active_registry()) {
-    sys::ToolOnDragged(*registry, mDispatcher, event.info);
+    sys::tool_on_dragged(*registry, mDispatcher, event.info);
   }
 }
 
 void application::on_mouse_released(const mouse_released_event& event)
 {
   if (auto* registry = mModel.active_registry()) {
-    sys::ToolOnReleased(*registry, mDispatcher, event.info);
+    sys::tool_on_released(*registry, mDispatcher, event.info);
   }
 }
 

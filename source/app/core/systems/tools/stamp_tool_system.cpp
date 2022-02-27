@@ -17,17 +17,17 @@
 namespace tactile::sys {
 namespace {
 
-inline TileCache gOldState;
-inline TileCache gSequence;
+inline TileCache _old_state;
+inline TileCache _sequence;
 
-[[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
+[[nodiscard]] auto _is_usable(const entt::registry& registry) -> bool
 {
   return is_tile_layer_active(registry) && is_tileset_selection_not_empty(registry);
 }
 
-void UpdateSequence(entt::registry& registry, const tile_position& cursor)
+void _update_sequence(entt::registry& registry, const tile_position& cursor)
 {
-  TACTILE_ASSERT(IsUsable(registry));
+  TACTILE_ASSERT(_is_usable(registry));
 
   const auto layerEntity = get_active_layer(registry);
   TACTILE_ASSERT(layerEntity != entt::null);
@@ -54,10 +54,10 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
       if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
         if (is_position_in_map(registry, pos)) {
-          if (!gOldState.contains(pos)) {
-            gOldState.emplace(pos, get_tile(layer, pos));
+          if (!_old_state.contains(pos)) {
+            _old_state.emplace(pos, get_tile(layer, pos));
           }
-          gSequence.emplace_or_replace(pos, tile);
+          _sequence.emplace_or_replace(pos, tile);
           set_tile(layer, pos, tile);
         }
       }
@@ -67,29 +67,29 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 
 }  // namespace
 
-void StampToolOnPressed(entt::registry& registry, const mouse_info& mouse)
+void stamp_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    gOldState.clear();
-    gSequence.clear();
+  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+    _old_state.clear();
+    _sequence.clear();
 
-    UpdateSequence(registry, mouse.position_in_viewport);
+    _update_sequence(registry, mouse.position_in_viewport);
   }
 }
 
-void StampToolOnDragged(entt::registry& registry, const mouse_info& mouse)
+void stamp_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    UpdateSequence(registry, mouse.position_in_viewport);
+  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+    _update_sequence(registry, mouse.position_in_viewport);
   }
 }
 
-void StampToolOnReleased(entt::registry& registry,
-                         entt::dispatcher& dispatcher,
-                         const mouse_info& mouse)
+void stamp_tool_on_released(entt::registry& registry,
+                            entt::dispatcher& dispatcher,
+                            const mouse_info& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    dispatcher.enqueue<stamp_sequence_event>(std::move(gOldState), std::move(gSequence));
+  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+    dispatcher.enqueue<stamp_sequence_event>(std::move(_old_state), std::move(_sequence));
   }
 }
 

@@ -8,15 +8,15 @@
 
 namespace tactile::sys {
 
-void SelectTool(entt::registry& registry, const tool_type tool)
+void select_tool(entt::registry& registry, const tool_type tool)
 {
   auto& active = registry.ctx<comp::active_tool>();
   active.tool = (active.tool == tool) ? tool_type::none : tool;
 }
 
-void ToolOnPressed(entt::registry& registry,
-                   entt::dispatcher& dispatcher,
-                   const mouse_info& mouse)
+void tool_on_pressed(entt::registry& registry,
+                     entt::dispatcher& dispatcher,
+                     const mouse_info& mouse)
 {
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
@@ -24,19 +24,19 @@ void ToolOnPressed(entt::registry& registry,
       break;
 
     case tool_type::stamp:
-      StampToolOnPressed(registry, mouse);
+      stamp_tool_on_pressed(registry, mouse);
       break;
 
     case tool_type::bucket:
-      BucketToolOnPressed(registry, dispatcher, mouse);
+      bucket_tool_on_pressed(registry, dispatcher, mouse);
       break;
 
     case tool_type::eraser:
-      EraserToolOnPressed(registry, mouse);
+      eraser_tool_on_pressed(registry, mouse);
       break;
 
     case tool_type::object_selection:
-      ObjectSelectionToolOnPressed(registry, dispatcher, mouse);
+      object_selection_tool_on_pressed(registry, dispatcher, mouse);
       break;
 
     case tool_type::rectangle:
@@ -47,9 +47,9 @@ void ToolOnPressed(entt::registry& registry,
   }
 }
 
-void ToolOnDragged(entt::registry& registry,
-                   [[maybe_unused]] entt::dispatcher& dispatcher,
-                   const mouse_info& mouse)
+void tool_on_dragged(entt::registry& registry,
+                     [[maybe_unused]] entt::dispatcher& dispatcher,
+                     const mouse_info& mouse)
 {
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
@@ -60,15 +60,15 @@ void ToolOnDragged(entt::registry& registry,
       break;
 
     case tool_type::stamp:
-      StampToolOnDragged(registry, mouse);
+      stamp_tool_on_dragged(registry, mouse);
       break;
 
     case tool_type::eraser:
-      EraserToolOnDragged(registry, mouse);
+      eraser_tool_on_dragged(registry, mouse);
       break;
 
     case tool_type::object_selection:
-      ObjectSelectionToolOnDragged(registry, mouse);
+      object_selection_tool_on_dragged(registry, mouse);
       break;
 
     case tool_type::rectangle:
@@ -79,9 +79,9 @@ void ToolOnDragged(entt::registry& registry,
   }
 }
 
-void ToolOnReleased(entt::registry& registry,
-                    entt::dispatcher& dispatcher,
-                    const mouse_info& mouse)
+void tool_on_released(entt::registry& registry,
+                      entt::dispatcher& dispatcher,
+                      const mouse_info& mouse)
 {
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
@@ -92,15 +92,15 @@ void ToolOnReleased(entt::registry& registry,
       break;
 
     case tool_type::stamp:
-      StampToolOnReleased(registry, dispatcher, mouse);
+      stamp_tool_on_released(registry, dispatcher, mouse);
       break;
 
     case tool_type::eraser:
-      EraserToolOnReleased(registry, dispatcher, mouse);
+      eraser_tool_on_released(registry, dispatcher, mouse);
       break;
 
     case tool_type::object_selection:
-      ObjectSelectionToolOnReleased(registry, dispatcher, mouse);
+      object_selection_tool_on_released(registry, dispatcher, mouse);
       break;
 
     case tool_type::rectangle:

@@ -10,15 +10,15 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
+[[nodiscard]] auto _is_usable(const entt::registry& registry) -> bool
 {
   return is_object_layer_active(registry);
 }
 
-[[nodiscard]] auto GetTargetObject(const entt::registry& registry,
-                                   const mouse_info& mouse) -> entt::entity
+[[nodiscard]] auto _target_object(const entt::registry& registry, const mouse_info& mouse)
+    -> entt::entity
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
     return registry.ctx<comp::active_object>().entity;
   }
   else {
@@ -28,11 +28,11 @@ namespace {
 
 }  // namespace
 
-void ObjectSelectionToolOnPressed(entt::registry& registry,
-                                  entt::dispatcher& dispatcher,
-                                  const mouse_info& mouse)
+void object_selection_tool_on_pressed(entt::registry& registry,
+                                      entt::dispatcher& dispatcher,
+                                      const mouse_info& mouse)
 {
-  if (IsUsable(registry)) {
+  if (_is_usable(registry)) {
     if (mouse.button == cen::mouse_button::left) {
       auto& active = registry.ctx<comp::active_object>();
       active.entity = entt::null;
@@ -70,9 +70,9 @@ void ObjectSelectionToolOnPressed(entt::registry& registry,
   }
 }
 
-void ObjectSelectionToolOnDragged(entt::registry& registry, const mouse_info& mouse)
+void object_selection_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
 {
-  const auto entity = GetTargetObject(registry, mouse);
+  const auto entity = _target_object(registry, mouse);
   if (entity != entt::null) {
     auto& drag = registry.get<comp::object_drag_info>(entity);
 
@@ -89,11 +89,11 @@ void ObjectSelectionToolOnDragged(entt::registry& registry, const mouse_info& mo
   }
 }
 
-void ObjectSelectionToolOnReleased(entt::registry& registry,
-                                   entt::dispatcher& dispatcher,
-                                   const mouse_info& mouse)
+void object_selection_tool_on_released(entt::registry& registry,
+                                       entt::dispatcher& dispatcher,
+                                       const mouse_info& mouse)
 {
-  const auto entity = GetTargetObject(registry, mouse);
+  const auto entity = _target_object(registry, mouse);
   if (entity != entt::null) {
     if (const auto* drag = registry.try_get<comp::object_drag_info>(entity)) {
       const auto& object = registry.get<comp::object>(entity);

@@ -13,14 +13,14 @@
 namespace tactile::sys {
 namespace {
 
-inline TileCache gOldState;
+inline TileCache _old_state;
 
-[[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
+[[nodiscard]] auto _is_usable(const entt::registry& registry) -> bool
 {
   return is_tile_layer_active(registry);
 }
 
-void UpdateSequence(entt::registry& registry, const tile_position& cursor)
+void _update_sequence(entt::registry& registry, const tile_position& cursor)
 {
   const auto entity = get_active_layer(registry);
   TACTILE_ASSERT(entity != entt::null);
@@ -28,8 +28,8 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
   TACTILE_ASSERT(registry.all_of<comp::tile_layer>(entity));
   auto& layer = registry.get<comp::tile_layer>(entity);
 
-  if (!gOldState.contains(cursor)) {
-    gOldState.emplace(cursor, get_tile(layer, cursor));
+  if (!_old_state.contains(cursor)) {
+    _old_state.emplace(cursor, get_tile(layer, cursor));
   }
 
   set_tile(layer, cursor, empty_tile);
@@ -37,27 +37,27 @@ void UpdateSequence(entt::registry& registry, const tile_position& cursor)
 
 }  // namespace
 
-void EraserToolOnPressed(entt::registry& registry, const mouse_info& mouse)
+void eraser_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    gOldState.clear();
-    UpdateSequence(registry, mouse.position_in_viewport);
+  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+    _old_state.clear();
+    _update_sequence(registry, mouse.position_in_viewport);
   }
 }
 
-void EraserToolOnDragged(entt::registry& registry, const mouse_info& mouse)
+void eraser_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    UpdateSequence(registry, mouse.position_in_viewport);
+  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+    _update_sequence(registry, mouse.position_in_viewport);
   }
 }
 
-void EraserToolOnReleased(entt::registry& registry,
-                          entt::dispatcher& dispatcher,
-                          const mouse_info& mouse)
+void eraser_tool_on_released(entt::registry& registry,
+                             entt::dispatcher& dispatcher,
+                             const mouse_info& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
-    dispatcher.enqueue<eraser_sequence_event>(std::move(gOldState));
+  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+    dispatcher.enqueue<eraser_sequence_event>(std::move(_old_state));
   }
 }
 
