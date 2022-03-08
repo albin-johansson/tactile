@@ -88,6 +88,17 @@ struct AddRectangleEvent final
 };
 
 /**
+ * \brief Emitted when an ellipse should be added to the current object layer.
+ */
+struct AddEllipseEvent final
+{
+  float x{};
+  float y{};
+  float width{};
+  float height{};
+};
+
+/**
  * \brief Emitted when a point should be added to the current object layer.
  */
 struct AddPointEvent final

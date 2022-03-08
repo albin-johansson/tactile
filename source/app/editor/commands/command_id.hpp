@@ -52,6 +52,7 @@ struct command_id final
     eraser_sequence,
     bucket,
     add_rectangle,
+    add_ellipse,
     add_point,
 
     add_tileset,

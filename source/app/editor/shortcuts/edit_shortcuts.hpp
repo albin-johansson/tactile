@@ -143,6 +143,16 @@ struct EnableRectangleToolShortcut final : AShortcut
                                const widget_manager& widgets) const -> bool override;
 };
 
+struct EnableEllipseToolShortcut final : AShortcut
+{
+  EnableEllipseToolShortcut();
+
+  void Activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
+};
+
 struct EnablePointToolShortcut final : AShortcut
 {
   EnablePointToolShortcut();

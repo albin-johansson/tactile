@@ -68,6 +68,31 @@ auto make_rectangle_object(entt::registry& registry,
                            float height) -> object_id;
 
 /**
+ * \brief Adds a new ellipse object to the active object layer.
+ *
+ * \pre The layer must be an object layer.
+ *
+ * \details The created entity will feature the following components:
+ * - `object`
+ * - `attribute_context`
+ *
+ * \param registry the map registry.
+ * \param layerId the object layer to add the object to.
+ * \param x the ellipse x-coordinate.
+ * \param y the ellipse y-coordinate.
+ * \param width the ellipse width.
+ * \param height the ellipse height.
+ *
+ * \return the identifier assigned to the object.
+ */
+auto make_ellipse_object(entt::registry& registry,
+                         layer_id layerId,
+                         float x,
+                         float y,
+                         float width,
+                         float height) -> object_id;
+
+/**
  * \brief Adds a new point object to the active object layer.
  *
  * \pre The layer must be an object layer.

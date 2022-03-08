@@ -19,35 +19,19 @@
 
 #pragma once
 
+#include <entt/entt.hpp>
+
+#include "core/mouse_info.hpp"
 #include "core/tool_type.hpp"
 
-namespace tactile::comp {
+namespace tactile::sys {
 
-struct active_tool final
-{
-  tool_type tool{tool_type::none};
-};
+void on_ellipse_tool_pressed(entt::registry& registry, const mouse_info& mouse);
 
-/**
- * \brief A context component that is used to keep track of rectangle tool strokes.
- */
-struct CurrentRectangleStroke final
-{
-  float start_x{};
-  float start_y{};
-  float current_x{};
-  float current_y{};
-};
+void on_ellipse_tool_dragged(entt::registry& registry, const mouse_info& mouse);
 
-/**
- * \brief A context component that is used to keep track of ellipse tool strokes.
- */
-struct CurrentEllipseStroke final
-{
-  float start_x{};
-  float start_y{};
-  float current_x{};
-  float current_y{};
-};
+void on_ellipse_tool_released(entt::registry& registry,
+                              entt::dispatcher& dispatcher,
+                              const mouse_info& mouse);
 
-}  // namespace tactile::comp
+}  // namespace tactile::sys

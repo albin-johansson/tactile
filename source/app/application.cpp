@@ -380,6 +380,11 @@ void application::on_add_rectangle(const AddRectangleEvent& event)
   _execute<RectangleToolCmd>(mModel, event.x, event.y, event.width, event.height);
 }
 
+void application::on_add_ellipse(const AddEllipseEvent& event)
+{
+  _execute<EllipseToolCmd>(mModel, event.x, event.y, event.width, event.height);
+}
+
 void application::on_add_point(const AddPointEvent& event)
 {
   _execute<PointToolCmd>(mModel, event.x, event.y);

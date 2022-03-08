@@ -121,6 +121,7 @@ class application final
   void on_eraser_sequence(eraser_sequence_event event);
   void on_flood(const flood_event& event);
   void on_add_rectangle(const AddRectangleEvent& event);
+  void on_add_ellipse(const AddEllipseEvent& event);
   void on_add_point(const AddPointEvent& event);
 
   void on_center_viewport();

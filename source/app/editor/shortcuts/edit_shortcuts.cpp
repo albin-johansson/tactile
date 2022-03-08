@@ -209,6 +209,19 @@ auto EnableRectangleToolShortcut::IsEnabled(const document_model& model,
   return model.is_tool_possible(tool_type::rectangle) && widgets.is_editor_focused();
 }
 
+EnableEllipseToolShortcut::EnableEllipseToolShortcut() : AShortcut{cen::scancodes::t} {}
+
+void EnableEllipseToolShortcut::Activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<select_tool_event>(tool_type::ellipse);
+}
+
+auto EnableEllipseToolShortcut::IsEnabled(const document_model& model,
+                                          const widget_manager& widgets) const -> bool
+{
+  return model.is_tool_possible(tool_type::ellipse) && widgets.is_editor_focused();
+}
+
 EnablePointToolShortcut::EnablePointToolShortcut() : AShortcut{cen::scancodes::y} {}
 
 void EnablePointToolShortcut::Activate(entt::dispatcher& dispatcher)

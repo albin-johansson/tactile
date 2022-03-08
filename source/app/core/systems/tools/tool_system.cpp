@@ -25,6 +25,7 @@
 #include "object_selection_tool_system.hpp"
 #include "point_tool_system.hpp"
 #include "rectangle_tool_system.hpp"
+#include "ellipse_tool_system.hpp"
 #include "stamp_tool_system.hpp"
 
 namespace tactile::sys {
@@ -69,7 +70,7 @@ void on_tool_pressed(entt::registry& registry,
       break;
 
     case tool_type::ellipse:
-      // TODO
+      on_ellipse_tool_pressed(registry, mouse);
       break;
   }
 }
@@ -81,8 +82,8 @@ void on_tool_dragged(entt::registry& registry,
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
     case tool_type::none:
+    case tool_type::point:
       [[fallthrough]];
-
     case tool_type::bucket:
       break;
 
@@ -103,8 +104,7 @@ void on_tool_dragged(entt::registry& registry,
       break;
 
     case tool_type::ellipse:
-    case tool_type::point:
-      // TODO
+      on_ellipse_tool_dragged(registry, mouse);
       break;
   }
 }
@@ -117,8 +117,8 @@ void on_tool_released(entt::registry& registry,
   switch (active.tool) {
     case tool_type::none:
       [[fallthrough]];
-
     case tool_type::bucket:
+    case tool_type::point:
       break;
 
     case tool_type::stamp:
@@ -138,8 +138,7 @@ void on_tool_released(entt::registry& registry,
       break;
 
     case tool_type::ellipse:
-    case tool_type::point:
-      // TODO
+      on_ellipse_tool_released(registry, dispatcher, mouse);
       break;
   }
 }

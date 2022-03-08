@@ -86,6 +86,23 @@ auto make_rectangle_object(entt::registry& registry,
                       height);
 }
 
+auto make_ellipse_object(entt::registry& registry,
+                         const layer_id layerId,
+                         const float x,
+                         const float y,
+                         const float width,
+                         const float height) -> object_id
+{
+  return _make_object(registry,
+                      layerId,
+                      "Ellipse",
+                      object_type::ellipse,
+                      x,
+                      y,
+                      width,
+                      height);
+}
+
 auto make_point_object(entt::registry& registry,
                        const layer_id layerId,
                        const float x,

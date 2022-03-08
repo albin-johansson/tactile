@@ -144,6 +144,16 @@ void UpdateCursorGizmos(graphics_ctx& graphics,
       graphics.draw_translated_rect_with_shadow(pos, size);
     }
   }
+  else if (sys::is_tool_enabled(registry, tool_type::ellipse)) {
+    if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
+      const ImVec2 radius{(stroke->current_x - stroke->start_x),
+                          (stroke->current_y - stroke->start_y)};
+      const ImVec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
+
+      graphics.set_draw_color(cen::colors::yellow);
+      graphics.draw_translated_ellipse_with_shadow(center, radius);
+    }
+  }
 }
 
 void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,

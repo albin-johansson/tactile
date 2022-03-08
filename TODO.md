@@ -24,7 +24,6 @@ This document provides a brief outline of planned features for the Tactile edito
 
 ## Objects
 
-* Ellipse object tool
 * Implement object reference properties
 
 ## Components 
