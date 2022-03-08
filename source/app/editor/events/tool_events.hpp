@@ -87,6 +87,15 @@ struct AddRectangleEvent final
   float height{};
 };
 
+/**
+ * \brief Emitted when a point should be added to the current object layer.
+ */
+struct AddPointEvent final
+{
+  float x{};
+  float y{};
+};
+
 /// \} End of group events
 
 }  // namespace tactile

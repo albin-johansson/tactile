@@ -56,6 +56,7 @@ void subscribe_to_events(appl& app)
   app.connect<eraser_sequence_event, &appl::on_eraser_sequence>();
   app.connect<flood_event, &appl::on_flood>();
   app.connect<AddRectangleEvent, &appl::on_add_rectangle>();
+  app.connect<AddPointEvent, &appl::on_add_point>();
 
   app.connect<CenterViewportEvent, &appl::on_center_viewport>();
   app.connect<OffsetViewportEvent, &appl::on_offset_viewport>();

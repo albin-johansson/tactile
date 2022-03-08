@@ -68,6 +68,25 @@ auto make_rectangle_object(entt::registry& registry,
                            float height) -> object_id;
 
 /**
+ * \brief Adds a new point object to the active object layer.
+ *
+ * \pre The layer must be an object layer.
+ *
+ * \details The created entity will feature the following components:
+ * - `object`
+ * - `attribute_context`
+ *
+ * \param registry the map registry.
+ * \param layerId the object layer to add the object to.
+ * \param x the point x-coordinate.
+ * \param y the point y-coordinate.
+ *
+ * \return the identifier assigned to the object.
+ */
+auto make_point_object(entt::registry& registry, layer_id layerId, float x, float y)
+    -> object_id;
+
+/**
  * \brief Removes an object.
  *
  * \details This function will also remove the object from the associated object layer.

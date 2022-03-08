@@ -23,6 +23,7 @@
 #include "core/components/tool.hpp"
 #include "eraser_tool_system.hpp"
 #include "object_selection_tool_system.hpp"
+#include "point_tool_system.hpp"
 #include "rectangle_tool_system.hpp"
 #include "stamp_tool_system.hpp"
 
@@ -63,8 +64,11 @@ void on_tool_pressed(entt::registry& registry,
       on_rectangle_tool_pressed(registry, mouse);
       break;
 
-    case tool_type::ellipse:
     case tool_type::point:
+      on_point_tool_pressed(registry, dispatcher, mouse);
+      break;
+
+    case tool_type::ellipse:
       // TODO
       break;
   }

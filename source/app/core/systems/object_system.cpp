@@ -86,6 +86,14 @@ auto make_rectangle_object(entt::registry& registry,
                       height);
 }
 
+auto make_point_object(entt::registry& registry,
+                       const layer_id layerId,
+                       const float x,
+                       const float y) -> object_id
+{
+  return _make_object(registry, layerId, "Point", object_type::point, x, y, 0, 0);
+}
+
 auto remove_object(entt::registry& registry, const object_id id) -> RemoveObjectResult
 {
   const auto objectEntity = find_object(registry, id);
