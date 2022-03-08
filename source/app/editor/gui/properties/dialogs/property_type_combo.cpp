@@ -33,20 +33,20 @@
 namespace tactile {
 namespace {
 
-constexpr std::array gItems{std::make_pair("string", attribute_type::string),
-                            std::make_pair("int", attribute_type::integer),
-                            std::make_pair("float", attribute_type::floating),
-                            std::make_pair("bool", attribute_type::boolean),
-                            std::make_pair("color", attribute_type::color),
-                            std::make_pair("object", attribute_type::object),
-                            std::make_pair("file", attribute_type::file)};
+constexpr std::array gItems{std::make_pair("string", AttributeType::string),
+                            std::make_pair("int", AttributeType::integer),
+                            std::make_pair("float", AttributeType::floating),
+                            std::make_pair("bool", AttributeType::boolean),
+                            std::make_pair("color", AttributeType::color),
+                            std::make_pair("object", AttributeType::object),
+                            std::make_pair("file", AttributeType::file)};
 
-[[nodiscard]] auto GetIndexFromType(const attribute_type type) -> usize
+[[nodiscard]] auto GetIndexFromType(const AttributeType type) -> usize
 {
   const auto it = std::find_if(
       gItems.begin(),
       gItems.end(),
-      [=](const std::pair<c_str, attribute_type>& pair) { return type == pair.second; });
+      [=](const std::pair<c_str, AttributeType>& pair) { return type == pair.second; });
 
   if (it != gItems.end()) {
     return static_cast<usize>(it - gItems.begin());
@@ -56,7 +56,7 @@ constexpr std::array gItems{std::make_pair("string", attribute_type::string),
   }
 }
 
-void PropertyTypeComboImpl(attribute_type& out, maybe<attribute_type> previousType)
+void PropertyTypeComboImpl(AttributeType& out, maybe<AttributeType> previousType)
 {
   const auto currentIndex = GetIndexFromType(out);
   auto&& [currentName, currentType] = gItems.at(currentIndex);
@@ -79,12 +79,12 @@ void PropertyTypeComboImpl(attribute_type& out, maybe<attribute_type> previousTy
 
 }  // namespace
 
-void PropertyTypeCombo(attribute_type& out)
+void PropertyTypeCombo(AttributeType& out)
 {
   PropertyTypeComboImpl(out, nothing);
 }
 
-void PropertyTypeCombo(const attribute_type previous, attribute_type& out)
+void PropertyTypeCombo(const AttributeType previous, AttributeType& out)
 {
   PropertyTypeComboImpl(out, previous);
 }

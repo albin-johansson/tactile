@@ -35,7 +35,7 @@ class UpdateComponentCmd final : public ACommand
                      context_id contextId,
                      component_id componentId,
                      std::string attribute,
-                     attribute_value value);
+                     Attribute value);
 
   void undo() override;
 
@@ -53,8 +53,8 @@ class UpdateComponentCmd final : public ACommand
   context_id mContextId{};
   component_id mComponentId{};
   std::string mAttributeName;
-  attribute_value mUpdatedValue;
-  maybe<attribute_value> mPreviousValue;
+  Attribute mUpdatedValue;
+  maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

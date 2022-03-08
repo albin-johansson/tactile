@@ -9,8 +9,8 @@ using namespace std::string_literals;
 
 TEST(AttributeValue, Defaults)
 {
-  const attribute_value value;
-  ASSERT_EQ(attribute_type::string, value.type());
+  const Attribute value;
+  ASSERT_EQ(AttributeType::string, value.type());
 
   ASSERT_TRUE(value.is_string());
   ASSERT_FALSE(value.is_int());
@@ -31,7 +31,7 @@ TEST(AttributeValue, Defaults)
 
 TEST(AttributeValue, IntAttribute)
 {
-  const attribute_value value{123};
+  const Attribute value{123};
   ASSERT_EQ(123, value.as_int());
 
   ASSERT_TRUE(value.is_int());
@@ -47,7 +47,7 @@ TEST(AttributeValue, IntAttribute)
 
 TEST(AttributeValue, FloatAttribute)
 {
-  const attribute_value value{12.3f};
+  const Attribute value{12.3f};
   ASSERT_EQ(12.3f, value.as_float());
 
   ASSERT_TRUE(value.is_float());
@@ -63,7 +63,7 @@ TEST(AttributeValue, FloatAttribute)
 
 TEST(AttributeValue, StringAttribute)
 {
-  const attribute_value value{"foo"s};
+  const Attribute value{"foo"s};
   ASSERT_EQ("foo", value.as_string());
 
   ASSERT_TRUE(value.is_string());
@@ -79,7 +79,7 @@ TEST(AttributeValue, StringAttribute)
 
 TEST(AttributeValue, BoolAttribute)
 {
-  const attribute_value value{false};
+  const Attribute value{false};
   ASSERT_FALSE(value.as_bool());
 
   ASSERT_TRUE(value.is_bool());
@@ -96,7 +96,7 @@ TEST(AttributeValue, BoolAttribute)
 TEST(AttributeValue, FileAttribute)
 {
   const std::filesystem::path file{"test-resources/foo.txt"};
-  const attribute_value value{file};
+  const Attribute value{file};
 
   ASSERT_TRUE(value.is_file());
   ASSERT_TRUE(value.try_as_file());
@@ -111,7 +111,7 @@ TEST(AttributeValue, FileAttribute)
 
 TEST(AttributeValue, ObjectAttribute)
 {
-  const attribute_value value{object_t{7}};
+  const Attribute value{object_t{7}};
 
   ASSERT_TRUE(value.is_object());
   ASSERT_TRUE(value.try_as_object());
@@ -126,7 +126,7 @@ TEST(AttributeValue, ObjectAttribute)
 
 TEST(AttributeValue, ColorAttribute)
 {
-  const attribute_value value{cen::colors::red};
+  const Attribute value{cen::colors::red};
 
   ASSERT_TRUE(value.is_color());
   ASSERT_TRUE(value.try_as_color());
@@ -141,7 +141,7 @@ TEST(AttributeValue, ColorAttribute)
 
 TEST(AttributeValue, SetValue)
 {
-  attribute_value value;
+  Attribute value;
 
   value.set_value(10);
   ASSERT_TRUE(value.is_int());

@@ -30,7 +30,7 @@ namespace tactile::sys {
 void add_property(entt::registry& registry,
                   comp::attribute_context& context,
                   std::string name,
-                  const attribute_type type)
+                  const AttributeType type)
 {
   TACTILE_ASSERT(!has_property_with_name(registry, context, name));
 
@@ -46,7 +46,7 @@ void add_property(entt::registry& registry,
 void add_property(entt::registry& registry,
                   comp::attribute_context& context,
                   std::string name,
-                  attribute_value value)
+                  Attribute value)
 {
   TACTILE_ASSERT(!has_property_with_name(registry, context, name));
 
@@ -88,7 +88,7 @@ void rename_property(entt::registry& registry,
 void update_property(entt::registry& registry,
                      comp::attribute_context& context,
                      const std::string_view name,
-                     attribute_value value)
+                     Attribute value)
 {
   const auto entity = find_property(registry, context, name);
   TACTILE_ASSERT(entity != entt::null);
@@ -100,7 +100,7 @@ void update_property(entt::registry& registry,
 void change_property_type(entt::registry& registry,
                           comp::attribute_context& context,
                           const std::string_view name,
-                          const attribute_type type)
+                          const AttributeType type)
 {
   const auto entity = find_property(registry, context, name);
   TACTILE_ASSERT(entity != entt::null);

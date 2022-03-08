@@ -34,7 +34,7 @@ class UpdateComponentAttrCmd final : public ACommand
   UpdateComponentAttrCmd(registry_ref registry,
                          component_id id,
                          std::string attribute,
-                         attribute_value value);
+                         Attribute value);
 
   void undo() override;
 
@@ -51,8 +51,8 @@ class UpdateComponentAttrCmd final : public ACommand
   registry_ref mRegistry;
   component_id mComponentId{};
   std::string mAttributeName;
-  attribute_value mUpdatedValue;
-  maybe<attribute_value> mPreviousValue;
+  Attribute mUpdatedValue;
+  maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

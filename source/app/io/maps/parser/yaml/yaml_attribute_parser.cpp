@@ -30,28 +30,28 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_attribute_type(const std::string_view type)
-    -> maybe<attribute_type>
+    -> maybe<AttributeType>
 {
   if (type == "string") {
-    return attribute_type::string;
+    return AttributeType::string;
   }
   else if (type == "int") {
-    return attribute_type::integer;
+    return AttributeType::integer;
   }
   else if (type == "float") {
-    return attribute_type::floating;
+    return AttributeType::floating;
   }
   else if (type == "bool") {
-    return attribute_type::boolean;
+    return AttributeType::boolean;
   }
   else if (type == "color") {
-    return attribute_type::color;
+    return AttributeType::color;
   }
   else if (type == "object") {
-    return attribute_type::object;
+    return AttributeType::object;
   }
   else if (type == "file") {
-    return attribute_type::file;
+    return AttributeType::file;
   }
   else {
     return nothing;
@@ -59,27 +59,26 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_attribute_value(const YAML::Node& value,
-                                          const attribute_type type)
-    -> maybe<attribute_value>
+                                          const AttributeType type) -> maybe<Attribute>
 {
   switch (type) {
-    case attribute_type::string:
+    case AttributeType::string:
       return value.as<std::string>();
 
-    case attribute_type::integer:
+    case AttributeType::integer:
       return value.as<int32>();
 
-    case attribute_type::floating:
+    case AttributeType::floating:
       return value.as<float>();
 
-    case attribute_type::boolean:
+    case AttributeType::boolean:
       return value.as<bool>();
 
-    case attribute_type::file: {
+    case AttributeType::file: {
       const std::filesystem::path file = value.as<std::string>();
       return file;
     }
-    case attribute_type::color: {
+    case AttributeType::color: {
       const auto hex = value.as<std::string>();
       if (const auto color = cen::color::from_rgba(hex)) {
         return *color;
@@ -88,7 +87,7 @@ namespace {
         return std::nullopt;
       }
     }
-    case attribute_type::object:
+    case AttributeType::object:
       return object_t{value.as<int32>()};
 
     default:
@@ -108,7 +107,7 @@ namespace {
     return parse_error::no_component_def_attribute_name;
   }
 
-  attribute_type type{};
+  AttributeType type{};
   if (auto attributeType = node["type"]) {
     if (const auto parsedType = _parse_attribute_type(attributeType.as<std::string>())) {
       type = *parsedType;
@@ -126,28 +125,28 @@ namespace {
 
   if (auto defaultValue = node["default"]) {
     switch (type) {
-      case attribute_type::string:
+      case AttributeType::string:
         value = defaultValue.as<std::string>();
         break;
 
-      case attribute_type::integer:
+      case AttributeType::integer:
         value = defaultValue.as<int32>();
         break;
 
-      case attribute_type::floating:
+      case AttributeType::floating:
         value = defaultValue.as<float>();
         break;
 
-      case attribute_type::boolean:
+      case AttributeType::boolean:
         value = defaultValue.as<bool>();
         break;
 
-      case attribute_type::file: {
+      case AttributeType::file: {
         std::filesystem::path path = defaultValue.as<std::string>();
         value = std::move(path);
         break;
       }
-      case attribute_type::color: {
+      case AttributeType::color: {
         if (auto color = cen::color::from_rgba(defaultValue.as<std::string>())) {
           value = *color;
         }
@@ -156,7 +155,7 @@ namespace {
         }
         break;
       }
-      case attribute_type::object:
+      case AttributeType::object:
         value = object_t{defaultValue.as<int32>()};
         break;
     }
@@ -273,7 +272,7 @@ auto parse_properties(const YAML::Node& node, ir::attribute_context_data& data)
   if (auto sequence = node["properties"]) {
     for (const auto& propertyNode : sequence) {
       std::string propertyName;
-      attribute_type propertyType{};
+      AttributeType propertyType{};
 
       if (auto name = propertyNode["name"]) {
         propertyName = name.as<std::string>();

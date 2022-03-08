@@ -359,7 +359,7 @@ void _emit_tilesets(YAML::Emitter& emitter, const emit_info& info)
 
 void _emit_component_definition_attribute(YAML::Emitter& emitter,
                                           const std::string& name,
-                                          const attribute_value& value)
+                                          const Attribute& value)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;

@@ -65,7 +65,7 @@ class component_editor final : public dialog_base
   void show_component_attribute(entt::dispatcher& dispatcher,
                                 component_id id,
                                 const std::string& name,
-                                const attribute_value& value);
+                                const Attribute& value);
 };
 
 }  // namespace tactile

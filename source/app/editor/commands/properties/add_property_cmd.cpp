@@ -28,7 +28,7 @@ namespace tactile {
 
 AddPropertyCmd::AddPropertyCmd(registry_ref registry,
                                std::string name,
-                               const attribute_type type)
+                               const AttributeType type)
     : ACommand{"Add Property"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}

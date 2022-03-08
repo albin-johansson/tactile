@@ -61,7 +61,7 @@ class widget_manager final
 
   void show_rename_property_dialog(const std::string& name);
 
-  void show_change_property_type_dialog(std::string name, attribute_type type);
+  void show_change_property_type_dialog(std::string name, AttributeType type);
 
   void show_resize_map_dialog(usize currentRows, usize currentColumns);
 

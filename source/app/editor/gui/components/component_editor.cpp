@@ -188,7 +188,7 @@ void component_editor::show_component_attributes(const entt::registry& registry,
 void component_editor::show_component_attribute(entt::dispatcher& dispatcher,
                                                 component_id id,
                                                 const std::string& name,
-                                                const attribute_value& value)
+                                                const Attribute& value)
 {
   auto& data = *mData;
   const scoped::id scope{name.c_str()};
@@ -222,7 +222,7 @@ void component_editor::show_component_attribute(entt::dispatcher& dispatcher,
   ImGui::SetNextItemWidth(-min_float);
 
   const auto type = value.type();
-  attribute_type newType = type;
+  AttributeType newType = type;
   PropertyTypeCombo(type, newType);
   if (newType != type) {
     dispatcher.enqueue<set_component_attr_type_event>(id, name, newType);

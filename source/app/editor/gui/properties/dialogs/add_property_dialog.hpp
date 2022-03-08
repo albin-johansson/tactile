@@ -46,7 +46,7 @@ class AddPropertyDialog final : public dialog_base
 
  private:
   std::array<char, 128> mNameBuffer{};
-  attribute_type mPropertyType{attribute_type::string};
+  AttributeType mPropertyType{AttributeType::string};
 };
 
 }  // namespace tactile

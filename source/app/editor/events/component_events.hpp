@@ -75,14 +75,14 @@ struct set_component_attr_type_event final
 {
   component_id id{};
   std::string attribute;
-  attribute_type type{};
+  AttributeType type{};
 };
 
 struct update_component_def_attr_event final
 {
   component_id id{};
   std::string attribute;
-  attribute_value value;
+  Attribute value;
 };
 
 struct add_component_event final
@@ -108,7 +108,7 @@ struct update_component_event final
   context_id context{};
   component_id component{};
   std::string attribute;
-  attribute_value value;
+  Attribute value;
 };
 
 }  // namespace tactile

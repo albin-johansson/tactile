@@ -66,7 +66,7 @@ void PropertiesDock::ShowRenamePropertyDialog(const std::string& name)
 }
 
 void PropertiesDock::ShowChangePropertyTypeDialog(std::string name,
-                                                  const attribute_type type)
+                                                  const AttributeType type)
 {
   mChangeTypeDialog.Show(std::move(name), type);
 }

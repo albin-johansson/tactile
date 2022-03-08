@@ -42,7 +42,7 @@ class PropertiesDock final
 
   void ShowRenamePropertyDialog(const std::string& name);
 
-  void ShowChangePropertyTypeDialog(std::string name, attribute_type type);
+  void ShowChangePropertyTypeDialog(std::string name, AttributeType type);
 
   [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
 

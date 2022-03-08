@@ -197,7 +197,7 @@ void make_component_attribute(entt::registry& registry,
 void make_component_attribute(entt::registry& registry,
                               component_id id,
                               const std::string& name,
-                              const attribute_value& value);
+                              const Attribute& value);
 
 /**
  * \brief Removes an attribute from a component definition.
@@ -258,7 +258,7 @@ auto duplicate_component_attribute(entt::registry& registry,
 void set_component_attribute_type(entt::registry& registry,
                                   component_id id,
                                   std::string_view attribute,
-                                  attribute_type type);
+                                  AttributeType type);
 
 /**
  * \brief Sets the default value of a component attribute.
@@ -279,17 +279,17 @@ void set_component_attribute_type(entt::registry& registry,
 void set_component_attribute_value(entt::registry& registry,
                                    component_id id,
                                    std::string_view attribute,
-                                   attribute_value value);
+                                   Attribute value);
 
 [[nodiscard]] auto get_component_attribute_type(const entt::registry& registry,
                                                 component_id id,
                                                 std::string_view attribute)
-    -> attribute_type;
+    -> AttributeType;
 
 [[nodiscard]] auto get_component_attribute_value(const entt::registry& registry,
                                                  component_id id,
                                                  std::string_view attribute)
-    -> const attribute_value&;
+    -> const Attribute&;
 
 [[nodiscard]] auto is_component_attribute_name_taken(const entt::registry& registry,
                                                      component_id id,
@@ -353,7 +353,7 @@ void update_component(entt::registry& registry,
                       context_id contextId,
                       component_id componentId,
                       std::string_view attribute,
-                      attribute_value value);
+                      Attribute value);
 
 /**
  * \brief Resets the attributes of an attached component to their default values.
@@ -403,7 +403,7 @@ auto reset_component(entt::registry& registry,
                                            context_id contextId,
                                            component_id componentId,
                                            std::string_view attribute)
-    -> const attribute_value&;
+    -> const Attribute&;
 
 [[nodiscard]] auto get_component_count(const entt::registry& registry,
                                        context_id contextId) -> usize;

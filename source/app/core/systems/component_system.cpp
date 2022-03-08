@@ -307,7 +307,7 @@ void make_component_attribute(entt::registry& registry,
 void make_component_attribute(entt::registry& registry,
                               const component_id id,
                               const std::string& name,
-                              const attribute_value& value)
+                              const Attribute& value)
 {
   log_debug("Adding attribute '{}' to component '{}'", name, id);
 
@@ -387,7 +387,7 @@ auto duplicate_component_attribute(entt::registry& registry,
 void set_component_attribute_type(entt::registry& registry,
                                   const component_id id,
                                   const std::string_view attribute,
-                                  const attribute_type type)
+                                  const AttributeType type)
 {
   log_verbose("Setting type of attribute '{}' in component '{}' to '{}'",
               attribute,
@@ -401,7 +401,7 @@ void set_component_attribute_type(entt::registry& registry,
 void set_component_attribute_value(entt::registry& registry,
                                    const component_id id,
                                    const std::string_view attribute,
-                                   attribute_value value)
+                                   Attribute value)
 {
   auto iter = GetComponentAttribute(registry, id, attribute);
 
@@ -412,7 +412,7 @@ void set_component_attribute_value(entt::registry& registry,
 
 auto get_component_attribute_type(const entt::registry& registry,
                                   const component_id id,
-                                  const std::string_view attribute) -> attribute_type
+                                  const std::string_view attribute) -> AttributeType
 {
   const auto iter = GetComponentAttribute(registry, id, attribute);
   return iter->second.type();
@@ -420,8 +420,7 @@ auto get_component_attribute_type(const entt::registry& registry,
 
 auto get_component_attribute_value(const entt::registry& registry,
                                    const component_id id,
-                                   const std::string_view attribute)
-    -> const attribute_value&
+                                   const std::string_view attribute) -> const Attribute&
 {
   const auto iter = GetComponentAttribute(registry, id, attribute);
   return iter->second;
@@ -523,7 +522,7 @@ void update_component(entt::registry& registry,
                       const context_id contextId,
                       const component_id componentId,
                       const std::string_view attribute,
-                      attribute_value value)
+                      Attribute value)
 {
   auto& component = GetComponent(registry, contextId, componentId);
 
@@ -586,7 +585,7 @@ auto get_component(const entt::registry& registry,
 auto get_component_attribute(const entt::registry& registry,
                              const context_id contextId,
                              const component_id componentId,
-                             const std::string_view attribute) -> const attribute_value&
+                             const std::string_view attribute) -> const Attribute&
 {
   const auto& context = get_context(registry, contextId);
 

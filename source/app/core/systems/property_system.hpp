@@ -56,7 +56,7 @@ namespace tactile::sys {
 void add_property(entt::registry& registry,
                   comp::attribute_context& context,
                   std::string name,
-                  attribute_type type);
+                  AttributeType type);
 
 /**
  * \brief Adds a property to an attribute context.
@@ -71,7 +71,7 @@ void add_property(entt::registry& registry,
 void add_property(entt::registry& registry,
                   comp::attribute_context& context,
                   std::string name,
-                  attribute_value value);
+                  Attribute value);
 
 /**
  * \brief Removes a property from an attribute context.
@@ -115,7 +115,7 @@ void rename_property(entt::registry& registry,
 void update_property(entt::registry& registry,
                      comp::attribute_context& context,
                      std::string_view name,
-                     attribute_value value);
+                     Attribute value);
 
 /**
  * \brief Changes the type of the value of an existing property.
@@ -132,7 +132,7 @@ void update_property(entt::registry& registry,
 void change_property_type(entt::registry& registry,
                           comp::attribute_context& context,
                           std::string_view name,
-                          attribute_type type);
+                          AttributeType type);
 
 /**
  * \brief Attempts to find a property in a context with a specific name.

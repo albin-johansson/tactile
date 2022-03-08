@@ -28,7 +28,7 @@ namespace tactile::comp {
 struct property final
 {
   std::string name;
-  attribute_value value;
+  Attribute value;
 };
 
 }  // namespace tactile::comp

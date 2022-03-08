@@ -34,7 +34,7 @@ class ChangePropertyTypeDialog final : public dialog_base
 
   ~ChangePropertyTypeDialog() override = default;
 
-  void Show(std::string name, attribute_type type);
+  void Show(std::string name, AttributeType type);
 
  protected:
   void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
@@ -45,9 +45,9 @@ class ChangePropertyTypeDialog final : public dialog_base
       -> bool override;
 
  private:
-  attribute_type mCurrentType{attribute_type::string};
+  AttributeType mCurrentType{AttributeType::string};
   maybe<std::string> mPropertyName;
-  maybe<attribute_type> mPreviousType;
+  maybe<AttributeType> mPreviousType;
 };
 
 }  // namespace tactile

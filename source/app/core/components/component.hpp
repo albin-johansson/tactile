@@ -31,7 +31,7 @@
 
 namespace tactile {
 
-using component_attribute_map = std::map<std::string, attribute_value, std::less<>>;
+using component_attribute_map = std::map<std::string, Attribute, std::less<>>;
 
 namespace comp {
 

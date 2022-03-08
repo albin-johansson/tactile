@@ -32,11 +32,11 @@
 
 namespace tactile::ir {
 
-using component_map = tree_map<std::string, attribute_value>;
+using component_map = tree_map<std::string, Attribute>;
 
 struct attribute_context_data final
 {
-  tree_map<std::string, attribute_value> properties;
+  tree_map<std::string, Attribute> properties;
   tree_map<std::string, component_map> components;
 };
 

@@ -31,7 +31,7 @@ namespace tactile {
 class UpdatePropertyCmd final : public ACommand
 {
  public:
-  UpdatePropertyCmd(registry_ref registry, std::string name, attribute_value value);
+  UpdatePropertyCmd(registry_ref registry, std::string name, Attribute value);
 
   void undo() override;
 
@@ -48,8 +48,8 @@ class UpdatePropertyCmd final : public ACommand
   registry_ref mRegistry;
   context_id mContextId;
   std::string mName;
-  attribute_value mNewValue;
-  maybe<attribute_value> mOldValue;
+  Attribute mNewValue;
+  maybe<Attribute> mOldValue;
 };
 
 }  // namespace tactile

@@ -34,14 +34,14 @@ namespace tactile::sys {
 
 struct component_snapshot final
 {
-  tree_map<std::string, attribute_value> attributes;
+  tree_map<std::string, Attribute> attributes;
 };
 
 struct attribute_context_snapshot final
 {
   context_id id{};
   std::string name;
-  tree_map<std::string, attribute_value> properties;
+  tree_map<std::string, Attribute> properties;
   tree_map<component_id, component_snapshot> components;
 };
 

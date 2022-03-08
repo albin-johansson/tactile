@@ -29,7 +29,7 @@ UpdateComponentCmd::UpdateComponentCmd(registry_ref registry,
                                        const context_id contextId,
                                        const component_id componentId,
                                        std::string attribute,
-                                       attribute_value value)
+                                       Attribute value)
     : ACommand{"update Component Value"}
     , mRegistry{registry}
     , mContextId{contextId}

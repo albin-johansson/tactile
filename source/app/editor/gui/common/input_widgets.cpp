@@ -31,47 +31,46 @@
 
 namespace tactile {
 
-auto input_attribute(const char* id, const attribute_value& value)
-    -> maybe<attribute_value>
+auto input_attribute(const char* id, const Attribute& value) -> maybe<Attribute>
 {
   switch (value.type()) {
-    case attribute_type::string: {
+    case AttributeType::string: {
       if (auto updated = input_string_with_hint(id, "Empty", value.as_string())) {
         return std::move(updated);
       }
       break;
     }
-    case attribute_type::integer: {
+    case AttributeType::integer: {
       if (const auto updated = input_int(id, value.as_int())) {
         return updated;
       }
       break;
     }
-    case attribute_type::floating: {
+    case AttributeType::floating: {
       if (const auto updated = input_float(id, value.as_float())) {
         return updated;
       }
       break;
     }
-    case attribute_type::boolean: {
+    case AttributeType::boolean: {
       if (const auto updated = input_bool(id, value.as_bool())) {
         return updated;
       }
       break;
     }
-    case attribute_type::file: {
+    case AttributeType::file: {
       if (auto updated = input_file(id, value.as_file())) {
         return std::move(updated);
       }
       break;
     }
-    case attribute_type::color: {
+    case AttributeType::color: {
       if (const auto updated = input_color(id, value.as_color())) {
         return updated;
       }
       break;
     }
-    case attribute_type::object: {
+    case AttributeType::object: {
       if (const auto updated = input_object(id, value.as_object())) {
         return updated;
       }

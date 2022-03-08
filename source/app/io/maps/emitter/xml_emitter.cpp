@@ -54,39 +54,39 @@ void _append_properties(pugi::xml_node node,
     const auto type = propertyValue.type();
 
     /* Properties with no type attribute are assumed to be string properties */
-    if (type != attribute_type::string) {
+    if (type != AttributeType::string) {
       propertyNode.append_attribute("type").set_value(stringify(type));
     }
 
     auto valueAttr = propertyNode.append_attribute("value");
 
     switch (type) {
-      case attribute_type::string:
+      case AttributeType::string:
         valueAttr.set_value(propertyValue.as_string().c_str());
         break;
 
-      case attribute_type::integer:
+      case AttributeType::integer:
         valueAttr.set_value(propertyValue.as_int());
         break;
 
-      case attribute_type::floating:
+      case AttributeType::floating:
         valueAttr.set_value(propertyValue.as_float());
         break;
 
-      case attribute_type::boolean:
+      case AttributeType::boolean:
         valueAttr.set_value(propertyValue.as_bool());
         break;
 
-      case attribute_type::file: {
+      case AttributeType::file: {
         const auto str = convert_to_forward_slashes(propertyValue.as_file());
         valueAttr.set_value(str.c_str());
         break;
       }
-      case attribute_type::color:
+      case AttributeType::color:
         valueAttr.set_value(propertyValue.as_color().as_argb().c_str());
         break;
 
-      case attribute_type::object:
+      case AttributeType::object:
         valueAttr.set_value(propertyValue.as_object());
         break;
     }

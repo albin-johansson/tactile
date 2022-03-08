@@ -32,9 +32,8 @@
 namespace tactile::parsing {
 namespace {
 
-[[nodiscard]] auto _parse_value(pugi::xml_node node,
-                                const char* type,
-                                attribute_value& value) -> parse_error
+[[nodiscard]] auto _parse_value(pugi::xml_node node, const char* type, Attribute& value)
+    -> parse_error
 {
   TACTILE_ASSERT(type);
 

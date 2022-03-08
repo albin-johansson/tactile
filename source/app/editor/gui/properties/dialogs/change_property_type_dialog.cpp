@@ -34,7 +34,7 @@ ChangePropertyTypeDialog::ChangePropertyTypeDialog() : dialog_base{"Change Prope
   set_accept_button_label("Change");
 }
 
-void ChangePropertyTypeDialog::Show(std::string name, const attribute_type type)
+void ChangePropertyTypeDialog::Show(std::string name, const AttributeType type)
 {
   mPropertyName = std::move(name);
   mCurrentType = type;

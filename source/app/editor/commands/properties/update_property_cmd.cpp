@@ -28,7 +28,7 @@ namespace tactile {
 
 UpdatePropertyCmd::UpdatePropertyCmd(registry_ref registry,
                                      std::string name,
-                                     attribute_value value)
+                                     Attribute value)
     : ACommand{"update Property"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}

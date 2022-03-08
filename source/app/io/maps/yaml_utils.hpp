@@ -26,8 +26,8 @@
 
 namespace tactile {
 
-auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::Emitter&;
+auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&;
 
-auto operator<<(YAML::Emitter& emitter, attribute_type type) -> YAML::Emitter&;
+auto operator<<(YAML::Emitter& emitter, AttributeType type) -> YAML::Emitter&;
 
 }  // namespace tactile

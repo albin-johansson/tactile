@@ -45,34 +45,34 @@ template <typename T>
 
 }  // namespace
 
-void to_json(nlohmann::json& json, const attribute_value& value)
+void to_json(nlohmann::json& json, const Attribute& value)
 {
   switch (value.type()) {
-    case attribute_type::string:
+    case AttributeType::string:
       json = value.as_string();
       break;
 
-    case attribute_type::integer:
+    case AttributeType::integer:
       json = value.as_int();
       break;
 
-    case attribute_type::floating:
+    case AttributeType::floating:
       json = value.as_float();
       break;
 
-    case attribute_type::boolean:
+    case AttributeType::boolean:
       json = value.as_bool();
       break;
 
-    case attribute_type::file:
+    case AttributeType::file:
       json = convert_to_forward_slashes(value.as_file());
       break;
 
-    case attribute_type::color:
+    case AttributeType::color:
       json = value.as_color().as_argb();
       break;
 
-    case attribute_type::object:
+    case AttributeType::object:
       json = value.as_object();
       break;
 

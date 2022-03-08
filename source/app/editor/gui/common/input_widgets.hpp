@@ -30,8 +30,8 @@
 
 namespace tactile {
 
-[[nodiscard]] auto input_attribute(const char* id, const attribute_value& value)
-    -> maybe<attribute_value>;
+[[nodiscard]] auto input_attribute(const char* id, const Attribute& value)
+    -> maybe<Attribute>;
 
 [[nodiscard]] auto input_int(const char* id, int value) -> maybe<int>;
 

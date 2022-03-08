@@ -32,7 +32,7 @@ namespace {
 
 [[nodiscard]] auto _parse_value(const nlohmann::json& json,
                                 const std::string_view type,
-                                attribute_value& value) -> parse_error
+                                Attribute& value) -> parse_error
 {
   if (type == "string") {
     value = as_string(json, "value").value();

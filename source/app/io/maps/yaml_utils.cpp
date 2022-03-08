@@ -24,34 +24,34 @@
 
 namespace tactile {
 
-auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::Emitter&
+auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&
 {
   switch (value.type()) {
-    case attribute_type::string:
+    case AttributeType::string:
       emitter << value.as_string();
       break;
 
-    case attribute_type::integer:
+    case AttributeType::integer:
       emitter << value.as_int();
       break;
 
-    case attribute_type::floating:
+    case AttributeType::floating:
       emitter << value.as_float();
       break;
 
-    case attribute_type::boolean:
+    case AttributeType::boolean:
       emitter << value.as_bool();
       break;
 
-    case attribute_type::file:
+    case AttributeType::file:
       emitter << convert_to_forward_slashes(value.as_file());
       break;
 
-    case attribute_type::color:
+    case AttributeType::color:
       emitter << value.as_color().as_rgba();
       break;
 
-    case attribute_type::object:
+    case AttributeType::object:
       emitter << value.as_object();
       break;
 
@@ -62,7 +62,7 @@ auto operator<<(YAML::Emitter& emitter, const attribute_value& value) -> YAML::E
   return emitter;
 }
 
-auto operator<<(YAML::Emitter& emitter, const attribute_type type) -> YAML::Emitter&
+auto operator<<(YAML::Emitter& emitter, const AttributeType type) -> YAML::Emitter&
 {
   return emitter << stringify(type);
 }
