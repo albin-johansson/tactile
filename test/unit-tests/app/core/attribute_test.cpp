@@ -7,7 +7,7 @@
 using namespace tactile;
 using namespace std::string_literals;
 
-TEST(AttributeValue, Defaults)
+TEST(Attribute, Defaults)
 {
   const Attribute value;
   ASSERT_EQ(AttributeType::string, value.type());
@@ -29,7 +29,7 @@ TEST(AttributeValue, Defaults)
   ASSERT_THROW(value.as_object(), tactile_error);
 }
 
-TEST(AttributeValue, IntAttribute)
+TEST(Attribute, IntAttribute)
 {
   const Attribute value{123};
   ASSERT_EQ(123, value.as_int());
@@ -45,7 +45,7 @@ TEST(AttributeValue, IntAttribute)
   ASSERT_FALSE(value.is_object());
 }
 
-TEST(AttributeValue, FloatAttribute)
+TEST(Attribute, FloatAttribute)
 {
   const Attribute value{12.3f};
   ASSERT_EQ(12.3f, value.as_float());
@@ -61,7 +61,7 @@ TEST(AttributeValue, FloatAttribute)
   ASSERT_FALSE(value.is_object());
 }
 
-TEST(AttributeValue, StringAttribute)
+TEST(Attribute, StringAttribute)
 {
   const Attribute value{"foo"s};
   ASSERT_EQ("foo", value.as_string());
@@ -77,7 +77,7 @@ TEST(AttributeValue, StringAttribute)
   ASSERT_FALSE(value.is_object());
 }
 
-TEST(AttributeValue, BoolAttribute)
+TEST(Attribute, BoolAttribute)
 {
   const Attribute value{false};
   ASSERT_FALSE(value.as_bool());
@@ -93,7 +93,7 @@ TEST(AttributeValue, BoolAttribute)
   ASSERT_FALSE(value.is_object());
 }
 
-TEST(AttributeValue, FileAttribute)
+TEST(Attribute, FileAttribute)
 {
   const std::filesystem::path file{"test-resources/foo.txt"};
   const Attribute value{file};
@@ -109,7 +109,7 @@ TEST(AttributeValue, FileAttribute)
   ASSERT_FALSE(value.is_object());
 }
 
-TEST(AttributeValue, ObjectAttribute)
+TEST(Attribute, ObjectAttribute)
 {
   const Attribute value{object_t{7}};
 
@@ -124,7 +124,7 @@ TEST(AttributeValue, ObjectAttribute)
   ASSERT_FALSE(value.is_file());
 }
 
-TEST(AttributeValue, ColorAttribute)
+TEST(Attribute, ColorAttribute)
 {
   const Attribute value{cen::colors::red};
 
@@ -139,7 +139,7 @@ TEST(AttributeValue, ColorAttribute)
   ASSERT_FALSE(value.is_object());
 }
 
-TEST(AttributeValue, SetValue)
+TEST(Attribute, SetValue)
 {
   Attribute value;
 
