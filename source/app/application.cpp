@@ -498,27 +498,27 @@ void application::on_set_tileset_name(const set_tileset_name_event& event)
 
 void application::on_add_row()
 {
-  _execute<add_row_cmd>(mModel);
+  _execute<AddRowCmd>(mModel);
 }
 
 void application::on_add_column()
 {
-  _execute<add_column_cmd>(mModel);
+  _execute<AddColumnCmd>(mModel);
 }
 
 void application::on_remove_row()
 {
-  _execute<remove_row_cmd>(mModel);
+  _execute<RemoveRowCmd>(mModel);
 }
 
 void application::on_remove_column()
 {
-  _execute<remove_column_cmd>(mModel);
+  _execute<RemoveColumnCmd>(mModel);
 }
 
 void application::on_resize_map(const resize_map_event& event)
 {
-  _execute<resize_map_cmd>(mModel, event.row_count, event.col_count);
+  _execute<ResizeMapCmd>(mModel, event.row_count, event.col_count);
 }
 
 void application::on_open_resize_map_dialog()

@@ -25,10 +25,10 @@
 
 namespace tactile {
 
-class add_column_cmd final : public ACommand
+class AddColumnCmd final : public ACommand
 {
  public:
-  explicit add_column_cmd(registry_ref registry);
+  explicit AddColumnCmd(registry_ref registry);
 
   void undo() override;
 

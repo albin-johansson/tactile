@@ -25,12 +25,12 @@
 
 namespace tactile {
 
-void map_command_cache::clear() noexcept
+void MapCommandCache::clear() noexcept
 {
   mCache.clear();
 }
 
-void map_command_cache::restore_tiles(entt::registry& registry)
+void MapCommandCache::restore_tiles(entt::registry& registry)
 {
   for (const auto& [layerId, tileCache] : mCache) {
     const auto entity = sys::get_tile_layer_entity(registry, layerId);
@@ -42,9 +42,9 @@ void map_command_cache::restore_tiles(entt::registry& registry)
   }
 }
 
-void map_command_cache::save_tiles(const entt::registry& registry,
-                                   const tile_position& begin,
-                                   const tile_position& end)
+void MapCommandCache::save_tiles(const entt::registry& registry,
+                                 const tile_position& begin,
+                                 const tile_position& end)
 {
   for (auto&& [entity, layer, tileLayer] :
        registry.view<comp::layer, comp::tile_layer>().each()) {
@@ -62,7 +62,7 @@ void map_command_cache::save_tiles(const entt::registry& registry,
   }
 }
 
-void map_command_cache::merge_with(const map_command_cache& other)
+void MapCommandCache::merge_with(const MapCommandCache& other)
 {
   for (const auto& [otherLayer, otherTileCache] : other.mCache) {
     auto& tileCache = mCache[otherLayer];

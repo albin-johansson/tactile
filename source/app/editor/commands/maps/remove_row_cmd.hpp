@@ -26,10 +26,10 @@
 
 namespace tactile {
 
-class remove_row_cmd final : public ACommand
+class RemoveRowCmd final : public ACommand
 {
  public:
-  explicit remove_row_cmd(registry_ref registry);
+  explicit RemoveRowCmd(registry_ref registry);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class remove_row_cmd final : public ACommand
 
  private:
   registry_ref mRegistry;
-  map_command_cache mCache;
+  MapCommandCache mCache;
   usize mRows{1};
 };
 

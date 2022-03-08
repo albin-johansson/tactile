@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class map_command_cache final
+class MapCommandCache final
 {
   using tile_cache = tree_map<tile_position, tile_id>;
   using layer_cache = tree_map<layer_id, tile_cache>;
@@ -40,7 +40,7 @@ class map_command_cache final
                   const tile_position& begin,
                   const tile_position& end);
 
-  void merge_with(const map_command_cache& other);
+  void merge_with(const MapCommandCache& other);
 
  private:
   layer_cache mCache;

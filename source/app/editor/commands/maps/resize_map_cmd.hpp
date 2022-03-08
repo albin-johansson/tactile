@@ -26,10 +26,10 @@
 
 namespace tactile {
 
-class resize_map_cmd final : public ACommand
+class ResizeMapCmd final : public ACommand
 {
  public:
-  resize_map_cmd(registry_ref registry, usize nRows, usize nCols);
+  ResizeMapCmd(registry_ref registry, usize nRows, usize nCols);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class resize_map_cmd final : public ACommand
   registry_ref mRegistry;
   usize mRows{};
   usize mCols{};
-  map_command_cache mCache;
+  MapCommandCache mCache;
   maybe<usize> mPrevRows{};
   maybe<usize> mPrevCols{};
 

@@ -25,18 +25,18 @@
 
 namespace tactile {
 
-remove_column_cmd::remove_column_cmd(registry_ref registry)
+RemoveColumnCmd::RemoveColumnCmd(registry_ref registry)
     : ACommand{"Remove Column(s)"}
     , mRegistry{registry}
 {}
 
-void remove_column_cmd::undo()
+void RemoveColumnCmd::undo()
 {
   invoke_n(mColumns, [this] { sys::add_column_to_map(mRegistry); });
   mCache.restore_tiles(mRegistry);
 }
 
-void remove_column_cmd::redo()
+void RemoveColumnCmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -50,10 +50,10 @@ void remove_column_cmd::redo()
   invoke_n(mColumns, [this] { sys::remove_column_from_map(mRegistry); });
 }
 
-auto remove_column_cmd::merge_with(const ACommand& cmd) -> bool
+auto RemoveColumnCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const remove_column_cmd&>(cmd);
+    const auto& other = dynamic_cast<const RemoveColumnCmd&>(cmd);
 
     mColumns += other.mColumns;
     mCache.merge_with(other.mCache);

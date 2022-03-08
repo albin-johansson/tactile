@@ -24,16 +24,14 @@
 
 namespace tactile {
 
-resize_map_cmd::resize_map_cmd(registry_ref registry,
-                               const usize nRows,
-                               const usize nCols)
+ResizeMapCmd::ResizeMapCmd(registry_ref registry, const usize nRows, const usize nCols)
     : ACommand{"Resize Map"}
     , mRegistry{registry}
     , mRows{nRows}
     , mCols{nCols}
 {}
 
-void resize_map_cmd::undo()
+void ResizeMapCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::resize_map(registry, mPrevRows.value(), mPrevCols.value());
@@ -43,7 +41,7 @@ void resize_map_cmd::undo()
   }
 }
 
-void resize_map_cmd::redo()
+void ResizeMapCmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -67,7 +65,7 @@ void resize_map_cmd::redo()
   sys::resize_map(registry, mRows, mCols);
 }
 
-auto resize_map_cmd::is_lossy_resize() const -> bool
+auto ResizeMapCmd::is_lossy_resize() const -> bool
 {
   return mPrevRows > mRows || mPrevCols > mCols;
 }
