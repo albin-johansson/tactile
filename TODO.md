@@ -29,5 +29,3 @@ This document provides a brief outline of planned features for the Tactile edito
 ## Components 
 
 * Decide on whether component data is stored embedded in maps or externally (maybe both?)
-* Parsing
-* Emitting
