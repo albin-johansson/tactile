@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-class remove_property_cmd final : public command_base
+class remove_property_cmd final : public ACommand
 {
  public:
   remove_property_cmd(registry_ref registry, std::string name);

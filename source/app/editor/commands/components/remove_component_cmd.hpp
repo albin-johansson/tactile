@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class remove_component_cmd final : public command_base
+class remove_component_cmd final : public ACommand
 {
  public:
   remove_component_cmd(registry_ref registry,

@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-class duplicate_layer_cmd final : public command_base
+class duplicate_layer_cmd final : public ACommand
 {
  public:
   duplicate_layer_cmd(registry_ref registry, layer_id id);

@@ -36,7 +36,7 @@ class set_object_name_cmd final : public object_cmd
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
   [[nodiscard]] auto id() const noexcept -> int override
   {

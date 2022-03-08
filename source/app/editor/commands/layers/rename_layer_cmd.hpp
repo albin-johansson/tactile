@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class rename_layer_cmd final : public command_base
+class rename_layer_cmd final : public ACommand
 {
  public:
   rename_layer_cmd(registry_ref registry, layer_id id, std::string name);

@@ -26,7 +26,7 @@ namespace tactile {
 set_layer_visibility_cmd::set_layer_visibility_cmd(registry_ref registry,
                                                    const layer_id id,
                                                    const bool visible)
-    : command_base{"Set Layer Visibility"}
+    : ACommand{"Set Layer Visibility"}
     , mRegistry{registry}
     , mLayerId{id}
     , mVisible{visible}

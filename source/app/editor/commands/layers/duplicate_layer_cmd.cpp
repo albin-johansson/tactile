@@ -25,7 +25,7 @@
 namespace tactile {
 
 duplicate_layer_cmd::duplicate_layer_cmd(registry_ref registry, const layer_id id)
-    : command_base{"Duplicate Layer"}
+    : ACommand{"Duplicate Layer"}
     , mRegistry{registry}
     , mLayerId{id}
 {}

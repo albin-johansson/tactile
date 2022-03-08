@@ -24,7 +24,7 @@
 namespace tactile {
 
 PointToolCmd::PointToolCmd(registry_ref registry, const float x, const float y)
-    : command_base{"Add Point"}
+    : ACommand{"Add Point"}
     , mRegistry{registry}
     , mLayerId{sys::get_active_layer_id(registry).value()}
     , mPointX{x}

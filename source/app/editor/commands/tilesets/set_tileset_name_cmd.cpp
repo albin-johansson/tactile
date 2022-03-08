@@ -30,7 +30,7 @@ namespace tactile {
 set_tileset_name_cmd::set_tileset_name_cmd(registry_ref registry,
                                            const tileset_id id,
                                            std::string name)
-    : command_base{"Set Tileset Name"}
+    : ACommand{"Set Tileset Name"}
     , mRegistry{registry}
     , mTilesetId{id}
     , mNewName{std::move(name)}
@@ -59,7 +59,7 @@ void set_tileset_name_cmd::redo()
   context.name = mNewName;
 }
 
-auto set_tileset_name_cmd::merge_with(const command_base& cmd) -> bool
+auto set_tileset_name_cmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const set_tileset_name_cmd&>(cmd);

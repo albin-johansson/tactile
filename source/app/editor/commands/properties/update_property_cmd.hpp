@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-class update_property_cmd final : public command_base
+class update_property_cmd final : public ACommand
 {
  public:
   update_property_cmd(registry_ref registry, std::string name, attribute_value value);
@@ -37,7 +37,7 @@ class update_property_cmd final : public command_base
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
   [[nodiscard]] auto id() const noexcept -> int override
   {

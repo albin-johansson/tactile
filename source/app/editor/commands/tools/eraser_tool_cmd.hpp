@@ -29,7 +29,7 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class EraserToolCmd final : public command_base
+class EraserToolCmd final : public ACommand
 {
  public:
   EraserToolCmd(registry_ref registry, TileCache&& oldState);

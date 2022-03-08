@@ -29,7 +29,7 @@ namespace tactile {
 change_property_type_cmd::change_property_type_cmd(registry_ref registry,
                                                    std::string name,
                                                    const attribute_type type)
-    : command_base{"Change Property Type"}
+    : ACommand{"Change Property Type"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}
     , mName{std::move(name)}

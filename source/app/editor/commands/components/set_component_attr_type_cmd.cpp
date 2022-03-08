@@ -29,7 +29,7 @@ set_component_attr_type_cmd::set_component_attr_type_cmd(registry_ref registry,
                                                          const component_id id,
                                                          std::string attribute,
                                                          const attribute_type type)
-    : command_base{"Set Component Attribute Type"}
+    : ACommand{"Set Component Attribute Type"}
     , mRegistry{registry}
     , mComponentId{id}
     , mAttributeName{std::move(attribute)}

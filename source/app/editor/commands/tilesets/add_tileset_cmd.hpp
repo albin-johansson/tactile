@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class add_tileset_cmd final : public command_base
+class add_tileset_cmd final : public ACommand
 {
  public:
   add_tileset_cmd(registry_ref registry,

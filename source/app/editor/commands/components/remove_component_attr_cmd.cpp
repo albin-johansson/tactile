@@ -28,7 +28,7 @@ namespace tactile {
 remove_component_attr_cmd::remove_component_attr_cmd(registry_ref registry,
                                                      const component_id componentId,
                                                      std::string attribute)
-    : command_base{"Remove Component Attribute"}
+    : ACommand{"Remove Component Attribute"}
     , mRegistry{registry}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}

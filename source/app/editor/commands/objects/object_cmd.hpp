@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-class object_cmd : public command_base
+class object_cmd : public ACommand
 {
  public:
   object_cmd(std::string name, registry_ref registry, object_id id);

@@ -29,7 +29,7 @@ update_component_attr_cmd::update_component_attr_cmd(registry_ref registry,
                                                      const component_id id,
                                                      std::string attribute,
                                                      attribute_value value)
-    : command_base{"update Component Attribute"}
+    : ACommand{"update Component Attribute"}
     , mRegistry{registry}
     , mComponentId{id}
     , mAttributeName{std::move(attribute)}
@@ -57,7 +57,7 @@ void update_component_attr_cmd::redo()
                                      mUpdatedValue);
 }
 
-auto update_component_attr_cmd::merge_with(const command_base& cmd) -> bool
+auto update_component_attr_cmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const update_component_attr_cmd&>(cmd);

@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-class set_layer_visibility_cmd final : public command_base
+class set_layer_visibility_cmd final : public ACommand
 {
  public:
   set_layer_visibility_cmd(registry_ref registry, layer_id id, bool visible);

@@ -28,7 +28,7 @@
 namespace tactile {
 
 object_cmd::object_cmd(std::string name, registry_ref registry, const object_id id)
-    : command_base{std::move(name)}
+    : ACommand{std::move(name)}
     , mRegistry{registry}
     , mObjectId{id}
 {}

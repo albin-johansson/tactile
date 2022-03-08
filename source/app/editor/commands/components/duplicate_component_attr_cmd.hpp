@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class duplicate_component_attr_cmd final : public command_base
+class duplicate_component_attr_cmd final : public ACommand
 {
  public:
   duplicate_component_attr_cmd(registry_ref registry,

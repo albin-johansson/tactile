@@ -30,7 +30,7 @@ add_tileset_cmd::add_tileset_cmd(registry_ref registry,
                                  comp::texture texture,
                                  const int32 tileWidth,
                                  const int32 tileHeight)
-    : command_base{"Add Tileset"}
+    : ACommand{"Add Tileset"}
     , mRegistry{registry}
     , mTexture{std::move(texture)}
     , mTileWidth{tileWidth}

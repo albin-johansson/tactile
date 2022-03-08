@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class set_component_attr_type_cmd final : public command_base
+class set_component_attr_type_cmd final : public ACommand
 {
  public:
   set_component_attr_type_cmd(registry_ref registry,

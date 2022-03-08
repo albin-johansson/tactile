@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-class add_column_cmd final : public command_base
+class add_column_cmd final : public ACommand
 {
  public:
   explicit add_column_cmd(registry_ref registry);
@@ -34,7 +34,7 @@ class add_column_cmd final : public command_base
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
   [[nodiscard]] auto id() const noexcept -> int override
   {

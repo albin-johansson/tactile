@@ -25,7 +25,7 @@
 namespace tactile {
 
 remove_tileset_cmd::remove_tileset_cmd(registry_ref registry, const tileset_id id)
-    : command_base{"Remove Tileset"}
+    : ACommand{"Remove Tileset"}
     , mRegistry{registry}
     , mTilesetId{id}
 {}

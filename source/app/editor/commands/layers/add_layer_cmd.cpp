@@ -26,7 +26,7 @@
 namespace tactile {
 
 add_layer_cmd::add_layer_cmd(registry_ref registry, const layer_type type)
-    : command_base{"Add Layer"}
+    : ACommand{"Add Layer"}
     , mRegistry{registry}
     , mLayerType{type}
 {}

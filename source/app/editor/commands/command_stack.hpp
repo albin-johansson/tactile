@@ -73,7 +73,7 @@ class command_stack final
    */
   void redo();
 
-  template <typename T, typename... Args, is_derived_from<command_base, T> = 0>
+  template <typename T, typename... Args, is_derived_from<ACommand, T> = 0>
   void push_without_redo(Args&&... args)
   {
     if (size() == capacity()) {
@@ -99,7 +99,7 @@ class command_stack final
    * \param args the arguments that will be forwarded to the command
    * constructor.
    */
-  template <typename T, typename... Args, is_derived_from<command_base, T> = 0>
+  template <typename T, typename... Args, is_derived_from<ACommand, T> = 0>
   void push(Args&&... args)
   {
     if (size() == capacity()) {
@@ -204,7 +204,7 @@ class command_stack final
   [[nodiscard]] auto capacity() const noexcept -> usize { return mCapacity; }
 
  private:
-  std::deque<std::unique_ptr<command_base>> mStack;
+  std::deque<std::unique_ptr<ACommand>> mStack;
   maybe<usize> mIndex;
   maybe<usize> mCleanIndex;
   usize mCapacity;

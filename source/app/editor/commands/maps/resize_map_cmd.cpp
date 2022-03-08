@@ -27,7 +27,7 @@ namespace tactile {
 resize_map_cmd::resize_map_cmd(registry_ref registry,
                                const usize nRows,
                                const usize nCols)
-    : command_base{"Resize Map"}
+    : ACommand{"Resize Map"}
     , mRegistry{registry}
     , mRows{nRows}
     , mCols{nCols}

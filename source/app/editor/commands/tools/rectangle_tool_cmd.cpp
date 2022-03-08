@@ -28,7 +28,7 @@ RectangleToolCmd::RectangleToolCmd(registry_ref registry,
                                    const float y,
                                    const float width,
                                    const float height)
-    : command_base{"Add Rectangle"}
+    : ACommand{"Add Rectangle"}
     , mRegistry{registry}
     , mLayerId{sys::get_active_layer_id(registry).value()}
     , mX{x}

@@ -29,7 +29,7 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class StampToolCmd final : public command_base
+class StampToolCmd final : public ACommand
 {
  public:
   StampToolCmd(registry_ref registry, TileCache&& oldState, TileCache&& newState);

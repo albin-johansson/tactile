@@ -25,7 +25,7 @@
 namespace tactile {
 
 move_layer_down_cmd::move_layer_down_cmd(registry_ref registry, const layer_id id)
-    : command_base{"Move Layer Down"}
+    : ACommand{"Move Layer Down"}
     , mRegistry{registry}
     , mLayerId{id}
 {}

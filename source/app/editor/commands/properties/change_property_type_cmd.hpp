@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-class change_property_type_cmd final : public command_base
+class change_property_type_cmd final : public ACommand
 {
  public:
   change_property_type_cmd(registry_ref registry, std::string name, attribute_type type);

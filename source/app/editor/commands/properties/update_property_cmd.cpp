@@ -29,7 +29,7 @@ namespace tactile {
 update_property_cmd::update_property_cmd(registry_ref registry,
                                          std::string name,
                                          attribute_value value)
-    : command_base{"update Property"}
+    : ACommand{"update Property"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}
     , mName{std::move(name)}
@@ -50,7 +50,7 @@ void update_property_cmd::redo()
   sys::update_property(mRegistry, context, mName, mNewValue);
 }
 
-auto update_property_cmd::merge_with(const command_base& cmd) -> bool
+auto update_property_cmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const update_property_cmd&>(cmd);

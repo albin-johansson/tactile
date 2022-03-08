@@ -29,7 +29,7 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class add_layer_cmd final : public command_base
+class add_layer_cmd final : public ACommand
 {
  public:
   add_layer_cmd(registry_ref registry, layer_type type);

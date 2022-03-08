@@ -45,7 +45,7 @@ void set_object_name_cmd::redo()
   context.name = mNewName;
 }
 
-auto set_object_name_cmd::merge_with(const command_base& cmd) -> bool
+auto set_object_name_cmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const set_object_name_cmd&>(cmd);

@@ -10,9 +10,9 @@ using namespace tactile;
 
 namespace {
 
-struct foo_cmd : command_base
+struct foo_cmd : ACommand
 {
-  foo_cmd() : command_base{"foo_cmd"} {}
+  foo_cmd() : ACommand{"foo_cmd"} {}
 
   void undo() override
   {
@@ -27,9 +27,9 @@ struct foo_cmd : command_base
   [[nodiscard]] auto id() const -> int override { return 0; }
 };
 
-struct bar_cmd : command_base
+struct bar_cmd : ACommand
 {
-  bar_cmd() : command_base{"bar_cmd"} {}
+  bar_cmd() : ACommand{"bar_cmd"} {}
 
   void undo() override
   {

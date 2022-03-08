@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class rename_component_attr_cmd final : public command_base
+class rename_component_attr_cmd final : public ACommand
 {
  public:
   rename_component_attr_cmd(registry_ref registry,

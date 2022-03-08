@@ -29,7 +29,7 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class PointToolCmd final : public command_base
+class PointToolCmd final : public ACommand
 {
  public:
   PointToolCmd(registry_ref registry, float x, float y);

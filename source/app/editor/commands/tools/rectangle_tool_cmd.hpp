@@ -29,7 +29,7 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class RectangleToolCmd final : public command_base
+class RectangleToolCmd final : public ACommand
 {
  public:
   RectangleToolCmd(registry_ref registry, float x, float y, float width, float height);

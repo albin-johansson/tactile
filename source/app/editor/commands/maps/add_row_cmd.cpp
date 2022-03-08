@@ -25,7 +25,7 @@
 namespace tactile {
 
 add_row_cmd::add_row_cmd(registry_ref registry)
-    : command_base{"Add Row(s)"}
+    : ACommand{"Add Row(s)"}
     , mRegistry{registry}
 {}
 
@@ -39,7 +39,7 @@ void add_row_cmd::redo()
   invoke_n(mRows, [this] { sys::add_row_to_map(mRegistry); });
 }
 
-auto add_row_cmd::merge_with(const command_base& cmd) -> bool
+auto add_row_cmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const add_row_cmd&>(cmd);

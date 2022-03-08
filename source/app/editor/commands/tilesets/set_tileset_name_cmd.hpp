@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class set_tileset_name_cmd final : public command_base
+class set_tileset_name_cmd final : public ACommand
 {
  public:
   set_tileset_name_cmd(registry_ref registry, tileset_id id, std::string name);
@@ -36,7 +36,7 @@ class set_tileset_name_cmd final : public command_base
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const command_base& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
   [[nodiscard]] auto id() const noexcept -> int override
   {

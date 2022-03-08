@@ -30,7 +30,7 @@ namespace tactile {
 StampToolCmd::StampToolCmd(registry_ref registry,
                            TileCache&& oldState,
                            TileCache&& newState)
-    : command_base{"Stamp Sequence"}
+    : ACommand{"Stamp Sequence"}
     , mRegistry{registry}
     , mLayer{sys::get_active_layer_id(registry).value()}
     , mOldState{std::move(oldState)}

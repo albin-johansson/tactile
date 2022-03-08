@@ -26,7 +26,7 @@ namespace tactile {
 add_component_cmd::add_component_cmd(registry_ref registry,
                                      const context_id contextId,
                                      const component_id componentId)
-    : command_base{"Add Component"}
+    : ACommand{"Add Component"}
     , mRegistry{registry}
     , mContextId{contextId}
     , mComponentId{componentId}

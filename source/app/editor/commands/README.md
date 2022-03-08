@@ -1,7 +1,7 @@
 # Command API
 
 The undo/redo support is provided using a typical command pattern architecture, where all commands are implemented as
-derived classes of the `command_base` abstract class. All command implementations must provide `undo()`, `redo()`,
+derived classes of the `ACommand` abstract class. All command implementations must provide `undo()`, `redo()`,
 and `id()` functions. Additionally, the command stack is able to merge consecutive commands of the same type for command
 types that override `merge_with()`. See the in-source documentation for more details regarding these functions.
 

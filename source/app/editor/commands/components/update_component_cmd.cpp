@@ -30,7 +30,7 @@ update_component_cmd::update_component_cmd(registry_ref registry,
                                            const component_id componentId,
                                            std::string attribute,
                                            attribute_value value)
-    : command_base{"update Component Value"}
+    : ACommand{"update Component Value"}
     , mRegistry{registry}
     , mContextId{contextId}
     , mComponentId{componentId}
@@ -64,7 +64,7 @@ void update_component_cmd::redo()
                         mUpdatedValue);
 }
 
-auto update_component_cmd::merge_with(const command_base& cmd) -> bool
+auto update_component_cmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const update_component_cmd&>(cmd);

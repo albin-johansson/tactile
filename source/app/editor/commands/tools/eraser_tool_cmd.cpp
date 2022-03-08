@@ -29,7 +29,7 @@
 namespace tactile {
 
 EraserToolCmd::EraserToolCmd(registry_ref registry, TileCache&& oldState)
-    : command_base{"Eraser Sequence"}
+    : ACommand{"Eraser Sequence"}
     , mRegistry{registry}
     , mLayer{sys::get_active_layer_id(registry).value()}
     , mOldState{std::move(oldState)}
