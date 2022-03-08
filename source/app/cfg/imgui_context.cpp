@@ -32,7 +32,7 @@
 namespace tactile {
 namespace {
 
-void load_fonts()
+void _load_fonts()
 {
   auto& io = ImGui::GetIO();
   io.Fonts->Clear();
@@ -68,7 +68,7 @@ void load_fonts()
 
 }  // namespace
 
-im_gui_context::im_gui_context(cen::window& window, cen::gl_context& context)
+ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
@@ -86,7 +86,7 @@ im_gui_context::im_gui_context(cen::window& window, cen::gl_context& context)
     mInitializedBackend = ImGui_ImplOpenGL3_Init("#version 130");
   }
 
-  load_fonts();
+  _load_fonts();
 
   ImGui::StyleColorsDark();
 
@@ -101,7 +101,7 @@ im_gui_context::im_gui_context(cen::window& window, cen::gl_context& context)
   log_debug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
 }
 
-im_gui_context::~im_gui_context()
+ImGuiContext::~ImGuiContext()
 {
   if (mInitializedBackend) {
     ImGui_ImplOpenGL3_Shutdown();

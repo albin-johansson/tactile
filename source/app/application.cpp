@@ -79,7 +79,7 @@ void _register(document_model& model, Args&&... args)
 
 }  // namespace
 
-application::application(app_configuration* configuration)
+application::application(AppConfiguration* configuration)
     : mConfiguration{configuration}
     , mIcons{mTextures}
 {

@@ -29,7 +29,7 @@
 auto main(int, char**) -> int
 {
   try {
-    tactile::app_configuration configuration;
+    tactile::AppConfiguration configuration;
     tactile::application app{&configuration};
     return app.run();
   }

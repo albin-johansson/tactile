@@ -4,7 +4,7 @@
 
 auto main(int argc, char** argv) -> int
 {
-  tactile::app_configuration configuration;
+  tactile::AppConfiguration configuration;
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

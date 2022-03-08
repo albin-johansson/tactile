@@ -77,7 +77,7 @@ void _win32_use_immersive_dark_mode([[maybe_unused]] cen::window& window)
 
 }  // namespace
 
-app_configuration::app_configuration()
+AppConfiguration::AppConfiguration()
 {
   /* Use terminate handler that doesn't do anything fancy, e.g. no logging */
   std::set_terminate([] { std::abort(); });
@@ -118,7 +118,7 @@ app_configuration::app_configuration()
   mWindow->maximize();
 }
 
-auto app_configuration::window() -> cen::window&
+auto AppConfiguration::window() -> cen::window&
 {
   return mWindow.value();
 }

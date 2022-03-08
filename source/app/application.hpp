@@ -40,7 +40,7 @@
 
 namespace tactile {
 
-class app_configuration;
+class AppConfiguration;
 
 /**
  * \brief Tracks visibility of widgets for the "Toggle UI" feature.
@@ -66,12 +66,12 @@ class application final
   friend void subscribe_to_events(application&);
 
  public:
-  explicit application(app_configuration* configuration);
+  explicit application(AppConfiguration* configuration);
 
   auto run() -> int;
 
  private:
-  app_configuration* mConfiguration{}; /* Non-owning */
+  AppConfiguration* mConfiguration{}; /* Non-owning */
   entt::dispatcher mDispatcher;
   cen::keyboard mKeyboard;
   document_model mModel;

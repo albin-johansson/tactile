@@ -23,12 +23,12 @@
 
 namespace tactile {
 
-protobuf_context::protobuf_context()
+ProtobufContext::ProtobufContext()
 {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 }
 
-protobuf_context::~protobuf_context()
+ProtobufContext::~ProtobufContext()
 {
   google::protobuf::ShutdownProtobufLibrary();
 }

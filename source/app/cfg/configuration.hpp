@@ -32,23 +32,23 @@ namespace tactile {
  *
  * \ingroup cfg
  */
-class app_configuration final
+class AppConfiguration final
 {
  public:
-  app_configuration();
+  AppConfiguration();
 
   /* Returns the application window */
   [[nodiscard]] auto window() -> cen::window&;
 
  private:
-  protobuf_context mProtobuf;
+  ProtobufContext mProtobuf;
   cen::sdl mSDL;
   cen::img mIMG;
 
   /* Initialization of these members needs to be deferred */
   maybe<cen::window> mWindow;
   maybe<cen::gl_context> mOpenGL;
-  maybe<im_gui_context> mImGui;
+  maybe<ImGuiContext> mImGui;
 };
 
 }  // namespace tactile

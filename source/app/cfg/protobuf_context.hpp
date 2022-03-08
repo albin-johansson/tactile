@@ -26,12 +26,12 @@ namespace tactile {
  *
  * \ingroup cfg
  */
-class protobuf_context final
+class ProtobufContext final
 {
  public:
-  protobuf_context();
+  ProtobufContext();
 
-  ~protobuf_context();
+  ~ProtobufContext();
 };
 
 }  // namespace tactile
