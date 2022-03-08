@@ -219,8 +219,7 @@ TEST(ComponentSystem, SetComponentAttributeType)
   const auto def = sys::make_component_def(registry, "Def");
 
   sys::make_component_attribute(registry, def, "A");
-  ASSERT_EQ(AttributeType::string,
-            sys::get_component_attribute_type(registry, def, "A"));
+  ASSERT_EQ(AttributeType::string, sys::get_component_attribute_type(registry, def, "A"));
 
   sys::set_component_attribute_type(registry, def, "A", AttributeType::integer);
   ASSERT_EQ(AttributeType::integer,
