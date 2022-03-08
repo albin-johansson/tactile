@@ -43,7 +43,7 @@ struct RemoveObjectResult final
 };
 
 /**
- * \brief Adds a new add_rectangle object to the active object layer.
+ * \brief Adds a new rectangle object to the active object layer.
  *
  * \pre The layer must be an object layer.
  *
@@ -53,10 +53,10 @@ struct RemoveObjectResult final
  *
  * \param registry the map registry.
  * \param layerId the object layer to add the object to.
- * \param x the add_rectangle x-coordinate.
- * \param y the add_rectangle y-coordinate.
- * \param width the add_rectangle width.
- * \param height the add_rectangle height.
+ * \param x the rectangle x-coordinate.
+ * \param y the rectangle y-coordinate.
+ * \param width the rectangle width.
+ * \param height the rectangle height.
  *
  * \return the identifier assigned to the object.
  */
