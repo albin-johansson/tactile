@@ -30,7 +30,7 @@ auto main(int, char**) -> int
 {
   try {
     tactile::AppConfiguration configuration;
-    tactile::application app{&configuration};
+    tactile::Application app{&configuration};
     return app.run();
   }
   catch (const std::exception& e) {

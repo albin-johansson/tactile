@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-using appl = application;
+using appl = Application;
 
 void subscribe_to_events(appl& app)
 {

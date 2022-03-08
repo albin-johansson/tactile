@@ -45,7 +45,7 @@ class AppConfiguration;
 /**
  * \brief Tracks visibility of widgets for the "Toggle UI" feature.
  */
-struct widget_show_state final
+struct WidgetShowState final
 {
   bool prev_show_layer_dock{};
   bool prev_show_tileset_dock{};
@@ -61,12 +61,12 @@ struct widget_show_state final
  * \details This class handles the main poll/update/render application loop, along with
  * the basic initialization and configuration of all aspects of the Tactile application.
  */
-class application final
+class Application final
 {
-  friend void subscribe_to_events(application&);
+  friend void subscribe_to_events(Application&);
 
  public:
-  explicit application(AppConfiguration* configuration);
+  explicit Application(AppConfiguration* configuration);
 
   auto run() -> int;
 
@@ -78,7 +78,7 @@ class application final
   texture_manager mTextures;
   icon_manager mIcons;
   widget_manager mWidgets;
-  widget_show_state mWidgetShowState;
+  WidgetShowState mWidgetShowState;
   bool mQuit{};
 
   template <typename Event, auto Slot>
