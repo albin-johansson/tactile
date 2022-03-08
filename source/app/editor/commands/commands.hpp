@@ -61,4 +61,5 @@
 #include "tilesets/set_tileset_name_cmd.hpp"
 #include "tools/bucket_cmd.hpp"
 #include "tools/eraser_sequence_cmd.hpp"
+#include "tools/add_rectangle_cmd.hpp"
 #include "tools/stamp_sequence_cmd.hpp"

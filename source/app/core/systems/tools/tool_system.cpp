@@ -23,6 +23,7 @@
 #include "core/components/tool.hpp"
 #include "eraser_tool_system.hpp"
 #include "object_selection_tool_system.hpp"
+#include "rectangle_tool_system.hpp"
 #include "stamp_tool_system.hpp"
 
 namespace tactile::sys {
@@ -59,6 +60,9 @@ void on_tool_pressed(entt::registry& registry,
       break;
 
     case tool_type::rectangle:
+      on_rectangle_tool_pressed(registry, dispatcher, mouse);
+      break;
+
     case tool_type::ellipse:
     case tool_type::point:
       // TODO
@@ -91,6 +95,9 @@ void on_tool_dragged(entt::registry& registry,
       break;
 
     case tool_type::rectangle:
+      on_rectangle_tool_dragged(registry, dispatcher, mouse);
+      break;
+
     case tool_type::ellipse:
     case tool_type::point:
       // TODO
@@ -123,6 +130,9 @@ void on_tool_released(entt::registry& registry,
       break;
 
     case tool_type::rectangle:
+      on_rectangle_tool_released(registry, dispatcher, mouse);
+      break;
+
     case tool_type::ellipse:
     case tool_type::point:
       // TODO

@@ -51,6 +51,7 @@ struct command_id final
     stamp_sequence,
     eraser_sequence,
     bucket,
+    add_rectangle,
 
     add_tileset,
     remove_tileset,

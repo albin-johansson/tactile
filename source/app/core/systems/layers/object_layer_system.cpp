@@ -21,6 +21,7 @@
 
 #include "core/components/object.hpp"
 #include "core/map.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "layer_system.hpp"
 #include "misc/throw.hpp"
@@ -54,6 +55,18 @@ namespace {
 }
 
 }  // namespace
+
+auto get_object_layer(entt::registry& registry, const layer_id id)
+    -> std::pair<entt::entity, comp::object_layer&>
+{
+  const auto entity = find_layer(registry, id);
+  if (entity != entt::null && registry.all_of<comp::object_layer>(entity)) {
+    return {entity, registry.get<comp::object_layer>(entity)};
+  }
+  else {
+    throw_traced(tactile_error{"Invalid object layer ID!"});
+  }
+}
 
 auto get_object_layer(const entt::registry& registry, const layer_id id)
     -> std::pair<entt::entity, const comp::object_layer&>

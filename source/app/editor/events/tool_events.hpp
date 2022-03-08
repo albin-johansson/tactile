@@ -76,6 +76,17 @@ struct flood_event final
   tile_id replacement{};
 };
 
+/**
+ * \brief Emitted when a rectangle should be added to the current object layer.
+ */
+struct AddRectangleEvent final
+{
+  float x{};
+  float y{};
+  float width{};
+  float height{};
+};
+
 /// \} End of group events
 
 }  // namespace tactile

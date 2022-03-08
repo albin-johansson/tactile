@@ -19,24 +19,41 @@
 
 #pragma once
 
-#include "core/tool_type.hpp"
+#include "core/systems/object_system.hpp"
+#include "editor/commands/command.hpp"
+#include "editor/commands/command_id.hpp"
+#include "tactile.hpp"
 
-namespace tactile::comp {
+namespace tactile {
 
-struct active_tool final
+/// \addtogroup commands
+/// \{
+
+class AddRectangleCmd final : public command_base
 {
-  tool_type tool{tool_type::none};
+ public:
+  AddRectangleCmd(registry_ref registry, float x, float y, float width, float height);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return command_id::add_rectangle;
+  }
+
+ private:
+  registry_ref mRegistry;
+  layer_id mLayerId{};
+  float mX{};
+  float mY{};
+  float mWidth{};
+  float mHeight{};
+  maybe<object_id> mObjectId;
+  maybe<sys::RemoveObjectResult> mSnapshot;
 };
 
-/**
- * \brief A context component that is used to keep track of rectangle tool strokes.
- */
-struct CurrentRectangleStroke final
-{
-  float start_x{};
-  float start_y{};
-  float current_x{};
-  float current_y{};
-};
+/// \} End of group commands
 
-}  // namespace tactile::comp
+}  // namespace tactile

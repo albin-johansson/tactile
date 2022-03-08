@@ -377,6 +377,11 @@ void application::on_flood(const flood_event& event)
   _execute<bucket_cmd>(mModel, event.origin, event.replacement);
 }
 
+void application::on_add_rectangle(const AddRectangleEvent& event)
+{
+  _execute<AddRectangleCmd>(mModel, event.x, event.y, event.width, event.height);
+}
+
 void application::on_center_viewport()
 {
   CenterViewport();

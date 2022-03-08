@@ -21,6 +21,8 @@
 
 #include <entt/entt.hpp>
 
+#include "core/components/object.hpp"
+#include "snapshot.hpp"
 #include "tactile.hpp"
 
 namespace tactile::sys {
@@ -32,6 +34,58 @@ namespace tactile::sys {
 
 /// \addtogroup object-system
 /// \{
+
+struct RemoveObjectResult final
+{
+  layer_id layer{};
+  comp::object object;
+  sys::attribute_context_snapshot context;
+};
+
+/**
+ * \brief Adds a new add_rectangle object to the active object layer.
+ *
+ * \pre The layer must be an object layer.
+ *
+ * \details The created entity will feature the following components:
+ * - `object`
+ * - `attribute_context`
+ *
+ * \param registry the map registry.
+ * \param layerId the object layer to add the object to.
+ * \param x the add_rectangle x-coordinate.
+ * \param y the add_rectangle y-coordinate.
+ * \param width the add_rectangle width.
+ * \param height the add_rectangle height.
+ *
+ * \return the identifier assigned to the object.
+ */
+auto make_rectangle_object(entt::registry& registry,
+                           layer_id layerId,
+                           float x,
+                           float y,
+                           float width,
+                           float height) -> object_id;
+
+/**
+ * \brief Removes an object.
+ *
+ * \details This function will also remove the object from the associated object layer.
+ *
+ * \param registry the map registry.
+ * \param id the identifier associated with the object to remove.
+ *
+ * \return a snapshot of the removed object.
+ */
+auto remove_object(entt::registry& registry, object_id id) -> RemoveObjectResult;
+
+/**
+ * \brief Restores a previously removed object.
+ *
+ * \param registry the map registry.
+ * \param snapshot the snapshot information.
+ */
+void restore_object(entt::registry& registry, RemoveObjectResult snapshot);
 
 /**
  * \brief Returns the object entity associated with a specific ID.

@@ -19,10 +19,111 @@
 
 #include "object_system.hpp"
 
+#include <string>   // string
+#include <utility>  // move
+
+#include "context_system.hpp"
+#include "core/components/layer.hpp"
 #include "core/components/object.hpp"
+#include "core/map.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/object_layer_system.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::sys {
+namespace {
+
+[[nodiscard]] auto _make_object(entt::registry& registry,
+                                const layer_id layerId,
+                                std::string name,
+                                const object_type type,
+                                const float x,
+                                const float y,
+                                const float width,
+                                const float height) -> object_id
+{
+  auto& map = registry.ctx<MapInfo>();
+  const auto id = map.next_object_id;
+  ++map.next_object_id;
+
+  auto&& [layerEntity, objectLayer] = get_object_layer(registry, layerId);
+
+  const auto objectEntity = registry.create();
+  objectLayer.objects.push_back(objectEntity);
+
+  auto& context = add_attribute_context(registry, objectEntity);
+  context.name = std::move(name);
+
+  auto& object = registry.emplace<comp::object>(objectEntity);
+  object.id = id;
+  object.type = type;
+
+  object.x = x;
+  object.y = y;
+  object.width = width;
+  object.height = height;
+  object.visible = true;
+
+  return id;
+}
+
+}  // namespace
+
+auto make_rectangle_object(entt::registry& registry,
+                           const layer_id layerId,
+                           const float x,
+                           const float y,
+                           const float width,
+                           const float height) -> object_id
+{
+  return _make_object(registry,
+                      layerId,
+                      "Rectangle",
+                      object_type::rect,
+                      x,
+                      y,
+                      width,
+                      height);
+}
+
+auto remove_object(entt::registry& registry, const object_id id) -> RemoveObjectResult
+{
+  const auto objectEntity = find_object(registry, id);
+
+  maybe<layer_id> layerId;
+  for (auto&& [layerEntity, layer, objectLayer] :
+       registry.view<comp::layer, comp::object_layer>().each()) {
+    if (std::erase(objectLayer.objects, objectEntity) > 0) {
+      layerId = layer.id;
+      break;
+    }
+  }
+
+  if (auto& activeObject = registry.ctx<comp::active_object>();
+      activeObject.entity == objectEntity) {
+    activeObject.entity = entt::null;
+  }
+
+  RemoveObjectResult result;
+  result.layer = layerId.value();
+  result.object = registry.get<comp::object>(objectEntity);
+  result.context = copy_attribute_context(registry, objectEntity);
+
+  registry.destroy(objectEntity);
+
+  return result;
+}
+
+void restore_object(entt::registry& registry, RemoveObjectResult snapshot)
+{
+  const auto objectEntity = registry.create();
+
+  registry.emplace<comp::object>(objectEntity, std::move(snapshot.object));
+  restore_attribute_context(registry, objectEntity, std::move(snapshot.context));
+
+  auto&& [layerEntity, layer] = get_object_layer(registry, snapshot.layer);
+  layer.objects.push_back(objectEntity);
+}
 
 auto find_object(const entt::registry& registry, const object_id id) -> entt::entity
 {

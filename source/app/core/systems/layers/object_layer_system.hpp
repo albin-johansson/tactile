@@ -39,6 +39,9 @@ namespace tactile::sys {
 /// \name Object functions
 /// \{
 
+[[nodiscard]] auto get_object_layer(entt::registry& registry, layer_id id)
+    -> std::pair<entt::entity, comp::object_layer&>;
+
 [[nodiscard]] auto get_object_layer(const entt::registry& registry, layer_id id)
     -> std::pair<entt::entity, const comp::object_layer&>;
 

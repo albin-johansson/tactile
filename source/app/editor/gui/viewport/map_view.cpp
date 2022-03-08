@@ -24,6 +24,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/components/tool.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
@@ -93,7 +94,8 @@ void CenterViewport(entt::dispatcher& dispatcher,
   dispatcher.enqueue<OffsetViewportEvent>(dx, dy);
 }
 
-void UpdateCursorGizmos(const entt::registry& registry,
+void UpdateCursorGizmos(graphics_ctx& graphics,
+                        const entt::registry& registry,
                         entt::dispatcher& dispatcher,
                         const ViewportCursorInfo& cursor,
                         const render_info& info)
@@ -131,6 +133,16 @@ void UpdateCursorGizmos(const entt::registry& registry,
   if (sys::is_tool_enabled(registry, tool_type::stamp) &&
       sys::is_tileset_selection_not_empty(registry)) {
     RenderStampPreview(registry, cursor.map_position, info);
+  }
+  else if (sys::is_tool_enabled(registry, tool_type::rectangle)) {
+    if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
+      const ImVec2 pos{stroke->start_x, stroke->start_y};
+      const ImVec2 size{stroke->current_x - stroke->start_x,
+                        stroke->current_y - stroke->start_y};
+
+      graphics.set_draw_color(cen::colors::yellow);
+      graphics.draw_translated_rect_with_shadow(pos, size);
+    }
   }
 }
 
@@ -192,7 +204,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 
   const auto cursor = GetViewportCursorInfo(info);
   if (cursor.is_within_map) {
-    UpdateCursorGizmos(registry, dispatcher, cursor, info);
+    UpdateCursorGizmos(graphics, registry, dispatcher, cursor, info);
   }
 
   graphics.pop_clip();
