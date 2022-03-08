@@ -27,9 +27,9 @@
 
 namespace tactile {
 
-bucket_cmd::bucket_cmd(registry_ref registry,
-                       const tile_position origin,
-                       const tile_id replacement)
+BucketToolCmd::BucketToolCmd(registry_ref registry,
+                             const tile_position origin,
+                             const tile_id replacement)
     : command_base{"Bucket Fill"}
     , mRegistry{registry}
     , mLayer{sys::get_active_layer_id(registry).value()}
@@ -37,7 +37,7 @@ bucket_cmd::bucket_cmd(registry_ref registry,
     , mReplacement{replacement}
 {}
 
-void bucket_cmd::undo()
+void BucketToolCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -55,7 +55,7 @@ void bucket_cmd::undo()
   mTarget.reset();
 }
 
-void bucket_cmd::redo()
+void BucketToolCmd::redo()
 {
   auto& registry = mRegistry.get();
 

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "stamp_sequence_cmd.hpp"
+#include "stamp_tool_cmd.hpp"
 
 #include <utility>  // move
 
@@ -27,9 +27,9 @@
 
 namespace tactile {
 
-stamp_sequence_cmd::stamp_sequence_cmd(registry_ref registry,
-                                       TileCache&& oldState,
-                                       TileCache&& newState)
+StampToolCmd::StampToolCmd(registry_ref registry,
+                           TileCache&& oldState,
+                           TileCache&& newState)
     : command_base{"Stamp Sequence"}
     , mRegistry{registry}
     , mLayer{sys::get_active_layer_id(registry).value()}
@@ -37,17 +37,17 @@ stamp_sequence_cmd::stamp_sequence_cmd(registry_ref registry,
     , mNewState{std::move(newState)}
 {}
 
-void stamp_sequence_cmd::undo()
+void StampToolCmd::undo()
 {
   ApplySequence(mOldState);
 }
 
-void stamp_sequence_cmd::redo()
+void StampToolCmd::redo()
 {
   ApplySequence(mNewState);
 }
 
-void stamp_sequence_cmd::ApplySequence(const TileCache& cache)
+void StampToolCmd::ApplySequence(const TileCache& cache)
 {
   auto& registry = mRegistry.get();
 

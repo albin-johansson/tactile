@@ -362,19 +362,19 @@ void application::on_tool_released(const ToolReleasedEvent& event)
 
 void application::on_stamp_sequence(stamp_sequence_event event)
 {
-  _register<stamp_sequence_cmd>(mModel,
+  _register<StampToolCmd>(mModel,
                                 std::move(event.old_state),
                                 std::move(event.sequence));
 }
 
 void application::on_eraser_sequence(eraser_sequence_event event)
 {
-  _register<eraser_sequence_cmd>(mModel, std::move(event.old_state));
+  _register<EraserToolCmd>(mModel, std::move(event.old_state));
 }
 
 void application::on_flood(const flood_event& event)
 {
-  _execute<bucket_cmd>(mModel, event.origin, event.replacement);
+  _execute<BucketToolCmd>(mModel, event.origin, event.replacement);
 }
 
 void application::on_add_rectangle(const AddRectangleEvent& event)

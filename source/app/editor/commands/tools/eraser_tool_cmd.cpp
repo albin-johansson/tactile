@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "eraser_sequence_cmd.hpp"
+#include "eraser_tool_cmd.hpp"
 
 #include <utility>  // move
 
@@ -28,14 +28,14 @@
 
 namespace tactile {
 
-eraser_sequence_cmd::eraser_sequence_cmd(registry_ref registry, TileCache&& oldState)
+EraserToolCmd::EraserToolCmd(registry_ref registry, TileCache&& oldState)
     : command_base{"Eraser Sequence"}
     , mRegistry{registry}
     , mLayer{sys::get_active_layer_id(registry).value()}
     , mOldState{std::move(oldState)}
 {}
 
-void eraser_sequence_cmd::undo()
+void EraserToolCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -45,7 +45,7 @@ void eraser_sequence_cmd::undo()
   sys::set_tiles(layer, mOldState);
 }
 
-void eraser_sequence_cmd::redo()
+void EraserToolCmd::redo()
 {
   auto& registry = mRegistry.get();
 

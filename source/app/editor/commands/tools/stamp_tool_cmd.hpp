@@ -29,10 +29,10 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class stamp_sequence_cmd final : public command_base
+class StampToolCmd final : public command_base
 {
  public:
-  stamp_sequence_cmd(registry_ref registry, TileCache&& oldState, TileCache&& newState);
+  StampToolCmd(registry_ref registry, TileCache&& oldState, TileCache&& newState);
 
   void undo() override;
 

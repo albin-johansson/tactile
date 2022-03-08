@@ -29,10 +29,10 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class eraser_sequence_cmd final : public command_base
+class EraserToolCmd final : public command_base
 {
  public:
-  eraser_sequence_cmd(registry_ref registry, TileCache&& oldState);
+  EraserToolCmd(registry_ref registry, TileCache&& oldState);
 
   void undo() override;
 
