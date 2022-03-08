@@ -29,10 +29,10 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class AddRectangleCmd final : public command_base
+class RectangleToolCmd final : public command_base
 {
  public:
-  AddRectangleCmd(registry_ref registry, float x, float y, float width, float height);
+  RectangleToolCmd(registry_ref registry, float x, float y, float width, float height);
 
   void undo() override;
 

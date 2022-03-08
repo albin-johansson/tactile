@@ -17,17 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_rectangle_cmd.hpp"
+#include "rectangle_tool_cmd.hpp"
 
 #include "core/systems/layers/layer_system.hpp"
 
 namespace tactile {
 
-AddRectangleCmd::AddRectangleCmd(registry_ref registry,
-                                 const float x,
-                                 const float y,
-                                 const float width,
-                                 const float height)
+RectangleToolCmd::RectangleToolCmd(registry_ref registry,
+                                   const float x,
+                                   const float y,
+                                   const float width,
+                                   const float height)
     : command_base{"Add Rectangle"}
     , mRegistry{registry}
     , mLayerId{sys::get_active_layer_id(registry).value()}
@@ -37,13 +37,13 @@ AddRectangleCmd::AddRectangleCmd(registry_ref registry,
     , mHeight{height}
 {}
 
-void AddRectangleCmd::undo()
+void RectangleToolCmd::undo()
 {
   auto& registry = mRegistry.get();
   mSnapshot = sys::remove_object(registry, mObjectId.value());
 }
 
-void AddRectangleCmd::redo()
+void RectangleToolCmd::redo()
 {
   auto& registry = mRegistry.get();
   if (mObjectId) {
