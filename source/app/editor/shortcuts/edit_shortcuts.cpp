@@ -195,4 +195,18 @@ auto EnableObjectSelectionShortcut::IsEnabled(const document_model& model,
          widgets.is_editor_focused();
 }
 
+EnableRectangleToolShortcut::EnableRectangleToolShortcut() : AShortcut{cen::scancodes::r}
+{}
+
+void EnableRectangleToolShortcut::Activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<select_tool_event>(tool_type::rectangle);
+}
+
+auto EnableRectangleToolShortcut::IsEnabled(const document_model& model,
+                                            const widget_manager& widgets) const -> bool
+{
+  return model.is_tool_possible(tool_type::rectangle) && widgets.is_editor_focused();
+}
+
 }  // namespace tactile

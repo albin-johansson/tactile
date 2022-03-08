@@ -56,6 +56,7 @@ void LoadDefaultShortcuts()
   LoadShortcut<EnableEraserShortcut>();
   LoadShortcut<EnableBucketShortcut>();
   LoadShortcut<EnableObjectSelectionShortcut>();
+  LoadShortcut<EnableRectangleToolShortcut>();
 
   LoadShortcut<AddRowShortcut>();
   LoadShortcut<AddColumnShortcut>();

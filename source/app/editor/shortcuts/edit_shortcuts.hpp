@@ -133,4 +133,14 @@ struct EnableObjectSelectionShortcut final : AShortcut
                                const widget_manager& widgets) const -> bool override;
 };
 
+struct EnableRectangleToolShortcut final : AShortcut
+{
+  EnableRectangleToolShortcut();
+
+  void Activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto IsEnabled(const document_model& model,
+                               const widget_manager& widgets) const -> bool override;
+};
+
 }  // namespace tactile
