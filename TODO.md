@@ -24,7 +24,6 @@ This document provides a brief outline of planned features for the Tactile edito
 
 ## Objects
 
-* Rectangle object tool
 * Point object tool
 * Ellipse object tool
 * Implement object reference properties
