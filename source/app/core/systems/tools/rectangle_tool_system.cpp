@@ -63,10 +63,7 @@ void on_rectangle_tool_released(entt::registry& registry,
                                 const mouse_info& mouse)
 {
   if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
-    if (auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
-      stroke->current_x = mouse.x;
-      stroke->current_y = mouse.y;
-
+    if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
       const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
 
       const auto x = (std::min)(stroke->start_x, stroke->current_x) / xRatio;
