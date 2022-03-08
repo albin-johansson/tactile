@@ -26,9 +26,9 @@
 
 namespace tactile {
 
-change_property_type_cmd::change_property_type_cmd(registry_ref registry,
-                                                   std::string name,
-                                                   const attribute_type type)
+ChangePropertyTypeCmd::ChangePropertyTypeCmd(registry_ref registry,
+                                             std::string name,
+                                             const attribute_type type)
     : ACommand{"Change Property Type"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}
@@ -36,7 +36,7 @@ change_property_type_cmd::change_property_type_cmd(registry_ref registry,
     , mPropertyType{type}
 {}
 
-void change_property_type_cmd::undo()
+void ChangePropertyTypeCmd::undo()
 {
   const auto& value = mPreviousValue.value();
   const auto type = value.type();
@@ -48,7 +48,7 @@ void change_property_type_cmd::undo()
   mPreviousValue.reset();
 }
 
-void change_property_type_cmd::redo()
+void ChangePropertyTypeCmd::redo()
 {
   auto& context = sys::get_context(mRegistry, mContextId);
   mPreviousValue = sys::get_property(mRegistry, context, mName).value;

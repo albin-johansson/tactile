@@ -631,27 +631,27 @@ void application::on_show_change_property_type_dialog(
 
 void application::on_add_property(const add_property_event& event)
 {
-  _execute<add_property_cmd>(mModel, event.name, event.type);
+  _execute<AddPropertyCmd>(mModel, event.name, event.type);
 }
 
 void application::on_remove_property(const remove_property_event& event)
 {
-  _execute<remove_property_cmd>(mModel, event.name);
+  _execute<RemovePropertyCmd>(mModel, event.name);
 }
 
 void application::on_rename_property(const rename_property_event& event)
 {
-  _execute<rename_property_cmd>(mModel, event.old_name, event.new_name);
+  _execute<RenamePropertyCmd>(mModel, event.old_name, event.new_name);
 }
 
 void application::on_update_property(const update_property_event& event)
 {
-  _execute<update_property_cmd>(mModel, event.name, event.value);
+  _execute<UpdatePropertyCmd>(mModel, event.name, event.value);
 }
 
 void application::on_change_property_type(const change_property_type_event& event)
 {
-  _execute<change_property_type_cmd>(mModel, event.name, event.type);
+  _execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
 }
 
 void application::on_inspect_context(const inspect_context_event& event)

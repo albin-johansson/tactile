@@ -28,10 +28,10 @@
 
 namespace tactile {
 
-class add_property_cmd final : public ACommand
+class AddPropertyCmd final : public ACommand
 {
  public:
-  add_property_cmd(registry_ref registry, std::string name, attribute_type type);
+  AddPropertyCmd(registry_ref registry, std::string name, attribute_type type);
 
   void undo() override;
 

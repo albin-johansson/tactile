@@ -28,10 +28,10 @@
 
 namespace tactile {
 
-class remove_property_cmd final : public ACommand
+class RemovePropertyCmd final : public ACommand
 {
  public:
-  remove_property_cmd(registry_ref registry, std::string name);
+  RemovePropertyCmd(registry_ref registry, std::string name);
 
   void undo() override;
 

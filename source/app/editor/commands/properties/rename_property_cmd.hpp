@@ -27,10 +27,10 @@
 
 namespace tactile {
 
-class rename_property_cmd final : public ACommand
+class RenamePropertyCmd final : public ACommand
 {
  public:
-  rename_property_cmd(registry_ref registry, std::string oldName, std::string newName);
+  RenamePropertyCmd(registry_ref registry, std::string oldName, std::string newName);
 
   void undo() override;
 

@@ -26,9 +26,9 @@
 
 namespace tactile {
 
-update_property_cmd::update_property_cmd(registry_ref registry,
-                                         std::string name,
-                                         attribute_value value)
+UpdatePropertyCmd::UpdatePropertyCmd(registry_ref registry,
+                                     std::string name,
+                                     attribute_value value)
     : ACommand{"update Property"}
     , mRegistry{registry}
     , mContextId{sys::current_context_id(mRegistry)}
@@ -36,24 +36,24 @@ update_property_cmd::update_property_cmd(registry_ref registry,
     , mNewValue{std::move(value)}
 {}
 
-void update_property_cmd::undo()
+void UpdatePropertyCmd::undo()
 {
   auto& context = sys::get_context(mRegistry, mContextId);
   sys::update_property(mRegistry, context, mName, mOldValue.value());
   mOldValue.reset();
 }
 
-void update_property_cmd::redo()
+void UpdatePropertyCmd::redo()
 {
   auto& context = sys::get_context(mRegistry, mContextId);
   mOldValue = sys::get_property(mRegistry, context, mName).value;
   sys::update_property(mRegistry, context, mName, mNewValue);
 }
 
-auto update_property_cmd::merge_with(const ACommand& cmd) -> bool
+auto UpdatePropertyCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const update_property_cmd&>(cmd);
+    const auto& other = dynamic_cast<const UpdatePropertyCmd&>(cmd);
     if (mContextId == other.mContextId && mName == other.mName) {
       mNewValue = other.mNewValue;
       return true;
