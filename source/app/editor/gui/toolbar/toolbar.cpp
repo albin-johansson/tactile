@@ -195,7 +195,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
                  model.is_tool_possible(tool_type::rectangle),
                  bw,
                  bh)) {
-    dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
+    dispatcher.enqueue<select_tool_event>(tool_type::rectangle);
   }
 
   if (ToolButton(TAC_ICON_ELLIPSE,
