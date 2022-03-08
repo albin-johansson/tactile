@@ -45,6 +45,11 @@ This section provides a high-level description of how to manually build the Tact
 of [Vcpkg](https://github.com/microsoft/vcpkg) for third-party dependency management. As a result, building the code
 base is really quite straightforward. The process is also basically the same on all platforms.
 
+## Install Boost
+
+You'll need to install the Boost libraries on your system. This should be fairly straight forward. Make sure that you
+set the environment variable `BOOST_ROOT` to point to the root of your Boost installation.
+
 ### Install Vcpkg
 
 You can install Vcpkg wherever you like, so it helps to set the environment variable `VCPKG_ROOT` to the path where
