@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "set_tileset_name_cmd.hpp"
+#include "rename_tileset_cmd.hpp"
 
 #include <utility>  // move
 
@@ -27,16 +27,16 @@
 
 namespace tactile {
 
-set_tileset_name_cmd::set_tileset_name_cmd(registry_ref registry,
-                                           const tileset_id id,
-                                           std::string name)
-    : ACommand{"Set Tileset Name"}
+RenameTilesetCmd::RenameTilesetCmd(registry_ref registry,
+                                   const tileset_id id,
+                                   std::string name)
+    : ACommand{"Rename Tileset"}
     , mRegistry{registry}
     , mTilesetId{id}
     , mNewName{std::move(name)}
 {}
 
-void set_tileset_name_cmd::undo()
+void RenameTilesetCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -47,7 +47,7 @@ void set_tileset_name_cmd::undo()
   context.name = mOldName.value();
 }
 
-void set_tileset_name_cmd::redo()
+void RenameTilesetCmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -59,10 +59,10 @@ void set_tileset_name_cmd::redo()
   context.name = mNewName;
 }
 
-auto set_tileset_name_cmd::merge_with(const ACommand& cmd) -> bool
+auto RenameTilesetCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const set_tileset_name_cmd&>(cmd);
+    const auto& other = dynamic_cast<const RenameTilesetCmd&>(cmd);
     if (mTilesetId == other.mTilesetId) {
       mNewName = other.mNewName;
       return true;

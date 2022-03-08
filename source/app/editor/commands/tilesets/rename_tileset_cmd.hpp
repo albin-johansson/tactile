@@ -27,10 +27,10 @@
 
 namespace tactile {
 
-class set_tileset_name_cmd final : public ACommand
+class RenameTilesetCmd final : public ACommand
 {
  public:
-  set_tileset_name_cmd(registry_ref registry, tileset_id id, std::string name);
+  RenameTilesetCmd(registry_ref registry, tileset_id id, std::string name);
 
   void undo() override;
 

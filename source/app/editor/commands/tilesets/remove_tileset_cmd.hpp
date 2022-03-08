@@ -26,10 +26,10 @@
 
 namespace tactile {
 
-class remove_tileset_cmd final : public ACommand
+class RemoveTilesetCmd final : public ACommand
 {
  public:
-  remove_tileset_cmd(registry_ref registry, tileset_id id);
+  RemoveTilesetCmd(registry_ref registry, tileset_id id);
 
   void undo() override;
 

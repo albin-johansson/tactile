@@ -27,13 +27,13 @@
 
 namespace tactile {
 
-class add_tileset_cmd final : public ACommand
+class AddTilesetCmd final : public ACommand
 {
  public:
-  add_tileset_cmd(registry_ref registry,
-                  comp::texture texture,
-                  int32 tileWidth,
-                  int32 tileHeight);
+  AddTilesetCmd(registry_ref registry,
+                comp::texture texture,
+                int32 tileWidth,
+                int32 tileHeight);
 
   void undo() override;
 
