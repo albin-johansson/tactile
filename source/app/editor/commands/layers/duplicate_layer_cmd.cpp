@@ -24,13 +24,13 @@
 
 namespace tactile {
 
-duplicate_layer_cmd::duplicate_layer_cmd(registry_ref registry, const layer_id id)
+DuplicateLayerCmd::DuplicateLayerCmd(registry_ref registry, const layer_id id)
     : ACommand{"Duplicate Layer"}
     , mRegistry{registry}
     , mLayerId{id}
 {}
 
-void duplicate_layer_cmd::undo()
+void DuplicateLayerCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -38,7 +38,7 @@ void duplicate_layer_cmd::undo()
   sys::remove_layer(registry, entity);
 }
 
-void duplicate_layer_cmd::redo()
+void DuplicateLayerCmd::redo()
 {
   auto& registry = mRegistry.get();
 

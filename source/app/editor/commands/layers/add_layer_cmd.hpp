@@ -29,10 +29,10 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class add_layer_cmd final : public ACommand
+class AddLayerCmd final : public ACommand
 {
  public:
-  add_layer_cmd(registry_ref registry, layer_type type);
+  AddLayerCmd(registry_ref registry, layer_type type);
 
   void undo() override;
 

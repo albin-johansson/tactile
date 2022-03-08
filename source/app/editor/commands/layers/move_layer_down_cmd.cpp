@@ -24,20 +24,20 @@
 
 namespace tactile {
 
-move_layer_down_cmd::move_layer_down_cmd(registry_ref registry, const layer_id id)
+MoveLayerDownCmd::MoveLayerDownCmd(registry_ref registry, const layer_id id)
     : ACommand{"Move Layer Down"}
     , mRegistry{registry}
     , mLayerId{id}
 {}
 
-void move_layer_down_cmd::undo()
+void MoveLayerDownCmd::undo()
 {
   auto& registry = mRegistry.get();
   auto&& [entity, layer] = sys::get_layer(registry, mLayerId);
   sys::move_layer_up(registry, entity);
 }
 
-void move_layer_down_cmd::redo()
+void MoveLayerDownCmd::redo()
 {
   auto& registry = mRegistry.get();
   auto&& [entity, layer] = sys::get_layer(registry, mLayerId);

@@ -29,10 +29,10 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-class remove_layer_cmd final : public ACommand
+class RemoveLayerCmd final : public ACommand
 {
  public:
-  remove_layer_cmd(registry_ref registry, layer_id id);
+  RemoveLayerCmd(registry_ref registry, layer_id id);
 
   void undo() override;
 
