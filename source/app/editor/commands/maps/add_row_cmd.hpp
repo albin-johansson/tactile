@@ -36,7 +36,7 @@ class AddRowCmd final : public ACommand
 
   [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
-  [[nodiscard]] auto id() const noexcept -> int override { return command_id::add_row; }
+  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_row; }
 
  private:
   registry_ref mRegistry;

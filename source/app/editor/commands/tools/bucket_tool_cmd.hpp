@@ -40,7 +40,7 @@ class BucketToolCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override { return command_id::bucket; }
+  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::bucket; }
 
  private:
   registry_ref mRegistry;

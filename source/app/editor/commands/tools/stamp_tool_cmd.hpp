@@ -40,7 +40,7 @@ class StampToolCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::stamp_sequence;
+    return CommandId::stamp_sequence;
   }
 
  private:

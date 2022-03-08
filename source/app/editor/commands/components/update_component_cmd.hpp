@@ -45,7 +45,7 @@ class UpdateComponentCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::update_component;
+    return CommandId::update_component;
   }
 
  private:

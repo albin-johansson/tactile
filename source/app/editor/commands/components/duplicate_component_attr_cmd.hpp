@@ -40,7 +40,7 @@ class DuplicateComponentAttrCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::duplicate_component_attribute;
+    return CommandId::duplicate_component_attribute;
   }
 
  private:

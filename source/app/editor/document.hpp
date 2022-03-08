@@ -30,7 +30,7 @@ namespace tactile {
 struct Document final
 {
   entt::registry registry;
-  command_stack commands;
+  CommandStack commands;
   std::filesystem::path path;
 };
 

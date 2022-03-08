@@ -40,7 +40,7 @@ class EraserToolCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::eraser_sequence;
+    return CommandId::eraser_sequence;
   }
 
  private:

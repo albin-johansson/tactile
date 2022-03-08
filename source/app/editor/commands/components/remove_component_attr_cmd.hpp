@@ -40,7 +40,7 @@ class RemoveComponentAttrCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::remove_component_attribute;
+    return CommandId::remove_component_attribute;
   }
 
  private:

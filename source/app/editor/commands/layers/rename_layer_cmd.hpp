@@ -38,7 +38,7 @@ class RenameLayerCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::rename_layer;
+    return CommandId::rename_layer;
   }
 
  private:

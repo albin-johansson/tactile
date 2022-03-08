@@ -41,7 +41,7 @@ class UpdatePropertyCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::update_property;
+    return CommandId::update_property;
   }
 
  private:

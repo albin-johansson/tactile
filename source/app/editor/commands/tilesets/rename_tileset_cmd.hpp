@@ -40,7 +40,7 @@ class RenameTilesetCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::set_tileset_name;
+    return CommandId::set_tileset_name;
   }
 
  private:

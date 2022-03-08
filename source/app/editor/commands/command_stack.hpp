@@ -35,10 +35,10 @@ namespace tactile {
  *
  * \ingroup commands
  */
-class command_stack final
+class CommandStack final
 {
  public:
-  command_stack();
+  CommandStack();
 
   /**
    * \brief Clears the command stack of all commands.

@@ -41,7 +41,7 @@ class RenameComponentAttrCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::rename_component_attribute;
+    return CommandId::rename_component_attribute;
   }
 
  private:

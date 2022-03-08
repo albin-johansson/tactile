@@ -39,7 +39,7 @@ class ChangePropertyTypeCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::change_property_type;
+    return CommandId::change_property_type;
   }
 
  private:

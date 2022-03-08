@@ -39,7 +39,7 @@ class RemoveComponentCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::remove_component;
+    return CommandId::remove_component;
   }
 
  private:

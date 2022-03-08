@@ -46,7 +46,7 @@ class MoveObjectCmd final : public AObjectCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::move_object;
+    return CommandId::move_object;
   }
 
  private:

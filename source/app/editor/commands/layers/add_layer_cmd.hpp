@@ -38,7 +38,7 @@ class AddLayerCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override { return command_id::add_layer; }
+  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_layer; }
 
  private:
   registry_ref mRegistry;

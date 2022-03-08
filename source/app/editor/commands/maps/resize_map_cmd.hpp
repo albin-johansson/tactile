@@ -36,9 +36,7 @@ class ResizeMapCmd final : public ACommand
   void redo() override;
 
   [[nodiscard]] auto id() const noexcept -> int override
-  {
-    return command_id::resize_map;
-  }
+  { return CommandId::resize_map; }
 
  private:
   registry_ref mRegistry;

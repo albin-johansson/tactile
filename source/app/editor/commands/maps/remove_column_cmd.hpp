@@ -39,7 +39,7 @@ class RemoveColumnCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::remove_column;
+    return CommandId::remove_column;
   }
 
  private:

@@ -24,9 +24,9 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-struct command_id final
+struct CommandId final
 {
-  enum value_t {
+  enum Value {
     add_row,
     add_column,
     remove_row,

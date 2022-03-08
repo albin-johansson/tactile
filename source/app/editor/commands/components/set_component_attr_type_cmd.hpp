@@ -41,7 +41,7 @@ class SetComponentAttrTypeCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::set_component_attribute_type;
+    return CommandId::set_component_attribute_type;
   }
 
  private:

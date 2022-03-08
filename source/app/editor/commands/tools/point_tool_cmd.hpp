@@ -38,7 +38,7 @@ class PointToolCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override { return command_id::add_point; }
+  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_point; }
 
  private:
   registry_ref mRegistry;

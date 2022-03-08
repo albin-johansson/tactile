@@ -36,7 +36,7 @@ class DuplicateLayerCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::duplicate_layer;
+    return CommandId::duplicate_layer;
   }
 
  private:

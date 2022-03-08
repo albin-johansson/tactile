@@ -36,7 +36,7 @@ class SetLayerVisibilityCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::set_layer_visible;
+    return CommandId::set_layer_visible;
   }
 
  private:

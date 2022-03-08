@@ -38,7 +38,7 @@ class CreateComponentAttrCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::create_component_def_attribute;
+    return CommandId::create_component_def_attribute;
   }
 
  private:

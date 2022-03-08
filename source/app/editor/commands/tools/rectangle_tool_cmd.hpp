@@ -40,7 +40,7 @@ class RectangleToolCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::add_rectangle;
+    return CommandId::add_rectangle;
   }
 
  private:

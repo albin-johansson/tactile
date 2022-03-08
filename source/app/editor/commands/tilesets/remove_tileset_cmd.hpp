@@ -37,7 +37,7 @@ class RemoveTilesetCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::remove_tileset;
+    return CommandId::remove_tileset;
   }
 
  private:

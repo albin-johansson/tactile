@@ -40,7 +40,7 @@ class SetObjectTagCmd final : public AObjectCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::set_object_tag;
+    return CommandId::set_object_tag;
   }
 
  private:

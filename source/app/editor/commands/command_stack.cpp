@@ -25,25 +25,25 @@
 
 namespace tactile {
 
-command_stack::command_stack() : mCapacity{get_preferences().command_capacity()} {}
+CommandStack::CommandStack() : mCapacity{get_preferences().command_capacity()} {}
 
-void command_stack::clear()
+void CommandStack::clear()
 {
   mStack.clear();
   mIndex.reset();
 }
 
-void command_stack::mark_as_clean()
+void CommandStack::mark_as_clean()
 {
   mCleanIndex = mIndex;
 }
 
-void command_stack::reset_clean()
+void CommandStack::reset_clean()
 {
   mCleanIndex.reset();
 }
 
-void command_stack::undo()
+void CommandStack::undo()
 {
   TACTILE_ASSERT(can_undo());
 
@@ -58,7 +58,7 @@ void command_stack::undo()
   }
 }
 
-void command_stack::redo()
+void CommandStack::redo()
 {
   TACTILE_ASSERT(can_redo());
 
@@ -70,7 +70,7 @@ void command_stack::redo()
   mIndex = index;
 }
 
-void command_stack::set_capacity(usize capacity)
+void CommandStack::set_capacity(const usize capacity)
 {
   mCapacity = capacity;
 
@@ -81,22 +81,22 @@ void command_stack::set_capacity(usize capacity)
   }
 }
 
-auto command_stack::is_clean() const -> bool
+auto CommandStack::is_clean() const -> bool
 {
   return mStack.empty() || (mCleanIndex == mIndex);
 }
 
-auto command_stack::can_undo() const -> bool
+auto CommandStack::can_undo() const -> bool
 {
   return !mStack.empty() && mIndex.has_value();
 }
 
-auto command_stack::can_redo() const -> bool
+auto CommandStack::can_redo() const -> bool
 {
   return (!mStack.empty() && !mIndex) || (!mStack.empty() && mIndex < mStack.size() - 1);
 }
 
-auto command_stack::get_undo_text() const -> const std::string&
+auto CommandStack::get_undo_text() const -> const std::string&
 {
   TACTILE_ASSERT(can_undo());
 
@@ -104,7 +104,7 @@ auto command_stack::get_undo_text() const -> const std::string&
   return cmd->text();
 }
 
-auto command_stack::get_redo_text() const -> const std::string&
+auto CommandStack::get_redo_text() const -> const std::string&
 {
   TACTILE_ASSERT(can_redo());
 
@@ -112,7 +112,7 @@ auto command_stack::get_redo_text() const -> const std::string&
   return cmd->text();
 }
 
-void command_stack::remove_oldest_command()
+void CommandStack::remove_oldest_command()
 {
   mStack.pop_front();
 
@@ -130,7 +130,7 @@ void command_stack::remove_oldest_command()
   }
 }
 
-void command_stack::remove_commands_after_current_index()
+void CommandStack::remove_commands_after_current_index()
 {
   const auto startIndex = mIndex ? *mIndex + 1 : 0;
   const auto size = mStack.size();
