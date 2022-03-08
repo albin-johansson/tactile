@@ -28,14 +28,14 @@
 
 namespace tactile {
 
-class update_component_cmd final : public ACommand
+class UpdateComponentCmd final : public ACommand
 {
  public:
-  update_component_cmd(registry_ref registry,
-                       context_id contextId,
-                       component_id componentId,
-                       std::string attribute,
-                       attribute_value value);
+  UpdateComponentCmd(registry_ref registry,
+                     context_id contextId,
+                     component_id componentId,
+                     std::string attribute,
+                     attribute_value value);
 
   void undo() override;
 

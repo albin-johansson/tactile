@@ -27,12 +27,12 @@
 
 namespace tactile {
 
-class remove_component_attr_cmd final : public ACommand
+class RemoveComponentAttrCmd final : public ACommand
 {
  public:
-  remove_component_attr_cmd(registry_ref registry,
-                            component_id componentId,
-                            std::string attribute);
+  RemoveComponentAttrCmd(registry_ref registry,
+                         component_id componentId,
+                         std::string attribute);
 
   void undo() override;
 

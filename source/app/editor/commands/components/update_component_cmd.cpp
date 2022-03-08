@@ -25,11 +25,11 @@
 
 namespace tactile {
 
-update_component_cmd::update_component_cmd(registry_ref registry,
-                                           const context_id contextId,
-                                           const component_id componentId,
-                                           std::string attribute,
-                                           attribute_value value)
+UpdateComponentCmd::UpdateComponentCmd(registry_ref registry,
+                                       const context_id contextId,
+                                       const component_id componentId,
+                                       std::string attribute,
+                                       attribute_value value)
     : ACommand{"update Component Value"}
     , mRegistry{registry}
     , mContextId{contextId}
@@ -38,7 +38,7 @@ update_component_cmd::update_component_cmd(registry_ref registry,
     , mUpdatedValue{std::move(value)}
 {}
 
-void update_component_cmd::undo()
+void UpdateComponentCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -51,7 +51,7 @@ void update_component_cmd::undo()
   mPreviousValue.reset();
 }
 
-void update_component_cmd::redo()
+void UpdateComponentCmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -64,10 +64,10 @@ void update_component_cmd::redo()
                         mUpdatedValue);
 }
 
-auto update_component_cmd::merge_with(const ACommand& cmd) -> bool
+auto UpdateComponentCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const update_component_cmd&>(cmd);
+    const auto& other = dynamic_cast<const UpdateComponentCmd&>(cmd);
 
     const bool targetsSameAttribute = mContextId == other.mContextId &&
                                       mComponentId == other.mComponentId &&

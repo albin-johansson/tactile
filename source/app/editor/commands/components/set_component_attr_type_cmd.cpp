@@ -25,10 +25,10 @@
 
 namespace tactile {
 
-set_component_attr_type_cmd::set_component_attr_type_cmd(registry_ref registry,
-                                                         const component_id id,
-                                                         std::string attribute,
-                                                         const attribute_type type)
+SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(registry_ref registry,
+                                                 const component_id id,
+                                                 std::string attribute,
+                                                 const attribute_type type)
     : ACommand{"Set Component Attribute Type"}
     , mRegistry{registry}
     , mComponentId{id}
@@ -36,7 +36,7 @@ set_component_attr_type_cmd::set_component_attr_type_cmd(registry_ref registry,
     , mNewType{type}
 {}
 
-void set_component_attr_type_cmd::undo()
+void SetComponentAttrTypeCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -49,7 +49,7 @@ void set_component_attr_type_cmd::undo()
   sys::set_component_attribute_value(registry, mComponentId, mAttributeName, previous);
 }
 
-void set_component_attr_type_cmd::redo()
+void SetComponentAttrTypeCmd::redo()
 {
   auto& registry = mRegistry.get();
 

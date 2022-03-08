@@ -25,10 +25,10 @@
 
 namespace tactile {
 
-rename_component_attr_cmd::rename_component_attr_cmd(registry_ref registry,
-                                                     const component_id id,
-                                                     std::string previousName,
-                                                     std::string updatedName)
+RenameComponentAttrCmd::RenameComponentAttrCmd(registry_ref registry,
+                                               const component_id id,
+                                               std::string previousName,
+                                               std::string updatedName)
     : ACommand{"Rename Component Attribute"}
     , mRegistry{registry}
     , mComponentId{id}
@@ -36,13 +36,13 @@ rename_component_attr_cmd::rename_component_attr_cmd(registry_ref registry,
     , mUpdatedName{std::move(updatedName)}
 {}
 
-void rename_component_attr_cmd::undo()
+void RenameComponentAttrCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::rename_component_attribute(registry, mComponentId, mUpdatedName, mPreviousName);
 }
 
-void rename_component_attr_cmd::redo()
+void RenameComponentAttrCmd::redo()
 {
   auto& registry = mRegistry.get();
   sys::rename_component_attribute(registry, mComponentId, mPreviousName, mUpdatedName);

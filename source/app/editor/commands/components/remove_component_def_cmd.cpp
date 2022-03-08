@@ -21,21 +21,20 @@
 
 namespace tactile {
 
-remove_component_def_cmd::remove_component_def_cmd(registry_ref registry,
-                                                   const component_id id)
+RemoveComponentDefCmd::RemoveComponentDefCmd(registry_ref registry, const component_id id)
     : ACommand{"Remove Component Definition"}
     , mRegistry{registry}
     , mComponentId{id}
 {}
 
-void remove_component_def_cmd::undo()
+void RemoveComponentDefCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::restore_component_def(registry, mSnapshot.value());
   mSnapshot.reset();
 }
 
-void remove_component_def_cmd::redo()
+void RemoveComponentDefCmd::redo()
 {
   auto& registry = mRegistry.get();
   mSnapshot = sys::remove_component_def(registry, mComponentId);

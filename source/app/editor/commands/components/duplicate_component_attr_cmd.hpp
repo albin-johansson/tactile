@@ -27,12 +27,12 @@
 
 namespace tactile {
 
-class duplicate_component_attr_cmd final : public ACommand
+class DuplicateComponentAttrCmd final : public ACommand
 {
  public:
-  duplicate_component_attr_cmd(registry_ref registry,
-                               component_id componentId,
-                               std::string attribute);
+  DuplicateComponentAttrCmd(registry_ref registry,
+                            component_id componentId,
+                            std::string attribute);
 
   void undo() override;
 

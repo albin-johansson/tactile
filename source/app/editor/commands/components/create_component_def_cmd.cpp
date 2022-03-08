@@ -25,20 +25,19 @@
 
 namespace tactile {
 
-create_component_def_cmd::create_component_def_cmd(registry_ref registry,
-                                                   std::string name)
+CreateComponentDefCmd::CreateComponentDefCmd(registry_ref registry, std::string name)
     : ACommand{"Create Component Definition"}
     , mRegistry{registry}
     , mName{std::move(name)}
 {}
 
-void create_component_def_cmd::undo()
+void CreateComponentDefCmd::undo()
 {
   auto& registry = mRegistry.get();
   sys::remove_component_def(registry, mComponentId.value());
 }
 
-void create_component_def_cmd::redo()
+void CreateComponentDefCmd::redo()
 {
   auto& registry = mRegistry.get();
   if (!mComponentId) {

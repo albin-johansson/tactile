@@ -668,72 +668,72 @@ void application::on_open_component_editor()
 
 void application::on_create_component_def(const create_component_def_event& event)
 {
-  _execute<create_component_def_cmd>(mModel, event.name);
+  _execute<CreateComponentDefCmd>(mModel, event.name);
 }
 
 void application::on_remove_component_def(const remove_component_def_event& event)
 {
-  _execute<remove_component_def_cmd>(mModel, event.id);
+  _execute<RemoveComponentDefCmd>(mModel, event.id);
 }
 
 void application::on_rename_component_def(const rename_component_def_event& event)
 {
-  _execute<rename_component_cmd>(mModel, event.id, event.name);
+  _execute<RenameComponentCmd>(mModel, event.id, event.name);
 }
 
 void application::on_create_component_attr(const create_component_attr_event& event)
 {
-  _execute<create_component_attr_cmd>(mModel, event.id, event.name);
+  _execute<CreateComponentAttrCmd>(mModel, event.id, event.name);
 }
 
 void application::on_remove_component_attr(const remove_component_attr_event& event)
 {
-  _execute<remove_component_attr_cmd>(mModel, event.id, event.name);
+  _execute<RemoveComponentAttrCmd>(mModel, event.id, event.name);
 }
 
 void application::on_rename_component_attr(const rename_component_attr_event& event)
 {
-  _execute<rename_component_attr_cmd>(mModel, event.id, event.previous, event.updated);
+  _execute<RenameComponentAttrCmd>(mModel, event.id, event.previous, event.updated);
 }
 
 void application::on_duplicate_component_attr(const duplicate_component_attr_event& event)
 {
-  _execute<duplicate_component_attr_cmd>(mModel, event.id, event.attribute);
+  _execute<DuplicateComponentAttrCmd>(mModel, event.id, event.attribute);
 }
 
 void application::on_set_component_attr_type(const set_component_attr_type_event& event)
 {
-  _execute<set_component_attr_type_cmd>(mModel, event.id, event.attribute, event.type);
+  _execute<SetComponentAttrTypeCmd>(mModel, event.id, event.attribute, event.type);
 }
 
 void application::on_update_component_def_attr(
     const update_component_def_attr_event& event)
 {
-  _execute<update_component_attr_cmd>(mModel, event.id, event.attribute, event.value);
+  _execute<UpdateComponentAttrCmd>(mModel, event.id, event.attribute, event.value);
 }
 
 void application::on_add_component(const add_component_event& event)
 {
-  _execute<add_component_cmd>(mModel, event.context, event.component);
+  _execute<AddComponentCmd>(mModel, event.context, event.component);
 }
 
 void application::on_remove_component(const remove_component_event& event)
 {
-  _execute<remove_component_cmd>(mModel, event.context, event.component);
+  _execute<RemoveComponentCmd>(mModel, event.context, event.component);
 }
 
 void application::on_update_component(const update_component_event& event)
 {
-  _execute<update_component_cmd>(mModel,
-                                 event.context,
-                                 event.component,
-                                 event.attribute,
-                                 event.value);
+  _execute<UpdateComponentCmd>(mModel,
+                               event.context,
+                               event.component,
+                               event.attribute,
+                               event.value);
 }
 
 void application::on_reset_component_values(const reset_component_values_event& event)
 {
-  _execute<reset_component_cmd>(mModel, event.context, event.component);
+  _execute<ResetComponentCmd>(mModel, event.context, event.component);
 }
 
 void application::on_toggle_ui()
