@@ -60,7 +60,7 @@ void on_tool_pressed(entt::registry& registry,
       break;
 
     case tool_type::rectangle:
-      on_rectangle_tool_pressed(registry, dispatcher, mouse);
+      on_rectangle_tool_pressed(registry, mouse);
       break;
 
     case tool_type::ellipse:
@@ -95,7 +95,7 @@ void on_tool_dragged(entt::registry& registry,
       break;
 
     case tool_type::rectangle:
-      on_rectangle_tool_dragged(registry, dispatcher, mouse);
+      on_rectangle_tool_dragged(registry, mouse);
       break;
 
     case tool_type::ellipse:

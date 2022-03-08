@@ -26,13 +26,9 @@
 
 namespace tactile::sys {
 
-void on_rectangle_tool_pressed(entt::registry& registry,
-                               entt::dispatcher& dispatcher,
-                               const mouse_info& mouse);
+void on_rectangle_tool_pressed(entt::registry& registry, const mouse_info& mouse);
 
-void on_rectangle_tool_dragged(entt::registry& registry,
-                               entt::dispatcher& dispatcher,
-                               const mouse_info& mouse);
+void on_rectangle_tool_dragged(entt::registry& registry, const mouse_info& mouse);
 
 void on_rectangle_tool_released(entt::registry& registry,
                                 entt::dispatcher& dispatcher,

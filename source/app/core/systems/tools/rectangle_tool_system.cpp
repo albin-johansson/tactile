@@ -37,9 +37,7 @@ namespace {
 
 }  // namespace
 
-void on_rectangle_tool_pressed(entt::registry& registry,
-                               entt::dispatcher& dispatcher,
-                               const mouse_info& mouse)
+void on_rectangle_tool_pressed(entt::registry& registry, const mouse_info& mouse)
 {
   if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
     auto& stroke = registry.set<comp::CurrentRectangleStroke>();
@@ -50,9 +48,7 @@ void on_rectangle_tool_pressed(entt::registry& registry,
   }
 }
 
-void on_rectangle_tool_dragged(entt::registry& registry,
-                               entt::dispatcher& dispatcher,
-                               const mouse_info& mouse)
+void on_rectangle_tool_dragged(entt::registry& registry, const mouse_info& mouse)
 {
   if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
     if (auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
