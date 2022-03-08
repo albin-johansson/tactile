@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "object_cmd.hpp"
+#include "object_command.hpp"
 
 #include <utility>  // move
 
@@ -27,13 +27,15 @@
 
 namespace tactile {
 
-object_cmd::object_cmd(std::string name, registry_ref registry, const object_id id)
+AObjectCommand::AObjectCommand(std::string name,
+                               registry_ref registry,
+                               const object_id id)
     : ACommand{std::move(name)}
     , mRegistry{registry}
     , mObjectId{id}
 {}
 
-auto object_cmd::target_object_context() const -> comp::attribute_context&
+auto AObjectCommand::target_object_context() const -> comp::attribute_context&
 {
   auto& registry = mRegistry.get();
 
@@ -43,7 +45,7 @@ auto object_cmd::target_object_context() const -> comp::attribute_context&
   return registry.get<comp::attribute_context>(entity);
 }
 
-auto object_cmd::target_object() -> comp::object&
+auto AObjectCommand::target_object() -> comp::object&
 {
   auto& registry = mRegistry.get();
 

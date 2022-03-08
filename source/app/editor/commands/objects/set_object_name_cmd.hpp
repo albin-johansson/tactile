@@ -22,15 +22,15 @@
 #include <string>  // string
 
 #include "editor/commands/command_id.hpp"
-#include "object_cmd.hpp"
+#include "object_command.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class set_object_name_cmd final : public object_cmd
+class SetObjectNameCmd final : public AObjectCommand
 {
  public:
-  set_object_name_cmd(registry_ref registry, object_id id, std::string name);
+  SetObjectNameCmd(registry_ref registry, object_id id, std::string name);
 
   void undo() override;
 

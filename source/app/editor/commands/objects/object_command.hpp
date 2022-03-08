@@ -28,10 +28,10 @@
 
 namespace tactile {
 
-class object_cmd : public ACommand
+class AObjectCommand : public ACommand
 {
  public:
-  object_cmd(std::string name, registry_ref registry, object_id id);
+  AObjectCommand(std::string name, registry_ref registry, object_id id);
 
  protected:
   [[nodiscard]] auto target_object() -> comp::object&;

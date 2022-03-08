@@ -20,15 +20,15 @@
 #pragma once
 
 #include "editor/commands/command_id.hpp"
-#include "object_cmd.hpp"
+#include "object_command.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class set_object_visibility_cmd final : public object_cmd
+class SetObjectVisibilityCmd final : public AObjectCommand
 {
  public:
-  set_object_visibility_cmd(registry_ref registry, object_id id, bool visible);
+  SetObjectVisibilityCmd(registry_ref registry, object_id id, bool visible);
 
   void undo() override;
 

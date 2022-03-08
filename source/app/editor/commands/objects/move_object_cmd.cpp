@@ -23,27 +23,27 @@
 
 namespace tactile {
 
-move_object_cmd::move_object_cmd(registry_ref registry,
-                                 const object_id id,
-                                 const float oldX,
-                                 const float oldY,
-                                 const float newX,
-                                 const float newY)
-    : object_cmd{"Move Object", registry, id}
+MoveObjectCmd::MoveObjectCmd(registry_ref registry,
+                             const object_id id,
+                             const float oldX,
+                             const float oldY,
+                             const float newX,
+                             const float newY)
+    : AObjectCommand{"Move Object", registry, id}
     , mOldX{oldX}
     , mOldY{oldY}
     , mNewX{newX}
     , mNewY{newY}
 {}
 
-void move_object_cmd::undo()
+void MoveObjectCmd::undo()
 {
   auto& object = target_object();
   object.x = mOldX;
   object.y = mOldY;
 }
 
-void move_object_cmd::redo()
+void MoveObjectCmd::redo()
 {
   auto& object = target_object();
   object.x = mNewX;
