@@ -29,10 +29,11 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
     * Note that not all Tiled features are supported by Tactile
 * Intuitive mouse tools
-    * Tile stamp tool
-    * Eraser tool
-    * Bucket fill tool
-    * ...
+  * Tile stamp tool
+  * Eraser tool
+  * Bucket fill tool
+  * Rectangle tool
+  * Point tool
 * Components (attachable bundles of attributes, otherwise commonly found in game engines)
 * Tile animations
 * Various editor themes
