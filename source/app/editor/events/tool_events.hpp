@@ -30,17 +30,26 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
-struct mouse_pressed_event final
+/**
+ * \brief Event that is emitted when a mouse tool is pressed.
+ */
+struct ToolPressedEvent final
 {
   mouse_info info;
 };
 
-struct mouse_drag_event final
+/**
+ * \brief Event that is emitted when a mouse tool is dragged.
+ */
+struct ToolDraggedEvent final
 {
   mouse_info info;
 };
 
-struct mouse_released_event final
+/**
+ * \brief Event that is emitted when a mouse tool is released.
+ */
+struct ToolReleasedEvent final
 {
   mouse_info info;
 };

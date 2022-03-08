@@ -114,9 +114,9 @@ class application final
   void on_select_map(const select_map_event& event);
 
   void on_select_tool(const select_tool_event& event);
-  void on_mouse_pressed(const mouse_pressed_event& event);
-  void on_mouse_drag(const mouse_drag_event& event);
-  void on_mouse_released(const mouse_released_event& event);
+  void on_tool_pressed(const ToolPressedEvent& event);
+  void on_tool_dragged(const ToolDraggedEvent& event);
+  void on_tool_released(const ToolReleasedEvent& event);
   void on_stamp_sequence(stamp_sequence_event event);
   void on_eraser_sequence(eraser_sequence_event event);
   void on_flood(const flood_event& event);

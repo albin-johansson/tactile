@@ -115,15 +115,15 @@ void UpdateCursorGizmos(const entt::registry& registry,
 
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(),
                                  ImGui::GetWindowPos() + ImGui::GetWindowSize())) {
-    CheckFor<mouse_pressed_event>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    CheckFor<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseClicked(button);
     });
 
-    CheckFor<mouse_drag_event>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    CheckFor<ToolDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseDragging(button);
     });
 
-    CheckFor<mouse_released_event>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    CheckFor<ToolReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseReleased(button);
     });
   }

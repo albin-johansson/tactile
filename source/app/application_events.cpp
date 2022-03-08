@@ -49,9 +49,9 @@ void subscribe_to_events(appl& app)
   app.connect<select_map_event, &appl::on_select_map>();
 
   app.connect<select_tool_event, &appl::on_select_tool>();
-  app.connect<mouse_pressed_event, &appl::on_mouse_pressed>();
-  app.connect<mouse_drag_event, &appl::on_mouse_drag>();
-  app.connect<mouse_released_event, &appl::on_mouse_released>();
+  app.connect<ToolPressedEvent, &appl::on_tool_pressed>();
+  app.connect<ToolDraggedEvent, &appl::on_tool_dragged>();
+  app.connect<ToolReleasedEvent, &appl::on_tool_released>();
   app.connect<stamp_sequence_event, &appl::on_stamp_sequence>();
   app.connect<eraser_sequence_event, &appl::on_eraser_sequence>();
   app.connect<flood_event, &appl::on_flood>();

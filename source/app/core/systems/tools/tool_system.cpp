@@ -33,7 +33,7 @@ void select_tool(entt::registry& registry, const tool_type tool)
   active.tool = (active.tool == tool) ? tool_type::none : tool;
 }
 
-void tool_on_pressed(entt::registry& registry,
+void on_tool_pressed(entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const mouse_info& mouse)
 {
@@ -66,7 +66,7 @@ void tool_on_pressed(entt::registry& registry,
   }
 }
 
-void tool_on_dragged(entt::registry& registry,
+void on_tool_dragged(entt::registry& registry,
                      [[maybe_unused]] entt::dispatcher& dispatcher,
                      const mouse_info& mouse)
 {
@@ -98,7 +98,7 @@ void tool_on_dragged(entt::registry& registry,
   }
 }
 
-void tool_on_released(entt::registry& registry,
+void on_tool_released(entt::registry& registry,
                       entt::dispatcher& dispatcher,
                       const mouse_info& mouse)
 {
