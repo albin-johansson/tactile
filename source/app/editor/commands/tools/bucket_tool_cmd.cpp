@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "bucket_cmd.hpp"
+#include "bucket_tool_cmd.hpp"
 
 #include "core/algorithms/flood_fill.hpp"
 #include "core/components/layer.hpp"

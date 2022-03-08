@@ -59,7 +59,7 @@
 #include "tilesets/add_tileset_cmd.hpp"
 #include "tilesets/remove_tileset_cmd.hpp"
 #include "tilesets/rename_tileset_cmd.hpp"
-#include "tools/bucket_cmd.hpp"
+#include "tools/bucket_tool_cmd.hpp"
 #include "tools/ellipse_tool_cmd.hpp"
 #include "tools/eraser_tool_cmd.hpp"
 #include "tools/point_tool_cmd.hpp"
