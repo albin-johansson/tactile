@@ -73,7 +73,10 @@ void on_rectangle_tool_released(entt::registry& registry,
       const auto y = (std::min)(stroke->start_y, stroke->current_y) / yRatio;
       const auto width = std::abs(stroke->current_x - stroke->start_x) / xRatio;
       const auto height = std::abs(stroke->current_y - stroke->start_y) / yRatio;
-      dispatcher.enqueue<AddRectangleEvent>(x, y, width, height);
+
+      if (width != 0 && height != 0) {
+        dispatcher.enqueue<AddRectangleEvent>(x, y, width, height);
+      }
 
       registry.unset<comp::CurrentRectangleStroke>();
     }
