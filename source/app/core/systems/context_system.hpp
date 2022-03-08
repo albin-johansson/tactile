@@ -117,7 +117,6 @@ void restore_attribute_context(entt::registry& registry,
 [[nodiscard]] auto get_context(entt::registry& registry, context_id id)
     -> comp::attribute_context&;
 
-/// \copydoc get_context()
 [[nodiscard]] auto get_context(const entt::registry& registry, context_id id)
     -> const comp::attribute_context&;
 
