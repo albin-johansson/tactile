@@ -362,9 +362,7 @@ void application::on_tool_released(const ToolReleasedEvent& event)
 
 void application::on_stamp_sequence(stamp_sequence_event event)
 {
-  _register<StampToolCmd>(mModel,
-                                std::move(event.old_state),
-                                std::move(event.sequence));
+  _register<StampToolCmd>(mModel, std::move(event.old_state), std::move(event.sequence));
 }
 
 void application::on_eraser_sequence(eraser_sequence_event event)
