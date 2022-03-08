@@ -23,18 +23,21 @@
 
 namespace tactile::sys {
 
-/// \name Animation system
+/**
+ * \ingroup systems
+ * \defgroup animation-system Animation system
+ */
+
+/// \addtogroup animation-system
 /// \{
 
 /**
  * \brief Updates all animations in a registry.
  *
- * \ingroup systems
- *
  * \param registry the document registry.
  */
 void update_animations(entt::registry& registry);
 
-/// \} End of animation system
+/// \} End of group animation-system
 
 }  // namespace tactile::sys
