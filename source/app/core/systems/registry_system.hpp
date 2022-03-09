@@ -28,13 +28,13 @@ namespace tactile::sys {
  *
  * \ingroup systems
  *
- * \details The created registry will feature the following context variables:
+ * \details The created registry will feature the following context components:
  * - `MapInfo`
  * - `Viewport`
- * - `tileset_context`
+ * - `TilesetContext`
  * - `AttributeContext`
  * - `active_layer`
- * - `active_tileset`
+ * - `ActiveTileset`
  * - `ActiveAttributeContext`
  * - `active_tool`
  * - `active_object`
