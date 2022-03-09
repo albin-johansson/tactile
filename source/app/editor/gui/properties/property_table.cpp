@@ -147,7 +147,7 @@ void ShowNativeMapProperties(const std::string& name, const MapInfo& map)
 }
 
 void ShowNativeTilesetProperties(const std::string& name,
-                                 const comp::tileset& tileset,
+                                 const comp::Tileset& tileset,
                                  entt::dispatcher& dispatcher)
 {
   NativeReadOnlyRow("Type", "Tileset");
@@ -261,7 +261,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
       ShowNativeMapProperties(context.name, registry.ctx<MapInfo>());
     }
     else {
-      if (const auto* tileset = registry.try_get<comp::tileset>(current.entity)) {
+      if (const auto* tileset = registry.try_get<comp::Tileset>(current.entity)) {
         ShowNativeTilesetProperties(context.name, *tileset, dispatcher);
       }
       else if (const auto* layer = registry.try_get<comp::layer>(current.entity)) {

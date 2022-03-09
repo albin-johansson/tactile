@@ -36,7 +36,7 @@ void on_bucket_tool_pressed(entt::registry& registry,
     const auto entity = find_active_tileset(registry);
     TACTILE_ASSERT(entity != entt::null);
 
-    const auto& selection = registry.get<comp::tileset_selection>(entity);
+    const auto& selection = registry.get<comp::TilesetSelection>(entity);
     const auto position = selection.region->begin;
     const auto replacement = get_tile_from_tileset(registry, entity, position);
 

@@ -37,7 +37,7 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto create_source_rect_cache(const comp::tileset& tileset)
+[[nodiscard]] auto create_source_rect_cache(const comp::Tileset& tileset)
     -> std::unordered_map<tile_id, cen::irect>
 {
   std::unordered_map<tile_id, cen::irect> cache;
@@ -60,9 +60,9 @@ namespace {
 
 void refresh_tileset_cache(entt::registry& registry, const entt::entity entity)
 {
-  const auto& tileset = registry.get<comp::tileset>(entity);
+  const auto& tileset = registry.get<comp::Tileset>(entity);
 
-  auto& cache = registry.emplace_or_replace<comp::tileset_cache>(entity);
+  auto& cache = registry.emplace_or_replace<comp::TilesetCache>(entity);
   cache.source_rects = create_source_rect_cache(tileset);
 
   for (auto&& [tileEntity, tile] : registry.view<comp::MetaTile>().each()) {
@@ -75,8 +75,8 @@ void refresh_tileset_cache(entt::registry& registry, const entt::entity entity)
 void register_new_tiles_in_tile_context(entt::registry& registry,
                                         const entt::entity tilesetEntity)
 {
-  auto& tilesets = registry.ctx<comp::tileset_context>();
-  const auto& tileset = registry.get<comp::tileset>(tilesetEntity);
+  auto& tilesets = registry.ctx<comp::TilesetContext>();
+  const auto& tileset = registry.get<comp::Tileset>(tilesetEntity);
 
   for (tile_id tile = tileset.first_id; tile <= tileset.last_id; ++tile) {
     tilesets.tile_to_tileset[tile] = tilesetEntity;
@@ -86,8 +86,8 @@ void register_new_tiles_in_tile_context(entt::registry& registry,
 void unregister_tiles_from_tile_context(entt::registry& registry,
                                         const entt::entity tilesetEntity)
 {
-  auto& tilesets = registry.ctx<comp::tileset_context>();
-  const auto& tileset = registry.get<comp::tileset>(tilesetEntity);
+  auto& tilesets = registry.ctx<comp::TilesetContext>();
+  const auto& tileset = registry.get<comp::Tileset>(tilesetEntity);
 
   for (tile_id tile = tileset.first_id; tile <= tileset.last_id; ++tile) {
     tilesets.tile_to_tileset.erase(tile);
@@ -110,7 +110,7 @@ void add_viewport(entt::registry& registry,
 
 void update_tilesets(entt::registry& registry)
 {
-  for (auto&& [entity, cache] : registry.view<comp::tileset_cache>().each()) {
+  for (auto&& [entity, cache] : registry.view<comp::TilesetCache>().each()) {
     cache.source_to_render.clear();
   }
 }
@@ -121,7 +121,7 @@ auto make_tileset(entt::registry& registry,
                   const int32 tileWidth,
                   const int32 tileHeight) -> entt::entity
 {
-  auto& tilesets = registry.ctx<comp::tileset_context>();
+  auto& tilesets = registry.ctx<comp::TilesetContext>();
 
   const auto id = tilesets.next_id;
   ++tilesets.next_id;
@@ -129,7 +129,7 @@ auto make_tileset(entt::registry& registry,
   log_debug("Creating tileset with ID '{}'", id);
 
   const auto tilesetEntity = registry.create();
-  auto& tileset = registry.emplace<comp::tileset>(tilesetEntity);
+  auto& tileset = registry.emplace<comp::Tileset>(tilesetEntity);
   tileset.id = id;
 
   tileset.tile_width = tileWidth;
@@ -145,17 +145,17 @@ auto make_tileset(entt::registry& registry,
 
   registry.emplace<comp::texture>(tilesetEntity, texture);
 
-  auto& uv = registry.emplace<comp::uv_tile_size>(tilesetEntity);
+  auto& uv = registry.emplace<comp::UvTileSize>(tilesetEntity);
   uv.width = static_cast<float>(tileWidth) / static_cast<float>(texture.width);
   uv.height = static_cast<float>(tileHeight) / static_cast<float>(texture.height);
 
-  auto& cache = registry.emplace<comp::tileset_cache>(tilesetEntity);
+  auto& cache = registry.emplace<comp::TilesetCache>(tilesetEntity);
   cache.source_rects = create_source_rect_cache(tileset);
 
   auto& context = add_attribute_context(registry, tilesetEntity);
   context.name = texture.path.stem().string();
 
-  registry.emplace<comp::tileset_selection>(tilesetEntity);
+  registry.emplace<comp::TilesetSelection>(tilesetEntity);
 
   add_viewport(registry, tilesetEntity, tileset.tile_width, tileset.tile_height);
 
@@ -169,7 +169,7 @@ auto make_tileset(entt::registry& registry,
                   const int32 tileWidth,
                   const int32 tileHeight) -> entt::entity
 {
-  auto& context = registry.ctx<comp::tileset_context>();
+  auto& context = registry.ctx<comp::TilesetContext>();
   return make_tileset(registry, context.next_tile_id, texture, tileWidth, tileHeight);
 }
 
@@ -179,10 +179,10 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
   const auto tilesetEntity = registry.create();
 
   auto& tileset =
-      registry.emplace<comp::tileset>(tilesetEntity, std::move(snapshot.core));
-  registry.emplace<comp::tileset_selection>(tilesetEntity, snapshot.selection);
+      registry.emplace<comp::Tileset>(tilesetEntity, std::move(snapshot.core));
+  registry.emplace<comp::TilesetSelection>(tilesetEntity, snapshot.selection);
   registry.emplace<comp::texture>(tilesetEntity, snapshot.texture);
-  registry.emplace<comp::uv_tile_size>(tilesetEntity, snapshot.uv);
+  registry.emplace<comp::UvTileSize>(tilesetEntity, snapshot.uv);
 
   add_viewport(registry, tilesetEntity, tileset.tile_width, tileset.tile_height);
 
@@ -200,10 +200,10 @@ auto copy_tileset(const entt::registry& registry, const entt::entity source)
   TACTILE_ASSERT(source != entt::null);
   TilesetSnapshot snapshot;
 
-  snapshot.core = registry.get<comp::tileset>(source);
-  snapshot.selection = registry.get<comp::tileset_selection>(source);
+  snapshot.core = registry.get<comp::Tileset>(source);
+  snapshot.selection = registry.get<comp::TilesetSelection>(source);
   snapshot.texture = registry.get<comp::texture>(source);
-  snapshot.uv = registry.get<comp::uv_tile_size>(source);
+  snapshot.uv = registry.get<comp::UvTileSize>(source);
   snapshot.context = copy_attribute_context(registry, source);
 
   return snapshot;
@@ -216,7 +216,7 @@ void select_tileset(entt::registry& registry, const tileset_id id)
   const auto entity = find_tileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& activeTileset = registry.ctx<comp::active_tileset>();
+  auto& activeTileset = registry.ctx<comp::ActiveTileset>();
   activeTileset.entity = entity;
 }
 
@@ -227,7 +227,7 @@ void remove_tileset(entt::registry& registry, const tileset_id id)
   const auto entity = find_tileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& activeTileset = registry.ctx<comp::active_tileset>();
+  auto& activeTileset = registry.ctx<comp::ActiveTileset>();
   if (entity == activeTileset.entity) {
     activeTileset.entity = entt::null;
   }
@@ -241,23 +241,23 @@ void remove_tileset(entt::registry& registry, const tileset_id id)
 
   registry.destroy(entity);
 
-  if (!registry.view<comp::tileset>().empty()) {
-    activeTileset.entity = registry.view<comp::tileset>().front();
+  if (!registry.view<comp::Tileset>().empty()) {
+    activeTileset.entity = registry.view<comp::Tileset>().front();
   }
 }
 
 void update_tileset_selection(entt::registry& registry, const Region& region)
 {
-  auto& active = registry.ctx<comp::active_tileset>();
+  auto& active = registry.ctx<comp::ActiveTileset>();
   TACTILE_ASSERT(active.entity != entt::null);
 
-  auto& selection = registry.get<comp::tileset_selection>(active.entity);
+  auto& selection = registry.get<comp::TilesetSelection>(active.entity);
   selection.region = region;
 }
 
 auto find_tileset(const entt::registry& registry, const tileset_id id) -> entt::entity
 {
-  for (auto&& [entity, tileset] : registry.view<comp::tileset>().each()) {
+  for (auto&& [entity, tileset] : registry.view<comp::Tileset>().each()) {
     if (tileset.id == id) {
       return entity;
     }
@@ -303,7 +303,7 @@ auto get_tile_entity(const entt::registry& registry, const tile_id id) -> entt::
 auto find_tileset_with_tile(const entt::registry& registry, const tile_id id)
     -> entt::entity
 {
-  for (auto&& [entity, tileset] : registry.view<comp::tileset>().each()) {
+  for (auto&& [entity, tileset] : registry.view<comp::Tileset>().each()) {
     if (id >= tileset.first_id && id <= tileset.last_id) {
       return entity;
     }
@@ -314,15 +314,15 @@ auto find_tileset_with_tile(const entt::registry& registry, const tile_id id)
 
 auto find_active_tileset(const entt::registry& registry) -> entt::entity
 {
-  const auto& active = registry.ctx<comp::active_tileset>();
+  const auto& active = registry.ctx<comp::ActiveTileset>();
   return active.entity;
 }
 
 auto is_tileset_selection_not_empty(const entt::registry& registry) -> bool
 {
-  const auto& active = registry.ctx<comp::active_tileset>();
+  const auto& active = registry.ctx<comp::ActiveTileset>();
   if (active.entity != entt::null) {
-    const auto& selection = registry.get<comp::tileset_selection>(active.entity);
+    const auto& selection = registry.get<comp::TilesetSelection>(active.entity);
     return selection.region.has_value();
   }
   else {
@@ -332,9 +332,9 @@ auto is_tileset_selection_not_empty(const entt::registry& registry) -> bool
 
 auto is_single_tile_selected_in_tileset(const entt::registry& registry) -> bool
 {
-  const auto& active = registry.ctx<comp::active_tileset>();
+  const auto& active = registry.ctx<comp::ActiveTileset>();
   if (active.entity != entt::null) {
-    const auto& selection = registry.get<comp::tileset_selection>(active.entity);
+    const auto& selection = registry.get<comp::TilesetSelection>(active.entity);
     if (selection.region) {
       const auto& region = *selection.region;
       return (region.end - region.begin) == tile_position{1, 1};
@@ -348,7 +348,7 @@ auto get_tile_to_render(const entt::registry& registry,
                         const entt::entity tilesetEntity,
                         const tile_id id) -> tile_id
 {
-  const auto& cache = registry.get<comp::tileset_cache>(tilesetEntity);
+  const auto& cache = registry.get<comp::TilesetCache>(tilesetEntity);
 
   /* Check for already cached tile to render */
   if (const auto iter = cache.source_to_render.find(id);
@@ -377,7 +377,7 @@ auto get_source_rect(const entt::registry& registry,
                      const entt::entity tilesetEntity,
                      const tile_id id) -> const cen::irect&
 {
-  const auto& cache = registry.get<comp::tileset_cache>(tilesetEntity);
+  const auto& cache = registry.get<comp::TilesetCache>(tilesetEntity);
   return cache.source_rects.at(id);
 }
 
@@ -386,8 +386,8 @@ auto get_tile_from_tileset(const entt::registry& registry,
                            const tile_position& position) -> tile_id
 {
   TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<comp::tileset>(entity));
-  const auto& tileset = registry.get<comp::tileset>(entity);
+  TACTILE_ASSERT(registry.all_of<comp::Tileset>(entity));
+  const auto& tileset = registry.get<comp::Tileset>(entity);
 
   const auto row = position.row();
   const auto col = position.col();
@@ -407,7 +407,7 @@ auto convert_to_local(const entt::registry& registry, const tile_id global)
 {
   const auto entity = find_tileset_with_tile(registry, global);
   if (entity != entt::null) {
-    const auto& tileset = registry.get<comp::tileset>(entity);
+    const auto& tileset = registry.get<comp::Tileset>(entity);
     return global - tileset.first_id;
   }
   else {

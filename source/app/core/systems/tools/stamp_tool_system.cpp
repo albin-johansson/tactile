@@ -57,7 +57,7 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
   const auto tilesetEntity = find_active_tileset(registry);
   TACTILE_ASSERT(tilesetEntity != entt::null);
 
-  const auto& selection = registry.get<comp::tileset_selection>(tilesetEntity);
+  const auto& selection = registry.get<comp::TilesetSelection>(tilesetEntity);
   const auto& region = selection.region.value();
   const auto selectionSize = region.end - region.begin;
   const auto previewOffset = selectionSize / tile_position{2, 2};

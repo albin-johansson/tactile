@@ -46,10 +46,10 @@ struct attribute_context_snapshot final
 
 struct TilesetSnapshot final
 {
-  comp::tileset core;
-  comp::tileset_selection selection;
+  comp::Tileset core;
+  comp::TilesetSelection selection;
   comp::texture texture;
-  comp::uv_tile_size uv;
+  comp::UvTileSize uv;
   attribute_context_snapshot context;
 };
 

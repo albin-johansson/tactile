@@ -35,7 +35,7 @@ void RenderTile(graphics_ctx& graphics,
                 const int32 row,
                 const int32 column)
 {
-  const auto& context = registry.ctx<comp::tileset_context>();
+  const auto& context = registry.ctx<comp::TilesetContext>();
   auto iter = context.tile_to_tileset.find(tile);
 
   if (iter == context.tile_to_tileset.end()) {
@@ -45,7 +45,7 @@ void RenderTile(graphics_ctx& graphics,
   const auto tilesetEntity = iter->second;
   if (tilesetEntity != entt::null) {
     const auto& texture = registry.get<comp::texture>(tilesetEntity);
-    const auto& uvTileSize = registry.get<comp::uv_tile_size>(tilesetEntity);
+    const auto& uvTileSize = registry.get<comp::UvTileSize>(tilesetEntity);
 
     const auto tileToRender = sys::get_tile_to_render(registry, tilesetEntity, tile);
     const auto& sourceRect = sys::get_source_rect(registry, tilesetEntity, tileToRender);

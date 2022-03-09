@@ -56,7 +56,7 @@ struct render_info final
 [[nodiscard]] auto get_render_info(const Viewport& viewport, const MapInfo& map)
     -> render_info;
 
-[[nodiscard]] auto get_render_info(const Viewport& viewport, const comp::tileset& tileset)
+[[nodiscard]] auto get_render_info(const Viewport& viewport, const comp::Tileset& tileset)
     -> render_info;
 
 /// \} End of group rendering

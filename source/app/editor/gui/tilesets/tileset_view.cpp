@@ -85,7 +85,7 @@ void TilesetView::Update(const entt::registry& registry,
                          const entt::entity entity,
                          entt::dispatcher& dispatcher)
 {
-  const auto& tileset = registry.get<comp::tileset>(entity);
+  const auto& tileset = registry.get<comp::Tileset>(entity);
   const auto& viewport = registry.get<Viewport>(entity);
 
   const auto region = ImGui::GetContentRegionAvail();
@@ -113,7 +113,7 @@ void TilesetView::Update(const entt::registry& registry,
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
   RenderTilesetImage(graphics, registry.get<comp::texture>(entity), position);
 
-  if (const auto& selection = registry.get<comp::tileset_selection>(entity);
+  if (const auto& selection = registry.get<comp::TilesetSelection>(entity);
       selection.region) {
     RenderSelection(*selection.region, position, tileSize);
   }

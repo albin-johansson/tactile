@@ -34,7 +34,7 @@ namespace tactile::comp {
  *
  * \ingroup components
  */
-struct tileset_context final
+struct TilesetContext final
 {
   tileset_id next_id{};    ///< Next available tileset ID.
   tile_id next_tile_id{};  ///< Next available global tile ID.
@@ -45,7 +45,12 @@ struct tileset_context final
   hash_map<tile_id, entt::entity> tile_to_tileset;
 };
 
-struct tileset final
+/**
+ * \brief Provides general information about a tileset.
+ *
+ * \ingroup components
+ */
+struct Tileset final
 {
   tileset_id id{};       ///< Unique ID associated with the tileset.
   tile_id first_id{};    ///< First associated global tile ID.
@@ -57,7 +62,12 @@ struct tileset final
   int32 column_count{};  ///< Amount of tile columns.
 };
 
-struct uv_tile_size final
+/**
+ * \brief Provides information about the size of a single tile in a tileset for rendering.
+ *
+ * \ingroup components
+ */
+struct UvTileSize final
 {
   float width{};
   float height{};
@@ -78,9 +88,11 @@ struct MetaTile final
 };
 
 /**
- * \brief Cached information about a single tileset.
+ * \brief Contains cached information about a single tileset.
+ *
+ * \ingroup components
  */
-struct tileset_cache final
+struct TilesetCache final
 {
   hash_map<tile_id, cen::irect> source_rects;  ///< Tileset source rectangles.
   hash_map<tile_id, entt::entity> tiles;       ///< Additional tile info.
@@ -91,14 +103,24 @@ struct tileset_cache final
   mutable hash_map<tile_id, tile_id> source_to_render;
 };
 
-struct tileset_selection final
+/**
+ * \brief Represents the tile selection in a tileset.
+ *
+ * \ingroup components
+ */
+struct TilesetSelection final
 {
-  maybe<Region> region;
+  maybe<Region> region;  ///< The currently selected region, if any.
 };
 
-struct active_tileset final
+/**
+ * \brief Context component that keeps track of the active tileset.
+ *
+ * \ingroup components
+ */
+struct ActiveTileset final
 {
-  entt::entity entity{entt::null};
+  entt::entity entity{entt::null};  ///< The active tileset (might be null).
 };
 
 }  // namespace tactile::comp

@@ -76,8 +76,8 @@ void TilesetTabWidget::Update(const entt::registry& registry,
       dispatcher.enqueue<show_add_tileset_dialog_event>();
     }
 
-    const auto& activeTileset = registry.ctx<comp::active_tileset>();
-    for (auto&& [entity, tileset] : registry.view<comp::tileset>().each()) {
+    const auto& activeTileset = registry.ctx<comp::ActiveTileset>();
+    for (auto&& [entity, tileset] : registry.view<comp::Tileset>().each()) {
       const scoped::id scope{tileset.id};
 
       const auto isActive = activeTileset.entity == entity;

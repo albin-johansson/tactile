@@ -36,7 +36,7 @@ auto make_document_registry() -> entt::registry
   entt::registry registry;
 
   registry.set<comp::active_layer>();
-  registry.set<comp::active_tileset>();
+  registry.set<comp::ActiveTileset>();
   registry.set<comp::ActiveAttributeContext>();
   registry.set<comp::active_tool>();
   registry.set<comp::active_object>();
@@ -55,7 +55,7 @@ auto make_document_registry() -> entt::registry
   context.id = get_and_update_next_context_id();
   context.name = "Map";
 
-  auto& tilesets = registry.set<comp::tileset_context>();
+  auto& tilesets = registry.set<comp::TilesetContext>();
   tilesets.next_id = 1;
   tilesets.next_tile_id = 1;
 

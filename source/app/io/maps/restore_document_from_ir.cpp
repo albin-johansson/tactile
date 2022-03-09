@@ -225,7 +225,7 @@ void _restore_fancy_tile_objects(entt::registry& registry,
 }
 
 void _restore_fancy_tiles(entt::registry& registry,
-                          comp::tileset_cache& cache,
+                          comp::TilesetCache& cache,
                           const ir::tileset_data& tilesetData)
 {
   const auto firstGlobalId = tilesetData.first_tile;
@@ -267,7 +267,7 @@ void _restore_tileset(entt::registry& registry,
 
   registry.get<comp::AttributeContext>(entity).name = tilesetData.name;
 
-  auto& cache = registry.get<comp::tileset_cache>(entity);
+  auto& cache = registry.get<comp::TilesetCache>(entity);
   _restore_fancy_tiles(registry, cache, tilesetData);
 
   _restore_properties(registry, entity, tilesetData.context);
@@ -282,9 +282,9 @@ void _restore_tilesets(Document& document,
     _restore_tileset(document.registry, textures, tilesetData);
   }
 
-  if (!document.registry.storage<comp::tileset>().empty()) {
-    auto& activeTileset = document.registry.ctx<comp::active_tileset>();
-    activeTileset.entity = document.registry.view<comp::tileset>().front();
+  if (!document.registry.storage<comp::Tileset>().empty()) {
+    auto& activeTileset = document.registry.ctx<comp::ActiveTileset>();
+    activeTileset.entity = document.registry.view<comp::Tileset>().front();
   }
 }
 

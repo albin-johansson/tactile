@@ -188,7 +188,7 @@ void _convert_fancy_tile_animation(ir::fancy_tile_data& data,
 }
 
 void _convert_fancy_tiles(ir::tileset_data& data,
-                          const comp::tileset& tileset,
+                          const comp::Tileset& tileset,
                           const entt::registry& registry)
 {
   for (auto&& [entity, tile, context] :
@@ -228,7 +228,7 @@ void _convert_fancy_tiles(ir::tileset_data& data,
 void _convert_tilesets(ir::map_data& data, const entt::registry& registry)
 {
   for (auto&& [entity, tileset, texture, context] :
-       registry.view<comp::tileset, comp::texture, comp::AttributeContext>().each()) {
+       registry.view<comp::Tileset, comp::texture, comp::AttributeContext>().each()) {
     auto& tilesetData = data.tilesets.emplace_back();
     tilesetData.name = context.name;
 

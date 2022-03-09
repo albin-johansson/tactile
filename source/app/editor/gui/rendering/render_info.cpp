@@ -95,7 +95,7 @@ auto get_render_info(const Viewport& viewport, const MapInfo& map) -> render_inf
                           static_cast<int32>(map.column_count));
 }
 
-auto get_render_info(const Viewport& viewport, const comp::tileset& tileset)
+auto get_render_info(const Viewport& viewport, const comp::Tileset& tileset)
     -> render_info
 {
   const ImVec2 tileSize{static_cast<float>(tileset.tile_width),
