@@ -35,7 +35,35 @@ namespace {
   return is_object_layer_active(registry);
 }
 
+void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
+{
+  if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
+    const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
+
+    const auto x = (std::min)(stroke->start_x, stroke->current_x) / xRatio;
+    const auto y = (std::min)(stroke->start_y, stroke->current_y) / yRatio;
+    const auto width = std::abs(stroke->current_x - stroke->start_x) / xRatio;
+    const auto height = std::abs(stroke->current_y - stroke->start_y) / yRatio;
+
+    if (width != 0 && height != 0) {
+      dispatcher.enqueue<AddRectangleEvent>(x, y, width, height);
+    }
+
+    registry.unset<comp::CurrentRectangleStroke>();
+  }
+}
+
 }  // namespace
+
+void on_rectangle_tool_disabled(entt::registry& registry, entt::dispatcher& dispatcher)
+{
+  _maybe_emit_event(registry, dispatcher);
+}
+
+void on_rectangle_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
+{
+  _maybe_emit_event(registry, dispatcher);
+}
 
 void on_rectangle_tool_pressed(entt::registry& registry, const mouse_info& mouse)
 {
@@ -63,20 +91,7 @@ void on_rectangle_tool_released(entt::registry& registry,
                                 const mouse_info& mouse)
 {
   if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
-    if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
-      const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
-
-      const auto x = (std::min)(stroke->start_x, stroke->current_x) / xRatio;
-      const auto y = (std::min)(stroke->start_y, stroke->current_y) / yRatio;
-      const auto width = std::abs(stroke->current_x - stroke->start_x) / xRatio;
-      const auto height = std::abs(stroke->current_y - stroke->start_y) / yRatio;
-
-      if (width != 0 && height != 0) {
-        dispatcher.enqueue<AddRectangleEvent>(x, y, width, height);
-      }
-
-      registry.unset<comp::CurrentRectangleStroke>();
-    }
+    _maybe_emit_event(registry, dispatcher);
   }
 }
 

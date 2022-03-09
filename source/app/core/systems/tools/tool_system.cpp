@@ -45,9 +45,12 @@ void select_tool(entt::registry& registry,
       eraser_tool_on_disable(dispatcher);
       break;
 
+    case tool_type::rectangle:
+      on_rectangle_tool_disabled(registry, dispatcher);
+      break;
+
     case tool_type::bucket:
     case tool_type::object_selection:
-    case tool_type::rectangle:
     case tool_type::ellipse:
     case tool_type::point:
       [[fallthrough]];
@@ -58,7 +61,7 @@ void select_tool(entt::registry& registry,
   active.tool = (active.tool == tool) ? tool_type::none : tool;
 }
 
-void on_tool_entered(entt::registry& registry, entt::dispatcher& dispatcher)
+void on_tool_entered(entt::registry& registry, entt::dispatcher&)
 {
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
@@ -91,8 +94,11 @@ void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
       object_selection_tool_on_exited(registry, dispatcher);
       break;
 
-    case tool_type::bucket:
     case tool_type::rectangle:
+      on_rectangle_tool_exited(registry, dispatcher);
+      break;
+
+    case tool_type::bucket:
     case tool_type::ellipse:
     case tool_type::point:
       [[fallthrough]];
