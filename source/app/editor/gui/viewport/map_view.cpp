@@ -264,7 +264,7 @@ void update_map_view_object_context_menu(const entt::registry& registry,
 }
 
 // TODO the declaration of this function isn't in map_view.hpp
-void CenterMapViewport()
+void center_map_viewport()
 {
   _will_center_viewport = true;
 }

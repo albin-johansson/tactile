@@ -31,11 +31,11 @@
 namespace tactile {
 namespace {
 
-constexpr auto gWindowFlags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
-constinit bool gHasFocus = false;
-constinit bool gMouseWithinWindow = false;
+constexpr auto _window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
+constinit bool _has_focus = false;
+constinit bool _mouse_within_window = false;
 
-void RemoveTabBarFromNextWindow()
+void _remove_tab_bar_from_next_window()
 {
   ImGuiWindowClass wc{};
   wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
@@ -44,21 +44,21 @@ void RemoveTabBarFromNextWindow()
 
 }  // namespace
 
-void UpdateViewportWidget(const DocumentModel& model,
-                          const IconManager& icons,
-                          entt::dispatcher& dispatcher)
+void update_viewport_widget(const DocumentModel& model,
+                            const IconManager& icons,
+                            entt::dispatcher& dispatcher)
 {
   scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {4, 4}};
-  RemoveTabBarFromNextWindow();
+  _remove_tab_bar_from_next_window();
 
-  scoped::Window window{"Viewport", gWindowFlags};
+  scoped::Window window{"Viewport", _window_flags};
   if (window.is_open()) {
     padding.pop();
-    gHasFocus = ImGui::IsWindowFocused();
-    gMouseWithinWindow = scoped::Window::current_window_contains_mouse();
+    _has_focus = ImGui::IsWindowFocused();
+    _mouse_within_window = scoped::Window::current_window_contains_mouse();
 
     if (model.has_active_document()) {
-      UpdateDocumentTabs(model, dispatcher);
+      update_document_tabs(model, dispatcher);
 
       if (window.mouse_entered()) {
         dispatcher.enqueue<ToolEnteredEvent>();
@@ -73,24 +73,24 @@ void UpdateViewportWidget(const DocumentModel& model,
     }
   }
   else {
-    gHasFocus = false;
-    gMouseWithinWindow = false;
+    _has_focus = false;
+    _mouse_within_window = false;
   }
 }
 
-void CenterViewport()
+void center_viewport()
 {
-  CenterMapViewport();
+  center_map_viewport();
 }
 
-auto IsViewportFocused() noexcept -> bool
+auto is_viewport_focused() noexcept -> bool
 {
-  return gHasFocus;
+  return _has_focus;
 }
 
-auto IsMouseWithinViewport() noexcept -> bool
+auto is_mouse_within_viewport() noexcept -> bool
 {
-  return gMouseWithinWindow;
+  return _mouse_within_window;
 }
 
 }  // namespace tactile

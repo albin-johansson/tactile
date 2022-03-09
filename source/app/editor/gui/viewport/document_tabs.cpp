@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-void UpdateDocumentTabs(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::TabBar bar{"##MapViewportTabBar", ImGuiTabBarFlags_Reorderable};
       bar.is_open()) {

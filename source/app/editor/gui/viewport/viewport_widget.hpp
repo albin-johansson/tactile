@@ -19,21 +19,31 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/entt.hpp>
 
 namespace tactile {
 
 class DocumentModel;
 class IconManager;
 
-void UpdateViewportWidget(const DocumentModel& model,
-                          const IconManager& icons,
-                          entt::dispatcher& dispatcher);
+/**
+ * \brief Updates the state of the primary viewport widget.
+ *
+ * \param model the current document model.
+ * \param icons the loaded icons.
+ * \param dispatcher the event dispatcher that will be used.
+ */
+void update_viewport_widget(const DocumentModel& model,
+                            const IconManager& icons,
+                            entt::dispatcher& dispatcher);
 
-void CenterViewport();
+/**
+ * \brief Centers the main viewport over the current map.
+ */
+void center_viewport();
 
-[[nodiscard]] auto IsViewportFocused() noexcept -> bool;
+[[nodiscard]] auto is_viewport_focused() noexcept -> bool;
 
-[[nodiscard]] auto IsMouseWithinViewport() noexcept -> bool;
+[[nodiscard]] auto is_mouse_within_viewport() noexcept -> bool;
 
 }  // namespace tactile

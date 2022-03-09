@@ -190,7 +190,7 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
   const auto* registry = mModel.active_registry();
   if (registry && !ImGui::GetTopMostPopupModal()) {
-    if (IsMouseWithinViewport()) {
+    if (is_mouse_within_viewport()) {
       const auto& viewport = registry->ctx<Viewport>();
       const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
       const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
@@ -406,7 +406,7 @@ void Application::on_add_point(const AddPointEvent& event)
 
 void Application::on_center_viewport()
 {
-  CenterViewport();
+  center_viewport();
 }
 
 void Application::on_offset_viewport(const OffsetViewportEvent& event)

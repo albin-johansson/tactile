@@ -70,7 +70,7 @@ void widget_manager::update(const DocumentModel& model,
     mWidgets->mComponentDock.update(model, dispatcher);
   }
 
-  UpdateViewportWidget(model, icons, dispatcher);
+  update_viewport_widget(model, icons, dispatcher);
 
   if (const auto* registry = model.active_registry()) {
     update_map_view_object_context_menu(*registry, dispatcher);
@@ -158,7 +158,7 @@ auto widget_manager::is_toolbar_focused() const -> bool
 
 auto widget_manager::is_viewport_focused() const -> bool
 {
-  return tactile::IsViewportFocused();
+  return tactile::is_viewport_focused();
 }
 
 auto widget_manager::is_layer_dock_focused() const -> bool

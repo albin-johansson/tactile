@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/entt.hpp>
 
 namespace tactile {
 
 class DocumentModel;
 
-void UpdateDocumentTabs(const DocumentModel& model, entt::dispatcher& dispatcher);
+void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-void CenterMapViewport();
+void center_map_viewport();
 
 }  // namespace tactile
