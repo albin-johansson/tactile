@@ -28,7 +28,7 @@
 namespace tactile::parsing {
 
 [[nodiscard]] auto parse_tileset(pugi::xml_node node,
-                                 ir::tileset_data& tilesetData,
+                                 ir::TilesetData& tilesetData,
                                  const std::filesystem::path& dir) -> parse_error;
 
 }  // namespace tactile::parsing

@@ -31,7 +31,7 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_fancy_tiles(pugi::xml_node tilesetNode,
-                                      ir::tileset_data& tilesetData) -> parse_error
+                                      ir::TilesetData& tilesetData) -> parse_error
 {
   for (auto tileNode : tilesetNode.children("tile")) {
     tile_id tileId{};
@@ -81,7 +81,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_image_info(pugi::xml_node tilesetNode,
-                                     ir::tileset_data& tilesetData,
+                                     ir::TilesetData& tilesetData,
                                      const std::filesystem::path& dir) -> parse_error
 {
   auto imageNode = tilesetNode.child("image");
@@ -117,7 +117,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_common_attributes(pugi::xml_node node,
-                                            ir::tileset_data& tilesetData,
+                                            ir::TilesetData& tilesetData,
                                             const std::filesystem::path& dir)
     -> parse_error
 {
@@ -174,7 +174,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_external_tileset(pugi::xml_node node,
-                                           ir::tileset_data& tilesetData,
+                                           ir::TilesetData& tilesetData,
                                            const std::filesystem::path& dir)
     -> parse_error
 {
@@ -198,7 +198,7 @@ namespace {
 }  // namespace
 
 auto parse_tileset(pugi::xml_node node,
-                   ir::tileset_data& tilesetData,
+                   ir::TilesetData& tilesetData,
                    const std::filesystem::path& dir) -> parse_error
 {
   if (const auto firstTile = int_attribute(node, "firstgid")) {

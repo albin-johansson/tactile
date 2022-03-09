@@ -41,12 +41,12 @@ auto parse_data::error() const -> parse_error
   return mError;
 }
 
-auto parse_data::data() -> ir::map_data&
+auto parse_data::data() -> ir::MapData&
 {
   return mData;
 }
 
-auto parse_data::data() const -> const ir::map_data&
+auto parse_data::data() const -> const ir::MapData&
 {
   return mData;
 }

@@ -77,8 +77,8 @@ namespace {
   return parse_error::none;
 }
 
-[[nodiscard]] auto _parse_property(pugi::xml_node node,
-                                   ir::attribute_context_data& context) -> parse_error
+[[nodiscard]] auto _parse_property(pugi::xml_node node, ir::AttributeContextData& context)
+    -> parse_error
 {
   std::string propertyName;
 
@@ -103,7 +103,7 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(pugi::xml_node node, ir::attribute_context_data& context)
+auto parse_properties(pugi::xml_node node, ir::AttributeContextData& context)
     -> parse_error
 {
   for (const auto propertyNode : node.child("properties").children("property")) {

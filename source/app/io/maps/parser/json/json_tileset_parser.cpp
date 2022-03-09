@@ -35,7 +35,7 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_fancy_tile(const nlohmann::json& json,
-                                     ir::tileset_data& tilesetData) -> parse_error
+                                     ir::TilesetData& tilesetData) -> parse_error
 {
   tile_id tileId{};
 
@@ -93,7 +93,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_fancy_tiles(const nlohmann::json& json,
-                                      ir::tileset_data& tilesetData) -> parse_error
+                                      ir::TilesetData& tilesetData) -> parse_error
 {
   if (json.contains("tiles")) {
     for (const auto& [_, value] : json.at("tiles").items()) {
@@ -108,7 +108,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_image_path(const nlohmann::json& json,
-                                     ir::tileset_data& tilesetData,
+                                     ir::TilesetData& tilesetData,
                                      const std::filesystem::path& dir) -> parse_error
 {
   const auto relative = json.find("image");
@@ -129,7 +129,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_common_tileset_attributes(const nlohmann::json& json,
-                                                    ir::tileset_data& tilesetData,
+                                                    ir::TilesetData& tilesetData,
                                                     const std::filesystem::path& dir)
     -> parse_error
 {
@@ -200,7 +200,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_external_tileset(const nlohmann::json& json,
-                                           ir::tileset_data& tilesetData,
+                                           ir::TilesetData& tilesetData,
                                            const std::filesystem::path& dir)
     -> parse_error
 {
@@ -222,7 +222,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tileset(const nlohmann::json& json,
-                                  ir::tileset_data& tilesetData,
+                                  ir::TilesetData& tilesetData,
                                   const std::filesystem::path& dir) -> parse_error
 {
   if (const auto firstTile = as_int(json, "firstgid")) {
@@ -243,7 +243,7 @@ namespace {
 }  // namespace
 
 auto parse_tilesets(const nlohmann::json& json,
-                    ir::map_data& mapData,
+                    ir::MapData& mapData,
                     const std::filesystem::path& dir) -> parse_error
 {
   const auto iter = json.find("tilesets");

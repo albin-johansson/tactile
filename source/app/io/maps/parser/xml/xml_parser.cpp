@@ -44,7 +44,7 @@ namespace {
   return parse_error::none;
 }
 
-[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::map_data& data)
+[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& data)
     -> parse_error
 {
   pugi::xml_document document;

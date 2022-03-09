@@ -22,8 +22,8 @@ using namespace std::string_literals;
 
 namespace {
 
-void _validate_contexts(const ir::attribute_context_data& source,
-                        const ir::attribute_context_data& restored)
+void _validate_contexts(const ir::AttributeContextData& source,
+                        const ir::AttributeContextData& restored)
 {
   ASSERT_EQ(source.properties.size(), restored.properties.size());
   ASSERT_EQ(source.components.size(), restored.components.size());
@@ -36,7 +36,7 @@ void _validate_contexts(const ir::attribute_context_data& source,
   }
 }
 
-void _validate_objects(const ir::object_data& source, const ir::object_data& restored)
+void _validate_objects(const ir::ObjectData& source, const ir::ObjectData& restored)
 {
   ASSERT_EQ(source.id, restored.id);
   ASSERT_EQ(source.type, restored.type);
@@ -54,8 +54,8 @@ void _validate_objects(const ir::object_data& source, const ir::object_data& res
   _validate_contexts(source.context, restored.context);
 }
 
-void _validate_object_layers(const ir::object_layer_data& source,
-                             const ir::object_layer_data& restored)
+void _validate_object_layers(const ir::ObjectLayerData& source,
+                             const ir::ObjectLayerData& restored)
 {
   ASSERT_EQ(source.objects.size(), restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
@@ -65,8 +65,8 @@ void _validate_object_layers(const ir::object_layer_data& source,
   }
 }
 
-void _validate_layers(const ir::layer_data& sourceLayer,
-                      const ir::layer_data& restoredLayer)
+void _validate_layers(const ir::LayerData& sourceLayer,
+                      const ir::LayerData& restoredLayer)
 {
   ASSERT_EQ(sourceLayer.name, restoredLayer.name);
   ASSERT_EQ(sourceLayer.type, restoredLayer.type);
@@ -78,21 +78,21 @@ void _validate_layers(const ir::layer_data& sourceLayer,
   ASSERT_EQ(sourceLayer.visible, restoredLayer.visible);
 
   if (sourceLayer.type == LayerType::tile_layer) {
-    const auto& sourceTileData = std::get<ir::tile_layer_data>(sourceLayer.data);
-    const auto& restoredTileData = std::get<ir::tile_layer_data>(restoredLayer.data);
+    const auto& sourceTileData = std::get<ir::TileLayerData>(sourceLayer.data);
+    const auto& restoredTileData = std::get<ir::TileLayerData>(restoredLayer.data);
 
     ASSERT_EQ(sourceTileData.row_count, restoredTileData.row_count);
     ASSERT_EQ(sourceTileData.col_count, restoredTileData.col_count);
     ASSERT_EQ(sourceTileData.tiles, restoredTileData.tiles);
   }
   else if (sourceLayer.type == LayerType::object_layer) {
-    const auto& sourceObjects = std::get<ir::object_layer_data>(sourceLayer.data);
-    const auto& restoredObjects = std::get<ir::object_layer_data>(restoredLayer.data);
+    const auto& sourceObjects = std::get<ir::ObjectLayerData>(sourceLayer.data);
+    const auto& restoredObjects = std::get<ir::ObjectLayerData>(restoredLayer.data);
     _validate_object_layers(sourceObjects, restoredObjects);
   }
   else if (sourceLayer.type == LayerType::group_layer) {
-    const auto& sourceGroup = std::get<ir::group_layer_data>(sourceLayer.data);
-    const auto& restoredGroup = std::get<ir::group_layer_data>(restoredLayer.data);
+    const auto& sourceGroup = std::get<ir::GroupLayerData>(sourceLayer.data);
+    const auto& restoredGroup = std::get<ir::GroupLayerData>(restoredLayer.data);
 
     ASSERT_EQ(sourceGroup.children.size(), restoredGroup.children.size());
     for (usize index = 0; index < sourceGroup.children.size(); ++index) {
@@ -105,7 +105,7 @@ void _validate_layers(const ir::layer_data& sourceLayer,
   _validate_contexts(sourceLayer.context, restoredLayer.context);
 }
 
-void _validate_layers(const ir::map_data& source, const ir::map_data& restored)
+void _validate_layers(const ir::MapData& source, const ir::MapData& restored)
 {
   ASSERT_EQ(source.layers.size(), restored.layers.size());
   for (usize index = 0; index < source.layers.size(); ++index) {
@@ -115,8 +115,8 @@ void _validate_layers(const ir::map_data& source, const ir::map_data& restored)
   }
 }
 
-void _validate_fancy_tiles(const ir::fancy_tile_data& source,
-                           const ir::fancy_tile_data& restored)
+void _validate_fancy_tiles(const ir::MetaTileData& source,
+                           const ir::MetaTileData& restored)
 {
   ASSERT_EQ(source.objects.size(), restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
@@ -137,7 +137,7 @@ void _validate_fancy_tiles(const ir::fancy_tile_data& source,
   _validate_contexts(source.context, restored.context);
 }
 
-void _validate_tilesets(const ir::map_data& source, const ir::map_data& restored)
+void _validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
 {
   ASSERT_EQ(source.tilesets.size(), restored.tilesets.size());
 
@@ -168,14 +168,14 @@ void _validate_tilesets(const ir::map_data& source, const ir::map_data& restored
   }
 }
 
-void _validate_component_definitions(const ir::map_data& source,
-                                     const ir::map_data& restored)
+void _validate_component_definitions(const ir::MapData& source,
+                                     const ir::MapData& restored)
 {
   ASSERT_EQ(source.component_definitions.size(), restored.component_definitions.size());
   ASSERT_EQ(source.component_definitions, restored.component_definitions);
 }
 
-void _validate_basic_map_info(const ir::map_data& source, const ir::map_data& restored)
+void _validate_basic_map_info(const ir::MapData& source, const ir::MapData& restored)
 {
   ASSERT_EQ(source.row_count, restored.row_count);
   ASSERT_EQ(source.col_count, restored.col_count);
@@ -190,9 +190,9 @@ void _validate_basic_map_info(const ir::map_data& source, const ir::map_data& re
 constexpr usize _row_count = 15;
 constexpr usize _col_count = 13;
 
-[[nodiscard]] auto _create_source_ground_layer() -> ir::layer_data
+[[nodiscard]] auto _create_source_ground_layer() -> ir::LayerData
 {
-  ir::layer_data data;
+  ir::LayerData data;
 
   data.name = "Ground";
   data.type = LayerType::tile_layer;
@@ -203,7 +203,7 @@ constexpr usize _col_count = 13;
   data.opacity = 0.8f;
   data.visible = true;
 
-  auto& tileData = data.data.emplace<ir::tile_layer_data>();
+  auto& tileData = data.data.emplace<ir::TileLayerData>();
   tileData.row_count = _row_count;
   tileData.col_count = _col_count;
 
@@ -220,9 +220,9 @@ constexpr usize _col_count = 13;
   return data;
 }
 
-[[nodiscard]] auto _create_source_group_layer(const bool useComponents) -> ir::layer_data
+[[nodiscard]] auto _create_source_group_layer(const bool useComponents) -> ir::LayerData
 {
-  ir::layer_data data;
+  ir::LayerData data;
 
   data.name = "Tile Detail Layers";
   data.type = LayerType::group_layer;
@@ -235,10 +235,10 @@ constexpr usize _col_count = 13;
 
   data.context.properties["tint"] = cen::color::from_rgba("#1DBC748F").value();
 
-  auto& group = data.data.emplace<ir::group_layer_data>();
+  auto& group = data.data.emplace<ir::GroupLayerData>();
 
   {
-    auto& child = group.children.emplace_back(std::make_unique<ir::layer_data>());
+    auto& child = group.children.emplace_back(std::make_unique<ir::LayerData>());
     child->name = "Details 1";
     child->type = LayerType::tile_layer;
 
@@ -248,7 +248,7 @@ constexpr usize _col_count = 13;
     child->opacity = 0.9f;
     child->visible = true;
 
-    auto& tileData = child->data.emplace<ir::tile_layer_data>();
+    auto& tileData = child->data.emplace<ir::TileLayerData>();
     tileData.row_count = _row_count;
     tileData.col_count = _col_count;
     tileData.tiles = make_tile_matrix(_row_count, _col_count);
@@ -258,7 +258,7 @@ constexpr usize _col_count = 13;
   }
 
   {
-    auto& child = group.children.emplace_back(std::make_unique<ir::layer_data>());
+    auto& child = group.children.emplace_back(std::make_unique<ir::LayerData>());
     child->name = "Details 2";
     child->type = LayerType::tile_layer;
 
@@ -268,7 +268,7 @@ constexpr usize _col_count = 13;
     child->opacity = 1.0f;
     child->visible = true;
 
-    auto& tileData = child->data.emplace<ir::tile_layer_data>();
+    auto& tileData = child->data.emplace<ir::TileLayerData>();
     tileData.row_count = _row_count;
     tileData.col_count = _col_count;
     tileData.tiles = make_tile_matrix(_row_count, _col_count);
@@ -281,9 +281,9 @@ constexpr usize _col_count = 13;
   return data;
 }
 
-[[nodiscard]] auto _create_source_object_layer(const bool useComponents) -> ir::layer_data
+[[nodiscard]] auto _create_source_object_layer(const bool useComponents) -> ir::LayerData
 {
-  ir::layer_data data;
+  ir::LayerData data;
 
   data.name = "Objects";
   data.type = LayerType::object_layer;
@@ -294,7 +294,7 @@ constexpr usize _col_count = 13;
   data.opacity = 1.0f;
   data.visible = true;
 
-  auto& objectLayerData = data.data.emplace<ir::object_layer_data>();
+  auto& objectLayerData = data.data.emplace<ir::ObjectLayerData>();
 
   auto& point = objectLayerData.objects.emplace_back();
   point.name = "Point";
@@ -340,9 +340,9 @@ constexpr usize _col_count = 13;
   return data;
 }
 
-[[nodiscard]] auto _create_source_tileset(const bool useComponents) -> ir::tileset_data
+[[nodiscard]] auto _create_source_tileset(const bool useComponents) -> ir::TilesetData
 {
-  ir::tileset_data data;
+  ir::TilesetData data;
 
   data.name = "test_tileset";
 
@@ -382,9 +382,9 @@ constexpr usize _col_count = 13;
   return data;
 }
 
-[[nodiscard]] auto _create_source_data(const bool useComponents) -> ir::map_data
+[[nodiscard]] auto _create_source_data(const bool useComponents) -> ir::MapData
 {
-  ir::map_data data;
+  ir::MapData data;
 
   data.tile_width = 32;
   data.tile_height = 28;

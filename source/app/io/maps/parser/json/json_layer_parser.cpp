@@ -28,9 +28,9 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_object_layer(const nlohmann::json& json,
-                                       ir::layer_data& layerData) -> parse_error
+                                       ir::LayerData& layerData) -> parse_error
 {
-  auto& objectLayerData = layerData.data.emplace<ir::object_layer_data>();
+  auto& objectLayerData = layerData.data.emplace<ir::ObjectLayerData>();
 
   if (const auto iter = json.find("objects"); iter != json.end()) {
     objectLayerData.objects.reserve(iter->size());
@@ -82,11 +82,11 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer(const nlohmann::json& json,
-                                     ir::layer_data& layerData,
+                                     ir::LayerData& layerData,
                                      const usize rows,
                                      const usize columns) -> parse_error
 {
-  auto& tileLayerData = layerData.data.emplace<ir::tile_layer_data>();
+  auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
 
   if (const auto width = as_uint(json, "width")) {
     tileLayerData.col_count = *width;
@@ -129,7 +129,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_layer(const nlohmann::json& json,
-                                ir::layer_data& layerData,
+                                ir::LayerData& layerData,
                                 const usize index,
                                 const usize rows,
                                 const usize columns) -> parse_error
@@ -164,12 +164,12 @@ namespace {
     }
     else if (type == "group") {
       layerData.type = LayerType::group_layer;
-      auto& groupLayerData = layerData.data.emplace<ir::group_layer_data>();
+      auto& groupLayerData = layerData.data.emplace<ir::GroupLayerData>();
 
       usize childIndex = 0;
       for (const auto& [_, value] : json.at("layers").items()) {
         auto& childLayerData =
-            groupLayerData.children.emplace_back(std::make_unique<ir::layer_data>());
+            groupLayerData.children.emplace_back(std::make_unique<ir::LayerData>());
 
         if (const auto err =
                 _parse_layer(value, *childLayerData, childIndex, rows, columns);
@@ -198,7 +198,7 @@ namespace {
 
 }  // namespace
 
-auto parse_object(const nlohmann::json& json, ir::object_data& objectData) -> parse_error
+auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> parse_error
 {
   if (const auto id = as_int(json, "id")) {
     objectData.id = *id;
@@ -235,7 +235,7 @@ auto parse_object(const nlohmann::json& json, ir::object_data& objectData) -> pa
   return parse_error::none;
 }
 
-auto parse_layers(const nlohmann::json& json, ir::map_data& mapData) -> parse_error
+auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> parse_error
 {
   const auto iter = json.find("layers");
 

@@ -31,11 +31,11 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_layer(const YAML::Node& node,
-                                const ir::map_data& map,
-                                ir::layer_data& layer,
+                                const ir::MapData& map,
+                                ir::LayerData& layer,
                                 usize index) -> parse_error;
 
-[[nodiscard]] auto _parse_tile_layer_data(ir::tile_layer_data& layer,
+[[nodiscard]] auto _parse_tile_layer_data(ir::TileLayerData& layer,
                                           const usize columns,
                                           const std::string& tileData) -> parse_error
 {
@@ -55,13 +55,13 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer(const YAML::Node& node,
-                                     ir::layer_data& data,
+                                     ir::LayerData& data,
                                      const usize rows,
                                      const usize columns) -> parse_error
 {
   data.type = LayerType::tile_layer;
 
-  auto& tileLayer = data.data.emplace<ir::tile_layer_data>();
+  auto& tileLayer = data.data.emplace<ir::TileLayerData>();
   tileLayer.row_count = rows;
   tileLayer.col_count = columns;
   tileLayer.tiles = make_tile_matrix(rows, columns);
@@ -83,11 +83,11 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_object_layer(const YAML::Node& node,
-                                       const ir::map_data& map,
-                                       ir::layer_data& data) -> parse_error
+                                       const ir::MapData& map,
+                                       ir::LayerData& data) -> parse_error
 {
   data.type = LayerType::object_layer;
-  auto& objectLayer = data.data.emplace<ir::object_layer_data>();
+  auto& objectLayer = data.data.emplace<ir::ObjectLayerData>();
 
   if (auto sequence = node["objects"]) {
     objectLayer.objects.reserve(sequence.size());
@@ -105,18 +105,18 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_group_layer(const YAML::Node& node,
-                                      const ir::map_data& map,
-                                      ir::layer_data& data) -> parse_error
+                                      const ir::MapData& map,
+                                      ir::LayerData& data) -> parse_error
 {
   data.type = LayerType::group_layer;
-  auto& group = data.data.emplace<ir::group_layer_data>();
+  auto& group = data.data.emplace<ir::GroupLayerData>();
 
   if (auto sequence = node["layers"]) {
     group.children.reserve(sequence.size());
 
     usize index = 0;
     for (const auto& layerNode : sequence) {
-      auto& child = group.children.emplace_back(std::make_unique<ir::layer_data>());
+      auto& child = group.children.emplace_back(std::make_unique<ir::LayerData>());
 
       if (const auto err = _parse_layer(layerNode, map, *child, index);
           err != parse_error::none) {
@@ -131,8 +131,8 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_layer(const YAML::Node& node,
-                                const ir::map_data& map,
-                                ir::layer_data& layer,
+                                const ir::MapData& map,
+                                ir::LayerData& layer,
                                 const usize index) -> parse_error
 {
   layer.index = index;
@@ -208,9 +208,8 @@ namespace {
 
 }  // namespace
 
-auto parse_object(const YAML::Node& node,
-                  const ir::map_data& map,
-                  ir::object_data* object) -> parse_error
+auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData* object)
+    -> parse_error
 {
   if (auto id = node["id"]) {
     object->id = id.as<object_id>();
@@ -294,7 +293,7 @@ auto parse_object(const YAML::Node& node,
   return parse_error::none;
 }
 
-auto parse_layers(const YAML::Node& sequence, ir::map_data& map) -> parse_error
+auto parse_layers(const YAML::Node& sequence, ir::MapData& map) -> parse_error
 {
   map.layers.reserve(sequence.size());
 

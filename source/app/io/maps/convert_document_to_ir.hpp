@@ -25,6 +25,6 @@ namespace tactile {
 
 struct Document;
 
-[[nodiscard]] auto convert_document_to_ir(const Document& document) -> ir::map_data;
+[[nodiscard]] auto convert_document_to_ir(const Document& document) -> ir::MapData;
 
 }  // namespace tactile

@@ -31,8 +31,8 @@ namespace {
 
 constexpr int32 _tileset_file_version = 1;
 
-[[nodiscard]] auto _parse_animation_frame(const YAML::Node& node,
-                                          ir::fancy_tile_data& tile) -> parse_error
+[[nodiscard]] auto _parse_animation_frame(const YAML::Node& node, ir::MetaTileData& tile)
+    -> parse_error
 {
   tile_id frameTile{};
   uint64 frameDuration{};
@@ -59,8 +59,8 @@ constexpr int32 _tileset_file_version = 1;
 }
 
 [[nodiscard]] auto _parse_fancy_tile(const YAML::Node& node,
-                                     const ir::map_data& map,
-                                     ir::tileset_data& tileset) -> parse_error
+                                     const ir::MapData& map,
+                                     ir::TilesetData& tileset) -> parse_error
 {
   tile_id tileId{};
 
@@ -109,8 +109,8 @@ constexpr int32 _tileset_file_version = 1;
 }
 
 [[nodiscard]] auto _parse_fancy_tiles(const YAML::Node& sequence,
-                                      const ir::map_data& map,
-                                      ir::tileset_data& tileset) -> parse_error
+                                      const ir::MapData& map,
+                                      ir::TilesetData& tileset) -> parse_error
 {
   tileset.fancy_tiles.reserve(sequence.size());
 
@@ -125,7 +125,7 @@ constexpr int32 _tileset_file_version = 1;
 }
 
 [[nodiscard]] auto _parse_tileset(const std::filesystem::path& source,
-                                  ir::map_data& map,
+                                  ir::MapData& map,
                                   const tile_id firstTileId) -> parse_error
 {
   try {
@@ -237,7 +237,7 @@ constexpr int32 _tileset_file_version = 1;
 }  // namespace
 
 auto parse_tilesets(const YAML::Node& sequence,
-                    ir::map_data& map,
+                    ir::MapData& map,
                     const std::filesystem::path& dir) -> parse_error
 {
   map.tilesets.reserve(sequence.size());

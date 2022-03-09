@@ -50,7 +50,7 @@ namespace {
   return nodes;
 }
 
-[[nodiscard]] auto _parse_csv_tiles(const char* csv, ir::tile_layer_data& layerData)
+[[nodiscard]] auto _parse_csv_tiles(const char* csv, ir::TileLayerData& layerData)
     -> parse_error
 {
   usize index{};
@@ -70,7 +70,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_nodes(pugi::xml_node dataNode,
-                                     ir::tile_layer_data& layerData) -> parse_error
+                                     ir::TileLayerData& layerData) -> parse_error
 {
   usize index = 0;
   for (const auto tileNode : dataNode.children("tile")) {
@@ -84,7 +84,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_data(pugi::xml_node layerNode,
-                                    ir::tile_layer_data& layerData) -> parse_error
+                                    ir::TileLayerData& layerData) -> parse_error
 {
   const auto data = layerNode.child("data");
 
@@ -118,11 +118,11 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer(pugi::xml_node layerNode,
-                                     ir::layer_data& layerData,
+                                     ir::LayerData& layerData,
                                      const usize rows,
                                      const usize columns) -> parse_error
 {
-  auto& tileLayerData = layerData.data.emplace<ir::tile_layer_data>();
+  auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
 
   if (const auto width = uint_attribute(layerNode, "width")) {
     tileLayerData.col_count = *width;
@@ -163,10 +163,10 @@ namespace {
   return parse_error::none;
 }
 
-[[nodiscard]] auto _parse_object_layer(pugi::xml_node layerNode,
-                                       ir::layer_data& layerData) -> parse_error
+[[nodiscard]] auto _parse_object_layer(pugi::xml_node layerNode, ir::LayerData& layerData)
+    -> parse_error
 {
-  auto& objectLayerData = layerData.data.emplace<ir::object_layer_data>();
+  auto& objectLayerData = layerData.data.emplace<ir::ObjectLayerData>();
 
   for (const auto objectNode : layerNode.children("object")) {
     auto& objectData = objectLayerData.objects.emplace_back();
@@ -179,7 +179,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_layer(pugi::xml_node layerNode,
-                                ir::layer_data& layerData,
+                                ir::LayerData& layerData,
                                 const usize index,
                                 const usize rows,
                                 const usize columns) -> parse_error
@@ -213,12 +213,12 @@ namespace {
   }
   else if (std::strcmp(layerNode.name(), "group") == 0) {
     layerData.type = LayerType::group_layer;
-    auto& groupData = layerData.data.emplace<ir::group_layer_data>();
+    auto& groupData = layerData.data.emplace<ir::GroupLayerData>();
 
     usize childIndex = 0;
     for (auto childLayerNode : _collect_layer_nodes(layerNode)) {
       auto& childLayerData =
-          groupData.children.emplace_back(std::make_unique<ir::layer_data>());
+          groupData.children.emplace_back(std::make_unique<ir::LayerData>());
 
       if (const auto err =
               _parse_layer(childLayerNode, *childLayerData, childIndex, rows, columns);
@@ -244,7 +244,7 @@ namespace {
 
 }  // namespace
 
-auto parse_object(pugi::xml_node objectNode, ir::object_data& objectData) -> parse_error
+auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData) -> parse_error
 {
   if (const auto id = int_attribute(objectNode, "id")) {
     objectData.id = *id;
@@ -281,7 +281,7 @@ auto parse_object(pugi::xml_node objectNode, ir::object_data& objectData) -> par
   return parse_error::none;
 }
 
-auto parse_layers(pugi::xml_node mapNode, ir::map_data& mapData) -> parse_error
+auto parse_layers(pugi::xml_node mapNode, ir::MapData& mapData) -> parse_error
 {
   usize index = 0;
   for (const auto layerNode : _collect_layer_nodes(mapNode)) {

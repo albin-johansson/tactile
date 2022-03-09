@@ -28,7 +28,7 @@
 namespace tactile::parsing {
 namespace {
 
-[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::map_data& data)
+[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& data)
     -> parse_error
 {
   const auto node = YAML::LoadFile(path.string());

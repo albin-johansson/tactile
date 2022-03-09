@@ -38,13 +38,13 @@ class parse_data final
 
   [[nodiscard]] auto error() const -> parse_error;
 
-  [[nodiscard]] auto data() -> ir::map_data&;
+  [[nodiscard]] auto data() -> ir::MapData&;
 
-  [[nodiscard]] auto data() const -> const ir::map_data&;
+  [[nodiscard]] auto data() const -> const ir::MapData&;
 
  private:
   std::filesystem::path mPath;
-  ir::map_data mData;
+  ir::MapData mData;
   parse_error mError{parse_error::none};
 };
 

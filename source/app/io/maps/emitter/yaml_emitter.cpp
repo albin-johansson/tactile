@@ -39,7 +39,7 @@ namespace {
 
 constexpr int tileset_node_version = 1;
 
-void _emit_properties(YAML::Emitter& emitter, const ir::attribute_context_data& context)
+void _emit_properties(YAML::Emitter& emitter, const ir::AttributeContextData& context)
 {
   if (!context.properties.empty()) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
@@ -56,7 +56,7 @@ void _emit_properties(YAML::Emitter& emitter, const ir::attribute_context_data& 
   }
 }
 
-void _emit_components(YAML::Emitter& emitter, const ir::attribute_context_data& context)
+void _emit_components(YAML::Emitter& emitter, const ir::AttributeContextData& context)
 {
   if (!context.components.empty()) {
     emitter << YAML::Key << "components" << YAML::BeginSeq;
@@ -82,7 +82,7 @@ void _emit_components(YAML::Emitter& emitter, const ir::attribute_context_data& 
   }
 }
 
-void _emit_object_data(YAML::Emitter& emitter, const ir::object_data& data)
+void _emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "id" << YAML::Value << data.id;
@@ -136,7 +136,7 @@ void _emit_object_data(YAML::Emitter& emitter, const ir::object_data& data)
   emitter << YAML::EndMap;
 }
 
-void _emit_object_layer_data(YAML::Emitter& emitter, const ir::object_layer_data& data)
+void _emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& data)
 {
   if (data.objects.empty()) {
     return;
@@ -152,7 +152,7 @@ void _emit_object_layer_data(YAML::Emitter& emitter, const ir::object_layer_data
 }
 
 void _emit_tile_layer_data(YAML::Emitter& emitter,
-                           const ir::tile_layer_data& data,
+                           const ir::TileLayerData& data,
                            const usize rows,
                            const usize columns)
 {
@@ -184,7 +184,7 @@ void _emit_tile_layer_data(YAML::Emitter& emitter,
 }
 
 void _emit_layer(YAML::Emitter& emitter,
-                 const ir::layer_data& data,
+                 const ir::LayerData& data,
                  const usize rows,
                  const usize columns)
 {
@@ -206,14 +206,14 @@ void _emit_layer(YAML::Emitter& emitter,
     case LayerType::tile_layer:
       emitter << YAML::Value << "tile-layer";
       _emit_tile_layer_data(emitter,
-                            std::get<ir::tile_layer_data>(data.data),
+                            std::get<ir::TileLayerData>(data.data),
                             rows,
                             columns);
       break;
 
     case LayerType::object_layer:
       emitter << YAML::Value << "object-layer";
-      _emit_object_layer_data(emitter, std::get<ir::object_layer_data>(data.data));
+      _emit_object_layer_data(emitter, std::get<ir::ObjectLayerData>(data.data));
       break;
 
     case LayerType::group_layer: {
@@ -221,7 +221,7 @@ void _emit_layer(YAML::Emitter& emitter,
       emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
       for (const auto& childLayerData :
-           std::get<ir::group_layer_data>(data.data).children) {
+           std::get<ir::GroupLayerData>(data.data).children) {
         _emit_layer(emitter, *childLayerData, rows, columns);
       }
 
@@ -236,7 +236,7 @@ void _emit_layer(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void _emit_layers(YAML::Emitter& emitter, const ir::map_data& data)
+void _emit_layers(YAML::Emitter& emitter, const ir::MapData& data)
 {
   if (data.layers.empty()) {
     return;
@@ -251,7 +251,7 @@ void _emit_layers(YAML::Emitter& emitter, const ir::map_data& data)
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::fancy_tile_data& data)
+void _emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::MetaTileData& data)
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
 
@@ -265,7 +265,7 @@ void _emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::fancy_tile_d
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::tileset_data& tileset)
+void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
@@ -296,7 +296,7 @@ void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::tileset_data& tileset
 
 void _emit_tileset_file(const emit_info& info,
                         const std::string& filename,
-                        const ir::tileset_data& tileset)
+                        const ir::TilesetData& tileset)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);
