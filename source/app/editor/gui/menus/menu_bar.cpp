@@ -21,8 +21,8 @@
 
 #include <imgui.h>
 
+#include "debug_menu.hpp"
 #include "editor/model.hpp"
-#include "map_menu.hpp"
 
 namespace tactile {
 
@@ -34,7 +34,7 @@ void MenuBar::update(const DocumentModel& model, entt::dispatcher& dispatcher)
     mViewMenu.update(model, dispatcher);
     mMapMenu.update(model, dispatcher);
     mHelpMenu.update(model, dispatcher);
-    mDebugMenu.update();
+    update_debug_menu();
 
     ImGui::EndMainMenuBar();
   }
@@ -42,7 +42,7 @@ void MenuBar::update(const DocumentModel& model, entt::dispatcher& dispatcher)
   mFileMenu.update_windows(model, dispatcher);
   mEditMenu.update_windows(model, dispatcher);
   mHelpMenu.update_windows();
-  mDebugMenu.update_windows();
+  update_debug_menu_windows();
 }
 
 void MenuBar::show_settings_dialog()

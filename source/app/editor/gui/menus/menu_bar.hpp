@@ -21,7 +21,6 @@
 
 #include <entt/entt.hpp>  // dispatcher
 
-#include "debug_menu.hpp"
 #include "edit_menu.hpp"
 #include "file_menu.hpp"
 #include "help_menu.hpp"
@@ -59,7 +58,6 @@ class MenuBar final
   ViewMenu mViewMenu;
   MapMenu mMapMenu;
   HelpMenu mHelpMenu;
-  DebugMenu mDebugMenu;
 };
 
 }  // namespace tactile

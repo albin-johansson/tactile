@@ -28,33 +28,40 @@
 #include "meta/build.hpp"
 
 namespace tactile {
+namespace {
 
-void DebugMenu::update()
+bool _show_metrics = false;
+bool _show_demo = false;
+bool _show_style_editor = false;
+
+}  // namespace
+
+void update_debug_menu()
 {
   if (scoped::Menu menu{"Debug"}; menu.is_open()) {
-    mShowMetrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
+    _show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
     if constexpr (is_debug_build) {
       ImGui::Separator();
-      mShowDemo = ImGui::MenuItem("Show Demo Window...");
-      mShowStyleEditor = ImGui::MenuItem("Show Style Editor...");
+      _show_demo = ImGui::MenuItem("Show Demo Window...");
+      _show_style_editor = ImGui::MenuItem("Show Style Editor...");
     }
   }
 }
 
-void DebugMenu::update_windows()
+void update_debug_menu_windows()
 {
-  if (mShowMetrics) {
+  if (_show_metrics) {
     center_next_window_on_appearance();
-    ImGui::ShowMetricsWindow(&mShowMetrics);
+    ImGui::ShowMetricsWindow(&_show_metrics);
   }
 
   if constexpr (is_debug_build) {
-    if (mShowDemo) {
-      ImGui::ShowDemoWindow(&mShowDemo);
+    if (_show_demo) {
+      ImGui::ShowDemoWindow(&_show_demo);
     }
 
-    if (mShowStyleEditor) {
+    if (_show_style_editor) {
       scoped::Window editor{"Style Editor"};
       ImGui::ShowStyleEditor();
     }
