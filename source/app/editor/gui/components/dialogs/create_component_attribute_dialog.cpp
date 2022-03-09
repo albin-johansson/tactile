@@ -50,8 +50,8 @@ auto create_component_attribute_dialog::validate(const document_model& model,
 
 void create_component_attribute_dialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<create_component_attr_event>(mComponentId,
-                                                  std::string{current_input()});
+  dispatcher.enqueue<CreateComponentAttrEvent>(mComponentId,
+                                               std::string{current_input()});
 }
 
 }  // namespace tactile

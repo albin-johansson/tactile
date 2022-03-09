@@ -43,9 +43,9 @@ void rename_component_attribute_dialog::show(std::string previousName,
 
 void rename_component_attribute_dialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<rename_component_attr_event>(mComponentId.value(),
-                                                  previous_input(),
-                                                  std::string{current_input()});
+  dispatcher.enqueue<RenameComponentAttrEvent>(mComponentId.value(),
+                                               previous_input(),
+                                               std::string{current_input()});
 }
 
 auto rename_component_attribute_dialog::validate(const document_model& model,

@@ -26,24 +26,24 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
-struct quit_event final
+struct QuitEvent final
 {};
 
-struct toggle_ui_event final
+struct ToggleUiEvent final
 {};
 
-struct show_settings_event final
+struct ShowSettingsEvent final
 {};
 
-struct save_event final
+struct SaveEvent final
 {};
 
-struct save_as_event final
+struct SaveAsEvent final
 {
   std::filesystem::path path;
 };
 
-struct open_save_as_dialog_event final
+struct OpenSaveAsDialogEvent final
 {};
 
 /// \} End of group events

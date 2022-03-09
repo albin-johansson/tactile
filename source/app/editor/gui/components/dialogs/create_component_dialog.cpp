@@ -39,7 +39,7 @@ void create_component_dialog::show()
 
 void create_component_dialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<create_component_def_event>(std::string{current_input()});
+  dispatcher.enqueue<CreateComponentDefEvent>(std::string{current_input()});
 }
 
 }  // namespace tactile

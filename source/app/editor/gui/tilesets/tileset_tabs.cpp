@@ -42,13 +42,13 @@ void UpdateContextMenu(const tileset_id id,
 {
   if (auto popup = scoped::popup::for_item("##TilesetTabContext"); popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
-      dispatcher.enqueue<show_add_tileset_dialog_event>();
+      dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
-      dispatcher.enqueue<inspect_context_event>(tilesetEntity);
+      dispatcher.enqueue<InspectContextEvent>(tilesetEntity);
     }
 
     ImGui::Separator();
@@ -60,7 +60,7 @@ void UpdateContextMenu(const tileset_id id,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Tileset")) {
-      dispatcher.enqueue<remove_tileset_event>(id);
+      dispatcher.enqueue<RemoveTilesetEvent>(id);
     }
   }
 }
@@ -73,7 +73,7 @@ void TilesetTabWidget::Update(const entt::registry& registry,
   if (scoped::tab_bar bar{"TilesetTabBar", gTabBarFlags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
-      dispatcher.enqueue<show_add_tileset_dialog_event>();
+      dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
     const auto& activeTileset = registry.ctx<comp::ActiveTileset>();
@@ -92,10 +92,10 @@ void TilesetTabWidget::Update(const entt::registry& registry,
       }
 
       if (!opened) {
-        dispatcher.enqueue<remove_tileset_event>(tileset.id);
+        dispatcher.enqueue<RemoveTilesetEvent>(tileset.id);
       }
       else if (ImGui::IsItemActivated()) {
-        dispatcher.enqueue<select_tileset_event>(tileset.id);
+        dispatcher.enqueue<SelectTilesetEvent>(tileset.id);
       }
       else {
         UpdateContextMenu(tileset.id, entity, dispatcher);

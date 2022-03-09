@@ -52,7 +52,7 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
 void _maybe_emit_event(entt::dispatcher& dispatcher)
 {
   if (!_old_state.empty()) {
-    dispatcher.enqueue<eraser_sequence_event>(std::move(_old_state));
+    dispatcher.enqueue<EraserSequenceEvent>(std::move(_old_state));
     _old_state.clear();
   }
 }

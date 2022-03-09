@@ -26,13 +26,13 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
-struct undo_event final
+struct UndoEvent final
 {};
 
-struct redo_event final
+struct RedoEvent final
 {};
 
-struct set_command_capacity_event final
+struct SetCommandCapacityEvent final
 {
   usize capacity{};
 };

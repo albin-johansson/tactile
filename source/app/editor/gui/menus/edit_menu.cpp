@@ -46,11 +46,11 @@ void EditMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
                                     canRedo ? model.get_redo_text() : ""};
 
     if (ImGui::MenuItem(undoText.data(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
-      dispatcher.enqueue<undo_event>();
+      dispatcher.enqueue<UndoEvent>();
     }
 
     if (ImGui::MenuItem(redoText.data(), TACTILE_PRIMARY_MOD "+Y", false, canRedo)) {
-      dispatcher.enqueue<redo_event>();
+      dispatcher.enqueue<RedoEvent>();
     }
 
     ImGui::Separator();
@@ -59,49 +59,49 @@ void EditMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
                         "S",
                         model.is_tool_active(tool_type::stamp),
                         model.is_tool_possible(tool_type::stamp))) {
-      dispatcher.enqueue<select_tool_event>(tool_type::stamp);
+      dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
     }
 
     if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket Tool",
                         "B",
                         model.is_tool_active(tool_type::bucket),
                         model.is_tool_possible(tool_type::bucket))) {
-      dispatcher.enqueue<select_tool_event>(tool_type::bucket);
+      dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser Tool",
                         "E",
                         model.is_tool_active(tool_type::eraser),
                         model.is_tool_possible(tool_type::eraser))) {
-      dispatcher.enqueue<select_tool_event>(tool_type::eraser);
+      dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
     }
 
     if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection Tool",
                         "Q",
                         model.is_tool_active(tool_type::object_selection),
                         model.is_tool_possible(tool_type::object_selection))) {
-      dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
+      dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
     }
 
     if (ImGui::MenuItem(TAC_ICON_RECTANGLE " Rectangle Tool",
                         "R",
                         model.is_tool_active(tool_type::rectangle),
                         model.is_tool_possible(tool_type::rectangle))) {
-      dispatcher.enqueue<select_tool_event>(tool_type::rectangle);
+      dispatcher.enqueue<SelectToolEvent>(tool_type::rectangle);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ELLIPSE " Ellipse Tool",
                         "T",
                         model.is_tool_active(tool_type::ellipse),
                         model.is_tool_possible(tool_type::ellipse))) {
-      dispatcher.enqueue<select_tool_event>(tool_type::ellipse);
+      dispatcher.enqueue<SelectToolEvent>(tool_type::ellipse);
     }
 
     if (ImGui::MenuItem(TAC_ICON_POINT " Point Tool",
                         "Y",
                         model.is_tool_active(tool_type::point),
                         model.is_tool_possible(tool_type::point))) {
-      dispatcher.enqueue<select_tool_event>(tool_type::point);
+      dispatcher.enqueue<SelectToolEvent>(tool_type::point);
     }
 
     ImGui::Separator();

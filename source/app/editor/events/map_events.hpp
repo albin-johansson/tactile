@@ -28,25 +28,25 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
-struct show_new_map_dialog_event final
+struct ShowNewMapDialogEvent final
 {};
 
-struct show_open_map_dialog_event final
+struct ShowOpenMapDialogEvent final
 {};
 
-struct add_row_event final
+struct AddRowEvent final
 {};
 
-struct add_column_event final
+struct AddColumnEvent final
 {};
 
-struct remove_row_event final
+struct RemoveRowEvent final
 {};
 
-struct remove_column_event final
+struct RemoveColumnEvent final
 {};
 
-struct create_map_event final
+struct CreateMapEvent final
 {
   int32 tile_width{};
   int32 tile_height{};
@@ -54,28 +54,28 @@ struct create_map_event final
   usize column_count{};
 };
 
-struct close_map_event final
+struct CloseMapEvent final
 {
   map_id id{};
 };
 
-struct open_map_event final
+struct OpenMapEvent final
 {
   std::filesystem::path path;
 };
 
-struct select_map_event final
+struct SelectMapEvent final
 {
   map_id id;
 };
 
-struct inspect_map_event final
+struct InspectMapEvent final
 {};
 
-struct open_resize_map_dialog_event final
+struct OpenResizeMapDialogEvent final
 {};
 
-struct resize_map_event final
+struct ResizeMapEvent final
 {
   usize row_count{};
   usize col_count{};

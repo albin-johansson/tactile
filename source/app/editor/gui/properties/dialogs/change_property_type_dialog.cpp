@@ -53,7 +53,7 @@ void ChangePropertyTypeDialog::on_update(const document_model&, entt::dispatcher
 
 void ChangePropertyTypeDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<change_property_type_event>(mPropertyName.value(), mCurrentType);
+  dispatcher.enqueue<ChangePropertyTypeEvent>(mPropertyName.value(), mCurrentType);
 }
 
 auto ChangePropertyTypeDialog::is_current_input_valid(const document_model&) const -> bool

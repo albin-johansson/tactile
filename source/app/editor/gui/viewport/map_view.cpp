@@ -170,7 +170,7 @@ void _update_context_menu([[maybe_unused]] const entt::registry& registry,
   if (const auto popup = scoped::popup::for_item("##MapViewContextMenu", flags);
       popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
-      dispatcher.enqueue<inspect_map_event>();
+      dispatcher.enqueue<InspectMapEvent>();
     }
 
     ImGui::Separator();
@@ -236,14 +236,14 @@ void update_map_view_object_context_menu(const entt::registry& registry,
     const auto& object = registry.get<comp::Object>(active.entity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
-      dispatcher.enqueue<inspect_context_event>(active.entity);
+      dispatcher.enqueue<InspectContextEvent>(active.entity);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Object Visibility",
                         nullptr,
                         object.visible)) {
-      dispatcher.enqueue<set_object_visibility_event>(object.id, !object.visible);
+      dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, !object.visible);
     }
 
     // TODO implement the object actions

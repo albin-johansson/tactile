@@ -64,7 +64,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
   };
 
   if (button(TAC_ICON_FILE, "Create new map", bw, bh)) {
-    dispatcher.enqueue<show_new_map_dialog_event>();
+    dispatcher.enqueue<ShowNewMapDialogEvent>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -72,7 +72,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
   }
 
   if (button(TAC_ICON_OPEN, "Open map", bw, bh)) {
-    dispatcher.enqueue<show_open_map_dialog_event>();
+    dispatcher.enqueue<ShowOpenMapDialogEvent>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -80,7 +80,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
   }
 
   if (button(TAC_ICON_SAVE, "Save", !model.is_clean(), bw, bh)) {
-    dispatcher.enqueue<save_event>();
+    dispatcher.enqueue<SaveEvent>();
   }
 
   separate();
@@ -90,7 +90,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
   }
 
   if (button(TAC_ICON_UNDO, "Undo", model.can_undo(), bw, bh)) {
-    dispatcher.enqueue<undo_event>();
+    dispatcher.enqueue<UndoEvent>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -98,7 +98,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
   }
 
   if (button(TAC_ICON_REDO, "Redo", model.can_redo(), bw, bh)) {
-    dispatcher.enqueue<redo_event>();
+    dispatcher.enqueue<RedoEvent>();
   }
 
   separate();
@@ -116,7 +116,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
   }
 
   if (button(TAC_ICON_RESIZE, "Resize map", true, bw, bh)) {
-    dispatcher.enqueue<open_resize_map_dialog_event>();
+    dispatcher.enqueue<OpenResizeMapDialogEvent>();
   }
 
   if (axis == ImGuiAxis_X) {
@@ -130,7 +130,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
   }
 
   if (button(TAC_ICON_TILESET, "Create tileset", true, bw, bh)) {
-    dispatcher.enqueue<show_add_tileset_dialog_event>();
+    dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
   }
 
   separate();
@@ -145,7 +145,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
                  model.is_tool_possible(tool_type::stamp),
                  bw,
                  bh)) {
-    dispatcher.enqueue<select_tool_event>(tool_type::stamp);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
   }
 
   if (axis == ImGuiAxis_X) {
@@ -158,7 +158,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
                  model.is_tool_possible(tool_type::bucket),
                  bw,
                  bh)) {
-    dispatcher.enqueue<select_tool_event>(tool_type::bucket);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
   }
 
   if (axis == ImGuiAxis_X) {
@@ -171,7 +171,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
                  model.is_tool_possible(tool_type::eraser),
                  bw,
                  bh)) {
-    dispatcher.enqueue<select_tool_event>(tool_type::eraser);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
   }
 
   separate();
@@ -186,7 +186,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
                  model.is_tool_possible(tool_type::object_selection),
                  bw,
                  bh)) {
-    dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
   }
 
   if (ToolButton(TAC_ICON_RECTANGLE,
@@ -195,7 +195,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
                  model.is_tool_possible(tool_type::rectangle),
                  bw,
                  bh)) {
-    dispatcher.enqueue<select_tool_event>(tool_type::rectangle);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::rectangle);
   }
 
   if (ToolButton(TAC_ICON_ELLIPSE,
@@ -204,7 +204,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
                  model.is_tool_possible(tool_type::ellipse),
                  bw,
                  bh)) {
-    dispatcher.enqueue<select_tool_event>(tool_type::ellipse);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::ellipse);
   }
 
   if (ToolButton(TAC_ICON_POINT,
@@ -213,7 +213,7 @@ void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
                  model.is_tool_possible(tool_type::point),
                  bw,
                  bh)) {
-    dispatcher.enqueue<select_tool_event>(tool_type::point);
+    dispatcher.enqueue<SelectToolEvent>(tool_type::point);
   }
 
   end_docking_toolbar();

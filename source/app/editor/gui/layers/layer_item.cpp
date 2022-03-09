@@ -48,33 +48,33 @@ void _update_layer_item_popup(const entt::registry& registry,
     const auto [entity, layer] = sys::get_layer(registry, id);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
-      dispatcher.enqueue<inspect_context_event>(entity);
+      dispatcher.enqueue<InspectContextEvent>(entity);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Layer")) {
-      dispatcher.enqueue<open_rename_layer_dialog_event>(id);
+      dispatcher.enqueue<OpenRenameLayerDialogEvent>(id);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Layer")) {
-      dispatcher.enqueue<duplicate_layer_event>(id);
+      dispatcher.enqueue<DuplicateLayerEvent>(id);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Layer")) {
-      dispatcher.enqueue<remove_layer_event>(id);
+      dispatcher.enqueue<RemoveLayerEvent>(id);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Layer Visibility",
                         nullptr,
                         layer.visible)) {
-      dispatcher.enqueue<set_layer_visible_event>(id, !layer.visible);
+      dispatcher.enqueue<SetLayerVisibleEvent>(id, !layer.visible);
     }
 
     if (auto opacity = layer.opacity; ImGui::SliderFloat("Opacity", &opacity, 0, 1.0f)) {
-      dispatcher.enqueue<set_layer_opacity_event>(id, opacity);
+      dispatcher.enqueue<SetLayerOpacityEvent>(id, opacity);
     }
 
     ImGui::Separator();
@@ -82,14 +82,14 @@ void _update_layer_item_popup(const entt::registry& registry,
                         nullptr,
                         false,
                         sys::can_move_layer_up(registry, entity))) {
-      dispatcher.enqueue<move_layer_up_event>(id);
+      dispatcher.enqueue<MoveLayerUpEvent>(id);
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move Layer Down",
                         nullptr,
                         false,
                         sys::can_move_layer_down(registry, entity))) {
-      dispatcher.enqueue<move_layer_down_event>(id);
+      dispatcher.enqueue<MoveLayerDownEvent>(id);
     }
   }
 }
@@ -108,7 +108,7 @@ void _show_group_layer_item(const entt::registry& registry,
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<select_layer_event>(layer.id);
+      dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
     _update_layer_item_popup(registry, dispatcher, layer.id);
@@ -123,7 +123,7 @@ void _show_group_layer_item(const entt::registry& registry,
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<select_layer_event>(layer.id);
+      dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
     _update_layer_item_popup(registry, dispatcher, layer.id);
@@ -150,12 +150,12 @@ void show_layer_item(const entt::registry& registry,
 
   if (layer.type != layer_type::group_layer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
-      dispatcher.enqueue<select_layer_event>(layer.id);
+      dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
     /* Make sure to select the layer item when right-clicked as well */
     if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-      dispatcher.enqueue<select_layer_event>(layer.id);
+      dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
     _update_layer_item_popup(registry, dispatcher, layer.id);

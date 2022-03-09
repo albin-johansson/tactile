@@ -48,7 +48,7 @@ void resize_map_dialog::on_update(const document_model&, entt::dispatcher&)
 
 void resize_map_dialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<resize_map_event>(mRows, mColumns);
+  dispatcher.enqueue<ResizeMapEvent>(mRows, mColumns);
 }
 
 }  // namespace tactile

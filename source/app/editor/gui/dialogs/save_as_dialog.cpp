@@ -58,7 +58,7 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
       }
     }
 
-    dispatcher.enqueue<save_as_event>(std::move(path));
+    dispatcher.enqueue<SaveAsEvent>(std::move(path));
   }
 }
 

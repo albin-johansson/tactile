@@ -38,7 +38,7 @@ auto PropertyItemContextMenu(entt::dispatcher& dispatcher,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Property")) {
-      dispatcher.enqueue<remove_property_event>(name);
+      dispatcher.enqueue<RemovePropertyEvent>(name);
     }
 
     return true;

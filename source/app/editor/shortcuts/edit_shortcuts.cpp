@@ -35,7 +35,7 @@ UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, gPrimaryModifier} {}
 
 void UndoShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<undo_event>();
+  dispatcher.enqueue<UndoEvent>();
 }
 
 auto UndoShortcut::IsEnabled(const document_model& model, const widget_manager&) const
@@ -48,7 +48,7 @@ RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, gPrimaryModifier} {}
 
 void RedoShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<redo_event>();
+  dispatcher.enqueue<RedoEvent>();
 }
 
 auto RedoShortcut::IsEnabled(const document_model& model, const widget_manager&) const
@@ -61,7 +61,7 @@ AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, gSecondaryModifi
 
 void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<add_row_event>();
+  dispatcher.enqueue<AddRowEvent>();
 }
 
 auto AddRowShortcut::IsEnabled(const document_model& model, const widget_manager&) const
@@ -75,7 +75,7 @@ AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, gSecondary
 
 void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<add_column_event>();
+  dispatcher.enqueue<AddColumnEvent>();
 }
 
 auto AddColumnShortcut::IsEnabled(const document_model& model,
@@ -90,7 +90,7 @@ RemoveRowShortcut::RemoveRowShortcut()
 
 void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<remove_row_event>();
+  dispatcher.enqueue<RemoveRowEvent>();
 }
 
 auto RemoveRowShortcut::IsEnabled(const document_model& model,
@@ -111,7 +111,7 @@ RemoveColumnShortcut::RemoveColumnShortcut()
 
 void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<remove_column_event>();
+  dispatcher.enqueue<RemoveColumnEvent>();
 }
 
 auto RemoveColumnShortcut::IsEnabled(const document_model& model,
@@ -131,7 +131,7 @@ AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, gPrimary
 
 void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<show_add_tileset_dialog_event>();
+  dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
 }
 
 auto AddTilesetShortcut::IsEnabled(const document_model& model,
@@ -144,7 +144,7 @@ EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}
 
 void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<select_tool_event>(tool_type::bucket);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
 }
 
 auto EnableBucketShortcut::IsEnabled(const document_model& model,
@@ -157,7 +157,7 @@ EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
 
 void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<select_tool_event>(tool_type::eraser);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
 }
 
 auto EnableEraserShortcut::IsEnabled(const document_model& model,
@@ -170,7 +170,7 @@ EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
 
 void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<select_tool_event>(tool_type::stamp);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
 }
 
 auto EnableStampShortcut::IsEnabled(const document_model& model,
@@ -185,7 +185,7 @@ EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
 
 void EnableObjectSelectionShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<select_tool_event>(tool_type::object_selection);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
 }
 
 auto EnableObjectSelectionShortcut::IsEnabled(const document_model& model,
@@ -200,7 +200,7 @@ EnableRectangleToolShortcut::EnableRectangleToolShortcut() : AShortcut{cen::scan
 
 void EnableRectangleToolShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<select_tool_event>(tool_type::rectangle);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::rectangle);
 }
 
 auto EnableRectangleToolShortcut::IsEnabled(const document_model& model,
@@ -213,7 +213,7 @@ EnableEllipseToolShortcut::EnableEllipseToolShortcut() : AShortcut{cen::scancode
 
 void EnableEllipseToolShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<select_tool_event>(tool_type::ellipse);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::ellipse);
 }
 
 auto EnableEllipseToolShortcut::IsEnabled(const document_model& model,
@@ -226,7 +226,7 @@ EnablePointToolShortcut::EnablePointToolShortcut() : AShortcut{cen::scancodes::y
 
 void EnablePointToolShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<select_tool_event>(tool_type::point);
+  dispatcher.enqueue<SelectToolEvent>(tool_type::point);
 }
 
 auto EnablePointToolShortcut::IsEnabled(const document_model& model,

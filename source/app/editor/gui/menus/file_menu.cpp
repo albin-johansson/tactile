@@ -52,26 +52,26 @@ void FileMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
                         TACTILE_PRIMARY_MOD "+S",
                         false,
                         model.is_save_possible())) {
-      dispatcher.enqueue<save_event>();
+      dispatcher.enqueue<SaveEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save As...",
                         TACTILE_PRIMARY_MOD "+Shift+S",
                         false,
                         hasActiveDocument)) {
-      dispatcher.enqueue<open_save_as_dialog_event>();
+      dispatcher.enqueue<OpenSaveAsDialogEvent>();
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Map", nullptr, false, hasActiveDocument)) {
-      dispatcher.enqueue<close_map_event>(model.active_map_id().value());
+      dispatcher.enqueue<CloseMapEvent>(model.active_map_id().value());
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_EXIT " Exit")) {
-      dispatcher.enqueue<quit_event>();
+      dispatcher.enqueue<QuitEvent>();
     }
   }
 }
@@ -103,7 +103,7 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
                         false,
                         is_last_closed_file_valid())) {
       // TODO this will need to be tweaked if tileset documents viewing will be supported
-      dispatcher.enqueue<open_map_event>(last_closed_file());
+      dispatcher.enqueue<OpenMapEvent>(last_closed_file());
     }
 
     const auto& history = file_history();
@@ -115,7 +115,7 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
     for (const auto& path : history) {
       if (ImGui::MenuItem(path.c_str())) {
         /* It's fine if the file doesn't exist anymore, the parser handles that */
-        dispatcher.enqueue<open_map_event>(path);
+        dispatcher.enqueue<OpenMapEvent>(path);
       }
     }
 
@@ -135,7 +135,7 @@ void FileMenu::UpdateMapFileDialog(entt::dispatcher& dispatcher)
   auto dialog = file_dialog::open_map();
 
   if (dialog.is_okay()) {
-    dispatcher.enqueue<open_map_event>(dialog.path());
+    dispatcher.enqueue<OpenMapEvent>(dialog.path());
   }
 
   mShowOpenMapDialog = false;

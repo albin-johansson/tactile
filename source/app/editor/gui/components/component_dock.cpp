@@ -60,7 +60,7 @@ void _show_component_popup_content(entt::dispatcher& dispatcher,
                                    const component_id componentId)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
-    dispatcher.enqueue<reset_component_values_event>(contextId, componentId);
+    dispatcher.enqueue<ResetComponentValuesEvent>(contextId, componentId);
   }
 
   ImGui::Separator();
@@ -72,7 +72,7 @@ void _show_component_popup_content(entt::dispatcher& dispatcher,
   ImGui::Separator();
 
   if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Component")) {
-    dispatcher.enqueue<remove_component_event>(contextId, componentId);
+    dispatcher.enqueue<RemoveComponentEvent>(contextId, componentId);
   }
 }
 
@@ -113,10 +113,10 @@ void _show_component(entt::dispatcher& dispatcher,
         ImGui::TableNextColumn();
 
         if (auto value = input_attribute("##ComponentAttributeTableValue", attribute)) {
-          dispatcher.enqueue<update_component_event>(contextId,
-                                                     component.type,
-                                                     attributeName,
-                                                     std::move(*value));
+          dispatcher.enqueue<UpdateComponentEvent>(contextId,
+                                                   component.type,
+                                                   attributeName,
+                                                   std::move(*value));
         }
       }
     }
@@ -137,14 +137,14 @@ void _show_add_component_button_popup_content(const entt::registry& registry,
       scoped::disable disable{sys::has_component(registry, contextId, def.id)};
 
       if (ImGui::MenuItem(def.name.c_str())) {
-        dispatcher.enqueue<add_component_event>(contextId, def.id);
+        dispatcher.enqueue<AddComponentEvent>(contextId, def.id);
       }
     }
   }
 
   ImGui::Separator();
   if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...")) {
-    dispatcher.enqueue<open_component_editor_event>();
+    dispatcher.enqueue<OpenComponentEditorEvent>();
   }
 }
 

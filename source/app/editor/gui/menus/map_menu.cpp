@@ -39,7 +39,7 @@ void MapMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
   scoped::disable disable{!model.has_active_document()};
   if (scoped::menu menu{"Map"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
-      dispatcher.enqueue<inspect_map_event>();
+      dispatcher.enqueue<InspectMapEvent>();
     }
 
     ImGui::Separator();
@@ -51,25 +51,25 @@ void MapMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem("Add Row", TACTILE_SECONDARY_MOD "+R")) {
-      dispatcher.enqueue<add_row_event>();
+      dispatcher.enqueue<AddRowEvent>();
     }
 
     if (ImGui::MenuItem("Add Column", TACTILE_SECONDARY_MOD "+C")) {
-      dispatcher.enqueue<add_column_event>();
+      dispatcher.enqueue<AddColumnEvent>();
     }
 
     if (ImGui::MenuItem("Remove Row", TACTILE_SECONDARY_MOD "+Shift+R")) {
-      dispatcher.enqueue<remove_row_event>();
+      dispatcher.enqueue<RemoveRowEvent>();
     }
 
     if (ImGui::MenuItem("Remove Column", TACTILE_SECONDARY_MOD "+Shift+C")) {
-      dispatcher.enqueue<remove_column_event>();
+      dispatcher.enqueue<RemoveColumnEvent>();
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem("Resize Map...")) {
-      dispatcher.enqueue<open_resize_map_dialog_event>();
+      dispatcher.enqueue<OpenResizeMapDialogEvent>();
     }
   }
 

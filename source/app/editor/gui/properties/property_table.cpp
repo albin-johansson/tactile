@@ -158,7 +158,7 @@ void ShowNativeTilesetProperties(const std::string& name,
 
   if (const auto updatedName = NativeNameRow(name, true);
       updatedName && !updatedName->empty()) {
-    dispatcher.enqueue<set_tileset_name_event>(tileset.id, *updatedName);
+    dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
   }
 
   NativeReadOnlyRow("First tile ID", tileset.first_id);
@@ -192,11 +192,11 @@ void ShowNativeLayerProperties(const comp::Layer& layer, entt::dispatcher& dispa
   }
 
   if (const auto value = NativeOpacityRow(layer.opacity)) {
-    dispatcher.enqueue<set_layer_opacity_event>(layer.id, *value);
+    dispatcher.enqueue<SetLayerOpacityEvent>(layer.id, *value);
   }
 
   if (const auto value = NativeVisibilityRow(layer.visible)) {
-    dispatcher.enqueue<set_layer_visible_event>(layer.id, *value);
+    dispatcher.enqueue<SetLayerVisibleEvent>(layer.id, *value);
   }
 }
 
@@ -223,7 +223,7 @@ void ShowNativeObjectProperties(const std::string& name,
   }
 
   if (const auto updatedName = NativeNameRow(name)) {
-    dispatcher.enqueue<set_object_name_event>(object.id, *updatedName);
+    dispatcher.enqueue<SetObjectNameEvent>(object.id, *updatedName);
   }
 
   NativeReadOnlyRow("X", object.x);
@@ -235,14 +235,14 @@ void ShowNativeObjectProperties(const std::string& name,
   }
 
   if (const auto visible = NativeVisibilityRow(object.visible)) {
-    dispatcher.enqueue<set_object_visibility_event>(object.id, *visible);
+    dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, *visible);
   }
 
   PrepareTableRow("Tag");
 
   ImGui::TableNextColumn();
   if (const auto tag = input_string("##NativeObjectTagInput", object.tag)) {
-    dispatcher.enqueue<set_object_tag_event>(object.id, *tag);
+    dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
   }
 }
 
@@ -285,12 +285,12 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   }
 
   if (mContextState.show_add_dialog) {
-    dispatcher.enqueue<show_add_property_dialog_event>();
+    dispatcher.enqueue<ShowAddPropertyDialogEvent>();
     mContextState.show_add_dialog = false;
   }
 
   if (mContextState.show_rename_dialog) {
-    dispatcher.enqueue<show_rename_property_dialog_event>(mRenameTarget.value());
+    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(mRenameTarget.value());
     mRenameTarget.reset();
     mContextState.show_rename_dialog = false;
   }
@@ -298,7 +298,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   if (mContextState.show_change_type_dialog) {
     const auto& name = mChangeTypeTarget.value();
     const auto type = sys::get_property(registry, context, name).value.type();
-    dispatcher.enqueue<show_change_property_type_dialog_event>(name, type);
+    dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(name, type);
     mChangeTypeTarget.reset();
     mContextState.show_change_type_dialog = false;
   }
@@ -349,37 +349,37 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
 
     if (value.is_string()) {
       if (const auto updated = input_string("##CustomPropertyInput", value.as_string())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
+        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.is_int()) {
       if (const auto updated = input_int("##CustomPropertyInput", value.as_int())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
+        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.is_float()) {
       if (const auto updated = input_float("##CustomPropertyInput", value.as_float())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
+        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.is_bool()) {
       if (const auto updated = input_bool("##CustomPropertyInput", value.as_bool())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
+        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.is_color()) {
       if (const auto updated = input_color("##CustomPropertyInput", value.as_color())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
+        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.is_object()) {
       if (const auto updated = input_object("##CustomPropertyInput", value.as_object())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
+        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
     else if (value.is_file()) {
       if (const auto updated = input_file("##CustomPropertyInput", value.as_file())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
+        dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
       }
     }
 

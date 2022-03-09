@@ -33,7 +33,7 @@ namespace tactile {
 /**
  * \brief Emitted after an object has been moved.
  */
-struct move_object_event final
+struct MoveObjectEvent final
 {
   object_id id{};  ///< ID of object to move.
   float old_x{};   ///< Previous x-coordinate of the object.
@@ -45,7 +45,7 @@ struct move_object_event final
 /**
  * \brief Emitted when the visibility of an object should be changed.
  */
-struct set_object_visibility_event final
+struct SetObjectVisibilityEvent final
 {
   object_id id{};  ///< ID of target object.
   bool visible{};  ///< New visibility state.
@@ -54,7 +54,7 @@ struct set_object_visibility_event final
 /**
  * \brief Emitted when the tag of an object should be changed.
  */
-struct set_object_tag_event final
+struct SetObjectTagEvent final
 {
   object_id id{};   ///< ID of target object.
   std::string tag;  ///< The new object tag.
@@ -63,7 +63,7 @@ struct set_object_tag_event final
 /**
  * \brief Emitted when the name of an object should be changed.
  */
-struct set_object_name_event final
+struct SetObjectNameEvent final
 {
   object_id id{};    ///< ID of target object.
   std::string name;  ///< The new object name.
@@ -79,7 +79,7 @@ struct remove_object_event final
   object_id id{};  ///< ID of the target object.
 };
 
-struct spawn_object_context_menu_event final
+struct SpawnObjectContextMenuEvent final
 {
   entt::entity object_entity{entt::null};
 };

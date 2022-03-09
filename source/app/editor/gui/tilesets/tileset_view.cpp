@@ -105,7 +105,7 @@ void TilesetView::Update(const entt::registry& registry,
                            static_cast<float>(tileset.tile_height)};
 
   if (const auto selection = rubber_band(scroll, tileSize)) {
-    dispatcher.enqueue<set_tileset_selection_event>(*selection);
+    dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
   graphics.push_clip();

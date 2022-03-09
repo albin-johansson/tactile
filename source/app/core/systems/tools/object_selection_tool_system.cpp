@@ -37,11 +37,11 @@ void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
 
       /* Only emit an event if the object has been moved along any axis */
       if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
-        dispatcher.enqueue<move_object_event>(object.id,
-                                              drag->origin_object_x,
-                                              drag->origin_object_y,
-                                              object.x,
-                                              object.y);
+        dispatcher.enqueue<MoveObjectEvent>(object.id,
+                                            drag->origin_object_x,
+                                            drag->origin_object_y,
+                                            object.x,
+                                            object.y);
       }
 
       registry.remove<comp::ObjectDragInfo>(entity);
@@ -92,7 +92,7 @@ void on_object_selection_tool_pressed(entt::registry& registry,
         active.entity = objectEntity;
 
         if (objectEntity != entt::null) {
-          dispatcher.enqueue<spawn_object_context_menu_event>(objectEntity);
+          dispatcher.enqueue<SpawnObjectContextMenuEvent>(objectEntity);
         }
 
         break;

@@ -32,14 +32,14 @@ NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, gPrimaryModifier
 
 void NewMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<show_new_map_dialog_event>();
+  dispatcher.enqueue<ShowNewMapDialogEvent>();
 }
 
 OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, gPrimaryModifier} {}
 
 void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<show_open_map_dialog_event>();
+  dispatcher.enqueue<ShowOpenMapDialogEvent>();
 }
 
 OpenSettingsShortcut::OpenSettingsShortcut()
@@ -48,14 +48,14 @@ OpenSettingsShortcut::OpenSettingsShortcut()
 
 void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<show_settings_event>();
+  dispatcher.enqueue<ShowSettingsEvent>();
 }
 
 SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, gPrimaryModifier} {}
 
 void SaveShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<save_event>();
+  dispatcher.enqueue<SaveEvent>();
 }
 
 auto SaveShortcut::IsEnabled(const document_model& model, const widget_manager&) const
@@ -70,7 +70,7 @@ SaveAsShortcut::SaveAsShortcut()
 
 void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<open_save_as_dialog_event>();
+  dispatcher.enqueue<OpenSaveAsDialogEvent>();
 }
 
 auto SaveAsShortcut::IsEnabled(const document_model& model, const widget_manager&) const

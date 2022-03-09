@@ -56,10 +56,10 @@ void UpdateDocumentTabs(const document_model& model, entt::dispatcher& dispatche
       }
 
       if (!opened) {
-        dispatcher.enqueue<close_map_event>(id);
+        dispatcher.enqueue<CloseMapEvent>(id);
       }
       else if (ImGui::IsItemActivated()) {
-        dispatcher.enqueue<select_map_event>(id);
+        dispatcher.enqueue<SelectMapEvent>(id);
       }
     }
   }

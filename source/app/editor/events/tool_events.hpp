@@ -60,23 +60,23 @@ struct ToolEnteredEvent final
 struct ToolExitedEvent final
 {};
 
-struct select_tool_event final
+struct SelectToolEvent final
 {
   tool_type type{};
 };
 
-struct stamp_sequence_event final
+struct StampSequenceEvent final
 {
   TileCache old_state;
   TileCache sequence;
 };
 
-struct eraser_sequence_event final
+struct EraserSequenceEvent final
 {
   TileCache old_state;
 };
 
-struct flood_event final
+struct FloodEvent final
 {
   tile_position origin;
   tile_id replacement{};

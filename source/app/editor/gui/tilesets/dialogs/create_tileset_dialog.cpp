@@ -68,7 +68,7 @@ void CreateTilesetDialog::on_update(const document_model&, entt::dispatcher&)
 
 void CreateTilesetDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<add_tileset_event>(mFullImagePath, mTileWidth, mTileHeight);
+  dispatcher.enqueue<AddTilesetEvent>(mFullImagePath, mTileWidth, mTileHeight);
 }
 
 auto CreateTilesetDialog::is_current_input_valid(const document_model&) const -> bool

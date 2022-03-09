@@ -31,50 +31,50 @@ namespace tactile {
 /// \addtogroup events
 /// \{
 
-struct show_add_property_dialog_event final
+struct ShowAddPropertyDialogEvent final
 {};
 
-struct show_change_property_type_dialog_event final
+struct ShowChangePropertyTypeDialogEvent final
 {
   std::string name;
   AttributeType current_type{};
 };
 
-struct show_rename_property_dialog_event final
+struct ShowRenamePropertyDialogEvent final
 {
   std::string name;
 };
 
-struct add_property_event final
+struct AddPropertyEvent final
 {
   std::string name;      ///< The chosen name.
   AttributeType type{};  ///< The chosen type.
 };
 
-struct remove_property_event final
+struct RemovePropertyEvent final
 {
   std::string name;  ///< Name of the property in the current context.
 };
 
-struct rename_property_event final
+struct RenamePropertyEvent final
 {
   std::string old_name;  ///< Current property name.
   std::string new_name;  ///< Requested new property name.
 };
 
-struct update_property_event final
+struct UpdatePropertyEvent final
 {
   std::string name;  ///< Name of property to modify.
   Attribute value;   ///< Updated value of the property.
 };
 
-struct change_property_type_event final
+struct ChangePropertyTypeEvent final
 {
   std::string name;      ///< Name of property to modify.
   AttributeType type{};  ///< Requested new property type.
 };
 
-struct inspect_context_event final
+struct InspectContextEvent final
 {
   entt::entity entity{entt::null};  ///< Potentially null attribute context.
 };

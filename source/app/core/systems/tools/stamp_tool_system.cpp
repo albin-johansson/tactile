@@ -87,7 +87,7 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
 void _maybe_emit_event(entt::dispatcher& dispatcher)
 {
   if (!_old_state.empty() && !_sequence.empty()) {
-    dispatcher.enqueue<stamp_sequence_event>(std::move(_old_state), std::move(_sequence));
+    dispatcher.enqueue<StampSequenceEvent>(std::move(_old_state), std::move(_sequence));
     _old_state.clear();
     _sequence.clear();
   }

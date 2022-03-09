@@ -150,7 +150,7 @@ void ViewMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument)) {
-      dispatcher.enqueue<toggle_ui_event>();
+      dispatcher.enqueue<ToggleUiEvent>();
     }
   }
 }

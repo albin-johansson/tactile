@@ -53,8 +53,8 @@ void AddPropertyDialog::on_update(const document_model&, entt::dispatcher&)
 
 void AddPropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<add_property_event>(create_string_from_buffer(mNameBuffer),
-                                         mPropertyType);
+  dispatcher.enqueue<AddPropertyEvent>(create_string_from_buffer(mNameBuffer),
+                                       mPropertyType);
 }
 
 auto AddPropertyDialog::is_current_input_valid(const document_model& model) const -> bool

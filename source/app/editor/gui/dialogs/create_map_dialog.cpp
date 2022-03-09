@@ -89,10 +89,10 @@ void create_map_dialog::on_accept(entt::dispatcher& dispatcher)
   TACTILE_ASSERT(mTileHeight > 0);
   TACTILE_ASSERT(mRows > 0);
   TACTILE_ASSERT(mColumns > 0);
-  dispatcher.enqueue<create_map_event>(mTileWidth,
-                                       mTileHeight,
-                                       static_cast<usize>(mRows),
-                                       static_cast<usize>(mColumns));
+  dispatcher.enqueue<CreateMapEvent>(mTileWidth,
+                                     mTileHeight,
+                                     static_cast<usize>(mRows),
+                                     static_cast<usize>(mColumns));
 }
 
 auto create_map_dialog::is_current_input_valid(const document_model&) const -> bool
