@@ -24,7 +24,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/components/tool.hpp"
+#include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"

@@ -6,7 +6,7 @@
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/tiles.hpp"
-#include "core/components/tool.hpp"
+#include "core/components/tools.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 
@@ -19,7 +19,7 @@ TEST(RegistrySystem, MakeDocumentRegistry)
   ASSERT_TRUE(registry.try_ctx<comp::ActiveLayer>());
   ASSERT_TRUE(registry.try_ctx<comp::ActiveTileset>());
   ASSERT_TRUE(registry.try_ctx<comp::ActiveAttributeContext>());
-  ASSERT_TRUE(registry.try_ctx<comp::active_tool>());
+  ASSERT_TRUE(registry.try_ctx<comp::ActiveTool>());
   ASSERT_TRUE(registry.try_ctx<comp::ActiveObject>());
   ASSERT_TRUE(registry.try_ctx<Viewport>());
   ASSERT_TRUE(registry.try_ctx<comp::AttributeContext>());

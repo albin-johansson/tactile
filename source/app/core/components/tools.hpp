@@ -23,13 +23,20 @@
 
 namespace tactile::comp {
 
-struct active_tool final
+/**
+ * \brief Context component used to keep track of the active mouse tool.
+ *
+ * \ingroup components
+ */
+struct ActiveTool final
 {
   tool_type tool{tool_type::none};
 };
 
 /**
  * \brief A context component that is used to keep track of rectangle tool strokes.
+ *
+ * \ingroup components
  */
 struct CurrentRectangleStroke final
 {
@@ -41,6 +48,8 @@ struct CurrentRectangleStroke final
 
 /**
  * \brief A context component that is used to keep track of ellipse tool strokes.
+ *
+ * \ingroup components
  */
 struct CurrentEllipseStroke final
 {

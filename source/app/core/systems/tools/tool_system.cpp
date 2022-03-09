@@ -20,7 +20,7 @@
 #include "tool_system.hpp"
 
 #include "bucket_tool_system.hpp"
-#include "core/components/tool.hpp"
+#include "core/components/tools.hpp"
 #include "ellipse_tool_system.hpp"
 #include "eraser_tool_system.hpp"
 #include "object_selection_tool_system.hpp"
@@ -34,7 +34,7 @@ void select_tool(entt::registry& registry,
                  entt::dispatcher& dispatcher,
                  const tool_type tool)
 {
-  auto& active = registry.ctx<comp::active_tool>();
+  auto& active = registry.ctx<comp::ActiveTool>();
 
   switch (active.tool) {
     case tool_type::stamp:
@@ -66,7 +66,7 @@ void select_tool(entt::registry& registry,
 
 void on_tool_entered(entt::registry& registry, entt::dispatcher&)
 {
-  const auto& active = registry.ctx<comp::active_tool>();
+  const auto& active = registry.ctx<comp::ActiveTool>();
   switch (active.tool) {
     case tool_type::stamp:
     case tool_type::eraser:
@@ -83,7 +83,7 @@ void on_tool_entered(entt::registry& registry, entt::dispatcher&)
 
 void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  const auto& active = registry.ctx<comp::active_tool>();
+  const auto& active = registry.ctx<comp::ActiveTool>();
   switch (active.tool) {
     case tool_type::stamp:
       on_stamp_tool_exited(dispatcher);
@@ -117,7 +117,7 @@ void on_tool_pressed(entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const mouse_info& mouse)
 {
-  const auto& active = registry.ctx<comp::active_tool>();
+  const auto& active = registry.ctx<comp::ActiveTool>();
   switch (active.tool) {
     case tool_type::none:
       break;
@@ -156,7 +156,7 @@ void on_tool_dragged(entt::registry& registry,
                      [[maybe_unused]] entt::dispatcher& dispatcher,
                      const mouse_info& mouse)
 {
-  const auto& active = registry.ctx<comp::active_tool>();
+  const auto& active = registry.ctx<comp::ActiveTool>();
   switch (active.tool) {
     case tool_type::none:
     case tool_type::point:
@@ -190,7 +190,7 @@ void on_tool_released(entt::registry& registry,
                       entt::dispatcher& dispatcher,
                       const mouse_info& mouse)
 {
-  const auto& active = registry.ctx<comp::active_tool>();
+  const auto& active = registry.ctx<comp::ActiveTool>();
   switch (active.tool) {
     case tool_type::none:
       [[fallthrough]];
@@ -222,7 +222,7 @@ void on_tool_released(entt::registry& registry,
 
 auto is_tool_enabled(const entt::registry& registry, const tool_type tool) -> bool
 {
-  const auto& active = registry.ctx<comp::active_tool>();
+  const auto& active = registry.ctx<comp::ActiveTool>();
   return active.tool == tool;
 }
 

@@ -24,7 +24,7 @@
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/tiles.hpp"
-#include "core/components/tool.hpp"
+#include "core/components/tools.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 #include "property_system.hpp"
@@ -38,7 +38,7 @@ auto make_document_registry() -> entt::registry
   registry.set<comp::ActiveLayer>();
   registry.set<comp::ActiveTileset>();
   registry.set<comp::ActiveAttributeContext>();
-  registry.set<comp::active_tool>();
+  registry.set<comp::ActiveTool>();
   registry.set<comp::ActiveObject>();
 
   auto& map = registry.set<MapInfo>();

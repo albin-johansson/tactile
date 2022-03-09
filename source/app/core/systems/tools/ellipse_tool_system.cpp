@@ -21,7 +21,7 @@
 
 #include <cmath>  // abs
 
-#include "core/components/tool.hpp"
+#include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/tool_events.hpp"
