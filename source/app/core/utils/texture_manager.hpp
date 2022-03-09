@@ -27,15 +27,15 @@
 
 namespace tactile {
 
-class texture_manager final
+class TextureManager final
 {
  public:
-  TACTILE_DEFAULT_COPY(texture_manager)
-  TACTILE_DEFAULT_MOVE(texture_manager)
+  TACTILE_DEFAULT_COPY(TextureManager)
+  TACTILE_DEFAULT_MOVE(TextureManager)
 
-  texture_manager() = default;
+  TextureManager() = default;
 
-  ~texture_manager();
+  ~TextureManager();
 
   [[nodiscard]] auto load(const std::filesystem::path& path) -> Maybe<comp::Texture>;
 

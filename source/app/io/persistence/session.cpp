@@ -44,7 +44,7 @@ constexpr int _format_version [[maybe_unused]] = 1;
 
 }  // namespace
 
-void restore_last_session(DocumentModel& model, texture_manager& textures)
+void restore_last_session(DocumentModel& model, TextureManager& textures)
 {
   proto::session session;
 

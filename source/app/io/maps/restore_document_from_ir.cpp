@@ -253,7 +253,7 @@ void _restore_fancy_tiles(entt::registry& registry,
 }
 
 void _restore_tileset(entt::registry& registry,
-                      texture_manager& textures,
+                      TextureManager& textures,
                       const ir::tileset_data& tilesetData)
 {
   const auto texture = textures.load(tilesetData.image_path).value();
@@ -273,7 +273,7 @@ void _restore_tileset(entt::registry& registry,
 }
 
 void _restore_tilesets(Document& document,
-                       texture_manager& textures,
+                       TextureManager& textures,
                        const ir::map_data& mapData)
 {
   for (const auto& tilesetData : mapData.tilesets) {
@@ -316,7 +316,7 @@ void _restore_component_definitions(entt::registry& registry, const ir::map_data
 
 }  // namespace
 
-auto restore_document_from_ir(const parsing::parse_data& data, texture_manager& textures)
+auto restore_document_from_ir(const parsing::parse_data& data, TextureManager& textures)
     -> Document
 {
   Document document;

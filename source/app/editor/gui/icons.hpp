@@ -110,7 +110,7 @@ namespace tactile {
 class IconManager final
 {
  public:
-  explicit IconManager(texture_manager& textures);
+  explicit IconManager(TextureManager& textures);
 
   /**
    * \brief Returns the texture identifier for the Tactile icon.

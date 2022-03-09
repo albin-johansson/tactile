@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-class texture_manager;
+class TextureManager;
 
 /**
  * \brief Creates a map document from an intermediate map representation.
@@ -35,6 +35,6 @@ class texture_manager;
  * \return a document based on the intermediate representation.
  */
 [[nodiscard]] auto restore_document_from_ir(const parsing::parse_data& data,
-                                            texture_manager& textures) -> Document;
+                                            TextureManager& textures) -> Document;
 
 }  // namespace tactile

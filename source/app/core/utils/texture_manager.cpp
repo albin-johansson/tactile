@@ -40,7 +40,7 @@ using texture_data_ptr = std::unique_ptr<uchar, texture_data_deleter>;
 
 }  // namespace
 
-texture_manager::~texture_manager()
+TextureManager::~TextureManager()
 {
   for (const auto texture : mTextures) {
     log_debug("Deleting texture {}", texture);
@@ -50,7 +50,7 @@ texture_manager::~texture_manager()
   mTextures.clear();
 }
 
-auto texture_manager::load(const std::filesystem::path& path) -> Maybe<comp::Texture>
+auto TextureManager::load(const std::filesystem::path& path) -> Maybe<comp::Texture>
 {
   comp::Texture texture;
   texture.path = path;

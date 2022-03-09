@@ -75,7 +75,7 @@ class Application final
   entt::dispatcher mDispatcher;
   cen::keyboard mKeyboard;
   DocumentModel mModel;
-  texture_manager mTextures;
+  TextureManager mTextures;
   IconManager mIcons;
   widget_manager mWidgets;
   WidgetShowState mWidgetShowState;
