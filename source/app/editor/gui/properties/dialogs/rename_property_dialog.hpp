@@ -33,7 +33,7 @@ class RenamePropertyDialog final : public string_input_dialog
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto validate(const document_model& model, std::string_view input) const
+  [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
       -> bool override;
 };
 

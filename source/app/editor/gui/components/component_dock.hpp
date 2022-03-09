@@ -34,7 +34,7 @@ class component_dock final : public ADockWidget
   component_dock();
 
  protected:
-  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
   void set_visible(bool visible) override;
 

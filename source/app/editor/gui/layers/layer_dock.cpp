@@ -62,7 +62,7 @@ void layer_dock::show_rename_layer_dialog(const layer_id id)
   mData->mRenameTarget = id;
 }
 
-void layer_dock::on_update(const document_model& model, entt::dispatcher& dispatcher)
+void layer_dock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
 
@@ -120,7 +120,7 @@ auto layer_dock::is_visible() const -> bool
   return prefs.is_layer_dock_visible();
 }
 
-void layer_dock::update_buttons(const document_model& model,
+void layer_dock::update_buttons(const DocumentModel& model,
                                 const entt::registry& registry,
                                 entt::dispatcher& dispatcher)
 {

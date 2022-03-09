@@ -38,7 +38,7 @@
 
 namespace tactile {
 
-void Toolbar::Update(const document_model& model, entt::dispatcher& dispatcher)
+void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (!mVisible) {
     return;

@@ -155,7 +155,7 @@ component_dock::component_dock() : ADockWidget{"Components", _window_flags}
   set_close_button_enabled(true);
 }
 
-void component_dock::on_update(const document_model& model, entt::dispatcher& dispatcher)
+void component_dock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
 

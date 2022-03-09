@@ -32,7 +32,7 @@
 
 namespace tactile {
 
-void FileMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
+void FileMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::menu menu{"File"}; menu.is_open()) {
     const auto hasActiveDocument = model.has_active_document();
@@ -76,7 +76,7 @@ void FileMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
   }
 }
 
-void FileMenu::UpdateWindows(const document_model& model, entt::dispatcher& dispatcher)
+void FileMenu::UpdateWindows(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   mCreateMapDialog.update(model, dispatcher);
 

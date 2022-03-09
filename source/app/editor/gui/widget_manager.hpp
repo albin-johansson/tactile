@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 class icon_manager;
 
 class widget_manager final
@@ -43,7 +43,7 @@ class widget_manager final
 
   ~widget_manager() noexcept;
 
-  void update(const document_model& model,
+  void update(const DocumentModel& model,
               const icon_manager& icons,
               entt::dispatcher& dispatcher);
 
@@ -67,7 +67,7 @@ class widget_manager final
 
   void show_map_import_error_dialog(parsing::parse_error error);
 
-  void show_component_editor(const document_model& model);
+  void show_component_editor(const DocumentModel& model);
 
   void set_toolbar_visible(bool visible);
 

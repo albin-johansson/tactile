@@ -56,7 +56,7 @@ widget_manager::widget_manager() : mWidgets{std::make_unique<widgets>()} {}
 
 widget_manager::~widget_manager() noexcept = default;
 
-void widget_manager::update(const document_model& model,
+void widget_manager::update(const DocumentModel& model,
                             const icon_manager& icons,
                             entt::dispatcher& dispatcher)
 {
@@ -134,7 +134,7 @@ void widget_manager::show_map_import_error_dialog(const parsing::parse_error err
   mWidgets->mMapParseErrorDialog.show(error);
 }
 
-void widget_manager::show_component_editor(const document_model& model)
+void widget_manager::show_component_editor(const DocumentModel& model)
 {
   mWidgets->mMenuBar.ShowComponentEditor(model);
 }

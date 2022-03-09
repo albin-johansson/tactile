@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 /**
  * \brief Used to manage the available component definitions.
@@ -46,10 +46,10 @@ class component_editor final : public dialog_base
 
   ~component_editor() noexcept override;
 
-  void show(const document_model& model);
+  void show(const DocumentModel& model);
 
  protected:
-  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
  private:
   struct component_editor_data;

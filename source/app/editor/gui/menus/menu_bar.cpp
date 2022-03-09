@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-void MenuBar::Update(const document_model& model, entt::dispatcher& dispatcher)
+void MenuBar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar()) {
     mFileMenu.Update(model, dispatcher);
@@ -65,7 +65,7 @@ void MenuBar::ShowAddTilesetDialog()
   mMapMenu.ShowAddTilesetDialog();
 }
 
-void MenuBar::ShowComponentEditor(const document_model& model)
+void MenuBar::ShowComponentEditor(const DocumentModel& model)
 {
   mEditMenu.ShowComponentEditor(model);
 }

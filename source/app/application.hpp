@@ -74,7 +74,7 @@ class Application final
   AppConfiguration* mConfiguration{}; /* Non-owning */
   entt::dispatcher mDispatcher;
   cen::keyboard mKeyboard;
-  document_model mModel;
+  DocumentModel mModel;
   texture_manager mTextures;
   icon_manager mIcons;
   widget_manager mWidgets;

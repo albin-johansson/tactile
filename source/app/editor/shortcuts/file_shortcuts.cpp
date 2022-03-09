@@ -58,7 +58,7 @@ void SaveShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SaveEvent>();
 }
 
-auto SaveShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+auto SaveShortcut::IsEnabled(const DocumentModel& model, const widget_manager&) const
     -> bool
 {
   return model.is_save_possible();
@@ -73,7 +73,7 @@ void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<OpenSaveAsDialogEvent>();
 }
 
-auto SaveAsShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+auto SaveAsShortcut::IsEnabled(const DocumentModel& model, const widget_manager&) const
     -> bool
 {
   return model.is_save_possible();

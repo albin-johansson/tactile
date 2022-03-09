@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-auto component_name_dialog::validate(const document_model& model,
+auto component_name_dialog::validate(const DocumentModel& model,
                                      std::string_view input) const -> bool
 {
   const auto& registry = model.get_active_registry();

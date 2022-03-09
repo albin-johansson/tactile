@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 class context_menu
 {
@@ -37,12 +37,12 @@ class context_menu
 
   virtual ~context_menu() noexcept = default;
 
-  void update(const document_model& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
   void show();
 
  protected:
-  virtual void on_update([[maybe_unused]] const document_model& model,
+  virtual void on_update([[maybe_unused]] const DocumentModel& model,
                          [[maybe_unused]] entt::dispatcher& dispatcher)
   {}
 

@@ -37,11 +37,11 @@ class ChangePropertyTypeDialog final : public dialog_base
   void Show(std::string name, AttributeType type);
 
  protected:
-  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
   void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_current_input_valid(const document_model& model) const
+  [[nodiscard]] auto is_current_input_valid(const DocumentModel& model) const
       -> bool override;
 
  private:

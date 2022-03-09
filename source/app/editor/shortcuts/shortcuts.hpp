@@ -24,12 +24,12 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 class widget_manager;
 
 void LoadDefaultShortcuts();
 
-void UpdateShortcuts(const document_model& model,
+void UpdateShortcuts(const DocumentModel& model,
                      const widget_manager& widgets,
                      const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher);

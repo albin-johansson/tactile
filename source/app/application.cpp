@@ -54,7 +54,7 @@ namespace tactile {
 namespace {
 
 template <typename Command, typename... Args>
-void _execute(document_model& model, Args&&... args)
+void _execute(DocumentModel& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
     auto& commands = document->commands;
@@ -66,7 +66,7 @@ void _execute(document_model& model, Args&&... args)
 }
 
 template <typename Command, typename... Args>
-void _register(document_model& model, Args&&... args)
+void _register(DocumentModel& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
     auto& commands = document->commands;

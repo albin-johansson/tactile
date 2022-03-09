@@ -29,7 +29,7 @@ struct UndoShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -39,7 +39,7 @@ struct RedoShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -49,7 +49,7 @@ struct AddRowShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -59,7 +59,7 @@ struct AddColumnShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -69,7 +69,7 @@ struct RemoveRowShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -79,7 +79,7 @@ struct RemoveColumnShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -89,7 +89,7 @@ struct AddTilesetShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -99,7 +99,7 @@ struct EnableBucketShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -109,7 +109,7 @@ struct EnableEraserShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -119,7 +119,7 @@ struct EnableStampShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -129,7 +129,7 @@ struct EnableObjectSelectionShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -139,7 +139,7 @@ struct EnableRectangleToolShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -149,7 +149,7 @@ struct EnableEllipseToolShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 
@@ -159,7 +159,7 @@ struct EnablePointToolShortcut final : AShortcut
 
   void Activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto IsEnabled(const document_model& model,
+  [[nodiscard]] auto IsEnabled(const DocumentModel& model,
                                const widget_manager& widgets) const -> bool override;
 };
 

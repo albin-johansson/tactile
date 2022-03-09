@@ -29,7 +29,7 @@ class component_name_dialog : public string_input_dialog
  protected:
   using string_input_dialog::string_input_dialog;
 
-  [[nodiscard]] auto validate(const document_model& model, std::string_view input) const
+  [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
       -> bool final;
 };
 

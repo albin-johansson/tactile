@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 class layer_dock final : public ADockWidget
 {
@@ -41,7 +41,7 @@ class layer_dock final : public ADockWidget
   void show_rename_layer_dialog(layer_id id);
 
  protected:
-  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
   void set_visible(bool visible) override;
 
@@ -51,7 +51,7 @@ class layer_dock final : public ADockWidget
   struct layer_dock_data;
   std::unique_ptr<layer_dock_data> mData;
 
-  void update_buttons(const document_model& model,
+  void update_buttons(const DocumentModel& model,
                       const entt::registry& registry,
                       entt::dispatcher& dispatcher);
 };

@@ -48,7 +48,7 @@ void rename_component_attribute_dialog::on_accept(entt::dispatcher& dispatcher)
                                                std::string{current_input()});
 }
 
-auto rename_component_attribute_dialog::validate(const document_model& model,
+auto rename_component_attribute_dialog::validate(const DocumentModel& model,
                                                  const std::string_view input) const
     -> bool
 {

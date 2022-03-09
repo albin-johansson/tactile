@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 class widget_manager;
 
 class AShortcut
@@ -40,7 +40,7 @@ class AShortcut
 
   virtual ~AShortcut() noexcept = default;
 
-  void Poll(const document_model& model,
+  void Poll(const DocumentModel& model,
             const widget_manager& widgets,
             const cen::keyboard_event& event,
             entt::dispatcher& dispatcher);
@@ -48,7 +48,7 @@ class AShortcut
   virtual void Activate(entt::dispatcher& dispatcher) = 0;
 
   [[nodiscard]] virtual auto IsEnabled(
-      [[maybe_unused]] const document_model& model,
+      [[maybe_unused]] const DocumentModel& model,
       [[maybe_unused]] const widget_manager& widgets) const -> bool
   {
     return true;

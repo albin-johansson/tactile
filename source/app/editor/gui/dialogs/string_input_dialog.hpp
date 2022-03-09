@@ -48,9 +48,9 @@ class string_input_dialog : public dialog_base
    */
   void set_input_hint(const char* hint);
 
-  void on_update(const document_model& model, entt::dispatcher& dispatcher) final;
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) final;
 
-  [[nodiscard]] auto is_current_input_valid(const document_model& model) const
+  [[nodiscard]] auto is_current_input_valid(const DocumentModel& model) const
       -> bool final;
 
   /**
@@ -61,7 +61,7 @@ class string_input_dialog : public dialog_base
    *
    * \return `true` if the input string is valid; `false` otherwise.
    */
-  [[nodiscard]] virtual auto validate(const document_model& model,
+  [[nodiscard]] virtual auto validate(const DocumentModel& model,
                                       std::string_view input) const -> bool = 0;
 
   /**

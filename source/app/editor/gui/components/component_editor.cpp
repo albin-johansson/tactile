@@ -60,14 +60,14 @@ component_editor::component_editor()
 
 component_editor::~component_editor() noexcept = default;
 
-void component_editor::show(const document_model& model)
+void component_editor::show(const DocumentModel& model)
 {
   const auto& registry = model.get_active_registry();
   mData->active_component = sys::get_first_available_component_def(registry);
   make_visible();
 }
 
-void component_editor::on_update(const document_model& model,
+void component_editor::on_update(const DocumentModel& model,
                                  entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();

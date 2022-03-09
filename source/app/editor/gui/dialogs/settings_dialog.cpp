@@ -52,7 +52,7 @@ void settings_dialog::show()
   make_visible();
 }
 
-void settings_dialog::on_update(const document_model&, entt::dispatcher&)
+void settings_dialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   if (scoped::tab_bar bar{"##SettingsTabBar"}; bar.is_open()) {
     update_behavior_tab();

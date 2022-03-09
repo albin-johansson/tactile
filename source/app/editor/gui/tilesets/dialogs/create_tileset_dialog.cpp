@@ -46,7 +46,7 @@ void CreateTilesetDialog::Open()
   make_visible();
 }
 
-void CreateTilesetDialog::on_update(const document_model&, entt::dispatcher&)
+void CreateTilesetDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
   ImGui::Spacing();
@@ -71,7 +71,7 @@ void CreateTilesetDialog::on_accept(entt::dispatcher& dispatcher)
   dispatcher.enqueue<AddTilesetEvent>(mFullImagePath, mTileWidth, mTileHeight);
 }
 
-auto CreateTilesetDialog::is_current_input_valid(const document_model&) const -> bool
+auto CreateTilesetDialog::is_current_input_valid(const DocumentModel&) const -> bool
 {
   return mPathPreviewBuffer.front() != '\0' && mTileWidth > 0 && mTileHeight > 0;
 }

@@ -23,9 +23,9 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
-void UpdateDocumentTabs(const document_model& model, entt::dispatcher& dispatcher);
+void UpdateDocumentTabs(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 void CenterMapViewport();
 

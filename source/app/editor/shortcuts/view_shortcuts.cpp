@@ -37,7 +37,7 @@ void CenterViewportShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<CenterViewportEvent>();
 }
 
-auto CenterViewportShortcut::IsEnabled(const document_model& model,
+auto CenterViewportShortcut::IsEnabled(const DocumentModel& model,
                                        const widget_manager&) const -> bool
 {
   return model.has_active_document();
@@ -52,7 +52,7 @@ void DecreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<DecreaseZoomEvent>();
 }
 
-auto DecreaseViewportZoomShortcut::IsEnabled(const document_model& model,
+auto DecreaseViewportZoomShortcut::IsEnabled(const DocumentModel& model,
                                              const widget_manager&) const -> bool
 {
   return model.can_decrease_viewport_tile_size();
@@ -67,7 +67,7 @@ void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<IncreaseZoomEvent>();
 }
 
-auto IncreaseViewportZoomShortcut::IsEnabled(const document_model& model,
+auto IncreaseViewportZoomShortcut::IsEnabled(const DocumentModel& model,
                                              const widget_manager&) const -> bool
 {
   return model.has_active_document();
@@ -82,7 +82,7 @@ void PanUpShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanUpEvent>();
 }
 
-auto PanUpShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+auto PanUpShortcut::IsEnabled(const DocumentModel& model, const widget_manager&) const
     -> bool
 {
   return model.has_active_document();
@@ -97,7 +97,7 @@ void PanDownShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanDownEvent>();
 }
 
-auto PanDownShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+auto PanDownShortcut::IsEnabled(const DocumentModel& model, const widget_manager&) const
     -> bool
 {
   return model.has_active_document();
@@ -112,7 +112,7 @@ void PanLeftShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanLeftEvent>();
 }
 
-auto PanLeftShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+auto PanLeftShortcut::IsEnabled(const DocumentModel& model, const widget_manager&) const
     -> bool
 {
   return model.has_active_document();
@@ -127,7 +127,7 @@ void PanRightShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanRightEvent>();
 }
 
-auto PanRightShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+auto PanRightShortcut::IsEnabled(const DocumentModel& model, const widget_manager&) const
     -> bool
 {
   return model.has_active_document();
@@ -149,7 +149,7 @@ void ToggleUiShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ToggleUiEvent>();
 }
 
-auto ToggleUiShortcut::IsEnabled(const document_model& model,
+auto ToggleUiShortcut::IsEnabled(const DocumentModel& model,
                                  const widget_manager& widgets) const -> bool
 {
   return model.has_active_document() && widgets.is_editor_focused();

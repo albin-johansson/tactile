@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 class ADockWidget
 {
@@ -38,12 +38,12 @@ class ADockWidget
 
   virtual ~ADockWidget() noexcept = default;
 
-  void update(const document_model& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
   [[nodiscard]] auto has_focus() const noexcept -> bool { return mHasFocus; }
 
  protected:
-  virtual void on_update([[maybe_unused]] const document_model& model,
+  virtual void on_update([[maybe_unused]] const DocumentModel& model,
                          [[maybe_unused]] entt::dispatcher& dispatcher)
   {}
 

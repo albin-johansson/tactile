@@ -34,7 +34,7 @@ ADockWidget::ADockWidget(const char* title, const ImGuiWindowFlags flags)
   }
 }
 
-void ADockWidget::update(const document_model& model, entt::dispatcher& dispatcher)
+void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   bool visible = is_visible();
 

@@ -31,12 +31,12 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 class PropertiesDock final
 {
  public:
-  void Update(const document_model& model, entt::dispatcher& dispatcher);
+  void Update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
   void ShowAddPropertyDialog();
 

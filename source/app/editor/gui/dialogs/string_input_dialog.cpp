@@ -42,7 +42,7 @@ void string_input_dialog::set_input_hint(const char* hint)
   mHint = hint;
 }
 
-void string_input_dialog::on_update(const document_model&, entt::dispatcher&)
+void string_input_dialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   if (mShouldAcquireFocus) {
     ImGui::SetKeyboardFocusHere();
@@ -54,7 +54,7 @@ void string_input_dialog::on_update(const document_model&, entt::dispatcher&)
                            sizeof mBuffer);
 }
 
-auto string_input_dialog::is_current_input_valid(const document_model& model) const
+auto string_input_dialog::is_current_input_valid(const DocumentModel& model) const
     -> bool
 {
   return validate(model, current_input());

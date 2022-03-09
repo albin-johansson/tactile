@@ -23,10 +23,10 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 class icon_manager;
 
-void UpdateViewportWidget(const document_model& model,
+void UpdateViewportWidget(const DocumentModel& model,
                           const icon_manager& icons,
                           entt::dispatcher& dispatcher);
 

@@ -35,7 +35,7 @@ void resize_map_dialog::show(usize nCurrentRows, usize nCurrentColumns)
   make_visible();
 }
 
-void resize_map_dialog::on_update(const document_model&, entt::dispatcher&)
+void resize_map_dialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   auto rows = static_cast<int>(mRows);
   ImGui::DragInt("Rows", &rows, 1.0f, 1, 10'000);

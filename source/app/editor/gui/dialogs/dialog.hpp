@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 /**
  * \brief Serves as the base implementation of all modal dialogs.
@@ -53,7 +53,7 @@ class dialog_base
    * \param model the associated model.
    * \param dispatcher the event dispatcher used.
    */
-  void update(const document_model& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
  protected:
   /**
@@ -64,7 +64,7 @@ class dialog_base
    * \param model the associated model.
    * \param dispatcher the event dispatcher used.
    */
-  virtual void on_update(const document_model& model, entt::dispatcher& dispatcher) = 0;
+  virtual void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) = 0;
 
   /**
    * \brief Invoked when the "Cancel" button is pressed.
@@ -93,7 +93,7 @@ class dialog_base
    * \return `true` if the state of the input is acceptable; `false` otherwise.
    */
   [[nodiscard]] virtual auto is_current_input_valid(
-      [[maybe_unused]] const document_model& model) const -> bool
+      [[maybe_unused]] const DocumentModel& model) const -> bool
   {
     return true;
   }

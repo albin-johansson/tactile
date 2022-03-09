@@ -36,7 +36,7 @@ void map_parse_error_dialog::show(const parsing::parse_error error)
   make_visible();
 }
 
-void map_parse_error_dialog::on_update(const document_model&, entt::dispatcher&)
+void map_parse_error_dialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   ImGui::TextUnformatted(
       "Oops, something went wrong when parsing the map! " ICON_FA_SAD_TEAR);

@@ -36,7 +36,7 @@ void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RenamePropertyEvent>(previous_input(), std::string{current_input()});
 }
 
-auto RenamePropertyDialog::validate(const document_model& model,
+auto RenamePropertyDialog::validate(const DocumentModel& model,
                                     std::string_view input) const -> bool
 {
   const auto& registry = model.get_active_registry();

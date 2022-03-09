@@ -44,7 +44,7 @@ constexpr int _format_version [[maybe_unused]] = 1;
 
 }  // namespace
 
-void restore_last_session(document_model& model, texture_manager& textures)
+void restore_last_session(DocumentModel& model, texture_manager& textures)
 {
   proto::session session;
 
@@ -65,7 +65,7 @@ void restore_last_session(document_model& model, texture_manager& textures)
   }
 }
 
-void save_session(const document_model& model)
+void save_session(const DocumentModel& model)
 {
   proto::session session;
   for (const auto& [id, document] : model) {

@@ -34,7 +34,7 @@
 
 namespace tactile {
 
-void document_model::update()
+void DocumentModel::update()
 {
   if (auto* registry = active_registry()) {
     sys::update_tilesets(*registry);
@@ -42,7 +42,7 @@ void document_model::update()
   }
 }
 
-auto document_model::add_map(Document document) -> map_id
+auto DocumentModel::add_map(Document document) -> map_id
 {
   const auto id = mNextId;
 
@@ -53,7 +53,7 @@ auto document_model::add_map(Document document) -> map_id
   return id;
 }
 
-auto document_model::add_map(const int32 tileWidth,
+auto DocumentModel::add_map(const int32 tileWidth,
                              const int32 tileHeight,
                              const usize rows,
                              const usize columns) -> map_id
@@ -73,13 +73,13 @@ auto document_model::add_map(const int32 tileWidth,
   return add_map(std::move(document));
 }
 
-void document_model::select_map(const map_id id)
+void DocumentModel::select_map(const map_id id)
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   mActiveMap = id;
 }
 
-void document_model::remove_map(const map_id id)
+void DocumentModel::remove_map(const map_id id)
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   mDocuments.erase(id);
@@ -95,19 +95,19 @@ void document_model::remove_map(const map_id id)
   }
 }
 
-auto document_model::has_path(const map_id id) const -> bool
+auto DocumentModel::has_path(const map_id id) const -> bool
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   return !mDocuments.at(id)->path.empty();
 }
 
-auto document_model::get_path(const map_id id) const -> const std::filesystem::path&
+auto DocumentModel::get_path(const map_id id) const -> const std::filesystem::path&
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   return mDocuments.at(id)->path;
 }
 
-auto document_model::has_document_with_path(const std::filesystem::path& path) const
+auto DocumentModel::has_document_with_path(const std::filesystem::path& path) const
     -> bool
 {
   return std::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
@@ -115,17 +115,17 @@ auto document_model::has_document_with_path(const std::filesystem::path& path) c
   });
 }
 
-auto document_model::active_map_id() const -> maybe<map_id>
+auto DocumentModel::active_map_id() const -> maybe<map_id>
 {
   return mActiveMap;
 }
 
-auto document_model::has_active_document() const -> bool
+auto DocumentModel::has_active_document() const -> bool
 {
   return mActiveMap.has_value();
 }
 
-auto document_model::is_save_possible() const -> bool
+auto DocumentModel::is_save_possible() const -> bool
 {
   if (mActiveMap) {
     const auto& document = mDocuments.at(*mActiveMap);
@@ -136,7 +136,7 @@ auto document_model::is_save_possible() const -> bool
   }
 }
 
-auto document_model::can_decrease_viewport_tile_size() const -> bool
+auto DocumentModel::can_decrease_viewport_tile_size() const -> bool
 {
   if (has_active_document()) {
     const auto& document = mDocuments.at(*mActiveMap);
@@ -146,7 +146,7 @@ auto document_model::can_decrease_viewport_tile_size() const -> bool
   return false;
 }
 
-auto document_model::active_document() -> Document*
+auto DocumentModel::active_document() -> Document*
 {
   if (mActiveMap) {
     return mDocuments.at(*mActiveMap).get();
@@ -156,7 +156,7 @@ auto document_model::active_document() -> Document*
   }
 }
 
-auto document_model::active_document() const -> const Document*
+auto DocumentModel::active_document() const -> const Document*
 {
   if (mActiveMap) {
     return mDocuments.at(*mActiveMap).get();
@@ -166,7 +166,7 @@ auto document_model::active_document() const -> const Document*
   }
 }
 
-auto document_model::active_registry() -> entt::registry*
+auto DocumentModel::active_registry() -> entt::registry*
 {
   if (mActiveMap) {
     return &mDocuments.at(*mActiveMap)->registry;
@@ -176,7 +176,7 @@ auto document_model::active_registry() -> entt::registry*
   }
 }
 
-auto document_model::active_registry() const -> const entt::registry*
+auto DocumentModel::active_registry() const -> const entt::registry*
 {
   if (mActiveMap) {
     return &mDocuments.at(*mActiveMap)->registry;
@@ -186,7 +186,7 @@ auto document_model::active_registry() const -> const entt::registry*
   }
 }
 
-auto document_model::get_active_registry() -> entt::registry&
+auto DocumentModel::get_active_registry() -> entt::registry&
 {
   if (mActiveMap) {
     return mDocuments.at(*mActiveMap)->registry;
@@ -196,7 +196,7 @@ auto document_model::get_active_registry() -> entt::registry&
   }
 }
 
-auto document_model::get_active_registry() const -> const entt::registry&
+auto DocumentModel::get_active_registry() const -> const entt::registry&
 {
   if (mActiveMap) {
     return mDocuments.at(*mActiveMap)->registry;
@@ -206,47 +206,47 @@ auto document_model::get_active_registry() const -> const entt::registry&
   }
 }
 
-void document_model::set_command_capacity(const usize capacity)
+void DocumentModel::set_command_capacity(const usize capacity)
 {
   for (auto& [id, document] : mDocuments) {
     document->commands.set_capacity(capacity);
   }
 }
 
-auto document_model::is_clean() const -> bool
+auto DocumentModel::is_clean() const -> bool
 {
   return mActiveMap && mDocuments.at(*mActiveMap)->commands.is_clean();
 }
 
-auto document_model::can_undo() const -> bool
+auto DocumentModel::can_undo() const -> bool
 {
   return mActiveMap && mDocuments.at(*mActiveMap)->commands.can_undo();
 }
 
-auto document_model::can_redo() const -> bool
+auto DocumentModel::can_redo() const -> bool
 {
   return mActiveMap && mDocuments.at(*mActiveMap)->commands.can_redo();
 }
 
-auto document_model::get_undo_text() const -> const std::string&
+auto DocumentModel::get_undo_text() const -> const std::string&
 {
   TACTILE_ASSERT(can_undo());
   return mDocuments.at(mActiveMap.value())->commands.get_undo_text();
 }
 
-auto document_model::get_redo_text() const -> const std::string&
+auto DocumentModel::get_redo_text() const -> const std::string&
 {
   TACTILE_ASSERT(can_redo());
   return mDocuments.at(mActiveMap.value())->commands.get_redo_text();
 }
 
-auto document_model::is_tool_active(const tool_type tool) const -> bool
+auto DocumentModel::is_tool_active(const tool_type tool) const -> bool
 {
   const auto* registry = active_registry();
   return registry && sys::is_tool_enabled(*registry, tool);
 }
 
-auto document_model::is_tool_possible(const tool_type tool) const -> bool
+auto DocumentModel::is_tool_possible(const tool_type tool) const -> bool
 {
   const auto* registry = active_registry();
 
