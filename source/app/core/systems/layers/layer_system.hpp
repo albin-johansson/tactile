@@ -24,7 +24,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/map.hpp"
 #include "core/systems/snapshot.hpp"
 #include "tactile.hpp"

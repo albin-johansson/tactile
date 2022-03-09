@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "core/components/attributes.hpp"
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/components/object.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/tool.hpp"

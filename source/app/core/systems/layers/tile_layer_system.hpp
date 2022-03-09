@@ -21,7 +21,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/tile_cache.hpp"
 #include "core/tile_position.hpp"
 #include "misc/assert.hpp"

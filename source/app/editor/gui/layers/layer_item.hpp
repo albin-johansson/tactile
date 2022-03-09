@@ -21,7 +21,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

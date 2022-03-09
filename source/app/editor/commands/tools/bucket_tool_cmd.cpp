@@ -20,7 +20,7 @@
 #include "bucket_tool_cmd.hpp"
 
 #include "core/algorithms/flood_fill.hpp"
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "misc/assert.hpp"

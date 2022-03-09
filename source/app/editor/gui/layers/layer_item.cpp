@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"

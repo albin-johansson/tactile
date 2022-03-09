@@ -20,7 +20,7 @@
 #include "map_system.hpp"
 
 #include "core/algorithms/invoke_n.hpp"
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/map.hpp"
 #include "core/utils/sfinae.hpp"
 #include "core/utils/tiles.hpp"
