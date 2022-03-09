@@ -35,7 +35,7 @@
 namespace tactile {
 namespace {
 
-constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
 }  // namespace
 
@@ -50,7 +50,7 @@ void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispa
     return;
   }
 
-  scoped::Window window{"Tilesets", gWindowFlags, &visible};
+  scoped::Window window{"Tilesets", _window_flags, &visible};
   if (window.is_open()) {
     mHasFocus = ImGui::IsWindowFocused();
     mWindowContainsMouse = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
