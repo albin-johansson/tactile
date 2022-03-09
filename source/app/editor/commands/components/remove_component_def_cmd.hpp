@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/components/component.hpp"
+#include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"

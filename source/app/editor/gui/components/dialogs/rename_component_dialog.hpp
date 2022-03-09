@@ -22,7 +22,7 @@
 #include <string>  // string
 
 #include "component_name_dialog.hpp"
-#include "core/components/component.hpp"
+#include "core/components/attributes.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

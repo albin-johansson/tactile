@@ -23,9 +23,7 @@
 
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
-#include "core/components/component.hpp"
 #include "core/components/parent.hpp"
-#include "core/components/property.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/map.hpp"
@@ -42,7 +40,7 @@ void _convert_attribute_context(ir::attribute_context_data& data,
                                 const entt::registry& registry)
 {
   for (const auto propertyEntity : context.properties) {
-    const auto& property = registry.get<comp::property>(propertyEntity);
+    const auto& property = registry.get<comp::Property>(propertyEntity);
     data.properties[property.name] = property.value;
   }
 

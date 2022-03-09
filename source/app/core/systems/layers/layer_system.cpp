@@ -28,7 +28,6 @@
 #include "core/components/attributes.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
-#include "core/components/property.hpp"
 #include "core/map.hpp"
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/property_system.hpp"
@@ -79,8 +78,7 @@ namespace {
   TACTILE_ASSERT(registry.all_of<comp::Layer>(source));
   TACTILE_ASSERT(registry.all_of<comp::LayerTreeNode>(source));
   TACTILE_ASSERT(registry.all_of<comp::Parent>(source));
-  assert(
-      (registry.any_of<comp::TileLayer, comp::ObjectLayer, comp::GroupLayer>(source)));
+  assert((registry.any_of<comp::TileLayer, comp::ObjectLayer, comp::GroupLayer>(source)));
 
   LayerSnapshot snapshot;
   snapshot.index = registry.get<comp::LayerTreeNode>(source).index;

@@ -26,7 +26,6 @@
 
 #include "core/attribute.hpp"
 #include "core/components/attributes.hpp"
-#include "core/components/property.hpp"
 #include "snapshot.hpp"
 #include "tactile.hpp"
 
@@ -165,7 +164,7 @@ void change_property_type(entt::registry& registry,
  */
 [[nodiscard]] auto get_property(const entt::registry& registry,
                                 const comp::AttributeContext& context,
-                                std::string_view name) -> const comp::property&;
+                                std::string_view name) -> const comp::Property&;
 
 /**
  * \brief Indicates whether or not an attribute context has a property with a certain

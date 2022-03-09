@@ -23,7 +23,7 @@
 
 #include <imgui.h>
 
-#include "core/components/component.hpp"
+#include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/context_system.hpp"
 #include "editor/events/component_events.hpp"

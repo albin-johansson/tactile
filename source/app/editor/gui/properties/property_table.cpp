@@ -23,9 +23,9 @@
 
 #include <imgui.h>
 
+#include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
-#include "core/components/property.hpp"
 #include "core/components/tiles.hpp"
 #include "core/map.hpp"
 #include "core/systems/context_system.hpp"
@@ -312,7 +312,7 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
   bool first = true;
 
   for (const auto entity : context.properties) {
-    const auto& property = registry.get<comp::property>(entity);
+    const auto& property = registry.get<comp::Property>(entity);
 
     const auto& name = property.name;
     const auto& value = property.value;

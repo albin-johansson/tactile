@@ -24,7 +24,14 @@
 
 #include <entt/entt.hpp>
 
+#include "core/attribute.hpp"
 #include "tactile.hpp"
+
+namespace tactile {
+
+using component_attribute_map = tree_map<std::string, Attribute>;
+
+}  // namespace tactile
 
 namespace tactile::comp {
 
@@ -59,6 +66,49 @@ struct AttributeContext final
 struct ActiveAttributeContext final
 {
   entt::entity entity{entt::null};  ///< The current context entity (may be null).
+};
+
+/**
+ * \brief Component that represents a named attribute value.
+ *
+ * \ingroup components
+ */
+struct Property final
+{
+  std::string name;  ///< The name that is unique within the associated context.
+  Attribute value;   ///< The property attribute value.
+};
+
+/**
+ * \brief Describes the structure of a component.
+ *
+ * \details Component definitions are unique to each map (for now).
+ *
+ * \todo A possible use case for projects could be to provide common component
+ * definitions.
+ *
+ * \todo Should it be possible to import component definitions from existing maps?
+ *
+ * \ingroup components
+ */
+struct ComponentDef final
+{
+  component_id id{};                   ///< Unique ID for the component definition.
+  std::string name;                    ///< The component name (which is unique!).
+  component_attribute_map attributes;  ///< The attributes with their default values.
+};
+
+/**
+ * \brief Represents a user-defined bundle of properties.
+ *
+ * \details Components are supported by all attribute contexts.
+ *
+ * \ingroup components
+ */
+struct Component final
+{
+  component_id type;               ///< The ID of the component definition type.
+  component_attribute_map values;  ///< Current values.
 };
 
 }  // namespace tactile::comp

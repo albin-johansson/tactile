@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include "core/components/component.hpp"
+#include "core/components/attributes.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"

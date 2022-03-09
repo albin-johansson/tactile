@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include "core/components/component.hpp"
+#include "core/components/attributes.hpp"
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 #include "tactile.hpp"
 

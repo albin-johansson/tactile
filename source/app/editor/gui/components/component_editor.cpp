@@ -24,7 +24,7 @@
 
 #include <imgui.h>
 
-#include "core/components/component.hpp"
+#include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "dialogs/create_component_attribute_dialog.hpp"
 #include "dialogs/create_component_dialog.hpp"

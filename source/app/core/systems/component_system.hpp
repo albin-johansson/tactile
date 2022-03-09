@@ -27,7 +27,7 @@
 #include <entt/entt.hpp>
 
 #include "core/attribute.hpp"
-#include "core/components/component.hpp"
+#include "core/components/attributes.hpp"
 #include "tactile.hpp"
 
 namespace tactile::sys {

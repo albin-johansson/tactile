@@ -73,7 +73,7 @@ auto copy_attribute_context(const entt::registry& registry, const entt::entity s
   snapshot.name = context.name;
 
   for (const auto propertyEntity : context.properties) {
-    const auto& property = registry.get<comp::property>(propertyEntity);
+    const auto& property = registry.get<comp::Property>(propertyEntity);
     snapshot.properties.try_emplace(property.name, property.value);
   }
 

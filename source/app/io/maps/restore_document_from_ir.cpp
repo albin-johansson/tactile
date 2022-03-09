@@ -26,10 +26,8 @@
 
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
-#include "core/components/component.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
-#include "core/components/property.hpp"
 #include "core/components/tiles.hpp"
 #include "core/map.hpp"
 #include "core/systems/component_system.hpp"
@@ -58,7 +56,7 @@ void _restore_properties(entt::registry& registry,
   for (const auto& [propertyName, propertyValue] : source.properties) {
     const auto propertyEntity = registry.create();
 
-    auto& property = registry.emplace<comp::property>(propertyEntity);
+    auto& property = registry.emplace<comp::Property>(propertyEntity);
     property.name = propertyName;
     property.value = propertyValue;
 

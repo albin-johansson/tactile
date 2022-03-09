@@ -26,7 +26,6 @@
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
-#include "core/components/property.hpp"
 #include "core/map.hpp"
 #include "property_system.hpp"
 
@@ -55,7 +54,7 @@ inline auto DuplicateComp<comp::AttributeContext>(entt::registry& registry,
     const auto propertyEntity = registry.create();
     context.properties.push_back(propertyEntity);
 
-    DuplicateComp<comp::property>(registry, srcPropertyEntity, propertyEntity);
+    DuplicateComp<comp::Property>(registry, srcPropertyEntity, propertyEntity);
   }
 
   return context;
@@ -63,8 +62,8 @@ inline auto DuplicateComp<comp::AttributeContext>(entt::registry& registry,
 
 template <>
 inline auto DuplicateComp<comp::ObjectLayer>(entt::registry& registry,
-                                              const entt::entity source,
-                                              const entt::entity destination)
+                                             const entt::entity source,
+                                             const entt::entity destination)
     -> comp::ObjectLayer&
 {
   auto& map = registry.ctx<MapInfo>();
