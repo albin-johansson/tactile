@@ -19,7 +19,7 @@
 
 #include "bucket_tool_system.hpp"
 
-#include "core/components/tileset.hpp"
+#include "core/components/tiles.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/events/tool_events.hpp"

@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/components/tileset.hpp"
+#include "core/components/tiles.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"

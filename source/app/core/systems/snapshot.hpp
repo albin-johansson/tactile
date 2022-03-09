@@ -26,8 +26,7 @@
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/texture.hpp"
-#include "core/components/tileset.hpp"
-#include "core/components/uv_tile_size.hpp"
+#include "core/components/tiles.hpp"
 #include "tactile.hpp"
 
 namespace tactile::sys {

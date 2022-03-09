@@ -24,7 +24,7 @@
 #include <imgui_internal.h>
 
 #include "core/components/texture.hpp"
-#include "core/components/tileset.hpp"
+#include "core/components/tiles.hpp"
 #include "core/viewport.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/common/rubber_band.hpp"

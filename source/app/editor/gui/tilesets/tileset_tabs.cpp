@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
-#include "core/components/tileset.hpp"
+#include "core/components/tiles.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"

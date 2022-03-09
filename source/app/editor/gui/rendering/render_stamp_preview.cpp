@@ -23,8 +23,7 @@
 #include <imgui_internal.h>
 
 #include "core/components/texture.hpp"
-#include "core/components/tileset.hpp"
-#include "core/components/uv_tile_size.hpp"
+#include "core/components/tiles.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/tile_position.hpp"
 #include "editor/gui/textures.hpp"

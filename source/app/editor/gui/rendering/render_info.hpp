@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/components/tileset.hpp"
+#include "core/components/tiles.hpp"
 #include "core/region.hpp"
 
 namespace tactile {

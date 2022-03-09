@@ -23,7 +23,7 @@
 
 #include <imgui_internal.h>
 
-#include "core/components/tileset.hpp"
+#include "core/components/tiles.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 
