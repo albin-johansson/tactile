@@ -27,7 +27,7 @@
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/component.hpp"
-#include "core/components/fancy_tile.hpp"
+#include "core/components/tiles.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property.hpp"
@@ -214,7 +214,7 @@ void _restore_tile_animation(entt::registry& registry,
 }
 
 void _restore_fancy_tile_objects(entt::registry& registry,
-                                 comp::fancy_tile& tile,
+                                 comp::MetaTile& tile,
                                  const ir::fancy_tile_data& tileData)
 {
   tile.objects.reserve(tileData.objects.size());
@@ -234,7 +234,7 @@ void _restore_fancy_tiles(entt::registry& registry,
   for (const auto& [id, tileData] : tilesetData.fancy_tiles) {
     const auto tileEntity = registry.create();
 
-    auto& tile = registry.emplace<comp::fancy_tile>(tileEntity);
+    auto& tile = registry.emplace<comp::MetaTile>(tileEntity);
     tile.id = firstGlobalId + id;
 
     cache.tiles.try_emplace(tile.id, tileEntity);

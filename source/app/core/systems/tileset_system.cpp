@@ -25,7 +25,7 @@
 #include "context_system.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
-#include "core/components/fancy_tile.hpp"
+#include "core/components/tiles.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
@@ -67,7 +67,7 @@ void refresh_tileset_cache(entt::registry& registry, const entt::entity entity)
   auto& cache = registry.emplace_or_replace<comp::tileset_cache>(entity);
   cache.source_rects = create_source_rect_cache(tileset);
 
-  for (auto&& [tileEntity, tile] : registry.view<comp::fancy_tile>().each()) {
+  for (auto&& [tileEntity, tile] : registry.view<comp::MetaTile>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       cache.tiles.try_emplace(tile.id, tileEntity);
     }
@@ -282,7 +282,7 @@ auto get_tileset_entity(const entt::registry& registry, const tileset_id id)
 
 auto find_tile(const entt::registry& registry, const tile_id id) -> entt::entity
 {
-  for (auto&& [entity, fancy] : registry.view<comp::fancy_tile>().each()) {
+  for (auto&& [entity, fancy] : registry.view<comp::MetaTile>().each()) {
     if (fancy.id == id) {
       return entity;
     }

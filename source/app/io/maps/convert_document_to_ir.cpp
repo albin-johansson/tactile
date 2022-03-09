@@ -24,7 +24,7 @@
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/component.hpp"
-#include "core/components/fancy_tile.hpp"
+#include "core/components/tiles.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
 #include "core/components/texture.hpp"
@@ -193,7 +193,7 @@ void _convert_fancy_tiles(ir::tileset_data& data,
                           const entt::registry& registry)
 {
   for (auto&& [entity, tile, context] :
-       registry.view<comp::fancy_tile, comp::AttributeContext>().each()) {
+       registry.view<comp::MetaTile, comp::AttributeContext>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       const bool interesting = registry.all_of<comp::Animation>(entity) ||
                                !context.properties.empty() ||
