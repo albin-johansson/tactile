@@ -32,7 +32,7 @@
 namespace tactile {
 namespace {
 
-constexpr auto gWindowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                              ImGuiWindowFlags_HorizontalScrollbar |
                              ImGuiWindowFlags_AlwaysAutoResize;
@@ -177,7 +177,7 @@ void LogDock::Update()
     return;
   }
 
-  scoped::Window dock{"Log", gWindowFlags, &visible};
+  scoped::Window dock{"Log", _window_flags, &visible};
   mHasFocus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
