@@ -77,7 +77,7 @@ inline auto DuplicateComp<comp::ObjectLayer>(entt::registry& registry,
 
     DuplicateComp<comp::AttributeContext>(registry, sourceObject, objectEntity);
 
-    auto& object = DuplicateComp<comp::object>(registry, sourceObject, objectEntity);
+    auto& object = DuplicateComp<comp::Object>(registry, sourceObject, objectEntity);
     object.id = map.next_object_id;
     ++map.next_object_id;
   }

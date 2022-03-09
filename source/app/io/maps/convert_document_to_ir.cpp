@@ -58,7 +58,7 @@ void _convert_attribute_context(ir::attribute_context_data& data,
 }
 
 void _convert_object(ir::object_data& data,
-                     const comp::object& object,
+                     const comp::Object& object,
                      const comp::AttributeContext& context,
                      const entt::registry& registry)
 {
@@ -90,7 +90,7 @@ void _convert_object_layer(ir::object_layer_data& data,
   data.objects.reserve(objectLayer.objects.size());
 
   for (const auto objectEntity : objectLayer.objects) {
-    const auto& object = registry.get<comp::object>(objectEntity);
+    const auto& object = registry.get<comp::Object>(objectEntity);
     const auto& context = registry.get<comp::AttributeContext>(objectEntity);
 
     auto& objectData = data.objects.emplace_back();
@@ -212,7 +212,7 @@ void _convert_fancy_tiles(ir::tileset_data& data,
 
         if (!tile.objects.empty()) {
           for (const auto objectEntity : tile.objects) {
-            const auto& object = registry.get<comp::object>(objectEntity);
+            const auto& object = registry.get<comp::Object>(objectEntity);
             const auto& objectContext =
                 registry.get<comp::AttributeContext>(objectEntity);
 

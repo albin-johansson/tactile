@@ -38,7 +38,7 @@ namespace tactile::sys {
 struct RemoveObjectResult final
 {
   layer_id layer{};
-  comp::object object;
+  comp::Object object;
   sys::attribute_context_snapshot context;
 };
 

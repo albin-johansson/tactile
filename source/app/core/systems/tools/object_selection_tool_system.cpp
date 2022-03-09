@@ -30,10 +30,10 @@ namespace {
 
 void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  const auto entity = registry.ctx<comp::active_object>().entity;
+  const auto entity = registry.ctx<comp::ActiveObject>().entity;
   if (entity != entt::null) {
-    if (const auto* drag = registry.try_get<comp::object_drag_info>(entity)) {
-      const auto& object = registry.get<comp::object>(entity);
+    if (const auto* drag = registry.try_get<comp::ObjectDragInfo>(entity)) {
+      const auto& object = registry.get<comp::Object>(entity);
 
       /* Only emit an event if the object has been moved along any axis */
       if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
@@ -44,7 +44,7 @@ void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
                                               object.y);
       }
 
-      registry.remove<comp::object_drag_info>(entity);
+      registry.remove<comp::ObjectDragInfo>(entity);
     }
   }
 }
@@ -70,16 +70,16 @@ void on_object_selection_tool_pressed(entt::registry& registry,
                                       const mouse_info& mouse)
 {
   if (is_object_layer_active(registry)) {
-    auto& active = registry.ctx<comp::active_object>();
+    auto& active = registry.ctx<comp::ActiveObject>();
     const auto objectEntity = _find_object_at_mouse(registry, mouse);
     switch (mouse.button) {
       case cen::mouse_button::left: {
         active.entity = objectEntity;
 
         if (objectEntity != entt::null) {
-          const auto& object = registry.get<comp::object>(objectEntity);
+          const auto& object = registry.get<comp::Object>(objectEntity);
 
-          auto& drag = registry.emplace<comp::object_drag_info>(objectEntity);
+          auto& drag = registry.emplace<comp::ObjectDragInfo>(objectEntity);
           drag.origin_object_x = object.x;
           drag.origin_object_y = object.y;
           drag.last_mouse_x = mouse.x;
@@ -108,10 +108,10 @@ void on_object_selection_tool_dragged(entt::registry& registry,
                                       const mouse_info& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_object_layer_active(registry)) {
-    const auto& active = registry.ctx<comp::active_object>();
+    const auto& active = registry.ctx<comp::ActiveObject>();
     if (active.entity != entt::null) {
-      if (auto* drag = registry.try_get<comp::object_drag_info>(active.entity)) {
-        auto& object = registry.get<comp::object>(active.entity);
+      if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.entity)) {
+        auto& object = registry.get<comp::Object>(active.entity);
         if (mouse.is_within_contents) {
           const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
           const auto dx = (mouse.x - drag->last_mouse_x) / xRatio;

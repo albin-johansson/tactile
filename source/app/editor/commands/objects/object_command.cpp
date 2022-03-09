@@ -45,14 +45,14 @@ auto AObjectCommand::target_object_context() const -> comp::AttributeContext&
   return registry.get<comp::AttributeContext>(entity);
 }
 
-auto AObjectCommand::target_object() -> comp::object&
+auto AObjectCommand::target_object() -> comp::Object&
 {
   auto& registry = mRegistry.get();
 
   const auto entity = sys::find_object(registry, mObjectId);
   TACTILE_ASSERT(entity != entt::null);
 
-  return registry.get<comp::object>(entity);
+  return registry.get<comp::Object>(entity);
 }
 
 }  // namespace tactile

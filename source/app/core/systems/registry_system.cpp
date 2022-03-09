@@ -39,7 +39,7 @@ auto make_document_registry() -> entt::registry
   registry.set<comp::ActiveTileset>();
   registry.set<comp::ActiveAttributeContext>();
   registry.set<comp::active_tool>();
-  registry.set<comp::active_object>();
+  registry.set<comp::ActiveObject>();
 
   auto& map = registry.set<MapInfo>();
   map.row_count = 5;

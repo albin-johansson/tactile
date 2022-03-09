@@ -102,7 +102,7 @@ namespace {
 
       for (const auto objectEntity : registry.get<comp::ObjectLayer>(source).objects) {
         auto& objectSnapshot = objects.emplace_back();
-        objectSnapshot.core = registry.get<comp::object>(objectEntity);
+        objectSnapshot.core = registry.get<comp::Object>(objectEntity);
         objectSnapshot.context = copy_attribute_context(registry, objectEntity);
       }
 
@@ -284,7 +284,7 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
       for (auto objectSnapshot : snapshot.objects.value()) {
         const auto objectEntity = registry.create();
 
-        registry.emplace<comp::object>(objectEntity, std::move(objectSnapshot.core));
+        registry.emplace<comp::Object>(objectEntity, std::move(objectSnapshot.core));
         restore_attribute_context(registry,
                                   objectEntity,
                                   std::move(objectSnapshot.context));

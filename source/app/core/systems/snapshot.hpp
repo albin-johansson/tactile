@@ -55,7 +55,7 @@ struct TilesetSnapshot final
 
 struct ObjectSnapshot final
 {
-  comp::object core;
+  comp::Object core;
   attribute_context_snapshot context;
 };
 

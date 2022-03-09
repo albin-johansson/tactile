@@ -201,7 +201,7 @@ void ShowNativeLayerProperties(const comp::Layer& layer, entt::dispatcher& dispa
 }
 
 void ShowNativeObjectProperties(const std::string& name,
-                                const comp::object& object,
+                                const comp::Object& object,
                                 entt::dispatcher& dispatcher)
 {
   switch (object.type) {
@@ -267,7 +267,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
       else if (const auto* layer = registry.try_get<comp::Layer>(current.entity)) {
         ShowNativeLayerProperties(*layer, dispatcher);
       }
-      else if (const auto* object = registry.try_get<comp::object>(current.entity)) {
+      else if (const auto* object = registry.try_get<comp::Object>(current.entity)) {
         ShowNativeObjectProperties(context.name, *object, dispatcher);
       }
     }

@@ -20,7 +20,7 @@ TEST(RegistrySystem, MakeDocumentRegistry)
   ASSERT_TRUE(registry.try_ctx<comp::ActiveTileset>());
   ASSERT_TRUE(registry.try_ctx<comp::ActiveAttributeContext>());
   ASSERT_TRUE(registry.try_ctx<comp::active_tool>());
-  ASSERT_TRUE(registry.try_ctx<comp::active_object>());
+  ASSERT_TRUE(registry.try_ctx<comp::ActiveObject>());
   ASSERT_TRUE(registry.try_ctx<Viewport>());
   ASSERT_TRUE(registry.try_ctx<comp::AttributeContext>());
   ASSERT_TRUE(registry.try_ctx<comp::TilesetContext>());

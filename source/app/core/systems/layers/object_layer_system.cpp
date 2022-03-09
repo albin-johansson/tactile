@@ -29,7 +29,7 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _get_hit_detection_bounds(const comp::object& object,
+[[nodiscard]] auto _get_hit_detection_bounds(const comp::Object& object,
                                              const float mapTileWidth,
                                              const float mapTileHeight,
                                              const float xRatio,
@@ -92,7 +92,7 @@ auto find_object(const entt::registry& registry,
                  const object_id id) -> entt::entity
 {
   for (const auto objectEntity : layer.objects) {
-    const auto& object = registry.get<comp::object>(objectEntity);
+    const auto& object = registry.get<comp::Object>(objectEntity);
     if (object.id == id) {
       return objectEntity;
     }
@@ -110,7 +110,7 @@ auto find_object(const entt::registry& registry,
   const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
 
   for (const auto objectEntity : layer.objects) {
-    const auto& object = registry.get<comp::object>(objectEntity);
+    const auto& object = registry.get<comp::Object>(objectEntity);
     const auto bounds = _get_hit_detection_bounds(object,
                                                   static_cast<float>(map.tile_width),
                                                   static_cast<float>(map.tile_height),

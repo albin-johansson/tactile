@@ -96,7 +96,7 @@ auto _restore_object(entt::registry& registry, const ir::object_data& objectData
 {
   const auto objectEntity = registry.create();
 
-  auto& object = registry.emplace<comp::object>(objectEntity);
+  auto& object = registry.emplace<comp::Object>(objectEntity);
   object.id = objectData.id;
   object.type = objectData.type;
 

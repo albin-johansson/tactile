@@ -31,10 +31,9 @@ namespace tactile::comp {
 /**
  * \brief Component that represents objects located in object layers.
  *
- * \see active_object
- * \see object_drag_info
+ * \ingroup components
  */
-struct object final
+struct Object final
 {
   object_id id{};      ///< Unique object identifier.
   float x{};           ///< X-coordinate.
@@ -47,17 +46,21 @@ struct object final
 };
 
 /**
- * \brief Context component pointing to the currently active object entity.
+ * \brief Context component used to keep track of active object.
+ *
+ * \ingroup components
  */
-struct active_object final
+struct ActiveObject final
 {
   entt::entity entity{entt::null};  ///< The currently active object (possibly null).
 };
 
 /**
  * \brief Component that provides temporary information about dragged objects.
+ *
+ * \ingroup components
  */
-struct object_drag_info final
+struct ObjectDragInfo final
 {
   float origin_object_x{};  ///< Object X-coordinate at the drag start.
   float origin_object_y{};  ///< Object Y-coordinate at the drag start.

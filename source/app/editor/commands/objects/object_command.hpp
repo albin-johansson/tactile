@@ -34,7 +34,7 @@ class AObjectCommand : public ACommand
   AObjectCommand(std::string name, registry_ref registry, object_id id);
 
  protected:
-  [[nodiscard]] auto target_object() -> comp::object&;
+  [[nodiscard]] auto target_object() -> comp::Object&;
 
   [[nodiscard]] auto target_object_context() const -> comp::AttributeContext&;
 

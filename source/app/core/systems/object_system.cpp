@@ -54,7 +54,7 @@ namespace {
   auto& context = add_attribute_context(registry, objectEntity);
   context.name = std::move(name);
 
-  auto& object = registry.emplace<comp::object>(objectEntity);
+  auto& object = registry.emplace<comp::Object>(objectEntity);
   object.id = id;
   object.type = type;
 
@@ -129,14 +129,14 @@ auto remove_object(entt::registry& registry, const object_id id) -> RemoveObject
     activeContext.entity = entt::null;
   }
 
-  if (auto& activeObject = registry.ctx<comp::active_object>();
+  if (auto& activeObject = registry.ctx<comp::ActiveObject>();
       activeObject.entity == objectEntity) {
     activeObject.entity = entt::null;
   }
 
   RemoveObjectResult result;
   result.layer = layerId.value();
-  result.object = registry.get<comp::object>(objectEntity);
+  result.object = registry.get<comp::Object>(objectEntity);
   result.context = copy_attribute_context(registry, objectEntity);
 
   registry.destroy(objectEntity);
@@ -148,7 +148,7 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot)
 {
   const auto objectEntity = registry.create();
 
-  registry.emplace<comp::object>(objectEntity, std::move(snapshot.object));
+  registry.emplace<comp::Object>(objectEntity, std::move(snapshot.object));
   restore_attribute_context(registry, objectEntity, std::move(snapshot.context));
 
   auto&& [layerEntity, layer] = get_object_layer(registry, snapshot.layer);
@@ -157,7 +157,7 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot)
 
 auto find_object(const entt::registry& registry, const object_id id) -> entt::entity
 {
-  for (auto&& [entity, object] : registry.view<comp::object>().each()) {
+  for (auto&& [entity, object] : registry.view<comp::Object>().each()) {
     if (object.id == id) {
       return entity;
     }
