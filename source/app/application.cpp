@@ -336,7 +336,7 @@ void Application::on_select_map(const select_map_event& event)
 void Application::on_select_tool(const select_tool_event& event)
 {
   auto& registry = mModel.get_active_registry();
-  sys::select_tool(registry, event.type);
+  sys::select_tool(registry, mDispatcher, event.type);
 }
 
 void Application::on_tool_pressed(const ToolPressedEvent& event)

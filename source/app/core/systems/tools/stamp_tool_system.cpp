@@ -95,6 +95,11 @@ void _emit_event(entt::dispatcher& dispatcher)
 
 }  // namespace
 
+void stamp_tool_on_disable(entt::dispatcher& dispatcher)
+{
+  _emit_event(dispatcher);
+}
+
 void stamp_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&

@@ -25,9 +25,13 @@
 
 namespace tactile::sys {
 
+void eraser_tool_on_disable(entt::dispatcher& dispatcher);
+
 void eraser_tool_on_pressed(entt::registry& registry, const mouse_info& mouse);
 
-void eraser_tool_on_dragged(entt::registry& registry, const mouse_info& mouse);
+void eraser_tool_on_dragged(entt::registry& registry,
+                            entt::dispatcher& dispatcher,
+                            const mouse_info& mouse);
 
 void eraser_tool_on_released(entt::registry& registry,
                              entt::dispatcher& dispatcher,

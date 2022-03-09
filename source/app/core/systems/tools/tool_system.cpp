@@ -33,9 +33,31 @@ namespace tactile::sys {
 // TODO on_disable / on_enable functions
 // TODO on_entered / on_exited functions for viewports would be helpful
 
-void select_tool(entt::registry& registry, const tool_type tool)
+void select_tool(entt::registry& registry,
+                 entt::dispatcher& dispatcher,
+                 const tool_type tool)
 {
   auto& active = registry.ctx<comp::active_tool>();
+
+  switch (active.tool) {
+    case tool_type::stamp:
+      stamp_tool_on_disable(dispatcher);
+      break;
+
+    case tool_type::eraser:
+      eraser_tool_on_disable(dispatcher);
+      break;
+
+    case tool_type::bucket:
+    case tool_type::object_selection:
+    case tool_type::rectangle:
+    case tool_type::ellipse:
+    case tool_type::point:
+      [[fallthrough]];
+    case tool_type::none:
+      break;
+  }
+
   active.tool = (active.tool == tool) ? tool_type::none : tool;
 }
 
@@ -95,7 +117,7 @@ void on_tool_dragged(entt::registry& registry,
       break;
 
     case tool_type::eraser:
-      eraser_tool_on_dragged(registry, mouse);
+      eraser_tool_on_dragged(registry, dispatcher, mouse);
       break;
 
     case tool_type::object_selection:

@@ -25,6 +25,8 @@
 
 namespace tactile::sys {
 
+void stamp_tool_on_disable(entt::dispatcher& dispatcher);
+
 void stamp_tool_on_pressed(entt::registry& registry, const mouse_info& mouse);
 
 void stamp_tool_on_dragged(entt::registry& registry,

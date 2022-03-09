@@ -34,11 +34,6 @@ namespace {
 
 inline TileCache _old_state;
 
-[[nodiscard]] auto _is_usable(const entt::registry& registry) -> bool
-{
-  return is_tile_layer_active(registry);
-}
-
 void _update_sequence(entt::registry& registry, const tile_position& cursor)
 {
   const auto entity = get_active_layer(registry);
@@ -54,20 +49,41 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
   set_tile(layer, cursor, empty_tile);
 }
 
+void _emit_event(entt::dispatcher& dispatcher)
+{
+  if (!_old_state.empty()) {
+    dispatcher.enqueue<eraser_sequence_event>(std::move(_old_state));
+    _old_state.clear();
+  }
+}
+
 }  // namespace
+
+void eraser_tool_on_disable(entt::dispatcher& dispatcher)
+{
+  _emit_event(dispatcher);
+}
 
 void eraser_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
 {
-  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+  if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
+      is_tile_layer_active(registry)) {
     _old_state.clear();
     _update_sequence(registry, mouse.position_in_viewport);
   }
 }
 
-void eraser_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
+void eraser_tool_on_dragged(entt::registry& registry,
+                            entt::dispatcher& dispatcher,
+                            const mouse_info& mouse)
 {
-  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
-    _update_sequence(registry, mouse.position_in_viewport);
+  if (mouse.button == cen::mouse_button::left && is_tile_layer_active(registry)) {
+    if (mouse.is_within_contents) {
+      _update_sequence(registry, mouse.position_in_viewport);
+    }
+    else {
+      _emit_event(dispatcher);
+    }
   }
 }
 
@@ -75,7 +91,8 @@ void eraser_tool_on_released(entt::registry& registry,
                              entt::dispatcher& dispatcher,
                              const mouse_info& mouse)
 {
-  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+  if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
+      is_tile_layer_active(registry)) {
     dispatcher.enqueue<eraser_sequence_event>(std::move(_old_state));
   }
 }
