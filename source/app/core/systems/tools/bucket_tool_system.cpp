@@ -27,7 +27,7 @@
 
 namespace tactile::sys {
 
-void bucket_tool_on_pressed(entt::registry& registry,
+void on_bucket_tool_pressed(entt::registry& registry,
                             entt::dispatcher& dispatcher,
                             const mouse_info& mouse)
 {

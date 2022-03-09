@@ -25,15 +25,15 @@
 
 namespace tactile::sys {
 
-void stamp_tool_on_disable(entt::dispatcher& dispatcher);
+void on_stamp_tool_disabled(entt::dispatcher& dispatcher);
 
-void stamp_tool_on_exited(entt::dispatcher& dispatcher);
+void on_stamp_tool_exited(entt::dispatcher& dispatcher);
 
-void stamp_tool_on_pressed(entt::registry& registry, const mouse_info& mouse);
+void on_stamp_tool_pressed(entt::registry& registry, const mouse_info& mouse);
 
-void stamp_tool_on_dragged(entt::registry& registry, const mouse_info& mouse);
+void on_stamp_tool_dragged(entt::registry& registry, const mouse_info& mouse);
 
-void stamp_tool_on_released(entt::registry& registry,
+void on_stamp_tool_released(entt::registry& registry,
                             entt::dispatcher& dispatcher,
                             const mouse_info& mouse);
 

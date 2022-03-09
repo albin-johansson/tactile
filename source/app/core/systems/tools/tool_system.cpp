@@ -38,11 +38,11 @@ void select_tool(entt::registry& registry,
 
   switch (active.tool) {
     case tool_type::stamp:
-      stamp_tool_on_disable(dispatcher);
+      on_stamp_tool_disabled(dispatcher);
       break;
 
     case tool_type::eraser:
-      eraser_tool_on_disable(dispatcher);
+      on_eraser_tool_disabled(dispatcher);
       break;
 
     case tool_type::rectangle:
@@ -86,15 +86,15 @@ void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
   const auto& active = registry.ctx<comp::active_tool>();
   switch (active.tool) {
     case tool_type::stamp:
-      stamp_tool_on_exited(dispatcher);
+      on_stamp_tool_exited(dispatcher);
       break;
 
     case tool_type::eraser:
-      eraser_tool_on_exited(dispatcher);
+      on_eraser_tool_exited(dispatcher);
       break;
 
     case tool_type::object_selection:
-      object_selection_tool_on_exited(registry, dispatcher);
+      on_object_selection_tool_exited(registry, dispatcher);
       break;
 
     case tool_type::rectangle:
@@ -123,19 +123,19 @@ void on_tool_pressed(entt::registry& registry,
       break;
 
     case tool_type::stamp:
-      stamp_tool_on_pressed(registry, mouse);
+      on_stamp_tool_pressed(registry, mouse);
       break;
 
     case tool_type::bucket:
-      bucket_tool_on_pressed(registry, dispatcher, mouse);
+      on_bucket_tool_pressed(registry, dispatcher, mouse);
       break;
 
     case tool_type::eraser:
-      eraser_tool_on_pressed(registry, mouse);
+      on_eraser_tool_pressed(registry, mouse);
       break;
 
     case tool_type::object_selection:
-      object_selection_tool_on_pressed(registry, dispatcher, mouse);
+      on_object_selection_tool_pressed(registry, dispatcher, mouse);
       break;
 
     case tool_type::rectangle:
@@ -165,15 +165,15 @@ void on_tool_dragged(entt::registry& registry,
       break;
 
     case tool_type::stamp:
-      stamp_tool_on_dragged(registry, mouse);
+      on_stamp_tool_dragged(registry, mouse);
       break;
 
     case tool_type::eraser:
-      eraser_tool_on_dragged(registry, mouse);
+      on_eraser_tool_dragged(registry, mouse);
       break;
 
     case tool_type::object_selection:
-      object_selection_tool_on_dragged(registry, dispatcher, mouse);
+      on_object_selection_tool_dragged(registry, dispatcher, mouse);
       break;
 
     case tool_type::rectangle:
@@ -199,15 +199,15 @@ void on_tool_released(entt::registry& registry,
       break;
 
     case tool_type::stamp:
-      stamp_tool_on_released(registry, dispatcher, mouse);
+      on_stamp_tool_released(registry, dispatcher, mouse);
       break;
 
     case tool_type::eraser:
-      eraser_tool_on_released(registry, dispatcher, mouse);
+      on_eraser_tool_released(registry, dispatcher, mouse);
       break;
 
     case tool_type::object_selection:
-      object_selection_tool_on_released(registry, dispatcher, mouse);
+      on_object_selection_tool_released(registry, dispatcher, mouse);
       break;
 
     case tool_type::rectangle:

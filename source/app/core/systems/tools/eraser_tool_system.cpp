@@ -59,17 +59,17 @@ void _maybe_emit_event(entt::dispatcher& dispatcher)
 
 }  // namespace
 
-void eraser_tool_on_disable(entt::dispatcher& dispatcher)
+void on_eraser_tool_disabled(entt::dispatcher& dispatcher)
 {
   _maybe_emit_event(dispatcher);
 }
 
-void eraser_tool_on_exited(entt::dispatcher& dispatcher)
+void on_eraser_tool_exited(entt::dispatcher& dispatcher)
 {
   _maybe_emit_event(dispatcher);
 }
 
-void eraser_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
+void on_eraser_tool_pressed(entt::registry& registry, const mouse_info& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       is_tile_layer_active(registry)) {
@@ -78,7 +78,7 @@ void eraser_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
   }
 }
 
-void eraser_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
+void on_eraser_tool_dragged(entt::registry& registry, const mouse_info& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       is_tile_layer_active(registry)) {
@@ -86,7 +86,7 @@ void eraser_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
   }
 }
 
-void eraser_tool_on_released(entt::registry& registry,
+void on_eraser_tool_released(entt::registry& registry,
                              entt::dispatcher& dispatcher,
                              const mouse_info& mouse)
 {

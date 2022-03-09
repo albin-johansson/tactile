@@ -95,17 +95,17 @@ void _maybe_emit_event(entt::dispatcher& dispatcher)
 
 }  // namespace
 
-void stamp_tool_on_disable(entt::dispatcher& dispatcher)
+void on_stamp_tool_disabled(entt::dispatcher& dispatcher)
 {
   _maybe_emit_event(dispatcher);
 }
 
-void stamp_tool_on_exited(entt::dispatcher& dispatcher)
+void on_stamp_tool_exited(entt::dispatcher& dispatcher)
 {
   _maybe_emit_event(dispatcher);
 }
 
-void stamp_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
+void on_stamp_tool_pressed(entt::registry& registry, const mouse_info& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       _is_usable(registry)) {
@@ -116,7 +116,7 @@ void stamp_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
   }
 }
 
-void stamp_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
+void on_stamp_tool_dragged(entt::registry& registry, const mouse_info& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       _is_usable(registry)) {
@@ -124,7 +124,7 @@ void stamp_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
   }
 }
 
-void stamp_tool_on_released(entt::registry& registry,
+void on_stamp_tool_released(entt::registry& registry,
                             entt::dispatcher& dispatcher,
                             const mouse_info& mouse)
 {
