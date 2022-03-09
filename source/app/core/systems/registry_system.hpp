@@ -33,11 +33,11 @@ namespace tactile::sys {
  * - `Viewport`
  * - `TilesetContext`
  * - `AttributeContext`
- * - `active_layer`
+ * - `ActiveLayer`
  * - `ActiveTileset`
  * - `ActiveAttributeContext`
- * - `active_tool`
- * - `active_object`
+ * - `ActiveTool`
+ * - `ActiveObject`
  *
  * \return a document registry.
  */
