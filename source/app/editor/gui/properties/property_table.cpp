@@ -24,7 +24,7 @@
 #include <imgui.h>
 
 #include "core/components/layers.hpp"
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "core/components/property.hpp"
 #include "core/components/tiles.hpp"
 #include "core/map.hpp"

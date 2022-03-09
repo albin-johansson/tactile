@@ -19,7 +19,7 @@
 
 #include "object_layer_system.hpp"
 
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "core/map.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/viewport_system.hpp"

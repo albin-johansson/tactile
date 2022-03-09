@@ -26,7 +26,7 @@
 #include <fmt/format.h>  // format
 
 #include "core/components/attributes.hpp"
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
 #include "core/map.hpp"

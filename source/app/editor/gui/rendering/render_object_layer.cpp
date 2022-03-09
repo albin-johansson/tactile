@@ -26,7 +26,7 @@
 
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "graphics.hpp"
 #include "misc/assert.hpp"
 

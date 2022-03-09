@@ -21,7 +21,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "snapshot.hpp"
 #include "tactile.hpp"
 

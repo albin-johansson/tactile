@@ -19,7 +19,7 @@
 
 #include "set_object_visibility_cmd.hpp"
 
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 
 namespace tactile {
 

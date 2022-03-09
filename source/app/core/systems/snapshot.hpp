@@ -24,7 +24,7 @@
 
 #include "core/attribute.hpp"
 #include "core/components/layers.hpp"
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "tactile.hpp"

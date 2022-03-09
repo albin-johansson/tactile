@@ -19,7 +19,7 @@
 
 #include "object_selection_tool_system.hpp"
 
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/viewport_system.hpp"

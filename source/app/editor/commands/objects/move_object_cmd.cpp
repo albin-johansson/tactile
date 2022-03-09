@@ -19,7 +19,7 @@
 
 #include "move_object_cmd.hpp"
 
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 
 namespace tactile {
 

@@ -22,7 +22,7 @@
 #include <string>  // string
 
 #include "core/components/attributes.hpp"
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "editor/commands/command.hpp"
 #include "tactile.hpp"
 

@@ -20,7 +20,7 @@
 #include "render_map.hpp"
 
 #include "core/components/layers.hpp"
-#include "core/components/object.hpp"
+#include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
 #include "graphics.hpp"
 #include "io/persistence/preferences.hpp"
