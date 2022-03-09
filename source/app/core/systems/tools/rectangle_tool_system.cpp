@@ -67,7 +67,8 @@ void on_rectangle_tool_exited(entt::registry& registry, entt::dispatcher& dispat
 
 void on_rectangle_tool_pressed(entt::registry& registry, const mouse_info& mouse)
 {
-  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
+  if (_is_usable(registry) && mouse.is_within_contents &&
+      mouse.button == cen::mouse_button::left) {
     auto& stroke = registry.set<comp::CurrentRectangleStroke>();
     stroke.start_x = mouse.x;
     stroke.start_y = mouse.y;
