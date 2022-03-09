@@ -26,7 +26,7 @@
 
 namespace tactile::sys {
 
-void select_tool(entt::registry& registry, entt::dispatcher& dispatcher, tool_type tool);
+void select_tool(entt::registry& registry, entt::dispatcher& dispatcher, ToolType tool);
 
 void on_tool_entered(entt::registry& registry, entt::dispatcher& dispatcher);
 
@@ -44,7 +44,6 @@ void on_tool_released(entt::registry& registry,
                       entt::dispatcher& dispatcher,
                       const mouse_info& mouse);
 
-[[nodiscard]] auto is_tool_enabled(const entt::registry& registry, tool_type tool)
-    -> bool;
+[[nodiscard]] auto is_tool_enabled(const entt::registry& registry, ToolType tool) -> bool;
 
 }  // namespace tactile::sys

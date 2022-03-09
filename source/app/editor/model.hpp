@@ -257,7 +257,7 @@ class DocumentModel final
    *
    * \return `true` if the tool is active; `false` otherwise.
    */
-  [[nodiscard]] auto is_tool_active(tool_type tool) const -> bool;
+  [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;
 
   /**
    * \brief Indicates whether a specific mouse tool is usable.
@@ -266,7 +266,7 @@ class DocumentModel final
    *
    * \return `true` if the tool is usable; `false` otherwise.
    */
-  [[nodiscard]] auto is_tool_possible(tool_type tool) const -> bool;
+  [[nodiscard]] auto is_tool_possible(ToolType tool) const -> bool;
 
   /// \} End of mouse tool functions
 

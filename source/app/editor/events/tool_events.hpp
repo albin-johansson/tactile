@@ -62,7 +62,7 @@ struct ToolExitedEvent final
 
 struct SelectToolEvent final
 {
-  tool_type type{};
+  ToolType type{};
 };
 
 struct StampSequenceEvent final

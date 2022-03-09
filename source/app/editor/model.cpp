@@ -240,13 +240,13 @@ auto DocumentModel::get_redo_text() const -> const std::string&
   return mDocuments.at(mActiveMap.value())->commands.get_redo_text();
 }
 
-auto DocumentModel::is_tool_active(const tool_type tool) const -> bool
+auto DocumentModel::is_tool_active(const ToolType tool) const -> bool
 {
   const auto* registry = active_registry();
   return registry && sys::is_tool_enabled(*registry, tool);
 }
 
-auto DocumentModel::is_tool_possible(const tool_type tool) const -> bool
+auto DocumentModel::is_tool_possible(const ToolType tool) const -> bool
 {
   const auto* registry = active_registry();
 
@@ -255,18 +255,18 @@ auto DocumentModel::is_tool_possible(const tool_type tool) const -> bool
   }
 
   switch (tool) {
-    case tool_type::stamp:
-    case tool_type::eraser:
+    case ToolType::stamp:
+    case ToolType::eraser:
       return sys::is_tile_layer_active(*registry);
 
-    case tool_type::bucket:
+    case ToolType::bucket:
       return sys::is_tile_layer_active(*registry) &&
              sys::is_single_tile_selected_in_tileset(*registry);
 
-    case tool_type::object_selection:
-    case tool_type::rectangle:
-    case tool_type::ellipse:
-    case tool_type::point:
+    case ToolType::object_selection:
+    case ToolType::rectangle:
+    case ToolType::ellipse:
+    case ToolType::point:
       return sys::is_object_layer_active(*registry);
 
     default:

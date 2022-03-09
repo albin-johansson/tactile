@@ -57,51 +57,51 @@ void EditMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp Tool",
                         "S",
-                        model.is_tool_active(tool_type::stamp),
-                        model.is_tool_possible(tool_type::stamp))) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
+                        model.is_tool_active(ToolType::stamp),
+                        model.is_tool_possible(ToolType::stamp))) {
+      dispatcher.enqueue<SelectToolEvent>(ToolType::stamp);
     }
 
     if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket Tool",
                         "B",
-                        model.is_tool_active(tool_type::bucket),
-                        model.is_tool_possible(tool_type::bucket))) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
+                        model.is_tool_active(ToolType::bucket),
+                        model.is_tool_possible(ToolType::bucket))) {
+      dispatcher.enqueue<SelectToolEvent>(ToolType::bucket);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser Tool",
                         "E",
-                        model.is_tool_active(tool_type::eraser),
-                        model.is_tool_possible(tool_type::eraser))) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
+                        model.is_tool_active(ToolType::eraser),
+                        model.is_tool_possible(ToolType::eraser))) {
+      dispatcher.enqueue<SelectToolEvent>(ToolType::eraser);
     }
 
     if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection Tool",
                         "Q",
-                        model.is_tool_active(tool_type::object_selection),
-                        model.is_tool_possible(tool_type::object_selection))) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
+                        model.is_tool_active(ToolType::object_selection),
+                        model.is_tool_possible(ToolType::object_selection))) {
+      dispatcher.enqueue<SelectToolEvent>(ToolType::object_selection);
     }
 
     if (ImGui::MenuItem(TAC_ICON_RECTANGLE " Rectangle Tool",
                         "R",
-                        model.is_tool_active(tool_type::rectangle),
-                        model.is_tool_possible(tool_type::rectangle))) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::rectangle);
+                        model.is_tool_active(ToolType::rectangle),
+                        model.is_tool_possible(ToolType::rectangle))) {
+      dispatcher.enqueue<SelectToolEvent>(ToolType::rectangle);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ELLIPSE " Ellipse Tool",
                         "T",
-                        model.is_tool_active(tool_type::ellipse),
-                        model.is_tool_possible(tool_type::ellipse))) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::ellipse);
+                        model.is_tool_active(ToolType::ellipse),
+                        model.is_tool_possible(ToolType::ellipse))) {
+      dispatcher.enqueue<SelectToolEvent>(ToolType::ellipse);
     }
 
     if (ImGui::MenuItem(TAC_ICON_POINT " Point Tool",
                         "Y",
-                        model.is_tool_active(tool_type::point),
-                        model.is_tool_possible(tool_type::point))) {
-      dispatcher.enqueue<SelectToolEvent>(tool_type::point);
+                        model.is_tool_active(ToolType::point),
+                        model.is_tool_possible(ToolType::point))) {
+      dispatcher.enqueue<SelectToolEvent>(ToolType::point);
     }
 
     ImGui::Separator();

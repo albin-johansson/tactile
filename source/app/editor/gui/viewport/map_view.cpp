@@ -110,11 +110,11 @@ void _draw_cursor_gizmos(graphics_ctx& graphics,
   }
 
   if (cursor.is_within_map &&  //
-      sys::is_tool_enabled(registry, tool_type::stamp) &&
+      sys::is_tool_enabled(registry, ToolType::stamp) &&
       sys::is_tileset_selection_not_empty(registry)) {
     RenderStampPreview(registry, cursor.map_position, info);
   }
-  else if (sys::is_tool_enabled(registry, tool_type::rectangle)) {
+  else if (sys::is_tool_enabled(registry, ToolType::rectangle)) {
     if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
       const ImVec2 pos{stroke->start_x, stroke->start_y};
       const ImVec2 size{stroke->current_x - stroke->start_x,
@@ -125,7 +125,7 @@ void _draw_cursor_gizmos(graphics_ctx& graphics,
       graphics.draw_translated_rect_with_shadow(pos, size);
     }
   }
-  else if (sys::is_tool_enabled(registry, tool_type::ellipse)) {
+  else if (sys::is_tool_enabled(registry, ToolType::ellipse)) {
     if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
       const ImVec2 radius{(stroke->current_x - stroke->start_x),
                           (stroke->current_y - stroke->start_y)};

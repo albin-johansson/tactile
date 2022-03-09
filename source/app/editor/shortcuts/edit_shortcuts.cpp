@@ -144,39 +144,39 @@ EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}
 
 void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::bucket);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::bucket);
 }
 
 auto EnableBucketShortcut::IsEnabled(const DocumentModel& model,
                                      const widget_manager& widgets) const -> bool
 {
-  return model.is_tool_possible(tool_type::bucket) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::bucket) && widgets.is_editor_focused();
 }
 
 EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
 
 void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::eraser);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::eraser);
 }
 
 auto EnableEraserShortcut::IsEnabled(const DocumentModel& model,
                                      const widget_manager& widgets) const -> bool
 {
-  return model.is_tool_possible(tool_type::eraser) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::eraser) && widgets.is_editor_focused();
 }
 
 EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
 
 void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::stamp);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::stamp);
 }
 
 auto EnableStampShortcut::IsEnabled(const DocumentModel& model,
                                     const widget_manager& widgets) const -> bool
 {
-  return model.is_tool_possible(tool_type::stamp) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::stamp) && widgets.is_editor_focused();
 }
 
 EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
@@ -185,13 +185,13 @@ EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
 
 void EnableObjectSelectionShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::object_selection);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::object_selection);
 }
 
 auto EnableObjectSelectionShortcut::IsEnabled(const DocumentModel& model,
                                               const widget_manager& widgets) const -> bool
 {
-  return model.is_tool_possible(tool_type::object_selection) &&
+  return model.is_tool_possible(ToolType::object_selection) &&
          widgets.is_editor_focused();
 }
 
@@ -200,39 +200,39 @@ EnableRectangleToolShortcut::EnableRectangleToolShortcut() : AShortcut{cen::scan
 
 void EnableRectangleToolShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::rectangle);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::rectangle);
 }
 
 auto EnableRectangleToolShortcut::IsEnabled(const DocumentModel& model,
                                             const widget_manager& widgets) const -> bool
 {
-  return model.is_tool_possible(tool_type::rectangle) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::rectangle) && widgets.is_editor_focused();
 }
 
 EnableEllipseToolShortcut::EnableEllipseToolShortcut() : AShortcut{cen::scancodes::t} {}
 
 void EnableEllipseToolShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::ellipse);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::ellipse);
 }
 
 auto EnableEllipseToolShortcut::IsEnabled(const DocumentModel& model,
                                           const widget_manager& widgets) const -> bool
 {
-  return model.is_tool_possible(tool_type::ellipse) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::ellipse) && widgets.is_editor_focused();
 }
 
 EnablePointToolShortcut::EnablePointToolShortcut() : AShortcut{cen::scancodes::y} {}
 
 void EnablePointToolShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(tool_type::point);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::point);
 }
 
 auto EnablePointToolShortcut::IsEnabled(const DocumentModel& model,
                                         const widget_manager& widgets) const -> bool
 {
-  return model.is_tool_possible(tool_type::point) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::point) && widgets.is_editor_focused();
 }
 
 }  // namespace tactile
