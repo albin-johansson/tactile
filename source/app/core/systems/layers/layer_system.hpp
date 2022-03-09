@@ -60,7 +60,7 @@ namespace tactile::sys {
  */
 auto make_basic_layer(entt::registry& registry,
                       layer_id id,
-                      layer_type type,
+                      LayerType type,
                       std::string name,
                       entt::entity parent = entt::null) -> entt::entity;
 

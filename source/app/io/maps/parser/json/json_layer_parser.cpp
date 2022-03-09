@@ -149,21 +149,21 @@ namespace {
 
   if (auto type = as_string(json, "type")) {
     if (type == "tilelayer") {
-      layerData.type = layer_type::tile_layer;
+      layerData.type = LayerType::tile_layer;
       if (const auto err = _parse_tile_layer(json, layerData, rows, columns);
           err != parse_error::none) {
         return err;
       }
     }
     else if (type == "objectgroup") {
-      layerData.type = layer_type::object_layer;
+      layerData.type = LayerType::object_layer;
       if (const auto err = _parse_object_layer(json, layerData);
           err != parse_error::none) {
         return err;
       }
     }
     else if (type == "group") {
-      layerData.type = layer_type::group_layer;
+      layerData.type = LayerType::group_layer;
       auto& groupLayerData = layerData.data.emplace<ir::group_layer_data>();
 
       usize childIndex = 0;

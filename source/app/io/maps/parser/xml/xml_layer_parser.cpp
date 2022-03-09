@@ -198,21 +198,21 @@ namespace {
   layerData.visible = layerNode.attribute("visible").as_bool(true);
 
   if (std::strcmp(layerNode.name(), "layer") == 0) {
-    layerData.type = layer_type::tile_layer;
+    layerData.type = LayerType::tile_layer;
     if (const auto err = _parse_tile_layer(layerNode, layerData, rows, columns);
         err != parse_error::none) {
       return err;
     }
   }
   else if (std::strcmp(layerNode.name(), "objectgroup") == 0) {
-    layerData.type = layer_type::object_layer;
+    layerData.type = LayerType::object_layer;
     if (const auto err = _parse_object_layer(layerNode, layerData);
         err != parse_error::none) {
       return err;
     }
   }
   else if (std::strcmp(layerNode.name(), "group") == 0) {
-    layerData.type = layer_type::group_layer;
+    layerData.type = LayerType::group_layer;
     auto& groupData = layerData.data.emplace<ir::group_layer_data>();
 
     usize childIndex = 0;

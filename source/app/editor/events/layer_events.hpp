@@ -31,7 +31,7 @@ namespace tactile {
 
 struct AddLayerEvent final
 {
-  layer_type type{};
+  LayerType type{};
 };
 
 struct RemoveLayerEvent final

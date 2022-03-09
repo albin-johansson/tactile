@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-AddLayerCmd::AddLayerCmd(registry_ref registry, const layer_type type)
+AddLayerCmd::AddLayerCmd(registry_ref registry, const LayerType type)
     : ACommand{"Add Layer"}
     , mRegistry{registry}
     , mLayerType{type}
@@ -52,15 +52,15 @@ void AddLayerCmd::redo()
 
     entt::entity entity{entt::null};
     switch (mLayerType) {
-      case layer_type::tile_layer: {
+      case LayerType::tile_layer: {
         entity = sys::make_tile_layer(registry);
         break;
       }
-      case layer_type::object_layer: {
+      case LayerType::object_layer: {
         entity = sys::make_object_layer(registry);
         break;
       }
-      case layer_type::group_layer: {
+      case LayerType::group_layer: {
         entity = sys::make_group_layer(registry);
         break;
       }

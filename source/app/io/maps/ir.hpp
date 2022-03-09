@@ -89,7 +89,7 @@ struct layer_data final
   using data_type = std::variant<tile_layer_data, object_layer_data, group_layer_data>;
 
   layer_id id{};
-  layer_type type{};
+  LayerType type{};
 
   usize index{};
 

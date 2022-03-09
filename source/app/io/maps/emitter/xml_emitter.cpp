@@ -211,15 +211,15 @@ void _append_object_layer(pugi::xml_node root, const ir::layer_data& layerData)
 void _append_layer(pugi::xml_node root, const ir::layer_data& layerData)
 {
   switch (layerData.type) {
-    case layer_type::tile_layer:
+    case LayerType::tile_layer:
       _append_tile_layer(root, layerData);
       break;
 
-    case layer_type::object_layer:
+    case LayerType::object_layer:
       _append_object_layer(root, layerData);
       break;
 
-    case layer_type::group_layer: {
+    case LayerType::group_layer: {
       const auto& groupLayerData = std::get<ir::group_layer_data>(layerData.data);
 
       auto collection = root.append_child("group");

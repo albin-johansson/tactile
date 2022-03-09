@@ -103,7 +103,7 @@ namespace {
   json["y"] = 0;
 
   switch (data.type) {
-    case layer_type::tile_layer: {
+    case LayerType::tile_layer: {
       const auto& tileLayerData = std::get<ir::tile_layer_data>(data.data);
 
       json["type"] = "tilelayer";
@@ -121,7 +121,7 @@ namespace {
       json["data"] = std::move(tiles);
       break;
     }
-    case layer_type::object_layer: {
+    case LayerType::object_layer: {
       const auto& objectLayerData = std::get<ir::object_layer_data>(data.data);
 
       json["type"] = "objectgroup";
@@ -135,7 +135,7 @@ namespace {
       json["objects"] = std::move(objects);
       break;
     }
-    case layer_type::group_layer: {
+    case LayerType::group_layer: {
       const auto& groupLayerData = std::get<ir::group_layer_data>(data.data);
 
       json["type"] = "group";

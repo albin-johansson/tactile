@@ -23,8 +23,10 @@ namespace tactile {
 
 /**
  * \brief Represents all of the supported layer types.
+ *
+ * \ingroup core
  */
-enum class layer_type
+enum class LayerType
 {
   tile_layer,
   object_layer,

@@ -32,7 +32,7 @@ namespace tactile {
 class AddLayerCmd final : public ACommand
 {
  public:
-  AddLayerCmd(registry_ref registry, layer_type type);
+  AddLayerCmd(registry_ref registry, LayerType type);
 
   void undo() override;
 
@@ -42,7 +42,7 @@ class AddLayerCmd final : public ACommand
 
  private:
   registry_ref mRegistry;
-  layer_type mLayerType;
+  LayerType mLayerType;
   maybe<layer_id> mLayerId;
   maybe<sys::LayerSnapshot> mLayerSnapshot;
 };

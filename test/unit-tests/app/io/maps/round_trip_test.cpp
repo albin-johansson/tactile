@@ -77,7 +77,7 @@ void _validate_layers(const ir::layer_data& sourceLayer,
   ASSERT_EQ(sourceLayer.opacity, restoredLayer.opacity);
   ASSERT_EQ(sourceLayer.visible, restoredLayer.visible);
 
-  if (sourceLayer.type == layer_type::tile_layer) {
+  if (sourceLayer.type == LayerType::tile_layer) {
     const auto& sourceTileData = std::get<ir::tile_layer_data>(sourceLayer.data);
     const auto& restoredTileData = std::get<ir::tile_layer_data>(restoredLayer.data);
 
@@ -85,12 +85,12 @@ void _validate_layers(const ir::layer_data& sourceLayer,
     ASSERT_EQ(sourceTileData.col_count, restoredTileData.col_count);
     ASSERT_EQ(sourceTileData.tiles, restoredTileData.tiles);
   }
-  else if (sourceLayer.type == layer_type::object_layer) {
+  else if (sourceLayer.type == LayerType::object_layer) {
     const auto& sourceObjects = std::get<ir::object_layer_data>(sourceLayer.data);
     const auto& restoredObjects = std::get<ir::object_layer_data>(restoredLayer.data);
     _validate_object_layers(sourceObjects, restoredObjects);
   }
-  else if (sourceLayer.type == layer_type::group_layer) {
+  else if (sourceLayer.type == LayerType::group_layer) {
     const auto& sourceGroup = std::get<ir::group_layer_data>(sourceLayer.data);
     const auto& restoredGroup = std::get<ir::group_layer_data>(restoredLayer.data);
 
@@ -195,7 +195,7 @@ constexpr usize _col_count = 13;
   ir::layer_data data;
 
   data.name = "Ground";
-  data.type = layer_type::tile_layer;
+  data.type = LayerType::tile_layer;
 
   data.id = 1;
   data.index = 0;
@@ -225,7 +225,7 @@ constexpr usize _col_count = 13;
   ir::layer_data data;
 
   data.name = "Tile Detail Layers";
-  data.type = layer_type::group_layer;
+  data.type = LayerType::group_layer;
 
   data.id = 2;
   data.index = 1;
@@ -240,7 +240,7 @@ constexpr usize _col_count = 13;
   {
     auto& child = group.children.emplace_back(std::make_unique<ir::layer_data>());
     child->name = "Details 1";
-    child->type = layer_type::tile_layer;
+    child->type = LayerType::tile_layer;
 
     child->id = 3;
     child->index = 0;
@@ -260,7 +260,7 @@ constexpr usize _col_count = 13;
   {
     auto& child = group.children.emplace_back(std::make_unique<ir::layer_data>());
     child->name = "Details 2";
-    child->type = layer_type::tile_layer;
+    child->type = LayerType::tile_layer;
 
     child->id = 4;
     child->index = 1;
@@ -286,7 +286,7 @@ constexpr usize _col_count = 13;
   ir::layer_data data;
 
   data.name = "Objects";
-  data.type = layer_type::object_layer;
+  data.type = LayerType::object_layer;
 
   data.id = 5;
   data.index = 2;

@@ -132,6 +132,6 @@ class icon_manager final
  *
  * \throws tactile_error if the layer type is invalid.
  */
-[[nodiscard]] auto get_icon(layer_type type) -> const char*;
+[[nodiscard]] auto get_icon(LayerType type) -> const char*;
 
 }  // namespace tactile
