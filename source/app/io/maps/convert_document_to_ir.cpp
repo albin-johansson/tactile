@@ -163,7 +163,7 @@ void _convert_layers(ir::map_data& data, const entt::registry& registry)
 
   /* Only iterate top-level layers */
   for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
-    const auto& parent = registry.get<comp::parent>(entity);
+    const auto& parent = registry.get<comp::Parent>(entity);
     if (parent.entity == entt::null) {
       auto& layerData = data.layers.emplace_back();
       _convert_layer(layerData, index, registry, entity);

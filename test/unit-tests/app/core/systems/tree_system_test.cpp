@@ -40,12 +40,12 @@ struct SimpleTreeConfig final
   cfg.e = cfg.registry.create();
   cfg.f = cfg.registry.create();
 
-  cfg.registry.emplace<comp::parent>(cfg.a, entt::null);
-  cfg.registry.emplace<comp::parent>(cfg.b, cfg.a);
-  cfg.registry.emplace<comp::parent>(cfg.c, cfg.a);
-  cfg.registry.emplace<comp::parent>(cfg.d, cfg.b);
-  cfg.registry.emplace<comp::parent>(cfg.e, entt::null);
-  cfg.registry.emplace<comp::parent>(cfg.f, cfg.a);
+  cfg.registry.emplace<comp::Parent>(cfg.a, entt::null);
+  cfg.registry.emplace<comp::Parent>(cfg.b, cfg.a);
+  cfg.registry.emplace<comp::Parent>(cfg.c, cfg.a);
+  cfg.registry.emplace<comp::Parent>(cfg.d, cfg.b);
+  cfg.registry.emplace<comp::Parent>(cfg.e, entt::null);
+  cfg.registry.emplace<comp::Parent>(cfg.f, cfg.a);
 
   {
     auto& node = cfg.registry.emplace<comp::layer_tree_node>(cfg.a, 0u);

@@ -21,13 +21,18 @@
 
 #include <vector>  // vector
 
-#include <entt/entt.hpp>  // entity, null
+#include <entt/entt.hpp>
 
 namespace tactile::comp {
 
-struct parent final
+/**
+ * \brief Component featured by entities that have a parent entity.
+ *
+ * \ingroup components
+ */
+struct Parent final
 {
-  entt::entity entity{entt::null};
+  entt::entity entity{entt::null};  ///< The possibly null parent entity.
 };
 
 }  // namespace tactile::comp

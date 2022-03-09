@@ -33,7 +33,7 @@ void _validate_layer_node_entity(const entt::registry& registry,
 {
   TACTILE_ASSERT(entity != entt::null);
   TACTILE_ASSERT(registry.all_of<comp::layer_tree_node>(entity));
-  TACTILE_ASSERT(registry.all_of<comp::parent>(entity));
+  TACTILE_ASSERT(registry.all_of<comp::Parent>(entity));
 }
 
 void _swap_indices(entt::registry& registry, const entt::entity a, const entt::entity b)
@@ -76,7 +76,7 @@ void _destroy_child_nodes(entt::registry& registry, const entt::entity entity)
                                 const entt::entity entity,
                                 const usize targetIndex) -> entt::entity
 {
-  const auto& parent = registry.get<comp::parent>(entity);
+  const auto& parent = registry.get<comp::Parent>(entity);
   if (parent.entity != entt::null) {
     const auto& parentNode = registry.get<comp::layer_tree_node>(parent.entity);
     for (const auto child : parentNode.children) {
@@ -88,7 +88,7 @@ void _destroy_child_nodes(entt::registry& registry, const entt::entity entity)
   }
   else {
     for (auto&& [otherEntity, otherNode, otherParent] :
-         registry.view<comp::layer_tree_node, comp::parent>().each()) {
+         registry.view<comp::layer_tree_node, comp::Parent>().each()) {
       if (otherParent.entity == entt::null && otherNode.index == targetIndex) {
         return otherEntity;
       }
@@ -159,7 +159,7 @@ void destroy_layer_node(entt::registry& registry, const entt::entity entity)
   decrement_layer_indices_of_siblings_below(registry, entity);
 
   /* Remove the node from the parent node, if there is one. */
-  const auto& parent = registry.get<comp::parent>(entity);
+  const auto& parent = registry.get<comp::Parent>(entity);
   if (parent.entity != entt::null) {
     auto& parentNode = registry.get<comp::layer_tree_node>(parent.entity);
     std::erase(parentNode.children, entity);
@@ -259,12 +259,12 @@ auto layer_sibling_count(const entt::registry& registry, const entt::entity enti
 {
   _validate_layer_node_entity(registry, entity);
 
-  const auto& parent = registry.get<comp::parent>(entity);
+  const auto& parent = registry.get<comp::Parent>(entity);
   if (parent.entity == entt::null) {
     usize count = 0;
 
     for (auto&& [otherEntity, otherNode, otherParent] :
-         registry.view<comp::layer_tree_node, comp::parent>().each()) {
+         registry.view<comp::layer_tree_node, comp::Parent>().each()) {
       if (otherEntity != entity && otherParent.entity == entt::null) {
         ++count;
       }
@@ -307,7 +307,7 @@ auto layer_global_index(const entt::registry& registry, const entt::entity entit
   _validate_layer_node_entity(registry, entity);
 
   const auto& node = registry.get<comp::layer_tree_node>(entity);
-  const auto& parent = registry.get<comp::parent>(entity);
+  const auto& parent = registry.get<comp::Parent>(entity);
 
   const auto base =
       node.index + _count_siblings_above_including_children(registry, entity);

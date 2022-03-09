@@ -81,7 +81,7 @@ void layer_dock::on_update(const document_model& model, entt::dispatcher& dispat
         for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
           /* Note, we rely on the layer_tree_node pool being sorted, so we can't include
              other components in the view query directly. */
-          const auto& parent = registry.get<comp::parent>(entity);
+          const auto& parent = registry.get<comp::Parent>(entity);
           if (parent.entity == entt::null) {
             show_layer_item(registry, dispatcher, entity);
           }
