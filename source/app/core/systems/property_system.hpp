@@ -25,7 +25,7 @@
 #include <entt/entt.hpp>
 
 #include "core/attribute.hpp"
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/property.hpp"
 #include "snapshot.hpp"
 #include "tactile.hpp"
@@ -54,7 +54,7 @@ namespace tactile::sys {
  * \param type the type of the property value.
  */
 void add_property(entt::registry& registry,
-                  comp::attribute_context& context,
+                  comp::AttributeContext& context,
                   std::string name,
                   AttributeType type);
 
@@ -69,7 +69,7 @@ void add_property(entt::registry& registry,
  * \param value the initial value of the property.
  */
 void add_property(entt::registry& registry,
-                  comp::attribute_context& context,
+                  comp::AttributeContext& context,
                   std::string name,
                   Attribute value);
 
@@ -83,7 +83,7 @@ void add_property(entt::registry& registry,
  * \param name the name of the property that will be removed.
  */
 void remove_property(entt::registry& registry,
-                     comp::attribute_context& context,
+                     comp::AttributeContext& context,
                      std::string_view name);
 
 /**
@@ -98,7 +98,7 @@ void remove_property(entt::registry& registry,
  * \param newName the new name of the property.
  */
 void rename_property(entt::registry& registry,
-                     comp::attribute_context& context,
+                     comp::AttributeContext& context,
                      std::string_view oldName,
                      std::string newName);
 
@@ -113,7 +113,7 @@ void rename_property(entt::registry& registry,
  * \param value the new value of the property.
  */
 void update_property(entt::registry& registry,
-                     comp::attribute_context& context,
+                     comp::AttributeContext& context,
                      std::string_view name,
                      Attribute value);
 
@@ -130,7 +130,7 @@ void update_property(entt::registry& registry,
  * \param value the new type of the property.
  */
 void change_property_type(entt::registry& registry,
-                          comp::attribute_context& context,
+                          comp::AttributeContext& context,
                           std::string_view name,
                           AttributeType type);
 
@@ -147,7 +147,7 @@ void change_property_type(entt::registry& registry,
  * \see get_property()
  */
 [[nodiscard]] auto find_property(const entt::registry& registry,
-                                 const comp::attribute_context& context,
+                                 const comp::AttributeContext& context,
                                  std::string_view name) -> entt::entity;
 
 /**
@@ -164,7 +164,7 @@ void change_property_type(entt::registry& registry,
  * \see find_property()
  */
 [[nodiscard]] auto get_property(const entt::registry& registry,
-                                const comp::attribute_context& context,
+                                const comp::AttributeContext& context,
                                 std::string_view name) -> const comp::property&;
 
 /**
@@ -184,7 +184,7 @@ void change_property_type(entt::registry& registry,
  * \see find_property()
  */
 [[nodiscard]] auto has_property_with_name(const entt::registry& registry,
-                                          const comp::attribute_context& context,
+                                          const comp::AttributeContext& context,
                                           std::string_view name) -> bool;
 
 /// \} End of property system

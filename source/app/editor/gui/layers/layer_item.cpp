@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -145,7 +145,7 @@ void show_layer_item(const entt::registry& registry,
   const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
                                    : _base_node_flags;
 
-  const auto& context = registry.get<comp::attribute_context>(layerEntity);
+  const auto& context = registry.get<comp::AttributeContext>(layerEntity);
   formatted_string name{"{} {}", get_icon(layer.type), context.name};
 
   if (layer.type != layer_type::group_layer) {

@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "add_layer_context_menu.hpp"
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -99,7 +99,7 @@ void layer_dock::on_update(const document_model& model, entt::dispatcher& dispat
     const auto entity = sys::find_layer(registry, target);
     TACTILE_ASSERT(entity != entt::null);
 
-    const auto& context = registry.get<comp::attribute_context>(entity);
+    const auto& context = registry.get<comp::AttributeContext>(entity);
 
     renameLayerDialog.show(target, context.name);
     renameTarget.reset();

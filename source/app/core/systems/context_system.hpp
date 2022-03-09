@@ -21,7 +21,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "snapshot.hpp"
 #include "tactile.hpp"
 
@@ -69,7 +69,7 @@ void reset_next_context_id() noexcept;
  * \return the created attribute context.
  */
 auto add_attribute_context(entt::registry& registry, entt::entity entity)
-    -> comp::attribute_context&;
+    -> comp::AttributeContext&;
 
 /**
  * \brief Creates a snapshot of the state of a attribute context.
@@ -115,10 +115,10 @@ void restore_attribute_context(entt::registry& registry,
  * \throws tactile_error if the identifier is invalid.
  */
 [[nodiscard]] auto get_context(entt::registry& registry, context_id id)
-    -> comp::attribute_context&;
+    -> comp::AttributeContext&;
 
 [[nodiscard]] auto get_context(const entt::registry& registry, context_id id)
-    -> const comp::attribute_context&;
+    -> const comp::AttributeContext&;
 
 /**
  * \brief Returns the currently active attribute context.
@@ -128,7 +128,7 @@ void restore_attribute_context(entt::registry& registry,
  * \return the current context.
  */
 [[nodiscard]] auto current_context(const entt::registry& registry)
-    -> const comp::attribute_context&;
+    -> const comp::AttributeContext&;
 
 /**
  * \brief Returns the identifier associated with the current context.

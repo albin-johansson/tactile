@@ -45,7 +45,7 @@ namespace tactile::sys {
  * \pre `parent` must either be associated with a group layer or be null.
  *
  * \details The created entity will feature the following components:
- * - `attribute_context`
+ * - `AttributeContext`
  * - `layer`
  * - `layer_tree_node`
  * - `parent`
@@ -74,7 +74,7 @@ auto make_basic_layer(entt::registry& registry,
  * - `Layer`
  * - `TileLayer`
  * - `Parent`
- * - `attribute_context`
+ * - `AttributeContext`
  *
  * \param registry the associated registry.
  *
@@ -94,7 +94,7 @@ auto make_tile_layer(entt::registry& registry) -> entt::entity;
  * - `Layer`
  * - `ObjectLayer`
  * - `Parent`
- * - `attribute_context`
+ * - `AttributeContext`
  *
  * \param registry the associated registry.
  *
@@ -114,13 +114,11 @@ auto make_object_layer(entt::registry& registry) -> entt::entity;
  * - `Layer`
  * - `GroupLayer`
  * - `Parent`
- * - `attribute_context`
+ * - `AttributeContext`
  *
- * \param registry the associated registry.
+ * \param registry a map registry.
  *
  * \return the created group layer entity.
- *
- * \since 0.2.0
  */
 auto make_group_layer(entt::registry& registry) -> entt::entity;
 
@@ -132,7 +130,7 @@ auto make_group_layer(entt::registry& registry) -> entt::entity;
  * \details The active layer is is reset if the specified layer is active at the time
  * of invocation. This function will also repair the layer indices.
  *
- * \param registry the associated registry.
+ * \param registry a map registry.
  * \param entity the layer entity that will be removed.
  *
  * \return a snapshot of the removed layer.
@@ -155,12 +153,10 @@ auto duplicate_layer(entt::registry& registry,
 /**
  * \brief Attempts to find the layer associated with the specified ID.
  *
- * \param registry the associated registry.
+ * \param registry a map registry.
  * \param id the ID associated with the desired layer.
  *
  * \return the associated layer entity; a null entity is returned if there is none.
- *
- * \since 0.2.0
  */
 [[nodiscard]] auto find_layer(const entt::registry& registry, layer_id id)
     -> entt::entity;

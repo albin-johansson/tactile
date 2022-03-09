@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/object.hpp"
 #include "editor/commands/command.hpp"
 #include "tactile.hpp"
@@ -36,7 +36,7 @@ class AObjectCommand : public ACommand
  protected:
   [[nodiscard]] auto target_object() -> comp::object&;
 
-  [[nodiscard]] auto target_object_context() const -> comp::attribute_context&;
+  [[nodiscard]] auto target_object_context() const -> comp::AttributeContext&;
 
   [[nodiscard]] auto target_object_id() const noexcept -> object_id { return mObjectId; }
 

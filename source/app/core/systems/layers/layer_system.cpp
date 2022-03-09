@@ -25,7 +25,7 @@
 
 #include <fmt/format.h>  // format
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
@@ -245,7 +245,7 @@ auto remove_layer(entt::registry& registry, const entt::entity entity) -> LayerS
   };
 
   maybe_reset(registry.ctx<comp::active_layer>().entity, entity);
-  maybe_reset(registry.ctx<comp::active_attribute_context>().entity, entity);
+  maybe_reset(registry.ctx<comp::ActiveAttributeContext>().entity, entity);
 
   destroy_layer_node(registry, entity);
 
@@ -348,7 +348,7 @@ auto duplicate_layer(entt::registry& registry,
   }
 
   {
-    auto& context = DuplicateComp<comp::attribute_context>(registry, source, copy);
+    auto& context = DuplicateComp<comp::AttributeContext>(registry, source, copy);
     if (!recursive) {
       context.name += " (Copy)";
     }

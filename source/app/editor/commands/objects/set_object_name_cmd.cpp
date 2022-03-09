@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 
 namespace tactile {
 

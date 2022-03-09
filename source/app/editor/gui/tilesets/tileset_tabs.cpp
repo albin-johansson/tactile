@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/tileset.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
@@ -81,7 +81,7 @@ void TilesetTabWidget::Update(const entt::registry& registry,
       const scoped::id scope{tileset.id};
 
       const auto isActive = activeTileset.entity == entity;
-      const auto& context = registry.get<comp::attribute_context>(entity);
+      const auto& context = registry.get<comp::AttributeContext>(entity);
 
       bool opened = true;
       if (scoped::tab_item item{context.name.c_str(),

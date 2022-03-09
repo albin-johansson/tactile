@@ -24,7 +24,7 @@
 
 #include "context_system.hpp"
 #include "core/components/animation.hpp"
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
@@ -234,7 +234,7 @@ void remove_tileset(entt::registry& registry, const tileset_id id)
     activeTileset.entity = entt::null;
   }
 
-  auto& activeContext = registry.ctx<comp::active_attribute_context>();
+  auto& activeContext = registry.ctx<comp::ActiveAttributeContext>();
   if (entity == activeContext.entity) {
     activeContext.entity = entt::null;
   }
@@ -361,9 +361,9 @@ auto get_tile_to_render(const entt::registry& registry,
   if (const auto iter = cache.tiles.find(id); iter != cache.tiles.end()) {
     const auto entity = iter->second;
 
-    if (const auto* animation = registry.try_get<comp::animation>(entity)) {
+    if (const auto* animation = registry.try_get<comp::Animation>(entity)) {
       const auto frameEntity = animation->frames.at(animation->index);
-      const auto& frame = registry.get<comp::animation_frame>(frameEntity);
+      const auto& frame = registry.get<comp::AnimationFrame>(frameEntity);
 
       /* This cache is cleared before each frame */
       cache.source_to_render[id] = frame.tile;

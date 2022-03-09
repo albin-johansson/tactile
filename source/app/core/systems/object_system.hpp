@@ -49,7 +49,7 @@ struct RemoveObjectResult final
  *
  * \details The created entity will feature the following components:
  * - `object`
- * - `attribute_context`
+ * - `AttributeContext`
  *
  * \param registry the map registry.
  * \param layerId the object layer to add the object to.
@@ -74,7 +74,7 @@ auto make_rectangle_object(entt::registry& registry,
  *
  * \details The created entity will feature the following components:
  * - `object`
- * - `attribute_context`
+ * - `AttributeContext`
  *
  * \param registry the map registry.
  * \param layerId the object layer to add the object to.
@@ -99,7 +99,7 @@ auto make_ellipse_object(entt::registry& registry,
  *
  * \details The created entity will feature the following components:
  * - `object`
- * - `attribute_context`
+ * - `AttributeContext`
  *
  * \param registry the map registry.
  * \param layerId the object layer to add the object to.

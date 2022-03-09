@@ -28,17 +28,37 @@
 
 namespace tactile::comp {
 
-struct attribute_context final
+/**
+ * \brief Featured by all entities that can host properties and components.
+ *
+ * \details This component is featured by many different kinds of items, such as:
+ * - Maps
+ * - Layers
+ * - Tilesets
+ * - Tiles
+ * - Layer objects
+ *
+ * \ingroup components
+ */
+struct AttributeContext final
 {
-  context_id id{};
-  std::string name;
-  std::vector<entt::entity> properties;
-  std::vector<entt::entity> components;
+  context_id id{};   ///< The unique context identifier (not persistent).
+  std::string name;  ///< The name of the context.
+  std::vector<entt::entity> properties;  ///< All associated properties.
+  std::vector<entt::entity> components;  ///< All associated components.
 };
 
-struct active_attribute_context final
+/**
+ * \brief Context component that keeps track of the current attribute context.
+ *
+ * \details There is always an active attribute context, a null active entity is used to
+ * indicate that the root map is the active context.
+ *
+ * \ingroup components
+ */
+struct ActiveAttributeContext final
 {
-  entt::entity entity{entt::null};
+  entt::entity entity{entt::null};  ///< The current context entity (may be null).
 };
 
 }  // namespace tactile::comp

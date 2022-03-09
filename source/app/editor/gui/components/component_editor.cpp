@@ -79,7 +79,7 @@ void component_editor::on_update(const document_model& model,
     data.active_component.reset();
   }
 
-  if (registry.storage<comp::component_def>().empty()) {
+  if (registry.storage<comp::ComponentDef>().empty()) {
     ImGui::TextUnformatted("There are no available components for the current map.");
 
     if (centered_button(TAC_ICON_ADD, "Create Component")) {
@@ -92,14 +92,14 @@ void component_editor::on_update(const document_model& model,
     ImGui::SameLine();
 
     if (!data.active_component) {
-      const auto entity = registry.view<comp::component_def>().front();
-      data.active_component = registry.get<comp::component_def>(entity).id;
+      const auto entity = registry.view<comp::ComponentDef>().front();
+      data.active_component = registry.get<comp::ComponentDef>(entity).id;
     }
 
     const auto& name =
         sys::get_component_def_name(registry, data.active_component.value());
     if (scoped::combo combo{"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
-      for (auto&& [entity, component] : registry.view<comp::component_def>().each()) {
+      for (auto&& [entity, component] : registry.view<comp::ComponentDef>().each()) {
         if (ImGui::Selectable(component.name.c_str())) {
           data.active_component = component.id;
         }

@@ -22,7 +22,7 @@
 #include <memory>  // make_unique
 
 #include "core/components/animation.hpp"
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/component.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/parent.hpp"
@@ -39,7 +39,7 @@ namespace tactile {
 namespace {
 
 void _convert_attribute_context(ir::attribute_context_data& data,
-                                const comp::attribute_context& context,
+                                const comp::AttributeContext& context,
                                 const entt::registry& registry)
 {
   for (const auto propertyEntity : context.properties) {
@@ -48,7 +48,7 @@ void _convert_attribute_context(ir::attribute_context_data& data,
   }
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::component>(componentEntity);
+    const auto& component = registry.get<comp::Component>(componentEntity);
     const auto type = sys::get_component_def_name(registry, component.type);
 
     auto& attributes = data.components[type];
@@ -60,7 +60,7 @@ void _convert_attribute_context(ir::attribute_context_data& data,
 
 void _convert_object(ir::object_data& data,
                      const comp::object& object,
-                     const comp::attribute_context& context,
+                     const comp::AttributeContext& context,
                      const entt::registry& registry)
 {
   data.id = object.id;
@@ -92,7 +92,7 @@ void _convert_object_layer(ir::object_layer_data& data,
 
   for (const auto objectEntity : objectLayer.objects) {
     const auto& object = registry.get<comp::object>(objectEntity);
-    const auto& context = registry.get<comp::attribute_context>(objectEntity);
+    const auto& context = registry.get<comp::AttributeContext>(objectEntity);
 
     auto& objectData = data.objects.emplace_back();
     _convert_object(objectData, object, context, registry);
@@ -153,7 +153,7 @@ void _convert_layer(ir::layer_data& data,
     }
   }
 
-  const auto& context = registry.get<comp::attribute_context>(entity);
+  const auto& context = registry.get<comp::AttributeContext>(entity);
   data.name = context.name;
   _convert_attribute_context(data.context, context, registry);
 }
@@ -174,13 +174,13 @@ void _convert_layers(ir::map_data& data, const entt::registry& registry)
 }
 
 void _convert_fancy_tile_animation(ir::fancy_tile_data& data,
-                                   const comp::animation& animation,
+                                   const comp::Animation& animation,
                                    const entt::registry& registry)
 {
   data.frames.reserve(animation.frames.size());
 
   for (const auto frameEntity : animation.frames) {
-    const auto& frame = registry.get<comp::animation_frame>(frameEntity);
+    const auto& frame = registry.get<comp::AnimationFrame>(frameEntity);
 
     auto& frameData = data.frames.emplace_back();
     frameData.local_id = sys::convert_to_local(registry, frame.tile).value();
@@ -193,9 +193,9 @@ void _convert_fancy_tiles(ir::tileset_data& data,
                           const entt::registry& registry)
 {
   for (auto&& [entity, tile, context] :
-       registry.view<comp::fancy_tile, comp::attribute_context>().each()) {
+       registry.view<comp::fancy_tile, comp::AttributeContext>().each()) {
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
-      const bool interesting = registry.all_of<comp::animation>(entity) ||
+      const bool interesting = registry.all_of<comp::Animation>(entity) ||
                                !context.properties.empty() ||
                                !context.properties.empty() || !tile.objects.empty();
 
@@ -203,7 +203,7 @@ void _convert_fancy_tiles(ir::tileset_data& data,
         const auto local = sys::convert_to_local(registry, tile.id).value();
         auto& tileData = data.fancy_tiles[local];
 
-        if (const auto* animation = registry.try_get<comp::animation>(entity)) {
+        if (const auto* animation = registry.try_get<comp::Animation>(entity)) {
           _convert_fancy_tile_animation(tileData, *animation, registry);
         }
 
@@ -215,7 +215,7 @@ void _convert_fancy_tiles(ir::tileset_data& data,
           for (const auto objectEntity : tile.objects) {
             const auto& object = registry.get<comp::object>(objectEntity);
             const auto& objectContext =
-                registry.get<comp::attribute_context>(objectEntity);
+                registry.get<comp::AttributeContext>(objectEntity);
 
             auto& objectData = tileData.objects.emplace_back();
             _convert_object(objectData, object, objectContext, registry);
@@ -229,7 +229,7 @@ void _convert_fancy_tiles(ir::tileset_data& data,
 void _convert_tilesets(ir::map_data& data, const entt::registry& registry)
 {
   for (auto&& [entity, tileset, texture, context] :
-       registry.view<comp::tileset, comp::texture, comp::attribute_context>().each()) {
+       registry.view<comp::tileset, comp::texture, comp::AttributeContext>().each()) {
     auto& tilesetData = data.tilesets.emplace_back();
     tilesetData.name = context.name;
 
@@ -249,7 +249,7 @@ void _convert_tilesets(ir::map_data& data, const entt::registry& registry)
 
 void _convert_component_definitions(ir::map_data& data, const entt::registry& registry)
 {
-  for (auto&& [entity, def] : registry.view<comp::component_def>().each()) {
+  for (auto&& [entity, def] : registry.view<comp::ComponentDef>().each()) {
     auto& attributes = data.component_definitions[def.name];
     for (const auto& [attrName, attrValue] : def.attributes) {
       attributes[attrName] = attrValue;
@@ -287,7 +287,7 @@ auto convert_document_to_ir(const Document& document) -> ir::map_data
   _convert_layers(data, registry);
 
   _convert_attribute_context(data.context,
-                             registry.ctx<comp::attribute_context>(),
+                             registry.ctx<comp::AttributeContext>(),
                              registry);
 
   TACTILE_PROFILE_END("Converted document to IR")

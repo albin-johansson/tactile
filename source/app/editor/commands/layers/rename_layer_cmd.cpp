@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "misc/assert.hpp"
 
@@ -41,7 +41,7 @@ void RenameLayerCmd::undo()
   const auto entity = sys::find_layer(registry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<comp::attribute_context>(entity);
+  auto& context = registry.get<comp::AttributeContext>(entity);
   context.name = mPreviousName.value();
 
   mPreviousName.reset();
@@ -54,7 +54,7 @@ void RenameLayerCmd::redo()
   const auto entity = sys::find_layer(registry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<comp::attribute_context>(entity);
+  auto& context = registry.get<comp::AttributeContext>(entity);
   mPreviousName = context.name;
   context.name = mName;
 }

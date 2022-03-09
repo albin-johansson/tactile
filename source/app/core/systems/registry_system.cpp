@@ -20,7 +20,7 @@
 #include "registry_system.hpp"
 
 #include "context_system.hpp"
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/tileset.hpp"
@@ -37,7 +37,7 @@ auto make_document_registry() -> entt::registry
 
   registry.set<comp::active_layer>();
   registry.set<comp::active_tileset>();
-  registry.set<comp::active_attribute_context>();
+  registry.set<comp::ActiveAttributeContext>();
   registry.set<comp::active_tool>();
   registry.set<comp::active_object>();
 
@@ -51,7 +51,7 @@ auto make_document_registry() -> entt::registry
   viewport.x_offset = 0;
   viewport.y_offset = 0;
 
-  auto& context = registry.set<comp::attribute_context>();
+  auto& context = registry.set<comp::AttributeContext>();
   context.id = get_and_update_next_context_id();
   context.name = "Map";
 

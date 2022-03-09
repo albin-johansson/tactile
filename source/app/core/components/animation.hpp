@@ -30,8 +30,10 @@ namespace tactile::comp {
 
 /**
  * \brief Represents a single frame in an animation.
+ *
+ * \ingroup components
  */
-struct animation_frame final
+struct AnimationFrame final
 {
   tile_id tile{};         ///< Tile that will be rendered during the frame.
   cen::u64ms duration{};  ///< Duration of the frame.
@@ -39,8 +41,10 @@ struct animation_frame final
 
 /**
  * \brief Represents an animation.
+ *
+ * \ingroup components
  */
-struct animation final
+struct Animation final
 {
   usize index{};                     ///< Index of the current frame.
   cen::u64ms last_update_time{};     ///< When a frame was last changed.

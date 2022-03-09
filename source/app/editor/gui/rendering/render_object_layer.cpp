@@ -24,7 +24,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "graphics.hpp"
@@ -49,7 +49,7 @@ void RenderPointObject(graphics_ctx& graphics,
     graphics.set_line_thickness(2.0f);
     graphics.draw_translated_circle_with_shadow(position, radius);
 
-    const auto& context = registry.get<comp::attribute_context>(objectEntity);
+    const auto& context = registry.get<comp::AttributeContext>(objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);
@@ -71,7 +71,7 @@ void RenderEllipseObject(graphics_ctx& graphics,
                          const cen::color& color)
 {
   const auto& object = registry.get<comp::object>(objectEntity);
-  const auto& context = registry.get<comp::attribute_context>(objectEntity);
+  const auto& context = registry.get<comp::AttributeContext>(objectEntity);
   TACTILE_ASSERT(object.type == object_type::ellipse);
 
   const ImVec2 size = {object.width, object.height};
@@ -112,7 +112,7 @@ void RenderRectangleObject(graphics_ctx& graphics,
     graphics.set_line_thickness(2.0f);
     graphics.draw_translated_rect_with_shadow(position, size);
 
-    const auto& context = registry.get<comp::attribute_context>(objectEntity);
+    const auto& context = registry.get<comp::AttributeContext>(objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);

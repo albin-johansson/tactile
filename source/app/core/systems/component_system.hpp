@@ -163,10 +163,10 @@ void rename_component_def(entt::registry& registry, component_id id, std::string
                                       std::string_view name) -> entt::entity;
 
 [[nodiscard]] auto get_component_def(entt::registry& registry, component_id id)
-    -> std::pair<entt::entity, comp::component_def&>;
+    -> std::pair<entt::entity, comp::ComponentDef&>;
 
 [[nodiscard]] auto get_component_def(const entt::registry& registry, component_id id)
-    -> std::pair<entt::entity, const comp::component_def&>;
+    -> std::pair<entt::entity, const comp::ComponentDef&>;
 
 [[nodiscard]] auto get_component_def_name(const entt::registry& registry, component_id id)
     -> const std::string&;
@@ -320,7 +320,7 @@ void set_component_attribute_value(entt::registry& registry,
  */
 auto add_component(entt::registry& registry,
                    context_id contextId,
-                   component_id componentId) -> comp::component&;
+                   component_id componentId) -> comp::Component&;
 
 /**
  * \brief Removes a component from a context.
@@ -397,7 +397,7 @@ auto reset_component(entt::registry& registry,
  */
 [[nodiscard]] auto get_component(const entt::registry& registry,
                                  context_id contextId,
-                                 component_id componentId) -> const comp::component&;
+                                 component_id componentId) -> const comp::Component&;
 
 [[nodiscard]] auto get_component_attribute(const entt::registry& registry,
                                            context_id contextId,

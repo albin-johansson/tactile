@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/systems/object_system.hpp"
 #include "misc/assert.hpp"
 
@@ -35,14 +35,14 @@ AObjectCommand::AObjectCommand(std::string name,
     , mObjectId{id}
 {}
 
-auto AObjectCommand::target_object_context() const -> comp::attribute_context&
+auto AObjectCommand::target_object_context() const -> comp::AttributeContext&
 {
   auto& registry = mRegistry.get();
 
   const auto entity = sys::find_object(registry, mObjectId);
   TACTILE_ASSERT(entity != entt::null);
 
-  return registry.get<comp::attribute_context>(entity);
+  return registry.get<comp::AttributeContext>(entity);
 }
 
 auto AObjectCommand::target_object() -> comp::object&

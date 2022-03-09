@@ -29,7 +29,7 @@
 
 #include "application_events.hpp"
 #include "cfg/configuration.hpp"
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
@@ -246,7 +246,7 @@ void Application::on_save()
       save_document(*document);
       document->commands.mark_as_clean();
 
-      auto& context = document->registry.ctx<comp::attribute_context>();
+      auto& context = document->registry.ctx<comp::AttributeContext>();
       context.name = document->path.filename().string();
     }
     else {
@@ -288,7 +288,7 @@ void Application::on_show_open_map_dialog()
 void Application::on_show_map_properties()
 {
   if (auto* registry = mModel.active_registry()) {
-    auto& current = registry->ctx<comp::active_attribute_context>();
+    auto& current = registry->ctx<comp::ActiveAttributeContext>();
     current.entity = entt::null;
   }
 }
@@ -671,7 +671,7 @@ void Application::on_change_property_type(const change_property_type_event& even
 void Application::on_inspect_context(const inspect_context_event& event)
 {
   auto& registry = mModel.get_active_registry();
-  auto& current = registry.ctx<comp::active_attribute_context>();
+  auto& current = registry.ctx<comp::ActiveAttributeContext>();
   current.entity = event.entity;
 }
 

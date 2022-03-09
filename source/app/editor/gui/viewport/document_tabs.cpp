@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -47,7 +47,7 @@ void UpdateDocumentTabs(const document_model& model, entt::dispatcher& dispatche
         }
       }
 
-      const auto& context = document->registry.ctx<comp::attribute_context>();
+      const auto& context = document->registry.ctx<comp::AttributeContext>();
       bool opened = true;
       if (scoped::tab_item item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {

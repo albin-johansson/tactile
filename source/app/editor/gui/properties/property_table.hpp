@@ -23,7 +23,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "items/property_item_context_menu.hpp"
 #include "tactile.hpp"
 
@@ -41,7 +41,7 @@ class PropertyTable final
 
   void ShowCustomProperties(const entt::registry& registry,
                             entt::dispatcher& dispatcher,
-                            const comp::attribute_context& context,
+                            const comp::AttributeContext& context,
                             bool& isItemContextOpen);
 };
 

@@ -52,7 +52,7 @@ void update_tilesets(entt::registry& registry);
  * - `tileset_cache`
  * - `tileset_selection`
  * - `uv_tile_size`
- * - `attribute_context`
+ * - `AttributeContext`
  * - `Viewport`
  *
  * \param registry the document registry.

@@ -31,31 +31,37 @@
 
 namespace tactile {
 
-using component_attribute_map = std::map<std::string, Attribute, std::less<>>;
+using component_attribute_map = tree_map<std::string, Attribute>;
 
 namespace comp {
 
 /**
- * Describes the structure of a component.
+ * \brief Describes the structure of a component.
  *
- * Component definitions are unique to each map (for now).
+ * \details Component definitions are unique to each map (for now).
  *
  * \todo A possible use case for projects could be to provide common component
  * definitions.
  *
  * \todo Should it be possible to import component definitions from existing maps?
+ *
+ * \ingroup components
  */
-struct component_def final
+struct ComponentDef final
 {
-  component_id id{};  ///< Unique ID for the component definition.
-  std::string name;   ///< The human-readable component name, also unique.
-  component_attribute_map attributes;
+  component_id id{};                   ///< Unique ID for the component definition.
+  std::string name;                    ///< The component name (which is unique!).
+  component_attribute_map attributes;  ///< The attributes with their default values.
 };
 
 /**
- * Represents a user-defined component that can be attached to attribute context entities.
+ * \brief Represents a user-defined bundle of properties.
+ *
+ * \details Components are supported by all attribute contexts.
+ *
+ * \ingroup components
  */
-struct component final
+struct Component final
 {
   component_id type;               ///< The ID of the component definition type.
   component_attribute_map values;  ///< Current values.

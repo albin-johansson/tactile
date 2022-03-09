@@ -25,7 +25,7 @@
 #include <fmt/format.h>
 
 #include "core/components/animation.hpp"
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/component.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/layer.hpp"
@@ -52,8 +52,8 @@ void _restore_properties(entt::registry& registry,
 {
   const auto count = source.properties.size();
 
-  auto& context = (entity != entt::null) ? registry.get<comp::attribute_context>(entity)
-                                         : registry.ctx<comp::attribute_context>();
+  auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
+                                         : registry.ctx<comp::AttributeContext>();
   context.properties.reserve(count);
 
   for (const auto& [propertyName, propertyValue] : source.properties) {
@@ -71,8 +71,8 @@ void _restore_components(entt::registry& registry,
                          const entt::entity entity,
                          const ir::attribute_context_data& source)
 {
-  auto& context = (entity != entt::null) ? registry.get<comp::attribute_context>(entity)
-                                         : registry.ctx<comp::attribute_context>();
+  auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
+                                         : registry.ctx<comp::AttributeContext>();
   context.components.reserve(source.components.size());
 
   for (const auto& [type, attributes] : source.components) {
@@ -82,8 +82,8 @@ void _restore_components(entt::registry& registry,
     const auto componentEntity = registry.create();
     context.components.push_back(componentEntity);
 
-    const auto& def = registry.get<comp::component_def>(defEntity);
-    auto& component = registry.emplace<comp::component>(componentEntity);
+    const auto& def = registry.get<comp::ComponentDef>(defEntity);
+    auto& component = registry.emplace<comp::Component>(componentEntity);
     component.type = def.id;
 
     for (const auto& [attrName, attrValue] : attributes) {
@@ -199,13 +199,13 @@ void _restore_tile_animation(entt::registry& registry,
                              const int32 firstGlobalId,
                              const ir::fancy_tile_data& tileData)
 {
-  auto& animation = registry.emplace<comp::animation>(tileEntity);
+  auto& animation = registry.emplace<comp::Animation>(tileEntity);
   animation.frames.reserve(tileData.frames.size());
 
   for (const auto& frameData : tileData.frames) {
     const auto frameEntity = registry.create();
 
-    auto& frame = registry.emplace<comp::animation_frame>(frameEntity);
+    auto& frame = registry.emplace<comp::AnimationFrame>(frameEntity);
     frame.tile = firstGlobalId + frameData.local_id;
     frame.duration = cen::u64ms{frameData.duration_ms};
 
@@ -266,7 +266,7 @@ void _restore_tileset(entt::registry& registry,
                                         tilesetData.tile_width,
                                         tilesetData.tile_height);
 
-  registry.get<comp::attribute_context>(entity).name = tilesetData.name;
+  registry.get<comp::AttributeContext>(entity).name = tilesetData.name;
 
   auto& cache = registry.get<comp::tileset_cache>(entity);
   _restore_fancy_tiles(registry, cache, tilesetData);
@@ -291,7 +291,7 @@ void _restore_tilesets(Document& document,
 
 void _restore_root_attribute_context(Document& document)
 {
-  auto& context = document.registry.ctx<comp::attribute_context>();
+  auto& context = document.registry.ctx<comp::AttributeContext>();
   context.name = document.path.filename().string();
 }
 

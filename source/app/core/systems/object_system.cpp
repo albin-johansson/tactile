@@ -124,7 +124,7 @@ auto remove_object(entt::registry& registry, const object_id id) -> RemoveObject
     }
   }
 
-  if (auto& activeContext = registry.ctx<comp::active_attribute_context>();
+  if (auto& activeContext = registry.ctx<comp::ActiveAttributeContext>();
       activeContext.entity == objectEntity) {
     activeContext.entity = entt::null;
   }

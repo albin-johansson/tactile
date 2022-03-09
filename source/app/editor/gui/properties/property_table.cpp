@@ -253,7 +253,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
-  const auto& current = registry.ctx<comp::active_attribute_context>();
+  const auto& current = registry.ctx<comp::ActiveAttributeContext>();
   const auto& context = sys::current_context(registry);
 
   if (scoped::table table{"##PropertyTable", 2, flags}; table.is_open()) {
@@ -306,7 +306,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
 
 void PropertyTable::ShowCustomProperties(const entt::registry& registry,
                                          entt::dispatcher& dispatcher,
-                                         const comp::attribute_context& context,
+                                         const comp::AttributeContext& context,
                                          bool& isItemContextOpen)
 {
   bool first = true;
