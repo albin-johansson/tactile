@@ -28,10 +28,12 @@
 namespace tactile::comp {
 
 /**
- * \brief Component that denotes tiles with additional meta-information.
+ * \brief Component that provides meta-information about tileset tiles.
  *
- * \details Tiles with aspects such as animations, properties or associated objects are
- * considered to be "fancy" and will feature this component.
+ * \details Tiles with aspects such as animations, properties or associated objects will
+ * feature this component.
+ *
+ * \ingroup components
  */
 struct MetaTile final
 {
