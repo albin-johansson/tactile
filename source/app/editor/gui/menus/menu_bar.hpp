@@ -25,7 +25,6 @@
 #include "file_menu.hpp"
 #include "help_menu.hpp"
 #include "map_menu.hpp"
-#include "view_menu.hpp"
 
 namespace tactile {
 
@@ -55,7 +54,6 @@ class MenuBar final
  private:
   FileMenu mFileMenu;
   EditMenu mEditMenu;
-  ViewMenu mViewMenu;
   MapMenu mMapMenu;
   HelpMenu mHelpMenu;
 };

@@ -68,7 +68,7 @@ void _update_widgets_menu(const bool hasActiveMap)
 
 }  // namespace
 
-void ViewMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{"View"}; menu.is_open()) {
     const auto hasActiveDocument = model.has_active_document();
