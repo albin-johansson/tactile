@@ -36,8 +36,7 @@ class AddColumnCmd final : public ACommand
 
   [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
-  { return CommandId::add_column; }
+  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_column; }
 
  private:
   registry_ref mRegistry;

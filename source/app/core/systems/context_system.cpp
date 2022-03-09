@@ -112,8 +112,7 @@ void restore_attribute_context(entt::registry& registry,
   }
 }
 
-auto get_context(entt::registry& registry, const context_id id)
-    -> comp::AttributeContext&
+auto get_context(entt::registry& registry, const context_id id) -> comp::AttributeContext&
 {
   if (auto& context = registry.ctx<comp::AttributeContext>(); context.id == id) {
     return context;
