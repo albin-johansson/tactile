@@ -117,7 +117,7 @@ void update_tilesets(entt::registry& registry)
 
 auto make_tileset(entt::registry& registry,
                   const tile_id firstId,
-                  const comp::texture& texture,
+                  const comp::Texture& texture,
                   const int32 tileWidth,
                   const int32 tileHeight) -> entt::entity
 {
@@ -143,7 +143,7 @@ auto make_tileset(entt::registry& registry,
   tileset.last_id = tileset.first_id + tile_id{tileset.tile_count};
   tilesets.next_tile_id += tileset.tile_count + 1;
 
-  registry.emplace<comp::texture>(tilesetEntity, texture);
+  registry.emplace<comp::Texture>(tilesetEntity, texture);
 
   auto& uv = registry.emplace<comp::UvTileSize>(tilesetEntity);
   uv.width = static_cast<float>(tileWidth) / static_cast<float>(texture.width);
@@ -165,7 +165,7 @@ auto make_tileset(entt::registry& registry,
 }
 
 auto make_tileset(entt::registry& registry,
-                  const comp::texture& texture,
+                  const comp::Texture& texture,
                   const int32 tileWidth,
                   const int32 tileHeight) -> entt::entity
 {
@@ -181,7 +181,7 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
   auto& tileset =
       registry.emplace<comp::Tileset>(tilesetEntity, std::move(snapshot.core));
   registry.emplace<comp::TilesetSelection>(tilesetEntity, snapshot.selection);
-  registry.emplace<comp::texture>(tilesetEntity, snapshot.texture);
+  registry.emplace<comp::Texture>(tilesetEntity, snapshot.texture);
   registry.emplace<comp::UvTileSize>(tilesetEntity, snapshot.uv);
 
   add_viewport(registry, tilesetEntity, tileset.tile_width, tileset.tile_height);
@@ -202,7 +202,7 @@ auto copy_tileset(const entt::registry& registry, const entt::entity source)
 
   snapshot.core = registry.get<comp::Tileset>(source);
   snapshot.selection = registry.get<comp::TilesetSelection>(source);
-  snapshot.texture = registry.get<comp::texture>(source);
+  snapshot.texture = registry.get<comp::Texture>(source);
   snapshot.uv = registry.get<comp::UvTileSize>(source);
   snapshot.context = copy_attribute_context(registry, source);
 

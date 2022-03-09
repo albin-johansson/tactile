@@ -26,9 +26,11 @@
 namespace tactile::comp {
 
 /**
- * \brief Represents a loaded OpenGL texture.
+ * \brief Represents an OpenGL texture.
+ *
+ * \ingroup components
  */
-struct texture final
+struct Texture final
 {
   uint id{};                   ///< The OpenGL texture identifier.
   int width{};                 ///< The texture pixel width.

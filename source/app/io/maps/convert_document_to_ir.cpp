@@ -228,7 +228,7 @@ void _convert_fancy_tiles(ir::tileset_data& data,
 void _convert_tilesets(ir::map_data& data, const entt::registry& registry)
 {
   for (auto&& [entity, tileset, texture, context] :
-       registry.view<comp::Tileset, comp::texture, comp::AttributeContext>().each()) {
+       registry.view<comp::Tileset, comp::Texture, comp::AttributeContext>().each()) {
     auto& tilesetData = data.tilesets.emplace_back();
     tilesetData.name = context.name;
 

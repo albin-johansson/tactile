@@ -27,7 +27,7 @@
 namespace tactile {
 
 AddTilesetCmd::AddTilesetCmd(registry_ref registry,
-                             comp::texture texture,
+                             comp::Texture texture,
                              const int32 tileWidth,
                              const int32 tileHeight)
     : ACommand{"Add Tileset"}

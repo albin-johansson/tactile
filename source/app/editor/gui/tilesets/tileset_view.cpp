@@ -71,7 +71,7 @@ void RenderSelection(const Region& selection, const ImVec2& min, const ImVec2& t
 }
 
 void RenderTilesetImage(graphics_ctx& graphics,
-                        const comp::texture& texture,
+                        const comp::Texture& texture,
                         const ImVec2& position)
 {
   const ImVec2 size = {static_cast<float>(texture.width),
@@ -111,7 +111,7 @@ void TilesetView::Update(const entt::registry& registry,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  RenderTilesetImage(graphics, registry.get<comp::texture>(entity), position);
+  RenderTilesetImage(graphics, registry.get<comp::Texture>(entity), position);
 
   if (const auto& selection = registry.get<comp::TilesetSelection>(entity);
       selection.region) {

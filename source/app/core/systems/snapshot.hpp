@@ -48,7 +48,7 @@ struct TilesetSnapshot final
 {
   comp::Tileset core;
   comp::TilesetSelection selection;
-  comp::texture texture;
+  comp::Texture texture;
   comp::UvTileSize uv;
   attribute_context_snapshot context;
 };

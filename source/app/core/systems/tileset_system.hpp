@@ -51,7 +51,7 @@ void update_tilesets(entt::registry& registry);
  * - `Tileset`
  * - `TilesetCache`
  * - `TilesetSelection`
- * - `texture`
+ * - `Texture`
  * - `UvTileSize`
  * - `Viewport`
  *
@@ -65,13 +65,13 @@ void update_tilesets(entt::registry& registry);
  */
 auto make_tileset(entt::registry& registry,
                   tile_id firstId,
-                  const comp::texture& texture,
+                  const comp::Texture& texture,
                   int32 tileWidth,
                   int32 tileHeight) -> entt::entity;
 
 // This overload should be used when the user adds new tilesets (i.e. not from parsing)
 auto make_tileset(entt::registry& registry,
-                  const comp::texture& texture,
+                  const comp::Texture& texture,
                   int32 tileWidth,
                   int32 tileHeight) -> entt::entity;
 

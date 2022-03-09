@@ -31,7 +31,7 @@ class AddTilesetCmd final : public ACommand
 {
  public:
   AddTilesetCmd(registry_ref registry,
-                comp::texture texture,
+                comp::Texture texture,
                 int32 tileWidth,
                 int32 tileHeight);
 
@@ -46,7 +46,7 @@ class AddTilesetCmd final : public ACommand
 
  private:
   registry_ref mRegistry;
-  comp::texture mTexture;
+  comp::Texture mTexture;
   int32 mTileWidth;
   int32 mTileHeight;
   maybe<tileset_id> mTilesetId;
