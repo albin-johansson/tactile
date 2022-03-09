@@ -57,7 +57,7 @@ widget_manager::widget_manager() : mWidgets{std::make_unique<widgets>()} {}
 widget_manager::~widget_manager() noexcept = default;
 
 void widget_manager::update(const DocumentModel& model,
-                            const icon_manager& icons,
+                            const IconManager& icons,
                             entt::dispatcher& dispatcher)
 {
   mWidgets->mMenuBar.Update(model, dispatcher);

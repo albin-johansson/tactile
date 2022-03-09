@@ -44,14 +44,14 @@ void save_preferences();
  *
  * \param prefs the new preferences.
  */
-void set_preferences(preference_state prefs);
+void set_preferences(PreferenceState prefs);
 
 /**
  * \brief Returns the current preferences.
  *
  * \return the preferences.
  */
-[[nodiscard]] auto get_preferences() -> preference_state&;
+[[nodiscard]] auto get_preferences() -> PreferenceState&;
 
 /// \} End of preference API
 

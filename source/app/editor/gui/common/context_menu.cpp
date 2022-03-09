@@ -24,14 +24,14 @@
 
 namespace tactile {
 
-context_menu::context_menu(const char* name) : mName{name}
+ContextMenu::ContextMenu(const char* name) : mName{name}
 {
   if (!mName) {
     throw_traced(tactile_error{"Invalid null context menu name!"});
   }
 }
 
-void context_menu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void ContextMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::Popup popup{mName}; popup.is_open()) {
     on_update(model, dispatcher);
@@ -43,7 +43,7 @@ void context_menu::update(const DocumentModel& model, entt::dispatcher& dispatch
   }
 }
 
-void context_menu::show()
+void ContextMenu::show()
 {
   mShow = true;
 }

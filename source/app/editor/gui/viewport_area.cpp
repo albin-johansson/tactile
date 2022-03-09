@@ -49,14 +49,14 @@ namespace {
 
 }  // namespace
 
-auto viewport_area::get_size() const -> ImVec2
+auto ViewportArea::get_size() const -> ImVec2
 {
   const auto pos = ImGui::GetWindowPos();
   return (pos + ImGui::GetWindowSize()) - pos;
 }
 
-void viewport_area::check_mouse_events(const entt::registry& registry,
-                                       entt::dispatcher& dispatcher)
+void ViewportArea::check_mouse_events(const entt::registry& registry,
+                                      entt::dispatcher& dispatcher)
 {
   mContainsMouse = false;
 
@@ -75,13 +75,13 @@ void viewport_area::check_mouse_events(const entt::registry& registry,
   }
 }
 
-auto viewport_area::contains_mouse() const -> bool
+auto ViewportArea::contains_mouse() const -> bool
 {
   return mContainsMouse;
 }
 
-void viewport_area::check_clicked(const entt::registry& registry,
-                                  entt::dispatcher& dispatcher)
+void ViewportArea::check_clicked(const entt::registry& registry,
+                                 entt::dispatcher& dispatcher)
 {
   const auto button = check_for(
       [](const ImGuiMouseButton button) { return ImGui::IsMouseClicked(button); });
@@ -91,8 +91,8 @@ void viewport_area::check_clicked(const entt::registry& registry,
   }
 }
 
-void viewport_area::check_dragged(const entt::registry& registry,
-                                  entt::dispatcher& dispatcher)
+void ViewportArea::check_dragged(const entt::registry& registry,
+                                 entt::dispatcher& dispatcher)
 {
   const auto button = check_for(
       [](const ImGuiMouseButton button) { return ImGui::IsMouseDragging(button); });
@@ -102,8 +102,8 @@ void viewport_area::check_dragged(const entt::registry& registry,
   }
 }
 
-void viewport_area::check_released(const entt::registry& registry,
-                                   entt::dispatcher& dispatcher)
+void ViewportArea::check_released(const entt::registry& registry,
+                                  entt::dispatcher& dispatcher)
 {
   const auto button = check_for(
       [](const ImGuiMouseButton button) { return ImGui::IsMouseReleased(button); });

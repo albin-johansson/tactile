@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-class add_layer_context_menu final : public context_menu
+class add_layer_context_menu final : public ContextMenu
 {
  public:
   add_layer_context_menu();

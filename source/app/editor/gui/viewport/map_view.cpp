@@ -195,7 +195,7 @@ void update_map_view(const entt::registry& registry, entt::dispatcher& dispatche
   const auto& map = registry.ctx<MapInfo>();
 
   const auto info = get_render_info(viewport, map);
-  UpdateViewportOffset(info.canvas_br - info.canvas_tl, dispatcher);
+  update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
 
   graphics_ctx graphics{info};
 

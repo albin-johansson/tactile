@@ -27,15 +27,15 @@
 
 namespace tactile {
 
-class viewport_area
+class ViewportArea
 {
  public:
-  TACTILE_DEFAULT_COPY(viewport_area)
-  TACTILE_DEFAULT_MOVE(viewport_area)
+  TACTILE_DEFAULT_COPY(ViewportArea)
+  TACTILE_DEFAULT_MOVE(ViewportArea)
 
-  viewport_area() noexcept = default;
+  ViewportArea() noexcept = default;
 
-  virtual ~viewport_area() noexcept = default;
+  virtual ~ViewportArea() noexcept = default;
 
   [[nodiscard]] auto get_size() const -> ImVec2;
 

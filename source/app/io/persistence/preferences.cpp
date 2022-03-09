@@ -34,13 +34,13 @@ namespace {
   return path;
 }
 
-inline preference_state _settings;
+inline PreferenceState _settings;
 
 }  // namespace
 
 void load_preferences()
 {
-  _settings = preference_state{};
+  _settings = PreferenceState{};
 
   const auto& path = get_file_path();
   if (std::filesystem::exists(path)) {
@@ -60,12 +60,12 @@ void save_preferences()
   _settings.save(path);
 }
 
-void set_preferences(preference_state prefs)
+void set_preferences(PreferenceState prefs)
 {
   _settings = std::move(prefs);
 }
 
-auto get_preferences() -> preference_state&
+auto get_preferences() -> PreferenceState&
 {
   return _settings;
 }

@@ -47,9 +47,9 @@ void PreparePositionAndPivot()
 
   const auto corner = get_preferences().viewport_overlay_pos();
   const bool isRight =
-      corner == overlay_pos::top_right || corner == overlay_pos::bottom_right;
+      corner == OverlayPos::top_right || corner == OverlayPos::bottom_right;
   const bool isBottom =
-      corner == overlay_pos::bottom_left || corner == overlay_pos::bottom_right;
+      corner == OverlayPos::bottom_left || corner == OverlayPos::bottom_right;
 
   const float padding = 10.0f;
 
@@ -126,20 +126,20 @@ void UpdateOverlayContextMenu()
     auto& prefs = get_preferences();
     const auto corner = prefs.viewport_overlay_pos();
 
-    if (ImGui::MenuItem("Top-left", nullptr, corner == overlay_pos::top_left)) {
-      prefs.set_viewport_overlay_pos(overlay_pos::top_left);
+    if (ImGui::MenuItem("Top-left", nullptr, corner == OverlayPos::top_left)) {
+      prefs.set_viewport_overlay_pos(OverlayPos::top_left);
     }
 
-    if (ImGui::MenuItem("Top-right", nullptr, corner == overlay_pos::top_right)) {
-      prefs.set_viewport_overlay_pos(overlay_pos::top_right);
+    if (ImGui::MenuItem("Top-right", nullptr, corner == OverlayPos::top_right)) {
+      prefs.set_viewport_overlay_pos(OverlayPos::top_right);
     }
 
-    if (ImGui::MenuItem("Bottom-left", nullptr, corner == overlay_pos::bottom_left)) {
-      prefs.set_viewport_overlay_pos(overlay_pos::bottom_left);
+    if (ImGui::MenuItem("Bottom-left", nullptr, corner == OverlayPos::bottom_left)) {
+      prefs.set_viewport_overlay_pos(OverlayPos::bottom_left);
     }
 
-    if (ImGui::MenuItem("Bottom-right", nullptr, corner == overlay_pos::bottom_right)) {
-      prefs.set_viewport_overlay_pos(overlay_pos::bottom_right);
+    if (ImGui::MenuItem("Bottom-right", nullptr, corner == OverlayPos::bottom_right)) {
+      prefs.set_viewport_overlay_pos(OverlayPos::bottom_right);
     }
   }
 }

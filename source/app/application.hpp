@@ -76,7 +76,7 @@ class Application final
   cen::keyboard mKeyboard;
   DocumentModel mModel;
   texture_manager mTextures;
-  icon_manager mIcons;
+  IconManager mIcons;
   widget_manager mWidgets;
   WidgetShowState mWidgetShowState;
   bool mQuit{};

@@ -29,7 +29,7 @@ namespace {
 constexpr float _accent_opacity = 0.65f;
 constexpr float _area_opacity = 0.40f;
 
-struct theme_cfg final
+struct ThemeCfg final
 {
   ImVec4 accent{};
   ImVec4 selection{};
@@ -38,9 +38,9 @@ struct theme_cfg final
   ImVec4 text{};
 };
 
-[[nodiscard]] auto _theme_from_hue(const float hue) -> theme_cfg
+[[nodiscard]] auto _theme_from_hue(const float hue) -> ThemeCfg
 {
-  theme_cfg cfg;
+  ThemeCfg cfg;
 
   const auto h = hue / 255.0f;
   cfg.bg = ImColor::HSV(h, 0.20f, 0.08f, 1.00f);
@@ -59,7 +59,7 @@ struct theme_cfg final
   return {color.x, color.y, color.z, alpha};
 }
 
-void _apply_theme_from_config(ImGuiStyle& style, const theme_cfg& cfg)
+void _apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 {
   const auto set = [&style](const ImGuiCol_ index, const ImVec4& color) {
     style.Colors[index] = color;
@@ -146,43 +146,43 @@ void _apply_theme_from_config(ImGuiStyle& style, const theme_cfg& cfg)
 
 }  // namespace
 
-auto human_readable_name(const editor_theme theme) -> std::string_view
+auto human_readable_name(const EditorTheme theme) -> std::string_view
 {
   switch (theme) {
-    case editor_theme::dear_dark:
+    case EditorTheme::dear_dark:
       return "Dear Dark";
 
-    case editor_theme::dear_light:
+    case EditorTheme::dear_light:
       return "Dear Light";
 
-    case editor_theme::ruby:
+    case EditorTheme::ruby:
       return "Ruby";
 
-    case editor_theme::sapphire:
+    case EditorTheme::sapphire:
       return "Sapphire";
 
-    case editor_theme::emerald:
+    case EditorTheme::emerald:
       return "Emerald";
 
-    case editor_theme::amethyst:
+    case EditorTheme::amethyst:
       return "Amethyst";
 
-    case editor_theme::amber:
+    case EditorTheme::amber:
       return "Amber";
 
-    case editor_theme::nocturnal:
+    case EditorTheme::nocturnal:
       return "Nocturnal";
 
-    case editor_theme::ash:
+    case EditorTheme::ash:
       return "Ash";
 
-    case editor_theme::diamond:
+    case EditorTheme::diamond:
       return "Diamond";
 
-    case editor_theme::joker:
+    case EditorTheme::joker:
       return "Joker";
 
-    case editor_theme::raspberry:
+    case EditorTheme::raspberry:
       return "Raspberry";
 
     default:
@@ -217,50 +217,50 @@ void apply_style(ImGuiStyle& style)
   style.TabRounding = rounding;
 }
 
-void apply_theme(ImGuiStyle& style, const editor_theme theme)
+void apply_theme(ImGuiStyle& style, const EditorTheme theme)
 {
   switch (theme) {
-    case editor_theme::dear_dark:
+    case EditorTheme::dear_dark:
       ImGui::StyleColorsDark(&style);
       break;
 
-    case editor_theme::dear_light:
+    case EditorTheme::dear_light:
       ImGui::StyleColorsLight(&style);
       break;
 
-    case editor_theme::ruby:
+    case EditorTheme::ruby:
       _apply_theme_from_config(style, _theme_from_hue(0));
       break;
 
-    case editor_theme::emerald:
+    case EditorTheme::emerald:
       _apply_theme_from_config(style, _theme_from_hue(100));
       break;
 
-    case editor_theme::diamond:
+    case EditorTheme::diamond:
       _apply_theme_from_config(style, _theme_from_hue(120));
       break;
 
-    case editor_theme::sapphire:
+    case EditorTheme::sapphire:
       _apply_theme_from_config(style, _theme_from_hue(150));
       break;
 
-    case editor_theme::joker:
+    case EditorTheme::joker:
       _apply_theme_from_config(style, _theme_from_hue(190));
       break;
 
-    case editor_theme::amethyst:
+    case EditorTheme::amethyst:
       _apply_theme_from_config(style, _theme_from_hue(225));
       break;
 
-    case editor_theme::raspberry:
+    case EditorTheme::raspberry:
       _apply_theme_from_config(style, _theme_from_hue(245));
       break;
 
-    case editor_theme::amber:
+    case EditorTheme::amber:
       _apply_theme_from_config(style, _theme_from_hue(272));
       break;
 
-    case editor_theme::nocturnal:
+    case EditorTheme::nocturnal:
       _apply_theme_from_config(style,
                                {.accent = {0.0f, 0.5f, 0.5f, _accent_opacity},
                                 .selection = {0.0f, 0.6f, 0.6f, 0.9f},
@@ -269,7 +269,7 @@ void apply_theme(ImGuiStyle& style, const editor_theme theme)
                                 .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
-    case editor_theme::ash:
+    case EditorTheme::ash:
       _apply_theme_from_config(style,
                                {.accent = {0.4f, 0.4f, 0.4f, _accent_opacity},
                                 .selection = {0.5f, 0.5f, 0.5f, 0.9f},

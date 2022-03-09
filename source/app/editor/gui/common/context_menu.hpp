@@ -27,15 +27,15 @@ namespace tactile {
 
 class DocumentModel;
 
-class context_menu
+class ContextMenu
 {
  public:
-  TACTILE_DEFAULT_COPY(context_menu)
-  TACTILE_DEFAULT_MOVE(context_menu)
+  TACTILE_DEFAULT_COPY(ContextMenu)
+  TACTILE_DEFAULT_MOVE(ContextMenu)
 
-  explicit context_menu(const char* name);
+  explicit ContextMenu(const char* name);
 
-  virtual ~context_menu() noexcept = default;
+  virtual ~ContextMenu() noexcept = default;
 
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 

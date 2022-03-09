@@ -31,7 +31,7 @@
 namespace tactile {
 
 class DocumentModel;
-class icon_manager;
+class IconManager;
 
 class widget_manager final
 {
@@ -44,7 +44,7 @@ class widget_manager final
   ~widget_manager() noexcept;
 
   void update(const DocumentModel& model,
-              const icon_manager& icons,
+              const IconManager& icons,
               entt::dispatcher& dispatcher);
 
   void show_settings();

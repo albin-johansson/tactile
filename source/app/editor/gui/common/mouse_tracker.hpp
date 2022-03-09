@@ -28,7 +28,7 @@ namespace tactile {
 /// \addtogroup gui
 /// \{
 
-void UpdateViewportOffset(const ImVec2& viewportSize, entt::dispatcher& dispatcher);
+void update_viewport_offset(const ImVec2& viewportSize, entt::dispatcher& dispatcher);
 
 /// \} End of group gui
 

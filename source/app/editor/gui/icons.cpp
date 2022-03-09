@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-icon_manager::icon_manager(texture_manager& textures)
+IconManager::IconManager(texture_manager& textures)
     : mTactileIcon{textures.load("resources/icon.png").value().id}
 {}
 

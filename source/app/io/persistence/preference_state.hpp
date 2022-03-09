@@ -38,7 +38,7 @@ namespace tactile {
  *
  * \see proto::overlay_pos
  */
-enum class overlay_pos
+enum class OverlayPos
 {
   top_left = 0,
   top_right = 1,
@@ -46,20 +46,20 @@ enum class overlay_pos
   bottom_right = 3
 };
 
-class preference_state final
+class PreferenceState final
 {
  public:
-  preference_state();
+  PreferenceState();
 
-  preference_state(const preference_state& other);
+  PreferenceState(const PreferenceState& other);
 
-  preference_state(preference_state&& other) noexcept;
+  PreferenceState(PreferenceState&& other) noexcept;
 
-  auto operator=(const preference_state& other) -> preference_state&;
+  auto operator=(const PreferenceState& other) -> PreferenceState&;
 
-  auto operator=(preference_state&& other) noexcept -> preference_state&;
+  auto operator=(PreferenceState&& other) noexcept -> PreferenceState&;
 
-  ~preference_state() noexcept;
+  ~PreferenceState() noexcept;
 
   void parse(const std::filesystem::path& path);
 
@@ -75,8 +75,8 @@ class preference_state final
 
   void reset_dock_visibilities();
 
-  void set_theme(editor_theme theme);
-  [[nodiscard]] auto get_theme() const -> editor_theme;
+  void set_theme(EditorTheme theme);
+  [[nodiscard]] auto get_theme() const -> EditorTheme;
 
   void set_viewport_bg(const cen::color& bg);
   [[nodiscard]] auto viewport_bg() const -> const cen::color&;
@@ -117,8 +117,8 @@ class preference_state final
   void set_will_restore_last_session(bool restore);
   [[nodiscard]] auto will_restore_last_session() const -> bool;
 
-  void set_viewport_overlay_pos(overlay_pos pos);
-  [[nodiscard]] auto viewport_overlay_pos() const -> overlay_pos;
+  void set_viewport_overlay_pos(OverlayPos pos);
+  [[nodiscard]] auto viewport_overlay_pos() const -> OverlayPos;
 
   void set_command_capacity(usize capacity);
   [[nodiscard]] auto command_capacity() const -> usize;

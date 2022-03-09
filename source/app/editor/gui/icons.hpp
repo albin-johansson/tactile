@@ -107,10 +107,10 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class icon_manager final
+class IconManager final
 {
  public:
-  explicit icon_manager(texture_manager& textures);
+  explicit IconManager(texture_manager& textures);
 
   /**
    * \brief Returns the texture identifier for the Tactile icon.
