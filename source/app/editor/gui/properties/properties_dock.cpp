@@ -45,7 +45,7 @@ void PropertiesDock::Update(const DocumentModel& model, entt::dispatcher& dispat
 
   if (dock.is_open()) {
     const auto& registry = model.get_active_registry();
-    mPropertyTable.Update(registry, dispatcher);
+    mPropertyTable.update(registry, dispatcher);
   }
 
   mAddDialog.update(model, dispatcher);

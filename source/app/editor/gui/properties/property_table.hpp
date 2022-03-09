@@ -32,17 +32,17 @@ namespace tactile {
 class PropertyTable final
 {
  public:
-  void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
+  void update(const entt::registry& registry, entt::dispatcher& dispatcher);
 
  private:
   PropertyItemContextMenuState mContextState;
   Maybe<std::string> mRenameTarget;
   Maybe<std::string> mChangeTypeTarget;
 
-  void ShowCustomProperties(const entt::registry& registry,
-                            entt::dispatcher& dispatcher,
-                            const comp::AttributeContext& context,
-                            bool& isItemContextOpen);
+  void show_custom_properties(const entt::registry& registry,
+                              entt::dispatcher& dispatcher,
+                              const comp::AttributeContext& context,
+                              bool& isItemContextOpen);
 };
 
 }  // namespace tactile
