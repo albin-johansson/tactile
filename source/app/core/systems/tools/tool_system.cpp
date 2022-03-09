@@ -49,9 +49,12 @@ void select_tool(entt::registry& registry,
       on_rectangle_tool_disabled(registry, dispatcher);
       break;
 
+    case tool_type::ellipse:
+      on_ellipse_tool_disabled(registry, dispatcher);
+      break;
+
     case tool_type::bucket:
     case tool_type::object_selection:
-    case tool_type::ellipse:
     case tool_type::point:
       [[fallthrough]];
     case tool_type::none:
@@ -98,8 +101,11 @@ void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
       on_rectangle_tool_exited(registry, dispatcher);
       break;
 
-    case tool_type::bucket:
     case tool_type::ellipse:
+      on_ellipse_tool_exited(registry, dispatcher);
+      break;
+
+    case tool_type::bucket:
     case tool_type::point:
       [[fallthrough]];
     case tool_type::none:

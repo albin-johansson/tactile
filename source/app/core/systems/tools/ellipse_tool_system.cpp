@@ -27,10 +27,54 @@
 #include "editor/events/tool_events.hpp"
 
 namespace tactile::sys {
+namespace {
+
+void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
+{
+  if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
+    const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
+
+    const auto xRadius = (stroke->current_x - stroke->start_x) / xRatio;
+    const auto yRadius = (stroke->current_y - stroke->start_y) / yRatio;
+
+    auto x = (stroke->start_x / xRatio);
+    auto y = (stroke->start_y / yRatio);
+
+    if (xRadius < 0) {
+      x += xRadius * 2.0f;
+    }
+
+    if (yRadius < 0) {
+      y += yRadius * 2.0f;
+    }
+
+    if (xRadius != 0 && yRadius != 0) {
+      dispatcher.enqueue<AddEllipseEvent>(x,
+                                          y,
+                                          std::abs(xRadius) * 2.0f,
+                                          std::abs(yRadius) * 2.0f);
+    }
+
+    registry.unset<comp::CurrentEllipseStroke>();
+  }
+}
+
+}  // namespace
+
+void on_ellipse_tool_disabled(entt::registry& registry, entt::dispatcher& dispatcher)
+{
+  _maybe_emit_event(registry, dispatcher);
+}
+
+void on_ellipse_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
+{
+  _maybe_emit_event(registry, dispatcher);
+}
 
 void on_ellipse_tool_pressed(entt::registry& registry, const mouse_info& mouse)
 {
-  if (is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {
+  if (is_object_layer_active(registry) && mouse.is_within_contents &&
+      mouse.button == cen::mouse_button::left) {
     auto& stroke = registry.set<comp::CurrentEllipseStroke>();
     stroke.start_x = mouse.x;
     stroke.start_y = mouse.y;
@@ -54,32 +98,7 @@ void on_ellipse_tool_released(entt::registry& registry,
                               const mouse_info& mouse)
 {
   if (is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {
-    if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
-      const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
-
-      const auto xRadius = (stroke->current_x - stroke->start_x) / xRatio;
-      const auto yRadius = (stroke->current_y - stroke->start_y) / yRatio;
-
-      auto x = (stroke->start_x / xRatio);
-      auto y = (stroke->start_y / yRatio);
-
-      if (xRadius < 0) {
-        x += xRadius * 2.0f;
-      }
-
-      if (yRadius < 0) {
-        y += yRadius * 2.0f;
-      }
-
-      if (xRadius != 0 && yRadius != 0) {
-        dispatcher.enqueue<AddEllipseEvent>(x,
-                                            y,
-                                            std::abs(xRadius) * 2.0f,
-                                            std::abs(yRadius) * 2.0f);
-      }
-
-      registry.unset<comp::CurrentEllipseStroke>();
-    }
+    _maybe_emit_event(registry, dispatcher);
   }
 }
 
