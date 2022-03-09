@@ -54,6 +54,12 @@ struct ToolReleasedEvent final
   mouse_info info;
 };
 
+struct ToolEnteredEvent final
+{};
+
+struct ToolExitedEvent final
+{};
+
 struct select_tool_event final
 {
   tool_type type{};

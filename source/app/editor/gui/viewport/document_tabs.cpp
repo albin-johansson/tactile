@@ -51,7 +51,7 @@ void UpdateDocumentTabs(const document_model& model, entt::dispatcher& dispatche
       bool opened = true;
       if (scoped::tab_item item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {
-          UpdateMapView(document->registry, dispatcher);
+          update_map_view(document->registry, dispatcher);
         }
       }
 

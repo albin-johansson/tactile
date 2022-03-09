@@ -360,6 +360,20 @@ void Application::on_tool_released(const ToolReleasedEvent& event)
   }
 }
 
+void Application::on_tool_entered()
+{
+  if (auto* registry = mModel.active_registry()) {
+    sys::on_tool_entered(*registry, mDispatcher);
+  }
+}
+
+void Application::on_tool_exited()
+{
+  if (auto* registry = mModel.active_registry()) {
+    sys::on_tool_exited(*registry, mDispatcher);
+  }
+}
+
 void Application::on_stamp_sequence(stamp_sequence_event event)
 {
   _register<StampToolCmd>(mModel, std::move(event.old_state), std::move(event.sequence));
@@ -609,7 +623,7 @@ void Application::on_set_object_tag(const set_object_tag_event& event)
 
 void Application::on_spawn_object_context_menu(const spawn_object_context_menu_event&)
 {
-  OpenObjectContextMenu();
+  open_object_context_menu();
 }
 
 void Application::on_show_add_property_dialog()

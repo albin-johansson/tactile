@@ -23,11 +23,11 @@
 
 namespace tactile {
 
-void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher);
+void update_map_view(const entt::registry& registry, entt::dispatcher& dispatcher);
 
-void UpdateMapViewObjectContextMenu(const entt::registry& registry,
-                                    entt::dispatcher& dispatcher);
+void update_map_view_object_context_menu(const entt::registry& registry,
+                                         entt::dispatcher& dispatcher);
 
-void OpenObjectContextMenu();
+void open_object_context_menu();
 
 }  // namespace tactile

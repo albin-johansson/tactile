@@ -84,7 +84,7 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
   }
 }
 
-void _emit_event(entt::dispatcher& dispatcher)
+void _maybe_emit_event(entt::dispatcher& dispatcher)
 {
   if (!_old_state.empty() && !_sequence.empty()) {
     dispatcher.enqueue<stamp_sequence_event>(std::move(_old_state), std::move(_sequence));
@@ -97,7 +97,12 @@ void _emit_event(entt::dispatcher& dispatcher)
 
 void stamp_tool_on_disable(entt::dispatcher& dispatcher)
 {
-  _emit_event(dispatcher);
+  _maybe_emit_event(dispatcher);
+}
+
+void stamp_tool_on_exited(entt::dispatcher& dispatcher)
+{
+  _maybe_emit_event(dispatcher);
 }
 
 void stamp_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
@@ -111,21 +116,11 @@ void stamp_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
   }
 }
 
-void stamp_tool_on_dragged(entt::registry& registry,
-                           entt::dispatcher& dispatcher,
-                           const mouse_info& mouse)
+void stamp_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
 {
-  if (mouse.button == cen::mouse_button::left && _is_usable(registry)) {
-    if (mouse.is_within_contents) {
-      _update_sequence(registry, mouse.position_in_viewport);
-    }
-    else {
-      /* Note, it is intentionally possible for the user to continue the stroke by
-         returning the cursor to be within the contents. However, when this happens, a new
-         stamp sequence is begun. In other words, multiple stamp sequences can be created
-         by one press/drag/release cycle. */
-      _emit_event(dispatcher);
-    }
+  if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
+      _is_usable(registry)) {
+    _update_sequence(registry, mouse.position_in_viewport);
   }
 }
 
@@ -133,9 +128,8 @@ void stamp_tool_on_released(entt::registry& registry,
                             entt::dispatcher& dispatcher,
                             const mouse_info& mouse)
 {
-  if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
-      _is_usable(registry)) {
-    _emit_event(dispatcher);
+  if (mouse.button == cen::mouse_button::left && _is_usable(registry)) {
+    _maybe_emit_event(dispatcher);
   }
 }
 

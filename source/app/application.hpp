@@ -117,6 +117,9 @@ class Application final
   void on_tool_pressed(const ToolPressedEvent& event);
   void on_tool_dragged(const ToolDraggedEvent& event);
   void on_tool_released(const ToolReleasedEvent& event);
+  void on_tool_entered();
+  void on_tool_exited();
+
   void on_stamp_sequence(stamp_sequence_event event);
   void on_eraser_sequence(eraser_sequence_event event);
   void on_flood(const flood_event& event);

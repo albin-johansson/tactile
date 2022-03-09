@@ -43,17 +43,16 @@
 #include "editor/gui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
 #include "viewport_cursor_info.hpp"
 #include "viewport_overlay.hpp"
 
 namespace tactile {
 namespace {
 
-constinit bool gCenterViewport = false;
+constinit bool _will_center_viewport = false;
 
 template <typename Event, typename T>
-void CheckFor(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
+void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
 {
   const auto left = query(ImGuiMouseButton_Left);
   const auto mid = query(ImGuiMouseButton_Middle);
@@ -79,11 +78,11 @@ void CheckFor(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&
   }
 }
 
-void CenterViewport(entt::dispatcher& dispatcher,
-                    const Viewport& viewport,
-                    const ImVec2& canvasSize,
-                    const float nRows,
-                    const float nCols)
+void _center_viewport(entt::dispatcher& dispatcher,
+                      const Viewport& viewport,
+                      const ImVec2& canvasSize,
+                      const float nRows,
+                      const float nCols)
 {
   const auto width = nCols * viewport.tile_width;
   const auto height = nRows * viewport.tile_height;
@@ -138,33 +137,27 @@ void _draw_cursor_gizmos(graphics_ctx& graphics,
   }
 }
 
-void _poll_mouse(const entt::registry& registry,
-                 entt::dispatcher& dispatcher,
-                 const ViewportCursorInfo& cursor)
+void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
 {
-  const auto& io = ImGui::GetIO();
-
-  const ImRect bounds{ImGui::GetWindowContentRegionMin(),
-                      ImGui::GetWindowContentRegionMax()};
-
-  if (ImGui::IsMouseHoveringRect(bounds.GetTL(), bounds.GetBR())) {
-    CheckFor<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+  if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
+                                 ImGui::GetWindowContentRegionMax())) {
+    _check_for<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseClicked(button);
     });
 
-    CheckFor<ToolDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    _check_for<ToolDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseDragging(button);
     });
 
-    CheckFor<ToolReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    _check_for<ToolReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseReleased(button);
     });
   }
 }
 
-void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
-                       entt::dispatcher& dispatcher,
-                       [[maybe_unused]] const ViewportCursorInfo& cursor)
+void _update_context_menu([[maybe_unused]] const entt::registry& registry,
+                          entt::dispatcher& dispatcher,
+                          [[maybe_unused]] const ViewportCursorInfo& cursor)
 {
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
@@ -191,7 +184,7 @@ void UpdateContextMenu([[maybe_unused]] const entt::registry& registry,
 
 }  // namespace
 
-void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
+void update_map_view(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   const auto& viewport = registry.ctx<Viewport>();
   const auto& map = registry.ctx<MapInfo>();
@@ -207,29 +200,29 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
   graphics.push_clip();
 
   // TODO viewport should be centered by default
-  if (gCenterViewport) {
-    CenterViewport(dispatcher,
-                   viewport,
-                   info.canvas_br - info.canvas_tl,
-                   info.row_count,
-                   info.col_count);
-    gCenterViewport = false;
+  if (_will_center_viewport) {
+    _center_viewport(dispatcher,
+                     viewport,
+                     info.canvas_br - info.canvas_tl,
+                     info.row_count,
+                     info.col_count);
+    _will_center_viewport = false;
   }
 
   RenderMap(graphics, registry);
 
   const auto cursor = GetViewportCursorInfo(info);
-  _poll_mouse(registry, dispatcher, cursor);
+  _poll_mouse(dispatcher, cursor);
   _draw_cursor_gizmos(graphics, registry, cursor, info);
 
   graphics.pop_clip();
 
   UpdateViewportOverlay(registry, cursor);
-  UpdateContextMenu(registry, dispatcher, cursor);
+  _update_context_menu(registry, dispatcher, cursor);
 }
 
-void UpdateMapViewObjectContextMenu(const entt::registry& registry,
-                                    entt::dispatcher& dispatcher)
+void update_map_view_object_context_menu(const entt::registry& registry,
+                                         entt::dispatcher& dispatcher)
 {
   if (scoped::popup popup{"##MapViewObjectContextMenu"}; popup.is_open()) {
     const auto active = registry.ctx<comp::active_object>();
@@ -268,10 +261,10 @@ void UpdateMapViewObjectContextMenu(const entt::registry& registry,
 // TODO the declaration of this function isn't in map_view.hpp
 void CenterMapViewport()
 {
-  gCenterViewport = true;
+  _will_center_viewport = true;
 }
 
-void OpenObjectContextMenu()
+void open_object_context_menu()
 {
   ImGui::OpenPopup("##MapViewObjectContextMenu",
                    ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);

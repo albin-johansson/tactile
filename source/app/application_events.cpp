@@ -52,6 +52,9 @@ void subscribe_to_events(appl& app)
   app.connect<ToolPressedEvent, &appl::on_tool_pressed>();
   app.connect<ToolDraggedEvent, &appl::on_tool_dragged>();
   app.connect<ToolReleasedEvent, &appl::on_tool_released>();
+  app.connect<ToolEnteredEvent, &appl::on_tool_entered>();
+  app.connect<ToolExitedEvent, &appl::on_tool_exited>();
+
   app.connect<stamp_sequence_event, &appl::on_stamp_sequence>();
   app.connect<eraser_sequence_event, &appl::on_eraser_sequence>();
   app.connect<flood_event, &appl::on_flood>();

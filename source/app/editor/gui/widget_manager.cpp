@@ -73,7 +73,7 @@ void widget_manager::update(const document_model& model,
   UpdateViewportWidget(model, icons, dispatcher);
 
   if (const auto* registry = model.active_registry()) {
-    UpdateMapViewObjectContextMenu(*registry, dispatcher);
+    update_map_view_object_context_menu(*registry, dispatcher);
     mWidgets->mTilesetDock.Update(*registry, dispatcher);
     mWidgets->mLogDock.Update();
   }

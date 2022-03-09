@@ -49,7 +49,7 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
   set_tile(layer, cursor, empty_tile);
 }
 
-void _emit_event(entt::dispatcher& dispatcher)
+void _maybe_emit_event(entt::dispatcher& dispatcher)
 {
   if (!_old_state.empty()) {
     dispatcher.enqueue<eraser_sequence_event>(std::move(_old_state));
@@ -61,7 +61,12 @@ void _emit_event(entt::dispatcher& dispatcher)
 
 void eraser_tool_on_disable(entt::dispatcher& dispatcher)
 {
-  _emit_event(dispatcher);
+  _maybe_emit_event(dispatcher);
+}
+
+void eraser_tool_on_exited(entt::dispatcher& dispatcher)
+{
+  _maybe_emit_event(dispatcher);
 }
 
 void eraser_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
@@ -73,17 +78,11 @@ void eraser_tool_on_pressed(entt::registry& registry, const mouse_info& mouse)
   }
 }
 
-void eraser_tool_on_dragged(entt::registry& registry,
-                            entt::dispatcher& dispatcher,
-                            const mouse_info& mouse)
+void eraser_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
 {
-  if (mouse.button == cen::mouse_button::left && is_tile_layer_active(registry)) {
-    if (mouse.is_within_contents) {
-      _update_sequence(registry, mouse.position_in_viewport);
-    }
-    else {
-      _emit_event(dispatcher);
-    }
+  if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
+      is_tile_layer_active(registry)) {
+    _update_sequence(registry, mouse.position_in_viewport);
   }
 }
 
@@ -91,9 +90,8 @@ void eraser_tool_on_released(entt::registry& registry,
                              entt::dispatcher& dispatcher,
                              const mouse_info& mouse)
 {
-  if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
-      is_tile_layer_active(registry)) {
-    dispatcher.enqueue<eraser_sequence_event>(std::move(_old_state));
+  if (mouse.button == cen::mouse_button::left && is_tile_layer_active(registry)) {
+    _maybe_emit_event(dispatcher);
   }
 }
 

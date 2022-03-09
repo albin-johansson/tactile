@@ -23,6 +23,7 @@
 #include <imgui_internal.h>
 
 #include "document_tabs.hpp"
+#include "editor/events/tool_events.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "home_page_content.hpp"
@@ -58,6 +59,14 @@ void UpdateViewportWidget(const document_model& model,
 
     if (model.has_active_document()) {
       UpdateDocumentTabs(model, dispatcher);
+
+      if (window.mouse_entered()) {
+        dispatcher.enqueue<ToolEnteredEvent>();
+      }
+
+      if (window.mouse_exited()) {
+        dispatcher.enqueue<ToolExitedEvent>();
+      }
     }
     else {
       UpdateHomePageContent(icons, dispatcher);
