@@ -49,7 +49,7 @@ struct layer_dock::layer_dock_data final
 };
 
 layer_dock::layer_dock()
-    : dock_widget{"Layers", ImGuiWindowFlags_NoCollapse}
+    : ADockWidget{"Layers", ImGuiWindowFlags_NoCollapse}
     , mData{std::make_unique<layer_dock_data>()}
 {
   set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);

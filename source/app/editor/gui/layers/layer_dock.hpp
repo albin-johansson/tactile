@@ -31,7 +31,7 @@ namespace tactile {
 
 class document_model;
 
-class layer_dock final : public dock_widget
+class layer_dock final : public ADockWidget
 {
  public:
   layer_dock();

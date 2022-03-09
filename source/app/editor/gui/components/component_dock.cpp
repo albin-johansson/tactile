@@ -150,7 +150,7 @@ void _show_add_component_button_popup_content(const entt::registry& registry,
 
 }  // namespace
 
-component_dock::component_dock() : dock_widget{"Components", _window_flags}
+component_dock::component_dock() : ADockWidget{"Components", _window_flags}
 {
   set_close_button_enabled(true);
 }

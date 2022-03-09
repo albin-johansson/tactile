@@ -28,15 +28,15 @@ namespace tactile {
 
 class document_model;
 
-class dock_widget
+class ADockWidget
 {
  public:
-  TACTILE_DEFAULT_COPY(dock_widget)
-  TACTILE_DEFAULT_MOVE(dock_widget)
+  TACTILE_DEFAULT_COPY(ADockWidget)
+  TACTILE_DEFAULT_MOVE(ADockWidget)
 
-  dock_widget(const char* title, ImGuiWindowFlags flags);
+  ADockWidget(const char* title, ImGuiWindowFlags flags);
 
-  virtual ~dock_widget() noexcept = default;
+  virtual ~ADockWidget() noexcept = default;
 
   void update(const document_model& model, entt::dispatcher& dispatcher);
 

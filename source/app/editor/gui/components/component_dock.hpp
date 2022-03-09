@@ -28,7 +28,7 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class component_dock final : public dock_widget
+class component_dock final : public ADockWidget
 {
  public:
   component_dock();

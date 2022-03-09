@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-dock_widget::dock_widget(const char* title, const ImGuiWindowFlags flags)
+ADockWidget::ADockWidget(const char* title, const ImGuiWindowFlags flags)
     : mTitle{title}
     , mWindowFlags{flags}
 {
@@ -34,7 +34,7 @@ dock_widget::dock_widget(const char* title, const ImGuiWindowFlags flags)
   }
 }
 
-void dock_widget::update(const document_model& model, entt::dispatcher& dispatcher)
+void ADockWidget::update(const document_model& model, entt::dispatcher& dispatcher)
 {
   bool visible = is_visible();
 
@@ -54,12 +54,12 @@ void dock_widget::update(const document_model& model, entt::dispatcher& dispatch
   set_visible(visible);
 }
 
-void dock_widget::set_close_button_enabled(const bool enabled)
+void ADockWidget::set_close_button_enabled(const bool enabled)
 {
   mHasCloseButton = enabled;
 }
 
-void dock_widget::set_focus_flags(const ImGuiFocusedFlags flags)
+void ADockWidget::set_focus_flags(const ImGuiFocusedFlags flags)
 {
   mFocusFlags = flags;
 }
