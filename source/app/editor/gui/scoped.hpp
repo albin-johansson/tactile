@@ -353,6 +353,14 @@ class modal final
 
 class window final
 {
+  struct WindowData final
+  {
+    bool was_hovered{};
+    bool is_hovered{};
+  };
+
+  inline static hash_map<const char*, WindowData> window_data;
+
  public:
   TACTILE_DEFAULT_COPY(window)
   TACTILE_DEFAULT_MOVE(window)
@@ -360,8 +368,13 @@ class window final
   explicit window(const char* label,
                   const ImGuiWindowFlags flags = 0,
                   bool* open = nullptr)
-      : mOpen{ImGui::Begin(label, open, flags)}
-  {}
+      : mLabel{label}
+      , mOpen{ImGui::Begin(label, open, flags)}
+  {
+    auto& data = window_data[label];
+    data.was_hovered = data.is_hovered;
+    data.is_hovered = current_window_contains_mouse();
+  }
 
   ~window() { ImGui::End(); }
 
@@ -372,6 +385,18 @@ class window final
 
   [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
+  [[nodiscard]] auto mouse_entered() const noexcept -> bool
+  {
+    const auto& data = window_data.at(mLabel);
+    return !data.was_hovered && data.is_hovered;
+  }
+
+  [[nodiscard]] auto mouse_exited() const noexcept -> bool
+  {
+    const auto& data = window_data.at(mLabel);
+    return data.was_hovered && !data.is_hovered;
+  }
+
   [[nodiscard]] static auto current_window_contains_mouse() -> bool
   {
     const auto min = ImGui::GetWindowContentRegionMin();
@@ -380,6 +405,7 @@ class window final
   }
 
  private:
+  const char* mLabel{};
   bool mOpen{};
 };
 
