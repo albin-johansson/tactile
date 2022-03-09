@@ -26,6 +26,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_cache.hpp"
 #include "core/tile_position.hpp"
@@ -49,16 +50,12 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
   TACTILE_ASSERT(_is_usable(registry));
 
   const auto layerEntity = get_active_layer(registry);
-  TACTILE_ASSERT(layerEntity != entt::null);
-  TACTILE_ASSERT(registry.all_of<comp::TileLayer>(layerEntity));
-
-  auto& layer = registry.get<comp::TileLayer>(layerEntity);
+  auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
 
   const auto tilesetEntity = find_active_tileset(registry);
-  TACTILE_ASSERT(tilesetEntity != entt::null);
-
-  const auto& selection = registry.get<comp::TilesetSelection>(tilesetEntity);
+  const auto& selection = checked_get<comp::TilesetSelection>(registry, tilesetEntity);
   const auto& region = selection.region.value();
+
   const auto selectionSize = region.end - region.begin;
   const auto previewOffset = selectionSize / tile_position{2, 2};
   const auto endRow = selectionSize.row();

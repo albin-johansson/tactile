@@ -22,6 +22,7 @@
 #include "core/components/objects.hpp"
 #include "core/map.hpp"
 #include "core/systems/context_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "layer_system.hpp"
 #include "misc/throw.hpp"
@@ -92,7 +93,7 @@ auto find_object(const entt::registry& registry,
                  const object_id id) -> entt::entity
 {
   for (const auto objectEntity : layer.objects) {
-    const auto& object = registry.get<comp::Object>(objectEntity);
+    const auto& object = checked_get<comp::Object>(registry, objectEntity);
     if (object.id == id) {
       return objectEntity;
     }

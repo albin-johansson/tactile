@@ -21,9 +21,9 @@
 
 #include "core/components/tiles.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/events/tool_events.hpp"
-#include "misc/assert.hpp"
 
 namespace tactile::sys {
 
@@ -34,9 +34,8 @@ void on_bucket_tool_pressed(entt::registry& registry,
   if (is_tile_layer_active(registry) && is_single_tile_selected_in_tileset(registry) &&
       mouse.button == cen::mouse_button::left) {
     const auto entity = find_active_tileset(registry);
-    TACTILE_ASSERT(entity != entt::null);
+    const auto& selection = checked_get<comp::TilesetSelection>(registry, entity);
 
-    const auto& selection = registry.get<comp::TilesetSelection>(entity);
     const auto position = selection.region->begin;
     const auto replacement = get_tile_from_tileset(registry, entity, position);
 

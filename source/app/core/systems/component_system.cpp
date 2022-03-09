@@ -28,7 +28,7 @@
 #include "misc/assert.hpp"
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
-#include "property_system.hpp"
+#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -39,8 +39,8 @@ namespace {
     -> decltype(comp::ComponentDef::attributes)::const_iterator
 {
   const auto [defEntity, def] = get_component_def(registry, id);
-  if (const auto it = def.attributes.find(attribute); it != def.attributes.end()) {
-    return it;
+  if (auto iter = def.attributes.find(attribute); iter != def.attributes.end()) {
+    return iter;
   }
   else {
     throw_traced(tactile_error{"Invalid component attribute name!"});
@@ -53,8 +53,8 @@ namespace {
     -> decltype(comp::ComponentDef::attributes)::iterator
 {
   const auto [defEntity, def] = get_component_def(registry, id);
-  if (const auto it = def.attributes.find(attribute); it != def.attributes.end()) {
-    return it;
+  if (auto iter = def.attributes.find(attribute); iter != def.attributes.end()) {
+    return iter;
   }
   else {
     throw_traced(tactile_error{"Invalid component attribute name!"});
@@ -65,8 +65,8 @@ namespace {
                                      const std::string_view attribute)
     -> decltype(comp::Component::values)::iterator
 {
-  if (const auto it = component.values.find(attribute); it != component.values.end()) {
-    return it;
+  if (auto iter = component.values.find(attribute); iter != component.values.end()) {
+    return iter;
   }
   else {
     throw_traced(tactile_error{"Invalid component attribute name!"});
@@ -80,7 +80,7 @@ namespace {
   auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
-    auto& component = registry.get<comp::Component>(componentEntity);
+    auto& component = checked_get<comp::Component>(registry, componentEntity);
     if (component.type == componentId) {
       return component;
     }
@@ -142,7 +142,7 @@ auto remove_component_def(entt::registry& registry, const component_id id)
   auto cache = [&](const component_id componentId,
                    const comp::AttributeContext& context) {
     for (const auto componentEntity : context.components) {
-      const auto& component = registry.get<comp::Component>(componentEntity);
+      const auto& component = checked_get<comp::Component>(registry, componentEntity);
       if (component.type == componentId) {
         result.values[context.id] = component.values;
       }
@@ -152,7 +152,7 @@ auto remove_component_def(entt::registry& registry, const component_id id)
   /* Removes component entities of the specified type */
   auto remove = [&, id](std::vector<entt::entity>& components) {
     std::erase_if(components, [&](const entt::entity componentEntity) {
-      const auto& component = registry.get<comp::Component>(componentEntity);
+      const auto& component = checked_get<comp::Component>(registry, componentEntity);
       return component.type == id;
     });
   };
@@ -234,7 +234,7 @@ auto get_first_available_component_def(const entt::registry& registry)
 {
   if (!registry.storage<comp::ComponentDef>().empty()) {
     const auto entity = registry.view<comp::ComponentDef>().front();
-    const auto& def = registry.get<comp::ComponentDef>(entity);
+    const auto& def = checked_get<comp::ComponentDef>(registry, entity);
     return def.id;
   }
   else {
@@ -271,7 +271,7 @@ auto get_component_def(entt::registry& registry, const component_id id)
 {
   const auto entity = find_component_def(registry, id);
   if (entity != entt::null) {
-    return {entity, registry.get<comp::ComponentDef>(entity)};
+    return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
     throw_traced(tactile_error{"Failed to find component definition with specified ID!"});
@@ -283,7 +283,7 @@ auto get_component_def(const entt::registry& registry, const component_id id)
 {
   const auto entity = find_component_def(registry, id);
   if (entity != entt::null) {
-    return {entity, registry.get<comp::ComponentDef>(entity)};
+    return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
     throw_traced(tactile_error{"Failed to find component definition with specified ID!"});
@@ -482,7 +482,7 @@ auto remove_component(entt::registry& registry,
   snapshot.component = componentId;
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::Component>(componentEntity);
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
     if (component.type == componentId) {
       snapshot.values = component.values;
       match = componentEntity;
@@ -557,7 +557,7 @@ auto has_component(const entt::registry& registry,
   const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::Component>(componentEntity);
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
     if (component.type == componentId) {
       return true;
     }
@@ -573,7 +573,7 @@ auto get_component(const entt::registry& registry,
   const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::Component>(componentEntity);
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
     if (component.type == componentId) {
       return component;
     }
@@ -590,7 +590,7 @@ auto get_component_attribute(const entt::registry& registry,
   const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::Component>(componentEntity);
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
     if (component.type == componentId) {
       if (const auto it = component.values.find(attribute);
           it != component.values.end()) {

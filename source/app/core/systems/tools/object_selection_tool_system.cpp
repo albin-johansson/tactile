@@ -22,6 +22,7 @@
 #include "core/components/objects.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/object_events.hpp"
 
@@ -33,7 +34,7 @@ void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
   const auto entity = registry.ctx<comp::ActiveObject>().entity;
   if (entity != entt::null) {
     if (const auto* drag = registry.try_get<comp::ObjectDragInfo>(entity)) {
-      const auto& object = registry.get<comp::Object>(entity);
+      const auto& object = checked_get<comp::Object>(registry, entity);
 
       /* Only emit an event if the object has been moved along any axis */
       if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
@@ -77,7 +78,7 @@ void on_object_selection_tool_pressed(entt::registry& registry,
         active.entity = objectEntity;
 
         if (objectEntity != entt::null) {
-          const auto& object = registry.get<comp::Object>(objectEntity);
+          const auto& object = checked_get<comp::Object>(registry, objectEntity);
 
           auto& drag = registry.emplace<comp::ObjectDragInfo>(objectEntity);
           drag.origin_object_x = object.x;
@@ -111,7 +112,7 @@ void on_object_selection_tool_dragged(entt::registry& registry,
     const auto& active = registry.ctx<comp::ActiveObject>();
     if (active.entity != entt::null) {
       if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.entity)) {
-        auto& object = registry.get<comp::Object>(active.entity);
+        auto& object = checked_get<comp::Object>(registry, active.entity);
         if (mouse.is_within_contents) {
           const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
           const auto dx = (mouse.x - drag->last_mouse_x) / xRatio;

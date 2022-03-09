@@ -31,6 +31,7 @@
 #include "core/map.hpp"
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/property_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/utils/tiles.hpp"
 #include "layer_tree_system.hpp"
 #include "misc/assert.hpp"
@@ -55,7 +56,7 @@ namespace {
                                     const entt::entity parentEntity) -> usize
 {
   if (parentEntity != entt::null) {
-    const auto& node = registry.get<comp::LayerTreeNode>(parentEntity);
+    const auto& node = checked_get<comp::LayerTreeNode>(registry, parentEntity);
     return node.children.size();
   }
   else {
@@ -81,26 +82,27 @@ namespace {
   assert((registry.any_of<comp::TileLayer, comp::ObjectLayer, comp::GroupLayer>(source)));
 
   LayerSnapshot snapshot;
-  snapshot.index = registry.get<comp::LayerTreeNode>(source).index;
-  snapshot.core = registry.get<comp::Layer>(source);
+  snapshot.index = checked_get<comp::LayerTreeNode>(registry, source).index;
+  snapshot.core = checked_get<comp::Layer>(registry, source);
   snapshot.context = copy_attribute_context(registry, source);
 
-  const auto parentEntity = registry.get<comp::Parent>(source).entity;
+  const auto parentEntity = checked_get<comp::Parent>(registry, source).entity;
   if (parentEntity != entt::null) {
-    snapshot.parent = registry.get<comp::Layer>(parentEntity).id;
+    snapshot.parent = checked_get<comp::Layer>(registry, parentEntity).id;
   }
 
   switch (snapshot.core.type) {
     case LayerType::tile_layer: {
-      snapshot.tiles = registry.get<comp::TileLayer>(source).matrix;
+      snapshot.tiles = checked_get<comp::TileLayer>(registry, source).matrix;
       break;
     }
     case LayerType::object_layer: {
       auto& objects = snapshot.objects.emplace();
 
-      for (const auto objectEntity : registry.get<comp::ObjectLayer>(source).objects) {
+      for (const auto objectEntity :
+           checked_get<comp::ObjectLayer>(registry, source).objects) {
         auto& objectSnapshot = objects.emplace_back();
-        objectSnapshot.core = registry.get<comp::Object>(objectEntity);
+        objectSnapshot.core = checked_get<comp::Object>(registry, objectEntity);
         objectSnapshot.context = copy_attribute_context(registry, objectEntity);
       }
 
@@ -109,7 +111,8 @@ namespace {
     case LayerType::group_layer: {
       auto& children = snapshot.children.emplace();
 
-      for (const auto child : registry.get<comp::LayerTreeNode>(source).children) {
+      for (const auto child :
+           checked_get<comp::LayerTreeNode>(registry, source).children) {
         children.push_back(_copy_layer(registry, child));
       }
 
@@ -163,7 +166,7 @@ auto make_basic_layer(entt::registry& registry,
 
   if (parent != entt::null) {
     TACTILE_ASSERT(registry.all_of<comp::LayerTreeNode>(parent));
-    auto& parentNode = registry.get<comp::LayerTreeNode>(parent);
+    auto& parentNode = checked_get<comp::LayerTreeNode>(registry, parent);
     parentNode.children.push_back(entity);
   }
 
@@ -264,7 +267,7 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
                                        parent);
 
   {
-    auto& layer = registry.get<comp::Layer>(entity);
+    auto& layer = checked_get<comp::Layer>(registry, entity);
     layer.opacity = snapshot.core.opacity;
     layer.visible = snapshot.core.visible;
   }
@@ -310,7 +313,7 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
 
 auto duplicate_layer(entt::registry& registry, const entt::entity source) -> entt::entity
 {
-  const auto& sourceParent = registry.get<comp::Parent>(source);
+  const auto& sourceParent = checked_get<comp::Parent>(registry, source);
   const auto copy = duplicate_layer(registry, source, sourceParent.entity, false);
 
   sort_layers(registry);
@@ -335,13 +338,13 @@ auto duplicate_layer(entt::registry& registry,
 
   {
     auto& node = registry.emplace<comp::LayerTreeNode>(copy);
-    node.index = registry.get<comp::LayerTreeNode>(source).index;
+    node.index = checked_get<comp::LayerTreeNode>(registry, source).index;
   }
 
   registry.emplace<comp::Parent>(copy, parent);
 
   if (parent != entt::null) {
-    auto& parentNode = registry.get<comp::LayerTreeNode>(parent);
+    auto& parentNode = checked_get<comp::LayerTreeNode>(registry, parent);
     parentNode.children.push_back(copy);
   }
 
@@ -358,9 +361,9 @@ auto duplicate_layer(entt::registry& registry,
     layer.id = map.next_layer_id;
 
     if (!recursive) {
-      const auto sourceNode = registry.get<comp::LayerTreeNode>(source);
+      const auto sourceNode = checked_get<comp::LayerTreeNode>(registry, source);
 
-      auto& node = registry.get<comp::LayerTreeNode>(copy);
+      auto& node = checked_get<comp::LayerTreeNode>(registry, copy);
       node.index = sourceNode.index + 1u;
     }
 
@@ -375,7 +378,8 @@ auto duplicate_layer(entt::registry& registry,
   }
   else if (registry.all_of<comp::GroupLayer>(source)) {
     registry.emplace<comp::GroupLayer>(copy);
-    for (const auto sourceChild : registry.get<comp::LayerTreeNode>(source).children) {
+    for (const auto sourceChild :
+         checked_get<comp::LayerTreeNode>(registry, source).children) {
       /* We don't need to add the created child layer to the group layer explicitly */
       duplicate_layer(registry, sourceChild, copy, true);
     }
@@ -411,7 +415,7 @@ auto get_layer(entt::registry& registry, const layer_id id)
 {
   const auto entity = find_layer(registry, id);
   if (entity != entt::null && registry.all_of<comp::Layer>(entity)) {
-    return {entity, registry.get<comp::Layer>(entity)};
+    return {entity, checked_get<comp::Layer>(registry, entity)};
   }
   else {
     throw_traced(tactile_error{"Invalid layer identifier!"});
@@ -423,7 +427,7 @@ auto get_layer(const entt::registry& registry, const layer_id id)
 {
   const auto entity = find_layer(registry, id);
   if (entity != entt::null && registry.all_of<comp::Layer>(entity)) {
-    return {entity, registry.get<comp::Layer>(entity)};
+    return {entity, checked_get<comp::Layer>(registry, entity)};
   }
   else {
     throw_traced(tactile_error{"Invalid layer identifier!"});
@@ -462,7 +466,7 @@ auto get_active_layer_id(const entt::registry& registry) -> maybe<layer_id>
 {
   const auto& active = registry.ctx<comp::ActiveLayer>();
   if (active.entity != entt::null) {
-    return registry.get<comp::Layer>(active.entity).id;
+    return checked_get<comp::Layer>(registry, active.entity).id;
   }
   else {
     return nothing;

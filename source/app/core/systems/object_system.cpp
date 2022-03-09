@@ -29,6 +29,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "misc/throw.hpp"
+#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -136,7 +137,7 @@ auto remove_object(entt::registry& registry, const object_id id) -> RemoveObject
 
   RemoveObjectResult result;
   result.layer = layerId.value();
-  result.object = registry.get<comp::Object>(objectEntity);
+  result.object = checked_get<comp::Object>(registry, objectEntity);
   result.context = copy_attribute_context(registry, objectEntity);
 
   registry.destroy(objectEntity);

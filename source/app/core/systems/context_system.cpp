@@ -25,6 +25,7 @@
 #include "misc/assert.hpp"
 #include "misc/throw.hpp"
 #include "property_system.hpp"
+#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -64,21 +65,19 @@ auto add_attribute_context(entt::registry& registry, const entt::entity entity)
 auto copy_attribute_context(const entt::registry& registry, const entt::entity source)
     -> attribute_context_snapshot
 {
-  TACTILE_ASSERT(source != entt::null);
-  TACTILE_ASSERT(registry.all_of<comp::AttributeContext>(source));
-  const auto& context = registry.get<comp::AttributeContext>(source);
+  const auto& context = checked_get<comp::AttributeContext>(registry, source);
 
   attribute_context_snapshot snapshot;
   snapshot.id = context.id;
   snapshot.name = context.name;
 
   for (const auto propertyEntity : context.properties) {
-    const auto& property = registry.get<comp::Property>(propertyEntity);
+    const auto& property = checked_get<comp::Property>(registry, propertyEntity);
     snapshot.properties.try_emplace(property.name, property.value);
   }
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::Component>(componentEntity);
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
 
     auto& componentSnapshot = snapshot.components[component.type];
     for (const auto& [attrName, attrValue] : component.values) {
@@ -147,7 +146,7 @@ auto current_context(const entt::registry& registry) -> const comp::AttributeCon
 {
   const auto& current = registry.ctx<comp::ActiveAttributeContext>();
   return (current.entity != entt::null)
-             ? registry.get<comp::AttributeContext>(current.entity)
+             ? checked_get<comp::AttributeContext>(registry, current.entity)
              : registry.ctx<comp::AttributeContext>();
 }
 

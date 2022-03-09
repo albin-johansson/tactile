@@ -23,10 +23,10 @@
 
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/tile_cache.hpp"
 #include "core/tile_position.hpp"
 #include "editor/events/tool_events.hpp"
-#include "misc/assert.hpp"
 #include "tactile.hpp"
 
 namespace tactile::sys {
@@ -37,10 +37,7 @@ inline TileCache _old_state;
 void _update_sequence(entt::registry& registry, const tile_position& cursor)
 {
   const auto entity = get_active_layer(registry);
-  TACTILE_ASSERT(entity != entt::null);
-
-  TACTILE_ASSERT(registry.all_of<comp::TileLayer>(entity));
-  auto& layer = registry.get<comp::TileLayer>(entity);
+  auto& layer = checked_get<comp::TileLayer>(registry, entity);
 
   if (!_old_state.contains(cursor)) {
     _old_state.emplace(cursor, get_tile(layer, cursor));

@@ -23,6 +23,7 @@
 
 #include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {
@@ -41,8 +42,8 @@ void _swap_indices(entt::registry& registry, const entt::entity a, const entt::e
   TACTILE_ASSERT(a != entt::null);
   TACTILE_ASSERT(b != entt::null);
 
-  auto& fst = registry.get<comp::LayerTreeNode>(a);
-  auto& snd = registry.get<comp::LayerTreeNode>(b);
+  auto& fst = checked_get<comp::LayerTreeNode>(registry, a);
+  auto& snd = checked_get<comp::LayerTreeNode>(registry, b);
 
   std::swap(fst.index, snd.index);
   sort_layers(registry);
@@ -54,7 +55,7 @@ void _offset_indices_of_siblings_below(entt::registry& registry,
 {
   auto sibling = layer_sibling_below(registry, entity);
   while (sibling != entt::null) {
-    auto& siblingNode = registry.get<comp::LayerTreeNode>(sibling);
+    auto& siblingNode = checked_get<comp::LayerTreeNode>(registry, sibling);
     const auto newIndex = static_cast<int64>(siblingNode.index) + offset;
     sibling = layer_sibling_below(registry, sibling);
     siblingNode.index = static_cast<usize>(newIndex);
@@ -63,7 +64,7 @@ void _offset_indices_of_siblings_below(entt::registry& registry,
 
 void _destroy_child_nodes(entt::registry& registry, const entt::entity entity)
 {
-  auto& node = registry.get<comp::LayerTreeNode>(entity);
+  auto& node = checked_get<comp::LayerTreeNode>(registry, entity);
   for (const auto child : node.children) {
     if (registry.all_of<comp::LayerTreeNode>(child)) {
       _destroy_child_nodes(registry, child);
@@ -76,11 +77,11 @@ void _destroy_child_nodes(entt::registry& registry, const entt::entity entity)
                                 const entt::entity entity,
                                 const usize targetIndex) -> entt::entity
 {
-  const auto& parent = registry.get<comp::Parent>(entity);
+  const auto& parent = checked_get<comp::Parent>(registry, entity);
   if (parent.entity != entt::null) {
-    const auto& parentNode = registry.get<comp::LayerTreeNode>(parent.entity);
+    const auto& parentNode = checked_get<comp::LayerTreeNode>(registry, parent.entity);
     for (const auto child : parentNode.children) {
-      const auto& childLayer = registry.get<comp::LayerTreeNode>(child);
+      const auto& childLayer = checked_get<comp::LayerTreeNode>(registry, child);
       if (childLayer.index == targetIndex) {
         return child;
       }
@@ -132,8 +133,8 @@ void sort_layers(entt::registry& registry)
     std::sort(node.children.begin(),
               node.children.end(),
               [&](const entt::entity a, const entt::entity b) {
-                const auto& fst = registry.get<comp::LayerTreeNode>(a);
-                const auto& snd = registry.get<comp::LayerTreeNode>(b);
+                const auto& fst = checked_get<comp::LayerTreeNode>(registry, a);
+                const auto& snd = checked_get<comp::LayerTreeNode>(registry, b);
                 return fst.index < snd.index;
               });
   }
@@ -159,9 +160,9 @@ void destroy_layer_node(entt::registry& registry, const entt::entity entity)
   decrement_layer_indices_of_siblings_below(registry, entity);
 
   /* Remove the node from the parent node, if there is one. */
-  const auto& parent = registry.get<comp::Parent>(entity);
+  const auto& parent = checked_get<comp::Parent>(registry, entity);
   if (parent.entity != entt::null) {
-    auto& parentNode = registry.get<comp::LayerTreeNode>(parent.entity);
+    auto& parentNode = checked_get<comp::LayerTreeNode>(registry, parent.entity);
     std::erase(parentNode.children, entity);
   }
 
@@ -198,7 +199,7 @@ void move_layer_down(entt::registry& registry, const entt::entity entity)
 auto can_move_layer_up(const entt::registry& registry, const entt::entity entity) -> bool
 {
   _validate_layer_node_entity(registry, entity);
-  return registry.get<comp::LayerTreeNode>(entity).index > 0u;
+  return checked_get<comp::LayerTreeNode>(registry, entity).index > 0u;
 }
 
 auto can_move_layer_down(const entt::registry& registry, const entt::entity entity)
@@ -206,7 +207,7 @@ auto can_move_layer_down(const entt::registry& registry, const entt::entity enti
 {
   _validate_layer_node_entity(registry, entity);
 
-  const auto index = registry.get<comp::LayerTreeNode>(entity).index;
+  const auto index = checked_get<comp::LayerTreeNode>(registry, entity).index;
   const auto nSiblings = layer_sibling_count(registry, entity);
 
   return index < nSiblings;
@@ -219,7 +220,7 @@ auto is_child_layer_node(const entt::registry& registry,
   _validate_layer_node_entity(registry, parent);
   _validate_layer_node_entity(registry, entity);
 
-  for (const auto child : registry.get<comp::LayerTreeNode>(parent).children) {
+  for (const auto child : checked_get<comp::LayerTreeNode>(registry, parent).children) {
     if (child == entity) {
       return true;
     }
@@ -236,7 +237,7 @@ auto layer_sibling_above(const entt::registry& registry, const entt::entity enti
 {
   _validate_layer_node_entity(registry, entity);
 
-  const auto index = registry.get<comp::LayerTreeNode>(entity).index;
+  const auto index = checked_get<comp::LayerTreeNode>(registry, entity).index;
   if (index != 0u) {
     return _get_sibling(registry, entity, index - 1u);
   }
@@ -250,7 +251,7 @@ auto layer_sibling_below(const entt::registry& registry, const entt::entity enti
 {
   _validate_layer_node_entity(registry, entity);
 
-  const auto index = registry.get<comp::LayerTreeNode>(entity).index;
+  const auto index = checked_get<comp::LayerTreeNode>(registry, entity).index;
   return _get_sibling(registry, entity, index + 1u);
 }
 
@@ -259,7 +260,7 @@ auto layer_sibling_count(const entt::registry& registry, const entt::entity enti
 {
   _validate_layer_node_entity(registry, entity);
 
-  const auto& parent = registry.get<comp::Parent>(entity);
+  const auto& parent = checked_get<comp::Parent>(registry, entity);
   if (parent.entity == entt::null) {
     usize count = 0;
 
@@ -273,7 +274,7 @@ auto layer_sibling_count(const entt::registry& registry, const entt::entity enti
     return count;
   }
   else {
-    const auto& parentNode = registry.get<comp::LayerTreeNode>(parent.entity);
+    const auto& parentNode = checked_get<comp::LayerTreeNode>(registry, parent.entity);
     return parentNode.children.size() - 1;  // Exclude the queried layer
   }
 }
@@ -283,7 +284,7 @@ auto layer_children_count(const entt::registry& registry, const entt::entity ent
 {
   _validate_layer_node_entity(registry, entity);
 
-  const auto& node = registry.get<comp::LayerTreeNode>(entity);
+  const auto& node = checked_get<comp::LayerTreeNode>(registry, entity);
   auto count = node.children.size();
 
   for (const auto child : node.children) {
@@ -297,7 +298,7 @@ auto layer_local_index(const entt::registry& registry, const entt::entity entity
 {
   _validate_layer_node_entity(registry, entity);
 
-  const auto& node = registry.get<comp::LayerTreeNode>(entity);
+  const auto& node = checked_get<comp::LayerTreeNode>(registry, entity);
   return node.index;
 }
 
@@ -306,8 +307,8 @@ auto layer_global_index(const entt::registry& registry, const entt::entity entit
 {
   _validate_layer_node_entity(registry, entity);
 
-  const auto& node = registry.get<comp::LayerTreeNode>(entity);
-  const auto& parent = registry.get<comp::Parent>(entity);
+  const auto& node = checked_get<comp::LayerTreeNode>(registry, entity);
+  const auto& parent = checked_get<comp::Parent>(registry, entity);
 
   const auto base =
       node.index + _count_siblings_above_including_children(registry, entity);

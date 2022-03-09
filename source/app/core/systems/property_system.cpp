@@ -23,7 +23,7 @@
 #include <vector>   // erase
 
 #include "misc/assert.hpp"
-#include "misc/throw.hpp"
+#include "registry_system.hpp"
 
 namespace tactile::sys {
 
@@ -79,9 +79,7 @@ void rename_property(entt::registry& registry,
   TACTILE_ASSERT(!has_property_with_name(registry, context, newName));
 
   const auto entity = find_property(registry, context, oldName);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& property = registry.get<comp::Property>(entity);
+  auto& property = checked_get<comp::Property>(registry, entity);
   property.name = std::move(newName);
 }
 
@@ -91,9 +89,7 @@ void update_property(entt::registry& registry,
                      Attribute value)
 {
   const auto entity = find_property(registry, context, name);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& property = registry.get<comp::Property>(entity);
+  auto& property = checked_get<comp::Property>(registry, entity);
   property.value = std::move(value);
 }
 
@@ -103,9 +99,7 @@ void change_property_type(entt::registry& registry,
                           const AttributeType type)
 {
   const auto entity = find_property(registry, context, name);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& property = registry.get<comp::Property>(entity);
+  auto& property = checked_get<comp::Property>(registry, entity);
   property.value.reset_to_default(type);
 }
 
@@ -114,7 +108,7 @@ auto find_property(const entt::registry& registry,
                    const std::string_view name) -> entt::entity
 {
   for (const auto entity : context.properties) {
-    const auto& property = registry.get<comp::Property>(entity);
+    const auto& property = checked_get<comp::Property>(registry, entity);
     if (property.name == name) {
       return entity;
     }
@@ -128,12 +122,7 @@ auto get_property(const entt::registry& registry,
                   const std::string_view name) -> const comp::Property&
 {
   const auto entity = find_property(registry, context, name);
-  if (entity != entt::null) {
-    return registry.get<comp::Property>(entity);
-  }
-  else {
-    throw_traced(tactile_error{"Found no property with the specified name!"});
-  }
+  return checked_get<comp::Property>(registry, entity);
 }
 
 auto has_property_with_name(const entt::registry& registry,

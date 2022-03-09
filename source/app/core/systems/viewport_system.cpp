@@ -27,6 +27,7 @@
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 #include "misc/assert.hpp"
+#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -58,18 +59,14 @@ void OffsetBoundViewport(entt::registry& registry,
                          const float viewWidth,
                          const float viewHeight)
 {
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<Viewport>(entity));
-  TACTILE_ASSERT(registry.all_of<comp::Texture>(entity));
-
-  auto& viewport = registry.get<Viewport>(entity);
+  auto& viewport = checked_get<Viewport>(registry, entity);
   viewport.x_offset += dx;
   viewport.y_offset += dy;
 
   viewport.x_offset = (std::min)(0.0f, viewport.x_offset);
   viewport.y_offset = (std::min)(0.0f, viewport.y_offset);
 
-  const auto& texture = registry.get<comp::Texture>(entity);
+  const auto& texture = checked_get<comp::Texture>(registry, entity);
   const auto textureWidth = static_cast<float>(texture.width);
   const auto textureHeight = static_cast<float>(texture.height);
 
