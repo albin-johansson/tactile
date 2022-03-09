@@ -186,7 +186,7 @@ class CommandStack final
    * \return the index of the current command;
    *         an empty optional is returned is there is no such command.
    */
-  [[nodiscard]] auto index() const noexcept -> maybe<usize> { return mIndex; }
+  [[nodiscard]] auto index() const noexcept -> Maybe<usize> { return mIndex; }
 
   /**
    * \brief Returns the clean index, if there is one.
@@ -194,7 +194,7 @@ class CommandStack final
    * \return the index of the command considered to represent the clean state;
    *         an empty optional is returned is there is no clean index.
    */
-  [[nodiscard]] auto clean_index() const noexcept -> maybe<usize> { return mCleanIndex; }
+  [[nodiscard]] auto clean_index() const noexcept -> Maybe<usize> { return mCleanIndex; }
 
   /**
    * \brief Returns the maximum amount of commands that the stack can hold.
@@ -205,8 +205,8 @@ class CommandStack final
 
  private:
   std::deque<std::unique_ptr<ACommand>> mStack;
-  maybe<usize> mIndex;
-  maybe<usize> mCleanIndex;
+  Maybe<usize> mIndex;
+  Maybe<usize> mCleanIndex;
   usize mCapacity;
 
   void remove_oldest_command();

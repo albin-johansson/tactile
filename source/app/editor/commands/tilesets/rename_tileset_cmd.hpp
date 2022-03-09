@@ -47,7 +47,7 @@ class RenameTilesetCmd final : public ACommand
   registry_ref mRegistry;
   tileset_id mTilesetId;
   std::string mNewName;
-  maybe<std::string> mOldName;
+  Maybe<std::string> mOldName;
 };
 
 }  // namespace tactile

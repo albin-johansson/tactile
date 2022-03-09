@@ -47,7 +47,7 @@ class DuplicateComponentAttrCmd final : public ACommand
   registry_ref mRegistry;
   component_id mComponentId{};
   std::string mAttributeName;
-  maybe<std::string> mDuplicatedName;
+  Maybe<std::string> mDuplicatedName;
 };
 
 }  // namespace tactile

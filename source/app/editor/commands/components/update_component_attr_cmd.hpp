@@ -52,7 +52,7 @@ class UpdateComponentAttrCmd final : public ACommand
   component_id mComponentId{};
   std::string mAttributeName;
   Attribute mUpdatedValue;
-  maybe<Attribute> mPreviousValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

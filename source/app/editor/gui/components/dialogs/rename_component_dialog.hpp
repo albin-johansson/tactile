@@ -43,7 +43,7 @@ class rename_component_dialog final : public component_name_dialog
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  maybe<component_id> mComponentId;
+  Maybe<component_id> mComponentId;
 };
 
 }  // namespace tactile

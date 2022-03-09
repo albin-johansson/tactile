@@ -47,7 +47,7 @@ class ChangePropertyTypeCmd final : public ACommand
   context_id mContextId;
   std::string mName;
   AttributeType mPropertyType;
-  maybe<Attribute> mPreviousValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

@@ -46,7 +46,7 @@ class RenameComponentCmd final : public ACommand
   registry_ref mRegistry;
   component_id mComponentId{};
   std::string mUpdatedName;
-  maybe<std::string> mPreviousName;
+  Maybe<std::string> mPreviousName;
 };
 
 }  // namespace tactile

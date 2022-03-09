@@ -116,7 +116,7 @@ auto remove_object(entt::registry& registry, const object_id id) -> RemoveObject
 {
   const auto objectEntity = find_object(registry, id);
 
-  maybe<layer_id> layerId;
+  Maybe<layer_id> layerId;
   for (auto&& [layerEntity, layer, objectLayer] :
        registry.view<comp::Layer, comp::ObjectLayer>().each()) {
     if (std::erase(objectLayer.objects, objectEntity) > 0) {

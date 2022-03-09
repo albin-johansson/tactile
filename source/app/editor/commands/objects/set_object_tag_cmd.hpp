@@ -45,7 +45,7 @@ class SetObjectTagCmd final : public AObjectCommand
 
  private:
   std::string mNewTag;
-  maybe<std::string> mOldTag;
+  Maybe<std::string> mOldTag;
 };
 
 }  // namespace tactile

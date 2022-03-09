@@ -46,7 +46,7 @@ class ResetComponentCmd final : public ACommand
   registry_ref mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
-  maybe<sys::reset_component_result> mSnapshot;
+  Maybe<sys::reset_component_result> mSnapshot;
 };
 
 }  // namespace tactile

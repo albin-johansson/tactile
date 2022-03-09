@@ -191,12 +191,12 @@ auto widget_manager::is_toolbar_visible() const -> bool
   return mWidgets->mToolbar.IsVisible();
 }
 
-auto widget_manager::tileset_view_width() const -> maybe<float>
+auto widget_manager::tileset_view_width() const -> Maybe<float>
 {
   return mWidgets->mTilesetDock.GetTilesetView().GetWidth();
 }
 
-auto widget_manager::tileset_view_height() const -> maybe<float>
+auto widget_manager::tileset_view_height() const -> Maybe<float>
 {
   return mWidgets->mTilesetDock.GetTilesetView().GetHeight();
 }

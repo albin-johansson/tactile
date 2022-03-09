@@ -50,8 +50,8 @@ class EllipseToolCmd final : public ACommand
   float mY{};
   float mWidth{};  /* X-axis diameter */
   float mHeight{}; /* Y-axis diameter */
-  maybe<object_id> mObjectId;
-  maybe<sys::RemoveObjectResult> mSnapshot;
+  Maybe<object_id> mObjectId;
+  Maybe<sys::RemoveObjectResult> mSnapshot;
 };
 
 /// \} End of group commands

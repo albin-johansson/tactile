@@ -49,8 +49,8 @@ class AddTilesetCmd final : public ACommand
   comp::Texture mTexture;
   int32 mTileWidth;
   int32 mTileHeight;
-  maybe<tileset_id> mTilesetId;
-  maybe<sys::TilesetSnapshot> mSnapshot;
+  Maybe<tileset_id> mTilesetId;
+  Maybe<sys::TilesetSnapshot> mSnapshot;
 };
 
 }  // namespace tactile

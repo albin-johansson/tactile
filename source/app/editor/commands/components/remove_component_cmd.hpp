@@ -46,7 +46,7 @@ class RemoveComponentCmd final : public ACommand
   registry_ref mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
-  maybe<sys::remove_component_result> mSnapshot;
+  Maybe<sys::remove_component_result> mSnapshot;
 };
 
 }  // namespace tactile

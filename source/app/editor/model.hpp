@@ -158,7 +158,7 @@ class DocumentModel final
    *
    * \return the identifier of the active map.
    */
-  [[nodiscard]] auto active_map_id() const -> maybe<map_id>;
+  [[nodiscard]] auto active_map_id() const -> Maybe<map_id>;
 
   /**
    * \brief Returns the currently active document, if there is one.
@@ -279,7 +279,7 @@ class DocumentModel final
 
  private:
   document_map mDocuments;
-  maybe<map_id> mActiveMap;
+  Maybe<map_id> mActiveMap;
   map_id mNextId{1};
 };
 

@@ -45,7 +45,7 @@ class SetLayerOpacityCmd final : public ACommand
   registry_ref mRegistry;
   layer_id mLayerId;
   float mOpacity;
-  maybe<float> mPreviousOpacity;
+  Maybe<float> mPreviousOpacity;
 };
 
 }  // namespace tactile

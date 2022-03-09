@@ -46,8 +46,8 @@ class ChangePropertyTypeDialog final : public dialog_base
 
  private:
   AttributeType mCurrentType{AttributeType::string};
-  maybe<std::string> mPropertyName;
-  maybe<AttributeType> mPreviousType;
+  Maybe<std::string> mPropertyName;
+  Maybe<AttributeType> mPreviousType;
 };
 
 }  // namespace tactile

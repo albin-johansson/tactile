@@ -42,8 +42,8 @@ class rename_layer_dialog final : public string_input_dialog
       -> bool override;
 
  private:
-  maybe<layer_id> mTargetId;
-  maybe<std::string> mOldName;
+  Maybe<layer_id> mTargetId;
+  Maybe<std::string> mOldName;
 };
 
 }  // namespace tactile

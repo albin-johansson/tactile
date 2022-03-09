@@ -49,7 +49,7 @@ class UpdatePropertyCmd final : public ACommand
   context_id mContextId;
   std::string mName;
   Attribute mNewValue;
-  maybe<Attribute> mOldValue;
+  Maybe<Attribute> mOldValue;
 };
 
 }  // namespace tactile

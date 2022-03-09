@@ -31,12 +31,12 @@
 namespace tactile {
 
 [[nodiscard]] auto input_attribute(const char* id, const Attribute& value)
-    -> maybe<Attribute>;
+    -> Maybe<Attribute>;
 
-[[nodiscard]] auto input_int(const char* id, int value) -> maybe<int>;
+[[nodiscard]] auto input_int(const char* id, int value) -> Maybe<int>;
 
 [[nodiscard]] auto input_float(const char* id, float value, float min = 0, float max = 0)
-    -> maybe<float>;
+    -> Maybe<float>;
 
 [[nodiscard]] auto input_string_with_hint(const char* id,
                                           const char* hint,
@@ -44,22 +44,22 @@ namespace tactile {
                                           const char* label = nullptr,
                                           ImGuiInputTextFlags flags = 0,
                                           ImGuiInputTextCallback filter = nullptr)
-    -> maybe<std::string>;
+    -> Maybe<std::string>;
 
 [[nodiscard]] auto input_string(const char* id,
                                 const std::string& value,
                                 const char* label = nullptr,
                                 ImGuiInputTextFlags flags = 0,
                                 ImGuiInputTextCallback filter = nullptr)
-    -> maybe<std::string>;
+    -> Maybe<std::string>;
 
-[[nodiscard]] auto input_bool(const char* id, bool value) -> maybe<bool>;
+[[nodiscard]] auto input_bool(const char* id, bool value) -> Maybe<bool>;
 
-[[nodiscard]] auto input_object(const char* id, object_t value) -> maybe<object_t>;
+[[nodiscard]] auto input_object(const char* id, object_t value) -> Maybe<object_t>;
 
-[[nodiscard]] auto input_color(const char* id, cen::color value) -> maybe<cen::color>;
+[[nodiscard]] auto input_color(const char* id, cen::color value) -> Maybe<cen::color>;
 
 [[nodiscard]] auto input_file(const char* id, const std::filesystem::path& value)
-    -> maybe<std::filesystem::path>;
+    -> Maybe<std::filesystem::path>;
 
 }  // namespace tactile

@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-using component_attribute_map = tree_map<std::string, Attribute>;
+using component_attribute_map = TreeMap<std::string, Attribute>;
 
 }  // namespace tactile
 

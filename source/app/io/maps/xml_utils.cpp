@@ -51,7 +51,7 @@ auto has_attribute(pugi::xml_node node, const char* attributeName) -> bool
 }
 
 auto string_attribute(pugi::xml_node node, const char* attributeName)
-    -> maybe<std::string>
+    -> Maybe<std::string>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -63,7 +63,7 @@ auto string_attribute(pugi::xml_node node, const char* attributeName)
   }
 }
 
-auto int_attribute(pugi::xml_node node, const char* attributeName) -> maybe<int32>
+auto int_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<int32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -78,7 +78,7 @@ auto int_attribute(pugi::xml_node node, const char* attributeName) -> maybe<int3
   }
 }
 
-auto uint_attribute(pugi::xml_node node, const char* attributeName) -> maybe<uint32>
+auto uint_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<uint32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -93,7 +93,7 @@ auto uint_attribute(pugi::xml_node node, const char* attributeName) -> maybe<uin
   }
 }
 
-auto float_attribute(pugi::xml_node node, const char* attributeName) -> maybe<float>
+auto float_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<float>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -108,7 +108,7 @@ auto float_attribute(pugi::xml_node node, const char* attributeName) -> maybe<fl
   }
 }
 
-auto bool_attribute(pugi::xml_node node, const char* attributeName) -> maybe<bool>
+auto bool_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<bool>
 {
   TACTILE_ASSERT(attributeName);
 

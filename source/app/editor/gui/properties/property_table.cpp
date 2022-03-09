@@ -54,7 +54,7 @@ void PrepareTableRow(const c_str label)
 
 [[nodiscard]] auto NativeNameRow(const std::string& name,
                                  const bool validateAsFileName = false)
-    -> maybe<std::string>
+    -> Maybe<std::string>
 {
   PrepareTableRow("Name");
 
@@ -86,7 +86,7 @@ void PrepareTableRow(const c_str label)
   }
 }
 
-[[nodiscard]] auto NativeOpacityRow(const float opacity) -> maybe<float>
+[[nodiscard]] auto NativeOpacityRow(const float opacity) -> Maybe<float>
 {
   PrepareTableRow("Opacity");
 
@@ -94,7 +94,7 @@ void PrepareTableRow(const c_str label)
   return input_float("##NativeOpacityRow", opacity, 0.0f, 1.0f);
 }
 
-[[nodiscard]] auto NativeVisibilityRow(const bool visible) -> maybe<bool>
+[[nodiscard]] auto NativeVisibilityRow(const bool visible) -> Maybe<bool>
 {
   PrepareTableRow("Visible");
 

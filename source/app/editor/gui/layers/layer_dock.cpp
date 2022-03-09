@@ -45,7 +45,7 @@ struct layer_dock::layer_dock_data final
 {
   rename_layer_dialog mRenameLayerDialog;
   add_layer_context_menu mAddLayerContextMenu;
-  maybe<layer_id> mRenameTarget;
+  Maybe<layer_id> mRenameTarget;
 };
 
 layer_dock::layer_dock()
@@ -127,7 +127,7 @@ void layer_dock::update_buttons(const DocumentModel& model,
   const auto activeLayerEntity = registry.ctx<comp::ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
-  maybe<layer_id> activeLayerId;
+  Maybe<layer_id> activeLayerId;
   if (hasActiveLayer) {
     const auto& layer = registry.get<comp::Layer>(activeLayerEntity);
     activeLayerId = layer.id;

@@ -47,7 +47,7 @@ class BucketToolCmd final : public ACommand
   layer_id mLayer;
   tile_position mOrigin;
   tile_id mReplacement;
-  maybe<tile_id> mTarget;
+  Maybe<tile_id> mTarget;
   std::vector<tile_position> mPositions;
 };
 

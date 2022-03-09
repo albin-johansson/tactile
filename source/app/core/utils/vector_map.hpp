@@ -181,7 +181,7 @@ class vector_map final
   }
 
   template <typename T>
-  [[nodiscard]] auto index_of(const T& key) const -> maybe<size_type>
+  [[nodiscard]] auto index_of(const T& key) const -> Maybe<size_type>
   {
     if (const auto it = find(key); it != end()) {
       return std::distance(begin(), it);

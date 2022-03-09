@@ -47,7 +47,7 @@ struct component_editor::component_editor_data final
   create_component_attribute_dialog create_component_attr;
   rename_component_dialog rename_component;
   rename_component_attribute_dialog rename_component_attr;
-  maybe<component_id> active_component;
+  Maybe<component_id> active_component;
 };
 
 component_editor::component_editor()

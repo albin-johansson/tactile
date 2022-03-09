@@ -45,7 +45,7 @@ class CreateComponentDefCmd final : public ACommand
  private:
   registry_ref mRegistry;
   std::string mName;
-  maybe<component_id> mComponentId;
+  Maybe<component_id> mComponentId;
 };
 
 }  // namespace tactile

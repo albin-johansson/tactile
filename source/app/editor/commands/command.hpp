@@ -33,7 +33,7 @@ namespace tactile {
 /**
  * \brief All commands are expected to take this as their first constructor parameter.
  */
-using registry_ref = ref<entt::registry>;
+using registry_ref = Ref<entt::registry>;
 
 /**
  * \brief The abstract base class of all command implementations.

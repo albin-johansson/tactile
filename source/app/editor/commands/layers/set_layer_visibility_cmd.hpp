@@ -43,7 +43,7 @@ class SetLayerVisibilityCmd final : public ACommand
   registry_ref mRegistry;
   layer_id mLayerId;
   bool mVisible;
-  maybe<bool> mPreviousVisibility;
+  Maybe<bool> mPreviousVisibility;
 };
 
 }  // namespace tactile

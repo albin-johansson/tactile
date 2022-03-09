@@ -41,7 +41,7 @@ class SetObjectVisibilityCmd final : public AObjectCommand
 
  private:
   bool mVisible;
-  maybe<bool> mPreviousVisibility;
+  Maybe<bool> mPreviousVisibility;
 };
 
 }  // namespace tactile

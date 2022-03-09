@@ -46,7 +46,7 @@ class rename_component_attribute_dialog final : public string_input_dialog
       -> bool override;
 
  private:
-  maybe<component_id> mComponentId;
+  Maybe<component_id> mComponentId;
 };
 
 }  // namespace tactile

@@ -45,7 +45,7 @@ class RenameLayerCmd final : public ACommand
   registry_ref mRegistry;
   layer_id mLayerId;
   std::string mName;
-  maybe<std::string> mPreviousName;
+  Maybe<std::string> mPreviousName;
 };
 
 }  // namespace tactile

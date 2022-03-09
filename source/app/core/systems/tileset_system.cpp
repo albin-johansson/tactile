@@ -400,7 +400,7 @@ auto get_tile_from_tileset(const entt::registry& registry,
 }
 
 auto convert_to_local(const entt::registry& registry, const tile_id global)
-    -> maybe<tile_id>
+    -> Maybe<tile_id>
 {
   const auto entity = find_tileset_with_tile(registry, global);
   if (entity != entt::null) {

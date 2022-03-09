@@ -31,7 +31,7 @@
 
 namespace tactile {
 
-auto input_attribute(const char* id, const Attribute& value) -> maybe<Attribute>
+auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
 {
   switch (value.type()) {
     case AttributeType::string: {
@@ -81,7 +81,7 @@ auto input_attribute(const char* id, const Attribute& value) -> maybe<Attribute>
   return nothing;
 }
 
-auto input_int(const char* id, int value) -> maybe<int>
+auto input_int(const char* id, int value) -> Maybe<int>
 {
   const scoped::id scope{id};
 
@@ -98,7 +98,7 @@ auto input_int(const char* id, int value) -> maybe<int>
 }
 
 auto input_float(const char* id, float value, const float min, const float max)
-    -> maybe<float>
+    -> Maybe<float>
 {
   const scoped::id scope{id};
 
@@ -127,7 +127,7 @@ auto input_string_with_hint(const char* id,
                             const std::string& value,
                             const char* label,
                             const ImGuiInputTextFlags flags,
-                            const ImGuiInputTextCallback filter) -> maybe<std::string>
+                            const ImGuiInputTextCallback filter) -> Maybe<std::string>
 {
   const scoped::id scope{id};
 
@@ -164,12 +164,12 @@ auto input_string(const char* id,
                   const std::string& value,
                   const char* label,
                   const ImGuiInputTextFlags flags,
-                  const ImGuiInputTextCallback filter) -> maybe<std::string>
+                  const ImGuiInputTextCallback filter) -> Maybe<std::string>
 {
   return input_string_with_hint(id, nullptr, value, label, flags, filter);
 }
 
-auto input_bool(const char* id, bool value) -> maybe<bool>
+auto input_bool(const char* id, bool value) -> Maybe<bool>
 {
   const scoped::id scope{id};
 
@@ -184,7 +184,7 @@ auto input_bool(const char* id, bool value) -> maybe<bool>
   return nothing;
 }
 
-auto input_object(const char* id, object_t value) -> maybe<object_t>
+auto input_object(const char* id, object_t value) -> Maybe<object_t>
 {
   const scoped::id scope{id};
 
@@ -198,7 +198,7 @@ auto input_object(const char* id, object_t value) -> maybe<object_t>
   return nothing;
 }
 
-auto input_color(const char* id, const cen::color value) -> maybe<cen::color>
+auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
@@ -218,7 +218,7 @@ auto input_color(const char* id, const cen::color value) -> maybe<cen::color>
 }
 
 auto input_file(const char* id, const std::filesystem::path& value)
-    -> maybe<std::filesystem::path>
+    -> Maybe<std::filesystem::path>
 {
   const scoped::id scope{id};
 

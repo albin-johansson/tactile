@@ -46,9 +46,9 @@ class AppConfiguration final
   cen::img mIMG;
 
   /* Initialization of these members needs to be deferred */
-  maybe<cen::window> mWindow;
-  maybe<cen::gl_context> mOpenGL;
-  maybe<ImGuiContext> mImGui;
+  Maybe<cen::window> mWindow;
+  Maybe<cen::gl_context> mOpenGL;
+  Maybe<ImGuiContext> mImGui;
 };
 
 }  // namespace tactile

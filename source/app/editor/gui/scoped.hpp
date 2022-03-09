@@ -359,7 +359,7 @@ class window final
     bool is_hovered{};
   };
 
-  inline static hash_map<const char*, WindowData> window_data;
+  inline static HashMap<const char*, WindowData> window_data;
 
  public:
   TACTILE_DEFAULT_COPY(window)

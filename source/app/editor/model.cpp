@@ -115,7 +115,7 @@ auto DocumentModel::has_document_with_path(const std::filesystem::path& path) co
   });
 }
 
-auto DocumentModel::active_map_id() const -> maybe<map_id>
+auto DocumentModel::active_map_id() const -> Maybe<map_id>
 {
   return mActiveMap;
 }

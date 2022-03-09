@@ -42,7 +42,7 @@ struct TilesetContext final
   /**
    * \brief Maps all global tile identifiers to the associated tileset.
    */
-  hash_map<tile_id, entt::entity> tile_to_tileset;
+  HashMap<tile_id, entt::entity> tile_to_tileset;
 };
 
 /**
@@ -94,13 +94,13 @@ struct MetaTile final
  */
 struct TilesetCache final
 {
-  hash_map<tile_id, cen::irect> source_rects;  ///< Tileset source rectangles.
-  hash_map<tile_id, entt::entity> tiles;       ///< Additional tile info.
+  HashMap<tile_id, cen::irect> source_rects;  ///< Tileset source rectangles.
+  HashMap<tile_id, entt::entity> tiles;       ///< Additional tile info.
 
   /**
    * \brief Frame-by-frame cache that maps tiles to the tile that should be rendered.
    */
-  mutable hash_map<tile_id, tile_id> source_to_render;
+  mutable HashMap<tile_id, tile_id> source_to_render;
 };
 
 /**
@@ -110,7 +110,7 @@ struct TilesetCache final
  */
 struct TilesetSelection final
 {
-  maybe<Region> region;  ///< The currently selected region, if any.
+  Maybe<Region> region;  ///< The currently selected region, if any.
 };
 
 /**

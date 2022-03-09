@@ -37,6 +37,6 @@ namespace tactile {
  * \return the current selection; `nothing` if there is none.
  */
 [[nodiscard]] auto rubber_band(const ImVec2& offset, const ImVec2& tileSize)
-    -> maybe<Region>;
+    -> Maybe<Region>;
 
 }  // namespace tactile

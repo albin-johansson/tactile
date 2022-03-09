@@ -32,12 +32,12 @@
 
 namespace tactile::ir {
 
-using component_map = tree_map<std::string, Attribute>;
+using component_map = TreeMap<std::string, Attribute>;
 
 struct attribute_context_data final
 {
-  tree_map<std::string, Attribute> properties;
-  tree_map<std::string, component_map> components;
+  TreeMap<std::string, Attribute> properties;
+  TreeMap<std::string, component_map> components;
 };
 
 struct object_data final
@@ -130,7 +130,7 @@ struct tileset_data final
   int32 image_width{};
   int32 image_height{};
 
-  hash_map<tile_id, fancy_tile_data> fancy_tiles;
+  HashMap<tile_id, fancy_tile_data> fancy_tiles;
 
   attribute_context_data context;
 };
@@ -146,7 +146,7 @@ struct map_data
   int32 next_layer_id{};
   int32 next_object_id{};
 
-  tree_map<std::string, component_map> component_definitions;
+  TreeMap<std::string, component_map> component_definitions;
 
   std::vector<tileset_data> tilesets;
   std::vector<layer_data> layers;

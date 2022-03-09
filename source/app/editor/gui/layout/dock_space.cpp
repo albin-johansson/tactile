@@ -31,7 +31,7 @@ namespace tactile {
 namespace {
 
 constinit bool gInitialized = false;
-constinit maybe<ImGuiID> gRootId;
+constinit Maybe<ImGuiID> gRootId;
 
 }  // namespace
 

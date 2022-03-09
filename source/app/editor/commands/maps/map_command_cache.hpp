@@ -28,8 +28,8 @@ namespace tactile {
 
 class MapCommandCache final
 {
-  using tile_cache = tree_map<tile_position, tile_id>;
-  using layer_cache = tree_map<layer_id, tile_cache>;
+  using tile_cache = TreeMap<tile_position, tile_id>;
+  using layer_cache = TreeMap<layer_id, tile_cache>;
 
  public:
   void clear() noexcept;

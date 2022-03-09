@@ -46,7 +46,7 @@ class RemovePropertyCmd final : public ACommand
   registry_ref mRegistry;
   context_id mContextId;
   std::string mName;
-  maybe<Attribute> mPreviousValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

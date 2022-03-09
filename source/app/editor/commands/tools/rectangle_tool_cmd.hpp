@@ -50,8 +50,8 @@ class RectangleToolCmd final : public ACommand
   float mY{};
   float mWidth{};
   float mHeight{};
-  maybe<object_id> mObjectId;
-  maybe<sys::RemoveObjectResult> mSnapshot;
+  Maybe<object_id> mObjectId;
+  Maybe<sys::RemoveObjectResult> mSnapshot;
 };
 
 /// \} End of group commands

@@ -42,7 +42,7 @@ class DuplicateLayerCmd final : public ACommand
  private:
   registry_ref mRegistry;
   layer_id mLayerId;
-  maybe<layer_id> mNewLayerId;
+  Maybe<layer_id> mNewLayerId;
 };
 
 }  // namespace tactile

@@ -260,7 +260,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  * \return the corresponding local tile identifier; `nothing` if something went wrong.
  */
 [[nodiscard]] auto convert_to_local(const entt::registry& registry, tile_id global)
-    -> maybe<tile_id>;
+    -> Maybe<tile_id>;
 
 /// \} End of tileset system
 

@@ -33,18 +33,18 @@ namespace tactile {
 [[nodiscard]] auto has_attribute(pugi::xml_node node, const char* attributeName) -> bool;
 
 [[nodiscard]] auto string_attribute(pugi::xml_node node, const char* attributeName)
-    -> maybe<std::string>;
+    -> Maybe<std::string>;
 
 [[nodiscard]] auto int_attribute(pugi::xml_node node, const char* attributeName)
-    -> maybe<int32>;
+    -> Maybe<int32>;
 
 [[nodiscard]] auto uint_attribute(pugi::xml_node node, const char* attributeName)
-    -> maybe<uint32>;
+    -> Maybe<uint32>;
 
 [[nodiscard]] auto float_attribute(pugi::xml_node node, const char* attributeName)
-    -> maybe<float>;
+    -> Maybe<float>;
 
 [[nodiscard]] auto bool_attribute(pugi::xml_node node, const char* attributeName)
-    -> maybe<bool>;
+    -> Maybe<bool>;
 
 }  // namespace tactile

@@ -45,8 +45,8 @@ class PointToolCmd final : public ACommand
   layer_id mLayerId{};
   float mPointX{};
   float mPointY{};
-  maybe<object_id> mObjectId;
-  maybe<sys::RemoveObjectResult> mSnapshot;
+  Maybe<object_id> mObjectId;
+  Maybe<sys::RemoveObjectResult> mSnapshot;
 };
 
 /// \} End of group commands

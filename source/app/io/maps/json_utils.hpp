@@ -45,21 +45,21 @@ void to_json(nlohmann::json& json, const Attribute& value);
 
 void write_json(const nlohmann::json& json, const std::filesystem::path& path);
 
-[[nodiscard]] auto read_json(const std::filesystem::path& path) -> maybe<nlohmann::json>;
+[[nodiscard]] auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>;
 
 [[nodiscard]] auto as_string(const nlohmann::json& json, std::string_view name)
-    -> maybe<std::string>;
+    -> Maybe<std::string>;
 
 [[nodiscard]] auto as_int(const nlohmann::json& json, std::string_view name)
-    -> maybe<int32>;
+    -> Maybe<int32>;
 
 [[nodiscard]] auto as_uint(const nlohmann::json& json, std::string_view name)
-    -> maybe<uint32>;
+    -> Maybe<uint32>;
 
 [[nodiscard]] auto as_float(const nlohmann::json& json, std::string_view name)
-    -> maybe<float>;
+    -> Maybe<float>;
 
 [[nodiscard]] auto as_bool(const nlohmann::json& json, std::string_view name)
-    -> maybe<bool>;
+    -> Maybe<bool>;
 
 }  // namespace tactile

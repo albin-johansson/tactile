@@ -89,9 +89,9 @@ class widget_manager final
 
   [[nodiscard]] auto is_toolbar_visible() const -> bool;
 
-  [[nodiscard]] auto tileset_view_width() const -> maybe<float>;
+  [[nodiscard]] auto tileset_view_width() const -> Maybe<float>;
 
-  [[nodiscard]] auto tileset_view_height() const -> maybe<float>;
+  [[nodiscard]] auto tileset_view_height() const -> Maybe<float>;
 
  private:
   struct widgets;

@@ -148,7 +148,7 @@ auto duplicate_layer(entt::registry& registry,
 
 [[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> maybe<layer_id>;
+[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<layer_id>;
 
 /**
  * \brief Attempts to find the layer associated with the specified ID.

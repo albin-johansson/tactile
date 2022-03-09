@@ -154,7 +154,7 @@ void rename_component_def(entt::registry& registry, component_id id, std::string
                                            std::string_view name) -> bool;
 
 [[nodiscard]] auto get_first_available_component_def(const entt::registry& registry)
-    -> maybe<component_id>;
+    -> Maybe<component_id>;
 
 [[nodiscard]] auto find_component_def(const entt::registry& registry, component_id id)
     -> entt::entity;

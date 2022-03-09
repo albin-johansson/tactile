@@ -45,7 +45,7 @@ class SetObjectNameCmd final : public AObjectCommand
 
  private:
   std::string mNewName;
-  maybe<std::string> mOldName;
+  Maybe<std::string> mOldName;
 };
 
 }  // namespace tactile

@@ -43,7 +43,7 @@ class RemoveTilesetCmd final : public ACommand
  private:
   registry_ref mRegistry;
   tileset_id mTilesetId;
-  maybe<sys::TilesetSnapshot> mSnapshot;
+  Maybe<sys::TilesetSnapshot> mSnapshot;
 };
 
 }  // namespace tactile

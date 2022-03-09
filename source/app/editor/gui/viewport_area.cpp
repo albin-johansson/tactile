@@ -27,7 +27,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto check_for(auto&& query) -> maybe<cen::mouse_button>
+[[nodiscard]] auto check_for(auto&& query) -> Maybe<cen::mouse_button>
 {
   const auto left = query(ImGuiMouseButton_Left);
   const auto mid = query(ImGuiMouseButton_Middle);

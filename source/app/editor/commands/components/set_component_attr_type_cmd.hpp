@@ -49,7 +49,7 @@ class SetComponentAttrTypeCmd final : public ACommand
   component_id mComponentId;
   std::string mAttributeName;
   AttributeType mNewType;
-  maybe<Attribute> mPreviousValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile
