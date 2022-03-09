@@ -25,6 +25,9 @@
 
 namespace tactile::sys {
 
+void object_selection_tool_on_exited(entt::registry& registry,
+                                     entt::dispatcher& dispatcher);
+
 void object_selection_tool_on_pressed(entt::registry& registry,
                                       entt::dispatcher& dispatcher,
                                       const mouse_info& mouse);

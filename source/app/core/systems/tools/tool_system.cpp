@@ -88,6 +88,9 @@ void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
       break;
 
     case tool_type::object_selection:
+      object_selection_tool_on_exited(registry, dispatcher);
+      break;
+
     case tool_type::bucket:
     case tool_type::rectangle:
     case tool_type::ellipse:
