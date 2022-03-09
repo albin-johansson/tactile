@@ -30,7 +30,7 @@ namespace tactile {
 class SetObjectNameCmd final : public AObjectCommand
 {
  public:
-  SetObjectNameCmd(registry_ref registry, object_id id, std::string name);
+  SetObjectNameCmd(RegistryRef registry, object_id id, std::string name);
 
   void undo() override;
 

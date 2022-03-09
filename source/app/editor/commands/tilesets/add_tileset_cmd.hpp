@@ -30,7 +30,7 @@ namespace tactile {
 class AddTilesetCmd final : public ACommand
 {
  public:
-  AddTilesetCmd(registry_ref registry,
+  AddTilesetCmd(RegistryRef registry,
                 comp::Texture texture,
                 int32 tileWidth,
                 int32 tileHeight);
@@ -45,7 +45,7 @@ class AddTilesetCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   comp::Texture mTexture;
   int32 mTileWidth;
   int32 mTileHeight;

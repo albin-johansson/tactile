@@ -29,7 +29,7 @@ namespace tactile {
 class RemoveComponentCmd final : public ACommand
 {
  public:
-  RemoveComponentCmd(registry_ref registry,
+  RemoveComponentCmd(RegistryRef registry,
                      context_id contextId,
                      component_id componentId);
 
@@ -43,7 +43,7 @@ class RemoveComponentCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
   Maybe<sys::remove_component_result> mSnapshot;

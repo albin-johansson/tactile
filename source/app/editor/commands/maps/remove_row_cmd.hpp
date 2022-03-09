@@ -29,7 +29,7 @@ namespace tactile {
 class RemoveRowCmd final : public ACommand
 {
  public:
-  explicit RemoveRowCmd(registry_ref registry);
+  explicit RemoveRowCmd(RegistryRef registry);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class RemoveRowCmd final : public ACommand
   [[nodiscard]] auto id() const noexcept -> int override { return CommandId::remove_row; }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   MapCommandCache mCache;
   usize mRows{1};
 };

@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-StampToolCmd::StampToolCmd(registry_ref registry,
+StampToolCmd::StampToolCmd(RegistryRef registry,
                            TileCache&& oldState,
                            TileCache&& newState)
     : ACommand{"Stamp Sequence"}

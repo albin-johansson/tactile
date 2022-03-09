@@ -32,7 +32,7 @@ namespace tactile {
 class StampToolCmd final : public ACommand
 {
  public:
-  StampToolCmd(registry_ref registry, TileCache&& oldState, TileCache&& newState);
+  StampToolCmd(RegistryRef registry, TileCache&& oldState, TileCache&& newState);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class StampToolCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   layer_id mLayer;
   TileCache mOldState;
   TileCache mNewState;

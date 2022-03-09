@@ -31,7 +31,7 @@ namespace tactile {
 class UpdateComponentCmd final : public ACommand
 {
  public:
-  UpdateComponentCmd(registry_ref registry,
+  UpdateComponentCmd(RegistryRef registry,
                      context_id contextId,
                      component_id componentId,
                      std::string attribute,
@@ -49,7 +49,7 @@ class UpdateComponentCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
   std::string mAttributeName;

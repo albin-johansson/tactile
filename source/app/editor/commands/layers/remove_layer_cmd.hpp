@@ -32,7 +32,7 @@ namespace tactile {
 class RemoveLayerCmd final : public ACommand
 {
  public:
-  RemoveLayerCmd(registry_ref registry, layer_id id);
+  RemoveLayerCmd(RegistryRef registry, layer_id id);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class RemoveLayerCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   layer_id mLayerId;
   Maybe<sys::LayerSnapshot> mLayerSnapshot;
 };

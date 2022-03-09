@@ -32,7 +32,7 @@ namespace tactile {
 class EllipseToolCmd final : public ACommand
 {
  public:
-  EllipseToolCmd(registry_ref registry, float x, float y, float width, float height);
+  EllipseToolCmd(RegistryRef registry, float x, float y, float width, float height);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class EllipseToolCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   layer_id mLayerId{};
   float mX{};
   float mY{};

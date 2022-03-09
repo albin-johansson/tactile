@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-RectangleToolCmd::RectangleToolCmd(registry_ref registry,
+RectangleToolCmd::RectangleToolCmd(RegistryRef registry,
                                    const float x,
                                    const float y,
                                    const float width,

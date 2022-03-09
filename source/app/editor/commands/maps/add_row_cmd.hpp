@@ -28,7 +28,7 @@ namespace tactile {
 class AddRowCmd final : public ACommand
 {
  public:
-  explicit AddRowCmd(registry_ref registry);
+  explicit AddRowCmd(RegistryRef registry);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class AddRowCmd final : public ACommand
   [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_row; }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   usize mRows{1};
 };
 

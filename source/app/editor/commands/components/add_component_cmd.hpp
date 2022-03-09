@@ -28,7 +28,7 @@ namespace tactile {
 class AddComponentCmd final : public ACommand
 {
  public:
-  AddComponentCmd(registry_ref registry, context_id contextId, component_id componentId);
+  AddComponentCmd(RegistryRef registry, context_id contextId, component_id componentId);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class AddComponentCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
 };

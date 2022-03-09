@@ -29,7 +29,7 @@ namespace tactile {
 class ResetComponentCmd final : public ACommand
 {
  public:
-  ResetComponentCmd(registry_ref registry,
+  ResetComponentCmd(RegistryRef registry,
                     context_id contextId,
                     component_id componentId);
 
@@ -43,7 +43,7 @@ class ResetComponentCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
   Maybe<sys::reset_component_result> mSnapshot;

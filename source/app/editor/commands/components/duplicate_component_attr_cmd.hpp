@@ -30,7 +30,7 @@ namespace tactile {
 class DuplicateComponentAttrCmd final : public ACommand
 {
  public:
-  DuplicateComponentAttrCmd(registry_ref registry,
+  DuplicateComponentAttrCmd(RegistryRef registry,
                             component_id componentId,
                             std::string attribute);
 
@@ -44,7 +44,7 @@ class DuplicateComponentAttrCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   component_id mComponentId{};
   std::string mAttributeName;
   Maybe<std::string> mDuplicatedName;

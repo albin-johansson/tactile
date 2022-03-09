@@ -30,7 +30,7 @@ namespace tactile {
 class RemoveComponentAttrCmd final : public ACommand
 {
  public:
-  RemoveComponentAttrCmd(registry_ref registry,
+  RemoveComponentAttrCmd(RegistryRef registry,
                          component_id componentId,
                          std::string attribute);
 
@@ -44,7 +44,7 @@ class RemoveComponentAttrCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   component_id mComponentId{};
   std::string mAttributeName;
   Maybe<Attribute> mPreviousDefault;

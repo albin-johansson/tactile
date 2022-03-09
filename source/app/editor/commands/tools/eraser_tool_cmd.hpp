@@ -32,7 +32,7 @@ namespace tactile {
 class EraserToolCmd final : public ACommand
 {
  public:
-  EraserToolCmd(registry_ref registry, TileCache&& oldState);
+  EraserToolCmd(RegistryRef registry, TileCache&& oldState);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class EraserToolCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   layer_id mLayer;
   TileCache mOldState;
 };

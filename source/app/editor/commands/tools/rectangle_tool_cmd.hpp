@@ -32,7 +32,7 @@ namespace tactile {
 class RectangleToolCmd final : public ACommand
 {
  public:
-  RectangleToolCmd(registry_ref registry, float x, float y, float width, float height);
+  RectangleToolCmd(RegistryRef registry, float x, float y, float width, float height);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class RectangleToolCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   layer_id mLayerId{};
   float mX{};
   float mY{};

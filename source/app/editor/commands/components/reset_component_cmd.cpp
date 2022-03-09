@@ -21,7 +21,7 @@
 
 namespace tactile {
 
-ResetComponentCmd::ResetComponentCmd(registry_ref registry,
+ResetComponentCmd::ResetComponentCmd(RegistryRef registry,
                                      const context_id contextId,
                                      const component_id componentId)
     : ACommand{"Reset Component Values"}

@@ -21,7 +21,7 @@
 
 namespace tactile {
 
-RemoveComponentDefCmd::RemoveComponentDefCmd(registry_ref registry, const component_id id)
+RemoveComponentDefCmd::RemoveComponentDefCmd(RegistryRef registry, const component_id id)
     : ACommand{"Remove Component Definition"}
     , mRegistry{registry}
     , mComponentId{id}

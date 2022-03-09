@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-EllipseToolCmd::EllipseToolCmd(registry_ref registry,
+EllipseToolCmd::EllipseToolCmd(RegistryRef registry,
                                const float x,
                                const float y,
                                const float width,

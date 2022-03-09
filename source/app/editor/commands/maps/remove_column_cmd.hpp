@@ -29,7 +29,7 @@ namespace tactile {
 class RemoveColumnCmd final : public ACommand
 {
  public:
-  explicit RemoveColumnCmd(registry_ref registry);
+  explicit RemoveColumnCmd(RegistryRef registry);
 
   void undo() override;
 
@@ -43,7 +43,7 @@ class RemoveColumnCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   MapCommandCache mCache;
   usize mColumns{1};
 };

@@ -8,7 +8,7 @@ types that override `merge_with()`. See the in-source documentation for more det
 ## Guidelines
 
 * Never store entity identifiers in commands, use dedicated identifiers such as `object_id` instead.
-* Always take `registry_ref` as the first command constructor parameter.
+* Always take `RegistryRef` as the first command constructor parameter.
 * Use `id()` to perform initial type checks when overriding `merge_with()`, but use `dynamic_cast` and not `static_cast`
   for the actual downcast.
 
@@ -18,9 +18,9 @@ The process of adding a new command to the application always involves a set of 
 
 1. Add an enumerator for the new command to the `command_id` enum.
 2. Implement the new command class, make sure that the `id()` function returns the newly added enumerator value.
-3. Most commands are executed as a result of an event, so make sure that `application` has a function that handles the
+3. Most commands are executed as a result of an event, so make sure that `Application` has a function that handles the
    event.
-4. Make sure that the dispatcher connects the event to the appropriate `application` function,
+4. Make sure that the dispatcher connects the event to the appropriate `Application` function,
    see `application_events.cpp`.
 5. Implement the creation of the command using one of the `_execute()` or `_register()` functions in `application.cpp`,
    which adds a command to the command stack. `_execute()` invokes the `redo()` function of the added command

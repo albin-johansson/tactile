@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-RenameLayerCmd::RenameLayerCmd(registry_ref registry, const layer_id id, std::string name)
+RenameLayerCmd::RenameLayerCmd(RegistryRef registry, const layer_id id, std::string name)
     : ACommand{"Rename Layer"}
     , mRegistry{registry}
     , mLayerId{id}

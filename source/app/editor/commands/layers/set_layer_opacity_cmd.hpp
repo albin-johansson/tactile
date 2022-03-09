@@ -28,7 +28,7 @@ namespace tactile {
 class SetLayerOpacityCmd final : public ACommand
 {
  public:
-  SetLayerOpacityCmd(registry_ref registry, layer_id id, float opacity);
+  SetLayerOpacityCmd(RegistryRef registry, layer_id id, float opacity);
 
   void undo() override;
 
@@ -42,7 +42,7 @@ class SetLayerOpacityCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   layer_id mLayerId;
   float mOpacity;
   Maybe<float> mPreviousOpacity;

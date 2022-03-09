@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-UpdatePropertyCmd::UpdatePropertyCmd(registry_ref registry,
+UpdatePropertyCmd::UpdatePropertyCmd(RegistryRef registry,
                                      std::string name,
                                      Attribute value)
     : ACommand{"update Property"}

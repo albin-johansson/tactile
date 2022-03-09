@@ -28,7 +28,7 @@ namespace tactile {
 class AddColumnCmd final : public ACommand
 {
  public:
-  explicit AddColumnCmd(registry_ref registry);
+  explicit AddColumnCmd(RegistryRef registry);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class AddColumnCmd final : public ACommand
   [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_column; }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   usize mColumns{1};
 };
 

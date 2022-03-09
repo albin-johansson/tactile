@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-RenameComponentAttrCmd::RenameComponentAttrCmd(registry_ref registry,
+RenameComponentAttrCmd::RenameComponentAttrCmd(RegistryRef registry,
                                                const component_id id,
                                                std::string previousName,
                                                std::string updatedName)

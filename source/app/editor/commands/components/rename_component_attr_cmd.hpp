@@ -30,7 +30,7 @@ namespace tactile {
 class RenameComponentAttrCmd final : public ACommand
 {
  public:
-  RenameComponentAttrCmd(registry_ref registry,
+  RenameComponentAttrCmd(RegistryRef registry,
                          component_id id,
                          std::string previousName,
                          std::string updatedName);
@@ -45,7 +45,7 @@ class RenameComponentAttrCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   component_id mComponentId{};
   std::string mPreviousName;
   std::string mUpdatedName;

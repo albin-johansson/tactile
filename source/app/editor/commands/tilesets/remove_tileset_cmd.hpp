@@ -29,7 +29,7 @@ namespace tactile {
 class RemoveTilesetCmd final : public ACommand
 {
  public:
-  RemoveTilesetCmd(registry_ref registry, tileset_id id);
+  RemoveTilesetCmd(RegistryRef registry, tileset_id id);
 
   void undo() override;
 
@@ -41,7 +41,7 @@ class RemoveTilesetCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   tileset_id mTilesetId;
   Maybe<sys::TilesetSnapshot> mSnapshot;
 };

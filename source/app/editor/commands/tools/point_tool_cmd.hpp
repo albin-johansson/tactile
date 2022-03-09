@@ -32,7 +32,7 @@ namespace tactile {
 class PointToolCmd final : public ACommand
 {
  public:
-  PointToolCmd(registry_ref registry, float x, float y);
+  PointToolCmd(RegistryRef registry, float x, float y);
 
   void undo() override;
 
@@ -41,7 +41,7 @@ class PointToolCmd final : public ACommand
   [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_point; }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   layer_id mLayerId{};
   float mPointX{};
   float mPointY{};

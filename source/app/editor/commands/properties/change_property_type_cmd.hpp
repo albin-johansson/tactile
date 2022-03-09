@@ -31,7 +31,7 @@ namespace tactile {
 class ChangePropertyTypeCmd final : public ACommand
 {
  public:
-  ChangePropertyTypeCmd(registry_ref registry, std::string name, AttributeType type);
+  ChangePropertyTypeCmd(RegistryRef registry, std::string name, AttributeType type);
 
   void undo() override;
 
@@ -43,7 +43,7 @@ class ChangePropertyTypeCmd final : public ACommand
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   context_id mContextId;
   std::string mName;
   AttributeType mPropertyType;
