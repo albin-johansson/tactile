@@ -34,7 +34,7 @@
 
 namespace tactile {
 
-void EditMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void EditMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{"Edit"}; menu.is_open()) {
     const auto canUndo = model.can_undo();
@@ -121,18 +121,18 @@ void EditMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 }
 
-void EditMenu::UpdateWindows(const DocumentModel& model, entt::dispatcher& dispatcher)
+void EditMenu::update_windows(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   mSettingsDialog.update(model, dispatcher);
   mComponentEditor.update(model, dispatcher);
 }
 
-void EditMenu::OpenSettingsModal()
+void EditMenu::show_settings_dialog()
 {
   mSettingsDialog.show();
 }
 
-void EditMenu::ShowComponentEditor(const DocumentModel& model)
+void EditMenu::show_component_editor(const DocumentModel& model)
 {
   mComponentEditor.show(model);
 }

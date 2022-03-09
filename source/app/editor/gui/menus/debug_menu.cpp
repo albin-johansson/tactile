@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-void DebugMenu::Update()
+void DebugMenu::update()
 {
   if (scoped::Menu menu{"Debug"}; menu.is_open()) {
     mShowMetrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
@@ -42,7 +42,7 @@ void DebugMenu::Update()
   }
 }
 
-void DebugMenu::UpdateWindows()
+void DebugMenu::update_windows()
 {
   if (mShowMetrics) {
     center_next_window_on_appearance();

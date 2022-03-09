@@ -33,21 +33,22 @@ class DocumentModel;
 class FileMenu final
 {
  public:
-  void Update(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
   /* Updates all associated windows. */
-  void UpdateWindows(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void update_windows(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void ShowNewMapDialog();
+  void show_map_creation_dialog();
 
-  void ShowOpenMapDialog();
+  void show_open_map_dialog();
 
  private:
   create_map_dialog mCreateMapDialog;
   bool mShowOpenMapDialog{};
 
-  void UpdateRecentFilesMenu(entt::dispatcher& dispatcher);
-  void UpdateMapFileDialog(entt::dispatcher& dispatcher);
+  void update_recent_files_menu(entt::dispatcher& dispatcher);
+
+  void update_map_file_dialog(entt::dispatcher& dispatcher);
 };
 
 /// \} End of group gui

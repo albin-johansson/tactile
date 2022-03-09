@@ -60,7 +60,7 @@ void widget_manager::update(const DocumentModel& model,
                             const IconManager& icons,
                             entt::dispatcher& dispatcher)
 {
-  mWidgets->mMenuBar.Update(model, dispatcher);
+  mWidgets->mMenuBar.update(model, dispatcher);
   UpdateDockSpace();
 
   if (model.has_active_document()) {
@@ -84,22 +84,22 @@ void widget_manager::update(const DocumentModel& model,
 
 void widget_manager::show_settings()
 {
-  mWidgets->mMenuBar.ShowSettings();
+  mWidgets->mMenuBar.show_settings_dialog();
 }
 
 void widget_manager::show_new_map_dialog()
 {
-  mWidgets->mMenuBar.ShowNewMapDialog();
+  mWidgets->mMenuBar.show_map_creation_dialog();
 }
 
 void widget_manager::show_open_map_dialog()
 {
-  mWidgets->mMenuBar.ShowOpenMapDialog();
+  mWidgets->mMenuBar.show_open_map_dialog();
 }
 
 void widget_manager::show_add_tileset_dialog()
 {
-  mWidgets->mMenuBar.ShowAddTilesetDialog();
+  mWidgets->mMenuBar.show_tileset_creation_dialog();
 }
 
 void widget_manager::show_rename_layer_dialog(const layer_id id)
@@ -136,7 +136,7 @@ void widget_manager::show_map_import_error_dialog(const parsing::parse_error err
 
 void widget_manager::show_component_editor(const DocumentModel& model)
 {
-  mWidgets->mMenuBar.ShowComponentEditor(model);
+  mWidgets->mMenuBar.show_component_editor(model);
 }
 
 void widget_manager::set_toolbar_visible(const bool visible)

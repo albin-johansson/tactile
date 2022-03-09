@@ -26,48 +26,48 @@
 
 namespace tactile {
 
-void MenuBar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void MenuBar::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar()) {
-    mFileMenu.Update(model, dispatcher);
-    mEditMenu.Update(model, dispatcher);
-    mViewMenu.Update(model, dispatcher);
-    mMapMenu.Update(model, dispatcher);
-    mHelpMenu.Update(model, dispatcher);
-    mDebugMenu.Update();
+    mFileMenu.update(model, dispatcher);
+    mEditMenu.update(model, dispatcher);
+    mViewMenu.update(model, dispatcher);
+    mMapMenu.update(model, dispatcher);
+    mHelpMenu.update(model, dispatcher);
+    mDebugMenu.update();
 
     ImGui::EndMainMenuBar();
   }
 
-  mFileMenu.UpdateWindows(model, dispatcher);
-  mEditMenu.UpdateWindows(model, dispatcher);
-  mHelpMenu.UpdateWindows();
-  mDebugMenu.UpdateWindows();
+  mFileMenu.update_windows(model, dispatcher);
+  mEditMenu.update_windows(model, dispatcher);
+  mHelpMenu.update_windows();
+  mDebugMenu.update_windows();
 }
 
-void MenuBar::ShowSettings()
+void MenuBar::show_settings_dialog()
 {
-  mEditMenu.OpenSettingsModal();
+  mEditMenu.show_settings_dialog();
 }
 
-void MenuBar::ShowNewMapDialog()
+void MenuBar::show_map_creation_dialog()
 {
-  mFileMenu.ShowNewMapDialog();
+  mFileMenu.show_map_creation_dialog();
 }
 
-void MenuBar::ShowOpenMapDialog()
+void MenuBar::show_open_map_dialog()
 {
-  mFileMenu.ShowOpenMapDialog();
+  mFileMenu.show_open_map_dialog();
 }
 
-void MenuBar::ShowAddTilesetDialog()
+void MenuBar::show_tileset_creation_dialog()
 {
-  mMapMenu.ShowAddTilesetDialog();
+  mMapMenu.show_tileset_creation_dialog();
 }
 
-void MenuBar::ShowComponentEditor(const DocumentModel& model)
+void MenuBar::show_component_editor(const DocumentModel& model)
 {
-  mEditMenu.ShowComponentEditor(model);
+  mEditMenu.show_component_editor(model);
 }
 
 }  // namespace tactile

@@ -41,17 +41,17 @@ class MenuBar final
    * \param model the associated model.
    * \param dispatcher the event dispatcher that will be used.
    */
-  void Update(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void ShowSettings();
+  void show_settings_dialog();
 
-  void ShowNewMapDialog();
+  void show_map_creation_dialog();
 
-  void ShowOpenMapDialog();
+  void show_open_map_dialog();
 
-  void ShowAddTilesetDialog();
+  void show_tileset_creation_dialog();
 
-  void ShowComponentEditor(const DocumentModel& model);
+  void show_component_editor(const DocumentModel& model);
 
  private:
   FileMenu mFileMenu;

@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-void HelpMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void HelpMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{"Help"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
@@ -54,7 +54,7 @@ void HelpMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
   mCreditsDialog.update(model, dispatcher);
 }
 
-void HelpMenu::UpdateWindows()
+void HelpMenu::update_windows()
 {
   if (mShowAboutImGui) {
     center_next_window_on_appearance();

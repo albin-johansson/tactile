@@ -34,14 +34,14 @@ class DocumentModel;
 class EditMenu final
 {
  public:
-  void Update(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
   /* Updates all associated windows. */
-  void UpdateWindows(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void update_windows(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void OpenSettingsModal();
+  void show_settings_dialog();
 
-  void ShowComponentEditor(const DocumentModel& model);
+  void show_component_editor(const DocumentModel& model);
 
  private:
   settings_dialog mSettingsDialog;

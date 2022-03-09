@@ -32,7 +32,7 @@
 
 namespace tactile {
 
-void FileMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void FileMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{"File"}; menu.is_open()) {
     const auto hasActiveDocument = model.has_active_document();
@@ -44,7 +44,7 @@ void FileMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     mShowOpenMapDialog =
         ImGui::MenuItem(TAC_ICON_OPEN " Open Map...", TACTILE_PRIMARY_MOD "+O");
 
-    UpdateRecentFilesMenu(dispatcher);
+    update_recent_files_menu(dispatcher);
 
     ImGui::Separator();
 
@@ -76,26 +76,26 @@ void FileMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 }
 
-void FileMenu::UpdateWindows(const DocumentModel& model, entt::dispatcher& dispatcher)
+void FileMenu::update_windows(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   mCreateMapDialog.update(model, dispatcher);
 
   if (mShowOpenMapDialog) {
-    UpdateMapFileDialog(dispatcher);
+    update_map_file_dialog(dispatcher);
   }
 }
 
-void FileMenu::ShowNewMapDialog()
+void FileMenu::show_map_creation_dialog()
 {
   mCreateMapDialog.show();
 }
 
-void FileMenu::ShowOpenMapDialog()
+void FileMenu::show_open_map_dialog()
 {
   mShowOpenMapDialog = true;
 }
 
-void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
+void FileMenu::update_recent_files_menu(entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{TAC_ICON_HISTORY " Recent Files"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
@@ -130,7 +130,7 @@ void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
   }
 }
 
-void FileMenu::UpdateMapFileDialog(entt::dispatcher& dispatcher)
+void FileMenu::update_map_file_dialog(entt::dispatcher& dispatcher)
 {
   auto dialog = file_dialog::open_map();
 

@@ -24,9 +24,9 @@ namespace tactile {
 class DebugMenu final
 {
  public:
-  void Update();
+  void update();
 
-  void UpdateWindows();
+  void update_windows();
 
  private:
   bool mShowMetrics{};

@@ -34,7 +34,7 @@ MapMenu::MapMenu() : mCreateTilesetDialog{std::make_unique<CreateTilesetDialog>(
 
 MapMenu::~MapMenu() noexcept = default;
 
-void MapMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void MapMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   scoped::Disable disable{!model.has_active_document()};
   if (scoped::Menu menu{"Map"}; menu.is_open()) {
@@ -45,7 +45,7 @@ void MapMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_TILESET " Add Tileset...", TACTILE_PRIMARY_MOD "+T")) {
-      ShowAddTilesetDialog();
+      show_tileset_creation_dialog();
     }
 
     ImGui::Separator();
@@ -76,7 +76,7 @@ void MapMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
   mCreateTilesetDialog->update(model, dispatcher);
 }
 
-void MapMenu::ShowAddTilesetDialog()
+void MapMenu::show_tileset_creation_dialog()
 {
   mCreateTilesetDialog->Open();
 }

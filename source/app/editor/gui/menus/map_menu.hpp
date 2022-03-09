@@ -35,9 +35,9 @@ class MapMenu final
 
   ~MapMenu() noexcept;
 
-  void Update(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void ShowAddTilesetDialog();
+  void show_tileset_creation_dialog();
 
  private:
   std::unique_ptr<CreateTilesetDialog> mCreateTilesetDialog;

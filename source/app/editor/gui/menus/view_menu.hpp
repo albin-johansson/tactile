@@ -28,7 +28,7 @@ class DocumentModel;
 class ViewMenu final
 {
  public:
-  void Update(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 };
 
 }  // namespace tactile

@@ -33,7 +33,7 @@
 namespace tactile {
 namespace {
 
-void UpdateWidgetsMenu(const bool hasActiveMap)
+void _update_widgets_menu(const bool hasActiveMap)
 {
   if (scoped::Menu menu{"Widgets", hasActiveMap}; menu.is_open()) {
     if (ImGui::MenuItem("Reset Layout")) {
@@ -68,11 +68,11 @@ void UpdateWidgetsMenu(const bool hasActiveMap)
 
 }  // namespace
 
-void ViewMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void ViewMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{"View"}; menu.is_open()) {
     const auto hasActiveDocument = model.has_active_document();
-    UpdateWidgetsMenu(hasActiveDocument);
+    _update_widgets_menu(hasActiveDocument);
 
     ImGui::Separator();
 
