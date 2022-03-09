@@ -22,6 +22,7 @@
 #include "core/components/object.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
@@ -29,19 +30,17 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _is_usable(const entt::registry& registry) -> bool
+void _emit_event(entt::dispatcher& dispatcher,
+                 const comp::object_drag_info& drag,
+                 const comp::object& object)
 {
-  return is_object_layer_active(registry);
-}
-
-[[nodiscard]] auto _target_object(const entt::registry& registry, const mouse_info& mouse)
-    -> entt::entity
-{
-  if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
-    return registry.ctx<comp::active_object>().entity;
-  }
-  else {
-    return entt::null;
+  /* Only emit an event if the object has been moved along any axis */
+  if (drag.origin_object_x != object.x || drag.origin_object_y != object.y) {
+    dispatcher.enqueue<move_object_event>(object.id,
+                                          drag.origin_object_x,
+                                          drag.origin_object_y,
+                                          object.x,
+                                          object.y);
   }
 }
 
@@ -51,7 +50,7 @@ void object_selection_tool_on_pressed(entt::registry& registry,
                                       entt::dispatcher& dispatcher,
                                       const mouse_info& mouse)
 {
-  if (_is_usable(registry)) {
+  if (is_object_layer_active(registry)) {
     if (mouse.button == cen::mouse_button::left) {
       auto& active = registry.ctx<comp::active_object>();
       active.entity = entt::null;
@@ -89,22 +88,33 @@ void object_selection_tool_on_pressed(entt::registry& registry,
   }
 }
 
-void object_selection_tool_on_dragged(entt::registry& registry, const mouse_info& mouse)
+void object_selection_tool_on_dragged(entt::registry& registry,
+                                      entt::dispatcher& dispatcher,
+                                      const mouse_info& mouse)
 {
-  const auto entity = _target_object(registry, mouse);
-  if (entity != entt::null) {
-    auto& drag = registry.get<comp::object_drag_info>(entity);
+  if (mouse.button == cen::mouse_button::left) {
+    const auto entity = registry.ctx<comp::active_object>().entity;
+    if (entity != entt::null) {
+      if (auto* drag = registry.try_get<comp::object_drag_info>(entity)) {
+        auto& object = registry.get<comp::object>(entity);
+        if (mouse.is_within_contents) {
+          const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
+          const auto dx = (mouse.x - drag->last_mouse_x) / xRatio;
+          const auto dy = (mouse.y - drag->last_mouse_y) / yRatio;
 
-    const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
-    const auto dx = (mouse.x - drag.last_mouse_x) / xRatio;
-    const auto dy = (mouse.y - drag.last_mouse_y) / yRatio;
+          object.x += dx;
+          object.y += dy;
 
-    auto& object = registry.get<comp::object>(entity);
-    object.x += dx;
-    object.y += dy;
-
-    drag.last_mouse_x = mouse.x;
-    drag.last_mouse_y = mouse.y;
+          drag->last_mouse_x = mouse.x;
+          drag->last_mouse_y = mouse.y;
+        }
+        else {
+          /* Stop if the user drags the object outside the map */
+          _emit_event(dispatcher, *drag, object);
+          registry.remove<comp::object_drag_info>(entity);
+        }
+      }
+    }
   }
 }
 
@@ -112,22 +122,15 @@ void object_selection_tool_on_released(entt::registry& registry,
                                        entt::dispatcher& dispatcher,
                                        const mouse_info& mouse)
 {
-  const auto entity = _target_object(registry, mouse);
-  if (entity != entt::null) {
-    if (const auto* drag = registry.try_get<comp::object_drag_info>(entity)) {
-      const auto& object = registry.get<comp::object>(entity);
-
-      /* Only emit an event if the object has been moved along any axis */
-      if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
-        dispatcher.enqueue<move_object_event>(object.id,
-                                              drag->origin_object_x,
-                                              drag->origin_object_y,
-                                              object.x,
-                                              object.y);
+  if (mouse.button == cen::mouse_button::left) {
+    const auto entity = registry.ctx<comp::active_object>().entity;
+    if (entity != entt::null) {
+      if (const auto* drag = registry.try_get<comp::object_drag_info>(entity)) {
+        const auto& object = registry.get<comp::object>(entity);
+        _emit_event(dispatcher, *drag, object);
+        registry.remove<comp::object_drag_info>(entity);
       }
     }
-
-    registry.remove<comp::object_drag_info>(entity);
   }
 }
 

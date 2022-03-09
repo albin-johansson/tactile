@@ -43,13 +43,12 @@
 #include "editor/gui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
+#include "misc/logging.hpp"
 #include "viewport_cursor_info.hpp"
 #include "viewport_overlay.hpp"
 
 namespace tactile {
 namespace {
-
-constexpr auto gTileHighlightColor = IM_COL32(0, 255, 0, 200);
 
 constinit bool gCenterViewport = false;
 
@@ -64,6 +63,7 @@ void CheckFor(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&
     info.x = cursor.raw_position.x;
     info.y = cursor.raw_position.y;
     info.position_in_viewport = cursor.map_position;
+    info.is_within_contents = cursor.is_within_map;
 
     if (left) {
       info.button = cen::mouse_button::left;
@@ -94,29 +94,60 @@ void CenterViewport(entt::dispatcher& dispatcher,
   dispatcher.enqueue<OffsetViewportEvent>(dx, dy);
 }
 
-void UpdateCursorGizmos(graphics_ctx& graphics,
-                        const entt::registry& registry,
-                        entt::dispatcher& dispatcher,
-                        const ViewportCursorInfo& cursor,
-                        const render_info& info)
+void _draw_cursor_gizmos(graphics_ctx& graphics,
+                         const entt::registry& registry,
+                         const ViewportCursorInfo& cursor,
+                         const render_info& info)
 {
-  TACTILE_ASSERT(cursor.is_within_map);
-
-  if (!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered()) {
+  if (!ImGui::IsWindowFocused()) {
     return;
   }
 
-  if (sys::is_tile_layer_active(registry)) {
-    ImGui::GetWindowDrawList()->AddRect(cursor.clamped_position,
-                                        cursor.clamped_position + info.grid_size,
-                                        gTileHighlightColor,
-                                        0,
-                                        0,
-                                        2);
+  if (cursor.is_within_map && sys::is_tile_layer_active(registry)) {
+    graphics.set_draw_color(cen::colors::lime.with_alpha(200));
+    graphics.set_line_thickness(2);
+    graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
   }
 
-  if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(),
-                                 ImGui::GetWindowPos() + ImGui::GetWindowSize())) {
+  if (cursor.is_within_map &&  //
+      sys::is_tool_enabled(registry, tool_type::stamp) &&
+      sys::is_tileset_selection_not_empty(registry)) {
+    RenderStampPreview(registry, cursor.map_position, info);
+  }
+  else if (sys::is_tool_enabled(registry, tool_type::rectangle)) {
+    if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
+      const ImVec2 pos{stroke->start_x, stroke->start_y};
+      const ImVec2 size{stroke->current_x - stroke->start_x,
+                        stroke->current_y - stroke->start_y};
+
+      graphics.set_draw_color(cen::colors::yellow);
+      graphics.set_line_thickness(1);
+      graphics.draw_translated_rect_with_shadow(pos, size);
+    }
+  }
+  else if (sys::is_tool_enabled(registry, tool_type::ellipse)) {
+    if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
+      const ImVec2 radius{(stroke->current_x - stroke->start_x),
+                          (stroke->current_y - stroke->start_y)};
+      const ImVec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
+
+      graphics.set_draw_color(cen::colors::yellow);
+      graphics.set_line_thickness(1);
+      graphics.draw_translated_ellipse_with_shadow(center, radius);
+    }
+  }
+}
+
+void _poll_mouse(const entt::registry& registry,
+                 entt::dispatcher& dispatcher,
+                 const ViewportCursorInfo& cursor)
+{
+  const auto& io = ImGui::GetIO();
+
+  const ImRect bounds{ImGui::GetWindowContentRegionMin(),
+                      ImGui::GetWindowContentRegionMax()};
+
+  if (ImGui::IsMouseHoveringRect(bounds.GetTL(), bounds.GetBR())) {
     CheckFor<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseClicked(button);
     });
@@ -128,31 +159,6 @@ void UpdateCursorGizmos(graphics_ctx& graphics,
     CheckFor<ToolReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseReleased(button);
     });
-  }
-
-  if (sys::is_tool_enabled(registry, tool_type::stamp) &&
-      sys::is_tileset_selection_not_empty(registry)) {
-    RenderStampPreview(registry, cursor.map_position, info);
-  }
-  else if (sys::is_tool_enabled(registry, tool_type::rectangle)) {
-    if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
-      const ImVec2 pos{stroke->start_x, stroke->start_y};
-      const ImVec2 size{stroke->current_x - stroke->start_x,
-                        stroke->current_y - stroke->start_y};
-
-      graphics.set_draw_color(cen::colors::yellow);
-      graphics.draw_translated_rect_with_shadow(pos, size);
-    }
-  }
-  else if (sys::is_tool_enabled(registry, tool_type::ellipse)) {
-    if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
-      const ImVec2 radius{(stroke->current_x - stroke->start_x),
-                          (stroke->current_y - stroke->start_y)};
-      const ImVec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
-
-      graphics.set_draw_color(cen::colors::yellow);
-      graphics.draw_translated_ellipse_with_shadow(center, radius);
-    }
   }
 }
 
@@ -213,9 +219,8 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
   RenderMap(graphics, registry);
 
   const auto cursor = GetViewportCursorInfo(info);
-  if (cursor.is_within_map) {
-    UpdateCursorGizmos(graphics, registry, dispatcher, cursor, info);
-  }
+  _poll_mouse(registry, dispatcher, cursor);
+  _draw_cursor_gizmos(graphics, registry, cursor, info);
 
   graphics.pop_clip();
 

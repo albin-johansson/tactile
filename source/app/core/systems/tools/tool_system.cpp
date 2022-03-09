@@ -21,14 +21,17 @@
 
 #include "bucket_tool_system.hpp"
 #include "core/components/tool.hpp"
+#include "ellipse_tool_system.hpp"
 #include "eraser_tool_system.hpp"
 #include "object_selection_tool_system.hpp"
 #include "point_tool_system.hpp"
 #include "rectangle_tool_system.hpp"
-#include "ellipse_tool_system.hpp"
 #include "stamp_tool_system.hpp"
 
 namespace tactile::sys {
+
+// TODO on_disable / on_enable functions
+// TODO on_entered / on_exited functions for viewports would be helpful
 
 void select_tool(entt::registry& registry, const tool_type tool)
 {
@@ -88,7 +91,7 @@ void on_tool_dragged(entt::registry& registry,
       break;
 
     case tool_type::stamp:
-      stamp_tool_on_dragged(registry, mouse);
+      stamp_tool_on_dragged(registry, dispatcher, mouse);
       break;
 
     case tool_type::eraser:
@@ -96,7 +99,7 @@ void on_tool_dragged(entt::registry& registry,
       break;
 
     case tool_type::object_selection:
-      object_selection_tool_on_dragged(registry, mouse);
+      object_selection_tool_on_dragged(registry, dispatcher, mouse);
       break;
 
     case tool_type::rectangle:

@@ -36,6 +36,7 @@ struct mouse_info final
   float y{};                           ///< The mouse y-coordinate.
   tile_position position_in_viewport;  ///< The hovered tile position.
   cen::mouse_button button{};          ///< The activated mouse button.
+  bool is_within_contents{};           ///< Is the mouse within the tile contents?
 };
 
 }  // namespace tactile
