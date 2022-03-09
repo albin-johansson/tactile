@@ -206,15 +206,15 @@ void _show_native_object_properties(const std::string& name,
                                     entt::dispatcher& dispatcher)
 {
   switch (object.type) {
-    case object_type::rect:
+    case ObjectType::rect:
       _native_read_only_row("Type", "Rectangle");
       break;
 
-    case object_type::point:
+    case ObjectType::point:
       _native_read_only_row("Type", "Point");
       break;
 
-    case object_type::ellipse:
+    case ObjectType::ellipse:
       _native_read_only_row("Type", "Ellipse");
       break;
   }
@@ -230,7 +230,7 @@ void _show_native_object_properties(const std::string& name,
   _native_read_only_row("X", object.x);
   _native_read_only_row("Y", object.y);
 
-  if (object.type != object_type::point) {
+  if (object.type != ObjectType::point) {
     _native_read_only_row("Width", object.width);
     _native_read_only_row("Height", object.height);
   }

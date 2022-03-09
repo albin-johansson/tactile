@@ -89,15 +89,15 @@ void _emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
 
   emitter << YAML::Key << "type";
   switch (data.type) {
-    case object_type::point:
+    case ObjectType::point:
       emitter << YAML::Value << "point";
       break;
 
-    case object_type::rect:
+    case ObjectType::rect:
       emitter << YAML::Value << "rect";
       break;
 
-    case object_type::ellipse:
+    case ObjectType::ellipse:
       emitter << YAML::Value << "ellipse";
       break;
   }

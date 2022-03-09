@@ -38,7 +38,7 @@ namespace {
 {
   /* Points have no width or height, so we have to create a hitbox large enough to be easy
      for the user to click */
-  if (object.type == object_type::point) {
+  if (object.type == ObjectType::point) {
     const auto width = static_cast<float>(mapTileWidth) / 2.0f;
     const auto height = static_cast<float>(mapTileHeight) / 2.0f;
 

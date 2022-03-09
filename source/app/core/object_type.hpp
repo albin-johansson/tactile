@@ -28,14 +28,14 @@ namespace tactile {
 /**
  * \brief Represents the different available map object types.
  */
-enum class object_type
+enum class ObjectType
 {
   point,
   rect,
   ellipse
 };
 
-inline auto operator<<(std::ostream& stream, const object_type type) -> std::ostream&
+inline auto operator<<(std::ostream& stream, const ObjectType type) -> std::ostream&
 {
   return stream << magic_enum::enum_name(type);
 }

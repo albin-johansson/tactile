@@ -43,7 +43,7 @@ struct AttributeContextData final
 struct ObjectData final
 {
   object_id id{};
-  object_type type{};
+  ObjectType type{};
 
   float x{};
   float y{};

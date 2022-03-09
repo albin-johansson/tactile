@@ -68,15 +68,15 @@ namespace {
   json["rotation"] = 0;
 
   switch (data.type) {
-    case object_type::rect:
+    case ObjectType::rect:
       /* Assumed to be rectangle if no point/ellipse indicators */
       break;
 
-    case object_type::point: {
+    case ObjectType::point: {
       json["point"] = true;
       break;
     }
-    case object_type::ellipse: {
+    case ObjectType::ellipse: {
       json["ellipse"] = true;
       break;
     }

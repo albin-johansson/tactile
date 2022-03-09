@@ -37,7 +37,7 @@ namespace {
 [[nodiscard]] auto _make_object(entt::registry& registry,
                                 const layer_id layerId,
                                 std::string name,
-                                const object_type type,
+                                const ObjectType type,
                                 const float x,
                                 const float y,
                                 const float width,
@@ -80,7 +80,7 @@ auto make_rectangle_object(entt::registry& registry,
   return _make_object(registry,
                       layerId,
                       "Rectangle",
-                      object_type::rect,
+                      ObjectType::rect,
                       x,
                       y,
                       width,
@@ -97,7 +97,7 @@ auto make_ellipse_object(entt::registry& registry,
   return _make_object(registry,
                       layerId,
                       "Ellipse",
-                      object_type::ellipse,
+                      ObjectType::ellipse,
                       x,
                       y,
                       width,
@@ -109,7 +109,7 @@ auto make_point_object(entt::registry& registry,
                        const float x,
                        const float y) -> object_id
 {
-  return _make_object(registry, layerId, "Point", object_type::point, x, y, 0, 0);
+  return _make_object(registry, layerId, "Point", ObjectType::point, x, y, 0, 0);
 }
 
 auto remove_object(entt::registry& registry, const object_id id) -> RemoveObjectResult
