@@ -49,6 +49,7 @@
 namespace tactile {
 namespace {
 
+constexpr auto _object_context_menu_id = "##MapViewObjectContextMenu";
 constinit bool _will_center_viewport = false;
 
 template <typename Event, typename T>
@@ -139,6 +140,10 @@ void _draw_cursor_gizmos(graphics_ctx& graphics,
 
 void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
 {
+  if (ImGui::IsPopupOpen(_object_context_menu_id, ImGuiPopupFlags_AnyPopup)) {
+    return;
+  }
+
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
                                  ImGui::GetWindowContentRegionMax())) {
     _check_for<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
@@ -224,7 +229,7 @@ void update_map_view(const entt::registry& registry, entt::dispatcher& dispatche
 void update_map_view_object_context_menu(const entt::registry& registry,
                                          entt::dispatcher& dispatcher)
 {
-  if (scoped::popup popup{"##MapViewObjectContextMenu"}; popup.is_open()) {
+  if (scoped::popup popup{_object_context_menu_id}; popup.is_open()) {
     const auto active = registry.ctx<comp::active_object>();
 
     TACTILE_ASSERT(active.entity != entt::null);
@@ -266,7 +271,7 @@ void CenterMapViewport()
 
 void open_object_context_menu()
 {
-  ImGui::OpenPopup("##MapViewObjectContextMenu",
+  ImGui::OpenPopup(_object_context_menu_id,
                    ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
 }
 
