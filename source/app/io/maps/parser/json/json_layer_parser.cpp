@@ -47,7 +47,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer_data(const nlohmann::json& json,
-                                          tile_matrix& tiles,
+                                          TileMatrix& tiles,
                                           const usize columns) -> parse_error
 {
   /* We only support the CSV tile encoding, which is the implicit default */

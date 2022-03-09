@@ -46,9 +46,9 @@ namespace tactile::sys {
  *
  * \details The created entity will feature the following components:
  * - `AttributeContext`
- * - `layer`
- * - `layer_tree_node`
- * - `parent`
+ * - `Layer`
+ * - `LayerTreeNode`
+ * - `Parent`
  *
  * \param registry the associated registry.
  * \param id the unique identifier associated with the layer.
@@ -165,10 +165,10 @@ auto duplicate_layer(entt::registry& registry,
     -> entt::entity;
 
 [[nodiscard]] auto get_layer(entt::registry& registry, layer_id id)
-    -> std::pair<entt::entity, comp::layer&>;
+    -> std::pair<entt::entity, comp::Layer&>;
 
 [[nodiscard]] auto get_layer(const entt::registry& registry, layer_id id)
-    -> std::pair<entt::entity, const comp::layer&>;
+    -> std::pair<entt::entity, const comp::Layer&>;
 
 [[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;
 

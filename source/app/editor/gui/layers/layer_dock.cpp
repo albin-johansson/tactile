@@ -71,14 +71,14 @@ void layer_dock::on_update(const document_model& model, entt::dispatcher& dispat
     ImGui::SameLine();
 
     scoped::group group;
-    if (registry.view<comp::layer>().empty()) {
+    if (registry.view<comp::Layer>().empty()) {
       prepare_vertical_alignment_center(1);
       centered_text("No available layers!");
     }
     else {
       const ImVec2 size{-min_float, -min_float};
       if (scoped::list_box list{"##LayerTreeNode", size}; list.is_open()) {
-        for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
+        for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
           /* Note, we rely on the layer_tree_node pool being sorted, so we can't include
              other components in the view query directly. */
           const auto& parent = registry.get<comp::Parent>(entity);
@@ -124,12 +124,12 @@ void layer_dock::update_buttons(const document_model& model,
                                 const entt::registry& registry,
                                 entt::dispatcher& dispatcher)
 {
-  const auto activeLayerEntity = registry.ctx<comp::active_layer>().entity;
+  const auto activeLayerEntity = registry.ctx<comp::ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
   maybe<layer_id> activeLayerId;
   if (hasActiveLayer) {
-    const auto& layer = registry.get<comp::layer>(activeLayerEntity);
+    const auto& layer = registry.get<comp::Layer>(activeLayerEntity);
     activeLayerId = layer.id;
   }
 

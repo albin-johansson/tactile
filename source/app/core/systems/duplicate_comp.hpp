@@ -62,15 +62,15 @@ inline auto DuplicateComp<comp::AttributeContext>(entt::registry& registry,
 }
 
 template <>
-inline auto DuplicateComp<comp::object_layer>(entt::registry& registry,
+inline auto DuplicateComp<comp::ObjectLayer>(entt::registry& registry,
                                               const entt::entity source,
                                               const entt::entity destination)
-    -> comp::object_layer&
+    -> comp::ObjectLayer&
 {
   auto& map = registry.ctx<MapInfo>();
-  auto& layer = registry.emplace<comp::object_layer>(destination);
+  auto& layer = registry.emplace<comp::ObjectLayer>(destination);
 
-  const auto& sourceLayer = registry.get<comp::object_layer>(source);
+  const auto& sourceLayer = registry.get<comp::ObjectLayer>(source);
   for (const auto sourceObject : sourceLayer.objects) {
     const auto objectEntity = registry.create();
     layer.objects.push_back(objectEntity);

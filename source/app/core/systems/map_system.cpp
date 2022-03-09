@@ -48,7 +48,7 @@ void add_row_to_map(entt::registry& registry)
   auto& map = registry.ctx<MapInfo>();
   ++map.row_count;
 
-  for (auto&& [entity, layer] : registry.view<comp::tile_layer>().each()) {
+  for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
     layer.matrix.push_back(make_tile_row(map.column_count));
   }
 }
@@ -58,7 +58,7 @@ void add_column_to_map(entt::registry& registry)
   auto& map = registry.ctx<MapInfo>();
   ++map.column_count;
 
-  for (auto&& [entity, layer] : registry.view<comp::tile_layer>().each()) {
+  for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
     for (auto& row : layer.matrix) {
       row.push_back(empty_tile);
     }
@@ -70,7 +70,7 @@ void remove_row_from_map(entt::registry& registry)
   auto& map = registry.ctx<MapInfo>();
   if (map.row_count > 1) {
     --map.row_count;
-    for (auto&& [entity, layer] : registry.view<comp::tile_layer>().each()) {
+    for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
       layer.matrix.pop_back();
     }
   }
@@ -82,7 +82,7 @@ void remove_column_from_map(entt::registry& registry)
   if (map.column_count > 1) {
     --map.column_count;
 
-    for (auto&& [entity, layer] : registry.view<comp::tile_layer>().each()) {
+    for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
       for (auto& row : layer.matrix) {
         TACTILE_ASSERT(row.size() > 1);
         row.pop_back();

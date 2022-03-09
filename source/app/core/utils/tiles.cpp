@@ -21,17 +21,17 @@
 
 namespace tactile {
 
-auto make_tile_row(const usize nCols) -> tile_row
+auto make_tile_row(const usize nCols) -> TileRow
 {
-  tile_row row;
+  TileRow row;
   row.reserve(nCols);
   row.assign(nCols, 0);
   return row;
 }
 
-auto make_tile_matrix(const usize nRows, const usize nCols) -> tile_matrix
+auto make_tile_matrix(const usize nRows, const usize nCols) -> TileMatrix
 {
-  tile_matrix tiles;
+  TileMatrix tiles;
   tiles.reserve(nRows);
   tiles.assign(nRows, make_tile_row(nCols));
   return tiles;

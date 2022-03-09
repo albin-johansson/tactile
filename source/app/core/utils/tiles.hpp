@@ -50,7 +50,7 @@ template <typename T, is_integral<T> = 0>
   return {index / nColumns, index % nColumns};
 }
 
-[[nodiscard]] auto make_tile_row(usize nCols) -> tile_row;
+[[nodiscard]] auto make_tile_row(usize nCols) -> TileRow;
 
 /**
  * \brief Creates a tile matrix with the specified dimensions.
@@ -60,6 +60,6 @@ template <typename T, is_integral<T> = 0>
  *
  * \return a matrix with empty tile identifiers.
  */
-[[nodiscard]] auto make_tile_matrix(usize nRows, usize nCols) -> tile_matrix;
+[[nodiscard]] auto make_tile_matrix(usize nRows, usize nCols) -> TileMatrix;
 
 }  // namespace tactile

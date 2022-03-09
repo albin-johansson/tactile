@@ -16,7 +16,7 @@ TEST(RegistrySystem, MakeDocumentRegistry)
 {
   const auto registry = sys::make_document_registry();
   ASSERT_TRUE(registry.try_ctx<MapInfo>());
-  ASSERT_TRUE(registry.try_ctx<comp::active_layer>());
+  ASSERT_TRUE(registry.try_ctx<comp::ActiveLayer>());
   ASSERT_TRUE(registry.try_ctx<comp::ActiveTileset>());
   ASSERT_TRUE(registry.try_ctx<comp::ActiveAttributeContext>());
   ASSERT_TRUE(registry.try_ctx<comp::active_tool>());

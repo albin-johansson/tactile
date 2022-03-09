@@ -40,7 +40,7 @@ void EraserToolCmd::undo()
   auto& registry = mRegistry.get();
 
   const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  auto& layer = registry.get<comp::tile_layer>(entity);
+  auto& layer = registry.get<comp::TileLayer>(entity);
 
   sys::set_tiles(layer, mOldState);
 }
@@ -52,7 +52,7 @@ void EraserToolCmd::redo()
   const auto entity = sys::find_layer(registry, mLayer);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& matrix = registry.get<comp::tile_layer>(entity).matrix;
+  auto& matrix = registry.get<comp::TileLayer>(entity).matrix;
   for (const auto& [position, _] : mOldState) {
     TACTILE_ASSERT(position.row_index() < matrix.size());
     TACTILE_ASSERT(position.col_index() < matrix.front().size());

@@ -28,27 +28,10 @@
 
 namespace tactile {
 
-using tile_row = std::vector<tile_id>;
-using tile_matrix = std::vector<tile_row>;
+using TileRow = std::vector<tile_id>;
+using TileMatrix = std::vector<TileRow>;
 
 namespace comp {
-
-/**
- * \brief Context component that keeps track of the selected layer.
- */
-struct active_layer final
-{
-  entt::entity entity{entt::null};  ///< The currently active layer, can be null.
-};
-
-/**
- * \brief Component used to represent the layer hierarchy.
- */
-struct layer_tree_node final
-{
-  usize index{};                       ///< Local index, i.e. relative to tree siblings.
-  std::vector<entt::entity> children;  ///< All associated child nodes.
-};
 
 /**
  * \brief Component that provides common aspects of layers.
@@ -58,9 +41,10 @@ struct layer_tree_node final
  * \see TileLayer
  * \see ObjectLayer
  * \see GroupLayer
- * \see ActiveLayer
+ *
+ * \ingroup components
  */
-struct layer final
+struct Layer final
 {
   layer_id id{};        ///< Unique layer ID.
   layer_type type{};    ///< The specific layer type.
@@ -70,27 +54,54 @@ struct layer final
 
 /**
  * \brief Component that represents plain tile layers.
+ *
+ * \ingroup components
  */
-struct tile_layer final
+struct TileLayer final
 {
-  tile_matrix matrix;  ///< The associated matrix of tile identifiers.
+  TileMatrix matrix;  ///< The associated matrix of tile identifiers.
 };
 
 /**
  * \brief Component that represents object layers.
  *
  * \see Object
+ *
+ * \ingroup components
  */
-struct object_layer final
+struct ObjectLayer final
 {
   std::vector<entt::entity> objects;  ///< The associated object entities.
 };
 
 /**
  * \brief Tag component used to denote group layers.
+ *
+ * \ingroup components
  */
-struct group_layer final
+struct GroupLayer final
 {};
+
+/**
+ * \brief Component used to represent the layer hierarchy.
+ *
+ * \ingroup components
+ */
+struct LayerTreeNode final
+{
+  usize index{};                       ///< Local index, i.e. relative to tree siblings.
+  std::vector<entt::entity> children;  ///< All associated child nodes.
+};
+
+/**
+ * \brief Context component that keeps track of the active layer.
+ *
+ * \ingroup components
+ */
+struct ActiveLayer final
+{
+  entt::entity entity{entt::null};  ///< The currently active layer, can be null.
+};
 
 }  // namespace comp
 }  // namespace tactile

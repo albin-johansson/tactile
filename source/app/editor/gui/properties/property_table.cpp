@@ -171,7 +171,7 @@ void ShowNativeTilesetProperties(const std::string& name,
   NativeReadOnlyRow("Tile height", tileset.tile_height);
 }
 
-void ShowNativeLayerProperties(const comp::layer& layer, entt::dispatcher& dispatcher)
+void ShowNativeLayerProperties(const comp::Layer& layer, entt::dispatcher& dispatcher)
 {
   switch (layer.type) {
     case layer_type::tile_layer:
@@ -264,7 +264,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
       if (const auto* tileset = registry.try_get<comp::Tileset>(current.entity)) {
         ShowNativeTilesetProperties(context.name, *tileset, dispatcher);
       }
-      else if (const auto* layer = registry.try_get<comp::layer>(current.entity)) {
+      else if (const auto* layer = registry.try_get<comp::Layer>(current.entity)) {
         ShowNativeLayerProperties(*layer, dispatcher);
       }
       else if (const auto* object = registry.try_get<comp::object>(current.entity)) {

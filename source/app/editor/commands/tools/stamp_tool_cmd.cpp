@@ -52,7 +52,7 @@ void StampToolCmd::ApplySequence(const TileCache& cache)
   auto& registry = mRegistry.get();
 
   const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  auto& layer = registry.get<comp::tile_layer>(entity);
+  auto& layer = registry.get<comp::TileLayer>(entity);
 
   sys::set_tiles(layer, cache);
 }

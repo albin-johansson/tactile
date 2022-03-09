@@ -35,7 +35,7 @@ auto make_document_registry() -> entt::registry
 {
   entt::registry registry;
 
-  registry.set<comp::active_layer>();
+  registry.set<comp::ActiveLayer>();
   registry.set<comp::ActiveTileset>();
   registry.set<comp::ActiveAttributeContext>();
   registry.set<comp::active_tool>();

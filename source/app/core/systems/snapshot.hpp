@@ -62,10 +62,10 @@ struct ObjectSnapshot final
 struct LayerSnapshot final
 {
   usize index{};
-  comp::layer core;
+  comp::Layer core;
   attribute_context_snapshot context;
   maybe<layer_id> parent;
-  maybe<tile_matrix> tiles;
+  maybe<TileMatrix> tiles;
   maybe<std::vector<ObjectSnapshot>> objects;
   maybe<std::vector<LayerSnapshot>> children;
 };

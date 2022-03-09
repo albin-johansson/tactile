@@ -556,7 +556,7 @@ void Application::on_remove_layer(const remove_layer_event& event)
 void Application::on_select_layer(const select_layer_event& event)
 {
   if (auto* registry = mModel.active_registry()) {
-    auto& active = registry->ctx<comp::active_layer>();
+    auto& active = registry->ctx<comp::ActiveLayer>();
     active.entity = sys::find_layer(*registry, event.id);
   }
 }

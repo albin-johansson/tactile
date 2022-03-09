@@ -25,7 +25,7 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto is_valid_position(const comp::tile_layer& layer,
+[[nodiscard]] auto is_valid_position(const comp::TileLayer& layer,
                                      const usize row,
                                      const usize col) -> bool
 {
@@ -38,7 +38,7 @@ auto get_tile_layer_entity(const entt::registry& registry, const layer_id id)
     -> entt::entity
 {
   const auto entity = sys::find_layer(registry, id);
-  if (entity != entt::null && registry.all_of<comp::tile_layer>(entity)) {
+  if (entity != entt::null && registry.all_of<comp::TileLayer>(entity)) {
     return entity;
   }
   else {
@@ -46,7 +46,7 @@ auto get_tile_layer_entity(const entt::registry& registry, const layer_id id)
   }
 }
 
-void set_tile(comp::tile_layer& layer, const tile_position& position, const tile_id tile)
+void set_tile(comp::TileLayer& layer, const tile_position& position, const tile_id tile)
 {
   const auto row = position.row_index();
   const auto col = position.col_index();
@@ -59,7 +59,7 @@ void set_tile(comp::tile_layer& layer, const tile_position& position, const tile
   }
 }
 
-void set_tiles(comp::tile_layer& layer, const TileCache& tiles)
+void set_tiles(comp::TileLayer& layer, const TileCache& tiles)
 {
   for (const auto& [position, tile] : tiles) {
     const auto row = position.row_index();
@@ -69,7 +69,7 @@ void set_tiles(comp::tile_layer& layer, const TileCache& tiles)
   }
 }
 
-auto get_tile(const comp::tile_layer& layer, const tile_position& position) -> tile_id
+auto get_tile(const comp::TileLayer& layer, const tile_position& position) -> tile_id
 {
   const auto row = position.row_index();
   const auto col = position.col_index();

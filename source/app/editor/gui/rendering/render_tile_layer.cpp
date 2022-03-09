@@ -32,8 +32,8 @@ void RenderTileLayer(graphics_ctx& graphics,
                      const entt::entity layerEntity,
                      const float parentOpacity)
 {
-  const auto& layer = registry.get<comp::layer>(layerEntity);
-  const auto& tileLayer = registry.get<comp::tile_layer>(layerEntity);
+  const auto& layer = registry.get<comp::Layer>(layerEntity);
+  const auto& tileLayer = registry.get<comp::TileLayer>(layerEntity);
 
   graphics.set_opacity(parentOpacity * layer.opacity);
 

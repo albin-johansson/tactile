@@ -14,9 +14,9 @@ TEST(FloodFill, flood)
   auto registry = sys::make_document_registry();
 
   const auto entity = sys::make_tile_layer(registry);
-  auto& layer = registry.get<comp::tile_layer>(entity);
+  auto& layer = registry.get<comp::TileLayer>(entity);
 
-  registry.ctx<comp::active_layer>().entity = entity;
+  registry.ctx<comp::ActiveLayer>().entity = entity;
 
   /* 0  0  0  0  0
      0  0  0  0  0

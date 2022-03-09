@@ -46,13 +46,13 @@ void DuplicateLayerCmd::redo()
   const auto entity = sys::duplicate_layer(registry, sourceEntity);
 
   if (!mNewLayerId) {
-    const auto& layer = registry.get<comp::layer>(entity);
+    const auto& layer = registry.get<comp::Layer>(entity);
     mNewLayerId = layer.id;
   }
   else {
     // Reuse previous ID of duplicated layer
     TACTILE_ASSERT(sys::find_layer(registry, *mNewLayerId) == entt::null);
-    auto& layer = registry.get<comp::layer>(entity);
+    auto& layer = registry.get<comp::Layer>(entity);
     layer.id = *mNewLayerId;
   }
 }

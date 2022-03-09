@@ -91,13 +91,13 @@ void UpdateMouseRowColumnLabels(const ViewportCursorInfo& cursor)
 void UpdateMouseTileLabels(const entt::registry& registry,
                            const ViewportCursorInfo& cursor)
 {
-  const auto& activeLayer = registry.ctx<comp::active_layer>();
+  const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
 
   if (activeLayer.entity != entt::null) {
-    if (registry.all_of<comp::tile_layer>(activeLayer.entity)) {
+    if (registry.all_of<comp::TileLayer>(activeLayer.entity)) {
       ImGui::Separator();
 
-      const auto& layer = registry.get<comp::tile_layer>(activeLayer.entity);
+      const auto& layer = registry.get<comp::TileLayer>(activeLayer.entity);
       const auto global = sys::get_tile(layer, cursor.map_position);
 
       if (cursor.is_within_map && global != empty_tile) {

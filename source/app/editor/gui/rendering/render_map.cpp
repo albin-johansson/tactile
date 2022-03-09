@@ -33,7 +33,7 @@ namespace {
 void RenderLayer(graphics_ctx& graphics,
                  const entt::registry& registry,
                  const entt::entity layerEntity,
-                 const comp::layer& layer,
+                 const comp::Layer& layer,
                  const float parentOpacity)
 {
   if (layer.type == layer_type::tile_layer) {
@@ -48,12 +48,12 @@ void RenderLayer(graphics_ctx& graphics,
 
 void RenderMap(graphics_ctx& graphics, const entt::registry& registry)
 {
-  for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
-    const auto& layer = registry.get<comp::layer>(entity);
+  for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
+    const auto& layer = registry.get<comp::Layer>(entity);
     const auto& parent = registry.get<comp::Parent>(entity);
 
     const auto* parentLayer = (parent.entity != entt::null)
-                                  ? registry.try_get<comp::layer>(parent.entity)
+                                  ? registry.try_get<comp::Layer>(parent.entity)
                                   : nullptr;
     const auto parentOpacity = parentLayer ? parentLayer->opacity : 1.0f;
 

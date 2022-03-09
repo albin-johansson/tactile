@@ -121,7 +121,7 @@ void _restore_object_layer(entt::registry& registry,
                            const entt::entity entity,
                            const ir::object_layer_data& objectLayerData)
 {
-  auto& objectLayer = registry.emplace<comp::object_layer>(entity);
+  auto& objectLayer = registry.emplace<comp::ObjectLayer>(entity);
   objectLayer.objects.reserve(objectLayerData.objects.size());
 
   for (const auto& objectData : objectLayerData.objects) {
@@ -140,10 +140,10 @@ auto _restore_layer(entt::registry& registry,
                                             layerData.name,
                                             parent);
 
-  auto& node = registry.get<comp::layer_tree_node>(entity);
+  auto& node = registry.get<comp::LayerTreeNode>(entity);
   node.index = layerData.index;
 
-  auto& layer = registry.get<comp::layer>(entity);
+  auto& layer = registry.get<comp::Layer>(entity);
   layer.opacity = layerData.opacity;
   layer.visible = layerData.visible;
 
@@ -151,7 +151,7 @@ auto _restore_layer(entt::registry& registry,
     case layer_type::tile_layer: {
       const auto& tileLayerData = std::get<ir::tile_layer_data>(layerData.data);
 
-      auto& tileLayer = registry.emplace<comp::tile_layer>(entity);
+      auto& tileLayer = registry.emplace<comp::TileLayer>(entity);
       tileLayer.matrix = tileLayerData.tiles;
 
       break;
@@ -162,7 +162,7 @@ auto _restore_layer(entt::registry& registry,
       break;
     }
     case layer_type::group_layer: {
-      registry.emplace<comp::group_layer>(entity);
+      registry.emplace<comp::GroupLayer>(entity);
 
       const auto& groupData = std::get<ir::group_layer_data>(layerData.data);
       for (const auto& childLayerData : groupData.children) {
@@ -187,9 +187,9 @@ void _restore_layers(Document& document, const ir::map_data& mapData)
 
   sys::sort_layers(document.registry);
 
-  if (!document.registry.storage<comp::layer_tree_node>().empty()) {
-    auto& activeLayer = document.registry.ctx<comp::active_layer>();
-    activeLayer.entity = document.registry.view<comp::layer_tree_node>().front();
+  if (!document.registry.storage<comp::LayerTreeNode>().empty()) {
+    auto& activeLayer = document.registry.ctx<comp::ActiveLayer>();
+    activeLayer.entity = document.registry.view<comp::LayerTreeNode>().front();
   }
 }
 

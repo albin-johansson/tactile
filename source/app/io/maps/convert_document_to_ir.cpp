@@ -86,7 +86,7 @@ void _convert_object_layer(ir::object_layer_data& data,
                            const entt::registry& registry,
                            const entt::entity entity)
 {
-  const auto& objectLayer = registry.get<comp::object_layer>(entity);
+  const auto& objectLayer = registry.get<comp::ObjectLayer>(entity);
   data.objects.reserve(objectLayer.objects.size());
 
   for (const auto objectEntity : objectLayer.objects) {
@@ -102,7 +102,7 @@ void _convert_group_layer(ir::group_layer_data& data,
                           const entt::registry& registry,
                           const entt::entity entity)
 {
-  const auto& node = registry.get<comp::layer_tree_node>(entity);
+  const auto& node = registry.get<comp::LayerTreeNode>(entity);
   data.children.reserve(node.children.size());
 
   usize index = 0;
@@ -118,7 +118,7 @@ void _convert_layer(ir::layer_data& data,
                     const entt::registry& registry,
                     const entt::entity entity)
 {
-  const auto& layer = registry.get<comp::layer>(entity);
+  const auto& layer = registry.get<comp::Layer>(entity);
 
   data.index = index;
 
@@ -129,7 +129,7 @@ void _convert_layer(ir::layer_data& data,
 
   switch (layer.type) {
     case layer_type::tile_layer: {
-      const auto& tileLayer = registry.get<comp::tile_layer>(entity);
+      const auto& tileLayer = registry.get<comp::TileLayer>(entity);
 
       auto& tileLayerData = data.data.emplace<ir::tile_layer_data>();
       tileLayerData.tiles = tileLayer.matrix;
@@ -162,7 +162,7 @@ void _convert_layers(ir::map_data& data, const entt::registry& registry)
   usize index = 0;
 
   /* Only iterate top-level layers */
-  for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
+  for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
     const auto& parent = registry.get<comp::Parent>(entity);
     if (parent.entity == entt::null) {
       auto& layerData = data.layers.emplace_back();
@@ -282,7 +282,7 @@ auto convert_document_to_ir(const Document& document) -> ir::map_data
   _convert_component_definitions(data, registry);
   _convert_tilesets(data, registry);
 
-  data.layers.reserve(registry.storage<comp::layer>().size());
+  data.layers.reserve(registry.storage<comp::Layer>().size());
   _convert_layers(data, registry);
 
   _convert_attribute_context(data.context,

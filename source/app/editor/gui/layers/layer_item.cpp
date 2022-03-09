@@ -97,7 +97,7 @@ void _update_layer_item_popup(const entt::registry& registry,
 void _show_group_layer_item(const entt::registry& registry,
                             entt::dispatcher& dispatcher,
                             const entt::entity layerEntity,
-                            const comp::layer& layer,
+                            const comp::Layer& layer,
                             const ImGuiTreeNodeFlags flags,
                             const char* name)
 {
@@ -113,7 +113,7 @@ void _show_group_layer_item(const entt::registry& registry,
 
     _update_layer_item_popup(registry, dispatcher, layer.id);
 
-    const auto& node = registry.get<comp::layer_tree_node>(layerEntity);
+    const auto& node = registry.get<comp::LayerTreeNode>(layerEntity);
     for (const auto child : node.children) {
       show_layer_item(registry, dispatcher, child);
     }
@@ -136,8 +136,8 @@ void show_layer_item(const entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const entt::entity layerEntity)
 {
-  const auto& layer = registry.get<comp::layer>(layerEntity);
-  const auto& activeLayer = registry.ctx<comp::active_layer>();
+  const auto& layer = registry.get<comp::Layer>(layerEntity);
+  const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
 
   const scoped::id scope{layer.id};
 

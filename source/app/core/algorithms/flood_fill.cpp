@@ -32,7 +32,7 @@ void flood(entt::registry& registry,
            const tile_id replacement,
            std::vector<tile_position>& affected)
 {
-  auto& layer = registry.get<comp::tile_layer>(entity);
+  auto& layer = registry.get<comp::TileLayer>(entity);
   const auto target = sys::get_tile(layer, origin);
 
   if (!sys::is_position_in_map(registry, origin) || (target == replacement)) {
