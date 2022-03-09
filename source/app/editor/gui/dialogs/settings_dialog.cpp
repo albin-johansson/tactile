@@ -54,7 +54,7 @@ void settings_dialog::show()
 
 void settings_dialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  if (scoped::tab_bar bar{"##SettingsTabBar"}; bar.is_open()) {
+  if (scoped::TabBar bar{"##SettingsTabBar"}; bar.is_open()) {
     update_behavior_tab();
     update_appearance_tab();
     update_export_tab();
@@ -89,7 +89,7 @@ void settings_dialog::apply_settings(entt::dispatcher& dispatcher)
 
 void settings_dialog::update_behavior_tab()
 {
-  if (scoped::tab_item item{"Behavior"}; item.is_open()) {
+  if (scoped::TabItem item{"Behavior"}; item.is_open()) {
     ImGui::Spacing();
     if (button("Restore Defaults")) {
       mGuiSettings.reset_behavior_preferences();
@@ -136,7 +136,7 @@ void settings_dialog::update_behavior_tab()
 
 void settings_dialog::update_appearance_tab()
 {
-  if (scoped::tab_item item{"Appearance"}; item.is_open()) {
+  if (scoped::TabItem item{"Appearance"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
@@ -146,7 +146,7 @@ void settings_dialog::update_appearance_tab()
 
     ImGui::Spacing();
 
-    if (scoped::combo combo{"Theme",
+    if (scoped::Combo combo{"Theme",
                             human_readable_name(mGuiSettings.get_theme()).data()};
         combo.is_open()) {
       for (const auto theme : themes) {
@@ -182,7 +182,7 @@ void settings_dialog::update_appearance_tab()
 
 void settings_dialog::update_export_tab()
 {
-  if (scoped::tab_item item{"Export"}; item.is_open()) {
+  if (scoped::TabItem item{"Export"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
@@ -192,7 +192,7 @@ void settings_dialog::update_export_tab()
 
     ImGui::Spacing();
 
-    if (scoped::combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
+    if (scoped::Combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
         format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
         mGuiSettings.set_preferred_format("YAML");

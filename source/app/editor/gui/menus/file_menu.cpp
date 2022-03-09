@@ -34,7 +34,7 @@ namespace tactile {
 
 void FileMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::menu menu{"File"}; menu.is_open()) {
+  if (scoped::Menu menu{"File"}; menu.is_open()) {
     const auto hasActiveDocument = model.has_active_document();
 
     if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
@@ -97,7 +97,7 @@ void FileMenu::ShowOpenMapDialog()
 
 void FileMenu::UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 {
-  if (scoped::menu menu{TAC_ICON_HISTORY " Recent Files"}; menu.is_open()) {
+  if (scoped::Menu menu{TAC_ICON_HISTORY " Recent Files"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
                         nullptr,
                         false,

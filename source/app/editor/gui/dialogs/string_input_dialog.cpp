@@ -54,8 +54,7 @@ void string_input_dialog::on_update(const DocumentModel&, entt::dispatcher&)
                            sizeof mBuffer);
 }
 
-auto string_input_dialog::is_current_input_valid(const DocumentModel& model) const
-    -> bool
+auto string_input_dialog::is_current_input_valid(const DocumentModel& model) const -> bool
 {
   return validate(model, current_input());
 }

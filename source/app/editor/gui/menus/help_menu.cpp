@@ -32,7 +32,7 @@ namespace tactile {
 
 void HelpMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::menu menu{"Help"}; menu.is_open()) {
+  if (scoped::Menu menu{"Help"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
       mAboutDialog.show();
     }

@@ -35,7 +35,7 @@ namespace {
 
 void UpdateWidgetsMenu(const bool hasActiveMap)
 {
-  if (scoped::menu menu{"Widgets", hasActiveMap}; menu.is_open()) {
+  if (scoped::Menu menu{"Widgets", hasActiveMap}; menu.is_open()) {
     if (ImGui::MenuItem("Reset Layout")) {
       ResetLayout();
     }
@@ -70,7 +70,7 @@ void UpdateWidgetsMenu(const bool hasActiveMap)
 
 void ViewMenu::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::menu menu{"View"}; menu.is_open()) {
+  if (scoped::Menu menu{"View"}; menu.is_open()) {
     const auto hasActiveDocument = model.has_active_document();
     UpdateWidgetsMenu(hasActiveDocument);
 

@@ -62,7 +62,7 @@ void credits_dialog::on_update(const DocumentModel&, entt::dispatcher&)
       "Tactile is developed using the following open-source libraries.");
   ImGui::Spacing();
 
-  if (scoped::table table{"##CreditsTable", 2, _table_flags}; table.is_open()) {
+  if (scoped::Table table{"##CreditsTable", 2, _table_flags}; table.is_open()) {
     ImGui::TableSetupColumn("Library");
     ImGui::TableSetupColumn("License");
     ImGui::TableHeadersRow();

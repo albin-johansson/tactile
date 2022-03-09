@@ -78,8 +78,8 @@ void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<AddColumnEvent>();
 }
 
-auto AddColumnShortcut::IsEnabled(const DocumentModel& model,
-                                  const widget_manager&) const -> bool
+auto AddColumnShortcut::IsEnabled(const DocumentModel& model, const widget_manager&) const
+    -> bool
 {
   return model.has_active_document();
 }
@@ -93,8 +93,8 @@ void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RemoveRowEvent>();
 }
 
-auto RemoveRowShortcut::IsEnabled(const DocumentModel& model,
-                                  const widget_manager&) const -> bool
+auto RemoveRowShortcut::IsEnabled(const DocumentModel& model, const widget_manager&) const
+    -> bool
 {
   if (const auto* registry = model.active_registry()) {
     const auto& map = registry->ctx<MapInfo>();

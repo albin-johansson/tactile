@@ -70,14 +70,14 @@ void layer_dock::on_update(const DocumentModel& model, entt::dispatcher& dispatc
     update_buttons(model, registry, dispatcher);
     ImGui::SameLine();
 
-    scoped::group group;
+    scoped::Group group;
     if (registry.view<comp::Layer>().empty()) {
       prepare_vertical_alignment_center(1);
       centered_text("No available layers!");
     }
     else {
       const ImVec2 size{-min_float, -min_float};
-      if (scoped::list_box list{"##LayerTreeNode", size}; list.is_open()) {
+      if (scoped::ListBox list{"##LayerTreeNode", size}; list.is_open()) {
         for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
           /* Note, we rely on the layer_tree_node pool being sorted, so we can't include
              other components in the view query directly. */
@@ -133,7 +133,7 @@ void layer_dock::update_buttons(const DocumentModel& model,
     activeLayerId = layer.id;
   }
 
-  scoped::group group;
+  scoped::Group group;
 
   if (button(TAC_ICON_ADD, "Add new layer")) {
     mData->mAddLayerContextMenu.show();

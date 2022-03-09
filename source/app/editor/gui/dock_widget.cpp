@@ -44,7 +44,7 @@ void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatche
 
   bool* show = mHasCloseButton ? &visible : nullptr;
 
-  scoped::window dock{mTitle, mWindowFlags, show};
+  scoped::Window dock{mTitle, mWindowFlags, show};
   mHasFocus = dock.has_focus();
 
   if (dock.is_open()) {

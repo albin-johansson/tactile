@@ -122,7 +122,7 @@ void UpdateMouseTileLabels(const entt::registry& registry,
 
 void UpdateOverlayContextMenu()
 {
-  if (auto popup = scoped::popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
+  if (auto popup = scoped::Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     auto& prefs = get_preferences();
     const auto corner = prefs.viewport_overlay_pos();
 
@@ -152,7 +152,7 @@ void UpdateViewportOverlay(const entt::registry& registry,
   PreparePositionAndPivot();
 
   ImGui::SetNextWindowBgAlpha(gOpacity);
-  scoped::window window{"##ViewportOverlay", gFlags};
+  scoped::Window window{"##ViewportOverlay", gFlags};
 
   if (window.is_open()) {
     UpdateMouseCoordinateLabels(cursor);

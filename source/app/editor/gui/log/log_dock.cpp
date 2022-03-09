@@ -78,7 +78,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
   }
 
   ImGui::SetNextItemWidth(comboWidth);
-  if (scoped::combo filterCombo{"##LogFilterCombo", filter}; filterCombo.is_open()) {
+  if (scoped::Combo filterCombo{"##LogFilterCombo", filter}; filterCombo.is_open()) {
     if (ImGui::MenuItem(verboseFilter)) {
       return log_level::verbose;
     }
@@ -131,8 +131,8 @@ void ShowColorLegendHint()
   ImGui::TextDisabled("(?)");
 
   if (ImGui::IsItemHovered()) {
-    scoped::style_color bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
-    scoped::tooltip tooltip;
+    scoped::StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+    scoped::Tooltip tooltip;
 
     static const auto verboseColor = GetColorForLevel(log_level::verbose);
     static const auto debugColor = GetColorForLevel(log_level::debug);
@@ -150,9 +150,9 @@ void ShowColorLegendHint()
 
 void ShowLogContents(const log_level filter)
 {
-  scoped::style_color childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+  scoped::StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
-  if (scoped::child pane{"##LogPane", {}, true, gChildFlags}; pane.is_open()) {
+  if (scoped::Child pane{"##LogPane", {}, true, gChildFlags}; pane.is_open()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(log_size(filter)));
 
@@ -177,7 +177,7 @@ void LogDock::Update()
     return;
   }
 
-  scoped::window dock{"Log", gWindowFlags, &visible};
+  scoped::Window dock{"Log", gWindowFlags, &visible};
   mHasFocus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
@@ -195,7 +195,7 @@ void LogDock::Update()
       centered_text("No logged messages match the current filter.");
     }
 
-    if (auto popup = scoped::popup::for_window("##LogDockContext"); popup.is_open()) {
+    if (auto popup = scoped::Popup::for_window("##LogDockContext"); popup.is_open()) {
       if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
         clear_log_history();
       }

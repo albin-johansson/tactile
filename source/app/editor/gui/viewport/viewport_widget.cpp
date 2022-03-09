@@ -48,14 +48,14 @@ void UpdateViewportWidget(const DocumentModel& model,
                           const icon_manager& icons,
                           entt::dispatcher& dispatcher)
 {
-  scoped::style_var padding{ImGuiStyleVar_WindowPadding, {4, 4}};
+  scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {4, 4}};
   RemoveTabBarFromNextWindow();
 
-  scoped::window window{"Viewport", gWindowFlags};
+  scoped::Window window{"Viewport", gWindowFlags};
   if (window.is_open()) {
     padding.pop();
     gHasFocus = ImGui::IsWindowFocused();
-    gMouseWithinWindow = scoped::window::current_window_contains_mouse();
+    gMouseWithinWindow = scoped::Window::current_window_contains_mouse();
 
     if (model.has_active_document()) {
       UpdateDocumentTabs(model, dispatcher);

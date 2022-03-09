@@ -40,7 +40,7 @@ void PropertiesDock::Update(const DocumentModel& model, entt::dispatcher& dispat
   }
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-  scoped::window dock{"Properties", flags, &visible};
+  scoped::Window dock{"Properties", flags, &visible};
   mHasFocus = dock.has_focus();
 
   if (dock.is_open()) {

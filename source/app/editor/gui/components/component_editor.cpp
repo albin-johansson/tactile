@@ -67,8 +67,7 @@ void component_editor::show(const DocumentModel& model)
   make_visible();
 }
 
-void component_editor::on_update(const DocumentModel& model,
-                                 entt::dispatcher& dispatcher)
+void component_editor::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
   auto& data = *mData;
@@ -98,7 +97,7 @@ void component_editor::on_update(const DocumentModel& model,
 
     const auto& name =
         sys::get_component_def_name(registry, data.active_component.value());
-    if (scoped::combo combo{"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
+    if (scoped::Combo combo{"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
       for (auto&& [entity, component] : registry.view<comp::ComponentDef>().each()) {
         if (ImGui::Selectable(component.name.c_str())) {
           data.active_component = component.id;
@@ -140,7 +139,7 @@ void component_editor::show_component_combo_popup(const entt::registry& registry
                                                   entt::dispatcher& dispatcher)
 {
   auto& data = *mData;
-  if (scoped::popup popup{"##ComponentEditorPopup"}; popup.is_open()) {
+  if (scoped::Popup popup{"##ComponentEditorPopup"}; popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
       const auto id = data.active_component.value();
       data.rename_component.show(sys::get_component_def_name(registry, id), id);
@@ -167,7 +166,7 @@ void component_editor::show_component_attributes(const entt::registry& registry,
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
-    if (scoped::table table{"##ComponentAttributeTable", 3, table_flags};
+    if (scoped::Table table{"##ComponentAttributeTable", 3, table_flags};
         table.is_open()) {
       ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch);
@@ -191,7 +190,7 @@ void component_editor::show_component_attribute(entt::dispatcher& dispatcher,
                                                 const Attribute& value)
 {
   auto& data = *mData;
-  const scoped::id scope{name.c_str()};
+  const scoped::Id scope{name.c_str()};
 
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
@@ -199,7 +198,7 @@ void component_editor::show_component_attribute(entt::dispatcher& dispatcher,
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(name.c_str());
 
-  if (auto popup = scoped::popup::for_item("##ComponentAttributeNameContext");
+  if (auto popup = scoped::Popup::for_item("##ComponentAttributeNameContext");
       popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Attribute")) {
       data.rename_component_attr.show(name, data.active_component.value());

@@ -61,9 +61,9 @@ void PropertyTypeComboImpl(AttributeType& out, Maybe<AttributeType> previousType
   const auto currentIndex = GetIndexFromType(out);
   auto&& [currentName, currentType] = gItems.at(currentIndex);
 
-  if (scoped::combo combo{"##PropertyTypeComboImpl", currentName}; combo.is_open()) {
+  if (scoped::Combo combo{"##PropertyTypeComboImpl", currentName}; combo.is_open()) {
     for (auto&& [name, type] : gItems) {
-      scoped::disable disable{previousType == type};
+      scoped::Disable disable{previousType == type};
 
       const auto selected = std::strcmp(currentName, name) == 0;
       if (ImGui::Selectable(name, selected)) {

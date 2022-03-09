@@ -256,7 +256,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   const auto& current = registry.ctx<comp::ActiveAttributeContext>();
   const auto& context = sys::current_context(registry);
 
-  if (scoped::table table{"##PropertyTable", 2, flags}; table.is_open()) {
+  if (scoped::Table table{"##PropertyTable", 2, flags}; table.is_open()) {
     if (current.entity == entt::null) {
       ShowNativeMapProperties(context.name, registry.ctx<MapInfo>());
     }
@@ -276,7 +276,7 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
     ShowCustomProperties(registry, dispatcher, context, isItemContextOpen);
 
     if (!isItemContextOpen) {
-      if (auto popup = scoped::popup::for_window("##PropertyTableContext");
+      if (auto popup = scoped::Popup::for_window("##PropertyTableContext");
           popup.is_open()) {
         mContextState.show_add_dialog =
             ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
@@ -317,7 +317,7 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
     const auto& name = property.name;
     const auto& value = property.value;
 
-    const scoped::id scope{name.c_str()};
+    const scoped::Id scope{name.c_str()};
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();

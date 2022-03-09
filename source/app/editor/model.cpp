@@ -54,9 +54,9 @@ auto DocumentModel::add_map(Document document) -> map_id
 }
 
 auto DocumentModel::add_map(const int32 tileWidth,
-                             const int32 tileHeight,
-                             const usize rows,
-                             const usize columns) -> map_id
+                            const int32 tileHeight,
+                            const usize rows,
+                            const usize columns) -> map_id
 {
   TACTILE_ASSERT(tileWidth > 0);
   TACTILE_ASSERT(tileHeight > 0);

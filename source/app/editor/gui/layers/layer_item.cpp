@@ -44,7 +44,7 @@ void _update_layer_item_popup(const entt::registry& registry,
                               entt::dispatcher& dispatcher,
                               const layer_id id)
 {
-  if (auto popup = scoped::popup::for_item("##LayerItemPopup"); popup.is_open()) {
+  if (auto popup = scoped::Popup::for_item("##LayerItemPopup"); popup.is_open()) {
     const auto [entity, layer] = sys::get_layer(registry, id);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
@@ -102,7 +102,7 @@ void _show_group_layer_item(const entt::registry& registry,
                             const char* name)
 {
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-  if (scoped::tree_node treeNode{"##GroupLayerTreeNode", flags, "%s", name};
+  if (scoped::TreeNode treeNode{"##GroupLayerTreeNode", flags, "%s", name};
       treeNode.is_open()) {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
@@ -139,7 +139,7 @@ void show_layer_item(const entt::registry& registry,
   const auto& layer = registry.get<comp::Layer>(layerEntity);
   const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
 
-  const scoped::id scope{layer.id};
+  const scoped::Id scope{layer.id};
 
   const auto isActiveLayer = layerEntity == activeLayer.entity;
   const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
