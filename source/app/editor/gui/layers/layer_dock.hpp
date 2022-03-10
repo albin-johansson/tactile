@@ -34,6 +34,9 @@ class DocumentModel;
 class LayerDock final : public ADockWidget
 {
  public:
+  TACTILE_DELETE_COPY(LayerDock)
+  TACTILE_DEFAULT_MOVE(LayerDock)
+
   LayerDock();
 
   ~LayerDock() noexcept override;
