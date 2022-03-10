@@ -36,8 +36,8 @@ struct LogEntry final
   std::string str;
 };
 
-inline std::deque<LogEntry> _history;
-inline LogLevel _log_level{LogLevel::info};
+std::deque<LogEntry> _history;
+LogLevel _log_level{LogLevel::info};
 
 void _log(const fmt::color color,
           const LogLevel level,
