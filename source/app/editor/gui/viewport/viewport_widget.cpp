@@ -69,7 +69,7 @@ void update_viewport_widget(const DocumentModel& model,
       }
     }
     else {
-      UpdateHomePageContent(icons, dispatcher);
+      update_home_page_content(icons, dispatcher);
     }
   }
   else {

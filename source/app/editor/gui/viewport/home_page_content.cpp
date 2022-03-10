@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-void UpdateHomePageContent(const IconManager& icons, entt::dispatcher& dispatcher)
+void update_home_page_content(const IconManager& icons, entt::dispatcher& dispatcher)
 {
   prepare_vertical_alignment_center(4);
 

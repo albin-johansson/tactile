@@ -25,6 +25,6 @@ namespace tactile {
 
 class IconManager;
 
-void UpdateHomePageContent(const IconManager& icons, entt::dispatcher& dispatcher);
+void update_home_page_content(const IconManager& icons, entt::dispatcher& dispatcher);
 
 }  // namespace tactile
