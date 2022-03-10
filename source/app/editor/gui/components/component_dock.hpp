@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "editor/gui/dock_widget.hpp"
+#include "editor/gui/common/dock_widget.hpp"
 
 namespace tactile {
 

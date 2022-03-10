@@ -22,7 +22,7 @@
 #include <centurion.hpp>
 #include <entt/entt.hpp>
 
-#include "rendering/render_info.hpp"
+#include "editor/gui/rendering/render_info.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
