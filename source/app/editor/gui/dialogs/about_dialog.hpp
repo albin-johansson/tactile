@@ -28,10 +28,10 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class about_dialog final : public dialog_base
+class AboutDialog final : public dialog_base
 {
  public:
-  about_dialog();
+  AboutDialog();
 
   void show();
 

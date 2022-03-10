@@ -36,7 +36,7 @@ class HelpMenu final
   void update_windows();
 
  private:
-  about_dialog mAboutDialog;
+  AboutDialog mAboutDialog;
   credits_dialog mCreditsDialog;
   bool mShowAboutImGui{};
 };
