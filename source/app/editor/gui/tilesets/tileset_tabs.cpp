@@ -53,8 +53,11 @@ void _update_context_menu(const tileset_id id,
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Tileset")) {
-      // TODO
+    {
+      scoped::Disable disable;
+      if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Tileset")) {
+        // TODO
+      }
     }
 
     ImGui::Separator();
