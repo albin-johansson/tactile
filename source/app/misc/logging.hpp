@@ -56,7 +56,7 @@ void print([[maybe_unused]] const fmt::color color,
            const Args&... args)
 {
   if constexpr (on_windows) {
-    fmt::print(fmt, args...);
+    fmt::print(fmt::runtime(fmt), args...);
   }
   else {
     fmt::print(fmt::fg(color), fmt, args...);
