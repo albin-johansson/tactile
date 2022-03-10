@@ -27,16 +27,16 @@
 
 namespace tactile::parsing {
 
-class parse_data final
+class ParseData final
 {
  public:
   void set_path(const std::filesystem::path& path);
 
-  void set_error(parse_error error);
+  void set_error(ParseError error);
 
   [[nodiscard]] auto path() const -> const std::filesystem::path&;
 
-  [[nodiscard]] auto error() const -> parse_error;
+  [[nodiscard]] auto error() const -> ParseError;
 
   [[nodiscard]] auto data() -> ir::MapData&;
 
@@ -45,7 +45,7 @@ class parse_data final
  private:
   std::filesystem::path mPath;
   ir::MapData mData;
-  parse_error mError{parse_error::none};
+  ParseError mError{ParseError::none};
 };
 
 }  // namespace tactile::parsing

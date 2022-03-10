@@ -25,6 +25,6 @@
 
 namespace tactile::parsing {
 
-[[nodiscard]] auto parse_map(const std::filesystem::path& path) -> parse_data;
+[[nodiscard]] auto parse_map(const std::filesystem::path& path) -> ParseData;
 
 }  // namespace tactile::parsing

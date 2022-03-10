@@ -30,6 +30,6 @@ namespace tactile::parsing {
 
 [[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
                                   ir::MapData& data,
-                                  const std::filesystem::path& dir) -> parse_error;
+                                  const std::filesystem::path& dir) -> ParseError;
 
 }  // namespace tactile::parsing

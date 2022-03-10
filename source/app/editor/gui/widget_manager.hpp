@@ -65,7 +65,7 @@ class widget_manager final
 
   void show_resize_map_dialog(usize currentRows, usize currentColumns);
 
-  void show_map_import_error_dialog(parsing::parse_error error);
+  void show_map_import_error_dialog(parsing::ParseError error);
 
   void show_component_editor(const DocumentModel& model);
 

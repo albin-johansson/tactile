@@ -28,7 +28,7 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_object_layer(const nlohmann::json& json,
-                                       ir::LayerData& layerData) -> parse_error
+                                       ir::LayerData& layerData) -> ParseError
 {
   auto& objectLayerData = layerData.data.emplace<ir::ObjectLayerData>();
 
@@ -37,33 +37,33 @@ namespace {
 
     for (const auto& [_, value] : iter->items()) {
       auto& objectData = objectLayerData.objects.emplace_back();
-      if (const auto err = parse_object(value, objectData); err != parse_error::none) {
+      if (const auto err = parse_object(value, objectData); err != ParseError::none) {
         return err;
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_tile_layer_data(const nlohmann::json& json,
                                           TileMatrix& tiles,
-                                          const usize columns) -> parse_error
+                                          const usize columns) -> ParseError
 {
   /* We only support the CSV tile encoding, which is the implicit default */
   if (auto encoding = as_string(json, "encoding")) {
     if (encoding != "csv") {
-      return parse_error::unsupported_tile_layer_encoding;
+      return ParseError::unsupported_tile_layer_encoding;
     }
   }
 
   if (!json.contains("data")) {
-    return parse_error::no_tile_layer_data;
+    return ParseError::no_tile_layer_data;
   }
 
   const auto data = json.at("data");
   if (!data.is_array()) {
-    return parse_error::corrupt_tile_layer_data;
+    return ParseError::corrupt_tile_layer_data;
   }
 
   usize index = 0;
@@ -74,17 +74,17 @@ namespace {
       ++index;
     }
     else {
-      return parse_error::corrupt_tile_layer_data;
+      return ParseError::corrupt_tile_layer_data;
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_tile_layer(const nlohmann::json& json,
                                      ir::LayerData& layerData,
                                      const usize rows,
-                                     const usize columns) -> parse_error
+                                     const usize columns) -> ParseError
 {
   auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
 
@@ -121,18 +121,18 @@ namespace {
 
   if (const auto err =
           _parse_tile_layer_data(json, tileLayerData.tiles, tileLayerData.col_count);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_layer(const nlohmann::json& json,
                                 ir::LayerData& layerData,
                                 const usize index,
                                 const usize rows,
-                                const usize columns) -> parse_error
+                                const usize columns) -> ParseError
 {
   layerData.index = index;
 
@@ -140,7 +140,7 @@ namespace {
     layerData.id = *id;
   }
   else {
-    return parse_error::no_layer_id;
+    return ParseError::no_layer_id;
   }
 
   layerData.name = as_string(json, "name").value_or("Layer");
@@ -151,14 +151,14 @@ namespace {
     if (type == "tilelayer") {
       layerData.type = LayerType::tile_layer;
       if (const auto err = _parse_tile_layer(json, layerData, rows, columns);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
     else if (type == "objectgroup") {
       layerData.type = LayerType::object_layer;
       if (const auto err = _parse_object_layer(json, layerData);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
@@ -173,7 +173,7 @@ namespace {
 
         if (const auto err =
                 _parse_layer(value, *childLayerData, childIndex, rows, columns);
-            err != parse_error::none) {
+            err != ParseError::none) {
           return err;
         }
 
@@ -181,30 +181,30 @@ namespace {
       }
     }
     else {
-      return parse_error::unsupported_layer_type;
+      return ParseError::unsupported_layer_type;
     }
   }
   else {
-    return parse_error::no_layer_type;
+    return ParseError::no_layer_type;
   }
 
   if (const auto err = parse_properties(json, layerData.context);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace
 
-auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> parse_error
+auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> ParseError
 {
   if (const auto id = as_int(json, "id")) {
     objectData.id = *id;
   }
   else {
-    return parse_error::no_object_id;
+    return ParseError::no_object_id;
   }
 
   objectData.name = as_string(json, "name").value_or("");
@@ -228,20 +228,20 @@ auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> par
   }
 
   if (const auto err = parse_properties(json, objectData.context);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
-auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> parse_error
+auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseError
 {
   const auto iter = json.find("layers");
 
   if (iter == json.end()) {
     log_warning("JSON map has no \"layers\" attribute, which is required!");
-    return parse_error::none;
+    return ParseError::none;
   }
 
   mapData.layers.reserve(iter->size());
@@ -252,14 +252,14 @@ auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> parse_err
 
     if (const auto err =
             _parse_layer(value, layerData, index, mapData.row_count, mapData.col_count);
-        err != parse_error::none) {
+        err != ParseError::none) {
       return err;
     }
 
     ++index;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace tactile::parsing

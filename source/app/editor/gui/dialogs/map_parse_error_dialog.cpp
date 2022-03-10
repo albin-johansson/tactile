@@ -30,7 +30,7 @@ map_parse_error_dialog::map_parse_error_dialog() : dialog_base{"Map Parse Error"
   set_close_button_label(nullptr);
 }
 
-void map_parse_error_dialog::show(const parsing::parse_error error)
+void map_parse_error_dialog::show(const parsing::ParseError error)
 {
   mError = error;
   make_visible();

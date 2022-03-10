@@ -26,6 +26,6 @@
 namespace tactile::parsing {
 
 [[nodiscard]] auto parse_properties(pugi::xml_node node,
-                                    ir::AttributeContextData& context) -> parse_error;
+                                    ir::AttributeContextData& context) -> ParseError;
 
 }  // namespace tactile::parsing

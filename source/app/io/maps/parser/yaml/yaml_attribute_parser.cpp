@@ -97,14 +97,14 @@ namespace {
 
 [[nodiscard]] auto _parse_component_definition_attribute(const YAML::Node& node,
                                                          ir::ComponentMap& def)
-    -> parse_error
+    -> ParseError
 {
   std::string name;
   if (auto attributeName = node["name"]) {
     name = attributeName.as<std::string>();
   }
   else {
-    return parse_error::no_component_def_attribute_name;
+    return ParseError::no_component_def_attribute_name;
   }
 
   AttributeType type{};
@@ -113,11 +113,11 @@ namespace {
       type = *parsedType;
     }
     else {
-      return parse_error::unsupported_component_def_attribute_type;
+      return ParseError::unsupported_component_def_attribute_type;
     }
   }
   else {
-    return parse_error::no_component_def_attribute_type;
+    return ParseError::no_component_def_attribute_type;
   }
 
   auto& value = def[name];
@@ -151,7 +151,7 @@ namespace {
           value = *color;
         }
         else {
-          return parse_error::corrupt_component_def_attribute_value;
+          return ParseError::corrupt_component_def_attribute_value;
         }
         break;
       }
@@ -161,18 +161,18 @@ namespace {
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_component_definition(const YAML::Node& node, ir::MapData& data)
-    -> parse_error
+    -> ParseError
 {
   std::string type;
   if (auto name = node["name"]) {
     type = name.as<std::string>();
   }
   else {
-    return parse_error::no_component_def_name;
+    return ParseError::no_component_def_name;
   }
 
   auto& def = data.component_definitions[type];
@@ -180,25 +180,25 @@ namespace {
   if (auto attributeSeq = node["attributes"]) {
     for (auto attributeNode : attributeSeq) {
       if (const auto err = _parse_component_definition_attribute(attributeNode, def);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_component(const YAML::Node& node,
                                     const ir::MapData& map,
-                                    ir::AttributeContextData& data) -> parse_error
+                                    ir::AttributeContextData& data) -> ParseError
 {
   std::string type;
   if (auto typeName = node["type"]) {
     type = typeName.as<std::string>();
   }
   else {
-    return parse_error::no_component_type;
+    return ParseError::no_component_type;
   }
 
   // TODO invalid component type check, e.g. parse_error::invalid_component_type
@@ -212,7 +212,7 @@ namespace {
         attr = name.as<std::string>();
       }
       else {
-        return parse_error::no_component_attribute_name;
+        return ParseError::no_component_attribute_name;
       }
 
       if (auto value = valueNode["value"]) {
@@ -221,52 +221,52 @@ namespace {
           attributes[attr] = std::move(*attributeValue);
         }
         else {
-          return parse_error::corrupt_component_attribute_value;
+          return ParseError::corrupt_component_attribute_value;
         }
       }
       else {
-        return parse_error::no_component_attribute_value;
+        return ParseError::no_component_attribute_value;
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace
 
-auto parse_component_definitions(const YAML::Node& node, ir::MapData& data) -> parse_error
+auto parse_component_definitions(const YAML::Node& node, ir::MapData& data) -> ParseError
 {
   if (auto sequence = node["component-definitions"]) {
     for (const auto& defNode : sequence) {
       if (const auto err = _parse_component_definition(defNode, data);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 auto parse_components(const YAML::Node& node,
                       const ir::MapData& map,
-                      ir::AttributeContextData& data) -> parse_error
+                      ir::AttributeContextData& data) -> ParseError
 {
   if (auto sequence = node["components"]) {
     for (const auto& componentNode : sequence) {
       if (const auto err = _parse_component(componentNode, map, data);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
-    -> parse_error
+    -> ParseError
 {
   if (auto sequence = node["properties"]) {
     for (const auto& propertyNode : sequence) {
@@ -277,7 +277,7 @@ auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
         propertyName = name.as<std::string>();
       }
       else {
-        return parse_error::no_property_name;
+        return ParseError::no_property_name;
       }
 
       if (auto type = propertyNode["type"]) {
@@ -285,11 +285,11 @@ auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
           propertyType = *parsedType;
         }
         else {
-          return parse_error::unsupported_property_type;
+          return ParseError::unsupported_property_type;
         }
       }
       else {
-        return parse_error::no_property_type;
+        return ParseError::no_property_type;
       }
 
       if (auto valueAttr = propertyNode["value"]) {
@@ -297,16 +297,16 @@ auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
           data.properties[std::move(propertyName)] = std::move(*value);
         }
         else {
-          return parse_error::corrupt_property_value;
+          return ParseError::corrupt_property_value;
         }
       }
       else {
-        return parse_error::corrupt_property_value;  // TODO no_property_value
+        return ParseError::corrupt_property_value;  // TODO no_property_value
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace tactile::parsing

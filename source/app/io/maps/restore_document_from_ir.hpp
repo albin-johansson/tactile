@@ -34,7 +34,7 @@ class TextureManager;
  *
  * \return a document based on the intermediate representation.
  */
-[[nodiscard]] auto restore_document_from_ir(const parsing::parse_data& data,
+[[nodiscard]] auto restore_document_from_ir(const parsing::ParseData& data,
                                             TextureManager& textures) -> Document;
 
 }  // namespace tactile

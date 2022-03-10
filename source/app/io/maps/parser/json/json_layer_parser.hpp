@@ -27,9 +27,9 @@
 namespace tactile::parsing {
 
 [[nodiscard]] auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData)
-    -> parse_error;
+    -> ParseError;
 
 [[nodiscard]] auto parse_layers(const nlohmann::json& json, ir::MapData& mapData)
-    -> parse_error;
+    -> ParseError;
 
 }  // namespace tactile::parsing

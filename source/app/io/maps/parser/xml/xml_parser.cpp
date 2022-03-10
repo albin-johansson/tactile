@@ -31,30 +31,30 @@
 namespace tactile::parsing {
 namespace {
 
-[[nodiscard]] auto _validate_map(pugi::xml_node mapNode) -> parse_error
+[[nodiscard]] auto _validate_map(pugi::xml_node mapNode) -> ParseError
 {
   if (string_attribute(mapNode, "orientation") != "orthogonal") {
-    return parse_error::unsupported_map_orientation;
+    return ParseError::unsupported_map_orientation;
   }
 
   if (bool_attribute(mapNode, "infinite").value_or(false)) {
-    return parse_error::unsupported_infinite_map;
+    return ParseError::unsupported_infinite_map;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& data)
-    -> parse_error
+    -> ParseError
 {
   pugi::xml_document document;
   if (!document.load_file(path.c_str())) {
-    return parse_error::could_not_read_file;
+    return ParseError::could_not_read_file;
   }
 
   auto mapNode = document.child("map");
 
-  if (const auto err = _validate_map(mapNode); err != parse_error::none) {
+  if (const auto err = _validate_map(mapNode); err != ParseError::none) {
     return err;
   }
 
@@ -62,42 +62,42 @@ namespace {
     data.col_count = *width;
   }
   else {
-    return parse_error::no_map_width;
+    return ParseError::no_map_width;
   }
 
   if (const auto height = uint_attribute(mapNode, "height")) {
     data.row_count = *height;
   }
   else {
-    return parse_error::no_map_height;
+    return ParseError::no_map_height;
   }
 
   if (const auto tw = int_attribute(mapNode, "tilewidth")) {
     data.tile_width = *tw;
   }
   else {
-    return parse_error::no_map_tile_width;
+    return ParseError::no_map_tile_width;
   }
 
   if (const auto th = int_attribute(mapNode, "tileheight")) {
     data.tile_height = *th;
   }
   else {
-    return parse_error::no_map_tile_height;
+    return ParseError::no_map_tile_height;
   }
 
   if (const auto id = int_attribute(mapNode, "nextlayerid")) {
     data.next_layer_id = *id;
   }
   else {
-    return parse_error::no_map_next_layer_id;
+    return ParseError::no_map_next_layer_id;
   }
 
   if (const auto id = int_attribute(mapNode, "nextobjectid")) {
     data.next_object_id = *id;
   }
   else {
-    return parse_error::no_map_next_object_id;
+    return ParseError::no_map_next_object_id;
   }
 
   const auto dir = path.parent_path();
@@ -105,28 +105,28 @@ namespace {
   for (auto tilesetNode : mapNode.children("tileset")) {
     auto& tilesetData = data.tilesets.emplace_back();
     if (const auto err = parse_tileset(tilesetNode, tilesetData, dir);
-        err != parse_error::none) {
+        err != ParseError::none) {
       return err;
     }
   }
 
-  if (const auto err = parse_layers(mapNode, data); err != parse_error::none) {
+  if (const auto err = parse_layers(mapNode, data); err != ParseError::none) {
     return err;
   }
 
   if (const auto err = parse_properties(mapNode, data.context);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace
 
-auto parse_xml_map(const std::filesystem::path& path) -> parse_data
+auto parse_xml_map(const std::filesystem::path& path) -> ParseData
 {
-  parse_data result;
+  ParseData result;
   result.set_path(path);
 
   const auto err = _parse_map(path, result.data());

@@ -129,7 +129,7 @@ void widget_manager::show_resize_map_dialog(const usize currentRows,
   mWidgets->mResizeMapDialog.show(currentRows, currentColumns);
 }
 
-void widget_manager::show_map_import_error_dialog(const parsing::parse_error error)
+void widget_manager::show_map_import_error_dialog(const parsing::ParseError error)
 {
   mWidgets->mMapParseErrorDialog.show(error);
 }

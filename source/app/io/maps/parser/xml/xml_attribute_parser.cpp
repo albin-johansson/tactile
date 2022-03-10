@@ -33,7 +33,7 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_value(pugi::xml_node node, const char* type, Attribute& value)
-    -> parse_error
+    -> ParseError
 {
   TACTILE_ASSERT(type);
 
@@ -67,18 +67,18 @@ namespace {
       value = *color;
     }
     else {
-      return parse_error::corrupt_property_value;
+      return ParseError::corrupt_property_value;
     }
   }
   else {
-    return parse_error::unsupported_property_type;
+    return ParseError::unsupported_property_type;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_property(pugi::xml_node node, ir::AttributeContextData& context)
-    -> parse_error
+    -> ParseError
 {
   std::string propertyName;
 
@@ -86,7 +86,7 @@ namespace {
     propertyName = std::move(*name);
   }
   else {
-    return parse_error::no_property_name;
+    return ParseError::no_property_name;
   }
 
   auto& value = context.properties[std::move(propertyName)];
@@ -94,26 +94,26 @@ namespace {
   /* String properties may exclude the type attribute */
   const char* type = node.attribute("type").as_string("string");
 
-  if (const auto err = _parse_value(node, type, value); err != parse_error::none) {
+  if (const auto err = _parse_value(node, type, value); err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace
 
 auto parse_properties(pugi::xml_node node, ir::AttributeContextData& context)
-    -> parse_error
+    -> ParseError
 {
   for (const auto propertyNode : node.child("properties").children("property")) {
     if (const auto err = _parse_property(propertyNode, context);
-        err != parse_error::none) {
+        err != ParseError::none) {
       return err;
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace tactile::parsing

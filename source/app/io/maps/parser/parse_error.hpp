@@ -29,7 +29,7 @@ namespace tactile::parsing {
  *
  * \see to_cause(parse_error)
  */
-enum class parse_error
+enum class ParseError
 {
   none,
   unknown,
@@ -102,8 +102,8 @@ enum class parse_error
  *
  * \return an error cause message.
  */
-[[nodiscard]] auto to_cause(parse_error error) -> std::string_view;
+[[nodiscard]] auto to_cause(ParseError error) -> std::string_view;
 
-auto operator<<(std::ostream& stream, parse_error error) -> std::ostream&;
+auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;
 
 }  // namespace tactile::parsing

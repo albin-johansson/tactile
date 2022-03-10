@@ -27,6 +27,6 @@
 namespace tactile::parsing {
 
 [[nodiscard]] auto parse_properties(const nlohmann::json& json,
-                                    ir::AttributeContextData& contextData) -> parse_error;
+                                    ir::AttributeContextData& contextData) -> ParseError;
 
 }  // namespace tactile::parsing

@@ -21,32 +21,32 @@
 
 namespace tactile::parsing {
 
-void parse_data::set_path(const std::filesystem::path& path)
+void ParseData::set_path(const std::filesystem::path& path)
 {
   mPath = std::filesystem::absolute(path);
 }
 
-void parse_data::set_error(const parse_error error)
+void ParseData::set_error(const ParseError error)
 {
   mError = error;
 }
 
-auto parse_data::path() const -> const std::filesystem::path&
+auto ParseData::path() const -> const std::filesystem::path&
 {
   return mPath;
 }
 
-auto parse_data::error() const -> parse_error
+auto ParseData::error() const -> ParseError
 {
   return mError;
 }
 
-auto parse_data::data() -> ir::MapData&
+auto ParseData::data() -> ir::MapData&
 {
   return mData;
 }
 
-auto parse_data::data() const -> const ir::MapData&
+auto ParseData::data() const -> const ir::MapData&
 {
   return mData;
 }

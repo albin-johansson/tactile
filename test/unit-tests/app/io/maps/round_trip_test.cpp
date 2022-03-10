@@ -452,7 +452,7 @@ TEST(RoundTrip, YAML)
   emitter::emit_yaml_map(emitter);
 
   const auto result = parsing::parse_map("test_map.yaml");
-  ASSERT_EQ(parsing::parse_error::none, result.error());
+  ASSERT_EQ(parsing::ParseError::none, result.error());
 
   const auto& source = emitter.data();
   const auto& restored = result.data();
@@ -470,9 +470,9 @@ TEST(RoundTrip, JSON)
   emitter::emit_json_map(emitter);
 
   const auto result = parsing::parse_map("test_map.json");
-  ASSERT_EQ(parsing::parse_error::none, result.error());
+  ASSERT_EQ(parsing::ParseError::none, result.error());
 
-  ASSERT_EQ(parsing::parse_error::none, result.error());
+  ASSERT_EQ(parsing::ParseError::none, result.error());
 
   const auto& source = emitter.data();
   const auto& restored = result.data();
@@ -489,7 +489,7 @@ TEST(RoundTrip, XML)
   emitter::emit_xml_map(emitter);
 
   const auto result = parsing::parse_map("test_map.tmx");
-  ASSERT_EQ(parsing::parse_error::none, result.error());
+  ASSERT_EQ(parsing::ParseError::none, result.error());
 
   const auto& source = emitter.data();
   const auto& restored = result.data();

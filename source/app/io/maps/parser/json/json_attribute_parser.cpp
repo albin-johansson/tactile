@@ -32,7 +32,7 @@ namespace {
 
 [[nodiscard]] auto _parse_value(const nlohmann::json& json,
                                 const std::string_view type,
-                                Attribute& value) -> parse_error
+                                Attribute& value) -> ParseError
 {
   if (type == "string") {
     value = as_string(json, "value").value();
@@ -60,18 +60,18 @@ namespace {
       value = *color;
     }
     else {
-      return parse_error::corrupt_property_value;
+      return ParseError::corrupt_property_value;
     }
   }
   else {
-    return parse_error::unsupported_property_type;
+    return ParseError::unsupported_property_type;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_property(const nlohmann::json& json,
-                                   ir::AttributeContextData& contextData) -> parse_error
+                                   ir::AttributeContextData& contextData) -> ParseError
 {
   std::string propertyName;
 
@@ -79,38 +79,38 @@ namespace {
     propertyName = std::move(*name);
   }
   else {
-    return parse_error::no_property_name;
+    return ParseError::no_property_name;
   }
 
   auto& value = contextData.properties[std::move(propertyName)];
 
   if (auto type = as_string(json, "type")) {
-    if (const auto err = _parse_value(json, *type, value); err != parse_error::none) {
+    if (const auto err = _parse_value(json, *type, value); err != ParseError::none) {
       return err;
     }
   }
   else {
-    return parse_error::no_property_type;
+    return ParseError::no_property_type;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace
 
 auto parse_properties(const nlohmann::json& json, ir::AttributeContextData& contextData)
-    -> parse_error
+    -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [_, value] : it->items()) {
       if (const auto err = _parse_property(value, contextData);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace tactile::parsing

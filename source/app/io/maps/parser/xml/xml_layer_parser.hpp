@@ -26,9 +26,9 @@
 namespace tactile::parsing {
 
 [[nodiscard]] auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData)
-    -> parse_error;
+    -> ParseError;
 
 [[nodiscard]] auto parse_layers(pugi::xml_node mapNode, ir::MapData& mapData)
-    -> parse_error;
+    -> ParseError;
 
 }  // namespace tactile::parsing
