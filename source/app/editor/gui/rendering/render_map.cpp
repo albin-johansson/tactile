@@ -30,11 +30,11 @@
 namespace tactile {
 namespace {
 
-void RenderLayer(GraphicsCtx& graphics,
-                 const entt::registry& registry,
-                 const entt::entity layerEntity,
-                 const comp::Layer& layer,
-                 const float parentOpacity)
+void _render_layer(GraphicsCtx& graphics,
+                   const entt::registry& registry,
+                   const entt::entity layerEntity,
+                   const comp::Layer& layer,
+                   const float parentOpacity)
 {
   if (layer.type == LayerType::tile_layer) {
     render_tile_layer(graphics, registry, layerEntity, parentOpacity);
@@ -59,7 +59,7 @@ void render_map(GraphicsCtx& graphics, const entt::registry& registry)
 
     if (layer.visible) {
       if (!parentLayer || parentLayer->visible) {
-        RenderLayer(graphics, registry, entity, layer, layer.opacity * parentOpacity);
+        _render_layer(graphics, registry, entity, layer, layer.opacity * parentOpacity);
       }
     }
   }
