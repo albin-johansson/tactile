@@ -194,10 +194,11 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
     if (is_mouse_within_viewport()) {
       const auto& viewport = registry->ctx<Viewport>();
       if (cen::is_active(primary_modifier)) {
-        if (event.precise_y() > 0) {
+        const auto y = event.precise_y();
+        if (y > 0) {
           mDispatcher.enqueue<IncreaseZoomEvent>();
         }
-        else {
+        else if (y < 0 && sys::can_decrease_viewport_zoom(*registry)) {
           mDispatcher.enqueue<DecreaseZoomEvent>();
         }
       }
