@@ -108,7 +108,7 @@ auto find_object(const entt::registry& registry,
                  const float y) -> entt::entity
 {
   const auto& map = registry.ctx<MapInfo>();
-  const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
+  const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
   for (const auto objectEntity : layer.objects) {
     const auto& object = registry.get<comp::Object>(objectEntity);

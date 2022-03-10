@@ -412,62 +412,62 @@ void Application::on_center_viewport()
 void Application::on_offset_viewport(const OffsetViewportEvent& event)
 {
   auto& registry = mModel.get_active_registry();
-  sys::OffsetViewport(registry, event.dx, event.dy);
+  sys::offset_viewport(registry, event.dx, event.dy);
 }
 
 void Application::on_offset_bound_viewport(const OffsetBoundViewportEvent& event)
 {
   auto& registry = mModel.get_active_registry();
-  sys::OffsetBoundViewport(registry,
-                           event.entity,
-                           event.dx,
-                           event.dy,
-                           event.view_width,
-                           event.view_height);
+  sys::offset_bound_viewport(registry,
+                             event.entity,
+                             event.dx,
+                             event.dy,
+                             event.view_width,
+                             event.view_height);
 }
 
 void Application::on_pan_left()
 {
   auto& registry = mModel.get_active_registry();
-  sys::PanViewportLeft(registry);
+  sys::pan_viewport_left(registry);
 }
 
 void Application::on_pan_right()
 {
   auto& registry = mModel.get_active_registry();
-  sys::PanViewportRight(registry);
+  sys::pan_viewport_right(registry);
 }
 
 void Application::on_pan_up()
 {
   auto& registry = mModel.get_active_registry();
-  sys::PanViewportUp(registry);
+  sys::pan_viewport_up(registry);
 }
 
 void Application::on_pan_down()
 {
   auto& registry = mModel.get_active_registry();
-  sys::PanViewportDown(registry);
+  sys::pan_viewport_down(registry);
 }
 
 void Application::on_increase_zoom()
 {
   auto& registry = mModel.get_active_registry();
   const auto mousePos = ImGui::GetIO().MousePos;
-  sys::IncreaseViewportZoom(registry, mousePos.x, mousePos.y);
+  sys::increase_viewport_zoom(registry, mousePos.x, mousePos.y);
 }
 
 void Application::on_decrease_zoom()
 {
   auto& registry = mModel.get_active_registry();
   const auto mousePos = ImGui::GetIO().MousePos;
-  sys::DecreaseViewportZoom(registry, mousePos.x, mousePos.y);
+  sys::decrease_viewport_zoom(registry, mousePos.x, mousePos.y);
 }
 
 void Application::on_reset_zoom()
 {
   auto& registry = mModel.get_active_registry();
-  sys::ResetViewportZoom(registry);
+  sys::reset_viewport_zoom(registry);
 }
 
 void Application::on_show_tileset_creation_dialog()

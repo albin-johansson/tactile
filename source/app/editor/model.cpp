@@ -140,7 +140,7 @@ auto DocumentModel::can_decrease_viewport_tile_size() const -> bool
 {
   if (has_active_document()) {
     const auto& document = mDocuments.at(*mActiveMap);
-    return sys::CanDecreaseViewportZoom(document->registry);
+    return sys::can_decrease_viewport_zoom(document->registry);
   }
 
   return false;

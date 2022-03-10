@@ -114,7 +114,7 @@ void on_object_selection_tool_dragged(entt::registry& registry,
       if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.entity)) {
         auto& object = checked_get<comp::Object>(registry, active.entity);
         if (mouse.is_within_contents) {
-          const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
+          const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
           const auto dx = (mouse.x - drag->last_mouse_x) / xRatio;
           const auto dy = (mouse.y - drag->last_mouse_y) / yRatio;
 

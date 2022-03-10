@@ -31,7 +31,7 @@ void on_point_tool_pressed(entt::registry& registry,
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       is_object_layer_active(registry)) {
-    const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
+    const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
     const auto x = mouse.x / xRatio;
     const auto y = mouse.y / yRatio;

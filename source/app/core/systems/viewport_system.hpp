@@ -39,7 +39,7 @@ struct ViewportScalingRatio final
  * \param dx the x-axis offset.
  * \param dy the y-axis offset.
  */
-void OffsetViewport(entt::registry& registry, float dx, float dy);
+void offset_viewport(entt::registry& registry, float dx, float dy);
 
 /**
  * \brief Offsets a viewport that is bound to the size of an underlying texture.
@@ -54,47 +54,47 @@ void OffsetViewport(entt::registry& registry, float dx, float dy);
  * \param viewWidth the width of the viewport.
  * \param viewHeight the height of the viewport.
  */
-void OffsetBoundViewport(entt::registry& registry,
-                         entt::entity entity,
-                         float dx,
-                         float dy,
-                         float viewWidth,
-                         float viewHeight);
+void offset_bound_viewport(entt::registry& registry,
+                           entt::entity entity,
+                           float dx,
+                           float dy,
+                           float viewWidth,
+                           float viewHeight);
 
 /**
  * \brief Pans the viewport to the left.
  *
  * \param registry the document registry.
  */
-void PanViewportLeft(entt::registry& registry);
+void pan_viewport_left(entt::registry& registry);
 
 /**
  * \brief Pans the viewport to the right.
  *
  * \param registry the document registry.
  */
-void PanViewportRight(entt::registry& registry);
+void pan_viewport_right(entt::registry& registry);
 
 /**
  * \brief Pans the viewport upwards.
  *
  * \param registry the document registry.
  */
-void PanViewportUp(entt::registry& registry);
+void pan_viewport_up(entt::registry& registry);
 
 /**
  * \brief Pans the viewport downwards.
  *
  * \param registry the document registry.
  */
-void PanViewportDown(entt::registry& registry);
+void pan_viewport_down(entt::registry& registry);
 
 /**
  * \brief Resets the zoom (viewport tile size) to the default.
  *
  * \param registry the document registry.
  */
-void ResetViewportZoom(entt::registry& registry);
+void reset_viewport_zoom(entt::registry& registry);
 
 /**
  * \brief Decreases the viewport zoom.
@@ -105,9 +105,9 @@ void ResetViewportZoom(entt::registry& registry);
  * \param mouseX the mouse x-coordinate.
  * \param mouseY the mouse y-coordinate
  *
- * \see `CanDecreaseViewportZoom()`
+ * \see `can_decrease_viewport_zoom()`
  */
-void DecreaseViewportZoom(entt::registry& registry, float mouseX, float mouseY);
+void decrease_viewport_zoom(entt::registry& registry, float mouseX, float mouseY);
 
 /**
  * \brief Increases the viewport zoom.
@@ -116,7 +116,7 @@ void DecreaseViewportZoom(entt::registry& registry, float mouseX, float mouseY);
  * \param mouseX the mouse x-coordinate.
  * \param mouseY the mouse y-coordinate
  */
-void IncreaseViewportZoom(entt::registry& registry, float mouseX, float mouseY);
+void increase_viewport_zoom(entt::registry& registry, float mouseX, float mouseY);
 
 /**
  * \brief Indicates whether or not the viewport zoom can be decreased.
@@ -125,9 +125,9 @@ void IncreaseViewportZoom(entt::registry& registry, float mouseX, float mouseY);
  *
  * \return `true` if the viewport zoom can be decreased; `false` otherwise.
  *
- * \see `DecreaseViewportZoom()`
+ * \see `decrease_viewport_zoom()`
  */
-[[nodiscard]] auto CanDecreaseViewportZoom(const entt::registry& registry) -> bool;
+[[nodiscard]] auto can_decrease_viewport_zoom(const entt::registry& registry) -> bool;
 
 /**
  * \brief Returns the relationship between the viewport and logical tile sizes.
@@ -136,7 +136,7 @@ void IncreaseViewportZoom(entt::registry& registry, float mouseX, float mouseY);
  *
  * \return the ratio between the viewport tile size and the map tile size.
  */
-[[nodiscard]] auto GetViewportScalingRatio(const entt::registry& registry)
+[[nodiscard]] auto get_viewport_scaling_ratio(const entt::registry& registry)
     -> ViewportScalingRatio;
 
 /// \} End of viewport system

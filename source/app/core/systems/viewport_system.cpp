@@ -32,9 +32,9 @@
 namespace tactile::sys {
 namespace {
 
-constexpr float gMinTileHeight = 4;
+constexpr float _min_tile_height = 4;
 
-[[nodiscard]] auto GetViewportOffsetDelta(const float tileWidth, const float ratio)
+[[nodiscard]] auto _get_viewport_offset_delta(const float tileWidth, const float ratio)
     -> std::pair<float, float>
 {
   const auto dx = std::round((std::max)(2.0f, tileWidth * 0.05f));
@@ -45,19 +45,19 @@ constexpr float gMinTileHeight = 4;
 
 }  // namespace
 
-void OffsetViewport(entt::registry& registry, const float dx, const float dy)
+void offset_viewport(entt::registry& registry, const float dx, const float dy)
 {
   auto& viewport = registry.ctx<Viewport>();
   viewport.x_offset += dx;
   viewport.y_offset += dy;
 }
 
-void OffsetBoundViewport(entt::registry& registry,
-                         const entt::entity entity,
-                         const float dx,
-                         const float dy,
-                         const float viewWidth,
-                         const float viewHeight)
+void offset_bound_viewport(entt::registry& registry,
+                           const entt::entity entity,
+                           const float dx,
+                           const float dy,
+                           const float viewWidth,
+                           const float viewHeight)
 {
   auto& viewport = checked_get<Viewport>(registry, entity);
   viewport.x_offset += dx;
@@ -74,31 +74,31 @@ void OffsetBoundViewport(entt::registry& registry,
   viewport.y_offset = (std::max)(-textureHeight + viewHeight, viewport.y_offset);
 }
 
-void PanViewportLeft(entt::registry& registry)
+void pan_viewport_left(entt::registry& registry)
 {
   auto& viewport = registry.ctx<Viewport>();
   viewport.x_offset += viewport.tile_width;
 }
 
-void PanViewportRight(entt::registry& registry)
+void pan_viewport_right(entt::registry& registry)
 {
   auto& viewport = registry.ctx<Viewport>();
   viewport.x_offset -= viewport.tile_width;
 }
 
-void PanViewportUp(entt::registry& registry)
+void pan_viewport_up(entt::registry& registry)
 {
   auto& viewport = registry.ctx<Viewport>();
   viewport.y_offset += viewport.tile_height;
 }
 
-void PanViewportDown(entt::registry& registry)
+void pan_viewport_down(entt::registry& registry)
 {
   auto& viewport = registry.ctx<Viewport>();
   viewport.y_offset -= viewport.tile_height;
 }
 
-void ResetViewportZoom(entt::registry& registry)
+void reset_viewport_zoom(entt::registry& registry)
 {
   const auto& map = registry.ctx<MapInfo>();
   auto& viewport = registry.ctx<Viewport>();
@@ -106,11 +106,11 @@ void ResetViewportZoom(entt::registry& registry)
   viewport.tile_height = 2.0f * static_cast<float>(map.tile_height);
 }
 
-void DecreaseViewportZoom(entt::registry& registry,
-                          const float mouseX,
-                          const float mouseY)
+void decrease_viewport_zoom(entt::registry& registry,
+                            const float mouseX,
+                            const float mouseY)
 {
-  TACTILE_ASSERT(CanDecreaseViewportZoom(registry));
+  TACTILE_ASSERT(can_decrease_viewport_zoom(registry));
 
   auto& viewport = registry.ctx<Viewport>();
 
@@ -120,21 +120,21 @@ void DecreaseViewportZoom(entt::registry& registry,
 
   {
     const auto ratio = viewport.tile_width / viewport.tile_height;
-    const auto [dx, dy] = GetViewportOffsetDelta(viewport.tile_width, ratio);
+    const auto [dx, dy] = _get_viewport_offset_delta(viewport.tile_width, ratio);
     viewport.tile_width -= dx;
     viewport.tile_height -= dy;
 
-    viewport.tile_width = (std::max)(gMinTileHeight * ratio, viewport.tile_width);
-    viewport.tile_height = (std::max)(gMinTileHeight, viewport.tile_height);
+    viewport.tile_width = (std::max)(_min_tile_height * ratio, viewport.tile_width);
+    viewport.tile_height = (std::max)(_min_tile_height, viewport.tile_height);
   }
 
   viewport.x_offset = mouseX - (px * viewport.tile_width);
   viewport.y_offset = mouseY - (py * viewport.tile_height);
 }
 
-void IncreaseViewportZoom(entt::registry& registry,
-                          const float mouseX,
-                          const float mouseY)
+void increase_viewport_zoom(entt::registry& registry,
+                            const float mouseX,
+                            const float mouseY)
 {
   auto& viewport = registry.ctx<Viewport>();
 
@@ -144,7 +144,7 @@ void IncreaseViewportZoom(entt::registry& registry,
 
   {
     const auto ratio = viewport.tile_width / viewport.tile_height;
-    const auto [dx, dy] = GetViewportOffsetDelta(viewport.tile_width, ratio);
+    const auto [dx, dy] = _get_viewport_offset_delta(viewport.tile_width, ratio);
     viewport.tile_width += dx;
     viewport.tile_height += dy;
   }
@@ -153,13 +153,13 @@ void IncreaseViewportZoom(entt::registry& registry,
   viewport.y_offset = mouseY - (py * viewport.tile_height);
 }
 
-auto CanDecreaseViewportZoom(const entt::registry& registry) -> bool
+auto can_decrease_viewport_zoom(const entt::registry& registry) -> bool
 {
   const auto& viewport = registry.ctx<Viewport>();
-  return viewport.tile_height > gMinTileHeight;
+  return viewport.tile_height > _min_tile_height;
 }
 
-auto GetViewportScalingRatio(const entt::registry& registry) -> ViewportScalingRatio
+auto get_viewport_scaling_ratio(const entt::registry& registry) -> ViewportScalingRatio
 {
   const auto& viewport = registry.ctx<Viewport>();
   const auto& map = registry.ctx<MapInfo>();

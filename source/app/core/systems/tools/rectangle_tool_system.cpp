@@ -38,7 +38,7 @@ namespace {
 void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
 {
   if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
-    const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
+    const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
     const auto x = (std::min)(stroke->start_x, stroke->current_x) / xRatio;
     const auto y = (std::min)(stroke->start_y, stroke->current_y) / yRatio;

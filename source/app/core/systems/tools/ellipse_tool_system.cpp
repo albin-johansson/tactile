@@ -32,7 +32,7 @@ namespace {
 void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
 {
   if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
-    const auto [xRatio, yRatio] = GetViewportScalingRatio(registry);
+    const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
     const auto xRadius = (stroke->current_x - stroke->start_x) / xRatio;
     const auto yRadius = (stroke->current_y - stroke->start_y) / yRatio;
