@@ -63,7 +63,7 @@ struct WidgetShowState final
  */
 class Application final
 {
-  friend void subscribe_to_events(Application&);
+  friend void subscribe_to_events(Application& app);
 
  public:
   explicit Application(AppConfiguration* configuration);

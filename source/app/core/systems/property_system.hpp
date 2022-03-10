@@ -126,7 +126,7 @@ void update_property(entt::registry& registry,
  * \param registry the document registry.
  * \param context the context that will be modified.
  * \param name the name of the property that will be updated.
- * \param value the new type of the property.
+ * \param type the new type of the property.
  */
 void change_property_type(entt::registry& registry,
                           comp::AttributeContext& context,
