@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class CreateTilesetDialog final : public dialog_base
+class CreateTilesetDialog final : public ADialog
 {
  public:
   CreateTilesetDialog();

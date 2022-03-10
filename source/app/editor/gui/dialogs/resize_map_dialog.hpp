@@ -29,7 +29,7 @@ namespace tactile {
 /**
  * \brief Used to change the dimensions of a tilemap.
  */
-class resize_map_dialog final : public dialog_base
+class resize_map_dialog final : public ADialog
 {
  public:
   TACTILE_DEFAULT_COPY(resize_map_dialog)

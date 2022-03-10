@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-string_input_dialog::string_input_dialog(const char* title) : dialog_base{title} {}
+string_input_dialog::string_input_dialog(const char* title) : ADialog{title} {}
 
 void string_input_dialog::show(std::string previous)
 {

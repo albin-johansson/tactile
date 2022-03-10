@@ -45,7 +45,7 @@ void _row(const c_str lib, const c_str license)
 
 }  // namespace
 
-credits_dialog::credits_dialog() : dialog_base{"Credits"}
+credits_dialog::credits_dialog() : ADialog{"Credits"}
 {
   set_accept_button_label(nullptr);
   set_close_button_label("Close");

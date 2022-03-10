@@ -28,7 +28,7 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class AboutDialog final : public dialog_base
+class AboutDialog final : public ADialog
 {
  public:
   AboutDialog();

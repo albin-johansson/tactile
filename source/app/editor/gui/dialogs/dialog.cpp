@@ -26,14 +26,14 @@
 
 namespace tactile {
 
-dialog_base::dialog_base(const c_str title) : mTitle{title}
+ADialog::ADialog(const c_str title) : mTitle{title}
 {
   if (!mTitle) {
     throw_traced(TactileError{"Invalid null dialog title!"});
   }
 }
 
-void dialog_base::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void ADialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (mShow) {
     ImGui::OpenPopup(mTitle);
@@ -77,22 +77,22 @@ void dialog_base::update(const DocumentModel& model, entt::dispatcher& dispatche
   }
 }
 
-void dialog_base::make_visible()
+void ADialog::make_visible()
 {
   mShow = true;
 }
 
-void dialog_base::use_apply_button()
+void ADialog::use_apply_button()
 {
   mUseApplyButton = true;
 }
 
-void dialog_base::set_accept_button_label(const c_str label)
+void ADialog::set_accept_button_label(const c_str label)
 {
   mAcceptButtonLabel = label;
 }
 
-void dialog_base::set_close_button_label(const c_str label)
+void ADialog::set_close_button_label(const c_str label)
 {
   mCloseButtonLabel = label;
 }

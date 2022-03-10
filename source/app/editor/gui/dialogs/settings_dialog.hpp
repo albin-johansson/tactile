@@ -30,7 +30,7 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class settings_dialog final : public dialog_base
+class settings_dialog final : public ADialog
 {
  public:
   TACTILE_DEFAULT_COPY(settings_dialog)

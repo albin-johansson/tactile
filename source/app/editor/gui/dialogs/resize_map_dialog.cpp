@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-resize_map_dialog::resize_map_dialog() : dialog_base{"Resize Map"} {}
+resize_map_dialog::resize_map_dialog() : ADialog{"Resize Map"} {}
 
 void resize_map_dialog::show(usize nCurrentRows, usize nCurrentColumns)
 {

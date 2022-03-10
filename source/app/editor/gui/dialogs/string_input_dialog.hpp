@@ -33,7 +33,7 @@ namespace tactile {
 /**
  * \brief An abstract class representing dialogs which provide a string input field.
  */
-class string_input_dialog : public dialog_base
+class string_input_dialog : public ADialog
 {
  public:
   explicit string_input_dialog(const char* title);

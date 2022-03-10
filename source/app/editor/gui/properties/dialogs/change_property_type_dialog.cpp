@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-ChangePropertyTypeDialog::ChangePropertyTypeDialog() : dialog_base{"Change Property Type"}
+ChangePropertyTypeDialog::ChangePropertyTypeDialog() : ADialog{"Change Property Type"}
 {
   set_accept_button_label("Change");
 }

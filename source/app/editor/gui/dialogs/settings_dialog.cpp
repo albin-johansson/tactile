@@ -40,7 +40,7 @@ void _update_preview_settings(const PreferenceState& prefs)
 
 }  // namespace
 
-settings_dialog::settings_dialog() : dialog_base{"Settings"}
+settings_dialog::settings_dialog() : ADialog{"Settings"}
 {
   use_apply_button();
 }

@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-AddPropertyDialog::AddPropertyDialog() : dialog_base{"Add Property"}
+AddPropertyDialog::AddPropertyDialog() : ADialog{"Add Property"}
 {
   set_accept_button_label("Add");
 }

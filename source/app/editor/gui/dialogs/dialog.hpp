@@ -30,11 +30,11 @@ class DocumentModel;
 /**
  * \brief Serves as the base implementation of all modal dialogs.
  */
-class dialog_base
+class ADialog
 {
  public:
-  TACTILE_DEFAULT_COPY(dialog_base)
-  TACTILE_DEFAULT_MOVE(dialog_base)
+  TACTILE_DEFAULT_COPY(ADialog)
+  TACTILE_DEFAULT_MOVE(ADialog)
 
   /**
    * \brief Creates a dialog.
@@ -43,9 +43,9 @@ class dialog_base
    *
    * \throws tactile_error if the title is null.
    */
-  explicit dialog_base(c_str title);
+  explicit ADialog(c_str title);
 
-  virtual ~dialog_base() noexcept = default;
+  virtual ~ADialog() noexcept = default;
 
   /**
    * \brief Updates the state of the dialog.

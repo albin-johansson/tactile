@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class ChangePropertyTypeDialog final : public dialog_base
+class ChangePropertyTypeDialog final : public ADialog
 {
  public:
   ChangePropertyTypeDialog();

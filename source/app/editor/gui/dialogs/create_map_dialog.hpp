@@ -28,7 +28,7 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class create_map_dialog final : public dialog_base
+class create_map_dialog final : public ADialog
 {
  public:
   create_map_dialog();

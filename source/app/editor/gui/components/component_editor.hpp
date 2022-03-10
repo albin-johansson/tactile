@@ -36,7 +36,7 @@ class DocumentModel;
  *
  * \ingroup gui
  */
-class ComponentEditor final : public dialog_base
+class ComponentEditor final : public ADialog
 {
  public:
   TACTILE_DELETE_COPY(ComponentEditor)

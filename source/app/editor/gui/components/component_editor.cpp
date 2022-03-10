@@ -51,7 +51,7 @@ struct ComponentEditor::component_editor_data final
 };
 
 ComponentEditor::ComponentEditor()
-    : dialog_base{"Component Editor"}
+    : ADialog{"Component Editor"}
     , mData{std::make_unique<component_editor_data>()}
 {
   set_accept_button_label(nullptr);

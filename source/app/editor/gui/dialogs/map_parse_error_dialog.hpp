@@ -28,7 +28,7 @@ namespace tactile {
 /**
  * \brief Provides information about a failed attempt to parse a map.
  */
-class map_parse_error_dialog final : public dialog_base
+class map_parse_error_dialog final : public ADialog
 {
  public:
   map_parse_error_dialog();

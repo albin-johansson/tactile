@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-create_map_dialog::create_map_dialog() : dialog_base{"Create New Map"}
+create_map_dialog::create_map_dialog() : ADialog{"Create New Map"}
 {
   set_accept_button_label("Create");
 }

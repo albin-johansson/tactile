@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-map_parse_error_dialog::map_parse_error_dialog() : dialog_base{"Map Parse Error"}
+map_parse_error_dialog::map_parse_error_dialog() : ADialog{"Map Parse Error"}
 {
   set_close_button_label(nullptr);
 }
