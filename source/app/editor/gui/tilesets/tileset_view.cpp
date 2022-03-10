@@ -35,15 +35,15 @@
 namespace tactile {
 namespace {
 
-constexpr auto gRubberBandColor = IM_COL32(0, 0x44, 0xCC, 100);
-constexpr cen::color gGridColor{200, 200, 200, 40};
+constexpr auto _rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
+constexpr cen::color _grid_color{200, 200, 200, 40};
 
-[[nodiscard]] auto TrackScrollOffset(const ImVec2& canvasSize, ImVec2 offset) -> ImVec2
+[[nodiscard]] auto _track_scroll_offset(const ImVec2& canvasSize, ImVec2 offset) -> ImVec2
 {
   constexpr auto flags = ImGuiButtonFlags_MouseButtonLeft |
                          ImGuiButtonFlags_MouseButtonMiddle |
                          ImGuiButtonFlags_MouseButtonRight;
-  ImGui::InvisibleButton("TrackScrollOffset", canvasSize, flags);
+  ImGui::InvisibleButton("_track_scroll_offset", canvasSize, flags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
     offset.x += io.MouseDelta.x;
@@ -55,7 +55,7 @@ constexpr cen::color gGridColor{200, 200, 200, 40};
   }
 }
 
-void RenderSelection(const Region& selection, const ImVec2& min, const ImVec2& tileSize)
+void _render_selection(const Region& selection, const ImVec2& min, const ImVec2& tileSize)
 {
   const auto diff = selection.end - selection.begin;
 
@@ -67,12 +67,12 @@ void RenderSelection(const Region& selection, const ImVec2& min, const ImVec2& t
 
   ImGui::GetWindowDrawList()->AddRectFilled(min + origin,
                                             min + origin + size,
-                                            gRubberBandColor);
+                                            _rubber_band_color);
 }
 
-void RenderTilesetImage(graphics_ctx& graphics,
-                        const comp::Texture& texture,
-                        const ImVec2& position)
+void _render_tileset_image(graphics_ctx& graphics,
+                           const comp::Texture& texture,
+                           const ImVec2& position)
 {
   const ImVec2 size = {static_cast<float>(texture.width),
                        static_cast<float>(texture.height)};
@@ -81,7 +81,7 @@ void RenderTilesetImage(graphics_ctx& graphics,
 
 }  // namespace
 
-void TilesetView::Update(const entt::registry& registry,
+void TilesetView::update(const entt::registry& registry,
                          const entt::entity entity,
                          entt::dispatcher& dispatcher)
 {
@@ -99,7 +99,7 @@ void TilesetView::Update(const entt::registry& registry,
   graphics.clear();
 
   const auto offset = ImVec2{viewport.x_offset, viewport.y_offset};
-  const auto scroll = TrackScrollOffset(info.canvas_br - info.canvas_tl, offset);
+  const auto scroll = _track_scroll_offset(info.canvas_br - info.canvas_tl, offset);
 
   const ImVec2 tileSize = {static_cast<float>(tileset.tile_width),
                            static_cast<float>(tileset.tile_height)};
@@ -111,26 +111,26 @@ void TilesetView::Update(const entt::registry& registry,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  RenderTilesetImage(graphics, registry.get<comp::Texture>(entity), position);
+  _render_tileset_image(graphics, registry.get<comp::Texture>(entity), position);
 
   if (const auto& selection = registry.get<comp::TilesetSelection>(entity);
       selection.region) {
-    RenderSelection(*selection.region, position, tileSize);
+    _render_selection(*selection.region, position, tileSize);
   }
 
   graphics.set_line_thickness(1);
-  graphics.set_draw_color(gGridColor);
+  graphics.set_draw_color(_grid_color);
   graphics.render_translated_grid();
 
   graphics.pop_clip();
 }
 
-auto TilesetView::GetWidth() const -> Maybe<float>
+auto TilesetView::width() const -> Maybe<float>
 {
   return mWidth;
 }
 
-auto TilesetView::GetHeight() const -> Maybe<float>
+auto TilesetView::height() const -> Maybe<float>
 {
   return mHeight;
 }

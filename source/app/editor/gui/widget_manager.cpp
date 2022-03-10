@@ -66,6 +66,7 @@ void widget_manager::update(const DocumentModel& model,
   if (model.has_active_document()) {
     mWidgets->mToolbar.Update(model, dispatcher);
     mWidgets->mLayerDock.update(model, dispatcher);
+    mWidgets->mTilesetDock.update(model, dispatcher);
     mWidgets->mPropertiesDock.update(model, dispatcher);
     mWidgets->mComponentDock.update(model, dispatcher);
     mWidgets->mLogDock.update(model, dispatcher);
@@ -75,7 +76,6 @@ void widget_manager::update(const DocumentModel& model,
 
   if (const auto* registry = model.active_registry()) {
     update_map_view_object_context_menu(*registry, dispatcher);
-    mWidgets->mTilesetDock.Update(*registry, dispatcher);
   }
 
   mWidgets->mResizeMapDialog.update(model, dispatcher);
@@ -167,7 +167,7 @@ auto widget_manager::is_layer_dock_focused() const -> bool
 
 auto widget_manager::is_tileset_dock_focused() const -> bool
 {
-  return mWidgets->mTilesetDock.IsFocused();
+  return mWidgets->mTilesetDock.has_focus();
 }
 
 auto widget_manager::is_property_dock_focused() const -> bool
@@ -182,7 +182,7 @@ auto widget_manager::is_log_dock_focused() const -> bool
 
 auto widget_manager::is_tileset_dock_hovered() const -> bool
 {
-  return mWidgets->mTilesetDock.IsHovered();
+  return mWidgets->mTilesetDock.has_mouse_hover();
 }
 
 auto widget_manager::is_toolbar_visible() const -> bool
@@ -192,12 +192,12 @@ auto widget_manager::is_toolbar_visible() const -> bool
 
 auto widget_manager::tileset_view_width() const -> Maybe<float>
 {
-  return mWidgets->mTilesetDock.GetTilesetView().GetWidth();
+  return mWidgets->mTilesetDock.get_tileset_view().width();
 }
 
 auto widget_manager::tileset_view_height() const -> Maybe<float>
 {
-  return mWidgets->mTilesetDock.GetTilesetView().GetHeight();
+  return mWidgets->mTilesetDock.get_tileset_view().height();
 }
 
 }  // namespace tactile

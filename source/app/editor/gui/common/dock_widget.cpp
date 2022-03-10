@@ -46,6 +46,7 @@ void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatche
 
   scoped::Window dock{mTitle, mWindowFlags, show};
   mHasFocus = dock.has_focus(mFocusFlags);
+  mIsHovered = ImGui::IsWindowHovered(mFocusFlags);
 
   if (dock.is_open()) {
     on_update(model, dispatcher);

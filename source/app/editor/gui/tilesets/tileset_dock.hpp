@@ -21,28 +21,28 @@
 
 #include <entt/entt.hpp>
 
+#include "editor/gui/common/dock_widget.hpp"
 #include "tactile.hpp"
 #include "tileset_tabs.hpp"
 
 namespace tactile {
 
-class TilesetDock final
+class TilesetDock final : public ADockWidget
 {
  public:
-  void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
+  TilesetDock();
 
-  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+  [[nodiscard]] auto get_tileset_view() const -> const TilesetView&;
 
-  [[nodiscard]] auto IsHovered() const noexcept -> bool { return mWindowContainsMouse; }
+ protected:
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto GetTilesetView() const -> const TilesetView&;
+  void set_visible(bool visible) override;
+
+  [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
   TilesetTabWidget mTabWidget;
-  bool mHasFocus{};
-  bool mWindowContainsMouse{};
-
-  void ResetState();
 };
 
 }  // namespace tactile

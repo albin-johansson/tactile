@@ -42,6 +42,8 @@ class ADockWidget
 
   [[nodiscard]] auto has_focus() const noexcept -> bool { return mHasFocus; }
 
+  [[nodiscard]] auto has_mouse_hover() const noexcept -> bool { return mIsHovered; }
+
  protected:
   virtual void on_update([[maybe_unused]] const DocumentModel& model,
                          [[maybe_unused]] entt::dispatcher& dispatcher)
@@ -59,8 +61,9 @@ class ADockWidget
   const char* mTitle{};
   ImGuiWindowFlags mWindowFlags{};
   ImGuiFocusedFlags mFocusFlags{};
-  bool mHasFocus{};
   bool mHasCloseButton{};
+  bool mHasFocus{};
+  bool mIsHovered{};
 };
 
 }  // namespace tactile

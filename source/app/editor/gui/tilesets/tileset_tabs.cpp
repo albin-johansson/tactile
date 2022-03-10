@@ -33,12 +33,12 @@
 namespace tactile {
 namespace {
 
-constexpr auto gTabBarFlags =
+constexpr auto _tab_bar_flags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
-void UpdateContextMenu(const tileset_id id,
-                       const entt::entity tilesetEntity,
-                       entt::dispatcher& dispatcher)
+void _update_context_menu(const tileset_id id,
+                          const entt::entity tilesetEntity,
+                          entt::dispatcher& dispatcher)
 {
   if (auto popup = scoped::Popup::for_item("##TilesetTabContext"); popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
@@ -67,10 +67,10 @@ void UpdateContextMenu(const tileset_id id,
 
 }  // namespace
 
-void TilesetTabWidget::Update(const entt::registry& registry,
+void TilesetTabWidget::update(const entt::registry& registry,
                               entt::dispatcher& dispatcher)
 {
-  if (scoped::TabBar bar{"TilesetTabBar", gTabBarFlags}; bar.is_open()) {
+  if (scoped::TabBar bar{"TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
@@ -88,7 +88,7 @@ void TilesetTabWidget::Update(const entt::registry& registry,
                                &opened,
                                isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
-        mTilesetView.Update(registry, entity, dispatcher);
+        mTilesetView.update(registry, entity, dispatcher);
       }
 
       if (!opened) {
@@ -98,13 +98,13 @@ void TilesetTabWidget::Update(const entt::registry& registry,
         dispatcher.enqueue<SelectTilesetEvent>(tileset.id);
       }
       else {
-        UpdateContextMenu(tileset.id, entity, dispatcher);
+        _update_context_menu(tileset.id, entity, dispatcher);
       }
     }
   }
 }
 
-auto TilesetTabWidget::GetTilesetView() const -> const TilesetView&
+auto TilesetTabWidget::get_tileset_view() const -> const TilesetView&
 {
   return mTilesetView;
 }

@@ -28,13 +28,13 @@ namespace tactile {
 class TilesetView final
 {
  public:
-  void Update(const entt::registry& registry,
+  void update(const entt::registry& registry,
               entt::entity entity,
               entt::dispatcher& dispatcher);
 
-  [[nodiscard]] auto GetWidth() const -> Maybe<float>;
+  [[nodiscard]] auto width() const -> Maybe<float>;
 
-  [[nodiscard]] auto GetHeight() const -> Maybe<float>;
+  [[nodiscard]] auto height() const -> Maybe<float>;
 
  private:
   Maybe<float> mWidth;

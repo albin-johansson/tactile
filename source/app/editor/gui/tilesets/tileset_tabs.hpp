@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry, dispatcher
+#include <entt/entt.hpp>
 
 #include "tileset_view.hpp"
 
@@ -28,9 +28,9 @@ namespace tactile {
 class TilesetTabWidget final
 {
  public:
-  void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
+  void update(const entt::registry& registry, entt::dispatcher& dispatcher);
 
-  [[nodiscard]] auto GetTilesetView() const -> const TilesetView&;
+  [[nodiscard]] auto get_tileset_view() const -> const TilesetView&;
 
  private:
   TilesetView mTilesetView;

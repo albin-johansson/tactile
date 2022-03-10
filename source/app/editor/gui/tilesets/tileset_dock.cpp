@@ -28,7 +28,7 @@
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/menus/map_menu.hpp"
-#include "editor/gui/scoped.hpp"
+#include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 #include "tileset_tabs.hpp"
 
@@ -39,47 +39,42 @@ constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_No
 
 }  // namespace
 
-void TilesetDock::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
+TilesetDock::TilesetDock() : ADockWidget{"Tilesets", _window_flags}
 {
-  ResetState();
-
-  auto& prefs = get_preferences();
-  bool visible = prefs.is_tileset_dock_visible();
-
-  if (!visible) {
-    return;
-  }
-
-  scoped::Window window{"Tilesets", _window_flags, &visible};
-  if (window.is_open()) {
-    mHasFocus = ImGui::IsWindowFocused();
-    mWindowContainsMouse = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
-
-    if (!registry.view<comp::Tileset>().empty()) {
-      mTabWidget.Update(registry, dispatcher);
-    }
-    else {
-      prepare_vertical_alignment_center(2);
-      centered_text("Current map has no tilesets!");
-      ImGui::Spacing();
-      if (centered_button(TAC_ICON_TILESET " Create tileset...")) {
-        dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
-      }
-    }
-  }
-
-  prefs.set_tileset_dock_visible(visible);
+  set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
+  set_close_button_enabled(true);
 }
 
-auto TilesetDock::GetTilesetView() const -> const TilesetView&
+void TilesetDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  return mTabWidget.GetTilesetView();
+  const auto& registry = model.get_active_registry();
+
+  if (!registry.view<comp::Tileset>().empty()) {
+    mTabWidget.update(registry, dispatcher);
+  }
+  else {
+    prepare_vertical_alignment_center(2);
+    centered_text("Current map has no tilesets!");
+    ImGui::Spacing();
+    if (centered_button(TAC_ICON_TILESET " Create tileset...")) {
+      dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+    }
+  }
 }
 
-void TilesetDock::ResetState()
+void TilesetDock::set_visible(const bool visible)
 {
-  mHasFocus = false;
-  mWindowContainsMouse = false;
+  get_preferences().set_tileset_dock_visible(visible);
+}
+
+auto TilesetDock::is_visible() const -> bool
+{
+  return get_preferences().is_tileset_dock_visible();
+}
+
+auto TilesetDock::get_tileset_view() const -> const TilesetView&
+{
+  return mTabWidget.get_tileset_view();
 }
 
 }  // namespace tactile
