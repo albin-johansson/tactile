@@ -29,6 +29,7 @@
 #include "editor/events/component_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
+#include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
@@ -163,15 +164,21 @@ void ComponentDock::on_update(const DocumentModel& model, entt::dispatcher& disp
   ImGui::Text("Context: %s", context.name.c_str());
 
   if (scoped::Child pane{"##ComponentsChild"}; pane.is_open()) {
-    for (const auto componentEntity : context.components) {
-      const auto& component = registry.get<comp::Component>(componentEntity);
-      const auto& name = sys::get_component_def_name(registry, component.type);
+    if (context.components.empty()) {
+      prepare_vertical_alignment_center(2);
+      centered_text("There are no components associated with the current context.");
+    }
+    else {
+      for (const auto componentEntity : context.components) {
+        const auto& component = registry.get<comp::Component>(componentEntity);
+        const auto& name = sys::get_component_def_name(registry, component.type);
+
+        ImGui::Separator();
+        _show_component(dispatcher, context.id, name.c_str(), component);
+      }
 
       ImGui::Separator();
-      _show_component(dispatcher, context.id, name.c_str(), component);
     }
-
-    ImGui::Separator();
 
     if (centered_button(TAC_ICON_ADD, "Add component")) {
       ImGui::OpenPopup("##AddComponentButtonPopup");
