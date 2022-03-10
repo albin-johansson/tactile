@@ -32,10 +32,10 @@ struct RenderInfo;
 /**
  * \brief Provides a common simplified rendering API.
  */
-class graphics_ctx final
+class GraphicsCtx final
 {
  public:
-  explicit graphics_ctx(const RenderInfo& info);
+  explicit GraphicsCtx(const RenderInfo& info);
 
   void push_clip();
 

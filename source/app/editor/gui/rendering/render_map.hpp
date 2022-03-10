@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-class graphics_ctx;
+class GraphicsCtx;
 
 /**
  * \brief Renders a map.
@@ -33,6 +33,6 @@ class graphics_ctx;
  * \param graphics the graphics context that will be used.
  * \param registry the registry associated with the map that will rendered.
  */
-void RenderMap(graphics_ctx& graphics, const entt::registry& registry);
+void RenderMap(GraphicsCtx& graphics, const entt::registry& registry);
 
 }  // namespace tactile

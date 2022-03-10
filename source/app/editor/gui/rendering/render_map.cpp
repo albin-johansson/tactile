@@ -30,7 +30,7 @@
 namespace tactile {
 namespace {
 
-void RenderLayer(graphics_ctx& graphics,
+void RenderLayer(GraphicsCtx& graphics,
                  const entt::registry& registry,
                  const entt::entity layerEntity,
                  const comp::Layer& layer,
@@ -46,7 +46,7 @@ void RenderLayer(graphics_ctx& graphics,
 
 }  // namespace
 
-void RenderMap(graphics_ctx& graphics, const entt::registry& registry)
+void RenderMap(GraphicsCtx& graphics, const entt::registry& registry)
 {
   for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
     const auto& layer = registry.get<comp::Layer>(entity);

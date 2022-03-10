@@ -27,7 +27,7 @@ struct ImVec2;
 
 namespace tactile {
 
-class graphics_ctx;
+class GraphicsCtx;
 
 /**
  * \brief Renders a single tile.
@@ -40,7 +40,7 @@ class graphics_ctx;
  * \param row the row coordinate of the tile.
  * \param column the column coordinate of the tile.
  */
-void RenderTile(graphics_ctx& graphics,
+void RenderTile(GraphicsCtx& graphics,
                 const entt::registry& registry,
                 tile_id tile,
                 int32 row,

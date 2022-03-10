@@ -33,7 +33,7 @@
 namespace tactile {
 namespace {
 
-void RenderPointObject(graphics_ctx& graphics,
+void RenderPointObject(GraphicsCtx& graphics,
                        const entt::registry& registry,
                        const entt::entity objectEntity,
                        const ImVec2& position,
@@ -64,7 +64,7 @@ void RenderPointObject(graphics_ctx& graphics,
   }
 }
 
-void RenderEllipseObject(graphics_ctx& graphics,
+void RenderEllipseObject(GraphicsCtx& graphics,
                          const entt::registry& registry,
                          const entt::entity objectEntity,
                          const ImVec2& position,
@@ -96,7 +96,7 @@ void RenderEllipseObject(graphics_ctx& graphics,
   }
 }
 
-void RenderRectangleObject(graphics_ctx& graphics,
+void RenderRectangleObject(GraphicsCtx& graphics,
                            const entt::registry& registry,
                            const entt::entity objectEntity,
                            const ImVec2& position,
@@ -128,7 +128,7 @@ void RenderRectangleObject(graphics_ctx& graphics,
 
 }  // namespace
 
-void RenderObject(graphics_ctx& graphics,
+void RenderObject(GraphicsCtx& graphics,
                   const entt::registry& registry,
                   const entt::entity objectEntity,
                   const cen::color& color)
@@ -156,7 +156,7 @@ void RenderObject(graphics_ctx& graphics,
   }
 }
 
-void RenderObjectLayer(graphics_ctx& graphics,
+void RenderObjectLayer(GraphicsCtx& graphics,
                        const entt::registry& registry,
                        const entt::entity layerEntity,
                        const float parentOpacity)

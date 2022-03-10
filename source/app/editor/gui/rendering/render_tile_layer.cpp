@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-void RenderTileLayer(graphics_ctx& graphics,
+void RenderTileLayer(GraphicsCtx& graphics,
                      const entt::registry& registry,
                      const entt::entity layerEntity,
                      const float parentOpacity)

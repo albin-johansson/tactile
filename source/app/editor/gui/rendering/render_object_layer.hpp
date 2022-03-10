@@ -24,9 +24,9 @@
 
 namespace tactile {
 
-class graphics_ctx;
+class GraphicsCtx;
 
-void RenderObject(graphics_ctx& graphics,
+void RenderObject(GraphicsCtx& graphics,
                   const entt::registry& registry,
                   entt::entity objectEntity,
                   const cen::color& color);
@@ -41,7 +41,7 @@ void RenderObject(graphics_ctx& graphics,
  * \param layerEntity the object layer entity.
  * \param parentOpacity the opacity of the parent layer.
  */
-void RenderObjectLayer(graphics_ctx& graphics,
+void RenderObjectLayer(GraphicsCtx& graphics,
                        const entt::registry& registry,
                        entt::entity layerEntity,
                        float parentOpacity);

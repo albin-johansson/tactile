@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-void RenderTile(graphics_ctx& graphics,
+void RenderTile(GraphicsCtx& graphics,
                 const entt::registry& registry,
                 const tile_id tile,
                 const int32 row,

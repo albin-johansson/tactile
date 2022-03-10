@@ -94,7 +94,7 @@ void _center_viewport(entt::dispatcher& dispatcher,
   dispatcher.enqueue<OffsetViewportEvent>(dx, dy);
 }
 
-void _draw_cursor_gizmos(graphics_ctx& graphics,
+void _draw_cursor_gizmos(GraphicsCtx& graphics,
                          const entt::registry& registry,
                          const ViewportCursorInfo& cursor,
                          const RenderInfo& info)
@@ -197,7 +197,7 @@ void update_map_view(const entt::registry& registry, entt::dispatcher& dispatche
   const auto info = get_render_info(viewport, map);
   update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
 
-  graphics_ctx graphics{info};
+  GraphicsCtx graphics{info};
 
   graphics.set_draw_color(get_preferences().viewport_bg());
   graphics.clear();

@@ -70,7 +70,7 @@ void _render_selection(const Region& selection, const ImVec2& min, const ImVec2&
                                             _rubber_band_color);
 }
 
-void _render_tileset_image(graphics_ctx& graphics,
+void _render_tileset_image(GraphicsCtx& graphics,
                            const comp::Texture& texture,
                            const ImVec2& position)
 {
@@ -93,7 +93,7 @@ void TilesetView::update(const entt::registry& registry,
   mHeight = region.y;
 
   const auto info = get_render_info(viewport, tileset);
-  graphics_ctx graphics{info};
+  GraphicsCtx graphics{info};
 
   graphics.set_draw_color(get_preferences().viewport_bg());
   graphics.clear();
