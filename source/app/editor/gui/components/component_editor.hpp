@@ -36,15 +36,15 @@ class DocumentModel;
  *
  * \ingroup gui
  */
-class component_editor final : public dialog_base
+class ComponentEditor final : public dialog_base
 {
  public:
-  TACTILE_DELETE_COPY(component_editor)
-  TACTILE_DEFAULT_MOVE(component_editor)
+  TACTILE_DELETE_COPY(ComponentEditor)
+  TACTILE_DEFAULT_MOVE(ComponentEditor)
 
-  component_editor();
+  ComponentEditor();
 
-  ~component_editor() noexcept override;
+  ~ComponentEditor() noexcept override;
 
   void show(const DocumentModel& model);
 

@@ -41,7 +41,7 @@
 
 namespace tactile {
 
-struct component_editor::component_editor_data final
+struct ComponentEditor::component_editor_data final
 {
   create_component_dialog create_component;
   create_component_attribute_dialog create_component_attr;
@@ -50,7 +50,7 @@ struct component_editor::component_editor_data final
   Maybe<component_id> active_component;
 };
 
-component_editor::component_editor()
+ComponentEditor::ComponentEditor()
     : dialog_base{"Component Editor"}
     , mData{std::make_unique<component_editor_data>()}
 {
@@ -58,16 +58,16 @@ component_editor::component_editor()
   set_close_button_label("Close");
 }
 
-component_editor::~component_editor() noexcept = default;
+ComponentEditor::~ComponentEditor() noexcept = default;
 
-void component_editor::show(const DocumentModel& model)
+void ComponentEditor::show(const DocumentModel& model)
 {
   const auto& registry = model.get_active_registry();
   mData->active_component = sys::get_first_available_component_def(registry);
   make_visible();
 }
 
-void component_editor::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
   auto& data = *mData;
@@ -135,8 +135,8 @@ void component_editor::on_update(const DocumentModel& model, entt::dispatcher& d
   ImGui::Separator();
 }
 
-void component_editor::show_component_combo_popup(const entt::registry& registry,
-                                                  entt::dispatcher& dispatcher)
+void ComponentEditor::show_component_combo_popup(const entt::registry& registry,
+                                                 entt::dispatcher& dispatcher)
 {
   auto& data = *mData;
   if (scoped::Popup popup{"##ComponentEditorPopup"}; popup.is_open()) {
@@ -154,9 +154,9 @@ void component_editor::show_component_combo_popup(const entt::registry& registry
   }
 }
 
-void component_editor::show_component_attributes(const entt::registry& registry,
-                                                 entt::dispatcher& dispatcher,
-                                                 component_id id)
+void ComponentEditor::show_component_attributes(const entt::registry& registry,
+                                                entt::dispatcher& dispatcher,
+                                                component_id id)
 {
   auto& data = *mData;
   const auto& [defEntity, def] = sys::get_component_def(registry, id);
@@ -184,10 +184,10 @@ void component_editor::show_component_attributes(const entt::registry& registry,
   }
 }
 
-void component_editor::show_component_attribute(entt::dispatcher& dispatcher,
-                                                component_id id,
-                                                const std::string& name,
-                                                const Attribute& value)
+void ComponentEditor::show_component_attribute(entt::dispatcher& dispatcher,
+                                               component_id id,
+                                               const std::string& name,
+                                               const Attribute& value)
 {
   auto& data = *mData;
   const scoped::Id scope{name.c_str()};
