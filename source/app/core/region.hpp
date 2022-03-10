@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "tile_position.hpp"
+#include "tile_pos.hpp"
 
 namespace tactile {
 
@@ -30,8 +30,8 @@ namespace tactile {
  */
 struct Region final
 {
-  tile_position begin;  ///< The top-left position.
-  tile_position end;    ///< The bottom-right position.
+  TilePos begin;  ///< The top-left position.
+  TilePos end;    ///< The bottom-right position.
 
   [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
 };

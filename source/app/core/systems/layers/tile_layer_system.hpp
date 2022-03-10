@@ -23,7 +23,7 @@
 
 #include "core/components/layers.hpp"
 #include "core/tile_cache.hpp"
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "misc/assert.hpp"
 #include "tactile.hpp"
 
@@ -62,7 +62,7 @@ namespace tactile::sys {
  *
  * \throws TactileError if the position is invalid.
  */
-void set_tile(comp::TileLayer& layer, const tile_position& position, tile_id tile);
+void set_tile(comp::TileLayer& layer, const TilePos& position, tile_id tile);
 
 /**
  * \brief Restores the values of tiles in a tile layer according to a tile cache.
@@ -82,7 +82,7 @@ void set_tiles(comp::TileLayer& layer, const TileCache& tiles);
  *
  * \return the tile at the position; the empty tile is returned for invalid positions.
  */
-[[nodiscard]] auto get_tile(const comp::TileLayer& layer, const tile_position& position)
+[[nodiscard]] auto get_tile(const comp::TileLayer& layer, const TilePos& position)
     -> tile_id;
 
 /**

@@ -55,11 +55,11 @@ void ResizeMapCmd::redo()
 
     mCache.clear();
     mCache.save_tiles(registry,
-                      tile_position::from(rows - (mPrevRows.value() - mRows), 0u),
-                      tile_position::from(rows, cols));
+                      TilePos::from(rows - (mPrevRows.value() - mRows), 0u),
+                      TilePos::from(rows, cols));
     mCache.save_tiles(registry,
-                      tile_position::from(0u, cols - (mPrevCols.value() - mCols)),
-                      tile_position::from(rows, cols));
+                      TilePos::from(0u, cols - (mPrevCols.value() - mCols)),
+                      TilePos::from(rows, cols));
   }
 
   sys::resize_map(registry, mRows, mCols);

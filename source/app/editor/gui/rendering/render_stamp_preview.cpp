@@ -25,7 +25,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/systems/map_system.hpp"
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "editor/gui/textures.hpp"
 #include "misc/assert.hpp"
 #include "render_info.hpp"
@@ -44,14 +44,14 @@ struct PreviewInfo final
   ImVec2 grid_size{};
   ImVec2 uv_size{};
 
-  tile_position mouse_pos{};
-  tile_position selection_begin;
-  tile_position selection_size;
-  tile_position offset;
+  TilePos mouse_pos{};
+  TilePos selection_begin;
+  TilePos selection_size;
+  TilePos offset;
 };
 
 void RenderPreviewTile(const PreviewInfo& info,
-                       const tile_position& previewTilePos,
+                       const TilePos& previewTilePos,
                        const ImVec2& tilesetTilePos)
 {
   const auto x = static_cast<float>(previewTilePos.col()) * info.grid_size.x;
@@ -76,7 +76,7 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
   const auto endCol = info.selection_size.col();
   for (auto row = 0; row < endRow; ++row) {
     for (auto col = 0; col < endCol; ++col) {
-      const auto position = tile_position{row, col};
+      const auto position = TilePos{row, col};
       const auto previewTilePos = info.mouse_pos + position - info.offset;
 
       if (sys::is_position_in_map(registry, previewTilePos)) {
@@ -92,7 +92,7 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
 }  // namespace
 
 void RenderStampPreview(const entt::registry& registry,
-                        const tile_position& mousePos,
+                        const TilePos& mousePos,
                         const RenderInfo& renderInfo)
 {
   const auto& activeTileset = registry.ctx<comp::ActiveTileset>();
@@ -119,7 +119,7 @@ void RenderStampPreview(const entt::registry& registry,
   info.mouse_pos = mousePos;
   info.selection_begin = region.begin;
   info.selection_size = region.end - region.begin;
-  info.offset = info.selection_size / tile_position{2, 2};
+  info.offset = info.selection_size / TilePos{2, 2};
 
   RenderPreviewTiles(registry, info);
 }

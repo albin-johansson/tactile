@@ -29,7 +29,7 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_cache.hpp"
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "editor/events/tool_events.hpp"
 #include "misc/assert.hpp"
 #include "tactile.hpp"
@@ -45,7 +45,7 @@ inline TileCache _sequence;
   return is_tile_layer_active(registry) && is_tileset_selection_not_empty(registry);
 }
 
-void _update_sequence(entt::registry& registry, const tile_position& cursor)
+void _update_sequence(entt::registry& registry, const TilePos& cursor)
 {
   TACTILE_ASSERT(_is_usable(registry));
 
@@ -57,13 +57,13 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
   const auto& region = selection.region.value();
 
   const auto selectionSize = region.end - region.begin;
-  const auto previewOffset = selectionSize / tile_position{2, 2};
+  const auto previewOffset = selectionSize / TilePos{2, 2};
   const auto endRow = selectionSize.row();
   const auto endCol = selectionSize.col();
 
   for (auto row = 0; row < endRow; ++row) {
     for (auto col = 0; col < endCol; ++col) {
-      const auto index = tile_position{row, col};
+      const auto index = TilePos{row, col};
       const auto selectionPosition = region.begin + index;
 
       const auto tile = get_tile_from_tileset(registry, tilesetEntity, selectionPosition);

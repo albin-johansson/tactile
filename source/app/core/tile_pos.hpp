@@ -33,13 +33,13 @@ namespace tactile {
  *
  * \note This class may represent positions with negative indices.
  */
-class tile_position final
+class TilePos final
 {
  public:
   /**
    * \brief Creates a tile position at origin, (0, 0).
    */
-  constexpr tile_position() noexcept = default;
+  constexpr TilePos() noexcept = default;
 
   /**
    * \brief Creates a tile position.
@@ -47,13 +47,13 @@ class tile_position final
    * \param row the row index.
    * \param column the column index.
    */
-  constexpr tile_position(const int32 row, const int32 column) noexcept
+  constexpr TilePos(const int32 row, const int32 column) noexcept
       : mRow{row}
       , mCol{column}
   {}
 
   [[nodiscard]] constexpr static auto from(const usize row, const usize column) noexcept
-      -> tile_position
+      -> TilePos
   {
     return {static_cast<int32>(row), static_cast<int32>(column)};
   }
@@ -67,10 +67,9 @@ class tile_position final
    * \return a position translated from the supplied index.
    */
   [[nodiscard]] constexpr static auto from_index(const int32 index,
-                                                 const int32 nCols) noexcept
-      -> tile_position
+                                                 const int32 nCols) noexcept -> TilePos
   {
-    return tile_position{index / nCols, index % nCols};
+    return TilePos{index / nCols, index % nCols};
   }
 
   /**
@@ -92,8 +91,7 @@ class tile_position final
    * \return a position that is offset from this position.
    */
   [[nodiscard]] constexpr auto offset_by(const int32 row,
-                                         const int32 column) const noexcept
-      -> tile_position
+                                         const int32 column) const noexcept -> TilePos
   {
     return {mRow + row, mCol + column};
   }
@@ -103,7 +101,7 @@ class tile_position final
    *
    * \return a position one step to the "north".
    */
-  [[nodiscard]] constexpr auto north() const noexcept -> tile_position
+  [[nodiscard]] constexpr auto north() const noexcept -> TilePos
   {
     return {mRow - 1, mCol};
   }
@@ -113,7 +111,7 @@ class tile_position final
    *
    * \return a position one step to the "south".
    */
-  [[nodiscard]] constexpr auto south() const noexcept -> tile_position
+  [[nodiscard]] constexpr auto south() const noexcept -> TilePos
   {
     return {mRow + 1, mCol};
   }
@@ -124,7 +122,7 @@ class tile_position final
    *
    * a position one step to the "west".
    */
-  [[nodiscard]] constexpr auto west() const noexcept -> tile_position
+  [[nodiscard]] constexpr auto west() const noexcept -> TilePos
   {
     return {mRow, mCol - 1};
   }
@@ -135,7 +133,7 @@ class tile_position final
    *
    * \return a position one step to the "east".
    */
-  [[nodiscard]] constexpr auto east() const noexcept -> tile_position
+  [[nodiscard]] constexpr auto east() const noexcept -> TilePos
   {
     return {mRow, mCol + 1};
   }
@@ -202,7 +200,7 @@ class tile_position final
     return mCol * tileWidth;
   }
 
-  [[nodiscard]] constexpr auto operator<=>(const tile_position&) const noexcept = default;
+  [[nodiscard]] constexpr auto operator<=>(const TilePos&) const noexcept = default;
 
  private:
   int32 mRow{};
@@ -212,26 +210,26 @@ class tile_position final
 /// \name Tile position operators
 /// \{
 
-[[nodiscard]] constexpr auto operator+(const tile_position& lhs,
-                                       const tile_position& rhs) noexcept -> tile_position
+[[nodiscard]] constexpr auto operator+(const TilePos& lhs, const TilePos& rhs) noexcept
+    -> TilePos
 {
   return {lhs.row() + rhs.row(), lhs.col() + rhs.col()};
 }
 
-[[nodiscard]] constexpr auto operator-(const tile_position& lhs,
-                                       const tile_position& rhs) noexcept -> tile_position
+[[nodiscard]] constexpr auto operator-(const TilePos& lhs, const TilePos& rhs) noexcept
+    -> TilePos
 {
   return {lhs.row() - rhs.row(), lhs.col() - rhs.col()};
 }
 
-[[nodiscard]] constexpr auto operator*(const tile_position& lhs,
-                                       const tile_position& rhs) noexcept -> tile_position
+[[nodiscard]] constexpr auto operator*(const TilePos& lhs, const TilePos& rhs) noexcept
+    -> TilePos
 {
   return {lhs.row() * rhs.row(), lhs.col() * rhs.col()};
 }
 
-[[nodiscard]] constexpr auto operator/(const tile_position& lhs,
-                                       const tile_position& rhs) noexcept -> tile_position
+[[nodiscard]] constexpr auto operator/(const TilePos& lhs, const TilePos& rhs) noexcept
+    -> TilePos
 {
   return {lhs.row() / rhs.row(), lhs.col() / rhs.col()};
 }

@@ -23,7 +23,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -39,8 +39,8 @@ namespace tactile {
  */
 void flood(entt::registry& registry,
            entt::entity entity,
-           const tile_position& origin,
+           const TilePos& origin,
            tile_id replacement,
-           std::vector<tile_position>& affected);
+           std::vector<TilePos>& affected);
 
 }  // namespace tactile

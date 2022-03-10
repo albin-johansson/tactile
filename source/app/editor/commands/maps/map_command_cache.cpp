@@ -43,8 +43,8 @@ void MapCommandCache::restore_tiles(entt::registry& registry)
 }
 
 void MapCommandCache::save_tiles(const entt::registry& registry,
-                                 const tile_position& begin,
-                                 const tile_position& end)
+                                 const TilePos& begin,
+                                 const TilePos& end)
 {
   for (auto&& [entity, layer, tileLayer] :
        registry.view<comp::Layer, comp::TileLayer>().each()) {
@@ -54,7 +54,7 @@ void MapCommandCache::save_tiles(const entt::registry& registry,
     const auto endCol = end.col();
     for (auto row = begin.row(); row < endRow; ++row) {
       for (auto col = begin.col(); col < endCol; ++col) {
-        const tile_position position{row, col};
+        const TilePos position{row, col};
         const auto tile = sys::get_tile(tileLayer, position);
         tileCache.try_emplace(position, tile);
       }

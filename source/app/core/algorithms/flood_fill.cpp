@@ -28,9 +28,9 @@ namespace tactile {
 
 void flood(entt::registry& registry,
            const entt::entity entity,
-           const tile_position& origin,
+           const TilePos& origin,
            const tile_id replacement,
-           std::vector<tile_position>& affected)
+           std::vector<TilePos>& affected)
 {
   auto& layer = registry.get<comp::TileLayer>(entity);
   const auto target = sys::get_tile(layer, origin);
@@ -39,13 +39,13 @@ void flood(entt::registry& registry,
     return;
   }
 
-  std::queue<tile_position> positions;
+  std::queue<TilePos> positions;
   positions.push(origin);
 
   sys::set_tile(layer, origin, replacement);
   affected.push_back(origin);
 
-  auto update = [&](const tile_position& position) {
+  auto update = [&](const TilePos& position) {
     if (sys::is_position_in_map(registry, position)) {
       const auto tile = sys::get_tile(layer, position);
       if (tile == target) {

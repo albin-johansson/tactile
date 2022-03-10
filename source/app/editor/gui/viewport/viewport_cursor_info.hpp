@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 
 namespace tactile {
 
@@ -29,7 +29,7 @@ struct RenderInfo;
 
 struct ViewportCursorInfo final
 {
-  tile_position map_position;
+  TilePos map_position;
   ImVec2 clamped_position{};
   ImVec2 raw_position{};
   ImVec2 scaled_position{};

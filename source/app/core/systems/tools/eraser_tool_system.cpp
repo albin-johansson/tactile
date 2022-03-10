@@ -25,7 +25,7 @@
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "core/tile_cache.hpp"
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "editor/events/tool_events.hpp"
 #include "tactile.hpp"
 
@@ -34,7 +34,7 @@ namespace {
 
 inline TileCache _old_state;
 
-void _update_sequence(entt::registry& registry, const tile_position& cursor)
+void _update_sequence(entt::registry& registry, const TilePos& cursor)
 {
   const auto entity = get_active_layer(registry);
   auto& layer = checked_get<comp::TileLayer>(registry, entity);

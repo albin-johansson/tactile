@@ -21,14 +21,14 @@
 
 #include <entt/entt.hpp>  // registry
 
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
 class MapCommandCache final
 {
-  using tile_cache = TreeMap<tile_position, tile_id>;
+  using tile_cache = TreeMap<TilePos, tile_id>;
   using layer_cache = TreeMap<layer_id, tile_cache>;
 
  public:
@@ -37,8 +37,8 @@ class MapCommandCache final
   void restore_tiles(entt::registry& registry);
 
   void save_tiles(const entt::registry& registry,
-                  const tile_position& begin,
-                  const tile_position& end);
+                  const TilePos& begin,
+                  const TilePos& end);
 
   void merge_with(const MapCommandCache& other);
 

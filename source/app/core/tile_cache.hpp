@@ -22,10 +22,10 @@
 #include <boost/container/flat_map.hpp>
 
 #include "tactile.hpp"
-#include "tile_position.hpp"
+#include "tile_pos.hpp"
 
 namespace tactile {
 
-using TileCache = boost::container::flat_map<tile_position, tile_id>;
+using TileCache = boost::container::flat_map<TilePos, tile_id>;
 
 }  // namespace tactile

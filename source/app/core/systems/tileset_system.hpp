@@ -24,7 +24,7 @@
 
 #include "core/components/texture.hpp"
 #include "core/region.hpp"
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "snapshot.hpp"
 #include "tactile.hpp"
 
@@ -246,7 +246,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_tile_from_tileset(const entt::registry& registry,
                                          entt::entity entity,
-                                         const tile_position& position) -> tile_id;
+                                         const TilePos& position) -> tile_id;
 
 /**
  * \brief Converts a global tile identifier to its local counterpart.

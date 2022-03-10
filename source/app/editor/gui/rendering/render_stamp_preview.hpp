@@ -23,11 +23,11 @@
 
 namespace tactile {
 
-class tile_position;
+class TilePos;
 struct RenderInfo;
 
 void RenderStampPreview(const entt::registry& registry,
-                        const tile_position& mousePos,
+                        const TilePos& mousePos,
                         const RenderInfo& info);
 
 }  // namespace tactile

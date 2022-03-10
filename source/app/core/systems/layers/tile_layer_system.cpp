@@ -46,7 +46,7 @@ auto get_tile_layer_entity(const entt::registry& registry, const layer_id id)
   }
 }
 
-void set_tile(comp::TileLayer& layer, const tile_position& position, const tile_id tile)
+void set_tile(comp::TileLayer& layer, const TilePos& position, const tile_id tile)
 {
   const auto row = position.row_index();
   const auto col = position.col_index();
@@ -69,7 +69,7 @@ void set_tiles(comp::TileLayer& layer, const TileCache& tiles)
   }
 }
 
-auto get_tile(const comp::TileLayer& layer, const tile_position& position) -> tile_id
+auto get_tile(const comp::TileLayer& layer, const TilePos& position) -> tile_id
 {
   const auto row = position.row_index();
   const auto col = position.col_index();

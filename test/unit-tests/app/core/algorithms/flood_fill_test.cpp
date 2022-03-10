@@ -43,7 +43,7 @@ TEST(FloodFill, flood)
   sys::set_tile(layer, {4, 0}, 1);
 
   {
-    std::vector<tile_position> affected;
+    std::vector<TilePos> affected;
     flood(registry, entity, {4, 1}, 2, affected);
   }
 
@@ -84,7 +84,7 @@ TEST(FloodFill, flood)
   ASSERT_EQ(2, sys::get_tile(layer, {4, 4}));
 
   {
-    std::vector<tile_position> affected;
+    std::vector<TilePos> affected;
     flood(registry, entity, {3, 1}, 3, affected);
   }
 

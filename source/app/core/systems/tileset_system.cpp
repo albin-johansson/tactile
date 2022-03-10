@@ -336,7 +336,7 @@ auto is_single_tile_selected_in_tileset(const entt::registry& registry) -> bool
     const auto& selection = checked_get<comp::TilesetSelection>(registry, active.entity);
     if (selection.region) {
       const auto& region = *selection.region;
-      return (region.end - region.begin) == tile_position{1, 1};
+      return (region.end - region.begin) == TilePos{1, 1};
     }
   }
 
@@ -382,7 +382,7 @@ auto get_source_rect(const entt::registry& registry,
 
 auto get_tile_from_tileset(const entt::registry& registry,
                            const entt::entity entity,
-                           const tile_position& position) -> tile_id
+                           const TilePos& position) -> tile_id
 {
   const auto& tileset = checked_get<comp::Tileset>(registry, entity);
 

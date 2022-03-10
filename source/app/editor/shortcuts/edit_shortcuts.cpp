@@ -134,8 +134,8 @@ void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
 }
 
-auto AddTilesetShortcut::IsEnabled(const DocumentModel& model,
-                                   const WidgetManager&) const -> bool
+auto AddTilesetShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+    -> bool
 {
   return model.has_active_document();
 }

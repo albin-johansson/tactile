@@ -21,7 +21,7 @@
 
 #include <vector>  // vector
 
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
@@ -34,7 +34,7 @@ namespace tactile {
 class BucketToolCmd final : public ACommand
 {
  public:
-  BucketToolCmd(RegistryRef registry, tile_position origin, tile_id replacement);
+  BucketToolCmd(RegistryRef registry, TilePos origin, tile_id replacement);
 
   void undo() override;
 
@@ -45,10 +45,10 @@ class BucketToolCmd final : public ACommand
  private:
   RegistryRef mRegistry;
   layer_id mLayer;
-  tile_position mOrigin;
+  TilePos mOrigin;
   tile_id mReplacement;
   Maybe<tile_id> mTarget;
-  std::vector<tile_position> mPositions;
+  std::vector<TilePos> mPositions;
 };
 
 /// \} End of group commands

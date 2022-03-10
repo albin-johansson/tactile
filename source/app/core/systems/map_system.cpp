@@ -110,8 +110,7 @@ void resize_map(entt::registry& registry, usize nRows, usize nCols)
   }
 }
 
-auto is_position_in_map(const entt::registry& registry, const tile_position& position)
-    -> bool
+auto is_position_in_map(const entt::registry& registry, const TilePos& position) -> bool
 {
   const auto& map = registry.ctx<MapInfo>();
 
