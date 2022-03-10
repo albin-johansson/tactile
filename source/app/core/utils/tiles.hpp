@@ -26,7 +26,7 @@
 namespace tactile {
 
 template <typename T>
-struct matrix_coords final
+struct MatrixCoords final
 {
   T row{};
   T col{};
@@ -45,7 +45,7 @@ struct matrix_coords final
  */
 template <typename T, is_integral<T> = 0>
 [[nodiscard]] constexpr auto to_matrix_coords(const T index, const T nColumns) noexcept
-    -> matrix_coords<T>
+    -> MatrixCoords<T>
 {
   return {index / nColumns, index % nColumns};
 }
