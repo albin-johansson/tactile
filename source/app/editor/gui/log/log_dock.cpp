@@ -33,12 +33,12 @@ namespace tactile {
 namespace {
 
 constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
-                             ImGuiWindowFlags_HorizontalScrollbar |
-                             ImGuiWindowFlags_AlwaysAutoResize;
+constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
+                              ImGuiWindowFlags_HorizontalScrollbar |
+                              ImGuiWindowFlags_AlwaysAutoResize;
 
 // TODO should verbose/debug options be disabled in release builds?
-[[nodiscard]] auto ShowLogLevelFilterCombo(const log_level currentLevel)
+[[nodiscard]] auto _show_log_level_filter_combo(const log_level currentLevel)
     -> Maybe<log_level>
 {
   static constexpr c_str verboseFilter = "Everything";
@@ -103,7 +103,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
   return nothing;
 }
 
-[[nodiscard]] auto GetColorForLevel(const log_level level) -> ImVec4
+[[nodiscard]] auto _color_for_level(const log_level level) -> ImVec4
 {
   switch (level) {
     case log_level::verbose:
@@ -126,7 +126,7 @@ constexpr auto gChildFlags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
   }
 }
 
-void ShowColorLegendHint()
+void _show_color_legend_hint()
 {
   ImGui::TextDisabled("(?)");
 
@@ -134,11 +134,11 @@ void ShowColorLegendHint()
     scoped::StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
     scoped::Tooltip tooltip;
 
-    static const auto verboseColor = GetColorForLevel(log_level::verbose);
-    static const auto debugColor = GetColorForLevel(log_level::debug);
-    static const auto infoColor = GetColorForLevel(log_level::info);
-    static const auto warningColor = GetColorForLevel(log_level::warning);
-    static const auto errorColor = GetColorForLevel(log_level::error);
+    static const auto verboseColor = _color_for_level(log_level::verbose);
+    static const auto debugColor = _color_for_level(log_level::debug);
+    static const auto infoColor = _color_for_level(log_level::info);
+    static const auto warningColor = _color_for_level(log_level::warning);
+    static const auto errorColor = _color_for_level(log_level::error);
 
     ImGui::TextColored(verboseColor, "Verbose message");
     ImGui::TextColored(debugColor, "Debug message");
@@ -148,18 +148,18 @@ void ShowColorLegendHint()
   }
 }
 
-void ShowLogContents(const log_level filter)
+void _show_log_contents(const log_level filter)
 {
   scoped::StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
-  if (scoped::Child pane{"##LogPane", {}, true, gChildFlags}; pane.is_open()) {
+  if (scoped::Child pane{"##LogPane", {}, true, _child_flags}; pane.is_open()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(log_size(filter)));
 
     while (clipper.Step()) {
       for (auto i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {
         const auto& [level, str] = get_filtered_log_entry(filter, static_cast<usize>(i));
-        const auto color = GetColorForLevel(level);
+        const auto color = _color_for_level(level);
         ImGui::TextColored(color, "%s", str.c_str());
       }
     }
@@ -168,41 +168,43 @@ void ShowLogContents(const log_level filter)
 
 }  // namespace
 
-void LogDock::Update()
+LogDock::LogDock() : ADockWidget{"Log", _window_flags}
 {
-  auto& prefs = get_preferences();
-  bool visible = prefs.is_log_dock_visible();
+  set_close_button_enabled(true);
+  set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
+}
 
-  if (!visible) {
-    return;
+void LogDock::on_update(const DocumentModel&, entt::dispatcher&)
+{
+  if (const auto level = _show_log_level_filter_combo(mLogLevel)) {
+    mLogLevel = *level;
   }
 
-  scoped::Window dock{"Log", _window_flags, &visible};
-  mHasFocus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  ImGui::SameLine();
+  _show_color_legend_hint();
 
-  if (dock.is_open()) {
-    if (const auto level = ShowLogLevelFilterCombo(mLogLevel)) {
-      mLogLevel = *level;
-    }
-
-    ImGui::SameLine();
-    ShowColorLegendHint();
-
-    if (log_size(mLogLevel) != 0u) {
-      ShowLogContents(mLogLevel);
-    }
-    else {
-      centered_text("No logged messages match the current filter.");
-    }
-
-    if (auto popup = scoped::Popup::for_window("##LogDockContext"); popup.is_open()) {
-      if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
-        clear_log_history();
-      }
-    }
+  if (log_size(mLogLevel) != 0u) {
+    _show_log_contents(mLogLevel);
+  }
+  else {
+    centered_text("No logged messages match the current filter.");
   }
 
-  prefs.set_log_dock_visible(visible);
+  if (auto popup = scoped::Popup::for_window("##LogDockContext"); popup.is_open()) {
+    if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
+      clear_log_history();
+    }
+  }
+}
+
+void LogDock::set_visible(const bool visible)
+{
+  get_preferences().set_log_dock_visible(visible);
+}
+
+auto LogDock::is_visible() const -> bool
+{
+  return get_preferences().is_log_dock_visible();
 }
 
 }  // namespace tactile

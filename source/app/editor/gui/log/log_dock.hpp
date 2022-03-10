@@ -19,20 +19,25 @@
 
 #pragma once
 
+#include "editor/gui/common/dock_widget.hpp"
 #include "misc/logging.hpp"
 
 namespace tactile {
 
-class LogDock final
+class LogDock final : public ADockWidget
 {
  public:
-  void Update();
+  LogDock();
 
-  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+ protected:
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
+
+  void set_visible(bool visible) override;
+
+  [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
   log_level mLogLevel{log_level::verbose};
-  bool mHasFocus{};
 };
 
 }  // namespace tactile

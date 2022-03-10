@@ -68,6 +68,7 @@ void widget_manager::update(const DocumentModel& model,
     mWidgets->mLayerDock.update(model, dispatcher);
     mWidgets->mPropertiesDock.Update(model, dispatcher);
     mWidgets->mComponentDock.update(model, dispatcher);
+    mWidgets->mLogDock.update(model, dispatcher);
   }
 
   update_viewport_widget(model, icons, dispatcher);
@@ -75,7 +76,6 @@ void widget_manager::update(const DocumentModel& model,
   if (const auto* registry = model.active_registry()) {
     update_map_view_object_context_menu(*registry, dispatcher);
     mWidgets->mTilesetDock.Update(*registry, dispatcher);
-    mWidgets->mLogDock.Update();
   }
 
   mWidgets->mResizeMapDialog.update(model, dispatcher);
@@ -178,7 +178,7 @@ auto widget_manager::is_properties_dock_focused() const -> bool
 
 auto widget_manager::is_log_dock_focused() const -> bool
 {
-  return mWidgets->mLogDock.IsFocused();
+  return mWidgets->mLogDock.has_focus();
 }
 
 auto widget_manager::is_tileset_dock_hovered() const -> bool
