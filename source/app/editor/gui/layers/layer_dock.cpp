@@ -41,7 +41,7 @@
 
 namespace tactile {
 
-struct LayerDock::layer_dock_data final
+struct LayerDock::LayerDockData final
 {
   RenameLayerDialog mRenameLayerDialog;
   AddLayerContextMenu mAddLayerContextMenu;
@@ -50,7 +50,7 @@ struct LayerDock::layer_dock_data final
 
 LayerDock::LayerDock()
     : ADockWidget{"Layers", ImGuiWindowFlags_NoCollapse}
-    , mData{std::make_unique<layer_dock_data>()}
+    , mData{std::make_unique<LayerDockData>()}
 {
   set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
 }
