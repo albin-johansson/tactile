@@ -26,10 +26,10 @@ namespace tactile {
 /**
  * \brief Provides information about third-party dependencies.
  */
-class credits_dialog final : public ADialog
+class CreditsDialog final : public ADialog
 {
  public:
-  credits_dialog();
+  CreditsDialog();
 
   void show();
 

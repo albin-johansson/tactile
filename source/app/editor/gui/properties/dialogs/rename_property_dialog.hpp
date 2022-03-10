@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-class RenamePropertyDialog final : public string_input_dialog
+class RenamePropertyDialog final : public AStringInputDialog
 {
  public:
   RenamePropertyDialog();

@@ -28,7 +28,7 @@
 namespace tactile {
 
 CreateComponentAttributeDialog::CreateComponentAttributeDialog()
-    : string_input_dialog{"Create Attribute"}
+    : AStringInputDialog{"Create Attribute"}
 {
   set_accept_button_label("Create");
   set_input_hint("Attribute name");
@@ -37,7 +37,7 @@ CreateComponentAttributeDialog::CreateComponentAttributeDialog()
 void CreateComponentAttributeDialog::show(const component_id id)
 {
   mComponentId = id;
-  string_input_dialog::show("");
+  AStringInputDialog::show("");
 }
 
 auto CreateComponentAttributeDialog::validate(const DocumentModel& model,

@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-rename_layer_dialog::rename_layer_dialog() : string_input_dialog{"Rename Layer"}
+rename_layer_dialog::rename_layer_dialog() : AStringInputDialog{"Rename Layer"}
 {
   set_accept_button_label("Rename");
 }
@@ -34,7 +34,7 @@ void rename_layer_dialog::show(const layer_id id, std::string oldName)
 {
   mTargetId = id;
   mOldName = std::move(oldName);
-  string_input_dialog::show(*mOldName);
+  AStringInputDialog::show(*mOldName);
 }
 
 void rename_layer_dialog::on_accept(entt::dispatcher& dispatcher)

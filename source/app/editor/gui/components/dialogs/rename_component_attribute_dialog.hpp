@@ -32,7 +32,7 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class RenameComponentAttributeDialog final : public string_input_dialog
+class RenameComponentAttributeDialog final : public AStringInputDialog
 {
  public:
   RenameComponentAttributeDialog();

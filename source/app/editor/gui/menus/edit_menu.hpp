@@ -44,7 +44,7 @@ class EditMenu final
   void show_component_editor(const DocumentModel& model);
 
  private:
-  settings_dialog mSettingsDialog;
+  SettingsDialog mSettingsDialog;
   ComponentEditor mComponentEditor;
 };
 

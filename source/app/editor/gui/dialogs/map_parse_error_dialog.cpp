@@ -25,18 +25,18 @@
 
 namespace tactile {
 
-map_parse_error_dialog::map_parse_error_dialog() : ADialog{"Map Parse Error"}
+MapParseErrorDialog::MapParseErrorDialog() : ADialog{"Map Parse Error"}
 {
   set_close_button_label(nullptr);
 }
 
-void map_parse_error_dialog::show(const parsing::ParseError error)
+void MapParseErrorDialog::show(const parsing::ParseError error)
 {
   mError = error;
   make_visible();
 }
 
-void map_parse_error_dialog::on_update(const DocumentModel&, entt::dispatcher&)
+void MapParseErrorDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   ImGui::TextUnformatted(
       "Oops, something went wrong when parsing the map! " ICON_FA_SAD_TEAR);

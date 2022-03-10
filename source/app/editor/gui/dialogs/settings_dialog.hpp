@@ -30,15 +30,15 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class settings_dialog final : public ADialog
+class SettingsDialog final : public ADialog
 {
  public:
-  TACTILE_DEFAULT_COPY(settings_dialog)
-  TACTILE_DEFAULT_MOVE(settings_dialog)
+  TACTILE_DEFAULT_COPY(SettingsDialog)
+  TACTILE_DEFAULT_MOVE(SettingsDialog)
 
-  settings_dialog();
+  SettingsDialog();
 
-  ~settings_dialog() override = default;
+  ~SettingsDialog() override = default;
 
   void show();
 

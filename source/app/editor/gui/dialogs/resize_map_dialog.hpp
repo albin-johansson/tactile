@@ -29,15 +29,15 @@ namespace tactile {
 /**
  * \brief Used to change the dimensions of a tilemap.
  */
-class resize_map_dialog final : public ADialog
+class ResizeMapDialog final : public ADialog
 {
  public:
-  TACTILE_DEFAULT_COPY(resize_map_dialog)
-  TACTILE_DEFAULT_MOVE(resize_map_dialog)
+  TACTILE_DEFAULT_COPY(ResizeMapDialog)
+  TACTILE_DEFAULT_MOVE(ResizeMapDialog)
 
-  resize_map_dialog();
+  ResizeMapDialog();
 
-  ~resize_map_dialog() override = default;
+  ~ResizeMapDialog() override = default;
 
   void show(usize nCurrentRows, usize nCurrentColumns);
 

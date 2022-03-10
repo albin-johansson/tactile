@@ -37,7 +37,7 @@ class HelpMenu final
 
  private:
   AboutDialog mAboutDialog;
-  credits_dialog mCreditsDialog;
+  CreditsDialog mCreditsDialog;
   bool mShowAboutImGui{};
 };
 

@@ -40,19 +40,19 @@ void _update_preview_settings(const PreferenceState& prefs)
 
 }  // namespace
 
-settings_dialog::settings_dialog() : ADialog{"Settings"}
+SettingsDialog::SettingsDialog() : ADialog{"Settings"}
 {
   use_apply_button();
 }
 
-void settings_dialog::show()
+void SettingsDialog::show()
 {
   mSnapshot = get_preferences();
   mGuiSettings = mSnapshot;
   make_visible();
 }
 
-void settings_dialog::on_update(const DocumentModel&, entt::dispatcher&)
+void SettingsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   if (scoped::TabBar bar{"##SettingsTabBar"}; bar.is_open()) {
     update_behavior_tab();
@@ -61,25 +61,25 @@ void settings_dialog::on_update(const DocumentModel&, entt::dispatcher&)
   }
 }
 
-void settings_dialog::on_cancel()
+void SettingsDialog::on_cancel()
 {
   /* Reset any changes we made for preview purposes */
   _update_preview_settings(get_preferences());
 }
 
-void settings_dialog::on_accept(entt::dispatcher& dispatcher)
+void SettingsDialog::on_accept(entt::dispatcher& dispatcher)
 {
   apply_settings(dispatcher);
   _update_preview_settings(get_preferences());
 }
 
-void settings_dialog::on_apply(entt::dispatcher& dispatcher)
+void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
 {
   apply_settings(dispatcher);
   _update_preview_settings(get_preferences());
 }
 
-void settings_dialog::apply_settings(entt::dispatcher& dispatcher)
+void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 {
   set_preferences(mGuiSettings);
   if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
@@ -87,7 +87,7 @@ void settings_dialog::apply_settings(entt::dispatcher& dispatcher)
   }
 }
 
-void settings_dialog::update_behavior_tab()
+void SettingsDialog::update_behavior_tab()
 {
   if (scoped::TabItem item{"Behavior"}; item.is_open()) {
     ImGui::Spacing();
@@ -134,7 +134,7 @@ void settings_dialog::update_behavior_tab()
   }
 }
 
-void settings_dialog::update_appearance_tab()
+void SettingsDialog::update_appearance_tab()
 {
   if (scoped::TabItem item{"Appearance"}; item.is_open()) {
     ImGui::Spacing();
@@ -180,7 +180,7 @@ void settings_dialog::update_appearance_tab()
   }
 }
 
-void settings_dialog::update_export_tab()
+void SettingsDialog::update_export_tab()
 {
   if (scoped::TabItem item{"Export"}; item.is_open()) {
     ImGui::Spacing();

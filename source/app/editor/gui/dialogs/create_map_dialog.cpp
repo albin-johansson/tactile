@@ -29,12 +29,12 @@
 
 namespace tactile {
 
-create_map_dialog::create_map_dialog() : ADialog{"Create New Map"}
+CreateMapDialog::CreateMapDialog() : ADialog{"Create New Map"}
 {
   set_accept_button_label("Create");
 }
 
-void create_map_dialog::show()
+void CreateMapDialog::show()
 {
   const auto& prefs = get_preferences();
   mTileWidth = prefs.preferred_tile_width();
@@ -46,7 +46,7 @@ void create_map_dialog::show()
   make_visible();
 }
 
-void create_map_dialog::on_update(const DocumentModel&, entt::dispatcher&)
+void CreateMapDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   {
     const char* rowsLabel = "Rows:";
@@ -83,7 +83,7 @@ void create_map_dialog::on_update(const DocumentModel&, entt::dispatcher&)
   }
 }
 
-void create_map_dialog::on_accept(entt::dispatcher& dispatcher)
+void CreateMapDialog::on_accept(entt::dispatcher& dispatcher)
 {
   TACTILE_ASSERT(mTileWidth > 0);
   TACTILE_ASSERT(mTileHeight > 0);
@@ -95,7 +95,7 @@ void create_map_dialog::on_accept(entt::dispatcher& dispatcher)
                                      static_cast<usize>(mColumns));
 }
 
-auto create_map_dialog::is_current_input_valid(const DocumentModel&) const -> bool
+auto CreateMapDialog::is_current_input_valid(const DocumentModel&) const -> bool
 {
   return (mTileWidth > 0) && (mTileHeight > 0) && (mRows > 0) && (mColumns > 0);
 }

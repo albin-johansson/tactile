@@ -45,18 +45,18 @@ void _row(const c_str lib, const c_str license)
 
 }  // namespace
 
-credits_dialog::credits_dialog() : ADialog{"Credits"}
+CreditsDialog::CreditsDialog() : ADialog{"Credits"}
 {
   set_accept_button_label(nullptr);
   set_close_button_label("Close");
 }
 
-void credits_dialog::show()
+void CreditsDialog::show()
 {
   make_visible();
 }
 
-void credits_dialog::on_update(const DocumentModel&, entt::dispatcher&)
+void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   ImGui::TextUnformatted(
       "Tactile is developed using the following open-source libraries.");

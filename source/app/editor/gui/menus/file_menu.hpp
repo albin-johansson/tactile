@@ -43,7 +43,7 @@ class FileMenu final
   void show_open_map_dialog();
 
  private:
-  create_map_dialog mCreateMapDialog;
+  CreateMapDialog mCreateMapDialog;
   bool mShowOpenMapDialog{};
 
   void update_recent_files_menu(entt::dispatcher& dispatcher);

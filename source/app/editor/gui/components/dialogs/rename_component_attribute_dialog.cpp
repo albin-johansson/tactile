@@ -28,7 +28,7 @@
 namespace tactile {
 
 RenameComponentAttributeDialog::RenameComponentAttributeDialog()
-    : string_input_dialog{"Rename Component Attribute"}
+    : AStringInputDialog{"Rename Component Attribute"}
 {
   set_accept_button_label("Rename");
   set_input_hint("Attribute name");
@@ -37,7 +37,7 @@ RenameComponentAttributeDialog::RenameComponentAttributeDialog()
 void RenameComponentAttributeDialog::show(std::string previousName, const component_id id)
 {
   mComponentId = id;
-  string_input_dialog::show(std::move(previousName));
+  AStringInputDialog::show(std::move(previousName));
 }
 
 void RenameComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)

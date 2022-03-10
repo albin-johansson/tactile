@@ -28,10 +28,10 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class create_map_dialog final : public ADialog
+class CreateMapDialog final : public ADialog
 {
  public:
-  create_map_dialog();
+  CreateMapDialog();
 
   void show();
 

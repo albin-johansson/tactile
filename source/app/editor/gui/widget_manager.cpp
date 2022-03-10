@@ -48,8 +48,8 @@ struct widget_manager::widgets final
   ComponentDock mComponentDock;
   LogDock mLogDock;
 
-  resize_map_dialog mResizeMapDialog;
-  map_parse_error_dialog mMapParseErrorDialog;
+  ResizeMapDialog mResizeMapDialog;
+  MapParseErrorDialog mMapParseErrorDialog;
 };
 
 widget_manager::widget_manager() : mWidgets{std::make_unique<widgets>()} {}
