@@ -66,7 +66,7 @@ void widget_manager::update(const DocumentModel& model,
   if (model.has_active_document()) {
     mWidgets->mToolbar.Update(model, dispatcher);
     mWidgets->mLayerDock.update(model, dispatcher);
-    mWidgets->mPropertiesDock.Update(model, dispatcher);
+    mWidgets->mPropertiesDock.update(model, dispatcher);
     mWidgets->mComponentDock.update(model, dispatcher);
     mWidgets->mLogDock.update(model, dispatcher);
   }
@@ -109,18 +109,18 @@ void widget_manager::show_rename_layer_dialog(const layer_id id)
 
 void widget_manager::show_add_property_dialog()
 {
-  mWidgets->mPropertiesDock.ShowAddPropertyDialog();
+  mWidgets->mPropertiesDock.show_add_property_dialog();
 }
 
 void widget_manager::show_rename_property_dialog(const std::string& name)
 {
-  mWidgets->mPropertiesDock.ShowRenamePropertyDialog(name);
+  mWidgets->mPropertiesDock.show_rename_property_dialog(name);
 }
 
 void widget_manager::show_change_property_type_dialog(std::string name,
                                                       const AttributeType type)
 {
-  mWidgets->mPropertiesDock.ShowChangePropertyTypeDialog(std::move(name), type);
+  mWidgets->mPropertiesDock.show_change_property_type_dialog(std::move(name), type);
 }
 
 void widget_manager::show_resize_map_dialog(const usize currentRows,
@@ -147,8 +147,7 @@ void widget_manager::set_toolbar_visible(const bool visible)
 auto widget_manager::is_editor_focused() const -> bool
 {
   return is_toolbar_focused() || is_viewport_focused() || is_layer_dock_focused() ||
-         is_tileset_dock_focused() || is_properties_dock_focused() ||
-         is_log_dock_focused();
+         is_tileset_dock_focused() || is_property_dock_focused() || is_log_dock_focused();
 }
 
 auto widget_manager::is_toolbar_focused() const -> bool
@@ -171,9 +170,9 @@ auto widget_manager::is_tileset_dock_focused() const -> bool
   return mWidgets->mTilesetDock.IsFocused();
 }
 
-auto widget_manager::is_properties_dock_focused() const -> bool
+auto widget_manager::is_property_dock_focused() const -> bool
 {
-  return mWidgets->mPropertiesDock.IsFocused();
+  return mWidgets->mPropertiesDock.has_focus();
 }
 
 auto widget_manager::is_log_dock_focused() const -> bool

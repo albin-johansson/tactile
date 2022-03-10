@@ -81,7 +81,7 @@ class widget_manager final
 
   [[nodiscard]] auto is_tileset_dock_focused() const -> bool;
 
-  [[nodiscard]] auto is_properties_dock_focused() const -> bool;
+  [[nodiscard]] auto is_property_dock_focused() const -> bool;
 
   [[nodiscard]] auto is_log_dock_focused() const -> bool;
 

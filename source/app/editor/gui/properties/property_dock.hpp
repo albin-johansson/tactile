@@ -26,6 +26,7 @@
 #include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
+#include "editor/gui/common/dock_widget.hpp"
 #include "property_table.hpp"
 #include "tactile.hpp"
 
@@ -33,25 +34,29 @@ namespace tactile {
 
 class DocumentModel;
 
-class PropertyDock final
+class PropertyDock final : public ADockWidget
 {
  public:
-  void Update(const DocumentModel& model, entt::dispatcher& dispatcher);
+  PropertyDock();
 
-  void ShowAddPropertyDialog();
+  void show_add_property_dialog();
 
-  void ShowRenamePropertyDialog(const std::string& name);
+  void show_rename_property_dialog(const std::string& name);
 
-  void ShowChangePropertyTypeDialog(std::string name, AttributeType type);
+  void show_change_property_type_dialog(std::string name, AttributeType type);
 
-  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+ protected:
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
+
+  void set_visible(bool visible) override;
+
+  [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
   PropertyTable mPropertyTable;
   AddPropertyDialog mAddDialog;
   RenamePropertyDialog mRenameDialog;
   ChangePropertyTypeDialog mChangeTypeDialog;
-  bool mHasFocus{};
 };
 
 }  // namespace tactile

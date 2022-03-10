@@ -90,8 +90,8 @@ class PreferenceState final
   void set_tileset_dock_visible(bool visible);
   [[nodiscard]] auto is_tileset_dock_visible() const -> bool;
 
-  void set_properties_dock_visible(bool visible);
-  [[nodiscard]] auto is_properties_dock_visible() const -> bool;
+  void set_property_dock_visible(bool visible);
+  [[nodiscard]] auto is_property_dock_visible() const -> bool;
 
   void set_component_dock_visible(bool visible);
   [[nodiscard]] auto is_component_dock_visible() const -> bool;

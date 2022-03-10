@@ -761,7 +761,7 @@ void Application::on_toggle_ui()
   if (!show) {
     mWidgetShowState.prev_show_layer_dock = prefs.is_layer_dock_visible();
     mWidgetShowState.prev_show_tileset_dock = prefs.is_tileset_dock_visible();
-    mWidgetShowState.prev_show_properties_dock = prefs.is_properties_dock_visible();
+    mWidgetShowState.prev_show_property_dock = prefs.is_property_dock_visible();
     mWidgetShowState.prev_show_log_dock = prefs.is_log_dock_visible();
     mWidgetShowState.prev_show_component_dock = prefs.is_component_dock_visible();
     mWidgetShowState.prev_show_toolbar = mWidgets.is_toolbar_visible();
@@ -769,7 +769,7 @@ void Application::on_toggle_ui()
 
   prefs.set_layer_dock_visible(show);
   prefs.set_tileset_dock_visible(show);
-  prefs.set_properties_dock_visible(show);
+  prefs.set_property_dock_visible(show);
   prefs.set_component_dock_visible(show);
   prefs.set_log_dock_visible(show);
 
@@ -778,7 +778,7 @@ void Application::on_toggle_ui()
   if (show) {
     prefs.set_layer_dock_visible(mWidgetShowState.prev_show_layer_dock);
     prefs.set_tileset_dock_visible(mWidgetShowState.prev_show_tileset_dock);
-    prefs.set_properties_dock_visible(mWidgetShowState.prev_show_properties_dock);
+    prefs.set_property_dock_visible(mWidgetShowState.prev_show_property_dock);
     prefs.set_log_dock_visible(mWidgetShowState.prev_show_log_dock);
     prefs.set_component_dock_visible(mWidgetShowState.prev_show_component_dock);
 

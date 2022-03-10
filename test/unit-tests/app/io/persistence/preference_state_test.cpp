@@ -16,7 +16,7 @@ TEST(PreferenceState, Defaults)
   ASSERT_FALSE(state.has_window_border());
 
   ASSERT_TRUE(state.is_tileset_dock_visible());
-  ASSERT_TRUE(state.is_properties_dock_visible());
+  ASSERT_TRUE(state.is_property_dock_visible());
   ASSERT_TRUE(state.is_component_dock_visible());
   ASSERT_TRUE(state.is_layer_dock_visible());
   ASSERT_FALSE(state.is_log_dock_visible());
@@ -86,11 +86,11 @@ TEST(PreferenceState, SetPropertiesDockVisible)
 {
   PreferenceState state;
 
-  state.set_properties_dock_visible(true);
-  ASSERT_TRUE(state.is_properties_dock_visible());
+  state.set_property_dock_visible(true);
+  ASSERT_TRUE(state.is_property_dock_visible());
 
-  state.set_properties_dock_visible(false);
-  ASSERT_FALSE(state.is_properties_dock_visible());
+  state.set_property_dock_visible(false);
+  ASSERT_FALSE(state.is_property_dock_visible());
 }
 
 TEST(PreferenceState, SetComponentDockVisible)

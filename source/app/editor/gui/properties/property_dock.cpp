@@ -24,51 +24,52 @@
 #include <imgui.h>
 
 #include "dialogs/add_property_dialog.hpp"
-#include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile {
 
-void PropertyDock::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
+PropertyDock::PropertyDock()
+    : ADockWidget{"Properties",
+                  ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar}
 {
-  auto& prefs = get_preferences();
-  bool visible = prefs.is_properties_dock_visible();
+  set_close_button_enabled(true);
+}
 
-  if (!visible) {
-    return;
-  }
-
-  constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-  scoped::Window dock{"Properties", flags, &visible};
-  mHasFocus = dock.has_focus();
-
-  if (dock.is_open()) {
-    const auto& registry = model.get_active_registry();
-    mPropertyTable.update(registry, dispatcher);
-  }
+void PropertyDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
+{
+  const auto& registry = model.get_active_registry();
+  mPropertyTable.update(registry, dispatcher);
 
   mAddDialog.update(model, dispatcher);
   mRenameDialog.update(model, dispatcher);
   mChangeTypeDialog.update(model, dispatcher);
-
-  prefs.set_properties_dock_visible(visible);
 }
 
-void PropertyDock::ShowAddPropertyDialog()
+void PropertyDock::show_add_property_dialog()
 {
   mAddDialog.open();
 }
 
-void PropertyDock::ShowRenamePropertyDialog(const std::string& name)
+void PropertyDock::show_rename_property_dialog(const std::string& name)
 {
   mRenameDialog.show(name);
 }
 
-void PropertyDock::ShowChangePropertyTypeDialog(std::string name,
-                                                const AttributeType type)
+void PropertyDock::show_change_property_type_dialog(std::string name,
+                                                    const AttributeType type)
 {
   mChangeTypeDialog.show(std::move(name), type);
+}
+
+void PropertyDock::set_visible(const bool visible)
+{
+  get_preferences().set_property_dock_visible(visible);
+}
+
+auto PropertyDock::is_visible() const -> bool
+{
+  return get_preferences().is_property_dock_visible();
 }
 
 }  // namespace tactile

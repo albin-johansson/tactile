@@ -47,7 +47,7 @@ constexpr uint64 _bit_fold_tile_data = 1u << 2u;
 constexpr uint64 _bit_show_grid = 1u << 3u;
 constexpr uint64 _bit_show_layer_dock = 1u << 4u;
 constexpr uint64 _bit_show_tileset_dock = 1u << 5u;
-constexpr uint64 _bit_show_properties_dock = 1u << 6u;
+constexpr uint64 _bit_show_property_dock = 1u << 6u;
 constexpr uint64 _bit_show_log_dock = 1u << 7u;
 constexpr uint64 _bit_window_border = 1u << 8u;
 constexpr uint64 _bit_restore_layout = 1u << 9u;
@@ -55,7 +55,7 @@ constexpr uint64 _bit_restore_last_session = 1u << 10u;
 constexpr uint64 _bit_show_component_dock = 1u << 11u;
 
 constexpr uint64 _def_flags = _bit_show_grid | _bit_indent_output | _bit_show_layer_dock |
-                              _bit_show_tileset_dock | _bit_show_properties_dock |
+                              _bit_show_tileset_dock | _bit_show_property_dock |
                               _bit_show_component_dock | _bit_restore_layout |
                               _bit_restore_last_session;
 
@@ -122,7 +122,7 @@ void PreferenceState::print()
   PRINT_FLAG("Show layer dock", _bit_show_layer_dock);
   PRINT_FLAG("Show log dock", _bit_show_log_dock);
   PRINT_FLAG("Show tileset dock", _bit_show_tileset_dock);
-  PRINT_FLAG("Show properties dock", _bit_show_properties_dock);
+  PRINT_FLAG("Show property dock", _bit_show_property_dock);
   PRINT_FLAG("Show component dock", _bit_show_component_dock);
 
   PRINT_FLAG("Window border", _bit_window_border);
@@ -196,8 +196,8 @@ void PreferenceState::parse(const std::filesystem::path& path)
       set_flag(_bit_show_layer_dock, cfg.show_layer_dock());
     }
 
-    if (cfg.has_show_properties_dock()) {
-      set_flag(_bit_show_properties_dock, cfg.show_properties_dock());
+    if (cfg.has_show_property_dock()) {
+      set_flag(_bit_show_property_dock, cfg.show_property_dock());
     }
 
     if (cfg.has_show_log_dock()) {
@@ -247,7 +247,7 @@ void PreferenceState::save(const std::filesystem::path& path)
 
   cfg.set_show_tileset_dock(is_tileset_dock_visible());
   cfg.set_show_layer_dock(is_layer_dock_visible());
-  cfg.set_show_properties_dock(is_properties_dock_visible());
+  cfg.set_show_property_dock(is_property_dock_visible());
   cfg.set_show_log_dock(is_log_dock_visible());
   cfg.set_show_component_dock(is_component_dock_visible());
   cfg.set_restore_layout(will_restore_layout());
@@ -292,7 +292,7 @@ void PreferenceState::reset_dock_visibilities()
 {
   reset_flag(_bit_show_layer_dock);
   reset_flag(_bit_show_tileset_dock);
-  reset_flag(_bit_show_properties_dock);
+  reset_flag(_bit_show_property_dock);
   reset_flag(_bit_show_component_dock);
   reset_flag(_bit_show_log_dock);
 }
@@ -347,14 +347,14 @@ auto PreferenceState::is_tileset_dock_visible() const -> bool
   return test_flag(_bit_show_tileset_dock);
 }
 
-void PreferenceState::set_properties_dock_visible(const bool visible)
+void PreferenceState::set_property_dock_visible(const bool visible)
 {
-  set_flag(_bit_show_properties_dock, visible);
+  set_flag(_bit_show_property_dock, visible);
 }
 
-auto PreferenceState::is_properties_dock_visible() const -> bool
+auto PreferenceState::is_property_dock_visible() const -> bool
 {
-  return test_flag(_bit_show_properties_dock);
+  return test_flag(_bit_show_property_dock);
 }
 
 void PreferenceState::set_component_dock_visible(const bool visible)

@@ -50,7 +50,7 @@ message Settings {
   optional bool restore_last_session = 20;
   optional bool restore_layout = 21;
   optional bool show_layer_dock = 22;
-  optional bool show_properties_dock = 23;
+  optional bool show_property_dock = 23;
   optional bool show_tileset_dock = 24;
   optional bool show_log_dock = 30;
   optional bool show_component_dock = 31;

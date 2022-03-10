@@ -44,8 +44,8 @@ void _update_widgets_menu(const bool hasActiveMap)
 
     auto& prefs = get_preferences();
 
-    if (ImGui::MenuItem("Properties", nullptr, prefs.is_properties_dock_visible())) {
-      prefs.set_properties_dock_visible(!prefs.is_properties_dock_visible());
+    if (ImGui::MenuItem("Properties", nullptr, prefs.is_property_dock_visible())) {
+      prefs.set_property_dock_visible(!prefs.is_property_dock_visible());
     }
 
     if (ImGui::MenuItem("Layers", nullptr, prefs.is_layer_dock_visible())) {
