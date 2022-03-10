@@ -22,8 +22,8 @@
 #include <imgui.h>
 
 #include "debug_menu.hpp"
-#include "view_menu.hpp"
 #include "editor/model.hpp"
+#include "view_menu.hpp"
 
 namespace tactile {
 

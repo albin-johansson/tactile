@@ -41,28 +41,28 @@
 
 namespace tactile {
 
-struct layer_dock::layer_dock_data final
+struct LayerDock::layer_dock_data final
 {
-  rename_layer_dialog mRenameLayerDialog;
-  add_layer_context_menu mAddLayerContextMenu;
+  RenameLayerDialog mRenameLayerDialog;
+  AddLayerContextMenu mAddLayerContextMenu;
   Maybe<layer_id> mRenameTarget;
 };
 
-layer_dock::layer_dock()
+LayerDock::LayerDock()
     : ADockWidget{"Layers", ImGuiWindowFlags_NoCollapse}
     , mData{std::make_unique<layer_dock_data>()}
 {
   set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
 }
 
-layer_dock::~layer_dock() noexcept = default;
+LayerDock::~LayerDock() noexcept = default;
 
-void layer_dock::show_rename_layer_dialog(const layer_id id)
+void LayerDock::show_rename_layer_dialog(const layer_id id)
 {
   mData->mRenameTarget = id;
 }
 
-void layer_dock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void LayerDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
 
@@ -108,21 +108,21 @@ void layer_dock::on_update(const DocumentModel& model, entt::dispatcher& dispatc
   renameLayerDialog.update(model, dispatcher);
 }
 
-void layer_dock::set_visible(const bool visible)
+void LayerDock::set_visible(const bool visible)
 {
   auto& prefs = get_preferences();
   prefs.set_layer_dock_visible(visible);
 }
 
-auto layer_dock::is_visible() const -> bool
+auto LayerDock::is_visible() const -> bool
 {
   const auto& prefs = get_preferences();
   return prefs.is_layer_dock_visible();
 }
 
-void layer_dock::update_buttons(const DocumentModel& model,
-                                const entt::registry& registry,
-                                entt::dispatcher& dispatcher)
+void LayerDock::update_buttons(const DocumentModel& model,
+                               const entt::registry& registry,
+                               entt::dispatcher& dispatcher)
 {
   const auto activeLayerEntity = registry.ctx<comp::ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;

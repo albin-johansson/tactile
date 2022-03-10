@@ -31,12 +31,12 @@ namespace tactile {
 
 class DocumentModel;
 
-class layer_dock final : public ADockWidget
+class LayerDock final : public ADockWidget
 {
  public:
-  layer_dock();
+  LayerDock();
 
-  ~layer_dock() noexcept override;
+  ~LayerDock() noexcept override;
 
   void show_rename_layer_dialog(layer_id id);
 

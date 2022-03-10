@@ -43,7 +43,7 @@ struct widget_manager::widgets final
   MenuBar mMenuBar;
   Toolbar mToolbar;
   TilesetDock mTilesetDock;
-  layer_dock mLayerDock;
+  LayerDock mLayerDock;
   PropertiesDock mPropertiesDock;
   ComponentDock mComponentDock;
   LogDock mLogDock;

@@ -28,10 +28,10 @@ namespace tactile {
  * \brief Used to change the name of an existing layer.
  * \ingroup gui
  */
-class rename_layer_dialog final : public AStringInputDialog
+class RenameLayerDialog final : public AStringInputDialog
 {
  public:
-  rename_layer_dialog();
+  RenameLayerDialog();
 
   void show(layer_id id, std::string oldName);
 

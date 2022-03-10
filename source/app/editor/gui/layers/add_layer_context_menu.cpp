@@ -26,9 +26,9 @@
 
 namespace tactile {
 
-add_layer_context_menu::add_layer_context_menu() : ContextMenu{"AddLayerContextMenu"} {}
+AddLayerContextMenu::AddLayerContextMenu() : ContextMenu{"AddLayerContextMenu"} {}
 
-void add_layer_context_menu::on_update(const DocumentModel&, entt::dispatcher& dispatcher)
+void AddLayerContextMenu::on_update(const DocumentModel&, entt::dispatcher& dispatcher)
 {
   if (ImGui::Selectable(TAC_ICON_TILE_LAYER " Tile layer")) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::tile_layer);

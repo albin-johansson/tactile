@@ -23,10 +23,10 @@
 
 namespace tactile {
 
-class add_layer_context_menu final : public ContextMenu
+class AddLayerContextMenu final : public ContextMenu
 {
  public:
-  add_layer_context_menu();
+  AddLayerContextMenu();
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
