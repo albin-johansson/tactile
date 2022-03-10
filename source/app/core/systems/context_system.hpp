@@ -86,7 +86,7 @@ auto add_attribute_context(entt::registry& registry, entt::entity entity)
  */
 [[nodiscard]] auto copy_attribute_context(const entt::registry& registry,
                                           entt::entity source)
-    -> attribute_context_snapshot;
+    -> AttributeContextSnapshot;
 
 /**
  * \brief Restores an attribute context component.
@@ -102,7 +102,7 @@ auto add_attribute_context(entt::registry& registry, entt::entity entity)
  */
 void restore_attribute_context(entt::registry& registry,
                                entt::entity entity,
-                               attribute_context_snapshot snapshot);
+                               AttributeContextSnapshot snapshot);
 
 /**
  * \brief Returns the context associated with an identifier.

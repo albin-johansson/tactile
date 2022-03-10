@@ -31,17 +31,17 @@
 
 namespace tactile::sys {
 
-struct component_snapshot final
+struct ComponentSnapshot final
 {
   TreeMap<std::string, Attribute> attributes;
 };
 
-struct attribute_context_snapshot final
+struct AttributeContextSnapshot final
 {
   context_id id{};
   std::string name;
   TreeMap<std::string, Attribute> properties;
-  TreeMap<component_id, component_snapshot> components;
+  TreeMap<component_id, ComponentSnapshot> components;
 };
 
 struct TilesetSnapshot final
@@ -50,20 +50,20 @@ struct TilesetSnapshot final
   comp::TilesetSelection selection;
   comp::Texture texture;
   comp::UvTileSize uv;
-  attribute_context_snapshot context;
+  AttributeContextSnapshot context;
 };
 
 struct ObjectSnapshot final
 {
   comp::Object core;
-  attribute_context_snapshot context;
+  AttributeContextSnapshot context;
 };
 
 struct LayerSnapshot final
 {
   usize index{};
   comp::Layer core;
-  attribute_context_snapshot context;
+  AttributeContextSnapshot context;
   Maybe<layer_id> parent;
   Maybe<TileMatrix> tiles;
   Maybe<std::vector<ObjectSnapshot>> objects;

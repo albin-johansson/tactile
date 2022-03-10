@@ -63,11 +63,11 @@ auto add_attribute_context(entt::registry& registry, const entt::entity entity)
 }
 
 auto copy_attribute_context(const entt::registry& registry, const entt::entity source)
-    -> attribute_context_snapshot
+    -> AttributeContextSnapshot
 {
   const auto& context = checked_get<comp::AttributeContext>(registry, source);
 
-  attribute_context_snapshot snapshot;
+  AttributeContextSnapshot snapshot;
   snapshot.id = context.id;
   snapshot.name = context.name;
 
@@ -90,7 +90,7 @@ auto copy_attribute_context(const entt::registry& registry, const entt::entity s
 
 void restore_attribute_context(entt::registry& registry,
                                const entt::entity entity,
-                               attribute_context_snapshot snapshot)
+                               AttributeContextSnapshot snapshot)
 {
   TACTILE_ASSERT(entity != entt::null);
 
