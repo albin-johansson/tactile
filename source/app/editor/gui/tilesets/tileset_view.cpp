@@ -27,6 +27,7 @@
 #include "core/components/tiles.hpp"
 #include "core/viewport.hpp"
 #include "editor/events/tileset_events.hpp"
+#include "editor/events/viewport_events.hpp"
 #include "editor/gui/common/rubber_band.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_info.hpp"
@@ -38,20 +39,22 @@ namespace {
 constexpr auto _rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
 constexpr cen::color _grid_color{200, 200, 200, 40};
 
-[[nodiscard]] auto _track_scroll_offset(const ImVec2& canvasSize, ImVec2 offset) -> ImVec2
+void _update_viewport_offset(const entt::entity viewportEntity,
+                             entt::dispatcher& dispatcher,
+                             const ImVec2& viewportSize)
 {
-  constexpr auto flags = ImGuiButtonFlags_MouseButtonLeft |
-                         ImGuiButtonFlags_MouseButtonMiddle |
-                         ImGuiButtonFlags_MouseButtonRight;
-  ImGui::InvisibleButton("_track_scroll_offset", canvasSize, flags);
+  ImGui::InvisibleButton("TilesetViewInvisibleButton",
+                         viewportSize,
+                         ImGuiButtonFlags_MouseButtonLeft |
+                             ImGuiButtonFlags_MouseButtonMiddle |
+                             ImGuiButtonFlags_MouseButtonRight);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
-    offset.x += io.MouseDelta.x;
-    offset.y += io.MouseDelta.y;
-    return offset;
-  }
-  else {
-    return offset;
+    dispatcher.enqueue<OffsetBoundViewportEvent>(viewportEntity,
+                                                 io.MouseDelta.x,
+                                                 io.MouseDelta.y,
+                                                 viewportSize.x,
+                                                 viewportSize.y);
   }
 }
 
@@ -93,18 +96,17 @@ void TilesetView::update(const entt::registry& registry,
   mHeight = region.y;
 
   const auto info = get_render_info(viewport, tileset);
-  GraphicsCtx graphics{info};
+  _update_viewport_offset(entity, dispatcher, info.canvas_br - info.canvas_tl);
 
+  GraphicsCtx graphics{info};
   graphics.set_draw_color(get_preferences().viewport_bg());
   graphics.clear();
 
-  const auto offset = ImVec2{viewport.x_offset, viewport.y_offset};
-  const auto scroll = _track_scroll_offset(info.canvas_br - info.canvas_tl, offset);
-
+  const ImVec2 offset{viewport.x_offset, viewport.y_offset};
   const ImVec2 tileSize = {static_cast<float>(tileset.tile_width),
                            static_cast<float>(tileset.tile_height)};
 
-  if (const auto selection = rubber_band(scroll, tileSize)) {
+  if (const auto selection = rubber_band(offset, tileSize)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
