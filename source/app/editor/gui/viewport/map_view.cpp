@@ -252,13 +252,13 @@ void update_map_view_object_context_menu(const entt::registry& registry,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
-      dispatcher.enqueue<duplicate_object_event>(object.id);
+      dispatcher.enqueue<DuplicateObjectEvent>(object.id);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
-      dispatcher.enqueue<remove_object_event>(object.id);
+      dispatcher.enqueue<RemoveObjectEvent>(object.id);
     }
   }
 }

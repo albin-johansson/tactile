@@ -69,12 +69,12 @@ struct SetObjectNameEvent final
   std::string name;  ///< The new object name.
 };
 
-struct duplicate_object_event final
+struct DuplicateObjectEvent final
 {
   object_id id{};  ///< ID of the target object.
 };
 
-struct remove_object_event final
+struct RemoveObjectEvent final
 {
   object_id id{};  ///< ID of the target object.
 };
