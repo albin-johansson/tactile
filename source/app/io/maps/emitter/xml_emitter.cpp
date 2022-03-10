@@ -344,7 +344,7 @@ void _append_tileset(pugi::xml_node root,
   }
 }
 
-void _append_root(pugi::xml_document& document, const emit_info& info)
+void _append_root(pugi::xml_document& document, const EmitInfo& info)
 {
   const auto& mapData = info.data();
   auto root = document.append_child("map");
@@ -378,7 +378,7 @@ void _append_root(pugi::xml_document& document, const emit_info& info)
 
 }  // namespace
 
-void emit_xml_map(const emit_info& info)
+void emit_xml_map(const EmitInfo& info)
 {
   if (!info.data().component_definitions.empty()) {
     log_warning("Component data will be ignored when saving the map as XML!");

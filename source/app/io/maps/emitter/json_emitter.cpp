@@ -235,7 +235,7 @@ namespace {
 }
 
 void _add_common_tileset_attributes(nlohmann::json& json,
-                                    const emit_info& info,
+                                    const EmitInfo& info,
                                     const ir::TilesetData& data)
 {
   json["name"] = data.name;
@@ -264,7 +264,7 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   }
 }
 
-[[nodiscard]] auto _emit_embedded_tileset(const emit_info& info,
+[[nodiscard]] auto _emit_embedded_tileset(const EmitInfo& info,
                                           const ir::TilesetData& data) -> nlohmann::json
 {
   auto json = nlohmann::json::object();
@@ -285,7 +285,7 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   return json;
 }
 
-void _create_external_tileset_file(const emit_info& info, const ir::TilesetData& data)
+void _create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& data)
 {
   auto json = nlohmann::json::object();
   _add_common_tileset_attributes(json, info, data);
@@ -300,7 +300,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::TilesetData&
   write_json(json, path);
 }
 
-[[nodiscard]] auto _emit_tileset(const emit_info& info, const ir::TilesetData& data)
+[[nodiscard]] auto _emit_tileset(const EmitInfo& info, const ir::TilesetData& data)
     -> nlohmann::json
 {
   if (get_preferences().embed_tilesets()) {
@@ -312,7 +312,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::TilesetData&
   }
 }
 
-[[nodiscard]] auto _emit_tilesets(const emit_info& info) -> nlohmann::json
+[[nodiscard]] auto _emit_tilesets(const EmitInfo& info) -> nlohmann::json
 {
   auto json = nlohmann::json::array();
 
@@ -326,7 +326,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::TilesetData&
 
 }  // namespace
 
-void emit_json_map(const emit_info& info)
+void emit_json_map(const EmitInfo& info)
 {
   auto json = nlohmann::json::object();
 

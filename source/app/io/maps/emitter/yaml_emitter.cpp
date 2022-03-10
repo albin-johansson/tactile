@@ -294,7 +294,7 @@ void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_file(const emit_info& info,
+void _emit_tileset_file(const EmitInfo& info,
                         const std::string& filename,
                         const ir::TilesetData& tileset)
 {
@@ -334,7 +334,7 @@ void _emit_tileset_file(const emit_info& info,
   stream << emitter.c_str();
 }
 
-void _emit_tilesets(YAML::Emitter& emitter, const emit_info& info)
+void _emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
 {
   const auto& data = info.data();
 
@@ -372,7 +372,7 @@ void _emit_component_definition_attribute(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void _emit_component_definitions(YAML::Emitter& emitter, const emit_info& info)
+void _emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
 {
   const auto& data = info.data();
 
@@ -404,7 +404,7 @@ void _emit_component_definitions(YAML::Emitter& emitter, const emit_info& info)
 
 }  // namespace
 
-void emit_yaml_map(const emit_info& info)
+void emit_yaml_map(const EmitInfo& info)
 {
   const auto& data = info.data();
 

@@ -447,8 +447,8 @@ constexpr usize _col_count = 13;
 
 TEST(RoundTrip, YAML)
 {
-  const emitter::emit_info emitter{std::filesystem::absolute("test_map.yaml"),
-                                   _create_source_data(true)};
+  const emitter::EmitInfo emitter{std::filesystem::absolute("test_map.yaml"),
+                                  _create_source_data(true)};
   emitter::emit_yaml_map(emitter);
 
   const auto result = parsing::parse_map("test_map.yaml");
@@ -465,8 +465,8 @@ TEST(RoundTrip, YAML)
 
 TEST(RoundTrip, JSON)
 {
-  const emitter::emit_info emitter{std::filesystem::absolute("test_map.json"),
-                                   _create_source_data(false)};
+  const emitter::EmitInfo emitter{std::filesystem::absolute("test_map.json"),
+                                  _create_source_data(false)};
   emitter::emit_json_map(emitter);
 
   const auto result = parsing::parse_map("test_map.json");
@@ -484,8 +484,8 @@ TEST(RoundTrip, JSON)
 
 TEST(RoundTrip, XML)
 {
-  const emitter::emit_info emitter{std::filesystem::absolute("test_map.tmx"),
-                                   _create_source_data(false)};
+  const emitter::EmitInfo emitter{std::filesystem::absolute("test_map.tmx"),
+                                  _create_source_data(false)};
   emitter::emit_xml_map(emitter);
 
   const auto result = parsing::parse_map("test_map.tmx");

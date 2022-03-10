@@ -26,10 +26,10 @@
 
 namespace tactile::emitter {
 
-class emit_info final
+class EmitInfo final
 {
  public:
-  explicit emit_info(std::filesystem::path destination, ir::MapData data);
+  explicit EmitInfo(std::filesystem::path destination, ir::MapData data);
 
   [[nodiscard]] auto destination_file() const -> const std::filesystem::path&;
 
