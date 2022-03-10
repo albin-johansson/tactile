@@ -14,6 +14,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+  message("[Tactile]: Enabling IPO...")
+  set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+endif ()
+
 message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
