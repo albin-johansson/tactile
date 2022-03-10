@@ -73,7 +73,7 @@ void _update_sequence(entt::registry& registry, const tile_position& cursor)
           if (!_old_state.contains(pos)) {
             _old_state.emplace(pos, get_tile(layer, pos));
           }
-          _sequence.emplace_or_replace(pos, tile);
+          _sequence.insert_or_assign(pos, tile);
           set_tile(layer, pos, tile);
         }
       }

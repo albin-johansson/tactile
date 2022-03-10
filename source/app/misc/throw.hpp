@@ -21,8 +21,9 @@
 
 #include <exception>  // exception
 
-#include "boost.hpp"
-#include "meta/build.hpp"
+#include <boost/exception/all.hpp>
+
+#include "stacktrace.hpp"
 
 namespace tactile {
 

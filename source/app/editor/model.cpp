@@ -86,8 +86,8 @@ void DocumentModel::remove_map(const map_id id)
 
   if (mActiveMap == id) {
     if (!mDocuments.empty()) {
-      const auto& [mapId, map] = mDocuments.at_index(0);
-      mActiveMap = mapId;
+      const auto iter = mDocuments.nth(0);
+      mActiveMap = iter->first;
     }
     else {
       mActiveMap.reset();

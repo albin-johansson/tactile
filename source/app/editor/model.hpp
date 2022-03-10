@@ -22,9 +22,9 @@
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
 
+#include <boost/container/flat_map.hpp>
 #include <entt/entt.hpp>
 
-#include "core/utils/vector_map.hpp"
 #include "document.hpp"
 #include "events/command_events.hpp"
 #include "events/tool_events.hpp"
@@ -43,7 +43,7 @@ class DocumentModel final
 {
  public:
   // Documents are stored on the heap to ensure stability, which is important for commands
-  using document_map = vector_map<map_id, std::unique_ptr<Document>>;
+  using document_map = boost::container::flat_map<map_id, std::unique_ptr<Document>>;
   using const_iterator = document_map::const_iterator;
 
   /**

@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include "boost.hpp"
+#include <boost/assert.hpp>
+
 #include "meta/build.hpp"
 
 #if TACTILE_DEBUG

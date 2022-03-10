@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "boost.hpp"
+#include "stacktrace.hpp"
 
 namespace tactile {
 
