@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-using component_attribute_map = TreeMap<std::string, Attribute>;
+using ComponentAttrMap = TreeMap<std::string, Attribute>;
 
 }  // namespace tactile
 
@@ -93,9 +93,9 @@ struct Property final
  */
 struct ComponentDef final
 {
-  component_id id{};                   ///< Unique ID for the component definition.
-  std::string name;                    ///< The component name (which is unique!).
-  component_attribute_map attributes;  ///< The attributes with their default values.
+  component_id id{};            ///< Unique ID for the component definition.
+  std::string name;             ///< The component name (which is unique!).
+  ComponentAttrMap attributes;  ///< The attributes with their default values.
 };
 
 /**
@@ -107,8 +107,8 @@ struct ComponentDef final
  */
 struct Component final
 {
-  component_id type;               ///< The ID of the component definition type.
-  component_attribute_map values;  ///< Current values.
+  component_id type;        ///< The ID of the component definition type.
+  ComponentAttrMap values;  ///< Current values.
 };
 
 }  // namespace tactile::comp

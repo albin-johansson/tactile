@@ -42,22 +42,22 @@ namespace tactile::sys {
 
 struct RemoveComponentDefResult final
 {
-  component_id id{};                   ///< Previous component ID.
-  std::string name;                    ///< Previous component name.
-  component_attribute_map attributes;  ///< Removed component attributes.
-  std::map<context_id, component_attribute_map> values;  ///< Removed context attributes.
+  component_id id{};                              ///< Previous component ID.
+  std::string name;                               ///< Previous component name.
+  ComponentAttrMap attributes;                    ///< Removed component attributes.
+  std::map<context_id, ComponentAttrMap> values;  ///< Removed context attributes.
 };
 
 struct RemoveComponentResult final
 {
-  context_id context{};            ///< Context from which component was removed.
-  component_id component{};        ///< Previous component ID.
-  component_attribute_map values;  ///< Removed context attributes.
+  context_id context{};      ///< Context from which component was removed.
+  component_id component{};  ///< Previous component ID.
+  ComponentAttrMap values;   ///< Removed context attributes.
 };
 
 struct ResetComponentResult final
 {
-  component_attribute_map values;  ///< Previous component values.
+  ComponentAttrMap values;  ///< Previous component values.
 };
 
 /// \name Component definition functions
