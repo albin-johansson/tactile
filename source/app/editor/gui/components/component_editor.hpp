@@ -52,8 +52,8 @@ class ComponentEditor final : public ADialog
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
  private:
-  struct component_editor_data;
-  std::unique_ptr<component_editor_data> mData;
+  struct Data;
+  std::unique_ptr<Data> mData;
 
   void show_component_combo_popup(const entt::registry& registry,
                                   entt::dispatcher& dispatcher);

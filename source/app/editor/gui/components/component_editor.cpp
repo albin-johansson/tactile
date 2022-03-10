@@ -41,7 +41,7 @@
 
 namespace tactile {
 
-struct ComponentEditor::component_editor_data final
+struct ComponentEditor::Data final
 {
   CreateComponentDialog create_component;
   CreateComponentAttributeDialog create_component_attr;
@@ -52,7 +52,7 @@ struct ComponentEditor::component_editor_data final
 
 ComponentEditor::ComponentEditor()
     : ADialog{"Component Editor"}
-    , mData{std::make_unique<component_editor_data>()}
+    , mData{std::make_unique<Data>()}
 {
   set_accept_button_label(nullptr);
   set_close_button_label("Close");
