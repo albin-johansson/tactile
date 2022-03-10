@@ -37,16 +37,16 @@ void RenderLayer(GraphicsCtx& graphics,
                  const float parentOpacity)
 {
   if (layer.type == LayerType::tile_layer) {
-    RenderTileLayer(graphics, registry, layerEntity, parentOpacity);
+    render_tile_layer(graphics, registry, layerEntity, parentOpacity);
   }
   else if (layer.type == LayerType::object_layer) {
-    RenderObjectLayer(graphics, registry, layerEntity, parentOpacity);
+    render_object_layer(graphics, registry, layerEntity, parentOpacity);
   }
 }
 
 }  // namespace
 
-void RenderMap(GraphicsCtx& graphics, const entt::registry& registry)
+void render_map(GraphicsCtx& graphics, const entt::registry& registry)
 {
   for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
     const auto& layer = registry.get<comp::Layer>(entity);
@@ -66,7 +66,7 @@ void RenderMap(GraphicsCtx& graphics, const entt::registry& registry)
 
   if (const auto& activeObject = registry.ctx<comp::ActiveObject>();
       activeObject.entity != entt::null) {
-    RenderObject(graphics, registry, activeObject.entity, cen::colors::yellow);
+    render_object(graphics, registry, activeObject.entity, cen::colors::yellow);
   }
 
   graphics.set_line_thickness(1.0f);

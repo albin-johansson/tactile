@@ -40,10 +40,10 @@ class GraphicsCtx;
  * \param row the row coordinate of the tile.
  * \param column the column coordinate of the tile.
  */
-void RenderTile(GraphicsCtx& graphics,
-                const entt::registry& registry,
-                tile_id tile,
-                int32 row,
-                int32 column);
+void render_tile(GraphicsCtx& graphics,
+                 const entt::registry& registry,
+                 tile_id tile,
+                 int32 row,
+                 int32 column);
 
 }  // namespace tactile

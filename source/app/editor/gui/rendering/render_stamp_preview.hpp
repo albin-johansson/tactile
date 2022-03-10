@@ -26,8 +26,8 @@ namespace tactile {
 class TilePos;
 struct RenderInfo;
 
-void RenderStampPreview(const entt::registry& registry,
-                        const TilePos& mousePos,
-                        const RenderInfo& info);
+void render_stamp_preview(const entt::registry& registry,
+                          const TilePos& mousePos,
+                          const RenderInfo& info);
 
 }  // namespace tactile

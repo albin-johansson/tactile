@@ -112,7 +112,7 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
   if (cursor.is_within_map &&  //
       sys::is_tool_enabled(registry, ToolType::stamp) &&
       sys::is_tileset_selection_not_empty(registry)) {
-    RenderStampPreview(registry, cursor.map_position, info);
+    render_stamp_preview(registry, cursor.map_position, info);
   }
   else if (sys::is_tool_enabled(registry, ToolType::rectangle)) {
     if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
@@ -214,7 +214,7 @@ void update_map_view(const entt::registry& registry, entt::dispatcher& dispatche
     _will_center_viewport = false;
   }
 
-  RenderMap(graphics, registry);
+  render_map(graphics, registry);
 
   const auto cursor = GetViewportCursorInfo(info);
   _poll_mouse(dispatcher, cursor);

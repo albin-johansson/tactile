@@ -26,10 +26,10 @@ namespace tactile {
 
 class GraphicsCtx;
 
-void RenderObject(GraphicsCtx& graphics,
-                  const entt::registry& registry,
-                  entt::entity objectEntity,
-                  const cen::color& color);
+void render_object(GraphicsCtx& graphics,
+                   const entt::registry& registry,
+                   entt::entity objectEntity,
+                   const cen::color& color);
 
 /**
  * \brief Renders an object layer.
@@ -41,9 +41,9 @@ void RenderObject(GraphicsCtx& graphics,
  * \param layerEntity the object layer entity.
  * \param parentOpacity the opacity of the parent layer.
  */
-void RenderObjectLayer(GraphicsCtx& graphics,
-                       const entt::registry& registry,
-                       entt::entity layerEntity,
-                       float parentOpacity);
+void render_object_layer(GraphicsCtx& graphics,
+                         const entt::registry& registry,
+                         entt::entity layerEntity,
+                         float parentOpacity);
 
 }  // namespace tactile

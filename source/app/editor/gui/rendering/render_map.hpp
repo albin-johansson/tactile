@@ -33,6 +33,6 @@ class GraphicsCtx;
  * \param graphics the graphics context that will be used.
  * \param registry the registry associated with the map that will rendered.
  */
-void RenderMap(GraphicsCtx& graphics, const entt::registry& registry);
+void render_map(GraphicsCtx& graphics, const entt::registry& registry);
 
 }  // namespace tactile

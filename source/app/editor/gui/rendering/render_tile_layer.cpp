@@ -27,10 +27,10 @@
 
 namespace tactile {
 
-void RenderTileLayer(GraphicsCtx& graphics,
-                     const entt::registry& registry,
-                     const entt::entity layerEntity,
-                     const float parentOpacity)
+void render_tile_layer(GraphicsCtx& graphics,
+                       const entt::registry& registry,
+                       const entt::entity layerEntity,
+                       const float parentOpacity)
 {
   const auto& layer = registry.get<comp::Layer>(layerEntity);
   const auto& tileLayer = registry.get<comp::TileLayer>(layerEntity);
@@ -45,7 +45,7 @@ void RenderTileLayer(GraphicsCtx& graphics,
     for (auto col = bounds.begin.col(); col < endCol; ++col) {
       const auto tile = sys::get_tile(tileLayer, {row, col});
       if (tile != empty_tile) {
-        RenderTile(graphics, registry, tile, row, col);
+        render_tile(graphics, registry, tile, row, col);
       }
     }
   }

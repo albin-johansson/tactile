@@ -35,9 +35,9 @@ class GraphicsCtx;
  * \param layerEntity the entity that represents the tile layer.
  * \param parentOpacity the opacity of the parent layer.
  */
-void RenderTileLayer(GraphicsCtx& graphics,
-                     const entt::registry& registry,
-                     entt::entity layerEntity,
-                     float parentOpacity);
+void render_tile_layer(GraphicsCtx& graphics,
+                       const entt::registry& registry,
+                       entt::entity layerEntity,
+                       float parentOpacity);
 
 }  // namespace tactile

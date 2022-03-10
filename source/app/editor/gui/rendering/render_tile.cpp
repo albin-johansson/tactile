@@ -29,11 +29,11 @@
 
 namespace tactile {
 
-void RenderTile(GraphicsCtx& graphics,
-                const entt::registry& registry,
-                const tile_id tile,
-                const int32 row,
-                const int32 column)
+void render_tile(GraphicsCtx& graphics,
+                 const entt::registry& registry,
+                 const tile_id tile,
+                 const int32 row,
+                 const int32 column)
 {
   const auto& context = registry.ctx<comp::TilesetContext>();
   auto iter = context.tile_to_tileset.find(tile);

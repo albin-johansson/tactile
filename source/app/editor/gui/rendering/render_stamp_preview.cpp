@@ -34,7 +34,7 @@
 namespace tactile {
 namespace {
 
-constexpr uint32 gPreviewOpacity = 100;  // [0, 255]
+constexpr uint32 _preview_opacity = 100;  // [0, 255]
 
 struct PreviewInfo final
 {
@@ -50,9 +50,9 @@ struct PreviewInfo final
   TilePos offset;
 };
 
-void RenderPreviewTile(const PreviewInfo& info,
-                       const TilePos& previewTilePos,
-                       const ImVec2& tilesetTilePos)
+void _render_preview_tile(const PreviewInfo& info,
+                          const TilePos& previewTilePos,
+                          const ImVec2& tilesetTilePos)
 {
   const auto x = static_cast<float>(previewTilePos.col()) * info.grid_size.x;
   const auto y = static_cast<float>(previewTilePos.row()) * info.grid_size.y;
@@ -67,10 +67,10 @@ void RenderPreviewTile(const PreviewInfo& info,
                      realPos + info.grid_size,
                      uvMin,
                      uvMax,
-                     IM_COL32(0xFF, 0xFF, 0xFF, gPreviewOpacity));
+                     IM_COL32(0xFF, 0xFF, 0xFF, _preview_opacity));
 }
 
-void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
+void _render_preview_tiles(const entt::registry& registry, const PreviewInfo& info)
 {
   const auto endRow = info.selection_size.row();
   const auto endCol = info.selection_size.col();
@@ -83,7 +83,7 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
         const auto tilesetTilePos = info.selection_begin + position;
         const auto tilesetTileRow = static_cast<float>(tilesetTilePos.row());
         const auto tilesetTileCol = static_cast<float>(tilesetTilePos.col());
-        RenderPreviewTile(info, previewTilePos, {tilesetTileCol, tilesetTileRow});
+        _render_preview_tile(info, previewTilePos, {tilesetTileCol, tilesetTileRow});
       }
     }
   }
@@ -91,9 +91,9 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
 
 }  // namespace
 
-void RenderStampPreview(const entt::registry& registry,
-                        const TilePos& mousePos,
-                        const RenderInfo& renderInfo)
+void render_stamp_preview(const entt::registry& registry,
+                          const TilePos& mousePos,
+                          const RenderInfo& renderInfo)
 {
   const auto& activeTileset = registry.ctx<comp::ActiveTileset>();
 
@@ -121,7 +121,7 @@ void RenderStampPreview(const entt::registry& registry,
   info.selection_size = region.end - region.begin;
   info.offset = info.selection_size / TilePos{2, 2};
 
-  RenderPreviewTiles(registry, info);
+  _render_preview_tiles(registry, info);
 }
 
 }  // namespace tactile

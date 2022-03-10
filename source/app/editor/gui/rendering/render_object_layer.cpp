@@ -33,11 +33,11 @@
 namespace tactile {
 namespace {
 
-void RenderPointObject(GraphicsCtx& graphics,
-                       const entt::registry& registry,
-                       const entt::entity objectEntity,
-                       const ImVec2& position,
-                       const cen::color& color)
+void _render_point_object(GraphicsCtx& graphics,
+                          const entt::registry& registry,
+                          const entt::entity objectEntity,
+                          const ImVec2& position,
+                          const cen::color& color)
 {
   const float radius = (std::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
 
@@ -64,11 +64,11 @@ void RenderPointObject(GraphicsCtx& graphics,
   }
 }
 
-void RenderEllipseObject(GraphicsCtx& graphics,
-                         const entt::registry& registry,
-                         const entt::entity objectEntity,
-                         const ImVec2& position,
-                         const cen::color& color)
+void _render_ellipse_object(GraphicsCtx& graphics,
+                            const entt::registry& registry,
+                            const entt::entity objectEntity,
+                            const ImVec2& position,
+                            const cen::color& color)
 {
   const auto& object = registry.get<comp::Object>(objectEntity);
   const auto& context = registry.get<comp::AttributeContext>(objectEntity);
@@ -96,11 +96,11 @@ void RenderEllipseObject(GraphicsCtx& graphics,
   }
 }
 
-void RenderRectangleObject(GraphicsCtx& graphics,
-                           const entt::registry& registry,
-                           const entt::entity objectEntity,
-                           const ImVec2& position,
-                           const cen::color& color)
+void _render_rectangle_object(GraphicsCtx& graphics,
+                              const entt::registry& registry,
+                              const entt::entity objectEntity,
+                              const ImVec2& position,
+                              const cen::color& color)
 {
   const auto& object = registry.get<comp::Object>(objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::rect);
@@ -128,10 +128,10 @@ void RenderRectangleObject(GraphicsCtx& graphics,
 
 }  // namespace
 
-void RenderObject(GraphicsCtx& graphics,
-                  const entt::registry& registry,
-                  const entt::entity objectEntity,
-                  const cen::color& color)
+void render_object(GraphicsCtx& graphics,
+                   const entt::registry& registry,
+                   const entt::entity objectEntity,
+                   const cen::color& color)
 {
   const auto& object = registry.get<comp::Object>(objectEntity);
 
@@ -143,23 +143,23 @@ void RenderObject(GraphicsCtx& graphics,
 
   switch (object.type) {
     case ObjectType::point:
-      RenderPointObject(graphics, registry, objectEntity, position, color);
+      _render_point_object(graphics, registry, objectEntity, position, color);
       break;
 
     case ObjectType::ellipse:
-      RenderEllipseObject(graphics, registry, objectEntity, position, color);
+      _render_ellipse_object(graphics, registry, objectEntity, position, color);
       break;
 
     case ObjectType::rect:
-      RenderRectangleObject(graphics, registry, objectEntity, position, color);
+      _render_rectangle_object(graphics, registry, objectEntity, position, color);
       break;
   }
 }
 
-void RenderObjectLayer(GraphicsCtx& graphics,
-                       const entt::registry& registry,
-                       const entt::entity layerEntity,
-                       const float parentOpacity)
+void render_object_layer(GraphicsCtx& graphics,
+                         const entt::registry& registry,
+                         const entt::entity layerEntity,
+                         const float parentOpacity)
 {
   const auto& layer = registry.get<comp::Layer>(layerEntity);
   const auto& objectLayer = registry.get<comp::ObjectLayer>(layerEntity);
@@ -168,7 +168,7 @@ void RenderObjectLayer(GraphicsCtx& graphics,
   const auto objectColor = cen::color::from_norm(1, 0, 0, opacity);
 
   for (const auto objectEntity : objectLayer.objects) {
-    RenderObject(graphics, registry, objectEntity, objectColor);
+    render_object(graphics, registry, objectEntity, objectColor);
   }
 }
 
