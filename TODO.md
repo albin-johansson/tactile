@@ -15,7 +15,6 @@ This document provides a brief outline of planned features for the Tactile edito
 
 ## UX
 
-* Fix viewport zoom on desktops
 * Provide option for user to manually locate tileset images for maps with invalid tileset image paths
 * (Optionally) warn when closing maps with unsaved changes
 * Reset affected tiles in maps when a tileset is removed (and restore them if the tileset is restored)

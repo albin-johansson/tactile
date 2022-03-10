@@ -41,6 +41,7 @@
 #include "editor/gui/toolbar/toolbar.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
+#include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/maps/parser/parse_map.hpp"
 #include "io/maps/restore_document_from_ir.hpp"
@@ -192,9 +193,19 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
   if (registry && !ImGui::GetTopMostPopupModal()) {
     if (is_mouse_within_viewport()) {
       const auto& viewport = registry->ctx<Viewport>();
-      const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
-      const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
-      mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+      if (cen::is_active(primary_modifier)) {
+        if (event.precise_y() > 0) {
+          mDispatcher.enqueue<IncreaseZoomEvent>();
+        }
+        else {
+          mDispatcher.enqueue<DecreaseZoomEvent>();
+        }
+      }
+      else {
+        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
+        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
+        mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+      }
     }
     else if (mWidgets.is_tileset_dock_hovered()) {
       const auto width = mWidgets.tileset_view_width();
@@ -205,8 +216,8 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
         const auto& viewport = registry->get<Viewport>(entity);
 
-        const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
-        const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
+        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
+        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
         mDispatcher.enqueue<OffsetBoundViewportEvent>(entity, -dx, dy, *width, *height);
       }
     }
