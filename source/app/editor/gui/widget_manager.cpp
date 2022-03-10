@@ -38,7 +38,7 @@
 
 namespace tactile {
 
-struct widget_manager::widgets final
+struct WidgetManager::Widgets final
 {
   MenuBar mMenuBar;
   Toolbar mToolbar;
@@ -52,13 +52,13 @@ struct widget_manager::widgets final
   MapParseErrorDialog mMapParseErrorDialog;
 };
 
-widget_manager::widget_manager() : mWidgets{std::make_unique<widgets>()} {}
+WidgetManager::WidgetManager() : mWidgets{std::make_unique<Widgets>()} {}
 
-widget_manager::~widget_manager() noexcept = default;
+WidgetManager::~WidgetManager() noexcept = default;
 
-void widget_manager::update(const DocumentModel& model,
-                            const IconManager& icons,
-                            entt::dispatcher& dispatcher)
+void WidgetManager::update(const DocumentModel& model,
+                           const IconManager& icons,
+                           entt::dispatcher& dispatcher)
 {
   mWidgets->mMenuBar.update(model, dispatcher);
   UpdateDockSpace();
@@ -82,120 +82,120 @@ void widget_manager::update(const DocumentModel& model,
   mWidgets->mMapParseErrorDialog.update(model, dispatcher);
 }
 
-void widget_manager::show_settings()
+void WidgetManager::show_settings()
 {
   mWidgets->mMenuBar.show_settings_dialog();
 }
 
-void widget_manager::show_new_map_dialog()
+void WidgetManager::show_new_map_dialog()
 {
   mWidgets->mMenuBar.show_map_creation_dialog();
 }
 
-void widget_manager::show_open_map_dialog()
+void WidgetManager::show_open_map_dialog()
 {
   mWidgets->mMenuBar.show_open_map_dialog();
 }
 
-void widget_manager::show_add_tileset_dialog()
+void WidgetManager::show_add_tileset_dialog()
 {
   mWidgets->mMenuBar.show_tileset_creation_dialog();
 }
 
-void widget_manager::show_rename_layer_dialog(const layer_id id)
+void WidgetManager::show_rename_layer_dialog(const layer_id id)
 {
   mWidgets->mLayerDock.show_rename_layer_dialog(id);
 }
 
-void widget_manager::show_add_property_dialog()
+void WidgetManager::show_add_property_dialog()
 {
   mWidgets->mPropertiesDock.show_add_property_dialog();
 }
 
-void widget_manager::show_rename_property_dialog(const std::string& name)
+void WidgetManager::show_rename_property_dialog(const std::string& name)
 {
   mWidgets->mPropertiesDock.show_rename_property_dialog(name);
 }
 
-void widget_manager::show_change_property_type_dialog(std::string name,
-                                                      const AttributeType type)
+void WidgetManager::show_change_property_type_dialog(std::string name,
+                                                     const AttributeType type)
 {
   mWidgets->mPropertiesDock.show_change_property_type_dialog(std::move(name), type);
 }
 
-void widget_manager::show_resize_map_dialog(const usize currentRows,
-                                            const usize currentColumns)
+void WidgetManager::show_resize_map_dialog(const usize currentRows,
+                                           const usize currentColumns)
 {
   mWidgets->mResizeMapDialog.show(currentRows, currentColumns);
 }
 
-void widget_manager::show_map_import_error_dialog(const parsing::ParseError error)
+void WidgetManager::show_map_import_error_dialog(const parsing::ParseError error)
 {
   mWidgets->mMapParseErrorDialog.show(error);
 }
 
-void widget_manager::show_component_editor(const DocumentModel& model)
+void WidgetManager::show_component_editor(const DocumentModel& model)
 {
   mWidgets->mMenuBar.show_component_editor(model);
 }
 
-void widget_manager::set_toolbar_visible(const bool visible)
+void WidgetManager::set_toolbar_visible(const bool visible)
 {
   mWidgets->mToolbar.SetVisible(visible);
 }
 
-auto widget_manager::is_editor_focused() const -> bool
+auto WidgetManager::is_editor_focused() const -> bool
 {
   return is_toolbar_focused() || is_viewport_focused() || is_layer_dock_focused() ||
          is_tileset_dock_focused() || is_property_dock_focused() || is_log_dock_focused();
 }
 
-auto widget_manager::is_toolbar_focused() const -> bool
+auto WidgetManager::is_toolbar_focused() const -> bool
 {
   return mWidgets->mToolbar.IsFocused();
 }
 
-auto widget_manager::is_viewport_focused() const -> bool
+auto WidgetManager::is_viewport_focused() const -> bool
 {
   return tactile::is_viewport_focused();
 }
 
-auto widget_manager::is_layer_dock_focused() const -> bool
+auto WidgetManager::is_layer_dock_focused() const -> bool
 {
   return mWidgets->mLayerDock.has_focus();
 }
 
-auto widget_manager::is_tileset_dock_focused() const -> bool
+auto WidgetManager::is_tileset_dock_focused() const -> bool
 {
   return mWidgets->mTilesetDock.has_focus();
 }
 
-auto widget_manager::is_property_dock_focused() const -> bool
+auto WidgetManager::is_property_dock_focused() const -> bool
 {
   return mWidgets->mPropertiesDock.has_focus();
 }
 
-auto widget_manager::is_log_dock_focused() const -> bool
+auto WidgetManager::is_log_dock_focused() const -> bool
 {
   return mWidgets->mLogDock.has_focus();
 }
 
-auto widget_manager::is_tileset_dock_hovered() const -> bool
+auto WidgetManager::is_tileset_dock_hovered() const -> bool
 {
   return mWidgets->mTilesetDock.has_mouse_hover();
 }
 
-auto widget_manager::is_toolbar_visible() const -> bool
+auto WidgetManager::is_toolbar_visible() const -> bool
 {
   return mWidgets->mToolbar.IsVisible();
 }
 
-auto widget_manager::tileset_view_width() const -> Maybe<float>
+auto WidgetManager::tileset_view_width() const -> Maybe<float>
 {
   return mWidgets->mTilesetDock.get_tileset_view().width();
 }
 
-auto widget_manager::tileset_view_height() const -> Maybe<float>
+auto WidgetManager::tileset_view_height() const -> Maybe<float>
 {
   return mWidgets->mTilesetDock.get_tileset_view().height();
 }

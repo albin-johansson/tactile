@@ -77,7 +77,7 @@ class Application final
   DocumentModel mModel;
   TextureManager mTextures;
   IconManager mIcons;
-  widget_manager mWidgets;
+  WidgetManager mWidgets;
   WidgetShowState mWidgetShowState;
   bool mQuit{};
 

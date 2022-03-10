@@ -33,15 +33,15 @@ namespace tactile {
 class DocumentModel;
 class IconManager;
 
-class widget_manager final
+class WidgetManager final
 {
  public:
-  TACTILE_DELETE_COPY(widget_manager)
-  TACTILE_DEFAULT_MOVE(widget_manager)
+  TACTILE_DELETE_COPY(WidgetManager)
+  TACTILE_DEFAULT_MOVE(WidgetManager)
 
-  widget_manager();
+  WidgetManager();
 
-  ~widget_manager() noexcept;
+  ~WidgetManager() noexcept;
 
   void update(const DocumentModel& model,
               const IconManager& icons,
@@ -94,8 +94,8 @@ class widget_manager final
   [[nodiscard]] auto tileset_view_height() const -> Maybe<float>;
 
  private:
-  struct widgets;
-  std::unique_ptr<widgets> mWidgets;
+  struct Widgets;
+  std::unique_ptr<Widgets> mWidgets;
 };
 
 }  // namespace tactile

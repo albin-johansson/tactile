@@ -82,7 +82,7 @@ void LoadDefaultShortcuts()
 }
 
 void UpdateShortcuts(const DocumentModel& model,
-                     const widget_manager& widgets,
+                     const WidgetManager& widgets,
                      const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher)
 {
