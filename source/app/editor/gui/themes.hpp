@@ -36,7 +36,7 @@ namespace tactile {
  *
  * \warning Do not change the enumerator values!
  *
- * \see proto::theme
+ * \see proto::Theme
  */
 enum class EditorTheme
 {

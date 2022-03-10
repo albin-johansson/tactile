@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package tactile.proto;
 
-message history {
+message History {
   optional string last_opened_file = 1;
   repeated string files = 2;
 }

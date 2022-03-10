@@ -36,7 +36,7 @@ namespace tactile {
  *
  * \warning Do not change the enumerator values!
  *
- * \see proto::overlay_pos
+ * \see proto::OverlayPos
  */
 enum class OverlayPos
 {

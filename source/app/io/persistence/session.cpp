@@ -46,7 +46,7 @@ constexpr int _format_version [[maybe_unused]] = 1;
 
 void restore_last_session(DocumentModel& model, TextureManager& textures)
 {
-  proto::session session;
+  proto::Session session;
 
   std::ifstream stream{_get_file_path(), std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
@@ -67,7 +67,7 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
 
 void save_session(const DocumentModel& model)
 {
-  proto::session session;
+  proto::Session session;
   for (const auto& [id, document] : model) {
     if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);
