@@ -64,7 +64,7 @@ constexpr uint64 _def_flags = _bit_show_grid | _bit_indent_output | _bit_show_la
 #define PRINT_FLAG(Name, Mask) \
   log_info(Name "... {}", (mData->flags & (Mask)) ? "yes" : "no")
 
-struct PreferenceState::preferences_data
+struct PreferenceState::Data
 {
   std::string preferred_format{_def_preferred_format};
 
@@ -79,10 +79,10 @@ struct PreferenceState::preferences_data
   uint64 flags{_def_flags};
 };
 
-PreferenceState::PreferenceState() : mData{std::make_unique<preferences_data>()} {}
+PreferenceState::PreferenceState() : mData{std::make_unique<Data>()} {}
 
 PreferenceState::PreferenceState(const PreferenceState& other)
-    : mData{std::make_unique<preferences_data>()}
+    : mData{std::make_unique<Data>()}
 {
   *mData = *other.mData;
 }
@@ -92,7 +92,7 @@ PreferenceState::PreferenceState(PreferenceState&&) noexcept = default;
 auto PreferenceState::operator=(const PreferenceState& other) -> PreferenceState&
 {
   if (this != &other) {
-    mData = std::make_unique<preferences_data>();
+    mData = std::make_unique<Data>();
     *mData = *other.mData;
   }
   return *this;

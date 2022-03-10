@@ -133,8 +133,8 @@ class PreferenceState final
   [[nodiscard]] auto preferred_tile_height() const -> int;
 
  private:
-  struct preferences_data;
-  std::unique_ptr<preferences_data> mData;
+  struct Data;
+  std::unique_ptr<Data> mData;
 
   void set_flag(uint64 flag, bool value) noexcept;
 
