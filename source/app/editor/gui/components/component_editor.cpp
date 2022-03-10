@@ -43,10 +43,10 @@ namespace tactile {
 
 struct ComponentEditor::component_editor_data final
 {
-  create_component_dialog create_component;
-  create_component_attribute_dialog create_component_attr;
-  rename_component_dialog rename_component;
-  rename_component_attribute_dialog rename_component_attr;
+  CreateComponentDialog create_component;
+  CreateComponentAttributeDialog create_component_attr;
+  RenameComponentDialog rename_component;
+  RenameComponentAttributeDialog rename_component_attr;
   Maybe<component_id> active_component;
 };
 

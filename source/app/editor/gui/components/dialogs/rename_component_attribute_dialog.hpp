@@ -32,10 +32,10 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class rename_component_attribute_dialog final : public string_input_dialog
+class RenameComponentAttributeDialog final : public string_input_dialog
 {
  public:
-  rename_component_attribute_dialog();
+  RenameComponentAttributeDialog();
 
   void show(std::string previousName, component_id id);
 

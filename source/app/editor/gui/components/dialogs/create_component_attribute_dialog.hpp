@@ -24,10 +24,10 @@
 
 namespace tactile {
 
-class create_component_attribute_dialog final : public string_input_dialog
+class CreateComponentAttributeDialog final : public string_input_dialog
 {
  public:
-  create_component_attribute_dialog();
+  CreateComponentAttributeDialog();
 
   void show(component_id id);
 

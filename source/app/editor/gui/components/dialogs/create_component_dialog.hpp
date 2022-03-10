@@ -28,10 +28,10 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class create_component_dialog final : public component_name_dialog
+class CreateComponentDialog final : public ComponentNameDialog
 {
  public:
-  create_component_dialog();
+  CreateComponentDialog();
 
   void show();
 

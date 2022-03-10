@@ -27,28 +27,28 @@
 
 namespace tactile {
 
-create_component_attribute_dialog::create_component_attribute_dialog()
+CreateComponentAttributeDialog::CreateComponentAttributeDialog()
     : string_input_dialog{"Create Attribute"}
 {
   set_accept_button_label("Create");
   set_input_hint("Attribute name");
 }
 
-void create_component_attribute_dialog::show(const component_id id)
+void CreateComponentAttributeDialog::show(const component_id id)
 {
   mComponentId = id;
   string_input_dialog::show("");
 }
 
-auto create_component_attribute_dialog::validate(const DocumentModel& model,
-                                                 std::string_view input) const -> bool
+auto CreateComponentAttributeDialog::validate(const DocumentModel& model,
+                                              const std::string_view input) const -> bool
 {
   const auto& registry = model.get_active_registry();
   return !input.empty() &&
          !sys::is_component_attribute_name_taken(registry, mComponentId, input);
 }
 
-void create_component_attribute_dialog::on_accept(entt::dispatcher& dispatcher)
+void CreateComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<CreateComponentAttrEvent>(mComponentId,
                                                std::string{current_input()});

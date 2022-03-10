@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-class component_name_dialog : public string_input_dialog
+class ComponentNameDialog : public string_input_dialog
 {
  protected:
   using string_input_dialog::string_input_dialog;
