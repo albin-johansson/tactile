@@ -40,10 +40,10 @@ void EditMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
     const auto canUndo = model.can_undo();
     const auto canRedo = model.can_redo();
 
-    const formatted_string undoText{TAC_ICON_UNDO " Undo {}",
-                                    canUndo ? model.get_undo_text() : ""};
-    const formatted_string redoText{TAC_ICON_REDO " Redo {}",
-                                    canRedo ? model.get_redo_text() : ""};
+    const FormattedString undoText{TAC_ICON_UNDO " Undo {}",
+                                   canUndo ? model.get_undo_text() : ""};
+    const FormattedString redoText{TAC_ICON_REDO " Redo {}",
+                                   canRedo ? model.get_redo_text() : ""};
 
     if (ImGui::MenuItem(undoText.data(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
       dispatcher.enqueue<UndoEvent>();

@@ -146,7 +146,7 @@ void show_layer_item(const entt::registry& registry,
                                    : _base_node_flags;
 
   const auto& context = registry.get<comp::AttributeContext>(layerEntity);
-  formatted_string name{"{} {}", get_icon(layer.type), context.name};
+  FormattedString name{"{} {}", get_icon(layer.type), context.name};
 
   if (layer.type != LayerType::group_layer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
