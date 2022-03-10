@@ -31,17 +31,17 @@ namespace tactile {
 #define TACTILE_PRIMARY_MOD "Cmd"
 #define TACTILE_SECONDARY_MOD "Option"
 
-inline constexpr cen::key_mod gPrimaryModifier = cen::key_mod::lgui;
+inline constexpr cen::key_mod primary_modifier = cen::key_mod::lgui;
 
 #else
 
 #define TACTILE_PRIMARY_MOD "Ctrl"
 #define TACTILE_SECONDARY_MOD "Alt"
 
-inline constexpr cen::key_mod gPrimaryModifier = cen::key_mod::lctrl;
+inline constexpr cen::key_mod primary_modifier = cen::key_mod::lctrl;
 
 #endif  // TACTILE_PLATFORM_OSX
 
-inline constexpr cen::key_mod gSecondaryModifier = cen::key_mod::lalt;
+inline constexpr cen::key_mod secondary_modifier = cen::key_mod::lalt;
 
 }  // namespace tactile
