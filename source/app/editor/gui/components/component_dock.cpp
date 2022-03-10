@@ -150,12 +150,12 @@ void _show_add_component_button_popup_content(const entt::registry& registry,
 
 }  // namespace
 
-component_dock::component_dock() : ADockWidget{"Components", _window_flags}
+ComponentDock::ComponentDock() : ADockWidget{"Components", _window_flags}
 {
   set_close_button_enabled(true);
 }
 
-void component_dock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void ComponentDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
 
@@ -183,13 +183,13 @@ void component_dock::on_update(const DocumentModel& model, entt::dispatcher& dis
   }
 }
 
-void component_dock::set_visible(const bool visible)
+void ComponentDock::set_visible(const bool visible)
 {
   auto& prefs = get_preferences();
   prefs.set_component_dock_visible(visible);
 }
 
-auto component_dock::is_visible() const -> bool
+auto ComponentDock::is_visible() const -> bool
 {
   return get_preferences().is_component_dock_visible();
 }

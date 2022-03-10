@@ -45,7 +45,7 @@ struct widget_manager::widgets final
   TilesetDock mTilesetDock;
   layer_dock mLayerDock;
   PropertiesDock mPropertiesDock;
-  component_dock mComponentDock;
+  ComponentDock mComponentDock;
   LogDock mLogDock;
 
   resize_map_dialog mResizeMapDialog;

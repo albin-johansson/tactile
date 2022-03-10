@@ -28,10 +28,10 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class component_dock final : public ADockWidget
+class ComponentDock final : public ADockWidget
 {
  public:
-  component_dock();
+  ComponentDock();
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
