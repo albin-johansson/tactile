@@ -19,18 +19,26 @@
 
 #pragma once
 
+#include <memory>  // unique_ptr
+
 #include <entt/entt.hpp>
 
 #include "editor/gui/common/dock_widget.hpp"
 #include "tactile.hpp"
-#include "tileset_tabs.hpp"
 
 namespace tactile {
+
+class TilesetView;
 
 class TilesetDock final : public ADockWidget
 {
  public:
+  TACTILE_DELETE_COPY(TilesetDock)
+  TACTILE_DEFAULT_MOVE(TilesetDock)
+
   TilesetDock();
+
+  ~TilesetDock() noexcept override;
 
   [[nodiscard]] auto get_tileset_view() const -> const TilesetView&;
 
@@ -42,7 +50,8 @@ class TilesetDock final : public ADockWidget
   [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
-  TilesetTabWidget mTabWidget;
+  struct Data;
+  std::unique_ptr<Data> mData;
 };
 
 }  // namespace tactile

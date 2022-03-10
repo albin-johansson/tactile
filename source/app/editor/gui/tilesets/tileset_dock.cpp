@@ -39,18 +39,27 @@ constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_No
 
 }  // namespace
 
-TilesetDock::TilesetDock() : ADockWidget{"Tilesets", _window_flags}
+struct TilesetDock::Data final
+{
+  TilesetTabWidget tab_widget;
+};
+
+TilesetDock::TilesetDock()
+    : ADockWidget{"Tilesets", _window_flags}
+    , mData{std::make_unique<Data>()}
 {
   set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
   set_close_button_enabled(true);
 }
+
+TilesetDock::~TilesetDock() noexcept = default;
 
 void TilesetDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
 
   if (!registry.view<comp::Tileset>().empty()) {
-    mTabWidget.update(registry, dispatcher);
+    mData->tab_widget.update(registry, dispatcher);
   }
   else {
     prepare_vertical_alignment_center(2);
@@ -74,7 +83,7 @@ auto TilesetDock::is_visible() const -> bool
 
 auto TilesetDock::get_tileset_view() const -> const TilesetView&
 {
-  return mTabWidget.get_tileset_view();
+  return mData->tab_widget.get_tileset_view();
 }
 
 }  // namespace tactile

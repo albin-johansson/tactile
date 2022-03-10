@@ -32,6 +32,7 @@
 #include "menus/menu_bar.hpp"
 #include "properties/property_dock.hpp"
 #include "tilesets/tileset_dock.hpp"
+#include "tilesets/tileset_view.hpp"
 #include "toolbar/toolbar.hpp"
 #include "viewport/map_view.hpp"
 #include "viewport/viewport_widget.hpp"
