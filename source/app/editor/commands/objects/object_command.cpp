@@ -27,8 +27,7 @@
 
 namespace tactile {
 
-AObjectCommand::AObjectCommand(std::string name, RegistryRef registry,
-                               const object_id id)
+AObjectCommand::AObjectCommand(std::string name, RegistryRef registry, const object_id id)
     : ACommand{std::move(name)}
     , mRegistry{registry}
     , mObjectId{id}

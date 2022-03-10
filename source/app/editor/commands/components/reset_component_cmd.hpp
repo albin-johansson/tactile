@@ -29,9 +29,7 @@ namespace tactile {
 class ResetComponentCmd final : public ACommand
 {
  public:
-  ResetComponentCmd(RegistryRef registry,
-                    context_id contextId,
-                    component_id componentId);
+  ResetComponentCmd(RegistryRef registry, context_id contextId, component_id componentId);
 
   void undo() override;
 

@@ -77,8 +77,7 @@ constexpr int32 _tileset_file_version = 1;
     tile.frames.reserve(sequence.size());
 
     for (const auto& frame : sequence) {
-      if (const auto err = _parse_animation_frame(frame, tile);
-          err != ParseError::none) {
+      if (const auto err = _parse_animation_frame(frame, tile); err != ParseError::none) {
         return err;
       }
     }
@@ -115,8 +114,7 @@ constexpr int32 _tileset_file_version = 1;
   tileset.fancy_tiles.reserve(sequence.size());
 
   for (const auto& node : sequence) {
-    if (const auto err = _parse_fancy_tile(node, map, tileset);
-        err != ParseError::none) {
+    if (const auto err = _parse_fancy_tile(node, map, tileset); err != ParseError::none) {
       return err;
     }
   }

@@ -175,8 +175,7 @@ namespace {
 
 [[nodiscard]] auto _parse_external_tileset(pugi::xml_node node,
                                            ir::TilesetData& tilesetData,
-                                           const std::filesystem::path& dir)
-    -> ParseError
+                                           const std::filesystem::path& dir) -> ParseError
 {
   TACTILE_ASSERT(has_attribute(node, "source"));
 

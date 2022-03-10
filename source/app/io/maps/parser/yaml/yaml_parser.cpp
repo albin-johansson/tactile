@@ -80,8 +80,7 @@ namespace {
 
   const auto dir = path.parent_path();
 
-  if (const auto err = parse_component_definitions(node, data);
-      err != ParseError::none) {
+  if (const auto err = parse_component_definitions(node, data); err != ParseError::none) {
     return err;
   }
 

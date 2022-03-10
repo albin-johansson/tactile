@@ -201,8 +201,7 @@ namespace {
 
 [[nodiscard]] auto _parse_external_tileset(const nlohmann::json& json,
                                            ir::TilesetData& tilesetData,
-                                           const std::filesystem::path& dir)
-    -> ParseError
+                                           const std::filesystem::path& dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
 

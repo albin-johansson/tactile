@@ -114,8 +114,7 @@ namespace {
     return err;
   }
 
-  if (const auto err = parse_properties(mapNode, data.context);
-      err != ParseError::none) {
+  if (const auto err = parse_properties(mapNode, data.context); err != ParseError::none) {
     return err;
   }
 

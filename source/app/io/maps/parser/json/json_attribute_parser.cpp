@@ -103,8 +103,7 @@ auto parse_properties(const nlohmann::json& json, ir::AttributeContextData& cont
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [_, value] : it->items()) {
-      if (const auto err = _parse_property(value, contextData);
-          err != ParseError::none) {
+      if (const auto err = _parse_property(value, contextData); err != ParseError::none) {
         return err;
       }
     }

@@ -280,8 +280,7 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData
     object->height = 0;
   }
 
-  if (const auto err = parse_properties(node, object->context);
-      err != ParseError::none) {
+  if (const auto err = parse_properties(node, object->context); err != ParseError::none) {
     return err;
   }
 
