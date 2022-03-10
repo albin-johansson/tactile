@@ -37,7 +37,7 @@ struct MapInfo;
  *
  * \see get_render_info()
  */
-struct render_info final
+struct RenderInfo final
 {
   ImVec2 canvas_tl{};  ///< Top-left point of the canvas.
   ImVec2 canvas_br{};  ///< Bottom-right point of the canvas.
@@ -54,10 +54,10 @@ struct render_info final
 };
 
 [[nodiscard]] auto get_render_info(const Viewport& viewport, const MapInfo& map)
-    -> render_info;
+    -> RenderInfo;
 
 [[nodiscard]] auto get_render_info(const Viewport& viewport, const comp::Tileset& tileset)
-    -> render_info;
+    -> RenderInfo;
 
 /// \} End of group rendering
 

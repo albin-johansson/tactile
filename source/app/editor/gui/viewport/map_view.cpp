@@ -97,7 +97,7 @@ void _center_viewport(entt::dispatcher& dispatcher,
 void _draw_cursor_gizmos(graphics_ctx& graphics,
                          const entt::registry& registry,
                          const ViewportCursorInfo& cursor,
-                         const render_info& info)
+                         const RenderInfo& info)
 {
   if (!ImGui::IsWindowFocused()) {
     return;

@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-auto GetViewportCursorInfo(const render_info& info) -> ViewportCursorInfo
+auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
 {
   ViewportCursorInfo cursor;
 

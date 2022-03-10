@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-struct render_info;
+struct RenderInfo;
 
 /**
  * \brief Provides a common simplified rendering API.
@@ -35,7 +35,7 @@ struct render_info;
 class graphics_ctx final
 {
  public:
-  explicit graphics_ctx(const render_info& info);
+  explicit graphics_ctx(const RenderInfo& info);
 
   void push_clip();
 

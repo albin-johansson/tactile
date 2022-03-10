@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-struct render_info;
+struct RenderInfo;
 
 struct ViewportCursorInfo final
 {
@@ -36,6 +36,6 @@ struct ViewportCursorInfo final
   bool is_within_map{};
 };
 
-[[nodiscard]] auto GetViewportCursorInfo(const render_info& info) -> ViewportCursorInfo;
+[[nodiscard]] auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo;
 
 }  // namespace tactile

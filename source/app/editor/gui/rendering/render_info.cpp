@@ -57,9 +57,9 @@ namespace {
 [[nodiscard]] auto _get_render_info(const Viewport& viewport,
                                     const ImVec2& logicalTileSize,
                                     const int32 rows,
-                                    const int32 columns) -> render_info
+                                    const int32 columns) -> RenderInfo
 {
-  render_info info;
+  RenderInfo info;
 
   info.canvas_tl = ImGui::GetCursorScreenPos();
   info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
@@ -85,7 +85,7 @@ namespace {
 
 }  // namespace
 
-auto get_render_info(const Viewport& viewport, const MapInfo& map) -> render_info
+auto get_render_info(const Viewport& viewport, const MapInfo& map) -> RenderInfo
 {
   const ImVec2 tileSize{static_cast<float>(map.tile_width),
                         static_cast<float>(map.tile_height)};
@@ -96,7 +96,7 @@ auto get_render_info(const Viewport& viewport, const MapInfo& map) -> render_inf
 }
 
 auto get_render_info(const Viewport& viewport, const comp::Tileset& tileset)
-    -> render_info
+    -> RenderInfo
 {
   const ImVec2 tileSize{static_cast<float>(tileset.tile_width),
                         static_cast<float>(tileset.tile_height)};

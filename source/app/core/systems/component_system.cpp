@@ -127,13 +127,13 @@ void make_component_def(entt::registry& registry, const component_id id, std::st
 }
 
 auto remove_component_def(entt::registry& registry, const component_id id)
-    -> remove_component_def_result
+    -> RemoveComponentDefResult
 {
   log_debug("Deleting component definition '{}'", id);
 
   const auto [defEntity, def] = get_component_def(registry, id);
 
-  remove_component_def_result result;
+  RemoveComponentDefResult result;
   result.id = id;
   result.name = def.name;
   result.attributes = def.attributes;
@@ -171,7 +171,7 @@ auto remove_component_def(entt::registry& registry, const component_id id)
   return result;
 }
 
-void restore_component_def(entt::registry& registry, remove_component_def_result snapshot)
+void restore_component_def(entt::registry& registry, RemoveComponentDefResult snapshot)
 {
   log_debug("Restoring component definition '{}'", snapshot.id);
 
@@ -467,7 +467,7 @@ auto add_component(entt::registry& registry,
 
 auto remove_component(entt::registry& registry,
                       const context_id contextId,
-                      const component_id componentId) -> remove_component_result
+                      const component_id componentId) -> RemoveComponentResult
 {
   TACTILE_ASSERT(find_component_def(registry, componentId) != entt::null);
   TACTILE_ASSERT(has_component(registry, contextId, componentId));
@@ -477,7 +477,7 @@ auto remove_component(entt::registry& registry,
   auto& context = get_context(registry, contextId);
   entt::entity match = entt::null;
 
-  remove_component_result snapshot;
+  RemoveComponentResult snapshot;
   snapshot.context = contextId;
   snapshot.component = componentId;
 
@@ -499,7 +499,7 @@ auto remove_component(entt::registry& registry,
   return snapshot;
 }
 
-void restore_component(entt::registry& registry, remove_component_result snapshot)
+void restore_component(entt::registry& registry, RemoveComponentResult snapshot)
 {
   TACTILE_ASSERT(find_component_def(registry, snapshot.component) != entt::null);
   TACTILE_ASSERT(!has_component(registry, snapshot.context, snapshot.component));
@@ -532,7 +532,7 @@ void update_component(entt::registry& registry,
 
 auto reset_component(entt::registry& registry,
                      const context_id contextId,
-                     const component_id componentId) -> reset_component_result
+                     const component_id componentId) -> ResetComponentResult
 {
   TACTILE_ASSERT(has_component(registry, contextId, componentId));
 
@@ -541,7 +541,7 @@ auto reset_component(entt::registry& registry,
   const auto& [defEntity, def] = get_component_def(registry, componentId);
   auto& component = GetComponent(registry, contextId, componentId);
 
-  reset_component_result result;
+  ResetComponentResult result;
   for (auto& [name, value] : component.values) {
     result.values[name] = value;
     value = def.attributes.at(name);

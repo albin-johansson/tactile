@@ -40,7 +40,7 @@ namespace tactile::sys {
 /// \addtogroup component-system
 /// \{
 
-struct remove_component_def_result final
+struct RemoveComponentDefResult final
 {
   component_id id{};                   ///< Previous component ID.
   std::string name;                    ///< Previous component name.
@@ -48,14 +48,14 @@ struct remove_component_def_result final
   std::map<context_id, component_attribute_map> values;  ///< Removed context attributes.
 };
 
-struct remove_component_result final
+struct RemoveComponentResult final
 {
   context_id context{};            ///< Context from which component was removed.
   component_id component{};        ///< Previous component ID.
   component_attribute_map values;  ///< Removed context attributes.
 };
 
-struct reset_component_result final
+struct ResetComponentResult final
 {
   component_attribute_map values;  ///< Previous component values.
 };
@@ -104,7 +104,7 @@ void make_component_def(entt::registry& registry, component_id id, std::string n
  * \see restore_component_def()
  */
 auto remove_component_def(entt::registry& registry, component_id id)
-    -> remove_component_def_result;
+    -> RemoveComponentDefResult;
 
 /**
  * \brief Restores a previously removed component definition.
@@ -116,8 +116,7 @@ auto remove_component_def(entt::registry& registry, component_id id)
  * \param registry the document registry.
  * \param snapshot the cached result of the removal of the component definition.
  */
-void restore_component_def(entt::registry& registry,
-                           remove_component_def_result snapshot);
+void restore_component_def(entt::registry& registry, RemoveComponentDefResult snapshot);
 
 /**
  * \brief Changes the name of a component definition.
@@ -339,7 +338,7 @@ auto add_component(entt::registry& registry,
  */
 auto remove_component(entt::registry& registry,
                       context_id contextId,
-                      component_id componentId) -> remove_component_result;
+                      component_id componentId) -> RemoveComponentResult;
 
 /**
  * \brief Restores a previously removed component to a context.
@@ -347,7 +346,7 @@ auto remove_component(entt::registry& registry,
  * \param registry the current document registry.
  * \param snapshot the snapshot of the previously removed component.
  */
-void restore_component(entt::registry& registry, remove_component_result snapshot);
+void restore_component(entt::registry& registry, RemoveComponentResult snapshot);
 
 void update_component(entt::registry& registry,
                       context_id contextId,
@@ -369,7 +368,7 @@ void update_component(entt::registry& registry,
  */
 auto reset_component(entt::registry& registry,
                      context_id contextId,
-                     component_id componentId) -> reset_component_result;
+                     component_id componentId) -> ResetComponentResult;
 
 /**
  * \brief Indicates whether a context holds a specific component.
