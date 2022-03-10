@@ -102,7 +102,7 @@ void on_stamp_tool_exited(entt::dispatcher& dispatcher)
   _maybe_emit_event(dispatcher);
 }
 
-void on_stamp_tool_pressed(entt::registry& registry, const mouse_info& mouse)
+void on_stamp_tool_pressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       _is_usable(registry)) {
@@ -113,7 +113,7 @@ void on_stamp_tool_pressed(entt::registry& registry, const mouse_info& mouse)
   }
 }
 
-void on_stamp_tool_dragged(entt::registry& registry, const mouse_info& mouse)
+void on_stamp_tool_dragged(entt::registry& registry, const MouseInfo& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       _is_usable(registry)) {
@@ -123,7 +123,7 @@ void on_stamp_tool_dragged(entt::registry& registry, const mouse_info& mouse)
 
 void on_stamp_tool_released(entt::registry& registry,
                             entt::dispatcher& dispatcher,
-                            const mouse_info& mouse)
+                            const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && _is_usable(registry)) {
     _maybe_emit_event(dispatcher);

@@ -27,7 +27,7 @@ namespace tactile::sys {
 
 void on_point_tool_pressed(entt::registry& registry,
                            entt::dispatcher& dispatcher,
-                           const mouse_info& mouse)
+                           const MouseInfo& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       is_object_layer_active(registry)) {

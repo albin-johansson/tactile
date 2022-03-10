@@ -51,7 +51,7 @@ void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
 }
 
 [[nodiscard]] auto _find_object_at_mouse(entt::registry& registry,
-                                         const mouse_info& mouse) -> entt::entity
+                                         const MouseInfo& mouse) -> entt::entity
 {
   const auto& [_, layer] =
       sys::get_object_layer(registry, get_active_layer_id(registry).value());
@@ -68,7 +68,7 @@ void on_object_selection_tool_exited(entt::registry& registry,
 
 void on_object_selection_tool_pressed(entt::registry& registry,
                                       entt::dispatcher& dispatcher,
-                                      const mouse_info& mouse)
+                                      const MouseInfo& mouse)
 {
   if (is_object_layer_active(registry)) {
     auto& active = registry.ctx<comp::ActiveObject>();
@@ -106,7 +106,7 @@ void on_object_selection_tool_pressed(entt::registry& registry,
 
 void on_object_selection_tool_dragged(entt::registry& registry,
                                       entt::dispatcher& dispatcher,
-                                      const mouse_info& mouse)
+                                      const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_object_layer_active(registry)) {
     const auto& active = registry.ctx<comp::ActiveObject>();
@@ -135,7 +135,7 @@ void on_object_selection_tool_dragged(entt::registry& registry,
 
 void on_object_selection_tool_released(entt::registry& registry,
                                        entt::dispatcher& dispatcher,
-                                       const mouse_info& mouse)
+                                       const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_object_layer_active(registry)) {
     _maybe_emit_event(registry, dispatcher);

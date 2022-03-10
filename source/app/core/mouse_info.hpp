@@ -30,7 +30,7 @@ namespace tactile {
  *
  * \ingroup core
  */
-struct mouse_info final
+struct MouseInfo final
 {
   float x{};                     ///< The mouse x-coordinate.
   float y{};                     ///< The mouse y-coordinate.

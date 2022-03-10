@@ -34,15 +34,15 @@ void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher);
 
 void on_tool_pressed(entt::registry& registry,
                      entt::dispatcher& dispatcher,
-                     const mouse_info& mouse);
+                     const MouseInfo& mouse);
 
 void on_tool_dragged(entt::registry& registry,
                      entt::dispatcher& dispatcher,
-                     const mouse_info& mouse);
+                     const MouseInfo& mouse);
 
 void on_tool_released(entt::registry& registry,
                       entt::dispatcher& dispatcher,
-                      const mouse_info& mouse);
+                      const MouseInfo& mouse);
 
 [[nodiscard]] auto is_tool_enabled(const entt::registry& registry, ToolType tool) -> bool;
 

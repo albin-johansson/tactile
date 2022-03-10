@@ -30,14 +30,14 @@ void on_object_selection_tool_exited(entt::registry& registry,
 
 void on_object_selection_tool_pressed(entt::registry& registry,
                                       entt::dispatcher& dispatcher,
-                                      const mouse_info& mouse);
+                                      const MouseInfo& mouse);
 
 void on_object_selection_tool_dragged(entt::registry& registry,
                                       entt::dispatcher& dispatcher,
-                                      const mouse_info& mouse);
+                                      const MouseInfo& mouse);
 
 void on_object_selection_tool_released(entt::registry& registry,
                                        entt::dispatcher& dispatcher,
-                                       const mouse_info& mouse);
+                                       const MouseInfo& mouse);
 
 }  // namespace tactile::sys

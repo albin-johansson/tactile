@@ -27,6 +27,6 @@ namespace tactile::sys {
 
 void on_point_tool_pressed(entt::registry& registry,
                            entt::dispatcher& dispatcher,
-                           const mouse_info& mouse);
+                           const MouseInfo& mouse);
 
 }  // namespace tactile::sys

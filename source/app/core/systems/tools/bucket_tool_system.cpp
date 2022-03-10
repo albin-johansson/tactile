@@ -29,7 +29,7 @@ namespace tactile::sys {
 
 void on_bucket_tool_pressed(entt::registry& registry,
                             entt::dispatcher& dispatcher,
-                            const mouse_info& mouse)
+                            const MouseInfo& mouse)
 {
   if (is_tile_layer_active(registry) && is_single_tile_selected_in_tileset(registry) &&
       mouse.button == cen::mouse_button::left) {

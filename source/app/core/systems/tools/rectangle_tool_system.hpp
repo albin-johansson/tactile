@@ -30,12 +30,12 @@ void on_rectangle_tool_disabled(entt::registry& registry, entt::dispatcher& disp
 
 void on_rectangle_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher);
 
-void on_rectangle_tool_pressed(entt::registry& registry, const mouse_info& mouse);
+void on_rectangle_tool_pressed(entt::registry& registry, const MouseInfo& mouse);
 
-void on_rectangle_tool_dragged(entt::registry& registry, const mouse_info& mouse);
+void on_rectangle_tool_dragged(entt::registry& registry, const MouseInfo& mouse);
 
 void on_rectangle_tool_released(entt::registry& registry,
                                 entt::dispatcher& dispatcher,
-                                const mouse_info& mouse);
+                                const MouseInfo& mouse);
 
 }  // namespace tactile::sys

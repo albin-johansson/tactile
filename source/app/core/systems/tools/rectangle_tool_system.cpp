@@ -65,7 +65,7 @@ void on_rectangle_tool_exited(entt::registry& registry, entt::dispatcher& dispat
   _maybe_emit_event(registry, dispatcher);
 }
 
-void on_rectangle_tool_pressed(entt::registry& registry, const mouse_info& mouse)
+void on_rectangle_tool_pressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (_is_usable(registry) && mouse.is_within_contents &&
       mouse.button == cen::mouse_button::left) {
@@ -77,7 +77,7 @@ void on_rectangle_tool_pressed(entt::registry& registry, const mouse_info& mouse
   }
 }
 
-void on_rectangle_tool_dragged(entt::registry& registry, const mouse_info& mouse)
+void on_rectangle_tool_dragged(entt::registry& registry, const MouseInfo& mouse)
 {
   if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
     if (auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
@@ -89,7 +89,7 @@ void on_rectangle_tool_dragged(entt::registry& registry, const mouse_info& mouse
 
 void on_rectangle_tool_released(entt::registry& registry,
                                 entt::dispatcher& dispatcher,
-                                const mouse_info& mouse)
+                                const MouseInfo& mouse)
 {
   if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
     _maybe_emit_event(registry, dispatcher);

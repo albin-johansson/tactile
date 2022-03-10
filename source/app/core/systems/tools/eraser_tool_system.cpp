@@ -66,7 +66,7 @@ void on_eraser_tool_exited(entt::dispatcher& dispatcher)
   _maybe_emit_event(dispatcher);
 }
 
-void on_eraser_tool_pressed(entt::registry& registry, const mouse_info& mouse)
+void on_eraser_tool_pressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       is_tile_layer_active(registry)) {
@@ -75,7 +75,7 @@ void on_eraser_tool_pressed(entt::registry& registry, const mouse_info& mouse)
   }
 }
 
-void on_eraser_tool_dragged(entt::registry& registry, const mouse_info& mouse)
+void on_eraser_tool_dragged(entt::registry& registry, const MouseInfo& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       is_tile_layer_active(registry)) {
@@ -85,7 +85,7 @@ void on_eraser_tool_dragged(entt::registry& registry, const mouse_info& mouse)
 
 void on_eraser_tool_released(entt::registry& registry,
                              entt::dispatcher& dispatcher,
-                             const mouse_info& mouse)
+                             const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_tile_layer_active(registry)) {
     _maybe_emit_event(dispatcher);

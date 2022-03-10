@@ -115,7 +115,7 @@ void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
 
 void on_tool_pressed(entt::registry& registry,
                      entt::dispatcher& dispatcher,
-                     const mouse_info& mouse)
+                     const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<comp::ActiveTool>();
   switch (active.tool) {
@@ -154,7 +154,7 @@ void on_tool_pressed(entt::registry& registry,
 
 void on_tool_dragged(entt::registry& registry,
                      [[maybe_unused]] entt::dispatcher& dispatcher,
-                     const mouse_info& mouse)
+                     const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<comp::ActiveTool>();
   switch (active.tool) {
@@ -188,7 +188,7 @@ void on_tool_dragged(entt::registry& registry,
 
 void on_tool_released(entt::registry& registry,
                       entt::dispatcher& dispatcher,
-                      const mouse_info& mouse)
+                      const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<comp::ActiveTool>();
   switch (active.tool) {

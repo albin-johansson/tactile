@@ -35,7 +35,7 @@ namespace tactile {
  */
 struct ToolPressedEvent final
 {
-  mouse_info info;
+  MouseInfo info;
 };
 
 /**
@@ -43,7 +43,7 @@ struct ToolPressedEvent final
  */
 struct ToolDraggedEvent final
 {
-  mouse_info info;
+  MouseInfo info;
 };
 
 /**
@@ -51,7 +51,7 @@ struct ToolDraggedEvent final
  */
 struct ToolReleasedEvent final
 {
-  mouse_info info;
+  MouseInfo info;
 };
 
 struct ToolEnteredEvent final

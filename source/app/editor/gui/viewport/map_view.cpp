@@ -59,7 +59,7 @@ void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, 
   const auto mid = query(ImGuiMouseButton_Middle);
   const auto right = query(ImGuiMouseButton_Right);
   if (left || mid || right) {
-    mouse_info info;
+    MouseInfo info;
     info.x = cursor.raw_position.x;
     info.y = cursor.raw_position.y;
     info.position_in_viewport = cursor.map_position;
