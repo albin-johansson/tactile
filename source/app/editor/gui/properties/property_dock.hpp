@@ -19,15 +19,13 @@
 
 #pragma once
 
+#include <memory>  // unique_ptr
 #include <string>  // string
 
 #include <entt/entt.hpp>
 
-#include "dialogs/add_property_dialog.hpp"
-#include "dialogs/change_property_type_dialog.hpp"
-#include "dialogs/rename_property_dialog.hpp"
+#include "core/attribute.hpp"
 #include "editor/gui/common/dock_widget.hpp"
-#include "property_table.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -37,7 +35,12 @@ class DocumentModel;
 class PropertyDock final : public ADockWidget
 {
  public:
+  TACTILE_DELETE_COPY(PropertyDock)
+  TACTILE_DEFAULT_MOVE(PropertyDock)
+
   PropertyDock();
+
+  ~PropertyDock() noexcept override;
 
   void show_add_property_dialog();
 
@@ -53,10 +56,8 @@ class PropertyDock final : public ADockWidget
   [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
-  PropertyTable mPropertyTable;
-  AddPropertyDialog mAddDialog;
-  RenamePropertyDialog mRenameDialog;
-  ChangePropertyTypeDialog mChangeTypeDialog;
+  struct Data;
+  std::unique_ptr<Data> mData;
 };
 
 }  // namespace tactile

@@ -24,42 +24,56 @@
 #include <imgui.h>
 
 #include "dialogs/add_property_dialog.hpp"
+#include "dialogs/change_property_type_dialog.hpp"
+#include "dialogs/rename_property_dialog.hpp"
 #include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
+#include "property_table.hpp"
 
 namespace tactile {
+
+struct PropertyDock::Data
+{
+  PropertyTable property_table;
+  AddPropertyDialog add_dialog;
+  RenamePropertyDialog rename_dialog;
+  ChangePropertyTypeDialog change_type_dialog;
+};
 
 PropertyDock::PropertyDock()
     : ADockWidget{"Properties",
                   ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar}
+    , mData{std::make_unique<Data>()}
 {
   set_close_button_enabled(true);
 }
 
+PropertyDock::~PropertyDock() noexcept = default;
+
 void PropertyDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  mPropertyTable.update(registry, dispatcher);
+  mData->property_table.update(registry, dispatcher);
 
-  mAddDialog.update(model, dispatcher);
-  mRenameDialog.update(model, dispatcher);
-  mChangeTypeDialog.update(model, dispatcher);
+  mData->add_dialog.update(model, dispatcher);
+  mData->rename_dialog.update(model, dispatcher);
+  mData->change_type_dialog.update(model, dispatcher);
 }
 
 void PropertyDock::show_add_property_dialog()
 {
-  mAddDialog.open();
+  mData->add_dialog.open();
 }
 
 void PropertyDock::show_rename_property_dialog(const std::string& name)
 {
-  mRenameDialog.show(name);
+  mData->rename_dialog.show(name);
 }
 
 void PropertyDock::show_change_property_type_dialog(std::string name,
                                                     const AttributeType type)
 {
-  mChangeTypeDialog.show(std::move(name), type);
+  mData->change_type_dialog.show(std::move(name), type);
 }
 
 void PropertyDock::set_visible(const bool visible)
