@@ -30,7 +30,7 @@
 #include "layout/dock_space.hpp"
 #include "log/log_dock.hpp"
 #include "menus/menu_bar.hpp"
-#include "properties/properties_dock.hpp"
+#include "properties/property_dock.hpp"
 #include "tilesets/tileset_dock.hpp"
 #include "toolbar/toolbar.hpp"
 #include "viewport/map_view.hpp"
@@ -44,7 +44,7 @@ struct widget_manager::widgets final
   Toolbar mToolbar;
   TilesetDock mTilesetDock;
   LayerDock mLayerDock;
-  PropertiesDock mPropertiesDock;
+  PropertyDock mPropertiesDock;
   ComponentDock mComponentDock;
   LogDock mLogDock;
 

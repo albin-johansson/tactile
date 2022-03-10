@@ -30,11 +30,14 @@ namespace tactile {
 class AddPropertyDialog final : public ADialog
 {
  public:
+  TACTILE_DEFAULT_COPY(AddPropertyDialog)
+  TACTILE_DEFAULT_MOVE(AddPropertyDialog)
+
   AddPropertyDialog();
 
   ~AddPropertyDialog() override = default;
 
-  void Open();
+  void open();
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;

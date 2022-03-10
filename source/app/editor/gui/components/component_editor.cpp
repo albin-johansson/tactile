@@ -222,7 +222,7 @@ void ComponentEditor::show_component_attribute(entt::dispatcher& dispatcher,
 
   const auto type = value.type();
   AttributeType newType = type;
-  PropertyTypeCombo(type, newType);
+  show_property_type_combo(type, newType);
   if (newType != type) {
     dispatcher.enqueue<SetComponentAttrTypeEvent>(id, name, newType);
   }

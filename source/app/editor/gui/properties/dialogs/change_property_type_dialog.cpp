@@ -34,7 +34,7 @@ ChangePropertyTypeDialog::ChangePropertyTypeDialog() : ADialog{"Change Property 
   set_accept_button_label("Change");
 }
 
-void ChangePropertyTypeDialog::Show(std::string name, const AttributeType type)
+void ChangePropertyTypeDialog::show(std::string name, const AttributeType type)
 {
   mPropertyName = std::move(name);
   mCurrentType = type;
@@ -48,7 +48,7 @@ void ChangePropertyTypeDialog::on_update(const DocumentModel&, entt::dispatcher&
   ImGui::TextUnformatted("Type: ");
 
   ImGui::SameLine();
-  PropertyTypeCombo(mPreviousType.value(), mCurrentType);
+  show_property_type_combo(mPreviousType.value(), mCurrentType);
 }
 
 void ChangePropertyTypeDialog::on_accept(entt::dispatcher& dispatcher)

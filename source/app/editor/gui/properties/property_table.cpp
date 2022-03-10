@@ -331,7 +331,7 @@ void PropertyTable::show_custom_properties(const entt::registry& registry,
     ImGui::Selectable(name.c_str());
 
     if (!isItemContextOpen) {
-      isItemContextOpen = PropertyItemContextMenu(dispatcher, name, mContextState);
+      isItemContextOpen = property_item_context_menu(dispatcher, name, mContextState);
     }
 
     if (mContextState.show_rename_dialog && !mRenameTarget) {

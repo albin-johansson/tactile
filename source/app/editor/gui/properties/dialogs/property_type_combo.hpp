@@ -23,8 +23,8 @@
 
 namespace tactile {
 
-void PropertyTypeCombo(AttributeType& out);
+void show_property_type_combo(AttributeType& out);
 
-void PropertyTypeCombo(AttributeType previous, AttributeType& out);
+void show_property_type_combo(AttributeType previous, AttributeType& out);
 
 }  // namespace tactile

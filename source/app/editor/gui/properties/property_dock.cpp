@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "properties_dock.hpp"
+#include "property_dock.hpp"
 
 #include <utility>  // move
 
@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-void PropertiesDock::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void PropertyDock::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& prefs = get_preferences();
   bool visible = prefs.is_properties_dock_visible();
@@ -55,20 +55,20 @@ void PropertiesDock::Update(const DocumentModel& model, entt::dispatcher& dispat
   prefs.set_properties_dock_visible(visible);
 }
 
-void PropertiesDock::ShowAddPropertyDialog()
+void PropertyDock::ShowAddPropertyDialog()
 {
-  mAddDialog.Open();
+  mAddDialog.open();
 }
 
-void PropertiesDock::ShowRenamePropertyDialog(const std::string& name)
+void PropertyDock::ShowRenamePropertyDialog(const std::string& name)
 {
   mRenameDialog.show(name);
 }
 
-void PropertiesDock::ShowChangePropertyTypeDialog(std::string name,
-                                                  const AttributeType type)
+void PropertyDock::ShowChangePropertyTypeDialog(std::string name,
+                                                const AttributeType type)
 {
-  mChangeTypeDialog.Show(std::move(name), type);
+  mChangeTypeDialog.show(std::move(name), type);
 }
 
 }  // namespace tactile

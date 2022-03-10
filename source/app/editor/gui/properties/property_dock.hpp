@@ -33,7 +33,7 @@ namespace tactile {
 
 class DocumentModel;
 
-class PropertiesDock final
+class PropertyDock final
 {
  public:
   void Update(const DocumentModel& model, entt::dispatcher& dispatcher);

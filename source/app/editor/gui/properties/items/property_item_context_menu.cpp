@@ -27,9 +27,9 @@
 
 namespace tactile {
 
-auto PropertyItemContextMenu(entt::dispatcher& dispatcher,
-                             const std::string& name,
-                             PropertyItemContextMenuState& state) -> bool
+auto property_item_context_menu(entt::dispatcher& dispatcher,
+                                const std::string& name,
+                                PropertyItemContextMenuState& state) -> bool
 {
   if (auto popup = scoped::Popup::for_item("##PropertyItemContext"); popup.is_open()) {
     state.show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename Property...");

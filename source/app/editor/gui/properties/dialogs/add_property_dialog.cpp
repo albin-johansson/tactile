@@ -35,7 +35,7 @@ AddPropertyDialog::AddPropertyDialog() : ADialog{"Add Property"}
   set_accept_button_label("Add");
 }
 
-void AddPropertyDialog::Open()
+void AddPropertyDialog::open()
 {
   zero_buffer(mNameBuffer);
   mPropertyType = AttributeType::string;
@@ -48,7 +48,7 @@ void AddPropertyDialog::on_update(const DocumentModel&, entt::dispatcher&)
                            "Unique property name...",
                            mNameBuffer.data(),
                            sizeof mNameBuffer);
-  PropertyTypeCombo(mPropertyType);
+  show_property_type_combo(mPropertyType);
 }
 
 void AddPropertyDialog::on_accept(entt::dispatcher& dispatcher)

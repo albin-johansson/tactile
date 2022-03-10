@@ -30,11 +30,14 @@ namespace tactile {
 class ChangePropertyTypeDialog final : public ADialog
 {
  public:
+  TACTILE_DEFAULT_COPY(ChangePropertyTypeDialog)
+  TACTILE_DEFAULT_MOVE(ChangePropertyTypeDialog)
+
   ChangePropertyTypeDialog();
 
   ~ChangePropertyTypeDialog() override = default;
 
-  void Show(std::string name, AttributeType type);
+  void show(std::string name, AttributeType type);
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;

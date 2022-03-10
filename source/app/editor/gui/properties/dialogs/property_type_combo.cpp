@@ -33,7 +33,7 @@
 namespace tactile {
 namespace {
 
-constexpr std::array gItems{std::make_pair("string", AttributeType::string),
+constexpr std::array _items{std::make_pair("string", AttributeType::string),
                             std::make_pair("int", AttributeType::integer),
                             std::make_pair("float", AttributeType::floating),
                             std::make_pair("bool", AttributeType::boolean),
@@ -41,28 +41,28 @@ constexpr std::array gItems{std::make_pair("string", AttributeType::string),
                             std::make_pair("object", AttributeType::object),
                             std::make_pair("file", AttributeType::file)};
 
-[[nodiscard]] auto GetIndexFromType(const AttributeType type) -> usize
+[[nodiscard]] auto _index_from_type(const AttributeType type) -> usize
 {
   const auto it = std::find_if(
-      gItems.begin(),
-      gItems.end(),
+      _items.begin(),
+      _items.end(),
       [=](const std::pair<c_str, AttributeType>& pair) { return type == pair.second; });
 
-  if (it != gItems.end()) {
-    return static_cast<usize>(it - gItems.begin());
+  if (it != _items.end()) {
+    return static_cast<usize>(it - _items.begin());
   }
   else {
     throw_traced(TactileError{"Invalid property type!"});
   }
 }
 
-void PropertyTypeComboImpl(AttributeType& out, Maybe<AttributeType> previousType)
+void _property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previousType)
 {
-  const auto currentIndex = GetIndexFromType(out);
-  auto&& [currentName, currentType] = gItems.at(currentIndex);
+  const auto currentIndex = _index_from_type(out);
+  auto&& [currentName, currentType] = _items.at(currentIndex);
 
-  if (scoped::Combo combo{"##PropertyTypeComboImpl", currentName}; combo.is_open()) {
-    for (auto&& [name, type] : gItems) {
+  if (scoped::Combo combo{"##_property_type_combo_impl", currentName}; combo.is_open()) {
+    for (auto&& [name, type] : _items) {
       scoped::Disable disable{previousType == type};
 
       const auto selected = std::strcmp(currentName, name) == 0;
@@ -79,14 +79,14 @@ void PropertyTypeComboImpl(AttributeType& out, Maybe<AttributeType> previousType
 
 }  // namespace
 
-void PropertyTypeCombo(AttributeType& out)
+void show_property_type_combo(AttributeType& out)
 {
-  PropertyTypeComboImpl(out, nothing);
+  _property_type_combo_impl(out, nothing);
 }
 
-void PropertyTypeCombo(const AttributeType previous, AttributeType& out)
+void show_property_type_combo(const AttributeType previous, AttributeType& out)
 {
-  PropertyTypeComboImpl(out, previous);
+  _property_type_combo_impl(out, previous);
 }
 
 }  // namespace tactile

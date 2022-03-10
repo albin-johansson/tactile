@@ -20,12 +20,16 @@
 #pragma once
 
 #include "editor/gui/dialogs/string_input_dialog.hpp"
+#include "tactile.hpp"
 
 namespace tactile {
 
 class RenamePropertyDialog final : public AStringInputDialog
 {
  public:
+  TACTILE_DEFAULT_COPY(RenamePropertyDialog)
+  TACTILE_DEFAULT_MOVE(RenamePropertyDialog)
+
   RenamePropertyDialog();
 
   ~RenamePropertyDialog() override = default;
