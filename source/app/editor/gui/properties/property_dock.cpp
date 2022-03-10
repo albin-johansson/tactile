@@ -32,7 +32,7 @@
 
 namespace tactile {
 
-struct PropertyDock::Data
+struct PropertyDock::Data final
 {
   PropertyTable property_table;
   AddPropertyDialog add_dialog;
