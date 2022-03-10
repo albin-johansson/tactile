@@ -61,7 +61,7 @@ void WidgetManager::update(const DocumentModel& model,
                            entt::dispatcher& dispatcher)
 {
   mWidgets->mMenuBar.update(model, dispatcher);
-  UpdateDockSpace();
+  update_dock_space();
 
   if (model.has_active_document()) {
     mWidgets->mToolbar.Update(model, dispatcher);

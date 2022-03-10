@@ -30,29 +30,29 @@
 namespace tactile {
 namespace {
 
-constinit bool gInitialized = false;
-constinit Maybe<ImGuiID> gRootId;
+constinit bool _is_initialized = false;
+constinit Maybe<ImGuiID> _root_id;
 
 }  // namespace
 
-void UpdateDockSpace()
+void update_dock_space()
 {
-  gRootId = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-  if (!gInitialized) {
+  _root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+  if (!_is_initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
       const auto& prefs = get_preferences();
       if (!prefs.will_restore_layout() || !std::filesystem::exists("imgui.ini")) {
-        LoadDefaultLayout(gRootId.value(), false);
+        LoadDefaultLayout(_root_id.value(), false);
       }
-      gInitialized = true;
+      _is_initialized = true;
     }
   }
 }
 
-void ResetLayout()
+void reset_layout()
 {
-  LoadDefaultLayout(gRootId.value(), true);
+  LoadDefaultLayout(_root_id.value(), true);
 }
 
 }  // namespace tactile

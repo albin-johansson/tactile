@@ -21,15 +21,18 @@
 
 namespace tactile {
 
-/// \addtogroup gui
-/// \{
+/**
+ * \brief Updates the root dock space, call this function once each frame.
+ *
+ * \ingroup gui
+ */
+void update_dock_space();
 
-/// Updates the root dock space, call this function once each frame.
-void UpdateDockSpace();
-
-/// Resets all dock space widgets to the default layout.
-void ResetLayout();
-
-/// \} End of group gui
+/**
+ * \brief Resets all dock space widgets to the default layout.
+ *
+ * \ingroup gui
+ */
+void reset_layout();
 
 }  // namespace tactile

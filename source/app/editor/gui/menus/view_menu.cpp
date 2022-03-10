@@ -37,7 +37,7 @@ void _update_widgets_menu(const bool hasActiveMap)
 {
   if (scoped::Menu menu{"Widgets", hasActiveMap}; menu.is_open()) {
     if (ImGui::MenuItem("Reset Layout")) {
-      ResetLayout();
+      reset_layout();
     }
 
     ImGui::Separator();
