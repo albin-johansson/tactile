@@ -40,7 +40,7 @@ auto get_icon(const LayerType type) -> const char*
       return TAC_ICON_GROUP_LAYER;
 
     default:
-      throw_traced(tactile_error{"Failed to recognize layer type!"});
+      throw_traced(TactileError{"Failed to recognize layer type!"});
   }
 }
 

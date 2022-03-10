@@ -48,7 +48,7 @@ auto stringify(const AttributeType type) -> const char*
       return "object";
 
     default:
-      throw_traced(tactile_error{"Invalid attribute type!"});
+      throw_traced(TactileError{"Invalid attribute type!"});
   }
 }
 
@@ -81,7 +81,7 @@ void Attribute::reset_to_default(const AttributeType type)
     set_value<file_type>(file_type{});
   }
   else {
-    throw_traced(tactile_error{"Invalid attribute type!"});
+    throw_traced(TactileError{"Invalid attribute type!"});
   }
 }
 
@@ -109,7 +109,7 @@ auto Attribute::has_default_value() const -> bool
     return *color == cen::colors::black;
   }
   else {
-    throw_traced(tactile_error{"Invalid property type!"});
+    throw_traced(TactileError{"Invalid property type!"});
   }
 }
 
@@ -119,7 +119,7 @@ auto Attribute::as_string() const -> const string_type&
     return *str;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a string!"});
+    throw_traced(TactileError{"Attribute was not a string!"});
   }
 }
 
@@ -129,7 +129,7 @@ auto Attribute::as_int() const -> integer_type
     return *i;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not an integer!"});
+    throw_traced(TactileError{"Attribute was not an integer!"});
   }
 }
 
@@ -139,7 +139,7 @@ auto Attribute::as_float() const -> float_type
     return *f;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a float!"});
+    throw_traced(TactileError{"Attribute was not a float!"});
   }
 }
 
@@ -149,7 +149,7 @@ auto Attribute::as_bool() const -> bool
     return *b;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a boolean!"});
+    throw_traced(TactileError{"Attribute was not a boolean!"});
   }
 }
 
@@ -159,7 +159,7 @@ auto Attribute::as_file() const -> const file_type&
     return *file;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a file!"});
+    throw_traced(TactileError{"Attribute was not a file!"});
   }
 }
 
@@ -169,7 +169,7 @@ auto Attribute::as_object() const -> object_t
     return *obj;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not an object reference!"});
+    throw_traced(TactileError{"Attribute was not an object reference!"});
   }
 }
 
@@ -179,7 +179,7 @@ auto Attribute::as_color() const -> const color_type&
     return *color;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a color!"});
+    throw_traced(TactileError{"Attribute was not a color!"});
   }
 }
 
@@ -208,7 +208,7 @@ auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
       return stream << "object '" << value.as_object() << "'";
 
     default:
-      throw_traced(tactile_error{"Invalid attribute type!"});
+      throw_traced(TactileError{"Invalid attribute type!"});
   }
 }
 

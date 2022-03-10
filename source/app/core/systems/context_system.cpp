@@ -123,7 +123,7 @@ auto get_context(entt::registry& registry, const context_id id) -> comp::Attribu
     }
   }
 
-  throw_traced(tactile_error{"No matching attribute context!"});
+  throw_traced(TactileError{"No matching attribute context!"});
 }
 
 auto get_context(const entt::registry& registry, const context_id id)
@@ -139,7 +139,7 @@ auto get_context(const entt::registry& registry, const context_id id)
     }
   }
 
-  throw_traced(tactile_error{"No matching attribute context!"});
+  throw_traced(TactileError{"No matching attribute context!"});
 }
 
 auto current_context(const entt::registry& registry) -> const comp::AttributeContext&

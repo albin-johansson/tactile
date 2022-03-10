@@ -21,12 +21,12 @@ TEST(Attribute, Defaults)
   ASSERT_FALSE(value.is_object());
 
   ASSERT_EQ("", value.as_string());
-  ASSERT_THROW(value.as_int(), tactile_error);
-  ASSERT_THROW(value.as_float(), tactile_error);
-  ASSERT_THROW(value.as_bool(), tactile_error);
-  ASSERT_THROW(value.as_color(), tactile_error);
-  ASSERT_THROW(value.as_file(), tactile_error);
-  ASSERT_THROW(value.as_object(), tactile_error);
+  ASSERT_THROW(value.as_int(), TactileError);
+  ASSERT_THROW(value.as_float(), TactileError);
+  ASSERT_THROW(value.as_bool(), TactileError);
+  ASSERT_THROW(value.as_color(), TactileError);
+  ASSERT_THROW(value.as_file(), TactileError);
+  ASSERT_THROW(value.as_object(), TactileError);
 }
 
 TEST(Attribute, IntAttribute)

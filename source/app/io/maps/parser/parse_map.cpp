@@ -67,7 +67,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
     result.set_error(ParseError::unknown);
 
     if constexpr (is_debug_build) {
-      if (const auto* stacktrace = boost::get_error_info<trace_info>(e)) {
+      if (const auto* stacktrace = boost::get_error_info<TraceInfo>(e)) {
         print(fmt::color::orange, "{}\n", *stacktrace);
       }
     }

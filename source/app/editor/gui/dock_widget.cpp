@@ -30,7 +30,7 @@ ADockWidget::ADockWidget(const char* title, const ImGuiWindowFlags flags)
     , mWindowFlags{flags}
 {
   if (!mTitle) {
-    throw_traced(tactile_error{"Invalid null dock widget title!"});
+    throw_traced(TactileError{"Invalid null dock widget title!"});
   }
 }
 

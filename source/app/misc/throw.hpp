@@ -27,12 +27,12 @@
 
 namespace tactile {
 
-class tactile_error : public std::exception
+class TactileError : public std::exception
 {
  public:
-  tactile_error() noexcept = default;
+  TactileError() noexcept = default;
 
-  explicit tactile_error(const char* what) : mWhat{what ? what : "N/A"} {}
+  explicit TactileError(const char* what) : mWhat{what ? what : "N/A"} {}
 
   [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat; }
 
@@ -41,10 +41,10 @@ class tactile_error : public std::exception
 };
 
 namespace tags {
-struct trace_info_tag;
+struct TraceInfoTag;
 }  // namespace tags
 
-using trace_info = boost::error_info<tags::trace_info_tag, boost::stacktrace::stacktrace>;
+using TraceInfo = boost::error_info<tags::TraceInfoTag, boost::stacktrace::stacktrace>;
 
 /**
  * \brief Throws an exception with associated call stack information.
@@ -55,7 +55,7 @@ using trace_info = boost::error_info<tags::trace_info_tag, boost::stacktrace::st
  */
 [[noreturn]] void throw_traced(const auto& error)
 {
-  throw boost::enable_error_info(error) << trace_info{boost::stacktrace::stacktrace()};
+  throw boost::enable_error_info(error) << TraceInfo{boost::stacktrace::stacktrace()};
 }
 
 }  // namespace tactile

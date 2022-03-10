@@ -29,7 +29,7 @@ namespace tactile {
 dialog_base::dialog_base(const c_str title) : mTitle{title}
 {
   if (!mTitle) {
-    throw_traced(tactile_error{"Invalid null dialog title!"});
+    throw_traced(TactileError{"Invalid null dialog title!"});
   }
 }
 

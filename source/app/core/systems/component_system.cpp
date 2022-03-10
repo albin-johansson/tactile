@@ -43,7 +43,7 @@ namespace {
     return iter;
   }
   else {
-    throw_traced(tactile_error{"Invalid component attribute name!"});
+    throw_traced(TactileError{"Invalid component attribute name!"});
   }
 }
 
@@ -57,7 +57,7 @@ namespace {
     return iter;
   }
   else {
-    throw_traced(tactile_error{"Invalid component attribute name!"});
+    throw_traced(TactileError{"Invalid component attribute name!"});
   }
 }
 
@@ -69,7 +69,7 @@ namespace {
     return iter;
   }
   else {
-    throw_traced(tactile_error{"Invalid component attribute name!"});
+    throw_traced(TactileError{"Invalid component attribute name!"});
   }
 }
 
@@ -86,7 +86,7 @@ namespace {
     }
   }
 
-  throw_traced(tactile_error{"Did not find component!"});
+  throw_traced(TactileError{"Did not find component!"});
 }
 
 }  // namespace
@@ -274,7 +274,7 @@ auto get_component_def(entt::registry& registry, const component_id id)
     return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
-    throw_traced(tactile_error{"Failed to find component definition with specified ID!"});
+    throw_traced(TactileError{"Failed to find component definition with specified ID!"});
   }
 }
 
@@ -286,7 +286,7 @@ auto get_component_def(const entt::registry& registry, const component_id id)
     return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
-    throw_traced(tactile_error{"Failed to find component definition with specified ID!"});
+    throw_traced(TactileError{"Failed to find component definition with specified ID!"});
   }
 }
 
@@ -579,7 +579,7 @@ auto get_component(const entt::registry& registry,
     }
   }
 
-  throw_traced(tactile_error{"Context did not feature requested component!"});
+  throw_traced(TactileError{"Context did not feature requested component!"});
 }
 
 auto get_component_attribute(const entt::registry& registry,
@@ -599,7 +599,7 @@ auto get_component_attribute(const entt::registry& registry,
     }
   }
 
-  throw_traced(tactile_error{"Did not find component attribute!"});
+  throw_traced(TactileError{"Did not find component attribute!"});
 }
 
 auto get_component_count(const entt::registry& registry, const context_id contextId)

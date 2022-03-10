@@ -52,7 +52,7 @@ constexpr std::array gItems{std::make_pair("string", AttributeType::string),
     return static_cast<usize>(it - gItems.begin());
   }
   else {
-    throw_traced(tactile_error{"Invalid property type!"});
+    throw_traced(TactileError{"Invalid property type!"});
   }
 }
 

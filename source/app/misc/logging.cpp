@@ -123,7 +123,7 @@ auto get_filtered_log_entry(const log_level filter, const usize index)
     }
   }
 
-  throw_traced(tactile_error{"Invalid index for filtered log entry!"});
+  throw_traced(TactileError{"Invalid index for filtered log entry!"});
 }
 
 auto log_size(const log_level filter) -> usize

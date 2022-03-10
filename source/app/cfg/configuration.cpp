@@ -104,7 +104,7 @@ AppConfiguration::AppConfiguration()
 
   if (glewInit() != GLEW_OK) {
     log_error("Failed to initialize GLEW!");
-    throw_traced(tactile_error{"Failed to initialize GLEW!"});
+    throw_traced(TactileError{"Failed to initialize GLEW!"});
   }
 
   log_debug("OpenGL version... {}", glGetString(GL_VERSION));
