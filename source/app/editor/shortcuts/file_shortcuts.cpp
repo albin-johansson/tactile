@@ -30,14 +30,14 @@ namespace tactile {
 
 NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, gPrimaryModifier} {}
 
-void NewMapShortcut::Activate(entt::dispatcher& dispatcher)
+void NewMapShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ShowNewMapDialogEvent>();
 }
 
 OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, gPrimaryModifier} {}
 
-void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
+void OpenMapShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ShowOpenMapDialogEvent>();
 }
@@ -46,19 +46,19 @@ OpenSettingsShortcut::OpenSettingsShortcut()
     : AShortcut{SDL_SCANCODE_COMMA, gPrimaryModifier}
 {}
 
-void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
+void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ShowSettingsEvent>();
 }
 
 SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, gPrimaryModifier} {}
 
-void SaveShortcut::Activate(entt::dispatcher& dispatcher)
+void SaveShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<SaveEvent>();
 }
 
-auto SaveShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto SaveShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.is_save_possible();
@@ -68,12 +68,12 @@ SaveAsShortcut::SaveAsShortcut()
     : AShortcut{cen::scancodes::s, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
-void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
+void SaveAsShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<OpenSaveAsDialogEvent>();
 }
 
-auto SaveAsShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto SaveAsShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.is_save_possible();

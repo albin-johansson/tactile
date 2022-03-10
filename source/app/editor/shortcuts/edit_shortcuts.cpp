@@ -33,12 +33,12 @@ namespace tactile {
 
 UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, gPrimaryModifier} {}
 
-void UndoShortcut::Activate(entt::dispatcher& dispatcher)
+void UndoShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<UndoEvent>();
 }
 
-auto UndoShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto UndoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.can_undo();
@@ -46,12 +46,12 @@ auto UndoShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) c
 
 RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, gPrimaryModifier} {}
 
-void RedoShortcut::Activate(entt::dispatcher& dispatcher)
+void RedoShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<RedoEvent>();
 }
 
-auto RedoShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto RedoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.can_redo();
@@ -59,12 +59,12 @@ auto RedoShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) c
 
 AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, gSecondaryModifier} {}
 
-void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
+void AddRowShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<AddRowEvent>();
 }
 
-auto AddRowShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto AddRowShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.has_active_document();
@@ -73,12 +73,12 @@ auto AddRowShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&)
 AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, gSecondaryModifier}
 {}
 
-void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
+void AddColumnShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<AddColumnEvent>();
 }
 
-auto AddColumnShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto AddColumnShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.has_active_document();
@@ -88,12 +88,12 @@ RemoveRowShortcut::RemoveRowShortcut()
     : AShortcut{cen::scancodes::r, gSecondaryModifier | cen::key_mod::lshift}
 {}
 
-void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
+void RemoveRowShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<RemoveRowEvent>();
 }
 
-auto RemoveRowShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   if (const auto* registry = model.active_registry()) {
@@ -109,13 +109,13 @@ RemoveColumnShortcut::RemoveColumnShortcut()
     : AShortcut{cen::scancodes::c, gSecondaryModifier | cen::key_mod::lshift}
 {}
 
-void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
+void RemoveColumnShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<RemoveColumnEvent>();
 }
 
-auto RemoveColumnShortcut::IsEnabled(const DocumentModel& model,
-                                     const WidgetManager&) const -> bool
+auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
+                                      const WidgetManager&) const -> bool
 {
   if (const auto* registry = model.active_registry()) {
     const auto& map = registry->ctx<MapInfo>();
@@ -129,52 +129,52 @@ auto RemoveColumnShortcut::IsEnabled(const DocumentModel& model,
 AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, gPrimaryModifier}
 {}
 
-void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
+void AddTilesetShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
 }
 
-auto AddTilesetShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto AddTilesetShortcut::is_enabled(const DocumentModel& model,
+                                    const WidgetManager&) const -> bool
 {
   return model.has_active_document();
 }
 
 EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}
 
-void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
+void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<SelectToolEvent>(ToolType::bucket);
 }
 
-auto EnableBucketShortcut::IsEnabled(const DocumentModel& model,
-                                     const WidgetManager& widgets) const -> bool
+auto EnableBucketShortcut::is_enabled(const DocumentModel& model,
+                                      const WidgetManager& widgets) const -> bool
 {
   return model.is_tool_possible(ToolType::bucket) && widgets.is_editor_focused();
 }
 
 EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
 
-void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
+void EnableEraserShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<SelectToolEvent>(ToolType::eraser);
 }
 
-auto EnableEraserShortcut::IsEnabled(const DocumentModel& model,
-                                     const WidgetManager& widgets) const -> bool
+auto EnableEraserShortcut::is_enabled(const DocumentModel& model,
+                                      const WidgetManager& widgets) const -> bool
 {
   return model.is_tool_possible(ToolType::eraser) && widgets.is_editor_focused();
 }
 
 EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
 
-void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
+void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<SelectToolEvent>(ToolType::stamp);
 }
 
-auto EnableStampShortcut::IsEnabled(const DocumentModel& model,
-                                    const WidgetManager& widgets) const -> bool
+auto EnableStampShortcut::is_enabled(const DocumentModel& model,
+                                     const WidgetManager& widgets) const -> bool
 {
   return model.is_tool_possible(ToolType::stamp) && widgets.is_editor_focused();
 }
@@ -183,13 +183,13 @@ EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
     : AShortcut{cen::scancodes::q}
 {}
 
-void EnableObjectSelectionShortcut::Activate(entt::dispatcher& dispatcher)
+void EnableObjectSelectionShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<SelectToolEvent>(ToolType::object_selection);
 }
 
-auto EnableObjectSelectionShortcut::IsEnabled(const DocumentModel& model,
-                                              const WidgetManager& widgets) const -> bool
+auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model,
+                                               const WidgetManager& widgets) const -> bool
 {
   return model.is_tool_possible(ToolType::object_selection) &&
          widgets.is_editor_focused();
@@ -198,39 +198,39 @@ auto EnableObjectSelectionShortcut::IsEnabled(const DocumentModel& model,
 EnableRectangleToolShortcut::EnableRectangleToolShortcut() : AShortcut{cen::scancodes::r}
 {}
 
-void EnableRectangleToolShortcut::Activate(entt::dispatcher& dispatcher)
+void EnableRectangleToolShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<SelectToolEvent>(ToolType::rectangle);
 }
 
-auto EnableRectangleToolShortcut::IsEnabled(const DocumentModel& model,
-                                            const WidgetManager& widgets) const -> bool
+auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model,
+                                             const WidgetManager& widgets) const -> bool
 {
   return model.is_tool_possible(ToolType::rectangle) && widgets.is_editor_focused();
 }
 
 EnableEllipseToolShortcut::EnableEllipseToolShortcut() : AShortcut{cen::scancodes::t} {}
 
-void EnableEllipseToolShortcut::Activate(entt::dispatcher& dispatcher)
+void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<SelectToolEvent>(ToolType::ellipse);
 }
 
-auto EnableEllipseToolShortcut::IsEnabled(const DocumentModel& model,
-                                          const WidgetManager& widgets) const -> bool
+auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model,
+                                           const WidgetManager& widgets) const -> bool
 {
   return model.is_tool_possible(ToolType::ellipse) && widgets.is_editor_focused();
 }
 
 EnablePointToolShortcut::EnablePointToolShortcut() : AShortcut{cen::scancodes::y} {}
 
-void EnablePointToolShortcut::Activate(entt::dispatcher& dispatcher)
+void EnablePointToolShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<SelectToolEvent>(ToolType::point);
 }
 
-auto EnablePointToolShortcut::IsEnabled(const DocumentModel& model,
-                                        const WidgetManager& widgets) const -> bool
+auto EnablePointToolShortcut::is_enabled(const DocumentModel& model,
+                                         const WidgetManager& widgets) const -> bool
 {
   return model.is_tool_possible(ToolType::point) && widgets.is_editor_focused();
 }

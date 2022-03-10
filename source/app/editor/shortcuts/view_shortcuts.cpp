@@ -32,13 +32,13 @@ CenterViewportShortcut::CenterViewportShortcut()
     : AShortcut{cen::scancodes::space, cen::key_mod::lshift}
 {}
 
-void CenterViewportShortcut::Activate(entt::dispatcher& dispatcher)
+void CenterViewportShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<CenterViewportEvent>();
 }
 
-auto CenterViewportShortcut::IsEnabled(const DocumentModel& model,
-                                       const WidgetManager&) const -> bool
+auto CenterViewportShortcut::is_enabled(const DocumentModel& model,
+                                        const WidgetManager&) const -> bool
 {
   return model.has_active_document();
 }
@@ -47,13 +47,13 @@ DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
     : AShortcut{cen::scan_code{SDLK_MINUS}, gPrimaryModifier}
 {}
 
-void DecreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
+void DecreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<DecreaseZoomEvent>();
 }
 
-auto DecreaseViewportZoomShortcut::IsEnabled(const DocumentModel& model,
-                                             const WidgetManager&) const -> bool
+auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
+                                              const WidgetManager&) const -> bool
 {
   return model.can_decrease_viewport_tile_size();
 }
@@ -62,13 +62,13 @@ IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
     : AShortcut{cen::scan_code{SDLK_PLUS}, gPrimaryModifier}
 {}
 
-void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
+void IncreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<IncreaseZoomEvent>();
 }
 
-auto IncreaseViewportZoomShortcut::IsEnabled(const DocumentModel& model,
-                                             const WidgetManager&) const -> bool
+auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
+                                              const WidgetManager&) const -> bool
 {
   return model.has_active_document();
 }
@@ -77,12 +77,12 @@ PanUpShortcut::PanUpShortcut()
     : AShortcut{cen::scancodes::up, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
-void PanUpShortcut::Activate(entt::dispatcher& dispatcher)
+void PanUpShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<PanUpEvent>();
 }
 
-auto PanUpShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto PanUpShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.has_active_document();
@@ -92,12 +92,12 @@ PanDownShortcut::PanDownShortcut()
     : AShortcut{cen::scancodes::down, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
-void PanDownShortcut::Activate(entt::dispatcher& dispatcher)
+void PanDownShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<PanDownEvent>();
 }
 
-auto PanDownShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto PanDownShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.has_active_document();
@@ -107,12 +107,12 @@ PanLeftShortcut::PanLeftShortcut()
     : AShortcut{cen::scancodes::left, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
-void PanLeftShortcut::Activate(entt::dispatcher& dispatcher)
+void PanLeftShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<PanLeftEvent>();
 }
 
-auto PanLeftShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto PanLeftShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.has_active_document();
@@ -122,12 +122,12 @@ PanRightShortcut::PanRightShortcut()
     : AShortcut{cen::scancodes::right, gPrimaryModifier | cen::key_mod::lshift}
 {}
 
-void PanRightShortcut::Activate(entt::dispatcher& dispatcher)
+void PanRightShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<PanRightEvent>();
 }
 
-auto PanRightShortcut::IsEnabled(const DocumentModel& model, const WidgetManager&) const
+auto PanRightShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.has_active_document();
@@ -136,7 +136,7 @@ auto PanRightShortcut::IsEnabled(const DocumentModel& model, const WidgetManager
 ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, gPrimaryModifier}
 {}
 
-void ToggleGridShortcut::Activate(entt::dispatcher&)
+void ToggleGridShortcut::activate(entt::dispatcher&)
 {
   auto& prefs = get_preferences();
   prefs.set_grid_visible(!prefs.is_grid_visible());
@@ -144,13 +144,13 @@ void ToggleGridShortcut::Activate(entt::dispatcher&)
 
 ToggleUiShortcut::ToggleUiShortcut() : AShortcut{cen::scancodes::tab} {}
 
-void ToggleUiShortcut::Activate(entt::dispatcher& dispatcher)
+void ToggleUiShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ToggleUiEvent>();
 }
 
-auto ToggleUiShortcut::IsEnabled(const DocumentModel& model,
-                                 const WidgetManager& widgets) const -> bool
+auto ToggleUiShortcut::is_enabled(const DocumentModel& model,
+                                  const WidgetManager& widgets) const -> bool
 {
   return model.has_active_document() && widgets.is_editor_focused();
 }

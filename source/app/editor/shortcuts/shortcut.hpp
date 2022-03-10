@@ -40,14 +40,14 @@ class AShortcut
 
   virtual ~AShortcut() noexcept = default;
 
-  void Poll(const DocumentModel& model,
+  void poll(const DocumentModel& model,
             const WidgetManager& widgets,
             const cen::keyboard_event& event,
             entt::dispatcher& dispatcher);
 
-  virtual void Activate(entt::dispatcher& dispatcher) = 0;
+  virtual void activate(entt::dispatcher& dispatcher) = 0;
 
-  [[nodiscard]] virtual auto IsEnabled(
+  [[nodiscard]] virtual auto is_enabled(
       [[maybe_unused]] const DocumentModel& model,
       [[maybe_unused]] const WidgetManager& widgets) const -> bool
   {

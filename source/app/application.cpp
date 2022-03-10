@@ -84,7 +84,7 @@ Application::Application(AppConfiguration* configuration)
     , mIcons{mTextures}
 {
   subscribe_to_events(*this);
-  LoadDefaultShortcuts();
+  load_default_shortcuts();
 }
 
 auto Application::run() -> int
@@ -181,7 +181,7 @@ void Application::on_keyboard_event(cen::keyboard_event event)
   event.set_modifier(cen::key_mod::num, false);
   event.set_modifier(cen::key_mod::mode, false);
 
-  UpdateShortcuts(mModel, mWidgets, event, mDispatcher);
+  update_shortcuts(mModel, mWidgets, event, mDispatcher);
 }
 
 void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
