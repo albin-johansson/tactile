@@ -198,7 +198,9 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
           mDispatcher.enqueue<IncreaseZoomEvent>();
         }
         else {
-          mDispatcher.enqueue<DecreaseZoomEvent>();
+          if (sys::can_decrease_viewport_zoom(*registry)) {
+            mDispatcher.enqueue<DecreaseZoomEvent>();
+          }
         }
       }
       else {
