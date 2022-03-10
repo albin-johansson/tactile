@@ -36,25 +36,25 @@ constexpr const char* _image_pattern_descriptor = "Image files";
 
 }  // namespace
 
-file_dialog::file_dialog(const char* path) : mPath{path} {}
+FileDialog::FileDialog(const char* path) : mPath{path} {}
 
-auto file_dialog::is_okay() const noexcept -> bool
+auto FileDialog::is_okay() const noexcept -> bool
 {
   return mPath != nullptr;
 }
 
-auto file_dialog::path() const -> std::filesystem::path
+auto FileDialog::path() const -> std::filesystem::path
 {
   TACTILE_ASSERT(is_okay());
   return {mPath};
 }
 
-auto file_dialog::open_file() -> file_dialog
+auto FileDialog::open_file() -> FileDialog
 {
   return {tinyfd_openFileDialog("Open File", nullptr, 0, nullptr, "Any file", 0)};
 }
 
-auto file_dialog::open_map() -> file_dialog
+auto FileDialog::open_map() -> FileDialog
 {
   return {tinyfd_openFileDialog("Open Map",
                                 nullptr,
@@ -64,7 +64,7 @@ auto file_dialog::open_map() -> file_dialog
                                 0)};
 }
 
-auto file_dialog::open_image() -> file_dialog
+auto FileDialog::open_image() -> FileDialog
 {
   return {tinyfd_openFileDialog("Open Image",
                                 nullptr,
@@ -74,7 +74,7 @@ auto file_dialog::open_image() -> file_dialog
                                 0)};
 }
 
-auto file_dialog::save_map() -> file_dialog
+auto FileDialog::save_map() -> FileDialog
 {
   return {tinyfd_saveFileDialog("Save Map",
                                 nullptr,
@@ -83,7 +83,7 @@ auto file_dialog::save_map() -> file_dialog
                                 _map_pattern_descriptor)};
 }
 
-auto file_dialog::save_image() -> file_dialog
+auto FileDialog::save_image() -> FileDialog
 {
   return {tinyfd_saveFileDialog("Save Image",
                                 nullptr,

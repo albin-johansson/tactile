@@ -30,7 +30,7 @@ namespace tactile {
 
 void show_save_as_dialog(entt::dispatcher& dispatcher)
 {
-  auto dialog = file_dialog::save_map();
+  auto dialog = FileDialog::save_map();
   if (dialog.is_okay()) {
     auto path = dialog.path();
 

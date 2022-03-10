@@ -78,7 +78,7 @@ auto CreateTilesetDialog::is_current_input_valid(const DocumentModel&) const -> 
 
 void CreateTilesetDialog::ShowImageFileDialog()
 {
-  auto dialog = file_dialog::open_image();
+  auto dialog = FileDialog::open_image();
   if (!dialog.is_okay()) {
     return;
   }

@@ -132,7 +132,7 @@ void FileMenu::update_recent_files_menu(entt::dispatcher& dispatcher)
 
 void FileMenu::update_map_file_dialog(entt::dispatcher& dispatcher)
 {
-  auto dialog = file_dialog::open_map();
+  auto dialog = FileDialog::open_map();
 
   if (dialog.is_okay()) {
     dispatcher.enqueue<OpenMapEvent>(dialog.path());
