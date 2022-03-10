@@ -38,8 +38,8 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                               ImGuiWindowFlags_AlwaysAutoResize;
 
 // TODO should verbose/debug options be disabled in release builds?
-[[nodiscard]] auto _show_log_level_filter_combo(const log_level currentLevel)
-    -> Maybe<log_level>
+[[nodiscard]] auto _show_log_level_filter_combo(const LogLevel currentLevel)
+    -> Maybe<LogLevel>
 {
   static constexpr c_str verboseFilter = "Everything";
   static constexpr c_str debugFilter = "Debug / Information / Warnings / Errors";
@@ -56,23 +56,23 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
 
   c_str filter = verboseFilter;
   switch (currentLevel) {
-    case log_level::verbose:
+    case LogLevel::verbose:
       filter = verboseFilter;
       break;
 
-    case log_level::debug:
+    case LogLevel::debug:
       filter = debugFilter;
       break;
 
-    case log_level::info:
+    case LogLevel::info:
       filter = infoFilter;
       break;
 
-    case log_level::warning:
+    case LogLevel::warning:
       filter = warningFilter;
       break;
 
-    case log_level::error:
+    case LogLevel::error:
       filter = errorFilter;
       break;
   }
@@ -80,45 +80,45 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
   ImGui::SetNextItemWidth(comboWidth);
   if (scoped::Combo filterCombo{"##LogFilterCombo", filter}; filterCombo.is_open()) {
     if (ImGui::MenuItem(verboseFilter)) {
-      return log_level::verbose;
+      return LogLevel::verbose;
     }
 
     if (ImGui::MenuItem(debugFilter)) {
-      return log_level::debug;
+      return LogLevel::debug;
     }
 
     if (ImGui::MenuItem(infoFilter)) {
-      return log_level::info;
+      return LogLevel::info;
     }
 
     if (ImGui::MenuItem(warningFilter)) {
-      return log_level::warning;
+      return LogLevel::warning;
     }
 
     if (ImGui::MenuItem(errorFilter)) {
-      return log_level::error;
+      return LogLevel::error;
     }
   }
 
   return nothing;
 }
 
-[[nodiscard]] auto _color_for_level(const log_level level) -> ImVec4
+[[nodiscard]] auto _color_for_level(const LogLevel level) -> ImVec4
 {
   switch (level) {
-    case log_level::verbose:
+    case LogLevel::verbose:
       return {0.93f, 0.51f, 0.93f, 1.0f};
 
-    case log_level::debug:
+    case LogLevel::debug:
       return {0.5f, 1.0f, 0.7f, 1.0f};
 
-    case log_level::info:
+    case LogLevel::info:
       return {1.0f, 1.0f, 1.0f, 1.00f};
 
-    case log_level::warning:
+    case LogLevel::warning:
       return {1.0f, 1.0f, 0.00f, 1.00f};
 
-    case log_level::error:
+    case LogLevel::error:
       return {1.00f, 0.27f, 0.00f, 1.00f};
 
     default:
@@ -134,11 +134,11 @@ void _show_color_legend_hint()
     scoped::StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
     scoped::Tooltip tooltip;
 
-    static const auto verboseColor = _color_for_level(log_level::verbose);
-    static const auto debugColor = _color_for_level(log_level::debug);
-    static const auto infoColor = _color_for_level(log_level::info);
-    static const auto warningColor = _color_for_level(log_level::warning);
-    static const auto errorColor = _color_for_level(log_level::error);
+    static const auto verboseColor = _color_for_level(LogLevel::verbose);
+    static const auto debugColor = _color_for_level(LogLevel::debug);
+    static const auto infoColor = _color_for_level(LogLevel::info);
+    static const auto warningColor = _color_for_level(LogLevel::warning);
+    static const auto errorColor = _color_for_level(LogLevel::error);
 
     ImGui::TextColored(verboseColor, "Verbose message");
     ImGui::TextColored(debugColor, "Debug message");
@@ -148,7 +148,7 @@ void _show_color_legend_hint()
   }
 }
 
-void _show_log_contents(const log_level filter)
+void _show_log_contents(const LogLevel filter)
 {
   scoped::StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 

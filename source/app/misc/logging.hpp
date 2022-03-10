@@ -41,7 +41,7 @@ void log_error_v(std::string_view fmt, fmt::format_args args);
 
 }  // namespace logger
 
-enum class log_level
+enum class LogLevel
 {
   verbose,  ///< Logs everything.
   debug,    ///< Logs stuff that a developer might be interested in.
@@ -98,7 +98,7 @@ void log_error(const std::string_view fmt, const Args&... args)
  */
 void clear_log_history();
 
-void set_log_level(log_level level);
+void set_log_level(LogLevel level);
 
 /**
  * \brief Returns the log entry at a specific index amongst entries that satisfy a filter.
@@ -112,8 +112,8 @@ void set_log_level(log_level level);
  *
  * \see log_size(log_level)
  */
-[[nodiscard]] auto get_filtered_log_entry(log_level filter, usize index)
-    -> std::pair<log_level, const std::string&>;
+[[nodiscard]] auto get_filtered_log_entry(LogLevel filter, usize index)
+    -> std::pair<LogLevel, const std::string&>;
 
 /**
  * \brief Returns the amount of log entries that satisfy a filter.
@@ -122,7 +122,7 @@ void set_log_level(log_level level);
  *
  * \return the amount of log entries that weren't filtered out.
  */
-[[nodiscard]] auto log_size(log_level filter) -> usize;
+[[nodiscard]] auto log_size(LogLevel filter) -> usize;
 
 /**
  * \brief Indicates whether a message using a specific log level satisfies a filter.
@@ -132,8 +132,8 @@ void set_log_level(log_level level);
  *
  * \return `true` if the log level is enabled according to the filter; `false` otherwise.
  */
-[[nodiscard]] auto is_enabled(log_level filter, log_level level) -> bool;
+[[nodiscard]] auto is_enabled(LogLevel filter, LogLevel level) -> bool;
 
-[[nodiscard]] auto is_enabled(log_level level) -> bool;
+[[nodiscard]] auto is_enabled(LogLevel level) -> bool;
 
 }  // namespace tactile

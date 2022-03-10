@@ -37,7 +37,7 @@ class LogDock final : public ADockWidget
   [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
-  log_level mLogLevel{log_level::verbose};
+  LogLevel mLogLevel{LogLevel::verbose};
 };
 
 }  // namespace tactile

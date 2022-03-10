@@ -30,17 +30,17 @@
 namespace tactile {
 namespace {
 
-struct logged_string final
+struct LogEntry final
 {
-  log_level level{};
+  LogLevel level{};
   std::string str;
 };
 
-inline std::deque<logged_string> _history;
-inline log_level _log_level{log_level::info};
+inline std::deque<LogEntry> _history;
+inline LogLevel _log_level{LogLevel::info};
 
 void _log(const fmt::color color,
-          const log_level level,
+          const LogLevel level,
           const std::string_view priority,
           const std::string_view fmt,
           const fmt::format_args args)
@@ -49,7 +49,7 @@ void _log(const fmt::color color,
   const auto msg = fmt::vformat(fmt, args);
   const auto full = fmt::vformat("{:%H:%M:%S} > {}\n", fmt::make_format_args(time, msg));
 
-  _history.push_back(logged_string{level, full});
+  _history.push_back(LogEntry{level, full});
 
   if constexpr (is_debug_build) {
     print(color, "{:>9} {}", priority, full);
@@ -62,36 +62,36 @@ namespace logger {
 
 void log_verbose_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (is_enabled(log_level::verbose)) {
-    _log(fmt::color::violet, log_level::verbose, "[VERBOSE]", fmt, args);
+  if (is_enabled(LogLevel::verbose)) {
+    _log(fmt::color::violet, LogLevel::verbose, "[VERBOSE]", fmt, args);
   }
 }
 
 void log_debug_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (is_enabled(log_level::debug)) {
-    _log(fmt::color::aquamarine, log_level::debug, "[DEBUG]", fmt, args);
+  if (is_enabled(LogLevel::debug)) {
+    _log(fmt::color::aquamarine, LogLevel::debug, "[DEBUG]", fmt, args);
   }
 }
 
 void log_info_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (is_enabled(log_level::info)) {
-    _log(fmt::color::white, log_level::info, "[INFO]", fmt, args);
+  if (is_enabled(LogLevel::info)) {
+    _log(fmt::color::white, LogLevel::info, "[INFO]", fmt, args);
   }
 }
 
 void log_warning_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (is_enabled(log_level::warning)) {
-    _log(fmt::color::yellow, log_level::warning, "[WARNING]", fmt, args);
+  if (is_enabled(LogLevel::warning)) {
+    _log(fmt::color::yellow, LogLevel::warning, "[WARNING]", fmt, args);
   }
 }
 
 void log_error_v(const std::string_view fmt, const fmt::format_args args)
 {
-  if (is_enabled(log_level::error)) {
-    _log(fmt::color::orange_red, log_level::error, "[ERROR]", fmt, args);
+  if (is_enabled(LogLevel::error)) {
+    _log(fmt::color::orange_red, LogLevel::error, "[ERROR]", fmt, args);
   }
 }
 
@@ -102,13 +102,13 @@ void clear_log_history()
   _history.clear();
 }
 
-void set_log_level(const log_level level)
+void set_log_level(const LogLevel level)
 {
   _log_level = level;
 }
 
-auto get_filtered_log_entry(const log_level filter, const usize index)
-    -> std::pair<log_level, const std::string&>
+auto get_filtered_log_entry(const LogLevel filter, const usize index)
+    -> std::pair<LogLevel, const std::string&>
 {
   usize i = 0;
 
@@ -126,7 +126,7 @@ auto get_filtered_log_entry(const log_level filter, const usize index)
   throw_traced(TactileError{"Invalid index for filtered log entry!"});
 }
 
-auto log_size(const log_level filter) -> usize
+auto log_size(const LogLevel filter) -> usize
 {
   usize count = 0;
 
@@ -139,24 +139,24 @@ auto log_size(const log_level filter) -> usize
   return count;
 }
 
-auto is_enabled(const log_level filter, const log_level level) -> bool
+auto is_enabled(const LogLevel filter, const LogLevel level) -> bool
 {
   switch (level) {
-    case log_level::verbose:
-      return filter == log_level::verbose;
+    case LogLevel::verbose:
+      return filter == LogLevel::verbose;
 
-    case log_level::debug:
-      return filter == log_level::verbose || filter == log_level::debug;
+    case LogLevel::debug:
+      return filter == LogLevel::verbose || filter == LogLevel::debug;
 
-    case log_level::info:
-      return filter == log_level::verbose || filter == log_level::debug ||
-             filter == log_level::info;
+    case LogLevel::info:
+      return filter == LogLevel::verbose || filter == LogLevel::debug ||
+             filter == LogLevel::info;
 
-    case log_level::warning:
-      return filter == log_level::verbose || filter == log_level::debug ||
-             filter == log_level::info || filter == log_level::warning;
+    case LogLevel::warning:
+      return filter == LogLevel::verbose || filter == LogLevel::debug ||
+             filter == LogLevel::info || filter == LogLevel::warning;
 
-    case log_level::error:
+    case LogLevel::error:
       return true; /* Errors are always logged */
 
     default:
@@ -164,7 +164,7 @@ auto is_enabled(const log_level filter, const log_level level) -> bool
   }
 }
 
-auto is_enabled(const log_level level) -> bool
+auto is_enabled(const LogLevel level) -> bool
 {
   return is_enabled(_log_level, level);
 }

@@ -83,10 +83,10 @@ AppConfiguration::AppConfiguration()
   std::set_terminate([] { std::abort(); });
 
   if constexpr (is_debug_build) {
-    set_log_level(log_level::verbose);
+    set_log_level(LogLevel::verbose);
   }
   else {
-    set_log_level(log_level::info);
+    set_log_level(LogLevel::info);
   }
 
   init_sdl_attributes();
