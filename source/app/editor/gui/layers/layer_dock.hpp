@@ -51,8 +51,8 @@ class LayerDock final : public ADockWidget
   [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
-  struct LayerDockData;
-  std::unique_ptr<LayerDockData> mData;
+  struct Data;
+  std::unique_ptr<Data> mData;
 
   void update_buttons(const DocumentModel& model,
                       const entt::registry& registry,

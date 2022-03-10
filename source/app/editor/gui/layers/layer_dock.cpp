@@ -41,16 +41,16 @@
 
 namespace tactile {
 
-struct LayerDock::LayerDockData final
+struct LayerDock::Data final
 {
-  RenameLayerDialog mRenameLayerDialog;
-  AddLayerContextMenu mAddLayerContextMenu;
-  Maybe<layer_id> mRenameTarget;
+  RenameLayerDialog rename_layer_dialog;
+  AddLayerContextMenu add_layer_context_menu;
+  Maybe<layer_id> rename_target;
 };
 
 LayerDock::LayerDock()
     : ADockWidget{"Layers", ImGuiWindowFlags_NoCollapse}
-    , mData{std::make_unique<LayerDockData>()}
+    , mData{std::make_unique<Data>()}
 {
   set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
 }
@@ -59,7 +59,7 @@ LayerDock::~LayerDock() noexcept = default;
 
 void LayerDock::show_rename_layer_dialog(const layer_id id)
 {
-  mData->mRenameTarget = id;
+  mData->rename_target = id;
 }
 
 void LayerDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
@@ -90,8 +90,8 @@ void LayerDock::on_update(const DocumentModel& model, entt::dispatcher& dispatch
     }
   }
 
-  auto& renameTarget = mData->mRenameTarget;
-  auto& renameLayerDialog = mData->mRenameLayerDialog;
+  auto& renameTarget = mData->rename_target;
+  auto& renameLayerDialog = mData->rename_layer_dialog;
 
   if (renameTarget.has_value()) {
     const auto target = *renameTarget;
@@ -136,10 +136,10 @@ void LayerDock::update_buttons(const DocumentModel& model,
   scoped::Group group;
 
   if (button(TAC_ICON_ADD, "Add new layer")) {
-    mData->mAddLayerContextMenu.show();
+    mData->add_layer_context_menu.show();
   }
 
-  mData->mAddLayerContextMenu.update(model, dispatcher);
+  mData->add_layer_context_menu.update(model, dispatcher);
 
   if (button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
     dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
