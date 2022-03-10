@@ -43,7 +43,7 @@ void update_dock_space()
     if (size.x > 0 && size.y > 0) {
       const auto& prefs = get_preferences();
       if (!prefs.will_restore_layout() || !std::filesystem::exists("imgui.ini")) {
-        LoadDefaultLayout(_root_id.value(), false);
+        load_default_layout(_root_id.value(), false);
       }
       _is_initialized = true;
     }
@@ -52,7 +52,7 @@ void update_dock_space()
 
 void reset_layout()
 {
-  LoadDefaultLayout(_root_id.value(), true);
+  load_default_layout(_root_id.value(), true);
 }
 
 }  // namespace tactile

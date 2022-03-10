@@ -24,14 +24,14 @@
 namespace tactile {
 
 /**
- * \brief Loads the default layout for the specified dock space.
- *
- * \ingroup gui
+ * \brief Loads the default layout for a dock space.
  *
  * \param id the ID of the dock space.
  * \param resetVisibility `true` if the docks should have their visibility reset;
- * `false` otherwise.
+ *                        `false` otherwise.
+ *
+ * \ingroup gui
  */
-void LoadDefaultLayout(ImGuiID id, bool resetVisibility);
+void load_default_layout(ImGuiID id, bool resetVisibility);
 
 }  // namespace tactile

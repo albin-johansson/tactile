@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
+void load_default_layout(ImGuiID id, const bool resetVisibility)
 {
   ImGui::DockBuilderRemoveNodeChildNodes(id);
 
