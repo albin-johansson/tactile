@@ -23,7 +23,6 @@
 
 #include <entt/entt.hpp>
 
-#include "dialogs/rename_layer_dialog.hpp"
 #include "editor/gui/common/dock_widget.hpp"
 #include "tactile.hpp"
 

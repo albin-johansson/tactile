@@ -27,6 +27,7 @@
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
+#include "dialogs/rename_layer_dialog.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
