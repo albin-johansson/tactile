@@ -26,6 +26,7 @@
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/property_events.hpp"
@@ -45,7 +46,7 @@ void _update_layer_item_popup(const entt::registry& registry,
                               const layer_id id)
 {
   if (auto popup = scoped::Popup::for_item("##LayerItemPopup"); popup.is_open()) {
-    const auto [entity, layer] = sys::get_layer(registry, id);
+    const auto& [entity, layer] = sys::get_layer(registry, id);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
       dispatcher.enqueue<InspectContextEvent>(entity);
@@ -115,7 +116,7 @@ void _show_group_layer_item(const entt::registry& registry,
 
     const auto& node = registry.get<comp::LayerTreeNode>(layerEntity);
     for (const auto child : node.children) {
-      show_layer_item(registry, dispatcher, child);
+      layer_item_view(registry, dispatcher, child);
     }
   }
   else {
@@ -132,11 +133,11 @@ void _show_group_layer_item(const entt::registry& registry,
 
 }  // namespace
 
-void show_layer_item(const entt::registry& registry,
+void layer_item_view(const entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const entt::entity layerEntity)
 {
-  const auto& layer = registry.get<comp::Layer>(layerEntity);
+  const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
   const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
 
   const scoped::Id scope{layer.id};
@@ -145,7 +146,7 @@ void show_layer_item(const entt::registry& registry,
   const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
                                    : _base_node_flags;
 
-  const auto& context = registry.get<comp::AttributeContext>(layerEntity);
+  const auto& context = sys::checked_get<comp::AttributeContext>(registry, layerEntity);
   FormattedString name{"{} {}", get_icon(layer.type), context.name};
 
   if (layer.type != LayerType::group_layer) {

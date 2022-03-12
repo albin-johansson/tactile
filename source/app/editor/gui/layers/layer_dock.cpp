@@ -36,7 +36,7 @@
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
-#include "layer_item.hpp"
+#include "editor/gui/layers/views/layer_item.hpp"
 #include "misc/assert.hpp"
 #include "tactile.hpp"
 
@@ -84,7 +84,7 @@ void LayerDock::on_update(const DocumentModel& model, entt::dispatcher& dispatch
              other components in the view query directly. */
           const auto& parent = registry.get<comp::Parent>(entity);
           if (parent.entity == entt::null) {
-            show_layer_item(registry, dispatcher, entity);
+            layer_item_view(registry, dispatcher, entity);
           }
         }
       }

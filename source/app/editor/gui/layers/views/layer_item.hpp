@@ -27,15 +27,15 @@
 namespace tactile {
 
 /**
- * \brief Shows a layer item that represents a layer in a map.
+ * \brief Shows a widget for a single layer in a map.
  *
  * \ingroup gui
  *
- * \param registry the document registry.
+ * \param registry the map registry.
  * \param dispatcher the event dispatcher that will be used.
  * \param layerEntity the entity of the layer that will be shown.
  */
-void show_layer_item(const entt::registry& registry,
+void layer_item_view(const entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      entt::entity layerEntity);
 
