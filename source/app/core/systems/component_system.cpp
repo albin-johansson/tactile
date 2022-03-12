@@ -33,9 +33,9 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
-                                         const component_id id,
-                                         const std::string_view attribute)
+[[nodiscard]] auto _get_component_attr(const entt::registry& registry,
+                                       const component_id id,
+                                       const std::string_view attribute)
     -> decltype(comp::ComponentDef::attributes)::const_iterator
 {
   const auto [defEntity, def] = get_component_def(registry, id);
@@ -47,9 +47,9 @@ namespace {
   }
 }
 
-[[nodiscard]] auto GetComponentAttribute(entt::registry& registry,
-                                         const component_id id,
-                                         const std::string_view attribute)
+[[nodiscard]] auto _get_component_attr(entt::registry& registry,
+                                       const component_id id,
+                                       const std::string_view attribute)
     -> decltype(comp::ComponentDef::attributes)::iterator
 {
   const auto [defEntity, def] = get_component_def(registry, id);
@@ -61,8 +61,8 @@ namespace {
   }
 }
 
-[[nodiscard]] auto GetComponentValue(comp::Component& component,
-                                     const std::string_view attribute)
+[[nodiscard]] auto _get_component_value(comp::Component& component,
+                                        const std::string_view attribute)
     -> decltype(comp::Component::values)::iterator
 {
   if (auto iter = component.values.find(attribute); iter != component.values.end()) {
@@ -73,9 +73,9 @@ namespace {
   }
 }
 
-[[nodiscard]] auto GetComponent(entt::registry& registry,
-                                const context_id contextId,
-                                const component_id componentId) -> comp::Component&
+[[nodiscard]] auto _get_component(entt::registry& registry,
+                                  const context_id contextId,
+                                  const component_id componentId) -> comp::Component&
 {
   auto& context = get_context(registry, contextId);
 
@@ -370,7 +370,7 @@ auto duplicate_component_attribute(entt::registry& registry,
   log_debug("Duplicating attribute '{}' in component '{}'", attribute, id);
 
   auto [defEntity, def] = get_component_def(registry, id);
-  auto iter = GetComponentAttribute(registry, id, attribute);
+  auto iter = _get_component_attr(registry, id, attribute);
 
   int suffix = 1;
   std::string candidateName;
@@ -394,7 +394,7 @@ void set_component_attribute_type(entt::registry& registry,
               id,
               type);
 
-  auto iter = GetComponentAttribute(registry, id, attribute);
+  auto iter = _get_component_attr(registry, id, attribute);
   iter->second.reset_to_default(type);
 }
 
@@ -403,7 +403,7 @@ void set_component_attribute_value(entt::registry& registry,
                                    const std::string_view attribute,
                                    Attribute value)
 {
-  auto iter = GetComponentAttribute(registry, id, attribute);
+  auto iter = _get_component_attr(registry, id, attribute);
 
   TACTILE_ASSERT_MSG(iter->second.type() == value.type(),
                      "Requested default value had wrong type!");
@@ -414,7 +414,7 @@ auto get_component_attribute_type(const entt::registry& registry,
                                   const component_id id,
                                   const std::string_view attribute) -> AttributeType
 {
-  const auto iter = GetComponentAttribute(registry, id, attribute);
+  const auto iter = _get_component_attr(registry, id, attribute);
   return iter->second.type();
 }
 
@@ -422,7 +422,7 @@ auto get_component_attribute_value(const entt::registry& registry,
                                    const component_id id,
                                    const std::string_view attribute) -> const Attribute&
 {
-  const auto iter = GetComponentAttribute(registry, id, attribute);
+  const auto iter = _get_component_attr(registry, id, attribute);
   return iter->second;
 }
 
@@ -524,9 +524,9 @@ void update_component(entt::registry& registry,
                       const std::string_view attribute,
                       Attribute value)
 {
-  auto& component = GetComponent(registry, contextId, componentId);
+  auto& component = _get_component(registry, contextId, componentId);
 
-  auto iter = GetComponentValue(component, attribute);
+  auto iter = _get_component_value(component, attribute);
   iter->second = std::move(value);
 }
 
@@ -539,7 +539,7 @@ auto reset_component(entt::registry& registry,
   log_debug("Resetting component '{}' in context '{}'", componentId, contextId);
 
   const auto& [defEntity, def] = get_component_def(registry, componentId);
-  auto& component = GetComponent(registry, contextId, componentId);
+  auto& component = _get_component(registry, contextId, componentId);
 
   ResetComponentResult result;
   for (auto& [name, value] : component.values) {
