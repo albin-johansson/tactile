@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <memory>  // unique_ptr
+
 #include <entt/entt.hpp>
 #include <imgui.h>
 
@@ -31,18 +33,18 @@ class DocumentModel;
 class ADockWidget
 {
  public:
-  TACTILE_DEFAULT_COPY(ADockWidget)
+  TACTILE_DELETE_COPY(ADockWidget)
   TACTILE_DEFAULT_MOVE(ADockWidget)
 
   ADockWidget(const char* title, ImGuiWindowFlags flags);
 
-  virtual ~ADockWidget() noexcept = default;
+  virtual ~ADockWidget() noexcept;
 
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  [[nodiscard]] auto has_focus() const noexcept -> bool { return mHasFocus; }
+  [[nodiscard]] auto has_focus() const -> bool;
 
-  [[nodiscard]] auto has_mouse_hover() const noexcept -> bool { return mIsHovered; }
+  [[nodiscard]] auto has_mouse_hover() const  -> bool;
 
  protected:
   virtual void on_update([[maybe_unused]] const DocumentModel& model,
@@ -58,12 +60,8 @@ class ADockWidget
   [[nodiscard]] virtual auto is_visible() const -> bool = 0;
 
  private:
-  const char* mTitle{};
-  ImGuiWindowFlags mWindowFlags{};
-  ImGuiFocusedFlags mFocusFlags{};
-  bool mHasCloseButton{};
-  bool mHasFocus{};
-  bool mIsHovered{};
+  struct Data;
+  std::unique_ptr<Data> mData;
 };
 
 }  // namespace tactile

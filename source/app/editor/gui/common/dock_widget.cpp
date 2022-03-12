@@ -25,14 +25,27 @@
 
 namespace tactile {
 
-ADockWidget::ADockWidget(const char* title, const ImGuiWindowFlags flags)
-    : mTitle{title}
-    , mWindowFlags{flags}
+struct ADockWidget::Data final
 {
-  if (!mTitle) {
+  const char* title{};
+  ImGuiWindowFlags window_flags{};
+  ImGuiFocusedFlags focus_flags{};
+  bool has_close_button{};
+  bool has_focus{};
+  bool contains_mouse{};
+};
+
+ADockWidget::ADockWidget(const char* title, const ImGuiWindowFlags flags)
+    : mData{std::make_unique<Data>()}
+{
+  mData->title = title;
+  mData->window_flags = flags;
+  if (!mData->title) {
     throw_traced(TactileError{"Invalid null dock widget title!"});
   }
 }
+
+ADockWidget::~ADockWidget() noexcept = default;
 
 void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -42,11 +55,11 @@ void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatche
     return;
   }
 
-  bool* show = mHasCloseButton ? &visible : nullptr;
+  bool* show = mData->has_close_button ? &visible : nullptr;
 
-  scoped::Window dock{mTitle, mWindowFlags, show};
-  mHasFocus = dock.has_focus(mFocusFlags);
-  mIsHovered = ImGui::IsWindowHovered(mFocusFlags);
+  scoped::Window dock{mData->title, mData->window_flags, show};
+  mData->has_focus = dock.has_focus(mData->focus_flags);
+  mData->contains_mouse = ImGui::IsWindowHovered(mData->focus_flags);
 
   if (dock.is_open()) {
     on_update(model, dispatcher);
@@ -57,12 +70,22 @@ void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatche
 
 void ADockWidget::set_close_button_enabled(const bool enabled)
 {
-  mHasCloseButton = enabled;
+  mData->has_close_button = enabled;
 }
 
 void ADockWidget::set_focus_flags(const ImGuiFocusedFlags flags)
 {
-  mFocusFlags = flags;
+  mData->focus_flags = flags;
+}
+
+auto ADockWidget::has_focus() const -> bool
+{
+  return mData->has_focus;
+}
+
+auto ADockWidget::has_mouse_hover() const -> bool
+{
+  return mData->contains_mouse;
 }
 
 }  // namespace tactile
