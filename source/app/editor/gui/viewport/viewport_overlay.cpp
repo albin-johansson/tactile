@@ -25,6 +25,7 @@
 #include "core/components/layers.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
 #include "viewport_cursor_info.hpp"
@@ -32,15 +33,15 @@
 namespace tactile {
 namespace {
 
-constexpr auto gFlags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
-                        ImGuiWindowFlags_AlwaysAutoResize |
-                        ImGuiWindowFlags_NoSavedSettings |
-                        ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
-                        ImGuiWindowFlags_NoMove;
+constexpr auto _window_flags =
+    ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
+    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
+    ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
+    ImGuiWindowFlags_NoMove;
 
-constexpr float gOpacity = 0.35f;
+constexpr float _opacity = 0.35f;
 
-void PreparePositionAndPivot()
+void _prepare_position_and_pivot()
 {
   const auto pos = ImGui::GetWindowPos();
   const auto size = ImGui::GetWindowSize();
@@ -66,39 +67,14 @@ void PreparePositionAndPivot()
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void UpdateMouseCoordinateLabels(const ViewportCursorInfo& cursor)
-{
-  if (ImGui::IsMousePosValid()) {
-    ImGui::Text("X/Y: (%.0f, %.0f)", cursor.scaled_position.x, cursor.scaled_position.y);
-  }
-  else {
-    ImGui::TextUnformatted("X/Y: N/A");
-  }
-}
-
-void UpdateMouseRowColumnLabels(const ViewportCursorInfo& cursor)
-{
-  if (cursor.is_within_map) {
-    ImGui::Text("Row/Column: (%i, %i)",
-                cursor.map_position.row(),
-                cursor.map_position.col());
-  }
-  else {
-    ImGui::TextUnformatted("Row/Column: N/A");
-  }
-}
-
-void UpdateMouseTileLabels(const entt::registry& registry,
-                           const ViewportCursorInfo& cursor)
+void _show_mouse_tile_labels(const entt::registry& registry,
+                             const ViewportCursorInfo& cursor)
 {
   const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
 
   if (activeLayer.entity != entt::null) {
-    if (registry.all_of<comp::TileLayer>(activeLayer.entity)) {
-      ImGui::Separator();
-
-      const auto& layer = registry.get<comp::TileLayer>(activeLayer.entity);
-      const auto global = sys::get_tile(layer, cursor.map_position);
+    if (const auto* layer = registry.try_get<comp::TileLayer>(activeLayer.entity)) {
+      const auto global = sys::get_tile(*layer, cursor.map_position);
 
       if (cursor.is_within_map && global != empty_tile) {
         ImGui::Text("Global ID: %i", global);
@@ -120,7 +96,7 @@ void UpdateMouseTileLabels(const entt::registry& registry,
   }
 }
 
-void UpdateOverlayContextMenu()
+void _update_overlay_context_menu()
 {
   if (auto popup = scoped::Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     auto& prefs = get_preferences();
@@ -141,25 +117,55 @@ void UpdateOverlayContextMenu()
     if (ImGui::MenuItem("Bottom-right", nullptr, corner == OverlayPos::bottom_right)) {
       prefs.set_viewport_overlay_pos(OverlayPos::bottom_right);
     }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_METRICS " Show Framerate",
+                        nullptr,
+                        prefs.viewport_overlay_show_fps())) {
+      prefs.set_viewport_overlay_show_fps(!prefs.viewport_overlay_show_fps());
+    }
   }
 }
 
 }  // namespace
 
-void UpdateViewportOverlay(const entt::registry& registry,
-                           const ViewportCursorInfo& cursor)
+void update_viewport_overlay(const entt::registry& registry,
+                             const ViewportCursorInfo& cursor)
 {
-  PreparePositionAndPivot();
+  _prepare_position_and_pivot();
 
-  ImGui::SetNextWindowBgAlpha(gOpacity);
-  scoped::Window window{"##ViewportOverlay", gFlags};
+  ImGui::SetNextWindowBgAlpha(_opacity);
+  scoped::Window window{"##ViewportOverlay", _window_flags};
 
   if (window.is_open()) {
-    UpdateMouseCoordinateLabels(cursor);
-    UpdateMouseRowColumnLabels(cursor);
-    UpdateMouseTileLabels(registry, cursor);
+    if (get_preferences().viewport_overlay_show_fps()) {
+      const auto& io = ImGui::GetIO();
+      ImGui::Text("%.2f ms (%.1f FPS)", 1'000.0f * io.DeltaTime, io.Framerate);
+      ImGui::Separator();
+    }
 
-    UpdateOverlayContextMenu();
+    if (ImGui::IsMousePosValid()) {
+      ImGui::Text("X/Y: (%.0f, %.0f)",
+                  cursor.scaled_position.x,
+                  cursor.scaled_position.y);
+    }
+    else {
+      ImGui::TextUnformatted("X/Y: N/A");
+    }
+
+    if (cursor.is_within_map) {
+      ImGui::Text("Row/Column: (%i, %i)",
+                  cursor.map_position.row(),
+                  cursor.map_position.col());
+    }
+    else {
+      ImGui::TextUnformatted("Row/Column: N/A");
+    }
+
+    ImGui::Separator();
+    _show_mouse_tile_labels(registry, cursor);
+
+    _update_overlay_context_menu();
   }
 }
 

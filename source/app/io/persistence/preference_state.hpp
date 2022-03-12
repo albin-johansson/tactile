@@ -120,6 +120,9 @@ class PreferenceState final
   void set_viewport_overlay_pos(OverlayPos pos);
   [[nodiscard]] auto viewport_overlay_pos() const -> OverlayPos;
 
+  void set_viewport_overlay_show_fps(bool show);
+  [[nodiscard]] auto viewport_overlay_show_fps() const -> bool;
+
   void set_command_capacity(usize capacity);
   [[nodiscard]] auto command_capacity() const -> usize;
 

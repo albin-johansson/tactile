@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry
+#include <entt/entt.hpp>
 
 namespace tactile {
 
 struct ViewportCursorInfo;
 
-void UpdateViewportOverlay(const entt::registry& registry,
-                           const ViewportCursorInfo& cursor);
+void update_viewport_overlay(const entt::registry& registry,
+                             const ViewportCursorInfo& cursor);
 
 }  // namespace tactile

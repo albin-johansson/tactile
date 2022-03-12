@@ -222,7 +222,7 @@ void update_map_view(const entt::registry& registry, entt::dispatcher& dispatche
 
   graphics.pop_clip();
 
-  UpdateViewportOverlay(registry, cursor);
+  update_viewport_overlay(registry, cursor);
   _update_context_menu(registry, dispatcher, cursor);
 }
 

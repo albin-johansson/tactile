@@ -53,11 +53,12 @@ constexpr uint64 _bit_window_border = 1u << 8u;
 constexpr uint64 _bit_restore_layout = 1u << 9u;
 constexpr uint64 _bit_restore_last_session = 1u << 10u;
 constexpr uint64 _bit_show_component_dock = 1u << 11u;
+constexpr uint64 _bit_show_viewport_overlay_fps = 1u << 12u;
 
 constexpr uint64 _def_flags = _bit_show_grid | _bit_indent_output | _bit_show_layer_dock |
                               _bit_show_tileset_dock | _bit_show_property_dock |
                               _bit_show_component_dock | _bit_restore_layout |
-                              _bit_restore_last_session;
+                              _bit_restore_last_session | _bit_show_viewport_overlay_fps;
 
 }  // namespace
 
@@ -113,6 +114,7 @@ void PreferenceState::print()
 
   log_info("Preferred format... {}", mData->preferred_format);
   log_info("Viewport overlay pos... {}", mData->viewport_overlay_pos);
+  PRINT_FLAG("Show FPS in viewport overlay", _bit_show_viewport_overlay_fps);
 
   PRINT_FLAG("Embed tilesets", _bit_embed_tilesets);
   PRINT_FLAG("Indent output", _bit_indent_output);
@@ -215,6 +217,10 @@ void PreferenceState::parse(const std::filesystem::path& path)
     if (cfg.has_viewport_overlay_pos()) {
       mData->viewport_overlay_pos = cfg.viewport_overlay_pos();
     }
+
+    if (cfg.has_viewport_overlay_show_fps()) {
+      set_flag(_bit_show_viewport_overlay_fps, cfg.viewport_overlay_show_fps());
+    }
   }
 }
 
@@ -253,6 +259,7 @@ void PreferenceState::save(const std::filesystem::path& path)
   cfg.set_restore_layout(will_restore_layout());
   cfg.set_viewport_overlay_pos(
       proto::OverlayPos{cen::to_underlying(viewport_overlay_pos())});
+  cfg.set_viewport_overlay_show_fps(viewport_overlay_show_fps());
 
   std::ofstream stream{path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
@@ -445,6 +452,16 @@ void PreferenceState::set_viewport_overlay_pos(const OverlayPos pos)
 auto PreferenceState::viewport_overlay_pos() const -> OverlayPos
 {
   return static_cast<OverlayPos>(mData->viewport_overlay_pos);
+}
+
+void PreferenceState::set_viewport_overlay_show_fps(const bool show)
+{
+  set_flag(_bit_show_viewport_overlay_fps, show);
+}
+
+auto PreferenceState::viewport_overlay_show_fps() const -> bool
+{
+  return test_flag(_bit_show_viewport_overlay_fps);
 }
 
 void PreferenceState::set_command_capacity(const usize capacity)

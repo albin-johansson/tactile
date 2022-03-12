@@ -60,4 +60,5 @@ message Settings {
   optional bool fold_tile_data = 28;
 
   optional OverlayPos viewport_overlay_pos = 27;
+  optional bool viewport_overlay_show_fps = 29;
 }
