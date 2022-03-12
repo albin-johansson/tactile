@@ -33,9 +33,9 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _get_component_attr(const entt::registry& registry,
-                                       const component_id id,
-                                       const std::string_view attribute)
+[[nodiscard]] auto _get_component_def_attr(const entt::registry& registry,
+                                           const component_id id,
+                                           const std::string_view attribute)
     -> decltype(comp::ComponentDef::attributes)::const_iterator
 {
   const auto [defEntity, def] = get_component_def(registry, id);
@@ -47,9 +47,9 @@ namespace {
   }
 }
 
-[[nodiscard]] auto _get_component_attr(entt::registry& registry,
-                                       const component_id id,
-                                       const std::string_view attribute)
+[[nodiscard]] auto _get_component_def_attr(entt::registry& registry,
+                                           const component_id id,
+                                           const std::string_view attribute)
     -> decltype(comp::ComponentDef::attributes)::iterator
 {
   const auto [defEntity, def] = get_component_def(registry, id);
@@ -370,7 +370,7 @@ auto duplicate_component_attribute(entt::registry& registry,
   log_debug("Duplicating attribute '{}' in component '{}'", attribute, id);
 
   auto [defEntity, def] = get_component_def(registry, id);
-  auto iter = _get_component_attr(registry, id, attribute);
+  auto iter = _get_component_def_attr(registry, id, attribute);
 
   int suffix = 1;
   std::string candidateName;
@@ -403,7 +403,7 @@ void set_component_attribute_value(entt::registry& registry,
                                    const std::string_view attribute,
                                    Attribute value)
 {
-  auto iter = _get_component_attr(registry, id, attribute);
+  auto iter = _get_component_def_attr(registry, id, attribute);
 
   TACTILE_ASSERT_MSG(iter->second.type() == value.type(),
                      "Requested default value had wrong type!");
@@ -414,7 +414,7 @@ auto get_component_attribute_type(const entt::registry& registry,
                                   const component_id id,
                                   const std::string_view attribute) -> AttributeType
 {
-  const auto iter = _get_component_attr(registry, id, attribute);
+  const auto iter = _get_component_def_attr(registry, id, attribute);
   return iter->second.type();
 }
 
@@ -422,7 +422,7 @@ auto get_component_attribute_value(const entt::registry& registry,
                                    const component_id id,
                                    const std::string_view attribute) -> const Attribute&
 {
-  const auto iter = _get_component_attr(registry, id, attribute);
+  const auto iter = _get_component_def_attr(registry, id, attribute);
   return iter->second;
 }
 
