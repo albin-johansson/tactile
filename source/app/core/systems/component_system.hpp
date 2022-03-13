@@ -42,10 +42,18 @@ namespace tactile::sys {
 
 struct RemoveComponentDefResult final
 {
-  component_id id{};                              ///< Previous component ID.
-  std::string name;                               ///< Previous component name.
-  ComponentAttrMap attributes;                    ///< Removed component attributes.
-  std::map<context_id, ComponentAttrMap> values;  ///< Removed context attributes.
+  component_id id{};                             ///< Previous component ID.
+  std::string name;                              ///< Previous component name.
+  ComponentAttrMap attributes;                   ///< Removed component attributes.
+  HashMap<context_id, ComponentAttrMap> values;  ///< Removed context attributes.
+};
+
+struct SetComponentAttrTypeResult final
+{
+  component_id comp_id{};                 ///< Affected component definition ID.
+  std::string attr_name;                  ///< Affected attribute name.
+  Attribute base_value;                   ///< Previous default value.
+  HashMap<context_id, Attribute> values;  ///< Previous values.
 };
 
 struct RemoveComponentResult final
@@ -247,17 +255,28 @@ auto duplicate_component_attribute(entt::registry& registry,
  *
  * \param registry the current document registry.
  * \param id the ID of the parent component.
- * \param attribute the name of the attribute that will be modified.
+ * \param attrName the name of the attribute that will be modified.
  * \param type the new type of the attribute.
+ *
+ * \return the previous values of the affected attributes.
  *
  * \throws TactileError if the attribute name is invalid.
  *
  * \see set_component_attribute_value()
  */
-void set_component_attribute_type(entt::registry& registry,
+auto set_component_attribute_type(entt::registry& registry,
                                   component_id id,
-                                  std::string_view attribute,
-                                  AttributeType type);
+                                  std::string_view attrName,
+                                  AttributeType type) -> SetComponentAttrTypeResult;
+
+/**
+ * \brief Restores the type of a component attribute.
+ *
+ * \param registry the map registry.
+ * \param snapshot the snapshot of the previous values.
+ */
+void restore_component_attribute_type(entt::registry& registry,
+                                      const SetComponentAttrTypeResult& snapshot);
 
 /**
  * \brief Sets the default value of a component attribute.

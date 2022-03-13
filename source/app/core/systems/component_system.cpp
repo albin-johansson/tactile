@@ -89,6 +89,83 @@ namespace {
   throw_traced(TactileError{"Did not find component!"});
 }
 
+void _visit_components(entt::registry& registry, auto callable)
+{
+  const auto& root = registry.ctx<comp::AttributeContext>();
+  for (const auto compEntity : root.components) {
+    auto& comp = checked_get<comp::Component>(registry, compEntity);
+    callable(root.id, comp);
+  }
+
+  for (auto&& [entity, ctx, comp] :
+       registry.view<comp::AttributeContext, comp::Component>().each()) {
+    callable(ctx.id, comp);
+  }
+}
+
+void _visit_components(const entt::registry& registry, auto callable)
+{
+  const auto& root = registry.ctx<comp::AttributeContext>();
+  for (const auto compEntity : root.components) {
+    const auto& comp = checked_get<comp::Component>(registry, compEntity);
+    callable(root.id, comp);
+  }
+
+  for (auto&& [entity, ctx, comp] :
+       registry.view<comp::AttributeContext, comp::Component>().each()) {
+    callable(ctx.id, comp);
+  }
+}
+
+void _visit_attributes(entt::registry& registry,
+                       const component_id compId,
+                       const std::string_view attrName,
+                       auto callable)
+{
+  _visit_components(registry,
+                    [=, &callable](const context_id ctx, comp::Component& comp) {
+                      if (comp.type == compId) {
+                        if (auto iter = comp.values.find(attrName);
+                            iter != comp.values.end()) {
+                          callable(ctx, iter->second);
+                        }
+                      }
+                    });
+}
+
+void _visit_attributes(const entt::registry& registry,
+                       const component_id compId,
+                       const std::string_view attrName,
+                       auto callable)
+{
+  _visit_components(registry,
+                    [=, &callable](const context_id ctx, const comp::Component& comp) {
+                      if (comp.type == compId) {
+                        if (auto iter = comp.values.find(attrName);
+                            iter != comp.values.end()) {
+                          callable(ctx, iter->second);
+                        }
+                      }
+                    });
+}
+
+[[nodiscard]] auto _collect_attributes(const entt::registry& registry,
+                                       const component_id componentId,
+                                       const std::string_view attrName)
+    -> HashMap<context_id, Attribute>
+{
+  HashMap<context_id, Attribute> attributes;
+
+  _visit_attributes(registry,
+                    componentId,
+                    attrName,
+                    [&](const context_id contextId, Attribute attr) {
+                      attributes[contextId] = std::move(attr);
+                    });
+
+  return attributes;
+}
+
 }  // namespace
 
 auto make_component_def(entt::registry& registry, std::string name) -> component_id
@@ -384,18 +461,50 @@ auto duplicate_component_attribute(entt::registry& registry,
   return candidateName;
 }
 
-void set_component_attribute_type(entt::registry& registry,
-                                  const component_id id,
-                                  const std::string_view attribute,
-                                  const AttributeType type)
+auto set_component_attribute_type(entt::registry& registry,
+                                  const component_id compId,
+                                  const std::string_view attrName,
+                                  const AttributeType type) -> SetComponentAttrTypeResult
 {
   log_verbose("Setting type of attribute '{}' in component '{}' to '{}'",
-              attribute,
-              id,
+              attrName,
+              compId,
               type);
 
-  auto iter = _get_component_attr(registry, id, attribute);
+  SetComponentAttrTypeResult result;
+  result.comp_id = compId;
+  result.attr_name = std::string{attrName};
+  result.values = _collect_attributes(registry, compId, attrName);
+
+  auto iter = _get_component_def_attr(registry, compId, attrName);
+  result.base_value = iter->second;
+
   iter->second.reset_to_default(type);
+
+  _visit_attributes(registry, compId, attrName, [type](context_id, Attribute& attr) {
+    attr.reset_to_default(type);
+  });
+
+  return result;
+}
+
+void restore_component_attribute_type(entt::registry& registry,
+                                      const SetComponentAttrTypeResult& snapshot)
+{
+  log_verbose("Restoring type of attribute '{}' in component '{}'",
+              snapshot.attr_name,
+              snapshot.comp_id);
+
+  {
+    auto&& [entity, def] = get_component_def(registry, snapshot.comp_id);
+    def.attributes[snapshot.attr_name] = snapshot.base_value;
+  }
+
+  for (auto&& [ctx, attr] : snapshot.values) {
+    auto& comp = _get_component(registry, ctx, snapshot.comp_id);
+    auto iter = comp.values.find(snapshot.attr_name);
+    iter->second = attr;
+  }
 }
 
 void set_component_attribute_value(entt::registry& registry,

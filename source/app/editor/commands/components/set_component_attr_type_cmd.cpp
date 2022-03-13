@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/systems/component_system.hpp"
 
 namespace tactile {
 
@@ -39,23 +38,16 @@ SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(RegistryRef registry,
 void SetComponentAttrTypeCmd::undo()
 {
   auto& registry = mRegistry.get();
-
-  const auto previous = mPreviousValue.value();
-
-  sys::set_component_attribute_type(registry,
-                                    mComponentId,
-                                    mAttributeName,
-                                    previous.type());
-  sys::set_component_attribute_value(registry, mComponentId, mAttributeName, previous);
+  sys::restore_component_attribute_type(registry, mSnapshot.value());
+  mSnapshot.reset();
 }
 
 void SetComponentAttrTypeCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  mPreviousValue =
-      sys::get_component_attribute_value(registry, mComponentId, mAttributeName);
-  sys::set_component_attribute_type(registry, mComponentId, mAttributeName, mNewType);
+  mSnapshot =
+      sys::set_component_attribute_type(registry, mComponentId, mAttributeName, mNewType);
 }
 
 }  // namespace tactile

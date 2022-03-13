@@ -22,6 +22,7 @@
 #include <string>  // string
 
 #include "core/components/attributes.hpp"
+#include "core/systems/component_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 
@@ -49,7 +50,7 @@ class SetComponentAttrTypeCmd final : public ACommand
   component_id mComponentId;
   std::string mAttributeName;
   AttributeType mNewType;
-  Maybe<Attribute> mPreviousValue;
+  Maybe<sys::SetComponentAttrTypeResult> mSnapshot;
 };
 
 }  // namespace tactile
