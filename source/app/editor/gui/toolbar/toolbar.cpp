@@ -139,12 +139,12 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_STAMP,
-                 "Stamp tool",
-                 model.is_tool_active(ToolType::stamp),
-                 model.is_tool_possible(ToolType::stamp),
-                 bw,
-                 bh)) {
+  if (tool_button(TAC_ICON_STAMP,
+                  "Stamp tool",
+                  model.is_tool_active(ToolType::stamp),
+                  model.is_tool_possible(ToolType::stamp),
+                  bw,
+                  bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::stamp);
   }
 
@@ -152,12 +152,12 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_BUCKET,
-                 "Bucket tool",
-                 model.is_tool_active(ToolType::bucket),
-                 model.is_tool_possible(ToolType::bucket),
-                 bw,
-                 bh)) {
+  if (tool_button(TAC_ICON_BUCKET,
+                  "Bucket tool",
+                  model.is_tool_active(ToolType::bucket),
+                  model.is_tool_possible(ToolType::bucket),
+                  bw,
+                  bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::bucket);
   }
 
@@ -165,12 +165,12 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_ERASER,
-                 "Eraser tool",
-                 model.is_tool_active(ToolType::eraser),
-                 model.is_tool_possible(ToolType::eraser),
-                 bw,
-                 bh)) {
+  if (tool_button(TAC_ICON_ERASER,
+                  "Eraser tool",
+                  model.is_tool_active(ToolType::eraser),
+                  model.is_tool_possible(ToolType::eraser),
+                  bw,
+                  bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::eraser);
   }
 
@@ -180,39 +180,39 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_OBJECT_SELECTION,
-                 "Object selection tool",
-                 model.is_tool_active(ToolType::object_selection),
-                 model.is_tool_possible(ToolType::object_selection),
-                 bw,
-                 bh)) {
+  if (tool_button(TAC_ICON_OBJECT_SELECTION,
+                  "Object selection tool",
+                  model.is_tool_active(ToolType::object_selection),
+                  model.is_tool_possible(ToolType::object_selection),
+                  bw,
+                  bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::object_selection);
   }
 
-  if (ToolButton(TAC_ICON_RECTANGLE,
-                 "Rectangle tool",
-                 model.is_tool_active(ToolType::rectangle),
-                 model.is_tool_possible(ToolType::rectangle),
-                 bw,
-                 bh)) {
+  if (tool_button(TAC_ICON_RECTANGLE,
+                  "Rectangle tool",
+                  model.is_tool_active(ToolType::rectangle),
+                  model.is_tool_possible(ToolType::rectangle),
+                  bw,
+                  bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::rectangle);
   }
 
-  if (ToolButton(TAC_ICON_ELLIPSE,
-                 "Ellipse tool",
-                 model.is_tool_active(ToolType::ellipse),
-                 model.is_tool_possible(ToolType::ellipse),
-                 bw,
-                 bh)) {
+  if (tool_button(TAC_ICON_ELLIPSE,
+                  "Ellipse tool",
+                  model.is_tool_active(ToolType::ellipse),
+                  model.is_tool_possible(ToolType::ellipse),
+                  bw,
+                  bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::ellipse);
   }
 
-  if (ToolButton(TAC_ICON_POINT,
-                 "Point tool",
-                 model.is_tool_active(ToolType::point),
-                 model.is_tool_possible(ToolType::point),
-                 bw,
-                 bh)) {
+  if (tool_button(TAC_ICON_POINT,
+                  "Point tool",
+                  model.is_tool_active(ToolType::point),
+                  model.is_tool_possible(ToolType::point),
+                  bw,
+                  bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::point);
   }
 

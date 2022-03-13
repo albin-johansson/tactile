@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-ADialog::ADialog(const c_str title) : mTitle{title}
+ADialog::ADialog(const char* title) : mTitle{title}
 {
   if (!mTitle) {
     throw_traced(TactileError{"Invalid null dialog title!"});
@@ -87,12 +87,12 @@ void ADialog::use_apply_button()
   mUseApplyButton = true;
 }
 
-void ADialog::set_accept_button_label(const c_str label)
+void ADialog::set_accept_button_label(const char* label)
 {
   mAcceptButtonLabel = label;
 }
 
-void ADialog::set_close_button_label(const c_str label)
+void ADialog::set_close_button_label(const char* label)
 {
   mCloseButtonLabel = label;
 }

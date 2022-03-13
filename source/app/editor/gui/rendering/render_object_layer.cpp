@@ -84,7 +84,7 @@ void _render_ellipse_object(GraphicsCtx& graphics,
   graphics.draw_translated_ellipse_with_shadow(center, radius);
 
   if (!context.name.empty()) {
-    const c_str text = context.name.c_str();
+    const auto* text = context.name.c_str();
     const auto textSize = ImGui::CalcTextSize(text);
     if (textSize.x <= radius.x) {
       const auto textX = center.x - (textSize.x / 2.0f);

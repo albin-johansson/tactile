@@ -34,7 +34,7 @@ namespace {
 constexpr EditorTheme _def_theme = EditorTheme::nocturnal;
 constexpr cen::color _def_viewport_bg{60, 60, 60};
 
-constexpr c_str _def_preferred_format = "YAML";
+constexpr auto _def_preferred_format = "YAML";
 
 constexpr usize _def_command_capacity = 100;
 constexpr int32 _def_preferred_tile_width = 32;

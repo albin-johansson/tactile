@@ -41,11 +41,11 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
 [[nodiscard]] auto _show_log_level_filter_combo(const LogLevel currentLevel)
     -> Maybe<LogLevel>
 {
-  static constexpr c_str verboseFilter = "Everything";
-  static constexpr c_str debugFilter = "Debug / Information / Warnings / Errors";
-  static constexpr c_str infoFilter = "Information / Warnings / Errors";
-  static constexpr c_str warningFilter = "Warnings / Errors";
-  static constexpr c_str errorFilter = "Errors";
+  static constexpr auto verboseFilter = "Everything";
+  static constexpr auto debugFilter = "Debug / Information / Warnings / Errors";
+  static constexpr auto infoFilter = "Information / Warnings / Errors";
+  static constexpr auto warningFilter = "Warnings / Errors";
+  static constexpr auto errorFilter = "Errors";
 
   static const auto comboWidth = ImGui::CalcTextSize(debugFilter).x * 1.2f;
 
@@ -54,7 +54,7 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
 
   ImGui::SameLine();
 
-  c_str filter = verboseFilter;
+  const char* filter = verboseFilter;
   switch (currentLevel) {
     case LogLevel::verbose:
       filter = verboseFilter;

@@ -83,11 +83,11 @@ class GraphicsCtx final
                                const ImVec2& position,
                                const ImVec2& uv);
 
-  void render_text(c_str text, const ImVec2& position);
+  void render_text(const char* text, const ImVec2& position);
 
-  void render_translated_text(c_str text, const ImVec2& position);
+  void render_translated_text(const char* text, const ImVec2& position);
 
-  void render_centered_text(c_str text, const ImVec2& center);
+  void render_centered_text(const char* text, const ImVec2& center);
 
   void render_translated_grid();
 

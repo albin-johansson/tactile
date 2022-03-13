@@ -43,7 +43,7 @@ class ADialog
    *
    * \throws tactile_error if the title is null.
    */
-  explicit ADialog(c_str title);
+  explicit ADialog(const char* title);
 
   virtual ~ADialog() noexcept = default;
 
@@ -126,7 +126,7 @@ class ADialog
    * \param label the label text;
    *              a null pointer may be used to indicate that the button will be hidden.
    */
-  void set_accept_button_label(c_str label);
+  void set_accept_button_label(const char* label);
 
   /**
    * \brief Sets the label of the "close" button.
@@ -136,12 +136,12 @@ class ADialog
    * \param label the label text;
    *              a null pointer may be used to indicate that the button will be hidden.
    */
-  void set_close_button_label(c_str label);
+  void set_close_button_label(const char* label);
 
  private:
-  c_str mTitle{};
-  c_str mAcceptButtonLabel{"OK"};
-  c_str mCloseButtonLabel{"Cancel"};
+  const char* mTitle{};
+  const char* mAcceptButtonLabel{"OK"};
+  const char* mCloseButtonLabel{"Cancel"};
   bool mUseApplyButton{};
   bool mShow{};
 };

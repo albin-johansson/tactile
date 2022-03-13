@@ -43,7 +43,7 @@ class FormattedString final
     mSize = ((std::min))(result.size, Capacity);
   }
 
-  [[nodiscard]] auto data() const noexcept -> c_str { return mBuffer.data(); }
+  [[nodiscard]] auto data() const noexcept -> const char* { return mBuffer.data(); }
 
   [[nodiscard]] auto view() const noexcept -> std::string_view
   {

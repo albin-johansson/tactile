@@ -43,13 +43,12 @@ constexpr std::array _items{std::make_pair("string", AttributeType::string),
 
 [[nodiscard]] auto _index_from_type(const AttributeType type) -> usize
 {
-  const auto it = std::find_if(
-      _items.begin(),
-      _items.end(),
-      [=](const std::pair<c_str, AttributeType>& pair) { return type == pair.second; });
+  auto iter = std::find_if(_items.begin(), _items.end(), [=](const auto& pair) {
+    return type == pair.second;
+  });
 
-  if (it != _items.end()) {
-    return static_cast<usize>(it - _items.begin());
+  if (iter != _items.end()) {
+    return static_cast<usize>(iter - _items.begin());
   }
   else {
     throw_traced(TactileError{"Invalid property type!"});

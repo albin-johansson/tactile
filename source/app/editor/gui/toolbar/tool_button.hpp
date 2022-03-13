@@ -23,11 +23,11 @@
 
 namespace tactile {
 
-auto ToolButton(c_str label,
-                c_str tooltip,
-                bool selected,
-                bool enabled = true,
-                float width = 0,
-                float height = 0) -> bool;
+auto tool_button(const char* label,
+                 const char* tooltip,
+                 bool selected,
+                 bool enabled = true,
+                 float width = 0,
+                 float height = 0) -> bool;
 
 }  // namespace tactile

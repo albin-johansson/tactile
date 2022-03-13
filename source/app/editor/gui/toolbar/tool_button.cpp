@@ -25,12 +25,12 @@
 
 namespace tactile {
 
-auto ToolButton(const c_str label,
-                const c_str tooltip,
-                const bool selected,
-                const bool enabled,
-                const float width,
-                const float height) -> bool
+auto tool_button(const char* label,
+                 const char* tooltip,
+                 const bool selected,
+                 const bool enabled,
+                 const float width,
+                 const float height) -> bool
 {
   if (selected) {
     const auto& style = ImGui::GetStyle();

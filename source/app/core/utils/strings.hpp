@@ -47,7 +47,7 @@ namespace tactile {
  *         an empty optional is returned upon failure.
  */
 template <typename T, is_integral<T> = 0>
-[[nodiscard]] auto from_string(const c_str str, const usize length, const int base)
+[[nodiscard]] auto from_string(const char* str, const usize length, const int base)
     -> Maybe<T>
 {
   if (!str) {
@@ -78,7 +78,7 @@ template <typename T, is_integral<T> = 0>
  *         an empty optional is returned upon failure.
  */
 template <typename T, is_integral<T> = 0>
-[[nodiscard]] auto from_string(const c_str str, const int base = 10) -> Maybe<T>
+[[nodiscard]] auto from_string(const char* str, const int base = 10) -> Maybe<T>
 {
   if (!str) {
     return nothing;
@@ -97,7 +97,7 @@ template <typename T, is_integral<T> = 0>
  *         an empty optional is returned upon failure.
  */
 template <typename T, is_floating<T> = 0>
-[[nodiscard]] auto from_string(const c_str str) -> Maybe<T>
+[[nodiscard]] auto from_string(const char* str) -> Maybe<T>
 {
   if (!str) {
     return nothing;

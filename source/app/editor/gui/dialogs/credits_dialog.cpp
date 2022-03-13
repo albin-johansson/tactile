@@ -32,7 +32,7 @@ constexpr auto _table_flags = ImGuiTableFlags_RowBg |      //
                               ImGuiTableFlags_Resizable |  //
                               ImGuiTableFlags_SizingStretchProp;
 
-void _row(const c_str lib, const c_str license)
+void _row(const char* lib, const char* license)
 {
   ImGui::TableNextRow();
 

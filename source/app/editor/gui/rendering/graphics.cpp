@@ -257,18 +257,18 @@ void GraphicsCtx::render_translated_image(const uint texture,
   render_image(texture, source, translate(position), uv);
 }
 
-void GraphicsCtx::render_text(const c_str text, const ImVec2& position)
+void GraphicsCtx::render_text(const char* text, const ImVec2& position)
 {
   TACTILE_ASSERT(text);
   ImGui::GetWindowDrawList()->AddText(position, get_draw_color(), text);
 }
 
-void GraphicsCtx::render_translated_text(const c_str text, const ImVec2& position)
+void GraphicsCtx::render_translated_text(const char* text, const ImVec2& position)
 {
   render_text(text, translate(position));
 }
 
-void GraphicsCtx::render_centered_text(const c_str text, const ImVec2& center)
+void GraphicsCtx::render_centered_text(const char* text, const ImVec2& center)
 {
   TACTILE_ASSERT(text);
 
