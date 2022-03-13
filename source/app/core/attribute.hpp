@@ -69,12 +69,12 @@ auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 enum object_t : int32 {};
 
 template <typename T>
-concept is_attribute_type = std::same_as<T, std::string> ||  //
-    std::same_as<T, int32> ||                                //
-    std::same_as<T, float> ||                                //
-    std::same_as<T, bool> ||                                 //
-    std::same_as<T, cen::color> ||                           //
-    std::same_as<T, std::filesystem::path> ||                //
+concept CAttributeType = std::same_as<T, std::string> ||  //
+    std::same_as<T, int32> ||                             //
+    std::same_as<T, float> ||                             //
+    std::same_as<T, bool> ||                              //
+    std::same_as<T, cen::color> ||                        //
+    std::same_as<T, std::filesystem::path> ||             //
     std::same_as<T, object_t>;
 
 /**
@@ -112,7 +112,7 @@ class Attribute final
    *
    * \param value the attribute value.
    */
-  template <is_attribute_type T>
+  template <CAttributeType T>
   /*implicit*/ Attribute(T value)
   {
     mValue.emplace<T>(std::move(value));
@@ -130,7 +130,7 @@ class Attribute final
    *
    * \param value the new attribute value.
    */
-  template <is_attribute_type T>
+  template <CAttributeType T>
   void set_value(T value)
   {
     mValue.emplace<T>(std::move(value));
@@ -415,13 +415,13 @@ class Attribute final
  private:
   value_type mValue;
 
-  template <is_attribute_type T>
+  template <CAttributeType T>
   [[nodiscard]] auto holds() const noexcept -> bool
   {
     return std::holds_alternative<T>(mValue);
   }
 
-  template <is_attribute_type T>
+  template <CAttributeType T>
   [[nodiscard]] auto get_if() const noexcept -> const T*
   {
     return std::get_if<T>(&mValue);
