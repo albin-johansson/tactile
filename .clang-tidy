@@ -24,8 +24,9 @@ Checks: "-*,
          cppcoreguidelines-*,
          -cppcoreguidelines-avoid-magic-numbers,
          -cppcoreguidelines-avoid-non-const-global-variables,
+         -cppcoreguidelines-pro-bounds-pointer-arithmetic,
          -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
          -cppcoreguidelines-pro-type-vararg,
          -cppcoreguidelines-owning-memory,
-         -cppcoreguidelines-avoid-goto,
+         -cppcoreguidelines-avoid-goto
          "
