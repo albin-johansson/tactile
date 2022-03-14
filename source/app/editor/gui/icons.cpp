@@ -20,11 +20,12 @@
 #include "icons.hpp"
 
 #include "misc/throw.hpp"
+#include "io/directories.hpp"
 
 namespace tactile {
 
 IconManager::IconManager(TextureManager& textures)
-    : mTactileIcon{textures.load("resources/icon.png").value().id}
+    : mTactileIcon{textures.load(find_resource("resources/icon.png")).value().id}
 {}
 
 auto get_icon(const LayerType type) -> const char*

@@ -24,6 +24,20 @@
 namespace tactile {
 
 /**
+ * \brief Returns the path to a resource.
+ *
+ * \details This function should be used to locate all resource files, such as images, to
+ * ensure that resource paths are resolved in app bundles on macOS.
+ *
+ * \param resource the path to the resource, e.g "resources/foo.png".
+ *
+ * \return the resolved file path.
+ *
+ * \ingroup io
+ */
+[[nodiscard]] auto find_resource(const char* resource) -> std::filesystem::path;
+
+/**
  * \brief Returns the path to the persistent file directory.
  *
  * \return the persistent file directory path.

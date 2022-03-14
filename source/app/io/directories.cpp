@@ -19,9 +19,18 @@
 
 #include "directories.hpp"
 
-#include <centurion.hpp>  // preferred_path
+#include <centurion.hpp>
+
+#include "misc/assert.hpp"
 
 namespace tactile {
+
+auto find_resource(const char* resource) -> std::filesystem::path
+{
+  TACTILE_ASSERT(resource);
+  static const std::filesystem::path dir{cen::base_path().copy()};
+  return dir / resource;
+}
 
 auto persistent_file_dir() -> const std::filesystem::path&
 {

@@ -25,6 +25,7 @@
 #include "editor/gui/themes.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
+#include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 #include "misc/logging.hpp"
@@ -43,8 +44,8 @@ void _load_fonts()
   io.FontGlobalScale = 1.0f / scale;
 
   if constexpr (on_osx) {
-    io.Fonts->AddFontFromFileTTF("resources/fonts/roboto/Roboto-Regular.ttf",
-                                 size * scale);
+    const auto path = find_resource("resources/fonts/roboto/Roboto-Regular.ttf");
+    io.Fonts->AddFontFromFileTTF(path.string().c_str(), size * scale);
   }
   else {
     io.Fonts->AddFontDefault();
@@ -58,10 +59,8 @@ void _load_fonts()
   config.GlyphMaxAdvanceX = config.GlyphMinAdvanceX;
 
   static constexpr ImWchar icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
-  io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
-                               13.0f * scale,
-                               &config,
-                               icon_range);
+  const auto path = find_resource("resources/fonts/fa/fa-solid-900.otf");
+  io.Fonts->AddFontFromFileTTF(path.string().c_str(), 13.0f * scale, &config, icon_range);
 
   io.Fonts->Build();
 }
