@@ -63,6 +63,30 @@ endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
   add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
+elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
+  message("[Tactile]: Building executable as application bundle...")
+
+  file(GLOB_RECURSE TACTILE_BUNDLE_RESOURCES "${RESOURCE_DIR}/*")
+
+  foreach (FILE ${TACTILE_BUNDLE_RESOURCES})
+    file(RELATIVE_PATH NEW_FILE "${RESOURCE_DIR}/" ${FILE})
+    get_filename_component(NEW_FILE_PATH ${NEW_FILE} DIRECTORY)
+    set_property(SOURCE ${FILE}
+                 PROPERTY MACOSX_PACKAGE_LOCATION "Resources/resources/${NEW_FILE_PATH}")
+  endforeach ()
+
+  add_executable(${TACTILE_EXE} MACOSX_BUNDLE ${SOURCE_FILES} main.cpp ${TACTILE_BUNDLE_RESOURCES})
+
+  set_target_properties(${TACTILE_EXE} PROPERTIES
+                        MACOSX_BUNDLE TRUE
+                        MACOSX_BUNDLE_GUI_IDENTIFIER "com.albinjohansson.tactile"
+                        MACOSX_BUNDLE_BUNDLE_NAME "Tactile"
+                        MACOSX_BUNDLE_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION}"
+                        MACOSX_BUNDLE_SHORT_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
+                        MACOSX_BUNDLE_LONG_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
+                        MACOSX_BUNDLE_COPYRIGHT "GPL-3.0"
+                        # TODO MACOSX_BUNDLE_ICON_FILE
+                        )
 else ()
   add_executable(${TACTILE_EXE} ${SOURCE_FILES} main.cpp)
 endif ()
@@ -104,4 +128,6 @@ target_link_libraries(${TACTILE_EXE}
                       SDL2::SDL2main
                       )
 
-copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
+if (NOT CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
+  copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
+endif ()
