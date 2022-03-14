@@ -7,7 +7,12 @@ endif ()
 message("[Tactile]: CMake toolchain file is... ${CMAKE_TOOLCHAIN_FILE}")
 message("[Tactile]: Vcpkg target triplet is... ${VCPKG_TARGET_TRIPLET}")
 
-project(tactile CXX)
+project(tactile
+        HOMEPAGE_URL "https://github.com/albin-johansson/tactile"
+        VERSION 0.3.0
+        LANGUAGES CXX)
+
+message("[Tactile]: Current version is ${CMAKE_PROJECT_VERSION}")
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
