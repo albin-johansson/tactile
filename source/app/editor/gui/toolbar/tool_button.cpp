@@ -33,8 +33,7 @@ auto tool_button(const char* label,
                  const float height) -> bool
 {
   if (selected) {
-    const auto& style = ImGui::GetStyle();
-    ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_HeaderActive]);
+    ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 180, 0, 0xFF));
   }
 
   const auto pressed = button(label, tooltip, enabled, width, height);
