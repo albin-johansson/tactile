@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "home_page_content.hpp"
+#include "start_page_view.hpp"
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-void update_home_page_content(const IconManager& icons, entt::dispatcher& dispatcher)
+void show_start_page_view(const IconManager& icons, entt::dispatcher& dispatcher)
 {
   prepare_vertical_alignment_center(4);
 

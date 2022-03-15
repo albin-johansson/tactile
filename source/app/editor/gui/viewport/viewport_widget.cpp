@@ -22,11 +22,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "document_tabs.hpp"
 #include "editor/events/tool_events.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/gui/viewport/views/document_tab_view.hpp"
+#include "editor/gui/viewport/views/start_page_view.hpp"
 #include "editor/model.hpp"
-#include "home_page_content.hpp"
 
 namespace tactile {
 namespace {
@@ -58,7 +58,7 @@ void update_viewport_widget(const DocumentModel& model,
     _mouse_within_window = scoped::Window::current_window_contains_mouse();
 
     if (model.has_active_document()) {
-      update_document_tabs(model, dispatcher);
+      show_document_tab_view(model, dispatcher);
 
       if (window.mouse_entered()) {
         dispatcher.enqueue<ToolEnteredEvent>();
@@ -69,7 +69,7 @@ void update_viewport_widget(const DocumentModel& model,
       }
     }
     else {
-      update_home_page_content(icons, dispatcher);
+      show_start_page_view(icons, dispatcher);
     }
   }
   else {

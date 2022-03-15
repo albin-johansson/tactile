@@ -17,19 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "document_tabs.hpp"
+#include "document_tab_view.hpp"
 
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
-#include "editor/model.hpp"
 #include "map_view.hpp"
+#include "editor/model.hpp"
 
 namespace tactile {
 
-void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_document_tab_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::TabBar bar{"##MapViewportTabBar", ImGuiTabBarFlags_Reorderable};
       bar.is_open()) {

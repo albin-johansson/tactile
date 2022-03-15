@@ -34,7 +34,7 @@
 #include "tilesets/tileset_dock.hpp"
 #include "tilesets/tileset_view.hpp"
 #include "toolbar/toolbar.hpp"
-#include "viewport/map_view.hpp"
+#include "editor/gui/viewport/views/map_view.hpp"
 #include "viewport/viewport_widget.hpp"
 
 namespace tactile {

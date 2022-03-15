@@ -34,7 +34,7 @@
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
-#include "editor/gui/viewport/map_view.hpp"
+#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"

@@ -41,10 +41,10 @@
 #include "editor/gui/rendering/render_map.hpp"
 #include "editor/gui/rendering/render_stamp_preview.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/gui/viewport/viewport_cursor_info.hpp"
+#include "editor/gui/viewport/viewport_overlay.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
-#include "viewport_cursor_info.hpp"
-#include "viewport_overlay.hpp"
 
 namespace tactile {
 namespace {
