@@ -32,6 +32,12 @@ auto find_resource(const char* resource) -> std::filesystem::path
   return dir / resource;
 }
 
+auto widget_ini_path() -> const std::filesystem::path&
+{
+  static const auto ini = absolute(find_resource("imgui.ini"));
+  return ini;
+}
+
 auto persistent_file_dir() -> const std::filesystem::path&
 {
   static const std::filesystem::path path{

@@ -77,6 +77,9 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // NOLINT
   io.WantCaptureKeyboard = true;
 
+  static const auto ini = widget_ini_path().string();
+  io.IniFilename = ini.c_str();
+
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
   if constexpr (on_osx) {
     mInitializedBackend = ImGui_ImplOpenGL3_Init("#version 150");
