@@ -28,11 +28,9 @@
 #include "editor/events/misc_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
-#include "editor/events/viewport_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/docking_toolbar.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/menus/map_menu.hpp"
 #include "editor/model.hpp"
 #include "tool_button.hpp"
 
@@ -107,28 +105,6 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (button(TAC_ICON_CENTER, "Center viewport", true, bw, bh)) {
-    dispatcher.enqueue<CenterViewportEvent>();
-  }
-
-  if (axis == ImGuiAxis_X) {
-    ImGui::SameLine();
-  }
-
-  if (button(TAC_ICON_RESIZE, "Resize map", true, bw, bh)) {
-    dispatcher.enqueue<OpenResizeMapDialogEvent>();
-  }
-
-  if (axis == ImGuiAxis_X) {
-    ImGui::SameLine();
-  }
-
-  separate();
-
-  if (axis == ImGuiAxis_X) {
-    ImGui::SameLine();
-  }
-
   if (button(TAC_ICON_TILESET, "Create tileset", true, bw, bh)) {
     dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
   }
@@ -174,8 +150,6 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     dispatcher.enqueue<SelectToolEvent>(ToolType::eraser);
   }
 
-  separate();
-
   if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
@@ -189,6 +163,10 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     dispatcher.enqueue<SelectToolEvent>(ToolType::object_selection);
   }
 
+  if (axis == ImGuiAxis_X) {
+    ImGui::SameLine();
+  }
+
   if (tool_button(TAC_ICON_RECTANGLE,
                   "Rectangle tool",
                   model.is_tool_active(ToolType::rectangle),
@@ -198,6 +176,10 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
     dispatcher.enqueue<SelectToolEvent>(ToolType::rectangle);
   }
 
+  if (axis == ImGuiAxis_X) {
+    ImGui::SameLine();
+  }
+
   if (tool_button(TAC_ICON_ELLIPSE,
                   "Ellipse tool",
                   model.is_tool_active(ToolType::ellipse),
@@ -205,6 +187,10 @@ void Toolbar::Update(const DocumentModel& model, entt::dispatcher& dispatcher)
                   bw,
                   bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::ellipse);
+  }
+
+  if (axis == ImGuiAxis_X) {
+    ImGui::SameLine();
   }
 
   if (tool_button(TAC_ICON_POINT,
