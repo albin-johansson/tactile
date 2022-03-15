@@ -21,10 +21,7 @@
 
 #include <utility>  // move, forward
 
-#include <GL/glew.h>
 #include <imgui.h>
-#include <imgui_impl_opengl3.h>
-#include <imgui_impl_sdl.h>
 #include <imgui_internal.h>
 
 #include "application_events.hpp"
@@ -79,62 +76,60 @@ void _register(DocumentModel& model, Args&&... args)
 }  // namespace
 
 Application::Application(AppConfiguration* configuration)
-    : mConfiguration{configuration}
+    : AEventLoop{configuration}
+    , mConfiguration{configuration}
     , mIcons{mTextures}
 {
   subscribe_to_events(*this);
   load_default_shortcuts();
 }
 
-auto Application::run() -> int
+void Application::on_startup()
 {
-  auto& window = mConfiguration->window();
-
   load_file_history();
 
   if (get_preferences().will_restore_last_session()) {
     restore_last_session(mModel, mTextures);
   }
 
+  auto& window = mConfiguration->window();
   window.show();
-
-  const auto& io = ImGui::GetIO();
-  while (!mQuit) {
-    mKeyboard.refresh();
-    poll_events();
-
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-    ImGui::NewFrame();
-    update_frame();
-    ImGui::EndFrame();
-
-    ImGui::Render();
-
-    glViewport(0,
-               0,
-               static_cast<int>(io.DisplaySize.x),
-               static_cast<int>(io.DisplaySize.y));
-    glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    cen::gl::swap(window);
-  }
-
-  on_about_to_exit();
-  window.hide();
-
-  return 0;
 }
 
-void Application::on_about_to_exit()
+void Application::on_shutdown()
 {
   save_current_files_to_history();
   save_preferences();
   save_session(mModel);
   save_file_history();
+
+  auto& window = mConfiguration->window();
+  window.hide();
+}
+
+void Application::on_update()
+{
+  mDispatcher.update();
+  mModel.update();
+  mWidgets.update(mModel, mIcons, mDispatcher);
+}
+
+void Application::on_event(const cen::event_handler& handler)
+{
+  switch (handler.type().value()) {
+    case cen::event_type::key_up:
+      [[fallthrough]];
+    case cen::event_type::key_down:
+      on_keyboard_event(handler.get<cen::keyboard_event>());
+      break;
+
+    case cen::event_type::mouse_wheel:
+      on_mouse_wheel_event(handler.get<cen::mouse_wheel_event>());
+      break;
+
+    default:
+      break;
+  }
 }
 
 void Application::save_current_files_to_history()
@@ -142,33 +137,6 @@ void Application::save_current_files_to_history()
   for (const auto& [id, document] : mModel) {
     if (!document->path.empty()) {
       add_file_to_history(document->path);
-    }
-  }
-}
-
-void Application::poll_events()
-{
-  cen::event_handler handler;
-  while (handler.poll()) {
-    ImGui_ImplSDL2_ProcessEvent(handler.data());
-
-    switch (handler.type().value()) {
-      case cen::event_type::quit:
-        mQuit = true;
-        break;
-
-      case cen::event_type::key_up:
-        [[fallthrough]];
-      case cen::event_type::key_down:
-        on_keyboard_event(handler.get<cen::keyboard_event>());
-        break;
-
-      case cen::event_type::mouse_wheel:
-        on_mouse_wheel_event(handler.get<cen::mouse_wheel_event>());
-        break;
-
-      default:
-        break;
     }
   }
 }
@@ -221,13 +189,6 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
       }
     }
   }
-}
-
-void Application::update_frame()
-{
-  mDispatcher.update();
-  mModel.update();
-  mWidgets.update(mModel, mIcons, mDispatcher);
 }
 
 void Application::on_undo()
@@ -800,7 +761,7 @@ void Application::on_toggle_ui()
 
 void Application::on_quit()
 {
-  mQuit = true;
+  stop();
 }
 
 }  // namespace tactile

@@ -31,7 +31,8 @@ auto main(int, char**) -> int
   try {
     tactile::AppConfiguration configuration;
     tactile::Application app{&configuration};
-    return app.run();
+    app.start();
+    return 0;
   }
   catch (const std::exception& e) {
     tactile::print(fmt::color::hot_pink, "Unhandled exception message: '{}'\n", e.what());

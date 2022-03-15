@@ -36,6 +36,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
+#include "loop.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -61,25 +62,32 @@ struct WidgetShowState final
  * \details This class handles the main poll/update/render application loop, along with
  * the basic initialization and configuration of all aspects of the Tactile application.
  */
-class Application final
+class Application final : AEventLoop
 {
   friend void subscribe_to_events(Application& app);
 
  public:
   explicit Application(AppConfiguration* configuration);
 
-  auto run() -> int;
+  using AEventLoop::start;
+
+ protected:
+  void on_startup() override;
+
+  void on_shutdown() override;
+
+  void on_update() override;
+
+  void on_event(const cen::event_handler& handler) override;
 
  private:
   AppConfiguration* mConfiguration{}; /* Non-owning */
   entt::dispatcher mDispatcher;
-  cen::keyboard mKeyboard;
   DocumentModel mModel;
   TextureManager mTextures;
   IconManager mIcons;
   WidgetManager mWidgets;
   WidgetShowState mWidgetShowState;
-  bool mQuit{};
 
   template <typename Event, auto Slot>
   void connect()
@@ -87,17 +95,11 @@ class Application final
     mDispatcher.sink<Event>().template connect<Slot>(this);
   }
 
-  void on_about_to_exit();
-
   void save_current_files_to_history();
-
-  void poll_events();
 
   void on_keyboard_event(cen::keyboard_event event);
 
   void on_mouse_wheel_event(const cen::mouse_wheel_event& event);
-
-  void update_frame();
 
   void on_undo();
 
