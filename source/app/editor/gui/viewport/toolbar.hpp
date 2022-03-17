@@ -29,6 +29,8 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
 
 [[nodiscard]] auto is_toolbar_visible() -> bool;
 
+[[nodiscard]] auto is_toolbar_hovered() -> bool;
+
 [[nodiscard]] auto is_toolbar_focused() -> bool;
 
 }  // namespace tactile

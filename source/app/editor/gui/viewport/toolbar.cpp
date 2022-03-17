@@ -40,8 +40,9 @@ constexpr auto _window_flags =
 constexpr int _button_width = 24;
 constexpr int _button_height = 24;
 
-inline bool _toolbar_visible = false;
-inline bool _toolbar_focused = false;
+constinit bool _toolbar_visible = false;
+constinit bool _toolbar_hovered = false;
+constinit bool _toolbar_focused = false;
 
 void _prepare_window_position()
 {
@@ -94,6 +95,7 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
 
   if (scoped::Window window{"##ViewportToolbarWindow", _window_flags}; window.is_open()) {
     _toolbar_visible = true;
+    _toolbar_hovered = ImGui::IsWindowHovered();
     _toolbar_focused = window.has_focus();
 
     if (button(TAC_ICON_UNDO, "Undo", model.can_undo(), _button_width, _button_height)) {
@@ -135,6 +137,7 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
   }
   else {
     _toolbar_visible = false;
+    _toolbar_hovered = false;
     _toolbar_focused = false;
   }
 }
@@ -142,6 +145,11 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
 auto is_toolbar_visible() -> bool
 {
   return _toolbar_visible;
+}
+
+auto is_toolbar_hovered() -> bool
+{
+  return _toolbar_hovered;
 }
 
 auto is_toolbar_focused() -> bool

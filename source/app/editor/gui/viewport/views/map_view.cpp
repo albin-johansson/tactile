@@ -142,6 +142,10 @@ void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
     return;
   }
 
+  if (is_toolbar_hovered()) {
+    return;
+  }
+
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
                                  ImGui::GetWindowContentRegionMax())) {
     _check_for<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
