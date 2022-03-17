@@ -22,6 +22,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/systems/tileset_system.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"
@@ -80,6 +81,22 @@ void _tool_button(const DocumentModel& model,
   }
 }
 
+void _show_extra_toolbar(auto callable)
+{
+  const auto& style = ImGui::GetStyle();
+  const auto pos = ImGui::GetWindowPos();
+  const auto size = ImGui::GetWindowSize();
+  ImGui::SetNextWindowPos({size.x + style.ItemSpacing.x, pos.y});
+
+  if (scoped::Window extra{"##ToolbarWindowExtra", _window_flags}; extra.is_open()) {
+    /* Prevent other mouse events in the viewport by treating both toolbars as one */
+    if (!_toolbar_hovered) {
+      _toolbar_hovered = ImGui::IsWindowHovered();
+    }
+    callable();
+  }
+}
+
 }  // namespace
 
 void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher)
@@ -93,7 +110,7 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
 
   scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {6, 6}};
 
-  if (scoped::Window window{"##ViewportToolbarWindow", _window_flags}; window.is_open()) {
+  if (scoped::Window window{"##ToolbarWindow", _window_flags}; window.is_open()) {
     _toolbar_visible = true;
     _toolbar_hovered = ImGui::IsWindowHovered();
     _toolbar_focused = window.has_focus();
@@ -106,34 +123,43 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
       dispatcher.enqueue<RedoEvent>();
     }
 
-    ImGui::Separator();
+    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
     if (button(TAC_ICON_TILESET, "Create tileset", true, _button_width, _button_height)) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
-    ImGui::Separator();
+    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
     _tool_button(model, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::stamp);
     _tool_button(model, dispatcher, TAC_ICON_ERASER, "Eraser tool", ToolType::eraser);
     _tool_button(model, dispatcher, TAC_ICON_BUCKET, "Bucket tool", ToolType::bucket);
-
-    ImGui::Separator();
-
     _tool_button(model,
                  dispatcher,
                  TAC_ICON_OBJECT_SELECTION,
                  "Object selection tool",
                  ToolType::object_selection);
-
     _tool_button(model,
                  dispatcher,
                  TAC_ICON_RECTANGLE,
                  "Rectangle tool",
                  ToolType::rectangle);
-
     _tool_button(model, dispatcher, TAC_ICON_ELLIPSE, "Ellipse tool", ToolType::ellipse);
     _tool_button(model, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::point);
+
+    if (model.is_tool_active(ToolType::stamp)) {
+      const auto& registry = model.get_active_registry();
+      _show_extra_toolbar([&registry] {
+        if (button(TAC_ICON_STAMP_RANDOMIZER,
+                   "Stamp random tile",
+                   sys::is_tileset_selection_not_empty(registry) &&
+                       !sys::is_single_tile_selected_in_tileset(registry),
+                   _button_width,
+                   _button_height)) {
+          // TODO emit randomizer mode event
+        }
+      });
+    }
   }
   else {
     _toolbar_visible = false;
