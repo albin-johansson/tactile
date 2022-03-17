@@ -52,7 +52,6 @@ struct WidgetShowState final
   bool prev_show_tileset_dock{};
   bool prev_show_property_dock{};
   bool prev_show_log_dock{};
-  bool prev_show_toolbar{};
   bool prev_show_component_dock{};
 };
 

@@ -24,6 +24,7 @@
 #include "components/component_dock.hpp"
 #include "dialogs/map_parse_error_dialog.hpp"
 #include "dialogs/resize_map_dialog.hpp"
+#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/model.hpp"
 #include "icons.hpp"
 #include "layers/layer_dock.hpp"
@@ -33,8 +34,7 @@
 #include "properties/property_dock.hpp"
 #include "tilesets/tileset_dock.hpp"
 #include "tilesets/tileset_view.hpp"
-#include "toolbar/toolbar.hpp"
-#include "editor/gui/viewport/views/map_view.hpp"
+#include "viewport/toolbar.hpp"
 #include "viewport/viewport_widget.hpp"
 
 namespace tactile {
@@ -42,7 +42,6 @@ namespace tactile {
 struct WidgetManager::Widgets final
 {
   MenuBar menu_bar;
-  Toolbar toolbar;
   TilesetDock tileset_dock;
   LayerDock layer_dock;
   PropertyDock property_dock;
@@ -64,7 +63,6 @@ void WidgetManager::update(const DocumentModel& model,
   update_dock_space();
 
   if (model.has_active_document()) {
-    mWidgets->toolbar.Update(model, dispatcher);
     mWidgets->layer_dock.update(model, dispatcher);
     mWidgets->tileset_dock.update(model, dispatcher);
     mWidgets->property_dock.update(model, dispatcher);
@@ -139,11 +137,6 @@ void WidgetManager::show_component_editor(const DocumentModel& model)
   mWidgets->menu_bar.show_component_editor(model);
 }
 
-void WidgetManager::set_toolbar_visible(const bool visible)
-{
-  mWidgets->toolbar.SetVisible(visible);
-}
-
 auto WidgetManager::is_editor_focused() const -> bool
 {
   return is_toolbar_focused() || is_viewport_focused() || is_layer_dock_focused() ||
@@ -152,7 +145,7 @@ auto WidgetManager::is_editor_focused() const -> bool
 
 auto WidgetManager::is_toolbar_focused() const -> bool
 {
-  return mWidgets->toolbar.IsFocused();
+  return tactile::is_toolbar_focused();
 }
 
 auto WidgetManager::is_viewport_focused() const -> bool
@@ -187,7 +180,7 @@ auto WidgetManager::is_tileset_dock_hovered() const -> bool
 
 auto WidgetManager::is_toolbar_visible() const -> bool
 {
-  return mWidgets->toolbar.IsVisible();
+  return tactile::is_toolbar_visible();
 }
 
 auto WidgetManager::tileset_view_width() const -> Maybe<float>

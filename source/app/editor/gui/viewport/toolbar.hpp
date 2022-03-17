@@ -19,12 +19,16 @@
 
 #pragma once
 
-#include "tactile.hpp"
+#include <entt/entt.hpp>
 
 namespace tactile {
 
-void begin_docking_toolbar(const char* name, int& axis);
+class DocumentModel;
 
-void end_docking_toolbar();
+void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher);
+
+[[nodiscard]] auto is_toolbar_visible() -> bool;
+
+[[nodiscard]] auto is_toolbar_focused() -> bool;
 
 }  // namespace tactile

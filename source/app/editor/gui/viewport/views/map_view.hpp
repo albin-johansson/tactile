@@ -19,11 +19,13 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry, dispatcher
+#include <entt/entt.hpp>
 
 namespace tactile {
 
-void update_map_view(const entt::registry& registry, entt::dispatcher& dispatcher);
+class DocumentModel;
+
+void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 void update_map_view_object_context_menu(const entt::registry& registry,
                                          entt::dispatcher& dispatcher);

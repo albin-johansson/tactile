@@ -69,8 +69,6 @@ class WidgetManager final
 
   void show_component_editor(const DocumentModel& model);
 
-  void set_toolbar_visible(bool visible);
-
   [[nodiscard]] auto is_editor_focused() const -> bool;
 
   [[nodiscard]] auto is_toolbar_focused() const -> bool;

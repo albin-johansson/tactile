@@ -735,7 +735,6 @@ void Application::on_toggle_ui()
     mWidgetShowState.prev_show_property_dock = prefs.is_property_dock_visible();
     mWidgetShowState.prev_show_log_dock = prefs.is_log_dock_visible();
     mWidgetShowState.prev_show_component_dock = prefs.is_component_dock_visible();
-    mWidgetShowState.prev_show_toolbar = mWidgets.is_toolbar_visible();
   }
 
   prefs.set_layer_dock_visible(show);
@@ -744,16 +743,12 @@ void Application::on_toggle_ui()
   prefs.set_component_dock_visible(show);
   prefs.set_log_dock_visible(show);
 
-  mWidgets.set_toolbar_visible(show);
-
   if (show) {
     prefs.set_layer_dock_visible(mWidgetShowState.prev_show_layer_dock);
     prefs.set_tileset_dock_visible(mWidgetShowState.prev_show_tileset_dock);
     prefs.set_property_dock_visible(mWidgetShowState.prev_show_property_dock);
     prefs.set_log_dock_visible(mWidgetShowState.prev_show_log_dock);
     prefs.set_component_dock_visible(mWidgetShowState.prev_show_component_dock);
-
-    mWidgets.set_toolbar_visible(mWidgetShowState.prev_show_toolbar);
   }
 
   show = !show;
