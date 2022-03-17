@@ -14,7 +14,6 @@ project(tactile
 
 message("[Tactile]: Current version is ${CMAKE_PROJECT_VERSION}")
 
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -58,7 +57,12 @@ find_path(STB_INCLUDE_DIRS "stb.h")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 
-include(Utilities)
+function(copy_directory_post_build target from to)
+  add_custom_command(TARGET ${target} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     ${from}
+                     ${to})
+endfunction()
 
 function(tactile_set_compile_options target)
   if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
