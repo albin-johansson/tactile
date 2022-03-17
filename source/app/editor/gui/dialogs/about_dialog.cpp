@@ -25,7 +25,7 @@
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"
 
-#define TAC_VER "0.3.0"
+#define TAC_VER "0.4.0"
 #define TAC_URL "https://www.github.com/albin-johansson/tactile"
 #define TAC_LICENSE "GPL v3.0"
 

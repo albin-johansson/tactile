@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Installer>
   <Name>Tactile</Name>
-  <Version>0.3.0</Version>
+  <Version>0.4.0</Version>
   <Title>Tactile installer</Title>
   <Publisher>Albin Johansson</Publisher>
   <StartMenuDir>Tactile</StartMenuDir>
