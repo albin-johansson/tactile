@@ -222,7 +222,8 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
   const auto cursor = GetViewportCursorInfo(info);
   _poll_mouse(dispatcher, cursor);
 
-  if (ImGui::IsWindowHovered()) {
+  if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
+                                 ImGui::GetWindowContentRegionMax())) {
     _draw_cursor_gizmos(graphics, registry, cursor, info);
   }
 
