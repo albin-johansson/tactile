@@ -3,7 +3,7 @@
   <DisplayName>The Tactile map editor</DisplayName>
   <Description>Install the Tactile application.</Description>
   <Version>0.3.0</Version>
-  <ReleaseDate>2022-03-14</ReleaseDate>
+  <ReleaseDate>2022-03-17</ReleaseDate>
   <Licenses>
     <License name="GPL-3.0" file="LICENSE" />
   </Licenses>
