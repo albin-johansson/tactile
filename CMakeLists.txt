@@ -56,6 +56,8 @@ find_package(GTest CONFIG REQUIRED)
 
 find_path(STB_INCLUDE_DIRS "stb.h")
 
+option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
+
 include(Utilities)
 
 function(tactile_set_compile_options target)

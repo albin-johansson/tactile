@@ -62,8 +62,9 @@ if (MSVC)
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
+  message("[Tactile]: Building executable a WIN32 (non-console) executable...")
   add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
-elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
+elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MATCHES ON)
   message("[Tactile]: Building executable as application bundle...")
 
   file(GLOB_RECURSE TACTILE_BUNDLE_RESOURCES "${RESOURCE_DIR}/*")
