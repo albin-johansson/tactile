@@ -129,6 +129,7 @@ target_link_libraries(${TACTILE_EXE}
                       SDL2::SDL2main
                       )
 
-if (NOT CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
+# Do not copy the resources when building as macOS app bundle
+if (TACTILE_BUILD_APP_BUNDLE MATCHES OFF)
   copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
 endif ()
