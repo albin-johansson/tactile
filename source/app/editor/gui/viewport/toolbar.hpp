@@ -25,6 +25,9 @@ namespace tactile {
 
 class DocumentModel;
 
+/// \name Toolbar functions
+/// \{
+
 void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 [[nodiscard]] auto is_toolbar_visible() -> bool;
@@ -32,5 +35,7 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
 [[nodiscard]] auto is_toolbar_hovered() -> bool;
 
 [[nodiscard]] auto is_toolbar_focused() -> bool;
+
+/// \} End of toolbar functions
 
 }  // namespace tactile
