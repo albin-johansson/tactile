@@ -31,8 +31,8 @@ void on_bucket_tool_pressed(entt::registry& registry,
                             entt::dispatcher& dispatcher,
                             const MouseInfo& mouse)
 {
-  if (is_tile_layer_active(registry) && is_single_tile_selected_in_tileset(registry) &&
-      mouse.button == cen::mouse_button::left) {
+  if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
+      is_tile_layer_active(registry) && is_single_tile_selected_in_tileset(registry)) {
     const auto entity = find_active_tileset(registry);
     const auto& selection = checked_get<comp::TilesetSelection>(registry, entity);
 
