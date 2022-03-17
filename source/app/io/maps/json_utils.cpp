@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "json_utils.hpp"
 
 #include <fstream>  // ifstream, ofstream
@@ -13,7 +32,7 @@ namespace {
 
 template <typename T>
 [[nodiscard]] auto _as(const nlohmann::json& json, const std::string_view name)
-    -> maybe<T>
+    -> Maybe<T>
 {
   const auto iter = json.find(name);
   if (iter != json.end()) {
@@ -26,39 +45,39 @@ template <typename T>
 
 }  // namespace
 
-void to_json(nlohmann::json& json, const attribute_value& value)
+void to_json(nlohmann::json& json, const Attribute& value)
 {
   switch (value.type()) {
-    case attribute_type::string:
+    case AttributeType::string:
       json = value.as_string();
       break;
 
-    case attribute_type::integer:
+    case AttributeType::integer:
       json = value.as_int();
       break;
 
-    case attribute_type::floating:
+    case AttributeType::floating:
       json = value.as_float();
       break;
 
-    case attribute_type::boolean:
+    case AttributeType::boolean:
       json = value.as_bool();
       break;
 
-    case attribute_type::file:
+    case AttributeType::file:
       json = convert_to_forward_slashes(value.as_file());
       break;
 
-    case attribute_type::color:
+    case AttributeType::color:
       json = value.as_color().as_argb();
       break;
 
-    case attribute_type::object:
+    case AttributeType::object:
       json = value.as_object();
       break;
 
     default:
-      throw_traced(tactile_error{"Invalid attribute type!"});
+      throw_traced(TactileError{"Invalid attribute type!"});
   }
 }
 
@@ -73,7 +92,7 @@ void write_json(const nlohmann::json& json, const std::filesystem::path& path)
   stream << json;
 }
 
-auto read_json(const std::filesystem::path& path) -> maybe<nlohmann::json>
+auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>
 {
   try {
     std::ifstream stream{path, std::ios::in};
@@ -89,27 +108,27 @@ auto read_json(const std::filesystem::path& path) -> maybe<nlohmann::json>
 }
 
 auto as_string(const nlohmann::json& json, const std::string_view name)
-    -> maybe<std::string>
+    -> Maybe<std::string>
 {
   return _as<std::string>(json, name);
 }
 
-auto as_int(const nlohmann::json& json, const std::string_view name) -> maybe<int32>
+auto as_int(const nlohmann::json& json, const std::string_view name) -> Maybe<int32>
 {
   return _as<int32>(json, name);
 }
 
-auto as_uint(const nlohmann::json& json, const std::string_view name) -> maybe<uint32>
+auto as_uint(const nlohmann::json& json, const std::string_view name) -> Maybe<uint32>
 {
   return _as<uint32>(json, name);
 }
 
-auto as_float(const nlohmann::json& json, const std::string_view name) -> maybe<float>
+auto as_float(const nlohmann::json& json, const std::string_view name) -> Maybe<float>
 {
   return _as<float>(json, name);
 }
 
-auto as_bool(const nlohmann::json& json, const std::string_view name) -> maybe<bool>
+auto as_bool(const nlohmann::json& json, const std::string_view name) -> Maybe<bool>
 {
   return _as<bool>(json, name);
 }

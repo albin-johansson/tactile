@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "tile_layer_system.hpp"
 
 #include "layer_system.hpp"
@@ -6,7 +25,7 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto is_valid_position(const comp::tile_layer& layer,
+[[nodiscard]] auto is_valid_position(const comp::TileLayer& layer,
                                      const usize row,
                                      const usize col) -> bool
 {
@@ -19,15 +38,15 @@ auto get_tile_layer_entity(const entt::registry& registry, const layer_id id)
     -> entt::entity
 {
   const auto entity = sys::find_layer(registry, id);
-  if (entity != entt::null && registry.all_of<comp::tile_layer>(entity)) {
+  if (entity != entt::null && registry.all_of<comp::TileLayer>(entity)) {
     return entity;
   }
   else {
-    throw_traced(tactile_error{"Invalid tile layer identifier!"});
+    throw_traced(TactileError{"Invalid tile layer identifier!"});
   }
 }
 
-void set_tile(comp::tile_layer& layer, const tile_position& position, const tile_id tile)
+void set_tile(comp::TileLayer& layer, const TilePos& position, const tile_id tile)
 {
   const auto row = position.row_index();
   const auto col = position.col_index();
@@ -36,11 +55,11 @@ void set_tile(comp::tile_layer& layer, const tile_position& position, const tile
     layer.matrix[row][col] = tile;
   }
   else {
-    throw_traced(tactile_error{"Invalid tile layer position!"});
+    throw_traced(TactileError{"Invalid tile layer position!"});
   }
 }
 
-void set_tiles(comp::tile_layer& layer, const TileCache& tiles)
+void set_tiles(comp::TileLayer& layer, const TileCache& tiles)
 {
   for (const auto& [position, tile] : tiles) {
     const auto row = position.row_index();
@@ -50,7 +69,7 @@ void set_tiles(comp::tile_layer& layer, const TileCache& tiles)
   }
 }
 
-auto get_tile(const comp::tile_layer& layer, const tile_position& position) -> tile_id
+auto get_tile(const comp::TileLayer& layer, const TilePos& position) -> tile_id
 {
   const auto row = position.row_index();
   const auto col = position.col_index();

@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <centurion.hpp>
@@ -5,7 +24,7 @@
 
 #include "core/components/texture.hpp"
 #include "core/region.hpp"
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "snapshot.hpp"
 #include "tactile.hpp"
 
@@ -28,12 +47,12 @@ void update_tilesets(entt::registry& registry);
  * \brief Creates a tileset entity.
  *
  * \details The created entity will feature the following components:
- * - `tileset`
- * - `texture`
- * - `tileset_cache`
- * - `tileset_selection`
- * - `uv_tile_size`
- * - `attribute_context`
+ * - `AttributeContext`
+ * - `Tileset`
+ * - `TilesetCache`
+ * - `TilesetSelection`
+ * - `Texture`
+ * - `UvTileSize`
  * - `Viewport`
  *
  * \param registry the document registry.
@@ -46,13 +65,13 @@ void update_tilesets(entt::registry& registry);
  */
 auto make_tileset(entt::registry& registry,
                   tile_id firstId,
-                  const comp::texture& texture,
+                  const comp::Texture& texture,
                   int32 tileWidth,
                   int32 tileHeight) -> entt::entity;
 
 // This overload should be used when the user adds new tilesets (i.e. not from parsing)
 auto make_tileset(entt::registry& registry,
-                  const comp::texture& texture,
+                  const comp::Texture& texture,
                   int32 tileWidth,
                   int32 tileHeight) -> entt::entity;
 
@@ -227,7 +246,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_tile_from_tileset(const entt::registry& registry,
                                          entt::entity entity,
-                                         const tile_position& position) -> tile_id;
+                                         const TilePos& position) -> tile_id;
 
 /**
  * \brief Converts a global tile identifier to its local counterpart.
@@ -241,7 +260,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  * \return the corresponding local tile identifier; `nothing` if something went wrong.
  */
 [[nodiscard]] auto convert_to_local(const entt::registry& registry, tile_id global)
-    -> maybe<tile_id>;
+    -> Maybe<tile_id>;
 
 /// \} End of tileset system
 

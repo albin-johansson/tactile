@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "duplicate_layer_cmd.hpp"
 
 #include "core/systems/layers/layer_system.hpp"
@@ -5,13 +24,13 @@
 
 namespace tactile {
 
-duplicate_layer_cmd::duplicate_layer_cmd(registry_ref registry, const layer_id id)
-    : command_base{"Duplicate Layer"}
+DuplicateLayerCmd::DuplicateLayerCmd(RegistryRef registry, const layer_id id)
+    : ACommand{"Duplicate Layer"}
     , mRegistry{registry}
     , mLayerId{id}
 {}
 
-void duplicate_layer_cmd::undo()
+void DuplicateLayerCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -19,7 +38,7 @@ void duplicate_layer_cmd::undo()
   sys::remove_layer(registry, entity);
 }
 
-void duplicate_layer_cmd::redo()
+void DuplicateLayerCmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -27,13 +46,13 @@ void duplicate_layer_cmd::redo()
   const auto entity = sys::duplicate_layer(registry, sourceEntity);
 
   if (!mNewLayerId) {
-    const auto& layer = registry.get<comp::layer>(entity);
+    const auto& layer = registry.get<comp::Layer>(entity);
     mNewLayerId = layer.id;
   }
   else {
     // Reuse previous ID of duplicated layer
     TACTILE_ASSERT(sys::find_layer(registry, *mNewLayerId) == entt::null);
-    auto& layer = registry.get<comp::layer>(entity);
+    auto& layer = registry.get<comp::Layer>(entity);
     layer.id = *mNewLayerId;
   }
 }

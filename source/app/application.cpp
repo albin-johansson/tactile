@@ -1,17 +1,32 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "application.hpp"
 
 #include <utility>  // move, forward
 
-#include <GL/glew.h>
 #include <imgui.h>
-#include <imgui_impl_opengl3.h>
-#include <imgui_impl_sdl.h>
 #include <imgui_internal.h>
 
 #include "application_events.hpp"
 #include "cfg/configuration.hpp"
-#include "core/components/attribute_context.hpp"
-#include "core/systems/component_system.hpp"
+#include "core/components/attributes.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
@@ -19,9 +34,9 @@
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
-#include "editor/gui/toolbar/toolbar.hpp"
-#include "editor/gui/viewport/map_view.hpp"
+#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
+#include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/maps/parser/parse_map.hpp"
 #include "io/maps/restore_document_from_ir.hpp"
@@ -35,7 +50,7 @@ namespace tactile {
 namespace {
 
 template <typename Command, typename... Args>
-void _execute(document_model& model, Args&&... args)
+void _execute(DocumentModel& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
     auto& commands = document->commands;
@@ -47,7 +62,7 @@ void _execute(document_model& model, Args&&... args)
 }
 
 template <typename Command, typename... Args>
-void _register(document_model& model, Args&&... args)
+void _register(DocumentModel& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
     auto& commands = document->commands;
@@ -60,66 +75,64 @@ void _register(document_model& model, Args&&... args)
 
 }  // namespace
 
-application::application(app_configuration* configuration)
-    : mConfiguration{configuration}
+Application::Application(AppConfiguration* configuration)
+    : AEventLoop{configuration}
+    , mConfiguration{configuration}
     , mIcons{mTextures}
 {
   subscribe_to_events(*this);
-  LoadDefaultShortcuts();
+  load_default_shortcuts();
 }
 
-auto application::run() -> int
+void Application::on_startup()
 {
-  auto& window = mConfiguration->window();
-
   load_file_history();
 
   if (get_preferences().will_restore_last_session()) {
     restore_last_session(mModel, mTextures);
   }
 
+  auto& window = mConfiguration->window();
   window.show();
-
-  const auto& io = ImGui::GetIO();
-  while (!mQuit) {
-    mKeyboard.refresh();
-    poll_events();
-
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-    ImGui::NewFrame();
-    update_frame();
-    ImGui::EndFrame();
-
-    ImGui::Render();
-
-    glViewport(0,
-               0,
-               static_cast<int>(io.DisplaySize.x),
-               static_cast<int>(io.DisplaySize.y));
-    glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    cen::gl::swap(window);
-  }
-
-  on_about_to_exit();
-  window.hide();
-
-  return 0;
 }
 
-void application::on_about_to_exit()
+void Application::on_shutdown()
 {
   save_current_files_to_history();
   save_preferences();
   save_session(mModel);
   save_file_history();
+
+  auto& window = mConfiguration->window();
+  window.hide();
 }
 
-void application::save_current_files_to_history()
+void Application::on_update()
+{
+  mDispatcher.update();
+  mModel.update();
+  mWidgets.update(mModel, mIcons, mDispatcher);
+}
+
+void Application::on_event(const cen::event_handler& handler)
+{
+  switch (handler.type().value()) {
+    case cen::event_type::key_up:
+      [[fallthrough]];
+    case cen::event_type::key_down:
+      on_keyboard_event(handler.get<cen::keyboard_event>());
+      break;
+
+    case cen::event_type::mouse_wheel:
+      on_mouse_wheel_event(handler.get<cen::mouse_wheel_event>());
+      break;
+
+    default:
+      break;
+  }
+}
+
+void Application::save_current_files_to_history()
 {
   for (const auto& [id, document] : mModel) {
     if (!document->path.empty()) {
@@ -128,54 +141,38 @@ void application::save_current_files_to_history()
   }
 }
 
-void application::poll_events()
-{
-  cen::event_handler handler;
-  while (handler.poll()) {
-    ImGui_ImplSDL2_ProcessEvent(handler.data());
-
-    switch (handler.type().value()) {
-      case cen::event_type::quit:
-        mQuit = true;
-        break;
-
-      case cen::event_type::key_up:
-        [[fallthrough]];
-      case cen::event_type::key_down:
-        on_keyboard_event(handler.get<cen::keyboard_event>());
-        break;
-
-      case cen::event_type::mouse_wheel:
-        on_mouse_wheel_event(handler.get<cen::mouse_wheel_event>());
-        break;
-
-      default:
-        break;
-    }
-  }
-}
-
-void application::on_keyboard_event(cen::keyboard_event event)
+void Application::on_keyboard_event(cen::keyboard_event event)
 {
   /* We don't care about these modifiers, they are just noise */
   event.set_modifier(cen::key_mod::caps, false);
   event.set_modifier(cen::key_mod::num, false);
   event.set_modifier(cen::key_mod::mode, false);
 
-  UpdateShortcuts(mModel, mWidgets, event, mDispatcher);
+  update_shortcuts(mModel, mWidgets, event, mDispatcher);
 }
 
-void application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
+void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
   constexpr float scaling = 4.0f;
 
   const auto* registry = mModel.active_registry();
   if (registry && !ImGui::GetTopMostPopupModal()) {
-    if (IsMouseWithinViewport()) {
+    if (is_mouse_within_viewport()) {
       const auto& viewport = registry->ctx<Viewport>();
-      const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
-      const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
-      mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+      if (cen::is_active(primary_modifier)) {
+        const auto y = event.precise_y();
+        if (y > 0) {
+          mDispatcher.enqueue<IncreaseZoomEvent>();
+        }
+        else if (y < 0 && sys::can_decrease_viewport_zoom(*registry)) {
+          mDispatcher.enqueue<DecreaseZoomEvent>();
+        }
+      }
+      else {
+        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
+        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
+        mDispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+      }
     }
     else if (mWidgets.is_tileset_dock_hovered()) {
       const auto width = mWidgets.tileset_view_width();
@@ -186,48 +183,41 @@ void application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
         const auto& viewport = registry->get<Viewport>(entity);
 
-        const auto dx = static_cast<float>(event.x()) * (viewport.tile_width / scaling);
-        const auto dy = static_cast<float>(event.y()) * (viewport.tile_height / scaling);
+        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
+        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
         mDispatcher.enqueue<OffsetBoundViewportEvent>(entity, -dx, dy, *width, *height);
       }
     }
   }
 }
 
-void application::update_frame()
-{
-  mDispatcher.update();
-  mModel.update();
-  mWidgets.update(mModel, mIcons, mDispatcher);
-}
-
-void application::on_undo()
+void Application::on_undo()
 {
   if (auto* document = mModel.active_document()) {
     document->commands.undo();
   }
 }
 
-void application::on_redo()
+void Application::on_redo()
 {
   if (auto* document = mModel.active_document()) {
     document->commands.redo();
   }
 }
 
-void application::on_set_command_capacity(const set_command_capacity_event& event)
+void Application::on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
   mModel.set_command_capacity(event.capacity);
 }
 
-void application::on_save()
+void Application::on_save()
 {
   if (auto* document = mModel.active_document()) {
     if (!document->path.empty()) {
       save_document(*document);
       document->commands.mark_as_clean();
 
-      auto& context = document->registry.ctx<comp::attribute_context>();
+      auto& context = document->registry.ctx<comp::AttributeContext>();
       context.name = document->path.filename().string();
     }
     else {
@@ -236,7 +226,7 @@ void application::on_save()
   }
 }
 
-void application::on_save_as(const save_as_event& event)
+void Application::on_save_as(const SaveAsEvent& event)
 {
   if (auto* document = mModel.active_document()) {
     document->path = event.path;
@@ -244,37 +234,37 @@ void application::on_save_as(const save_as_event& event)
   }
 }
 
-void application::on_open_save_as_dialog()
+void Application::on_open_save_as_dialog()
 {
   if (mModel.has_active_document()) {
     show_save_as_dialog(mDispatcher);
   }
 }
 
-void application::on_show_settings()
+void Application::on_show_settings()
 {
   mWidgets.show_settings();
 }
 
-void application::on_show_new_map_dialog()
+void Application::on_show_new_map_dialog()
 {
   mWidgets.show_new_map_dialog();
 }
 
-void application::on_show_open_map_dialog()
+void Application::on_show_open_map_dialog()
 {
   mWidgets.show_open_map_dialog();
 }
 
-void application::on_show_map_properties()
+void Application::on_show_map_properties()
 {
   if (auto* registry = mModel.active_registry()) {
-    auto& current = registry->ctx<comp::active_attribute_context>();
+    auto& current = registry->ctx<comp::ActiveAttributeContext>();
     current.entity = entt::null;
   }
 }
 
-void application::on_create_map(const create_map_event& event)
+void Application::on_create_map(const CreateMapEvent& event)
 {
   const auto id = mModel.add_map(event.tile_width,
                                  event.tile_height,
@@ -283,7 +273,7 @@ void application::on_create_map(const create_map_event& event)
   mModel.select_map(id);
 }
 
-void application::on_close_map(const close_map_event& event)
+void Application::on_close_map(const CloseMapEvent& event)
 {
   if (mModel.has_path(event.id)) {
     set_last_closed_file(mModel.get_path(event.id));
@@ -291,7 +281,7 @@ void application::on_close_map(const close_map_event& event)
   mModel.remove_map(event.id);
 }
 
-void application::on_open_map(const open_map_event& event)
+void Application::on_open_map(const OpenMapEvent& event)
 {
   /* Just silently ignore the request if the map is already open */
   if (mModel.has_document_with_path(event.path)) {
@@ -300,7 +290,7 @@ void application::on_open_map(const open_map_event& event)
   }
 
   const auto ir = parsing::parse_map(event.path);
-  if (ir.error() == parsing::parse_error::none) {
+  if (ir.error() == parsing::ParseError::none) {
     mModel.add_map(restore_document_from_ir(ir, mTextures));
     add_file_to_history(event.path);
   }
@@ -309,187 +299,214 @@ void application::on_open_map(const open_map_event& event)
   }
 }
 
-void application::on_select_map(const select_map_event& event)
+void Application::on_select_map(const SelectMapEvent& event)
 {
   mModel.select_map(event.id);
 }
 
-void application::on_select_tool(const select_tool_event& event)
+void Application::on_select_tool(const SelectToolEvent& event)
 {
   auto& registry = mModel.get_active_registry();
-  sys::SelectTool(registry, event.type);
+  sys::select_tool(registry, mDispatcher, event.type);
 }
 
-void application::on_mouse_pressed(const mouse_pressed_event& event)
+void Application::on_tool_pressed(const ToolPressedEvent& event)
 {
   if (auto* registry = mModel.active_registry()) {
-    sys::ToolOnPressed(*registry, mDispatcher, event.info);
+    sys::on_tool_pressed(*registry, mDispatcher, event.info);
   }
 }
 
-void application::on_mouse_drag(const mouse_drag_event& event)
+void Application::on_tool_dragged(const ToolDraggedEvent& event)
 {
   if (auto* registry = mModel.active_registry()) {
-    sys::ToolOnDragged(*registry, mDispatcher, event.info);
+    sys::on_tool_dragged(*registry, mDispatcher, event.info);
   }
 }
 
-void application::on_mouse_released(const mouse_released_event& event)
+void Application::on_tool_released(const ToolReleasedEvent& event)
 {
   if (auto* registry = mModel.active_registry()) {
-    sys::ToolOnReleased(*registry, mDispatcher, event.info);
+    sys::on_tool_released(*registry, mDispatcher, event.info);
   }
 }
 
-void application::on_stamp_sequence(stamp_sequence_event event)
+void Application::on_tool_entered()
 {
-  _register<stamp_sequence_cmd>(mModel,
-                                std::move(event.old_state),
-                                std::move(event.sequence));
+  if (auto* registry = mModel.active_registry()) {
+    sys::on_tool_entered(*registry, mDispatcher);
+  }
 }
 
-void application::on_eraser_sequence(eraser_sequence_event event)
+void Application::on_tool_exited()
 {
-  _register<eraser_sequence_cmd>(mModel, std::move(event.old_state));
+  if (auto* registry = mModel.active_registry()) {
+    sys::on_tool_exited(*registry, mDispatcher);
+  }
 }
 
-void application::on_flood(const flood_event& event)
+void Application::on_stamp_sequence(StampSequenceEvent event)
 {
-  _execute<bucket_cmd>(mModel, event.origin, event.replacement);
+  _register<StampToolCmd>(mModel, std::move(event.old_state), std::move(event.sequence));
 }
 
-void application::on_center_viewport()
+void Application::on_eraser_sequence(EraserSequenceEvent event)
 {
-  CenterViewport();
+  _register<EraserToolCmd>(mModel, std::move(event.old_state));
 }
 
-void application::on_offset_viewport(const OffsetViewportEvent& event)
+void Application::on_flood(const FloodEvent& event)
 {
-  auto& registry = mModel.get_active_registry();
-  sys::OffsetViewport(registry, event.dx, event.dy);
+  _execute<BucketToolCmd>(mModel, event.origin, event.replacement);
 }
 
-void application::on_offset_bound_viewport(const OffsetBoundViewportEvent& event)
+void Application::on_add_rectangle(const AddRectangleEvent& event)
 {
-  auto& registry = mModel.get_active_registry();
-  sys::OffsetBoundViewport(registry,
-                           event.entity,
-                           event.dx,
-                           event.dy,
-                           event.view_width,
-                           event.view_height);
+  _execute<RectangleToolCmd>(mModel, event.x, event.y, event.width, event.height);
 }
 
-void application::on_pan_left()
+void Application::on_add_ellipse(const AddEllipseEvent& event)
 {
-  auto& registry = mModel.get_active_registry();
-  sys::PanViewportLeft(registry);
+  _execute<EllipseToolCmd>(mModel, event.x, event.y, event.width, event.height);
 }
 
-void application::on_pan_right()
+void Application::on_add_point(const AddPointEvent& event)
 {
-  auto& registry = mModel.get_active_registry();
-  sys::PanViewportRight(registry);
+  _execute<PointToolCmd>(mModel, event.x, event.y);
 }
 
-void application::on_pan_up()
+void Application::on_center_viewport()
+{
+  center_viewport();
+}
+
+void Application::on_offset_viewport(const OffsetViewportEvent& event)
 {
   auto& registry = mModel.get_active_registry();
-  sys::PanViewportUp(registry);
+  sys::offset_viewport(registry, event.dx, event.dy);
 }
 
-void application::on_pan_down()
+void Application::on_offset_bound_viewport(const OffsetBoundViewportEvent& event)
 {
   auto& registry = mModel.get_active_registry();
-  sys::PanViewportDown(registry);
+  sys::offset_bound_viewport(registry,
+                             event.entity,
+                             event.dx,
+                             event.dy,
+                             event.view_width,
+                             event.view_height);
 }
 
-void application::on_increase_zoom()
+void Application::on_pan_left()
+{
+  auto& registry = mModel.get_active_registry();
+  sys::pan_viewport_left(registry);
+}
+
+void Application::on_pan_right()
+{
+  auto& registry = mModel.get_active_registry();
+  sys::pan_viewport_right(registry);
+}
+
+void Application::on_pan_up()
+{
+  auto& registry = mModel.get_active_registry();
+  sys::pan_viewport_up(registry);
+}
+
+void Application::on_pan_down()
+{
+  auto& registry = mModel.get_active_registry();
+  sys::pan_viewport_down(registry);
+}
+
+void Application::on_increase_zoom()
 {
   auto& registry = mModel.get_active_registry();
   const auto mousePos = ImGui::GetIO().MousePos;
-  sys::IncreaseViewportZoom(registry, mousePos.x, mousePos.y);
+  sys::increase_viewport_zoom(registry, mousePos.x, mousePos.y);
 }
 
-void application::on_decrease_zoom()
+void Application::on_decrease_zoom()
 {
   auto& registry = mModel.get_active_registry();
   const auto mousePos = ImGui::GetIO().MousePos;
-  sys::DecreaseViewportZoom(registry, mousePos.x, mousePos.y);
+  sys::decrease_viewport_zoom(registry, mousePos.x, mousePos.y);
 }
 
-void application::on_reset_zoom()
+void Application::on_reset_zoom()
 {
   auto& registry = mModel.get_active_registry();
-  sys::ResetViewportZoom(registry);
+  sys::reset_viewport_zoom(registry);
 }
 
-void application::on_show_add_tileset_dialog()
+void Application::on_show_tileset_creation_dialog()
 {
   mWidgets.show_add_tileset_dialog();
 }
 
-void application::on_add_tileset(const add_tileset_event& event)
+void Application::on_add_tileset(const AddTilesetEvent& event)
 {
   if (auto info = mTextures.load(event.path)) {
-    _execute<add_tileset_cmd>(mModel,
-                              std::move(*info),
-                              event.tile_width,
-                              event.tile_height);
+    _execute<AddTilesetCmd>(mModel,
+                            std::move(*info),
+                            event.tile_width,
+                            event.tile_height);
   }
   else {
     log_error("Failed to load tileset texture!");
   }
 }
 
-void application::on_remove_tileset(const remove_tileset_event& event)
+void Application::on_remove_tileset(const RemoveTilesetEvent& event)
 {
-  _execute<remove_tileset_cmd>(mModel, event.id);
+  _execute<RemoveTilesetCmd>(mModel, event.id);
 }
 
-void application::on_select_tileset(const select_tileset_event& event)
+void Application::on_select_tileset(const SelectTilesetEvent& event)
 {
   auto& registry = mModel.get_active_registry();
   sys::select_tileset(registry, event.id);
 }
 
-void application::on_set_tileset_selection(const set_tileset_selection_event& event)
+void Application::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
 {
   auto& registry = mModel.get_active_registry();
   sys::update_tileset_selection(registry, event.selection);
 }
 
-void application::on_set_tileset_name(const set_tileset_name_event& event)
+void Application::on_set_tileset_name(const SetTilesetNameEvent& event)
 {
-  _execute<set_tileset_name_cmd>(mModel, event.id, event.name);
+  _execute<RenameTilesetCmd>(mModel, event.id, event.name);
 }
 
-void application::on_add_row()
+void Application::on_add_row()
 {
-  _execute<add_row_cmd>(mModel);
+  _execute<AddRowCmd>(mModel);
 }
 
-void application::on_add_column()
+void Application::on_add_column()
 {
-  _execute<add_column_cmd>(mModel);
+  _execute<AddColumnCmd>(mModel);
 }
 
-void application::on_remove_row()
+void Application::on_remove_row()
 {
-  _execute<remove_row_cmd>(mModel);
+  _execute<RemoveRowCmd>(mModel);
 }
 
-void application::on_remove_column()
+void Application::on_remove_column()
 {
-  _execute<remove_column_cmd>(mModel);
+  _execute<RemoveColumnCmd>(mModel);
 }
 
-void application::on_resize_map(const resize_map_event& event)
+void Application::on_resize_map(const ResizeMapEvent& event)
 {
-  _execute<resize_map_cmd>(mModel, event.row_count, event.col_count);
+  _execute<ResizeMapCmd>(mModel, event.row_count, event.col_count);
 }
 
-void application::on_open_resize_map_dialog()
+void Application::on_open_resize_map_dialog()
 {
   if (auto* registry = mModel.active_registry()) {
     const auto& map = registry->ctx<MapInfo>();
@@ -497,214 +514,213 @@ void application::on_open_resize_map_dialog()
   }
 }
 
-void application::on_add_layer(const add_layer_event& event)
+void Application::on_add_layer(const AddLayerEvent& event)
 {
-  _execute<add_layer_cmd>(mModel, event.type);
+  _execute<AddLayerCmd>(mModel, event.type);
 }
 
-void application::on_remove_layer(const remove_layer_event& event)
+void Application::on_remove_layer(const RemoveLayerEvent& event)
 {
-  _execute<remove_layer_cmd>(mModel, event.id);
+  _execute<RemoveLayerCmd>(mModel, event.id);
 }
 
-void application::on_select_layer(const select_layer_event& event)
+void Application::on_select_layer(const SelectLayerEvent& event)
 {
   if (auto* registry = mModel.active_registry()) {
-    auto& active = registry->ctx<comp::active_layer>();
+    auto& active = registry->ctx<comp::ActiveLayer>();
     active.entity = sys::find_layer(*registry, event.id);
   }
 }
 
-void application::on_move_layer_up(const move_layer_up_event& event)
+void Application::on_move_layer_up(const MoveLayerUpEvent& event)
 {
-  _execute<move_layer_up_cmd>(mModel, event.id);
+  _execute<MoveLayerUpCmd>(mModel, event.id);
 }
 
-void application::on_move_layer_down(const move_layer_down_event& event)
+void Application::on_move_layer_down(const MoveLayerDownEvent& event)
 {
-  _execute<move_layer_down_cmd>(mModel, event.id);
+  _execute<MoveLayerDownCmd>(mModel, event.id);
 }
 
-void application::on_duplicate_layer(const duplicate_layer_event& event)
+void Application::on_duplicate_layer(const DuplicateLayerEvent& event)
 {
-  _execute<duplicate_layer_cmd>(mModel, event.id);
+  _execute<DuplicateLayerCmd>(mModel, event.id);
 }
 
-void application::on_set_layer_opacity(const set_layer_opacity_event& event)
+void Application::on_set_layer_opacity(const SetLayerOpacityEvent& event)
 {
-  _execute<set_layer_opacity_cmd>(mModel, event.id, event.opacity);
+  _execute<SetLayerOpacityCmd>(mModel, event.id, event.opacity);
 }
 
-void application::on_set_layer_visible(const set_layer_visible_event& event)
+void Application::on_set_layer_visible(const SetLayerVisibleEvent& event)
 {
-  _execute<set_layer_visibility_cmd>(mModel, event.id, event.visible);
+  _execute<SetLayerVisibilityCmd>(mModel, event.id, event.visible);
 }
 
-void application::on_open_rename_layer_dialog(const open_rename_layer_dialog_event& event)
+void Application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
 {
   mWidgets.show_rename_layer_dialog(event.id);
 }
 
-void application::on_rename_layer(const rename_layer_event& event)
+void Application::on_rename_layer(const RenameLayerEvent& event)
 {
-  _execute<rename_layer_cmd>(mModel, event.id, event.name);
+  _execute<RenameLayerCmd>(mModel, event.id, event.name);
 }
 
-void application::on_set_object_name(const set_object_name_event& event)
+void Application::on_set_object_name(const SetObjectNameEvent& event)
 {
-  _execute<set_object_name_cmd>(mModel, event.id, event.name);
+  _execute<SetObjectNameCmd>(mModel, event.id, event.name);
 }
 
-void application::on_move_object(const move_object_event& event)
+void Application::on_move_object(const MoveObjectEvent& event)
 {
-  _register<move_object_cmd>(mModel,
-                             event.id,
-                             event.old_x,
-                             event.old_y,
-                             event.new_x,
-                             event.new_y);
+  _register<MoveObjectCmd>(mModel,
+                           event.id,
+                           event.old_x,
+                           event.old_y,
+                           event.new_x,
+                           event.new_y);
 }
 
-void application::on_set_object_visibility(const set_object_visibility_event& event)
+void Application::on_set_object_visibility(const SetObjectVisibilityEvent& event)
 {
-  _execute<set_object_visibility_cmd>(mModel, event.id, event.visible);
+  _execute<SetObjectVisibilityCmd>(mModel, event.id, event.visible);
 }
 
-void application::on_set_object_tag(const set_object_tag_event& event)
+void Application::on_set_object_tag(const SetObjectTagEvent& event)
 {
-  _execute<set_object_tag_cmd>(mModel, event.id, event.tag);
+  _execute<SetObjectTagCmd>(mModel, event.id, event.tag);
 }
 
-void application::on_spawn_object_context_menu(const spawn_object_context_menu_event&)
+void Application::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
 {
-  OpenObjectContextMenu();
+  open_object_context_menu();
 }
 
-void application::on_show_add_property_dialog()
+void Application::on_show_add_property_dialog()
 {
   mWidgets.show_add_property_dialog();
 }
 
-void application::on_show_rename_property_dialog(
-    const show_rename_property_dialog_event& event)
+void Application::on_show_rename_property_dialog(
+    const ShowRenamePropertyDialogEvent& event)
 {
   mWidgets.show_rename_property_dialog(event.name);
 }
 
-void application::on_show_change_property_type_dialog(
-    const show_change_property_type_dialog_event& event)
+void Application::on_show_change_property_type_dialog(
+    const ShowChangePropertyTypeDialogEvent& event)
 {
   mWidgets.show_change_property_type_dialog(event.name, event.current_type);
 }
 
-void application::on_add_property(const add_property_event& event)
+void Application::on_add_property(const AddPropertyEvent& event)
 {
-  _execute<add_property_cmd>(mModel, event.name, event.type);
+  _execute<AddPropertyCmd>(mModel, event.name, event.type);
 }
 
-void application::on_remove_property(const remove_property_event& event)
+void Application::on_remove_property(const RemovePropertyEvent& event)
 {
-  _execute<remove_property_cmd>(mModel, event.name);
+  _execute<RemovePropertyCmd>(mModel, event.name);
 }
 
-void application::on_rename_property(const rename_property_event& event)
+void Application::on_rename_property(const RenamePropertyEvent& event)
 {
-  _execute<rename_property_cmd>(mModel, event.old_name, event.new_name);
+  _execute<RenamePropertyCmd>(mModel, event.old_name, event.new_name);
 }
 
-void application::on_update_property(const update_property_event& event)
+void Application::on_update_property(const UpdatePropertyEvent& event)
 {
-  _execute<update_property_cmd>(mModel, event.name, event.value);
+  _execute<UpdatePropertyCmd>(mModel, event.name, event.value);
 }
 
-void application::on_change_property_type(const change_property_type_event& event)
+void Application::on_change_property_type(const ChangePropertyTypeEvent& event)
 {
-  _execute<change_property_type_cmd>(mModel, event.name, event.type);
+  _execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
 }
 
-void application::on_inspect_context(const inspect_context_event& event)
+void Application::on_inspect_context(const InspectContextEvent& event)
 {
   auto& registry = mModel.get_active_registry();
-  auto& current = registry.ctx<comp::active_attribute_context>();
+  auto& current = registry.ctx<comp::ActiveAttributeContext>();
   current.entity = event.entity;
 }
 
-void application::on_open_component_editor()
+void Application::on_open_component_editor()
 {
   mWidgets.show_component_editor(mModel);
 }
 
-void application::on_create_component_def(const create_component_def_event& event)
+void Application::on_create_component_def(const CreateComponentDefEvent& event)
 {
-  _execute<create_component_def_cmd>(mModel, event.name);
+  _execute<CreateComponentDefCmd>(mModel, event.name);
 }
 
-void application::on_remove_component_def(const remove_component_def_event& event)
+void Application::on_remove_component_def(const RemoveComponentDefEvent& event)
 {
-  _execute<remove_component_def_cmd>(mModel, event.id);
+  _execute<RemoveComponentDefCmd>(mModel, event.id);
 }
 
-void application::on_rename_component_def(const rename_component_def_event& event)
+void Application::on_rename_component_def(const RenameComponentDefEvent& event)
 {
-  _execute<rename_component_cmd>(mModel, event.id, event.name);
+  _execute<RenameComponentCmd>(mModel, event.id, event.name);
 }
 
-void application::on_create_component_attr(const create_component_attr_event& event)
+void Application::on_create_component_attr(const CreateComponentAttrEvent& event)
 {
-  _execute<create_component_attr_cmd>(mModel, event.id, event.name);
+  _execute<CreateComponentAttrCmd>(mModel, event.id, event.name);
 }
 
-void application::on_remove_component_attr(const remove_component_attr_event& event)
+void Application::on_remove_component_attr(const RemoveComponentAttrEvent& event)
 {
-  _execute<remove_component_attr_cmd>(mModel, event.id, event.name);
+  _execute<RemoveComponentAttrCmd>(mModel, event.id, event.name);
 }
 
-void application::on_rename_component_attr(const rename_component_attr_event& event)
+void Application::on_rename_component_attr(const RenameComponentAttrEvent& event)
 {
-  _execute<rename_component_attr_cmd>(mModel, event.id, event.previous, event.updated);
+  _execute<RenameComponentAttrCmd>(mModel, event.id, event.previous, event.updated);
 }
 
-void application::on_duplicate_component_attr(const duplicate_component_attr_event& event)
+void Application::on_duplicate_component_attr(const DuplicateComponentAttrEvent& event)
 {
-  _execute<duplicate_component_attr_cmd>(mModel, event.id, event.attribute);
+  _execute<DuplicateComponentAttrCmd>(mModel, event.id, event.attribute);
 }
 
-void application::on_set_component_attr_type(const set_component_attr_type_event& event)
+void Application::on_set_component_attr_type(const SetComponentAttrTypeEvent& event)
 {
-  _execute<set_component_attr_type_cmd>(mModel, event.id, event.attribute, event.type);
+  _execute<SetComponentAttrTypeCmd>(mModel, event.id, event.attribute, event.type);
 }
 
-void application::on_update_component_def_attr(
-    const update_component_def_attr_event& event)
+void Application::on_update_component_def_attr(const UpdateComponentDefAttrEvent& event)
 {
-  _execute<update_component_attr_cmd>(mModel, event.id, event.attribute, event.value);
+  _execute<UpdateComponentAttrCmd>(mModel, event.id, event.attribute, event.value);
 }
 
-void application::on_add_component(const add_component_event& event)
+void Application::on_add_component(const AddComponentEvent& event)
 {
-  _execute<add_component_cmd>(mModel, event.context, event.component);
+  _execute<AddComponentCmd>(mModel, event.context, event.component);
 }
 
-void application::on_remove_component(const remove_component_event& event)
+void Application::on_remove_component(const RemoveComponentEvent& event)
 {
-  _execute<remove_component_cmd>(mModel, event.context, event.component);
+  _execute<RemoveComponentCmd>(mModel, event.context, event.component);
 }
 
-void application::on_update_component(const update_component_event& event)
+void Application::on_update_component(const UpdateComponentEvent& event)
 {
-  _execute<update_component_cmd>(mModel,
-                                 event.context,
-                                 event.component,
-                                 event.attribute,
-                                 event.value);
+  _execute<UpdateComponentCmd>(mModel,
+                               event.context,
+                               event.component,
+                               event.attribute,
+                               event.value);
 }
 
-void application::on_reset_component_values(const reset_component_values_event& event)
+void Application::on_reset_component_values(const ResetComponentValuesEvent& event)
 {
-  _execute<reset_component_cmd>(mModel, event.context, event.component);
+  _execute<ResetComponentCmd>(mModel, event.context, event.component);
 }
 
-void application::on_toggle_ui()
+void Application::on_toggle_ui()
 {
   if (ImGui::GetTopMostPopupModal() != nullptr) {
     return;
@@ -716,7 +732,7 @@ void application::on_toggle_ui()
   if (!show) {
     mWidgetShowState.prev_show_layer_dock = prefs.is_layer_dock_visible();
     mWidgetShowState.prev_show_tileset_dock = prefs.is_tileset_dock_visible();
-    mWidgetShowState.prev_show_properties_dock = prefs.is_properties_dock_visible();
+    mWidgetShowState.prev_show_property_dock = prefs.is_property_dock_visible();
     mWidgetShowState.prev_show_log_dock = prefs.is_log_dock_visible();
     mWidgetShowState.prev_show_component_dock = prefs.is_component_dock_visible();
     mWidgetShowState.prev_show_toolbar = mWidgets.is_toolbar_visible();
@@ -724,7 +740,7 @@ void application::on_toggle_ui()
 
   prefs.set_layer_dock_visible(show);
   prefs.set_tileset_dock_visible(show);
-  prefs.set_properties_dock_visible(show);
+  prefs.set_property_dock_visible(show);
   prefs.set_component_dock_visible(show);
   prefs.set_log_dock_visible(show);
 
@@ -733,7 +749,7 @@ void application::on_toggle_ui()
   if (show) {
     prefs.set_layer_dock_visible(mWidgetShowState.prev_show_layer_dock);
     prefs.set_tileset_dock_visible(mWidgetShowState.prev_show_tileset_dock);
-    prefs.set_properties_dock_visible(mWidgetShowState.prev_show_properties_dock);
+    prefs.set_property_dock_visible(mWidgetShowState.prev_show_property_dock);
     prefs.set_log_dock_visible(mWidgetShowState.prev_show_log_dock);
     prefs.set_component_dock_visible(mWidgetShowState.prev_show_component_dock);
 
@@ -743,9 +759,9 @@ void application::on_toggle_ui()
   show = !show;
 }
 
-void application::on_quit()
+void Application::on_quit()
 {
-  mQuit = true;
+  stop();
 }
 
 }  // namespace tactile

@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <array>        // array
@@ -14,10 +33,10 @@ namespace tactile {
 /**
  * \brief An abstract class representing dialogs which provide a string input field.
  */
-class string_input_dialog : public dialog_base
+class AStringInputDialog : public ADialog
 {
  public:
-  explicit string_input_dialog(const char* title);
+  explicit AStringInputDialog(const char* title);
 
   void show(std::string previous);
 
@@ -29,9 +48,9 @@ class string_input_dialog : public dialog_base
    */
   void set_input_hint(const char* hint);
 
-  void on_update(const document_model& model, entt::dispatcher& dispatcher) final;
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) final;
 
-  [[nodiscard]] auto is_current_input_valid(const document_model& model) const
+  [[nodiscard]] auto is_current_input_valid(const DocumentModel& model) const
       -> bool final;
 
   /**
@@ -42,7 +61,7 @@ class string_input_dialog : public dialog_base
    *
    * \return `true` if the input string is valid; `false` otherwise.
    */
-  [[nodiscard]] virtual auto validate(const document_model& model,
+  [[nodiscard]] virtual auto validate(const DocumentModel& model,
                                       std::string_view input) const -> bool = 0;
 
   /**

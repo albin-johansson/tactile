@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "configuration.hpp"
 
 #include <cstdlib>    // abort
@@ -5,6 +24,7 @@
 
 #include <GL/glew.h>
 
+#include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
@@ -58,16 +78,16 @@ void _win32_use_immersive_dark_mode([[maybe_unused]] cen::window& window)
 
 }  // namespace
 
-app_configuration::app_configuration()
+AppConfiguration::AppConfiguration()
 {
   /* Use terminate handler that doesn't do anything fancy, e.g. no logging */
   std::set_terminate([] { std::abort(); });
 
   if constexpr (is_debug_build) {
-    set_log_level(log_level::verbose);
+    set_log_level(LogLevel::verbose);
   }
   else {
-    set_log_level(log_level::info);
+    set_log_level(LogLevel::info);
   }
 
   init_sdl_attributes();
@@ -76,7 +96,7 @@ app_configuration::app_configuration()
   TACTILE_ASSERT(mWindow.has_value());
 
   _win32_use_immersive_dark_mode(*mWindow);
-  mWindow->set_icon(cen::surface{"resources/icon.png"});
+  mWindow->set_icon(cen::surface{find_resource("resources/icon.png").string()});
 
   mOpenGL.emplace(*mWindow);
   mOpenGL->make_current(*mWindow);
@@ -85,7 +105,7 @@ app_configuration::app_configuration()
 
   if (glewInit() != GLEW_OK) {
     log_error("Failed to initialize GLEW!");
-    throw_traced(tactile_error{"Failed to initialize GLEW!"});
+    throw_traced(TactileError{"Failed to initialize GLEW!"});
   }
 
   log_debug("OpenGL version... {}", glGetString(GL_VERSION));
@@ -99,7 +119,7 @@ app_configuration::app_configuration()
   mWindow->maximize();
 }
 
-auto app_configuration::window() -> cen::window&
+auto AppConfiguration::window() -> cen::window&
 {
   return mWindow.value();
 }

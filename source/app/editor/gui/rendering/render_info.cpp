@@ -1,10 +1,29 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "render_info.hpp"
 
 #include <algorithm>  // min, max
 
 #include <imgui_internal.h>
 
-#include "core/components/tileset.hpp"
+#include "core/components/tiles.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 
@@ -38,9 +57,9 @@ namespace {
 [[nodiscard]] auto _get_render_info(const Viewport& viewport,
                                     const ImVec2& logicalTileSize,
                                     const int32 rows,
-                                    const int32 columns) -> render_info
+                                    const int32 columns) -> RenderInfo
 {
-  render_info info;
+  RenderInfo info;
 
   info.canvas_tl = ImGui::GetCursorScreenPos();
   info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
@@ -66,7 +85,7 @@ namespace {
 
 }  // namespace
 
-auto get_render_info(const Viewport& viewport, const MapInfo& map) -> render_info
+auto get_render_info(const Viewport& viewport, const MapInfo& map) -> RenderInfo
 {
   const ImVec2 tileSize{static_cast<float>(map.tile_width),
                         static_cast<float>(map.tile_height)};
@@ -76,8 +95,7 @@ auto get_render_info(const Viewport& viewport, const MapInfo& map) -> render_inf
                           static_cast<int32>(map.column_count));
 }
 
-auto get_render_info(const Viewport& viewport, const comp::tileset& tileset)
-    -> render_info
+auto get_render_info(const Viewport& viewport, const comp::Tileset& tileset) -> RenderInfo
 {
   const ImVec2 tileSize{static_cast<float>(tileset.tile_width),
                         static_cast<float>(tileset.tile_height)};

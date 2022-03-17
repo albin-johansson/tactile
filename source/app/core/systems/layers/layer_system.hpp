@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <string>   // string
@@ -5,7 +24,7 @@
 
 #include <entt/entt.hpp>
 
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/map.hpp"
 #include "core/systems/snapshot.hpp"
 #include "tactile.hpp"
@@ -26,10 +45,10 @@ namespace tactile::sys {
  * \pre `parent` must either be associated with a group layer or be null.
  *
  * \details The created entity will feature the following components:
- * - `attribute_context`
- * - `layer`
- * - `layer_tree_node`
- * - `parent`
+ * - `AttributeContext`
+ * - `Layer`
+ * - `LayerTreeNode`
+ * - `Parent`
  *
  * \param registry the associated registry.
  * \param id the unique identifier associated with the layer.
@@ -41,7 +60,7 @@ namespace tactile::sys {
  */
 auto make_basic_layer(entt::registry& registry,
                       layer_id id,
-                      layer_type type,
+                      LayerType type,
                       std::string name,
                       entt::entity parent = entt::null) -> entt::entity;
 
@@ -55,7 +74,7 @@ auto make_basic_layer(entt::registry& registry,
  * - `Layer`
  * - `TileLayer`
  * - `Parent`
- * - `attribute_context`
+ * - `AttributeContext`
  *
  * \param registry the associated registry.
  *
@@ -75,7 +94,7 @@ auto make_tile_layer(entt::registry& registry) -> entt::entity;
  * - `Layer`
  * - `ObjectLayer`
  * - `Parent`
- * - `attribute_context`
+ * - `AttributeContext`
  *
  * \param registry the associated registry.
  *
@@ -95,13 +114,11 @@ auto make_object_layer(entt::registry& registry) -> entt::entity;
  * - `Layer`
  * - `GroupLayer`
  * - `Parent`
- * - `attribute_context`
+ * - `AttributeContext`
  *
- * \param registry the associated registry.
+ * \param registry a map registry.
  *
  * \return the created group layer entity.
- *
- * \since 0.2.0
  */
 auto make_group_layer(entt::registry& registry) -> entt::entity;
 
@@ -113,7 +130,7 @@ auto make_group_layer(entt::registry& registry) -> entt::entity;
  * \details The active layer is is reset if the specified layer is active at the time
  * of invocation. This function will also repair the layer indices.
  *
- * \param registry the associated registry.
+ * \param registry a map registry.
  * \param entity the layer entity that will be removed.
  *
  * \return a snapshot of the removed layer.
@@ -131,17 +148,15 @@ auto duplicate_layer(entt::registry& registry,
 
 [[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> maybe<layer_id>;
+[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<layer_id>;
 
 /**
  * \brief Attempts to find the layer associated with the specified ID.
  *
- * \param registry the associated registry.
+ * \param registry a map registry.
  * \param id the ID associated with the desired layer.
  *
  * \return the associated layer entity; a null entity is returned if there is none.
- *
- * \since 0.2.0
  */
 [[nodiscard]] auto find_layer(const entt::registry& registry, layer_id id)
     -> entt::entity;
@@ -150,10 +165,10 @@ auto duplicate_layer(entt::registry& registry,
     -> entt::entity;
 
 [[nodiscard]] auto get_layer(entt::registry& registry, layer_id id)
-    -> std::pair<entt::entity, comp::layer&>;
+    -> std::pair<entt::entity, comp::Layer&>;
 
 [[nodiscard]] auto get_layer(const entt::registry& registry, layer_id id)
-    -> std::pair<entt::entity, const comp::layer&>;
+    -> std::pair<entt::entity, const comp::Layer&>;
 
 [[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;
 

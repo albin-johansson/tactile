@@ -9,11 +9,13 @@ env:
   VCPKG_TARGET_TRIPLET: x64-osx
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
+  VCPKG_CACHE_EDITION: 1
   BOOST_ROOT: /opt/homebrew/Cellar/boost/1.76.0
 
 jobs:
   macos-latest-test:
     runs-on: macos-latest
+    if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
       - uses: actions/checkout@main
 
@@ -47,7 +49,7 @@ jobs:
             !${{env.VCPKG_ROOT}}\packages
             !${{env.VCPKG_ROOT}}\downloads
             !${{env.VCPKG_ROOT}}\installed
-          key: ${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile-osx
+          key: tactile-macos-vcpkg-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'

@@ -10,9 +10,9 @@ using namespace tactile;
 
 namespace {
 
-struct foo_cmd : command_base
+struct foo_cmd : ACommand
 {
-  foo_cmd() : command_base{"foo_cmd"} {}
+  foo_cmd() : ACommand{"foo_cmd"} {}
 
   void undo() override
   {
@@ -27,9 +27,9 @@ struct foo_cmd : command_base
   [[nodiscard]] auto id() const -> int override { return 0; }
 };
 
-struct bar_cmd : command_base
+struct bar_cmd : ACommand
 {
-  bar_cmd() : command_base{"bar_cmd"} {}
+  bar_cmd() : ACommand{"bar_cmd"} {}
 
   void undo() override
   {
@@ -48,7 +48,7 @@ struct bar_cmd : command_base
 
 TEST(CommandStack, Defaults)
 {
-  const command_stack stack;
+  const CommandStack stack;
   ASSERT_EQ(0, stack.size());
   ASSERT_EQ(get_preferences().command_capacity(), stack.capacity());
   ASSERT_FALSE(stack.can_undo());
@@ -58,7 +58,7 @@ TEST(CommandStack, Defaults)
 
 TEST(CommandStack, Usage)
 {
-  command_stack stack;
+  CommandStack stack;
 
   // ^[ ] -> [ ^foo_cmd ]
   stack.push<foo_cmd>();
@@ -135,7 +135,7 @@ TEST(CommandStack, Usage)
 
 TEST(CommandStack, Clean)
 {
-  command_stack stack;
+  CommandStack stack;
 
   ASSERT_TRUE(stack.is_clean());
   ASSERT_FALSE(stack.can_undo());
@@ -196,7 +196,7 @@ TEST(CommandStack, Clean)
 
 TEST(CommandStack, OverflowWithCleanIndex)
 {
-  command_stack stack;
+  CommandStack stack;
 
   stack.set_capacity(4);
   ASSERT_EQ(4, stack.capacity());
@@ -232,7 +232,7 @@ TEST(CommandStack, OverflowWithCleanIndex)
 
 TEST(CommandStack, Overflow)
 {
-  command_stack stack;
+  CommandStack stack;
   stack.push<foo_cmd>();
 
   ASSERT_EQ(1, stack.size());
@@ -254,7 +254,7 @@ TEST(CommandStack, Overflow)
 
 TEST(CommandStack, SetCapacity)
 {
-  command_stack stack;
+  CommandStack stack;
 
   stack.set_capacity(5);
   ASSERT_EQ(5, stack.capacity());

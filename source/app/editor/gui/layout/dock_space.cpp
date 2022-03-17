@@ -1,9 +1,27 @@
-#include "dock_space.hpp"
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
-#include <filesystem>  // exists
+#include "dock_space.hpp"
 
 #include <imgui.h>
 
+#include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 #include "load_default_layout.hpp"
 #include "tactile.hpp"
@@ -11,29 +29,29 @@
 namespace tactile {
 namespace {
 
-constinit bool gInitialized = false;
-constinit maybe<ImGuiID> gRootId;
+constinit bool _is_initialized = false;
+constinit Maybe<ImGuiID> _root_id;
 
 }  // namespace
 
-void UpdateDockSpace()
+void update_dock_space()
 {
-  gRootId = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-  if (!gInitialized) {
+  _root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+  if (!_is_initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
       const auto& prefs = get_preferences();
-      if (!prefs.will_restore_layout() || !std::filesystem::exists("imgui.ini")) {
-        LoadDefaultLayout(gRootId.value(), false);
+      if (!prefs.will_restore_layout() || !exists(widget_ini_path())) {
+        load_default_layout(_root_id.value(), false);
       }
-      gInitialized = true;
+      _is_initialized = true;
     }
   }
 }
 
-void ResetLayout()
+void reset_layout()
 {
-  LoadDefaultLayout(gRootId.value(), true);
+  load_default_layout(_root_id.value(), true);
 }
 
 }  // namespace tactile

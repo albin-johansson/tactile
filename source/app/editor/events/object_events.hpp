@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <string>  // string
@@ -14,7 +33,7 @@ namespace tactile {
 /**
  * \brief Emitted after an object has been moved.
  */
-struct move_object_event final
+struct MoveObjectEvent final
 {
   object_id id{};  ///< ID of object to move.
   float old_x{};   ///< Previous x-coordinate of the object.
@@ -26,7 +45,7 @@ struct move_object_event final
 /**
  * \brief Emitted when the visibility of an object should be changed.
  */
-struct set_object_visibility_event final
+struct SetObjectVisibilityEvent final
 {
   object_id id{};  ///< ID of target object.
   bool visible{};  ///< New visibility state.
@@ -35,7 +54,7 @@ struct set_object_visibility_event final
 /**
  * \brief Emitted when the tag of an object should be changed.
  */
-struct set_object_tag_event final
+struct SetObjectTagEvent final
 {
   object_id id{};   ///< ID of target object.
   std::string tag;  ///< The new object tag.
@@ -44,23 +63,23 @@ struct set_object_tag_event final
 /**
  * \brief Emitted when the name of an object should be changed.
  */
-struct set_object_name_event final
+struct SetObjectNameEvent final
 {
   object_id id{};    ///< ID of target object.
   std::string name;  ///< The new object name.
 };
 
-struct duplicate_object_event final
+struct DuplicateObjectEvent final
 {
   object_id id{};  ///< ID of the target object.
 };
 
-struct remove_object_event final
+struct RemoveObjectEvent final
 {
   object_id id{};  ///< ID of the target object.
 };
 
-struct spawn_object_context_menu_event final
+struct SpawnObjectContextMenuEvent final
 {
   entt::entity object_entity{entt::null};
 };

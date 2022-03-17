@@ -21,11 +21,11 @@ TEST_F(ViewportSystemTest, OffsetViewport)
   ASSERT_EQ(0, viewport.x_offset);
   ASSERT_EQ(0, viewport.y_offset);
 
-  sys::OffsetViewport(mRegistry, 42.5f, 27.3f);
+  sys::offset_viewport(mRegistry, 42.5f, 27.3f);
   ASSERT_EQ(42.5f, viewport.x_offset);
   ASSERT_EQ(27.3f, viewport.y_offset);
 
-  sys::OffsetViewport(mRegistry, -12.0f, -1.9f);
+  sys::offset_viewport(mRegistry, -12.0f, -1.9f);
   ASSERT_EQ(42.5f - 12.0f, viewport.x_offset);
   ASSERT_EQ(27.3f - 1.9f, viewport.y_offset);
 }
@@ -36,7 +36,7 @@ TEST_F(ViewportSystemTest, PanViewportLeft)
   ASSERT_GT(viewport.tile_width, 0);
   ASSERT_GT(viewport.tile_height, 0);
 
-  sys::PanViewportLeft(mRegistry);
+  sys::pan_viewport_left(mRegistry);
   ASSERT_EQ(viewport.tile_width, viewport.x_offset);
   ASSERT_EQ(0, viewport.y_offset);
 }
@@ -47,7 +47,7 @@ TEST_F(ViewportSystemTest, PanViewportRight)
   ASSERT_GT(viewport.tile_width, 0);
   ASSERT_GT(viewport.tile_height, 0);
 
-  sys::PanViewportRight(mRegistry);
+  sys::pan_viewport_right(mRegistry);
   ASSERT_EQ(-viewport.tile_width, viewport.x_offset);
   ASSERT_EQ(0, viewport.y_offset);
 }
@@ -58,7 +58,7 @@ TEST_F(ViewportSystemTest, PanViewportUp)
   ASSERT_GT(viewport.tile_width, 0);
   ASSERT_GT(viewport.tile_height, 0);
 
-  sys::PanViewportUp(mRegistry);
+  sys::pan_viewport_up(mRegistry);
   ASSERT_EQ(0, viewport.x_offset);
   ASSERT_EQ(viewport.tile_height, viewport.y_offset);
 }
@@ -69,7 +69,7 @@ TEST_F(ViewportSystemTest, PanViewportDown)
   ASSERT_GT(viewport.tile_width, 0);
   ASSERT_GT(viewport.tile_height, 0);
 
-  sys::PanViewportDown(mRegistry);
+  sys::pan_viewport_down(mRegistry);
   ASSERT_EQ(0, viewport.x_offset);
   ASSERT_EQ(-viewport.tile_height, viewport.y_offset);
 }
@@ -81,7 +81,7 @@ TEST_F(ViewportSystemTest, DecreaseViewportZoom)
   const auto width = viewport.tile_width;
   const auto height = viewport.tile_height;
 
-  sys::DecreaseViewportZoom(mRegistry, 0, 0);
+  sys::decrease_viewport_zoom(mRegistry, 0, 0);
 
   ASSERT_LT(viewport.tile_width, width);
   ASSERT_LT(viewport.tile_height, height);

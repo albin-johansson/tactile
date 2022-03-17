@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "xml_utils.hpp"
 
 #include <algorithm>  // any_of
@@ -32,7 +51,7 @@ auto has_attribute(pugi::xml_node node, const char* attributeName) -> bool
 }
 
 auto string_attribute(pugi::xml_node node, const char* attributeName)
-    -> maybe<std::string>
+    -> Maybe<std::string>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -44,7 +63,7 @@ auto string_attribute(pugi::xml_node node, const char* attributeName)
   }
 }
 
-auto int_attribute(pugi::xml_node node, const char* attributeName) -> maybe<int32>
+auto int_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<int32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -59,7 +78,7 @@ auto int_attribute(pugi::xml_node node, const char* attributeName) -> maybe<int3
   }
 }
 
-auto uint_attribute(pugi::xml_node node, const char* attributeName) -> maybe<uint32>
+auto uint_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<uint32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -74,7 +93,7 @@ auto uint_attribute(pugi::xml_node node, const char* attributeName) -> maybe<uin
   }
 }
 
-auto float_attribute(pugi::xml_node node, const char* attributeName) -> maybe<float>
+auto float_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<float>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -89,7 +108,7 @@ auto float_attribute(pugi::xml_node node, const char* attributeName) -> maybe<fl
   }
 }
 
-auto bool_attribute(pugi::xml_node node, const char* attributeName) -> maybe<bool>
+auto bool_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<bool>
 {
   TACTILE_ASSERT(attributeName);
 

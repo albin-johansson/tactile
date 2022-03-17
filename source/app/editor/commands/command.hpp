@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <string>  // string
@@ -14,27 +33,27 @@ namespace tactile {
 /**
  * \brief All commands are expected to take this as their first constructor parameter.
  */
-using registry_ref = ref<entt::registry>;
+using RegistryRef = Ref<entt::registry>;
 
 /**
  * \brief The abstract base class of all command implementations.
  */
-class command_base
+class ACommand
 {
  public:
-  TACTILE_DELETE_COPY(command_base)
-  TACTILE_DEFAULT_MOVE(command_base)
+  TACTILE_DELETE_COPY(ACommand)
+  TACTILE_DEFAULT_MOVE(ACommand)
 
-  command_base() = default;
+  ACommand() = default;
 
   /**
    * \brief Creates a command.
    *
    * \param text a short human-readable command name.
    */
-  explicit command_base(std::string text);
+  explicit ACommand(std::string text);
 
-  virtual ~command_base() = default;
+  virtual ~ACommand() = default;
 
   /**
    * \brief Reverts the effect of the command.
@@ -59,7 +78,7 @@ class command_base
    *
    * \details This function is mainly designed to be used when overriding the
    * `merge_with()` function, where it can be used to efficiently test if two
-   * commands are of the same type, since the parameter type is `command_base`.
+   * commands are of the same type, since the parameter type is `ACommand`.
    *
    * \return an identifier unique to the command class.
    *
@@ -86,7 +105,7 @@ class command_base
    * \return `true` if the supplied command was merged into *this* command;
    * `false` otherwise.
    */
-  [[nodiscard]] virtual auto merge_with([[maybe_unused]] const command_base& cmd) -> bool
+  [[nodiscard]] virtual auto merge_with([[maybe_unused]] const ACommand& cmd) -> bool
   {
     return false;
   }

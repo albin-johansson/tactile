@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <deque>    // deque
@@ -16,10 +35,10 @@ namespace tactile {
  *
  * \ingroup commands
  */
-class command_stack final
+class CommandStack final
 {
  public:
-  command_stack();
+  CommandStack();
 
   /**
    * \brief Clears the command stack of all commands.
@@ -54,7 +73,7 @@ class command_stack final
    */
   void redo();
 
-  template <typename T, typename... Args, is_derived_from<command_base, T> = 0>
+  template <typename T, typename... Args, is_derived_from<ACommand, T> = 0>
   void push_without_redo(Args&&... args)
   {
     if (size() == capacity()) {
@@ -80,7 +99,7 @@ class command_stack final
    * \param args the arguments that will be forwarded to the command
    * constructor.
    */
-  template <typename T, typename... Args, is_derived_from<command_base, T> = 0>
+  template <typename T, typename... Args, is_derived_from<ACommand, T> = 0>
   void push(Args&&... args)
   {
     if (size() == capacity()) {
@@ -167,7 +186,7 @@ class command_stack final
    * \return the index of the current command;
    *         an empty optional is returned is there is no such command.
    */
-  [[nodiscard]] auto index() const noexcept -> maybe<usize> { return mIndex; }
+  [[nodiscard]] auto index() const noexcept -> Maybe<usize> { return mIndex; }
 
   /**
    * \brief Returns the clean index, if there is one.
@@ -175,7 +194,7 @@ class command_stack final
    * \return the index of the command considered to represent the clean state;
    *         an empty optional is returned is there is no clean index.
    */
-  [[nodiscard]] auto clean_index() const noexcept -> maybe<usize> { return mCleanIndex; }
+  [[nodiscard]] auto clean_index() const noexcept -> Maybe<usize> { return mCleanIndex; }
 
   /**
    * \brief Returns the maximum amount of commands that the stack can hold.
@@ -185,9 +204,9 @@ class command_stack final
   [[nodiscard]] auto capacity() const noexcept -> usize { return mCapacity; }
 
  private:
-  std::deque<std::unique_ptr<command_base>> mStack;
-  maybe<usize> mIndex;
-  maybe<usize> mCleanIndex;
+  std::deque<std::unique_ptr<ACommand>> mStack;
+  Maybe<usize> mIndex;
+  Maybe<usize> mCleanIndex;
   usize mCapacity;
 
   void remove_oldest_command();

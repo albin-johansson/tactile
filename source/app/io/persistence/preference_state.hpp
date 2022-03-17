@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <filesystem>   // path
@@ -17,9 +36,9 @@ namespace tactile {
  *
  * \warning Do not change the enumerator values!
  *
- * \see proto::overlay_pos
+ * \see proto::OverlayPos
  */
-enum class overlay_pos
+enum class OverlayPos
 {
   top_left = 0,
   top_right = 1,
@@ -27,20 +46,20 @@ enum class overlay_pos
   bottom_right = 3
 };
 
-class preference_state final
+class PreferenceState final
 {
  public:
-  preference_state();
+  PreferenceState();
 
-  preference_state(const preference_state& other);
+  PreferenceState(const PreferenceState& other);
 
-  preference_state(preference_state&& other) noexcept;
+  PreferenceState(PreferenceState&& other) noexcept;
 
-  auto operator=(const preference_state& other) -> preference_state&;
+  auto operator=(const PreferenceState& other) -> PreferenceState&;
 
-  auto operator=(preference_state&& other) noexcept -> preference_state&;
+  auto operator=(PreferenceState&& other) noexcept -> PreferenceState&;
 
-  ~preference_state() noexcept;
+  ~PreferenceState() noexcept;
 
   void parse(const std::filesystem::path& path);
 
@@ -56,8 +75,8 @@ class preference_state final
 
   void reset_dock_visibilities();
 
-  void set_theme(editor_theme theme);
-  [[nodiscard]] auto get_theme() const -> editor_theme;
+  void set_theme(EditorTheme theme);
+  [[nodiscard]] auto get_theme() const -> EditorTheme;
 
   void set_viewport_bg(const cen::color& bg);
   [[nodiscard]] auto viewport_bg() const -> const cen::color&;
@@ -71,8 +90,8 @@ class preference_state final
   void set_tileset_dock_visible(bool visible);
   [[nodiscard]] auto is_tileset_dock_visible() const -> bool;
 
-  void set_properties_dock_visible(bool visible);
-  [[nodiscard]] auto is_properties_dock_visible() const -> bool;
+  void set_property_dock_visible(bool visible);
+  [[nodiscard]] auto is_property_dock_visible() const -> bool;
 
   void set_component_dock_visible(bool visible);
   [[nodiscard]] auto is_component_dock_visible() const -> bool;
@@ -98,8 +117,11 @@ class preference_state final
   void set_will_restore_last_session(bool restore);
   [[nodiscard]] auto will_restore_last_session() const -> bool;
 
-  void set_viewport_overlay_pos(overlay_pos pos);
-  [[nodiscard]] auto viewport_overlay_pos() const -> overlay_pos;
+  void set_viewport_overlay_pos(OverlayPos pos);
+  [[nodiscard]] auto viewport_overlay_pos() const -> OverlayPos;
+
+  void set_viewport_overlay_show_fps(bool show);
+  [[nodiscard]] auto viewport_overlay_show_fps() const -> bool;
 
   void set_command_capacity(usize capacity);
   [[nodiscard]] auto command_capacity() const -> usize;
@@ -114,8 +136,8 @@ class preference_state final
   [[nodiscard]] auto preferred_tile_height() const -> int;
 
  private:
-  struct preferences_data;
-  std::unique_ptr<preferences_data> mData;
+  struct Data;
+  std::unique_ptr<Data> mData;
 
   void set_flag(uint64 flag, bool value) noexcept;
 

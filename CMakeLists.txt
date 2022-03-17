@@ -7,12 +7,21 @@ endif ()
 message("[Tactile]: CMake toolchain file is... ${CMAKE_TOOLCHAIN_FILE}")
 message("[Tactile]: Vcpkg target triplet is... ${VCPKG_TARGET_TRIPLET}")
 
-project(tactile CXX)
+project(tactile
+        HOMEPAGE_URL "https://github.com/albin-johansson/tactile"
+        VERSION 0.3.0
+        LANGUAGES CXX)
 
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+message("[Tactile]: Current version is ${CMAKE_PROJECT_VERSION}")
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+  message("[Tactile]: Enabling IPO...")
+  set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+endif ()
 
 message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
 
@@ -22,29 +31,38 @@ set(RESOURCE_DIR ${ROOT_DIR}/resources)
 
 # Target names
 set(TACTILE_PROTO TactileProto)
-set(TACTILE_IO TactileIO)
 set(TACTILE_LIB TactileCore)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
-if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-  set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO.lib")
-elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/libTactileIO.so")
-elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin") # macOS
-  set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/libTactileIO.dylib")
-else ()
-  message(FATAL_ERROR "[Tactile]: Unsupported platform: ${CMAKE_SYSTEM_NAME}!")
-endif ()
+# These are not acquired using vcpkg
+find_package(OpenGL REQUIRED)
+find_package(Boost REQUIRED)
 
+find_package(GLEW CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2-image CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
+find_package(yaml-cpp CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(pugixml CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
+find_package(tinyfiledialogs CONFIG REQUIRED)
+find_package(GTest CONFIG REQUIRED)
 
-find_package(Boost REQUIRED)
+find_path(STB_INCLUDE_DIRS "stb.h")
 
-include(Utilities)
+option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
+
+function(copy_directory_post_build target from to)
+  add_custom_command(TARGET ${target} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     ${from}
+                     ${to})
+endfunction()
 
 function(tactile_set_compile_options target)
   if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")

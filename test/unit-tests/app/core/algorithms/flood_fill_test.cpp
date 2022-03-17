@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/registry_system.hpp"
@@ -14,9 +14,9 @@ TEST(FloodFill, flood)
   auto registry = sys::make_document_registry();
 
   const auto entity = sys::make_tile_layer(registry);
-  auto& layer = registry.get<comp::tile_layer>(entity);
+  auto& layer = registry.get<comp::TileLayer>(entity);
 
-  registry.ctx<comp::active_layer>().entity = entity;
+  registry.ctx<comp::ActiveLayer>().entity = entity;
 
   /* 0  0  0  0  0
      0  0  0  0  0
@@ -43,7 +43,7 @@ TEST(FloodFill, flood)
   sys::set_tile(layer, {4, 0}, 1);
 
   {
-    std::vector<tile_position> affected;
+    std::vector<TilePos> affected;
     flood(registry, entity, {4, 1}, 2, affected);
   }
 
@@ -84,7 +84,7 @@ TEST(FloodFill, flood)
   ASSERT_EQ(2, sys::get_tile(layer, {4, 4}));
 
   {
-    std::vector<tile_position> affected;
+    std::vector<TilePos> affected;
     flood(registry, entity, {3, 1}, 3, affected);
   }
 

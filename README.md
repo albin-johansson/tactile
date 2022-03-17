@@ -29,10 +29,12 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
     * Note that not all Tiled features are supported by Tactile
 * Intuitive mouse tools
-    * Tile stamp tool
-    * Eraser tool
-    * Bucket fill tool
-    * ...
+  * Tile stamp tool
+  * Eraser tool
+  * Bucket fill tool
+  * Rectangle tool
+  * Ellipse tool
+  * Point tool
 * Components (attachable bundles of attributes, otherwise commonly found in game engines)
 * Tile animations
 * Various editor themes
@@ -43,6 +45,11 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 This section provides a high-level description of how to manually build the Tactile editor. The project makes use
 of [Vcpkg](https://github.com/microsoft/vcpkg) for third-party dependency management. As a result, building the code
 base is really quite straightforward. The process is also basically the same on all platforms.
+
+### Install Boost
+
+You'll need to install the Boost libraries on your system. This should be fairly straight forward. Make sure that you
+set the environment variable `BOOST_ROOT` to point to the root of your Boost installation.
 
 ### Install Vcpkg
 

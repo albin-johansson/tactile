@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "file_shortcuts.hpp"
 
 #include "editor/events/map_events.hpp"
@@ -9,52 +28,52 @@
 
 namespace tactile {
 
-NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, gPrimaryModifier} {}
+NewMapShortcut::NewMapShortcut() : AShortcut{cen::scancodes::n, primary_modifier} {}
 
-void NewMapShortcut::Activate(entt::dispatcher& dispatcher)
+void NewMapShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<show_new_map_dialog_event>();
+  dispatcher.enqueue<ShowNewMapDialogEvent>();
 }
 
-OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, gPrimaryModifier} {}
+OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, primary_modifier} {}
 
-void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
+void OpenMapShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<show_open_map_dialog_event>();
+  dispatcher.enqueue<ShowOpenMapDialogEvent>();
 }
 
 OpenSettingsShortcut::OpenSettingsShortcut()
-    : AShortcut{SDL_SCANCODE_COMMA, gPrimaryModifier}
+    : AShortcut{SDL_SCANCODE_COMMA, primary_modifier}
 {}
 
-void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
+void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<show_settings_event>();
+  dispatcher.enqueue<ShowSettingsEvent>();
 }
 
-SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, gPrimaryModifier} {}
+SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, primary_modifier} {}
 
-void SaveShortcut::Activate(entt::dispatcher& dispatcher)
+void SaveShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<save_event>();
+  dispatcher.enqueue<SaveEvent>();
 }
 
-auto SaveShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+auto SaveShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.is_save_possible();
 }
 
 SaveAsShortcut::SaveAsShortcut()
-    : AShortcut{cen::scancodes::s, gPrimaryModifier | cen::key_mod::lshift}
+    : AShortcut{cen::scancodes::s, primary_modifier | cen::key_mod::lshift}
 {}
 
-void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
+void SaveAsShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<open_save_as_dialog_event>();
+  dispatcher.enqueue<OpenSaveAsDialogEvent>();
 }
 
-auto SaveAsShortcut::IsEnabled(const document_model& model, const widget_manager&) const
+auto SaveAsShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
   return model.is_save_possible();

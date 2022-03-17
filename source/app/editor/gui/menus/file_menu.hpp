@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <entt/entt.hpp>
@@ -6,7 +25,7 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 /// \addtogroup gui
 /// \{
@@ -14,21 +33,22 @@ class document_model;
 class FileMenu final
 {
  public:
-  void Update(const document_model& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
   /* Updates all associated windows. */
-  void UpdateWindows(const document_model& model, entt::dispatcher& dispatcher);
+  void update_windows(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void ShowNewMapDialog();
+  void show_map_creation_dialog();
 
-  void ShowOpenMapDialog();
+  void show_open_map_dialog();
 
  private:
-  create_map_dialog mCreateMapDialog;
+  CreateMapDialog mCreateMapDialog;
   bool mShowOpenMapDialog{};
 
-  void UpdateRecentFilesMenu(entt::dispatcher& dispatcher);
-  void UpdateMapFileDialog(entt::dispatcher& dispatcher);
+  void update_recent_files_menu(entt::dispatcher& dispatcher);
+
+  void update_map_file_dialog(entt::dispatcher& dispatcher);
 };
 
 /// \} End of group gui

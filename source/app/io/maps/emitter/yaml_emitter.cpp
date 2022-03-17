@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "yaml_emitter.hpp"
 
 #include <fstream>  // ofstream
@@ -20,7 +39,7 @@ namespace {
 
 constexpr int tileset_node_version = 1;
 
-void _emit_properties(YAML::Emitter& emitter, const ir::attribute_context_data& context)
+void _emit_properties(YAML::Emitter& emitter, const ir::AttributeContextData& context)
 {
   if (!context.properties.empty()) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
@@ -37,7 +56,7 @@ void _emit_properties(YAML::Emitter& emitter, const ir::attribute_context_data& 
   }
 }
 
-void _emit_components(YAML::Emitter& emitter, const ir::attribute_context_data& context)
+void _emit_components(YAML::Emitter& emitter, const ir::AttributeContextData& context)
 {
   if (!context.components.empty()) {
     emitter << YAML::Key << "components" << YAML::BeginSeq;
@@ -63,22 +82,22 @@ void _emit_components(YAML::Emitter& emitter, const ir::attribute_context_data& 
   }
 }
 
-void _emit_object_data(YAML::Emitter& emitter, const ir::object_data& data)
+void _emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "id" << YAML::Value << data.id;
 
   emitter << YAML::Key << "type";
   switch (data.type) {
-    case object_type::point:
+    case ObjectType::point:
       emitter << YAML::Value << "point";
       break;
 
-    case object_type::rect:
+    case ObjectType::rect:
       emitter << YAML::Value << "rect";
       break;
 
-    case object_type::ellipse:
+    case ObjectType::ellipse:
       emitter << YAML::Value << "ellipse";
       break;
   }
@@ -117,7 +136,7 @@ void _emit_object_data(YAML::Emitter& emitter, const ir::object_data& data)
   emitter << YAML::EndMap;
 }
 
-void _emit_object_layer_data(YAML::Emitter& emitter, const ir::object_layer_data& data)
+void _emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& data)
 {
   if (data.objects.empty()) {
     return;
@@ -133,7 +152,7 @@ void _emit_object_layer_data(YAML::Emitter& emitter, const ir::object_layer_data
 }
 
 void _emit_tile_layer_data(YAML::Emitter& emitter,
-                           const ir::tile_layer_data& data,
+                           const ir::TileLayerData& data,
                            const usize rows,
                            const usize columns)
 {
@@ -165,7 +184,7 @@ void _emit_tile_layer_data(YAML::Emitter& emitter,
 }
 
 void _emit_layer(YAML::Emitter& emitter,
-                 const ir::layer_data& data,
+                 const ir::LayerData& data,
                  const usize rows,
                  const usize columns)
 {
@@ -184,25 +203,25 @@ void _emit_layer(YAML::Emitter& emitter,
 
   emitter << YAML::Key << "type";
   switch (data.type) {
-    case layer_type::tile_layer:
+    case LayerType::tile_layer:
       emitter << YAML::Value << "tile-layer";
       _emit_tile_layer_data(emitter,
-                            std::get<ir::tile_layer_data>(data.data),
+                            std::get<ir::TileLayerData>(data.data),
                             rows,
                             columns);
       break;
 
-    case layer_type::object_layer:
+    case LayerType::object_layer:
       emitter << YAML::Value << "object-layer";
-      _emit_object_layer_data(emitter, std::get<ir::object_layer_data>(data.data));
+      _emit_object_layer_data(emitter, std::get<ir::ObjectLayerData>(data.data));
       break;
 
-    case layer_type::group_layer: {
+    case LayerType::group_layer: {
       emitter << YAML::Value << "group-layer";
       emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
       for (const auto& childLayerData :
-           std::get<ir::group_layer_data>(data.data).children) {
+           std::get<ir::GroupLayerData>(data.data).children) {
         _emit_layer(emitter, *childLayerData, rows, columns);
       }
 
@@ -217,7 +236,7 @@ void _emit_layer(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void _emit_layers(YAML::Emitter& emitter, const ir::map_data& data)
+void _emit_layers(YAML::Emitter& emitter, const ir::MapData& data)
 {
   if (data.layers.empty()) {
     return;
@@ -232,7 +251,7 @@ void _emit_layers(YAML::Emitter& emitter, const ir::map_data& data)
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::fancy_tile_data& data)
+void _emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::MetaTileData& data)
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
 
@@ -246,7 +265,7 @@ void _emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::fancy_tile_d
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::tileset_data& tileset)
+void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
@@ -275,9 +294,9 @@ void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::tileset_data& tileset
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_file(const emit_info& info,
+void _emit_tileset_file(const EmitInfo& info,
                         const std::string& filename,
-                        const ir::tileset_data& tileset)
+                        const ir::TilesetData& tileset)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);
@@ -315,7 +334,7 @@ void _emit_tileset_file(const emit_info& info,
   stream << emitter.c_str();
 }
 
-void _emit_tilesets(YAML::Emitter& emitter, const emit_info& info)
+void _emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
 {
   const auto& data = info.data();
 
@@ -340,7 +359,7 @@ void _emit_tilesets(YAML::Emitter& emitter, const emit_info& info)
 
 void _emit_component_definition_attribute(YAML::Emitter& emitter,
                                           const std::string& name,
-                                          const attribute_value& value)
+                                          const Attribute& value)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;
@@ -353,7 +372,7 @@ void _emit_component_definition_attribute(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void _emit_component_definitions(YAML::Emitter& emitter, const emit_info& info)
+void _emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
 {
   const auto& data = info.data();
 
@@ -385,7 +404,7 @@ void _emit_component_definitions(YAML::Emitter& emitter, const emit_info& info)
 
 }  // namespace
 
-void emit_yaml_map(const emit_info& info)
+void emit_yaml_map(const EmitInfo& info)
 {
   const auto& data = info.data();
 

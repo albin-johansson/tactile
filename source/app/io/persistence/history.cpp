@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "history.hpp"
 
 #include <algorithm>   // find, find_if
@@ -21,7 +40,7 @@ constexpr usize _max_size = 10;
 
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
-inline maybe<std::string> _last_closed_file;
+inline Maybe<std::string> _last_closed_file;
 inline std::deque<std::string> _history;
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&
@@ -37,7 +56,7 @@ void load_file_history()
   log_verbose("Loading file history...");
   std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
 
-  proto::history h;
+  proto::History h;
   if (h.ParseFromIstream(&stream)) {
     if (h.has_last_opened_file()) {
       _last_closed_file = h.last_opened_file();
@@ -55,7 +74,7 @@ void load_file_history()
 
 void save_file_history()
 {
-  proto::history h;
+  proto::History h;
 
   if (_last_closed_file) {
     h.set_last_opened_file(*_last_closed_file);
@@ -121,7 +140,7 @@ auto last_closed_file() -> const std::string&
     return _last_closed_file.value();
   }
   else {
-    throw_traced(tactile_error{"Invalid last closed file!"});
+    throw_traced(TactileError{"Invalid last closed file!"});
   }
 }
 

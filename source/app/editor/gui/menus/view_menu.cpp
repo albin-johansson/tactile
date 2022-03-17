@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "view_menu.hpp"
 
 #include <imgui.h>
@@ -14,19 +33,19 @@
 namespace tactile {
 namespace {
 
-void UpdateWidgetsMenu(const bool hasActiveMap)
+void _update_widgets_menu(const bool hasActiveMap)
 {
-  if (scoped::menu menu{"Widgets", hasActiveMap}; menu.is_open()) {
+  if (scoped::Menu menu{"Widgets", hasActiveMap}; menu.is_open()) {
     if (ImGui::MenuItem("Reset Layout")) {
-      ResetLayout();
+      reset_layout();
     }
 
     ImGui::Separator();
 
     auto& prefs = get_preferences();
 
-    if (ImGui::MenuItem("Properties", nullptr, prefs.is_properties_dock_visible())) {
-      prefs.set_properties_dock_visible(!prefs.is_properties_dock_visible());
+    if (ImGui::MenuItem("Properties", nullptr, prefs.is_property_dock_visible())) {
+      prefs.set_property_dock_visible(!prefs.is_property_dock_visible());
     }
 
     if (ImGui::MenuItem("Layers", nullptr, prefs.is_layer_dock_visible())) {
@@ -49,11 +68,11 @@ void UpdateWidgetsMenu(const bool hasActiveMap)
 
 }  // namespace
 
-void ViewMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
+void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::menu menu{"View"}; menu.is_open()) {
+  if (scoped::Menu menu{"View"}; menu.is_open()) {
     const auto hasActiveDocument = model.has_active_document();
-    UpdateWidgetsMenu(hasActiveDocument);
+    _update_widgets_menu(hasActiveDocument);
 
     ImGui::Separator();
 
@@ -131,7 +150,7 @@ void ViewMenu::Update(const document_model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument)) {
-      dispatcher.enqueue<toggle_ui_event>();
+      dispatcher.enqueue<ToggleUiEvent>();
     }
   }
 }

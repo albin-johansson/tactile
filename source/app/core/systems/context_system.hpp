@@ -1,8 +1,27 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <entt/entt.hpp>
 
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "snapshot.hpp"
 #include "tactile.hpp"
 
@@ -50,7 +69,7 @@ void reset_next_context_id() noexcept;
  * \return the created attribute context.
  */
 auto add_attribute_context(entt::registry& registry, entt::entity entity)
-    -> comp::attribute_context&;
+    -> comp::AttributeContext&;
 
 /**
  * \brief Creates a snapshot of the state of a attribute context.
@@ -67,7 +86,7 @@ auto add_attribute_context(entt::registry& registry, entt::entity entity)
  */
 [[nodiscard]] auto copy_attribute_context(const entt::registry& registry,
                                           entt::entity source)
-    -> attribute_context_snapshot;
+    -> AttributeContextSnapshot;
 
 /**
  * \brief Restores an attribute context component.
@@ -83,7 +102,7 @@ auto add_attribute_context(entt::registry& registry, entt::entity entity)
  */
 void restore_attribute_context(entt::registry& registry,
                                entt::entity entity,
-                               attribute_context_snapshot snapshot);
+                               AttributeContextSnapshot snapshot);
 
 /**
  * \brief Returns the context associated with an identifier.
@@ -96,11 +115,10 @@ void restore_attribute_context(entt::registry& registry,
  * \throws tactile_error if the identifier is invalid.
  */
 [[nodiscard]] auto get_context(entt::registry& registry, context_id id)
-    -> comp::attribute_context&;
+    -> comp::AttributeContext&;
 
-/// \copydoc get_context()
 [[nodiscard]] auto get_context(const entt::registry& registry, context_id id)
-    -> const comp::attribute_context&;
+    -> const comp::AttributeContext&;
 
 /**
  * \brief Returns the currently active attribute context.
@@ -110,7 +128,7 @@ void restore_attribute_context(entt::registry& registry,
  * \return the current context.
  */
 [[nodiscard]] auto current_context(const entt::registry& registry)
-    -> const comp::attribute_context&;
+    -> const comp::AttributeContext&;
 
 /**
  * \brief Returns the identifier associated with the current context.

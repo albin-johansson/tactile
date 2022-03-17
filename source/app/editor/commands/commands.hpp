@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 /* Convenience header that includes all other command headers */
@@ -39,7 +58,10 @@
 #include "properties/update_property_cmd.hpp"
 #include "tilesets/add_tileset_cmd.hpp"
 #include "tilesets/remove_tileset_cmd.hpp"
-#include "tilesets/set_tileset_name_cmd.hpp"
-#include "tools/bucket_cmd.hpp"
-#include "tools/eraser_sequence_cmd.hpp"
-#include "tools/stamp_sequence_cmd.hpp"
+#include "tilesets/rename_tileset_cmd.hpp"
+#include "tools/bucket_tool_cmd.hpp"
+#include "tools/ellipse_tool_cmd.hpp"
+#include "tools/eraser_tool_cmd.hpp"
+#include "tools/point_tool_cmd.hpp"
+#include "tools/rectangle_tool_cmd.hpp"
+#include "tools/stamp_tool_cmd.hpp"

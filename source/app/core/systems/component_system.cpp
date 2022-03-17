@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "component_system.hpp"
 
 #include <utility>  // move
@@ -5,69 +24,146 @@
 #include <fmt/format.h>
 
 #include "context_system.hpp"
-#include "core/components/attribute_context.hpp"
+#include "core/components/attributes.hpp"
 #include "misc/assert.hpp"
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
-#include "property_system.hpp"
+#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto GetComponentAttribute(const entt::registry& registry,
-                                         const component_id id,
-                                         const std::string_view attribute)
-    -> decltype(comp::component_def::attributes)::const_iterator
+[[nodiscard]] auto _get_component_def_attr(const entt::registry& registry,
+                                           const component_id compId,
+                                           const std::string_view attribute)
+    -> decltype(comp::ComponentDef::attributes)::const_iterator
 {
-  const auto [defEntity, def] = get_component_def(registry, id);
-  if (const auto it = def.attributes.find(attribute); it != def.attributes.end()) {
-    return it;
+  const auto [defEntity, def] = get_component_def(registry, compId);
+  if (auto iter = def.attributes.find(attribute); iter != def.attributes.end()) {
+    return iter;
   }
   else {
-    throw_traced(tactile_error{"Invalid component attribute name!"});
+    throw_traced(TactileError{"Invalid component attribute name!"});
   }
 }
 
-[[nodiscard]] auto GetComponentAttribute(entt::registry& registry,
-                                         const component_id id,
-                                         const std::string_view attribute)
-    -> decltype(comp::component_def::attributes)::iterator
+[[nodiscard]] auto _get_component_def_attr(entt::registry& registry,
+                                           const component_id compId,
+                                           const std::string_view attribute)
+    -> decltype(comp::ComponentDef::attributes)::iterator
 {
-  const auto [defEntity, def] = get_component_def(registry, id);
-  if (const auto it = def.attributes.find(attribute); it != def.attributes.end()) {
-    return it;
+  const auto [defEntity, def] = get_component_def(registry, compId);
+  if (auto iter = def.attributes.find(attribute); iter != def.attributes.end()) {
+    return iter;
   }
   else {
-    throw_traced(tactile_error{"Invalid component attribute name!"});
+    throw_traced(TactileError{"Invalid component attribute name!"});
   }
 }
 
-[[nodiscard]] auto GetComponentValue(comp::component& component,
-                                     const std::string_view attribute)
-    -> decltype(comp::component::values)::iterator
+[[nodiscard]] auto _get_component_value(comp::Component& component,
+                                        const std::string_view attribute)
+    -> decltype(comp::Component::values)::iterator
 {
-  if (const auto it = component.values.find(attribute); it != component.values.end()) {
-    return it;
+  if (auto iter = component.values.find(attribute); iter != component.values.end()) {
+    return iter;
   }
   else {
-    throw_traced(tactile_error{"Invalid component attribute name!"});
+    throw_traced(TactileError{"Invalid component attribute name!"});
   }
 }
 
-[[nodiscard]] auto GetComponent(entt::registry& registry,
-                                const context_id contextId,
-                                const component_id componentId) -> comp::component&
+[[nodiscard]] auto _get_component(entt::registry& registry,
+                                  const context_id contextId,
+                                  const component_id compId) -> comp::Component&
 {
   auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
-    auto& component = registry.get<comp::component>(componentEntity);
-    if (component.type == componentId) {
+    auto& component = checked_get<comp::Component>(registry, componentEntity);
+    if (component.type == compId) {
       return component;
     }
   }
 
-  throw_traced(tactile_error{"Did not find component!"});
+  throw_traced(TactileError{"Did not find component!"});
+}
+
+void _visit_components(entt::registry& registry, auto callable)
+{
+  const auto& root = registry.ctx<comp::AttributeContext>();
+  for (const auto compEntity : root.components) {
+    auto& comp = checked_get<comp::Component>(registry, compEntity);
+    callable(root.id, comp);
+  }
+
+  for (auto&& [entity, ctx, comp] :
+       registry.view<comp::AttributeContext, comp::Component>().each()) {
+    callable(ctx.id, comp);
+  }
+}
+
+void _visit_components(const entt::registry& registry, auto callable)
+{
+  const auto& root = registry.ctx<comp::AttributeContext>();
+  for (const auto compEntity : root.components) {
+    const auto& comp = checked_get<comp::Component>(registry, compEntity);
+    callable(root.id, comp);
+  }
+
+  for (auto&& [entity, ctx, comp] :
+       registry.view<comp::AttributeContext, comp::Component>().each()) {
+    callable(ctx.id, comp);
+  }
+}
+
+void _visit_attributes(entt::registry& registry,
+                       const component_id compId,
+                       const std::string_view attrName,
+                       auto callable)
+{
+  _visit_components(registry,
+                    [=, &callable](const context_id ctx, comp::Component& comp) {
+                      if (comp.type == compId) {
+                        if (auto iter = comp.values.find(attrName);
+                            iter != comp.values.end()) {
+                          callable(ctx, iter->second);
+                        }
+                      }
+                    });
+}
+
+void _visit_attributes(const entt::registry& registry,
+                       const component_id compId,
+                       const std::string_view attrName,
+                       auto callable)
+{
+  _visit_components(registry,
+                    [=, &callable](const context_id ctx, const comp::Component& comp) {
+                      if (comp.type == compId) {
+                        if (auto iter = comp.values.find(attrName);
+                            iter != comp.values.end()) {
+                          callable(ctx, iter->second);
+                        }
+                      }
+                    });
+}
+
+[[nodiscard]] auto _collect_attributes(const entt::registry& registry,
+                                       const component_id compId,
+                                       const std::string_view attrName)
+    -> HashMap<context_id, Attribute>
+{
+  HashMap<context_id, Attribute> attributes;
+
+  _visit_attributes(registry,
+                    compId,
+                    attrName,
+                    [&](const context_id contextId, Attribute attr) {
+                      attributes[contextId] = std::move(attr);
+                    });
+
+  return attributes;
 }
 
 }  // namespace
@@ -84,7 +180,7 @@ auto make_component_def(entt::registry& registry, std::string name) -> component
 
   const auto entity = registry.create();
 
-  auto& def = registry.emplace<comp::component_def>(entity);
+  auto& def = registry.emplace<comp::ComponentDef>(entity);
   def.id = next_id;
   def.name = std::move(name);
 
@@ -93,56 +189,57 @@ auto make_component_def(entt::registry& registry, std::string name) -> component
   return def.id;
 }
 
-void make_component_def(entt::registry& registry, const component_id id, std::string name)
+void make_component_def(entt::registry& registry,
+                        const component_id compId,
+                        std::string name)
 {
-  TACTILE_ASSERT(!is_valid_component(registry, id));
+  TACTILE_ASSERT(!is_valid_component(registry, compId));
   TACTILE_ASSERT(!is_component_name_taken(registry, name));
 
-  log_debug("Creating component definition with explicit ID '{}'", id);
+  log_debug("Creating component definition with explicit ID '{}'", compId);
 
   const auto entity = registry.create();
 
-  auto& def = registry.emplace<comp::component_def>(entity);
-  def.id = id;
+  auto& def = registry.emplace<comp::ComponentDef>(entity);
+  def.id = compId;
   def.name = std::move(name);
 }
 
-auto remove_component_def(entt::registry& registry, const component_id id)
-    -> remove_component_def_result
+auto remove_component_def(entt::registry& registry, const component_id compId)
+    -> RemoveComponentDefResult
 {
-  log_debug("Deleting component definition '{}'", id);
+  log_debug("Deleting component definition '{}'", compId);
 
-  const auto [defEntity, def] = get_component_def(registry, id);
+  const auto [defEntity, def] = get_component_def(registry, compId);
 
-  remove_component_def_result result;
-  result.id = id;
+  RemoveComponentDefResult result;
+  result.id = compId;
   result.name = def.name;
   result.attributes = def.attributes;
 
   /* Cache attributes from components that will be removed */
-  auto cache = [&](const component_id componentId,
-                   const comp::attribute_context& context) {
+  auto cache = [&](const component_id compId, const comp::AttributeContext& context) {
     for (const auto componentEntity : context.components) {
-      const auto& component = registry.get<comp::component>(componentEntity);
-      if (component.type == componentId) {
+      const auto& component = checked_get<comp::Component>(registry, componentEntity);
+      if (component.type == compId) {
         result.values[context.id] = component.values;
       }
     }
   };
 
   /* Removes component entities of the specified type */
-  auto remove = [&, id](std::vector<entt::entity>& components) {
+  auto remove = [&, compId](std::vector<entt::entity>& components) {
     std::erase_if(components, [&](const entt::entity componentEntity) {
-      const auto& component = registry.get<comp::component>(componentEntity);
-      return component.type == id;
+      const auto& component = checked_get<comp::Component>(registry, componentEntity);
+      return component.type == compId;
     });
   };
 
-  auto& root = registry.ctx<comp::attribute_context>();
+  auto& root = registry.ctx<comp::AttributeContext>();
   cache(def.id, root);
   remove(root.components);
 
-  for (auto&& [entity, context] : registry.view<comp::attribute_context>().each()) {
+  for (auto&& [entity, context] : registry.view<comp::AttributeContext>().each()) {
     cache(def.id, context);
     remove(context.components);
   }
@@ -152,7 +249,7 @@ auto remove_component_def(entt::registry& registry, const component_id id)
   return result;
 }
 
-void restore_component_def(entt::registry& registry, remove_component_def_result snapshot)
+void restore_component_def(entt::registry& registry, RemoveComponentDefResult snapshot)
 {
   log_debug("Restoring component definition '{}'", snapshot.id);
 
@@ -167,7 +264,7 @@ void restore_component_def(entt::registry& registry, remove_component_def_result
     auto& context = sys::get_context(registry, contextId);
 
     const auto componentEntity = registry.create();
-    auto& component = registry.emplace<comp::component>(componentEntity);
+    auto& component = registry.emplace<comp::Component>(componentEntity);
     component.type = snapshot.id;
     component.values = std::move(values);
 
@@ -176,46 +273,34 @@ void restore_component_def(entt::registry& registry, remove_component_def_result
 }
 
 void rename_component_def(entt::registry& registry,
-                          const component_id id,
+                          const component_id compId,
                           std::string name)
 {
   TACTILE_ASSERT(!sys::is_component_name_taken(registry, name));
 
-  log_debug("Renaming component definition '{}' to '{}'", id, name);
+  log_debug("Renaming component definition '{}' to '{}'", compId, name);
 
-  auto [entity, def] = get_component_def(registry, id);
+  auto [entity, def] = get_component_def(registry, compId);
   def.name = std::move(name);
 }
 
-auto is_valid_component(const entt::registry& registry, const component_id id) -> bool
+auto is_valid_component(const entt::registry& registry, const component_id compId) -> bool
 {
-  for (auto [entity, def] : registry.view<comp::component_def>().each()) {
-    if (def.id == id) {
-      return true;
-    }
-  }
-
-  return false;
+  return find_component_def(registry, compId) != entt::null;
 }
 
 auto is_component_name_taken(const entt::registry& registry, const std::string_view name)
     -> bool
 {
-  for (auto&& [entity, component] : registry.view<comp::component_def>().each()) {
-    if (component.name == name) {
-      return true;
-    }
-  }
-
-  return false;
+  return find_component_def(registry, name) != entt::null;
 }
 
 auto get_first_available_component_def(const entt::registry& registry)
-    -> maybe<component_id>
+    -> Maybe<component_id>
 {
-  if (!registry.storage<comp::component_def>().empty()) {
-    const auto entity = registry.view<comp::component_def>().front();
-    const auto& def = registry.get<comp::component_def>(entity);
+  if (!registry.storage<comp::ComponentDef>().empty()) {
+    const auto entity = registry.view<comp::ComponentDef>().front();
+    const auto& def = checked_get<comp::ComponentDef>(registry, entity);
     return def.id;
   }
   else {
@@ -223,11 +308,11 @@ auto get_first_available_component_def(const entt::registry& registry)
   }
 }
 
-auto find_component_def(const entt::registry& registry, const component_id id)
+auto find_component_def(const entt::registry& registry, const component_id compId)
     -> entt::entity
 {
-  for (auto&& [entity, component] : registry.view<comp::component_def>().each()) {
-    if (component.id == id) {
+  for (auto&& [entity, component] : registry.view<comp::ComponentDef>().each()) {
+    if (component.id == compId) {
       return entity;
     }
   }
@@ -238,7 +323,7 @@ auto find_component_def(const entt::registry& registry, const component_id id)
 auto find_component_def(const entt::registry& registry, const std::string_view name)
     -> entt::entity
 {
-  for (auto&& [entity, def] : registry.view<comp::component_def>().each()) {
+  for (auto&& [entity, def] : registry.view<comp::ComponentDef>().each()) {
     if (def.name == name) {
       return entity;
     }
@@ -247,95 +332,98 @@ auto find_component_def(const entt::registry& registry, const std::string_view n
   return entt::null;
 }
 
-auto get_component_def(entt::registry& registry, const component_id id)
-    -> std::pair<entt::entity, comp::component_def&>
+auto get_component_def(entt::registry& registry, const component_id compId)
+    -> std::pair<entt::entity, comp::ComponentDef&>
 {
-  const auto entity = find_component_def(registry, id);
+  const auto entity = find_component_def(registry, compId);
   if (entity != entt::null) {
-    return {entity, registry.get<comp::component_def>(entity)};
+    return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
-    throw_traced(tactile_error{"Failed to find component definition with specified ID!"});
+    throw_traced(TactileError{"Failed to find component definition with specified ID!"});
   }
 }
 
-auto get_component_def(const entt::registry& registry, const component_id id)
-    -> std::pair<entt::entity, const comp::component_def&>
+auto get_component_def(const entt::registry& registry, const component_id compId)
+    -> std::pair<entt::entity, const comp::ComponentDef&>
 {
-  const auto entity = find_component_def(registry, id);
+  const auto entity = find_component_def(registry, compId);
   if (entity != entt::null) {
-    return {entity, registry.get<comp::component_def>(entity)};
+    return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
-    throw_traced(tactile_error{"Failed to find component definition with specified ID!"});
+    throw_traced(TactileError{"Failed to find component definition with specified ID!"});
   }
 }
 
-auto get_component_def_name(const entt::registry& registry, const component_id id)
+auto get_component_def_name(const entt::registry& registry, const component_id compId)
     -> const std::string&
 {
-  const auto& [entity, def] = get_component_def(registry, id);
+  const auto& [entity, def] = get_component_def(registry, compId);
   return def.name;
 }
 
 void make_component_attribute(entt::registry& registry,
-                              const component_id id,
+                              const component_id compId,
                               const std::string& name)
 {
-  make_component_attribute(registry, id, name, std::string{});
+  make_component_attribute(registry, compId, name, std::string{});
 }
 
 void make_component_attribute(entt::registry& registry,
-                              const component_id id,
+                              const component_id compId,
                               const std::string& name,
-                              const attribute_value& value)
+                              const Attribute& value)
 {
-  log_debug("Adding attribute '{}' to component '{}'", name, id);
+  log_debug("Adding attribute '{}' to component '{}'", name, compId);
 
-  auto [defEntity, def] = get_component_def(registry, id);
+  auto [defEntity, def] = get_component_def(registry, compId);
   def.attributes[name] = value;
 
   /* Updates existing components of the affected type to feature the new attribute */
-  for (auto&& [entity, component] : registry.view<comp::component>().each()) {
-    if (component.type == id) {
+  for (auto&& [entity, component] : registry.view<comp::Component>().each()) {
+    if (component.type == compId) {
       component.values[name] = value;
     }
   }
 }
 
 void remove_component_attribute(entt::registry& registry,
-                                const component_id id,
+                                const component_id compId,
                                 const std::string_view name)
 {
-  log_debug("Removing attribute '{}' from component '{}'", name, id);
+  log_debug("Removing attribute '{}' from component '{}'", name, compId);
 
-  TACTILE_ASSERT(find_component_def(registry, id) != entt::null);
-  TACTILE_ASSERT(is_component_attribute_name_taken(registry, id, name));
+  TACTILE_ASSERT(find_component_def(registry, compId) != entt::null);
+  TACTILE_ASSERT(is_component_attribute_name_taken(registry, compId, name));
 
   const auto removeAttributeFrom = [name](auto& map) {
     std::erase_if(map, [name](const auto& pair) { return pair.first == name; });
   };
 
-  auto [defEntity, def] = get_component_def(registry, id);
+  auto [defEntity, def] = get_component_def(registry, compId);
   removeAttributeFrom(def.attributes);
 
-  for (auto&& [entity, component] : registry.view<comp::component>().each()) {
-    if (component.type == id) {
+  for (auto&& [entity, component] : registry.view<comp::Component>().each()) {
+    if (component.type == compId) {
       removeAttributeFrom(component.values);
     }
   }
 }
 
 void rename_component_attribute(entt::registry& registry,
-                                const component_id id,
+                                const component_id compId,
                                 const std::string& current,
                                 std::string updated)
 {
-  TACTILE_ASSERT(!is_component_attribute_name_taken(registry, id, updated));
+  TACTILE_ASSERT(!is_component_attribute_name_taken(registry, compId, updated));
 
-  log_debug("Renaming attribute '{}' in component '{}' to '{}'", current, id, updated);
+  log_debug("Renaming attribute '{}' in component '{}' to '{}'",
+            current,
+            compId,
+            updated);
 
-  auto [defEntity, def] = get_component_def(registry, id);
+  auto [defEntity, def] = get_component_def(registry, compId);
 
   TACTILE_ASSERT(def.attributes.contains(current));
   auto value = def.attributes.at(current);
@@ -345,46 +433,78 @@ void rename_component_attribute(entt::registry& registry,
 }
 
 auto duplicate_component_attribute(entt::registry& registry,
-                                   const component_id id,
+                                   const component_id compId,
                                    const std::string_view attribute) -> std::string
 {
-  log_debug("Duplicating attribute '{}' in component '{}'", attribute, id);
+  log_debug("Duplicating attribute '{}' in component '{}'", attribute, compId);
 
-  auto [defEntity, def] = get_component_def(registry, id);
-  auto iter = GetComponentAttribute(registry, id, attribute);
+  auto [defEntity, def] = get_component_def(registry, compId);
+  auto iter = _get_component_def_attr(registry, compId, attribute);
 
   int suffix = 1;
   std::string candidateName;
   do {
     candidateName = fmt::format("{} ({})", attribute, suffix);
     ++suffix;
-  } while (is_component_attribute_name_taken(registry, id, candidateName));
+  } while (is_component_attribute_name_taken(registry, compId, candidateName));
 
   def.attributes[candidateName] = iter->second;
 
   return candidateName;
 }
 
-void set_component_attribute_type(entt::registry& registry,
-                                  const component_id id,
-                                  const std::string_view attribute,
-                                  const attribute_type type)
+auto set_component_attribute_type(entt::registry& registry,
+                                  const component_id compId,
+                                  const std::string_view attrName,
+                                  const AttributeType type) -> SetComponentAttrTypeResult
 {
   log_verbose("Setting type of attribute '{}' in component '{}' to '{}'",
-              attribute,
-              id,
+              attrName,
+              compId,
               type);
 
-  auto iter = GetComponentAttribute(registry, id, attribute);
+  SetComponentAttrTypeResult result;
+  result.comp_id = compId;
+  result.attr_name = std::string{attrName};
+  result.values = _collect_attributes(registry, compId, attrName);
+
+  auto iter = _get_component_def_attr(registry, compId, attrName);
+  result.base_value = iter->second;
+
   iter->second.reset_to_default(type);
+
+  _visit_attributes(registry, compId, attrName, [type](context_id, Attribute& attr) {
+    attr.reset_to_default(type);
+  });
+
+  return result;
+}
+
+void restore_component_attribute_type(entt::registry& registry,
+                                      const SetComponentAttrTypeResult& snapshot)
+{
+  log_verbose("Restoring type of attribute '{}' in component '{}'",
+              snapshot.attr_name,
+              snapshot.comp_id);
+
+  {
+    auto&& [entity, def] = get_component_def(registry, snapshot.comp_id);
+    def.attributes[snapshot.attr_name] = snapshot.base_value;
+  }
+
+  for (auto&& [ctx, attr] : snapshot.values) {
+    auto& comp = _get_component(registry, ctx, snapshot.comp_id);
+    auto iter = comp.values.find(snapshot.attr_name);
+    iter->second = attr;
+  }
 }
 
 void set_component_attribute_value(entt::registry& registry,
-                                   const component_id id,
+                                   const component_id compId,
                                    const std::string_view attribute,
-                                   attribute_value value)
+                                   Attribute value)
 {
-  auto iter = GetComponentAttribute(registry, id, attribute);
+  auto iter = _get_component_def_attr(registry, compId, attribute);
 
   TACTILE_ASSERT_MSG(iter->second.type() == value.type(),
                      "Requested default value had wrong type!");
@@ -392,27 +512,26 @@ void set_component_attribute_value(entt::registry& registry,
 }
 
 auto get_component_attribute_type(const entt::registry& registry,
-                                  const component_id id,
-                                  const std::string_view attribute) -> attribute_type
+                                  const component_id compId,
+                                  const std::string_view attribute) -> AttributeType
 {
-  const auto iter = GetComponentAttribute(registry, id, attribute);
+  const auto iter = _get_component_def_attr(registry, compId, attribute);
   return iter->second.type();
 }
 
 auto get_component_attribute_value(const entt::registry& registry,
-                                   const component_id id,
-                                   const std::string_view attribute)
-    -> const attribute_value&
+                                   const component_id compId,
+                                   const std::string_view attribute) -> const Attribute&
 {
-  const auto iter = GetComponentAttribute(registry, id, attribute);
+  const auto iter = _get_component_def_attr(registry, compId, attribute);
   return iter->second;
 }
 
 auto is_component_attribute_name_taken(const entt::registry& registry,
-                                       const component_id id,
+                                       const component_id compId,
                                        const std::string_view name) -> bool
 {
-  const auto& [entity, def] = get_component_def(registry, id);
+  const auto& [entity, def] = get_component_def(registry, compId);
 
   for (const auto& [attributeName, attribute] : def.attributes) {
     if (attributeName == name) {
@@ -423,16 +542,16 @@ auto is_component_attribute_name_taken(const entt::registry& registry,
   return false;
 }
 
-auto get_component_attribute_count(const entt::registry& registry, const component_id id)
-    -> usize
+auto get_component_attribute_count(const entt::registry& registry,
+                                   const component_id compId) -> usize
 {
-  const auto [entity, def] = get_component_def(registry, id);
+  const auto [entity, def] = get_component_def(registry, compId);
   return def.attributes.size();
 }
 
 auto add_component(entt::registry& registry,
                    const context_id context,
-                   const component_id component) -> comp::component&
+                   const component_id component) -> comp::Component&
 {
   auto& ctx = get_context(registry, context);
 
@@ -440,7 +559,7 @@ auto add_component(entt::registry& registry,
   ctx.components.push_back(componentEntity);
 
   const auto [defEntity, def] = get_component_def(registry, component);
-  auto& comp = registry.emplace<comp::component>(componentEntity);
+  auto& comp = registry.emplace<comp::Component>(componentEntity);
   comp.type = component;
   comp.values = def.attributes;
 
@@ -449,23 +568,23 @@ auto add_component(entt::registry& registry,
 
 auto remove_component(entt::registry& registry,
                       const context_id contextId,
-                      const component_id componentId) -> remove_component_result
+                      const component_id compId) -> RemoveComponentResult
 {
-  TACTILE_ASSERT(find_component_def(registry, componentId) != entt::null);
-  TACTILE_ASSERT(has_component(registry, contextId, componentId));
+  TACTILE_ASSERT(find_component_def(registry, compId) != entt::null);
+  TACTILE_ASSERT(has_component(registry, contextId, compId));
 
-  log_debug("Removing component '{}' from context '{}'", componentId, contextId);
+  log_debug("Removing component '{}' from context '{}'", compId, contextId);
 
   auto& context = get_context(registry, contextId);
   entt::entity match = entt::null;
 
-  remove_component_result snapshot;
+  RemoveComponentResult snapshot;
   snapshot.context = contextId;
-  snapshot.component = componentId;
+  snapshot.component = compId;
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::component>(componentEntity);
-    if (component.type == componentId) {
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
+    if (component.type == compId) {
       snapshot.values = component.values;
       match = componentEntity;
 
@@ -481,7 +600,7 @@ auto remove_component(entt::registry& registry,
   return snapshot;
 }
 
-void restore_component(entt::registry& registry, remove_component_result snapshot)
+void restore_component(entt::registry& registry, RemoveComponentResult snapshot)
 {
   TACTILE_ASSERT(find_component_def(registry, snapshot.component) != entt::null);
   TACTILE_ASSERT(!has_component(registry, snapshot.context, snapshot.component));
@@ -495,35 +614,35 @@ void restore_component(entt::registry& registry, remove_component_result snapsho
   const auto componentEntity = registry.create();
   context.components.push_back(componentEntity);
 
-  auto& comp = registry.emplace<comp::component>(componentEntity);
+  auto& comp = registry.emplace<comp::Component>(componentEntity);
   comp.type = snapshot.component;
   comp.values = std::move(snapshot.values);
 }
 
 void update_component(entt::registry& registry,
                       const context_id contextId,
-                      const component_id componentId,
+                      const component_id compId,
                       const std::string_view attribute,
-                      attribute_value value)
+                      Attribute value)
 {
-  auto& component = GetComponent(registry, contextId, componentId);
+  auto& component = _get_component(registry, contextId, compId);
 
-  auto iter = GetComponentValue(component, attribute);
+  auto iter = _get_component_value(component, attribute);
   iter->second = std::move(value);
 }
 
 auto reset_component(entt::registry& registry,
                      const context_id contextId,
-                     const component_id componentId) -> reset_component_result
+                     const component_id compId) -> ResetComponentResult
 {
-  TACTILE_ASSERT(has_component(registry, contextId, componentId));
+  TACTILE_ASSERT(has_component(registry, contextId, compId));
 
-  log_debug("Resetting component '{}' in context '{}'", componentId, contextId);
+  log_debug("Resetting component '{}' in context '{}'", compId, contextId);
 
-  const auto& [defEntity, def] = get_component_def(registry, componentId);
-  auto& component = GetComponent(registry, contextId, componentId);
+  const auto& [defEntity, def] = get_component_def(registry, compId);
+  auto& component = _get_component(registry, contextId, compId);
 
-  reset_component_result result;
+  ResetComponentResult result;
   for (auto& [name, value] : component.values) {
     result.values[name] = value;
     value = def.attributes.at(name);
@@ -534,13 +653,13 @@ auto reset_component(entt::registry& registry,
 
 auto has_component(const entt::registry& registry,
                    const context_id contextId,
-                   const component_id componentId) -> bool
+                   const component_id compId) -> bool
 {
   const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::component>(componentEntity);
-    if (component.type == componentId) {
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
+    if (component.type == compId) {
       return true;
     }
   }
@@ -550,30 +669,30 @@ auto has_component(const entt::registry& registry,
 
 auto get_component(const entt::registry& registry,
                    const context_id contextId,
-                   const component_id componentId) -> const comp::component&
+                   const component_id compId) -> const comp::Component&
 {
   const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::component>(componentEntity);
-    if (component.type == componentId) {
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
+    if (component.type == compId) {
       return component;
     }
   }
 
-  throw_traced(tactile_error{"Context did not feature requested component!"});
+  throw_traced(TactileError{"Context did not feature requested component!"});
 }
 
 auto get_component_attribute(const entt::registry& registry,
                              const context_id contextId,
-                             const component_id componentId,
-                             const std::string_view attribute) -> const attribute_value&
+                             const component_id compId,
+                             const std::string_view attribute) -> const Attribute&
 {
   const auto& context = get_context(registry, contextId);
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::component>(componentEntity);
-    if (component.type == componentId) {
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
+    if (component.type == compId) {
       if (const auto it = component.values.find(attribute);
           it != component.values.end()) {
         return it->second;
@@ -581,7 +700,7 @@ auto get_component_attribute(const entt::registry& registry,
     }
   }
 
-  throw_traced(tactile_error{"Did not find component attribute!"});
+  throw_traced(TactileError{"Did not find component attribute!"});
 }
 
 auto get_component_count(const entt::registry& registry, const context_id contextId)

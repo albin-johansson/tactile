@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <memory>  // unique_ptr
@@ -11,21 +30,21 @@
 
 namespace tactile {
 
-class document_model;
-class icon_manager;
+class DocumentModel;
+class IconManager;
 
-class widget_manager final
+class WidgetManager final
 {
  public:
-  TACTILE_DELETE_COPY(widget_manager)
-  TACTILE_DEFAULT_MOVE(widget_manager)
+  TACTILE_DELETE_COPY(WidgetManager)
+  TACTILE_DEFAULT_MOVE(WidgetManager)
 
-  widget_manager();
+  WidgetManager();
 
-  ~widget_manager() noexcept;
+  ~WidgetManager() noexcept;
 
-  void update(const document_model& model,
-              const icon_manager& icons,
+  void update(const DocumentModel& model,
+              const IconManager& icons,
               entt::dispatcher& dispatcher);
 
   void show_settings();
@@ -42,13 +61,13 @@ class widget_manager final
 
   void show_rename_property_dialog(const std::string& name);
 
-  void show_change_property_type_dialog(std::string name, attribute_type type);
+  void show_change_property_type_dialog(std::string name, AttributeType type);
 
   void show_resize_map_dialog(usize currentRows, usize currentColumns);
 
-  void show_map_import_error_dialog(parsing::parse_error error);
+  void show_map_import_error_dialog(parsing::ParseError error);
 
-  void show_component_editor(const document_model& model);
+  void show_component_editor(const DocumentModel& model);
 
   void set_toolbar_visible(bool visible);
 
@@ -62,7 +81,7 @@ class widget_manager final
 
   [[nodiscard]] auto is_tileset_dock_focused() const -> bool;
 
-  [[nodiscard]] auto is_properties_dock_focused() const -> bool;
+  [[nodiscard]] auto is_property_dock_focused() const -> bool;
 
   [[nodiscard]] auto is_log_dock_focused() const -> bool;
 
@@ -70,13 +89,13 @@ class widget_manager final
 
   [[nodiscard]] auto is_toolbar_visible() const -> bool;
 
-  [[nodiscard]] auto tileset_view_width() const -> maybe<float>;
+  [[nodiscard]] auto tileset_view_width() const -> Maybe<float>;
 
-  [[nodiscard]] auto tileset_view_height() const -> maybe<float>;
+  [[nodiscard]] auto tileset_view_height() const -> Maybe<float>;
 
  private:
-  struct widgets;
-  std::unique_ptr<widgets> mWidgets;
+  struct Widgets;
+  std::unique_ptr<Widgets> mWidgets;
 };
 
 }  // namespace tactile

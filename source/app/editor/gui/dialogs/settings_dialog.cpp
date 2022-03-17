@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "settings_dialog.hpp"
 
 #include <imgui.h>
@@ -13,7 +32,7 @@
 namespace tactile {
 namespace {
 
-void _update_preview_settings(const preference_state& prefs)
+void _update_preview_settings(const PreferenceState& prefs)
 {
   apply_theme(ImGui::GetStyle(), prefs.get_theme());
   ImGui::GetStyle().WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;
@@ -21,56 +40,56 @@ void _update_preview_settings(const preference_state& prefs)
 
 }  // namespace
 
-settings_dialog::settings_dialog() : dialog_base{"Settings"}
+SettingsDialog::SettingsDialog() : ADialog{"Settings"}
 {
   use_apply_button();
 }
 
-void settings_dialog::show()
+void SettingsDialog::show()
 {
   mSnapshot = get_preferences();
   mGuiSettings = mSnapshot;
   make_visible();
 }
 
-void settings_dialog::on_update(const document_model&, entt::dispatcher&)
+void SettingsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  if (scoped::tab_bar bar{"##SettingsTabBar"}; bar.is_open()) {
+  if (scoped::TabBar bar{"##SettingsTabBar"}; bar.is_open()) {
     update_behavior_tab();
     update_appearance_tab();
     update_export_tab();
   }
 }
 
-void settings_dialog::on_cancel()
+void SettingsDialog::on_cancel()
 {
   /* Reset any changes we made for preview purposes */
   _update_preview_settings(get_preferences());
 }
 
-void settings_dialog::on_accept(entt::dispatcher& dispatcher)
+void SettingsDialog::on_accept(entt::dispatcher& dispatcher)
 {
   apply_settings(dispatcher);
   _update_preview_settings(get_preferences());
 }
 
-void settings_dialog::on_apply(entt::dispatcher& dispatcher)
+void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
 {
   apply_settings(dispatcher);
   _update_preview_settings(get_preferences());
 }
 
-void settings_dialog::apply_settings(entt::dispatcher& dispatcher)
+void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 {
   set_preferences(mGuiSettings);
   if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
-    dispatcher.enqueue<set_command_capacity_event>(mGuiSettings.command_capacity());
+    dispatcher.enqueue<SetCommandCapacityEvent>(mGuiSettings.command_capacity());
   }
 }
 
-void settings_dialog::update_behavior_tab()
+void SettingsDialog::update_behavior_tab()
 {
-  if (scoped::tab_item item{"Behavior"}; item.is_open()) {
+  if (scoped::TabItem item{"Behavior"}; item.is_open()) {
     ImGui::Spacing();
     if (button("Restore Defaults")) {
       mGuiSettings.reset_behavior_preferences();
@@ -115,9 +134,9 @@ void settings_dialog::update_behavior_tab()
   }
 }
 
-void settings_dialog::update_appearance_tab()
+void SettingsDialog::update_appearance_tab()
 {
-  if (scoped::tab_item item{"Appearance"}; item.is_open()) {
+  if (scoped::TabItem item{"Appearance"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
@@ -127,7 +146,7 @@ void settings_dialog::update_appearance_tab()
 
     ImGui::Spacing();
 
-    if (scoped::combo combo{"Theme",
+    if (scoped::Combo combo{"Theme",
                             human_readable_name(mGuiSettings.get_theme()).data()};
         combo.is_open()) {
       for (const auto theme : themes) {
@@ -161,9 +180,9 @@ void settings_dialog::update_appearance_tab()
   }
 }
 
-void settings_dialog::update_export_tab()
+void SettingsDialog::update_export_tab()
 {
-  if (scoped::tab_item item{"Export"}; item.is_open()) {
+  if (scoped::TabItem item{"Export"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
@@ -173,7 +192,7 @@ void settings_dialog::update_export_tab()
 
     ImGui::Spacing();
 
-    if (scoped::combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
+    if (scoped::Combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
         format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
         mGuiSettings.set_preferred_format("YAML");

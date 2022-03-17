@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <cstddef>        // size_t
@@ -26,8 +45,6 @@
 
 namespace tactile {
 
-using c_str = const char*;
-
 using uchar = unsigned char;
 using uint = unsigned int;
 using ulonglong = unsigned long long int;
@@ -51,8 +68,8 @@ inline constexpr auto max_int = (std::numeric_limits<int>::max)();
 
 inline constexpr auto max_uint = (std::numeric_limits<unsigned>::max)();
 
-using context_id = int32;    /// Identifier for attribute contexts (not persistent).
-using component_id = int32;  /// Identifier for component definitions (not persistent).
+using context_id = int32;    ///< Identifier for attribute contexts (not persistent).
+using component_id = int32;  ///< Identifier for component definitions (not persistent).
 using map_id = int32;
 using tileset_id = int32;
 using layer_id = int32;
@@ -62,16 +79,16 @@ using tile_id = int32;
 constexpr tile_id empty_tile = 0;
 
 template <typename K, typename V>
-using tree_map = std::map<K, V, std::less<>>;
+using TreeMap = std::map<K, V, std::less<>>;
 
 template <typename K, typename V>
-using hash_map = std::unordered_map<K, V>;
+using HashMap = std::unordered_map<K, V>;
 
 template <typename T>
-using ref = std::reference_wrapper<T>;
+using Ref = std::reference_wrapper<T>;
 
 template <typename T>
-using maybe = std::optional<T>;
+using Maybe = std::optional<T>;
 
 constexpr std::nullopt_t nothing = std::nullopt;
 

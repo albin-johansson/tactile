@@ -1,29 +1,57 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
+
+#include <memory>  // unique_ptr
 
 #include <entt/entt.hpp>
 
+#include "editor/gui/common/dock_widget.hpp"
 #include "tactile.hpp"
-#include "tileset_tabs.hpp"
 
 namespace tactile {
 
-class TilesetDock final
+class TilesetView;
+
+class TilesetDock final : public ADockWidget
 {
  public:
-  void Update(const entt::registry& registry, entt::dispatcher& dispatcher);
+  TACTILE_DELETE_COPY(TilesetDock)
+  TACTILE_DEFAULT_MOVE(TilesetDock)
 
-  [[nodiscard]] auto IsFocused() const noexcept -> bool { return mHasFocus; }
+  TilesetDock();
 
-  [[nodiscard]] auto IsHovered() const noexcept -> bool { return mWindowContainsMouse; }
+  ~TilesetDock() noexcept override;
 
-  [[nodiscard]] auto GetTilesetView() const -> const TilesetView&;
+  [[nodiscard]] auto get_tileset_view() const -> const TilesetView&;
+
+ protected:
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
+
+  void set_visible(bool visible) override;
+
+  [[nodiscard]] auto is_visible() const -> bool override;
 
  private:
-  TilesetTabWidget mTabWidget;
-  bool mHasFocus{};
-  bool mWindowContainsMouse{};
-
-  void ResetState();
+  struct Data;
+  std::unique_ptr<Data> mData;
 };
 
 }  // namespace tactile

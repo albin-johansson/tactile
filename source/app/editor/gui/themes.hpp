@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <array>  // array
@@ -17,9 +36,9 @@ namespace tactile {
  *
  * \warning Do not change the enumerator values!
  *
- * \see proto::theme
+ * \see proto::Theme
  */
-enum class editor_theme
+enum class EditorTheme
 {
   dear_dark = 0,   ///< The standard Dear ImGui dark theme.
   dear_light = 1,  ///< The standard Dear ImGui light theme.
@@ -35,20 +54,20 @@ enum class editor_theme
   raspberry = 11
 };
 
-constexpr std::array themes = {editor_theme::dear_dark,
-                               editor_theme::dear_light,
-                               editor_theme::ruby,
-                               editor_theme::sapphire,
-                               editor_theme::emerald,
-                               editor_theme::amethyst,
-                               editor_theme::amber,
-                               editor_theme::diamond,
-                               editor_theme::joker,
-                               editor_theme::raspberry,
-                               editor_theme::nocturnal,
-                               editor_theme::ash};
+constexpr std::array themes = {EditorTheme::dear_dark,
+                               EditorTheme::dear_light,
+                               EditorTheme::ruby,
+                               EditorTheme::sapphire,
+                               EditorTheme::emerald,
+                               EditorTheme::amethyst,
+                               EditorTheme::amber,
+                               EditorTheme::diamond,
+                               EditorTheme::joker,
+                               EditorTheme::raspberry,
+                               EditorTheme::nocturnal,
+                               EditorTheme::ash};
 
-[[nodiscard]] auto human_readable_name(editor_theme theme) -> std::string_view;
+[[nodiscard]] auto human_readable_name(EditorTheme theme) -> std::string_view;
 
 /**
  * \brief Applies the styling used by Tactile to a style instance.
@@ -65,7 +84,7 @@ void apply_style(ImGuiStyle& style);
  * \param style the style that will be affected.
  * \param theme the theme that will be applied to the style.
  */
-void apply_theme(ImGuiStyle& style, editor_theme theme);
+void apply_theme(ImGuiStyle& style, EditorTheme theme);
 
 /// \} End of theme API
 

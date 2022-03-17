@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "context_system.hpp"
 
 #include <utility>  // move
@@ -6,6 +25,7 @@
 #include "misc/assert.hpp"
 #include "misc/throw.hpp"
 #include "property_system.hpp"
+#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -32,34 +52,32 @@ auto next_context_id() noexcept -> context_id
 }
 
 auto add_attribute_context(entt::registry& registry, const entt::entity entity)
-    -> comp::attribute_context&
+    -> comp::AttributeContext&
 {
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.emplace<comp::attribute_context>(entity);
+  auto& context = registry.emplace<comp::AttributeContext>(entity);
   context.id = get_and_update_next_context_id();
 
   return context;
 }
 
 auto copy_attribute_context(const entt::registry& registry, const entt::entity source)
-    -> attribute_context_snapshot
+    -> AttributeContextSnapshot
 {
-  TACTILE_ASSERT(source != entt::null);
-  TACTILE_ASSERT(registry.all_of<comp::attribute_context>(source));
-  const auto& context = registry.get<comp::attribute_context>(source);
+  const auto& context = checked_get<comp::AttributeContext>(registry, source);
 
-  attribute_context_snapshot snapshot;
+  AttributeContextSnapshot snapshot;
   snapshot.id = context.id;
   snapshot.name = context.name;
 
   for (const auto propertyEntity : context.properties) {
-    const auto& property = registry.get<comp::property>(propertyEntity);
+    const auto& property = checked_get<comp::Property>(registry, propertyEntity);
     snapshot.properties.try_emplace(property.name, property.value);
   }
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::component>(componentEntity);
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
 
     auto& componentSnapshot = snapshot.components[component.type];
     for (const auto& [attrName, attrValue] : component.values) {
@@ -72,11 +90,11 @@ auto copy_attribute_context(const entt::registry& registry, const entt::entity s
 
 void restore_attribute_context(entt::registry& registry,
                                const entt::entity entity,
-                               attribute_context_snapshot snapshot)
+                               AttributeContextSnapshot snapshot)
 {
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get_or_emplace<comp::attribute_context>(entity);
+  auto& context = registry.get_or_emplace<comp::AttributeContext>(entity);
   context.id = snapshot.id;
   context.name = std::move(snapshot.name);
 
@@ -93,44 +111,43 @@ void restore_attribute_context(entt::registry& registry,
   }
 }
 
-auto get_context(entt::registry& registry, const context_id id)
-    -> comp::attribute_context&
+auto get_context(entt::registry& registry, const context_id id) -> comp::AttributeContext&
 {
-  if (auto& context = registry.ctx<comp::attribute_context>(); context.id == id) {
+  if (auto& context = registry.ctx<comp::AttributeContext>(); context.id == id) {
     return context;
   }
 
-  for (auto&& [entity, context] : registry.view<comp::attribute_context>().each()) {
+  for (auto&& [entity, context] : registry.view<comp::AttributeContext>().each()) {
     if (context.id == id) {
       return context;
     }
   }
 
-  throw_traced(tactile_error{"No matching attribute context!"});
+  throw_traced(TactileError{"No matching attribute context!"});
 }
 
 auto get_context(const entt::registry& registry, const context_id id)
-    -> const comp::attribute_context&
+    -> const comp::AttributeContext&
 {
-  if (const auto& context = registry.ctx<comp::attribute_context>(); context.id == id) {
+  if (const auto& context = registry.ctx<comp::AttributeContext>(); context.id == id) {
     return context;
   }
 
-  for (auto&& [entity, context] : registry.view<comp::attribute_context>().each()) {
+  for (auto&& [entity, context] : registry.view<comp::AttributeContext>().each()) {
     if (context.id == id) {
       return context;
     }
   }
 
-  throw_traced(tactile_error{"No matching attribute context!"});
+  throw_traced(TactileError{"No matching attribute context!"});
 }
 
-auto current_context(const entt::registry& registry) -> const comp::attribute_context&
+auto current_context(const entt::registry& registry) -> const comp::AttributeContext&
 {
-  const auto& current = registry.ctx<comp::active_attribute_context>();
+  const auto& current = registry.ctx<comp::ActiveAttributeContext>();
   return (current.entity != entt::null)
-             ? registry.get<comp::attribute_context>(current.entity)
-             : registry.ctx<comp::attribute_context>();
+             ? checked_get<comp::AttributeContext>(registry, current.entity)
+             : registry.ctx<comp::AttributeContext>();
 }
 
 auto current_context_id(const entt::registry& registry) -> context_id

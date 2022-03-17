@@ -1,13 +1,33 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "property_table.hpp"
 
-#include <locale>  // locale, isalpha, isdigit, isspace
+#include <locale>   // locale, isalpha, isdigit, isspace
+#include <utility>  // move
 
 #include <imgui.h>
 
-#include "core/components/layer.hpp"
-#include "core/components/object.hpp"
-#include "core/components/property.hpp"
-#include "core/components/tileset.hpp"
+#include "core/components/attributes.hpp"
+#include "core/components/layers.hpp"
+#include "core/components/objects.hpp"
+#include "core/components/tiles.hpp"
 #include "core/map.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
@@ -24,7 +44,7 @@
 namespace tactile {
 namespace {
 
-void PrepareTableRow(const c_str label)
+void _prepare_table_row(const char* label)
 {
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
@@ -33,11 +53,11 @@ void PrepareTableRow(const c_str label)
   ImGui::TextUnformatted(label);
 }
 
-[[nodiscard]] auto NativeNameRow(const std::string& name,
-                                 const bool validateAsFileName = false)
-    -> maybe<std::string>
+[[nodiscard]] auto _native_name_row(const std::string& name,
+                                    const bool validateAsFileName = false)
+    -> Maybe<std::string>
 {
-  PrepareTableRow("Name");
+  _prepare_table_row("Name");
 
   ImGui::TableNextColumn();
 
@@ -67,197 +87,197 @@ void PrepareTableRow(const c_str label)
   }
 }
 
-[[nodiscard]] auto NativeOpacityRow(const float opacity) -> maybe<float>
+[[nodiscard]] auto _native_opacity_row(const float opacity) -> Maybe<float>
 {
-  PrepareTableRow("Opacity");
+  _prepare_table_row("Opacity");
 
   ImGui::TableNextColumn();
-  return input_float("##NativeOpacityRow", opacity, 0.0f, 1.0f);
+  return input_float("##_native_opacity_row", opacity, 0.0f, 1.0f);
 }
 
-[[nodiscard]] auto NativeVisibilityRow(const bool visible) -> maybe<bool>
+[[nodiscard]] auto _native_visibility_row(const bool visible) -> Maybe<bool>
 {
-  PrepareTableRow("Visible");
+  _prepare_table_row("Visible");
 
   ImGui::TableNextColumn();
-  return input_bool("##NativeVisibilityRow", visible);
+  return input_bool("##_native_visibility_row", visible);
 }
 
-void NativeReadOnlyRow(const c_str label, const c_str value)
+void _native_read_only_row(const char* label, const char* value)
 {
-  PrepareTableRow(label);
+  _prepare_table_row(label);
 
   ImGui::TableNextColumn();
   ImGui::TextUnformatted(value);
 }
 
-void NativeReadOnlyRow(const c_str label, const float value)
+void _native_read_only_row(const char* label, const float value)
 {
-  PrepareTableRow(label);
+  _prepare_table_row(label);
 
   ImGui::TableNextColumn();
   ImGui::Text("%.2f", value);
 }
 
-void NativeReadOnlyRow(const c_str label, const int32 value)
+void _native_read_only_row(const char* label, const int32 value)
 {
-  PrepareTableRow(label);
+  _prepare_table_row(label);
 
   ImGui::TableNextColumn();
   ImGui::Text("%d", value);
 }
 
-void NativeReadOnlyRow(const c_str label, const usize value)
+void _native_read_only_row(const char* label, const usize value)
 {
-  PrepareTableRow(label);
+  _prepare_table_row(label);
 
   ImGui::TableNextColumn();
   ImGui::Text("%llu", static_cast<ulonglong>(value)); /* Cast to avoid format warnings */
 }
 
-void ShowNativeMapProperties(const std::string& name, const MapInfo& map)
+void _show_native_map_properties(const std::string& name, const MapInfo& map)
 {
-  NativeReadOnlyRow("Type", "Map");
-  NativeReadOnlyRow("Name", name.c_str());
+  _native_read_only_row("Type", "Map");
+  _native_read_only_row("Name", name.c_str());
 
-  NativeReadOnlyRow("Tile width", map.tile_width);
-  NativeReadOnlyRow("Tile height", map.tile_height);
+  _native_read_only_row("Tile width", map.tile_width);
+  _native_read_only_row("Tile height", map.tile_height);
 
-  NativeReadOnlyRow("Row count", map.row_count);
-  NativeReadOnlyRow("Column count", map.column_count);
+  _native_read_only_row("Row count", map.row_count);
+  _native_read_only_row("Column count", map.column_count);
 }
 
-void ShowNativeTilesetProperties(const std::string& name,
-                                 const comp::tileset& tileset,
-                                 entt::dispatcher& dispatcher)
+void _show_native_tileset_properties(const std::string& name,
+                                     const comp::Tileset& tileset,
+                                     entt::dispatcher& dispatcher)
 {
-  NativeReadOnlyRow("Type", "Tileset");
+  _native_read_only_row("Type", "Tileset");
 
   if constexpr (is_debug_build) {
-    NativeReadOnlyRow("ID", tileset.id);
+    _native_read_only_row("ID", tileset.id);
   }
 
-  if (const auto updatedName = NativeNameRow(name, true);
+  if (const auto updatedName = _native_name_row(name, true);
       updatedName && !updatedName->empty()) {
-    dispatcher.enqueue<set_tileset_name_event>(tileset.id, *updatedName);
+    dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
   }
 
-  NativeReadOnlyRow("First tile ID", tileset.first_id);
-  NativeReadOnlyRow("Last tile ID", tileset.last_id);
+  _native_read_only_row("First tile ID", tileset.first_id);
+  _native_read_only_row("Last tile ID", tileset.last_id);
 
-  NativeReadOnlyRow("Tile count", tileset.tile_count);
-  NativeReadOnlyRow("Column count", tileset.column_count);
+  _native_read_only_row("Tile count", tileset.tile_count);
+  _native_read_only_row("Column count", tileset.column_count);
 
-  NativeReadOnlyRow("Tile width", tileset.tile_width);
-  NativeReadOnlyRow("Tile height", tileset.tile_height);
+  _native_read_only_row("Tile width", tileset.tile_width);
+  _native_read_only_row("Tile height", tileset.tile_height);
 }
 
-void ShowNativeLayerProperties(const comp::layer& layer, entt::dispatcher& dispatcher)
+void _show_native_layer_properties(const comp::Layer& layer, entt::dispatcher& dispatcher)
 {
   switch (layer.type) {
-    case layer_type::tile_layer:
-      NativeReadOnlyRow("Type", "Tile Layer");
+    case LayerType::tile_layer:
+      _native_read_only_row("Type", "Tile Layer");
       break;
 
-    case layer_type::object_layer:
-      NativeReadOnlyRow("Type", "Object Layer");
+    case LayerType::object_layer:
+      _native_read_only_row("Type", "Object Layer");
       break;
 
-    case layer_type::group_layer:
-      NativeReadOnlyRow("Type", "Group Layer");
+    case LayerType::group_layer:
+      _native_read_only_row("Type", "Group Layer");
       break;
   }
 
   if constexpr (is_debug_build) {
-    NativeReadOnlyRow("ID", layer.id);
+    _native_read_only_row("ID", layer.id);
   }
 
-  if (const auto value = NativeOpacityRow(layer.opacity)) {
-    dispatcher.enqueue<set_layer_opacity_event>(layer.id, *value);
+  if (const auto value = _native_opacity_row(layer.opacity)) {
+    dispatcher.enqueue<SetLayerOpacityEvent>(layer.id, *value);
   }
 
-  if (const auto value = NativeVisibilityRow(layer.visible)) {
-    dispatcher.enqueue<set_layer_visible_event>(layer.id, *value);
+  if (const auto value = _native_visibility_row(layer.visible)) {
+    dispatcher.enqueue<SetLayerVisibleEvent>(layer.id, *value);
   }
 }
 
-void ShowNativeObjectProperties(const std::string& name,
-                                const comp::object& object,
-                                entt::dispatcher& dispatcher)
+void _show_native_object_properties(const std::string& name,
+                                    const comp::Object& object,
+                                    entt::dispatcher& dispatcher)
 {
   switch (object.type) {
-    case object_type::rect:
-      NativeReadOnlyRow("Type", "Rectangle");
+    case ObjectType::rect:
+      _native_read_only_row("Type", "Rectangle");
       break;
 
-    case object_type::point:
-      NativeReadOnlyRow("Type", "Point");
+    case ObjectType::point:
+      _native_read_only_row("Type", "Point");
       break;
 
-    case object_type::ellipse:
-      NativeReadOnlyRow("Type", "Ellipse");
+    case ObjectType::ellipse:
+      _native_read_only_row("Type", "Ellipse");
       break;
   }
 
   if constexpr (is_debug_build) {
-    NativeReadOnlyRow("ID", object.id);
+    _native_read_only_row("ID", object.id);
   }
 
-  if (const auto updatedName = NativeNameRow(name)) {
-    dispatcher.enqueue<set_object_name_event>(object.id, *updatedName);
+  if (const auto updatedName = _native_name_row(name)) {
+    dispatcher.enqueue<SetObjectNameEvent>(object.id, *updatedName);
   }
 
-  NativeReadOnlyRow("X", object.x);
-  NativeReadOnlyRow("Y", object.y);
+  _native_read_only_row("X", object.x);
+  _native_read_only_row("Y", object.y);
 
-  if (object.type != object_type::point) {
-    NativeReadOnlyRow("Width", object.width);
-    NativeReadOnlyRow("Height", object.height);
+  if (object.type != ObjectType::point) {
+    _native_read_only_row("Width", object.width);
+    _native_read_only_row("Height", object.height);
   }
 
-  if (const auto visible = NativeVisibilityRow(object.visible)) {
-    dispatcher.enqueue<set_object_visibility_event>(object.id, *visible);
+  if (const auto visible = _native_visibility_row(object.visible)) {
+    dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, *visible);
   }
 
-  PrepareTableRow("Tag");
+  _prepare_table_row("Tag");
 
   ImGui::TableNextColumn();
   if (const auto tag = input_string("##NativeObjectTagInput", object.tag)) {
-    dispatcher.enqueue<set_object_tag_event>(object.id, *tag);
+    dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
   }
 }
 
 }  // namespace
 
-void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dispatcher)
+void PropertyTable::update(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
-  const auto& current = registry.ctx<comp::active_attribute_context>();
+  const auto& current = registry.ctx<comp::ActiveAttributeContext>();
   const auto& context = sys::current_context(registry);
 
-  if (scoped::table table{"##PropertyTable", 2, flags}; table.is_open()) {
+  if (scoped::Table table{"##PropertyTable", 2, flags}; table.is_open()) {
     if (current.entity == entt::null) {
-      ShowNativeMapProperties(context.name, registry.ctx<MapInfo>());
+      _show_native_map_properties(context.name, registry.ctx<MapInfo>());
     }
     else {
-      if (const auto* tileset = registry.try_get<comp::tileset>(current.entity)) {
-        ShowNativeTilesetProperties(context.name, *tileset, dispatcher);
+      if (const auto* tileset = registry.try_get<comp::Tileset>(current.entity)) {
+        _show_native_tileset_properties(context.name, *tileset, dispatcher);
       }
-      else if (const auto* layer = registry.try_get<comp::layer>(current.entity)) {
-        ShowNativeLayerProperties(*layer, dispatcher);
+      else if (const auto* layer = registry.try_get<comp::Layer>(current.entity)) {
+        _show_native_layer_properties(*layer, dispatcher);
       }
-      else if (const auto* object = registry.try_get<comp::object>(current.entity)) {
-        ShowNativeObjectProperties(context.name, *object, dispatcher);
+      else if (const auto* object = registry.try_get<comp::Object>(current.entity)) {
+        _show_native_object_properties(context.name, *object, dispatcher);
       }
     }
 
     bool isItemContextOpen = false;
-    ShowCustomProperties(registry, dispatcher, context, isItemContextOpen);
+    show_custom_properties(registry, dispatcher, context, isItemContextOpen);
 
     if (!isItemContextOpen) {
-      if (auto popup = scoped::popup::for_window("##PropertyTableContext");
+      if (auto popup = scoped::Popup::for_window("##PropertyTableContext");
           popup.is_open()) {
         mContextState.show_add_dialog =
             ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
@@ -266,12 +286,12 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   }
 
   if (mContextState.show_add_dialog) {
-    dispatcher.enqueue<show_add_property_dialog_event>();
+    dispatcher.enqueue<ShowAddPropertyDialogEvent>();
     mContextState.show_add_dialog = false;
   }
 
   if (mContextState.show_rename_dialog) {
-    dispatcher.enqueue<show_rename_property_dialog_event>(mRenameTarget.value());
+    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(mRenameTarget.value());
     mRenameTarget.reset();
     mContextState.show_rename_dialog = false;
   }
@@ -279,26 +299,26 @@ void PropertyTable::Update(const entt::registry& registry, entt::dispatcher& dis
   if (mContextState.show_change_type_dialog) {
     const auto& name = mChangeTypeTarget.value();
     const auto type = sys::get_property(registry, context, name).value.type();
-    dispatcher.enqueue<show_change_property_type_dialog_event>(name, type);
+    dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(name, type);
     mChangeTypeTarget.reset();
     mContextState.show_change_type_dialog = false;
   }
 }
 
-void PropertyTable::ShowCustomProperties(const entt::registry& registry,
-                                         entt::dispatcher& dispatcher,
-                                         const comp::attribute_context& context,
-                                         bool& isItemContextOpen)
+void PropertyTable::show_custom_properties(const entt::registry& registry,
+                                           entt::dispatcher& dispatcher,
+                                           const comp::AttributeContext& context,
+                                           bool& isItemContextOpen)
 {
   bool first = true;
 
   for (const auto entity : context.properties) {
-    const auto& property = registry.get<comp::property>(entity);
+    const auto& property = registry.get<comp::Property>(entity);
 
     const auto& name = property.name;
     const auto& value = property.value;
 
-    const scoped::id scope{name.c_str()};
+    const scoped::Id scope{name.c_str()};
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();
@@ -311,7 +331,7 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
     ImGui::Selectable(name.c_str());
 
     if (!isItemContextOpen) {
-      isItemContextOpen = PropertyItemContextMenu(dispatcher, name, mContextState);
+      isItemContextOpen = property_item_context_menu(dispatcher, name, mContextState);
     }
 
     if (mContextState.show_rename_dialog && !mRenameTarget) {
@@ -328,40 +348,49 @@ void PropertyTable::ShowCustomProperties(const entt::registry& registry,
       ImGui::Separator();
     }
 
-    if (value.is_string()) {
-      if (const auto updated = input_string("##CustomPropertyInput", value.as_string())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
-      }
-    }
-    else if (value.is_int()) {
-      if (const auto updated = input_int("##CustomPropertyInput", value.as_int())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
-      }
-    }
-    else if (value.is_float()) {
-      if (const auto updated = input_float("##CustomPropertyInput", value.as_float())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
-      }
-    }
-    else if (value.is_bool()) {
-      if (const auto updated = input_bool("##CustomPropertyInput", value.as_bool())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
-      }
-    }
-    else if (value.is_color()) {
-      if (const auto updated = input_color("##CustomPropertyInput", value.as_color())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
-      }
-    }
-    else if (value.is_object()) {
-      if (const auto updated = input_object("##CustomPropertyInput", value.as_object())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
-      }
-    }
-    else if (value.is_file()) {
-      if (const auto updated = input_file("##CustomPropertyInput", value.as_file())) {
-        dispatcher.enqueue<update_property_event>(name, *updated);
-      }
+    switch (value.type()) {
+      case AttributeType::string:
+        if (auto updated = input_string("##CustomPropertyInput", value.as_string())) {
+          dispatcher.enqueue<UpdatePropertyEvent>(name, std::move(*updated));
+        }
+        break;
+
+      case AttributeType::integer:
+        if (const auto updated = input_int("##CustomPropertyInput", value.as_int())) {
+          dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+        }
+        break;
+
+      case AttributeType::floating:
+        if (const auto updated = input_float("##CustomPropertyInput", value.as_float())) {
+          dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+        }
+        break;
+
+      case AttributeType::boolean:
+        if (const auto updated = input_bool("##CustomPropertyInput", value.as_bool())) {
+          dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+        }
+        break;
+
+      case AttributeType::color:
+        if (const auto updated = input_color("##CustomPropertyInput", value.as_color())) {
+          dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+        }
+        break;
+
+      case AttributeType::object:
+        if (const auto updated =
+                input_object("##CustomPropertyInput", value.as_object())) {
+          dispatcher.enqueue<UpdatePropertyEvent>(name, *updated);
+        }
+        break;
+
+      case AttributeType::file:
+        if (auto updated = input_file("##CustomPropertyInput", value.as_file())) {
+          dispatcher.enqueue<UpdatePropertyEvent>(name, std::move(*updated));
+        }
+        break;
     }
 
     first = false;

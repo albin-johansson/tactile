@@ -22,14 +22,14 @@
 
 using namespace tactile;
 
-using parsing::parse_error;
+using parsing::ParseError;
 
 namespace {
 
-using test_data = std::pair<std::string_view, parse_error>;
+using test_data = std::pair<std::string_view, ParseError>;
 
 [[nodiscard]] constexpr auto _with(const std::string_view path,
-                                   const parse_error expected) -> test_data
+                                   const ParseError expected) -> test_data
 {
   return {path, expected};
 }
@@ -37,159 +37,159 @@ using test_data = std::pair<std::string_view, parse_error>;
 // clang-format off
 
 const auto cases = testing::Values(
-  _with("test-resources/dummy.txt", parse_error::unsupported_map_extension),
+  _with("test-resources/dummy.txt", ParseError::unsupported_map_extension),
 
-  _with("foo.yaml", parse_error::map_does_not_exist),
-  _with("foo.json", parse_error::map_does_not_exist),
-  _with("foo.tmx", parse_error::map_does_not_exist),
+  _with("foo.yaml", ParseError::map_does_not_exist),
+  _with("foo.json", ParseError::map_does_not_exist),
+  _with("foo.tmx", ParseError::map_does_not_exist),
 
-  _with(YAML_DIR "minimal.yaml", parse_error::none),
-  _with(JSON_DIR "minimal.json", parse_error::none),
-  _with(XML_DIR "minimal.xml", parse_error::none),
+  _with(YAML_DIR "minimal.yaml", ParseError::none),
+  _with(JSON_DIR "minimal.json", ParseError::none),
+  _with(XML_DIR "minimal.xml", ParseError::none),
 
-  _with(YAML_DIR "normal.yaml", parse_error::none),
+  _with(YAML_DIR "normal.yaml", ParseError::none),
 
-  _with(YAML_ERR "map/no_map_width.yaml", parse_error::no_map_width),
-  _with(JSON_ERR "map/no_map_width.json", parse_error::no_map_width),
-  _with(XML_ERR "map/no_map_width.xml", parse_error::no_map_width),
+  _with(YAML_ERR "map/no_map_width.yaml", ParseError::no_map_width),
+  _with(JSON_ERR "map/no_map_width.json", ParseError::no_map_width),
+  _with(XML_ERR "map/no_map_width.xml", ParseError::no_map_width),
 
-  _with(YAML_ERR "map/no_map_height.yaml", parse_error::no_map_height),
-  _with(JSON_ERR "map/no_map_height.json", parse_error::no_map_height),
-  _with(XML_ERR "map/no_map_height.xml", parse_error::no_map_height),
+  _with(YAML_ERR "map/no_map_height.yaml", ParseError::no_map_height),
+  _with(JSON_ERR "map/no_map_height.json", ParseError::no_map_height),
+  _with(XML_ERR "map/no_map_height.xml", ParseError::no_map_height),
 
-  _with(YAML_ERR "map/no_map_tile_width.yaml", parse_error::no_map_tile_width),
-  _with(JSON_ERR "map/no_map_tile_width.json", parse_error::no_map_tile_width),
-  _with(XML_ERR "map/no_map_tile_width.xml", parse_error::no_map_tile_width),
+  _with(YAML_ERR "map/no_map_tile_width.yaml", ParseError::no_map_tile_width),
+  _with(JSON_ERR "map/no_map_tile_width.json", ParseError::no_map_tile_width),
+  _with(XML_ERR "map/no_map_tile_width.xml", ParseError::no_map_tile_width),
 
-  _with(YAML_ERR "map/no_map_tile_height.yaml", parse_error::no_map_tile_height),
-  _with(JSON_ERR "map/no_map_tile_height.json", parse_error::no_map_tile_height),
-  _with(XML_ERR "map/no_map_tile_height.xml", parse_error::no_map_tile_height),
+  _with(YAML_ERR "map/no_map_tile_height.yaml", ParseError::no_map_tile_height),
+  _with(JSON_ERR "map/no_map_tile_height.json", ParseError::no_map_tile_height),
+  _with(XML_ERR "map/no_map_tile_height.xml", ParseError::no_map_tile_height),
 
-  _with(YAML_ERR "map/no_next_layer_id.yaml", parse_error::no_map_next_layer_id),
-  _with(JSON_ERR "map/no_next_layer_id.json", parse_error::no_map_next_layer_id),
-  _with(XML_ERR "map/no_next_layer_id.xml", parse_error::no_map_next_layer_id),
+  _with(YAML_ERR "map/no_next_layer_id.yaml", ParseError::no_map_next_layer_id),
+  _with(JSON_ERR "map/no_next_layer_id.json", ParseError::no_map_next_layer_id),
+  _with(XML_ERR "map/no_next_layer_id.xml", ParseError::no_map_next_layer_id),
 
-  _with(YAML_ERR "map/no_next_object_id.yaml", parse_error::no_map_next_object_id),
-  _with(JSON_ERR "map/no_next_object_id.json", parse_error::no_map_next_object_id),
-  _with(XML_ERR "map/no_next_object_id.xml", parse_error::no_map_next_object_id),
+  _with(YAML_ERR "map/no_next_object_id.yaml", ParseError::no_map_next_object_id),
+  _with(JSON_ERR "map/no_next_object_id.json", ParseError::no_map_next_object_id),
+  _with(XML_ERR "map/no_next_object_id.xml", ParseError::no_map_next_object_id),
 
-  _with(YAML_ERR "map/no_tileset_first_tile_id.yaml", parse_error::no_tileset_first_tile_id),
-  _with(JSON_ERR "map/no_tileset_first_tile_id.json", parse_error::no_tileset_first_tile_id),
-
-  // YAML only
-  _with(YAML_ERR "map/no_external_tileset_path.yaml", parse_error::no_external_tileset_path),
-
-  _with(YAML_ERR "map/external_tileset_does_not_exist.yaml", parse_error::external_tileset_does_not_exist),
-  _with(JSON_ERR "map/external_tileset_does_not_exist.json", parse_error::external_tileset_does_not_exist),
-  _with(XML_ERR "map/external_tileset_does_not_exist.xml", parse_error::external_tileset_does_not_exist),
-
-  _with(YAML_ERR "map/unknown_external_tileset_error.yaml", parse_error::unknown_external_tileset_error),
-  _with(JSON_ERR "map/unknown_external_tileset_error.json", parse_error::unknown_external_tileset_error),
-  _with(XML_ERR "map/unknown_external_tileset_error.xml", parse_error::unknown_external_tileset_error),
-
-  _with(YAML_ERR "layer/unsupported_layer_type.yaml", parse_error::unsupported_layer_type),
-  _with(JSON_ERR "layer/unsupported_layer_type.json", parse_error::unsupported_layer_type),
-
-  _with(YAML_ERR "layer/no_layer_id.yaml", parse_error::no_layer_id),
-  _with(JSON_ERR "layer/no_layer_id.json", parse_error::no_layer_id),
-  _with(XML_ERR "layer/no_layer_id.xml", parse_error::no_layer_id),
-
-  _with(YAML_ERR "layer/no_layer_type.yaml", parse_error::no_layer_type),
-  _with(JSON_ERR "layer/no_layer_type.json", parse_error::no_layer_type),
-
-  _with(YAML_ERR "layer/no_tile_layer_data.yaml", parse_error::no_tile_layer_data),
-  _with(JSON_ERR "layer/no_tile_layer_data.json", parse_error::no_tile_layer_data),
-  _with(XML_ERR "layer/no_tile_layer_data.xml", parse_error::no_tile_layer_data),
-
-  _with(YAML_ERR "layer/corrupt_tile_layer_data.yaml", parse_error::corrupt_tile_layer_data),
-  _with(JSON_ERR "layer/corrupt_tile_layer_data.json", parse_error::corrupt_tile_layer_data),
-  _with(XML_ERR "layer/corrupt_tile_layer_data.xml", parse_error::corrupt_tile_layer_data),
-
-  _with(YAML_ERR "tileset/no_tileset_tile_width.yaml", parse_error::no_tileset_tile_width),
-  _with(JSON_ERR "tileset/no_tileset_tile_width.json", parse_error::no_tileset_tile_width),
-  _with(XML_ERR "tileset/no_tileset_tile_width.xml", parse_error::no_tileset_tile_width),
-
-  _with(YAML_ERR "tileset/no_tileset_tile_height.yaml", parse_error::no_tileset_tile_height),
-  _with(JSON_ERR "tileset/no_tileset_tile_height.json", parse_error::no_tileset_tile_height),
-  _with(XML_ERR "tileset/no_tileset_tile_height.xml", parse_error::no_tileset_tile_height),
-
-  _with(YAML_ERR "tileset/no_tileset_name.yaml", parse_error::no_tileset_name),
-  _with(JSON_ERR "tileset/no_tileset_name.json", parse_error::no_tileset_name),
-  _with(XML_ERR "tileset/no_tileset_name.xml", parse_error::no_tileset_name),
-
-  _with(YAML_ERR "tileset/tileset_image_does_not_exist.yaml", parse_error::tileset_image_does_not_exist),
-  _with(JSON_ERR "tileset/tileset_image_does_not_exist.json", parse_error::tileset_image_does_not_exist),
-  _with(XML_ERR "tileset/tileset_image_does_not_exist.xml", parse_error::tileset_image_does_not_exist),
-
-  _with(YAML_ERR "tileset/no_tileset_image_path.yaml", parse_error::no_tileset_image_path),
-  _with(JSON_ERR "tileset/no_tileset_image_path.json", parse_error::no_tileset_image_path),
-  _with(XML_ERR "tileset/no_tileset_image_path.xml", parse_error::no_tileset_image_path),
-
-  _with(YAML_ERR "tileset/no_tileset_image_width.yaml", parse_error::no_tileset_image_width),
-  _with(JSON_ERR "tileset/no_tileset_image_width.json", parse_error::no_tileset_image_width),
-  _with(XML_ERR "tileset/no_tileset_image_width.xml", parse_error::no_tileset_image_width),
-
-  _with(YAML_ERR "tileset/no_tileset_image_height.yaml", parse_error::no_tileset_image_height),
-  _with(JSON_ERR "tileset/no_tileset_image_height.json", parse_error::no_tileset_image_height),
-  _with(XML_ERR "tileset/no_tileset_image_height.xml", parse_error::no_tileset_image_height),
-
-  _with(YAML_ERR "tileset/no_tileset_tile_count.yaml", parse_error::no_tileset_tile_count),
-  _with(JSON_ERR "tileset/no_tileset_tile_count.json", parse_error::no_tileset_tile_count),
-  _with(XML_ERR "tileset/no_tileset_tile_count.xml", parse_error::no_tileset_tile_count),
-
-  _with(YAML_ERR "tileset/no_tileset_column_count.yaml", parse_error::no_tileset_column_count),
-  _with(JSON_ERR "tileset/no_tileset_column_count.json", parse_error::no_tileset_column_count),
-  _with(XML_ERR "tileset/no_tileset_column_count.xml", parse_error::no_tileset_column_count),
+  _with(YAML_ERR "map/no_tileset_first_tile_id.yaml", ParseError::no_tileset_first_tile_id),
+  _with(JSON_ERR "map/no_tileset_first_tile_id.json", ParseError::no_tileset_first_tile_id),
 
   // YAML only
-  _with(YAML_ERR "tileset/no_tileset_version.yaml", parse_error::no_tileset_version),
-  _with(YAML_ERR "tileset/unsupported_tileset_version.yaml", parse_error::unsupported_tileset_version),
+  _with(YAML_ERR "map/no_external_tileset_path.yaml", ParseError::no_external_tileset_path),
 
-  _with(YAML_ERR "property/corrupt_property_value.yaml", parse_error::corrupt_property_value),
-  _with(JSON_ERR "property/corrupt_property_value.json", parse_error::corrupt_property_value),
-  _with(XML_ERR "property/corrupt_property_value.xml", parse_error::corrupt_property_value),
+  _with(YAML_ERR "map/external_tileset_does_not_exist.yaml", ParseError::external_tileset_does_not_exist),
+  _with(JSON_ERR "map/external_tileset_does_not_exist.json", ParseError::external_tileset_does_not_exist),
+  _with(XML_ERR "map/external_tileset_does_not_exist.xml", ParseError::external_tileset_does_not_exist),
 
-  _with(YAML_ERR "property/unsupported_property_type.yaml", parse_error::unsupported_property_type),
-  _with(JSON_ERR "property/unsupported_property_type.json", parse_error::unsupported_property_type),
-  _with(XML_ERR "property/unsupported_property_type.xml", parse_error::unsupported_property_type),
+  _with(YAML_ERR "map/unknown_external_tileset_error.yaml", ParseError::unknown_external_tileset_error),
+  _with(JSON_ERR "map/unknown_external_tileset_error.json", ParseError::unknown_external_tileset_error),
+  _with(XML_ERR "map/unknown_external_tileset_error.xml", ParseError::unknown_external_tileset_error),
 
-  _with(YAML_ERR "property/no_property_name.yaml", parse_error::no_property_name),
-  _with(JSON_ERR "property/no_property_name.json", parse_error::no_property_name),
-  _with(XML_ERR "property/no_property_name.xml", parse_error::no_property_name),
+  _with(YAML_ERR "layer/unsupported_layer_type.yaml", ParseError::unsupported_layer_type),
+  _with(JSON_ERR "layer/unsupported_layer_type.json", ParseError::unsupported_layer_type),
 
-  _with(YAML_ERR "property/no_property_type.yaml", parse_error::no_property_type),
-  _with(JSON_ERR "property/no_property_type.json", parse_error::no_property_type),
+  _with(YAML_ERR "layer/no_layer_id.yaml", ParseError::no_layer_id),
+  _with(JSON_ERR "layer/no_layer_id.json", ParseError::no_layer_id),
+  _with(XML_ERR "layer/no_layer_id.xml", ParseError::no_layer_id),
 
-  _with(YAML_ERR "object/no_object_id.yaml", parse_error::no_object_id),
-  _with(JSON_ERR "object/no_object_id.json", parse_error::no_object_id),
-  _with(XML_ERR "object/no_object_id.xml", parse_error::no_object_id),
+  _with(YAML_ERR "layer/no_layer_type.yaml", ParseError::no_layer_type),
+  _with(JSON_ERR "layer/no_layer_type.json", ParseError::no_layer_type),
+
+  _with(YAML_ERR "layer/no_tile_layer_data.yaml", ParseError::no_tile_layer_data),
+  _with(JSON_ERR "layer/no_tile_layer_data.json", ParseError::no_tile_layer_data),
+  _with(XML_ERR "layer/no_tile_layer_data.xml", ParseError::no_tile_layer_data),
+
+  _with(YAML_ERR "layer/corrupt_tile_layer_data.yaml", ParseError::corrupt_tile_layer_data),
+  _with(JSON_ERR "layer/corrupt_tile_layer_data.json", ParseError::corrupt_tile_layer_data),
+  _with(XML_ERR "layer/corrupt_tile_layer_data.xml", ParseError::corrupt_tile_layer_data),
+
+  _with(YAML_ERR "tileset/no_tileset_tile_width.yaml", ParseError::no_tileset_tile_width),
+  _with(JSON_ERR "tileset/no_tileset_tile_width.json", ParseError::no_tileset_tile_width),
+  _with(XML_ERR "tileset/no_tileset_tile_width.xml", ParseError::no_tileset_tile_width),
+
+  _with(YAML_ERR "tileset/no_tileset_tile_height.yaml", ParseError::no_tileset_tile_height),
+  _with(JSON_ERR "tileset/no_tileset_tile_height.json", ParseError::no_tileset_tile_height),
+  _with(XML_ERR "tileset/no_tileset_tile_height.xml", ParseError::no_tileset_tile_height),
+
+  _with(YAML_ERR "tileset/no_tileset_name.yaml", ParseError::no_tileset_name),
+  _with(JSON_ERR "tileset/no_tileset_name.json", ParseError::no_tileset_name),
+  _with(XML_ERR "tileset/no_tileset_name.xml", ParseError::no_tileset_name),
+
+  _with(YAML_ERR "tileset/tileset_image_does_not_exist.yaml", ParseError::tileset_image_does_not_exist),
+  _with(JSON_ERR "tileset/tileset_image_does_not_exist.json", ParseError::tileset_image_does_not_exist),
+  _with(XML_ERR "tileset/tileset_image_does_not_exist.xml", ParseError::tileset_image_does_not_exist),
+
+  _with(YAML_ERR "tileset/no_tileset_image_path.yaml", ParseError::no_tileset_image_path),
+  _with(JSON_ERR "tileset/no_tileset_image_path.json", ParseError::no_tileset_image_path),
+  _with(XML_ERR "tileset/no_tileset_image_path.xml", ParseError::no_tileset_image_path),
+
+  _with(YAML_ERR "tileset/no_tileset_image_width.yaml", ParseError::no_tileset_image_width),
+  _with(JSON_ERR "tileset/no_tileset_image_width.json", ParseError::no_tileset_image_width),
+  _with(XML_ERR "tileset/no_tileset_image_width.xml", ParseError::no_tileset_image_width),
+
+  _with(YAML_ERR "tileset/no_tileset_image_height.yaml", ParseError::no_tileset_image_height),
+  _with(JSON_ERR "tileset/no_tileset_image_height.json", ParseError::no_tileset_image_height),
+  _with(XML_ERR "tileset/no_tileset_image_height.xml", ParseError::no_tileset_image_height),
+
+  _with(YAML_ERR "tileset/no_tileset_tile_count.yaml", ParseError::no_tileset_tile_count),
+  _with(JSON_ERR "tileset/no_tileset_tile_count.json", ParseError::no_tileset_tile_count),
+  _with(XML_ERR "tileset/no_tileset_tile_count.xml", ParseError::no_tileset_tile_count),
+
+  _with(YAML_ERR "tileset/no_tileset_column_count.yaml", ParseError::no_tileset_column_count),
+  _with(JSON_ERR "tileset/no_tileset_column_count.json", ParseError::no_tileset_column_count),
+  _with(XML_ERR "tileset/no_tileset_column_count.xml", ParseError::no_tileset_column_count),
 
   // YAML only
-  _with(YAML_ERR "object/no_object_type.yaml", parse_error::no_object_type),
-  _with(YAML_ERR "object/unsupported_object_type.yaml", parse_error::unsupported_object_type),
+  _with(YAML_ERR "tileset/no_tileset_version.yaml", ParseError::no_tileset_version),
+  _with(YAML_ERR "tileset/unsupported_tileset_version.yaml", ParseError::unsupported_tileset_version),
 
-  _with(YAML_ERR "fancy-tile/no_fancy_tile_id.yaml", parse_error::no_fancy_tile_id),
-  _with(JSON_ERR "fancy-tile/no_fancy_tile_id.json", parse_error::no_fancy_tile_id),
-  _with(XML_ERR "fancy-tile/no_fancy_tile_id.xml", parse_error::no_fancy_tile_id),
+  _with(YAML_ERR "property/corrupt_property_value.yaml", ParseError::corrupt_property_value),
+  _with(JSON_ERR "property/corrupt_property_value.json", ParseError::corrupt_property_value),
+  _with(XML_ERR "property/corrupt_property_value.xml", ParseError::corrupt_property_value),
 
-  _with(YAML_ERR "fancy-tile/no_animation_frame_tile.yaml", parse_error::no_animation_frame_tile),
-  _with(JSON_ERR "fancy-tile/no_animation_frame_tile.json", parse_error::no_animation_frame_tile),
-  _with(XML_ERR "fancy-tile/no_animation_frame_tile.xml", parse_error::no_animation_frame_tile),
+  _with(YAML_ERR "property/unsupported_property_type.yaml", ParseError::unsupported_property_type),
+  _with(JSON_ERR "property/unsupported_property_type.json", ParseError::unsupported_property_type),
+  _with(XML_ERR "property/unsupported_property_type.xml", ParseError::unsupported_property_type),
 
-  _with(YAML_ERR "fancy-tile/no_animation_frame_duration.yaml", parse_error::no_animation_frame_duration),
-  _with(JSON_ERR "fancy-tile/no_animation_frame_duration.json", parse_error::no_animation_frame_duration),
-  _with(XML_ERR "fancy-tile/no_animation_frame_duration.xml", parse_error::no_animation_frame_duration),
+  _with(YAML_ERR "property/no_property_name.yaml", ParseError::no_property_name),
+  _with(JSON_ERR "property/no_property_name.json", ParseError::no_property_name),
+  _with(XML_ERR "property/no_property_name.xml", ParseError::no_property_name),
+
+  _with(YAML_ERR "property/no_property_type.yaml", ParseError::no_property_type),
+  _with(JSON_ERR "property/no_property_type.json", ParseError::no_property_type),
+
+  _with(YAML_ERR "object/no_object_id.yaml", ParseError::no_object_id),
+  _with(JSON_ERR "object/no_object_id.json", ParseError::no_object_id),
+  _with(XML_ERR "object/no_object_id.xml", ParseError::no_object_id),
 
   // YAML only
-  _with(YAML_ERR "component/no_component_def_name.yaml", parse_error::no_component_def_name),
-  _with(YAML_ERR "component/no_component_def_attribute_name.yaml", parse_error::no_component_def_attribute_name),
-  _with(YAML_ERR "component/no_component_def_attribute_type.yaml", parse_error::no_component_def_attribute_type),
-  _with(YAML_ERR "component/unsupported_component_def_attribute_type.yaml", parse_error::unsupported_component_def_attribute_type),
-  _with(YAML_ERR "component/corrupt_component_def_attribute_value.yaml", parse_error::corrupt_component_def_attribute_value),
-  _with(YAML_ERR "component/no_component_type.yaml", parse_error::no_component_type),
-  _with(YAML_ERR "component/no_component_attribute_name.yaml", parse_error::no_component_attribute_name),
-  _with(YAML_ERR "component/no_component_attribute_value.yaml", parse_error::no_component_attribute_value),
-  _with(YAML_ERR "component/corrupt_component_attribute_value.yaml", parse_error::corrupt_component_attribute_value)
+  _with(YAML_ERR "object/no_object_type.yaml", ParseError::no_object_type),
+  _with(YAML_ERR "object/unsupported_object_type.yaml", ParseError::unsupported_object_type),
+
+  _with(YAML_ERR "fancy-tile/no_fancy_tile_id.yaml", ParseError::no_fancy_tile_id),
+  _with(JSON_ERR "fancy-tile/no_fancy_tile_id.json", ParseError::no_fancy_tile_id),
+  _with(XML_ERR "fancy-tile/no_fancy_tile_id.xml", ParseError::no_fancy_tile_id),
+
+  _with(YAML_ERR "fancy-tile/no_animation_frame_tile.yaml", ParseError::no_animation_frame_tile),
+  _with(JSON_ERR "fancy-tile/no_animation_frame_tile.json", ParseError::no_animation_frame_tile),
+  _with(XML_ERR "fancy-tile/no_animation_frame_tile.xml", ParseError::no_animation_frame_tile),
+
+  _with(YAML_ERR "fancy-tile/no_animation_frame_duration.yaml", ParseError::no_animation_frame_duration),
+  _with(JSON_ERR "fancy-tile/no_animation_frame_duration.json", ParseError::no_animation_frame_duration),
+  _with(XML_ERR "fancy-tile/no_animation_frame_duration.xml", ParseError::no_animation_frame_duration),
+
+  // YAML only
+  _with(YAML_ERR "component/no_component_def_name.yaml", ParseError::no_component_def_name),
+  _with(YAML_ERR "component/no_component_def_attribute_name.yaml", ParseError::no_component_def_attribute_name),
+  _with(YAML_ERR "component/no_component_def_attribute_type.yaml", ParseError::no_component_def_attribute_type),
+  _with(YAML_ERR "component/unsupported_component_def_attribute_type.yaml", ParseError::unsupported_component_def_attribute_type),
+  _with(YAML_ERR "component/corrupt_component_def_attribute_value.yaml", ParseError::corrupt_component_def_attribute_value),
+  _with(YAML_ERR "component/no_component_type.yaml", ParseError::no_component_type),
+  _with(YAML_ERR "component/no_component_attribute_name.yaml", ParseError::no_component_attribute_name),
+  _with(YAML_ERR "component/no_component_attribute_value.yaml", ParseError::no_component_attribute_value),
+  _with(YAML_ERR "component/corrupt_component_attribute_value.yaml", ParseError::corrupt_component_attribute_value)
 );
 
 // clang-format on

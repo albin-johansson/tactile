@@ -9,10 +9,12 @@ env:
   VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg\bincache
   VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
+  VCPKG_CACHE_EDITION: 1
 
 jobs:
   windows-latest-test:
     runs-on: windows-latest
+    if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
       - uses: actions/checkout@main
       - uses: ilammy/msvc-dev-cmd@master
@@ -28,7 +30,7 @@ jobs:
             !${{env.VCPKG_ROOT}}\packages
             !${{env.VCPKG_ROOT}}\downloads
             !${{env.VCPKG_ROOT}}\installed
-          key: ${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile-windows
+          key: tactile-windows-vcpkg-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'

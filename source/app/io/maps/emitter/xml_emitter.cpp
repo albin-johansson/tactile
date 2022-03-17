@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "xml_emitter.hpp"
 
 #include <filesystem>  // path, relative
@@ -19,8 +38,7 @@
 namespace tactile::emitter {
 namespace {
 
-void _append_properties(pugi::xml_node node,
-                        const ir::attribute_context_data& contextData)
+void _append_properties(pugi::xml_node node, const ir::AttributeContextData& contextData)
 {
   if (contextData.properties.empty()) {
     return;
@@ -35,46 +53,46 @@ void _append_properties(pugi::xml_node node,
     const auto type = propertyValue.type();
 
     /* Properties with no type attribute are assumed to be string properties */
-    if (type != attribute_type::string) {
+    if (type != AttributeType::string) {
       propertyNode.append_attribute("type").set_value(stringify(type));
     }
 
     auto valueAttr = propertyNode.append_attribute("value");
 
     switch (type) {
-      case attribute_type::string:
+      case AttributeType::string:
         valueAttr.set_value(propertyValue.as_string().c_str());
         break;
 
-      case attribute_type::integer:
+      case AttributeType::integer:
         valueAttr.set_value(propertyValue.as_int());
         break;
 
-      case attribute_type::floating:
+      case AttributeType::floating:
         valueAttr.set_value(propertyValue.as_float());
         break;
 
-      case attribute_type::boolean:
+      case AttributeType::boolean:
         valueAttr.set_value(propertyValue.as_bool());
         break;
 
-      case attribute_type::file: {
+      case AttributeType::file: {
         const auto str = convert_to_forward_slashes(propertyValue.as_file());
         valueAttr.set_value(str.c_str());
         break;
       }
-      case attribute_type::color:
+      case AttributeType::color:
         valueAttr.set_value(propertyValue.as_color().as_argb().c_str());
         break;
 
-      case attribute_type::object:
+      case AttributeType::object:
         valueAttr.set_value(propertyValue.as_object());
         break;
     }
   }
 }
 
-void _append_object(pugi::xml_node node, const ir::object_data& objectData)
+void _append_object(pugi::xml_node node, const ir::ObjectData& objectData)
 {
   auto objectNode = node.append_child("object");
   objectNode.append_attribute("id").set_value(objectData.id);
@@ -108,17 +126,17 @@ void _append_object(pugi::xml_node node, const ir::object_data& objectData)
   }
 
   /* Objects are assumed to be rectangles unless explicitly told otherwise */
-  if (objectData.type == object_type::point) {
+  if (objectData.type == ObjectType::point) {
     objectNode.append_child("point");
   }
-  else if (objectData.type == object_type::ellipse) {
+  else if (objectData.type == ObjectType::ellipse) {
     objectNode.append_child("ellipse");
   }
 
   _append_properties(objectNode, objectData.context);
 }
 
-void _append_common_layer_attributes(pugi::xml_node node, const ir::layer_data& layerData)
+void _append_common_layer_attributes(pugi::xml_node node, const ir::LayerData& layerData)
 {
   node.append_attribute("id").set_value(layerData.id);
   node.append_attribute("name").set_value(layerData.name.c_str());
@@ -132,9 +150,9 @@ void _append_common_layer_attributes(pugi::xml_node node, const ir::layer_data& 
   }
 }
 
-void _append_tile_layer(pugi::xml_node root, const ir::layer_data& layerData)
+void _append_tile_layer(pugi::xml_node root, const ir::LayerData& layerData)
 {
-  const auto& tileLayerData = std::get<ir::tile_layer_data>(layerData.data);
+  const auto& tileLayerData = std::get<ir::TileLayerData>(layerData.data);
 
   auto node = root.append_child("layer");
   _append_common_layer_attributes(node, layerData);
@@ -176,9 +194,9 @@ void _append_tile_layer(pugi::xml_node root, const ir::layer_data& layerData)
   dataNode.text().set(stream.str().c_str());
 }
 
-void _append_object_layer(pugi::xml_node root, const ir::layer_data& layerData)
+void _append_object_layer(pugi::xml_node root, const ir::LayerData& layerData)
 {
-  const auto& objectLayerData = std::get<ir::object_layer_data>(layerData.data);
+  const auto& objectLayerData = std::get<ir::ObjectLayerData>(layerData.data);
 
   auto node = root.append_child("objectgroup");
   _append_common_layer_attributes(node, layerData);
@@ -189,19 +207,19 @@ void _append_object_layer(pugi::xml_node root, const ir::layer_data& layerData)
   }
 }
 
-void _append_layer(pugi::xml_node root, const ir::layer_data& layerData)
+void _append_layer(pugi::xml_node root, const ir::LayerData& layerData)
 {
   switch (layerData.type) {
-    case layer_type::tile_layer:
+    case LayerType::tile_layer:
       _append_tile_layer(root, layerData);
       break;
 
-    case layer_type::object_layer:
+    case LayerType::object_layer:
       _append_object_layer(root, layerData);
       break;
 
-    case layer_type::group_layer: {
-      const auto& groupLayerData = std::get<ir::group_layer_data>(layerData.data);
+    case LayerType::group_layer: {
+      const auto& groupLayerData = std::get<ir::GroupLayerData>(layerData.data);
 
       auto collection = root.append_child("group");
       _append_common_layer_attributes(collection, layerData);
@@ -215,11 +233,11 @@ void _append_layer(pugi::xml_node root, const ir::layer_data& layerData)
     }
 
     default:
-      throw_traced(tactile_error{"Invalid layer type!"});
+      throw_traced(TactileError{"Invalid layer type!"});
   }
 }
 
-void _append_fancy_tiles(pugi::xml_node node, const ir::tileset_data& tilesetData)
+void _append_fancy_tiles(pugi::xml_node node, const ir::TilesetData& tilesetData)
 {
   for (const auto& [id, tileData] : tilesetData.fancy_tiles) {
     auto tileNode = node.append_child("tile");
@@ -249,7 +267,7 @@ void _append_fancy_tiles(pugi::xml_node node, const ir::tileset_data& tilesetDat
 }
 
 void _append_common_tileset_attributes(pugi::xml_node node,
-                                       const ir::tileset_data& tilesetData,
+                                       const ir::TilesetData& tilesetData,
                                        const std::filesystem::path& dir)
 {
   node.append_attribute("name").set_value(tilesetData.name.c_str());
@@ -276,7 +294,7 @@ void _append_common_tileset_attributes(pugi::xml_node node,
 }
 
 void _append_embedded_tileset(pugi::xml_node root,
-                              const ir::tileset_data& tilesetData,
+                              const ir::TilesetData& tilesetData,
                               const std::filesystem::path& dir)
 {
   auto node = root.append_child("tileset");
@@ -286,7 +304,7 @@ void _append_embedded_tileset(pugi::xml_node root,
 }
 
 void _append_external_tileset(pugi::xml_node root,
-                              const ir::tileset_data& tilesetData,
+                              const ir::TilesetData& tilesetData,
                               const std::string& filename)
 {
   auto node = root.append_child("tileset");
@@ -295,7 +313,7 @@ void _append_external_tileset(pugi::xml_node root,
 }
 
 void _emit_external_tileset_file(const std::filesystem::path& path,
-                                 const ir::tileset_data& tilesetData,
+                                 const ir::TilesetData& tilesetData,
                                  const std::filesystem::path& dir)
 {
   pugi::xml_document document;
@@ -311,7 +329,7 @@ void _emit_external_tileset_file(const std::filesystem::path& path,
 }
 
 void _append_tileset(pugi::xml_node root,
-                     const ir::tileset_data& tilesetData,
+                     const ir::TilesetData& tilesetData,
                      const std::filesystem::path& dir)
 {
   const auto& prefs = get_preferences();
@@ -326,7 +344,7 @@ void _append_tileset(pugi::xml_node root,
   }
 }
 
-void _append_root(pugi::xml_document& document, const emit_info& info)
+void _append_root(pugi::xml_document& document, const EmitInfo& info)
 {
   const auto& mapData = info.data();
   auto root = document.append_child("map");
@@ -360,7 +378,7 @@ void _append_root(pugi::xml_document& document, const emit_info& info)
 
 }  // namespace
 
-void emit_xml_map(const emit_info& info)
+void emit_xml_map(const EmitInfo& info)
 {
   if (!info.data().component_definitions.empty()) {
     log_warning("Component data will be ignored when saving the map as XML!");

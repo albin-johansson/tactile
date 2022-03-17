@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include "core/systems/component_system.hpp"
@@ -7,12 +26,12 @@
 
 namespace tactile {
 
-class remove_component_cmd final : public command_base
+class RemoveComponentCmd final : public ACommand
 {
  public:
-  remove_component_cmd(registry_ref registry,
-                       context_id contextId,
-                       component_id componentId);
+  RemoveComponentCmd(RegistryRef registry,
+                     context_id contextId,
+                     component_id componentId);
 
   void undo() override;
 
@@ -20,14 +39,14 @@ class remove_component_cmd final : public command_base
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::remove_component;
+    return CommandId::remove_component;
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   context_id mContextId{};
   component_id mComponentId{};
-  maybe<sys::remove_component_result> mSnapshot;
+  Maybe<sys::RemoveComponentResult> mSnapshot;
 };
 
 }  // namespace tactile

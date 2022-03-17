@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "json_tileset_parser.hpp"
 
 #include <filesystem>  // weakly_canonical, exists
@@ -16,7 +35,7 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_fancy_tile(const nlohmann::json& json,
-                                     ir::tileset_data& tilesetData) -> parse_error
+                                     ir::TilesetData& tilesetData) -> ParseError
 {
   tile_id tileId{};
 
@@ -24,7 +43,7 @@ namespace {
     tileId = *id;
   }
   else {
-    return parse_error::no_fancy_tile_id;
+    return ParseError::no_fancy_tile_id;
   }
 
   auto& tileData = tilesetData.fancy_tiles[tileId];
@@ -39,14 +58,14 @@ namespace {
         frameData.local_id = *localId;
       }
       else {
-        return parse_error::no_animation_frame_tile;
+        return ParseError::no_animation_frame_tile;
       }
 
       if (const auto duration = as_uint(frameJson, "duration")) {
         frameData.duration_ms = *duration;
       }
       else {
-        return parse_error::no_animation_frame_duration;
+        return ParseError::no_animation_frame_duration;
       }
     }
   }
@@ -58,7 +77,7 @@ namespace {
       for (const auto& [_, objectJson] : objectsIter->items()) {
         auto& objectData = tileData.objects.emplace_back();
         if (const auto err = parse_object(objectJson, objectData);
-            err != parse_error::none) {
+            err != ParseError::none) {
           return err;
         }
       }
@@ -66,36 +85,36 @@ namespace {
   }
 
   if (const auto err = parse_properties(json, tileData.context);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_fancy_tiles(const nlohmann::json& json,
-                                      ir::tileset_data& tilesetData) -> parse_error
+                                      ir::TilesetData& tilesetData) -> ParseError
 {
   if (json.contains("tiles")) {
     for (const auto& [_, value] : json.at("tiles").items()) {
       if (const auto err = _parse_fancy_tile(value, tilesetData);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_image_path(const nlohmann::json& json,
-                                     ir::tileset_data& tilesetData,
-                                     const std::filesystem::path& dir) -> parse_error
+                                     ir::TilesetData& tilesetData,
+                                     const std::filesystem::path& dir) -> ParseError
 {
   const auto relative = json.find("image");
 
   if (relative == json.end()) {
-    return parse_error::no_tileset_image_path;
+    return ParseError::no_tileset_image_path;
   }
 
   auto absolute = std::filesystem::weakly_canonical(dir / relative->get<std::string>());
@@ -103,87 +122,86 @@ namespace {
     tilesetData.image_path = std::move(absolute);
   }
   else {
-    return parse_error::tileset_image_does_not_exist;
+    return ParseError::tileset_image_does_not_exist;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_common_tileset_attributes(const nlohmann::json& json,
-                                                    ir::tileset_data& tilesetData,
+                                                    ir::TilesetData& tilesetData,
                                                     const std::filesystem::path& dir)
-    -> parse_error
+    -> ParseError
 {
   if (auto name = as_string(json, "name")) {
     tilesetData.name = std::move(*name);
   }
   else {
-    return parse_error::no_tileset_name;
+    return ParseError::no_tileset_name;
   }
 
   if (const auto tw = as_int(json, "tilewidth")) {
     tilesetData.tile_width = *tw;
   }
   else {
-    return parse_error::no_tileset_tile_width;
+    return ParseError::no_tileset_tile_width;
   }
 
   if (const auto th = as_int(json, "tileheight")) {
     tilesetData.tile_height = *th;
   }
   else {
-    return parse_error::no_tileset_tile_height;
+    return ParseError::no_tileset_tile_height;
   }
 
   if (const auto count = as_int(json, "tilecount")) {
     tilesetData.tile_count = *count;
   }
   else {
-    return parse_error::no_tileset_tile_count;
+    return ParseError::no_tileset_tile_count;
   }
 
   if (const auto columns = as_int(json, "columns")) {
     tilesetData.column_count = *columns;
   }
   else {
-    return parse_error::no_tileset_column_count;
+    return ParseError::no_tileset_column_count;
   }
 
   if (const auto width = as_int(json, "imagewidth")) {
     tilesetData.image_width = *width;
   }
   else {
-    return parse_error::no_tileset_image_width;
+    return ParseError::no_tileset_image_width;
   }
 
   if (const auto height = as_int(json, "imageheight")) {
     tilesetData.image_height = *height;
   }
   else {
-    return parse_error::no_tileset_image_height;
+    return ParseError::no_tileset_image_height;
   }
 
   if (const auto err = _parse_image_path(json, tilesetData, dir);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
   if (const auto err = parse_properties(json, tilesetData.context);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
-  if (const auto err = _parse_fancy_tiles(json, tilesetData); err != parse_error::none) {
+  if (const auto err = _parse_fancy_tiles(json, tilesetData); err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_external_tileset(const nlohmann::json& json,
-                                           ir::tileset_data& tilesetData,
-                                           const std::filesystem::path& dir)
-    -> parse_error
+                                           ir::TilesetData& tilesetData,
+                                           const std::filesystem::path& dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
 
@@ -191,26 +209,26 @@ namespace {
   const auto source = std::filesystem::weakly_canonical(dir / relative);
 
   if (!std::filesystem::exists(source)) {
-    return parse_error::external_tileset_does_not_exist;
+    return ParseError::external_tileset_does_not_exist;
   }
 
   if (const auto external = read_json(source)) {
     return _parse_common_tileset_attributes(*external, tilesetData, dir);
   }
   else {
-    return parse_error::unknown_external_tileset_error;
+    return ParseError::unknown_external_tileset_error;
   }
 }
 
 [[nodiscard]] auto _parse_tileset(const nlohmann::json& json,
-                                  ir::tileset_data& tilesetData,
-                                  const std::filesystem::path& dir) -> parse_error
+                                  ir::TilesetData& tilesetData,
+                                  const std::filesystem::path& dir) -> ParseError
 {
   if (const auto firstTile = as_int(json, "firstgid")) {
     tilesetData.first_tile = *firstTile;
   }
   else {
-    return parse_error::no_tileset_first_tile_id;
+    return ParseError::no_tileset_first_tile_id;
   }
 
   if (json.contains("source")) {
@@ -224,14 +242,14 @@ namespace {
 }  // namespace
 
 auto parse_tilesets(const nlohmann::json& json,
-                    ir::map_data& mapData,
-                    const std::filesystem::path& dir) -> parse_error
+                    ir::MapData& mapData,
+                    const std::filesystem::path& dir) -> ParseError
 {
   const auto iter = json.find("tilesets");
 
   if (iter == json.end()) {
     log_warning("JSON map has no \"tilesets\" attribute, which is required!");
-    return parse_error::none;
+    return ParseError::none;
   }
 
   mapData.tilesets.reserve(iter->size());
@@ -239,12 +257,12 @@ auto parse_tilesets(const nlohmann::json& json,
   for (const auto& [_, value] : iter->items()) {
     auto& tilesetData = mapData.tilesets.emplace_back();
     if (const auto err = _parse_tileset(value, tilesetData, dir);
-        err != parse_error::none) {
+        err != ParseError::none) {
       return err;
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace tactile::parsing

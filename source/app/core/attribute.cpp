@@ -1,72 +1,91 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "attribute.hpp"
 
 #include "misc/throw.hpp"
 
 namespace tactile {
 
-auto stringify(const attribute_type type) -> const char*
+auto stringify(const AttributeType type) -> const char*
 {
   switch (type) {
-    case attribute_type::string:
+    case AttributeType::string:
       return "string";
 
-    case attribute_type::integer:
+    case AttributeType::integer:
       return "int";
 
-    case attribute_type::floating:
+    case AttributeType::floating:
       return "float";
 
-    case attribute_type::boolean:
+    case AttributeType::boolean:
       return "bool";
 
-    case attribute_type::file:
+    case AttributeType::file:
       return "file";
 
-    case attribute_type::color:
+    case AttributeType::color:
       return "color";
 
-    case attribute_type::object:
+    case AttributeType::object:
       return "object";
 
     default:
-      throw_traced(tactile_error{"Invalid attribute type!"});
+      throw_traced(TactileError{"Invalid attribute type!"});
   }
 }
 
-auto operator<<(std::ostream& stream, const attribute_type type) -> std::ostream&
+auto operator<<(std::ostream& stream, const AttributeType type) -> std::ostream&
 {
   return stream << stringify(type);
 }
 
-void attribute_value::reset_to_default(const attribute_type type)
+void Attribute::reset_to_default(const AttributeType type)
 {
-  if (type == attribute_type::integer) {
+  if (type == AttributeType::integer) {
     set_value<integer_type>(0);
   }
-  else if (type == attribute_type::floating) {
+  else if (type == AttributeType::floating) {
     set_value<float_type>(0);
   }
-  else if (type == attribute_type::boolean) {
+  else if (type == AttributeType::boolean) {
     set_value<bool>(false);
   }
-  else if (type == attribute_type::string) {
+  else if (type == AttributeType::string) {
     set_value<string_type>(string_type{});
   }
-  else if (type == attribute_type::color) {
+  else if (type == AttributeType::color) {
     set_value<color_type>(cen::colors::black);
   }
-  else if (type == attribute_type::object) {
+  else if (type == AttributeType::object) {
     set_value<object_t>(object_t{});
   }
-  else if (type == attribute_type::file) {
+  else if (type == AttributeType::file) {
     set_value<file_type>(file_type{});
   }
   else {
-    throw_traced(tactile_error{"Invalid attribute type!"});
+    throw_traced(TactileError{"Invalid attribute type!"});
   }
 }
 
-auto attribute_value::has_default_value() const -> bool
+auto Attribute::has_default_value() const -> bool
 {
   if (const auto* str = std::get_if<string_type>(&mValue)) {
     return str->empty();
@@ -90,106 +109,106 @@ auto attribute_value::has_default_value() const -> bool
     return *color == cen::colors::black;
   }
   else {
-    throw_traced(tactile_error{"Invalid property type!"});
+    throw_traced(TactileError{"Invalid property type!"});
   }
 }
 
-auto attribute_value::as_string() const -> const string_type&
+auto Attribute::as_string() const -> const string_type&
 {
   if (const auto* str = get_if<string_type>()) {
     return *str;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a string!"});
+    throw_traced(TactileError{"Attribute was not a string!"});
   }
 }
 
-auto attribute_value::as_int() const -> integer_type
+auto Attribute::as_int() const -> integer_type
 {
   if (const auto* i = get_if<integer_type>()) {
     return *i;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not an integer!"});
+    throw_traced(TactileError{"Attribute was not an integer!"});
   }
 }
 
-auto attribute_value::as_float() const -> float_type
+auto Attribute::as_float() const -> float_type
 {
   if (const auto* f = get_if<float_type>()) {
     return *f;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a float!"});
+    throw_traced(TactileError{"Attribute was not a float!"});
   }
 }
 
-auto attribute_value::as_bool() const -> bool
+auto Attribute::as_bool() const -> bool
 {
   if (const auto* b = get_if<bool>()) {
     return *b;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a boolean!"});
+    throw_traced(TactileError{"Attribute was not a boolean!"});
   }
 }
 
-auto attribute_value::as_file() const -> const file_type&
+auto Attribute::as_file() const -> const file_type&
 {
   if (const auto* file = get_if<file_type>()) {
     return *file;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a file!"});
+    throw_traced(TactileError{"Attribute was not a file!"});
   }
 }
 
-auto attribute_value::as_object() const -> object_t
+auto Attribute::as_object() const -> object_t
 {
   if (const auto* obj = get_if<object_t>()) {
     return *obj;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not an object reference!"});
+    throw_traced(TactileError{"Attribute was not an object reference!"});
   }
 }
 
-auto attribute_value::as_color() const -> const color_type&
+auto Attribute::as_color() const -> const color_type&
 {
   if (const auto* color = get_if<color_type>()) {
     return *color;
   }
   else {
-    throw_traced(tactile_error{"Attribute was not a color!"});
+    throw_traced(TactileError{"Attribute was not a color!"});
   }
 }
 
-auto operator<<(std::ostream& stream, const attribute_value& value) -> std::ostream&
+auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
 {
   switch (value.type()) {
-    case attribute_type::string:
+    case AttributeType::string:
       return stream << value.as_string();
 
-    case attribute_type::integer:
+    case AttributeType::integer:
       return stream << value.as_int();
 
-    case attribute_type::floating:
+    case AttributeType::floating:
       return stream << value.as_float();
 
-    case attribute_type::boolean:
+    case AttributeType::boolean:
       return stream << value.as_bool();
 
-    case attribute_type::file:
+    case AttributeType::file:
       return stream << value.as_file();
 
-    case attribute_type::color:
+    case AttributeType::color:
       return stream << value.as_color().as_rgba();
 
-    case attribute_type::object:
+    case AttributeType::object:
       return stream << "object '" << value.as_object() << "'";
 
     default:
-      throw_traced(tactile_error{"Invalid attribute type!"});
+      throw_traced(TactileError{"Invalid attribute type!"});
   }
 }
 

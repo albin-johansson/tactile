@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <string>  // string
@@ -9,10 +28,10 @@
 
 namespace tactile {
 
-class change_property_type_cmd final : public command_base
+class ChangePropertyTypeCmd final : public ACommand
 {
  public:
-  change_property_type_cmd(registry_ref registry, std::string name, attribute_type type);
+  ChangePropertyTypeCmd(RegistryRef registry, std::string name, AttributeType type);
 
   void undo() override;
 
@@ -20,15 +39,15 @@ class change_property_type_cmd final : public command_base
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return command_id::change_property_type;
+    return CommandId::change_property_type;
   }
 
  private:
-  registry_ref mRegistry;
+  RegistryRef mRegistry;
   context_id mContextId;
   std::string mName;
-  attribute_type mPropertyType;
-  maybe<attribute_value> mPreviousValue;
+  AttributeType mPropertyType;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

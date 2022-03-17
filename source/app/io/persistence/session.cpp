@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "session.hpp"
 
 #include <filesystem>  // path, absolute
@@ -25,15 +44,15 @@ constexpr int _format_version [[maybe_unused]] = 1;
 
 }  // namespace
 
-void restore_last_session(document_model& model, texture_manager& textures)
+void restore_last_session(DocumentModel& model, TextureManager& textures)
 {
-  proto::session session;
+  proto::Session session;
 
   std::ifstream stream{_get_file_path(), std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
       const auto ir = parsing::parse_map(file);
-      if (ir.error() == parsing::parse_error::none) {
+      if (ir.error() == parsing::ParseError::none) {
         model.add_map(restore_document_from_ir(ir, textures));
       }
       else {
@@ -46,9 +65,9 @@ void restore_last_session(document_model& model, texture_manager& textures)
   }
 }
 
-void save_session(const document_model& model)
+void save_session(const DocumentModel& model)
 {
-  proto::session session;
+  proto::Session session;
   for (const auto& [id, document] : model) {
     if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);

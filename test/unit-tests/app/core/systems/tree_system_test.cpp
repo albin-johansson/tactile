@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/registry_system.hpp"
@@ -40,29 +40,29 @@ struct SimpleTreeConfig final
   cfg.e = cfg.registry.create();
   cfg.f = cfg.registry.create();
 
-  cfg.registry.emplace<comp::parent>(cfg.a, entt::null);
-  cfg.registry.emplace<comp::parent>(cfg.b, cfg.a);
-  cfg.registry.emplace<comp::parent>(cfg.c, cfg.a);
-  cfg.registry.emplace<comp::parent>(cfg.d, cfg.b);
-  cfg.registry.emplace<comp::parent>(cfg.e, entt::null);
-  cfg.registry.emplace<comp::parent>(cfg.f, cfg.a);
+  cfg.registry.emplace<comp::Parent>(cfg.a, entt::null);
+  cfg.registry.emplace<comp::Parent>(cfg.b, cfg.a);
+  cfg.registry.emplace<comp::Parent>(cfg.c, cfg.a);
+  cfg.registry.emplace<comp::Parent>(cfg.d, cfg.b);
+  cfg.registry.emplace<comp::Parent>(cfg.e, entt::null);
+  cfg.registry.emplace<comp::Parent>(cfg.f, cfg.a);
 
   {
-    auto& node = cfg.registry.emplace<comp::layer_tree_node>(cfg.a, 0u);
+    auto& node = cfg.registry.emplace<comp::LayerTreeNode>(cfg.a, 0u);
     node.children.push_back(cfg.b);
     node.children.push_back(cfg.c);
     node.children.push_back(cfg.f);
   }
 
   {
-    auto& node = cfg.registry.emplace<comp::layer_tree_node>(cfg.b, 0u);
+    auto& node = cfg.registry.emplace<comp::LayerTreeNode>(cfg.b, 0u);
     node.children.push_back(cfg.d);
   }
 
-  cfg.registry.emplace<comp::layer_tree_node>(cfg.c, 1u);
-  cfg.registry.emplace<comp::layer_tree_node>(cfg.d, 0u);
-  cfg.registry.emplace<comp::layer_tree_node>(cfg.e, 1u);
-  cfg.registry.emplace<comp::layer_tree_node>(cfg.f, 2u);
+  cfg.registry.emplace<comp::LayerTreeNode>(cfg.c, 1u);
+  cfg.registry.emplace<comp::LayerTreeNode>(cfg.d, 0u);
+  cfg.registry.emplace<comp::LayerTreeNode>(cfg.e, 1u);
+  cfg.registry.emplace<comp::LayerTreeNode>(cfg.f, 2u);
 
   sys::sort_layers(cfg.registry);
 
@@ -75,8 +75,8 @@ TEST(TreeSystem, MoveLayerUp)
 {
   auto cfg = CreateTreeRegistrySimple();
 
-  ASSERT_EQ(0u, cfg.registry.get<comp::layer_tree_node>(cfg.a).index);
-  ASSERT_EQ(1u, cfg.registry.get<comp::layer_tree_node>(cfg.e).index);
+  ASSERT_EQ(0u, cfg.registry.get<comp::LayerTreeNode>(cfg.a).index);
+  ASSERT_EQ(1u, cfg.registry.get<comp::LayerTreeNode>(cfg.e).index);
   ASSERT_EQ(0u, sys::layer_global_index(cfg.registry, cfg.a));
   ASSERT_EQ(5u, sys::layer_global_index(cfg.registry, cfg.e));
   sys::move_layer_up(cfg.registry, cfg.e);
@@ -88,13 +88,13 @@ TEST(TreeSystem, MoveLayerUp)
   //      |__d
   //   |__c
   //   |__f
-  ASSERT_EQ(1u, cfg.registry.get<comp::layer_tree_node>(cfg.a).index);
-  ASSERT_EQ(0u, cfg.registry.get<comp::layer_tree_node>(cfg.e).index);
+  ASSERT_EQ(1u, cfg.registry.get<comp::LayerTreeNode>(cfg.a).index);
+  ASSERT_EQ(0u, cfg.registry.get<comp::LayerTreeNode>(cfg.e).index);
   ASSERT_EQ(1u, sys::layer_global_index(cfg.registry, cfg.a));
   ASSERT_EQ(0u, sys::layer_global_index(cfg.registry, cfg.e));
 
-  ASSERT_EQ(0u, cfg.registry.get<comp::layer_tree_node>(cfg.b).index);
-  ASSERT_EQ(1u, cfg.registry.get<comp::layer_tree_node>(cfg.c).index);
+  ASSERT_EQ(0u, cfg.registry.get<comp::LayerTreeNode>(cfg.b).index);
+  ASSERT_EQ(1u, cfg.registry.get<comp::LayerTreeNode>(cfg.c).index);
   ASSERT_EQ(2u, sys::layer_global_index(cfg.registry, cfg.b));
   ASSERT_EQ(4u, sys::layer_global_index(cfg.registry, cfg.c));
   sys::move_layer_up(cfg.registry, cfg.c);
@@ -106,8 +106,8 @@ TEST(TreeSystem, MoveLayerUp)
   //   |__b
   //      |__d
   //   |__f
-  ASSERT_EQ(1u, cfg.registry.get<comp::layer_tree_node>(cfg.b).index);
-  ASSERT_EQ(0u, cfg.registry.get<comp::layer_tree_node>(cfg.c).index);
+  ASSERT_EQ(1u, cfg.registry.get<comp::LayerTreeNode>(cfg.b).index);
+  ASSERT_EQ(0u, cfg.registry.get<comp::LayerTreeNode>(cfg.c).index);
   ASSERT_EQ(3u, sys::layer_global_index(cfg.registry, cfg.b));
   ASSERT_EQ(2u, sys::layer_global_index(cfg.registry, cfg.c));
 }
@@ -116,8 +116,8 @@ TEST(TreeSystem, MoveLayerDown)
 {
   auto cfg = CreateTreeRegistrySimple();
 
-  ASSERT_EQ(0u, cfg.registry.get<comp::layer_tree_node>(cfg.b).index);
-  ASSERT_EQ(1u, cfg.registry.get<comp::layer_tree_node>(cfg.c).index);
+  ASSERT_EQ(0u, cfg.registry.get<comp::LayerTreeNode>(cfg.b).index);
+  ASSERT_EQ(1u, cfg.registry.get<comp::LayerTreeNode>(cfg.c).index);
   ASSERT_EQ(1u, sys::layer_global_index(cfg.registry, cfg.b));
   ASSERT_EQ(3u, sys::layer_global_index(cfg.registry, cfg.c));
   sys::move_layer_down(cfg.registry, cfg.b);
@@ -128,13 +128,13 @@ TEST(TreeSystem, MoveLayerDown)
   //      |__d
   //   |__f
   // > e
-  ASSERT_EQ(1u, cfg.registry.get<comp::layer_tree_node>(cfg.b).index);
-  ASSERT_EQ(0u, cfg.registry.get<comp::layer_tree_node>(cfg.c).index);
+  ASSERT_EQ(1u, cfg.registry.get<comp::LayerTreeNode>(cfg.b).index);
+  ASSERT_EQ(0u, cfg.registry.get<comp::LayerTreeNode>(cfg.c).index);
   ASSERT_EQ(2u, sys::layer_global_index(cfg.registry, cfg.b));
   ASSERT_EQ(1u, sys::layer_global_index(cfg.registry, cfg.c));
 
-  ASSERT_EQ(0u, cfg.registry.get<comp::layer_tree_node>(cfg.a).index);
-  ASSERT_EQ(1u, cfg.registry.get<comp::layer_tree_node>(cfg.e).index);
+  ASSERT_EQ(0u, cfg.registry.get<comp::LayerTreeNode>(cfg.a).index);
+  ASSERT_EQ(1u, cfg.registry.get<comp::LayerTreeNode>(cfg.e).index);
   ASSERT_EQ(0u, sys::layer_global_index(cfg.registry, cfg.a));
   ASSERT_EQ(5u, sys::layer_global_index(cfg.registry, cfg.e));
   sys::move_layer_down(cfg.registry, cfg.a);
@@ -145,8 +145,8 @@ TEST(TreeSystem, MoveLayerDown)
   //   |__b
   //      |__d
   //   |__f
-  ASSERT_EQ(1u, cfg.registry.get<comp::layer_tree_node>(cfg.a).index);
-  ASSERT_EQ(0u, cfg.registry.get<comp::layer_tree_node>(cfg.e).index);
+  ASSERT_EQ(1u, cfg.registry.get<comp::LayerTreeNode>(cfg.a).index);
+  ASSERT_EQ(0u, cfg.registry.get<comp::LayerTreeNode>(cfg.e).index);
   ASSERT_EQ(1u, sys::layer_global_index(cfg.registry, cfg.a));
   ASSERT_EQ(0u, sys::layer_global_index(cfg.registry, cfg.e));
 }

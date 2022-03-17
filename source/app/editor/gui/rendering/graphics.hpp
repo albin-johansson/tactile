@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <centurion.hpp>
@@ -8,15 +27,15 @@
 
 namespace tactile {
 
-struct render_info;
+struct RenderInfo;
 
 /**
  * \brief Provides a common simplified rendering API.
  */
-class graphics_ctx final
+class GraphicsCtx final
 {
  public:
-  explicit graphics_ctx(const render_info& info);
+  explicit GraphicsCtx(const RenderInfo& info);
 
   void push_clip();
 
@@ -64,11 +83,11 @@ class graphics_ctx final
                                const ImVec2& position,
                                const ImVec2& uv);
 
-  void render_text(c_str text, const ImVec2& position);
+  void render_text(const char* text, const ImVec2& position);
 
-  void render_translated_text(c_str text, const ImVec2& position);
+  void render_translated_text(const char* text, const ImVec2& position);
 
-  void render_centered_text(c_str text, const ImVec2& center);
+  void render_centered_text(const char* text, const ImVec2& center);
 
   void render_translated_grid();
 

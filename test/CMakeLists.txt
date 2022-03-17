@@ -4,39 +4,12 @@ project(tactile-test CXX)
 
 enable_testing()
 
-find_package(GTest CONFIG REQUIRED)
-
-set(TEST_FILES
-    unit-tests/test_main.cpp
-
-    unit-tests/app/core/attribute_value_test.cpp
-    unit-tests/app/core/tile_position_test.cpp
-
-    unit-tests/app/core/algorithms/flood_fill_test.cpp
-    unit-tests/app/core/algorithms/invoke_n_test.cpp
-
-    unit-tests/app/core/systems/component_system_test.cpp
-    unit-tests/app/core/systems/layer_system_test.cpp
-    unit-tests/app/core/systems/map_system_test.cpp
-    unit-tests/app/core/systems/property_system_test.cpp
-    unit-tests/app/core/systems/registry_system_test.cpp
-    unit-tests/app/core/systems/tree_system_test.cpp
-    unit-tests/app/core/systems/viewport_system_test.cpp
-
-    unit-tests/app/core/utils/buffers_test.cpp
-    unit-tests/app/core/utils/colors_test.cpp
-    unit-tests/app/core/utils/formatted_string_test.cpp
-    unit-tests/app/core/utils/strings_test.cpp
-    unit-tests/app/core/utils/tiles_test.cpp
-    unit-tests/app/core/utils/vector_map_test.cpp
-
-    unit-tests/app/editor/commands/command_stack_test.cpp
-
-    unit-tests/app/io/maps/map_parser_test.cpp
-    unit-tests/app/io/maps/round_trip_test.cpp
-
-    unit-tests/app/io/persistence/preference_state_test.cpp
-    )
+file(GLOB_RECURSE TEST_FILES
+     CONFIGURE_DEPENDS
+     unit-tests/**/*.cpp
+     unit-tests/**/*.hpp
+     unit-tests/test_main.cpp
+     )
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
 

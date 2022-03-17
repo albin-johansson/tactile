@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "update_component_cmd.hpp"
 
 #include <utility>  // move
@@ -6,12 +25,12 @@
 
 namespace tactile {
 
-update_component_cmd::update_component_cmd(registry_ref registry,
-                                           const context_id contextId,
-                                           const component_id componentId,
-                                           std::string attribute,
-                                           attribute_value value)
-    : command_base{"update Component Value"}
+UpdateComponentCmd::UpdateComponentCmd(RegistryRef registry,
+                                       const context_id contextId,
+                                       const component_id componentId,
+                                       std::string attribute,
+                                       Attribute value)
+    : ACommand{"update Component Value"}
     , mRegistry{registry}
     , mContextId{contextId}
     , mComponentId{componentId}
@@ -19,7 +38,7 @@ update_component_cmd::update_component_cmd(registry_ref registry,
     , mUpdatedValue{std::move(value)}
 {}
 
-void update_component_cmd::undo()
+void UpdateComponentCmd::undo()
 {
   auto& registry = mRegistry.get();
 
@@ -32,7 +51,7 @@ void update_component_cmd::undo()
   mPreviousValue.reset();
 }
 
-void update_component_cmd::redo()
+void UpdateComponentCmd::redo()
 {
   auto& registry = mRegistry.get();
 
@@ -45,10 +64,10 @@ void update_component_cmd::redo()
                         mUpdatedValue);
 }
 
-auto update_component_cmd::merge_with(const command_base& cmd) -> bool
+auto UpdateComponentCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const update_component_cmd&>(cmd);
+    const auto& other = dynamic_cast<const UpdateComponentCmd&>(cmd);
 
     const bool targetsSameAttribute = mContextId == other.mContextId &&
                                       mComponentId == other.mComponentId &&

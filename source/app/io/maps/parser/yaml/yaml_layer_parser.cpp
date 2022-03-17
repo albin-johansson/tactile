@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "yaml_layer_parser.hpp"
 
 #include <algorithm>  // replace
@@ -12,13 +31,13 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_layer(const YAML::Node& node,
-                                const ir::map_data& map,
-                                ir::layer_data& layer,
-                                usize index) -> parse_error;
+                                const ir::MapData& map,
+                                ir::LayerData& layer,
+                                usize index) -> ParseError;
 
-[[nodiscard]] auto _parse_tile_layer_data(ir::tile_layer_data& layer,
+[[nodiscard]] auto _parse_tile_layer_data(ir::TileLayerData& layer,
                                           const usize columns,
-                                          const std::string& tileData) -> parse_error
+                                          const std::string& tileData) -> ParseError
 {
   usize index = 0;
   for (const auto& token : split(tileData.c_str(), ' ')) {
@@ -28,21 +47,21 @@ namespace {
       ++index;
     }
     else {
-      return parse_error::corrupt_tile_layer_data;
+      return ParseError::corrupt_tile_layer_data;
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_tile_layer(const YAML::Node& node,
-                                     ir::layer_data& data,
+                                     ir::LayerData& data,
                                      const usize rows,
-                                     const usize columns) -> parse_error
+                                     const usize columns) -> ParseError
 {
-  data.type = layer_type::tile_layer;
+  data.type = LayerType::tile_layer;
 
-  auto& tileLayer = data.data.emplace<ir::tile_layer_data>();
+  auto& tileLayer = data.data.emplace<ir::TileLayerData>();
   tileLayer.row_count = rows;
   tileLayer.col_count = columns;
   tileLayer.tiles = make_tile_matrix(rows, columns);
@@ -52,23 +71,23 @@ namespace {
     std::replace(rawTiles.begin(), rawTiles.end(), '\n', ' ');
 
     if (const auto err = _parse_tile_layer_data(tileLayer, columns, rawTiles);
-        err != parse_error::none) {
+        err != ParseError::none) {
       return err;
     }
   }
   else {
-    return parse_error::no_tile_layer_data;
+    return ParseError::no_tile_layer_data;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_object_layer(const YAML::Node& node,
-                                       const ir::map_data& map,
-                                       ir::layer_data& data) -> parse_error
+                                       const ir::MapData& map,
+                                       ir::LayerData& data) -> ParseError
 {
-  data.type = layer_type::object_layer;
-  auto& objectLayer = data.data.emplace<ir::object_layer_data>();
+  data.type = LayerType::object_layer;
+  auto& objectLayer = data.data.emplace<ir::ObjectLayerData>();
 
   if (auto sequence = node["objects"]) {
     objectLayer.objects.reserve(sequence.size());
@@ -76,31 +95,31 @@ namespace {
     for (const auto& objectNode : sequence) {
       auto& object = objectLayer.objects.emplace_back();
       if (const auto err = parse_object(objectNode, map, &object);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_group_layer(const YAML::Node& node,
-                                      const ir::map_data& map,
-                                      ir::layer_data& data) -> parse_error
+                                      const ir::MapData& map,
+                                      ir::LayerData& data) -> ParseError
 {
-  data.type = layer_type::group_layer;
-  auto& group = data.data.emplace<ir::group_layer_data>();
+  data.type = LayerType::group_layer;
+  auto& group = data.data.emplace<ir::GroupLayerData>();
 
   if (auto sequence = node["layers"]) {
     group.children.reserve(sequence.size());
 
     usize index = 0;
     for (const auto& layerNode : sequence) {
-      auto& child = group.children.emplace_back(std::make_unique<ir::layer_data>());
+      auto& child = group.children.emplace_back(std::make_unique<ir::LayerData>());
 
       if (const auto err = _parse_layer(layerNode, map, *child, index);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
 
@@ -108,13 +127,13 @@ namespace {
     }
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 [[nodiscard]] auto _parse_layer(const YAML::Node& node,
-                                const ir::map_data& map,
-                                ir::layer_data& layer,
-                                const usize index) -> parse_error
+                                const ir::MapData& map,
+                                ir::LayerData& layer,
+                                const usize index) -> ParseError
 {
   layer.index = index;
 
@@ -122,7 +141,7 @@ namespace {
     layer.id = identifier.as<layer_id>();
   }
   else {
-    return parse_error::no_layer_id;
+    return ParseError::no_layer_id;
   }
 
   if (auto opacity = node["opacity"]) {
@@ -151,72 +170,71 @@ namespace {
 
     if (value == "tile-layer") {
       if (const auto err = _parse_tile_layer(node, layer, map.row_count, map.col_count);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
     else if (value == "object-layer") {
       if (const auto err = _parse_object_layer(node, map, layer);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
     else if (value == "group-layer") {
       if (const auto err = _parse_group_layer(node, map, layer);
-          err != parse_error::none) {
+          err != ParseError::none) {
         return err;
       }
     }
     else {
-      return parse_error::unsupported_layer_type;
+      return ParseError::unsupported_layer_type;
     }
   }
   else {
-    return parse_error::no_layer_type;
+    return ParseError::no_layer_type;
   }
 
-  if (const auto err = parse_properties(node, layer.context); err != parse_error::none) {
+  if (const auto err = parse_properties(node, layer.context); err != ParseError::none) {
     return err;
   }
 
   if (const auto err = parse_components(node, map, layer.context);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace
 
-auto parse_object(const YAML::Node& node,
-                  const ir::map_data& map,
-                  ir::object_data* object) -> parse_error
+auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData* object)
+    -> ParseError
 {
   if (auto id = node["id"]) {
     object->id = id.as<object_id>();
   }
   else {
-    return parse_error::no_object_id;
+    return ParseError::no_object_id;
   }
 
   if (auto type = node["type"]) {
     const auto str = type.as<std::string>();
     if (str == "point") {
-      object->type = object_type::point;
+      object->type = ObjectType::point;
     }
     else if (str == "rect") {
-      object->type = object_type::rect;
+      object->type = ObjectType::rect;
     }
     else if (str == "ellipse") {
-      object->type = object_type::ellipse;
+      object->type = ObjectType::ellipse;
     }
     else {
-      return parse_error::unsupported_object_type;
+      return ParseError::unsupported_object_type;
     }
   }
   else {
-    return parse_error::no_object_type;
+    return ParseError::no_object_type;
   }
 
   if (auto name = node["name"]) {
@@ -262,20 +280,19 @@ auto parse_object(const YAML::Node& node,
     object->height = 0;
   }
 
-  if (const auto err = parse_properties(node, object->context);
-      err != parse_error::none) {
+  if (const auto err = parse_properties(node, object->context); err != ParseError::none) {
     return err;
   }
 
   if (const auto err = parse_components(node, map, object->context);
-      err != parse_error::none) {
+      err != ParseError::none) {
     return err;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
-auto parse_layers(const YAML::Node& sequence, ir::map_data& map) -> parse_error
+auto parse_layers(const YAML::Node& sequence, ir::MapData& map) -> ParseError
 {
   map.layers.reserve(sequence.size());
 
@@ -283,14 +300,14 @@ auto parse_layers(const YAML::Node& sequence, ir::map_data& map) -> parse_error
   for (const auto& layerNode : sequence) {
     auto& layer = map.layers.emplace_back();
     if (const auto err = _parse_layer(layerNode, map, layer, index);
-        err != parse_error::none) {
+        err != ParseError::none) {
       return err;
     }
 
     ++index;
   }
 
-  return parse_error::none;
+  return ParseError::none;
 }
 
 }  // namespace tactile::parsing

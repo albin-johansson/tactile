@@ -1,23 +1,42 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "property_system.hpp"
 
 #include <utility>  // move
 #include <vector>   // erase
 
 #include "misc/assert.hpp"
-#include "misc/throw.hpp"
+#include "registry_system.hpp"
 
 namespace tactile::sys {
 
 void add_property(entt::registry& registry,
-                  comp::attribute_context& context,
+                  comp::AttributeContext& context,
                   std::string name,
-                  const attribute_type type)
+                  const AttributeType type)
 {
   TACTILE_ASSERT(!has_property_with_name(registry, context, name));
 
   const auto entity = registry.create();
 
-  auto& property = registry.emplace<comp::property>(entity);
+  auto& property = registry.emplace<comp::Property>(entity);
   property.name = std::move(name);
   property.value.reset_to_default(type);
 
@@ -25,15 +44,15 @@ void add_property(entt::registry& registry,
 }
 
 void add_property(entt::registry& registry,
-                  comp::attribute_context& context,
+                  comp::AttributeContext& context,
                   std::string name,
-                  attribute_value value)
+                  Attribute value)
 {
   TACTILE_ASSERT(!has_property_with_name(registry, context, name));
 
   const auto entity = registry.create();
 
-  auto& property = registry.emplace<comp::property>(entity);
+  auto& property = registry.emplace<comp::Property>(entity);
   property.name = std::move(name);
   property.value = std::move(value);
 
@@ -41,7 +60,7 @@ void add_property(entt::registry& registry,
 }
 
 void remove_property(entt::registry& registry,
-                     comp::attribute_context& context,
+                     comp::AttributeContext& context,
                      const std::string_view name)
 {
   const auto entity = find_property(registry, context, name);
@@ -52,7 +71,7 @@ void remove_property(entt::registry& registry,
 }
 
 void rename_property(entt::registry& registry,
-                     comp::attribute_context& context,
+                     comp::AttributeContext& context,
                      const std::string_view oldName,
                      std::string newName)
 {
@@ -60,42 +79,36 @@ void rename_property(entt::registry& registry,
   TACTILE_ASSERT(!has_property_with_name(registry, context, newName));
 
   const auto entity = find_property(registry, context, oldName);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& property = registry.get<comp::property>(entity);
+  auto& property = checked_get<comp::Property>(registry, entity);
   property.name = std::move(newName);
 }
 
 void update_property(entt::registry& registry,
-                     comp::attribute_context& context,
+                     comp::AttributeContext& context,
                      const std::string_view name,
-                     attribute_value value)
+                     Attribute value)
 {
   const auto entity = find_property(registry, context, name);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& property = registry.get<comp::property>(entity);
+  auto& property = checked_get<comp::Property>(registry, entity);
   property.value = std::move(value);
 }
 
 void change_property_type(entt::registry& registry,
-                          comp::attribute_context& context,
+                          comp::AttributeContext& context,
                           const std::string_view name,
-                          const attribute_type type)
+                          const AttributeType type)
 {
   const auto entity = find_property(registry, context, name);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& property = registry.get<comp::property>(entity);
+  auto& property = checked_get<comp::Property>(registry, entity);
   property.value.reset_to_default(type);
 }
 
 auto find_property(const entt::registry& registry,
-                   const comp::attribute_context& context,
+                   const comp::AttributeContext& context,
                    const std::string_view name) -> entt::entity
 {
   for (const auto entity : context.properties) {
-    const auto& property = registry.get<comp::property>(entity);
+    const auto& property = checked_get<comp::Property>(registry, entity);
     if (property.name == name) {
       return entity;
     }
@@ -105,20 +118,15 @@ auto find_property(const entt::registry& registry,
 }
 
 auto get_property(const entt::registry& registry,
-                  const comp::attribute_context& context,
-                  const std::string_view name) -> const comp::property&
+                  const comp::AttributeContext& context,
+                  const std::string_view name) -> const comp::Property&
 {
   const auto entity = find_property(registry, context, name);
-  if (entity != entt::null) {
-    return registry.get<comp::property>(entity);
-  }
-  else {
-    throw_traced(tactile_error{"Found no property with the specified name!"});
-  }
+  return checked_get<comp::Property>(registry, entity);
 }
 
 auto has_property_with_name(const entt::registry& registry,
-                            const comp::attribute_context& context,
+                            const comp::AttributeContext& context,
                             const std::string_view name) -> bool
 {
   return find_property(registry, context, name) != entt::null;

@@ -2,16 +2,16 @@ syntax = "proto3";
 
 package tactile.proto;
 
-/* Remember to keep these values synced with tactile::overlay_pos! */
-enum overlay_pos {
+/* Remember to keep these values synced with tactile::OverlayPos! */
+enum OverlayPos {
   OVERLAY_POS_TOP_LEFT = 0;
   OVERLAY_POS_TOP_RIGHT = 1;
   OVERLAY_POS_BOTTOM_LEFT = 2;
   OVERLAY_POS_BOTTOM_RIGHT = 3;
 }
 
-/* Remember to keep these values synced with tactile::editor_theme! */
-enum theme {
+/* Remember to keep these values synced with tactile::EditorTheme! */
+enum Theme {
   THEME_DEAR_DARK = 0;
   THEME_DEAR_LIGHT = 1;
   THEME_RUBY = 2;
@@ -26,20 +26,20 @@ enum theme {
   THEME_RASPBERRY = 11;
 }
 
-message color {
+message Color {
   optional uint32 red = 1;
   optional uint32 green = 2;
   optional uint32 blue = 3;
   optional uint32 alpha = 4;
 }
 
-message settings {
-  optional theme theme = 1;
+message Settings {
+  optional Theme theme = 1;
 
   optional int32 preferred_tile_width = 2;
   optional int32 preferred_tile_height = 3;
 
-  optional color viewport_background = 4;
+  optional Color viewport_background = 4;
 
   optional string preferred_format = 16;
   optional uint64 command_capacity = 17;
@@ -50,7 +50,7 @@ message settings {
   optional bool restore_last_session = 20;
   optional bool restore_layout = 21;
   optional bool show_layer_dock = 22;
-  optional bool show_properties_dock = 23;
+  optional bool show_property_dock = 23;
   optional bool show_tileset_dock = 24;
   optional bool show_log_dock = 30;
   optional bool show_component_dock = 31;
@@ -59,5 +59,6 @@ message settings {
   optional bool indent_output = 26;
   optional bool fold_tile_data = 28;
 
-  optional overlay_pos viewport_overlay_pos = 27;
+  optional OverlayPos viewport_overlay_pos = 27;
+  optional bool viewport_overlay_show_fps = 29;
 }

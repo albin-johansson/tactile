@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "texture_manager.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -21,7 +40,7 @@ using texture_data_ptr = std::unique_ptr<uchar, texture_data_deleter>;
 
 }  // namespace
 
-texture_manager::~texture_manager()
+TextureManager::~TextureManager()
 {
   for (const auto texture : mTextures) {
     log_debug("Deleting texture {}", texture);
@@ -31,9 +50,9 @@ texture_manager::~texture_manager()
   mTextures.clear();
 }
 
-auto texture_manager::load(const std::filesystem::path& path) -> maybe<comp::texture>
+auto TextureManager::load(const std::filesystem::path& path) -> Maybe<comp::Texture>
 {
-  comp::texture texture;
+  comp::Texture texture;
   texture.path = path;
 
   // Load from file

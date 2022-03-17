@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <memory>  // unique_ptr
@@ -10,31 +29,31 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 /**
  * \brief Used to manage the available component definitions.
  *
  * \ingroup gui
  */
-class component_editor final : public dialog_base
+class ComponentEditor final : public ADialog
 {
  public:
-  TACTILE_DELETE_COPY(component_editor)
-  TACTILE_DEFAULT_MOVE(component_editor)
+  TACTILE_DELETE_COPY(ComponentEditor)
+  TACTILE_DEFAULT_MOVE(ComponentEditor)
 
-  component_editor();
+  ComponentEditor();
 
-  ~component_editor() noexcept override;
+  ~ComponentEditor() noexcept override;
 
-  void show(const document_model& model);
+  void show(const DocumentModel& model);
 
  protected:
-  void on_update(const document_model& model, entt::dispatcher& dispatcher) override;
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
  private:
-  struct component_editor_data;
-  std::unique_ptr<component_editor_data> mData;
+  struct Data;
+  std::unique_ptr<Data> mData;
 
   void show_component_combo_popup(const entt::registry& registry,
                                   entt::dispatcher& dispatcher);
@@ -46,7 +65,7 @@ class component_editor final : public dialog_base
   void show_component_attribute(entt::dispatcher& dispatcher,
                                 component_id id,
                                 const std::string& name,
-                                const attribute_value& value);
+                                const Attribute& value);
 };
 
 }  // namespace tactile

@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "preference_state.hpp"
 
 #include <fstream>  // ifstream, ofstream
@@ -12,15 +31,15 @@
 namespace tactile {
 namespace {
 
-constexpr editor_theme _def_theme = editor_theme::nocturnal;
+constexpr EditorTheme _def_theme = EditorTheme::nocturnal;
 constexpr cen::color _def_viewport_bg{60, 60, 60};
 
-constexpr c_str _def_preferred_format = "YAML";
+constexpr auto _def_preferred_format = "YAML";
 
 constexpr usize _def_command_capacity = 100;
 constexpr int32 _def_preferred_tile_width = 32;
 constexpr int32 _def_preferred_tile_height = 32;
-constexpr int32 _def_viewport_overlay_pos = cen::to_underlying(overlay_pos::bottom_left);
+constexpr int32 _def_viewport_overlay_pos = cen::to_underlying(OverlayPos::bottom_left);
 
 constexpr uint64 _bit_embed_tilesets = 1u << 0u;
 constexpr uint64 _bit_indent_output = 1u << 1u;
@@ -28,28 +47,29 @@ constexpr uint64 _bit_fold_tile_data = 1u << 2u;
 constexpr uint64 _bit_show_grid = 1u << 3u;
 constexpr uint64 _bit_show_layer_dock = 1u << 4u;
 constexpr uint64 _bit_show_tileset_dock = 1u << 5u;
-constexpr uint64 _bit_show_properties_dock = 1u << 6u;
+constexpr uint64 _bit_show_property_dock = 1u << 6u;
 constexpr uint64 _bit_show_log_dock = 1u << 7u;
 constexpr uint64 _bit_window_border = 1u << 8u;
 constexpr uint64 _bit_restore_layout = 1u << 9u;
 constexpr uint64 _bit_restore_last_session = 1u << 10u;
 constexpr uint64 _bit_show_component_dock = 1u << 11u;
+constexpr uint64 _bit_show_viewport_overlay_fps = 1u << 12u;
 
 constexpr uint64 _def_flags = _bit_show_grid | _bit_indent_output | _bit_show_layer_dock |
-                              _bit_show_tileset_dock | _bit_show_properties_dock |
+                              _bit_show_tileset_dock | _bit_show_property_dock |
                               _bit_show_component_dock | _bit_restore_layout |
-                              _bit_restore_last_session;
+                              _bit_restore_last_session | _bit_show_viewport_overlay_fps;
 
 }  // namespace
 
 #define PRINT_FLAG(Name, Mask) \
   log_info(Name "... {}", (mData->flags & (Mask)) ? "yes" : "no")
 
-struct preference_state::preferences_data
+struct PreferenceState::Data
 {
   std::string preferred_format{_def_preferred_format};
 
-  editor_theme theme{_def_theme};
+  EditorTheme theme{_def_theme};
   cen::color viewport_background{_def_viewport_bg};
 
   usize command_capacity{_def_command_capacity};
@@ -60,31 +80,30 @@ struct preference_state::preferences_data
   uint64 flags{_def_flags};
 };
 
-preference_state::preference_state() : mData{std::make_unique<preferences_data>()} {}
+PreferenceState::PreferenceState() : mData{std::make_unique<Data>()} {}
 
-preference_state::preference_state(const preference_state& other)
-    : mData{std::make_unique<preferences_data>()}
+PreferenceState::PreferenceState(const PreferenceState& other)
+    : mData{std::make_unique<Data>()}
 {
   *mData = *other.mData;
 }
 
-preference_state::preference_state(preference_state&&) noexcept = default;
+PreferenceState::PreferenceState(PreferenceState&&) noexcept = default;
 
-auto preference_state::operator=(const preference_state& other) -> preference_state&
+auto PreferenceState::operator=(const PreferenceState& other) -> PreferenceState&
 {
   if (this != &other) {
-    mData = std::make_unique<preferences_data>();
+    mData = std::make_unique<Data>();
     *mData = *other.mData;
   }
   return *this;
 }
 
-auto preference_state::operator=(preference_state&&) noexcept
-    -> preference_state& = default;
+auto PreferenceState::operator=(PreferenceState&&) noexcept -> PreferenceState& = default;
 
-preference_state::~preference_state() noexcept = default;
+PreferenceState::~PreferenceState() noexcept = default;
 
-void preference_state::print()
+void PreferenceState::print()
 {
   log_info("Theme... {}", magic_enum::enum_name(mData->theme));
   log_info("Viewport background... {}", mData->viewport_background.as_rgb());
@@ -95,6 +114,7 @@ void preference_state::print()
 
   log_info("Preferred format... {}", mData->preferred_format);
   log_info("Viewport overlay pos... {}", mData->viewport_overlay_pos);
+  PRINT_FLAG("Show FPS in viewport overlay", _bit_show_viewport_overlay_fps);
 
   PRINT_FLAG("Embed tilesets", _bit_embed_tilesets);
   PRINT_FLAG("Indent output", _bit_indent_output);
@@ -104,7 +124,7 @@ void preference_state::print()
   PRINT_FLAG("Show layer dock", _bit_show_layer_dock);
   PRINT_FLAG("Show log dock", _bit_show_log_dock);
   PRINT_FLAG("Show tileset dock", _bit_show_tileset_dock);
-  PRINT_FLAG("Show properties dock", _bit_show_properties_dock);
+  PRINT_FLAG("Show property dock", _bit_show_property_dock);
   PRINT_FLAG("Show component dock", _bit_show_component_dock);
 
   PRINT_FLAG("Window border", _bit_window_border);
@@ -112,14 +132,14 @@ void preference_state::print()
   PRINT_FLAG("Restore last session", _bit_restore_last_session);
 }
 
-void preference_state::parse(const std::filesystem::path& path)
+void PreferenceState::parse(const std::filesystem::path& path)
 {
   std::ifstream stream{path, std::ios::in | std::ios::binary};
 
-  proto::settings cfg;
+  proto::Settings cfg;
   if (cfg.ParseFromIstream(&stream)) {
     if (cfg.has_theme()) {
-      mData->theme = static_cast<editor_theme>(cfg.theme());
+      mData->theme = static_cast<EditorTheme>(cfg.theme());
     }
 
     if (cfg.has_viewport_background()) {
@@ -178,8 +198,8 @@ void preference_state::parse(const std::filesystem::path& path)
       set_flag(_bit_show_layer_dock, cfg.show_layer_dock());
     }
 
-    if (cfg.has_show_properties_dock()) {
-      set_flag(_bit_show_properties_dock, cfg.show_properties_dock());
+    if (cfg.has_show_property_dock()) {
+      set_flag(_bit_show_property_dock, cfg.show_property_dock());
     }
 
     if (cfg.has_show_log_dock()) {
@@ -197,14 +217,18 @@ void preference_state::parse(const std::filesystem::path& path)
     if (cfg.has_viewport_overlay_pos()) {
       mData->viewport_overlay_pos = cfg.viewport_overlay_pos();
     }
+
+    if (cfg.has_viewport_overlay_show_fps()) {
+      set_flag(_bit_show_viewport_overlay_fps, cfg.viewport_overlay_show_fps());
+    }
   }
 }
 
-void preference_state::save(const std::filesystem::path& path)
+void PreferenceState::save(const std::filesystem::path& path)
 {
-  proto::settings cfg;
+  proto::Settings cfg;
 
-  cfg.set_theme(static_cast<proto::theme>(mData->theme));
+  cfg.set_theme(static_cast<proto::Theme>(mData->theme));
   cfg.set_show_grid(is_grid_visible());
   cfg.set_window_border(has_window_border());
 
@@ -229,12 +253,13 @@ void preference_state::save(const std::filesystem::path& path)
 
   cfg.set_show_tileset_dock(is_tileset_dock_visible());
   cfg.set_show_layer_dock(is_layer_dock_visible());
-  cfg.set_show_properties_dock(is_properties_dock_visible());
+  cfg.set_show_property_dock(is_property_dock_visible());
   cfg.set_show_log_dock(is_log_dock_visible());
   cfg.set_show_component_dock(is_component_dock_visible());
   cfg.set_restore_layout(will_restore_layout());
   cfg.set_viewport_overlay_pos(
-      proto::overlay_pos{cen::to_underlying(viewport_overlay_pos())});
+      proto::OverlayPos{cen::to_underlying(viewport_overlay_pos())});
+  cfg.set_viewport_overlay_show_fps(viewport_overlay_show_fps());
 
   std::ofstream stream{path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
@@ -242,7 +267,7 @@ void preference_state::save(const std::filesystem::path& path)
   }
 }
 
-void preference_state::reset_appearance_preferences()
+void PreferenceState::reset_appearance_preferences()
 {
   mData->theme = _def_theme;
   mData->viewport_background = _def_viewport_bg;
@@ -254,7 +279,7 @@ void preference_state::reset_appearance_preferences()
   reset_flag(_bit_restore_layout);
 }
 
-void preference_state::reset_behavior_preferences()
+void PreferenceState::reset_behavior_preferences()
 {
   mData->command_capacity = _def_command_capacity;
   mData->preferred_tile_width = _def_preferred_tile_width;
@@ -262,7 +287,7 @@ void preference_state::reset_behavior_preferences()
   reset_flag(_bit_restore_last_session);
 }
 
-void preference_state::reset_export_preferences()
+void PreferenceState::reset_export_preferences()
 {
   mData->preferred_format = _def_preferred_format;
   reset_flag(_bit_embed_tilesets);
@@ -270,206 +295,216 @@ void preference_state::reset_export_preferences()
   reset_flag(_bit_fold_tile_data);
 }
 
-void preference_state::reset_dock_visibilities()
+void PreferenceState::reset_dock_visibilities()
 {
   reset_flag(_bit_show_layer_dock);
   reset_flag(_bit_show_tileset_dock);
-  reset_flag(_bit_show_properties_dock);
+  reset_flag(_bit_show_property_dock);
   reset_flag(_bit_show_component_dock);
   reset_flag(_bit_show_log_dock);
 }
 
-void preference_state::set_theme(const editor_theme theme)
+void PreferenceState::set_theme(const EditorTheme theme)
 {
   mData->theme = theme;
 }
 
-auto preference_state::get_theme() const -> editor_theme
+auto PreferenceState::get_theme() const -> EditorTheme
 {
   return mData->theme;
 }
 
-void preference_state::set_viewport_bg(const cen::color& bg)
+void PreferenceState::set_viewport_bg(const cen::color& bg)
 {
   mData->viewport_background = bg;
 }
 
-auto preference_state::viewport_bg() const -> const cen::color&
+auto PreferenceState::viewport_bg() const -> const cen::color&
 {
   return mData->viewport_background;
 }
 
-void preference_state::set_window_border(const bool enable)
+void PreferenceState::set_window_border(const bool enable)
 {
   set_flag(_bit_window_border, enable);
 }
 
-auto preference_state::has_window_border() const -> bool
+auto PreferenceState::has_window_border() const -> bool
 {
   return test_flag(_bit_window_border);
 }
 
-void preference_state::set_layer_dock_visible(const bool visible)
+void PreferenceState::set_layer_dock_visible(const bool visible)
 {
   set_flag(_bit_show_layer_dock, visible);
 }
 
-auto preference_state::is_layer_dock_visible() const -> bool
+auto PreferenceState::is_layer_dock_visible() const -> bool
 {
   return test_flag(_bit_show_layer_dock);
 }
 
-void preference_state::set_tileset_dock_visible(const bool visible)
+void PreferenceState::set_tileset_dock_visible(const bool visible)
 {
   set_flag(_bit_show_tileset_dock, visible);
 }
 
-auto preference_state::is_tileset_dock_visible() const -> bool
+auto PreferenceState::is_tileset_dock_visible() const -> bool
 {
   return test_flag(_bit_show_tileset_dock);
 }
 
-void preference_state::set_properties_dock_visible(const bool visible)
+void PreferenceState::set_property_dock_visible(const bool visible)
 {
-  set_flag(_bit_show_properties_dock, visible);
+  set_flag(_bit_show_property_dock, visible);
 }
 
-auto preference_state::is_properties_dock_visible() const -> bool
+auto PreferenceState::is_property_dock_visible() const -> bool
 {
-  return test_flag(_bit_show_properties_dock);
+  return test_flag(_bit_show_property_dock);
 }
 
-void preference_state::set_component_dock_visible(const bool visible)
+void PreferenceState::set_component_dock_visible(const bool visible)
 {
   set_flag(_bit_show_component_dock, visible);
 }
 
-auto preference_state::is_component_dock_visible() const -> bool
+auto PreferenceState::is_component_dock_visible() const -> bool
 {
   return test_flag(_bit_show_component_dock);
 }
 
-void preference_state::set_log_dock_visible(const bool visible)
+void PreferenceState::set_log_dock_visible(const bool visible)
 {
   set_flag(_bit_show_log_dock, visible);
 }
 
-auto preference_state::is_log_dock_visible() const -> bool
+auto PreferenceState::is_log_dock_visible() const -> bool
 {
   return test_flag(_bit_show_log_dock);
 }
 
-void preference_state::set_grid_visible(const bool visible)
+void PreferenceState::set_grid_visible(const bool visible)
 {
   set_flag(_bit_show_grid, visible);
 }
 
-auto preference_state::is_grid_visible() const -> bool
+auto PreferenceState::is_grid_visible() const -> bool
 {
   return test_flag(_bit_show_grid);
 }
 
-void preference_state::set_embed_tilesets(const bool embed)
+void PreferenceState::set_embed_tilesets(const bool embed)
 {
   set_flag(_bit_embed_tilesets, embed);
 }
 
-auto preference_state::embed_tilesets() const -> bool
+auto PreferenceState::embed_tilesets() const -> bool
 {
   return test_flag(_bit_embed_tilesets);
 }
 
-void preference_state::set_fold_tile_data(const bool fold)
+void PreferenceState::set_fold_tile_data(const bool fold)
 {
   set_flag(_bit_fold_tile_data, fold);
 }
 
-auto preference_state::fold_tile_data() const -> bool
+auto PreferenceState::fold_tile_data() const -> bool
 {
   return test_flag(_bit_fold_tile_data);
 }
 
-void preference_state::set_indent_output(const bool indent)
+void PreferenceState::set_indent_output(const bool indent)
 {
   set_flag(_bit_indent_output, indent);
 }
 
-auto preference_state::indent_output() const -> bool
+auto PreferenceState::indent_output() const -> bool
 {
   return test_flag(_bit_indent_output);
 }
 
-void preference_state::set_will_restore_layout(const bool restore)
+void PreferenceState::set_will_restore_layout(const bool restore)
 {
   set_flag(_bit_restore_layout, restore);
 }
 
-auto preference_state::will_restore_layout() const -> bool
+auto PreferenceState::will_restore_layout() const -> bool
 {
   return test_flag(_bit_restore_layout);
 }
 
-void preference_state::set_will_restore_last_session(const bool restore)
+void PreferenceState::set_will_restore_last_session(const bool restore)
 {
   set_flag(_bit_restore_last_session, restore);
 }
 
-auto preference_state::will_restore_last_session() const -> bool
+auto PreferenceState::will_restore_last_session() const -> bool
 {
   return test_flag(_bit_restore_last_session);
 }
 
-void preference_state::set_viewport_overlay_pos(const overlay_pos pos)
+void PreferenceState::set_viewport_overlay_pos(const OverlayPos pos)
 {
   mData->viewport_overlay_pos = cen::to_underlying(pos);
 }
 
-auto preference_state::viewport_overlay_pos() const -> overlay_pos
+auto PreferenceState::viewport_overlay_pos() const -> OverlayPos
 {
-  return static_cast<overlay_pos>(mData->viewport_overlay_pos);
+  return static_cast<OverlayPos>(mData->viewport_overlay_pos);
 }
 
-void preference_state::set_command_capacity(const usize capacity)
+void PreferenceState::set_viewport_overlay_show_fps(const bool show)
+{
+  set_flag(_bit_show_viewport_overlay_fps, show);
+}
+
+auto PreferenceState::viewport_overlay_show_fps() const -> bool
+{
+  return test_flag(_bit_show_viewport_overlay_fps);
+}
+
+void PreferenceState::set_command_capacity(const usize capacity)
 {
   mData->command_capacity = capacity;
 }
 
-auto preference_state::command_capacity() const -> usize
+auto PreferenceState::command_capacity() const -> usize
 {
   return mData->command_capacity;
 }
 
-void preference_state::set_preferred_format(std::string format)
+void PreferenceState::set_preferred_format(std::string format)
 {
   mData->preferred_format = std::move(format);
 }
 
-auto preference_state::preferred_format() const -> const std::string&
+auto PreferenceState::preferred_format() const -> const std::string&
 {
   return mData->preferred_format;
 }
 
-void preference_state::set_preferred_tile_width(const int32 width)
+void PreferenceState::set_preferred_tile_width(const int32 width)
 {
   mData->preferred_tile_width = width;
 }
 
-auto preference_state::preferred_tile_width() const -> int
+auto PreferenceState::preferred_tile_width() const -> int
 {
   return mData->preferred_tile_width;
 }
 
-void preference_state::set_preferred_tile_height(const int32 height)
+void PreferenceState::set_preferred_tile_height(const int32 height)
 {
   mData->preferred_tile_height = height;
 }
 
-auto preference_state::preferred_tile_height() const -> int
+auto PreferenceState::preferred_tile_height() const -> int
 {
   return mData->preferred_tile_height;
 }
 
-void preference_state::set_flag(const uint64 flag, const bool value) noexcept
+void PreferenceState::set_flag(const uint64 flag, const bool value) noexcept
 {
   if (value) {
     mData->flags |= flag;
@@ -479,12 +514,12 @@ void preference_state::set_flag(const uint64 flag, const bool value) noexcept
   }
 }
 
-void preference_state::reset_flag(const uint64 flag) noexcept
+void PreferenceState::reset_flag(const uint64 flag) noexcept
 {
   set_flag(flag, _def_flags & flag);
 }
 
-auto preference_state::test_flag(const uint64 flag) const noexcept -> bool
+auto PreferenceState::test_flag(const uint64 flag) const noexcept -> bool
 {
   return mData->flags & flag;
 }

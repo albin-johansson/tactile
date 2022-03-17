@@ -106,8 +106,8 @@ TEST(ComponentSystem, GetComponentDef)
 
   const auto& ref = registry;
 
-  ASSERT_THROW(sys::get_component_def(registry, id + 1), tactile_error);
-  ASSERT_THROW(sys::get_component_def(ref, id + 1), tactile_error);
+  ASSERT_THROW(sys::get_component_def(registry, id + 1), TactileError);
+  ASSERT_THROW(sys::get_component_def(ref, id + 1), TactileError);
 
   {
     const auto [entity, def] = sys::get_component_def(registry, id);
@@ -219,14 +219,13 @@ TEST(ComponentSystem, SetComponentAttributeType)
   const auto def = sys::make_component_def(registry, "Def");
 
   sys::make_component_attribute(registry, def, "A");
-  ASSERT_EQ(attribute_type::string,
+  ASSERT_EQ(AttributeType::string, sys::get_component_attribute_type(registry, def, "A"));
+
+  sys::set_component_attribute_type(registry, def, "A", AttributeType::integer);
+  ASSERT_EQ(AttributeType::integer,
             sys::get_component_attribute_type(registry, def, "A"));
 
-  sys::set_component_attribute_type(registry, def, "A", attribute_type::integer);
-  ASSERT_EQ(attribute_type::integer,
-            sys::get_component_attribute_type(registry, def, "A"));
-
-  ASSERT_THROW(sys::get_component_attribute_type(registry, def, "B"), tactile_error);
+  ASSERT_THROW(sys::get_component_attribute_type(registry, def, "B"), TactileError);
 }
 
 TEST(ComponentSystem, SetComponentAttributeValue)
@@ -237,14 +236,14 @@ TEST(ComponentSystem, SetComponentAttributeValue)
   const auto def = sys::make_component_def(registry, "Def");
 
   ASSERT_THROW(sys::set_component_attribute_value(registry, def, "ABC", 42),
-               tactile_error);
+               TactileError);
 
   sys::make_component_attribute(registry, def, "Foo");
   sys::set_component_attribute_value(registry, def, "Foo", "Bar"s);
 
   ASSERT_EQ("Bar", sys::get_component_attribute_value(registry, def, "Foo").as_string());
 
-  sys::set_component_attribute_type(registry, def, "Foo", attribute_type::boolean);
+  sys::set_component_attribute_type(registry, def, "Foo", AttributeType::boolean);
   sys::set_component_attribute_value(registry, def, "Foo", true);
 
   ASSERT_TRUE(sys::get_component_attribute_value(registry, def, "Foo").as_bool());
@@ -268,10 +267,10 @@ TEST(ComponentSystem, AddComponent)
   sys::make_component_attribute(registry, def, "X");
   sys::make_component_attribute(registry, def, "Y");
 
-  sys::set_component_attribute_type(registry, def, "X", attribute_type::integer);
+  sys::set_component_attribute_type(registry, def, "X", AttributeType::integer);
   sys::set_component_attribute_value(registry, def, "X", 42);
 
-  sys::set_component_attribute_type(registry, def, "Y", attribute_type::floating);
+  sys::set_component_attribute_type(registry, def, "Y", AttributeType::floating);
   sys::set_component_attribute_value(registry, def, "Y", -3.5f);
 
   const auto entity = CreateContext(registry);
@@ -282,7 +281,7 @@ TEST(ComponentSystem, AddComponent)
   ASSERT_EQ(42, sys::get_component_attribute(registry, entity, def, "X").as_int());
   ASSERT_EQ(-3.5f, sys::get_component_attribute(registry, entity, def, "Y").as_float());
 
-  ASSERT_THROW(sys::get_component_attribute(registry, entity, def, "foo"), tactile_error);
+  ASSERT_THROW(sys::get_component_attribute(registry, entity, def, "foo"), TactileError);
 }
 
 TEST(ComponentSystem, ResetComponent)
@@ -390,12 +389,12 @@ TEST(ComponentSystem, GetComponent)
   const auto b = sys::make_component_def(registry, "B");
 
   const auto entity = CreateContext(registry);
-  ASSERT_THROW(sys::get_component(registry, entity, a), tactile_error);
-  ASSERT_THROW(sys::get_component(registry, entity, b), tactile_error);
+  ASSERT_THROW(sys::get_component(registry, entity, a), TactileError);
+  ASSERT_THROW(sys::get_component(registry, entity, b), TactileError);
 
   sys::add_component(registry, entity, a);
   ASSERT_NO_THROW(sys::get_component(registry, entity, a));
-  ASSERT_THROW(sys::get_component(registry, entity, b), tactile_error);
+  ASSERT_THROW(sys::get_component(registry, entity, b), TactileError);
 
   const auto& component = sys::get_component(registry, entity, a);
   ASSERT_EQ(a, component.type);

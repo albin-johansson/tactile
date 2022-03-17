@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <entt/entt.hpp>
@@ -6,16 +25,16 @@
 
 namespace tactile {
 
-class document_model;
+class DocumentModel;
 
 /**
  * \brief Serves as the base implementation of all modal dialogs.
  */
-class dialog_base
+class ADialog
 {
  public:
-  TACTILE_DEFAULT_COPY(dialog_base)
-  TACTILE_DEFAULT_MOVE(dialog_base)
+  TACTILE_DEFAULT_COPY(ADialog)
+  TACTILE_DEFAULT_MOVE(ADialog)
 
   /**
    * \brief Creates a dialog.
@@ -24,9 +43,9 @@ class dialog_base
    *
    * \throws tactile_error if the title is null.
    */
-  explicit dialog_base(c_str title);
+  explicit ADialog(const char* title);
 
-  virtual ~dialog_base() noexcept = default;
+  virtual ~ADialog() noexcept = default;
 
   /**
    * \brief Updates the state of the dialog.
@@ -34,7 +53,7 @@ class dialog_base
    * \param model the associated model.
    * \param dispatcher the event dispatcher used.
    */
-  void update(const document_model& model, entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
  protected:
   /**
@@ -45,7 +64,7 @@ class dialog_base
    * \param model the associated model.
    * \param dispatcher the event dispatcher used.
    */
-  virtual void on_update(const document_model& model, entt::dispatcher& dispatcher) = 0;
+  virtual void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) = 0;
 
   /**
    * \brief Invoked when the "Cancel" button is pressed.
@@ -74,7 +93,7 @@ class dialog_base
    * \return `true` if the state of the input is acceptable; `false` otherwise.
    */
   [[nodiscard]] virtual auto is_current_input_valid(
-      [[maybe_unused]] const document_model& model) const -> bool
+      [[maybe_unused]] const DocumentModel& model) const -> bool
   {
     return true;
   }
@@ -107,7 +126,7 @@ class dialog_base
    * \param label the label text;
    *              a null pointer may be used to indicate that the button will be hidden.
    */
-  void set_accept_button_label(c_str label);
+  void set_accept_button_label(const char* label);
 
   /**
    * \brief Sets the label of the "close" button.
@@ -117,12 +136,12 @@ class dialog_base
    * \param label the label text;
    *              a null pointer may be used to indicate that the button will be hidden.
    */
-  void set_close_button_label(c_str label);
+  void set_close_button_label(const char* label);
 
  private:
-  c_str mTitle{};
-  c_str mAcceptButtonLabel{"OK"};
-  c_str mCloseButtonLabel{"Cancel"};
+  const char* mTitle{};
+  const char* mAcceptButtonLabel{"OK"};
+  const char* mCloseButtonLabel{"Cancel"};
   bool mUseApplyButton{};
   bool mShow{};
 };

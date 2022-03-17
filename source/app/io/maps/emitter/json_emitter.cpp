@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "json_emitter.hpp"
 
 #include <utility>  // move
@@ -16,7 +35,7 @@
 namespace tactile::emitter {
 namespace {
 
-[[nodiscard]] auto _emit_properties(const ir::attribute_context_data& data)
+[[nodiscard]] auto _emit_properties(const ir::AttributeContextData& data)
     -> nlohmann::json
 {
   auto array = nlohmann::json::array();
@@ -34,7 +53,7 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto _emit_object(const ir::object_data& data) -> nlohmann::json
+[[nodiscard]] auto _emit_object(const ir::ObjectData& data) -> nlohmann::json
 {
   auto json = nlohmann::json::object();
 
@@ -49,15 +68,15 @@ namespace {
   json["rotation"] = 0;
 
   switch (data.type) {
-    case object_type::rect:
+    case ObjectType::rect:
       /* Assumed to be rectangle if no point/ellipse indicators */
       break;
 
-    case object_type::point: {
+    case ObjectType::point: {
       json["point"] = true;
       break;
     }
-    case object_type::ellipse: {
+    case ObjectType::ellipse: {
       json["ellipse"] = true;
       break;
     }
@@ -70,7 +89,7 @@ namespace {
   return json;
 }
 
-[[nodiscard]] auto _emit_layer(const ir::layer_data& data,
+[[nodiscard]] auto _emit_layer(const ir::LayerData& data,
                                const usize rows,
                                const usize columns) -> nlohmann::json
 {
@@ -84,8 +103,8 @@ namespace {
   json["y"] = 0;
 
   switch (data.type) {
-    case layer_type::tile_layer: {
-      const auto& tileLayerData = std::get<ir::tile_layer_data>(data.data);
+    case LayerType::tile_layer: {
+      const auto& tileLayerData = std::get<ir::TileLayerData>(data.data);
 
       json["type"] = "tilelayer";
       json["width"] = columns;
@@ -102,8 +121,8 @@ namespace {
       json["data"] = std::move(tiles);
       break;
     }
-    case layer_type::object_layer: {
-      const auto& objectLayerData = std::get<ir::object_layer_data>(data.data);
+    case LayerType::object_layer: {
+      const auto& objectLayerData = std::get<ir::ObjectLayerData>(data.data);
 
       json["type"] = "objectgroup";
 
@@ -116,8 +135,8 @@ namespace {
       json["objects"] = std::move(objects);
       break;
     }
-    case layer_type::group_layer: {
-      const auto& groupLayerData = std::get<ir::group_layer_data>(data.data);
+    case LayerType::group_layer: {
+      const auto& groupLayerData = std::get<ir::GroupLayerData>(data.data);
 
       json["type"] = "group";
 
@@ -139,7 +158,7 @@ namespace {
   return json;
 }
 
-[[nodiscard]] auto _emit_layers(const ir::map_data& data) -> nlohmann::json
+[[nodiscard]] auto _emit_layers(const ir::MapData& data) -> nlohmann::json
 {
   auto array = nlohmann::json::array();
 
@@ -150,7 +169,7 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto _emit_fancy_tile_animation(const ir::fancy_tile_data& data)
+[[nodiscard]] auto _emit_fancy_tile_animation(const ir::MetaTileData& data)
     -> nlohmann::json
 {
   auto array = nlohmann::json::array();
@@ -167,7 +186,7 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto _emit_fancy_tile(const tile_id id, const ir::fancy_tile_data& data)
+[[nodiscard]] auto _emit_fancy_tile(const tile_id id, const ir::MetaTileData& data)
     -> nlohmann::json
 {
   auto json = nlohmann::json::object();
@@ -204,7 +223,7 @@ namespace {
   return json;
 }
 
-[[nodiscard]] auto _emit_fancy_tiles(const ir::tileset_data& data) -> nlohmann::json
+[[nodiscard]] auto _emit_fancy_tiles(const ir::TilesetData& data) -> nlohmann::json
 {
   auto json = nlohmann::json::array();
 
@@ -216,8 +235,8 @@ namespace {
 }
 
 void _add_common_tileset_attributes(nlohmann::json& json,
-                                    const emit_info& info,
-                                    const ir::tileset_data& data)
+                                    const EmitInfo& info,
+                                    const ir::TilesetData& data)
 {
   json["name"] = data.name;
   json["columns"] = data.column_count;
@@ -245,8 +264,8 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   }
 }
 
-[[nodiscard]] auto _emit_embedded_tileset(const emit_info& info,
-                                          const ir::tileset_data& data) -> nlohmann::json
+[[nodiscard]] auto _emit_embedded_tileset(const EmitInfo& info,
+                                          const ir::TilesetData& data) -> nlohmann::json
 {
   auto json = nlohmann::json::object();
 
@@ -256,7 +275,7 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   return json;
 }
 
-[[nodiscard]] auto _emit_external_tileset(const ir::tileset_data& data) -> nlohmann::json
+[[nodiscard]] auto _emit_external_tileset(const ir::TilesetData& data) -> nlohmann::json
 {
   auto json = nlohmann::json::object();
 
@@ -266,7 +285,7 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   return json;
 }
 
-void _create_external_tileset_file(const emit_info& info, const ir::tileset_data& data)
+void _create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& data)
 {
   auto json = nlohmann::json::object();
   _add_common_tileset_attributes(json, info, data);
@@ -281,7 +300,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::tileset_data
   write_json(json, path);
 }
 
-[[nodiscard]] auto _emit_tileset(const emit_info& info, const ir::tileset_data& data)
+[[nodiscard]] auto _emit_tileset(const EmitInfo& info, const ir::TilesetData& data)
     -> nlohmann::json
 {
   if (get_preferences().embed_tilesets()) {
@@ -293,7 +312,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::tileset_data
   }
 }
 
-[[nodiscard]] auto _emit_tilesets(const emit_info& info) -> nlohmann::json
+[[nodiscard]] auto _emit_tilesets(const EmitInfo& info) -> nlohmann::json
 {
   auto json = nlohmann::json::array();
 
@@ -307,7 +326,7 @@ void _create_external_tileset_file(const emit_info& info, const ir::tileset_data
 
 }  // namespace
 
-void emit_json_map(const emit_info& info)
+void emit_json_map(const EmitInfo& info)
 {
   auto json = nlohmann::json::object();
 

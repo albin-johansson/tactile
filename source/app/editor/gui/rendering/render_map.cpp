@@ -1,7 +1,26 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "render_map.hpp"
 
-#include "core/components/layer.hpp"
-#include "core/components/object.hpp"
+#include "core/components/layers.hpp"
+#include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
 #include "graphics.hpp"
 #include "io/persistence/preferences.hpp"
@@ -11,43 +30,43 @@
 namespace tactile {
 namespace {
 
-void RenderLayer(graphics_ctx& graphics,
-                 const entt::registry& registry,
-                 const entt::entity layerEntity,
-                 const comp::layer& layer,
-                 const float parentOpacity)
+void _render_layer(GraphicsCtx& graphics,
+                   const entt::registry& registry,
+                   const entt::entity layerEntity,
+                   const comp::Layer& layer,
+                   const float parentOpacity)
 {
-  if (layer.type == layer_type::tile_layer) {
-    RenderTileLayer(graphics, registry, layerEntity, parentOpacity);
+  if (layer.type == LayerType::tile_layer) {
+    render_tile_layer(graphics, registry, layerEntity, parentOpacity);
   }
-  else if (layer.type == layer_type::object_layer) {
-    RenderObjectLayer(graphics, registry, layerEntity, parentOpacity);
+  else if (layer.type == LayerType::object_layer) {
+    render_object_layer(graphics, registry, layerEntity, parentOpacity);
   }
 }
 
 }  // namespace
 
-void RenderMap(graphics_ctx& graphics, const entt::registry& registry)
+void render_map(GraphicsCtx& graphics, const entt::registry& registry)
 {
-  for (auto&& [entity, node] : registry.view<comp::layer_tree_node>().each()) {
-    const auto& layer = registry.get<comp::layer>(entity);
-    const auto& parent = registry.get<comp::parent>(entity);
+  for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
+    const auto& layer = registry.get<comp::Layer>(entity);
+    const auto& parent = registry.get<comp::Parent>(entity);
 
     const auto* parentLayer = (parent.entity != entt::null)
-                                  ? registry.try_get<comp::layer>(parent.entity)
+                                  ? registry.try_get<comp::Layer>(parent.entity)
                                   : nullptr;
     const auto parentOpacity = parentLayer ? parentLayer->opacity : 1.0f;
 
     if (layer.visible) {
       if (!parentLayer || parentLayer->visible) {
-        RenderLayer(graphics, registry, entity, layer, layer.opacity * parentOpacity);
+        _render_layer(graphics, registry, entity, layer, layer.opacity * parentOpacity);
       }
     }
   }
 
-  if (const auto& activeObject = registry.ctx<comp::active_object>();
+  if (const auto& activeObject = registry.ctx<comp::ActiveObject>();
       activeObject.entity != entt::null) {
-    RenderObject(graphics, registry, activeObject.entity, cen::colors::yellow);
+    render_object(graphics, registry, activeObject.entity, cen::colors::yellow);
   }
 
   graphics.set_line_thickness(1.0f);

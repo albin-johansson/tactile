@@ -2,52 +2,13 @@ cmake_minimum_required(VERSION 3.16)
 
 project(tactile-app CXX)
 
-find_package(OpenGL REQUIRED)  # Not acquired using vcpkg
-
-find_package(imgui CONFIG REQUIRED)
-find_package(GLEW CONFIG REQUIRED)
-find_package(EnTT CONFIG REQUIRED)
-find_package(magic_enum CONFIG REQUIRED)
-find_package(yaml-cpp CONFIG REQUIRED)
-find_package(pugixml CONFIG REQUIRED)
-find_package(nlohmann_json CONFIG REQUIRED)
-find_package(tinyfiledialogs CONFIG REQUIRED)
-
-find_package(ZLIB REQUIRED)
-
-find_path(STB_INCLUDE_DIRS "stb.h")
-find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
-
-add_subdirectory(cfg)
-add_subdirectory(core)
-add_subdirectory(editor)
-add_subdirectory(io)
-
-set(SOURCE_FILES
-
-    application.cpp
-    application.hpp
-    application_events.cpp
-    application_events.hpp
-    tactile.hpp
-
-    meta/build.hpp
-    meta/profile.hpp
-
-    misc/assert.cpp
-    misc/assert.hpp
-    misc/boost.hpp
-    misc/crash.cpp
-    misc/crash.hpp
-    misc/logging.cpp
-    misc/logging.hpp
-    misc/throw.hpp
-
-    ${TACTILE_CFG_SOURCE_FILES}
-    ${TACTILE_CORE_SOURCE_FILES}
-    ${TACTILE_EDITOR_SOURCE_FILES}
-    ${TACTILE_IO_SOURCE_FILES}
-    )
+file(GLOB_RECURSE SOURCE_FILES
+     CONFIGURE_DEPENDS
+     **/*.cpp
+     **/*.hpp
+     *.cpp
+     *.hpp
+     )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 
@@ -103,7 +64,32 @@ if (MSVC)
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
+  message("[Tactile]: Building executable a WIN32 (non-console) executable...")
   add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
+elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MATCHES ON)
+  message("[Tactile]: Building executable as application bundle...")
+
+  file(GLOB_RECURSE TACTILE_BUNDLE_RESOURCES "${RESOURCE_DIR}/*")
+
+  foreach (FILE ${TACTILE_BUNDLE_RESOURCES})
+    file(RELATIVE_PATH NEW_FILE "${RESOURCE_DIR}/" ${FILE})
+    get_filename_component(NEW_FILE_PATH ${NEW_FILE} DIRECTORY)
+    set_property(SOURCE ${FILE}
+                 PROPERTY MACOSX_PACKAGE_LOCATION "Resources/resources/${NEW_FILE_PATH}")
+  endforeach ()
+
+  add_executable(${TACTILE_EXE} MACOSX_BUNDLE ${SOURCE_FILES} main.cpp ${TACTILE_BUNDLE_RESOURCES})
+
+  set_target_properties(${TACTILE_EXE} PROPERTIES
+                        MACOSX_BUNDLE TRUE
+                        MACOSX_BUNDLE_GUI_IDENTIFIER "com.albinjohansson.tactile"
+                        MACOSX_BUNDLE_BUNDLE_NAME "Tactile"
+                        MACOSX_BUNDLE_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION}"
+                        MACOSX_BUNDLE_SHORT_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
+                        MACOSX_BUNDLE_LONG_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
+                        MACOSX_BUNDLE_COPYRIGHT "GPL-3.0"
+                        # TODO MACOSX_BUNDLE_ICON_FILE
+                        )
 else ()
   add_executable(${TACTILE_EXE} ${SOURCE_FILES} main.cpp)
 endif ()
@@ -145,4 +131,7 @@ target_link_libraries(${TACTILE_EXE}
                       SDL2::SDL2main
                       )
 
-copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
+# Do not copy the resources when building as macOS app bundle
+if (TACTILE_BUILD_APP_BUNDLE MATCHES OFF)
+  copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
+endif ()

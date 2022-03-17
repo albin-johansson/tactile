@@ -8,10 +8,12 @@ env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
+  VCPKG_CACHE_EDITION: 1
 
 jobs:
   ubuntu-latest-test:
     runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
       - uses: actions/checkout@main
       - uses: lukka/get-cmake@latest
@@ -58,7 +60,7 @@ jobs:
             !${{env.VCPKG_ROOT}}\packages
             !${{env.VCPKG_ROOT}}\downloads
             !${{env.VCPKG_ROOT}}\installed
-          key: ${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-x64-tactile-linux
+          key: tactile-linux-vcpkg-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'

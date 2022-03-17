@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <string>       // string
@@ -22,7 +41,7 @@ void log_error_v(std::string_view fmt, fmt::format_args args);
 
 }  // namespace logger
 
-enum class log_level
+enum class LogLevel
 {
   verbose,  ///< Logs everything.
   debug,    ///< Logs stuff that a developer might be interested in.
@@ -37,7 +56,7 @@ void print([[maybe_unused]] const fmt::color color,
            const Args&... args)
 {
   if constexpr (on_windows) {
-    fmt::print(fmt, args...);
+    fmt::print(fmt::runtime(fmt), args...);
   }
   else {
     fmt::print(fmt::fg(color), fmt, args...);
@@ -79,7 +98,7 @@ void log_error(const std::string_view fmt, const Args&... args)
  */
 void clear_log_history();
 
-void set_log_level(log_level level);
+void set_log_level(LogLevel level);
 
 /**
  * \brief Returns the log entry at a specific index amongst entries that satisfy a filter.
@@ -93,8 +112,8 @@ void set_log_level(log_level level);
  *
  * \see log_size(log_level)
  */
-[[nodiscard]] auto get_filtered_log_entry(log_level filter, usize index)
-    -> std::pair<log_level, const std::string&>;
+[[nodiscard]] auto get_filtered_log_entry(LogLevel filter, usize index)
+    -> std::pair<LogLevel, const std::string&>;
 
 /**
  * \brief Returns the amount of log entries that satisfy a filter.
@@ -103,7 +122,7 @@ void set_log_level(log_level level);
  *
  * \return the amount of log entries that weren't filtered out.
  */
-[[nodiscard]] auto log_size(log_level filter) -> usize;
+[[nodiscard]] auto log_size(LogLevel filter) -> usize;
 
 /**
  * \brief Indicates whether a message using a specific log level satisfies a filter.
@@ -113,8 +132,8 @@ void set_log_level(log_level level);
  *
  * \return `true` if the log level is enabled according to the filter; `false` otherwise.
  */
-[[nodiscard]] auto is_enabled(log_level filter, log_level level) -> bool;
+[[nodiscard]] auto is_enabled(LogLevel filter, LogLevel level) -> bool;
 
-[[nodiscard]] auto is_enabled(log_level level) -> bool;
+[[nodiscard]] auto is_enabled(LogLevel level) -> bool;
 
 }  // namespace tactile

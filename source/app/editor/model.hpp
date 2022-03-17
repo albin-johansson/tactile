@@ -1,11 +1,30 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
 
+#include <boost/container/flat_map.hpp>
 #include <entt/entt.hpp>
 
-#include "core/utils/vector_map.hpp"
 #include "document.hpp"
 #include "events/command_events.hpp"
 #include "events/tool_events.hpp"
@@ -20,11 +39,11 @@ namespace tactile {
  * than managing documents, this class provides several utilities for querying the state
  * of the core model from the perspective of the editor (GUI).
  */
-class document_model final
+class DocumentModel final
 {
  public:
-  // Store documents on the heap to ensure stability, which is important for commands
-  using document_map = vector_map<map_id, std::unique_ptr<Document>>;
+  // Documents are stored on the heap to ensure stability, which is important for commands
+  using document_map = boost::container::flat_map<map_id, std::unique_ptr<Document>>;
   using const_iterator = document_map::const_iterator;
 
   /**
@@ -139,7 +158,7 @@ class document_model final
    *
    * \return the identifier of the active map.
    */
-  [[nodiscard]] auto active_map_id() const -> maybe<map_id>;
+  [[nodiscard]] auto active_map_id() const -> Maybe<map_id>;
 
   /**
    * \brief Returns the currently active document, if there is one.
@@ -238,7 +257,7 @@ class document_model final
    *
    * \return `true` if the tool is active; `false` otherwise.
    */
-  [[nodiscard]] auto is_tool_active(tool_type tool) const -> bool;
+  [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;
 
   /**
    * \brief Indicates whether a specific mouse tool is usable.
@@ -247,7 +266,7 @@ class document_model final
    *
    * \return `true` if the tool is usable; `false` otherwise.
    */
-  [[nodiscard]] auto is_tool_possible(tool_type tool) const -> bool;
+  [[nodiscard]] auto is_tool_possible(ToolType tool) const -> bool;
 
   /// \} End of mouse tool functions
 
@@ -260,7 +279,7 @@ class document_model final
 
  private:
   document_map mDocuments;
-  maybe<map_id> mActiveMap;
+  Maybe<map_id> mActiveMap;
   map_id mNextId{1};
 };
 

@@ -1,13 +1,32 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "sfinae.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
 template <typename T>
-struct matrix_coords final
+struct MatrixCoords final
 {
   T row{};
   T col{};
@@ -26,12 +45,12 @@ struct matrix_coords final
  */
 template <typename T, is_integral<T> = 0>
 [[nodiscard]] constexpr auto to_matrix_coords(const T index, const T nColumns) noexcept
-    -> matrix_coords<T>
+    -> MatrixCoords<T>
 {
   return {index / nColumns, index % nColumns};
 }
 
-[[nodiscard]] auto make_tile_row(usize nCols) -> tile_row;
+[[nodiscard]] auto make_tile_row(usize nCols) -> TileRow;
 
 /**
  * \brief Creates a tile matrix with the specified dimensions.
@@ -41,6 +60,6 @@ template <typename T, is_integral<T> = 0>
  *
  * \return a matrix with empty tile identifiers.
  */
-[[nodiscard]] auto make_tile_matrix(usize nRows, usize nCols) -> tile_matrix;
+[[nodiscard]] auto make_tile_matrix(usize nRows, usize nCols) -> TileMatrix;
 
 }  // namespace tactile

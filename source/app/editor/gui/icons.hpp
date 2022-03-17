@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <IconsFontAwesome5.h>
@@ -88,10 +107,10 @@ namespace tactile {
  *
  * \ingroup gui
  */
-class icon_manager final
+class IconManager final
 {
  public:
-  explicit icon_manager(texture_manager& textures);
+  explicit IconManager(TextureManager& textures);
 
   /**
    * \brief Returns the texture identifier for the Tactile icon.
@@ -113,6 +132,6 @@ class icon_manager final
  *
  * \throws tactile_error if the layer type is invalid.
  */
-[[nodiscard]] auto get_icon(layer_type type) -> const char*;
+[[nodiscard]] auto get_icon(LayerType type) -> const char*;
 
 }  // namespace tactile

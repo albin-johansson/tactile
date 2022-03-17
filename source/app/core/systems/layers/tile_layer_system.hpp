@@ -1,10 +1,29 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <entt/entt.hpp>
 
-#include "core/components/layer.hpp"
+#include "core/components/layers.hpp"
 #include "core/tile_cache.hpp"
-#include "core/tile_position.hpp"
+#include "core/tile_pos.hpp"
 #include "misc/assert.hpp"
 #include "tactile.hpp"
 
@@ -43,7 +62,7 @@ namespace tactile::sys {
  *
  * \throws TactileError if the position is invalid.
  */
-void set_tile(comp::tile_layer& layer, const tile_position& position, tile_id tile);
+void set_tile(comp::TileLayer& layer, const TilePos& position, tile_id tile);
 
 /**
  * \brief Restores the values of tiles in a tile layer according to a tile cache.
@@ -53,7 +72,7 @@ void set_tile(comp::tile_layer& layer, const tile_position& position, tile_id ti
  * \param layer the target tile layer.
  * \param tiles the source tile cache.
  */
-void set_tiles(comp::tile_layer& layer, const TileCache& tiles);
+void set_tiles(comp::TileLayer& layer, const TileCache& tiles);
 
 /**
  * \brief Returns the tile at a specific position in a tile layer.
@@ -63,7 +82,7 @@ void set_tiles(comp::tile_layer& layer, const TileCache& tiles);
  *
  * \return the tile at the position; the empty tile is returned for invalid positions.
  */
-[[nodiscard]] auto get_tile(const comp::tile_layer& layer, const tile_position& position)
+[[nodiscard]] auto get_tile(const comp::TileLayer& layer, const TilePos& position)
     -> tile_id;
 
 /**
@@ -74,7 +93,7 @@ void set_tiles(comp::tile_layer& layer, const TileCache& tiles);
  * \param layer the tile layer to visit.
  * \param callable the function object invoked for each tile.
  */
-void each_tile(const comp::tile_layer& layer, auto&& callable)
+void each_tile(const comp::TileLayer& layer, auto&& callable)
 {
   TACTILE_ASSERT(!layer.matrix.empty());
   TACTILE_ASSERT(!layer.matrix.at(0).empty());

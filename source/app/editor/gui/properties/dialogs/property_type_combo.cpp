@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "property_type_combo.hpp"
 
 #include <algorithm>  // find_if
@@ -14,37 +33,36 @@
 namespace tactile {
 namespace {
 
-constexpr std::array gItems{std::make_pair("string", attribute_type::string),
-                            std::make_pair("int", attribute_type::integer),
-                            std::make_pair("float", attribute_type::floating),
-                            std::make_pair("bool", attribute_type::boolean),
-                            std::make_pair("color", attribute_type::color),
-                            std::make_pair("object", attribute_type::object),
-                            std::make_pair("file", attribute_type::file)};
+constexpr std::array _items{std::make_pair("string", AttributeType::string),
+                            std::make_pair("int", AttributeType::integer),
+                            std::make_pair("float", AttributeType::floating),
+                            std::make_pair("bool", AttributeType::boolean),
+                            std::make_pair("color", AttributeType::color),
+                            std::make_pair("object", AttributeType::object),
+                            std::make_pair("file", AttributeType::file)};
 
-[[nodiscard]] auto GetIndexFromType(const attribute_type type) -> usize
+[[nodiscard]] auto _index_from_type(const AttributeType type) -> usize
 {
-  const auto it = std::find_if(
-      gItems.begin(),
-      gItems.end(),
-      [=](const std::pair<c_str, attribute_type>& pair) { return type == pair.second; });
+  auto iter = std::find_if(_items.begin(), _items.end(), [=](const auto& pair) {
+    return type == pair.second;
+  });
 
-  if (it != gItems.end()) {
-    return static_cast<usize>(it - gItems.begin());
+  if (iter != _items.end()) {
+    return static_cast<usize>(iter - _items.begin());
   }
   else {
-    throw_traced(tactile_error{"Invalid property type!"});
+    throw_traced(TactileError{"Invalid property type!"});
   }
 }
 
-void PropertyTypeComboImpl(attribute_type& out, maybe<attribute_type> previousType)
+void _property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previousType)
 {
-  const auto currentIndex = GetIndexFromType(out);
-  auto&& [currentName, currentType] = gItems.at(currentIndex);
+  const auto currentIndex = _index_from_type(out);
+  auto&& [currentName, currentType] = _items.at(currentIndex);
 
-  if (scoped::combo combo{"##PropertyTypeComboImpl", currentName}; combo.is_open()) {
-    for (auto&& [name, type] : gItems) {
-      scoped::disable disable{previousType == type};
+  if (scoped::Combo combo{"##_property_type_combo_impl", currentName}; combo.is_open()) {
+    for (auto&& [name, type] : _items) {
+      scoped::Disable disable{previousType == type};
 
       const auto selected = std::strcmp(currentName, name) == 0;
       if (ImGui::Selectable(name, selected)) {
@@ -60,14 +78,14 @@ void PropertyTypeComboImpl(attribute_type& out, maybe<attribute_type> previousTy
 
 }  // namespace
 
-void PropertyTypeCombo(attribute_type& out)
+void show_property_type_combo(AttributeType& out)
 {
-  PropertyTypeComboImpl(out, nothing);
+  _property_type_combo_impl(out, nothing);
 }
 
-void PropertyTypeCombo(const attribute_type previous, attribute_type& out)
+void show_property_type_combo(const AttributeType previous, AttributeType& out)
 {
-  PropertyTypeComboImpl(out, previous);
+  _property_type_combo_impl(out, previous);
 }
 
 }  // namespace tactile

@@ -1,3 +1,22 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "create_tileset_dialog.hpp"
 
 #include <imgui.h>
@@ -10,7 +29,7 @@
 
 namespace tactile {
 
-CreateTilesetDialog::CreateTilesetDialog() : dialog_base{"Create tileset"}
+CreateTilesetDialog::CreateTilesetDialog() : ADialog{"Create tileset"}
 {
   set_accept_button_label("Create");
 }
@@ -27,7 +46,7 @@ void CreateTilesetDialog::Open()
   make_visible();
 }
 
-void CreateTilesetDialog::on_update(const document_model&, entt::dispatcher&)
+void CreateTilesetDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
   ImGui::Spacing();
@@ -49,17 +68,17 @@ void CreateTilesetDialog::on_update(const document_model&, entt::dispatcher&)
 
 void CreateTilesetDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<add_tileset_event>(mFullImagePath, mTileWidth, mTileHeight);
+  dispatcher.enqueue<AddTilesetEvent>(mFullImagePath, mTileWidth, mTileHeight);
 }
 
-auto CreateTilesetDialog::is_current_input_valid(const document_model&) const -> bool
+auto CreateTilesetDialog::is_current_input_valid(const DocumentModel&) const -> bool
 {
   return mPathPreviewBuffer.front() != '\0' && mTileWidth > 0 && mTileHeight > 0;
 }
 
 void CreateTilesetDialog::ShowImageFileDialog()
 {
-  auto dialog = file_dialog::open_image();
+  auto dialog = FileDialog::open_image();
   if (!dialog.is_okay()) {
     return;
   }
