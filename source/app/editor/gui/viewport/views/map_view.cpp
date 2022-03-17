@@ -99,10 +99,6 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
                          const ViewportCursorInfo& cursor,
                          const RenderInfo& info)
 {
-  if (!ImGui::IsWindowFocused()) {
-    return;
-  }
-
   if (cursor.is_within_map && sys::is_tile_layer_active(registry)) {
     graphics.set_draw_color(cen::colors::lime.with_alpha(200));
     graphics.set_line_thickness(2);
@@ -218,7 +214,10 @@ void update_map_view(const entt::registry& registry, entt::dispatcher& dispatche
 
   const auto cursor = GetViewportCursorInfo(info);
   _poll_mouse(dispatcher, cursor);
-  _draw_cursor_gizmos(graphics, registry, cursor, info);
+
+  if (ImGui::IsWindowHovered()) {
+    _draw_cursor_gizmos(graphics, registry, cursor, info);
+  }
 
   graphics.pop_clip();
 
