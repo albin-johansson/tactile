@@ -22,12 +22,12 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * Great performance thanks to ECS architecture
 * Extensive and intuitive undo & redo support
 * Various layer types
-    * Tile layers
-    * Object layers
-    * Group layers
+  * Tile layers
+  * Object layers
+  * Group layers
 * Supports an intuitive and human-readable YAML map format
 * Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
-    * Note that not all Tiled features are supported by Tactile
+  * Note that not all Tiled features are supported by Tactile
 * Intuitive mouse tools
   * Tile stamp tool
   * Eraser tool
