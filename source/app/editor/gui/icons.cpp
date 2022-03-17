@@ -25,7 +25,7 @@
 namespace tactile {
 
 IconManager::IconManager(TextureManager& textures)
-    : mTactileIcon{textures.load(find_resource("resources/icon.png")).value().id}
+    : mTactileIcon{textures.load(find_resource("resources/icon-512.png")).value().id}
 {}
 
 auto get_icon(const LayerType type) -> const char*
