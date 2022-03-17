@@ -8,7 +8,7 @@
 
 A tilemap editor that aims to be easy-to-use, fast and lightweight.
 
-<img src="meta/splash-0.3.0.png.jpg" alt="Splash" width="60%"/>
+![Splash](meta/splash-0.3.0.png)
 
 ## Aim
 
