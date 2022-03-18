@@ -103,22 +103,6 @@ void _prepare_table_row(const char* label)
   }
 }
 
-[[nodiscard]] auto _native_opacity_row(const float opacity) -> Maybe<float>
-{
-  _prepare_table_row("Opacity");
-
-  ImGui::TableNextColumn();
-  return input_float("##_native_opacity_row", opacity, 0.0f, 1.0f);
-}
-
-[[nodiscard]] auto _native_visibility_row(const bool visible) -> Maybe<bool>
-{
-  _prepare_table_row("Visible");
-
-  ImGui::TableNextColumn();
-  return input_bool("##_native_visibility_row", visible);
-}
-
 void _native_read_only_row(const char* label, const char* value)
 {
   _prepare_table_row(label);
@@ -208,11 +192,16 @@ void _show_native_layer_properties(const comp::Layer& layer, entt::dispatcher& d
     _native_read_only_row("ID", layer.id);
   }
 
-  if (const auto value = _native_opacity_row(layer.opacity)) {
+  _prepare_table_row("Opacity");
+  ImGui::TableNextColumn();
+  if (const auto value =
+          input_float("##_native_opacity_row", layer.opacity, 0.0f, 1.0f)) {
     dispatcher.enqueue<SetLayerOpacityEvent>(layer.id, *value);
   }
 
-  if (const auto value = _native_visibility_row(layer.visible)) {
+  _prepare_table_row("Visible");
+  ImGui::TableNextColumn();
+  if (const auto value = input_bool("##_native_visibility_row", layer.visible)) {
     dispatcher.enqueue<SetLayerVisibleEvent>(layer.id, *value);
   }
 }
@@ -251,7 +240,9 @@ void _show_native_object_properties(const std::string& name,
     _native_read_only_row("Height", object.height);
   }
 
-  if (const auto visible = _native_visibility_row(object.visible)) {
+  _prepare_table_row("Visible");
+  ImGui::TableNextColumn();
+  if (const auto visible = input_bool("##ObjectVisible", object.visible)) {
     dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, *visible);
   }
 
