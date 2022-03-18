@@ -16,10 +16,16 @@ This document provides a brief outline of planned features for the Tactile edito
 ## UX
 
 * When toggling dock widgets with Tab, it cannot be repeated after enabling the widgets
-* Stamp tool preview requires user to press mouse inside viewport to enable after focus loss
 * Provide option for user to manually locate tileset images for maps with invalid tileset image paths
 * (Optionally) warn when closing maps with unsaved changes
 * Reset affected tiles in maps when a tileset is removed (and restore them if the tileset is restored)
+* Ability to select arbitrary selection of tiles in tilesets, not just by rubber band
+* Active layer highlight mode
+
+## Tools
+
+* Randomizer option for stamp tool
+* Preview for bucket tool
 
 ## Objects
 

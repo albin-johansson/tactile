@@ -44,7 +44,7 @@ void _load_fonts()
   io.FontGlobalScale = 1.0f / scale;
 
   if constexpr (on_osx) {
-    const auto path = find_resource("resources/fonts/roboto/Roboto-Regular.ttf");
+    const auto path = find_resource("assets/fonts/roboto/Roboto-Regular.ttf");
     io.Fonts->AddFontFromFileTTF(path.string().c_str(), size * scale);
   }
   else {
@@ -59,7 +59,7 @@ void _load_fonts()
   config.GlyphMaxAdvanceX = config.GlyphMinAdvanceX;
 
   static constexpr ImWchar icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
-  const auto path = find_resource("resources/fonts/fa/fa-solid-900.otf");
+  const auto path = find_resource("assets/fonts/fa/fa-solid-900.otf");
   io.Fonts->AddFontFromFileTTF(path.string().c_str(), 13.0f * scale, &config, icon_range);
 
   io.Fonts->Build();
