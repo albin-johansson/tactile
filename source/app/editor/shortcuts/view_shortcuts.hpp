@@ -100,6 +100,13 @@ struct ToggleGridShortcut final : AShortcut
   void activate(entt::dispatcher& dispatcher) override;
 };
 
+struct ToggleLayerHighlightShortcut final : AShortcut
+{
+  ToggleLayerHighlightShortcut();
+
+  void activate(entt::dispatcher& dispatcher) override;
+};
+
 struct ToggleUiShortcut final : AShortcut
 {
   ToggleUiShortcut();

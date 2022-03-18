@@ -43,6 +43,8 @@ auto CenterViewportShortcut::is_enabled(const DocumentModel& model,
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
     : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier}
 {}
@@ -57,6 +59,8 @@ auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
 {
   return model.can_decrease_viewport_tile_size();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
     : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier}
@@ -73,6 +77,8 @@ auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 PanUpShortcut::PanUpShortcut()
     : AShortcut{cen::scancodes::up, primary_modifier | cen::key_mod::lshift}
 {}
@@ -87,6 +93,8 @@ auto PanUpShortcut::is_enabled(const DocumentModel& model, const WidgetManager&)
 {
   return model.has_active_document();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 PanDownShortcut::PanDownShortcut()
     : AShortcut{cen::scancodes::down, primary_modifier | cen::key_mod::lshift}
@@ -103,6 +111,8 @@ auto PanDownShortcut::is_enabled(const DocumentModel& model, const WidgetManager
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 PanLeftShortcut::PanLeftShortcut()
     : AShortcut{cen::scancodes::left, primary_modifier | cen::key_mod::lshift}
 {}
@@ -117,6 +127,8 @@ auto PanLeftShortcut::is_enabled(const DocumentModel& model, const WidgetManager
 {
   return model.has_active_document();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 PanRightShortcut::PanRightShortcut()
     : AShortcut{cen::scancodes::right, primary_modifier | cen::key_mod::lshift}
@@ -133,6 +145,8 @@ auto PanRightShortcut::is_enabled(const DocumentModel& model, const WidgetManage
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, primary_modifier}
 {}
 
@@ -141,6 +155,20 @@ void ToggleGridShortcut::activate(entt::dispatcher&)
   auto& prefs = get_preferences();
   prefs.set_grid_visible(!prefs.is_grid_visible());
 }
+
+/* ------------------------------------------------------------------------------------ */
+
+ToggleLayerHighlightShortcut::ToggleLayerHighlightShortcut()
+    : AShortcut{cen::scancodes::h}
+{}
+
+void ToggleLayerHighlightShortcut::activate(entt::dispatcher&)
+{
+  auto& prefs = get_preferences();
+  prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
+}
+
+/* ------------------------------------------------------------------------------------ */
 
 ToggleUiShortcut::ToggleUiShortcut() : AShortcut{cen::scancodes::tab} {}
 

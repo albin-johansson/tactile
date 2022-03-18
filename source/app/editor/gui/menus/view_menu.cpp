@@ -149,9 +149,8 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    // TODO shortcut "H"
     if (ImGui::MenuItem("Highlight Active Layer",
-                        nullptr,
+                        "H",
                         prefs.highlight_active_layer(),
                         hasActiveDocument)) {
       prefs.set_highlight_active_layer(!prefs.highlight_active_layer());

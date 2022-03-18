@@ -73,6 +73,7 @@ void load_default_shortcuts()
   _load_shortcut<DecreaseViewportZoomShortcut>();
 
   _load_shortcut<ToggleGridShortcut>();
+  _load_shortcut<ToggleLayerHighlightShortcut>();
   _load_shortcut<ToggleUiShortcut>();
 
   _load_shortcut<PanRightShortcut>();

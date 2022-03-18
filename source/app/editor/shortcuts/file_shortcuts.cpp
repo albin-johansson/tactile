@@ -21,7 +21,6 @@
 
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
-#include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
 #include "mappings.hpp"
@@ -35,12 +34,16 @@ void NewMapShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ShowNewMapDialogEvent>();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, primary_modifier} {}
 
 void OpenMapShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ShowOpenMapDialogEvent>();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 OpenSettingsShortcut::OpenSettingsShortcut()
     : AShortcut{SDL_SCANCODE_COMMA, primary_modifier}
@@ -50,6 +53,8 @@ void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ShowSettingsEvent>();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, primary_modifier} {}
 
@@ -63,6 +68,8 @@ auto SaveShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) 
 {
   return model.is_save_possible();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 SaveAsShortcut::SaveAsShortcut()
     : AShortcut{cen::scancodes::s, primary_modifier | cen::key_mod::lshift}
