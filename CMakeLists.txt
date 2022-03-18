@@ -27,7 +27,7 @@ message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARY_DIR ${ROOT_DIR}/lib)
-set(RESOURCE_DIR ${ROOT_DIR}/resources)
+set(RESOURCE_DIR ${ROOT_DIR}/assets)
 
 # Target names
 set(TACTILE_PROTO TactileProto)
