@@ -19,26 +19,25 @@
 
 #pragma once
 
-#include "editor/gui/common/dock_widget.hpp"
+#include <entt/entt.hpp>
 
 namespace tactile {
 
+class DocumentModel;
+
+/// \name Component dock functions
+/// \{
+
 /**
- * \brief Used to manage the components associated with attribute contexts.
+ * \briefs Updates the component dock widget.
+ *
+ * \details The component dock is used to manage the components associated with attribute
+ * contexts.
  *
  * \ingroup gui
  */
-class ComponentDock final : public ADockWidget
-{
- public:
-  ComponentDock();
+void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void set_visible(bool visible) override;
-
-  [[nodiscard]] auto is_visible() const -> bool override;
-};
+/// \} End of component dock functions
 
 }  // namespace tactile

@@ -45,7 +45,6 @@ struct WidgetManager::Widgets final
   TilesetDock tileset_dock;
   LayerDock layer_dock;
   PropertyDock property_dock;
-  ComponentDock component_dock;
   LogDock log_dock;
   ResizeMapDialog resize_map_dialog;
   MapParseErrorDialog map_parse_error_dialog;
@@ -66,7 +65,7 @@ void WidgetManager::update(const DocumentModel& model,
     mWidgets->layer_dock.update(model, dispatcher);
     mWidgets->tileset_dock.update(model, dispatcher);
     mWidgets->property_dock.update(model, dispatcher);
-    mWidgets->component_dock.update(model, dispatcher);
+    update_component_dock(model, dispatcher);
     mWidgets->log_dock.update(model, dispatcher);
   }
 
