@@ -96,7 +96,7 @@ AppConfiguration::AppConfiguration()
   TACTILE_ASSERT(mWindow.has_value());
 
   _win32_use_immersive_dark_mode(*mWindow);
-  mWindow->set_icon(cen::surface{find_resource("resources/icon-512.png").string()});
+  mWindow->set_icon(cen::surface{find_resource("resources/icon.png").string()});
 
   mOpenGL.emplace(*mWindow);
   mOpenGL->make_current(*mWindow);
