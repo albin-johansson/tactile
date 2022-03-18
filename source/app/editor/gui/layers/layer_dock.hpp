@@ -19,43 +19,47 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
 #include <entt/entt.hpp>
 
-#include "editor/gui/common/dock_widget.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
 class DocumentModel;
 
-class LayerDock final : public ADockWidget
-{
- public:
-  TACTILE_DELETE_COPY(LayerDock)
-  TACTILE_DEFAULT_MOVE(LayerDock)
+/// \name Layer dock functions
+/// \{
 
-  LayerDock();
+/**
+ * \brief Updates the layer dock widget.
+ *
+ * \pre There must be an active map document when this function is called.
+ *
+ * \param model the current document model.
+ * \param dispatcher the event dispatcher used.
+ *
+ * \ingroup gui
+ */
+void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  ~LayerDock() noexcept override;
+/**
+ * \brief Makes the dialog for renaming layers visible.
+ *
+ * \param layerId the ID of the layer that will be renamed.
+ *
+ * \ingroup gui
+ */
+void show_rename_layer_dialog(layer_id layerId);
 
-  void show_rename_layer_dialog(layer_id id);
+/**
+ * \brief Indicates whether the layer dock widget has input focus.
+ *
+ * \return `true` if the layer dock is focused; `false` otherwise.
+ *
+ * \ingroup gui
+ */
+[[nodiscard]] auto is_layer_dock_focused() -> bool;
 
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void set_visible(bool visible) override;
-
-  [[nodiscard]] auto is_visible() const -> bool override;
-
- private:
-  struct Data;
-  std::unique_ptr<Data> mData;
-
-  void update_buttons(const DocumentModel& model,
-                      const entt::registry& registry,
-                      entt::dispatcher& dispatcher);
-};
+/// \} End of layer dock functions
 
 }  // namespace tactile

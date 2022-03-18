@@ -43,7 +43,6 @@ struct WidgetManager::Widgets final
 {
   MenuBar menu_bar;
   TilesetDock tileset_dock;
-  LayerDock layer_dock;
   PropertyDock property_dock;
   LogDock log_dock;
   ResizeMapDialog resize_map_dialog;
@@ -62,7 +61,7 @@ void WidgetManager::update(const DocumentModel& model,
   update_dock_space();
 
   if (model.has_active_document()) {
-    mWidgets->layer_dock.update(model, dispatcher);
+    update_layer_dock(model, dispatcher);
     mWidgets->tileset_dock.update(model, dispatcher);
     mWidgets->property_dock.update(model, dispatcher);
     update_component_dock(model, dispatcher);
@@ -101,7 +100,7 @@ void WidgetManager::show_add_tileset_dialog()
 
 void WidgetManager::show_rename_layer_dialog(const layer_id id)
 {
-  mWidgets->layer_dock.show_rename_layer_dialog(id);
+  tactile::show_rename_layer_dialog(id);
 }
 
 void WidgetManager::show_add_property_dialog()
@@ -154,7 +153,7 @@ auto WidgetManager::is_viewport_focused() const -> bool
 
 auto WidgetManager::is_layer_dock_focused() const -> bool
 {
-  return mWidgets->layer_dock.has_focus();
+  return tactile::is_layer_dock_focused();
 }
 
 auto WidgetManager::is_tileset_dock_focused() const -> bool
