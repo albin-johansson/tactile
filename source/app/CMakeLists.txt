@@ -76,6 +76,9 @@ elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MA
                  PROPERTY MACOSX_PACKAGE_LOCATION "Resources/assets/${NEW_FILE_PATH}")
   endforeach ()
 
+  # The app icon needs to be in the root Resources folder
+  set_property(SOURCE "${RESOURCE_DIR}/Tactile.icns" PROPERTY MACOSX_PACKAGE_LOCATION "Resources/")
+
   add_executable(${TACTILE_EXE} MACOSX_BUNDLE ${SOURCE_FILES} main.cpp ${TACTILE_BUNDLE_RESOURCES})
 
   set_target_properties(${TACTILE_EXE} PROPERTIES
@@ -86,7 +89,7 @@ elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MA
                         MACOSX_BUNDLE_SHORT_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
                         MACOSX_BUNDLE_LONG_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
                         MACOSX_BUNDLE_COPYRIGHT "GPL-3.0"
-                        MACOSX_BUNDLE_ICON_FILE "icon.icns"
+                        MACOSX_BUNDLE_ICON_FILE "Tactile"
                         )
 else ()
   add_executable(${TACTILE_EXE} ${SOURCE_FILES} main.cpp)
