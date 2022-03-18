@@ -43,7 +43,6 @@ struct WidgetManager::Widgets final
 {
   MenuBar menu_bar;
   TilesetDock tileset_dock;
-  PropertyDock property_dock;
   LogDock log_dock;
   ResizeMapDialog resize_map_dialog;
   MapParseErrorDialog map_parse_error_dialog;
@@ -63,7 +62,7 @@ void WidgetManager::update(const DocumentModel& model,
   if (model.has_active_document()) {
     update_layer_dock(model, dispatcher);
     mWidgets->tileset_dock.update(model, dispatcher);
-    mWidgets->property_dock.update(model, dispatcher);
+    update_property_dock(model, dispatcher);
     update_component_dock(model, dispatcher);
     mWidgets->log_dock.update(model, dispatcher);
   }
@@ -105,18 +104,18 @@ void WidgetManager::show_rename_layer_dialog(const layer_id id)
 
 void WidgetManager::show_add_property_dialog()
 {
-  mWidgets->property_dock.show_add_property_dialog();
+  tactile::show_add_property_dialog();
 }
 
 void WidgetManager::show_rename_property_dialog(const std::string& name)
 {
-  mWidgets->property_dock.show_rename_property_dialog(name);
+  tactile::show_rename_property_dialog(name);
 }
 
 void WidgetManager::show_change_property_type_dialog(std::string name,
                                                      const AttributeType type)
 {
-  mWidgets->property_dock.show_change_property_type_dialog(std::move(name), type);
+  tactile::show_change_property_type_dialog(std::move(name), type);
 }
 
 void WidgetManager::show_resize_map_dialog(const usize currentRows,
@@ -163,7 +162,7 @@ auto WidgetManager::is_tileset_dock_focused() const -> bool
 
 auto WidgetManager::is_property_dock_focused() const -> bool
 {
-  return mWidgets->property_dock.has_focus();
+  return tactile::is_property_dock_focused();
 }
 
 auto WidgetManager::is_log_dock_focused() const -> bool
