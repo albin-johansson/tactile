@@ -39,7 +39,7 @@ void MapParseErrorDialog::show(const parsing::ParseError error)
 void MapParseErrorDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   ImGui::TextUnformatted(
-      "Oops, something went wrong when parsing the map! " ICON_FA_SAD_TEAR);
+      "Oops, something went wrong when parsing the map! " TAC_ICON_ERROR);
   ImGui::Text("Cause: %s", parsing::to_cause(mError.value()).data());
 }
 

@@ -33,7 +33,7 @@ auto property_item_context_menu(entt::dispatcher& dispatcher,
 {
   if (auto popup = scoped::Popup::for_item("##PropertyItemContext"); popup.is_open()) {
     state.show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename Property...");
-    state.show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change Type...");
+    state.show_change_type_dialog = ImGui::MenuItem(TAC_ICON_OBJECTS " Change Type...");
 
     ImGui::Separator();
 
