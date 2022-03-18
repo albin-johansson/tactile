@@ -20,7 +20,6 @@ This document provides a brief outline of planned features for the Tactile edito
 * (Optionally) warn when closing maps with unsaved changes
 * Reset affected tiles in maps when a tileset is removed (and restore them if the tileset is restored)
 * Ability to select arbitrary selection of tiles in tilesets, not just by rubber band
-* Active layer highlight mode
 
 ## Tools
 
