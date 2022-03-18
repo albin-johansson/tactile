@@ -34,7 +34,7 @@ void DuplicateLayerCmd::undo()
 {
   auto& registry = mRegistry.get();
 
-  auto&& [entity, layer] = sys::get_layer(registry, mLayerId);
+  auto&& [entity, layer] = sys::get_layer(registry, mNewLayerId.value());
   sys::remove_layer(registry, entity);
 }
 
