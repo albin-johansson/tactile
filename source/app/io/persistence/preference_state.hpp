@@ -102,6 +102,9 @@ class PreferenceState final
   void set_grid_visible(bool visible);
   [[nodiscard]] auto is_grid_visible() const -> bool;
 
+  void set_highlight_active_layer(bool highlight);
+  [[nodiscard]] auto highlight_active_layer() const -> bool;
+
   void set_embed_tilesets(bool embed);
   [[nodiscard]] auto embed_tilesets() const -> bool;
 

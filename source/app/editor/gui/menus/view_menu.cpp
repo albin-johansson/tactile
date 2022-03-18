@@ -149,6 +149,16 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
+    // TODO shortcut "H"
+    if (ImGui::MenuItem("Highlight Active Layer",
+                        nullptr,
+                        prefs.highlight_active_layer(),
+                        hasActiveDocument)) {
+      prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
+    }
+
+    ImGui::Separator();
+
     if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument)) {
       dispatcher.enqueue<ToggleUiEvent>();
     }

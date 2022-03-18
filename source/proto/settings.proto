@@ -45,6 +45,7 @@ message Settings {
   optional uint64 command_capacity = 17;
 
   optional bool show_grid = 18;
+  optional bool highlight_active_layer = 5;
   optional bool window_border = 19;
 
   optional bool restore_last_session = 20;
