@@ -48,7 +48,7 @@ auto next_bool() -> bool
 
 auto next_float() -> float
 {
-  return next_random(0.0f, 1.0f) <= 0.5f;
+  return next_random(0.0f, 1.0f);
 }
 
 }  // namespace tactile
