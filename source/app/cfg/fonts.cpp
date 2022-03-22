@@ -66,9 +66,9 @@ void reload_fonts()
 
   ImFontConfig config{};
   config.MergeMode = true;
-  config.PixelSnapH = true;
   config.GlyphMinAdvanceX = size * scale.x;
   config.GlyphMaxAdvanceX = config.GlyphMinAdvanceX;
+  config.GlyphOffset = {0, 2};
   io.Fonts->AddFontFromFileTTF(fa.c_str(), size * scale.x, &config, _icon_range);
 
   io.Fonts->Build();
