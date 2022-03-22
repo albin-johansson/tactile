@@ -19,7 +19,7 @@
 
 #include "fonts.hpp"
 
-#include <IconsFontAwesome5.h>
+#include <IconsFontAwesome6.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 
