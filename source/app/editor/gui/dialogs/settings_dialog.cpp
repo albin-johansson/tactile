@@ -22,8 +22,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "cfg/fonts.hpp"
 #include "core/utils/colors.hpp"
 #include "editor/events/command_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/checkbox.hpp"
 #include "editor/gui/scoped.hpp"
@@ -83,9 +85,17 @@ void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
 void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 {
   set_preferences(mGuiSettings);
+
   if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
     dispatcher.enqueue<SetCommandCapacityEvent>(mGuiSettings.command_capacity());
   }
+
+  if (mGuiSettings.use_default_font() != mSnapshot.use_default_font() ||
+      mGuiSettings.font_size() != mSnapshot.font_size()) {
+    dispatcher.enqueue<ReloadFontsEvent>();
+  }
+
+  mSnapshot = mGuiSettings;
 }
 
 void SettingsDialog::update_behavior_tab()
@@ -192,8 +202,13 @@ void SettingsDialog::update_appearance_tab()
 
     {
       scoped::Disable disableIf{mGuiSettings.use_default_font()};
+
+      ImGui::AlignTextToFramePadding();
+      ImGui::TextUnformatted("Font size:");
+
+      ImGui::SameLine();
       if (int size = mGuiSettings.font_size();
-          ImGui::DragInt("Font size", &size, 1.0f, 8, 64)) {
+          ImGui::DragInt("##FontSize", &size, 1.0f, 8, 64)) {
         mGuiSettings.set_font_size(size);
       }
     }

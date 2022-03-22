@@ -57,6 +57,8 @@ void AEventLoop::start()
       reload_fonts();
     }
 
+    on_pre_update();
+
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();

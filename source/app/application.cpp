@@ -26,6 +26,7 @@
 
 #include "application_events.hpp"
 #include "cfg/configuration.hpp"
+#include "cfg/fonts.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
@@ -34,8 +35,8 @@
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
-#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
+#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/maps/parser/parse_map.hpp"
@@ -105,6 +106,14 @@ void Application::on_shutdown()
 
   auto& window = mConfiguration->window();
   window.hide();
+}
+
+void Application::on_pre_update()
+{
+  if (mReloadFonts) {
+    reload_fonts();
+    mReloadFonts = false;
+  }
 }
 
 void Application::on_update()
@@ -752,6 +761,11 @@ void Application::on_toggle_ui()
   }
 
   show = !show;
+}
+
+void Application::on_reload_fonts()
+{
+  mReloadFonts = true;
 }
 
 void Application::on_quit()

@@ -132,6 +132,7 @@ void subscribe_to_events(App& app)
   app.connect<ResetComponentValuesEvent, &App::on_reset_component_values>();
 
   app.connect<ToggleUiEvent, &App::on_toggle_ui>();
+  app.connect<ReloadFontsEvent, &App::on_reload_fonts>();
   app.connect<QuitEvent, &App::on_quit>();
 }
 

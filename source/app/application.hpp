@@ -75,6 +75,8 @@ class Application final : AEventLoop
 
   void on_shutdown() override;
 
+  void on_pre_update() override;
+
   void on_update() override;
 
   void on_event(const cen::event_handler& handler) override;
@@ -87,6 +89,7 @@ class Application final : AEventLoop
   IconManager mIcons;
   WidgetManager mWidgets;
   WidgetShowState mWidgetShowState;
+  bool mReloadFonts{};
 
   template <typename Event, auto Slot>
   void connect()
@@ -274,6 +277,8 @@ class Application final : AEventLoop
   void on_reset_component_values(const ResetComponentValuesEvent& event);
 
   void on_toggle_ui();
+
+  void on_reload_fonts();
 
   void on_quit();
 };

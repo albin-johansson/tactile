@@ -46,6 +46,9 @@ struct SaveAsEvent final
 struct OpenSaveAsDialogEvent final
 {};
 
+struct ReloadFontsEvent final
+{};
+
 /// \} End of group events
 
 }  // namespace tactile

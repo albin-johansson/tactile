@@ -38,9 +38,6 @@ constexpr auto _window_flags =
     ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
     ImGuiWindowFlags_NoMove;
 
-constexpr int _button_width = 24;
-constexpr int _button_height = 24;
-
 constinit bool _toolbar_visible = false;
 constinit bool _toolbar_hovered = false;
 constinit bool _toolbar_focused = false;
@@ -58,7 +55,7 @@ void _prepare_window_position()
 
 void _tool_button(const DocumentModel& model,
                   entt::dispatcher& dispatcher,
-                  const char* label,
+                  const char* icon,
                   const char* tooltip,
                   const ToolType tool)
 {
@@ -68,11 +65,7 @@ void _tool_button(const DocumentModel& model,
     ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 180, 0, 0xFF));
   }
 
-  if (button(label,
-             tooltip,
-             model.is_tool_possible(tool),
-             _button_width,
-             _button_height)) {
+  if (icon_button(icon, tooltip, model.is_tool_possible(tool))) {
     dispatcher.enqueue<SelectToolEvent>(tool);
   }
 
@@ -115,17 +108,17 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
     _toolbar_hovered = ImGui::IsWindowHovered();
     _toolbar_focused = window.has_focus();
 
-    if (button(TAC_ICON_UNDO, "Undo", model.can_undo(), _button_width, _button_height)) {
+    if (icon_button(TAC_ICON_UNDO, "Undo", model.can_undo())) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (button(TAC_ICON_REDO, "Redo", model.can_redo(), _button_width, _button_height)) {
+    if (icon_button(TAC_ICON_REDO, "Redo", model.can_redo())) {
       dispatcher.enqueue<RedoEvent>();
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (button(TAC_ICON_TILESET, "Create tileset", true, _button_width, _button_height)) {
+    if (icon_button(TAC_ICON_TILESET, "Create tileset")) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
@@ -149,13 +142,11 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
 
     if (model.is_tool_active(ToolType::stamp)) {
       const auto& registry = model.get_active_registry();
-      _show_extra_toolbar([&registry] {
-        if (button(TAC_ICON_STAMP_RANDOMIZER,
-                   "Stamp random tile",
-                   sys::is_tileset_selection_not_empty(registry) &&
-                       !sys::is_single_tile_selected_in_tileset(registry),
-                   _button_width,
-                   _button_height)) {
+      _show_extra_toolbar([=, &registry] {
+        if (icon_button(TAC_ICON_STAMP_RANDOMIZER,
+                        "Stamp random tile",
+                        sys::is_tileset_selection_not_empty(registry) &&
+                            !sys::is_single_tile_selected_in_tileset(registry))) {
           // TODO emit randomizer mode event
         }
       });
