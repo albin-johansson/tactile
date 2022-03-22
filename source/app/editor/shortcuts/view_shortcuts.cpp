@@ -94,9 +94,12 @@ void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
 auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&,
                                           const WidgetManager&) const -> bool
 {
+  const auto& prefs = get_preferences();
+
   /* Check for modals to avoid case of changing font size when settings dialog is open */
-  return !ImGui::GetTopMostPopupModal() &&
-         get_preferences().font_size() < get_max_font_size();
+  return !ImGui::GetTopMostPopupModal() &&  //
+         !prefs.use_default_font() &&       //
+         prefs.font_size() < get_max_font_size();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -113,9 +116,12 @@ void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
 auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&,
                                           const WidgetManager&) const -> bool
 {
+  const auto& prefs = get_preferences();
+
   /* Check for modals to avoid case of changing font size when settings dialog is open */
-  return !ImGui::GetTopMostPopupModal() &&
-         get_preferences().font_size() > get_min_font_size();
+  return !ImGui::GetTopMostPopupModal() &&  //
+         !prefs.use_default_font() &&       //
+         prefs.font_size() > get_min_font_size();
 }
 
 /* ------------------------------------------------------------------------------------ */

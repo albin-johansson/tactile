@@ -125,18 +125,18 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem("Increase Font Size",
                         TACTILE_PRIMARY_MOD "+Shift+Plus",
                         false,
-                        fontSize < get_max_font_size())) {
+                        !prefs.use_default_font() && fontSize < get_max_font_size())) {
       dispatcher.enqueue<IncreaseFontSizeEvent>();
     }
 
     if (ImGui::MenuItem("Decrease Font Size",
                         TACTILE_PRIMARY_MOD "+Shift+Minus",
                         false,
-                        fontSize > get_min_font_size())) {
+                        !prefs.use_default_font() && fontSize > get_min_font_size())) {
       dispatcher.enqueue<DecreaseFontSizeEvent>();
     }
 
-    if (ImGui::MenuItem("Reset Font Size")) {
+    if (ImGui::MenuItem("Reset Font Size", nullptr, false, !prefs.use_default_font())) {
       dispatcher.enqueue<ResetFontSizeEvent>();
     }
 
