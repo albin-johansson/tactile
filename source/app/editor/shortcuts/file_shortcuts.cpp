@@ -45,17 +45,6 @@ void OpenMapShortcut::activate(entt::dispatcher& dispatcher)
 
 /* ------------------------------------------------------------------------------------ */
 
-OpenSettingsShortcut::OpenSettingsShortcut()
-    : AShortcut{SDL_SCANCODE_COMMA, primary_modifier}
-{}
-
-void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
-{
-  dispatcher.enqueue<ShowSettingsEvent>();
-}
-
-/* ------------------------------------------------------------------------------------ */
-
 SaveShortcut::SaveShortcut() : AShortcut{cen::scancodes::s, primary_modifier} {}
 
 void SaveShortcut::activate(entt::dispatcher& dispatcher)

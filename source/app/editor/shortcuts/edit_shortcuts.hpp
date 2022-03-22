@@ -163,4 +163,11 @@ struct EnablePointToolShortcut final : AShortcut
                                 const WidgetManager& widgets) const -> bool override;
 };
 
+struct OpenSettingsShortcut final : AShortcut
+{
+  OpenSettingsShortcut();
+
+  void activate(entt::dispatcher& dispatcher) override;
+};
+
 }  // namespace tactile

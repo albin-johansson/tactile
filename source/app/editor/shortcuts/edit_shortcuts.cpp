@@ -22,6 +22,7 @@
 #include "core/map.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/map_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
 #include "editor/gui/menus/map_menu.hpp"
@@ -259,6 +260,17 @@ auto EnablePointToolShortcut::is_enabled(const DocumentModel& model,
                                          const WidgetManager& widgets) const -> bool
 {
   return model.is_tool_possible(ToolType::point) && widgets.is_editor_focused();
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+OpenSettingsShortcut::OpenSettingsShortcut()
+    : AShortcut{SDL_SCANCODE_COMMA, primary_modifier}
+{}
+
+void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<ShowSettingsEvent>();
 }
 
 }  // namespace tactile

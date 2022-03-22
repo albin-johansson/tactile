@@ -37,13 +37,6 @@ struct OpenMapShortcut final : AShortcut
   void activate(entt::dispatcher& dispatcher) override;
 };
 
-struct OpenSettingsShortcut final : AShortcut
-{
-  OpenSettingsShortcut();
-
-  void activate(entt::dispatcher& dispatcher) override;
-};
-
 struct SaveShortcut final : AShortcut
 {
   SaveShortcut();
