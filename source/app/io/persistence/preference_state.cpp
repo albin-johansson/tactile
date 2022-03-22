@@ -58,10 +58,16 @@ constexpr uint64 _bit_show_viewport_overlay_fps = 1u << 12u;
 constexpr uint64 _bit_highlight_active_layer = 1u << 13u;
 constexpr uint64 _bit_use_default_font = 1u << 14u;
 
-constexpr uint64 _def_flags = _bit_show_grid | _bit_indent_output | _bit_show_layer_dock |
-                              _bit_show_tileset_dock | _bit_show_property_dock |
-                              _bit_show_component_dock | _bit_restore_layout |
-                              _bit_restore_last_session | _bit_show_viewport_overlay_fps;
+constexpr uint64 _def_flags = _bit_show_grid |                  //
+                              _bit_indent_output |              //
+                              _bit_show_layer_dock |            //
+                              _bit_show_tileset_dock |          //
+                              _bit_show_property_dock |         //
+                              _bit_show_component_dock |        //
+                              _bit_restore_layout |             //
+                              _bit_restore_last_session |       //
+                              _bit_show_viewport_overlay_fps |  //
+                              _bit_use_default_font;
 
 }  // namespace
 
