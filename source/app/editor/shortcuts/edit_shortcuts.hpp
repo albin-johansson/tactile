@@ -170,4 +170,11 @@ struct OpenSettingsShortcut final : AShortcut
   void activate(entt::dispatcher& dispatcher) override;
 };
 
+struct OpenComponentEditorShortcut final : AShortcut
+{
+  OpenComponentEditorShortcut();
+
+  void activate(entt::dispatcher& dispatcher) override;
+};
+
 }  // namespace tactile

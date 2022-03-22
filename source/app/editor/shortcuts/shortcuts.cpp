@@ -44,7 +44,6 @@ void load_default_shortcuts()
   // File
   _load_shortcut<NewMapShortcut>();
   _load_shortcut<OpenMapShortcut>();
-  _load_shortcut<OpenSettingsShortcut>();
   _load_shortcut<SaveShortcut>();
   _load_shortcut<SaveAsShortcut>();
 
@@ -60,12 +59,8 @@ void load_default_shortcuts()
   _load_shortcut<EnableEllipseToolShortcut>();
   _load_shortcut<EnablePointToolShortcut>();
 
-  _load_shortcut<AddRowShortcut>();
-  _load_shortcut<AddColumnShortcut>();
-  _load_shortcut<RemoveRowShortcut>();
-  _load_shortcut<RemoveColumnShortcut>();
-
-  _load_shortcut<AddTilesetShortcut>();
+  _load_shortcut<OpenComponentEditorShortcut>();
+  _load_shortcut<OpenSettingsShortcut>();
 
   // View
   _load_shortcut<CenterViewportShortcut>();
@@ -83,6 +78,14 @@ void load_default_shortcuts()
   _load_shortcut<PanLeftShortcut>();
   _load_shortcut<PanUpShortcut>();
   _load_shortcut<PanDownShortcut>();
+
+  // Map
+  _load_shortcut<AddTilesetShortcut>();
+
+  _load_shortcut<AddRowShortcut>();
+  _load_shortcut<AddColumnShortcut>();
+  _load_shortcut<RemoveRowShortcut>();
+  _load_shortcut<RemoveColumnShortcut>();
 }
 
 void update_shortcuts(const DocumentModel& model,

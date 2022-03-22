@@ -21,6 +21,7 @@
 
 #include "core/map.hpp"
 #include "editor/events/command_events.hpp"
+#include "editor/events/component_events.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/events/tileset_events.hpp"
@@ -271,6 +272,17 @@ OpenSettingsShortcut::OpenSettingsShortcut()
 void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ShowSettingsEvent>();
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+OpenComponentEditorShortcut::OpenComponentEditorShortcut()
+    : AShortcut{cen::scancodes::c, primary_modifier | cen::key_mod::lshift}
+{}
+
+void OpenComponentEditorShortcut::activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<OpenComponentEditorEvent>();
 }
 
 }  // namespace tactile

@@ -107,7 +107,7 @@ void EditMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...",
-                        nullptr,
+                        TACTILE_PRIMARY_MOD "+Shift+C",
                         false,
                         model.has_active_document())) {
       mComponentEditor.show(model);
