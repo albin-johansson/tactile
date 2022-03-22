@@ -67,6 +67,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     ImGui::TableSetupColumn("License");
     ImGui::TableHeadersRow();
 
+    _row("Boost", "BSL-1.0");
     _row("Centurion", "MIT");
     _row("cpp-codec", "MIT");
     _row("Dear ImGui", "MIT");

@@ -37,7 +37,7 @@ void HelpMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
       mAboutDialog.show();
     }
 
-    mShowAboutImGui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
+    mShowAboutImGui = ImGui::MenuItem("About Dear ImGui...");
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_BUG " Report Issue...")) {

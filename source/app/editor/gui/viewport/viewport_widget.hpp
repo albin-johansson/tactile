@@ -26,6 +26,9 @@ namespace tactile {
 class DocumentModel;
 class IconManager;
 
+/// \name Viewport widget functions
+/// \{
+
 /**
  * \brief Updates the state of the primary viewport widget.
  *
@@ -45,5 +48,7 @@ void center_viewport();
 [[nodiscard]] auto is_viewport_focused() noexcept -> bool;
 
 [[nodiscard]] auto is_mouse_within_viewport() noexcept -> bool;
+
+/// \} End of viewport widget functions
 
 }  // namespace tactile

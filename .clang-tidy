@@ -15,6 +15,8 @@ Checks: "-*,
          -readability-function-cognitive-complexity,
 
          modernize-*,
+        -modernize-avoid-c-arrays,
+        
          clang-analyzer-*,
          
          misc-*,
@@ -28,5 +30,6 @@ Checks: "-*,
          -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
          -cppcoreguidelines-pro-type-vararg,
          -cppcoreguidelines-owning-memory,
-         -cppcoreguidelines-avoid-goto
+         -cppcoreguidelines-avoid-goto,
+         -cppcoreguidelines-avoid-c-arrays
          "

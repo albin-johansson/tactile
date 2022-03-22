@@ -44,6 +44,8 @@ auto UndoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) 
   return model.can_undo();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 RedoShortcut::RedoShortcut() : AShortcut{cen::scancodes::y, primary_modifier} {}
 
 void RedoShortcut::activate(entt::dispatcher& dispatcher)
@@ -56,6 +58,8 @@ auto RedoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) 
 {
   return model.can_redo();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 AddRowShortcut::AddRowShortcut() : AShortcut{cen::scancodes::r, secondary_modifier} {}
 
@@ -70,6 +74,8 @@ auto AddRowShortcut::is_enabled(const DocumentModel& model, const WidgetManager&
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 AddColumnShortcut::AddColumnShortcut() : AShortcut{cen::scancodes::c, secondary_modifier}
 {}
 
@@ -83,6 +89,8 @@ auto AddColumnShortcut::is_enabled(const DocumentModel& model, const WidgetManag
 {
   return model.has_active_document();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 RemoveRowShortcut::RemoveRowShortcut()
     : AShortcut{cen::scancodes::r, secondary_modifier | cen::key_mod::lshift}
@@ -105,6 +113,8 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManag
   }
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 RemoveColumnShortcut::RemoveColumnShortcut()
     : AShortcut{cen::scancodes::c, secondary_modifier | cen::key_mod::lshift}
 {}
@@ -126,6 +136,8 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
   }
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 AddTilesetShortcut::AddTilesetShortcut() : AShortcut{cen::scancodes::t, primary_modifier}
 {}
 
@@ -140,6 +152,8 @@ auto AddTilesetShortcut::is_enabled(const DocumentModel& model,
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}
 
 void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
@@ -152,6 +166,8 @@ auto EnableBucketShortcut::is_enabled(const DocumentModel& model,
 {
   return model.is_tool_possible(ToolType::bucket) && widgets.is_editor_focused();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
 
@@ -166,6 +182,8 @@ auto EnableEraserShortcut::is_enabled(const DocumentModel& model,
   return model.is_tool_possible(ToolType::eraser) && widgets.is_editor_focused();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
 
 void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
@@ -178,6 +196,8 @@ auto EnableStampShortcut::is_enabled(const DocumentModel& model,
 {
   return model.is_tool_possible(ToolType::stamp) && widgets.is_editor_focused();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
     : AShortcut{cen::scancodes::q}
@@ -195,6 +215,8 @@ auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model,
          widgets.is_editor_focused();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 EnableRectangleToolShortcut::EnableRectangleToolShortcut() : AShortcut{cen::scancodes::r}
 {}
 
@@ -209,6 +231,8 @@ auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model,
   return model.is_tool_possible(ToolType::rectangle) && widgets.is_editor_focused();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 EnableEllipseToolShortcut::EnableEllipseToolShortcut() : AShortcut{cen::scancodes::t} {}
 
 void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
@@ -221,6 +245,8 @@ auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model,
 {
   return model.is_tool_possible(ToolType::ellipse) && widgets.is_editor_focused();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 EnablePointToolShortcut::EnablePointToolShortcut() : AShortcut{cen::scancodes::y} {}
 

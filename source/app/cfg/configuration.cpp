@@ -96,7 +96,15 @@ AppConfiguration::AppConfiguration()
   TACTILE_ASSERT(mWindow.has_value());
 
   _win32_use_immersive_dark_mode(*mWindow);
-  mWindow->set_icon(cen::surface{find_resource("resources/icon.png").string()});
+
+  /* This is ugly, but it's necessary to allow macOS builds in different flavours */
+#ifdef TACTILE_BUILD_APP_BUNDLE
+  const auto iconPath = find_resource("Tactile.icns");
+#else
+  const auto iconPath = find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
+#endif
+
+  mWindow->set_icon(cen::surface{iconPath.string()});
 
   mOpenGL.emplace(*mWindow);
   mOpenGL->make_current(*mWindow);

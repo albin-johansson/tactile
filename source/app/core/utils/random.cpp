@@ -17,14 +17,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "random.hpp"
 
-#include "tactile.hpp"
+#include <algorithm>   // generate
+#include <array>       // array
+#include <functional>  // ref
+#include <random>      // random_device, seed_seq
 
 namespace tactile {
 
-void begin_docking_toolbar(const char* name, int& axis);
+auto make_random_engine() -> RandomEngine
+{
+  using result_type = std::random_device::result_type;
 
-void end_docking_toolbar();
+  constexpr auto n = RandomEngine::state_size;
+
+  std::random_device device;
+  std::array<result_type, (n - 1) / sizeof(result_type) + 1> data{};
+
+  std::generate(data.begin(), data.end(), std::ref(device));
+  std::seed_seq seeds(data.begin(), data.end());
+
+  return RandomEngine(seeds);
+}
+
+auto next_bool() -> bool
+{
+  return next_random(0, 100) <= 50;
+}
+
+auto next_float() -> float
+{
+  return next_random(0.0f, 1.0f);
+}
 
 }  // namespace tactile

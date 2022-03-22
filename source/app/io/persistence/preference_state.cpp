@@ -25,6 +25,7 @@
 
 #include <magic_enum.hpp>
 
+#include "cfg/fonts.hpp"
 #include "misc/logging.hpp"
 #include "proto.hpp"
 
@@ -54,16 +55,24 @@ constexpr uint64 _bit_restore_layout = 1u << 9u;
 constexpr uint64 _bit_restore_last_session = 1u << 10u;
 constexpr uint64 _bit_show_component_dock = 1u << 11u;
 constexpr uint64 _bit_show_viewport_overlay_fps = 1u << 12u;
+constexpr uint64 _bit_highlight_active_layer = 1u << 13u;
+constexpr uint64 _bit_use_default_font = 1u << 14u;
 
-constexpr uint64 _def_flags = _bit_show_grid | _bit_indent_output | _bit_show_layer_dock |
-                              _bit_show_tileset_dock | _bit_show_property_dock |
-                              _bit_show_component_dock | _bit_restore_layout |
-                              _bit_restore_last_session | _bit_show_viewport_overlay_fps;
+constexpr uint64 _def_flags = _bit_show_grid |                  //
+                              _bit_indent_output |              //
+                              _bit_show_layer_dock |            //
+                              _bit_show_tileset_dock |          //
+                              _bit_show_property_dock |         //
+                              _bit_show_component_dock |        //
+                              _bit_restore_layout |             //
+                              _bit_restore_last_session |       //
+                              _bit_show_viewport_overlay_fps |  //
+                              _bit_use_default_font;
 
 }  // namespace
 
 #define PRINT_FLAG(Name, Mask) \
-  log_info(Name "... {}", (mData->flags & (Mask)) ? "yes" : "no")
+  log_debug(Name "... {}", (mData->flags & (Mask)) ? "yes" : "no")
 
 struct PreferenceState::Data
 {
@@ -73,9 +82,11 @@ struct PreferenceState::Data
   cen::color viewport_background{_def_viewport_bg};
 
   usize command_capacity{_def_command_capacity};
+
   int32 preferred_tile_width{_def_preferred_tile_width};
   int32 preferred_tile_height{_def_preferred_tile_height};
   int32 viewport_overlay_pos{_def_viewport_overlay_pos};
+  int32 font_size{get_default_font_size()};
 
   uint64 flags{_def_flags};
 };
@@ -105,22 +116,26 @@ PreferenceState::~PreferenceState() noexcept = default;
 
 void PreferenceState::print()
 {
-  log_info("Theme... {}", magic_enum::enum_name(mData->theme));
-  log_info("Viewport background... {}", mData->viewport_background.as_rgb());
+  log_debug("Theme... {}", magic_enum::enum_name(mData->theme));
+  log_debug("Viewport background... {}", mData->viewport_background.as_rgb());
 
-  log_info("Command capacity... {}", mData->command_capacity);
-  log_info("Preferred tile width... {}", mData->preferred_tile_width);
-  log_info("Preferred tile height... {}", mData->preferred_tile_height);
+  log_debug("Command capacity... {}", mData->command_capacity);
+  log_debug("Preferred tile width... {}", mData->preferred_tile_width);
+  log_debug("Preferred tile height... {}", mData->preferred_tile_height);
 
-  log_info("Preferred format... {}", mData->preferred_format);
-  log_info("Viewport overlay pos... {}", mData->viewport_overlay_pos);
+  log_debug("Preferred format... {}", mData->preferred_format);
+  log_debug("Viewport overlay pos... {}", mData->viewport_overlay_pos);
   PRINT_FLAG("Show FPS in viewport overlay", _bit_show_viewport_overlay_fps);
+
+  log_debug("Font size... {}", mData->font_size);
+  PRINT_FLAG("Use default font", _bit_use_default_font);
 
   PRINT_FLAG("Embed tilesets", _bit_embed_tilesets);
   PRINT_FLAG("Indent output", _bit_indent_output);
   PRINT_FLAG("Fold tile data", _bit_fold_tile_data);
 
   PRINT_FLAG("Show grid", _bit_show_grid);
+  PRINT_FLAG("Highlight active layer", _bit_highlight_active_layer);
   PRINT_FLAG("Show layer dock", _bit_show_layer_dock);
   PRINT_FLAG("Show log dock", _bit_show_log_dock);
   PRINT_FLAG("Show tileset dock", _bit_show_tileset_dock);
@@ -152,6 +167,10 @@ void PreferenceState::parse(const std::filesystem::path& path)
 
     if (cfg.has_show_grid()) {
       set_flag(_bit_show_grid, cfg.show_grid());
+    }
+
+    if (cfg.has_highlight_active_layer()) {
+      set_flag(_bit_highlight_active_layer, cfg.highlight_active_layer());
     }
 
     if (cfg.has_window_border()) {
@@ -221,6 +240,14 @@ void PreferenceState::parse(const std::filesystem::path& path)
     if (cfg.has_viewport_overlay_show_fps()) {
       set_flag(_bit_show_viewport_overlay_fps, cfg.viewport_overlay_show_fps());
     }
+
+    if (cfg.has_use_default_font()) {
+      set_flag(_bit_use_default_font, cfg.use_default_font());
+    }
+
+    if (cfg.has_font_size()) {
+      mData->font_size = cfg.font_size();
+    }
   }
 }
 
@@ -230,6 +257,7 @@ void PreferenceState::save(const std::filesystem::path& path)
 
   cfg.set_theme(static_cast<proto::Theme>(mData->theme));
   cfg.set_show_grid(is_grid_visible());
+  cfg.set_highlight_active_layer(highlight_active_layer());
   cfg.set_window_border(has_window_border());
 
   {
@@ -261,6 +289,9 @@ void PreferenceState::save(const std::filesystem::path& path)
       proto::OverlayPos{cen::to_underlying(viewport_overlay_pos())});
   cfg.set_viewport_overlay_show_fps(viewport_overlay_show_fps());
 
+  cfg.set_use_default_font(use_default_font());
+  cfg.set_font_size(font_size());
+
   std::ofstream stream{path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
     log_error("Failed to save preferences!");
@@ -277,6 +308,9 @@ void PreferenceState::reset_appearance_preferences()
 
   /* Note, not technically an appearance setting, but it is to the user */
   reset_flag(_bit_restore_layout);
+
+  reset_flag(_bit_use_default_font);
+  mData->font_size = get_default_font_size();
 }
 
 void PreferenceState::reset_behavior_preferences()
@@ -394,6 +428,16 @@ auto PreferenceState::is_grid_visible() const -> bool
   return test_flag(_bit_show_grid);
 }
 
+void PreferenceState::set_highlight_active_layer(const bool highlight)
+{
+  set_flag(_bit_highlight_active_layer, highlight);
+}
+
+auto PreferenceState::highlight_active_layer() const -> bool
+{
+  return test_flag(_bit_highlight_active_layer);
+}
+
 void PreferenceState::set_embed_tilesets(const bool embed)
 {
   set_flag(_bit_embed_tilesets, embed);
@@ -489,7 +533,7 @@ void PreferenceState::set_preferred_tile_width(const int32 width)
   mData->preferred_tile_width = width;
 }
 
-auto PreferenceState::preferred_tile_width() const -> int
+auto PreferenceState::preferred_tile_width() const -> int32
 {
   return mData->preferred_tile_width;
 }
@@ -499,9 +543,29 @@ void PreferenceState::set_preferred_tile_height(const int32 height)
   mData->preferred_tile_height = height;
 }
 
-auto PreferenceState::preferred_tile_height() const -> int
+auto PreferenceState::preferred_tile_height() const -> int32
 {
   return mData->preferred_tile_height;
+}
+
+void PreferenceState::set_font_size(const int32 size)
+{
+  mData->font_size = size;
+}
+
+auto PreferenceState::font_size() const -> int32
+{
+  return mData->font_size;
+}
+
+void PreferenceState::set_use_default_font(const bool use)
+{
+  set_flag(_bit_use_default_font, use);
+}
+
+auto PreferenceState::use_default_font() const -> bool
+{
+  return test_flag(_bit_use_default_font);
 }
 
 void PreferenceState::set_flag(const uint64 flag, const bool value) noexcept

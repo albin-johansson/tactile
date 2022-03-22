@@ -26,6 +26,7 @@
 
 #include "application_events.hpp"
 #include "cfg/configuration.hpp"
+#include "cfg/fonts.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
@@ -34,8 +35,8 @@
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
-#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
+#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/maps/parser/parse_map.hpp"
@@ -44,6 +45,7 @@
 #include "io/persistence/history.hpp"
 #include "io/persistence/preferences.hpp"
 #include "io/persistence/session.hpp"
+#include "misc/assert.hpp"
 #include "misc/logging.hpp"
 
 namespace tactile {
@@ -105,6 +107,14 @@ void Application::on_shutdown()
 
   auto& window = mConfiguration->window();
   window.hide();
+}
+
+void Application::on_pre_update()
+{
+  if (mReloadFonts) {
+    reload_fonts();
+    mReloadFonts = false;
+  }
 }
 
 void Application::on_update()
@@ -441,6 +451,32 @@ void Application::on_reset_zoom()
   sys::reset_viewport_zoom(registry);
 }
 
+void Application::on_reset_font_size()
+{
+  get_preferences().set_font_size(get_default_font_size());
+  mReloadFonts = true;
+}
+
+void Application::on_increase_font_size()
+{
+  auto& prefs = get_preferences();
+
+  TACTILE_ASSERT(prefs.font_size() + 2 <= get_max_font_size());
+  prefs.set_font_size(prefs.font_size() + 2);
+
+  mReloadFonts = true;
+}
+
+void Application::on_decrease_font_size()
+{
+  auto& prefs = get_preferences();
+
+  TACTILE_ASSERT(prefs.font_size() - 2 >= get_min_font_size());
+  prefs.set_font_size(prefs.font_size() - 2);
+
+  mReloadFonts = true;
+}
+
 void Application::on_show_tileset_creation_dialog()
 {
   mWidgets.show_add_tileset_dialog();
@@ -735,7 +771,6 @@ void Application::on_toggle_ui()
     mWidgetShowState.prev_show_property_dock = prefs.is_property_dock_visible();
     mWidgetShowState.prev_show_log_dock = prefs.is_log_dock_visible();
     mWidgetShowState.prev_show_component_dock = prefs.is_component_dock_visible();
-    mWidgetShowState.prev_show_toolbar = mWidgets.is_toolbar_visible();
   }
 
   prefs.set_layer_dock_visible(show);
@@ -744,19 +779,20 @@ void Application::on_toggle_ui()
   prefs.set_component_dock_visible(show);
   prefs.set_log_dock_visible(show);
 
-  mWidgets.set_toolbar_visible(show);
-
   if (show) {
     prefs.set_layer_dock_visible(mWidgetShowState.prev_show_layer_dock);
     prefs.set_tileset_dock_visible(mWidgetShowState.prev_show_tileset_dock);
     prefs.set_property_dock_visible(mWidgetShowState.prev_show_property_dock);
     prefs.set_log_dock_visible(mWidgetShowState.prev_show_log_dock);
     prefs.set_component_dock_visible(mWidgetShowState.prev_show_component_dock);
-
-    mWidgets.set_toolbar_visible(mWidgetShowState.prev_show_toolbar);
   }
 
   show = !show;
+}
+
+void Application::on_reload_fonts()
+{
+  mReloadFonts = true;
 }
 
 void Application::on_quit()

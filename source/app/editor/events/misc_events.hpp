@@ -46,6 +46,18 @@ struct SaveAsEvent final
 struct OpenSaveAsDialogEvent final
 {};
 
+struct ReloadFontsEvent final
+{};
+
+struct ResetFontSizeEvent final
+{};
+
+struct IncreaseFontSizeEvent final
+{};
+
+struct DecreaseFontSizeEvent final
+{};
+
 /// \} End of group events
 
 }  // namespace tactile

@@ -19,45 +19,29 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
 #include <string>  // string
 
 #include <entt/entt.hpp>
 
 #include "core/attribute.hpp"
-#include "editor/gui/common/dock_widget.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 
 class DocumentModel;
 
-class PropertyDock final : public ADockWidget
-{
- public:
-  TACTILE_DELETE_COPY(PropertyDock)
-  TACTILE_DEFAULT_MOVE(PropertyDock)
+/// \name Property dock functions
+/// \{
 
-  PropertyDock();
+void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  ~PropertyDock() noexcept override;
+void show_add_property_dialog();
 
-  void show_add_property_dialog();
+void show_rename_property_dialog(const std::string& name);
 
-  void show_rename_property_dialog(const std::string& name);
+void show_change_property_type_dialog(std::string name, AttributeType type);
 
-  void show_change_property_type_dialog(std::string name, AttributeType type);
+[[nodiscard]] auto is_property_dock_focused() -> bool;
 
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void set_visible(bool visible) override;
-
-  [[nodiscard]] auto is_visible() const -> bool override;
-
- private:
-  struct Data;
-  std::unique_ptr<Data> mData;
-};
+/// \} End of property dock functions
 
 }  // namespace tactile

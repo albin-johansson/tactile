@@ -27,140 +27,151 @@
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "dialogs/rename_layer_dialog.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/layers/views/layer_item.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
-#include "editor/gui/layers/views/layer_item.hpp"
 #include "misc/assert.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
+namespace {
 
-struct LayerDock::Data final
-{
-  RenameLayerDialog rename_layer_dialog;
-  AddLayerContextMenu add_layer_context_menu;
-  Maybe<layer_id> rename_target;
-};
+inline RenameLayerDialog _rename_layer_dialog;
+inline AddLayerContextMenu _add_layer_context_menu;
+inline Maybe<layer_id> _rename_target_id;
+constinit bool _is_focused = false;
 
-LayerDock::LayerDock()
-    : ADockWidget{"Layers", ImGuiWindowFlags_NoCollapse}
-    , mData{std::make_unique<Data>()}
-{
-  set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
-}
-
-LayerDock::~LayerDock() noexcept = default;
-
-void LayerDock::show_rename_layer_dialog(const layer_id id)
-{
-  mData->rename_target = id;
-}
-
-void LayerDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-
-  {
-    update_buttons(model, registry, dispatcher);
-    ImGui::SameLine();
-
-    scoped::Group group;
-    if (registry.view<comp::Layer>().empty()) {
-      prepare_vertical_alignment_center(1);
-      centered_text("No available layers!");
-    }
-    else {
-      const ImVec2 size{-min_float, -min_float};
-      if (scoped::ListBox list{"##LayerTreeNode", size}; list.is_open()) {
-        for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
-          /* Note, we rely on the layer_tree_node pool being sorted, so we can't include
-             other components in the view query directly. */
-          const auto& parent = registry.get<comp::Parent>(entity);
-          if (parent.entity == entt::null) {
-            layer_item_view(registry, dispatcher, entity);
-          }
-        }
-      }
-    }
-  }
-
-  auto& renameTarget = mData->rename_target;
-  auto& renameLayerDialog = mData->rename_layer_dialog;
-
-  if (renameTarget.has_value()) {
-    const auto target = *renameTarget;
-
-    const auto entity = sys::find_layer(registry, target);
-    TACTILE_ASSERT(entity != entt::null);
-
-    const auto& context = registry.get<comp::AttributeContext>(entity);
-
-    renameLayerDialog.show(target, context.name);
-    renameTarget.reset();
-  }
-
-  renameLayerDialog.update(model, dispatcher);
-}
-
-void LayerDock::set_visible(const bool visible)
-{
-  auto& prefs = get_preferences();
-  prefs.set_layer_dock_visible(visible);
-}
-
-auto LayerDock::is_visible() const -> bool
-{
-  const auto& prefs = get_preferences();
-  return prefs.is_layer_dock_visible();
-}
-
-void LayerDock::update_buttons(const DocumentModel& model,
-                               const entt::registry& registry,
-                               entt::dispatcher& dispatcher)
-{
   const auto activeLayerEntity = registry.ctx<comp::ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
   Maybe<layer_id> activeLayerId;
   if (hasActiveLayer) {
-    const auto& layer = registry.get<comp::Layer>(activeLayerEntity);
+    const auto& layer = sys::checked_get<comp::Layer>(registry, activeLayerEntity);
     activeLayerId = layer.id;
   }
 
   scoped::Group group;
 
-  if (button(TAC_ICON_ADD, "Add new layer")) {
-    mData->add_layer_context_menu.show();
+  if (icon_button(TAC_ICON_ADD, "Add new layer")) {
+    _add_layer_context_menu.show();
   }
 
-  mData->add_layer_context_menu.update(model, dispatcher);
+  _add_layer_context_menu.update(model, dispatcher);
 
-  if (button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
-    dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
+  if (icon_button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
+    dispatcher.enqueue<RemoveLayerEvent>(activeLayerId.value());
   }
 
-  if (button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
-    dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
+  if (icon_button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
+    dispatcher.enqueue<DuplicateLayerEvent>(activeLayerId.value());
   }
 
-  if (button(TAC_ICON_MOVE_UP,
-             "Move layer up",
-             hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
-    dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
+  if (icon_button(
+          TAC_ICON_MOVE_UP,
+          "Move layer up",
+          hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
+    dispatcher.enqueue<MoveLayerUpEvent>(activeLayerId.value());
   }
 
-  if (button(TAC_ICON_MOVE_DOWN,
-             "Move layer down",
-             hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
-    dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
+  if (icon_button(
+          TAC_ICON_MOVE_DOWN,
+          "Move layer down",
+          hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
+    dispatcher.enqueue<MoveLayerDownEvent>(activeLayerId.value());
   }
+}
+
+void _update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatcher)
+{
+  if (_rename_target_id.has_value()) {
+    const auto targetLayerId = *_rename_target_id;
+
+    const auto& registry = model.get_active_registry();
+    const auto entity = sys::find_layer(registry, targetLayerId);
+
+    TACTILE_ASSERT(entity != entt::null);
+    const auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
+
+    _rename_layer_dialog.show(targetLayerId, context.name);
+    _rename_target_id.reset();
+  }
+
+  _rename_layer_dialog.update(model, dispatcher);
+}
+
+void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
+{
+  _update_side_buttons(model, dispatcher);
+
+  ImGui::SameLine();
+  scoped::Group group;
+
+  const auto& registry = model.get_active_registry();
+  if (registry.view<comp::Layer>().empty()) {
+    prepare_vertical_alignment_center(1);
+    centered_text("This map has no layers!");
+  }
+  else {
+    const ImVec2 size{-min_float, -min_float};
+    if (scoped::ListBox list{"##LayerTreeNode", size}; list.is_open()) {
+      /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
+         other components in the view query directly. */
+      for (auto&& [entity, _] : registry.view<comp::LayerTreeNode>().each()) {
+        const auto& parent = sys::checked_get<comp::Parent>(registry, entity);
+        if (parent.entity == entt::null) {
+          layer_item_view(registry, dispatcher, entity);
+        }
+      }
+    }
+  }
+
+  _update_rename_dialog(model, dispatcher);
+}
+
+}  // namespace
+
+void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
+{
+  TACTILE_ASSERT(model.has_active_document());
+
+  auto& prefs = get_preferences();
+  bool visible = prefs.is_layer_dock_visible();
+
+  if (!visible) {
+    return;
+  }
+
+  constexpr auto flags = ImGuiWindowFlags_NoCollapse;
+
+  scoped::Window dock{"Layers", flags, &visible};
+  _is_focused = dock.is_open() &&  //
+                ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
+
+  if (dock.is_open()) {
+    _update_contents(model, dispatcher);
+  }
+
+  prefs.set_layer_dock_visible(visible);
+}
+
+void show_rename_layer_dialog(const layer_id layerId)
+{
+  _rename_target_id = layerId;
+}
+
+auto is_layer_dock_focused() -> bool
+{
+  return _is_focused;
 }
 
 }  // namespace tactile

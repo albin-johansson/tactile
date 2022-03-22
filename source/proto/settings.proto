@@ -45,6 +45,7 @@ message Settings {
   optional uint64 command_capacity = 17;
 
   optional bool show_grid = 18;
+  optional bool highlight_active_layer = 5;
   optional bool window_border = 19;
 
   optional bool restore_last_session = 20;
@@ -61,4 +62,7 @@ message Settings {
 
   optional OverlayPos viewport_overlay_pos = 27;
   optional bool viewport_overlay_show_fps = 29;
+
+  optional bool use_default_font = 6;
+  optional int32 font_size = 7;  /* Only applies when the default font is not used */
 }

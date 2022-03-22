@@ -19,15 +19,23 @@
 
 #pragma once
 
-#include "tactile.hpp"
+#include <entt/entt.hpp>
 
 namespace tactile {
 
-auto tool_button(const char* label,
-                 const char* tooltip,
-                 bool selected,
-                 bool enabled = true,
-                 float width = 0,
-                 float height = 0) -> bool;
+class DocumentModel;
+
+/// \name Toolbar functions
+/// \{
+
+void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher);
+
+[[nodiscard]] auto is_toolbar_visible() -> bool;
+
+[[nodiscard]] auto is_toolbar_hovered() -> bool;
+
+[[nodiscard]] auto is_toolbar_focused() -> bool;
+
+/// \} End of toolbar functions
 
 }  // namespace tactile

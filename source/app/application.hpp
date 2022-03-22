@@ -52,7 +52,6 @@ struct WidgetShowState final
   bool prev_show_tileset_dock{};
   bool prev_show_property_dock{};
   bool prev_show_log_dock{};
-  bool prev_show_toolbar{};
   bool prev_show_component_dock{};
 };
 
@@ -76,6 +75,8 @@ class Application final : AEventLoop
 
   void on_shutdown() override;
 
+  void on_pre_update() override;
+
   void on_update() override;
 
   void on_event(const cen::event_handler& handler) override;
@@ -88,6 +89,7 @@ class Application final : AEventLoop
   IconManager mIcons;
   WidgetManager mWidgets;
   WidgetShowState mWidgetShowState;
+  bool mReloadFonts{};
 
   template <typename Event, auto Slot>
   void connect()
@@ -172,6 +174,12 @@ class Application final : AEventLoop
   void on_decrease_zoom();
 
   void on_reset_zoom();
+
+  void on_reset_font_size();
+
+  void on_increase_font_size();
+
+  void on_decrease_font_size();
 
   void on_show_tileset_creation_dialog();
 
@@ -275,6 +283,8 @@ class Application final : AEventLoop
   void on_reset_component_values(const ResetComponentValuesEvent& event);
 
   void on_toggle_ui();
+
+  void on_reload_fonts();
 
   void on_quit();
 };

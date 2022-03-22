@@ -40,8 +40,6 @@ namespace {
 
 constexpr auto _add_component_popup_id = "##AddComponentButtonPopup";
 
-constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-
 void _show_add_component_button_popup_content(const entt::registry& registry,
                                               entt::dispatcher& dispatcher,
                                               const context_id contextId)
@@ -67,21 +65,12 @@ void _show_add_component_button_popup_content(const entt::registry& registry,
   }
 }
 
-}  // namespace
-
-ComponentDock::ComponentDock() : ADockWidget{"Components", _window_flags}
+void _show_contents(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  set_close_button_enabled(true);
-}
-
-void ComponentDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
-{
-  const auto& registry = model.get_active_registry();
-
   const auto& context = sys::current_context(registry);
   ImGui::Text("Context: %s", context.name.c_str());
 
-  if (scoped::Child pane{"##Components"}; pane.is_open()) {
+  if (scoped::Child pane{"##ComponentsChild"}; pane.is_open()) {
     if (context.components.empty()) {
       prepare_vertical_alignment_center(2);
       centered_text("There are no components associated with the current context.");
@@ -105,15 +94,25 @@ void ComponentDock::on_update(const DocumentModel& model, entt::dispatcher& disp
   }
 }
 
-void ComponentDock::set_visible(const bool visible)
+}  // namespace
+
+void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& prefs = get_preferences();
-  prefs.set_component_dock_visible(visible);
-}
+  bool visible = prefs.is_component_dock_visible();
 
-auto ComponentDock::is_visible() const -> bool
-{
-  return get_preferences().is_component_dock_visible();
+  if (!visible) {
+    return;
+  }
+
+  constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+
+  if (scoped::Window dock{"Components", flags, &visible}; dock.is_open()) {
+    const auto& registry = model.get_active_registry();
+    _show_contents(registry, dispatcher);
+  }
+
+  prefs.set_component_dock_visible(visible);
 }
 
 }  // namespace tactile

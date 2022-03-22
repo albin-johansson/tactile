@@ -51,7 +51,7 @@ void show_document_tab_view(const DocumentModel& model, entt::dispatcher& dispat
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {
-          update_map_view(document->registry, dispatcher);
+          update_map_view(model, dispatcher);
         }
       }
 

@@ -22,6 +22,7 @@
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
+#include "core/systems/registry_system.hpp"
 #include "graphics.hpp"
 #include "io/persistence/preferences.hpp"
 #include "render_object_layer.hpp"
@@ -48,9 +49,14 @@ void _render_layer(GraphicsCtx& graphics,
 
 void render_map(GraphicsCtx& graphics, const entt::registry& registry)
 {
+  const auto& prefs = get_preferences();
+  const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
+
+  const bool highlightActiveLayer = prefs.highlight_active_layer();
+
   for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
-    const auto& layer = registry.get<comp::Layer>(entity);
-    const auto& parent = registry.get<comp::Parent>(entity);
+    const auto& layer = sys::checked_get<comp::Layer>(registry, entity);
+    const auto& parent = sys::checked_get<comp::Parent>(registry, entity);
 
     const auto* parentLayer = (parent.entity != entt::null)
                                   ? registry.try_get<comp::Layer>(parent.entity)
@@ -59,7 +65,16 @@ void render_map(GraphicsCtx& graphics, const entt::registry& registry)
 
     if (layer.visible) {
       if (!parentLayer || parentLayer->visible) {
-        _render_layer(graphics, registry, entity, layer, layer.opacity * parentOpacity);
+        if (highlightActiveLayer) {
+          _render_layer(graphics,
+                        registry,
+                        entity,
+                        layer,
+                        activeLayer.entity == entity ? 1.0f : 0.5f);
+        }
+        else {
+          _render_layer(graphics, registry, entity, layer, parentOpacity * layer.opacity);
+        }
       }
     }
   }

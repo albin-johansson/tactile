@@ -102,6 +102,9 @@ class PreferenceState final
   void set_grid_visible(bool visible);
   [[nodiscard]] auto is_grid_visible() const -> bool;
 
+  void set_highlight_active_layer(bool highlight);
+  [[nodiscard]] auto highlight_active_layer() const -> bool;
+
   void set_embed_tilesets(bool embed);
   [[nodiscard]] auto embed_tilesets() const -> bool;
 
@@ -130,10 +133,16 @@ class PreferenceState final
   [[nodiscard]] auto preferred_format() const -> const std::string&;
 
   void set_preferred_tile_width(int32 width);
-  [[nodiscard]] auto preferred_tile_width() const -> int;
+  [[nodiscard]] auto preferred_tile_width() const -> int32;
 
   void set_preferred_tile_height(int32 height);
-  [[nodiscard]] auto preferred_tile_height() const -> int;
+  [[nodiscard]] auto preferred_tile_height() const -> int32;
+
+  void set_font_size(int32 size);
+  [[nodiscard]] auto font_size() const -> int32;
+
+  void set_use_default_font(bool use);
+  [[nodiscard]] auto use_default_font() const -> bool;
 
  private:
   struct Data;

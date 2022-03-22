@@ -41,8 +41,10 @@
 #include "editor/gui/rendering/render_map.hpp"
 #include "editor/gui/rendering/render_stamp_preview.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/gui/viewport/toolbar.hpp"
 #include "editor/gui/viewport/viewport_cursor_info.hpp"
 #include "editor/gui/viewport/viewport_overlay.hpp"
+#include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 
@@ -140,6 +142,10 @@ void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
     return;
   }
 
+  if (is_toolbar_hovered()) {
+    return;
+  }
+
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
                                  ImGui::GetWindowContentRegionMax())) {
     _check_for<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
@@ -185,8 +191,9 @@ void _update_context_menu([[maybe_unused]] const entt::registry& registry,
 
 }  // namespace
 
-void update_map_view(const entt::registry& registry, entt::dispatcher& dispatcher)
+void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
+  const auto& registry = model.get_active_registry();
   const auto& viewport = registry.ctx<Viewport>();
   const auto& map = registry.ctx<MapInfo>();
 
@@ -215,13 +222,16 @@ void update_map_view(const entt::registry& registry, entt::dispatcher& dispatche
   const auto cursor = GetViewportCursorInfo(info);
   _poll_mouse(dispatcher, cursor);
 
-  if (ImGui::IsWindowHovered()) {
+  if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
+                                 ImGui::GetWindowContentRegionMax())) {
     _draw_cursor_gizmos(graphics, registry, cursor, info);
   }
 
   graphics.pop_clip();
 
+  show_viewport_toolbar(model, dispatcher);
   update_viewport_overlay(registry, cursor);
+
   _update_context_menu(registry, dispatcher, cursor);
 }
 

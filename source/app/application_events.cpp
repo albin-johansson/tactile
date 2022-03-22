@@ -72,6 +72,9 @@ void subscribe_to_events(App& app)
   app.connect<IncreaseZoomEvent, &App::on_increase_zoom>();
   app.connect<DecreaseZoomEvent, &App::on_decrease_zoom>();
   app.connect<ResetZoomEvent, &App::on_reset_zoom>();
+  app.connect<ResetFontSizeEvent, &App::on_reset_font_size>();
+  app.connect<IncreaseFontSizeEvent, &App::on_increase_font_size>();
+  app.connect<DecreaseFontSizeEvent, &App::on_decrease_font_size>();
 
   app.connect<ShowTilesetCreationDialogEvent, &App::on_show_tileset_creation_dialog>();
   app.connect<AddTilesetEvent, &App::on_add_tileset>();
@@ -132,6 +135,7 @@ void subscribe_to_events(App& app)
   app.connect<ResetComponentValuesEvent, &App::on_reset_component_values>();
 
   app.connect<ToggleUiEvent, &App::on_toggle_ui>();
+  app.connect<ReloadFontsEvent, &App::on_reload_fonts>();
   app.connect<QuitEvent, &App::on_quit>();
 }
 

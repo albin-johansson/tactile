@@ -19,6 +19,9 @@
 
 #include "view_shortcuts.hpp"
 
+#include <imgui_internal.h>
+
+#include "cfg/fonts.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -43,6 +46,8 @@ auto CenterViewportShortcut::is_enabled(const DocumentModel& model,
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
     : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier}
 {}
@@ -57,6 +62,8 @@ auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
 {
   return model.can_decrease_viewport_tile_size();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
     : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier}
@@ -73,6 +80,46 @@ auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
+IncreaseFontSizeShortcut::IncreaseFontSizeShortcut()
+    : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier | cen::key_mod::lshift}
+{}
+
+void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<IncreaseFontSizeEvent>();
+}
+
+auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&,
+                                          const WidgetManager&) const -> bool
+{
+  /* Check for modals to avoid case of changing font size when settings dialog is open */
+  return !ImGui::GetTopMostPopupModal() &&
+         get_preferences().font_size() < get_max_font_size();
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+DecreaseFontSizeShortcut::DecreaseFontSizeShortcut()
+    : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier | cen::key_mod::lshift}
+{}
+
+void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<DecreaseFontSizeEvent>();
+}
+
+auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&,
+                                          const WidgetManager&) const -> bool
+{
+  /* Check for modals to avoid case of changing font size when settings dialog is open */
+  return !ImGui::GetTopMostPopupModal() &&
+         get_preferences().font_size() > get_min_font_size();
+}
+
+/* ------------------------------------------------------------------------------------ */
+
 PanUpShortcut::PanUpShortcut()
     : AShortcut{cen::scancodes::up, primary_modifier | cen::key_mod::lshift}
 {}
@@ -87,6 +134,8 @@ auto PanUpShortcut::is_enabled(const DocumentModel& model, const WidgetManager&)
 {
   return model.has_active_document();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 PanDownShortcut::PanDownShortcut()
     : AShortcut{cen::scancodes::down, primary_modifier | cen::key_mod::lshift}
@@ -103,6 +152,8 @@ auto PanDownShortcut::is_enabled(const DocumentModel& model, const WidgetManager
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 PanLeftShortcut::PanLeftShortcut()
     : AShortcut{cen::scancodes::left, primary_modifier | cen::key_mod::lshift}
 {}
@@ -117,6 +168,8 @@ auto PanLeftShortcut::is_enabled(const DocumentModel& model, const WidgetManager
 {
   return model.has_active_document();
 }
+
+/* ------------------------------------------------------------------------------------ */
 
 PanRightShortcut::PanRightShortcut()
     : AShortcut{cen::scancodes::right, primary_modifier | cen::key_mod::lshift}
@@ -133,6 +186,8 @@ auto PanRightShortcut::is_enabled(const DocumentModel& model, const WidgetManage
   return model.has_active_document();
 }
 
+/* ------------------------------------------------------------------------------------ */
+
 ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, primary_modifier}
 {}
 
@@ -141,6 +196,20 @@ void ToggleGridShortcut::activate(entt::dispatcher&)
   auto& prefs = get_preferences();
   prefs.set_grid_visible(!prefs.is_grid_visible());
 }
+
+/* ------------------------------------------------------------------------------------ */
+
+ToggleLayerHighlightShortcut::ToggleLayerHighlightShortcut()
+    : AShortcut{cen::scancodes::h}
+{}
+
+void ToggleLayerHighlightShortcut::activate(entt::dispatcher&)
+{
+  auto& prefs = get_preferences();
+  prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
+}
+
+/* ------------------------------------------------------------------------------------ */
 
 ToggleUiShortcut::ToggleUiShortcut() : AShortcut{cen::scancodes::tab} {}
 

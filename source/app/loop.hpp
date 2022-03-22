@@ -62,6 +62,14 @@ class AEventLoop
   virtual void on_shutdown() {}
 
   /**
+   * \brief Called once for each frame before `on_update()`.
+   *
+   * \details This function is useful to do tasks that cannot be done between calls to the
+   * NewFrame/EndFrame functions of Dear ImGui.
+   */
+  virtual void on_pre_update() {}
+
+  /**
    * \brief Called once for each frame.
    */
   virtual void on_update() = 0;
