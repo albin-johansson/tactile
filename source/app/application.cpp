@@ -45,6 +45,7 @@
 #include "io/persistence/history.hpp"
 #include "io/persistence/preferences.hpp"
 #include "io/persistence/session.hpp"
+#include "misc/assert.hpp"
 #include "misc/logging.hpp"
 
 namespace tactile {
@@ -448,6 +449,32 @@ void Application::on_reset_zoom()
 {
   auto& registry = mModel.get_active_registry();
   sys::reset_viewport_zoom(registry);
+}
+
+void Application::on_reset_font_size()
+{
+  get_preferences().set_font_size(get_default_font_size());
+  mReloadFonts = true;
+}
+
+void Application::on_increase_font_size()
+{
+  auto& prefs = get_preferences();
+
+  TACTILE_ASSERT(prefs.font_size() + 2 <= get_max_font_size());
+  prefs.set_font_size(prefs.font_size() + 2);
+
+  mReloadFonts = true;
+}
+
+void Application::on_decrease_font_size()
+{
+  auto& prefs = get_preferences();
+
+  TACTILE_ASSERT(prefs.font_size() - 2 >= get_min_font_size());
+  prefs.set_font_size(prefs.font_size() - 2);
+
+  mReloadFonts = true;
 }
 
 void Application::on_show_tileset_creation_dialog()

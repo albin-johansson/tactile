@@ -19,6 +19,9 @@
 
 #include "view_shortcuts.hpp"
 
+#include <imgui_internal.h>
+
+#include "cfg/fonts.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -75,6 +78,44 @@ auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
                                               const WidgetManager&) const -> bool
 {
   return model.has_active_document();
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+IncreaseFontSizeShortcut::IncreaseFontSizeShortcut()
+    : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier | cen::key_mod::lshift}
+{}
+
+void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<IncreaseFontSizeEvent>();
+}
+
+auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&,
+                                          const WidgetManager&) const -> bool
+{
+  /* Check for modals to avoid case of changing font size when settings dialog is open */
+  return !ImGui::GetTopMostPopupModal() &&
+         get_preferences().font_size() < get_max_font_size();
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+DecreaseFontSizeShortcut::DecreaseFontSizeShortcut()
+    : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier | cen::key_mod::lshift}
+{}
+
+void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<DecreaseFontSizeEvent>();
+}
+
+auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&,
+                                          const WidgetManager&) const -> bool
+{
+  /* Check for modals to avoid case of changing font size when settings dialog is open */
+  return !ImGui::GetTopMostPopupModal() &&
+         get_preferences().font_size() > get_min_font_size();
 }
 
 /* ------------------------------------------------------------------------------------ */

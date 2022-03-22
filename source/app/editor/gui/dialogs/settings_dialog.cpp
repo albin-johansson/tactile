@@ -207,8 +207,12 @@ void SettingsDialog::update_appearance_tab()
       ImGui::TextUnformatted("Font size:");
 
       ImGui::SameLine();
-      if (int size = mGuiSettings.font_size();
-          ImGui::DragInt("##FontSize", &size, 1.0f, 8, 32)) {
+      if (int size = mGuiSettings.font_size();  //
+          ImGui::DragInt("##FontSize",
+                         &size,
+                         1.0f,
+                         get_min_font_size(),
+                         get_max_font_size())) {
         mGuiSettings.set_font_size(size);
       }
     }

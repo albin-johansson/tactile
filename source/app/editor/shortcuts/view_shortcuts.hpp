@@ -53,6 +53,26 @@ struct IncreaseViewportZoomShortcut final : AShortcut
                                 const WidgetManager& widgets) const -> bool override;
 };
 
+struct IncreaseFontSizeShortcut final : AShortcut
+{
+  IncreaseFontSizeShortcut();
+
+  void activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto is_enabled(const DocumentModel& model,
+                                const WidgetManager& widgets) const -> bool override;
+};
+
+struct DecreaseFontSizeShortcut final : AShortcut
+{
+  DecreaseFontSizeShortcut();
+
+  void activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto is_enabled(const DocumentModel& model,
+                                const WidgetManager& widgets) const -> bool override;
+};
+
 struct PanUpShortcut final : AShortcut
 {
   PanUpShortcut();

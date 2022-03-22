@@ -175,6 +175,12 @@ class Application final : AEventLoop
 
   void on_reset_zoom();
 
+  void on_reset_font_size();
+
+  void on_increase_font_size();
+
+  void on_decrease_font_size();
+
   void on_show_tileset_creation_dialog();
 
   void on_add_tileset(const AddTilesetEvent& event);

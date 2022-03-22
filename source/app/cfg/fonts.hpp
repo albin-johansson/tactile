@@ -19,7 +19,12 @@
 
 #pragma once
 
+#include "tactile.hpp"
+
 namespace tactile {
+
+/// \name Font functions
+/// \{
 
 /**
  * \brief Reloads the main and icon fonts.
@@ -30,5 +35,34 @@ namespace tactile {
  * application, so this needs to be dynamically handled.
  */
 void reload_fonts();
+
+/**
+ * \brief Returns the default font size.
+ *
+ * \note This function always returns the same size.
+ *
+ * \return the default font size.
+ */
+[[nodiscard]] auto get_default_font_size() -> int32;
+
+/**
+ * \brief Returns the smallest acceptable font size.
+ *
+ * \note This function always returns the same size.
+ *
+ * \return the minimal font size.
+ */
+[[nodiscard]] auto get_min_font_size() -> int32;
+
+/**
+ * \brief Returns the largest acceptable font size.
+ *
+ * \note This function always returns the same size.
+ *
+ * \return the maximal font size.
+ */
+[[nodiscard]] auto get_max_font_size() -> int32;
+
+/// \} End of font functions
 
 }  // namespace tactile

@@ -25,6 +25,7 @@
 
 #include <magic_enum.hpp>
 
+#include "cfg/fonts.hpp"
 #include "misc/logging.hpp"
 #include "proto.hpp"
 
@@ -40,7 +41,6 @@ constexpr usize _def_command_capacity = 100;
 constexpr int32 _def_preferred_tile_width = 32;
 constexpr int32 _def_preferred_tile_height = 32;
 constexpr int32 _def_viewport_overlay_pos = cen::to_underlying(OverlayPos::bottom_left);
-constexpr int32 _def_font_size = 14;
 
 constexpr uint64 _bit_embed_tilesets = 1u << 0u;
 constexpr uint64 _bit_indent_output = 1u << 1u;
@@ -86,7 +86,7 @@ struct PreferenceState::Data
   int32 preferred_tile_width{_def_preferred_tile_width};
   int32 preferred_tile_height{_def_preferred_tile_height};
   int32 viewport_overlay_pos{_def_viewport_overlay_pos};
-  int32 font_size{_def_font_size};
+  int32 font_size{get_default_font_size()};
 
   uint64 flags{_def_flags};
 };
@@ -310,7 +310,7 @@ void PreferenceState::reset_appearance_preferences()
   reset_flag(_bit_restore_layout);
 
   reset_flag(_bit_use_default_font);
-  mData->font_size = _def_font_size;
+  mData->font_size = get_default_font_size();
 }
 
 void PreferenceState::reset_behavior_preferences()

@@ -21,6 +21,7 @@
 
 #include <imgui.h>
 
+#include "cfg/fonts.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
@@ -115,6 +116,28 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
                         false,
                         hasActiveDocument)) {
       dispatcher.enqueue<ResetZoomEvent>();
+    }
+
+    ImGui::Separator();
+
+    const auto fontSize = prefs.font_size();
+
+    if (ImGui::MenuItem("Increase Font Size",
+                        TACTILE_PRIMARY_MOD "+Shift+Plus",
+                        false,
+                        fontSize < get_max_font_size())) {
+      dispatcher.enqueue<IncreaseFontSizeEvent>();
+    }
+
+    if (ImGui::MenuItem("Decrease Font Size",
+                        TACTILE_PRIMARY_MOD "+Shift+Minus",
+                        false,
+                        fontSize > get_min_font_size())) {
+      dispatcher.enqueue<DecreaseFontSizeEvent>();
+    }
+
+    if (ImGui::MenuItem("Reset Font Size")) {
+      dispatcher.enqueue<ResetFontSizeEvent>();
     }
 
     ImGui::Separator();

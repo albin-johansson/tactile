@@ -79,4 +79,19 @@ void reload_fonts()
   ImGui::GetStyle().ScaleAllSizes(1.0f);
 }
 
+auto get_default_font_size() -> int32
+{
+  return 14;
+}
+
+auto get_min_font_size() -> int32
+{
+  return 8;
+}
+
+auto get_max_font_size() -> int32
+{
+  return 32;
+}
+
 }  // namespace tactile
