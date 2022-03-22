@@ -44,14 +44,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   io.IniFilename = ini.c_str();
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
-  if constexpr (on_osx) {
-    mInitializedBackend = ImGui_ImplOpenGL3_Init("#version 150");
-  }
-  else {
-    mInitializedBackend = ImGui_ImplOpenGL3_Init("#version 130");
-  }
-
-  _load_fonts();
+  mInitializedBackend = ImGui_ImplOpenGL3_Init();
 
   ImGui::StyleColorsDark();
 
