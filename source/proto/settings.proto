@@ -62,4 +62,7 @@ message Settings {
 
   optional OverlayPos viewport_overlay_pos = 27;
   optional bool viewport_overlay_show_fps = 29;
+
+  optional bool use_default_font = 6;
+  optional int32 font_size = 7;  /* Only applies when the default font is not used */
 }

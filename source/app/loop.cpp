@@ -29,12 +29,6 @@
 #include "misc/throw.hpp"
 
 namespace tactile {
-namespace {
-
-// TODO possible candidate for startup option?
-constexpr float _font_size = 14.0f;
-
-}  // namespace
 
 AEventLoop::AEventLoop(AppConfiguration* cfg) : mCfg{cfg}
 {
@@ -60,7 +54,7 @@ void AEventLoop::start()
        we know that we will load the fonts at least once. */
     if (const auto& scale = io.DisplayFramebufferScale; prevScale.x != scale.x) {
       prevScale = scale;
-      reload_fonts(_font_size);
+      reload_fonts();
     }
 
     ImGui_ImplOpenGL3_NewFrame();

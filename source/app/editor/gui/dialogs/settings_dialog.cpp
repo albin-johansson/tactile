@@ -20,6 +20,7 @@
 #include "settings_dialog.hpp"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
 #include "core/utils/colors.hpp"
 #include "editor/events/command_events.hpp"
@@ -145,6 +146,7 @@ void SettingsDialog::update_appearance_tab()
     }
 
     ImGui::Spacing();
+    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
     if (scoped::Combo combo{"Theme",
                             human_readable_name(mGuiSettings.get_theme()).data()};
@@ -176,6 +178,24 @@ void SettingsDialog::update_appearance_tab()
                  &restore,
                  "Restore the previous layout of widgets at startup")) {
       mGuiSettings.set_will_restore_layout(restore);
+    }
+
+    ImGui::Spacing();
+    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
+
+    if (bool use = mGuiSettings.use_default_font();
+        checkbox("Use default font",
+                 &use,
+                 "Use the built-in bitmap font (only supports one size)")) {
+      mGuiSettings.set_use_default_font(use);
+    }
+
+    {
+      scoped::Disable disableIf{mGuiSettings.use_default_font()};
+      if (int size = mGuiSettings.font_size();
+          ImGui::DragInt("Font size", &size, 1.0f, 8, 64)) {
+        mGuiSettings.set_font_size(size);
+      }
     }
   }
 }

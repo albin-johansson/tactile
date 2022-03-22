@@ -28,9 +28,7 @@ namespace tactile {
  * that the fonts need to be reloaded, e.g. when the reported display framebuffer size
  * changes. This information may change during the first couple of frames of the
  * application, so this needs to be dynamically handled.
- *
- * \param size the used font size.
  */
-void reload_fonts(float size);
+void reload_fonts();
 
 }  // namespace tactile

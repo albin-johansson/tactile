@@ -24,6 +24,7 @@
 #include <imgui_impl_opengl3.h>
 
 #include "io/directories.hpp"
+#include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"
 
 namespace tactile {
@@ -35,7 +36,7 @@ constexpr ImWchar _icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 }  // namespace
 
-void reload_fonts(const float size)
+void reload_fonts()
 {
   static const auto roboto = find_resource(_roboto_path).string();
   static const auto fa = find_resource(_fa_path).string();
@@ -45,9 +46,20 @@ void reload_fonts(const float size)
   auto& io = ImGui::GetIO();
   const auto scale = io.DisplayFramebufferScale;
 
-  // TODO let user request default font?
   io.Fonts->Clear();
-  io.Fonts->AddFontFromFileTTF(roboto.c_str(), size * scale.x);
+
+  const auto& prefs = get_preferences();
+  const auto useDefaultFont = prefs.use_default_font();
+  const auto size = useDefaultFont ? 13.0f : static_cast<float>(prefs.font_size());
+
+  if (useDefaultFont) {
+    ImFontConfig config{};
+    config.SizePixels = size * scale.x;
+    io.Fonts->AddFontDefault(&config);
+  }
+  else {
+    io.Fonts->AddFontFromFileTTF(roboto.c_str(), size * scale.x);
+  }
 
   /* The global scale is 1 on most platforms, and 0.5 on macOS */
   io.FontGlobalScale = 1.0f / scale.x;
