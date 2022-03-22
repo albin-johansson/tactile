@@ -62,29 +62,31 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
 
   scoped::Group group;
 
-  if (button(TAC_ICON_ADD, "Add new layer")) {
+  if (icon_button(TAC_ICON_ADD, "Add new layer")) {
     _add_layer_context_menu.show();
   }
 
   _add_layer_context_menu.update(model, dispatcher);
 
-  if (button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
+  if (icon_button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
     dispatcher.enqueue<RemoveLayerEvent>(activeLayerId.value());
   }
 
-  if (button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
+  if (icon_button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
     dispatcher.enqueue<DuplicateLayerEvent>(activeLayerId.value());
   }
 
-  if (button(TAC_ICON_MOVE_UP,
-             "Move layer up",
-             hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
+  if (icon_button(
+          TAC_ICON_MOVE_UP,
+          "Move layer up",
+          hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
     dispatcher.enqueue<MoveLayerUpEvent>(activeLayerId.value());
   }
 
-  if (button(TAC_ICON_MOVE_DOWN,
-             "Move layer down",
-             hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
+  if (icon_button(
+          TAC_ICON_MOVE_DOWN,
+          "Move layer down",
+          hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
     dispatcher.enqueue<MoveLayerDownEvent>(activeLayerId.value());
   }
 }
