@@ -25,9 +25,16 @@
 #include <imgui_impl_sdl.h>
 
 #include "cfg/configuration.hpp"
+#include "cfg/fonts.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile {
+namespace {
+
+// TODO possible candidate for startup option?
+constexpr float _font_size = 14.0f;
+
+}  // namespace
 
 AEventLoop::AEventLoop(AppConfiguration* cfg) : mCfg{cfg}
 {
@@ -45,8 +52,16 @@ void AEventLoop::start()
   const auto& io = ImGui::GetIO();
   auto& window = mCfg->window();
 
+  ImVec2 prevScale{};
   while (mRunning) {
     poll_events();
+
+    /* We reload the fonts when the framebuffer scale changes. Since it is initially zero,
+       we know that we will load the fonts at least once. */
+    if (const auto& scale = io.DisplayFramebufferScale; prevScale.x != scale.x) {
+      prevScale = scale;
+      reload_fonts(_font_size);
+    }
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();

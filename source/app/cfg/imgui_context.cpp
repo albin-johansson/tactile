@@ -19,7 +19,6 @@
 
 #include "imgui_context.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include "editor/gui/themes.hpp"
@@ -27,45 +26,9 @@
 #include "imgui_impl_sdl.h"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
-#include "meta/build.hpp"
 #include "misc/logging.hpp"
 
 namespace tactile {
-namespace {
-
-void _load_fonts()
-{
-  auto& io = ImGui::GetIO();
-  io.Fonts->Clear();
-
-  constexpr float size = on_osx ? 13.0f : 11.0f;
-  constexpr float scale = on_osx ? 2.0f : 1.0f;  // io.DisplayFramebufferScale
-
-  io.FontGlobalScale = 1.0f / scale;
-
-  if constexpr (on_osx) {
-    const auto path = find_resource("assets/fonts/roboto/Roboto-Regular.ttf");
-    io.Fonts->AddFontFromFileTTF(path.string().c_str(), size * scale);
-  }
-  else {
-    io.Fonts->AddFontDefault();
-  }
-
-  ImFontConfig config{};
-  config.MergeMode = true;
-  config.PixelSnapH = true;
-  config.GlyphOffset = {0, 1.5f};
-  config.GlyphMinAdvanceX = size * scale;
-  config.GlyphMaxAdvanceX = config.GlyphMinAdvanceX;
-
-  static constexpr ImWchar icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
-  const auto path = find_resource("assets/fonts/fa/fa-solid-900.otf");
-  io.Fonts->AddFontFromFileTTF(path.string().c_str(), 13.0f * scale, &config, icon_range);
-
-  io.Fonts->Build();
-}
-
-}  // namespace
 
 ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 {
