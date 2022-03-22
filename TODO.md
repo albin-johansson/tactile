@@ -1,3 +1,4 @@
+
 # TODO
 
 This document provides a brief outline of planned features for the Tactile editor.
@@ -15,7 +16,6 @@ This document provides a brief outline of planned features for the Tactile edito
 
 ## UX
 
-* When toggling dock widgets with Tab, it cannot be repeated after enabling the widgets
 * Provide option for user to manually locate tileset images for maps with invalid tileset image paths
 * (Optionally) warn when closing maps with unsaved changes
 * Reset affected tiles in maps when a tileset is removed (and restore them if the tileset is restored)
