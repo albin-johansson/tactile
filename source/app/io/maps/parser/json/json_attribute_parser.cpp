@@ -55,12 +55,19 @@ namespace {
   }
   else if (type == "color") {
     const auto hex = as_string(json, "value").value();
-    if (const auto color =
-            (hex.size() == 9) ? cen::color::from_argb(hex) : cen::color::from_rgb(hex)) {
-      value = *color;
+
+    /* Empty color properties are not supported, so just assume the default color value */
+    if (hex.empty()) {
+      value.reset_to_default(AttributeType::color);
     }
     else {
-      return ParseError::corrupt_property_value;
+      if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)
+                                               : cen::color::from_rgb(hex)) {
+        value = *color;
+      }
+      else {
+        return ParseError::corrupt_property_value;
+      }
     }
   }
   else {
