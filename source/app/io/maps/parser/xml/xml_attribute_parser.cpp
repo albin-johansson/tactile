@@ -37,10 +37,6 @@ namespace {
 {
   TACTILE_ASSERT(type);
 
-  if (node.attribute("value").empty()) {
-    // TODO no_property_value
-  }
-
   if (std::strcmp(type, "string") == 0) {
     value = string_attribute(node, "value").value();
   }
@@ -62,12 +58,17 @@ namespace {
   }
   else if (std::strcmp(type, "color") == 0) {
     const auto hex = string_attribute(node, "value").value();
-    if (const auto color =
-            (hex.size() == 9) ? cen::color::from_argb(hex) : cen::color::from_rgb(hex)) {
-      value = *color;
+    if (hex.empty()) {
+      value.reset_to_default(AttributeType::color);
     }
     else {
-      return ParseError::corrupt_property_value;
+      if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)
+                                               : cen::color::from_rgb(hex)) {
+        value = *color;
+      }
+      else {
+        return ParseError::corrupt_property_value;
+      }
     }
   }
   else {
