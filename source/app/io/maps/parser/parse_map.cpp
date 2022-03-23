@@ -51,7 +51,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
     else if (ext == ".xml" || ext == ".tmx") {
       result = parse_xml_map(path);
     }
-    else if (ext == ".json") {
+    else if (ext == ".json" || ext == ".tmj") {
       result = parse_json_map(path);
     }
     else {

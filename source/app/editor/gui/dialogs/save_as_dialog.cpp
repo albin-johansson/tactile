@@ -36,7 +36,7 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
 
     const auto ext = path.extension();
     const auto hasValidExtension = ext == ".yaml" || ext == ".yml" || ext == ".json" ||
-                                   ext == ".tmx" || ext == ".xml";
+                                   ext == ".tmj" || ext == ".tmx" || ext == ".xml";
 
     // TODO is this logic still required with new file dialogs?
     if (!hasValidExtension) {

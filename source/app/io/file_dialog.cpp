@@ -26,8 +26,13 @@
 namespace tactile {
 namespace {
 
-constexpr int _num_map_patterns = 5;
-constexpr const char* _map_patterns[] = {"*.yaml", "*.yml", "*.json", "*.tmx", "*.xml"};
+constexpr int _num_map_patterns = 6;
+constexpr const char* _map_patterns[] = {"*.yaml",  //
+                                         "*.yml",   //
+                                         "*.json",  //
+                                         "*.tmj",   //
+                                         "*.tmx",   //
+                                         "*.xml"};
 constexpr const char* _map_pattern_descriptor = "Map files";
 
 constexpr int _num_image_patterns = 3;
