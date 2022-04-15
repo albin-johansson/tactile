@@ -45,8 +45,6 @@ class ACommand
   TACTILE_DELETE_COPY(ACommand)
   TACTILE_DEFAULT_MOVE(ACommand)
 
-  ACommand() = default;
-
   /**
    * \brief Creates a command.
    *
