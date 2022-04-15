@@ -88,9 +88,4 @@ using HashMap = std::unordered_map<K, V>;
 template <typename T>
 using Ref = std::reference_wrapper<T>;
 
-template <typename T>
-using Maybe = std::optional<T>;
-
-constexpr std::nullopt_t nothing = std::nullopt;
-
 }  // namespace tactile

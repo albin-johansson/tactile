@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -46,7 +48,7 @@ class RemoveLayerCmd final : public ACommand
  private:
   RegistryRef mRegistry;
   LayerID mLayerId;
-  Maybe<sys::LayerSnapshot> mLayerSnapshot;
+  std::optional<sys::LayerSnapshot> mLayerSnapshot;
 };
 
 /// \} End of group commands

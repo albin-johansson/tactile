@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "editor/commands/command_id.hpp"
 #include "object_command.hpp"
@@ -45,7 +46,7 @@ class SetObjectTagCmd final : public AObjectCommand
 
  private:
   std::string mNewTag;
-  Maybe<std::string> mOldTag;
+  std::optional<std::string> mOldTag;
 };
 
 }  // namespace tactile

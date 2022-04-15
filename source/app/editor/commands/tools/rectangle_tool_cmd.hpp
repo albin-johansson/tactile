@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/systems/object_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -50,8 +52,8 @@ class RectangleToolCmd final : public ACommand
   float mY{};
   float mWidth{};
   float mHeight{};
-  Maybe<ObjectID> mObjectId;
-  Maybe<sys::RemoveObjectResult> mSnapshot;
+  std::optional<ObjectID> mObjectId;
+  std::optional<sys::RemoveObjectResult> mSnapshot;
 };
 
 /// \} End of group commands

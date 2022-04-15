@@ -19,8 +19,9 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-#include <string>  // string
+#include <memory>    // unique_ptr
+#include <optional>  // optional
+#include <string>    // string
 
 #include <entt/entt.hpp>
 
@@ -87,9 +88,9 @@ class WidgetManager final
 
   [[nodiscard]] auto is_toolbar_visible() const -> bool;
 
-  [[nodiscard]] auto tileset_view_width() const -> Maybe<float>;
+  [[nodiscard]] auto tileset_view_width() const -> std::optional<float>;
 
-  [[nodiscard]] auto tileset_view_height() const -> Maybe<float>;
+  [[nodiscard]] auto tileset_view_height() const -> std::optional<float>;
 
  private:
   struct Widgets;

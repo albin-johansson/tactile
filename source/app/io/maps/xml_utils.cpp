@@ -51,7 +51,7 @@ auto has_attribute(pugi::xml_node node, const char* attributeName) -> bool
 }
 
 auto string_attribute(pugi::xml_node node, const char* attributeName)
-    -> Maybe<std::string>
+    -> std::optional<std::string>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -59,11 +59,11 @@ auto string_attribute(pugi::xml_node node, const char* attributeName)
     return str;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
-auto int_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<int32>
+auto int_attribute(pugi::xml_node node, const char* attributeName) -> std::optional<int32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -74,11 +74,11 @@ auto int_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<int3
     return value;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
-auto uint_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<uint32>
+auto uint_attribute(pugi::xml_node node, const char* attributeName) -> std::optional<uint32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -89,11 +89,11 @@ auto uint_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<uin
     return value;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
-auto float_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<float>
+auto float_attribute(pugi::xml_node node, const char* attributeName) -> std::optional<float>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -104,11 +104,11 @@ auto float_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<fl
     return value;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
-auto bool_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<bool>
+auto bool_attribute(pugi::xml_node node, const char* attributeName) -> std::optional<bool>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -117,7 +117,7 @@ auto bool_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<boo
     return attribute.as_bool();
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 

@@ -23,6 +23,7 @@
 #include <charconv>      // from_chars
 #include <cstring>       // strlen
 #include <filesystem>    // path
+#include <optional>      // optional
 #include <string>        // string, stof
 #include <system_error>  // errc
 #include <vector>        // vector
@@ -48,10 +49,10 @@ namespace tactile {
  */
 template <typename T, is_integral<T> = 0>
 [[nodiscard]] auto from_string(const char* str, const usize length, const int base)
-    -> Maybe<T>
+    -> std::optional<T>
 {
   if (!str) {
-    return nothing;
+    return std::nullopt;
   }
 
   T value{};
@@ -64,7 +65,7 @@ template <typename T, is_integral<T> = 0>
     return value;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
@@ -78,10 +79,10 @@ template <typename T, is_integral<T> = 0>
  *         an empty optional is returned upon failure.
  */
 template <typename T, is_integral<T> = 0>
-[[nodiscard]] auto from_string(const char* str, const int base = 10) -> Maybe<T>
+[[nodiscard]] auto from_string(const char* str, const int base = 10) -> std::optional<T>
 {
   if (!str) {
-    return nothing;
+    return std::nullopt;
   }
   else {
     return from_string<T>(str, std::strlen(str), base);
@@ -97,10 +98,10 @@ template <typename T, is_integral<T> = 0>
  *         an empty optional is returned upon failure.
  */
 template <typename T, is_floating<T> = 0>
-[[nodiscard]] auto from_string(const char* str) -> Maybe<T>
+[[nodiscard]] auto from_string(const char* str) -> std::optional<T>
 {
   if (!str) {
-    return nothing;
+    return std::nullopt;
   }
 
   /* We only do this check in the floating-point overload, because it's the only version
@@ -113,14 +114,14 @@ template <typename T, is_floating<T> = 0>
     return value;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 #else
   try {
     return static_cast<T>(std::stof(str));
   }
   catch (...) {
-    return nothing;
+    return std::nullopt;
   }
 #endif  // __cpp_lib_to_chars >= 201611L
 }

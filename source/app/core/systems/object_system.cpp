@@ -19,8 +19,9 @@
 
 #include "object_system.hpp"
 
-#include <string>   // string
-#include <utility>  // move
+#include <optional>  // optional
+#include <string>    // string
+#include <utility>   // move
 
 #include "context_system.hpp"
 #include "core/components/layers.hpp"
@@ -116,7 +117,7 @@ auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectR
 {
   const auto objectEntity = find_object(registry, id);
 
-  Maybe<LayerID> layerId;
+  std::optional<LayerID> layerId;
   for (auto&& [layerEntity, layer, objectLayer] :
        registry.view<comp::Layer, comp::ObjectLayer>().each()) {
     if (std::erase(objectLayer.objects, objectEntity) > 0) {

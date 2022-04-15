@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
@@ -50,7 +51,7 @@ class SetComponentAttrTypeCmd final : public ACommand
   ComponentID mComponentId;
   std::string mAttributeName;
   AttributeType mNewType;
-  Maybe<sys::SetComponentAttrTypeResult> mSnapshot;
+  std::optional<sys::SetComponentAttrTypeResult> mSnapshot;
 };
 
 }  // namespace tactile

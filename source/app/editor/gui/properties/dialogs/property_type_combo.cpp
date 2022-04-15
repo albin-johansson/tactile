@@ -22,6 +22,7 @@
 #include <algorithm>  // find_if
 #include <array>      // array
 #include <cstring>    // strcmp
+#include <optional>   // optional
 #include <utility>    // pair, make_pair
 
 #include <imgui.h>
@@ -55,7 +56,8 @@ constexpr std::array _items{std::make_pair("string", AttributeType::string),
   }
 }
 
-void _property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previousType)
+void _property_type_combo_impl(AttributeType& out,
+                               std::optional<AttributeType> previousType)
 {
   const auto currentIndex = _index_from_type(out);
   auto&& [currentName, currentType] = _items.at(currentIndex);
@@ -80,7 +82,7 @@ void _property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous
 
 void show_property_type_combo(AttributeType& out)
 {
-  _property_type_combo_impl(out, nothing);
+  _property_type_combo_impl(out, std::nullopt);
 }
 
 void show_property_type_combo(const AttributeType previous, AttributeType& out)

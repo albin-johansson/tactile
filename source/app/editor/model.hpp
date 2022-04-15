@@ -21,6 +21,7 @@
 
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
+#include <optional>    // optional
 
 #include <boost/container/flat_map.hpp>
 #include <entt/entt.hpp>
@@ -158,7 +159,7 @@ class DocumentModel final
    *
    * \return the identifier of the active map.
    */
-  [[nodiscard]] auto active_map_id() const -> Maybe<MapID>;
+  [[nodiscard]] auto active_map_id() const -> std::optional<MapID>;
 
   /**
    * \brief Returns the currently active document, if there is one.
@@ -279,7 +280,7 @@ class DocumentModel final
 
  private:
   document_map mDocuments;
-  Maybe<MapID> mActiveMap;
+  std::optional<MapID> mActiveMap;
   MapID mNextId{1};
 };
 

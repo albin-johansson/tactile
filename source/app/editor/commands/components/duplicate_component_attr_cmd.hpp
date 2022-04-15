@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -47,7 +48,7 @@ class DuplicateComponentAttrCmd final : public ACommand
   RegistryRef mRegistry;
   ComponentID mComponentId{};
   std::string mAttributeName;
-  Maybe<std::string> mDuplicatedName;
+  std::optional<std::string> mDuplicatedName;
 };
 
 }  // namespace tactile

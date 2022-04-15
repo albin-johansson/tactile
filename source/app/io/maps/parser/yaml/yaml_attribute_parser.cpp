@@ -20,6 +20,7 @@
 #include "yaml_attribute_parser.hpp"
 
 #include <filesystem>   // path
+#include <optional>     // optional
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // move
@@ -30,7 +31,7 @@ namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_attribute_type(const std::string_view type)
-    -> Maybe<AttributeType>
+    -> std::optional<AttributeType>
 {
   if (type == "string") {
     return AttributeType::string;
@@ -54,12 +55,13 @@ namespace {
     return AttributeType::file;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
 [[nodiscard]] auto _parse_attribute_value(const YAML::Node& value,
-                                          const AttributeType type) -> Maybe<Attribute>
+                                          const AttributeType type)
+    -> std::optional<Attribute>
 {
   switch (type) {
     case AttributeType::string:
@@ -91,7 +93,7 @@ namespace {
       return object_t{value.as<int32>()};
 
     default:
-      return nothing;
+      return std::nullopt;
   }
 }
 

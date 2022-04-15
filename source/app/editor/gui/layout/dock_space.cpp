@@ -19,6 +19,8 @@
 
 #include "dock_space.hpp"
 
+#include <optional>  // optional
+
 #include <imgui.h>
 
 #include "io/directories.hpp"
@@ -30,7 +32,7 @@ namespace tactile {
 namespace {
 
 constinit bool _is_initialized = false;
-constinit Maybe<ImGuiID> _root_id;
+constinit std::optional<ImGuiID> _root_id;
 
 }  // namespace
 

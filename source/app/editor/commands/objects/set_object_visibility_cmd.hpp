@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "editor/commands/command_id.hpp"
 #include "object_command.hpp"
 #include "tactile.hpp"
@@ -41,7 +43,7 @@ class SetObjectVisibilityCmd final : public AObjectCommand
 
  private:
   bool mVisible;
-  Maybe<bool> mPreviousVisibility;
+  std::optional<bool> mPreviousVisibility;
 };
 
 }  // namespace tactile

@@ -400,7 +400,7 @@ auto get_tile_from_tileset(const entt::registry& registry,
 }
 
 auto convert_to_local(const entt::registry& registry, const TileID global)
-    -> Maybe<TileID>
+    -> std::optional<TileID>
 {
   const auto entity = find_tileset_with_tile(registry, global);
   if (entity != entt::null) {
@@ -408,7 +408,7 @@ auto convert_to_local(const entt::registry& registry, const TileID global)
     return global - tileset.first_id;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 

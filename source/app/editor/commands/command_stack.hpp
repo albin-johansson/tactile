@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include <deque>    // deque
-#include <memory>   // unique_ptr
-#include <string>   // string
-#include <utility>  // move
+#include <deque>     // deque
+#include <memory>    // unique_ptr
+#include <optional>  // optional
+#include <string>    // string
+#include <utility>   // move
 
 #include "command.hpp"
 #include "core/utils/sfinae.hpp"
@@ -186,7 +187,7 @@ class CommandStack final
    * \return the index of the current command;
    *         an empty optional is returned is there is no such command.
    */
-  [[nodiscard]] auto index() const noexcept -> Maybe<usize> { return mIndex; }
+  [[nodiscard]] auto index() const noexcept -> std::optional<usize> { return mIndex; }
 
   /**
    * \brief Returns the clean index, if there is one.
@@ -194,7 +195,10 @@ class CommandStack final
    * \return the index of the command considered to represent the clean state;
    *         an empty optional is returned is there is no clean index.
    */
-  [[nodiscard]] auto clean_index() const noexcept -> Maybe<usize> { return mCleanIndex; }
+  [[nodiscard]] auto clean_index() const noexcept -> std::optional<usize>
+  {
+    return mCleanIndex;
+  }
 
   /**
    * \brief Returns the maximum amount of commands that the stack can hold.
@@ -205,8 +209,8 @@ class CommandStack final
 
  private:
   std::deque<std::unique_ptr<ACommand>> mStack;
-  Maybe<usize> mIndex;
-  Maybe<usize> mCleanIndex;
+  std::optional<usize> mIndex;
+  std::optional<usize> mCleanIndex;
   usize mCapacity;
 
   void remove_oldest_command();

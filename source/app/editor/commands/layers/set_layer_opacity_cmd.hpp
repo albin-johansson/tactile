@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
@@ -45,7 +47,7 @@ class SetLayerOpacityCmd final : public ACommand
   RegistryRef mRegistry;
   LayerID mLayerId;
   float mOpacity;
-  Maybe<float> mPreviousOpacity;
+  std::optional<float> mPreviousOpacity;
 };
 
 }  // namespace tactile

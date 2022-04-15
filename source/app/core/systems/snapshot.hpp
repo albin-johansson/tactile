@@ -19,8 +19,9 @@
 
 #pragma once
 
-#include <string>  // string
-#include <vector>  // vector
+#include <optional>  // optional
+#include <string>    // string
+#include <vector>    // vector
 
 #include "core/attribute.hpp"
 #include "core/components/layers.hpp"
@@ -64,10 +65,10 @@ struct LayerSnapshot final
   usize index{};
   comp::Layer core;
   AttributeContextSnapshot context;
-  Maybe<LayerID> parent;
-  Maybe<TileMatrix> tiles;
-  Maybe<std::vector<ObjectSnapshot>> objects;
-  Maybe<std::vector<LayerSnapshot>> children;
+  std::optional<LayerID> parent;
+  std::optional<TileMatrix> tiles;
+  std::optional<std::vector<ObjectSnapshot>> objects;
+  std::optional<std::vector<LayerSnapshot>> children;
 };
 
 }  // namespace tactile::sys

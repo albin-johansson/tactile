@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include <centurion.hpp>
 
 #include "imgui_context.hpp"
@@ -46,9 +48,9 @@ class AppConfiguration final
   cen::img mIMG;
 
   /* Initialization of these members needs to be deferred */
-  Maybe<cen::window> mWindow;
-  Maybe<cen::gl_context> mOpenGL;
-  Maybe<ImGuiContext> mImGui;
+  std::optional<cen::window> mWindow;
+  std::optional<cen::gl_context> mOpenGL;
+  std::optional<ImGuiContext> mImGui;
 };
 
 }  // namespace tactile

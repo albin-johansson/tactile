@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -47,7 +48,7 @@ class RenameTilesetCmd final : public ACommand
   RegistryRef mRegistry;
   TilesetID mTilesetId;
   std::string mNewName;
-  Maybe<std::string> mOldName;
+  std::optional<std::string> mOldName;
 };
 
 }  // namespace tactile

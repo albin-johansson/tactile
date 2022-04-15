@@ -19,8 +19,9 @@
 
 #include "property_dock.hpp"
 
-#include <locale>   // locale, isalpha, isdigit, isspace
-#include <utility>  // move
+#include <locale>    // locale, isalpha, isdigit, isspace
+#include <optional>  // optional
+#include <utility>   // move
 
 #include <imgui.h>
 
@@ -52,8 +53,8 @@ namespace tactile {
 namespace {
 
 inline PropertyItemContextMenuState _context_state;
-inline Maybe<std::string> _rename_target;
-inline Maybe<std::string> _change_type_target;
+inline std::optional<std::string> _rename_target;
+inline std::optional<std::string> _change_type_target;
 constinit bool _is_focused = false;
 
 inline AddPropertyDialog _add_dialog;
@@ -71,7 +72,7 @@ void _prepare_table_row(const char* label)
 
 [[nodiscard]] auto _native_name_row(const std::string& name,
                                     const bool validateAsFileName = false)
-    -> Maybe<std::string>
+    -> std::optional<std::string>
 {
   _prepare_table_row("Name");
 

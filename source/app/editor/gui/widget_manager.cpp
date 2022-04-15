@@ -180,12 +180,12 @@ auto WidgetManager::is_toolbar_visible() const -> bool
   return tactile::is_toolbar_visible();
 }
 
-auto WidgetManager::tileset_view_width() const -> Maybe<float>
+auto WidgetManager::tileset_view_width() const -> std::optional<float>
 {
   return mWidgets->tileset_dock.get_tileset_view().width();
 }
 
-auto WidgetManager::tileset_view_height() const -> Maybe<float>
+auto WidgetManager::tileset_view_height() const -> std::optional<float>
 {
   return mWidgets->tileset_dock.get_tileset_view().height();
 }

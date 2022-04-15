@@ -31,7 +31,7 @@
 
 namespace tactile {
 
-auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
+auto input_attribute(const char* id, const Attribute& value) -> std::optional<Attribute>
 {
   switch (value.type()) {
     case AttributeType::string: {
@@ -78,10 +78,10 @@ auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
     }
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
-auto input_int(const char* id, int value) -> Maybe<int>
+auto input_int(const char* id, int value) -> std::optional<int>
 {
   const scoped::Id scope{id};
 
@@ -94,11 +94,11 @@ auto input_int(const char* id, int value) -> Maybe<int>
     ImGui::SetTooltip("[int]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 auto input_float(const char* id, float value, const float min, const float max)
-    -> Maybe<float>
+    -> std::optional<float>
 {
   const scoped::Id scope{id};
 
@@ -119,7 +119,7 @@ auto input_float(const char* id, float value, const float min, const float max)
     ImGui::SetTooltip("[float]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 auto input_string_with_hint(const char* id,
@@ -127,7 +127,8 @@ auto input_string_with_hint(const char* id,
                             const std::string& value,
                             const char* label,
                             const ImGuiInputTextFlags flags,
-                            const ImGuiInputTextCallback filter) -> Maybe<std::string>
+                            const ImGuiInputTextCallback filter)
+    -> std::optional<std::string>
 {
   const scoped::Id scope{id};
 
@@ -157,19 +158,19 @@ auto input_string_with_hint(const char* id,
     ImGui::SetTooltip("[string]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 auto input_string(const char* id,
                   const std::string& value,
                   const char* label,
                   const ImGuiInputTextFlags flags,
-                  const ImGuiInputTextCallback filter) -> Maybe<std::string>
+                  const ImGuiInputTextCallback filter) -> std::optional<std::string>
 {
   return input_string_with_hint(id, nullptr, value, label, flags, filter);
 }
 
-auto input_bool(const char* id, bool value) -> Maybe<bool>
+auto input_bool(const char* id, bool value) -> std::optional<bool>
 {
   const scoped::Id scope{id};
 
@@ -181,10 +182,10 @@ auto input_bool(const char* id, bool value) -> Maybe<bool>
     ImGui::SetTooltip("[bool]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
-auto input_object(const char* id, object_t value) -> Maybe<object_t>
+auto input_object(const char* id, object_t value) -> std::optional<object_t>
 {
   const scoped::Id scope{id};
 
@@ -195,10 +196,10 @@ auto input_object(const char* id, object_t value) -> Maybe<object_t>
     ImGui::SetTooltip("[object]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
-auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
+auto input_color(const char* id, const cen::color value) -> std::optional<cen::color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
@@ -214,11 +215,11 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
     ImGui::SetTooltip("[color]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 auto input_file(const char* id, const std::filesystem::path& value)
-    -> Maybe<std::filesystem::path>
+    -> std::optional<std::filesystem::path>
 {
   const scoped::Id scope{id};
 
@@ -244,7 +245,7 @@ auto input_file(const char* id, const std::filesystem::path& value)
     ImGui::SetTooltip("[file]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 }  // namespace tactile

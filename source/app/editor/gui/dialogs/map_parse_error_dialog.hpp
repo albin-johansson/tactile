@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "dialog.hpp"
 #include "io/maps/parser/parse_error.hpp"
 #include "tactile.hpp"
@@ -39,7 +41,7 @@ class MapParseErrorDialog final : public ADialog
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
  private:
-  Maybe<parsing::ParseError> mError;
+  std::optional<parsing::ParseError> mError;
 };
 
 }  // namespace tactile

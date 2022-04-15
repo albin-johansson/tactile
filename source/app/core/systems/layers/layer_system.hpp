@@ -19,8 +19,9 @@
 
 #pragma once
 
-#include <string>   // string
-#include <utility>  // pair
+#include <optional>  // optional
+#include <string>    // string
+#include <utility>   // pair
 
 #include <entt/entt.hpp>
 
@@ -148,7 +149,8 @@ auto duplicate_layer(entt::registry& registry,
 
 [[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>;
+[[nodiscard]] auto get_active_layer_id(const entt::registry& registry)
+    -> std::optional<LayerID>;
 
 /**
  * \brief Attempts to find the layer associated with the specified ID.

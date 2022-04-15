@@ -19,8 +19,9 @@
 
 #include "component_editor.hpp"
 
-#include <string>   // string
-#include <utility>  // move
+#include <optional>  // optional
+#include <string>    // string
+#include <utility>   // move
 
 #include <imgui.h>
 
@@ -47,7 +48,7 @@ struct ComponentEditor::Data final
   CreateComponentAttributeDialog create_component_attr;
   RenameComponentDialog rename_component;
   RenameComponentAttributeDialog rename_component_attr;
-  Maybe<ComponentID> active_component;
+  std::optional<ComponentID> active_component;
 };
 
 ComponentEditor::ComponentEditor()

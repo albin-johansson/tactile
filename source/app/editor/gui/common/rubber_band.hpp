@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/region.hpp"
 #include "tactile.hpp"
 
@@ -34,9 +36,9 @@ namespace tactile {
  * \param offset the current viewport scroll offset.
  * \param tileSize the logical tile size.
  *
- * \return the current selection; `nothing` if there is none.
+ * \return the current selection; an empty optional if there is none.
  */
 [[nodiscard]] auto rubber_band(const ImVec2& offset, const ImVec2& tileSize)
-    -> Maybe<Region>;
+    -> std::optional<Region>;
 
 }  // namespace tactile

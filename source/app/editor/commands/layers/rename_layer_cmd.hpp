@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -45,7 +46,7 @@ class RenameLayerCmd final : public ACommand
   RegistryRef mRegistry;
   LayerID mLayerId;
   std::string mName;
-  Maybe<std::string> mPreviousName;
+  std::optional<std::string> mPreviousName;
 };
 
 }  // namespace tactile

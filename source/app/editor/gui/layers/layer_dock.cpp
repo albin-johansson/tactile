@@ -19,6 +19,8 @@
 
 #include "layer_dock.hpp"
 
+#include <optional>  // optional
+
 #include <imgui.h>
 
 #include "add_layer_context_menu.hpp"
@@ -45,7 +47,7 @@ namespace {
 
 inline RenameLayerDialog _rename_layer_dialog;
 inline AddLayerContextMenu _add_layer_context_menu;
-inline Maybe<LayerID> _rename_target_id;
+inline std::optional<LayerID> _rename_target_id;
 constinit bool _is_focused = false;
 
 void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
@@ -54,7 +56,7 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
   const auto activeLayerEntity = registry.ctx<comp::ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
-  Maybe<LayerID> activeLayerId;
+  std::optional<LayerID> activeLayerId;
   if (hasActiveLayer) {
     const auto& layer = sys::checked_get<comp::Layer>(registry, activeLayerEntity);
     activeLayerId = layer.id;

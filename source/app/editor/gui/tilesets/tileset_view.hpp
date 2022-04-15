@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include <entt/entt.hpp>
 
 #include "tactile.hpp"
@@ -32,13 +34,13 @@ class TilesetView final
               entt::entity entity,
               entt::dispatcher& dispatcher);
 
-  [[nodiscard]] auto width() const -> Maybe<float>;
+  [[nodiscard]] auto width() const -> std::optional<float>;
 
-  [[nodiscard]] auto height() const -> Maybe<float>;
+  [[nodiscard]] auto height() const -> std::optional<float>;
 
  private:
-  Maybe<float> mWidth;
-  Maybe<float> mHeight;
+  std::optional<float> mWidth;
+  std::optional<float> mHeight;
 };
 
 }  // namespace tactile

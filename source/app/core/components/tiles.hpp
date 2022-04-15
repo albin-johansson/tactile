@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <vector>  // vector
+#include <optional>  // optional
+#include <vector>    // vector
 
 #include <centurion.hpp>
 #include <entt/entt.hpp>
@@ -110,7 +111,7 @@ struct TilesetCache final
  */
 struct TilesetSelection final
 {
-  Maybe<Region> region;  ///< The currently selected region, if any.
+  std::optional<Region> region;  ///< The currently selected region, if any.
 };
 
 /**

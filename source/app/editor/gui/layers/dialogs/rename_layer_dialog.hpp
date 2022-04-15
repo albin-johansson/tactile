@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 #include "tactile.hpp"
 
@@ -42,8 +44,8 @@ class RenameLayerDialog final : public AStringInputDialog
       -> bool override;
 
  private:
-  Maybe<LayerID> mTargetId;
-  Maybe<std::string> mOldName;
+  std::optional<LayerID> mTargetId;
+  std::optional<std::string> mOldName;
 };
 
 }  // namespace tactile

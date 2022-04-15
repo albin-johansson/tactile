@@ -19,6 +19,8 @@
 
 #include "viewport_area.hpp"
 
+#include <optional>  // optional
+
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -27,7 +29,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto check_for(auto&& query) -> Maybe<cen::mouse_button>
+[[nodiscard]] auto check_for(auto&& query) -> std::optional<cen::mouse_button>
 {
   const auto left = query(ImGuiMouseButton_Left);
   const auto mid = query(ImGuiMouseButton_Middle);
@@ -43,7 +45,7 @@ namespace {
     return cen::mouse_button::right;
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 

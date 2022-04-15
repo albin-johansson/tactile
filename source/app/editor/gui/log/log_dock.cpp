@@ -19,6 +19,8 @@
 
 #include "log_dock.hpp"
 
+#include <optional>  // optional
+
 #include <imgui.h>
 
 #include "editor/gui/common/centered_text.hpp"
@@ -39,7 +41,7 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
 
 // TODO should verbose/debug options be disabled in release builds?
 [[nodiscard]] auto _show_log_level_filter_combo(const LogLevel currentLevel)
-    -> Maybe<LogLevel>
+    -> std::optional<LogLevel>
 {
   static constexpr auto verboseFilter = "Everything";
   static constexpr auto debugFilter = "Debug / Information / Warnings / Errors";
@@ -100,7 +102,7 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
     }
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 [[nodiscard]] auto _color_for_level(const LogLevel level) -> ImVec4

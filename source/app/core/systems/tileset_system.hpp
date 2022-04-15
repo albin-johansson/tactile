@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include <centurion.hpp>
 #include <entt/entt.hpp>
 
@@ -251,16 +253,16 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
 /**
  * \brief Converts a global tile identifier to its local counterpart.
  *
- * \details A "local" tile identifier is a basically a tile index in the parent
- * tileset.
+ * \details A "local" tile identifier is a basically a tile index in the parent tileset.
  *
  * \param registry the associated registry.
  * \param global a global tile identifier that will be converted.
  *
- * \return the corresponding local tile identifier; `nothing` if something went wrong.
+ * \return the corresponding local tile identifier;
+ *         an empty optional if something went wrong.
  */
 [[nodiscard]] auto convert_to_local(const entt::registry& registry, TileID global)
-    -> Maybe<TileID>;
+    -> std::optional<TileID>;
 
 /// \} End of tileset system
 

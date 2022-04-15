@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/systems/object_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -45,8 +47,8 @@ class PointToolCmd final : public ACommand
   LayerID mLayerId{};
   float mPointX{};
   float mPointY{};
-  Maybe<ObjectID> mObjectId;
-  Maybe<sys::RemoveObjectResult> mSnapshot;
+  std::optional<ObjectID> mObjectId;
+  std::optional<sys::RemoveObjectResult> mSnapshot;
 };
 
 /// \} End of group commands

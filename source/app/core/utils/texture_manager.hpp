@@ -20,6 +20,7 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <optional>    // optional
 #include <vector>      // vector
 
 #include "core/components/texture.hpp"
@@ -37,7 +38,8 @@ class TextureManager final
 
   ~TextureManager();
 
-  [[nodiscard]] auto load(const std::filesystem::path& path) -> Maybe<comp::Texture>;
+  [[nodiscard]] auto load(const std::filesystem::path& path)
+      -> std::optional<comp::Texture>;
 
  private:
   std::vector<uint> mTextures;

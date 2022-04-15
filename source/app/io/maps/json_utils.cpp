@@ -32,14 +32,14 @@ namespace {
 
 template <typename T>
 [[nodiscard]] auto _as(const nlohmann::json& json, const std::string_view name)
-    -> Maybe<T>
+    -> std::optional<T>
 {
   const auto iter = json.find(name);
   if (iter != json.end()) {
     return iter->get<T>();
   }
   else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
@@ -92,7 +92,7 @@ void write_json(const nlohmann::json& json, const std::filesystem::path& path)
   stream << json;
 }
 
-auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>
+auto read_json(const std::filesystem::path& path) -> std::optional<nlohmann::json>
 {
   try {
     std::ifstream stream{path, std::ios::in};
@@ -103,32 +103,32 @@ auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>
     return json;
   }
   catch (...) {
-    return nothing;
+    return std::nullopt;
   }
 }
 
 auto as_string(const nlohmann::json& json, const std::string_view name)
-    -> Maybe<std::string>
+    -> std::optional<std::string>
 {
   return _as<std::string>(json, name);
 }
 
-auto as_int(const nlohmann::json& json, const std::string_view name) -> Maybe<int32>
+auto as_int(const nlohmann::json& json, const std::string_view name) -> std::optional<int32>
 {
   return _as<int32>(json, name);
 }
 
-auto as_uint(const nlohmann::json& json, const std::string_view name) -> Maybe<uint32>
+auto as_uint(const nlohmann::json& json, const std::string_view name) -> std::optional<uint32>
 {
   return _as<uint32>(json, name);
 }
 
-auto as_float(const nlohmann::json& json, const std::string_view name) -> Maybe<float>
+auto as_float(const nlohmann::json& json, const std::string_view name) -> std::optional<float>
 {
   return _as<float>(json, name);
 }
 
-auto as_bool(const nlohmann::json& json, const std::string_view name) -> Maybe<bool>
+auto as_bool(const nlohmann::json& json, const std::string_view name) -> std::optional<bool>
 {
   return _as<bool>(json, name);
 }

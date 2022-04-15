@@ -20,6 +20,7 @@
 #pragma once
 
 #include <map>          // map
+#include <optional>     // optional
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // pair
@@ -161,7 +162,7 @@ void rename_component_def(entt::registry& registry, ComponentID compId, std::str
                                            std::string_view name) -> bool;
 
 [[nodiscard]] auto get_first_available_component_def(const entt::registry& registry)
-    -> Maybe<ComponentID>;
+    -> std::optional<ComponentID>;
 
 [[nodiscard]] auto find_component_def(const entt::registry& registry, ComponentID compId)
     -> entt::entity;

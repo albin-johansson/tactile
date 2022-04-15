@@ -127,12 +127,12 @@ void TilesetView::update(const entt::registry& registry,
   graphics.pop_clip();
 }
 
-auto TilesetView::width() const -> Maybe<float>
+auto TilesetView::width() const -> std::optional<float>
 {
   return mWidth;
 }
 
-auto TilesetView::height() const -> Maybe<float>
+auto TilesetView::height() const -> std::optional<float>
 {
   return mHeight;
 }

@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "editor/commands/command_id.hpp"
 #include "object_command.hpp"
@@ -45,7 +46,7 @@ class SetObjectNameCmd final : public AObjectCommand
 
  private:
   std::string mNewName;
-  Maybe<std::string> mOldName;
+  std::optional<std::string> mOldName;
 };
 
 }  // namespace tactile

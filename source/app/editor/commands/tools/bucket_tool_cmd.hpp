@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <vector>  // vector
+#include <optional>  // optional
+#include <vector>    // vector
 
 #include "core/tile_pos.hpp"
 #include "editor/commands/command.hpp"
@@ -47,7 +48,7 @@ class BucketToolCmd final : public ACommand
   LayerID mLayer;
   TilePos mOrigin;
   TileID mReplacement;
-  Maybe<TileID> mTarget;
+  std::optional<TileID> mTarget;
   std::vector<TilePos> mPositions;
 };
 
