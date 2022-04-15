@@ -31,6 +31,7 @@
 #include "dialogs/create_component_dialog.hpp"
 #include "dialogs/rename_component_attribute_dialog.hpp"
 #include "dialogs/rename_component_dialog.hpp"
+#include "editor/constants.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"

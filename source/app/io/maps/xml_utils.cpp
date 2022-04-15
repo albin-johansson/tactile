@@ -22,6 +22,7 @@
 #include <algorithm>  // any_of
 #include <cstring>    // strcmp
 
+#include "editor/constants.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -78,7 +79,8 @@ auto int_attribute(pugi::xml_node node, const char* attributeName) -> std::optio
   }
 }
 
-auto uint_attribute(pugi::xml_node node, const char* attributeName) -> std::optional<uint32>
+auto uint_attribute(pugi::xml_node node, const char* attributeName)
+    -> std::optional<uint32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -93,7 +95,8 @@ auto uint_attribute(pugi::xml_node node, const char* attributeName) -> std::opti
   }
 }
 
-auto float_attribute(pugi::xml_node node, const char* attributeName) -> std::optional<float>
+auto float_attribute(pugi::xml_node node, const char* attributeName)
+    -> std::optional<float>
 {
   TACTILE_ASSERT(attributeName);
 
