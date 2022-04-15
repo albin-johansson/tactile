@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "editor/gui/dialogs/about_dialog.hpp"
 #include "editor/gui/dialogs/credits_dialog.hpp"

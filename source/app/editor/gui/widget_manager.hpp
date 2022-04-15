@@ -23,7 +23,7 @@
 #include <optional>  // optional
 #include <string>    // string
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
 #include "io/maps/parser/parse_error.hpp"

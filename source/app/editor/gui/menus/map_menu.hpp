@@ -21,7 +21,7 @@
 
 #include <memory>  // unique_ptr
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 namespace tactile {
 

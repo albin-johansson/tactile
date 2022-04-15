@@ -20,6 +20,7 @@
 #include "tileset_view.hpp"
 
 #include <centurion.hpp>
+#include <entt/entt.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 

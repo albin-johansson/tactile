@@ -19,6 +19,7 @@
 
 #include "viewport_widget.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 

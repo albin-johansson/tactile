@@ -19,6 +19,7 @@
 
 #include "start_page_view.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 

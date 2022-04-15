@@ -21,7 +21,7 @@
 
 #include <optional>  // optional
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "tactile.hpp"
 

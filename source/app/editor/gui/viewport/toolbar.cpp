@@ -19,6 +19,7 @@
 
 #include "toolbar.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/fwd.hpp>
 
 #include "edit_menu.hpp"
 #include "file_menu.hpp"

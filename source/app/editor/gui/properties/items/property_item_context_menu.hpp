@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/fwd.hpp>
 
 namespace tactile {
 

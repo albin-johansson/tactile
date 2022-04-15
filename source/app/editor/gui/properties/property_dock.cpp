@@ -23,6 +23,7 @@
 #include <optional>  // optional
 #include <utility>   // move
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"

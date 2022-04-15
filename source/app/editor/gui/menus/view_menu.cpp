@@ -19,6 +19,7 @@
 
 #include "view_menu.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "cfg/fonts.hpp"

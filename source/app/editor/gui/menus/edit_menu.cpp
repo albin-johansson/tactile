@@ -19,6 +19,7 @@
 
 #include "edit_menu.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "core/tool_type.hpp"

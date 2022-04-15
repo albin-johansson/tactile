@@ -19,6 +19,7 @@
 
 #include "file_menu.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"

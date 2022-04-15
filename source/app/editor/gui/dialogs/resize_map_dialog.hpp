@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
-
 #include "dialog.hpp"
 #include "tactile.hpp"
 

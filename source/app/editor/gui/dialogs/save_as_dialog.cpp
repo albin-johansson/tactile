@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include <entt/entt.hpp>
+
 #include "editor/events/misc_events.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"

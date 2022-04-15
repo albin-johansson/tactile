@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include <entt/entt.hpp>
+
 #include "components/component_dock.hpp"
 #include "dialogs/map_parse_error_dialog.hpp"
 #include "dialogs/resize_map_dialog.hpp"

@@ -21,6 +21,7 @@
 
 #include <optional>  // optional
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "add_layer_context_menu.hpp"

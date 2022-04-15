@@ -19,6 +19,7 @@
 
 #include "menu_bar.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "debug_menu.hpp"

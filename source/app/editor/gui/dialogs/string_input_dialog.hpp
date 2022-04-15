@@ -23,7 +23,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "dialog.hpp"
 #include "tactile.hpp"

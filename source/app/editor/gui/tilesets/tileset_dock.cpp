@@ -19,6 +19,7 @@
 
 #include "tileset_dock.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "core/components/tiles.hpp"

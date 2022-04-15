@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
 

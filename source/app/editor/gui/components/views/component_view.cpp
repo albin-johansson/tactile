@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include <entt/entt.hpp>
+
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/registry_system.hpp"

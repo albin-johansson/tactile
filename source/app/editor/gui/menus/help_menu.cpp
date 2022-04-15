@@ -20,6 +20,7 @@
 #include "help_menu.hpp"
 
 #include <centurion.hpp>  // open_url
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "editor/gui/alignment.hpp"

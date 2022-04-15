@@ -19,6 +19,7 @@
 
 #include "tileset_tabs.hpp"
 
+#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
