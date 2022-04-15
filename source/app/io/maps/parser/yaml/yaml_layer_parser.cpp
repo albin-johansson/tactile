@@ -59,7 +59,7 @@ namespace {
                                      const usize rows,
                                      const usize columns) -> ParseError
 {
-  data.type = LayerType::tile_layer;
+  data.type = LayerType::TileLayer;
 
   auto& tileLayer = data.data.emplace<ir::TileLayerData>();
   tileLayer.row_count = rows;
@@ -86,7 +86,7 @@ namespace {
                                        const ir::MapData& map,
                                        ir::LayerData& data) -> ParseError
 {
-  data.type = LayerType::object_layer;
+  data.type = LayerType::ObjectLayer;
   auto& objectLayer = data.data.emplace<ir::ObjectLayerData>();
 
   if (auto sequence = node["objects"]) {
@@ -108,7 +108,7 @@ namespace {
                                       const ir::MapData& map,
                                       ir::LayerData& data) -> ParseError
 {
-  data.type = LayerType::group_layer;
+  data.type = LayerType::GroupLayer;
   auto& group = data.data.emplace<ir::GroupLayerData>();
 
   if (auto sequence = node["layers"]) {

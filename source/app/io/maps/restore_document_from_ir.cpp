@@ -146,7 +146,7 @@ auto _restore_layer(entt::registry& registry,
   layer.visible = layerData.visible;
 
   switch (layerData.type) {
-    case LayerType::tile_layer: {
+    case LayerType::TileLayer: {
       const auto& tileLayerData = std::get<ir::TileLayerData>(layerData.data);
 
       auto& tileLayer = registry.emplace<comp::TileLayer>(entity);
@@ -154,12 +154,12 @@ auto _restore_layer(entt::registry& registry,
 
       break;
     }
-    case LayerType::object_layer: {
+    case LayerType::ObjectLayer: {
       const auto& objectLayerData = std::get<ir::ObjectLayerData>(layerData.data);
       _restore_object_layer(registry, entity, objectLayerData);
       break;
     }
-    case LayerType::group_layer: {
+    case LayerType::GroupLayer: {
       registry.emplace<comp::GroupLayer>(entity);
 
       const auto& groupData = std::get<ir::GroupLayerData>(layerData.data);

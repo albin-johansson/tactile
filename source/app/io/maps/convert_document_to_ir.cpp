@@ -126,7 +126,7 @@ void _convert_layer(ir::LayerData& data,
   data.visible = layer.visible;
 
   switch (layer.type) {
-    case LayerType::tile_layer: {
+    case LayerType::TileLayer: {
       const auto& tileLayer = registry.get<comp::TileLayer>(entity);
 
       auto& tileLayerData = data.data.emplace<ir::TileLayerData>();
@@ -138,12 +138,12 @@ void _convert_layer(ir::LayerData& data,
 
       break;
     }
-    case LayerType::object_layer: {
+    case LayerType::ObjectLayer: {
       auto& objectLayerData = data.data.emplace<ir::ObjectLayerData>();
       _convert_object_layer(objectLayerData, registry, entity);
       break;
     }
-    case LayerType::group_layer: {
+    case LayerType::GroupLayer: {
       auto& groupLayerData = data.data.emplace<ir::GroupLayerData>();
       _convert_group_layer(groupLayerData, registry, entity);
       break;

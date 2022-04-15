@@ -31,13 +31,13 @@ IconManager::IconManager(TextureManager& textures)
 auto get_icon(const LayerType type) -> const char*
 {
   switch (type) {
-    case LayerType::tile_layer:
+    case LayerType::TileLayer:
       return TAC_ICON_TILE_LAYER;
 
-    case LayerType::object_layer:
+    case LayerType::ObjectLayer:
       return TAC_ICON_OBJECT_LAYER;
 
-    case LayerType::group_layer:
+    case LayerType::GroupLayer:
       return TAC_ICON_GROUP_LAYER;
 
     default:

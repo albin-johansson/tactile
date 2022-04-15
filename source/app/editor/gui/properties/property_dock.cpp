@@ -176,15 +176,15 @@ void _show_native_tileset_properties(const std::string& name,
 void _show_native_layer_properties(const comp::Layer& layer, entt::dispatcher& dispatcher)
 {
   switch (layer.type) {
-    case LayerType::tile_layer:
+    case LayerType::TileLayer:
       _native_read_only_row("Type", "Tile Layer");
       break;
 
-    case LayerType::object_layer:
+    case LayerType::ObjectLayer:
       _native_read_only_row("Type", "Object Layer");
       break;
 
-    case LayerType::group_layer:
+    case LayerType::GroupLayer:
       _native_read_only_row("Type", "Group Layer");
       break;
   }

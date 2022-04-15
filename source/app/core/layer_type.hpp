@@ -28,9 +28,9 @@ namespace tactile {
  */
 enum class LayerType
 {
-  tile_layer,
-  object_layer,
-  group_layer
+  TileLayer,
+  ObjectLayer,
+  GroupLayer
 };
 
 }  // namespace tactile

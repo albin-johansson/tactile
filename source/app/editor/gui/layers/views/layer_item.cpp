@@ -149,7 +149,7 @@ void layer_item_view(const entt::registry& registry,
   const auto& context = sys::checked_get<comp::AttributeContext>(registry, layerEntity);
   FormattedString name{"{} {}", get_icon(layer.type), context.name};
 
-  if (layer.type != LayerType::group_layer) {
+  if (layer.type != LayerType::GroupLayer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }

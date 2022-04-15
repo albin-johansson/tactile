@@ -37,10 +37,10 @@ void _render_layer(GraphicsCtx& graphics,
                    const comp::Layer& layer,
                    const float parentOpacity)
 {
-  if (layer.type == LayerType::tile_layer) {
+  if (layer.type == LayerType::TileLayer) {
     render_tile_layer(graphics, registry, layerEntity, parentOpacity);
   }
-  else if (layer.type == LayerType::object_layer) {
+  else if (layer.type == LayerType::ObjectLayer) {
     render_object_layer(graphics, registry, layerEntity, parentOpacity);
   }
 }

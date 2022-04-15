@@ -203,7 +203,7 @@ void _emit_layer(YAML::Emitter& emitter,
 
   emitter << YAML::Key << "type";
   switch (data.type) {
-    case LayerType::tile_layer:
+    case LayerType::TileLayer:
       emitter << YAML::Value << "tile-layer";
       _emit_tile_layer_data(emitter,
                             std::get<ir::TileLayerData>(data.data),
@@ -211,12 +211,12 @@ void _emit_layer(YAML::Emitter& emitter,
                             columns);
       break;
 
-    case LayerType::object_layer:
+    case LayerType::ObjectLayer:
       emitter << YAML::Value << "object-layer";
       _emit_object_layer_data(emitter, std::get<ir::ObjectLayerData>(data.data));
       break;
 
-    case LayerType::group_layer: {
+    case LayerType::GroupLayer: {
       emitter << YAML::Value << "group-layer";
       emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
