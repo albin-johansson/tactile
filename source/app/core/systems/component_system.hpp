@@ -43,16 +43,16 @@ namespace tactile::sys {
 struct RemoveComponentDefResult final
 {
   ComponentID id{};                             ///< Previous component ID.
-  std::string name;                              ///< Previous component name.
-  ComponentAttrMap attributes;                   ///< Removed component attributes.
+  std::string name;                             ///< Previous component name.
+  ComponentAttrMap attributes;                  ///< Removed component attributes.
   HashMap<ContextID, ComponentAttrMap> values;  ///< Removed context attributes.
 };
 
 struct SetComponentAttrTypeResult final
 {
   ComponentID comp_id{};                 ///< Affected component definition ID.
-  std::string attr_name;                  ///< Affected attribute name.
-  Attribute base_value;                   ///< Previous default value.
+  std::string attr_name;                 ///< Affected attribute name.
+  Attribute base_value;                  ///< Previous default value.
   HashMap<ContextID, Attribute> values;  ///< Previous values.
 };
 
@@ -60,7 +60,7 @@ struct RemoveComponentResult final
 {
   ContextID context{};      ///< Context from which component was removed.
   ComponentID component{};  ///< Previous component ID.
-  ComponentAttrMap values;   ///< Removed context attributes.
+  ComponentAttrMap values;  ///< Removed context attributes.
 };
 
 struct ResetComponentResult final
@@ -136,9 +136,7 @@ void restore_component_def(entt::registry& registry, RemoveComponentDefResult sn
  * \param compId the ID of the component that will be renamed.
  * \param name the new component name.
  */
-void rename_component_def(entt::registry& registry,
-                          ComponentID compId,
-                          std::string name);
+void rename_component_def(entt::registry& registry, ComponentID compId, std::string name);
 
 /**
  * \brief Indicates whether a component ID is valid, i.e. if it's currently in use.

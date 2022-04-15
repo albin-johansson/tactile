@@ -122,15 +122,13 @@ void _visit_attributes(entt::registry& registry,
                        const std::string_view attrName,
                        auto callable)
 {
-  _visit_components(registry,
-                    [=, &callable](const ContextID ctx, comp::Component& comp) {
-                      if (comp.type == compId) {
-                        if (auto iter = comp.values.find(attrName);
-                            iter != comp.values.end()) {
-                          callable(ctx, iter->second);
-                        }
-                      }
-                    });
+  _visit_components(registry, [=, &callable](const ContextID ctx, comp::Component& comp) {
+    if (comp.type == compId) {
+      if (auto iter = comp.values.find(attrName); iter != comp.values.end()) {
+        callable(ctx, iter->second);
+      }
+    }
+  });
 }
 
 void _visit_attributes(const entt::registry& registry,

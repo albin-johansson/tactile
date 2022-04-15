@@ -52,9 +52,9 @@ struct TilesetContext final
  */
 struct Tileset final
 {
-  TilesetID id{};       ///< Unique ID associated with the tileset.
-  TileID first_id{};    ///< First associated global tile ID.
-  TileID last_id{};     ///< Last associated global tile ID (inclusive).
+  TilesetID id{};        ///< Unique ID associated with the tileset.
+  TileID first_id{};     ///< First associated global tile ID.
+  TileID last_id{};      ///< Last associated global tile ID (inclusive).
   int32 tile_width{};    ///< Width of tiles in the tileset.
   int32 tile_height{};   ///< Height of tiles in the tileset.
   int32 tile_count{};    ///< Number of tiles associated with the tileset.
@@ -83,7 +83,7 @@ struct UvTileSize final
  */
 struct MetaTile final
 {
-  TileID id{};                       ///< The ID of the associated tile.
+  TileID id{};                        ///< The ID of the associated tile.
   std::vector<entt::entity> objects;  ///< Associated object entities.
 };
 

@@ -44,7 +44,7 @@ class ADockWidget
 
   [[nodiscard]] auto has_focus() const -> bool;
 
-  [[nodiscard]] auto has_mouse_hover() const  -> bool;
+  [[nodiscard]] auto has_mouse_hover() const -> bool;
 
  protected:
   virtual void on_update([[maybe_unused]] const DocumentModel& model,

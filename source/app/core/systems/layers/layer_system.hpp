@@ -158,8 +158,7 @@ auto duplicate_layer(entt::registry& registry,
  *
  * \return the associated layer entity; a null entity is returned if there is none.
  */
-[[nodiscard]] auto find_layer(const entt::registry& registry, LayerID id)
-    -> entt::entity;
+[[nodiscard]] auto find_layer(const entt::registry& registry, LayerID id) -> entt::entity;
 
 [[nodiscard]] auto get_layer_entity(const entt::registry& registry, LayerID id)
     -> entt::entity;

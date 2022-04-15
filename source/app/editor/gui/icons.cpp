@@ -19,8 +19,8 @@
 
 #include "icons.hpp"
 
-#include "misc/throw.hpp"
 #include "io/directories.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
 

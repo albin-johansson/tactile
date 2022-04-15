@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-
 namespace tactile {
 
 SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(RegistryRef registry,

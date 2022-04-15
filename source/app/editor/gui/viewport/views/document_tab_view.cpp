@@ -24,8 +24,8 @@
 #include "core/components/attributes.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
-#include "map_view.hpp"
 #include "editor/model.hpp"
+#include "map_view.hpp"
 
 namespace tactile {
 

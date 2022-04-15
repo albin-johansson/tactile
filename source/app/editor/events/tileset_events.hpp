@@ -60,7 +60,7 @@ struct SetTilesetSelectionEvent final
  */
 struct SetTilesetNameEvent final
 {
-  TilesetID id{};   ///< ID of target tileset.
+  TilesetID id{};    ///< ID of target tileset.
   std::string name;  ///< The new tileset name.
 };
 
