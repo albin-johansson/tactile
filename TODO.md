@@ -9,6 +9,7 @@ This document provides a brief outline of planned features for the Tactile edito
 * Support viewing and editing external tilesets
 * Minimap widget
 * Custom themes?
+* Export as Godot scenes?
 
 ## Tiled compatibility
 
