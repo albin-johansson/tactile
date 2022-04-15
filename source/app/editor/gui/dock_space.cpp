@@ -17,13 +17,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "load_default_layout.hpp"
+#include "dock_space.hpp"
+
+#include <optional>  // optional
 
 #include <imgui_internal.h>
 
+#include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile {
+namespace {
+
+constinit std::optional<ImGuiID> _root_id;
+
+}  // namespace
+
+void update_dock_space()
+{
+  static bool initialized = false;
+
+  _root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+  if (!initialized) {
+    const auto size = ImGui::GetMainViewport()->Size;
+    if (size.x > 0 && size.y > 0) {
+      const auto& prefs = get_preferences();
+
+      if (!prefs.will_restore_layout() || !exists(widget_ini_path())) {
+        load_default_layout(_root_id.value(), false);
+      }
+
+      initialized = true;
+    }
+  }
+}
 
 void load_default_layout(ImGuiID id, const bool resetVisibility)
 {
@@ -49,6 +76,11 @@ void load_default_layout(ImGuiID id, const bool resetVisibility)
   if (resetVisibility) {
     get_preferences().reset_dock_visibilities();
   }
+}
+
+void reset_layout()
+{
+  load_default_layout(_root_id.value(), true);
 }
 
 }  // namespace tactile

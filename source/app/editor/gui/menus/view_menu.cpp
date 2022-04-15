@@ -26,7 +26,7 @@
 #include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/layout/dock_space.hpp"
+#include "editor/gui/dock_space.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
