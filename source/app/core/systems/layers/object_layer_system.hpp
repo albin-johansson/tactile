@@ -39,19 +39,19 @@ namespace tactile::sys {
 /// \name Object functions
 /// \{
 
-[[nodiscard]] auto get_object_layer(entt::registry& registry, layer_id id)
+[[nodiscard]] auto get_object_layer(entt::registry& registry, LayerID id)
     -> std::pair<entt::entity, comp::ObjectLayer&>;
 
-[[nodiscard]] auto get_object_layer(const entt::registry& registry, layer_id id)
+[[nodiscard]] auto get_object_layer(const entt::registry& registry, LayerID id)
     -> std::pair<entt::entity, const comp::ObjectLayer&>;
 
 [[nodiscard]] auto has_object(const entt::registry& registry,
                               const comp::ObjectLayer& layer,
-                              object_id id) -> bool;
+                              ObjectID id) -> bool;
 
 [[nodiscard]] auto find_object(const entt::registry& registry,
                                const comp::ObjectLayer& layer,
-                               object_id id) -> entt::entity;
+                               ObjectID id) -> entt::entity;
 
 /**
  * \brief Finds an object in the specified layer that contains the supplied coordinates.

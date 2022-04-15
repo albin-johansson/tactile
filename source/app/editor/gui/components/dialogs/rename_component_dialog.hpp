@@ -37,13 +37,13 @@ class RenameComponentDialog final : public ComponentNameDialog
  public:
   RenameComponentDialog();
 
-  void show(std::string previousName, component_id id);
+  void show(std::string previousName, ComponentID id);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  Maybe<component_id> mComponentId;
+  Maybe<ComponentID> mComponentId;
 };
 
 }  // namespace tactile

@@ -26,6 +26,6 @@
 
 namespace tactile {
 
-using TileCache = boost::container::flat_map<TilePos, tile_id>;
+using TileCache = boost::container::flat_map<TilePos, TileID>;
 
 }  // namespace tactile

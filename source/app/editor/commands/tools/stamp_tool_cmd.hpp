@@ -45,7 +45,7 @@ class StampToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayer;
+  LayerID mLayer;
   TileCache mOldState;
   TileCache mNewState;
 

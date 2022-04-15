@@ -28,7 +28,7 @@
 namespace tactile {
 
 RenameTilesetCmd::RenameTilesetCmd(RegistryRef registry,
-                                   const tileset_id id,
+                                   const TilesetID id,
                                    std::string name)
     : ACommand{"Rename Tileset"}
     , mRegistry{registry}

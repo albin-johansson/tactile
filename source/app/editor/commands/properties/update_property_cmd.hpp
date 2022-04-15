@@ -46,7 +46,7 @@ class UpdatePropertyCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  context_id mContextId;
+  ContextID mContextId;
   std::string mName;
   Attribute mNewValue;
   Maybe<Attribute> mOldValue;

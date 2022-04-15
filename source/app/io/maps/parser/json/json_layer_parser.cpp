@@ -70,7 +70,7 @@ namespace {
   for (const auto& [_, value] : data.items()) {
     if (value.is_number_integer()) {
       const auto [row, col] = to_matrix_coords(index, columns);
-      tiles[row][col] = value.get<tile_id>();
+      tiles[row][col] = value.get<TileID>();
       ++index;
     }
     else {

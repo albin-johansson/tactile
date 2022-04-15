@@ -31,7 +31,7 @@ class RenameComponentAttrCmd final : public ACommand
 {
  public:
   RenameComponentAttrCmd(RegistryRef registry,
-                         component_id id,
+                         ComponentID id,
                          std::string previousName,
                          std::string updatedName);
 
@@ -46,7 +46,7 @@ class RenameComponentAttrCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  component_id mComponentId{};
+  ComponentID mComponentId{};
   std::string mPreviousName;
   std::string mUpdatedName;
 };

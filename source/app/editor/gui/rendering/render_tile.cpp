@@ -31,7 +31,7 @@ namespace tactile {
 
 void render_tile(GraphicsCtx& graphics,
                  const entt::registry& registry,
-                 const tile_id tile,
+                 const TileID tile,
                  const int32 row,
                  const int32 column)
 {

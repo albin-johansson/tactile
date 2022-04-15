@@ -43,7 +43,7 @@ class DocumentModel final
 {
  public:
   // Documents are stored on the heap to ensure stability, which is important for commands
-  using document_map = boost::container::flat_map<map_id, std::unique_ptr<Document>>;
+  using document_map = boost::container::flat_map<MapID, std::unique_ptr<Document>>;
   using const_iterator = document_map::const_iterator;
 
   /**
@@ -63,7 +63,7 @@ class DocumentModel final
    *
    * \return the unique identifier assigned to the map.
    */
-  auto add_map(Document document) -> map_id;
+  auto add_map(Document document) -> MapID;
 
   /**
    * \brief Creates an empty map with the specified attributes.
@@ -75,7 +75,7 @@ class DocumentModel final
    *
    * \return the unique identifier assigned to the map.
    */
-  auto add_map(int32 tileWidth, int32 tileHeight, usize rows, usize columns) -> map_id;
+  auto add_map(int32 tileWidth, int32 tileHeight, usize rows, usize columns) -> MapID;
 
   /**
    * \brief Makes a specific map active.
@@ -84,7 +84,7 @@ class DocumentModel final
    *
    * \param id the identifier of the map that will be selected.
    */
-  void select_map(map_id id);
+  void select_map(MapID id);
 
   /**
    * \brief Closes a currently open map.
@@ -96,7 +96,7 @@ class DocumentModel final
    *
    * \param id the identifier of the map that will be closed.
    */
-  void remove_map(map_id id);
+  void remove_map(MapID id);
 
   /**
    * \brief Indicates whether a specific map has an associated file path.
@@ -107,7 +107,7 @@ class DocumentModel final
    *
    * \return `true` if the map has a file path; `false` otherwise.
    */
-  [[nodiscard]] auto has_path(map_id id) const -> bool;
+  [[nodiscard]] auto has_path(MapID id) const -> bool;
 
   /**
    * \brief Returns the (potentially empty) file path associated with a map.
@@ -118,7 +118,7 @@ class DocumentModel final
    *
    * \return the associated file path.
    */
-  [[nodiscard]] auto get_path(map_id id) const -> const std::filesystem::path&;
+  [[nodiscard]] auto get_path(MapID id) const -> const std::filesystem::path&;
 
   /**
    * \brief Indicates whether there is an open document associated with a file path.
@@ -158,7 +158,7 @@ class DocumentModel final
    *
    * \return the identifier of the active map.
    */
-  [[nodiscard]] auto active_map_id() const -> Maybe<map_id>;
+  [[nodiscard]] auto active_map_id() const -> Maybe<MapID>;
 
   /**
    * \brief Returns the currently active document, if there is one.
@@ -279,8 +279,8 @@ class DocumentModel final
 
  private:
   document_map mDocuments;
-  Maybe<map_id> mActiveMap;
-  map_id mNextId{1};
+  Maybe<MapID> mActiveMap;
+  MapID mNextId{1};
 };
 
 }  // namespace tactile

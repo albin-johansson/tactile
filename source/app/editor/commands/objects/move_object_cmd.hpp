@@ -34,7 +34,7 @@ class MoveObjectCmd final : public AObjectCommand
 {
  public:
   MoveObjectCmd(RegistryRef registry,
-                object_id id,
+                ObjectID id,
                 float oldX,
                 float oldY,
                 float newX,

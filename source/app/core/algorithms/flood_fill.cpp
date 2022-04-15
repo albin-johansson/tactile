@@ -29,7 +29,7 @@ namespace tactile {
 void flood(entt::registry& registry,
            const entt::entity entity,
            const TilePos& origin,
-           const tile_id replacement,
+           const TileID replacement,
            std::vector<TilePos>& affected)
 {
   auto& layer = registry.get<comp::TileLayer>(entity);

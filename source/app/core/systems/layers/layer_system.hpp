@@ -59,7 +59,7 @@ namespace tactile::sys {
  * \return the created layer entity.
  */
 auto make_basic_layer(entt::registry& registry,
-                      layer_id id,
+                      LayerID id,
                       LayerType type,
                       std::string name,
                       entt::entity parent = entt::null) -> entt::entity;
@@ -148,7 +148,7 @@ auto duplicate_layer(entt::registry& registry,
 
 [[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<layer_id>;
+[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>;
 
 /**
  * \brief Attempts to find the layer associated with the specified ID.
@@ -158,16 +158,16 @@ auto duplicate_layer(entt::registry& registry,
  *
  * \return the associated layer entity; a null entity is returned if there is none.
  */
-[[nodiscard]] auto find_layer(const entt::registry& registry, layer_id id)
+[[nodiscard]] auto find_layer(const entt::registry& registry, LayerID id)
     -> entt::entity;
 
-[[nodiscard]] auto get_layer_entity(const entt::registry& registry, layer_id id)
+[[nodiscard]] auto get_layer_entity(const entt::registry& registry, LayerID id)
     -> entt::entity;
 
-[[nodiscard]] auto get_layer(entt::registry& registry, layer_id id)
+[[nodiscard]] auto get_layer(entt::registry& registry, LayerID id)
     -> std::pair<entt::entity, comp::Layer&>;
 
-[[nodiscard]] auto get_layer(const entt::registry& registry, layer_id id)
+[[nodiscard]] auto get_layer(const entt::registry& registry, LayerID id)
     -> std::pair<entt::entity, const comp::Layer&>;
 
 [[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;

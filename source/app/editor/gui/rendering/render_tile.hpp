@@ -42,7 +42,7 @@ class GraphicsCtx;
  */
 void render_tile(GraphicsCtx& graphics,
                  const entt::registry& registry,
-                 tile_id tile,
+                 TileID tile,
                  int32 row,
                  int32 column);
 

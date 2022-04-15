@@ -30,7 +30,7 @@ namespace tactile {
 class RemoveComponentDefCmd final : public ACommand
 {
  public:
-  RemoveComponentDefCmd(RegistryRef registry, component_id id);
+  RemoveComponentDefCmd(RegistryRef registry, ComponentID id);
 
   void undo() override;
 
@@ -43,7 +43,7 @@ class RemoveComponentDefCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  component_id mComponentId{};
+  ComponentID mComponentId{};
   Maybe<sys::RemoveComponentDefResult> mSnapshot;
 };
 

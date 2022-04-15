@@ -79,7 +79,7 @@ struct EraserSequenceEvent final
 struct FloodEvent final
 {
   TilePos origin;
-  tile_id replacement{};
+  TileID replacement{};
 };
 
 /**

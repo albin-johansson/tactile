@@ -33,7 +33,7 @@ class RenameLayerDialog final : public AStringInputDialog
  public:
   RenameLayerDialog();
 
-  void show(layer_id id, std::string oldName);
+  void show(LayerID id, std::string oldName);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
@@ -42,7 +42,7 @@ class RenameLayerDialog final : public AStringInputDialog
       -> bool override;
 
  private:
-  Maybe<layer_id> mTargetId;
+  Maybe<LayerID> mTargetId;
   Maybe<std::string> mOldName;
 };
 

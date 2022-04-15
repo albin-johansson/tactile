@@ -30,8 +30,8 @@ class RemoveComponentCmd final : public ACommand
 {
  public:
   RemoveComponentCmd(RegistryRef registry,
-                     context_id contextId,
-                     component_id componentId);
+                     ContextID contextId,
+                     ComponentID componentId);
 
   void undo() override;
 
@@ -44,8 +44,8 @@ class RemoveComponentCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  context_id mContextId{};
-  component_id mComponentId{};
+  ContextID mContextId{};
+  ComponentID mComponentId{};
   Maybe<sys::RemoveComponentResult> mSnapshot;
 };
 

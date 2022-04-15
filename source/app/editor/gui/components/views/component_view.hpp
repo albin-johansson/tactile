@@ -35,7 +35,7 @@ namespace tactile {
  */
 void component_view(const entt::registry& registry,
                     entt::dispatcher& dispatcher,
-                    context_id contextId,
+                    ContextID contextId,
                     entt::entity componentEntity);
 
 }  // namespace tactile

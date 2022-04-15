@@ -45,12 +45,12 @@ class RectangleToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayerId{};
+  LayerID mLayerId{};
   float mX{};
   float mY{};
   float mWidth{};
   float mHeight{};
-  Maybe<object_id> mObjectId;
+  Maybe<ObjectID> mObjectId;
   Maybe<sys::RemoveObjectResult> mSnapshot;
 };
 

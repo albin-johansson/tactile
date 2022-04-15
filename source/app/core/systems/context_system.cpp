@@ -32,7 +32,7 @@ namespace {
 
 /* Identifier used to distinguish attribute contexts, generated on a
    session-by-session basis and not stored anywhere in save files. */
-inline context_id _next_context_id{1};
+inline ContextID _next_context_id{1};
 
 }  // namespace
 
@@ -41,12 +41,12 @@ void reset_next_context_id() noexcept
   _next_context_id = 1;
 }
 
-auto get_and_update_next_context_id() noexcept -> context_id
+auto get_and_update_next_context_id() noexcept -> ContextID
 {
   return _next_context_id++;
 }
 
-auto next_context_id() noexcept -> context_id
+auto next_context_id() noexcept -> ContextID
 {
   return _next_context_id;
 }
@@ -111,7 +111,7 @@ void restore_attribute_context(entt::registry& registry,
   }
 }
 
-auto get_context(entt::registry& registry, const context_id id) -> comp::AttributeContext&
+auto get_context(entt::registry& registry, const ContextID id) -> comp::AttributeContext&
 {
   if (auto& context = registry.ctx<comp::AttributeContext>(); context.id == id) {
     return context;
@@ -126,7 +126,7 @@ auto get_context(entt::registry& registry, const context_id id) -> comp::Attribu
   throw_traced(TactileError{"No matching attribute context!"});
 }
 
-auto get_context(const entt::registry& registry, const context_id id)
+auto get_context(const entt::registry& registry, const ContextID id)
     -> const comp::AttributeContext&
 {
   if (const auto& context = registry.ctx<comp::AttributeContext>(); context.id == id) {
@@ -150,7 +150,7 @@ auto current_context(const entt::registry& registry) -> const comp::AttributeCon
              : registry.ctx<comp::AttributeContext>();
 }
 
-auto current_context_id(const entt::registry& registry) -> context_id
+auto current_context_id(const entt::registry& registry) -> ContextID
 {
   const auto& context = current_context(registry);
   return context.id;

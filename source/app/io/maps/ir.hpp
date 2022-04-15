@@ -42,7 +42,7 @@ struct AttributeContextData final
 
 struct ObjectData final
 {
-  object_id id{};
+  ObjectID id{};
   ObjectType type{};
 
   float x{};
@@ -63,7 +63,7 @@ struct TileLayerData final
   /* The sizes are provided for convenience, they should mirror the map_data values */
   usize row_count{};
   usize col_count{};
-  std::vector<std::vector<tile_id>> tiles;
+  std::vector<std::vector<TileID>> tiles;
 };
 
 struct ObjectLayerData final
@@ -88,7 +88,7 @@ struct LayerData final
 {
   using data_type = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
-  layer_id id{};
+  LayerID id{};
   LayerType type{};
 
   usize index{};
@@ -104,7 +104,7 @@ struct LayerData final
 
 struct MetaAnimationFrameData final
 {
-  tile_id local_id{};
+  TileID local_id{};
   uint64 duration_ms{};
 };
 
@@ -118,7 +118,7 @@ struct MetaTileData final
 struct TilesetData final
 {
   std::string name;
-  tile_id first_tile{};
+  TileID first_tile{};
 
   int32 tile_width{};
   int32 tile_height{};
@@ -130,7 +130,7 @@ struct TilesetData final
   int32 image_width{};
   int32 image_height{};
 
-  HashMap<tile_id, MetaTileData> fancy_tiles;
+  HashMap<TileID, MetaTileData> fancy_tiles;
 
   AttributeContextData context;
 };

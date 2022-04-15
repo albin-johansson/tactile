@@ -26,7 +26,7 @@
 namespace tactile {
 
 SetObjectTagCmd::SetObjectTagCmd(RegistryRef registry,
-                                 const object_id id,
+                                 const ObjectID id,
                                  std::string tag)
     : AObjectCommand{"Set Object Tag", registry, id}
     , mNewTag{std::move(tag)}

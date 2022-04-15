@@ -42,10 +42,10 @@ class PointToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayerId{};
+  LayerID mLayerId{};
   float mPointX{};
   float mPointY{};
-  Maybe<object_id> mObjectId;
+  Maybe<ObjectID> mObjectId;
   Maybe<sys::RemoveObjectResult> mSnapshot;
 };
 

@@ -31,7 +31,7 @@ class DuplicateComponentAttrCmd final : public ACommand
 {
  public:
   DuplicateComponentAttrCmd(RegistryRef registry,
-                            component_id componentId,
+                            ComponentID componentId,
                             std::string attribute);
 
   void undo() override;
@@ -45,7 +45,7 @@ class DuplicateComponentAttrCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  component_id mComponentId{};
+  ComponentID mComponentId{};
   std::string mAttributeName;
   Maybe<std::string> mDuplicatedName;
 };

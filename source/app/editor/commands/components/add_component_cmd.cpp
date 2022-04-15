@@ -24,8 +24,8 @@
 namespace tactile {
 
 AddComponentCmd::AddComponentCmd(RegistryRef registry,
-                                 const context_id contextId,
-                                 const component_id componentId)
+                                 const ContextID contextId,
+                                 const ComponentID componentId)
     : ACommand{"Add Component"}
     , mRegistry{registry}
     , mContextId{contextId}

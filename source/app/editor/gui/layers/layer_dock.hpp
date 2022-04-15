@@ -49,7 +49,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
  *
  * \ingroup gui
  */
-void show_rename_layer_dialog(layer_id layerId);
+void show_rename_layer_dialog(LayerID layerId);
 
 /**
  * \brief Indicates whether the layer dock widget has input focus.

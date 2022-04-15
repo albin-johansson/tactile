@@ -55,7 +55,7 @@ class WidgetManager final
 
   void show_add_tileset_dialog();
 
-  void show_rename_layer_dialog(layer_id id);
+  void show_rename_layer_dialog(LayerID id);
 
   void show_add_property_dialog();
 

@@ -29,7 +29,7 @@ namespace tactile {
 
 BucketToolCmd::BucketToolCmd(RegistryRef registry,
                              const TilePos origin,
-                             const tile_id replacement)
+                             const TileID replacement)
     : ACommand{"Bucket Fill"}
     , mRegistry{registry}
     , mLayer{sys::get_active_layer_id(registry).value()}

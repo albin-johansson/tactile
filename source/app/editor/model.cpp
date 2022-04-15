@@ -42,7 +42,7 @@ void DocumentModel::update()
   }
 }
 
-auto DocumentModel::add_map(Document document) -> map_id
+auto DocumentModel::add_map(Document document) -> MapID
 {
   const auto id = mNextId;
 
@@ -56,7 +56,7 @@ auto DocumentModel::add_map(Document document) -> map_id
 auto DocumentModel::add_map(const int32 tileWidth,
                             const int32 tileHeight,
                             const usize rows,
-                            const usize columns) -> map_id
+                            const usize columns) -> MapID
 {
   TACTILE_ASSERT(tileWidth > 0);
   TACTILE_ASSERT(tileHeight > 0);
@@ -73,13 +73,13 @@ auto DocumentModel::add_map(const int32 tileWidth,
   return add_map(std::move(document));
 }
 
-void DocumentModel::select_map(const map_id id)
+void DocumentModel::select_map(const MapID id)
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   mActiveMap = id;
 }
 
-void DocumentModel::remove_map(const map_id id)
+void DocumentModel::remove_map(const MapID id)
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   mDocuments.erase(id);
@@ -95,13 +95,13 @@ void DocumentModel::remove_map(const map_id id)
   }
 }
 
-auto DocumentModel::has_path(const map_id id) const -> bool
+auto DocumentModel::has_path(const MapID id) const -> bool
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   return !mDocuments.at(id)->path.empty();
 }
 
-auto DocumentModel::get_path(const map_id id) const -> const std::filesystem::path&
+auto DocumentModel::get_path(const MapID id) const -> const std::filesystem::path&
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   return mDocuments.at(id)->path;
@@ -115,7 +115,7 @@ auto DocumentModel::has_document_with_path(const std::filesystem::path& path) co
   });
 }
 
-auto DocumentModel::active_map_id() const -> Maybe<map_id>
+auto DocumentModel::active_map_id() const -> Maybe<MapID>
 {
   return mActiveMap;
 }

@@ -50,7 +50,7 @@ namespace tactile::sys {
  *
  * \throws TactileError if the identifier is invalid.
  */
-[[nodiscard]] auto get_tile_layer_entity(const entt::registry& registry, layer_id id)
+[[nodiscard]] auto get_tile_layer_entity(const entt::registry& registry, LayerID id)
     -> entt::entity;
 
 /**
@@ -62,7 +62,7 @@ namespace tactile::sys {
  *
  * \throws TactileError if the position is invalid.
  */
-void set_tile(comp::TileLayer& layer, const TilePos& position, tile_id tile);
+void set_tile(comp::TileLayer& layer, const TilePos& position, TileID tile);
 
 /**
  * \brief Restores the values of tiles in a tile layer according to a tile cache.
@@ -83,12 +83,12 @@ void set_tiles(comp::TileLayer& layer, const TileCache& tiles);
  * \return the tile at the position; the empty tile is returned for invalid positions.
  */
 [[nodiscard]] auto get_tile(const comp::TileLayer& layer, const TilePos& position)
-    -> tile_id;
+    -> TileID;
 
 /**
  * \brief Visits each tile in a tile layer.
  *
- * \details The function object must provide `operator()(usize, usize, tile_id)`.
+ * \details The function object must provide `operator()(usize, usize, TileID)`.
  *
  * \param layer the tile layer to visit.
  * \param callable the function object invoked for each tile.

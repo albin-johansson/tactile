@@ -37,7 +37,7 @@ namespace tactile::sys {
 
 struct RemoveObjectResult final
 {
-  layer_id layer{};
+  LayerID layer{};
   comp::Object object;
   sys::AttributeContextSnapshot context;
 };
@@ -61,11 +61,11 @@ struct RemoveObjectResult final
  * \return the identifier assigned to the object.
  */
 auto make_rectangle_object(entt::registry& registry,
-                           layer_id layerId,
+                           LayerID layerId,
                            float x,
                            float y,
                            float width,
-                           float height) -> object_id;
+                           float height) -> ObjectID;
 
 /**
  * \brief Adds a new ellipse object to the active object layer.
@@ -86,11 +86,11 @@ auto make_rectangle_object(entt::registry& registry,
  * \return the identifier assigned to the object.
  */
 auto make_ellipse_object(entt::registry& registry,
-                         layer_id layerId,
+                         LayerID layerId,
                          float x,
                          float y,
                          float width,
-                         float height) -> object_id;
+                         float height) -> ObjectID;
 
 /**
  * \brief Adds a new point object to the active object layer.
@@ -108,8 +108,8 @@ auto make_ellipse_object(entt::registry& registry,
  *
  * \return the identifier assigned to the object.
  */
-auto make_point_object(entt::registry& registry, layer_id layerId, float x, float y)
-    -> object_id;
+auto make_point_object(entt::registry& registry, LayerID layerId, float x, float y)
+    -> ObjectID;
 
 /**
  * \brief Removes an object.
@@ -121,7 +121,7 @@ auto make_point_object(entt::registry& registry, layer_id layerId, float x, floa
  *
  * \return a snapshot of the removed object.
  */
-auto remove_object(entt::registry& registry, object_id id) -> RemoveObjectResult;
+auto remove_object(entt::registry& registry, ObjectID id) -> RemoveObjectResult;
 
 /**
  * \brief Restores a previously removed object.
@@ -139,7 +139,7 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot);
  *
  * \return the found entity; a null entity is returned if no object is found.
  */
-[[nodiscard]] auto find_object(const entt::registry& registry, object_id id)
+[[nodiscard]] auto find_object(const entt::registry& registry, ObjectID id)
     -> entt::entity;
 
 /**
@@ -152,7 +152,7 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot);
  *
  * \throws TactileError if the object identifier is invalid.
  */
-[[nodiscard]] auto get_object(const entt::registry& registry, object_id id)
+[[nodiscard]] auto get_object(const entt::registry& registry, ObjectID id)
     -> entt::entity;
 
 /// \} End of group object-system

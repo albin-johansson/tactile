@@ -32,7 +32,7 @@ class SetComponentAttrTypeCmd final : public ACommand
 {
  public:
   SetComponentAttrTypeCmd(RegistryRef registry,
-                          component_id id,
+                          ComponentID id,
                           std::string attribute,
                           AttributeType type);
 
@@ -47,7 +47,7 @@ class SetComponentAttrTypeCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  component_id mComponentId;
+  ComponentID mComponentId;
   std::string mAttributeName;
   AttributeType mNewType;
   Maybe<sys::SetComponentAttrTypeResult> mSnapshot;

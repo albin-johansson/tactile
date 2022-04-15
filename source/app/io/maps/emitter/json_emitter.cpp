@@ -186,7 +186,7 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto _emit_fancy_tile(const tile_id id, const ir::MetaTileData& data)
+[[nodiscard]] auto _emit_fancy_tile(const TileID id, const ir::MetaTileData& data)
     -> nlohmann::json
 {
   auto json = nlohmann::json::object();

@@ -37,7 +37,7 @@ namespace {
 [[nodiscard]] auto _parse_fancy_tile(const nlohmann::json& json,
                                      ir::TilesetData& tilesetData) -> ParseError
 {
-  tile_id tileId{};
+  TileID tileId{};
 
   if (const auto id = as_int(json, "id")) {
     tileId = *id;

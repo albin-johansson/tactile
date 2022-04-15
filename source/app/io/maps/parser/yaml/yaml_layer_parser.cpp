@@ -41,7 +41,7 @@ namespace {
 {
   usize index = 0;
   for (const auto& token : split(tileData.c_str(), ' ')) {
-    if (const auto id = from_string<tile_id>(token.c_str())) {
+    if (const auto id = from_string<TileID>(token.c_str())) {
       const auto [row, col] = to_matrix_coords(index, columns);
       layer.tiles[row][col] = *id;
       ++index;
@@ -138,7 +138,7 @@ namespace {
   layer.index = index;
 
   if (auto identifier = node["id"]) {
-    layer.id = identifier.as<layer_id>();
+    layer.id = identifier.as<LayerID>();
   }
   else {
     return ParseError::no_layer_id;
@@ -212,7 +212,7 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData
     -> ParseError
 {
   if (auto id = node["id"]) {
-    object->id = id.as<object_id>();
+    object->id = id.as<ObjectID>();
   }
   else {
     return ParseError::no_object_id;

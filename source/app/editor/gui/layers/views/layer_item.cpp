@@ -43,7 +43,7 @@ constexpr int _base_node_flags =
 
 void _update_layer_item_popup(const entt::registry& registry,
                               entt::dispatcher& dispatcher,
-                              const layer_id id)
+                              const LayerID id)
 {
   if (auto popup = scoped::Popup::for_item("##LayerItemPopup"); popup.is_open()) {
     const auto& [entity, layer] = sys::get_layer(registry, id);

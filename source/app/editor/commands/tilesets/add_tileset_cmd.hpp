@@ -49,7 +49,7 @@ class AddTilesetCmd final : public ACommand
   comp::Texture mTexture;
   int32 mTileWidth;
   int32 mTileHeight;
-  Maybe<tileset_id> mTilesetId;
+  Maybe<TilesetID> mTilesetId;
   Maybe<sys::TilesetSnapshot> mSnapshot;
 };
 

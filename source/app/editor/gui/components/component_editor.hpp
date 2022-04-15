@@ -60,10 +60,10 @@ class ComponentEditor final : public ADialog
 
   void show_component_attributes(const entt::registry& registry,
                                  entt::dispatcher& dispatcher,
-                                 component_id id);
+                                 ComponentID id);
 
   void show_component_attribute(entt::dispatcher& dispatcher,
-                                component_id id,
+                                ComponentID id,
                                 const std::string& name,
                                 const Attribute& value);
 };

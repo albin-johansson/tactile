@@ -38,10 +38,10 @@ struct ComponentSnapshot final
 
 struct AttributeContextSnapshot final
 {
-  context_id id{};
+  ContextID id{};
   std::string name;
   TreeMap<std::string, Attribute> properties;
-  TreeMap<component_id, ComponentSnapshot> components;
+  TreeMap<ComponentID, ComponentSnapshot> components;
 };
 
 struct TilesetSnapshot final
@@ -64,7 +64,7 @@ struct LayerSnapshot final
   usize index{};
   comp::Layer core;
   AttributeContextSnapshot context;
-  Maybe<layer_id> parent;
+  Maybe<LayerID> parent;
   Maybe<TileMatrix> tiles;
   Maybe<std::vector<ObjectSnapshot>> objects;
   Maybe<std::vector<LayerSnapshot>> children;

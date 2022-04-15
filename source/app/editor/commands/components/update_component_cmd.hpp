@@ -32,8 +32,8 @@ class UpdateComponentCmd final : public ACommand
 {
  public:
   UpdateComponentCmd(RegistryRef registry,
-                     context_id contextId,
-                     component_id componentId,
+                     ContextID contextId,
+                     ComponentID componentId,
                      std::string attribute,
                      Attribute value);
 
@@ -50,8 +50,8 @@ class UpdateComponentCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  context_id mContextId{};
-  component_id mComponentId{};
+  ContextID mContextId{};
+  ComponentID mComponentId{};
   std::string mAttributeName;
   Attribute mUpdatedValue;
   Maybe<Attribute> mPreviousValue;

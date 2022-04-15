@@ -40,8 +40,8 @@ constexpr auto _table_flags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
 void _trailing_button_popup_content(entt::dispatcher& dispatcher,
-                                    const context_id contextId,
-                                    const component_id componentId)
+                                    const ContextID contextId,
+                                    const ComponentID componentId)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
     dispatcher.enqueue<ResetComponentValuesEvent>(contextId, componentId);
@@ -81,7 +81,7 @@ auto _trailing_button() -> bool
 
 void component_view(const entt::registry& registry,
                     entt::dispatcher& dispatcher,
-                    const context_id contextId,
+                    const ContextID contextId,
                     const entt::entity componentEntity)
 {
   const auto& component = sys::checked_get<comp::Component>(registry, componentEntity);

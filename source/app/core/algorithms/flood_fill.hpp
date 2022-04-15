@@ -40,7 +40,7 @@ namespace tactile {
 void flood(entt::registry& registry,
            entt::entity entity,
            const TilePos& origin,
-           tile_id replacement,
+           TileID replacement,
            std::vector<TilePos>& affected);
 
 }  // namespace tactile

@@ -24,7 +24,7 @@
 namespace tactile {
 
 SetObjectVisibilityCmd::SetObjectVisibilityCmd(RegistryRef registry,
-                                               const object_id id,
+                                               const ObjectID id,
                                                const bool visible)
     : AObjectCommand{"Set Object Visibility", registry, id}
     , mVisible{visible}

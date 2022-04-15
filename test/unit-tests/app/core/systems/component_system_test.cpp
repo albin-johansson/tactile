@@ -14,7 +14,7 @@ namespace {
 
 constexpr entt::entity null_entity = entt::null;
 
-[[nodiscard]] auto CreateContext(entt::registry& registry) -> context_id
+[[nodiscard]] auto CreateContext(entt::registry& registry) -> ContextID
 {
   const auto entity = registry.create();
   const auto& context = sys::add_attribute_context(registry, entity);

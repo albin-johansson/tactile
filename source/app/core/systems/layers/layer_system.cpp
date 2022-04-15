@@ -141,7 +141,7 @@ void _restore_layer_index(entt::registry& registry,
 }  // namespace
 
 auto make_basic_layer(entt::registry& registry,
-                      const layer_id id,
+                      const LayerID id,
                       const LayerType type,
                       std::string name,
                       const entt::entity parent) -> entt::entity
@@ -388,7 +388,7 @@ auto duplicate_layer(entt::registry& registry,
   return copy;
 }
 
-auto find_layer(const entt::registry& registry, const layer_id id) -> entt::entity
+auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entity
 {
   for (auto&& [entity, layer] : registry.view<comp::Layer>().each()) {
     if (layer.id == id) {
@@ -399,7 +399,7 @@ auto find_layer(const entt::registry& registry, const layer_id id) -> entt::enti
   return entt::null;
 }
 
-auto get_layer_entity(const entt::registry& registry, const layer_id id) -> entt::entity
+auto get_layer_entity(const entt::registry& registry, const LayerID id) -> entt::entity
 {
   const auto entity = find_layer(registry, id);
   if (entity != entt::null && registry.all_of<comp::Layer>(entity)) {
@@ -410,7 +410,7 @@ auto get_layer_entity(const entt::registry& registry, const layer_id id) -> entt
   }
 }
 
-auto get_layer(entt::registry& registry, const layer_id id)
+auto get_layer(entt::registry& registry, const LayerID id)
     -> std::pair<entt::entity, comp::Layer&>
 {
   const auto entity = find_layer(registry, id);
@@ -422,7 +422,7 @@ auto get_layer(entt::registry& registry, const layer_id id)
   }
 }
 
-auto get_layer(const entt::registry& registry, const layer_id id)
+auto get_layer(const entt::registry& registry, const LayerID id)
     -> std::pair<entt::entity, const comp::Layer&>
 {
   const auto entity = find_layer(registry, id);
@@ -462,7 +462,7 @@ auto is_object_layer_active(const entt::registry& registry) -> bool
   }
 }
 
-auto get_active_layer_id(const entt::registry& registry) -> Maybe<layer_id>
+auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>
 {
   const auto& active = registry.ctx<comp::ActiveLayer>();
   if (active.entity != entt::null) {

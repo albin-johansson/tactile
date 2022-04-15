@@ -37,76 +37,76 @@ struct CreateComponentDefEvent final
 
 struct RenameComponentDefEvent final
 {
-  component_id id{};
+  ComponentID id{};
   std::string name;
 };
 
 struct RemoveComponentDefEvent final
 {
-  component_id id{};
+  ComponentID id{};
 };
 
 struct CreateComponentAttrEvent final
 {
-  component_id id{};
+  ComponentID id{};
   std::string name;
 };
 
 struct RemoveComponentAttrEvent final
 {
-  component_id id{};
+  ComponentID id{};
   std::string name;
 };
 
 struct RenameComponentAttrEvent final
 {
-  component_id id{};
+  ComponentID id{};
   std::string previous;
   std::string updated;
 };
 
 struct DuplicateComponentAttrEvent final
 {
-  component_id id{};
+  ComponentID id{};
   std::string attribute;
 };
 
 struct SetComponentAttrTypeEvent final
 {
-  component_id id{};
+  ComponentID id{};
   std::string attribute;
   AttributeType type{};
 };
 
 struct UpdateComponentDefAttrEvent final
 {
-  component_id id{};
+  ComponentID id{};
   std::string attribute;
   Attribute value;
 };
 
 struct AddComponentEvent final
 {
-  context_id context{};
-  component_id component{};
+  ContextID context{};
+  ComponentID component{};
 };
 
 struct RemoveComponentEvent final
 {
-  context_id context{};
-  component_id component{};
+  ContextID context{};
+  ComponentID component{};
 };
 
 struct ResetComponentValuesEvent final
 {
-  context_id context{};
-  component_id component{};
+  ContextID context{};
+  ComponentID component{};
 };
 
 struct UpdateComponentEvent final
 {
-  context_id context{};
-  component_id component{};
+  ContextID context{};
+  ComponentID component{};
   std::string attribute;
   Attribute value;
 };

@@ -47,7 +47,7 @@ struct ComponentEditor::Data final
   CreateComponentAttributeDialog create_component_attr;
   RenameComponentDialog rename_component;
   RenameComponentAttributeDialog rename_component_attr;
-  Maybe<component_id> active_component;
+  Maybe<ComponentID> active_component;
 };
 
 ComponentEditor::ComponentEditor()
@@ -156,7 +156,7 @@ void ComponentEditor::show_component_combo_popup(const entt::registry& registry,
 
 void ComponentEditor::show_component_attributes(const entt::registry& registry,
                                                 entt::dispatcher& dispatcher,
-                                                const component_id id)
+                                                const ComponentID id)
 {
   auto& data = *mData;
   const auto& [defEntity, def] = sys::get_component_def(registry, id);
@@ -185,7 +185,7 @@ void ComponentEditor::show_component_attributes(const entt::registry& registry,
 }
 
 void ComponentEditor::show_component_attribute(entt::dispatcher& dispatcher,
-                                               const component_id id,
+                                               const ComponentID id,
                                                const std::string& name,
                                                const Attribute& value)
 {

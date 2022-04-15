@@ -42,7 +42,7 @@ constexpr auto _add_component_popup_id = "##AddComponentButtonPopup";
 
 void _show_add_component_button_popup_content(const entt::registry& registry,
                                               entt::dispatcher& dispatcher,
-                                              const context_id contextId)
+                                              const ContextID contextId)
 {
   const auto view = registry.view<comp::ComponentDef>();
   if (view.empty()) {

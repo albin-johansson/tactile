@@ -34,7 +34,7 @@ namespace tactile {
 class BucketToolCmd final : public ACommand
 {
  public:
-  BucketToolCmd(RegistryRef registry, TilePos origin, tile_id replacement);
+  BucketToolCmd(RegistryRef registry, TilePos origin, TileID replacement);
 
   void undo() override;
 
@@ -44,10 +44,10 @@ class BucketToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayer;
+  LayerID mLayer;
   TilePos mOrigin;
-  tile_id mReplacement;
-  Maybe<tile_id> mTarget;
+  TileID mReplacement;
+  Maybe<TileID> mTarget;
   std::vector<TilePos> mPositions;
 };
 

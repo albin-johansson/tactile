@@ -49,7 +49,7 @@ namespace tactile::comp {
  */
 struct AttributeContext final
 {
-  context_id id{};   ///< The unique context identifier (not persistent).
+  ContextID id{};   ///< The unique context identifier (not persistent).
   std::string name;  ///< The name of the context.
   std::vector<entt::entity> properties;  ///< All associated properties.
   std::vector<entt::entity> components;  ///< All associated components.
@@ -93,7 +93,7 @@ struct Property final
  */
 struct ComponentDef final
 {
-  component_id id{};            ///< Unique ID for the component definition.
+  ComponentID id{};            ///< Unique ID for the component definition.
   std::string name;             ///< The component name (which is unique!).
   ComponentAttrMap attributes;  ///< The attributes with their default values.
 };
@@ -107,7 +107,7 @@ struct ComponentDef final
  */
 struct Component final
 {
-  component_id type;        ///< The ID of the component definition type.
+  ComponentID type;        ///< The ID of the component definition type.
   ComponentAttrMap values;  ///< Current values.
 };
 
