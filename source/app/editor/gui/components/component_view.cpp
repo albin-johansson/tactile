@@ -41,9 +41,9 @@ constexpr auto _header_flags =
 constexpr auto _table_flags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
-void _trailing_button_popup_content(entt::dispatcher& dispatcher,
-                                    const ContextID contextId,
-                                    const ComponentID componentId)
+void _update_trailing_button_popup_content(entt::dispatcher& dispatcher,
+                                           const ContextID contextId,
+                                           const ComponentID componentId)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
     dispatcher.enqueue<ResetComponentValuesEvent>(contextId, componentId);
@@ -65,16 +65,14 @@ void _trailing_button_popup_content(entt::dispatcher& dispatcher,
   }
 }
 
-auto _trailing_button() -> bool
+auto _update_trailing_button() -> bool
 {
-  ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32_BLACK_TRANS);
-  ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS);
-  ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS);
+  scoped::StyleColor button{ImGuiCol_Button, IM_COL32_BLACK_TRANS};
+  scoped::StyleColor buttonHovered{ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS};
+  scoped::StyleColor buttonActive{ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS};
 
   right_align_next_item(TAC_ICON_THREE_DOTS);
   const auto pressed = ImGui::SmallButton(TAC_ICON_THREE_DOTS);
-
-  ImGui::PopStyleColor(3);
 
   return pressed;
 }
@@ -93,12 +91,12 @@ void component_view(const entt::registry& registry,
 
   if (ImGui::CollapsingHeader(name.c_str(), _header_flags)) {
     ImGui::SameLine();
-    if (_trailing_button()) {
+    if (_update_trailing_button()) {
       ImGui::OpenPopup("##ComponentPopup");
     }
 
     if (auto popup = scoped::Popup::for_item("##ComponentPopup"); popup.is_open()) {
-      _trailing_button_popup_content(dispatcher, contextId, component.type);
+      _update_trailing_button_popup_content(dispatcher, contextId, component.type);
     }
 
     if (scoped::Table table{"##AttributeTable", 2, _table_flags}; table.is_open()) {
@@ -125,7 +123,7 @@ void component_view(const entt::registry& registry,
     /* Show a disabled button when collapsed, to avoid having the button disappear */
     scoped::Disable disable;
     ImGui::SameLine();
-    _trailing_button();
+    _update_trailing_button();
   }
 }
 

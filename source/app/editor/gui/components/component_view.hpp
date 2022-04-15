@@ -26,7 +26,7 @@
 namespace tactile {
 
 /**
- * \brief Shows a view of a component that is attached to a context.
+ * \brief Shows a view of a single component, attached to a context.
  *
  * \param registry the map registry.
  * \param dispatcher the event dispatcher.

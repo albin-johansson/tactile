@@ -29,7 +29,7 @@
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
-#include "editor/gui/components/views/component_view.hpp"
+#include "editor/gui/components/component_view.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
