@@ -82,8 +82,6 @@ class WidgetManager final
 
   [[nodiscard]] auto is_property_dock_focused() const -> bool;
 
-  [[nodiscard]] auto is_log_dock_focused() const -> bool;
-
   [[nodiscard]] auto is_tileset_dock_hovered() const -> bool;
 
   [[nodiscard]] auto is_toolbar_visible() const -> bool;

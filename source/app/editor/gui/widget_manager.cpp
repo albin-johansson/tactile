@@ -23,21 +23,21 @@
 
 #include <entt/entt.hpp>
 
-#include "components/component_dock.hpp"
-#include "dialogs/map_parse_error_dialog.hpp"
-#include "dialogs/resize_map_dialog.hpp"
+#include "editor/gui/components/component_dock.hpp"
+#include "editor/gui/dialogs/map_parse_error_dialog.hpp"
+#include "editor/gui/dialogs/resize_map_dialog.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/layers/layer_dock.hpp"
+#include "editor/gui/layout/dock_space.hpp"
+#include "editor/gui/log/log_dock.hpp"
+#include "editor/gui/menus/menu_bar.hpp"
+#include "editor/gui/properties/property_dock.hpp"
+#include "editor/gui/tilesets/tileset_dock.hpp"
+#include "editor/gui/tilesets/tileset_view.hpp"
+#include "editor/gui/viewport/toolbar.hpp"
+#include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/model.hpp"
-#include "icons.hpp"
-#include "layers/layer_dock.hpp"
-#include "layout/dock_space.hpp"
-#include "log/log_dock.hpp"
-#include "menus/menu_bar.hpp"
-#include "properties/property_dock.hpp"
-#include "tilesets/tileset_dock.hpp"
-#include "tilesets/tileset_view.hpp"
-#include "viewport/toolbar.hpp"
-#include "viewport/viewport_widget.hpp"
 
 namespace tactile {
 
@@ -45,7 +45,6 @@ struct WidgetManager::Widgets final
 {
   MenuBar menu_bar;
   TilesetDock tileset_dock;
-  LogDock log_dock;
   ResizeMapDialog resize_map_dialog;
   MapParseErrorDialog map_parse_error_dialog;
 };
@@ -66,7 +65,7 @@ void WidgetManager::update(const DocumentModel& model,
     mWidgets->tileset_dock.update(model, dispatcher);
     update_property_dock(model, dispatcher);
     update_component_dock(model, dispatcher);
-    mWidgets->log_dock.update(model, dispatcher);
+    update_log_dock();
   }
 
   update_viewport_widget(model, icons, dispatcher);
@@ -165,11 +164,6 @@ auto WidgetManager::is_tileset_dock_focused() const -> bool
 auto WidgetManager::is_property_dock_focused() const -> bool
 {
   return tactile::is_property_dock_focused();
-}
-
-auto WidgetManager::is_log_dock_focused() const -> bool
-{
-  return mWidgets->log_dock.has_focus();
 }
 
 auto WidgetManager::is_tileset_dock_hovered() const -> bool
