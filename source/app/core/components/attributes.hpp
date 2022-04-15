@@ -19,8 +19,10 @@
 
 #pragma once
 
-#include <string>  // string
-#include <vector>  // vector
+#include <functional>  // less
+#include <map>         // map
+#include <string>      // string
+#include <vector>      // vector
 
 #include <entt/entt.hpp>
 
@@ -29,7 +31,7 @@
 
 namespace tactile {
 
-using ComponentAttrMap = TreeMap<std::string, Attribute>;
+using ComponentAttrMap = std::map<std::string, Attribute, std::less<>>;
 
 }  // namespace tactile
 

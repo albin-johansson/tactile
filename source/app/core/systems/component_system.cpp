@@ -19,7 +19,7 @@
 
 #include "component_system.hpp"
 
-#include <utility>  // move
+#include <utility>        // move
 
 #include <fmt/format.h>
 
@@ -150,9 +150,9 @@ void _visit_attributes(const entt::registry& registry,
 [[nodiscard]] auto _collect_attributes(const entt::registry& registry,
                                        const ComponentID compId,
                                        const std::string_view attrName)
-    -> HashMap<ContextID, Attribute>
+    -> std::unordered_map<ContextID, Attribute>
 {
-  HashMap<ContextID, Attribute> attributes;
+  std::unordered_map<ContextID, Attribute> attributes;
 
   _visit_attributes(registry,
                     compId,

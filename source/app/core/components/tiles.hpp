@@ -19,8 +19,9 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <vector>    // vector
+#include <optional>       // optional
+#include <unordered_map>  // unordered_map
+#include <vector>         // vector
 
 #include <centurion.hpp>
 #include <entt/entt.hpp>
@@ -43,7 +44,7 @@ struct TilesetContext final
   /**
    * \brief Maps all global tile identifiers to the associated tileset.
    */
-  HashMap<TileID, entt::entity> tile_to_tileset;
+  std::unordered_map<TileID, entt::entity> tile_to_tileset;
 };
 
 /**
@@ -95,13 +96,13 @@ struct MetaTile final
  */
 struct TilesetCache final
 {
-  HashMap<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
-  HashMap<TileID, entt::entity> tiles;       ///< Additional tile info.
+  std::unordered_map<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
+  std::unordered_map<TileID, entt::entity> tiles;       ///< Additional tile info.
 
   /**
    * \brief Frame-by-frame cache that maps tiles to the tile that should be rendered.
    */
-  mutable HashMap<TileID, TileID> source_to_render;
+  mutable std::unordered_map<TileID, TileID> source_to_render;
 };
 
 /**

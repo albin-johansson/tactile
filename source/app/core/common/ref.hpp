@@ -20,33 +20,10 @@
 #pragma once
 
 #include <functional>  // less
-#include <map>         // map
-
-#include <entt/entt.hpp>
-
-#include "core/tile_pos.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 
-class MapCommandCache final
-{
-  using tile_cache = std::map<TilePos, TileID, std::less<>>;
-  using layer_cache = std::map<LayerID, tile_cache, std::less<>>;
-
- public:
-  void clear() noexcept;
-
-  void restore_tiles(entt::registry& registry);
-
-  void save_tiles(const entt::registry& registry,
-                  const TilePos& begin,
-                  const TilePos& end);
-
-  void merge_with(const MapCommandCache& other);
-
- private:
-  layer_cache mCache;
-};
+template <typename T>
+using Ref = std::reference_wrapper<T>;
 
 }  // namespace tactile

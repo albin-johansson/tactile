@@ -21,10 +21,6 @@
 
 #include <cstddef>        // size_t
 #include <cstdint>        // int{}_t, uint{}_t
-#include <functional>     // reference_wrapper, less
-#include <map>            // map
-#include <optional>       // optional, nullopt_t, nullopt
-#include <unordered_map>  // unordered_map
 
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
@@ -69,14 +65,5 @@ using TilesetID = int32;
 using TileID = int32;
 
 constexpr TileID empty_tile = 0;
-
-template <typename K, typename V>
-using TreeMap = std::map<K, V, std::less<>>;
-
-template <typename K, typename V>
-using HashMap = std::unordered_map<K, V>;
-
-template <typename T>
-using Ref = std::reference_wrapper<T>;
 
 }  // namespace tactile

@@ -19,11 +19,14 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <memory>      // unique_ptr
-#include <string>      // string
-#include <variant>     // variant
-#include <vector>      // vector
+#include <filesystem>     // path
+#include <functional>     // less
+#include <map>            // map
+#include <memory>         // unique_ptr
+#include <string>         // string
+#include <unordered_map>  // unordered_map
+#include <variant>        // variant
+#include <vector>         // vector
 
 #include "core/attribute.hpp"
 #include "core/layer_type.hpp"
@@ -32,12 +35,12 @@
 
 namespace tactile::ir {
 
-using ComponentMap = TreeMap<std::string, Attribute>;
+using ComponentMap = std::map<std::string, Attribute, std::less<>>;
 
 struct AttributeContextData final
 {
-  TreeMap<std::string, Attribute> properties;
-  TreeMap<std::string, ComponentMap> components;
+  std::map<std::string, Attribute, std::less<>> properties;
+  std::map<std::string, ComponentMap, std::less<>> components;
 };
 
 struct ObjectData final
@@ -130,7 +133,7 @@ struct TilesetData final
   int32 image_width{};
   int32 image_height{};
 
-  HashMap<TileID, MetaTileData> fancy_tiles;
+  std::unordered_map<TileID, MetaTileData> fancy_tiles;
 
   AttributeContextData context;
 };
@@ -146,7 +149,7 @@ struct MapData
   int32 next_layer_id{};
   int32 next_object_id{};
 
-  TreeMap<std::string, ComponentMap> component_definitions;
+  std::map<std::string, ComponentMap, std::less<>> component_definitions;
 
   std::vector<TilesetData> tilesets;
   std::vector<LayerData> layers;

@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <utility>  // forward
+#include <unordered_map>  // unordered_map
+#include <utility>        // forward
 
 #include <imgui.h>
 
@@ -359,7 +360,7 @@ class Window final
     bool is_hovered{};
   };
 
-  inline static HashMap<const char*, WindowData> window_data;
+  inline static std::unordered_map<const char*, WindowData> window_data;
 
  public:
   TACTILE_DEFAULT_COPY(Window)

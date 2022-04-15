@@ -19,34 +19,16 @@
 
 #pragma once
 
-#include <functional>  // less
-#include <map>         // map
-
-#include <entt/entt.hpp>
-
-#include "core/tile_pos.hpp"
-#include "tactile.hpp"
+#include <functional>     // less
+#include <map>            // map
+#include <unordered_map>  // unordered_map
 
 namespace tactile {
 
-class MapCommandCache final
-{
-  using tile_cache = std::map<TilePos, TileID, std::less<>>;
-  using layer_cache = std::map<LayerID, tile_cache, std::less<>>;
+template <typename K, typename V>
+using TreeMap = std::map<K, V, std::less<>>;
 
- public:
-  void clear() noexcept;
-
-  void restore_tiles(entt::registry& registry);
-
-  void save_tiles(const entt::registry& registry,
-                  const TilePos& begin,
-                  const TilePos& end);
-
-  void merge_with(const MapCommandCache& other);
-
- private:
-  layer_cache mCache;
-};
+template <typename K, typename V>
+using HashMap = std::unordered_map<K, V>;
 
 }  // namespace tactile
