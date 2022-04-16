@@ -23,6 +23,7 @@
 
 #include "io/maps/convert_document_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"
+#include "io/maps/emitter/godot_emitter.hpp"
 #include "io/maps/emitter/json_emitter.hpp"
 #include "io/maps/emitter/xml_emitter.hpp"
 #include "io/maps/emitter/yaml_emitter.hpp"
@@ -57,6 +58,24 @@ void save_document(const Document& document)
   }
 
   TACTILE_PROFILE_END("Emitted document")
+}
+
+void export_document_as_godot_scene(const Document& document,
+                                    const std::string_view projectMapDir,
+                                    const std::string_view projectTilesetDir,
+                                    const std::string_view projectImageDir,
+                                    const bool embedTilesets)
+{
+  // TODO validate directories
+
+  TACTILE_PROFILE_START
+  log_info("Exporting map as Godot scene...");
+
+  // FIXME path
+  emitter::EmitInfo info{"test.escn", convert_document_to_ir(document)};
+  emit_godot_scene(info);
+
+  TACTILE_PROFILE_END("Exported document as Godot scene")
 }
 
 }  // namespace tactile

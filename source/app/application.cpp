@@ -321,6 +321,13 @@ void Application::on_show_map_properties()
 
 void Application::on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
 {
+  if (const auto* document = mData->model.active_document()) {
+    export_document_as_godot_scene(*document,
+                                   event.project_dir,
+                                   event.image_dir,
+                                   event.tileset_dir,
+                                   event.embed_tilesets);
+  }
 }
 
 void Application::on_create_map(const CreateMapEvent& event)
