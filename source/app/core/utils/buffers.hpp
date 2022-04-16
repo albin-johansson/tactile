@@ -19,9 +19,7 @@
 
 #pragma once
 
-#include <array>        // array
-#include <cstddef>      // byte
-#include <cstring>      // memset
+#include <span>         // span
 #include <string>       // string
 #include <string_view>  // string_view
 
@@ -39,11 +37,7 @@ namespace tactile {
  *
  * \param buffer the buffer that will be zeroed.
  */
-template <usize Size>
-void zero_buffer(std::array<char, Size>& buffer)
-{
-  std::memset(buffer.data(), 0, sizeof buffer);
-}
+void zero_buffer(std::span<char> buffer);
 
 /**
  * \brief Copies a string into a character buffer.
@@ -59,30 +53,13 @@ void zero_buffer(std::array<char, Size>& buffer)
  * \param buffer the buffer that will be modified.
  * \param str the string that will be copied into the buffer.
  */
-template <usize Size>
-void copy_string_into_buffer(std::array<char, Size>& buffer, const std::string_view str)
-{
-  zero_buffer(buffer);
-
-  usize index = 0;
-  for (const auto ch : str) {
-    if (index < buffer.size()) {
-      buffer.at(index) = ch;
-    }
-    else {
-      // The string is larger than the buffer, so we are finished
-      break;
-    }
-
-    ++index;
-  }
-}
+void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
 
 /**
  * \brief Creates a string from a character buffer.
  *
- * \details The function assumes that the "valid" part of the buffer is
- * terminated with a null character ('\0').
+ * \details The function assumes that the "valid" part of the buffer is terminated with a
+ * null character ('\0').
  *
  * \tparam Size the size of the buffer.
  *
@@ -90,31 +67,10 @@ void copy_string_into_buffer(std::array<char, Size>& buffer, const std::string_v
  *
  * \return a string created from the buffer.
  */
-template <usize Size>
-[[nodiscard]] auto create_string_from_buffer(const std::array<char, Size>& buffer)
-    -> std::string
-{
-  usize index = 0;
+[[nodiscard]] auto create_string_from_buffer(std::span<const char> buffer) -> std::string;
 
-  while (index < buffer.size() && buffer.at(index) != '\0') {
-    ++index;
-  }
-
-  return std::string{buffer.data(), buffer.data() + index};
-}
-
-template <usize Size>
-[[nodiscard]] auto create_string_view_from_buffer(const std::array<char, Size>& buffer)
-    -> std::string_view
-{
-  usize index = 0;
-
-  while (index < buffer.size() && buffer.at(index) != '\0') {
-    ++index;
-  }
-
-  return std::string_view{buffer.data(), index};
-}
+[[nodiscard]] auto create_string_view_from_buffer(std::span<const char> buffer)
+    -> std::string_view;
 
 /// \} End of group utils
 
