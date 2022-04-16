@@ -27,6 +27,7 @@ namespace tactile {
 
 class DocumentModel;
 class CreateTilesetDialog;
+class GodotExportDialog;
 
 class MapMenu final
 {
@@ -41,6 +42,7 @@ class MapMenu final
 
  private:
   std::unique_ptr<CreateTilesetDialog> mCreateTilesetDialog;
+  std::unique_ptr<GodotExportDialog> mGodotExportDialog;
 };
 
 }  // namespace tactile

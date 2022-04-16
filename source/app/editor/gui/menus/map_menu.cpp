@@ -23,6 +23,7 @@
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"
+#include "editor/gui/dialogs/godot_export_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/tilesets/dialogs/create_tileset_dialog.hpp"
@@ -31,7 +32,10 @@
 
 namespace tactile {
 
-MapMenu::MapMenu() : mCreateTilesetDialog{std::make_unique<CreateTilesetDialog>()} {}
+MapMenu::MapMenu()
+    : mCreateTilesetDialog{std::make_unique<CreateTilesetDialog>()}
+    , mGodotExportDialog{std::make_unique<GodotExportDialog>()}
+{}
 
 MapMenu::~MapMenu() noexcept = default;
 
@@ -76,13 +80,14 @@ void MapMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (scoped::Menu ex{"Export"}; ex.is_open()) {
-      if (scoped::Disable godot; ImGui::MenuItem("Godot Scene (.tscn)")) {
-        // TODO
+      if (ImGui::MenuItem("Godot Scene...")) {
+        mGodotExportDialog->open();
       }
     }
   }
 
   mCreateTilesetDialog->update(model, dispatcher);
+  mGodotExportDialog->update(model, dispatcher);
 }
 
 void MapMenu::show_tileset_creation_dialog()
