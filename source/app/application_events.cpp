@@ -24,6 +24,9 @@
 #include "editor/events/misc_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/viewport_events.hpp"
+#include "editor/gui/menus/edit_menu.hpp"
+#include "editor/gui/menus/file_menu.hpp"
+#include "editor/gui/viewport/map_view.hpp"
 
 namespace tactile {
 
@@ -40,10 +43,10 @@ void subscribe_to_events(App* app)
   d.sink<SaveEvent>().connect<&App::on_save>(app);
   d.sink<SaveAsEvent>().connect<&App::on_save_as>(app);
   d.sink<OpenSaveAsDialogEvent>().connect<&App::on_open_save_as_dialog>(app);
-  d.sink<ShowSettingsEvent>().connect<&App::on_show_settings>(app);
+  d.sink<ShowSettingsEvent>().connect<&show_settings_dialog>();
 
-  d.sink<ShowNewMapDialogEvent>().connect<&App::on_show_new_map_dialog>(app);
-  d.sink<ShowOpenMapDialogEvent>().connect<&App::on_show_open_map_dialog>(app);
+  d.sink<ShowNewMapDialogEvent>().connect<&show_map_creation_dialog>();
+  d.sink<ShowOpenMapDialogEvent>().connect<&show_map_selector_dialog>();
   d.sink<InspectMapEvent>().connect<&App::on_show_map_properties>(app);
   d.sink<CreateMapEvent>().connect<&App::on_create_map>(app);
   d.sink<CloseMapEvent>().connect<&App::on_close_map>(app);
@@ -64,7 +67,7 @@ void subscribe_to_events(App* app)
   d.sink<AddEllipseEvent>().connect<&App::on_add_ellipse>(app);
   d.sink<AddPointEvent>().connect<&App::on_add_point>(app);
 
-  d.sink<CenterViewportEvent>().connect<&App::on_center_viewport>(app);
+  d.sink<CenterViewportEvent>().connect<&center_map_viewport>();
   d.sink<OffsetViewportEvent>().connect<&App::on_offset_viewport>(app);
   d.sink<OffsetBoundViewportEvent>().connect<&App::on_offset_bound_viewport>(app);
   d.sink<PanLeftEvent>().connect<&App::on_pan_left>(app);

@@ -93,12 +93,6 @@ class Application final : AEventLoop
 
   void on_open_save_as_dialog();
 
-  void on_show_settings();
-
-  void on_show_new_map_dialog();
-
-  void on_show_open_map_dialog();
-
   void on_show_map_properties();
 
   void on_create_map(const CreateMapEvent& event);
@@ -132,8 +126,6 @@ class Application final : AEventLoop
   void on_add_ellipse(const AddEllipseEvent& event);
 
   void on_add_point(const AddPointEvent& event);
-
-  void on_center_viewport();
 
   void on_offset_viewport(const OffsetViewportEvent& event);
 

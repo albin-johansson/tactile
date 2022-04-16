@@ -297,21 +297,6 @@ void Application::on_open_save_as_dialog()
   }
 }
 
-void Application::on_show_settings()
-{
-  show_settings_dialog();
-}
-
-void Application::on_show_new_map_dialog()
-{
-  mData->widgets.show_new_map_dialog();
-}
-
-void Application::on_show_open_map_dialog()
-{
-  mData->widgets.show_open_map_dialog();
-}
-
 void Application::on_show_map_properties()
 {
   if (auto* registry = mData->model.active_registry()) {
@@ -432,11 +417,6 @@ void Application::on_add_ellipse(const AddEllipseEvent& event)
 void Application::on_add_point(const AddPointEvent& event)
 {
   _execute<PointToolCmd>(mData->model, event.x, event.y);
-}
-
-void Application::on_center_viewport()
-{
-  center_map_viewport();
 }
 
 void Application::on_offset_viewport(const OffsetViewportEvent& event)

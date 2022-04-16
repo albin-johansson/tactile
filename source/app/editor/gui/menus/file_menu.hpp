@@ -21,36 +21,14 @@
 
 #include <entt/fwd.hpp>
 
-#include "editor/gui/dialogs/create_map_dialog.hpp"
-
 namespace tactile {
 
 class DocumentModel;
 
-/// \addtogroup gui
-/// \{
+void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-class FileMenu final
-{
- public:
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
+void show_map_creation_dialog();
 
-  /* Updates all associated windows. */
-  void update_windows(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-  void show_map_creation_dialog();
-
-  void show_open_map_dialog();
-
- private:
-  CreateMapDialog mCreateMapDialog;
-  bool mShowOpenMapDialog{};
-
-  void update_recent_files_menu(entt::dispatcher& dispatcher);
-
-  void update_map_file_dialog(entt::dispatcher& dispatcher);
-};
-
-/// \} End of group gui
+void show_map_selector_dialog();
 
 }  // namespace tactile

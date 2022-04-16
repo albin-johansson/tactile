@@ -24,6 +24,7 @@
 
 #include "editor/gui/menus/debug_menu.hpp"
 #include "editor/gui/menus/edit_menu.hpp"
+#include "editor/gui/menus/file_menu.hpp"
 #include "editor/gui/menus/view_menu.hpp"
 #include "editor/model.hpp"
 
@@ -32,7 +33,7 @@ namespace tactile {
 void MenuBar::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar()) {
-    mFileMenu.update(model, dispatcher);
+    update_file_menu(model, dispatcher);
     update_edit_menu(model, dispatcher);
     update_view_menu(model, dispatcher);
     mMapMenu.update(model, dispatcher);
@@ -42,19 +43,8 @@ void MenuBar::update(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::EndMainMenuBar();
   }
 
-  mFileMenu.update_windows(model, dispatcher);
   mHelpMenu.update_windows();
   update_debug_menu_windows();
-}
-
-void MenuBar::show_map_creation_dialog()
-{
-  mFileMenu.show_map_creation_dialog();
-}
-
-void MenuBar::show_open_map_dialog()
-{
-  mFileMenu.show_open_map_dialog();
 }
 
 void MenuBar::show_tileset_creation_dialog()

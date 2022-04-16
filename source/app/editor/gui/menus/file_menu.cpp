@@ -24,6 +24,7 @@
 
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
+#include "editor/gui/dialogs/create_map_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -32,71 +33,32 @@
 #include "io/persistence/history.hpp"
 
 namespace tactile {
+namespace {
 
-void FileMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+struct FileMenuState final
 {
-  if (scoped::Menu menu{"File"}; menu.is_open()) {
-    const auto hasActiveDocument = model.has_active_document();
+  CreateMapDialog map_creation_dialog;
+  bool show_map_selector{};
+};
 
-    if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
-      mCreateMapDialog.show();
-    }
+[[nodiscard]] auto _get_state() -> FileMenuState&
+{
+  static FileMenuState state;
+  return state;
+}
 
-    mShowOpenMapDialog =
-        ImGui::MenuItem(TAC_ICON_OPEN " Open Map...", TACTILE_PRIMARY_MOD "+O");
+void _update_map_file_dialog(entt::dispatcher& dispatcher)
+{
+  auto dialog = FileDialog::open_map();
 
-    update_recent_files_menu(dispatcher);
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
-                        TACTILE_PRIMARY_MOD "+S",
-                        false,
-                        model.is_save_possible())) {
-      dispatcher.enqueue<SaveEvent>();
-    }
-
-    if (ImGui::MenuItem(TAC_ICON_SAVE " Save As...",
-                        TACTILE_PRIMARY_MOD "+Shift+S",
-                        false,
-                        hasActiveDocument)) {
-      dispatcher.enqueue<OpenSaveAsDialogEvent>();
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Map", nullptr, false, hasActiveDocument)) {
-      dispatcher.enqueue<CloseMapEvent>(model.active_map_id().value());
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem(TAC_ICON_EXIT " Exit")) {
-      dispatcher.enqueue<QuitEvent>();
-    }
+  if (dialog.is_okay()) {
+    dispatcher.enqueue<OpenMapEvent>(dialog.path());
   }
+
+  _get_state().show_map_selector = false;
 }
 
-void FileMenu::update_windows(const DocumentModel& model, entt::dispatcher& dispatcher)
-{
-  mCreateMapDialog.update(model, dispatcher);
-
-  if (mShowOpenMapDialog) {
-    update_map_file_dialog(dispatcher);
-  }
-}
-
-void FileMenu::show_map_creation_dialog()
-{
-  mCreateMapDialog.show();
-}
-
-void FileMenu::show_open_map_dialog()
-{
-  mShowOpenMapDialog = true;
-}
-
-void FileMenu::update_recent_files_menu(entt::dispatcher& dispatcher)
+void _update_recent_files_menu(entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{TAC_ICON_HISTORY " Recent Files"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
@@ -131,15 +93,68 @@ void FileMenu::update_recent_files_menu(entt::dispatcher& dispatcher)
   }
 }
 
-void FileMenu::update_map_file_dialog(entt::dispatcher& dispatcher)
-{
-  auto dialog = FileDialog::open_map();
+}  // namespace
 
-  if (dialog.is_okay()) {
-    dispatcher.enqueue<OpenMapEvent>(dialog.path());
+void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+{
+  auto& state = _get_state();
+
+  if (scoped::Menu menu{"File"}; menu.is_open()) {
+    const auto hasActiveDocument = model.has_active_document();
+
+    if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
+      state.map_creation_dialog.show();
+    }
+
+    state.show_map_selector = ImGui::MenuItem(TAC_ICON_OPEN " Open Map...",  //
+                                              TACTILE_PRIMARY_MOD "+O");
+
+    _update_recent_files_menu(dispatcher);
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
+                        TACTILE_PRIMARY_MOD "+S",
+                        false,
+                        model.is_save_possible())) {
+      dispatcher.enqueue<SaveEvent>();
+    }
+
+    if (ImGui::MenuItem(TAC_ICON_SAVE " Save As...",
+                        TACTILE_PRIMARY_MOD "+Shift+S",
+                        false,
+                        hasActiveDocument)) {
+      dispatcher.enqueue<OpenSaveAsDialogEvent>();
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Map", nullptr, false, hasActiveDocument)) {
+      dispatcher.enqueue<CloseMapEvent>(model.active_map_id().value());
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_EXIT " Exit")) {
+      dispatcher.enqueue<QuitEvent>();
+    }
   }
 
-  mShowOpenMapDialog = false;
+  state.map_creation_dialog.update(model, dispatcher);
+
+  if (state.show_map_selector) {
+    _update_map_file_dialog(dispatcher);
+  }
+}
+
+void show_map_creation_dialog()
+{
+  _get_state().map_creation_dialog.show();
+}
+
+void show_map_selector_dialog()
+{
+  _get_state().show_map_selector = true;
 }
 
 }  // namespace tactile
