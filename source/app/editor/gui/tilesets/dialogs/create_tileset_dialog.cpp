@@ -34,7 +34,7 @@ CreateTilesetDialog::CreateTilesetDialog() : ADialog{"Create tileset"}
   set_accept_button_label("Create");
 }
 
-void CreateTilesetDialog::Open()
+void CreateTilesetDialog::open()
 {
   zero_buffer(mPathPreviewBuffer);
   mFullImagePath.clear();

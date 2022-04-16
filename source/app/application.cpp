@@ -506,11 +506,6 @@ void Application::on_decrease_font_size()
   mData->reload_fonts = true;
 }
 
-void Application::on_show_tileset_creation_dialog()
-{
-  mData->widgets.show_add_tileset_dialog();
-}
-
 void Application::on_add_tileset(const AddTilesetEvent& event)
 {
   if (auto info = mData->textures.load(event.path)) {

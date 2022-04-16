@@ -45,8 +45,6 @@ class WidgetManager final
 
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void show_add_tileset_dialog();
-
   void show_rename_layer_dialog(LayerID id);
 
   void show_add_property_dialog();

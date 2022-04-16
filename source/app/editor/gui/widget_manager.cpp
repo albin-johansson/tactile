@@ -77,11 +77,6 @@ void WidgetManager::update(const DocumentModel& model,
   mWidgets->map_parse_error_dialog.update(model, dispatcher);
 }
 
-void WidgetManager::show_add_tileset_dialog()
-{
-  mWidgets->menu_bar.show_tileset_creation_dialog();
-}
-
 void WidgetManager::show_rename_layer_dialog(const LayerID id)
 {
   tactile::show_rename_layer_dialog(id);

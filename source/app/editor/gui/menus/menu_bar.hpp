@@ -22,7 +22,6 @@
 #include <entt/fwd.hpp>
 
 #include "help_menu.hpp"
-#include "map_menu.hpp"
 
 namespace tactile {
 
@@ -39,10 +38,7 @@ class MenuBar final
    */
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void show_tileset_creation_dialog();
-
  private:
-  MapMenu mMapMenu;
   HelpMenu mHelpMenu;
 };
 

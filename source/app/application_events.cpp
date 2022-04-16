@@ -26,6 +26,7 @@
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/menus/file_menu.hpp"
+#include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 
 namespace tactile {
@@ -81,8 +82,7 @@ void subscribe_to_events(App* app)
   d.sink<IncreaseFontSizeEvent>().connect<&App::on_increase_font_size>(app);
   d.sink<DecreaseFontSizeEvent>().connect<&App::on_decrease_font_size>(app);
 
-  d.sink<ShowTilesetCreationDialogEvent>().connect<&App::on_show_tileset_creation_dialog>(
-      app);
+  d.sink<ShowTilesetCreationDialogEvent>().connect<&show_tileset_creation_dialog>();
   d.sink<AddTilesetEvent>().connect<&App::on_add_tileset>(app);
   d.sink<RemoveTilesetEvent>().connect<&App::on_remove_tileset>(app);
   d.sink<SelectTilesetEvent>().connect<&App::on_select_tileset>(app);
