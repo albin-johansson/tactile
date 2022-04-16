@@ -45,8 +45,6 @@ class WidgetManager final
 
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void show_settings();
-
   void show_new_map_dialog();
 
   void show_open_map_dialog();
@@ -64,8 +62,6 @@ class WidgetManager final
   void show_resize_map_dialog(usize currentRows, usize currentColumns);
 
   void show_map_import_error_dialog(parsing::ParseError error);
-
-  void show_component_editor(const DocumentModel& model);
 
   [[nodiscard]] auto is_editor_focused() const -> bool;
 

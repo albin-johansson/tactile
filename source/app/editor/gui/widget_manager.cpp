@@ -77,11 +77,6 @@ void WidgetManager::update(const DocumentModel& model,
   mWidgets->map_parse_error_dialog.update(model, dispatcher);
 }
 
-void WidgetManager::show_settings()
-{
-  mWidgets->menu_bar.show_settings_dialog();
-}
-
 void WidgetManager::show_new_map_dialog()
 {
   mWidgets->menu_bar.show_map_creation_dialog();
@@ -127,11 +122,6 @@ void WidgetManager::show_resize_map_dialog(const usize currentRows,
 void WidgetManager::show_map_import_error_dialog(const parsing::ParseError error)
 {
   mWidgets->map_parse_error_dialog.show(error);
-}
-
-void WidgetManager::show_component_editor(const DocumentModel& model)
-{
-  mWidgets->menu_bar.show_component_editor(model);
 }
 
 auto WidgetManager::is_editor_focused() const -> bool

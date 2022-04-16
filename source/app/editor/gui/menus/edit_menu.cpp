@@ -25,8 +25,8 @@
 #include "core/tool_type.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/events/command_events.hpp"
-#include "editor/events/map_events.hpp"
 #include "editor/events/tool_events.hpp"
+#include "editor/gui/components/component_editor.hpp"
 #include "editor/gui/dialogs/settings_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
@@ -34,8 +34,23 @@
 #include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {
+namespace {
 
-void EditMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+[[nodiscard]] auto _get_settings_dialog() -> SettingsDialog&
+{
+  static SettingsDialog dialog;
+  return dialog;
+}
+
+[[nodiscard]] auto _get_component_editor() -> ComponentEditor&
+{
+  static ComponentEditor editor;
+  return editor;
+}
+
+}  // namespace
+
+void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{"Edit"}; menu.is_open()) {
     const auto canUndo = model.can_undo();
@@ -111,31 +126,28 @@ void EditMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
                         TACTILE_PRIMARY_MOD "+Shift+C",
                         false,
                         model.has_active_document())) {
-      mComponentEditor.show(model);
+      _get_component_editor().show(model);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,")) {
-      mSettingsDialog.show();
+      _get_settings_dialog().show();
     }
   }
+
+  _get_settings_dialog().update(model, dispatcher);
+  _get_component_editor().update(model, dispatcher);
 }
 
-void EditMenu::update_windows(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_settings_dialog()
 {
-  mSettingsDialog.update(model, dispatcher);
-  mComponentEditor.update(model, dispatcher);
+  _get_settings_dialog().show();
 }
 
-void EditMenu::show_settings_dialog()
+void show_component_editor(const DocumentModel& model)
 {
-  mSettingsDialog.show();
-}
-
-void EditMenu::show_component_editor(const DocumentModel& model)
-{
-  mComponentEditor.show(model);
+  _get_component_editor().show(model);
 }
 
 }  // namespace tactile

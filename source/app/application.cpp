@@ -38,6 +38,7 @@
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -298,7 +299,7 @@ void Application::on_open_save_as_dialog()
 
 void Application::on_show_settings()
 {
-  mData->widgets.show_settings();
+  show_settings_dialog();
 }
 
 void Application::on_show_new_map_dialog()
@@ -732,7 +733,7 @@ void Application::on_inspect_context(const InspectContextEvent& event)
 
 void Application::on_open_component_editor()
 {
-  mData->widgets.show_component_editor(mData->model);
+  show_component_editor(mData->model);
 }
 
 void Application::on_create_component_def(const CreateComponentDefEvent& event)

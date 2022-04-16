@@ -21,7 +21,6 @@
 
 #include <entt/fwd.hpp>
 
-#include "edit_menu.hpp"
 #include "file_menu.hpp"
 #include "help_menu.hpp"
 #include "map_menu.hpp"
@@ -41,19 +40,14 @@ class MenuBar final
    */
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void show_settings_dialog();
-
   void show_map_creation_dialog();
 
   void show_open_map_dialog();
 
   void show_tileset_creation_dialog();
 
-  void show_component_editor(const DocumentModel& model);
-
  private:
   FileMenu mFileMenu;
-  EditMenu mEditMenu;
   MapMenu mMapMenu;
   HelpMenu mHelpMenu;
 };
