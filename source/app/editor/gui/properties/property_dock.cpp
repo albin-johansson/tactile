@@ -391,7 +391,7 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
   prefs.set_property_dock_visible(visible);
 }
 
-void show_add_property_dialog()
+void show_property_creation_dialog()
 {
   _add_dialog.open();
 }

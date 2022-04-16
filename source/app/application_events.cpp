@@ -27,6 +27,7 @@
 #include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/menus/file_menu.hpp"
 #include "editor/gui/menus/map_menu.hpp"
+#include "editor/gui/properties/property_dock.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 
 namespace tactile {
@@ -113,7 +114,7 @@ void subscribe_to_events(App* app)
   d.sink<SetObjectTagEvent>().connect<&App::on_set_object_tag>(app);
   d.sink<SpawnObjectContextMenuEvent>().connect<&App::on_spawn_object_context_menu>(app);
 
-  d.sink<ShowAddPropertyDialogEvent>().connect<&App::on_show_add_property_dialog>(app);
+  d.sink<ShowAddPropertyDialogEvent>().connect<&show_property_creation_dialog>();
   d.sink<ShowRenamePropertyDialogEvent>().connect<&App::on_show_rename_property_dialog>(
       app);
   d.sink<ShowChangePropertyTypeDialogEvent>()

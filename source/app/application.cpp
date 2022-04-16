@@ -662,11 +662,6 @@ void Application::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent
   open_object_context_menu();
 }
 
-void Application::on_show_add_property_dialog()
-{
-  show_add_property_dialog();
-}
-
 void Application::on_show_rename_property_dialog(
     const ShowRenamePropertyDialogEvent& event)
 {
