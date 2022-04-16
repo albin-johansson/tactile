@@ -319,6 +319,10 @@ void Application::on_show_map_properties()
   }
 }
 
+void Application::on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
+{
+}
+
 void Application::on_create_map(const CreateMapEvent& event)
 {
   const auto id = mData->model.add_map(event.tile_width,

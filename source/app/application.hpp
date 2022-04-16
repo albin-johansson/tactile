@@ -101,6 +101,8 @@ class Application final : AEventLoop
 
   void on_show_map_properties();
 
+  void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event);
+
   void on_create_map(const CreateMapEvent& event);
 
   void on_close_map(const CloseMapEvent& event);

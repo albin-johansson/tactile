@@ -49,6 +49,7 @@ void subscribe_to_events(App* app)
   d.sink<CloseMapEvent>().connect<&App::on_close_map>(app);
   d.sink<OpenMapEvent>().connect<&App::on_open_map>(app);
   d.sink<SelectMapEvent>().connect<&App::on_select_map>(app);
+  d.sink<ExportAsGodotSceneEvent>().connect<&App::on_export_as_godot_scene>(app);
 
   d.sink<SelectToolEvent>().connect<&App::on_select_tool>(app);
   d.sink<ToolPressedEvent>().connect<&App::on_tool_pressed>(app);
