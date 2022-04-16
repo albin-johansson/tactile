@@ -21,12 +21,11 @@
 
 #include <filesystem>  // absolute
 
-#include "emitter/emit_info.hpp"
-#include "emitter/json_emitter.hpp"
-#include "emitter/xml_emitter.hpp"
-#include "emitter/yaml_emitter.hpp"
 #include "io/maps/convert_document_to_ir.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/maps/emitter/emit_info.hpp"
+#include "io/maps/emitter/json_emitter.hpp"
+#include "io/maps/emitter/xml_emitter.hpp"
+#include "io/maps/emitter/yaml_emitter.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
 #include "misc/logging.hpp"
