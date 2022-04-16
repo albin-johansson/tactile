@@ -72,14 +72,6 @@ void MapMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem("Resize Map...")) {
       dispatcher.enqueue<OpenResizeMapDialogEvent>();
     }
-
-    ImGui::Separator();
-
-    if (scoped::Menu ex{"Export"}; ex.is_open()) {
-      if (scoped::Disable godot; ImGui::MenuItem("Godot Scene (.tscn)")) {
-        // TODO
-      }
-    }
   }
 
   mCreateTilesetDialog->update(model, dispatcher);
