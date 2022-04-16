@@ -27,9 +27,8 @@
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/scoped.hpp"
-#include "tileset_view.hpp"
+#include "editor/gui/tilesets/tileset_view.hpp"
 
 namespace tactile {
 namespace {
@@ -71,10 +70,9 @@ void _update_context_menu(const TilesetID id,
 
 }  // namespace
 
-void TilesetTabWidget::update(const entt::registry& registry,
-                              entt::dispatcher& dispatcher)
+void update_tileset_tabs(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (scoped::TabBar bar{"TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
+  if (scoped::TabBar bar{"##TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
@@ -92,7 +90,7 @@ void TilesetTabWidget::update(const entt::registry& registry,
                                &opened,
                                isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
-        mTilesetView.update(registry, entity, dispatcher);
+        update_tileset_view(registry, entity, dispatcher);
       }
 
       if (!opened) {
@@ -106,11 +104,6 @@ void TilesetTabWidget::update(const entt::registry& registry,
       }
     }
   }
-}
-
-auto TilesetTabWidget::get_tileset_view() const -> const TilesetView&
-{
-  return mTilesetView;
 }
 
 }  // namespace tactile

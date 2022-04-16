@@ -40,18 +40,19 @@ namespace {
 constexpr auto _rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
 constexpr cen::color _grid_color{200, 200, 200, 40};
 
-void _update_viewport_offset(const entt::entity viewportEntity,
+void _update_viewport_offset(const entt::entity tilesetEntity,
                              entt::dispatcher& dispatcher,
                              const ImVec2& viewportSize)
 {
-  ImGui::InvisibleButton("TilesetViewInvisibleButton",
+  ImGui::InvisibleButton("##TilesetViewInvisibleButton",
                          viewportSize,
                          ImGuiButtonFlags_MouseButtonLeft |
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
+
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
-    dispatcher.enqueue<OffsetBoundViewportEvent>(viewportEntity,
+    dispatcher.enqueue<OffsetBoundViewportEvent>(tilesetEntity,
                                                  io.MouseDelta.x,
                                                  io.MouseDelta.y,
                                                  viewportSize.x,
@@ -85,19 +86,19 @@ void _render_tileset_image(GraphicsCtx& graphics,
 
 }  // namespace
 
-void TilesetView::update(const entt::registry& registry,
-                         const entt::entity entity,
+void update_tileset_view(const entt::registry& registry,
+                         const entt::entity tilesetEntity,
                          entt::dispatcher& dispatcher)
 {
-  const auto& tileset = registry.get<comp::Tileset>(entity);
-  const auto& viewport = registry.get<Viewport>(entity);
+  const auto& tileset = registry.get<comp::Tileset>(tilesetEntity);
+  const auto& viewport = registry.get<Viewport>(tilesetEntity);
 
-  const auto region = ImGui::GetContentRegionAvail();
-  mWidth = region.x;
-  mHeight = region.y;
+  //  const auto region = ImGui::GetContentRegionAvail();
+  //  mWidth = region.x;
+  //  mHeight = region.y;
 
   const auto info = get_render_info(viewport, tileset);
-  _update_viewport_offset(entity, dispatcher, info.canvas_br - info.canvas_tl);
+  _update_viewport_offset(tilesetEntity, dispatcher, info.canvas_br - info.canvas_tl);
 
   GraphicsCtx graphics{info};
   graphics.set_draw_color(get_preferences().viewport_bg());
@@ -114,9 +115,9 @@ void TilesetView::update(const entt::registry& registry,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  _render_tileset_image(graphics, registry.get<comp::Texture>(entity), position);
+  _render_tileset_image(graphics, registry.get<comp::Texture>(tilesetEntity), position);
 
-  if (const auto& selection = registry.get<comp::TilesetSelection>(entity);
+  if (const auto& selection = registry.get<comp::TilesetSelection>(tilesetEntity);
       selection.region) {
     _render_selection(*selection.region, position, tileSize);
   }
@@ -126,16 +127,6 @@ void TilesetView::update(const entt::registry& registry,
   graphics.render_translated_grid();
 
   graphics.pop_clip();
-}
-
-auto TilesetView::width() const -> std::optional<float>
-{
-  return mWidth;
-}
-
-auto TilesetView::height() const -> std::optional<float>
-{
-  return mHeight;
 }
 
 }  // namespace tactile

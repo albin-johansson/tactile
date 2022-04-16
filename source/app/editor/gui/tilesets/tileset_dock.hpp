@@ -19,39 +19,16 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
 #include <entt/fwd.hpp>
-
-#include "editor/gui/common/dock_widget.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 
-class TilesetView;
+class DocumentModel;
 
-class TilesetDock final : public ADockWidget
-{
- public:
-  TACTILE_DELETE_COPY(TilesetDock)
-  TACTILE_DEFAULT_MOVE(TilesetDock)
+void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  TilesetDock();
+[[nodiscard]] auto is_tileset_dock_focused() -> bool;
 
-  ~TilesetDock() noexcept override;
-
-  [[nodiscard]] auto get_tileset_view() const -> const TilesetView&;
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void set_visible(bool visible) override;
-
-  [[nodiscard]] auto is_visible() const -> bool override;
-
- private:
-  struct Data;
-  std::unique_ptr<Data> mData;
-};
+[[nodiscard]] auto is_tileset_dock_hovered() -> bool;
 
 }  // namespace tactile

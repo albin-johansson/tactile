@@ -27,20 +27,8 @@
 
 namespace tactile {
 
-class TilesetView final
-{
- public:
-  void update(const entt::registry& registry,
-              entt::entity entity,
-              entt::dispatcher& dispatcher);
-
-  [[nodiscard]] auto width() const -> std::optional<float>;
-
-  [[nodiscard]] auto height() const -> std::optional<float>;
-
- private:
-  std::optional<float> mWidth;
-  std::optional<float> mHeight;
-};
+void update_tileset_view(const entt::registry& registry,
+                         entt::entity tilesetEntity,
+                         entt::dispatcher& dispatcher);
 
 }  // namespace tactile

@@ -38,7 +38,10 @@
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/layers/layer_dock.hpp"
 #include "editor/gui/menus/edit_menu.hpp"
+#include "editor/gui/properties/property_dock.hpp"
+#include "editor/gui/tilesets/tileset_dock.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -226,23 +229,25 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
         data.dispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
       }
     }
-    else if (data.widgets.is_tileset_dock_hovered()) {
-      const auto width = data.widgets.tileset_view_width();
-      const auto height = data.widgets.tileset_view_height();
-      if (width && height) {
-        const auto entity = sys::find_active_tileset(*registry);
-        TACTILE_ASSERT(entity != entt::null);
+    else if (is_tileset_dock_hovered()) {
+      // FIXME investigate with touchpad
 
-        const auto& viewport = registry->get<Viewport>(entity);
-
-        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
-        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
-        data.dispatcher.enqueue<OffsetBoundViewportEvent>(entity,
-                                                          -dx,
-                                                          dy,
-                                                          *width,
-                                                          *height);
-      }
+      //      const auto width = get_tileset_view_width();
+      //      const auto height = get_tileset_view_height();
+      //      if (width && height) {
+      //        const auto entity = sys::find_active_tileset(*registry);
+      //        TACTILE_ASSERT(entity != entt::null);
+      //
+      //        const auto& viewport = registry->get<Viewport>(entity);
+      //
+      //        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
+      //        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
+      //        data.dispatcher.enqueue<OffsetBoundViewportEvent>(entity,
+      //                                                          -dx,
+      //                                                          dy,
+      //                                                          *width,
+      //                                                          *height);
+      //      }
     }
   }
 }
@@ -619,7 +624,7 @@ void Application::on_set_layer_visible(const SetLayerVisibleEvent& event)
 
 void Application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
 {
-  mData->widgets.show_rename_layer_dialog(event.id);
+  show_rename_layer_dialog(event.id);
 }
 
 void Application::on_rename_layer(const RenameLayerEvent& event)
@@ -659,19 +664,19 @@ void Application::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent
 
 void Application::on_show_add_property_dialog()
 {
-  mData->widgets.show_add_property_dialog();
+  show_add_property_dialog();
 }
 
 void Application::on_show_rename_property_dialog(
     const ShowRenamePropertyDialogEvent& event)
 {
-  mData->widgets.show_rename_property_dialog(event.name);
+  show_rename_property_dialog(event.name);
 }
 
 void Application::on_show_change_property_type_dialog(
     const ShowChangePropertyTypeDialogEvent& event)
 {
-  mData->widgets.show_change_property_type_dialog(event.name, event.current_type);
+  show_change_property_type_dialog(event.name, event.current_type);
 }
 
 void Application::on_add_property(const AddPropertyEvent& event)

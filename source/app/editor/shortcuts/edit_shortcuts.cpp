@@ -164,9 +164,9 @@ void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
 }
 
 auto EnableBucketShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager& widgets) const -> bool
+                                      const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::bucket) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::bucket) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -179,9 +179,9 @@ void EnableEraserShortcut::activate(entt::dispatcher& dispatcher)
 }
 
 auto EnableEraserShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager& widgets) const -> bool
+                                      const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::eraser) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::eraser) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -194,9 +194,9 @@ void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
 }
 
 auto EnableStampShortcut::is_enabled(const DocumentModel& model,
-                                     const WidgetManager& widgets) const -> bool
+                                     const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::stamp) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::stamp) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -211,10 +211,9 @@ void EnableObjectSelectionShortcut::activate(entt::dispatcher& dispatcher)
 }
 
 auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model,
-                                               const WidgetManager& widgets) const -> bool
+                                               const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::object_selection) &&
-         widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::object_selection) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -228,9 +227,9 @@ void EnableRectangleToolShortcut::activate(entt::dispatcher& dispatcher)
 }
 
 auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model,
-                                             const WidgetManager& widgets) const -> bool
+                                             const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::rectangle) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::rectangle) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -243,9 +242,9 @@ void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
 }
 
 auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model,
-                                           const WidgetManager& widgets) const -> bool
+                                           const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::ellipse) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::ellipse) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -258,9 +257,9 @@ void EnablePointToolShortcut::activate(entt::dispatcher& dispatcher)
 }
 
 auto EnablePointToolShortcut::is_enabled(const DocumentModel& model,
-                                         const WidgetManager& widgets) const -> bool
+                                         const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::point) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::point) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
