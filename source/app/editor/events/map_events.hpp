@@ -20,6 +20,7 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <string>      // string
 
 #include "tactile.hpp"
 
@@ -79,6 +80,17 @@ struct ResizeMapEvent final
 {
   usize row_count{};
   usize col_count{};
+};
+
+/**
+ * \brief This event is emitted when the users wants to save a map as a Godot scene.
+ */
+struct ExportAsGodotSceneEvent final
+{
+  std::string project_dir;
+  std::string image_dir;
+  std::string tileset_dir;
+  bool embed_tilesets{};
 };
 
 /// \} End of group events
