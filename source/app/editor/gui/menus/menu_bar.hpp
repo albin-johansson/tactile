@@ -21,25 +21,16 @@
 
 #include <entt/fwd.hpp>
 
-#include "help_menu.hpp"
-
 namespace tactile {
 
 class DocumentModel;
 
-class MenuBar final
-{
- public:
-  /**
-   * \brief Updates the state of the menu bar.
-   *
-   * \param model the associated model.
-   * \param dispatcher the event dispatcher that will be used.
-   */
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
-
- private:
-  HelpMenu mHelpMenu;
-};
+/**
+ * \brief Updates the state of the main menu bar.
+ *
+ * \param model the associated document model.
+ * \param dispatcher the event dispatcher that will be used.
+ */
+void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

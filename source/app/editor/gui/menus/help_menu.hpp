@@ -21,24 +21,10 @@
 
 #include <entt/fwd.hpp>
 
-#include "editor/gui/dialogs/about_dialog.hpp"
-#include "editor/gui/dialogs/credits_dialog.hpp"
-
 namespace tactile {
 
 class DocumentModel;
 
-class HelpMenu final
-{
- public:
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-  void update_windows();
-
- private:
-  AboutDialog mAboutDialog;
-  CreditsDialog mCreditsDialog;
-  bool mShowAboutImGui{};
-};
+void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

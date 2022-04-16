@@ -43,7 +43,6 @@ namespace tactile {
 
 struct WidgetManager::Widgets final
 {
-  MenuBar menu_bar;
   TilesetDock tileset_dock;
   ResizeMapDialog resize_map_dialog;
   MapParseErrorDialog map_parse_error_dialog;
@@ -53,10 +52,9 @@ WidgetManager::WidgetManager() : mWidgets{std::make_unique<Widgets>()} {}
 
 WidgetManager::~WidgetManager() noexcept = default;
 
-void WidgetManager::update(const DocumentModel& model,
-                           entt::dispatcher& dispatcher)
+void WidgetManager::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  mWidgets->menu_bar.update(model, dispatcher);
+  update_menu_bar(model, dispatcher);
   update_dock_space();
 
   if (model.has_active_document()) {
