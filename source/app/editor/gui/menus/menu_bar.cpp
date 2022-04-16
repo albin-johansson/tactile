@@ -44,8 +44,6 @@ void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::EndMainMenuBar();
   }
-
-  update_debug_menu_windows();
 }
 
 }  // namespace tactile

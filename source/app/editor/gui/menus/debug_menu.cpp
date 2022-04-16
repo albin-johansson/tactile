@@ -19,7 +19,6 @@
 
 #include "debug_menu.hpp"
 
-#include <centurion.hpp>
 #include <imgui.h>
 
 #include "editor/gui/alignment.hpp"
@@ -28,43 +27,35 @@
 #include "meta/build.hpp"
 
 namespace tactile {
-namespace {
-
-bool _show_metrics = false;
-bool _show_demo = false;
-bool _show_style_editor = false;
-
-}  // namespace
 
 void update_debug_menu()
 {
+  static bool show_metrics = false;
+  static bool show_demo = false;
+  static bool show_style_editor = false;
+
   if (scoped::Menu menu{"Debug"}; menu.is_open()) {
-    _show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
+    show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
     if constexpr (is_debug_build) {
       ImGui::Separator();
-      _show_demo = ImGui::MenuItem("Show Demo Window...");
-      _show_style_editor = ImGui::MenuItem("Show Style Editor...");
+      show_demo = ImGui::MenuItem("Show Demo Window...");
+      show_style_editor = ImGui::MenuItem("Show Style Editor...");
     }
   }
-}
 
-void update_debug_menu_windows()
-{
-  if (_show_metrics) {
+  if (show_metrics) {
     center_next_window_on_appearance();
-    ImGui::ShowMetricsWindow(&_show_metrics);
+    ImGui::ShowMetricsWindow(&show_metrics);
   }
 
-  if constexpr (is_debug_build) {
-    if (_show_demo) {
-      ImGui::ShowDemoWindow(&_show_demo);
-    }
+  if (show_demo) {
+    ImGui::ShowDemoWindow(&show_demo);
+  }
 
-    if (_show_style_editor) {
-      scoped::Window editor{"Style Editor"};
-      ImGui::ShowStyleEditor();
-    }
+  if (show_style_editor) {
+    scoped::Window editor{"Style Editor"};
+    ImGui::ShowStyleEditor();
   }
 }
 
