@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <memory>  // unique_ptr
 
-#include "core/utils/texture_manager.hpp"
+#include <centurion.hpp>
+#include <entt/fwd.hpp>
+
 #include "editor/events/command_events.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/events/layer_events.hpp"
@@ -33,27 +34,12 @@
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
 #include "editor/events/viewport_events.hpp"
-#include "editor/gui/icons.hpp"
-#include "editor/gui/widget_manager.hpp"
-#include "editor/model.hpp"
 #include "loop.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
 class AppConfiguration;
-
-/**
- * \brief Tracks visibility of widgets for the "Toggle UI" feature.
- */
-struct WidgetShowState final
-{
-  bool prev_show_layer_dock{};
-  bool prev_show_tileset_dock{};
-  bool prev_show_property_dock{};
-  bool prev_show_log_dock{};
-  bool prev_show_component_dock{};
-};
 
 /**
  * \brief Represents the heart of the Tactile application.
@@ -63,10 +49,12 @@ struct WidgetShowState final
  */
 class Application final : AEventLoop
 {
-  friend void subscribe_to_events(Application& app);
+  friend void subscribe_to_events(Application* app);
 
  public:
   explicit Application(AppConfiguration* configuration);
+
+  ~Application() noexcept override;
 
   using AEventLoop::start;
 
@@ -82,19 +70,10 @@ class Application final : AEventLoop
   void on_event(const cen::event_handler& handler) override;
 
  private:
-  AppConfiguration* mConfiguration{}; /* Non-owning */
-  entt::dispatcher mDispatcher;
-  DocumentModel mModel;
-  TextureManager mTextures;
-  WidgetManager mWidgets;
-  WidgetShowState mWidgetShowState;
-  bool mReloadFonts{};
+  struct Data;
+  std::unique_ptr<Data> mData;
 
-  template <typename Event, auto Slot>
-  void connect()
-  {
-    mDispatcher.sink<Event>().template connect<Slot>(this);
-  }
+  [[nodiscard]] auto get_dispatcher() -> entt::dispatcher&;
 
   void save_current_files_to_history();
 
