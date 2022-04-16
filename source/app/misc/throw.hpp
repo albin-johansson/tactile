@@ -21,12 +21,13 @@
 
 #include <exception>  // exception
 
-#include <boost/exception/all.hpp>
-
-#include "stacktrace.hpp"
-
 namespace tactile {
 
+/**
+ * \brief The exception type used for all exceptions thrown in the codebase.
+ *
+ * \see panic(const char*)
+ */
 class TactileError : public std::exception
 {
  public:
@@ -40,22 +41,14 @@ class TactileError : public std::exception
   const char* mWhat{"N/A"};
 };
 
-namespace tags {
-struct TraceInfoTag;
-}  // namespace tags
-
-using TraceInfo = boost::error_info<tags::TraceInfoTag, boost::stacktrace::stacktrace>;
-
 /**
- * \brief Throws an exception with associated call stack information.
+ * \brief Throws an exception (of type TactileError) with embedded call stack information.
  *
- * \param error the exception to throw.
+ * \details This function should be used to raise all exceptions thrown in the codebase,
+ * since the embedded stack trace information makes debugging code a lot easier.
  *
- * \see trace_info
+ * \param msg the exception message.
  */
-[[noreturn]] void throw_traced(const auto& error)
-{
-  throw boost::enable_error_info(error) << TraceInfo{boost::stacktrace::stacktrace()};
-}
+[[noreturn]] void panic(const char* msg);
 
 }  // namespace tactile

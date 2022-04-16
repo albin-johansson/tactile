@@ -17,28 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "meta/build.hpp"
-
-#if TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
+#include "throw.hpp"
 
 #include <boost/exception/all.hpp>
-#include <boost/stacktrace.hpp>
 
-#if TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
-#pragma GCC diagnostic pop
-#endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
+#include "stacktrace.hpp"
 
 namespace tactile {
 
-namespace tags {
-struct TraceInfoTag;
-}  // namespace tags
-
-using TraceInfo = boost::error_info<tags::TraceInfoTag, boost::stacktrace::stacktrace>;
+void panic(const char* msg)
+{
+  throw boost::enable_error_info(TactileError{msg})
+      << TraceInfo{boost::stacktrace::stacktrace{}};
+}
 
 }  // namespace tactile

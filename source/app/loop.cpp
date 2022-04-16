@@ -33,7 +33,7 @@ namespace tactile {
 AEventLoop::AEventLoop(AppConfiguration* cfg) : mCfg{cfg}
 {
   if (!mCfg) {
-    throw_traced(TactileError{"Invalid null application configuration!"});
+    panic("Invalid null application configuration!");
   }
 }
 

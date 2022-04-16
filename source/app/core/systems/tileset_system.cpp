@@ -273,7 +273,7 @@ auto get_tileset_entity(const entt::registry& registry, const TilesetID id)
     return entity;
   }
   else {
-    throw_traced(TactileError{"Invalid tileset ID!"});
+    panic("Invalid tileset ID!");
   }
 }
 
@@ -295,7 +295,7 @@ auto get_tile_entity(const entt::registry& registry, const TileID id) -> entt::e
     return entity;
   }
   else {
-    throw_traced(TactileError{"Invalid tile ID!"});
+    panic("Invalid tile ID!");
   }
 }
 

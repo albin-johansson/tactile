@@ -19,7 +19,7 @@
 
 #include "component_system.hpp"
 
-#include <utility>        // move
+#include <utility>  // move
 
 #include <fmt/format.h>
 
@@ -43,7 +43,7 @@ namespace {
     return iter;
   }
   else {
-    throw_traced(TactileError{"Invalid component attribute name!"});
+    panic("Invalid component attribute name!");
   }
 }
 
@@ -57,7 +57,7 @@ namespace {
     return iter;
   }
   else {
-    throw_traced(TactileError{"Invalid component attribute name!"});
+    panic("Invalid component attribute name!");
   }
 }
 
@@ -69,7 +69,7 @@ namespace {
     return iter;
   }
   else {
-    throw_traced(TactileError{"Invalid component attribute name!"});
+    panic("Invalid component attribute name!");
   }
 }
 
@@ -86,7 +86,7 @@ namespace {
     }
   }
 
-  throw_traced(TactileError{"Did not find component!"});
+  panic("Did not find component!");
 }
 
 void _visit_components(entt::registry& registry, auto callable)
@@ -338,7 +338,7 @@ auto get_component_def(entt::registry& registry, const ComponentID compId)
     return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
-    throw_traced(TactileError{"Failed to find component definition with specified ID!"});
+    panic("Failed to find component definition with specified ID!");
   }
 }
 
@@ -350,7 +350,7 @@ auto get_component_def(const entt::registry& registry, const ComponentID compId)
     return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
-    throw_traced(TactileError{"Failed to find component definition with specified ID!"});
+    panic("Failed to find component definition with specified ID!");
   }
 }
 
@@ -678,7 +678,7 @@ auto get_component(const entt::registry& registry,
     }
   }
 
-  throw_traced(TactileError{"Context did not feature requested component!"});
+  panic("Context did not feature requested component!");
 }
 
 auto get_component_attribute(const entt::registry& registry,
@@ -698,7 +698,7 @@ auto get_component_attribute(const entt::registry& registry,
     }
   }
 
-  throw_traced(TactileError{"Did not find component attribute!"});
+  panic("Did not find component attribute!");
 }
 
 auto get_component_count(const entt::registry& registry, const ContextID contextId)

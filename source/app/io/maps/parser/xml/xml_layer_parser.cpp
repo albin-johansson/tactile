@@ -231,7 +231,7 @@ namespace {
   }
   else {
     /* If we enter this branch, then the layer collection is broken */
-    throw_traced(TactileError{"Collected invalid layer node!"});
+    panic("Collected invalid layer node!");
   }
 
   if (const auto err = parse_properties(layerNode, layerData.context);

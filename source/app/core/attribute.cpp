@@ -48,7 +48,7 @@ auto stringify(const AttributeType type) -> const char*
       return "object";
 
     default:
-      throw_traced(TactileError{"Invalid attribute type!"});
+      panic("Invalid attribute type!");
   }
 }
 
@@ -59,29 +59,37 @@ auto operator<<(std::ostream& stream, const AttributeType type) -> std::ostream&
 
 void Attribute::reset_to_default(const AttributeType type)
 {
-  if (type == AttributeType::integer) {
-    set_value<integer_type>(0);
-  }
-  else if (type == AttributeType::floating) {
-    set_value<float_type>(0);
-  }
-  else if (type == AttributeType::boolean) {
-    set_value<bool>(false);
-  }
-  else if (type == AttributeType::string) {
-    set_value<string_type>(string_type{});
-  }
-  else if (type == AttributeType::color) {
-    set_value<color_type>(cen::colors::black);
-  }
-  else if (type == AttributeType::object) {
-    set_value<object_t>(object_t{});
-  }
-  else if (type == AttributeType::file) {
-    set_value<file_type>(file_type{});
-  }
-  else {
-    throw_traced(TactileError{"Invalid attribute type!"});
+  switch (type) {
+    case AttributeType::string:
+      set_value<string_type>(string_type{});
+      break;
+
+    case AttributeType::integer:
+      set_value<integer_type>(0);
+      break;
+
+    case AttributeType::floating:
+      set_value<float_type>(0);
+      break;
+
+    case AttributeType::boolean:
+      set_value<bool>(false);
+      break;
+
+    case AttributeType::file:
+      set_value<file_type>(file_type{});
+      break;
+
+    case AttributeType::color:
+      set_value<color_type>(cen::colors::black);
+      break;
+
+    case AttributeType::object:
+      set_value<object_t>(object_t{});
+      break;
+
+    default:
+      panic("Invalid attribute type!");
   }
 }
 
@@ -109,7 +117,7 @@ auto Attribute::has_default_value() const -> bool
     return *color == cen::colors::black;
   }
   else {
-    throw_traced(TactileError{"Invalid property type!"});
+    panic("Invalid property type!");
   }
 }
 
@@ -119,7 +127,7 @@ auto Attribute::as_string() const -> const string_type&
     return *str;
   }
   else {
-    throw_traced(TactileError{"Attribute was not a string!"});
+    panic("Attribute was not a string!");
   }
 }
 
@@ -129,7 +137,7 @@ auto Attribute::as_int() const -> integer_type
     return *i;
   }
   else {
-    throw_traced(TactileError{"Attribute was not an integer!"});
+    panic("Attribute was not an integer!");
   }
 }
 
@@ -139,7 +147,7 @@ auto Attribute::as_float() const -> float_type
     return *f;
   }
   else {
-    throw_traced(TactileError{"Attribute was not a float!"});
+    panic("Attribute was not a float!");
   }
 }
 
@@ -149,7 +157,7 @@ auto Attribute::as_bool() const -> bool
     return *b;
   }
   else {
-    throw_traced(TactileError{"Attribute was not a boolean!"});
+    panic("Attribute was not a boolean!");
   }
 }
 
@@ -159,7 +167,7 @@ auto Attribute::as_file() const -> const file_type&
     return *file;
   }
   else {
-    throw_traced(TactileError{"Attribute was not a file!"});
+    panic("Attribute was not a file!");
   }
 }
 
@@ -169,7 +177,7 @@ auto Attribute::as_object() const -> object_t
     return *obj;
   }
   else {
-    throw_traced(TactileError{"Attribute was not an object reference!"});
+    panic("Attribute was not an object reference!");
   }
 }
 
@@ -179,7 +187,7 @@ auto Attribute::as_color() const -> const color_type&
     return *color;
   }
   else {
-    throw_traced(TactileError{"Attribute was not a color!"});
+    panic("Attribute was not a color!");
   }
 }
 
@@ -208,7 +216,7 @@ auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
       return stream << "object '" << value.as_object() << "'";
 
     default:
-      throw_traced(TactileError{"Invalid attribute type!"});
+      panic("Invalid attribute type!");
   }
 }
 

@@ -27,7 +27,7 @@ namespace tactile {
 ContextMenu::ContextMenu(const char* name) : mName{name}
 {
   if (!mName) {
-    throw_traced(TactileError{"Invalid null context menu name!"});
+    panic("Invalid null context menu name!");
   }
 }
 

@@ -186,7 +186,7 @@ auto human_readable_name(const EditorTheme theme) -> std::string_view
       return "Raspberry";
 
     default:
-      throw_traced(TactileError{"Invalid theme enumerator!"});
+      panic("Invalid theme enumerator!");
   }
 }
 

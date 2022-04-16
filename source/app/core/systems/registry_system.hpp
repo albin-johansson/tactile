@@ -62,14 +62,14 @@ template <typename T>
 [[nodiscard]] auto checked_get(entt::registry& registry, const entt::entity entity) -> T&
 {
   if (!registry.valid(entity)) {
-    throw_traced(TactileError{"Invalid entity identifier!"});
+    panic("Invalid entity identifier!");
   }
 
   if (auto* comp = registry.try_get<T>(entity)) {
     return *comp;
   }
   else {
-    throw_traced(TactileError{"Entity did not feature requested component!"});
+    panic("Entity did not feature requested component!");
   }
 }
 
@@ -78,14 +78,14 @@ template <typename T>
     -> const T&
 {
   if (!registry.valid(entity)) {
-    throw_traced(TactileError{"Invalid entity identifier!"});
+    panic("Invalid entity identifier!");
   }
 
   if (auto* comp = registry.try_get<T>(entity)) {
     return *comp;
   }
   else {
-    throw_traced(TactileError{"Entity did not feature requested component!"});
+    panic("Entity did not feature requested component!");
   }
 }
 
