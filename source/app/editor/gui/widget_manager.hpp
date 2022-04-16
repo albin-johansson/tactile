@@ -32,7 +32,6 @@
 namespace tactile {
 
 class DocumentModel;
-class IconManager;
 
 class WidgetManager final
 {
@@ -44,9 +43,7 @@ class WidgetManager final
 
   ~WidgetManager() noexcept;
 
-  void update(const DocumentModel& model,
-              const IconManager& icons,
-              entt::dispatcher& dispatcher);
+  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
   void show_settings();
 
@@ -75,8 +72,6 @@ class WidgetManager final
   [[nodiscard]] auto is_toolbar_focused() const -> bool;
 
   [[nodiscard]] auto is_viewport_focused() const -> bool;
-
-  [[nodiscard]] auto is_layer_dock_focused() const -> bool;
 
   [[nodiscard]] auto is_tileset_dock_focused() const -> bool;
 

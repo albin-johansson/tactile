@@ -35,8 +35,9 @@
 #include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
-#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/maps/parser/parse_map.hpp"
@@ -80,10 +81,10 @@ void _register(DocumentModel& model, Args&&... args)
 Application::Application(AppConfiguration* configuration)
     : AEventLoop{configuration}
     , mConfiguration{configuration}
-    , mIcons{mTextures}
 {
   subscribe_to_events(*this);
   load_default_shortcuts();
+  load_icons(mTextures);
 }
 
 void Application::on_startup()
@@ -121,7 +122,7 @@ void Application::on_update()
 {
   mDispatcher.update();
   mModel.update();
-  mWidgets.update(mModel, mIcons, mDispatcher);
+  mWidgets.update(mModel, mDispatcher);
 }
 
 void Application::on_event(const cen::event_handler& handler)
@@ -387,7 +388,7 @@ void Application::on_add_point(const AddPointEvent& event)
 
 void Application::on_center_viewport()
 {
-  center_viewport();
+  center_map_viewport();
 }
 
 void Application::on_offset_viewport(const OffsetViewportEvent& event)

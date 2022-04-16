@@ -17,40 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "start_page_view.hpp"
+#include "style.hpp"
 
-#include <entt/entt.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "editor/events/map_events.hpp"
-#include "editor/gui/alignment.hpp"
-#include "editor/gui/common/button.hpp"
-#include "editor/gui/icons.hpp"
-#include "editor/gui/textures.hpp"
-
 namespace tactile {
 
-void show_start_page_view(const IconManager& icons, entt::dispatcher& dispatcher)
+void remove_tab_bar_from_next_window()
 {
-  prepare_vertical_alignment_center(4);
-
-  ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2{0, 64});
-
-  center_next_item_horizontally(128);
-  ImGui::Image(to_texture_id(icons.tactile_icon()), {128, 128});
-
-  ImGui::Spacing();
-  ImGui::Spacing();
-
-  if (centered_button("Create new map")) {
-    dispatcher.enqueue<ShowNewMapDialogEvent>();
-  }
-
-  ImGui::Spacing();
-  if (centered_button("Open existing map")) {
-    dispatcher.enqueue<ShowOpenMapDialogEvent>();
-  }
+  ImGuiWindowClass wc{};
+  wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
+  ImGui::SetNextWindowClass(&wc);
 }
 
 }  // namespace tactile

@@ -105,35 +105,17 @@
 namespace tactile {
 
 /**
- * \brief Manages the few icons that are actually loaded as textures.
- *
- * \ingroup gui
+ * \brief Loads some icons to be used in the GUI.
  */
-class IconManager final
-{
- public:
-  explicit IconManager(TextureManager& textures);
-
-  /**
-   * \brief Returns the texture identifier for the Tactile icon.
-   *
-   * \return a texture identifier.
-   */
-  [[nodiscard]] auto tactile_icon() const noexcept -> uint { return mTactileIcon; }
-
- private:
-  uint mTactileIcon{};
-};
+void load_icons(TextureManager& textures);
 
 /**
- * \brief Returns the icon string literal for the specified layer type.
+ * \brief Returns the texture identifier for the Tactile icon.
  *
- * \param type the layer type to obtain the icon for.
+ * \pre `load_icons()` must have been called before.
  *
- * \return a string icon value.
- *
- * \throws tactile_error if the layer type is invalid.
+ * \return a texture identifier.
  */
-[[nodiscard]] auto get_icon(LayerType type) -> const char*;
+[[nodiscard]] auto get_tactile_icon() -> uint;
 
 }  // namespace tactile

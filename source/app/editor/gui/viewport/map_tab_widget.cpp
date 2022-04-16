@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "document_tab_view.hpp"
+#include "map_tab_widget.hpp"
 
 #include <entt/entt.hpp>
 #include <imgui.h>
@@ -30,10 +30,9 @@
 
 namespace tactile {
 
-void show_document_tab_view(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_map_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::TabBar bar{"##MapViewportTabBar", ImGuiTabBarFlags_Reorderable};
-      bar.is_open()) {
+  if (scoped::TabBar bar{"##MapTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
     for (const auto& [id, document] : model) {
       const scoped::Id scope{id};
 

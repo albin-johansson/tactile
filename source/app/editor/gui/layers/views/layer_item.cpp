@@ -33,6 +33,7 @@
 #include "editor/events/property_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
 namespace {
@@ -41,6 +42,23 @@ constexpr int _base_node_flags =
     ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |
     ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth |
     ImGuiTreeNodeFlags_SpanFullWidth;
+
+[[nodiscard]] auto _get_icon(const LayerType type) -> const char*
+{
+  switch (type) {
+    case LayerType::TileLayer:
+      return TAC_ICON_TILE_LAYER;
+
+    case LayerType::ObjectLayer:
+      return TAC_ICON_OBJECT_LAYER;
+
+    case LayerType::GroupLayer:
+      return TAC_ICON_GROUP_LAYER;
+
+    default:
+      throw_traced(TactileError{"Failed to recognize layer type!"});
+  }
+}
 
 void _update_layer_item_popup(const entt::registry& registry,
                               entt::dispatcher& dispatcher,
@@ -148,7 +166,7 @@ void layer_item_view(const entt::registry& registry,
                                    : _base_node_flags;
 
   const auto& context = sys::checked_get<comp::AttributeContext>(registry, layerEntity);
-  FormattedString name{"{} {}", get_icon(layer.type), context.name};
+  const FormattedString name{"{} {}", _get_icon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {

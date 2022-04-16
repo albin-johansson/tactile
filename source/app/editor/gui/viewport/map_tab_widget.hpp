@@ -23,8 +23,10 @@
 
 namespace tactile {
 
-class IconManager;
+class DocumentModel;
 
-void show_start_page_view(const IconManager& icons, entt::dispatcher& dispatcher);
+void update_map_tabs(const DocumentModel& model, entt::dispatcher& dispatcher);
+
+void center_map_viewport();
 
 }  // namespace tactile

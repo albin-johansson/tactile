@@ -34,9 +34,9 @@
 #include "editor/gui/properties/property_dock.hpp"
 #include "editor/gui/tilesets/tileset_dock.hpp"
 #include "editor/gui/tilesets/tileset_view.hpp"
+#include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/toolbar.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
-#include "editor/gui/viewport/views/map_view.hpp"
 #include "editor/model.hpp"
 
 namespace tactile {
@@ -54,7 +54,6 @@ WidgetManager::WidgetManager() : mWidgets{std::make_unique<Widgets>()} {}
 WidgetManager::~WidgetManager() noexcept = default;
 
 void WidgetManager::update(const DocumentModel& model,
-                           const IconManager& icons,
                            entt::dispatcher& dispatcher)
 {
   mWidgets->menu_bar.update(model, dispatcher);
@@ -68,7 +67,7 @@ void WidgetManager::update(const DocumentModel& model,
     update_log_dock();
   }
 
-  update_viewport_widget(model, icons, dispatcher);
+  update_viewport_widget(model, dispatcher);
 
   if (const auto* registry = model.active_registry()) {
     update_map_view_object_context_menu(*registry, dispatcher);
@@ -149,11 +148,6 @@ auto WidgetManager::is_toolbar_focused() const -> bool
 auto WidgetManager::is_viewport_focused() const -> bool
 {
   return tactile::is_viewport_focused();
-}
-
-auto WidgetManager::is_layer_dock_focused() const -> bool
-{
-  return tactile::is_layer_dock_focused();
 }
 
 auto WidgetManager::is_tileset_dock_focused() const -> bool

@@ -230,7 +230,7 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   graphics.pop_clip();
 
-  show_viewport_toolbar(model, dispatcher);
+  update_viewport_toolbar(model, dispatcher);
   update_viewport_overlay(registry, cursor);
 
   _update_context_menu(registry, dispatcher, cursor);
@@ -273,7 +273,6 @@ void update_map_view_object_context_menu(const entt::registry& registry,
   }
 }
 
-// TODO the declaration of this function isn't in map_view.hpp
 void center_map_viewport()
 {
   _will_center_viewport = true;

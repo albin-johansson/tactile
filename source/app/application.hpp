@@ -86,7 +86,6 @@ class Application final : AEventLoop
   entt::dispatcher mDispatcher;
   DocumentModel mModel;
   TextureManager mTextures;
-  IconManager mIcons;
   WidgetManager mWidgets;
   WidgetShowState mWidgetShowState;
   bool mReloadFonts{};

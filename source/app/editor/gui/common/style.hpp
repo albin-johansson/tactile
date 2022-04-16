@@ -19,17 +19,8 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
 namespace tactile {
 
-class DocumentModel;
-
-void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-void update_map_view_object_context_menu(const entt::registry& registry,
-                                         entt::dispatcher& dispatcher);
-
-void open_object_context_menu();
+void remove_tab_bar_from_next_window();
 
 }  // namespace tactile

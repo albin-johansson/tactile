@@ -26,6 +26,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/common/button.hpp"
+#include "editor/gui/common/style.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -93,11 +94,9 @@ void _show_extra_toolbar(auto callable)
 
 }  // namespace
 
-void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  ImGuiWindowClass wc{};
-  wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
-  ImGui::SetNextWindowClass(&wc);
+  remove_tab_bar_from_next_window();
 
   _prepare_window_position();
   ImGui::SetNextWindowBgAlpha(0.75f);

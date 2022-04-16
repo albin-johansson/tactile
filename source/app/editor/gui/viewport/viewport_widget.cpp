@@ -23,10 +23,15 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "editor/events/map_events.hpp"
 #include "editor/events/tool_events.hpp"
+#include "editor/gui/alignment.hpp"
+#include "editor/gui/common/button.hpp"
+#include "editor/gui/common/style.hpp"
+#include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "editor/gui/viewport/views/document_tab_view.hpp"
-#include "editor/gui/viewport/views/start_page_view.hpp"
+#include "editor/gui/textures.hpp"
+#include "editor/gui/viewport/map_tab_widget.hpp"
 #include "editor/model.hpp"
 
 namespace tactile {
@@ -36,21 +41,34 @@ constexpr auto _window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_No
 constinit bool _has_focus = false;
 constinit bool _mouse_within_window = false;
 
-void _remove_tab_bar_from_next_window()
+void _update_start_page(entt::dispatcher& dispatcher)
 {
-  ImGuiWindowClass wc{};
-  wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
-  ImGui::SetNextWindowClass(&wc);
+  prepare_vertical_alignment_center(4);
+
+  ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2{0, 64});
+
+  center_next_item_horizontally(128);
+  ImGui::Image(to_texture_id(get_tactile_icon()), {128, 128});
+
+  ImGui::Spacing();
+  ImGui::Spacing();
+
+  if (centered_button("Create new map")) {
+    dispatcher.enqueue<ShowNewMapDialogEvent>();
+  }
+
+  ImGui::Spacing();
+  if (centered_button("Open existing map")) {
+    dispatcher.enqueue<ShowOpenMapDialogEvent>();
+  }
 }
 
 }  // namespace
 
-void update_viewport_widget(const DocumentModel& model,
-                            const IconManager& icons,
-                            entt::dispatcher& dispatcher)
+void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {4, 4}};
-  _remove_tab_bar_from_next_window();
+  remove_tab_bar_from_next_window();
 
   scoped::Window window{"Viewport", _window_flags};
   if (window.is_open()) {
@@ -59,7 +77,7 @@ void update_viewport_widget(const DocumentModel& model,
     _mouse_within_window = scoped::Window::current_window_contains_mouse();
 
     if (model.has_active_document()) {
-      show_document_tab_view(model, dispatcher);
+      update_map_tabs(model, dispatcher);
 
       if (window.mouse_entered()) {
         dispatcher.enqueue<ToolEnteredEvent>();
@@ -70,18 +88,13 @@ void update_viewport_widget(const DocumentModel& model,
       }
     }
     else {
-      show_start_page_view(icons, dispatcher);
+      _update_start_page(dispatcher);
     }
   }
   else {
     _has_focus = false;
     _mouse_within_window = false;
   }
-}
-
-void center_viewport()
-{
-  center_map_viewport();
 }
 
 auto is_viewport_focused() noexcept -> bool

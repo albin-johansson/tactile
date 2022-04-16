@@ -28,7 +28,7 @@ class DocumentModel;
 /// \name Toolbar functions
 /// \{
 
-void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher);
+void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 [[nodiscard]] auto is_toolbar_visible() -> bool;
 

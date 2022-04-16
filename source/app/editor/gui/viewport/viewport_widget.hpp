@@ -24,7 +24,6 @@
 namespace tactile {
 
 class DocumentModel;
-class IconManager;
 
 /// \name Viewport widget functions
 /// \{
@@ -33,17 +32,9 @@ class IconManager;
  * \brief Updates the state of the primary viewport widget.
  *
  * \param model the current document model.
- * \param icons the loaded icons.
  * \param dispatcher the event dispatcher that will be used.
  */
-void update_viewport_widget(const DocumentModel& model,
-                            const IconManager& icons,
-                            entt::dispatcher& dispatcher);
-
-/**
- * \brief Centers the main viewport over the current map.
- */
-void center_viewport();
+void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 [[nodiscard]] auto is_viewport_focused() noexcept -> bool;
 
