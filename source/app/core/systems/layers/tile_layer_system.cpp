@@ -19,6 +19,8 @@
 
 #include "tile_layer_system.hpp"
 
+#include <entt/entt.hpp>
+
 #include "layer_system.hpp"
 #include "misc/throw.hpp"
 

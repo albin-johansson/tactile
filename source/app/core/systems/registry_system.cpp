@@ -19,6 +19,8 @@
 
 #include "registry_system.hpp"
 
+#include <entt/entt.hpp>
+
 #include "context_system.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"

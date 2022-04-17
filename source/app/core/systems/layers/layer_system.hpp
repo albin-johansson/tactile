@@ -23,7 +23,7 @@
 #include <string>    // string
 #include <utility>   // pair
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/components/layers.hpp"
 #include "core/map_info.hpp"

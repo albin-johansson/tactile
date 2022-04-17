@@ -22,7 +22,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
 #include "core/components/attributes.hpp"

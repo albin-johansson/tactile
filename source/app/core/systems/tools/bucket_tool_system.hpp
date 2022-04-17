@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry, dispatcher
+#include <entt/fwd.hpp>
 
 #include "core/mouse_info.hpp"
 

@@ -23,6 +23,8 @@
 #include <cmath>      // round
 #include <utility>    // pair
 
+#include <entt/entt.hpp>
+
 #include "core/components/texture.hpp"
 #include "core/components/viewport.hpp"
 #include "core/map_info.hpp"

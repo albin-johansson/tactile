@@ -20,6 +20,7 @@
 #include "animation_system.hpp"
 
 #include <centurion.hpp>
+#include <entt/entt.hpp>
 
 #include "core/components/animation.hpp"
 

@@ -19,6 +19,8 @@
 
 #include "object_selection_tool_system.hpp"
 
+#include <entt/entt.hpp>
+
 #include "core/components/objects.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"

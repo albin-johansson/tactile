@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include <entt/entt.hpp>
 #include <fmt/format.h>
 
 #include "context_system.hpp"

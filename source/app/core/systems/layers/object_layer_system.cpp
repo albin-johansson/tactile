@@ -19,6 +19,8 @@
 
 #include "object_layer_system.hpp"
 
+#include <entt/entt.hpp>
+
 #include "core/components/objects.hpp"
 #include "core/map_info.hpp"
 #include "core/systems/context_system.hpp"

@@ -22,6 +22,8 @@
 #include <unordered_map>  // unordered_map
 #include <utility>        // move
 
+#include <entt/entt.hpp>
+
 #include "context_system.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"

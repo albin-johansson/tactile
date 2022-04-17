@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include <entt/entt.hpp>
+
 #include "core/common/tile_cache.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"

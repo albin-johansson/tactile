@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/common/tile_cache.hpp"
 #include "core/components/layers.hpp"

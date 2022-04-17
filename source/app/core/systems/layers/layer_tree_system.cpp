@@ -21,6 +21,8 @@
 
 #include <utility>  // swap
 
+#include <entt/entt.hpp>
+
 #include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/registry_system.hpp"

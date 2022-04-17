@@ -22,7 +22,7 @@
 #include <optional>  // optional
 
 #include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/components/texture.hpp"
 #include "core/region.hpp"

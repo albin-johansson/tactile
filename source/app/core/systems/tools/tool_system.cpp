@@ -19,6 +19,8 @@
 
 #include "tool_system.hpp"
 
+#include <entt/entt.hpp>
+
 #include "bucket_tool_system.hpp"
 #include "core/components/tools.hpp"
 #include "ellipse_tool_system.hpp"

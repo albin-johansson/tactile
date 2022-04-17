@@ -19,6 +19,8 @@
 
 #include "map_system.hpp"
 
+#include <entt/entt.hpp>
+
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layers.hpp"
 #include "core/map_info.hpp"

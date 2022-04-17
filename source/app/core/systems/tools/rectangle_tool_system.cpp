@@ -22,6 +22,8 @@
 #include <algorithm>  // min
 #include <cmath>      // abs
 
+#include <entt/entt.hpp>
+
 #include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"

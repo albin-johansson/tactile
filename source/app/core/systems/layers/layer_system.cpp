@@ -23,7 +23,8 @@
 #include <utility>    // move, swap
 #include <vector>     // erase
 
-#include <fmt/format.h>  // format
+#include <entt/entt.hpp>
+#include <fmt/format.h>
 
 #include "core/components/attributes.hpp"
 #include "core/components/objects.hpp"

@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include <entt/entt.hpp>
+
 #include "component_system.hpp"
 #include "misc/assert.hpp"
 #include "misc/throw.hpp"

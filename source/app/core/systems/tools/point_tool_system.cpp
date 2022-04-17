@@ -19,6 +19,8 @@
 
 #include "point_tool_system.hpp"
 
+#include <entt/entt.hpp>
+
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/tool_events.hpp"
