@@ -2,8 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "core/components/viewport.hpp"
 #include "core/systems/registry_system.hpp"
-#include "core/viewport.hpp"
 
 using namespace tactile;
 

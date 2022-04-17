@@ -25,8 +25,8 @@
 #include "core/components/objects.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/tools.hpp"
+#include "core/components/viewport.hpp"
 #include "core/map.hpp"
-#include "core/viewport.hpp"
 #include "property_system.hpp"
 
 namespace tactile::sys {

@@ -26,7 +26,7 @@
 
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/viewport.hpp"
+#include "core/components/viewport.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/common/rubber_band.hpp"

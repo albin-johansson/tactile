@@ -24,8 +24,8 @@
 #include <utility>    // pair
 
 #include "core/components/texture.hpp"
+#include "core/components/viewport.hpp"
 #include "core/map.hpp"
-#include "core/viewport.hpp"
 #include "misc/assert.hpp"
 #include "registry_system.hpp"
 
