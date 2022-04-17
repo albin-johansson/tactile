@@ -28,7 +28,6 @@
 
 #include <centurion.hpp>
 
-#include "misc/assert.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -41,13 +40,13 @@ namespace tactile {
  */
 enum class AttributeType
 {
-  string,    ///< A string property.
-  integer,   ///< An integer property.
-  floating,  ///< A floating-point property.
-  boolean,   ///< A boolean property.
-  file,      ///< A file path property.
-  color,     ///< A color property.
-  object     ///< An integer ID property, that refers to a map object.
+  String,  ///< A string property.
+  Int,     ///< An integer property.
+  Float,   ///< A floating-point property.
+  Bool,    ///< A boolean property.
+  Path,    ///< A file path property.
+  Color,   ///< A color property.
+  Object   ///< An integer ID property, that refers to a map object.
 };
 
 /**
@@ -61,6 +60,17 @@ enum class AttributeType
  */
 [[nodiscard]] auto stringify(AttributeType type) -> const char*;
 
+/**
+ * \brief Outputs an attribute type using an output stream.
+ *
+ * \details This function simply forwards the result from `stringify(AttributeType)` to a
+ * stream.
+ *
+ * \param stream the output stream.
+ * \param type the attribute type to output.
+ *
+ * \return the used stream.
+ */
 auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 
 /**
@@ -88,14 +98,14 @@ class Attribute final
   using integer_type = int32;
   using float_type = float;
   using color_type = cen::color;
-  using file_type = std::filesystem::path;
+  using path_type = std::filesystem::path;
 
   using value_type = std::variant<string_type,
                                   integer_type,
                                   float_type,
                                   bool,
                                   color_type,
-                                  file_type,
+                                  path_type,
                                   object_t>;
 
   /// \name Construction
@@ -163,101 +173,56 @@ class Attribute final
    *
    * \return the attribute type.
    */
-  [[nodiscard]] auto type() const noexcept -> AttributeType
-  {
-    if (holds<integer_type>()) {
-      return AttributeType::integer;
-    }
-    else if (holds<float_type>()) {
-      return AttributeType::floating;
-    }
-    else if (holds<bool>()) {
-      return AttributeType::boolean;
-    }
-    else if (holds<object_t>()) {
-      return AttributeType::object;
-    }
-    else if (holds<color_type>()) {
-      return AttributeType::color;
-    }
-    else if (holds<file_type>()) {
-      return AttributeType::file;
-    }
-    else {
-      TACTILE_ASSERT(holds<string_type>());
-      return AttributeType::string;
-    }
-  }
+  [[nodiscard]] auto type() const noexcept -> AttributeType;
 
   /**
    * \brief Indicates whether the attribute holds a string value.
    *
    * \return `true` if the attribute is a string; `false` otherwise.
    */
-  [[nodiscard]] auto is_string() const noexcept -> bool
-  {
-    return type() == AttributeType::string;
-  }
+  [[nodiscard]] auto is_string() const noexcept -> bool;
 
   /**
    * \brief Indicates whether the attribute holds an integer value.
    *
    * \return `true` if the attribute is an integer; `false` otherwise.
    */
-  [[nodiscard]] auto is_int() const noexcept -> bool
-  {
-    return type() == AttributeType::integer;
-  }
+  [[nodiscard]] auto is_int() const noexcept -> bool;
 
   /**
    * \brief Indicates whether the attribute holds a float value.
    *
    * \return `true` if the attribute is a float; `false` otherwise.
    */
-  [[nodiscard]] auto is_float() const noexcept -> bool
-  {
-    return type() == AttributeType::floating;
-  }
+  [[nodiscard]] auto is_float() const noexcept -> bool;
 
   /**
    * \brief Indicates whether the attribute holds a boolean value.
    *
    * \return `true` if the attribute is a boolean; `false` otherwise.
    */
-  [[nodiscard]] auto is_bool() const noexcept -> bool
-  {
-    return type() == AttributeType::boolean;
-  }
+  [[nodiscard]] auto is_bool() const noexcept -> bool;
 
   /**
    * \brief Indicates whether the attribute holds a file path value.
    *
    * \return `true` if the attribute is a file; `false` otherwise.
    */
-  [[nodiscard]] auto is_file() const noexcept -> bool
-  {
-    return type() == AttributeType::file;
-  }
+  [[nodiscard]] auto is_path() const noexcept -> bool;
 
   /**
    * \brief Indicates whether the attribute holds an object reference value.
    *
    * \return `true` if the attribute is an object reference; `false` otherwise.
    */
-  [[nodiscard]] auto is_object() const noexcept -> bool
-  {
-    return type() == AttributeType::object;
-  }
+  [[nodiscard]] auto is_object() const noexcept -> bool;
 
   /**
    * \brief Indicates whether the attribute holds a color value.
    *
    * \return `true` if the attribute is a color; `false` otherwise.
    */
-  [[nodiscard]] auto is_color() const noexcept -> bool
-  {
-    return type() == AttributeType::color;
-  }
+  [[nodiscard]] auto is_color() const noexcept -> bool;
 
   /// \} End of type checks
 
@@ -314,9 +279,9 @@ class Attribute final
    * \return a pointer to the stored value;
    *         a null pointer if the internal value is of another type.
    */
-  [[nodiscard]] auto try_as_file() const noexcept -> const file_type*
+  [[nodiscard]] auto try_as_path() const noexcept -> const path_type*
   {
-    return get_if<file_type>();
+    return get_if<path_type>();
   }
 
   /**
@@ -389,7 +354,7 @@ class Attribute final
    *
    * \throws TactileError if the attribute isn't a file.
    */
-  [[nodiscard]] auto as_file() const -> const file_type&;
+  [[nodiscard]] auto as_path() const -> const path_type&;
 
   /**
    * \brief Returns the attribute's object reference value.

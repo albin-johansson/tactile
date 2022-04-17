@@ -34,25 +34,25 @@ namespace {
     -> std::optional<AttributeType>
 {
   if (type == "string") {
-    return AttributeType::string;
+    return AttributeType::String;
   }
   else if (type == "int") {
-    return AttributeType::integer;
+    return AttributeType::Int;
   }
   else if (type == "float") {
-    return AttributeType::floating;
+    return AttributeType::Float;
   }
   else if (type == "bool") {
-    return AttributeType::boolean;
+    return AttributeType::Bool;
   }
   else if (type == "color") {
-    return AttributeType::color;
+    return AttributeType::Color;
   }
   else if (type == "object") {
-    return AttributeType::object;
+    return AttributeType::Object;
   }
   else if (type == "file") {
-    return AttributeType::file;
+    return AttributeType::Path;
   }
   else {
     return std::nullopt;
@@ -64,23 +64,23 @@ namespace {
     -> std::optional<Attribute>
 {
   switch (type) {
-    case AttributeType::string:
+    case AttributeType::String:
       return value.as<std::string>();
 
-    case AttributeType::integer:
+    case AttributeType::Int:
       return value.as<int32>();
 
-    case AttributeType::floating:
+    case AttributeType::Float:
       return value.as<float>();
 
-    case AttributeType::boolean:
+    case AttributeType::Bool:
       return value.as<bool>();
 
-    case AttributeType::file: {
+    case AttributeType::Path: {
       const std::filesystem::path file = value.as<std::string>();
       return file;
     }
-    case AttributeType::color: {
+    case AttributeType::Color: {
       const auto hex = value.as<std::string>();
       if (const auto color = cen::color::from_rgba(hex)) {
         return *color;
@@ -89,7 +89,7 @@ namespace {
         return std::nullopt;
       }
     }
-    case AttributeType::object:
+    case AttributeType::Object:
       return object_t{value.as<int32>()};
 
     default:
@@ -127,28 +127,28 @@ namespace {
 
   if (auto defaultValue = node["default"]) {
     switch (type) {
-      case AttributeType::string:
+      case AttributeType::String:
         value = defaultValue.as<std::string>();
         break;
 
-      case AttributeType::integer:
+      case AttributeType::Int:
         value = defaultValue.as<int32>();
         break;
 
-      case AttributeType::floating:
+      case AttributeType::Float:
         value = defaultValue.as<float>();
         break;
 
-      case AttributeType::boolean:
+      case AttributeType::Bool:
         value = defaultValue.as<bool>();
         break;
 
-      case AttributeType::file: {
+      case AttributeType::Path: {
         std::filesystem::path path = defaultValue.as<std::string>();
         value = std::move(path);
         break;
       }
-      case AttributeType::color: {
+      case AttributeType::Color: {
         if (auto color = cen::color::from_rgba(defaultValue.as<std::string>())) {
           value = *color;
         }
@@ -157,7 +157,7 @@ namespace {
         }
         break;
       }
-      case AttributeType::object:
+      case AttributeType::Object:
         value = object_t{defaultValue.as<int32>()};
         break;
     }

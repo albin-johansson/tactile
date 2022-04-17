@@ -59,7 +59,7 @@ namespace {
   else if (std::strcmp(type, "color") == 0) {
     const auto hex = string_attribute(node, "value").value();
     if (hex.empty()) {
-      value.reset_to_default(AttributeType::color);
+      value.reset_to_default(AttributeType::Color);
     }
     else {
       if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)

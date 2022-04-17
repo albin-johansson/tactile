@@ -38,7 +38,7 @@ AddPropertyDialog::AddPropertyDialog() : ADialog{"Add Property"}
 void AddPropertyDialog::open()
 {
   zero_buffer(mNameBuffer);
-  mPropertyType = AttributeType::string;
+  mPropertyType = AttributeType::String;
   make_visible();
 }
 
