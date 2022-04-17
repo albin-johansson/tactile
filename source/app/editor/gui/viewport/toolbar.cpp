@@ -124,23 +124,23 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    _tool_button(model, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::stamp);
-    _tool_button(model, dispatcher, TAC_ICON_ERASER, "Eraser tool", ToolType::eraser);
-    _tool_button(model, dispatcher, TAC_ICON_BUCKET, "Bucket tool", ToolType::bucket);
+    _tool_button(model, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::Stamp);
+    _tool_button(model, dispatcher, TAC_ICON_ERASER, "Eraser tool", ToolType::Eraser);
+    _tool_button(model, dispatcher, TAC_ICON_BUCKET, "Bucket tool", ToolType::Bucket);
     _tool_button(model,
                  dispatcher,
                  TAC_ICON_OBJECT_SELECTION,
                  "Object selection tool",
-                 ToolType::object_selection);
+                 ToolType::ObjectSelection);
     _tool_button(model,
                  dispatcher,
                  TAC_ICON_RECTANGLE,
                  "Rectangle tool",
-                 ToolType::rectangle);
-    _tool_button(model, dispatcher, TAC_ICON_ELLIPSE, "Ellipse tool", ToolType::ellipse);
-    _tool_button(model, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::point);
+                 ToolType::Rectangle);
+    _tool_button(model, dispatcher, TAC_ICON_ELLIPSE, "Ellipse tool", ToolType::Ellipse);
+    _tool_button(model, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::Point);
 
-    if (model.is_tool_active(ToolType::stamp)) {
+    if (model.is_tool_active(ToolType::Stamp)) {
       const auto& registry = model.get_active_registry();
       _show_extra_toolbar([=, &registry] {
         if (icon_button(TAC_ICON_STAMP_RANDOMIZER,

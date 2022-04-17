@@ -28,14 +28,14 @@ namespace tactile {
  */
 enum class ToolType
 {
-  none,
-  stamp,
-  eraser,
-  bucket,
-  object_selection,
-  rectangle,
-  ellipse,
-  point
+  None,  ///< Used when no tool is enabled.
+  Stamp,
+  Eraser,
+  Bucket,
+  ObjectSelection,
+  Rectangle,
+  Ellipse,
+  Point
 };
 
 }  // namespace tactile

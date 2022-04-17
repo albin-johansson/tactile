@@ -255,18 +255,18 @@ auto DocumentModel::is_tool_possible(const ToolType tool) const -> bool
   }
 
   switch (tool) {
-    case ToolType::stamp:
-    case ToolType::eraser:
+    case ToolType::Stamp:
+    case ToolType::Eraser:
       return sys::is_tile_layer_active(*registry);
 
-    case ToolType::bucket:
+    case ToolType::Bucket:
       return sys::is_tile_layer_active(*registry) &&
              sys::is_single_tile_selected_in_tileset(*registry);
 
-    case ToolType::object_selection:
-    case ToolType::rectangle:
-    case ToolType::ellipse:
-    case ToolType::point:
+    case ToolType::ObjectSelection:
+    case ToolType::Rectangle:
+    case ToolType::Ellipse:
+    case ToolType::Point:
       return sys::is_object_layer_active(*registry);
 
     default:
