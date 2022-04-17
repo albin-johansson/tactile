@@ -388,6 +388,13 @@ auto duplicate_layer(entt::registry& registry,
   return copy;
 }
 
+void select_layer(entt::registry& registry, const LayerID id)
+{
+  const auto& [layerEntity, layer] = sys::get_layer(registry, id);
+  auto& active = registry.ctx<comp::ActiveLayer>();
+  active.entity = layerEntity;
+}
+
 auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entity
 {
   for (auto&& [entity, layer] : registry.view<comp::Layer>().each()) {

@@ -147,6 +147,16 @@ auto duplicate_layer(entt::registry& registry,
                      entt::entity parent,
                      bool recursive) -> entt::entity;
 
+/**
+ * \brief Selects the layer associated with the specified ID.
+ *
+ * \param registry the document registry.
+ * \param id the ID of the layer that will be selected.
+ *
+ * \throws TactileError if there is no layer with the specified ID.
+ */
+void select_layer(entt::registry& registry, LayerID id);
+
 [[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
 [[nodiscard]] auto get_active_layer_id(const entt::registry& registry)
