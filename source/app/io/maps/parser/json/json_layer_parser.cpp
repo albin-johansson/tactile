@@ -218,13 +218,13 @@ auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> Par
   objectData.visible = as_bool(json, "visible").value_or(true);
 
   if (json.contains("point")) {
-    objectData.type = ObjectType::point;
+    objectData.type = ObjectType::Point;
   }
   else if (json.contains("ellipse")) {
-    objectData.type = ObjectType::ellipse;
+    objectData.type = ObjectType::Ellipse;
   }
   else {
-    objectData.type = ObjectType::rect;
+    objectData.type = ObjectType::Rect;
   }
 
   if (const auto err = parse_properties(json, objectData.context);

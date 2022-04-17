@@ -81,7 +81,7 @@ auto make_rectangle_object(entt::registry& registry,
   return _make_object(registry,
                       layerId,
                       "Rectangle",
-                      ObjectType::rect,
+                      ObjectType::Rect,
                       x,
                       y,
                       width,
@@ -98,7 +98,7 @@ auto make_ellipse_object(entt::registry& registry,
   return _make_object(registry,
                       layerId,
                       "Ellipse",
-                      ObjectType::ellipse,
+                      ObjectType::Ellipse,
                       x,
                       y,
                       width,
@@ -110,7 +110,7 @@ auto make_point_object(entt::registry& registry,
                        const float x,
                        const float y) -> ObjectID
 {
-  return _make_object(registry, layerId, "Point", ObjectType::point, x, y, 0, 0);
+  return _make_object(registry, layerId, "Point", ObjectType::Point, x, y, 0, 0);
 }
 
 auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectResult

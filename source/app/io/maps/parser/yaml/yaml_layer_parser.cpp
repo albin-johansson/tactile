@@ -221,13 +221,13 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData
   if (auto type = node["type"]) {
     const auto str = type.as<std::string>();
     if (str == "point") {
-      object->type = ObjectType::point;
+      object->type = ObjectType::Point;
     }
     else if (str == "rect") {
-      object->type = ObjectType::rect;
+      object->type = ObjectType::Rect;
     }
     else if (str == "ellipse") {
-      object->type = ObjectType::ellipse;
+      object->type = ObjectType::Ellipse;
     }
     else {
       return ParseError::unsupported_object_type;

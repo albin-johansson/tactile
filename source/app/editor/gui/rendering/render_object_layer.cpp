@@ -42,7 +42,7 @@ void _render_point_object(GraphicsCtx& graphics,
   const float radius = (std::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
 
   const auto& object = registry.get<comp::Object>(objectEntity);
-  TACTILE_ASSERT(object.type == ObjectType::point);
+  TACTILE_ASSERT(object.type == ObjectType::Point);
 
   if (graphics.is_within_translated_bounds(position)) {
     graphics.set_draw_color(color);
@@ -72,7 +72,7 @@ void _render_ellipse_object(GraphicsCtx& graphics,
 {
   const auto& object = registry.get<comp::Object>(objectEntity);
   const auto& context = registry.get<comp::AttributeContext>(objectEntity);
-  TACTILE_ASSERT(object.type == ObjectType::ellipse);
+  TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
   const ImVec2 size = {object.width, object.height};
 
@@ -103,7 +103,7 @@ void _render_rectangle_object(GraphicsCtx& graphics,
                               const cen::color& color)
 {
   const auto& object = registry.get<comp::Object>(objectEntity);
-  TACTILE_ASSERT(object.type == ObjectType::rect);
+  TACTILE_ASSERT(object.type == ObjectType::Rect);
 
   const auto size = ImVec2{object.width, object.height} * graphics.tile_size_ratio();
 
@@ -142,15 +142,15 @@ void render_object(GraphicsCtx& graphics,
   const auto position = ImVec2{object.x, object.y} * graphics.tile_size_ratio();
 
   switch (object.type) {
-    case ObjectType::point:
+    case ObjectType::Point:
       _render_point_object(graphics, registry, objectEntity, position, color);
       break;
 
-    case ObjectType::ellipse:
+    case ObjectType::Ellipse:
       _render_ellipse_object(graphics, registry, objectEntity, position, color);
       break;
 
-    case ObjectType::rect:
+    case ObjectType::Rect:
       _render_rectangle_object(graphics, registry, objectEntity, position, color);
       break;
   }

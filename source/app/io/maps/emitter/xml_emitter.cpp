@@ -126,10 +126,10 @@ void _append_object(pugi::xml_node node, const ir::ObjectData& objectData)
   }
 
   /* Objects are assumed to be rectangles unless explicitly told otherwise */
-  if (objectData.type == ObjectType::point) {
+  if (objectData.type == ObjectType::Point) {
     objectNode.append_child("point");
   }
-  else if (objectData.type == ObjectType::ellipse) {
+  else if (objectData.type == ObjectType::Ellipse) {
     objectNode.append_child("ellipse");
   }
 
