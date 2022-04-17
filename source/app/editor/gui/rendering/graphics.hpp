@@ -23,11 +23,10 @@
 #include <imgui.h>
 
 #include "core/region.hpp"
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-struct RenderInfo;
 
 /**
  * \brief Provides a common simplified rendering API.
@@ -106,15 +105,21 @@ class GraphicsCtx final
 
   [[nodiscard]] auto translate(const ImVec2& position) const -> ImVec2;
 
-  [[nodiscard]] auto origin() const -> ImVec2 { return mOrigin; }
+  [[nodiscard]] auto origin() const -> const ImVec2& { return mOrigin; }
 
-  [[nodiscard]] auto viewport_tile_size() const -> ImVec2 { return mViewportTileSize; }
+  [[nodiscard]] auto viewport_tile_size() const -> const ImVec2&
+  {
+    return mViewportTileSize;
+  }
 
-  [[nodiscard]] auto logical_tile_size() const -> ImVec2 { return mLogicalTileSize; }
+  [[nodiscard]] auto logical_tile_size() const -> const ImVec2&
+  {
+    return mLogicalTileSize;
+  }
 
-  [[nodiscard]] auto tile_size_ratio() const -> ImVec2 { return mTileSizeRatio; }
+  [[nodiscard]] auto tile_size_ratio() const -> const ImVec2& { return mTileSizeRatio; }
 
-  [[nodiscard]] auto bounds() const -> Region { return mBounds; }
+  [[nodiscard]] auto bounds() const -> const Region& { return mBounds; }
 
  private:
   ImVec2 mCanvasTL;

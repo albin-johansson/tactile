@@ -19,7 +19,6 @@
 
 #include "menu_bar.hpp"
 
-#include <entt/entt.hpp>
 #include <imgui.h>
 
 #include "editor/gui/menus/debug_menu.hpp"

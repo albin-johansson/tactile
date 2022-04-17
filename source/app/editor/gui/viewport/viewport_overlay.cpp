@@ -19,7 +19,7 @@
 
 #include "viewport_overlay.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -28,8 +28,8 @@
 #include "core/systems/tileset_system.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/gui/viewport/viewport_cursor_info.hpp"
 #include "io/persistence/preferences.hpp"
-#include "viewport_cursor_info.hpp"
 
 namespace tactile {
 namespace {

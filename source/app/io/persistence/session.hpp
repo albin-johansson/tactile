@@ -19,9 +19,10 @@
 
 #pragma once
 
+#include "editor/fwd.hpp"
+
 namespace tactile {
 
-class DocumentModel;
 class TextureManager;
 
 /// \addtogroup io

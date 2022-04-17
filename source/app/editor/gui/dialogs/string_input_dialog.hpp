@@ -25,7 +25,7 @@
 
 #include <entt/fwd.hpp>
 
-#include "dialog.hpp"
+#include "editor/gui/dialogs/dialog.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

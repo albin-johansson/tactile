@@ -21,9 +21,9 @@
 
 #include <entt/fwd.hpp>
 
-namespace tactile {
+#include "editor/fwd.hpp"
 
-class DocumentModel;
+namespace tactile {
 
 /**
  * \brief Updates the state of the main menu bar.

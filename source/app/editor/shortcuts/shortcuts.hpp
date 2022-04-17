@@ -20,11 +20,12 @@
 #pragma once
 
 #include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
+
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
-class DocumentModel;
 class WidgetManager;
 
 void load_default_shortcuts();

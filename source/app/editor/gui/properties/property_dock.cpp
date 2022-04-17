@@ -23,7 +23,8 @@
 #include <optional>  // optional
 #include <utility>   // move
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
@@ -34,15 +35,15 @@
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "dialogs/add_property_dialog.hpp"
-#include "dialogs/change_property_type_dialog.hpp"
-#include "dialogs/rename_property_dialog.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/properties/dialogs/add_property_dialog.hpp"
+#include "editor/gui/properties/dialogs/change_property_type_dialog.hpp"
+#include "editor/gui/properties/dialogs/rename_property_dialog.hpp"
 #include "editor/gui/properties/items/property_item_context_menu.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"

@@ -19,6 +19,8 @@
 
 #include "shortcut.hpp"
 
+#include <entt/entt.hpp>
+
 namespace tactile {
 
 void AShortcut::poll(const DocumentModel& model,

@@ -20,7 +20,7 @@
 #include "help_menu.hpp"
 
 #include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/gui/alignment.hpp"

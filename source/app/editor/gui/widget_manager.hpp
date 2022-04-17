@@ -25,13 +25,11 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/attribute.hpp"
+#include "editor/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 class WidgetManager final
 {

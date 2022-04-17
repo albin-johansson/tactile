@@ -24,10 +24,9 @@
 #include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 /// \name Property dock functions
 /// \{

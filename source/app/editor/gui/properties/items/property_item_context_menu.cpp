@@ -19,7 +19,7 @@
 
 #include "property_item_context_menu.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/events/property_events.hpp"

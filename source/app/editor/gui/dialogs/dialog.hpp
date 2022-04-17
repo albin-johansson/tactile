@@ -21,11 +21,10 @@
 
 #include <entt/fwd.hpp>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 /**
  * \brief Serves as the base implementation of all modal dialogs.

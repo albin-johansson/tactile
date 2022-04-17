@@ -19,7 +19,7 @@
 
 #include "file_menu.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"

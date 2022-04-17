@@ -19,6 +19,7 @@
 
 #include "render_stamp_preview.hpp"
 
+#include <entt/entity/registry.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -26,9 +27,9 @@
 #include "core/components/tiles.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/tile_pos.hpp"
+#include "editor/gui/rendering/render_info.hpp"
 #include "editor/gui/textures.hpp"
 #include "misc/assert.hpp"
-#include "render_info.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

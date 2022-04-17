@@ -22,6 +22,8 @@
 #include <memory>  // unique_ptr, make_unique
 #include <vector>  // vector
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "edit_shortcuts.hpp"
 #include "file_shortcuts.hpp"
 #include "view_shortcuts.hpp"

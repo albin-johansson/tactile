@@ -19,29 +19,12 @@
 
 #pragma once
 
-#include <optional>  // optional
-
-#include "editor/gui/dialogs/dialog.hpp"
-#include "io/maps/parser/parse_error.hpp"
-#include "tactile.hpp"
-
 namespace tactile {
 
-/**
- * \brief Provides information about a failed attempt to parse a map.
- */
-class MapParseErrorDialog final : public ADialog
-{
- public:
-  MapParseErrorDialog();
+struct Document;
+struct RenderInfo;
 
-  void show(parsing::ParseError error);
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
- private:
-  std::optional<parsing::ParseError> mError;
-};
+class DocumentModel;
+class GraphicsCtx;
 
 }  // namespace tactile

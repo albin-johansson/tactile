@@ -21,11 +21,10 @@
 
 #include <entt/entt.hpp>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 class ContextMenu
 {

@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include <entt/entt.hpp>
+#include <entt/signal/dispatcher.hpp>
 
 #include "editor/events/misc_events.hpp"
 #include "io/file_dialog.hpp"

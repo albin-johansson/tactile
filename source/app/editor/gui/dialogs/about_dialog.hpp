@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "dialog.hpp"
+#include "editor/gui/dialogs/dialog.hpp"
 
 namespace tactile {
 

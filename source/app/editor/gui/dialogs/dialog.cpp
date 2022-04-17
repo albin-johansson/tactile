@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "dialog.hpp"
+#include "editor/gui/dialogs/dialog.hpp"
 
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"

@@ -21,9 +21,9 @@
 
 #include <entt/fwd.hpp>
 
-namespace tactile {
+#include "editor/fwd.hpp"
 
-class DocumentModel;
+namespace tactile {
 
 void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
 

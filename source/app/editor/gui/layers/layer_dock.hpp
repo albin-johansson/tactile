@@ -21,11 +21,10 @@
 
 #include <entt/fwd.hpp>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 /// \name Layer dock functions
 /// \{

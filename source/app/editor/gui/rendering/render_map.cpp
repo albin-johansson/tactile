@@ -19,14 +19,16 @@
 
 #include "render_map.hpp"
 
+#include <entt/entity/registry.hpp>
+
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/registry_system.hpp"
-#include "graphics.hpp"
+#include "editor/gui/rendering/graphics.hpp"
+#include "editor/gui/rendering/render_object_layer.hpp"
+#include "editor/gui/rendering/render_tile_layer.hpp"
 #include "io/persistence/preferences.hpp"
-#include "render_object_layer.hpp"
-#include "render_tile_layer.hpp"
 
 namespace tactile {
 namespace {

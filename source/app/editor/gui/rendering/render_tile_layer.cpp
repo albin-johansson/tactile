@@ -19,11 +19,13 @@
 
 #include "render_tile_layer.hpp"
 
+#include <entt/entity/registry.hpp>
+
 #include "core/components/layers.hpp"
 #include "core/region.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "graphics.hpp"
-#include "render_tile.hpp"
+#include "editor/gui/rendering/graphics.hpp"
+#include "editor/gui/rendering/render_tile.hpp"
 
 namespace tactile {
 

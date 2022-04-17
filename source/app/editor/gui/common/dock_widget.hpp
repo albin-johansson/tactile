@@ -24,11 +24,10 @@
 #include <entt/entt.hpp>
 #include <imgui.h>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 class ADockWidget
 {

@@ -22,8 +22,8 @@
 #include <optional>  // optional
 #include <string>    // string
 
-#include "component_name_dialog.hpp"
 #include "core/components/attributes.hpp"
+#include "editor/gui/components/dialogs/component_name_dialog.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

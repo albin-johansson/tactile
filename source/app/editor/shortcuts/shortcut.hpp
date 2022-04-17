@@ -20,13 +20,13 @@
 #pragma once
 
 #include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-class DocumentModel;
 class WidgetManager;
 
 class AShortcut

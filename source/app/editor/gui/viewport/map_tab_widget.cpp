@@ -19,14 +19,15 @@
 
 #include "map_tab_widget.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/gui/viewport/map_view.hpp"
 #include "editor/model.hpp"
-#include "map_view.hpp"
 
 namespace tactile {
 

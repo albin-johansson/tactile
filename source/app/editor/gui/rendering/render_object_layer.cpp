@@ -21,13 +21,14 @@
 
 #include <algorithm>  // min
 
+#include <entt/entity/registry.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
-#include "graphics.hpp"
+#include "editor/gui/rendering/graphics.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

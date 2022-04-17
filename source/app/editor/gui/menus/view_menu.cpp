@@ -19,7 +19,7 @@
 
 #include "view_menu.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "cfg/fonts.hpp"

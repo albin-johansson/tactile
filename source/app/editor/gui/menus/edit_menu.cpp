@@ -19,7 +19,8 @@
 
 #include "edit_menu.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/tool_type.hpp"
