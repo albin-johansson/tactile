@@ -213,7 +213,8 @@ void SettingsDialog::update_appearance_tab()
                          1.0f,
                          get_min_font_size(),
                          get_max_font_size())) {
-        // TODO fix issue when set to non power of two, and then increased/decrease with shortcuts (which causes crash due to assertions)
+        // TODO fix issue when set to non power of two, and then increased/decrease with
+        // shortcuts (which causes crash due to assertions)
         mGuiSettings.set_font_size(size - size % 2);
       }
     }

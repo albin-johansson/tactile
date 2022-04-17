@@ -66,16 +66,17 @@ auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 /**
  * \brief Strong type that represents object references.
  */
-enum object_t : int32 {};
+enum object_t : int32
+{};
 
 template <typename T>
-concept CAttributeType = std::same_as<T, std::string> ||  //
-    std::same_as<T, int32> ||                             //
-    std::same_as<T, float> ||                             //
-    std::same_as<T, bool> ||                              //
-    std::same_as<T, cen::color> ||                        //
-    std::same_as<T, std::filesystem::path> ||             //
-    std::same_as<T, object_t>;
+concept CAttributeType = std::same_as<T, std::string> ||            //
+                         std::same_as<T, int32> ||                  //
+                         std::same_as<T, float> ||                  //
+                         std::same_as<T, bool> ||                   //
+                         std::same_as<T, cen::color> ||             //
+                         std::same_as<T, std::filesystem::path> ||  //
+                         std::same_as<T, object_t>;
 
 /**
  * \brief Represents an "attribute" value, used by both property and component facilities.

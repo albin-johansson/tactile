@@ -28,7 +28,8 @@
 
 namespace tactile {
 
-auto rubber_band(const ImVec2& scrollOffset, const ImVec2& tileSize) -> std::optional<Region>
+auto rubber_band(const ImVec2& scrollOffset, const ImVec2& tileSize)
+    -> std::optional<Region>
 {
   const auto toRow = [=](const float y) {
     const auto mod = y - std::fmod(y, tileSize.y);
