@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "core/common/enum.hpp"
 #include "settings.pb.h"
 
 using namespace tactile;
@@ -225,22 +226,21 @@ TEST(PreferenceState, SetPreferredTileHeight)
 
 TEST(PreferenceState, EnsureThemeEnumsMatch)
 {
-  ASSERT_EQ(proto::THEME_DEAR_DARK, cen::to_underlying(EditorTheme::dear_dark));
-  ASSERT_EQ(proto::THEME_DEAR_LIGHT, cen::to_underlying(EditorTheme::dear_light));
-  ASSERT_EQ(proto::THEME_RUBY, cen::to_underlying(EditorTheme::ruby));
-  ASSERT_EQ(proto::THEME_SAPPHIRE, cen::to_underlying(EditorTheme::sapphire));
-  ASSERT_EQ(proto::THEME_EMERALD, cen::to_underlying(EditorTheme::emerald));
-  ASSERT_EQ(proto::THEME_AMETHYST, cen::to_underlying(EditorTheme::amethyst));
-  ASSERT_EQ(proto::THEME_AMBER, cen::to_underlying(EditorTheme::amber));
-  ASSERT_EQ(proto::THEME_NOCTURNAL, cen::to_underlying(EditorTheme::nocturnal));
-  ASSERT_EQ(proto::THEME_ASH, cen::to_underlying(EditorTheme::ash));
+  ASSERT_EQ(proto::THEME_DEAR_DARK, to_underlying(EditorTheme::dear_dark));
+  ASSERT_EQ(proto::THEME_DEAR_LIGHT, to_underlying(EditorTheme::dear_light));
+  ASSERT_EQ(proto::THEME_RUBY, to_underlying(EditorTheme::ruby));
+  ASSERT_EQ(proto::THEME_SAPPHIRE, to_underlying(EditorTheme::sapphire));
+  ASSERT_EQ(proto::THEME_EMERALD, to_underlying(EditorTheme::emerald));
+  ASSERT_EQ(proto::THEME_AMETHYST, to_underlying(EditorTheme::amethyst));
+  ASSERT_EQ(proto::THEME_AMBER, to_underlying(EditorTheme::amber));
+  ASSERT_EQ(proto::THEME_NOCTURNAL, to_underlying(EditorTheme::nocturnal));
+  ASSERT_EQ(proto::THEME_ASH, to_underlying(EditorTheme::ash));
 }
 
 TEST(PreferenceState, EnsureOverlayPosEnumsMatch)
 {
-  ASSERT_EQ(proto::OVERLAY_POS_TOP_LEFT, cen::to_underlying(OverlayPos::top_left));
-  ASSERT_EQ(proto::OVERLAY_POS_TOP_RIGHT, cen::to_underlying(OverlayPos::top_right));
-  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_RIGHT,
-            cen::to_underlying(OverlayPos::bottom_right));
-  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_LEFT, cen::to_underlying(OverlayPos::bottom_left));
+  ASSERT_EQ(proto::OVERLAY_POS_TOP_LEFT, to_underlying(OverlayPos::top_left));
+  ASSERT_EQ(proto::OVERLAY_POS_TOP_RIGHT, to_underlying(OverlayPos::top_right));
+  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_RIGHT, to_underlying(OverlayPos::bottom_right));
+  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_LEFT, to_underlying(OverlayPos::bottom_left));
 }
