@@ -30,6 +30,7 @@
 #include "cfg/fonts.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
@@ -42,6 +43,7 @@
 #include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/properties/property_dock.hpp"
 #include "editor/gui/tilesets/tileset_dock.hpp"
+#include "editor/gui/tilesets/tileset_view.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -206,6 +208,10 @@ void Application::on_keyboard_event(cen::keyboard_event event)
 
 void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
+  /* This function is ugly and awkward, but there doesn't seem to be a good way to handle
+     mouse "wheel" events using the public ImGui APIs. Otherwise, it would be nicer to
+     keep this code closer to the actual widgets. */
+
   constexpr float scaling = 4.0f;
 
   auto& data = *mData;
@@ -230,24 +236,22 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
       }
     }
     else if (is_tileset_dock_hovered()) {
-      // FIXME investigate with touchpad
+      const auto width = get_tileset_view_width();
+      const auto height = get_tileset_view_height();
+      if (width && height) {
+        const auto entity = sys::find_active_tileset(*registry);
+        TACTILE_ASSERT(entity != entt::null);
 
-      //      const auto width = get_tileset_view_width();
-      //      const auto height = get_tileset_view_height();
-      //      if (width && height) {
-      //        const auto entity = sys::find_active_tileset(*registry);
-      //        TACTILE_ASSERT(entity != entt::null);
-      //
-      //        const auto& viewport = registry->get<Viewport>(entity);
-      //
-      //        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
-      //        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
-      //        data.dispatcher.enqueue<OffsetBoundViewportEvent>(entity,
-      //                                                          -dx,
-      //                                                          dy,
-      //                                                          *width,
-      //                                                          *height);
-      //      }
+        const auto& viewport = sys::checked_get<Viewport>(*registry, entity);
+
+        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
+        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
+        data.dispatcher.enqueue<OffsetBoundViewportEvent>(entity,
+                                                          -dx,
+                                                          dy,
+                                                          *width,
+                                                          *height);
+      }
     }
   }
 }

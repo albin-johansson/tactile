@@ -37,8 +37,11 @@
 namespace tactile {
 namespace {
 
-constexpr auto _rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
+constexpr cen::color _rubber_band_color{0, 0x44, 0xCC, 100};
 constexpr cen::color _grid_color{200, 200, 200, 40};
+
+constinit std::optional<float> _view_width;
+constinit std::optional<float> _view_height;
 
 void _update_viewport_offset(const entt::entity tilesetEntity,
                              entt::dispatcher& dispatcher,
@@ -60,7 +63,10 @@ void _update_viewport_offset(const entt::entity tilesetEntity,
   }
 }
 
-void _render_selection(const Region& selection, const ImVec2& min, const ImVec2& tileSize)
+void _render_selection(GraphicsCtx& graphics,
+                       const Region& selection,
+                       const ImVec2& min,
+                       const ImVec2& tileSize)
 {
   const auto diff = selection.end - selection.begin;
 
@@ -70,9 +76,8 @@ void _render_selection(const Region& selection, const ImVec2& min, const ImVec2&
   const ImVec2 size{static_cast<float>(diff.col()) * tileSize.x,
                     static_cast<float>(diff.row()) * tileSize.y};
 
-  ImGui::GetWindowDrawList()->AddRectFilled(min + origin,
-                                            min + origin + size,
-                                            _rubber_band_color);
+  graphics.set_draw_color(_rubber_band_color);
+  graphics.fill_rect(min + origin, size);
 }
 
 void _render_tileset_image(GraphicsCtx& graphics,
@@ -93,9 +98,9 @@ void update_tileset_view(const entt::registry& registry,
   const auto& tileset = registry.get<comp::Tileset>(tilesetEntity);
   const auto& viewport = registry.get<Viewport>(tilesetEntity);
 
-  //  const auto region = ImGui::GetContentRegionAvail();
-  //  mWidth = region.x;
-  //  mHeight = region.y;
+  const auto region = ImGui::GetContentRegionAvail();
+  _view_width = region.x;
+  _view_height = region.y;
 
   const auto info = get_render_info(viewport, tileset);
   _update_viewport_offset(tilesetEntity, dispatcher, info.canvas_br - info.canvas_tl);
@@ -119,7 +124,7 @@ void update_tileset_view(const entt::registry& registry,
 
   if (const auto& selection = registry.get<comp::TilesetSelection>(tilesetEntity);
       selection.region) {
-    _render_selection(*selection.region, position, tileSize);
+    _render_selection(graphics, *selection.region, position, tileSize);
   }
 
   graphics.set_line_thickness(1);
@@ -127,6 +132,16 @@ void update_tileset_view(const entt::registry& registry,
   graphics.render_translated_grid();
 
   graphics.pop_clip();
+}
+
+auto get_tileset_view_width() -> std::optional<float>
+{
+  return _view_width;
+}
+
+auto get_tileset_view_height() -> std::optional<float>
+{
+  return _view_height;
 }
 
 }  // namespace tactile

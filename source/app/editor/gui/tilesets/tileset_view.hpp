@@ -31,4 +31,8 @@ void update_tileset_view(const entt::registry& registry,
                          entt::entity tilesetEntity,
                          entt::dispatcher& dispatcher);
 
+[[nodiscard]] auto get_tileset_view_width() -> std::optional<float>;
+
+[[nodiscard]] auto get_tileset_view_height() -> std::optional<float>;
+
 }  // namespace tactile

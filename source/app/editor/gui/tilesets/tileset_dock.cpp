@@ -65,7 +65,7 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
 
   auto& state = _get_state();
   state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
-  state.is_hovered = dock.current_window_contains_mouse();
+  state.is_hovered = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
     const auto& registry = model.get_active_registry();
