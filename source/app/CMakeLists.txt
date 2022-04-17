@@ -116,12 +116,7 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <functional>
 
                           <centurion.hpp>
-                          <entt/entt.hpp>
                           <imgui.h>
-                          <fmt/format.h>
-                          <yaml-cpp/yaml.h>
-                          <nlohmann/json.hpp>
-                          <pugixml.hpp>
                           )
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
