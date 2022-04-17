@@ -19,9 +19,9 @@
 
 #include "tile_layer_system.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
-#include "layer_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::sys {

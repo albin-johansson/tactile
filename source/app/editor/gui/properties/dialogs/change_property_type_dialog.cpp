@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/events/property_events.hpp"

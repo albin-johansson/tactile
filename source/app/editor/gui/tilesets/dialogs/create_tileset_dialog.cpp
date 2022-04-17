@@ -19,6 +19,7 @@
 
 #include "create_tileset_dialog.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/utils/buffers.hpp"

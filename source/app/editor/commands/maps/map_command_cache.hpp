@@ -22,7 +22,7 @@
 #include <functional>  // less
 #include <map>         // map
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/tile_pos.hpp"
 #include "tactile.hpp"

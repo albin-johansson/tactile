@@ -24,7 +24,7 @@
 #include <optional>    // optional
 
 #include <boost/container/flat_map.hpp>
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "document.hpp"
 #include "events/command_events.hpp"

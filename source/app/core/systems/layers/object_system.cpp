@@ -23,7 +23,7 @@
 #include <string>    // string
 #include <utility>   // move
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"

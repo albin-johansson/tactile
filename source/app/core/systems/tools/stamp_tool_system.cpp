@@ -21,7 +21,8 @@
 
 #include <utility>  // move
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 
 #include "core/common/tile_cache.hpp"
 #include "core/components/layers.hpp"

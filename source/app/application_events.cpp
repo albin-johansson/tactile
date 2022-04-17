@@ -19,6 +19,8 @@
 
 #include "application_events.hpp"
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "application.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"

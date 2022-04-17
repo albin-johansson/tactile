@@ -21,13 +21,13 @@
 
 #include <utility>  // move
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
-#include "component_system.hpp"
+#include "core/systems/component_system.hpp"
+#include "core/systems/property_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 #include "misc/throw.hpp"
-#include "property_system.hpp"
-#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {

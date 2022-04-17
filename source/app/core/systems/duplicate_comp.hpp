@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry, entity
+#include <entt/entity/registry.hpp>
 
-#include "context_system.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
 #include "core/map_info.hpp"
-#include "property_system.hpp"
+#include "core/systems/context_system.hpp"
+#include "core/systems/property_system.hpp"
 
 namespace tactile::sys {
 

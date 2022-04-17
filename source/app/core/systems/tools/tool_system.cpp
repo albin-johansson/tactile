@@ -19,16 +19,16 @@
 
 #include "tool_system.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
-#include "bucket_tool_system.hpp"
 #include "core/components/tools.hpp"
-#include "ellipse_tool_system.hpp"
-#include "eraser_tool_system.hpp"
-#include "object_selection_tool_system.hpp"
-#include "point_tool_system.hpp"
-#include "rectangle_tool_system.hpp"
-#include "stamp_tool_system.hpp"
+#include "core/systems/tools/bucket_tool_system.hpp"
+#include "core/systems/tools/ellipse_tool_system.hpp"
+#include "core/systems/tools/eraser_tool_system.hpp"
+#include "core/systems/tools/object_selection_tool_system.hpp"
+#include "core/systems/tools/point_tool_system.hpp"
+#include "core/systems/tools/rectangle_tool_system.hpp"
+#include "core/systems/tools/stamp_tool_system.hpp"
 
 namespace tactile::sys {
 

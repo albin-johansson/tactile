@@ -22,10 +22,10 @@
 #include <utility>  // move
 #include <vector>   // erase
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
-#include "registry_system.hpp"
 
 namespace tactile::sys {
 

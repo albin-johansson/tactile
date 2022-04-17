@@ -20,7 +20,7 @@
 #include "animation_system.hpp"
 
 #include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "core/components/animation.hpp"
 

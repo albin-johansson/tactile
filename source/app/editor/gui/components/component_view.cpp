@@ -21,7 +21,8 @@
 
 #include <utility>  // move
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"

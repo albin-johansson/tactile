@@ -19,7 +19,8 @@
 
 #include "point_tool_system.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"

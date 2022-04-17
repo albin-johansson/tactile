@@ -21,7 +21,8 @@
 
 #include <cmath>  // abs
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 
 #include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"

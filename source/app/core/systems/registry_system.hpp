@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "misc/throw.hpp"
 

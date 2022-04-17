@@ -21,7 +21,7 @@
 
 #include <variant>  // get
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 #include <fmt/format.h>
 
 #include "core/components/animation.hpp"

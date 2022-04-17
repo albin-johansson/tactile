@@ -21,7 +21,7 @@
 
 #include <filesystem>  // path
 
-#include <entt/entt.hpp>  // registry
+#include <entt/entt.hpp>
 
 #include "editor/commands/command_stack.hpp"
 

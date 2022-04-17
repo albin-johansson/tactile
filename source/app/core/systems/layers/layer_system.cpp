@@ -23,7 +23,7 @@
 #include <utility>    // move, swap
 #include <vector>     // erase
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 #include <fmt/format.h>
 
 #include "core/components/attributes.hpp"
@@ -31,12 +31,12 @@
 #include "core/components/parent.hpp"
 #include "core/map_info.hpp"
 #include "core/systems/duplicate_comp.hpp"
+#include "core/systems/layers/layer_tree_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "core/utils/tiles.hpp"
-#include "layer_tree_system.hpp"
 #include "misc/assert.hpp"
-#include "tile_layer_system.hpp"
 
 namespace tactile::sys {
 namespace {

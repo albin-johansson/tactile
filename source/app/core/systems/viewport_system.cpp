@@ -23,13 +23,13 @@
 #include <cmath>      // round
 #include <utility>    // pair
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "core/components/texture.hpp"
 #include "core/components/viewport.hpp"
 #include "core/map_info.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
-#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
