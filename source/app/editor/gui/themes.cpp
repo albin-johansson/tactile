@@ -149,40 +149,40 @@ void _apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 auto human_readable_name(const EditorTheme theme) -> std::string_view
 {
   switch (theme) {
-    case EditorTheme::dear_dark:
+    case EditorTheme::DearDark:
       return "Dear Dark";
 
-    case EditorTheme::dear_light:
+    case EditorTheme::DearLight:
       return "Dear Light";
 
-    case EditorTheme::ruby:
+    case EditorTheme::Ruby:
       return "Ruby";
 
-    case EditorTheme::sapphire:
+    case EditorTheme::Sapphire:
       return "Sapphire";
 
-    case EditorTheme::emerald:
+    case EditorTheme::Emerald:
       return "Emerald";
 
-    case EditorTheme::amethyst:
+    case EditorTheme::Amethyst:
       return "Amethyst";
 
-    case EditorTheme::amber:
+    case EditorTheme::Amber:
       return "Amber";
 
-    case EditorTheme::nocturnal:
+    case EditorTheme::Nocturnal:
       return "Nocturnal";
 
-    case EditorTheme::ash:
+    case EditorTheme::Ash:
       return "Ash";
 
-    case EditorTheme::diamond:
+    case EditorTheme::Diamond:
       return "Diamond";
 
-    case EditorTheme::joker:
+    case EditorTheme::Joker:
       return "Joker";
 
-    case EditorTheme::raspberry:
+    case EditorTheme::Raspberry:
       return "Raspberry";
 
     default:
@@ -220,47 +220,47 @@ void apply_style(ImGuiStyle& style)
 void apply_theme(ImGuiStyle& style, const EditorTheme theme)
 {
   switch (theme) {
-    case EditorTheme::dear_dark:
+    case EditorTheme::DearDark:
       ImGui::StyleColorsDark(&style);
       break;
 
-    case EditorTheme::dear_light:
+    case EditorTheme::DearLight:
       ImGui::StyleColorsLight(&style);
       break;
 
-    case EditorTheme::ruby:
+    case EditorTheme::Ruby:
       _apply_theme_from_config(style, _theme_from_hue(0));
       break;
 
-    case EditorTheme::emerald:
+    case EditorTheme::Emerald:
       _apply_theme_from_config(style, _theme_from_hue(100));
       break;
 
-    case EditorTheme::diamond:
+    case EditorTheme::Diamond:
       _apply_theme_from_config(style, _theme_from_hue(120));
       break;
 
-    case EditorTheme::sapphire:
+    case EditorTheme::Sapphire:
       _apply_theme_from_config(style, _theme_from_hue(150));
       break;
 
-    case EditorTheme::joker:
+    case EditorTheme::Joker:
       _apply_theme_from_config(style, _theme_from_hue(190));
       break;
 
-    case EditorTheme::amethyst:
+    case EditorTheme::Amethyst:
       _apply_theme_from_config(style, _theme_from_hue(225));
       break;
 
-    case EditorTheme::raspberry:
+    case EditorTheme::Raspberry:
       _apply_theme_from_config(style, _theme_from_hue(245));
       break;
 
-    case EditorTheme::amber:
+    case EditorTheme::Amber:
       _apply_theme_from_config(style, _theme_from_hue(272));
       break;
 
-    case EditorTheme::nocturnal:
+    case EditorTheme::Nocturnal:
       _apply_theme_from_config(style,
                                {.accent = {0.0f, 0.5f, 0.5f, _accent_opacity},
                                 .selection = {0.0f, 0.6f, 0.6f, 0.9f},
@@ -269,7 +269,7 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
                                 .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
-    case EditorTheme::ash:
+    case EditorTheme::Ash:
       _apply_theme_from_config(style,
                                {.accent = {0.4f, 0.4f, 0.4f, _accent_opacity},
                                 .selection = {0.5f, 0.5f, 0.5f, 0.9f},

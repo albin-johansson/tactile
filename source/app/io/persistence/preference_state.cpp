@@ -33,7 +33,7 @@
 namespace tactile {
 namespace {
 
-constexpr EditorTheme _def_theme = EditorTheme::nocturnal;
+constexpr EditorTheme _def_theme = EditorTheme::Nocturnal;
 constexpr cen::color _def_viewport_bg{60, 60, 60};
 
 constexpr auto _def_preferred_format = "YAML";
@@ -41,7 +41,7 @@ constexpr auto _def_preferred_format = "YAML";
 constexpr usize _def_command_capacity = 100;
 constexpr int32 _def_preferred_tile_width = 32;
 constexpr int32 _def_preferred_tile_height = 32;
-constexpr int32 _def_viewport_overlay_pos = to_underlying(OverlayPos::bottom_left);
+constexpr int32 _def_viewport_overlay_pos = to_underlying(OverlayPos::BottomLeft);
 
 constexpr uint64 _bit_embed_tilesets = 1u << 0u;
 constexpr uint64 _bit_indent_output = 1u << 1u;
