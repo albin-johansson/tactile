@@ -96,7 +96,7 @@ void update_tileset_view(const entt::registry& registry,
                          entt::dispatcher& dispatcher)
 {
   const auto& tileset = registry.get<comp::Tileset>(tilesetEntity);
-  const auto& viewport = registry.get<Viewport>(tilesetEntity);
+  const auto& viewport = registry.get<comp::Viewport>(tilesetEntity);
 
   const auto region = ImGui::GetContentRegionAvail();
   _view_width = region.x;

@@ -19,14 +19,50 @@
 
 #pragma once
 
-namespace tactile::comp {
+namespace tactile {
 
-struct Viewport final
-{
-  float x_offset{};
-  float y_offset{};
-  float tile_width{};
-  float tile_height{};
-};
+struct MouseInfo;
+struct Region;
 
-}  // namespace tactile::comp
+class Attribute;
+class TextureManager;
+class TilePos;
+
+namespace comp {
+
+struct ActiveAttributeContext;
+struct ActiveLayer;
+struct ActiveObject;
+struct ActiveTileset;
+struct ActiveTool;
+
+struct CurrentRectangleStroke;
+struct CurrentEllipseStroke;
+
+struct AnimationFrame;
+struct Animation;
+struct Viewport;
+struct Parent;
+
+struct AttributeContext;
+struct Property;
+struct ComponentDef;
+struct Component;
+
+struct Layer;
+struct TileLayer;
+struct ObjectLayer;
+struct GroupLayer;
+struct LayerTreeNode;
+struct Object;
+struct ObjectDragInfo;
+
+struct Texture;
+struct TilesetContext;
+struct Tileset;
+struct TilesetCache;
+struct UvTileSize;
+struct MetaTile;
+
+}  // namespace comp
+}  // namespace tactile

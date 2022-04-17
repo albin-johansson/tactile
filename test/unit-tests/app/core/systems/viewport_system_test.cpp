@@ -17,7 +17,7 @@ class ViewportSystemTest : public testing::Test
 
 TEST_F(ViewportSystemTest, OffsetViewport)
 {
-  const auto& viewport = mRegistry.ctx<Viewport>();
+  const auto& viewport = mRegistry.ctx<comp::Viewport>();
   ASSERT_EQ(0, viewport.x_offset);
   ASSERT_EQ(0, viewport.y_offset);
 
@@ -32,7 +32,7 @@ TEST_F(ViewportSystemTest, OffsetViewport)
 
 TEST_F(ViewportSystemTest, PanViewportLeft)
 {
-  const auto& viewport = mRegistry.ctx<Viewport>();
+  const auto& viewport = mRegistry.ctx<comp::Viewport>();
   ASSERT_GT(viewport.tile_width, 0);
   ASSERT_GT(viewport.tile_height, 0);
 
@@ -43,7 +43,7 @@ TEST_F(ViewportSystemTest, PanViewportLeft)
 
 TEST_F(ViewportSystemTest, PanViewportRight)
 {
-  const auto& viewport = mRegistry.ctx<Viewport>();
+  const auto& viewport = mRegistry.ctx<comp::Viewport>();
   ASSERT_GT(viewport.tile_width, 0);
   ASSERT_GT(viewport.tile_height, 0);
 
@@ -54,7 +54,7 @@ TEST_F(ViewportSystemTest, PanViewportRight)
 
 TEST_F(ViewportSystemTest, PanViewportUp)
 {
-  const auto& viewport = mRegistry.ctx<Viewport>();
+  const auto& viewport = mRegistry.ctx<comp::Viewport>();
   ASSERT_GT(viewport.tile_width, 0);
   ASSERT_GT(viewport.tile_height, 0);
 
@@ -65,7 +65,7 @@ TEST_F(ViewportSystemTest, PanViewportUp)
 
 TEST_F(ViewportSystemTest, PanViewportDown)
 {
-  const auto& viewport = mRegistry.ctx<Viewport>();
+  const auto& viewport = mRegistry.ctx<comp::Viewport>();
   ASSERT_GT(viewport.tile_width, 0);
   ASSERT_GT(viewport.tile_height, 0);
 
@@ -76,7 +76,7 @@ TEST_F(ViewportSystemTest, PanViewportDown)
 
 TEST_F(ViewportSystemTest, DecreaseViewportZoom)
 {
-  const auto& viewport = mRegistry.ctx<Viewport>();
+  const auto& viewport = mRegistry.ctx<comp::Viewport>();
 
   const auto width = viewport.tile_width;
   const auto height = viewport.tile_height;

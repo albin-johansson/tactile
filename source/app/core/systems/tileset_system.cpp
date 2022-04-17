@@ -101,7 +101,7 @@ void add_viewport(entt::registry& registry,
                   const int32 tileWidth,
                   const int32 tileHeight)
 {
-  auto& viewport = registry.emplace<Viewport>(tilesetEntity);
+  auto& viewport = registry.emplace<comp::Viewport>(tilesetEntity);
   viewport.x_offset = 0;
   viewport.y_offset = 0;
   viewport.tile_width = static_cast<float>(tileWidth);

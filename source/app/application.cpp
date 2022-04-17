@@ -219,7 +219,7 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
   if (registry && !ImGui::GetTopMostPopupModal()) {
     if (is_mouse_within_viewport()) {
-      const auto& viewport = registry->ctx<Viewport>();
+      const auto& viewport = registry->ctx<comp::Viewport>();
       if (cen::is_active(primary_modifier)) {
         const auto y = event.precise_y();
         if (y > 0) {
@@ -242,7 +242,7 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
         const auto entity = sys::find_active_tileset(*registry);
         TACTILE_ASSERT(entity != entt::null);
 
-        const auto& viewport = sys::checked_get<Viewport>(*registry, entity);
+        const auto& viewport = sys::checked_get<comp::Viewport>(*registry, entity);
 
         const auto dx = event.precise_x() * (viewport.tile_width / scaling);
         const auto dy = event.precise_y() * (viewport.tile_height / scaling);

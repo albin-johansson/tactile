@@ -47,7 +47,7 @@ auto make_document_registry() -> entt::registry
   map.row_count = 5;
   map.column_count = 5;
 
-  auto& viewport = registry.set<Viewport>();
+  auto& viewport = registry.set<comp::Viewport>();
   viewport.tile_width = 64;
   viewport.tile_height = 64;
   viewport.x_offset = 0;

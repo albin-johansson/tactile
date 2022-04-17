@@ -83,7 +83,7 @@ void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, 
 }
 
 void _center_viewport(entt::dispatcher& dispatcher,
-                      const Viewport& viewport,
+                      const comp::Viewport& viewport,
                       const ImVec2& canvasSize,
                       const float nRows,
                       const float nCols)
@@ -195,7 +195,7 @@ void _update_context_menu([[maybe_unused]] const entt::registry& registry,
 void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto& viewport = registry.ctx<Viewport>();
+  const auto& viewport = registry.ctx<comp::Viewport>();
   const auto& map = registry.ctx<MapInfo>();
 
   const auto info = get_render_info(viewport, map);
