@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "core/algorithms/invoke_n.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/registry_system.hpp"
 
 using namespace tactile;

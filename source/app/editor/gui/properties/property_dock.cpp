@@ -30,7 +30,7 @@
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/tiles.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/registry_system.hpp"

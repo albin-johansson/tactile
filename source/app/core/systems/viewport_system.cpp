@@ -25,7 +25,7 @@
 
 #include "core/components/texture.hpp"
 #include "core/components/viewport.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "misc/assert.hpp"
 #include "registry_system.hpp"
 

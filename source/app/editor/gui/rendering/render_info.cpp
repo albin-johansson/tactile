@@ -25,7 +25,7 @@
 
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 
 namespace tactile {
 namespace {

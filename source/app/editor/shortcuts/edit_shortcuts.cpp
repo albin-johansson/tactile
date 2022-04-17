@@ -19,7 +19,7 @@
 
 #include "edit_shortcuts.hpp"
 
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/events/map_events.hpp"

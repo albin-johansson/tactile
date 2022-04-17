@@ -22,7 +22,7 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"

@@ -26,7 +26,7 @@
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "property_system.hpp"
 
 namespace tactile::sys {

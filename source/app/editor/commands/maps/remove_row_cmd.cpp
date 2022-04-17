@@ -20,7 +20,7 @@
 #include "remove_row_cmd.hpp"
 
 #include "core/algorithms/invoke_n.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/map_system.hpp"
 
 namespace tactile {

@@ -21,7 +21,7 @@
 
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layers.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/utils/sfinae.hpp"
 #include "core/utils/tiles.hpp"
 #include "layers/tile_layer_system.hpp"

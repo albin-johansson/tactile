@@ -28,7 +28,7 @@
 #include "core/components/attributes.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/registry_system.hpp"

@@ -26,7 +26,7 @@
 #include "core/components/parent.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/document.hpp"

@@ -26,7 +26,7 @@
 #include "context_system.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "misc/throw.hpp"
