@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "core/components/attributes.hpp"
-#include "core/systems/object_system.hpp"
+#include "core/systems/layers/object_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
