@@ -60,7 +60,7 @@ auto input_attribute(const char* id, const Attribute& value) -> std::optional<At
       break;
     }
     case AttributeType::Path: {
-      if (auto updated = input_file(id, value.as_path())) {
+      if (auto updated = input_path(id, value.as_path())) {
         return std::move(updated);
       }
       break;
@@ -219,7 +219,7 @@ auto input_color(const char* id, const cen::color value) -> std::optional<cen::c
   return std::nullopt;
 }
 
-auto input_file(const char* id, const std::filesystem::path& value)
+auto input_path(const char* id, const std::filesystem::path& value)
     -> std::optional<std::filesystem::path>
 {
   const scoped::Id scope{id};
@@ -236,14 +236,14 @@ auto input_file(const char* id, const std::filesystem::path& value)
   auto str = value.filename().string();
 
   ImGui::SetNextItemWidth(-min_float);
-  ImGui::InputTextWithHint("##input_file",
+  ImGui::InputTextWithHint("##input_path",
                            "N/A",
                            str.data(),
                            str.capacity(),
                            ImGuiInputTextFlags_ReadOnly);
 
   if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[file]");
+    ImGui::SetTooltip("[path]");
   }
 
   return std::nullopt;

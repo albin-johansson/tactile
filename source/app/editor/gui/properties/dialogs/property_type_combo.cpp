@@ -40,7 +40,7 @@ constexpr std::array _items{std::make_pair("string", AttributeType::String),
                             std::make_pair("bool", AttributeType::Bool),
                             std::make_pair("color", AttributeType::Color),
                             std::make_pair("object", AttributeType::Object),
-                            std::make_pair("file", AttributeType::Path)};
+                            std::make_pair("path", AttributeType::Path)};
 
 [[nodiscard]] auto _index_from_type(const AttributeType type) -> usize
 {
