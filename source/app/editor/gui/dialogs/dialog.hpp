@@ -41,7 +41,7 @@ class ADialog
    *
    * \param title the non-null title of the dialog.
    *
-   * \throws tactile_error if the title is null.
+   * \throws TactileError if the title is null.
    */
   explicit ADialog(const char* title);
 

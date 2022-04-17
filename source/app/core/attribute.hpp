@@ -56,7 +56,7 @@ enum class AttributeType
  *
  * \return the type name.
  *
- * \throws tactile_error if the type is invalid.
+ * \throws TactileError if the type is invalid.
  */
 [[nodiscard]] auto stringify(AttributeType type) -> const char*;
 
