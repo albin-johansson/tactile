@@ -21,8 +21,8 @@
 
 #include <boost/container/flat_map.hpp>
 
+#include "core/tile_pos.hpp"
 #include "tactile.hpp"
-#include "tile_pos.hpp"
 
 namespace tactile {
 

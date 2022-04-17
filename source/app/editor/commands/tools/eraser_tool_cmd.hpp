@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/tile_cache.hpp"
+#include "core/common/tile_cache.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
