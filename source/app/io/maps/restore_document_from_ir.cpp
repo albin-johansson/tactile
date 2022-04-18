@@ -132,11 +132,11 @@ auto _restore_layer(entt::registry& registry,
                     const ir::LayerData& layerData,
                     const entt::entity parent = entt::null) -> entt::entity
 {
-  const auto entity = sys::make_basic_layer(registry,  //
-                                            layerData.id,
-                                            layerData.type,
-                                            layerData.name,
-                                            parent);
+  const auto entity = sys::new_layer_skeleton(registry,  //
+                                              layerData.id,
+                                              layerData.type,
+                                              layerData.name,
+                                              parent);
 
   auto& node = registry.get<comp::LayerTreeNode>(entity);
   node.index = layerData.index;

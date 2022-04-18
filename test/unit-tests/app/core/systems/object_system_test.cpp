@@ -41,7 +41,7 @@ struct TestData final
 {
   TestData data{.registry = sys::make_document_registry()};
 
-  const auto layerEntity = sys::make_object_layer(data.registry);
+  const auto layerEntity = sys::new_object_layer(data.registry);
   const auto& layer = sys::checked_get<comp::Layer>(data.registry, layerEntity);
 
   data.layer_id = layer.id;

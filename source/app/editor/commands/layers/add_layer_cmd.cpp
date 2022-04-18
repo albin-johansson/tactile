@@ -53,15 +53,15 @@ void AddLayerCmd::redo()
     entt::entity entity{entt::null};
     switch (mLayerType) {
       case LayerType::TileLayer: {
-        entity = sys::make_tile_layer(registry);
+        entity = sys::new_tile_layer(registry);
         break;
       }
       case LayerType::ObjectLayer: {
-        entity = sys::make_object_layer(registry);
+        entity = sys::new_object_layer(registry);
         break;
       }
       case LayerType::GroupLayer: {
-        entity = sys::make_group_layer(registry);
+        entity = sys::new_group_layer(registry);
         break;
       }
     }

@@ -141,11 +141,11 @@ void _restore_layer_index(entt::registry& registry,
 
 }  // namespace
 
-auto make_basic_layer(entt::registry& registry,
-                      const LayerID id,
-                      const LayerType type,
-                      std::string name,
-                      const entt::entity parent) -> entt::entity
+auto new_layer_skeleton(entt::registry& registry,
+                        const LayerID id,
+                        const LayerType type,
+                        std::string name,
+                        const entt::entity parent) -> entt::entity
 {
   const auto entity = registry.create();
 
@@ -179,16 +179,16 @@ auto make_basic_layer(entt::registry& registry,
   return entity;
 }
 
-auto make_tile_layer(entt::registry& registry) -> entt::entity
+auto new_tile_layer(entt::registry& registry) -> entt::entity
 {
   auto& map = registry.ctx<MapInfo>();
 
   const auto entity =
-      make_basic_layer(registry,
-                       map.next_layer_id,
-                       LayerType::TileLayer,
-                       fmt::format("Tile Layer {}", map.tile_layer_suffix),
-                       _new_layer_parent(registry));
+      new_layer_skeleton(registry,
+                         map.next_layer_id,
+                         LayerType::TileLayer,
+                         fmt::format("Tile Layer {}", map.tile_layer_suffix),
+                         _new_layer_parent(registry));
   ++map.next_layer_id;
   ++map.tile_layer_suffix;
 
@@ -198,16 +198,16 @@ auto make_tile_layer(entt::registry& registry) -> entt::entity
   return entity;
 }
 
-auto make_object_layer(entt::registry& registry) -> entt::entity
+auto new_object_layer(entt::registry& registry) -> entt::entity
 {
   auto& map = registry.ctx<MapInfo>();
 
   const auto entity =
-      make_basic_layer(registry,
-                       map.next_layer_id,
-                       LayerType::ObjectLayer,
-                       fmt::format("Object Layer {}", map.object_layer_suffix),
-                       _new_layer_parent(registry));
+      new_layer_skeleton(registry,
+                         map.next_layer_id,
+                         LayerType::ObjectLayer,
+                         fmt::format("Object Layer {}", map.object_layer_suffix),
+                         _new_layer_parent(registry));
   ++map.next_layer_id;
   ++map.object_layer_suffix;
 
@@ -216,16 +216,16 @@ auto make_object_layer(entt::registry& registry) -> entt::entity
   return entity;
 }
 
-auto make_group_layer(entt::registry& registry) -> entt::entity
+auto new_group_layer(entt::registry& registry) -> entt::entity
 {
   auto& map = registry.ctx<MapInfo>();
 
   const auto entity =
-      make_basic_layer(registry,
-                       map.next_layer_id,
-                       LayerType::GroupLayer,
-                       fmt::format("Group Layer {}", map.group_layer_suffix),
-                       _new_layer_parent(registry));
+      new_layer_skeleton(registry,
+                         map.next_layer_id,
+                         LayerType::GroupLayer,
+                         fmt::format("Group Layer {}", map.group_layer_suffix),
+                         _new_layer_parent(registry));
   ++map.next_layer_id;
   ++map.group_layer_suffix;
 
@@ -261,11 +261,11 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
     parent = find_layer(registry, *snapshot.parent);
   }
 
-  const auto entity = make_basic_layer(registry,
-                                       snapshot.core.id,
-                                       snapshot.core.type,
-                                       snapshot.context.name,
-                                       parent);
+  const auto entity = new_layer_skeleton(registry,
+                                         snapshot.core.id,
+                                         snapshot.core.type,
+                                         snapshot.context.name,
+                                         parent);
 
   {
     auto& layer = checked_get<comp::Layer>(registry, entity);

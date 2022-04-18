@@ -43,7 +43,11 @@ namespace tactile::sys {
 /**
  * \brief Creates a basic layer entity.
  *
- * \pre `parent` must either be associated with a group layer or be null.
+ * \details This function is used internally by the other layer factory functions, and
+ * does not produce ready-to-use layer entities. The purpose of exposing this function is
+ * to make restoring documents post-parsing easier.
+ *
+ * \pre `parent` is either a group layer or null.
  *
  * \details The created entity will feature the following components:
  * - `AttributeContext`
@@ -55,15 +59,15 @@ namespace tactile::sys {
  * \param id the unique identifier associated with the layer.
  * \param type the specific layer type.
  * \param name the name of the layer.
- * \param parent the parent layer entity, can safely be a null entity.
+ * \param parent the parent layer entity, can safely be null.
  *
  * \return the created layer entity.
  */
-auto make_basic_layer(entt::registry& registry,
-                      LayerID id,
-                      LayerType type,
-                      std::string name,
-                      entt::entity parent = entt::null) -> entt::entity;
+auto new_layer_skeleton(entt::registry& registry,
+                        LayerID id,
+                        LayerType type,
+                        std::string name,
+                        entt::entity parent = entt::null) -> entt::entity;
 
 /**
  * \brief Creates a tile layer entity.
@@ -73,17 +77,16 @@ auto make_basic_layer(entt::registry& registry,
  *
  * \details The created entity will feature the following components:
  * - `Layer`
+ * - `LayerTreeNode`
  * - `TileLayer`
  * - `Parent`
  * - `AttributeContext`
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
  *
- * \return the created tile layer entity.
- *
- * \since 0.2.0
+ * \return the created entity.
  */
-auto make_tile_layer(entt::registry& registry) -> entt::entity;
+auto new_tile_layer(entt::registry& registry) -> entt::entity;
 
 /**
  * \brief Creates an object layer entity.
@@ -93,17 +96,16 @@ auto make_tile_layer(entt::registry& registry) -> entt::entity;
  *
  * \details The created entity will feature the following components:
  * - `Layer`
+ * - `LayerTreeNode`
  * - `ObjectLayer`
  * - `Parent`
  * - `AttributeContext`
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
  *
- * \return the created object layer entity.
- *
- * \since 0.2.0
+ * \return the created entity.
  */
-auto make_object_layer(entt::registry& registry) -> entt::entity;
+auto new_object_layer(entt::registry& registry) -> entt::entity;
 
 /**
  * \brief Creates a group layer entity.
@@ -113,15 +115,16 @@ auto make_object_layer(entt::registry& registry) -> entt::entity;
  *
  * \details The created entity will feature the following components:
  * - `Layer`
+ * - `LayerTreeNode`
  * - `GroupLayer`
  * - `Parent`
  * - `AttributeContext`
  *
- * \param registry a map registry.
+ * \param registry the document registry.
  *
- * \return the created group layer entity.
+ * \return the created entity.
  */
-auto make_group_layer(entt::registry& registry) -> entt::entity;
+auto new_group_layer(entt::registry& registry) -> entt::entity;
 
 /**
  * \brief Removes the layer associated with the specified ID.
