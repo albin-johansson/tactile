@@ -128,7 +128,6 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <variant>
                           <vector>
 
-                          <centurion.hpp>
                           <imgui.h>
                           )
 
