@@ -66,10 +66,11 @@ void _update_layer_item_popup(const entt::registry& registry,
                               const LayerID id)
 {
   if (auto popup = scoped::Popup::for_item("##LayerItemPopup"); popup.is_open()) {
-    const auto& [entity, layer] = sys::get_layer(registry, id);
+    const auto layerEntity = sys::get_layer(registry, id);
+    const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
-      dispatcher.enqueue<InspectContextEvent>(entity);
+      dispatcher.enqueue<InspectContextEvent>(layerEntity);
     }
 
     ImGui::Separator();
@@ -102,14 +103,14 @@ void _update_layer_item_popup(const entt::registry& registry,
     if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move Layer Up",
                         nullptr,
                         false,
-                        sys::can_move_layer_up(registry, entity))) {
+                        sys::can_move_layer_up(registry, layerEntity))) {
       dispatcher.enqueue<MoveLayerUpEvent>(id);
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move Layer Down",
                         nullptr,
                         false,
-                        sys::can_move_layer_down(registry, entity))) {
+                        sys::can_move_layer_down(registry, layerEntity))) {
       dispatcher.enqueue<MoveLayerDownEvent>(id);
     }
   }

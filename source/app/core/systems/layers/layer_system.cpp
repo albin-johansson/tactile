@@ -391,9 +391,8 @@ auto duplicate_layer(entt::registry& registry,
 
 void select_layer(entt::registry& registry, const LayerID id)
 {
-  const auto& [layerEntity, layer] = get_layer(registry, id);
   auto& active = registry.ctx<comp::ActiveLayer>();
-  active.entity = layerEntity;
+  active.entity = get_layer(registry, id);
 }
 
 auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entity
@@ -418,24 +417,12 @@ auto get_layer_entity(const entt::registry& registry, const LayerID id) -> entt:
   }
 }
 
-auto get_layer(entt::registry& registry, const LayerID id)
-    -> std::pair<entt::entity, comp::Layer&>
+auto get_layer(const entt::registry& registry, const LayerID id) -> entt::entity
 {
   const auto entity = find_layer(registry, id);
-  if (entity != entt::null && registry.all_of<comp::Layer>(entity)) {
-    return {entity, checked_get<comp::Layer>(registry, entity)};
-  }
-  else {
-    panic("Invalid layer identifier!");
-  }
-}
-
-auto get_layer(const entt::registry& registry, const LayerID id)
-    -> std::pair<entt::entity, const comp::Layer&>
-{
-  const auto entity = find_layer(registry, id);
-  if (entity != entt::null && registry.all_of<comp::Layer>(entity)) {
-    return {entity, checked_get<comp::Layer>(registry, entity)};
+  if (entity != entt::null) {
+    TACTILE_ASSERT(registry.all_of<comp::Layer>(entity));
+    return entity;
   }
   else {
     panic("Invalid layer identifier!");

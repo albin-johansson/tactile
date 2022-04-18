@@ -175,14 +175,20 @@ void select_layer(entt::registry& registry, LayerID id);
  */
 [[nodiscard]] auto find_layer(const entt::registry& registry, LayerID id) -> entt::entity;
 
-[[nodiscard]] auto get_layer_entity(const entt::registry& registry, LayerID id)
-    -> entt::entity;
+[[nodiscard, deprecated]] auto get_layer_entity(const entt::registry& registry,
+                                                LayerID id) -> entt::entity;
 
-[[nodiscard]] auto get_layer(entt::registry& registry, LayerID id)
-    -> std::pair<entt::entity, comp::Layer&>;
-
-[[nodiscard]] auto get_layer(const entt::registry& registry, LayerID id)
-    -> std::pair<entt::entity, const comp::Layer&>;
+/**
+ * \brief Returns the layer entity associated with a layer ID.
+ *
+ * \param registry the document registry.
+ * \param id the ID associated with the desired layer.
+ *
+ * \return a layer entity.
+ *
+ * \throws TactileError if the ID is invalid.
+ */
+[[nodiscard]] auto get_layer(const entt::registry& registry, LayerID id) -> entt::entity;
 
 [[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;
 

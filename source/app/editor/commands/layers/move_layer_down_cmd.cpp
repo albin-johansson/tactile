@@ -33,15 +33,15 @@ MoveLayerDownCmd::MoveLayerDownCmd(RegistryRef registry, const LayerID id)
 void MoveLayerDownCmd::undo()
 {
   auto& registry = mRegistry.get();
-  auto&& [entity, layer] = sys::get_layer(registry, mLayerId);
-  sys::move_layer_up(registry, entity);
+  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  sys::move_layer_up(registry, layerEntity);
 }
 
 void MoveLayerDownCmd::redo()
 {
   auto& registry = mRegistry.get();
-  auto&& [entity, layer] = sys::get_layer(registry, mLayerId);
-  sys::move_layer_down(registry, entity);
+  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  sys::move_layer_down(registry, layerEntity);
 }
 
 }  // namespace tactile
