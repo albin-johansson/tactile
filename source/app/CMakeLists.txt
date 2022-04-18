@@ -101,19 +101,32 @@ tactile_set_compile_options(${TACTILE_LIB})
 tactile_set_compile_options(${TACTILE_EXE})
 
 target_precompile_headers(${TACTILE_LIB} PRIVATE
-                          <cstdint>
-                          <cstddef>
-                          <memory>
-                          <utility>
+                          <algorithm>
                           <array>
-                          <vector>
+                          <charconv>
+                          <concepts>
+                          <cstddef>
+                          <cstdint>
+                          <cstring>
+                          <cstdlib>
+                          <cmath>
+                          <filesystem>
+                          <fstream>
+                          <functional>
+                          <limits>
                           <map>
-                          <unordered_map>
-                          <variant>
+                          <memory>
+                          <optional>
+                          <random>
+                          <span>
                           <string>
                           <string_view>
-                          <concepts>
-                          <functional>
+                          <system_error>
+                          <type_traits>
+                          <unordered_map>
+                          <utility>
+                          <variant>
+                          <vector>
 
                           <centurion.hpp>
                           <imgui.h>
