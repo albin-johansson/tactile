@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <centurion.hpp>
+#include <centurion/opengl.hpp>
+#include <centurion/window.hpp>
 
 #include "tactile.hpp"
 

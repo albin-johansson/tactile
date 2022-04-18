@@ -22,7 +22,7 @@
 #include <algorithm>  // max, min
 #include <cmath>      // fmod
 
-#include <centurion.hpp>
+#include <centurion/math.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 

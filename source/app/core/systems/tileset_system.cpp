@@ -22,6 +22,7 @@
 #include <unordered_map>  // unordered_map
 #include <utility>        // move
 
+#include <centurion/math.hpp>
 #include <entt/entity/registry.hpp>
 
 #include "core/components/animation.hpp"

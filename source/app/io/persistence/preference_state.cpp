@@ -23,6 +23,7 @@
 #include <ios>      // ios
 #include <utility>  // move
 
+#include <centurion/color.hpp>
 #include <magic_enum.hpp>
 
 #include "cfg/fonts.hpp"

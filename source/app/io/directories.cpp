@@ -19,7 +19,7 @@
 
 #include "directories.hpp"
 
-#include <centurion.hpp>
+#include <centurion/filesystem.hpp>
 
 #include "misc/assert.hpp"
 

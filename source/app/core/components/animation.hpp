@@ -21,7 +21,7 @@
 
 #include <vector>  // vector
 
-#include <centurion.hpp>
+#include <centurion/common.hpp>
 #include <entt/entity/entity.hpp>
 
 #include "tactile.hpp"

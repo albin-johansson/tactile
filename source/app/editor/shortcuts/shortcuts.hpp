@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <centurion.hpp>
+#include <centurion/fwd.hpp>
 #include <entt/fwd.hpp>
 
 #include "editor/fwd.hpp"

@@ -24,7 +24,7 @@
 #include <string>      // string
 #include <utility>     // move
 
-#include <centurion.hpp>
+#include <centurion/color.hpp>
 
 #include "io/maps/xml_utils.hpp"
 #include "misc/assert.hpp"

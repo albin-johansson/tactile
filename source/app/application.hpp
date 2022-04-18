@@ -21,7 +21,7 @@
 
 #include <memory>  // unique_ptr
 
-#include <centurion.hpp>
+#include <centurion/event.hpp>
 #include <entt/fwd.hpp>
 
 #include "editor/events/command_events.hpp"

@@ -26,7 +26,7 @@
 #include <utility>     // move
 #include <variant>     // variant, get, get_if, holds_alternative
 
-#include <centurion.hpp>
+#include <centurion/color.hpp>
 
 #include "tactile.hpp"
 

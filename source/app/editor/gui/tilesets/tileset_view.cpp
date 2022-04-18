@@ -19,7 +19,7 @@
 
 #include "tileset_view.hpp"
 
-#include <centurion.hpp>
+#include <centurion/color.hpp>
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <centurion.hpp>
+#include <centurion/mouse.hpp>
 #include <entt/fwd.hpp>
 
 #include "editor/gui/rendering/render_info.hpp"

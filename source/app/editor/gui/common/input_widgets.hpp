@@ -23,7 +23,7 @@
 #include <optional>    // optional
 #include <string>      // string
 
-#include <centurion.hpp>
+#include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "core/attribute.hpp"

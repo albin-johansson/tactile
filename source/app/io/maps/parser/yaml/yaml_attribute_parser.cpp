@@ -25,7 +25,7 @@
 #include <string_view>  // string_view
 #include <utility>      // move
 
-#include <centurion.hpp>
+#include <centurion/color.hpp>
 
 namespace tactile::parsing {
 namespace {

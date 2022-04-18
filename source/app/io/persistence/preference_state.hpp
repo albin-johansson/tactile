@@ -24,7 +24,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <centurion.hpp>
+#include <centurion/fwd.hpp>
 
 #include "editor/gui/themes.hpp"
 #include "tactile.hpp"

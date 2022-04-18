@@ -20,10 +20,10 @@
 #include "imgui_context.hpp"
 
 #include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl.h>
 
 #include "editor/gui/themes.hpp"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_sdl.h"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"

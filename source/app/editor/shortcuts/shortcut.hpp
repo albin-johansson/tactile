@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <centurion.hpp>
+#include <centurion/event.hpp>
+#include <centurion/keyboard.hpp>
 #include <entt/fwd.hpp>
 
 #include "editor/fwd.hpp"

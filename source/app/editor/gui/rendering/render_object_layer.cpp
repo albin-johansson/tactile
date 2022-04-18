@@ -21,6 +21,7 @@
 
 #include <algorithm>  // min
 
+#include <centurion/color.hpp>
 #include <entt/entity/registry.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>

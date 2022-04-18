@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <centurion.hpp>
+#include <centurion/color.hpp>
+#include <centurion/math.hpp>
 #include <imgui.h>
 
 #include "core/region.hpp"
