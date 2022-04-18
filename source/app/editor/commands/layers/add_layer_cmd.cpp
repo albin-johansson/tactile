@@ -21,6 +21,7 @@
 
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -67,7 +68,7 @@ void AddLayerCmd::redo()
     }
 
     TACTILE_ASSERT(entity != entt::null);
-    mLayerId = registry.get<comp::Layer>(entity).id;
+    mLayerId = sys::checked_get<comp::Layer>(registry, entity).id;
 
     sys::sort_layers(registry);
   }

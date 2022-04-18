@@ -25,6 +25,7 @@
 
 #include "core/components/attributes.hpp"
 #include "core/components/tiles.hpp"
+#include "core/systems/registry_system.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
@@ -84,7 +85,7 @@ void update_tileset_tabs(const entt::registry& registry, entt::dispatcher& dispa
       const scoped::Id scope{tileset.id};
 
       const auto isActive = activeTileset.entity == entity;
-      const auto& context = registry.get<comp::AttributeContext>(entity);
+      const auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
 
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(),

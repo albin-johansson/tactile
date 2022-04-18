@@ -29,6 +29,7 @@
 #include "core/components/tools.hpp"
 #include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "editor/events/map_events.hpp"
@@ -244,7 +245,7 @@ void update_map_view_object_context_menu(const entt::registry& registry,
     const auto active = registry.ctx<comp::ActiveObject>();
 
     TACTILE_ASSERT(active.entity != entt::null);
-    const auto& object = registry.get<comp::Object>(active.entity);
+    const auto& object = sys::checked_get<comp::Object>(registry, active.entity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
       dispatcher.enqueue<InspectContextEvent>(active.entity);

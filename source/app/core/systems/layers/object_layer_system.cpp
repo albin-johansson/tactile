@@ -113,7 +113,7 @@ auto find_object(const entt::registry& registry,
   const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
   for (const auto objectEntity : layer.objects) {
-    const auto& object = registry.get<comp::Object>(objectEntity);
+    const auto& object = checked_get<comp::Object>(registry, objectEntity);
     const auto bounds = _get_hit_detection_bounds(object,
                                                   static_cast<float>(map.tile_width),
                                                   static_cast<float>(map.tile_height),

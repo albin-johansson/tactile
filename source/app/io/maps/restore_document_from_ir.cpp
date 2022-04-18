@@ -79,7 +79,7 @@ void _restore_components(entt::registry& registry,
     const auto componentEntity = registry.create();
     context.components.push_back(componentEntity);
 
-    const auto& def = registry.get<comp::ComponentDef>(defEntity);
+    const auto& def = sys::checked_get<comp::ComponentDef>(registry, defEntity);
     auto& component = registry.emplace<comp::Component>(componentEntity);
     component.type = def.id;
 
@@ -138,10 +138,10 @@ auto _restore_layer(entt::registry& registry,
                                               layerData.name,
                                               parent);
 
-  auto& node = registry.get<comp::LayerTreeNode>(entity);
+  auto& node = sys::checked_get<comp::LayerTreeNode>(registry, entity);
   node.index = layerData.index;
 
-  auto& layer = registry.get<comp::Layer>(entity);
+  auto& layer = sys::checked_get<comp::Layer>(registry, entity);
   layer.opacity = layerData.opacity;
   layer.visible = layerData.visible;
 
@@ -263,9 +263,9 @@ void _restore_tileset(entt::registry& registry,
                                         tilesetData.tile_width,
                                         tilesetData.tile_height);
 
-  registry.get<comp::AttributeContext>(entity).name = tilesetData.name;
+  sys::checked_get<comp::AttributeContext>(registry, entity).name = tilesetData.name;
 
-  auto& cache = registry.get<comp::TilesetCache>(entity);
+  auto& cache = sys::checked_get<comp::TilesetCache>(registry, entity);
   _restore_fancy_tiles(registry, cache, tilesetData);
 
   _restore_properties(registry, entity, tilesetData.context);

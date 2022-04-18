@@ -134,7 +134,7 @@ void _show_group_layer_item(const entt::registry& registry,
 
     _update_layer_item_popup(registry, dispatcher, layer.id);
 
-    const auto& node = registry.get<comp::LayerTreeNode>(layerEntity);
+    const auto& node = sys::checked_get<comp::LayerTreeNode>(registry, layerEntity);
     for (const auto child : node.children) {
       layer_item_view(registry, dispatcher, child);
     }
