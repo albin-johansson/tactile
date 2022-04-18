@@ -36,9 +36,9 @@ namespace tactile::sys {
 /// \{
 
 /**
- * \brief Adds a new rectangle object to the active object layer.
+ * \brief Adds a new rectangle object to an object layer.
  *
- * \pre The layer must be an object layer.
+ * \pre The specified layer must be an object layer.
  *
  * \details The created entity will feature the following components:
  * - `Object`
@@ -61,9 +61,9 @@ auto new_rectangle_object(entt::registry& registry,
                           float height) -> ObjectID;
 
 /**
- * \brief Adds a new ellipse object to the active object layer.
+ * \brief Adds a new ellipse object to an object layer.
  *
- * \pre The layer must be an object layer.
+ * \pre The specified layer must be an object layer.
  *
  * \details The created entity will feature the following components:
  * - `Object`
@@ -86,9 +86,9 @@ auto new_ellipse_object(entt::registry& registry,
                         float height) -> ObjectID;
 
 /**
- * \brief Adds a new point object to the active object layer.
+ * \brief Adds a new point object to an object layer.
  *
- * \pre The layer must be an object layer.
+ * \pre The specified layer must be an object layer.
  *
  * \details The created entity will feature the following components:
  * - `Object`
