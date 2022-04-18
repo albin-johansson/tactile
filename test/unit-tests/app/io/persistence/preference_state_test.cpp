@@ -1,5 +1,6 @@
 #include "io/persistence/preference_state.hpp"
 
+#include <centurion/color.hpp>
 #include <gtest/gtest.h>
 
 #include "core/common/enum.hpp"
