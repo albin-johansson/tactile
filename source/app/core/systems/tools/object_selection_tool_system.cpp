@@ -57,7 +57,7 @@ void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
     -> entt::entity
 {
   const auto& [_, layer] =
-      sys::get_object_layer(registry, get_active_layer_id(registry).value());
+      get_object_layer(registry, get_active_layer_id(registry).value());
   return find_object(registry, layer, mouse.x, mouse.y);
 }
 

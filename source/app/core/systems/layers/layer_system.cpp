@@ -391,7 +391,7 @@ auto duplicate_layer(entt::registry& registry,
 
 void select_layer(entt::registry& registry, const LayerID id)
 {
-  const auto& [layerEntity, layer] = sys::get_layer(registry, id);
+  const auto& [layerEntity, layer] = get_layer(registry, id);
   auto& active = registry.ctx<comp::ActiveLayer>();
   active.entity = layerEntity;
 }

@@ -108,7 +108,7 @@ struct RemoveObjectResult final
 {
   LayerID layer{};
   comp::Object object;
-  sys::AttributeContextSnapshot context;
+  AttributeContextSnapshot context;
 };
 
 /**

@@ -260,7 +260,7 @@ void restore_component_def(entt::registry& registry, RemoveComponentDefResult sn
   for (auto&& [contextId, values] : snapshot.values) {
     log_verbose("Restoring component '{}' for context '{}'", snapshot.id, contextId);
 
-    auto& context = sys::get_context(registry, contextId);
+    auto& context = get_context(registry, contextId);
 
     const auto componentEntity = registry.create();
     auto& component = registry.emplace<comp::Component>(componentEntity);
@@ -275,7 +275,7 @@ void rename_component_def(entt::registry& registry,
                           const ComponentID compId,
                           std::string name)
 {
-  TACTILE_ASSERT(!sys::is_component_name_taken(registry, name));
+  TACTILE_ASSERT(!is_component_name_taken(registry, name));
 
   log_debug("Renaming component definition '{}' to '{}'", compId, name);
 
