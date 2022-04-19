@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/components/layers.hpp"
-#include "sfinae.hpp"
+#include "core/utils/sfinae.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
