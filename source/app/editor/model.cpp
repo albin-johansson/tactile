@@ -66,7 +66,7 @@ auto DocumentModel::add_map(const int32 tileWidth,
   Document document;
   document.registry = sys::make_document_registry();
 
-  auto& map = document.registry.ctx<MapInfo>();
+  auto& map = document.registry.ctx().at<MapInfo>();
   map.tile_width = tileWidth;
   map.tile_height = tileHeight;
   map.row_count = rows;

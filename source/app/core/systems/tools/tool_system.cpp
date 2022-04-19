@@ -36,7 +36,7 @@ void select_tool(entt::registry& registry,
                  entt::dispatcher& dispatcher,
                  const ToolType tool)
 {
-  auto& active = registry.ctx<comp::ActiveTool>();
+  auto& active = registry.ctx().at<comp::ActiveTool>();
 
   switch (active.tool) {
     case ToolType::Stamp:
@@ -68,7 +68,7 @@ void select_tool(entt::registry& registry,
 
 void on_tool_entered(entt::registry& registry, entt::dispatcher&)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
     case ToolType::Stamp:
     case ToolType::Eraser:
@@ -85,7 +85,7 @@ void on_tool_entered(entt::registry& registry, entt::dispatcher&)
 
 void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
     case ToolType::Stamp:
       on_stamp_tool_exited(dispatcher);
@@ -119,7 +119,7 @@ void on_tool_pressed(entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
     case ToolType::None:
       break;
@@ -158,7 +158,7 @@ void on_tool_dragged(entt::registry& registry,
                      [[maybe_unused]] entt::dispatcher& dispatcher,
                      const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
     case ToolType::None:
     case ToolType::Point:
@@ -192,7 +192,7 @@ void on_tool_released(entt::registry& registry,
                       entt::dispatcher& dispatcher,
                       const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
     case ToolType::None:
       [[fallthrough]];
@@ -224,7 +224,7 @@ void on_tool_released(entt::registry& registry,
 
 auto is_tool_enabled(const entt::registry& registry, const ToolType tool) -> bool
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   return active.tool == tool;
 }
 

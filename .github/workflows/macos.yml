@@ -8,7 +8,7 @@ env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_TARGET_TRIPLET: x64-osx
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
-  VCPKG_COMMIT_ID: 772fe6cbce530cb3a5f0fee67b57e9861676e5d0
+  VCPKG_COMMIT_ID: 7f7f1a514599b040eed5a876b838b76689ebb291
   VCPKG_CACHE_EDITION: 1
   BOOST_ROOT: /opt/homebrew/Cellar/boost/1.76.0
 

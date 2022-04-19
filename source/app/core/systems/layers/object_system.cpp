@@ -46,7 +46,7 @@ namespace {
                                 const float width,
                                 const float height) -> ObjectID
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& map = registry.ctx().at<MapInfo>();
   const auto id = map.next_object_id;
   ++map.next_object_id;
 
@@ -128,12 +128,14 @@ auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectR
     }
   }
 
-  if (auto& activeContext = registry.ctx<comp::ActiveAttributeContext>();
+  auto& ctx = registry.ctx();
+
+  if (auto& activeContext = ctx.at<comp::ActiveAttributeContext>();
       activeContext.entity == objectEntity) {
     activeContext.entity = entt::null;
   }
 
-  if (auto& activeObject = registry.ctx<comp::ActiveObject>();
+  if (auto& activeObject = ctx.at<comp::ActiveObject>();
       activeObject.entity == objectEntity) {
     activeObject.entity = entt::null;
   }

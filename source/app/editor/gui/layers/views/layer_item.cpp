@@ -159,7 +159,7 @@ void layer_item_view(const entt::registry& registry,
                      const entt::entity layerEntity)
 {
   const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
-  const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
+  const auto& activeLayer = registry.ctx().at<comp::ActiveLayer>();
 
   const scoped::Id scope{layer.id};
 

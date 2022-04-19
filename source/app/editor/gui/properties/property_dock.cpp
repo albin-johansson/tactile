@@ -313,12 +313,13 @@ void _update_property_table(const entt::registry& registry, entt::dispatcher& di
   constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
-  const auto& current = registry.ctx<comp::ActiveAttributeContext>();
+  const auto& ctx = registry.ctx();
+  const auto& current = ctx.at<comp::ActiveAttributeContext>();
   const auto& context = sys::current_context(registry);
 
   if (scoped::Table table{"##PropertyTable", 2, flags}; table.is_open()) {
     if (current.entity == entt::null) {
-      _show_native_map_properties(context.name, registry.ctx<MapInfo>());
+      _show_native_map_properties(context.name, ctx.at<MapInfo>());
     }
     else {
       if (const auto* tileset = registry.try_get<comp::Tileset>(current.entity)) {

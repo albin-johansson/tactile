@@ -48,7 +48,7 @@ void update_map_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
         }
       }
 
-      const auto& context = document->registry.ctx<comp::AttributeContext>();
+      const auto& context = document->registry.ctx().at<comp::AttributeContext>();
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {

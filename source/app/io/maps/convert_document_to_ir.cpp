@@ -134,7 +134,7 @@ void _convert_layer(ir::LayerData& data,
       auto& tileLayerData = data.data.emplace<ir::TileLayerData>();
       tileLayerData.tiles = tileLayer.matrix;
 
-      const auto& mapInfo = registry.ctx<MapInfo>();
+      const auto& mapInfo = registry.ctx().at<MapInfo>();
       tileLayerData.row_count = mapInfo.row_count;
       tileLayerData.col_count = mapInfo.column_count;
 
@@ -275,9 +275,10 @@ auto convert_document_to_ir(const Document& document) -> ir::MapData
   TACTILE_PROFILE_START
 
   const auto& registry = document.registry;
+  const auto& ctx = registry.ctx();
 
   ir::MapData data;
-  _convert_basic_map_info(data, registry.ctx<MapInfo>());
+  _convert_basic_map_info(data, ctx.at<MapInfo>());
 
   _convert_component_definitions(data, registry);
   _convert_tilesets(data, registry);
@@ -285,9 +286,7 @@ auto convert_document_to_ir(const Document& document) -> ir::MapData
   data.layers.reserve(registry.storage<comp::Layer>().size());
   _convert_layers(data, registry);
 
-  _convert_attribute_context(data.context,
-                             registry.ctx<comp::AttributeContext>(),
-                             registry);
+  _convert_attribute_context(data.context, ctx.at<comp::AttributeContext>(), registry);
 
   TACTILE_PROFILE_END("Converted document to IR")
   return data;

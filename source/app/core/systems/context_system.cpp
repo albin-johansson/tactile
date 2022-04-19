@@ -115,7 +115,7 @@ void restore_attribute_context(entt::registry& registry,
 
 auto get_context(entt::registry& registry, const ContextID id) -> comp::AttributeContext&
 {
-  if (auto& context = registry.ctx<comp::AttributeContext>(); context.id == id) {
+  if (auto& context = registry.ctx().at<comp::AttributeContext>(); context.id == id) {
     return context;
   }
 
@@ -131,7 +131,8 @@ auto get_context(entt::registry& registry, const ContextID id) -> comp::Attribut
 auto get_context(const entt::registry& registry, const ContextID id)
     -> const comp::AttributeContext&
 {
-  if (const auto& context = registry.ctx<comp::AttributeContext>(); context.id == id) {
+  if (const auto& context = registry.ctx().at<comp::AttributeContext>();
+      context.id == id) {
     return context;
   }
 
@@ -146,10 +147,11 @@ auto get_context(const entt::registry& registry, const ContextID id)
 
 auto current_context(const entt::registry& registry) -> const comp::AttributeContext&
 {
-  const auto& current = registry.ctx<comp::ActiveAttributeContext>();
+  const auto& ctx = registry.ctx();
+  const auto& current = ctx.at<comp::ActiveAttributeContext>();
   return (current.entity != entt::null)
              ? checked_get<comp::AttributeContext>(registry, current.entity)
-             : registry.ctx<comp::AttributeContext>();
+             : ctx.at<comp::AttributeContext>();
 }
 
 auto current_context_id(const entt::registry& registry) -> ContextID

@@ -56,7 +56,7 @@ constinit bool _is_focused = false;
 void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto activeLayerEntity = registry.ctx<comp::ActiveLayer>().entity;
+  const auto activeLayerEntity = registry.ctx().at<comp::ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
   std::optional<LayerID> activeLayerId;

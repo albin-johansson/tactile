@@ -50,7 +50,7 @@ void _restore_properties(entt::registry& registry,
   const auto count = source.properties.size();
 
   auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
-                                         : registry.ctx<comp::AttributeContext>();
+                                         : registry.ctx().at<comp::AttributeContext>();
   context.properties.reserve(count);
 
   for (const auto& [propertyName, propertyValue] : source.properties) {
@@ -69,7 +69,7 @@ void _restore_components(entt::registry& registry,
                          const ir::AttributeContextData& source)
 {
   auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
-                                         : registry.ctx<comp::AttributeContext>();
+                                         : registry.ctx().at<comp::AttributeContext>();
   context.components.reserve(source.components.size());
 
   for (const auto& [type, attributes] : source.components) {
@@ -186,7 +186,7 @@ void _restore_layers(Document& document, const ir::MapData& mapData)
   sys::sort_layers(document.registry);
 
   if (!document.registry.storage<comp::LayerTreeNode>().empty()) {
-    auto& activeLayer = document.registry.ctx<comp::ActiveLayer>();
+    auto& activeLayer = document.registry.ctx().at<comp::ActiveLayer>();
     activeLayer.entity = document.registry.view<comp::LayerTreeNode>().front();
   }
 }
@@ -281,14 +281,14 @@ void _restore_tilesets(Document& document,
   }
 
   if (!document.registry.storage<comp::Tileset>().empty()) {
-    auto& activeTileset = document.registry.ctx<comp::ActiveTileset>();
+    auto& activeTileset = document.registry.ctx().at<comp::ActiveTileset>();
     activeTileset.entity = document.registry.view<comp::Tileset>().front();
   }
 }
 
 void _restore_root_attribute_context(Document& document)
 {
-  auto& context = document.registry.ctx<comp::AttributeContext>();
+  auto& context = document.registry.ctx().at<comp::AttributeContext>();
   context.name = document.path.filename().string();
 }
 
@@ -326,7 +326,7 @@ auto restore_document_from_ir(const parsing::ParseData& data, TextureManager& te
   const auto& mapData = data.data();
   _restore_component_definitions(document.registry, mapData);
 
-  _restore_map_context(document.registry.ctx<MapInfo>(), mapData);
+  _restore_map_context(document.registry.ctx().at<MapInfo>(), mapData);
   _restore_root_attribute_context(document);
 
   _restore_tilesets(document, textures, mapData);

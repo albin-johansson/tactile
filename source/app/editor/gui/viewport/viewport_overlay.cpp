@@ -71,7 +71,7 @@ void _prepare_position_and_pivot()
 void _show_mouse_tile_labels(const entt::registry& registry,
                              const ViewportCursorInfo& cursor)
 {
-  const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
+  const auto& activeLayer = registry.ctx().at<comp::ActiveLayer>();
 
   if (activeLayer.entity != entt::null) {
     if (const auto* layer = registry.try_get<comp::TileLayer>(activeLayer.entity)) {

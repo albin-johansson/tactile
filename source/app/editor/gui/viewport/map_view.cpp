@@ -116,7 +116,7 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
     render_stamp_preview(registry, cursor.map_position, info);
   }
   else if (sys::is_tool_enabled(registry, ToolType::Rectangle)) {
-    if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
+    if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
       const ImVec2 pos{stroke->start_x, stroke->start_y};
       const ImVec2 size{stroke->current_x - stroke->start_x,
                         stroke->current_y - stroke->start_y};
@@ -127,7 +127,7 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
     }
   }
   else if (sys::is_tool_enabled(registry, ToolType::Ellipse)) {
-    if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
+    if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
       const ImVec2 radius{(stroke->current_x - stroke->start_x),
                           (stroke->current_y - stroke->start_y)};
       const ImVec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
@@ -197,8 +197,10 @@ void _update_context_menu([[maybe_unused]] const entt::registry& registry,
 void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto& viewport = registry.ctx<comp::Viewport>();
-  const auto& map = registry.ctx<MapInfo>();
+  const auto& ctx = registry.ctx();
+
+  const auto& viewport = ctx.at<comp::Viewport>();
+  const auto& map = ctx.at<MapInfo>();
 
   const auto info = get_render_info(viewport, map);
   update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
@@ -242,7 +244,7 @@ void update_map_view_object_context_menu(const entt::registry& registry,
                                          entt::dispatcher& dispatcher)
 {
   if (scoped::Popup popup{_object_context_menu_id}; popup.is_open()) {
-    const auto active = registry.ctx<comp::ActiveObject>();
+    const auto active = registry.ctx().at<comp::ActiveObject>();
 
     TACTILE_ASSERT(active.entity != entt::null);
     const auto& object = sys::checked_get<comp::Object>(registry, active.entity);

@@ -15,13 +15,14 @@ using namespace tactile;
 TEST(RegistrySystem, MakeDocumentRegistry)
 {
   const auto registry = sys::make_document_registry();
-  ASSERT_TRUE(registry.try_ctx<MapInfo>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveLayer>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveTileset>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveAttributeContext>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveTool>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveObject>());
-  ASSERT_TRUE(registry.try_ctx<comp::Viewport>());
-  ASSERT_TRUE(registry.try_ctx<comp::AttributeContext>());
-  ASSERT_TRUE(registry.try_ctx<comp::TilesetContext>());
+  const auto& ctx = registry.ctx();
+  ASSERT_TRUE(ctx.find<MapInfo>());
+  ASSERT_TRUE(ctx.find<comp::ActiveLayer>());
+  ASSERT_TRUE(ctx.find<comp::ActiveTileset>());
+  ASSERT_TRUE(ctx.find<comp::ActiveAttributeContext>());
+  ASSERT_TRUE(ctx.find<comp::ActiveTool>());
+  ASSERT_TRUE(ctx.find<comp::ActiveObject>());
+  ASSERT_TRUE(ctx.find<comp::Viewport>());
+  ASSERT_TRUE(ctx.find<comp::AttributeContext>());
+  ASSERT_TRUE(ctx.find<comp::TilesetContext>());
 }

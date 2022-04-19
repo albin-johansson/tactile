@@ -17,7 +17,7 @@ constexpr entt::entity null_entity = entt::null;
 TEST(LayerSystem, SortLayers)
 {
   auto registry = sys::make_document_registry();
-  auto& active = registry.ctx<comp::ActiveLayer>();
+  auto& active = registry.ctx().at<comp::ActiveLayer>();
 
   const auto a = sys::new_tile_layer(registry);
   const auto b = sys::new_object_layer(registry);
@@ -75,7 +75,7 @@ TEST(LayerSystem, SortLayers)
 TEST(LayerSystem, RemoveLayer)
 {
   auto registry = sys::make_document_registry();
-  auto& active = registry.ctx<comp::ActiveLayer>();
+  auto& active = registry.ctx().at<comp::ActiveLayer>();
 
   const auto a = sys::new_tile_layer(registry);
   const auto b = sys::new_group_layer(registry);

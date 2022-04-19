@@ -97,7 +97,7 @@ void render_stamp_preview(const entt::registry& registry,
                           const TilePos& mousePos,
                           const RenderInfo& renderInfo)
 {
-  const auto& activeTileset = registry.ctx<comp::ActiveTileset>();
+  const auto& activeTileset = registry.ctx().at<comp::ActiveTileset>();
 
   const auto tilesetEntity = activeTileset.entity;
   TACTILE_ASSERT(tilesetEntity != entt::null);

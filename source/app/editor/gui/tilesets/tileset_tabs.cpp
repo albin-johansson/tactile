@@ -80,7 +80,7 @@ void update_tileset_tabs(const entt::registry& registry, entt::dispatcher& dispa
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
-    const auto& activeTileset = registry.ctx<comp::ActiveTileset>();
+    const auto& activeTileset = registry.ctx().at<comp::ActiveTileset>();
     for (auto&& [entity, tileset] : registry.view<comp::Tileset>().each()) {
       const scoped::Id scope{tileset.id};
 

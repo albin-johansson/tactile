@@ -37,7 +37,7 @@ void render_tile(GraphicsCtx& graphics,
                  const int32 row,
                  const int32 column)
 {
-  const auto& context = registry.ctx<comp::TilesetContext>();
+  const auto& context = registry.ctx().at<comp::TilesetContext>();
   auto iter = context.tile_to_tileset.find(tile);
 
   if (iter == context.tile_to_tileset.end()) {

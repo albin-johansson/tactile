@@ -107,7 +107,7 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManag
     -> bool
 {
   if (const auto* registry = model.active_registry()) {
-    const auto& map = registry->ctx<MapInfo>();
+    const auto& map = registry->ctx().at<MapInfo>();
     return map.row_count > 1;
   }
   else {
@@ -130,7 +130,7 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
                                       const WidgetManager&) const -> bool
 {
   if (const auto* registry = model.active_registry()) {
-    const auto& map = registry->ctx<MapInfo>();
+    const auto& map = registry->ctx().at<MapInfo>();
     return map.column_count > 1;
   }
   else {

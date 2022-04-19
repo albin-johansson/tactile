@@ -34,7 +34,8 @@ namespace {
 
 void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
+  auto& ctx = registry.ctx();
+  if (const auto* stroke = ctx.find<comp::CurrentEllipseStroke>()) {
     const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
     const auto xRadius = (stroke->current_x - stroke->start_x) / xRatio;
@@ -58,7 +59,7 @@ void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
                                           std::abs(yRadius) * 2.0f);
     }
 
-    registry.unset<comp::CurrentEllipseStroke>();
+    ctx.erase<comp::CurrentEllipseStroke>();
   }
 }
 
@@ -78,7 +79,7 @@ void on_ellipse_tool_pressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (is_object_layer_active(registry) && mouse.is_within_contents &&
       mouse.button == cen::mouse_button::left) {
-    auto& stroke = registry.set<comp::CurrentEllipseStroke>();
+    auto& stroke = registry.ctx().emplace<comp::CurrentEllipseStroke>();
     stroke.start_x = mouse.x;
     stroke.start_y = mouse.y;
     stroke.current_x = stroke.start_x;
@@ -89,7 +90,7 @@ void on_ellipse_tool_pressed(entt::registry& registry, const MouseInfo& mouse)
 void on_ellipse_tool_dragged(entt::registry& registry, const MouseInfo& mouse)
 {
   if (is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {
-    if (auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
+    if (auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
       stroke->current_x = mouse.x;
       stroke->current_y = mouse.y;
     }

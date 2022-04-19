@@ -43,7 +43,7 @@ namespace {
 
 [[nodiscard]] auto _new_layer_parent(const entt::registry& registry) -> entt::entity
 {
-  const auto active = registry.ctx<comp::ActiveLayer>();
+  const auto active = registry.ctx().at<comp::ActiveLayer>();
   if (active.entity != entt::null && registry.all_of<comp::GroupLayer>(active.entity)) {
     return active.entity;
   }
@@ -181,7 +181,7 @@ auto new_layer_skeleton(entt::registry& registry,
 
 auto new_tile_layer(entt::registry& registry) -> entt::entity
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& map = registry.ctx().at<MapInfo>();
 
   const auto entity =
       new_layer_skeleton(registry,
@@ -200,7 +200,7 @@ auto new_tile_layer(entt::registry& registry) -> entt::entity
 
 auto new_object_layer(entt::registry& registry) -> entt::entity
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& map = registry.ctx().at<MapInfo>();
 
   const auto entity =
       new_layer_skeleton(registry,
@@ -218,7 +218,7 @@ auto new_object_layer(entt::registry& registry) -> entt::entity
 
 auto new_group_layer(entt::registry& registry) -> entt::entity
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& map = registry.ctx().at<MapInfo>();
 
   const auto entity =
       new_layer_skeleton(registry,
@@ -246,8 +246,9 @@ auto remove_layer(entt::registry& registry, const entt::entity entity) -> LayerS
     }
   };
 
-  maybe_reset(registry.ctx<comp::ActiveLayer>().entity, entity);
-  maybe_reset(registry.ctx<comp::ActiveAttributeContext>().entity, entity);
+  auto& ctx = registry.ctx();
+  maybe_reset(ctx.at<comp::ActiveLayer>().entity, entity);
+  maybe_reset(ctx.at<comp::ActiveAttributeContext>().entity, entity);
 
   destroy_layer_node(registry, entity);
 
@@ -357,7 +358,8 @@ auto duplicate_layer(entt::registry& registry,
   }
 
   {
-    auto& map = registry.ctx<MapInfo>();
+    auto& ctx = registry.ctx();
+    auto& map = ctx.at<MapInfo>();
     auto& layer = DuplicateComp<comp::Layer>(registry, source, copy);
     layer.id = map.next_layer_id;
 
@@ -391,7 +393,7 @@ auto duplicate_layer(entt::registry& registry,
 
 void select_layer(entt::registry& registry, const LayerID id)
 {
-  auto& active = registry.ctx<comp::ActiveLayer>();
+  auto& active = registry.ctx().at<comp::ActiveLayer>();
   active.entity = get_layer(registry, id);
 }
 
@@ -431,13 +433,13 @@ auto get_layer(const entt::registry& registry, const LayerID id) -> entt::entity
 
 auto get_active_layer(const entt::registry& registry) -> entt::entity
 {
-  const auto& active = registry.ctx<comp::ActiveLayer>();
+  const auto& active = registry.ctx().at<comp::ActiveLayer>();
   return active.entity;
 }
 
 auto is_tile_layer_active(const entt::registry& registry) -> bool
 {
-  const auto& active = registry.ctx<comp::ActiveLayer>();
+  const auto& active = registry.ctx().at<comp::ActiveLayer>();
   if (active.entity != entt::null) {
     return registry.all_of<comp::TileLayer>(active.entity);
   }
@@ -448,7 +450,7 @@ auto is_tile_layer_active(const entt::registry& registry) -> bool
 
 auto is_object_layer_active(const entt::registry& registry) -> bool
 {
-  const auto& active = registry.ctx<comp::ActiveLayer>();
+  const auto& active = registry.ctx().at<comp::ActiveLayer>();
   if (active.entity != entt::null) {
     return registry.all_of<comp::ObjectLayer>(active.entity);
   }
@@ -459,7 +461,7 @@ auto is_object_layer_active(const entt::registry& registry) -> bool
 
 auto get_active_layer_id(const entt::registry& registry) -> std::optional<LayerID>
 {
-  const auto& active = registry.ctx<comp::ActiveLayer>();
+  const auto& active = registry.ctx().at<comp::ActiveLayer>();
   if (active.entity != entt::null) {
     return checked_get<comp::Layer>(registry, active.entity).id;
   }

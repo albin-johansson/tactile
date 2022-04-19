@@ -220,7 +220,8 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
   if (registry && !ImGui::GetTopMostPopupModal()) {
     if (is_mouse_within_viewport()) {
-      const auto& viewport = registry->ctx<comp::Viewport>();
+      const auto& ctx = registry->ctx();
+      const auto& viewport = ctx.at<comp::Viewport>();
       if (cen::is_active(primary_modifier)) {
         const auto y = event.precise_y();
         if (y > 0) {
@@ -283,7 +284,8 @@ void Application::on_save()
       save_document(*document);
       document->commands.mark_as_clean();
 
-      auto& context = document->registry.ctx<comp::AttributeContext>();
+      auto& ctx = document->registry.ctx();
+      auto& context = ctx.at<comp::AttributeContext>();
       context.name = document->path.filename().string();
     }
     else {
@@ -310,7 +312,8 @@ void Application::on_open_save_as_dialog()
 void Application::on_show_map_properties()
 {
   if (auto* registry = mData->model.active_registry()) {
-    auto& current = registry->ctx<comp::ActiveAttributeContext>();
+    auto& ctx = registry->ctx();
+    auto& current = ctx.at<comp::ActiveAttributeContext>();
     current.entity = entt::null;
   }
 }
@@ -579,7 +582,8 @@ void Application::on_resize_map(const ResizeMapEvent& event)
 void Application::on_open_resize_map_dialog()
 {
   if (auto* registry = mData->model.active_registry()) {
-    const auto& map = registry->ctx<MapInfo>();
+    const auto& ctx = registry->ctx();
+    const auto& map = ctx.at<MapInfo>();
     mData->widgets.show_resize_map_dialog(map.row_count, map.column_count);
   }
 }
@@ -706,7 +710,8 @@ void Application::on_change_property_type(const ChangePropertyTypeEvent& event)
 void Application::on_inspect_context(const InspectContextEvent& event)
 {
   auto& registry = mData->model.get_active_registry();
-  auto& current = registry.ctx<comp::ActiveAttributeContext>();
+  auto& ctx = registry.ctx();
+  auto& current = ctx.at<comp::ActiveAttributeContext>();
   current.entity = event.entity;
 }
 
