@@ -11,15 +11,15 @@ namespace {
 
 constexpr usize _buffer_size = 32'768;
 
-using process_function = int (*)(z_stream*, int);
-using end_function = int (*)(z_stream*);
+using ProcessFunction = int (*)(z_stream*, int);
+using EndFunction = int (*)(z_stream*);
 
 [[nodiscard]] auto _process_data(z_stream& stream,
-                                 process_function process,
-                                 end_function end,
-                                 const int flush) -> maybe<zlib_data>
+                                 ProcessFunction process,
+                                 EndFunction end,
+                                 const int flush) -> std::optional<ZlibData>
 {
-  zlib_data out;
+  ZlibData out;
   out.reserve(128);
 
   Bytef buffer[_buffer_size];
@@ -42,26 +42,26 @@ using end_function = int (*)(z_stream*);
   end(&stream);
 
   if (status != Z_STREAM_END) {
-    return nothing;
+    return std::nullopt;
   }
 
   return out;
 }
 
-[[nodiscard]] auto _convert(const zlib_compression_level level) -> int
+[[nodiscard]] auto _convert(const ZlibCompressionLevel level) -> int
 {
   switch (level) {
-    case zlib_compression_level::standard:
+    case ZlibCompressionLevel::Default:
       return Z_DEFAULT_COMPRESSION;
 
-    case zlib_compression_level::best_compression:
+    case ZlibCompressionLevel::BestCompression:
       return Z_BEST_COMPRESSION;
 
-    case zlib_compression_level::best_speed:
+    case ZlibCompressionLevel::BestSpeed:
       return Z_BEST_SPEED;
 
     default:
-      throw_traced(tactile_error{"Invalid Zlib compression level!"});
+      panic("Invalid Zlib compression level!");
   }
 }
 
@@ -69,14 +69,14 @@ using end_function = int (*)(z_stream*);
 
 auto compress_with_zlib(const void* data,
                         const usize bytes,
-                        const zlib_compression_level level) -> maybe<zlib_data>
+                        const ZlibCompressionLevel level) -> std::optional<ZlibData>
 {
   TACTILE_ASSERT(data);
   z_stream stream{};
 
   if (deflateInit(&stream, _convert(level)) != Z_OK) {
     log_error("Could not initialize z_stream for data compression!");
-    return nothing;
+    return std::nullopt;
   }
 
   stream.next_in = (Bytef*) data;
@@ -85,14 +85,14 @@ auto compress_with_zlib(const void* data,
   return _process_data(stream, deflate, deflateEnd, Z_FINISH);
 }
 
-auto decompress_with_zlib(const void* data, const usize bytes) -> maybe<zlib_data>
+auto decompress_with_zlib(const void* data, const usize bytes) -> std::optional<ZlibData>
 {
   TACTILE_ASSERT(data);
   z_stream stream{};
 
   if (inflateInit(&stream) != Z_OK) {
     log_error("Could not initialize z_stream for data decompression!");
-    return nothing;
+    return std::nullopt;
   }
 
   stream.next_in = (Bytef*) data;

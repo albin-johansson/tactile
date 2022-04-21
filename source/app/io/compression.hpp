@@ -1,21 +1,22 @@
 #pragma once
 
-#include <vector>  // vector
+#include <optional>  // optional
+#include <vector>    // vector
 
 #include "tactile.hpp"
 
 namespace tactile {
 
-using zlib_data = std::vector<uchar>;
+using ZlibData = std::vector<uchar>;
 
 /**
  * \brief Represents different compression levels passed on to Zlib.
  */
-enum class zlib_compression_level
+enum class ZlibCompressionLevel
 {
-  standard,          ///< Uses Z_DEFAULT_COMPRESSION.
-  best_compression,  ///< Uses Z_BEST_COMPRESSION.
-  best_speed         ///< Uses Z_BEST_SPEED.
+  Default,          ///< Uses Z_DEFAULT_COMPRESSION.
+  BestCompression,  ///< Uses Z_BEST_COMPRESSION.
+  BestSpeed         ///< Uses Z_BEST_SPEED.
 };
 
 /**
@@ -29,7 +30,8 @@ enum class zlib_compression_level
  */
 [[nodiscard]] auto compress_with_zlib(const void* data,
                                       usize bytes,
-                                      zlib_compression_level level) -> maybe<zlib_data>;
+                                      ZlibCompressionLevel level)
+    -> std::optional<ZlibData>;
 
 /**
  * \brief Restores data previously compressed with ZLib.
@@ -39,6 +41,7 @@ enum class zlib_compression_level
  *
  * \return the uncompressed data; an empty optional is returned upon failure.
  */
-[[nodiscard]] auto decompress_with_zlib(const void* data, usize bytes) -> maybe<zlib_data>;
+[[nodiscard]] auto decompress_with_zlib(const void* data, usize bytes)
+    -> std::optional<ZlibData>;
 
 }  // namespace tactile

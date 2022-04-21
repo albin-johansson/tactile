@@ -3,8 +3,8 @@
 #include <string>  // string
 #include <vector>  // vector
 
-#include "core/components/layer.hpp"
-#include "core/map.hpp"
+#include "core/components/layers.hpp"
+#include "core/map_info.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -25,7 +25,7 @@ namespace tactile {
  *
  * \see base64_decode_tiles()
  */
-[[nodiscard]] auto base64_encode_tiles(const tile_matrix& tiles,
+[[nodiscard]] auto base64_encode_tiles(const TileMatrix& tiles,
                                        usize rows,
                                        usize columns,
                                        tile_compression compression) -> std::string;
@@ -47,6 +47,6 @@ namespace tactile {
 [[nodiscard]] auto base64_decode_tiles(const std::string& tiles,
                                        usize rows,
                                        usize columns,
-                                       tile_compression compression) -> tile_matrix;
+                                       tile_compression compression) -> TileMatrix;
 
 }  // namespace tactile

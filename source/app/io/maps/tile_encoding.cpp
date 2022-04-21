@@ -13,15 +13,15 @@
 namespace tactile {
 namespace {
 
-/* Update documentation if the representation of tile_id changes */
-static_assert(std::same_as<tile_id, int32>);
+/* Update documentation if the representation of TileID changes */
+static_assert(std::same_as<TileID, int32>);
 
-[[nodiscard]] auto _convert_tile_matrix_to_sequence(const tile_matrix& matrix,
+[[nodiscard]] auto _convert_tile_matrix_to_sequence(const TileMatrix& matrix,
                                                     const usize rows,
                                                     const usize columns)
-    -> std::vector<tile_id>
+    -> std::vector<TileID>
 {
-  std::vector<tile_id> vec;
+  std::vector<TileID> vec;
   vec.reserve(rows * columns);
 
   for (usize row = 0; row < rows; ++row) {
@@ -35,7 +35,7 @@ static_assert(std::same_as<tile_id, int32>);
 
 [[nodiscard]] auto _decode_tiles(const std::vector<uchar>& data,
                                  const usize rows,
-                                 const usize columns) -> tile_matrix
+                                 const usize columns) -> TileMatrix
 {
   auto matrix = make_tile_matrix(rows, columns);
 
@@ -48,8 +48,8 @@ static_assert(std::same_as<tile_id, int32>);
     const auto c = static_cast<int32>(data[index + 2]);
     const auto d = static_cast<int32>(data[index + 3]);
 
-    const tile_id tile = cen::is_little_endian() ? (d << 3) | (c << 2) | (b << 1) | a
-                                                 : (a << 3) | (b << 2) | (c << 1) | d;
+    const TileID tile = cen::is_little_endian() ? (d << 3) | (c << 2) | (b << 1) | a
+                                                : (a << 3) | (b << 2) | (c << 1) | d;
 
     const auto [row, col] = to_matrix_coords(i, columns);
     matrix[row][col] = tile;
@@ -60,7 +60,7 @@ static_assert(std::same_as<tile_id, int32>);
 
 }  // namespace
 
-auto base64_encode_tiles(const tile_matrix& tiles,
+auto base64_encode_tiles(const TileMatrix& tiles,
                          const usize rows,
                          const usize columns,
                          const tile_compression compression) -> std::string
@@ -77,20 +77,20 @@ auto base64_encode_tiles(const tile_matrix& tiles,
     case tile_compression::zlib: {
       const auto compressed = compress_with_zlib(bytes.data(),  //
                                                  bytes.size(),
-                                                 zlib_compression_level::standard)
+                                                 ZlibCompressionLevel::Default)
                                   .value();
       const auto compressedBytes = std::as_bytes(std::span{compressed});
       return base64::encode(compressedBytes);
     }
     default:
-      throw_traced(tactile_error{"Invalid tile compression!"});
+      panic("Invalid tile compression!");
   }
 }
 
 auto base64_decode_tiles(const std::string& tiles,
                          const usize rows,
                          const usize columns,
-                         const tile_compression compression) -> tile_matrix
+                         const tile_compression compression) -> TileMatrix
 {
   const auto decoded = base64::decode(tiles);
 
@@ -104,7 +104,7 @@ auto base64_decode_tiles(const std::string& tiles,
       return _decode_tiles(decompressed, rows, columns);
     }
     default:
-      throw_traced(tactile_error{"Invalid tile compression!"});
+      panic("Invalid tile compression!");
   }
 }
 
