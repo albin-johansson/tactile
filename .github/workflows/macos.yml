@@ -9,7 +9,7 @@ env:
   VCPKG_TARGET_TRIPLET: x64-osx
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_COMMIT_ID: e0c3408c778c54788393c4a739f6f3507aff77cb
-  VCPKG_CACHE_EDITION: 1
+  VCPKG_CACHE_EDITION: 2
 
 jobs:
   macos-latest-test:
