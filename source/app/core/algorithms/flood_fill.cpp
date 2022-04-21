@@ -21,8 +21,12 @@
 
 #include <queue>  // queue
 
+#include <entt/entity/registry.hpp>
+
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
+#include "core/systems/registry_system.hpp"
+#include "core/tile_pos.hpp"
 
 namespace tactile {
 
@@ -32,7 +36,7 @@ void flood(entt::registry& registry,
            const TileID replacement,
            std::vector<TilePos>& affected)
 {
-  auto& layer = registry.get<comp::TileLayer>(entity);
+  auto& layer = sys::checked_get<comp::TileLayer>(registry, entity);
   const auto target = sys::get_tile(layer, origin);
 
   if (!sys::is_position_in_map(registry, origin) || (target == replacement)) {

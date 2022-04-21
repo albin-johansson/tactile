@@ -35,43 +35,43 @@ namespace tactile {
 auto input_attribute(const char* id, const Attribute& value) -> std::optional<Attribute>
 {
   switch (value.type()) {
-    case AttributeType::string: {
+    case AttributeType::String: {
       if (auto updated = input_string_with_hint(id, "Empty", value.as_string())) {
         return std::move(updated);
       }
       break;
     }
-    case AttributeType::integer: {
+    case AttributeType::Int: {
       if (const auto updated = input_int(id, value.as_int())) {
         return updated;
       }
       break;
     }
-    case AttributeType::floating: {
+    case AttributeType::Float: {
       if (const auto updated = input_float(id, value.as_float())) {
         return updated;
       }
       break;
     }
-    case AttributeType::boolean: {
+    case AttributeType::Bool: {
       if (const auto updated = input_bool(id, value.as_bool())) {
         return updated;
       }
       break;
     }
-    case AttributeType::file: {
-      if (auto updated = input_file(id, value.as_file())) {
+    case AttributeType::Path: {
+      if (auto updated = input_path(id, value.as_path())) {
         return std::move(updated);
       }
       break;
     }
-    case AttributeType::color: {
+    case AttributeType::Color: {
       if (const auto updated = input_color(id, value.as_color())) {
         return updated;
       }
       break;
     }
-    case AttributeType::object: {
+    case AttributeType::Object: {
       if (const auto updated = input_object(id, value.as_object())) {
         return updated;
       }
@@ -219,7 +219,7 @@ auto input_color(const char* id, const cen::color value) -> std::optional<cen::c
   return std::nullopt;
 }
 
-auto input_file(const char* id, const std::filesystem::path& value)
+auto input_path(const char* id, const std::filesystem::path& value)
     -> std::optional<std::filesystem::path>
 {
   const scoped::Id scope{id};
@@ -236,14 +236,14 @@ auto input_file(const char* id, const std::filesystem::path& value)
   auto str = value.filename().string();
 
   ImGui::SetNextItemWidth(-min_float);
-  ImGui::InputTextWithHint("##input_file",
+  ImGui::InputTextWithHint("##input_path",
                            "N/A",
                            str.data(),
                            str.capacity(),
                            ImGuiInputTextFlags_ReadOnly);
 
   if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[file]");
+    ImGui::SetTooltip("[path]");
   }
 
   return std::nullopt;

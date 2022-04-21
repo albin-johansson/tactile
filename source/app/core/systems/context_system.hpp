@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/components/attributes.hpp"
 #include "snapshot.hpp"
@@ -112,7 +112,7 @@ void restore_attribute_context(entt::registry& registry,
  *
  * \return a reference to the found context.
  *
- * \throws tactile_error if the identifier is invalid.
+ * \throws TactileError if the identifier is invalid.
  */
 [[nodiscard]] auto get_context(entt::registry& registry, ContextID id)
     -> comp::AttributeContext&;

@@ -19,7 +19,8 @@
 
 #include "layer_item.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
@@ -65,10 +66,11 @@ void _update_layer_item_popup(const entt::registry& registry,
                               const LayerID id)
 {
   if (auto popup = scoped::Popup::for_item("##LayerItemPopup"); popup.is_open()) {
-    const auto& [entity, layer] = sys::get_layer(registry, id);
+    const auto layerEntity = sys::get_layer(registry, id);
+    const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
-      dispatcher.enqueue<InspectContextEvent>(entity);
+      dispatcher.enqueue<InspectContextEvent>(layerEntity);
     }
 
     ImGui::Separator();
@@ -101,14 +103,14 @@ void _update_layer_item_popup(const entt::registry& registry,
     if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move Layer Up",
                         nullptr,
                         false,
-                        sys::can_move_layer_up(registry, entity))) {
+                        sys::can_move_layer_up(registry, layerEntity))) {
       dispatcher.enqueue<MoveLayerUpEvent>(id);
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move Layer Down",
                         nullptr,
                         false,
-                        sys::can_move_layer_down(registry, entity))) {
+                        sys::can_move_layer_down(registry, layerEntity))) {
       dispatcher.enqueue<MoveLayerDownEvent>(id);
     }
   }
@@ -133,7 +135,7 @@ void _show_group_layer_item(const entt::registry& registry,
 
     _update_layer_item_popup(registry, dispatcher, layer.id);
 
-    const auto& node = registry.get<comp::LayerTreeNode>(layerEntity);
+    const auto& node = sys::checked_get<comp::LayerTreeNode>(registry, layerEntity);
     for (const auto child : node.children) {
       layer_item_view(registry, dispatcher, child);
     }
@@ -157,7 +159,7 @@ void layer_item_view(const entt::registry& registry,
                      const entt::entity layerEntity)
 {
   const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
-  const auto& activeLayer = registry.ctx<comp::ActiveLayer>();
+  const auto& activeLayer = registry.ctx().at<comp::ActiveLayer>();
 
   const scoped::Id scope{layer.id};
 

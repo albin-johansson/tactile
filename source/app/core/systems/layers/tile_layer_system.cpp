@@ -19,7 +19,9 @@
 
 #include "tile_layer_system.hpp"
 
-#include "layer_system.hpp"
+#include <entt/entity/registry.hpp>
+
+#include "core/systems/layers/layer_system.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::sys {
@@ -37,7 +39,7 @@ namespace {
 auto get_tile_layer_entity(const entt::registry& registry, const LayerID id)
     -> entt::entity
 {
-  const auto entity = sys::find_layer(registry, id);
+  const auto entity = find_layer(registry, id);
   if (entity != entt::null && registry.all_of<comp::TileLayer>(entity)) {
     return entity;
   }

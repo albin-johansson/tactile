@@ -24,17 +24,16 @@
 #include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 /// \name Property dock functions
 /// \{
 
 void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-void show_add_property_dialog();
+void show_property_creation_dialog();
 
 void show_rename_property_dialog(const std::string& name);
 

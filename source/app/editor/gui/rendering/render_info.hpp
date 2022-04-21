@@ -21,12 +21,11 @@
 
 #include <imgui.h>
 
-#include "core/components/tiles.hpp"
+#include "core/fwd.hpp"
 #include "core/region.hpp"
 
 namespace tactile {
 
-struct Viewport;
 struct MapInfo;
 
 /// \addtogroup rendering
@@ -53,11 +52,11 @@ struct RenderInfo final
   float col_count{};  ///< Total amount of columns.
 };
 
-[[nodiscard]] auto get_render_info(const Viewport& viewport, const MapInfo& map)
+[[nodiscard]] auto get_render_info(const comp::Viewport& viewport, const MapInfo& map)
     -> RenderInfo;
 
-[[nodiscard]] auto get_render_info(const Viewport& viewport, const comp::Tileset& tileset)
-    -> RenderInfo;
+[[nodiscard]] auto get_render_info(const comp::Viewport& viewport,
+                                   const comp::Tileset& tileset) -> RenderInfo;
 
 /// \} End of group rendering
 

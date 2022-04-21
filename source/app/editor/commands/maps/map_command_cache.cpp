@@ -19,6 +19,8 @@
 
 #include "map_command_cache.hpp"
 
+#include <entt/entity/registry.hpp>
+
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"

@@ -19,6 +19,7 @@
 
 #include "attribute.hpp"
 
+#include "misc/assert.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile {
@@ -26,25 +27,25 @@ namespace tactile {
 auto stringify(const AttributeType type) -> const char*
 {
   switch (type) {
-    case AttributeType::string:
+    case AttributeType::String:
       return "string";
 
-    case AttributeType::integer:
+    case AttributeType::Int:
       return "int";
 
-    case AttributeType::floating:
+    case AttributeType::Float:
       return "float";
 
-    case AttributeType::boolean:
+    case AttributeType::Bool:
       return "bool";
 
-    case AttributeType::file:
+    case AttributeType::Path:
       return "file";
 
-    case AttributeType::color:
+    case AttributeType::Color:
       return "color";
 
-    case AttributeType::object:
+    case AttributeType::Object:
       return "object";
 
     default:
@@ -60,31 +61,31 @@ auto operator<<(std::ostream& stream, const AttributeType type) -> std::ostream&
 void Attribute::reset_to_default(const AttributeType type)
 {
   switch (type) {
-    case AttributeType::string:
+    case AttributeType::String:
       set_value<string_type>(string_type{});
       break;
 
-    case AttributeType::integer:
+    case AttributeType::Int:
       set_value<integer_type>(0);
       break;
 
-    case AttributeType::floating:
+    case AttributeType::Float:
       set_value<float_type>(0);
       break;
 
-    case AttributeType::boolean:
+    case AttributeType::Bool:
       set_value<bool>(false);
       break;
 
-    case AttributeType::file:
-      set_value<file_type>(file_type{});
+    case AttributeType::Path:
+      set_value<path_type>(path_type{});
       break;
 
-    case AttributeType::color:
+    case AttributeType::Color:
       set_value<color_type>(cen::colors::black);
       break;
 
-    case AttributeType::object:
+    case AttributeType::Object:
       set_value<object_t>(object_t{});
       break;
 
@@ -107,7 +108,7 @@ auto Attribute::has_default_value() const -> bool
   else if (const auto* b = std::get_if<bool>(&mValue)) {
     return !*b;
   }
-  else if (const auto* path = std::get_if<file_type>(&mValue)) {
+  else if (const auto* path = std::get_if<path_type>(&mValue)) {
     return path->empty();
   }
   else if (const auto* obj = std::get_if<object_t>(&mValue)) {
@@ -119,6 +120,67 @@ auto Attribute::has_default_value() const -> bool
   else {
     panic("Invalid property type!");
   }
+}
+
+auto Attribute::type() const noexcept -> AttributeType
+{
+  if (holds<integer_type>()) {
+    return AttributeType::Int;
+  }
+  else if (holds<float_type>()) {
+    return AttributeType::Float;
+  }
+  else if (holds<bool>()) {
+    return AttributeType::Bool;
+  }
+  else if (holds<object_t>()) {
+    return AttributeType::Object;
+  }
+  else if (holds<color_type>()) {
+    return AttributeType::Color;
+  }
+  else if (holds<path_type>()) {
+    return AttributeType::Path;
+  }
+  else {
+    TACTILE_ASSERT(holds<string_type>());
+    return AttributeType::String;
+  }
+}
+
+auto Attribute::is_string() const noexcept -> bool
+{
+  return type() == AttributeType::String;
+}
+
+auto Attribute::is_int() const noexcept -> bool
+{
+  return type() == AttributeType::Int;
+}
+
+auto Attribute::is_float() const noexcept -> bool
+{
+  return type() == AttributeType::Float;
+}
+
+auto Attribute::is_bool() const noexcept -> bool
+{
+  return type() == AttributeType::Bool;
+}
+
+auto Attribute::is_path() const noexcept -> bool
+{
+  return type() == AttributeType::Path;
+}
+
+auto Attribute::is_object() const noexcept -> bool
+{
+  return type() == AttributeType::Object;
+}
+
+auto Attribute::is_color() const noexcept -> bool
+{
+  return type() == AttributeType::Color;
 }
 
 auto Attribute::as_string() const -> const string_type&
@@ -161,9 +223,9 @@ auto Attribute::as_bool() const -> bool
   }
 }
 
-auto Attribute::as_file() const -> const file_type&
+auto Attribute::as_path() const -> const path_type&
 {
-  if (const auto* file = get_if<file_type>()) {
+  if (const auto* file = get_if<path_type>()) {
     return *file;
   }
   else {
@@ -194,25 +256,25 @@ auto Attribute::as_color() const -> const color_type&
 auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
 {
   switch (value.type()) {
-    case AttributeType::string:
+    case AttributeType::String:
       return stream << value.as_string();
 
-    case AttributeType::integer:
+    case AttributeType::Int:
       return stream << value.as_int();
 
-    case AttributeType::floating:
+    case AttributeType::Float:
       return stream << value.as_float();
 
-    case AttributeType::boolean:
+    case AttributeType::Bool:
       return stream << value.as_bool();
 
-    case AttributeType::file:
-      return stream << value.as_file();
+    case AttributeType::Path:
+      return stream << value.as_path();
 
-    case AttributeType::color:
+    case AttributeType::Color:
       return stream << value.as_color().as_rgba();
 
-    case AttributeType::object:
+    case AttributeType::Object:
       return stream << "object '" << value.as_object() << "'";
 
     default:

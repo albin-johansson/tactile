@@ -23,7 +23,7 @@
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "misc/assert.hpp"
+#include "core/systems/registry_system.hpp"
 
 namespace tactile {
 
@@ -41,14 +41,12 @@ void BucketToolCmd::undo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::find_layer(registry, mLayer);
-  TACTILE_ASSERT(entity != entt::null);
-  TACTILE_ASSERT(registry.all_of<comp::TileLayer>(entity));
+  const auto layerEntity = sys::find_layer(registry, mLayer);
+  auto& layer = sys::checked_get<comp::TileLayer>(registry, layerEntity);
 
   const auto target = mTarget.value();
-  auto& layer = registry.get<comp::TileLayer>(entity);
   for (const auto& position : mPositions) {
-    layer.matrix.at(position.row_index()).at(position.col_index()) = target;
+    layer.matrix[position.row_index()][position.col_index()] = target;
   }
 
   mPositions.clear();
@@ -60,7 +58,7 @@ void BucketToolCmd::redo()
   auto& registry = mRegistry.get();
 
   const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  const auto& layer = registry.get<comp::TileLayer>(entity);
+  const auto& layer = sys::checked_get<comp::TileLayer>(registry, entity);
 
   mTarget = sys::get_tile(layer, mOrigin);
   flood(registry, entity, mOrigin, mReplacement, mPositions);

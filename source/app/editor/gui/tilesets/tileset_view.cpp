@@ -19,14 +19,16 @@
 
 #include "tileset_view.hpp"
 
-#include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <centurion/color.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/viewport.hpp"
+#include "core/components/viewport.hpp"
+#include "core/systems/registry_system.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/common/rubber_band.hpp"
@@ -37,21 +39,25 @@
 namespace tactile {
 namespace {
 
-constexpr auto _rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
+constexpr cen::color _rubber_band_color{0, 0x44, 0xCC, 100};
 constexpr cen::color _grid_color{200, 200, 200, 40};
 
-void _update_viewport_offset(const entt::entity viewportEntity,
+constinit std::optional<float> _view_width;
+constinit std::optional<float> _view_height;
+
+void _update_viewport_offset(const entt::entity tilesetEntity,
                              entt::dispatcher& dispatcher,
                              const ImVec2& viewportSize)
 {
-  ImGui::InvisibleButton("TilesetViewInvisibleButton",
+  ImGui::InvisibleButton("##TilesetViewInvisibleButton",
                          viewportSize,
                          ImGuiButtonFlags_MouseButtonLeft |
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
+
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
-    dispatcher.enqueue<OffsetBoundViewportEvent>(viewportEntity,
+    dispatcher.enqueue<OffsetBoundViewportEvent>(tilesetEntity,
                                                  io.MouseDelta.x,
                                                  io.MouseDelta.y,
                                                  viewportSize.x,
@@ -59,7 +65,10 @@ void _update_viewport_offset(const entt::entity viewportEntity,
   }
 }
 
-void _render_selection(const Region& selection, const ImVec2& min, const ImVec2& tileSize)
+void _render_selection(GraphicsCtx& graphics,
+                       const Region& selection,
+                       const ImVec2& min,
+                       const ImVec2& tileSize)
 {
   const auto diff = selection.end - selection.begin;
 
@@ -69,9 +78,8 @@ void _render_selection(const Region& selection, const ImVec2& min, const ImVec2&
   const ImVec2 size{static_cast<float>(diff.col()) * tileSize.x,
                     static_cast<float>(diff.row()) * tileSize.y};
 
-  ImGui::GetWindowDrawList()->AddRectFilled(min + origin,
-                                            min + origin + size,
-                                            _rubber_band_color);
+  graphics.set_draw_color(_rubber_band_color);
+  graphics.fill_rect(min + origin, size);
 }
 
 void _render_tileset_image(GraphicsCtx& graphics,
@@ -85,19 +93,19 @@ void _render_tileset_image(GraphicsCtx& graphics,
 
 }  // namespace
 
-void TilesetView::update(const entt::registry& registry,
-                         const entt::entity entity,
+void update_tileset_view(const entt::registry& registry,
+                         const entt::entity tilesetEntity,
                          entt::dispatcher& dispatcher)
 {
-  const auto& tileset = registry.get<comp::Tileset>(entity);
-  const auto& viewport = registry.get<Viewport>(entity);
+  const auto& tileset = sys::checked_get<comp::Tileset>(registry, tilesetEntity);
+  const auto& viewport = sys::checked_get<comp::Viewport>(registry, tilesetEntity);
 
   const auto region = ImGui::GetContentRegionAvail();
-  mWidth = region.x;
-  mHeight = region.y;
+  _view_width = region.x;
+  _view_height = region.y;
 
   const auto info = get_render_info(viewport, tileset);
-  _update_viewport_offset(entity, dispatcher, info.canvas_br - info.canvas_tl);
+  _update_viewport_offset(tilesetEntity, dispatcher, info.canvas_br - info.canvas_tl);
 
   GraphicsCtx graphics{info};
   graphics.set_draw_color(get_preferences().viewport_bg());
@@ -114,11 +122,14 @@ void TilesetView::update(const entt::registry& registry,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  _render_tileset_image(graphics, registry.get<comp::Texture>(entity), position);
+  _render_tileset_image(graphics,
+                        sys::checked_get<comp::Texture>(registry, tilesetEntity),
+                        position);
 
-  if (const auto& selection = registry.get<comp::TilesetSelection>(entity);
+  if (const auto& selection =
+          sys::checked_get<comp::TilesetSelection>(registry, tilesetEntity);
       selection.region) {
-    _render_selection(*selection.region, position, tileSize);
+    _render_selection(graphics, *selection.region, position, tileSize);
   }
 
   graphics.set_line_thickness(1);
@@ -128,14 +139,14 @@ void TilesetView::update(const entt::registry& registry,
   graphics.pop_clip();
 }
 
-auto TilesetView::width() const -> std::optional<float>
+auto get_tileset_view_width() -> std::optional<float>
 {
-  return mWidth;
+  return _view_width;
 }
 
-auto TilesetView::height() const -> std::optional<float>
+auto get_tileset_view_height() -> std::optional<float>
 {
-  return mHeight;
+  return _view_height;
 }
 
 }  // namespace tactile

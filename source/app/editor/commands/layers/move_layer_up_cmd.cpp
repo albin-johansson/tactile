@@ -34,16 +34,16 @@ void MoveLayerUpCmd::undo()
 {
   auto& registry = mRegistry.get();
 
-  auto&& [entity, layer] = sys::get_layer(registry, mLayerId);
-  sys::move_layer_down(registry, entity);
+  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  sys::move_layer_down(registry, layerEntity);
 }
 
 void MoveLayerUpCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  auto&& [entity, layer] = sys::get_layer(registry, mLayerId);
-  sys::move_layer_up(registry, entity);
+  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  sys::move_layer_up(registry, layerEntity);
 }
 
 }  // namespace tactile

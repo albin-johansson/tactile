@@ -21,33 +21,14 @@
 
 #include <entt/fwd.hpp>
 
-#include "editor/gui/components/component_editor.hpp"
-#include "editor/gui/dialogs/settings_dialog.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
-class DocumentModel;
+void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-/// \addtogroup gui
-/// \{
+void show_settings_dialog();
 
-class EditMenu final
-{
- public:
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-  /* Updates all associated windows. */
-  void update_windows(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-  void show_settings_dialog();
-
-  void show_component_editor(const DocumentModel& model);
-
- private:
-  SettingsDialog mSettingsDialog;
-  ComponentEditor mComponentEditor;
-};
-
-/// \} End of group gui
+void show_component_editor(const DocumentModel& model);
 
 }  // namespace tactile

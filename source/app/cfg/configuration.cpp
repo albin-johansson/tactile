@@ -24,13 +24,15 @@
 
 #include <GL/glew.h>
 
+#include <centurion/system.hpp>
+
+#include "cfg/sdl_attributes.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
-#include "sdl_attributes.hpp"
 
 #if TACTILE_PLATFORM_WINDOWS
 
@@ -63,8 +65,8 @@ void _win32_use_immersive_dark_mode([[maybe_unused]] cen::window& window)
 
     cen::shared_object dwmapi{"dwmapi.dll"};
 
-    using signature = HRESULT(HWND, DWORD, LPCVOID, DWORD);
-    auto* setAttribute = dwmapi.load_function<signature>("DwmSetWindowAttribute");
+    auto* setAttribute = dwmapi.load_function<HRESULT(HWND, DWORD, LPCVOID, DWORD)>(
+        "DwmSetWindowAttribute");
 
     if (!setAttribute) {
       return;

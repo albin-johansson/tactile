@@ -22,9 +22,12 @@
 #include <memory>  // unique_ptr, make_unique
 #include <vector>  // vector
 
-#include "edit_shortcuts.hpp"
-#include "file_shortcuts.hpp"
-#include "view_shortcuts.hpp"
+#include <centurion/event.hpp>
+#include <entt/signal/dispatcher.hpp>
+
+#include "editor/shortcuts/edit_shortcuts.hpp"
+#include "editor/shortcuts/file_shortcuts.hpp"
+#include "editor/shortcuts/view_shortcuts.hpp"
 
 namespace tactile {
 namespace {

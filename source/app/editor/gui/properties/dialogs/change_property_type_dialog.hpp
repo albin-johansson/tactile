@@ -49,7 +49,7 @@ class ChangePropertyTypeDialog final : public ADialog
       -> bool override;
 
  private:
-  AttributeType mCurrentType{AttributeType::string};
+  AttributeType mCurrentType{AttributeType::String};
   std::optional<std::string> mPropertyName;
   std::optional<AttributeType> mPreviousType;
 };

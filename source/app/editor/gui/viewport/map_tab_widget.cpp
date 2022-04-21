@@ -19,14 +19,15 @@
 
 #include "map_tab_widget.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
+#include "editor/gui/viewport/map_view.hpp"
 #include "editor/model.hpp"
-#include "map_view.hpp"
 
 namespace tactile {
 
@@ -47,7 +48,7 @@ void update_map_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
         }
       }
 
-      const auto& context = document->registry.ctx<comp::AttributeContext>();
+      const auto& context = document->registry.ctx().at<comp::AttributeContext>();
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {

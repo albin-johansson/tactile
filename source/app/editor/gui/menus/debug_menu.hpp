@@ -23,6 +23,4 @@ namespace tactile {
 
 void update_debug_menu();
 
-void update_debug_menu_windows();
-
 }  // namespace tactile

@@ -21,23 +21,24 @@
 
 #include <optional>  // optional
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "add_layer_context_menu.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "dialogs/rename_layer_dialog.hpp"
 #include "editor/constants.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/layers/add_layer_context_menu.hpp"
+#include "editor/gui/layers/dialogs/rename_layer_dialog.hpp"
 #include "editor/gui/layers/views/layer_item.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -55,7 +56,7 @@ constinit bool _is_focused = false;
 void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto activeLayerEntity = registry.ctx<comp::ActiveLayer>().entity;
+  const auto activeLayerEntity = registry.ctx().at<comp::ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
   std::optional<LayerID> activeLayerId;

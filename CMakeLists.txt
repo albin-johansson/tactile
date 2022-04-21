@@ -35,23 +35,26 @@ set(TACTILE_LIB TactileCore)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
-# These are not acquired using vcpkg
-find_package(OpenGL REQUIRED)
-find_package(Boost REQUIRED)
+# We need this to avoid getting CMake confused over which Boost to use
+set(BOOST_ROOT "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}")
 
-find_package(GLEW CONFIG REQUIRED)
-find_package(SDL2 CONFIG REQUIRED)
-find_package(SDL2-image CONFIG REQUIRED)
-find_package(Protobuf CONFIG REQUIRED)
-find_package(imgui CONFIG REQUIRED)
+# Not acquired using vcpkg
+find_package(OpenGL REQUIRED)
+
+find_package(Boost REQUIRED COMPONENTS container exception)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
-find_package(yaml-cpp CONFIG REQUIRED)
-find_package(nlohmann_json CONFIG REQUIRED)
-find_package(pugixml CONFIG REQUIRED)
-find_package(magic_enum CONFIG REQUIRED)
-find_package(tinyfiledialogs CONFIG REQUIRED)
+find_package(GLEW CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(Protobuf CONFIG REQUIRED)
+find_package(pugixml CONFIG REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2-image CONFIG REQUIRED)
+find_package(tinyfiledialogs CONFIG REQUIRED)
+find_package(yaml-cpp CONFIG REQUIRED)
 
 find_path(STB_INCLUDE_DIRS "stb.h")
 

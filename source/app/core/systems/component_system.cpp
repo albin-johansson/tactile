@@ -21,14 +21,15 @@
 
 #include <utility>  // move
 
+#include <entt/entity/registry.hpp>
 #include <fmt/format.h>
 
-#include "context_system.hpp"
 #include "core/components/attributes.hpp"
+#include "core/systems/context_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
-#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -91,7 +92,8 @@ namespace {
 
 void _visit_components(entt::registry& registry, auto callable)
 {
-  const auto& root = registry.ctx<comp::AttributeContext>();
+  const auto& ctx = registry.ctx();
+  const auto& root = ctx.at<comp::AttributeContext>();
   for (const auto compEntity : root.components) {
     auto& comp = checked_get<comp::Component>(registry, compEntity);
     callable(root.id, comp);
@@ -105,7 +107,8 @@ void _visit_components(entt::registry& registry, auto callable)
 
 void _visit_components(const entt::registry& registry, auto callable)
 {
-  const auto& root = registry.ctx<comp::AttributeContext>();
+  const auto& ctx = registry.ctx();
+  const auto& root = ctx.at<comp::AttributeContext>();
   for (const auto compEntity : root.components) {
     const auto& comp = checked_get<comp::Component>(registry, compEntity);
     callable(root.id, comp);
@@ -233,7 +236,8 @@ auto remove_component_def(entt::registry& registry, const ComponentID compId)
     });
   };
 
-  auto& root = registry.ctx<comp::AttributeContext>();
+  auto& ctx = registry.ctx();
+  auto& root = ctx.at<comp::AttributeContext>();
   cache(def.id, root);
   remove(root.components);
 
@@ -259,7 +263,7 @@ void restore_component_def(entt::registry& registry, RemoveComponentDefResult sn
   for (auto&& [contextId, values] : snapshot.values) {
     log_verbose("Restoring component '{}' for context '{}'", snapshot.id, contextId);
 
-    auto& context = sys::get_context(registry, contextId);
+    auto& context = get_context(registry, contextId);
 
     const auto componentEntity = registry.create();
     auto& component = registry.emplace<comp::Component>(componentEntity);
@@ -274,7 +278,7 @@ void rename_component_def(entt::registry& registry,
                           const ComponentID compId,
                           std::string name)
 {
-  TACTILE_ASSERT(!sys::is_component_name_taken(registry, name));
+  TACTILE_ASSERT(!is_component_name_taken(registry, name));
 
   log_debug("Renaming component definition '{}' to '{}'", compId, name);
 

@@ -30,7 +30,7 @@ namespace tactile::comp {
  */
 struct ActiveTool final
 {
-  ToolType tool{ToolType::none};
+  ToolType tool{ToolType::None};
 };
 
 /**

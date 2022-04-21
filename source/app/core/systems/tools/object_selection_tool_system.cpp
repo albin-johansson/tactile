@@ -19,6 +19,9 @@
 
 #include "object_selection_tool_system.hpp"
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
+
 #include "core/components/objects.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
@@ -31,7 +34,7 @@ namespace {
 
 void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  const auto entity = registry.ctx<comp::ActiveObject>().entity;
+  const auto entity = registry.ctx().at<comp::ActiveObject>().entity;
   if (entity != entt::null) {
     if (const auto* drag = registry.try_get<comp::ObjectDragInfo>(entity)) {
       const auto& object = checked_get<comp::Object>(registry, entity);
@@ -54,7 +57,7 @@ void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
     -> entt::entity
 {
   const auto& [_, layer] =
-      sys::get_object_layer(registry, get_active_layer_id(registry).value());
+      get_object_layer(registry, get_active_layer_id(registry).value());
   return find_object(registry, layer, mouse.x, mouse.y);
 }
 
@@ -71,7 +74,7 @@ void on_object_selection_tool_pressed(entt::registry& registry,
                                       const MouseInfo& mouse)
 {
   if (is_object_layer_active(registry)) {
-    auto& active = registry.ctx<comp::ActiveObject>();
+    auto& active = registry.ctx().at<comp::ActiveObject>();
     const auto objectEntity = _find_object_at_mouse(registry, mouse);
     switch (mouse.button) {
       case cen::mouse_button::left: {
@@ -109,7 +112,7 @@ void on_object_selection_tool_dragged(entt::registry& registry,
                                       const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_object_layer_active(registry)) {
-    const auto& active = registry.ctx<comp::ActiveObject>();
+    const auto& active = registry.ctx().at<comp::ActiveObject>();
     if (active.entity != entt::null) {
       if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.entity)) {
         auto& object = checked_get<comp::Object>(registry, active.entity);

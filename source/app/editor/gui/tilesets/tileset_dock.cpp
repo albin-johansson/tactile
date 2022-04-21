@@ -19,7 +19,8 @@
 
 #include "tileset_dock.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/tiles.hpp"
@@ -28,63 +29,73 @@
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/menus/map_menu.hpp"
+#include "editor/gui/scoped.hpp"
+#include "editor/gui/tilesets/tileset_tabs.hpp"
 #include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
-#include "tileset_tabs.hpp"
 
 namespace tactile {
 namespace {
 
 constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
-}  // namespace
-
-struct TilesetDock::Data final
+struct TilesetDockState final
 {
-  TilesetTabWidget tab_widget;
+  bool has_focus{};
+  bool is_hovered{};
 };
 
-TilesetDock::TilesetDock()
-    : ADockWidget{"Tilesets", _window_flags}
-    , mData{std::make_unique<Data>()}
+[[nodiscard]] auto _get_state() -> TilesetDockState&
 {
-  set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
-  set_close_button_enabled(true);
+  static TilesetDockState state;
+  return state;
 }
 
-TilesetDock::~TilesetDock() noexcept = default;
+}  // namespace
 
-void TilesetDock::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  const auto& registry = model.get_active_registry();
+  auto& prefs = get_preferences();
+  bool visible = prefs.is_tileset_dock_visible();
 
-  if (!registry.view<comp::Tileset>().empty()) {
-    mData->tab_widget.update(registry, dispatcher);
+  if (!visible) {
+    return;
   }
-  else {
-    prepare_vertical_alignment_center(2);
-    centered_text("Current map has no tilesets!");
-    ImGui::Spacing();
-    if (centered_button(TAC_ICON_TILESET " Create tileset...")) {
-      dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+
+  scoped::Window dock{"Tilesets", _window_flags, &visible};
+
+  auto& state = _get_state();
+  state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  state.is_hovered = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
+
+  if (dock.is_open()) {
+    const auto& registry = model.get_active_registry();
+    if (registry.view<comp::Tileset>().empty()) {
+      prepare_vertical_alignment_center(2);
+      centered_text("Current map has no tilesets!");
+
+      ImGui::Spacing();
+
+      if (centered_button(TAC_ICON_TILESET " Create tileset...")) {
+        dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+      }
+    }
+    else {
+      update_tileset_tabs(registry, dispatcher);
     }
   }
+
+  prefs.set_tileset_dock_visible(visible);
 }
 
-void TilesetDock::set_visible(const bool visible)
+auto is_tileset_dock_focused() -> bool
 {
-  get_preferences().set_tileset_dock_visible(visible);
+  return _get_state().has_focus;
 }
 
-auto TilesetDock::is_visible() const -> bool
+auto is_tileset_dock_hovered() -> bool
 {
-  return get_preferences().is_tileset_dock_visible();
-}
-
-auto TilesetDock::get_tileset_view() const -> const TilesetView&
-{
-  return mData->tab_widget.get_tileset_view();
+  return _get_state().is_hovered;
 }
 
 }  // namespace tactile

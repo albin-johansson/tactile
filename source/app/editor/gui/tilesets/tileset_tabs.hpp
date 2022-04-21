@@ -21,19 +21,8 @@
 
 #include <entt/fwd.hpp>
 
-#include "tileset_view.hpp"
-
 namespace tactile {
 
-class TilesetTabWidget final
-{
- public:
-  void update(const entt::registry& registry, entt::dispatcher& dispatcher);
-
-  [[nodiscard]] auto get_tileset_view() const -> const TilesetView&;
-
- private:
-  TilesetView mTilesetView;
-};
+void update_tileset_tabs(const entt::registry& registry, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

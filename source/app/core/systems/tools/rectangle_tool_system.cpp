@@ -22,6 +22,9 @@
 #include <algorithm>  // min
 #include <cmath>      // abs
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
+
 #include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
@@ -37,7 +40,8 @@ namespace {
 
 void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
+  auto& ctx = registry.ctx();
+  if (const auto* stroke = ctx.find<comp::CurrentRectangleStroke>()) {
     const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
     const auto x = (std::min)(stroke->start_x, stroke->current_x) / xRatio;
@@ -49,7 +53,7 @@ void _maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
       dispatcher.enqueue<AddRectangleEvent>(x, y, width, height);
     }
 
-    registry.unset<comp::CurrentRectangleStroke>();
+    ctx.erase<comp::CurrentRectangleStroke>();
   }
 }
 
@@ -69,7 +73,7 @@ void on_rectangle_tool_pressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (_is_usable(registry) && mouse.is_within_contents &&
       mouse.button == cen::mouse_button::left) {
-    auto& stroke = registry.set<comp::CurrentRectangleStroke>();
+    auto& stroke = registry.ctx().emplace<comp::CurrentRectangleStroke>();
     stroke.start_x = mouse.x;
     stroke.start_y = mouse.y;
     stroke.current_x = stroke.start_x;
@@ -80,7 +84,7 @@ void on_rectangle_tool_pressed(entt::registry& registry, const MouseInfo& mouse)
 void on_rectangle_tool_dragged(entt::registry& registry, const MouseInfo& mouse)
 {
   if (_is_usable(registry) && mouse.button == cen::mouse_button::left) {
-    if (auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
+    if (auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
       stroke->current_x = mouse.x;
       stroke->current_y = mouse.y;
     }

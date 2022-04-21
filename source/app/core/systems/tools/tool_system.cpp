@@ -19,14 +19,16 @@
 
 #include "tool_system.hpp"
 
-#include "bucket_tool_system.hpp"
+#include <entt/entity/registry.hpp>
+
 #include "core/components/tools.hpp"
-#include "ellipse_tool_system.hpp"
-#include "eraser_tool_system.hpp"
-#include "object_selection_tool_system.hpp"
-#include "point_tool_system.hpp"
-#include "rectangle_tool_system.hpp"
-#include "stamp_tool_system.hpp"
+#include "core/systems/tools/bucket_tool_system.hpp"
+#include "core/systems/tools/ellipse_tool_system.hpp"
+#include "core/systems/tools/eraser_tool_system.hpp"
+#include "core/systems/tools/object_selection_tool_system.hpp"
+#include "core/systems/tools/point_tool_system.hpp"
+#include "core/systems/tools/rectangle_tool_system.hpp"
+#include "core/systems/tools/stamp_tool_system.hpp"
 
 namespace tactile::sys {
 
@@ -34,81 +36,81 @@ void select_tool(entt::registry& registry,
                  entt::dispatcher& dispatcher,
                  const ToolType tool)
 {
-  auto& active = registry.ctx<comp::ActiveTool>();
+  auto& active = registry.ctx().at<comp::ActiveTool>();
 
   switch (active.tool) {
-    case ToolType::stamp:
+    case ToolType::Stamp:
       on_stamp_tool_disabled(dispatcher);
       break;
 
-    case ToolType::eraser:
+    case ToolType::Eraser:
       on_eraser_tool_disabled(dispatcher);
       break;
 
-    case ToolType::rectangle:
+    case ToolType::Rectangle:
       on_rectangle_tool_disabled(registry, dispatcher);
       break;
 
-    case ToolType::ellipse:
+    case ToolType::Ellipse:
       on_ellipse_tool_disabled(registry, dispatcher);
       break;
 
-    case ToolType::bucket:
-    case ToolType::object_selection:
-    case ToolType::point:
+    case ToolType::Bucket:
+    case ToolType::ObjectSelection:
+    case ToolType::Point:
       [[fallthrough]];
-    case ToolType::none:
+    case ToolType::None:
       break;
   }
 
-  active.tool = (active.tool == tool) ? ToolType::none : tool;
+  active.tool = (active.tool == tool) ? ToolType::None : tool;
 }
 
 void on_tool_entered(entt::registry& registry, entt::dispatcher&)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
-    case ToolType::stamp:
-    case ToolType::eraser:
-    case ToolType::bucket:
-    case ToolType::object_selection:
-    case ToolType::rectangle:
-    case ToolType::ellipse:
-    case ToolType::point:
+    case ToolType::Stamp:
+    case ToolType::Eraser:
+    case ToolType::Bucket:
+    case ToolType::ObjectSelection:
+    case ToolType::Rectangle:
+    case ToolType::Ellipse:
+    case ToolType::Point:
       [[fallthrough]];
-    case ToolType::none:
+    case ToolType::None:
       break;
   }
 }
 
 void on_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
-    case ToolType::stamp:
+    case ToolType::Stamp:
       on_stamp_tool_exited(dispatcher);
       break;
 
-    case ToolType::eraser:
+    case ToolType::Eraser:
       on_eraser_tool_exited(dispatcher);
       break;
 
-    case ToolType::object_selection:
+    case ToolType::ObjectSelection:
       on_object_selection_tool_exited(registry, dispatcher);
       break;
 
-    case ToolType::rectangle:
+    case ToolType::Rectangle:
       on_rectangle_tool_exited(registry, dispatcher);
       break;
 
-    case ToolType::ellipse:
+    case ToolType::Ellipse:
       on_ellipse_tool_exited(registry, dispatcher);
       break;
 
-    case ToolType::bucket:
-    case ToolType::point:
+    case ToolType::Bucket:
+    case ToolType::Point:
       [[fallthrough]];
-    case ToolType::none:
+    case ToolType::None:
       break;
   }
 }
@@ -117,36 +119,36 @@ void on_tool_pressed(entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
-    case ToolType::none:
+    case ToolType::None:
       break;
 
-    case ToolType::stamp:
+    case ToolType::Stamp:
       on_stamp_tool_pressed(registry, mouse);
       break;
 
-    case ToolType::bucket:
+    case ToolType::Bucket:
       on_bucket_tool_pressed(registry, dispatcher, mouse);
       break;
 
-    case ToolType::eraser:
+    case ToolType::Eraser:
       on_eraser_tool_pressed(registry, mouse);
       break;
 
-    case ToolType::object_selection:
+    case ToolType::ObjectSelection:
       on_object_selection_tool_pressed(registry, dispatcher, mouse);
       break;
 
-    case ToolType::rectangle:
+    case ToolType::Rectangle:
       on_rectangle_tool_pressed(registry, mouse);
       break;
 
-    case ToolType::point:
+    case ToolType::Point:
       on_point_tool_pressed(registry, dispatcher, mouse);
       break;
 
-    case ToolType::ellipse:
+    case ToolType::Ellipse:
       on_ellipse_tool_pressed(registry, mouse);
       break;
   }
@@ -156,31 +158,31 @@ void on_tool_dragged(entt::registry& registry,
                      [[maybe_unused]] entt::dispatcher& dispatcher,
                      const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
-    case ToolType::none:
-    case ToolType::point:
+    case ToolType::None:
+    case ToolType::Point:
       [[fallthrough]];
-    case ToolType::bucket:
+    case ToolType::Bucket:
       break;
 
-    case ToolType::stamp:
+    case ToolType::Stamp:
       on_stamp_tool_dragged(registry, mouse);
       break;
 
-    case ToolType::eraser:
+    case ToolType::Eraser:
       on_eraser_tool_dragged(registry, mouse);
       break;
 
-    case ToolType::object_selection:
+    case ToolType::ObjectSelection:
       on_object_selection_tool_dragged(registry, dispatcher, mouse);
       break;
 
-    case ToolType::rectangle:
+    case ToolType::Rectangle:
       on_rectangle_tool_dragged(registry, mouse);
       break;
 
-    case ToolType::ellipse:
+    case ToolType::Ellipse:
       on_ellipse_tool_dragged(registry, mouse);
       break;
   }
@@ -190,31 +192,31 @@ void on_tool_released(entt::registry& registry,
                       entt::dispatcher& dispatcher,
                       const MouseInfo& mouse)
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   switch (active.tool) {
-    case ToolType::none:
+    case ToolType::None:
       [[fallthrough]];
-    case ToolType::bucket:
-    case ToolType::point:
+    case ToolType::Bucket:
+    case ToolType::Point:
       break;
 
-    case ToolType::stamp:
+    case ToolType::Stamp:
       on_stamp_tool_released(registry, dispatcher, mouse);
       break;
 
-    case ToolType::eraser:
+    case ToolType::Eraser:
       on_eraser_tool_released(registry, dispatcher, mouse);
       break;
 
-    case ToolType::object_selection:
+    case ToolType::ObjectSelection:
       on_object_selection_tool_released(registry, dispatcher, mouse);
       break;
 
-    case ToolType::rectangle:
+    case ToolType::Rectangle:
       on_rectangle_tool_released(registry, dispatcher, mouse);
       break;
 
-    case ToolType::ellipse:
+    case ToolType::Ellipse:
       on_ellipse_tool_released(registry, dispatcher, mouse);
       break;
   }
@@ -222,7 +224,7 @@ void on_tool_released(entt::registry& registry,
 
 auto is_tool_enabled(const entt::registry& registry, const ToolType tool) -> bool
 {
-  const auto& active = registry.ctx<comp::ActiveTool>();
+  const auto& active = registry.ctx().at<comp::ActiveTool>();
   return active.tool == tool;
 }
 

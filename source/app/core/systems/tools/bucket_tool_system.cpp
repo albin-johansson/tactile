@@ -19,6 +19,9 @@
 
 #include "bucket_tool_system.hpp"
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
+
 #include "core/components/tiles.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"

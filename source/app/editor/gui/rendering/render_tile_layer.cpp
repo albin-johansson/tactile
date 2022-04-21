@@ -19,11 +19,14 @@
 
 #include "render_tile_layer.hpp"
 
+#include <entt/entity/registry.hpp>
+
 #include "core/components/layers.hpp"
 #include "core/region.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "graphics.hpp"
-#include "render_tile.hpp"
+#include "core/systems/registry_system.hpp"
+#include "editor/gui/rendering/graphics.hpp"
+#include "editor/gui/rendering/render_tile.hpp"
 
 namespace tactile {
 
@@ -32,8 +35,8 @@ void render_tile_layer(GraphicsCtx& graphics,
                        const entt::entity layerEntity,
                        const float parentOpacity)
 {
-  const auto& layer = registry.get<comp::Layer>(layerEntity);
-  const auto& tileLayer = registry.get<comp::TileLayer>(layerEntity);
+  const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
+  const auto& tileLayer = sys::checked_get<comp::TileLayer>(registry, layerEntity);
 
   graphics.set_opacity(parentOpacity * layer.opacity);
 

@@ -61,7 +61,7 @@ void AddTilesetCmd::redo()
     sys::restore_tileset(registry, *mSnapshot);
   }
 
-  auto& active = registry.ctx<comp::ActiveTileset>();
+  auto& active = registry.ctx().at<comp::ActiveTileset>();
   active.entity = sys::find_tileset(registry, mTilesetId.value());
 }
 

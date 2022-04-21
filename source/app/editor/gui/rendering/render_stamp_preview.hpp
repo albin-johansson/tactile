@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry
+#include <entt/fwd.hpp>
+
+#include "core/fwd.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
-
-class TilePos;
-struct RenderInfo;
 
 void render_stamp_preview(const entt::registry& registry,
                           const TilePos& mousePos,

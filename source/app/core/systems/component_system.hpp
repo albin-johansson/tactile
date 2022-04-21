@@ -26,7 +26,7 @@
 #include <unordered_map>  // unordered_map
 #include <utility>        // pair
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
 #include "core/components/attributes.hpp"

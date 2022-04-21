@@ -21,23 +21,29 @@
 
 #include <ostream>  // ostream
 
-#include <magic_enum.hpp>
-
 namespace tactile {
 
 /**
  * \brief Represents the different available map object types.
+ *
+ * \see Object
+ * \see ObjectLayer
  */
 enum class ObjectType
 {
-  point,
-  rect,
-  ellipse
+  Point,
+  Rect,
+  Ellipse
 };
 
-inline auto operator<<(std::ostream& stream, const ObjectType type) -> std::ostream&
-{
-  return stream << magic_enum::enum_name(type);
-}
+/**
+ * \brief Outputs an object type as the enumerator name.
+ *
+ * \param stream the output stream.
+ * \param type the object type to output.
+ *
+ * \return the used stream.
+ */
+auto operator<<(std::ostream& stream, ObjectType type) -> std::ostream&;
 
 }  // namespace tactile

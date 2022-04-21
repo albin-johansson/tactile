@@ -19,11 +19,18 @@
 
 #include "application_events.hpp"
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "application.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/viewport_events.hpp"
+#include "editor/gui/menus/edit_menu.hpp"
+#include "editor/gui/menus/file_menu.hpp"
+#include "editor/gui/menus/map_menu.hpp"
+#include "editor/gui/properties/property_dock.hpp"
+#include "editor/gui/viewport/map_view.hpp"
 
 namespace tactile {
 
@@ -40,10 +47,10 @@ void subscribe_to_events(App* app)
   d.sink<SaveEvent>().connect<&App::on_save>(app);
   d.sink<SaveAsEvent>().connect<&App::on_save_as>(app);
   d.sink<OpenSaveAsDialogEvent>().connect<&App::on_open_save_as_dialog>(app);
-  d.sink<ShowSettingsEvent>().connect<&App::on_show_settings>(app);
+  d.sink<ShowSettingsEvent>().connect<&show_settings_dialog>();
 
-  d.sink<ShowNewMapDialogEvent>().connect<&App::on_show_new_map_dialog>(app);
-  d.sink<ShowOpenMapDialogEvent>().connect<&App::on_show_open_map_dialog>(app);
+  d.sink<ShowNewMapDialogEvent>().connect<&show_map_creation_dialog>();
+  d.sink<ShowOpenMapDialogEvent>().connect<&show_map_selector_dialog>();
   d.sink<InspectMapEvent>().connect<&App::on_show_map_properties>(app);
   d.sink<CreateMapEvent>().connect<&App::on_create_map>(app);
   d.sink<CloseMapEvent>().connect<&App::on_close_map>(app);
@@ -65,7 +72,7 @@ void subscribe_to_events(App* app)
   d.sink<AddEllipseEvent>().connect<&App::on_add_ellipse>(app);
   d.sink<AddPointEvent>().connect<&App::on_add_point>(app);
 
-  d.sink<CenterViewportEvent>().connect<&App::on_center_viewport>(app);
+  d.sink<CenterViewportEvent>().connect<&center_map_viewport>();
   d.sink<OffsetViewportEvent>().connect<&App::on_offset_viewport>(app);
   d.sink<OffsetBoundViewportEvent>().connect<&App::on_offset_bound_viewport>(app);
   d.sink<PanLeftEvent>().connect<&App::on_pan_left>(app);
@@ -79,8 +86,7 @@ void subscribe_to_events(App* app)
   d.sink<IncreaseFontSizeEvent>().connect<&App::on_increase_font_size>(app);
   d.sink<DecreaseFontSizeEvent>().connect<&App::on_decrease_font_size>(app);
 
-  d.sink<ShowTilesetCreationDialogEvent>().connect<&App::on_show_tileset_creation_dialog>(
-      app);
+  d.sink<ShowTilesetCreationDialogEvent>().connect<&show_tileset_creation_dialog>();
   d.sink<AddTilesetEvent>().connect<&App::on_add_tileset>(app);
   d.sink<RemoveTilesetEvent>().connect<&App::on_remove_tileset>(app);
   d.sink<SelectTilesetEvent>().connect<&App::on_select_tileset>(app);
@@ -111,7 +117,7 @@ void subscribe_to_events(App* app)
   d.sink<SetObjectTagEvent>().connect<&App::on_set_object_tag>(app);
   d.sink<SpawnObjectContextMenuEvent>().connect<&App::on_spawn_object_context_menu>(app);
 
-  d.sink<ShowAddPropertyDialogEvent>().connect<&App::on_show_add_property_dialog>(app);
+  d.sink<ShowAddPropertyDialogEvent>().connect<&show_property_creation_dialog>();
   d.sink<ShowRenamePropertyDialogEvent>().connect<&App::on_show_rename_property_dialog>(
       app);
   d.sink<ShowChangePropertyTypeDialogEvent>()

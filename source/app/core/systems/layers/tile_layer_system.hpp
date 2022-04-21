@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
+#include "core/common/tile_cache.hpp"
 #include "core/components/layers.hpp"
-#include "core/tile_cache.hpp"
 #include "core/tile_pos.hpp"
 #include "misc/assert.hpp"
 #include "tactile.hpp"

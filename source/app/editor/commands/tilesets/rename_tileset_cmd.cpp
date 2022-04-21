@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include "core/components/attributes.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "misc/assert.hpp"
 
@@ -43,7 +44,7 @@ void RenameTilesetCmd::undo()
   const auto entity = sys::find_tileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<comp::AttributeContext>(entity);
+  auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
   context.name = mOldName.value();
 }
 
@@ -54,7 +55,7 @@ void RenameTilesetCmd::redo()
   const auto entity = sys::find_tileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<comp::AttributeContext>(entity);
+  auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
   mOldName = context.name;
   context.name = mNewName;
 }

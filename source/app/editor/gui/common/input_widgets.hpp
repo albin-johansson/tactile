@@ -23,7 +23,7 @@
 #include <optional>    // optional
 #include <string>      // string
 
-#include <centurion.hpp>
+#include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "core/attribute.hpp"
@@ -62,7 +62,7 @@ namespace tactile {
 [[nodiscard]] auto input_color(const char* id, cen::color value)
     -> std::optional<cen::color>;
 
-[[nodiscard]] auto input_file(const char* id, const std::filesystem::path& value)
+[[nodiscard]] auto input_path(const char* id, const std::filesystem::path& value)
     -> std::optional<std::filesystem::path>;
 
 }  // namespace tactile

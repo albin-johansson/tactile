@@ -24,7 +24,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <centurion.hpp>
+#include <centurion/fwd.hpp>
 
 #include "editor/gui/themes.hpp"
 #include "tactile.hpp"
@@ -40,10 +40,10 @@ namespace tactile {
  */
 enum class OverlayPos
 {
-  top_left = 0,
-  top_right = 1,
-  bottom_left = 2,
-  bottom_right = 3
+  TopLeft = 0,
+  TopRight = 1,
+  BottomLeft = 2,
+  BottomRight = 3
 };
 
 class PreferenceState final

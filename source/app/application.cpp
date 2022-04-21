@@ -21,7 +21,8 @@
 
 #include <utility>  // move, forward
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -29,15 +30,21 @@
 #include "cfg/configuration.hpp"
 #include "cfg/fonts.hpp"
 #include "core/components/attributes.hpp"
+#include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "core/utils/texture_manager.hpp"
-#include "core/viewport.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/layers/layer_dock.hpp"
+#include "editor/gui/menus/edit_menu.hpp"
+#include "editor/gui/properties/property_dock.hpp"
+#include "editor/gui/tilesets/tileset_dock.hpp"
+#include "editor/gui/tilesets/tileset_view.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -202,6 +209,10 @@ void Application::on_keyboard_event(cen::keyboard_event event)
 
 void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
+  /* This function is ugly and awkward, but there doesn't seem to be a good way to handle
+     mouse "wheel" events using the public ImGui APIs. Otherwise, it would be nicer to
+     keep this code closer to the actual widgets. */
+
   constexpr float scaling = 4.0f;
 
   auto& data = *mData;
@@ -209,7 +220,8 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
   if (registry && !ImGui::GetTopMostPopupModal()) {
     if (is_mouse_within_viewport()) {
-      const auto& viewport = registry->ctx<Viewport>();
+      const auto& ctx = registry->ctx();
+      const auto& viewport = ctx.at<comp::Viewport>();
       if (cen::is_active(primary_modifier)) {
         const auto y = event.precise_y();
         if (y > 0) {
@@ -225,14 +237,14 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
         data.dispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
       }
     }
-    else if (data.widgets.is_tileset_dock_hovered()) {
-      const auto width = data.widgets.tileset_view_width();
-      const auto height = data.widgets.tileset_view_height();
+    else if (is_tileset_dock_hovered()) {
+      const auto width = get_tileset_view_width();
+      const auto height = get_tileset_view_height();
       if (width && height) {
         const auto entity = sys::find_active_tileset(*registry);
         TACTILE_ASSERT(entity != entt::null);
 
-        const auto& viewport = registry->get<Viewport>(entity);
+        const auto& viewport = sys::checked_get<comp::Viewport>(*registry, entity);
 
         const auto dx = event.precise_x() * (viewport.tile_width / scaling);
         const auto dy = event.precise_y() * (viewport.tile_height / scaling);
@@ -272,7 +284,8 @@ void Application::on_save()
       save_document(*document);
       document->commands.mark_as_clean();
 
-      auto& context = document->registry.ctx<comp::AttributeContext>();
+      auto& ctx = document->registry.ctx();
+      auto& context = ctx.at<comp::AttributeContext>();
       context.name = document->path.filename().string();
     }
     else {
@@ -296,25 +309,11 @@ void Application::on_open_save_as_dialog()
   }
 }
 
-void Application::on_show_settings()
-{
-  mData->widgets.show_settings();
-}
-
-void Application::on_show_new_map_dialog()
-{
-  mData->widgets.show_new_map_dialog();
-}
-
-void Application::on_show_open_map_dialog()
-{
-  mData->widgets.show_open_map_dialog();
-}
-
 void Application::on_show_map_properties()
 {
   if (auto* registry = mData->model.active_registry()) {
-    auto& current = registry->ctx<comp::ActiveAttributeContext>();
+    auto& ctx = registry->ctx();
+    auto& current = ctx.at<comp::ActiveAttributeContext>();
     current.entity = entt::null;
   }
 }
@@ -444,11 +443,6 @@ void Application::on_add_point(const AddPointEvent& event)
   _execute<PointToolCmd>(mData->model, event.x, event.y);
 }
 
-void Application::on_center_viewport()
-{
-  center_map_viewport();
-}
-
 void Application::on_offset_viewport(const OffsetViewportEvent& event)
 {
   auto& registry = mData->model.get_active_registry();
@@ -536,11 +530,6 @@ void Application::on_decrease_font_size()
   mData->reload_fonts = true;
 }
 
-void Application::on_show_tileset_creation_dialog()
-{
-  mData->widgets.show_add_tileset_dialog();
-}
-
 void Application::on_add_tileset(const AddTilesetEvent& event)
 {
   if (auto info = mData->textures.load(event.path)) {
@@ -604,7 +593,8 @@ void Application::on_resize_map(const ResizeMapEvent& event)
 void Application::on_open_resize_map_dialog()
 {
   if (auto* registry = mData->model.active_registry()) {
-    const auto& map = registry->ctx<MapInfo>();
+    const auto& ctx = registry->ctx();
+    const auto& map = ctx.at<MapInfo>();
     mData->widgets.show_resize_map_dialog(map.row_count, map.column_count);
   }
 }
@@ -622,8 +612,7 @@ void Application::on_remove_layer(const RemoveLayerEvent& event)
 void Application::on_select_layer(const SelectLayerEvent& event)
 {
   if (auto* registry = mData->model.active_registry()) {
-    auto& active = registry->ctx<comp::ActiveLayer>();
-    active.entity = sys::find_layer(*registry, event.id);
+    sys::select_layer(*registry, event.id);
   }
 }
 
@@ -654,7 +643,7 @@ void Application::on_set_layer_visible(const SetLayerVisibleEvent& event)
 
 void Application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
 {
-  mData->widgets.show_rename_layer_dialog(event.id);
+  show_rename_layer_dialog(event.id);
 }
 
 void Application::on_rename_layer(const RenameLayerEvent& event)
@@ -692,21 +681,16 @@ void Application::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent
   open_object_context_menu();
 }
 
-void Application::on_show_add_property_dialog()
-{
-  mData->widgets.show_add_property_dialog();
-}
-
 void Application::on_show_rename_property_dialog(
     const ShowRenamePropertyDialogEvent& event)
 {
-  mData->widgets.show_rename_property_dialog(event.name);
+  show_rename_property_dialog(event.name);
 }
 
 void Application::on_show_change_property_type_dialog(
     const ShowChangePropertyTypeDialogEvent& event)
 {
-  mData->widgets.show_change_property_type_dialog(event.name, event.current_type);
+  show_change_property_type_dialog(event.name, event.current_type);
 }
 
 void Application::on_add_property(const AddPropertyEvent& event)
@@ -737,13 +721,14 @@ void Application::on_change_property_type(const ChangePropertyTypeEvent& event)
 void Application::on_inspect_context(const InspectContextEvent& event)
 {
   auto& registry = mData->model.get_active_registry();
-  auto& current = registry.ctx<comp::ActiveAttributeContext>();
+  auto& ctx = registry.ctx();
+  auto& current = ctx.at<comp::ActiveAttributeContext>();
   current.entity = event.entity;
 }
 
 void Application::on_open_component_editor()
 {
-  mData->widgets.show_component_editor(mData->model);
+  show_component_editor(mData->model);
 }
 
 void Application::on_create_component_def(const CreateComponentDefEvent& event)

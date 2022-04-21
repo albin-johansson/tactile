@@ -22,7 +22,9 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "core/map.hpp"
+#include <entt/entity/registry.hpp>
+
+#include "core/map_info.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"
@@ -64,7 +66,7 @@ auto DocumentModel::add_map(const int32 tileWidth,
   Document document;
   document.registry = sys::make_document_registry();
 
-  auto& map = document.registry.ctx<MapInfo>();
+  auto& map = document.registry.ctx().at<MapInfo>();
   map.tile_width = tileWidth;
   map.tile_height = tileHeight;
   map.row_count = rows;
@@ -255,18 +257,18 @@ auto DocumentModel::is_tool_possible(const ToolType tool) const -> bool
   }
 
   switch (tool) {
-    case ToolType::stamp:
-    case ToolType::eraser:
+    case ToolType::Stamp:
+    case ToolType::Eraser:
       return sys::is_tile_layer_active(*registry);
 
-    case ToolType::bucket:
+    case ToolType::Bucket:
       return sys::is_tile_layer_active(*registry) &&
              sys::is_single_tile_selected_in_tileset(*registry);
 
-    case ToolType::object_selection:
-    case ToolType::rectangle:
-    case ToolType::ellipse:
-    case ToolType::point:
+    case ToolType::ObjectSelection:
+    case ToolType::Rectangle:
+    case ToolType::Ellipse:
+    case ToolType::Point:
       return sys::is_object_layer_active(*registry);
 
     default:

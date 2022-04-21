@@ -21,7 +21,9 @@
 
 #include <optional>  // optional
 
-#include <centurion.hpp>
+#include <centurion/initialization.hpp>
+#include <centurion/opengl.hpp>
+#include <centurion/window.hpp>
 
 #include "imgui_context.hpp"
 #include "protobuf_context.hpp"

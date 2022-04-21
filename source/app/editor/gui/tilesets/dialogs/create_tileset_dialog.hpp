@@ -31,7 +31,7 @@ class CreateTilesetDialog final : public ADialog
  public:
   CreateTilesetDialog();
 
-  void Open();
+  void open();
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;

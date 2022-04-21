@@ -34,13 +34,13 @@
 namespace tactile {
 namespace {
 
-constexpr std::array _items{std::make_pair("string", AttributeType::string),
-                            std::make_pair("int", AttributeType::integer),
-                            std::make_pair("float", AttributeType::floating),
-                            std::make_pair("bool", AttributeType::boolean),
-                            std::make_pair("color", AttributeType::color),
-                            std::make_pair("object", AttributeType::object),
-                            std::make_pair("file", AttributeType::file)};
+constexpr std::array _items{std::make_pair("string", AttributeType::String),
+                            std::make_pair("int", AttributeType::Int),
+                            std::make_pair("float", AttributeType::Float),
+                            std::make_pair("bool", AttributeType::Bool),
+                            std::make_pair("color", AttributeType::Color),
+                            std::make_pair("object", AttributeType::Object),
+                            std::make_pair("path", AttributeType::Path)};
 
 [[nodiscard]] auto _index_from_type(const AttributeType type) -> usize
 {

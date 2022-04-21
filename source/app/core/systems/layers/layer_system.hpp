@@ -23,10 +23,10 @@
 #include <string>    // string
 #include <utility>   // pair
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/components/layers.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/snapshot.hpp"
 #include "tactile.hpp"
 
@@ -43,7 +43,11 @@ namespace tactile::sys {
 /**
  * \brief Creates a basic layer entity.
  *
- * \pre `parent` must either be associated with a group layer or be null.
+ * \details This function is used internally by the other layer factory functions, and
+ * does not produce ready-to-use layer entities. The purpose of exposing this function is
+ * to make restoring documents post-parsing easier.
+ *
+ * \pre `parent` is either a group layer or null.
  *
  * \details The created entity will feature the following components:
  * - `AttributeContext`
@@ -55,15 +59,15 @@ namespace tactile::sys {
  * \param id the unique identifier associated with the layer.
  * \param type the specific layer type.
  * \param name the name of the layer.
- * \param parent the parent layer entity, can safely be a null entity.
+ * \param parent the parent layer entity, can safely be null.
  *
  * \return the created layer entity.
  */
-auto make_basic_layer(entt::registry& registry,
-                      LayerID id,
-                      LayerType type,
-                      std::string name,
-                      entt::entity parent = entt::null) -> entt::entity;
+auto new_layer_skeleton(entt::registry& registry,
+                        LayerID id,
+                        LayerType type,
+                        std::string name,
+                        entt::entity parent = entt::null) -> entt::entity;
 
 /**
  * \brief Creates a tile layer entity.
@@ -73,17 +77,16 @@ auto make_basic_layer(entt::registry& registry,
  *
  * \details The created entity will feature the following components:
  * - `Layer`
+ * - `LayerTreeNode`
  * - `TileLayer`
  * - `Parent`
  * - `AttributeContext`
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
  *
- * \return the created tile layer entity.
- *
- * \since 0.2.0
+ * \return the created entity.
  */
-auto make_tile_layer(entt::registry& registry) -> entt::entity;
+auto new_tile_layer(entt::registry& registry) -> entt::entity;
 
 /**
  * \brief Creates an object layer entity.
@@ -93,17 +96,16 @@ auto make_tile_layer(entt::registry& registry) -> entt::entity;
  *
  * \details The created entity will feature the following components:
  * - `Layer`
+ * - `LayerTreeNode`
  * - `ObjectLayer`
  * - `Parent`
  * - `AttributeContext`
  *
- * \param registry the associated registry.
+ * \param registry the document registry.
  *
- * \return the created object layer entity.
- *
- * \since 0.2.0
+ * \return the created entity.
  */
-auto make_object_layer(entt::registry& registry) -> entt::entity;
+auto new_object_layer(entt::registry& registry) -> entt::entity;
 
 /**
  * \brief Creates a group layer entity.
@@ -113,15 +115,16 @@ auto make_object_layer(entt::registry& registry) -> entt::entity;
  *
  * \details The created entity will feature the following components:
  * - `Layer`
+ * - `LayerTreeNode`
  * - `GroupLayer`
  * - `Parent`
  * - `AttributeContext`
  *
- * \param registry a map registry.
+ * \param registry the document registry.
  *
- * \return the created group layer entity.
+ * \return the created entity.
  */
-auto make_group_layer(entt::registry& registry) -> entt::entity;
+auto new_group_layer(entt::registry& registry) -> entt::entity;
 
 /**
  * \brief Removes the layer associated with the specified ID.
@@ -147,6 +150,16 @@ auto duplicate_layer(entt::registry& registry,
                      entt::entity parent,
                      bool recursive) -> entt::entity;
 
+/**
+ * \brief Selects the layer associated with the specified ID.
+ *
+ * \param registry the document registry.
+ * \param id the ID of the layer that will be selected.
+ *
+ * \throws TactileError if there is no layer with the specified ID.
+ */
+void select_layer(entt::registry& registry, LayerID id);
+
 [[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
 [[nodiscard]] auto get_active_layer_id(const entt::registry& registry)
@@ -162,14 +175,20 @@ auto duplicate_layer(entt::registry& registry,
  */
 [[nodiscard]] auto find_layer(const entt::registry& registry, LayerID id) -> entt::entity;
 
-[[nodiscard]] auto get_layer_entity(const entt::registry& registry, LayerID id)
-    -> entt::entity;
+[[nodiscard, deprecated]] auto get_layer_entity(const entt::registry& registry,
+                                                LayerID id) -> entt::entity;
 
-[[nodiscard]] auto get_layer(entt::registry& registry, LayerID id)
-    -> std::pair<entt::entity, comp::Layer&>;
-
-[[nodiscard]] auto get_layer(const entt::registry& registry, LayerID id)
-    -> std::pair<entt::entity, const comp::Layer&>;
+/**
+ * \brief Returns the layer entity associated with a layer ID.
+ *
+ * \param registry the document registry.
+ * \param id the ID associated with the desired layer.
+ *
+ * \return a layer entity.
+ *
+ * \throws TactileError if the ID is invalid.
+ */
+[[nodiscard]] auto get_layer(const entt::registry& registry, LayerID id) -> entt::entity;
 
 [[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;
 

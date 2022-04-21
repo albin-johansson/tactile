@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include <cstddef>        // size_t
-#include <cstdint>        // int{}_t, uint{}_t
+#include <cstddef>  // size_t
+#include <cstdint>  // int{}_t, uint{}_t
 
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
@@ -32,11 +32,11 @@
 
 #define TACTILE_DEFAULT_MOVE(Class)  \
   Class(Class&&) noexcept = default; \
-  auto operator=(Class&&) noexcept->Class& = default;
+  auto operator=(Class&&) noexcept -> Class& = default;
 
 #define TACTILE_DELETE_MOVE(Class)  \
   Class(Class&&) noexcept = delete; \
-  auto operator=(Class&&) noexcept->Class& = delete;
+  auto operator=(Class&&) noexcept -> Class& = delete;
 
 namespace tactile {
 

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "misc/throw.hpp"
 
@@ -55,7 +55,7 @@ namespace tactile::sys {
  *
  * \return a reference to the component.
  *
- * \throws tactile_error if the entity identifier is invalid or if the entity does not
+ * \throws TactileError if the entity identifier is invalid or if the entity does not
  * have the component.
  */
 template <typename T>

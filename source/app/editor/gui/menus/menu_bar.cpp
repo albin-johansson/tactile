@@ -19,57 +19,30 @@
 
 #include "menu_bar.hpp"
 
-#include <entt/entt.hpp>
 #include <imgui.h>
 
-#include "debug_menu.hpp"
+#include "editor/gui/menus/debug_menu.hpp"
+#include "editor/gui/menus/edit_menu.hpp"
+#include "editor/gui/menus/file_menu.hpp"
+#include "editor/gui/menus/help_menu.hpp"
+#include "editor/gui/menus/map_menu.hpp"
+#include "editor/gui/menus/view_menu.hpp"
 #include "editor/model.hpp"
-#include "view_menu.hpp"
 
 namespace tactile {
 
-void MenuBar::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar()) {
-    mFileMenu.update(model, dispatcher);
-    mEditMenu.update(model, dispatcher);
+    update_file_menu(model, dispatcher);
+    update_edit_menu(model, dispatcher);
     update_view_menu(model, dispatcher);
-    mMapMenu.update(model, dispatcher);
-    mHelpMenu.update(model, dispatcher);
+    update_map_menu(model, dispatcher);
+    update_help_menu(model, dispatcher);
     update_debug_menu();
 
     ImGui::EndMainMenuBar();
   }
-
-  mFileMenu.update_windows(model, dispatcher);
-  mEditMenu.update_windows(model, dispatcher);
-  mHelpMenu.update_windows();
-  update_debug_menu_windows();
-}
-
-void MenuBar::show_settings_dialog()
-{
-  mEditMenu.show_settings_dialog();
-}
-
-void MenuBar::show_map_creation_dialog()
-{
-  mFileMenu.show_map_creation_dialog();
-}
-
-void MenuBar::show_open_map_dialog()
-{
-  mFileMenu.show_open_map_dialog();
-}
-
-void MenuBar::show_tileset_creation_dialog()
-{
-  mMapMenu.show_tileset_creation_dialog();
-}
-
-void MenuBar::show_component_editor(const DocumentModel& model)
-{
-  mEditMenu.show_component_editor(model);
 }
 
 }  // namespace tactile

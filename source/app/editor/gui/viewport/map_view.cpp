@@ -21,15 +21,17 @@
 
 #include <cmath>  // round
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
 #include "core/components/tools.hpp"
+#include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
-#include "core/viewport.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
@@ -83,7 +85,7 @@ void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, 
 }
 
 void _center_viewport(entt::dispatcher& dispatcher,
-                      const Viewport& viewport,
+                      const comp::Viewport& viewport,
                       const ImVec2& canvasSize,
                       const float nRows,
                       const float nCols)
@@ -109,12 +111,12 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
   }
 
   if (cursor.is_within_map &&  //
-      sys::is_tool_enabled(registry, ToolType::stamp) &&
+      sys::is_tool_enabled(registry, ToolType::Stamp) &&
       sys::is_tileset_selection_not_empty(registry)) {
     render_stamp_preview(registry, cursor.map_position, info);
   }
-  else if (sys::is_tool_enabled(registry, ToolType::rectangle)) {
-    if (const auto* stroke = registry.try_ctx<comp::CurrentRectangleStroke>()) {
+  else if (sys::is_tool_enabled(registry, ToolType::Rectangle)) {
+    if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
       const ImVec2 pos{stroke->start_x, stroke->start_y};
       const ImVec2 size{stroke->current_x - stroke->start_x,
                         stroke->current_y - stroke->start_y};
@@ -124,8 +126,8 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
       graphics.draw_translated_rect_with_shadow(pos, size);
     }
   }
-  else if (sys::is_tool_enabled(registry, ToolType::ellipse)) {
-    if (const auto* stroke = registry.try_ctx<comp::CurrentEllipseStroke>()) {
+  else if (sys::is_tool_enabled(registry, ToolType::Ellipse)) {
+    if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
       const ImVec2 radius{(stroke->current_x - stroke->start_x),
                           (stroke->current_y - stroke->start_y)};
       const ImVec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
@@ -195,8 +197,10 @@ void _update_context_menu([[maybe_unused]] const entt::registry& registry,
 void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto& viewport = registry.ctx<Viewport>();
-  const auto& map = registry.ctx<MapInfo>();
+  const auto& ctx = registry.ctx();
+
+  const auto& viewport = ctx.at<comp::Viewport>();
+  const auto& map = ctx.at<MapInfo>();
 
   const auto info = get_render_info(viewport, map);
   update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
@@ -240,10 +244,10 @@ void update_map_view_object_context_menu(const entt::registry& registry,
                                          entt::dispatcher& dispatcher)
 {
   if (scoped::Popup popup{_object_context_menu_id}; popup.is_open()) {
-    const auto active = registry.ctx<comp::ActiveObject>();
+    const auto active = registry.ctx().at<comp::ActiveObject>();
 
     TACTILE_ASSERT(active.entity != entt::null);
-    const auto& object = registry.get<comp::Object>(active.entity);
+    const auto& object = sys::checked_get<comp::Object>(registry, active.entity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
       dispatcher.enqueue<InspectContextEvent>(active.entity);

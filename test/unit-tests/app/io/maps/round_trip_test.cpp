@@ -298,7 +298,7 @@ constexpr usize _col_count = 13;
 
   auto& point = objectLayerData.objects.emplace_back();
   point.name = "Point";
-  point.type = tactile::ObjectType::point;
+  point.type = ObjectType::Point;
   point.id = 34;
   point.x = 453;
   point.y = 328;
@@ -311,7 +311,7 @@ constexpr usize _col_count = 13;
 
   auto& rect = objectLayerData.objects.emplace_back();
   rect.name = "Rectangle";
-  rect.type = tactile::ObjectType::rect;
+  rect.type = ObjectType::Rect;
   rect.id = 26;
   rect.x = 854;
   rect.y = 654;
@@ -329,7 +329,7 @@ constexpr usize _col_count = 13;
 
   auto& ellipse = objectLayerData.objects.emplace_back();
   ellipse.name = "Ellipse";
-  ellipse.type = tactile::ObjectType::ellipse;
+  ellipse.type = ObjectType::Ellipse;
   ellipse.id = 54;
   ellipse.x = 193;
   ellipse.y = 587;
@@ -364,7 +364,7 @@ constexpr usize _col_count = 13;
 
   auto& objectData = data.fancy_tiles[80].objects.emplace_back();
   objectData.name = "Fancy Object";
-  objectData.type = ObjectType::point;
+  objectData.type = ObjectType::Point;
   objectData.id = 99;
   objectData.x = 23;
   objectData.y = 47;

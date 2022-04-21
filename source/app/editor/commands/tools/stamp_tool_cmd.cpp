@@ -23,7 +23,7 @@
 
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "misc/assert.hpp"
+#include "core/systems/registry_system.hpp"
 
 namespace tactile {
 
@@ -52,7 +52,7 @@ void StampToolCmd::ApplySequence(const TileCache& cache)
   auto& registry = mRegistry.get();
 
   const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  auto& layer = registry.get<comp::TileLayer>(entity);
+  auto& layer = sys::checked_get<comp::TileLayer>(registry, entity);
 
   sys::set_tiles(layer, cache);
 }

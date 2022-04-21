@@ -19,8 +19,8 @@
 
 #include "help_menu.hpp"
 
-#include <centurion.hpp>  // open_url
-#include <entt/entt.hpp>
+#include <centurion/system.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/gui/alignment.hpp"
@@ -30,15 +30,33 @@
 #include "editor/gui/scoped.hpp"
 
 namespace tactile {
+namespace {
 
-void HelpMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+struct HelpMenuState final
 {
+  AboutDialog about_dialog;
+  CreditsDialog credits_dialog;
+  bool show_about_imgui{};
+};
+
+[[nodiscard]] auto _get_state() -> HelpMenuState&
+{
+  static HelpMenuState state;
+  return state;
+}
+
+}  // namespace
+
+void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+{
+  auto& state = _get_state();
+
   if (scoped::Menu menu{"Help"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
-      mAboutDialog.show();
+      state.about_dialog.show();
     }
 
-    mShowAboutImGui = ImGui::MenuItem("About Dear ImGui...");
+    state.show_about_imgui = ImGui::MenuItem("About Dear ImGui...");
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_BUG " Report Issue...")) {
@@ -47,19 +65,16 @@ void HelpMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
     if (ImGui::MenuItem("Credits...")) {
-      mCreditsDialog.show();
+      state.credits_dialog.show();
     }
   }
 
-  mAboutDialog.update(model, dispatcher);
-  mCreditsDialog.update(model, dispatcher);
-}
+  state.about_dialog.update(model, dispatcher);
+  state.credits_dialog.update(model, dispatcher);
 
-void HelpMenu::update_windows()
-{
-  if (mShowAboutImGui) {
+  if (state.show_about_imgui) {
     center_next_window_on_appearance();
-    ImGui::ShowAboutWindow(&mShowAboutImGui);
+    ImGui::ShowAboutWindow(&state.show_about_imgui);
   }
 }
 

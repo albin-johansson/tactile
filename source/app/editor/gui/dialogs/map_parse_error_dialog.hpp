@@ -21,7 +21,7 @@
 
 #include <optional>  // optional
 
-#include "dialog.hpp"
+#include "editor/gui/dialogs/dialog.hpp"
 #include "io/maps/parser/parse_error.hpp"
 #include "tactile.hpp"
 

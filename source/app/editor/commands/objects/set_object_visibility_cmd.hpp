@@ -22,7 +22,7 @@
 #include <optional>  // optional
 
 #include "editor/commands/command_id.hpp"
-#include "object_command.hpp"
+#include "editor/commands/objects/object_command.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

@@ -23,13 +23,12 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/attribute.hpp"
+#include "core/fwd.hpp"
+#include "editor/fwd.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 /**
  * \brief Used to manage the available component definitions.

@@ -19,7 +19,7 @@
 
 #include "map_menu.hpp"
 
-#include <entt/entt.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"
@@ -31,16 +31,26 @@
 #include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {
+namespace {
 
-MapMenu::MapMenu()
-    : mCreateTilesetDialog{std::make_unique<CreateTilesetDialog>()}
-    , mGodotExportDialog{std::make_unique<GodotExportDialog>()}
-{}
-
-MapMenu::~MapMenu() noexcept = default;
-
-void MapMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+struct MapMenuState final
 {
+  CreateTilesetDialog tileset_creation_dialog;
+  GodotExportDialog godot_export_dialog;
+};
+
+[[nodiscard]] auto _get_state() -> MapMenuState&
+{
+  static MapMenuState state;
+  return state;
+}
+
+}  // namespace
+
+void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+{
+  auto& state = _get_state();
+
   scoped::Disable disable{!model.has_active_document()};
   if (scoped::Menu menu{"Map"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
@@ -81,18 +91,18 @@ void MapMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     if (scoped::Menu ex{"Export"}; ex.is_open()) {
       if (ImGui::MenuItem("Godot Scene...")) {
-        mGodotExportDialog->open();
+        state.godot_export_dialog.open();
       }
     }
   }
 
-  mCreateTilesetDialog->update(model, dispatcher);
-  mGodotExportDialog->update(model, dispatcher);
+  state.tileset_creation_dialog.update(model, dispatcher);
+  state.godot_export_dialog.update(model, dispatcher);
 }
 
-void MapMenu::show_tileset_creation_dialog()
+void show_tileset_creation_dialog()
 {
-  mCreateTilesetDialog->Open();
+  _get_state().tileset_creation_dialog.open();
 }
 
 }  // namespace tactile

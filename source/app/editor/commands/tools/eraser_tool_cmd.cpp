@@ -24,6 +24,7 @@
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -40,7 +41,7 @@ void EraserToolCmd::undo()
   auto& registry = mRegistry.get();
 
   const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  auto& layer = registry.get<comp::TileLayer>(entity);
+  auto& layer = sys::checked_get<comp::TileLayer>(registry, entity);
 
   sys::set_tiles(layer, mOldState);
 }
@@ -52,7 +53,7 @@ void EraserToolCmd::redo()
   const auto entity = sys::find_layer(registry, mLayer);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& matrix = registry.get<comp::TileLayer>(entity).matrix;
+  auto& matrix = sys::checked_get<comp::TileLayer>(registry, entity).matrix;
   for (const auto& [position, _] : mOldState) {
     TACTILE_ASSERT(position.row_index() < matrix.size());
     TACTILE_ASSERT(position.col_index() < matrix.front().size());

@@ -21,7 +21,6 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/components/layers.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

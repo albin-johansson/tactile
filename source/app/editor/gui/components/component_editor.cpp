@@ -23,24 +23,27 @@
 #include <string>    // string
 #include <utility>   // move
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/attribute.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
-#include "dialogs/create_component_attribute_dialog.hpp"
-#include "dialogs/create_component_dialog.hpp"
-#include "dialogs/rename_component_attribute_dialog.hpp"
-#include "dialogs/rename_component_dialog.hpp"
 #include "editor/constants.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/common/input_widgets.hpp"
+#include "editor/gui/components/dialogs/create_component_attribute_dialog.hpp"
+#include "editor/gui/components/dialogs/create_component_dialog.hpp"
+#include "editor/gui/components/dialogs/rename_component_attribute_dialog.hpp"
+#include "editor/gui/components/dialogs/rename_component_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/properties/dialogs/property_type_combo.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 

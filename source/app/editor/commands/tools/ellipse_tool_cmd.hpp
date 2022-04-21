@@ -21,7 +21,7 @@
 
 #include <optional>  // optional
 
-#include "core/systems/object_system.hpp"
+#include "core/systems/layers/object_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"

@@ -19,16 +19,18 @@
 
 #include "render_stamp_preview.hpp"
 
+#include <entt/entity/registry.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/systems/map_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/tile_pos.hpp"
+#include "editor/gui/rendering/render_info.hpp"
 #include "editor/gui/textures.hpp"
 #include "misc/assert.hpp"
-#include "render_info.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -95,19 +97,20 @@ void render_stamp_preview(const entt::registry& registry,
                           const TilePos& mousePos,
                           const RenderInfo& renderInfo)
 {
-  const auto& activeTileset = registry.ctx<comp::ActiveTileset>();
+  const auto& activeTileset = registry.ctx().at<comp::ActiveTileset>();
 
   const auto tilesetEntity = activeTileset.entity;
   TACTILE_ASSERT(tilesetEntity != entt::null);
 
-  const auto& selection = registry.get<comp::TilesetSelection>(tilesetEntity);
+  const auto& selection =
+      sys::checked_get<comp::TilesetSelection>(registry, tilesetEntity);
   if (!selection.region) {
     return;
   }
 
   const auto& region = selection.region.value();
-  const auto& texture = registry.get<comp::Texture>(tilesetEntity);
-  const auto& uv = registry.get<comp::UvTileSize>(tilesetEntity);
+  const auto& texture = sys::checked_get<comp::Texture>(registry, tilesetEntity);
+  const auto& uv = sys::checked_get<comp::UvTileSize>(registry, tilesetEntity);
 
   PreviewInfo info;
   info.texture_id = to_texture_id(texture.id);

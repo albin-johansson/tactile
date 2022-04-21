@@ -19,6 +19,8 @@
 
 #include "context_menu.hpp"
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "editor/gui/scoped.hpp"
 #include "misc/throw.hpp"
 

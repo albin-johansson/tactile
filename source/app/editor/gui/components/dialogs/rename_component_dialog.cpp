@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "editor/events/component_events.hpp"
 
 namespace tactile {

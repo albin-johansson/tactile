@@ -21,14 +21,13 @@
 
 #include <memory>  // unique_ptr
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 #include <imgui.h>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 class ADockWidget
 {

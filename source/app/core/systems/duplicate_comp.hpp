@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry, entity
+#include <entt/entity/registry.hpp>
 
-#include "context_system.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
-#include "core/map.hpp"
-#include "property_system.hpp"
+#include "core/map_info.hpp"
+#include "core/systems/context_system.hpp"
+#include "core/systems/property_system.hpp"
 
 namespace tactile::sys {
 
@@ -66,7 +66,8 @@ inline auto DuplicateComp<comp::ObjectLayer>(entt::registry& registry,
                                              const entt::entity destination)
     -> comp::ObjectLayer&
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& ctx = registry.ctx();
+  auto& map = ctx.at<MapInfo>();
   auto& layer = registry.emplace<comp::ObjectLayer>(destination);
 
   const auto& sourceLayer = registry.get<comp::ObjectLayer>(source);

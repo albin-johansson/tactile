@@ -21,11 +21,10 @@
 
 #include <entt/fwd.hpp>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 /**
  * \brief Serves as the base implementation of all modal dialogs.
@@ -41,7 +40,7 @@ class ADialog
    *
    * \param title the non-null title of the dialog.
    *
-   * \throws tactile_error if the title is null.
+   * \throws TactileError if the title is null.
    */
   explicit ADialog(const char* title);
 

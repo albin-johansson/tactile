@@ -23,8 +23,8 @@
 #include <unordered_map>  // unordered_map
 #include <vector>         // vector
 
-#include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <centurion/math.hpp>
+#include <entt/entity/entity.hpp>
 
 #include "core/region.hpp"
 #include "tactile.hpp"

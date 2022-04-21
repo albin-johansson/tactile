@@ -264,13 +264,13 @@ auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData) -> Pars
   objectData.visible = objectNode.attribute("visible").as_bool(true);
 
   if (!objectNode.child("point").empty()) {
-    objectData.type = ObjectType::point;
+    objectData.type = ObjectType::Point;
   }
   else if (!objectNode.child("ellipse").empty()) {
-    objectData.type = ObjectType::ellipse;
+    objectData.type = ObjectType::Ellipse;
   }
   else {
-    objectData.type = ObjectType::rect;
+    objectData.type = ObjectType::Rect;
   }
 
   if (const auto err = parse_properties(objectNode, objectData.context);

@@ -21,7 +21,7 @@
 
 #include <memory>  // unique_ptr
 
-#include <centurion.hpp>
+#include <centurion/event.hpp>
 #include <entt/fwd.hpp>
 
 #include "editor/events/command_events.hpp"
@@ -93,12 +93,6 @@ class Application final : AEventLoop
 
   void on_open_save_as_dialog();
 
-  void on_show_settings();
-
-  void on_show_new_map_dialog();
-
-  void on_show_open_map_dialog();
-
   void on_show_map_properties();
 
   void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event);
@@ -135,8 +129,6 @@ class Application final : AEventLoop
 
   void on_add_point(const AddPointEvent& event);
 
-  void on_center_viewport();
-
   void on_offset_viewport(const OffsetViewportEvent& event);
 
   void on_offset_bound_viewport(const OffsetBoundViewportEvent& event);
@@ -160,8 +152,6 @@ class Application final : AEventLoop
   void on_increase_font_size();
 
   void on_decrease_font_size();
-
-  void on_show_tileset_creation_dialog();
 
   void on_add_tileset(const AddTilesetEvent& event);
 
@@ -214,8 +204,6 @@ class Application final : AEventLoop
   void on_set_object_tag(const SetObjectTagEvent& event);
 
   void on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event);
-
-  void on_show_add_property_dialog();
 
   void on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event);
 

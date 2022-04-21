@@ -21,7 +21,7 @@
 
 #include <vector>  // vector
 
-#include <entt/entt.hpp>
+#include <entt/entity/entity.hpp>
 
 #include "core/layer_type.hpp"
 #include "tactile.hpp"

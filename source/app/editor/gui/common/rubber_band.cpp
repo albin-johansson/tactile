@@ -22,13 +22,14 @@
 #include <algorithm>  // max, min
 #include <cmath>      // fmod
 
-#include <centurion.hpp>
+#include <centurion/math.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
 namespace tactile {
 
-auto rubber_band(const ImVec2& scrollOffset, const ImVec2& tileSize) -> std::optional<Region>
+auto rubber_band(const ImVec2& scrollOffset, const ImVec2& tileSize)
+    -> std::optional<Region>
 {
   const auto toRow = [=](const float y) {
     const auto mod = y - std::fmod(y, tileSize.y);

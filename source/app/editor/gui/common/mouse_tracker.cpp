@@ -19,6 +19,7 @@
 
 #include "mouse_tracker.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/events/viewport_events.hpp"

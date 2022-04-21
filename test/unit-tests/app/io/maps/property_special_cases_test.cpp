@@ -28,7 +28,7 @@ TEST_P(PropertySpecialCaseTest, Parsing)
   ASSERT_TRUE(color.has_default_value());
 
   const auto& file = data.context.properties.at("empty-file");
-  ASSERT_TRUE(file.is_file());
+  ASSERT_TRUE(file.is_path());
   ASSERT_TRUE(file.has_default_value());
 
   const auto& obj = data.context.properties.at("empty-object");

@@ -28,7 +28,7 @@
 #include <system_error>  // errc
 #include <vector>        // vector
 
-#include "sfinae.hpp"
+#include "core/utils/sfinae.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

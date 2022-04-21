@@ -19,6 +19,7 @@
 
 #include "add_layer_context_menu.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/events/layer_events.hpp"

@@ -21,9 +21,9 @@
 
 #include <vector>  // vector
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
-#include "core/tile_pos.hpp"
+#include "core/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

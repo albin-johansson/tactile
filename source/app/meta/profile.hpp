@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <centurion.hpp>
+#include <centurion/system.hpp>
 
 #include "build.hpp"
 #include "misc/logging.hpp"

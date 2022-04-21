@@ -50,7 +50,7 @@ void RectangleToolCmd::redo()
     sys::restore_object(registry, mSnapshot.value());
   }
   else {
-    mObjectId = sys::make_rectangle_object(registry, mLayerId, mX, mY, mWidth, mHeight);
+    mObjectId = sys::new_rectangle_object(registry, mLayerId, mX, mY, mWidth, mHeight);
   }
 }
 

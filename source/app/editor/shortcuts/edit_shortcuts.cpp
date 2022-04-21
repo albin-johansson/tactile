@@ -19,7 +19,7 @@
 
 #include "edit_shortcuts.hpp"
 
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/events/map_events.hpp"
@@ -107,7 +107,7 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManag
     -> bool
 {
   if (const auto* registry = model.active_registry()) {
-    const auto& map = registry->ctx<MapInfo>();
+    const auto& map = registry->ctx().at<MapInfo>();
     return map.row_count > 1;
   }
   else {
@@ -130,7 +130,7 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
                                       const WidgetManager&) const -> bool
 {
   if (const auto* registry = model.active_registry()) {
-    const auto& map = registry->ctx<MapInfo>();
+    const auto& map = registry->ctx().at<MapInfo>();
     return map.column_count > 1;
   }
   else {
@@ -160,13 +160,13 @@ EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b} {}
 
 void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::bucket);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
 }
 
 auto EnableBucketShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager& widgets) const -> bool
+                                      const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::bucket) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::Bucket) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -175,13 +175,13 @@ EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e} {}
 
 void EnableEraserShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::eraser);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
 }
 
 auto EnableEraserShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager& widgets) const -> bool
+                                      const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::eraser) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::Eraser) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -190,13 +190,13 @@ EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s} {}
 
 void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::stamp);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
 }
 
 auto EnableStampShortcut::is_enabled(const DocumentModel& model,
-                                     const WidgetManager& widgets) const -> bool
+                                     const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::stamp) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::Stamp) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -207,14 +207,13 @@ EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
 
 void EnableObjectSelectionShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::object_selection);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
 }
 
 auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model,
-                                               const WidgetManager& widgets) const -> bool
+                                               const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::object_selection) &&
-         widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::ObjectSelection) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -224,13 +223,13 @@ EnableRectangleToolShortcut::EnableRectangleToolShortcut() : AShortcut{cen::scan
 
 void EnableRectangleToolShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::rectangle);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Rectangle);
 }
 
 auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model,
-                                             const WidgetManager& widgets) const -> bool
+                                             const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::rectangle) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::Rectangle) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -239,13 +238,13 @@ EnableEllipseToolShortcut::EnableEllipseToolShortcut() : AShortcut{cen::scancode
 
 void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::ellipse);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Ellipse);
 }
 
 auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model,
-                                           const WidgetManager& widgets) const -> bool
+                                           const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::ellipse) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::Ellipse) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -254,13 +253,13 @@ EnablePointToolShortcut::EnablePointToolShortcut() : AShortcut{cen::scancodes::y
 
 void EnablePointToolShortcut::activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(ToolType::point);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Point);
 }
 
 auto EnablePointToolShortcut::is_enabled(const DocumentModel& model,
-                                         const WidgetManager& widgets) const -> bool
+                                         const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::point) && widgets.is_editor_focused();
+  return model.is_tool_possible(ToolType::Point) && is_editor_focused();
 }
 
 /* ------------------------------------------------------------------------------------ */

@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <centurion/mouse.hpp>
+#include <entt/fwd.hpp>
 
 #include "editor/gui/rendering/render_info.hpp"
 #include "tactile.hpp"

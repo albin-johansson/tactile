@@ -21,7 +21,7 @@
 
 #include <variant>  // get
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 #include <fmt/format.h>
 
 #include "core/components/animation.hpp"
@@ -29,7 +29,7 @@
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/tiles.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -50,7 +50,7 @@ void _restore_properties(entt::registry& registry,
   const auto count = source.properties.size();
 
   auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
-                                         : registry.ctx<comp::AttributeContext>();
+                                         : registry.ctx().at<comp::AttributeContext>();
   context.properties.reserve(count);
 
   for (const auto& [propertyName, propertyValue] : source.properties) {
@@ -69,7 +69,7 @@ void _restore_components(entt::registry& registry,
                          const ir::AttributeContextData& source)
 {
   auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
-                                         : registry.ctx<comp::AttributeContext>();
+                                         : registry.ctx().at<comp::AttributeContext>();
   context.components.reserve(source.components.size());
 
   for (const auto& [type, attributes] : source.components) {
@@ -79,7 +79,7 @@ void _restore_components(entt::registry& registry,
     const auto componentEntity = registry.create();
     context.components.push_back(componentEntity);
 
-    const auto& def = registry.get<comp::ComponentDef>(defEntity);
+    const auto& def = sys::checked_get<comp::ComponentDef>(registry, defEntity);
     auto& component = registry.emplace<comp::Component>(componentEntity);
     component.type = def.id;
 
@@ -132,16 +132,16 @@ auto _restore_layer(entt::registry& registry,
                     const ir::LayerData& layerData,
                     const entt::entity parent = entt::null) -> entt::entity
 {
-  const auto entity = sys::make_basic_layer(registry,  //
-                                            layerData.id,
-                                            layerData.type,
-                                            layerData.name,
-                                            parent);
+  const auto entity = sys::new_layer_skeleton(registry,  //
+                                              layerData.id,
+                                              layerData.type,
+                                              layerData.name,
+                                              parent);
 
-  auto& node = registry.get<comp::LayerTreeNode>(entity);
+  auto& node = sys::checked_get<comp::LayerTreeNode>(registry, entity);
   node.index = layerData.index;
 
-  auto& layer = registry.get<comp::Layer>(entity);
+  auto& layer = sys::checked_get<comp::Layer>(registry, entity);
   layer.opacity = layerData.opacity;
   layer.visible = layerData.visible;
 
@@ -186,7 +186,7 @@ void _restore_layers(Document& document, const ir::MapData& mapData)
   sys::sort_layers(document.registry);
 
   if (!document.registry.storage<comp::LayerTreeNode>().empty()) {
-    auto& activeLayer = document.registry.ctx<comp::ActiveLayer>();
+    auto& activeLayer = document.registry.ctx().at<comp::ActiveLayer>();
     activeLayer.entity = document.registry.view<comp::LayerTreeNode>().front();
   }
 }
@@ -263,9 +263,9 @@ void _restore_tileset(entt::registry& registry,
                                         tilesetData.tile_width,
                                         tilesetData.tile_height);
 
-  registry.get<comp::AttributeContext>(entity).name = tilesetData.name;
+  sys::checked_get<comp::AttributeContext>(registry, entity).name = tilesetData.name;
 
-  auto& cache = registry.get<comp::TilesetCache>(entity);
+  auto& cache = sys::checked_get<comp::TilesetCache>(registry, entity);
   _restore_fancy_tiles(registry, cache, tilesetData);
 
   _restore_properties(registry, entity, tilesetData.context);
@@ -281,14 +281,14 @@ void _restore_tilesets(Document& document,
   }
 
   if (!document.registry.storage<comp::Tileset>().empty()) {
-    auto& activeTileset = document.registry.ctx<comp::ActiveTileset>();
+    auto& activeTileset = document.registry.ctx().at<comp::ActiveTileset>();
     activeTileset.entity = document.registry.view<comp::Tileset>().front();
   }
 }
 
 void _restore_root_attribute_context(Document& document)
 {
-  auto& context = document.registry.ctx<comp::AttributeContext>();
+  auto& context = document.registry.ctx().at<comp::AttributeContext>();
   context.name = document.path.filename().string();
 }
 
@@ -326,7 +326,7 @@ auto restore_document_from_ir(const parsing::ParseData& data, TextureManager& te
   const auto& mapData = data.data();
   _restore_component_definitions(document.registry, mapData);
 
-  _restore_map_context(document.registry.ctx<MapInfo>(), mapData);
+  _restore_map_context(document.registry.ctx().at<MapInfo>(), mapData);
   _restore_root_attribute_context(document);
 
   _restore_tilesets(document, textures, mapData);

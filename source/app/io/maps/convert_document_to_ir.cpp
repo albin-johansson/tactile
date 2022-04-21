@@ -26,8 +26,9 @@
 #include "core/components/parent.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/component_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/document.hpp"
 #include "meta/profile.hpp"
@@ -40,12 +41,12 @@ void _convert_attribute_context(ir::AttributeContextData& data,
                                 const entt::registry& registry)
 {
   for (const auto propertyEntity : context.properties) {
-    const auto& property = registry.get<comp::Property>(propertyEntity);
+    const auto& property = sys::checked_get<comp::Property>(registry, propertyEntity);
     data.properties[property.name] = property.value;
   }
 
   for (const auto componentEntity : context.components) {
-    const auto& component = registry.get<comp::Component>(componentEntity);
+    const auto& component = sys::checked_get<comp::Component>(registry, componentEntity);
     const auto type = sys::get_component_def_name(registry, component.type);
 
     auto& attributes = data.components[type];
@@ -84,12 +85,13 @@ void _convert_object_layer(ir::ObjectLayerData& data,
                            const entt::registry& registry,
                            const entt::entity entity)
 {
-  const auto& objectLayer = registry.get<comp::ObjectLayer>(entity);
+  const auto& objectLayer = sys::checked_get<comp::ObjectLayer>(registry, entity);
   data.objects.reserve(objectLayer.objects.size());
 
   for (const auto objectEntity : objectLayer.objects) {
-    const auto& object = registry.get<comp::Object>(objectEntity);
-    const auto& context = registry.get<comp::AttributeContext>(objectEntity);
+    const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
+    const auto& context =
+        sys::checked_get<comp::AttributeContext>(registry, objectEntity);
 
     auto& objectData = data.objects.emplace_back();
     _convert_object(objectData, object, context, registry);
@@ -100,7 +102,7 @@ void _convert_group_layer(ir::GroupLayerData& data,
                           const entt::registry& registry,
                           const entt::entity entity)
 {
-  const auto& node = registry.get<comp::LayerTreeNode>(entity);
+  const auto& node = sys::checked_get<comp::LayerTreeNode>(registry, entity);
   data.children.reserve(node.children.size());
 
   usize index = 0;
@@ -116,7 +118,7 @@ void _convert_layer(ir::LayerData& data,
                     const entt::registry& registry,
                     const entt::entity entity)
 {
-  const auto& layer = registry.get<comp::Layer>(entity);
+  const auto& layer = sys::checked_get<comp::Layer>(registry, entity);
 
   data.index = index;
 
@@ -127,12 +129,12 @@ void _convert_layer(ir::LayerData& data,
 
   switch (layer.type) {
     case LayerType::TileLayer: {
-      const auto& tileLayer = registry.get<comp::TileLayer>(entity);
+      const auto& tileLayer = sys::checked_get<comp::TileLayer>(registry, entity);
 
       auto& tileLayerData = data.data.emplace<ir::TileLayerData>();
       tileLayerData.tiles = tileLayer.matrix;
 
-      const auto& mapInfo = registry.ctx<MapInfo>();
+      const auto& mapInfo = registry.ctx().at<MapInfo>();
       tileLayerData.row_count = mapInfo.row_count;
       tileLayerData.col_count = mapInfo.column_count;
 
@@ -150,7 +152,7 @@ void _convert_layer(ir::LayerData& data,
     }
   }
 
-  const auto& context = registry.get<comp::AttributeContext>(entity);
+  const auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
   data.name = context.name;
   _convert_attribute_context(data.context, context, registry);
 }
@@ -161,7 +163,7 @@ void _convert_layers(ir::MapData& data, const entt::registry& registry)
 
   /* Only iterate top-level layers */
   for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
-    const auto& parent = registry.get<comp::Parent>(entity);
+    const auto& parent = sys::checked_get<comp::Parent>(registry, entity);
     if (parent.entity == entt::null) {
       auto& layerData = data.layers.emplace_back();
       _convert_layer(layerData, index, registry, entity);
@@ -177,7 +179,7 @@ void _convert_fancy_tile_animation(ir::MetaTileData& data,
   data.frames.reserve(animation.frames.size());
 
   for (const auto frameEntity : animation.frames) {
-    const auto& frame = registry.get<comp::AnimationFrame>(frameEntity);
+    const auto& frame = sys::checked_get<comp::AnimationFrame>(registry, frameEntity);
 
     auto& frameData = data.frames.emplace_back();
     frameData.local_id = sys::convert_to_local(registry, frame.tile).value();
@@ -210,9 +212,9 @@ void _convert_fancy_tiles(ir::TilesetData& data,
 
         if (!tile.objects.empty()) {
           for (const auto objectEntity : tile.objects) {
-            const auto& object = registry.get<comp::Object>(objectEntity);
+            const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
             const auto& objectContext =
-                registry.get<comp::AttributeContext>(objectEntity);
+                sys::checked_get<comp::AttributeContext>(registry, objectEntity);
 
             auto& objectData = tileData.objects.emplace_back();
             _convert_object(objectData, object, objectContext, registry);
@@ -273,9 +275,10 @@ auto convert_document_to_ir(const Document& document) -> ir::MapData
   TACTILE_PROFILE_START
 
   const auto& registry = document.registry;
+  const auto& ctx = registry.ctx();
 
   ir::MapData data;
-  _convert_basic_map_info(data, registry.ctx<MapInfo>());
+  _convert_basic_map_info(data, ctx.at<MapInfo>());
 
   _convert_component_definitions(data, registry);
   _convert_tilesets(data, registry);
@@ -283,9 +286,7 @@ auto convert_document_to_ir(const Document& document) -> ir::MapData
   data.layers.reserve(registry.storage<comp::Layer>().size());
   _convert_layers(data, registry);
 
-  _convert_attribute_context(data.context,
-                             registry.ctx<comp::AttributeContext>(),
-                             registry);
+  _convert_attribute_context(data.context, ctx.at<comp::AttributeContext>(), registry);
 
   TACTILE_PROFILE_END("Converted document to IR")
   return data;

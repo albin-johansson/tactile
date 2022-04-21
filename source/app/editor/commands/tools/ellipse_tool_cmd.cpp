@@ -50,7 +50,7 @@ void EllipseToolCmd::redo()
     sys::restore_object(registry, mSnapshot.value());
   }
   else {
-    mObjectId = sys::make_ellipse_object(registry, mLayerId, mX, mY, mWidth, mHeight);
+    mObjectId = sys::new_ellipse_object(registry, mLayerId, mX, mY, mWidth, mHeight);
   }
 }
 

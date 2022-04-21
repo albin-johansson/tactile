@@ -25,13 +25,11 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/attribute.hpp"
+#include "editor/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 class WidgetManager final
 {
@@ -45,49 +43,15 @@ class WidgetManager final
 
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  void show_settings();
-
-  void show_new_map_dialog();
-
-  void show_open_map_dialog();
-
-  void show_add_tileset_dialog();
-
-  void show_rename_layer_dialog(LayerID id);
-
-  void show_add_property_dialog();
-
-  void show_rename_property_dialog(const std::string& name);
-
-  void show_change_property_type_dialog(std::string name, AttributeType type);
-
   void show_resize_map_dialog(usize currentRows, usize currentColumns);
 
   void show_map_import_error_dialog(parsing::ParseError error);
-
-  void show_component_editor(const DocumentModel& model);
-
-  [[nodiscard]] auto is_editor_focused() const -> bool;
-
-  [[nodiscard]] auto is_toolbar_focused() const -> bool;
-
-  [[nodiscard]] auto is_viewport_focused() const -> bool;
-
-  [[nodiscard]] auto is_tileset_dock_focused() const -> bool;
-
-  [[nodiscard]] auto is_property_dock_focused() const -> bool;
-
-  [[nodiscard]] auto is_tileset_dock_hovered() const -> bool;
-
-  [[nodiscard]] auto is_toolbar_visible() const -> bool;
-
-  [[nodiscard]] auto tileset_view_width() const -> std::optional<float>;
-
-  [[nodiscard]] auto tileset_view_height() const -> std::optional<float>;
 
  private:
   struct Widgets;
   std::unique_ptr<Widgets> mWidgets;
 };
+
+[[nodiscard]] auto is_editor_focused() -> bool;
 
 }  // namespace tactile
