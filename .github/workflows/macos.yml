@@ -10,7 +10,6 @@ env:
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_COMMIT_ID: e0c3408c778c54788393c4a739f6f3507aff77cb
   VCPKG_CACHE_EDITION: 1
-  BOOST_ROOT: /opt/homebrew/Cellar/boost/1.76.0
 
 jobs:
   macos-latest-test:
@@ -34,10 +33,6 @@ jobs:
       - name: Install GLFW
         shell: bash
         run: brew install glfw
-
-      - name: Install Boost
-        shell: bash
-        run: brew install boost
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts

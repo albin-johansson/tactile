@@ -23,7 +23,6 @@ target_include_directories(${TACTILE_LIB}
                            ${LIBRARY_DIR}/centurion
                            ${LIBRARY_DIR}/fontawesome
                            ${STB_INCLUDE_DIRS}
-                           ${Boost_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
                            )
 
@@ -43,7 +42,9 @@ target_link_libraries(${TACTILE_LIB}
                       tinyfiledialogs::tinyfiledialogs
                       GLEW::GLEW
                       OpenGL::GL
-                      ${Boost_LIBRARIES}
+                      Boost::boost
+                      Boost::container
+                      Boost::exception
                       )
 
 target_compile_definitions(${TACTILE_LIB}
