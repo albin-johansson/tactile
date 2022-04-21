@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/systems/component_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -29,7 +31,7 @@ namespace tactile {
 class ResetComponentCmd final : public ACommand
 {
  public:
-  ResetComponentCmd(RegistryRef registry, context_id contextId, component_id componentId);
+  ResetComponentCmd(RegistryRef registry, ContextID contextId, ComponentID componentId);
 
   void undo() override;
 
@@ -42,9 +44,9 @@ class ResetComponentCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  context_id mContextId{};
-  component_id mComponentId{};
-  Maybe<sys::ResetComponentResult> mSnapshot;
+  ContextID mContextId{};
+  ComponentID mComponentId{};
+  std::optional<sys::ResetComponentResult> mSnapshot;
 };
 
 }  // namespace tactile

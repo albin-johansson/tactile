@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <centurion.hpp>
+#include <centurion/keyboard.hpp>
 
 #include "meta/build.hpp"
 #include "tactile.hpp"

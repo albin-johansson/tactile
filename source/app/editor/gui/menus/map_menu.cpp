@@ -19,6 +19,7 @@
 
 #include "map_menu.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/events/map_events.hpp"
@@ -29,12 +30,22 @@
 #include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {
+namespace {
 
-MapMenu::MapMenu() : mCreateTilesetDialog{std::make_unique<CreateTilesetDialog>()} {}
+struct MapMenuState final
+{
+  CreateTilesetDialog tileset_creation_dialog;
+};
 
-MapMenu::~MapMenu() noexcept = default;
+[[nodiscard]] auto _get_state() -> MapMenuState&
+{
+  static MapMenuState state;
+  return state;
+}
 
-void MapMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+}  // namespace
+
+void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   scoped::Disable disable{!model.has_active_document()};
   if (scoped::Menu menu{"Map"}; menu.is_open()) {
@@ -73,12 +84,12 @@ void MapMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
     }
   }
 
-  mCreateTilesetDialog->update(model, dispatcher);
+  _get_state().tileset_creation_dialog.update(model, dispatcher);
 }
 
-void MapMenu::show_tileset_creation_dialog()
+void show_tileset_creation_dialog()
 {
-  mCreateTilesetDialog->Open();
+  _get_state().tileset_creation_dialog.open();
 }
 
 }  // namespace tactile

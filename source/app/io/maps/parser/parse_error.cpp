@@ -188,7 +188,7 @@ auto to_cause(const ParseError error) -> std::string_view
       return "A tileset tile definition has an animation frame with no duration!";
 
     default:
-      throw_traced(TactileError{"Invalid parse error!"});
+      panic("Invalid parse error!");
   }
 }
 

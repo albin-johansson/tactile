@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/components/objects.hpp"
-#include "snapshot.hpp"
+#include "core/systems/snapshot.hpp"
 #include "tactile.hpp"
 
 namespace tactile::sys {
@@ -35,23 +35,16 @@ namespace tactile::sys {
 /// \addtogroup object-system
 /// \{
 
-struct RemoveObjectResult final
-{
-  layer_id layer{};
-  comp::Object object;
-  sys::AttributeContextSnapshot context;
-};
-
 /**
- * \brief Adds a new rectangle object to the active object layer.
+ * \brief Adds a new rectangle object to an object layer.
  *
- * \pre The layer must be an object layer.
+ * \pre The specified layer must be an object layer.
  *
  * \details The created entity will feature the following components:
- * - `object`
+ * - `Object`
  * - `AttributeContext`
  *
- * \param registry the map registry.
+ * \param registry the document registry.
  * \param layerId the object layer to add the object to.
  * \param x the rectangle x-coordinate.
  * \param y the rectangle y-coordinate.
@@ -60,23 +53,23 @@ struct RemoveObjectResult final
  *
  * \return the identifier assigned to the object.
  */
-auto make_rectangle_object(entt::registry& registry,
-                           layer_id layerId,
-                           float x,
-                           float y,
-                           float width,
-                           float height) -> object_id;
+auto new_rectangle_object(entt::registry& registry,
+                          LayerID layerId,
+                          float x,
+                          float y,
+                          float width,
+                          float height) -> ObjectID;
 
 /**
- * \brief Adds a new ellipse object to the active object layer.
+ * \brief Adds a new ellipse object to an object layer.
  *
- * \pre The layer must be an object layer.
+ * \pre The specified layer must be an object layer.
  *
  * \details The created entity will feature the following components:
- * - `object`
+ * - `Object`
  * - `AttributeContext`
  *
- * \param registry the map registry.
+ * \param registry the document registry.
  * \param layerId the object layer to add the object to.
  * \param x the ellipse x-coordinate.
  * \param y the ellipse y-coordinate.
@@ -85,20 +78,20 @@ auto make_rectangle_object(entt::registry& registry,
  *
  * \return the identifier assigned to the object.
  */
-auto make_ellipse_object(entt::registry& registry,
-                         layer_id layerId,
-                         float x,
-                         float y,
-                         float width,
-                         float height) -> object_id;
+auto new_ellipse_object(entt::registry& registry,
+                        LayerID layerId,
+                        float x,
+                        float y,
+                        float width,
+                        float height) -> ObjectID;
 
 /**
- * \brief Adds a new point object to the active object layer.
+ * \brief Adds a new point object to an object layer.
  *
- * \pre The layer must be an object layer.
+ * \pre The specified layer must be an object layer.
  *
  * \details The created entity will feature the following components:
- * - `object`
+ * - `Object`
  * - `AttributeContext`
  *
  * \param registry the map registry.
@@ -108,8 +101,15 @@ auto make_ellipse_object(entt::registry& registry,
  *
  * \return the identifier assigned to the object.
  */
-auto make_point_object(entt::registry& registry, layer_id layerId, float x, float y)
-    -> object_id;
+auto new_point_object(entt::registry& registry, LayerID layerId, float x, float y)
+    -> ObjectID;
+
+struct RemoveObjectResult final
+{
+  LayerID layer{};
+  comp::Object object;
+  AttributeContextSnapshot context;
+};
 
 /**
  * \brief Removes an object.
@@ -120,8 +120,10 @@ auto make_point_object(entt::registry& registry, layer_id layerId, float x, floa
  * \param id the identifier associated with the object to remove.
  *
  * \return a snapshot of the removed object.
+ *
+ * \throws TactileError if the object ID is invalid.
  */
-auto remove_object(entt::registry& registry, object_id id) -> RemoveObjectResult;
+auto remove_object(entt::registry& registry, ObjectID id) -> RemoveObjectResult;
 
 /**
  * \brief Restores a previously removed object.
@@ -139,7 +141,7 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot);
  *
  * \return the found entity; a null entity is returned if no object is found.
  */
-[[nodiscard]] auto find_object(const entt::registry& registry, object_id id)
+[[nodiscard]] auto find_object(const entt::registry& registry, ObjectID id)
     -> entt::entity;
 
 /**
@@ -152,7 +154,7 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot);
  *
  * \throws TactileError if the object identifier is invalid.
  */
-[[nodiscard]] auto get_object(const entt::registry& registry, object_id id)
+[[nodiscard]] auto get_object(const entt::registry& registry, ObjectID id)
     -> entt::entity;
 
 /// \} End of group object-system

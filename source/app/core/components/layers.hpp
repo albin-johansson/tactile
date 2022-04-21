@@ -21,14 +21,14 @@
 
 #include <vector>  // vector
 
-#include <entt/entt.hpp>
+#include <entt/entity/entity.hpp>
 
 #include "core/layer_type.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-using TileRow = std::vector<tile_id>;
+using TileRow = std::vector<TileID>;
 using TileMatrix = std::vector<TileRow>;
 
 namespace comp {
@@ -46,7 +46,7 @@ namespace comp {
  */
 struct Layer final
 {
-  layer_id id{};        ///< Unique layer ID.
+  LayerID id{};         ///< Unique layer ID.
   LayerType type{};     ///< The specific layer type.
   float opacity{1.0f};  ///< Opacity of the layer, in the range [0, 1].
   bool visible{true};   ///< Whether or not the layer is rendered.

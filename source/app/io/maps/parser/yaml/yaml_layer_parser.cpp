@@ -41,7 +41,7 @@ namespace {
 {
   usize index = 0;
   for (const auto& token : split(tileData.c_str(), ' ')) {
-    if (const auto id = from_string<tile_id>(token.c_str())) {
+    if (const auto id = from_string<TileID>(token.c_str())) {
       const auto [row, col] = to_matrix_coords(index, columns);
       layer.tiles[row][col] = *id;
       ++index;
@@ -59,7 +59,7 @@ namespace {
                                      const usize rows,
                                      const usize columns) -> ParseError
 {
-  data.type = LayerType::tile_layer;
+  data.type = LayerType::TileLayer;
 
   auto& tileLayer = data.data.emplace<ir::TileLayerData>();
   tileLayer.row_count = rows;
@@ -86,7 +86,7 @@ namespace {
                                        const ir::MapData& map,
                                        ir::LayerData& data) -> ParseError
 {
-  data.type = LayerType::object_layer;
+  data.type = LayerType::ObjectLayer;
   auto& objectLayer = data.data.emplace<ir::ObjectLayerData>();
 
   if (auto sequence = node["objects"]) {
@@ -108,7 +108,7 @@ namespace {
                                       const ir::MapData& map,
                                       ir::LayerData& data) -> ParseError
 {
-  data.type = LayerType::group_layer;
+  data.type = LayerType::GroupLayer;
   auto& group = data.data.emplace<ir::GroupLayerData>();
 
   if (auto sequence = node["layers"]) {
@@ -138,7 +138,7 @@ namespace {
   layer.index = index;
 
   if (auto identifier = node["id"]) {
-    layer.id = identifier.as<layer_id>();
+    layer.id = identifier.as<LayerID>();
   }
   else {
     return ParseError::no_layer_id;
@@ -212,7 +212,7 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData
     -> ParseError
 {
   if (auto id = node["id"]) {
-    object->id = id.as<object_id>();
+    object->id = id.as<ObjectID>();
   }
   else {
     return ParseError::no_object_id;
@@ -221,13 +221,13 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData
   if (auto type = node["type"]) {
     const auto str = type.as<std::string>();
     if (str == "point") {
-      object->type = ObjectType::point;
+      object->type = ObjectType::Point;
     }
     else if (str == "rect") {
-      object->type = ObjectType::rect;
+      object->type = ObjectType::Rect;
     }
     else if (str == "ellipse") {
-      object->type = ObjectType::ellipse;
+      object->type = ObjectType::Ellipse;
     }
     else {
       return ParseError::unsupported_object_type;

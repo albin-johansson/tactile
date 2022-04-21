@@ -22,12 +22,13 @@
 #include <utility>  // move
 
 #include "core/components/attributes.hpp"
-#include "core/systems/object_system.hpp"
+#include "core/systems/layers/object_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
 
-AObjectCommand::AObjectCommand(std::string name, RegistryRef registry, const object_id id)
+AObjectCommand::AObjectCommand(std::string name, RegistryRef registry, const ObjectID id)
     : ACommand{std::move(name)}
     , mRegistry{registry}
     , mObjectId{id}
@@ -40,7 +41,7 @@ auto AObjectCommand::target_object_context() const -> comp::AttributeContext&
   const auto entity = sys::find_object(registry, mObjectId);
   TACTILE_ASSERT(entity != entt::null);
 
-  return registry.get<comp::AttributeContext>(entity);
+  return sys::checked_get<comp::AttributeContext>(registry, entity);
 }
 
 auto AObjectCommand::target_object() -> comp::Object&
@@ -50,7 +51,7 @@ auto AObjectCommand::target_object() -> comp::Object&
   const auto entity = sys::find_object(registry, mObjectId);
   TACTILE_ASSERT(entity != entt::null);
 
-  return registry.get<comp::Object>(entity);
+  return sys::checked_get<comp::Object>(registry, entity);
 }
 
 }  // namespace tactile

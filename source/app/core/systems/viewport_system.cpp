@@ -23,11 +23,13 @@
 #include <cmath>      // round
 #include <utility>    // pair
 
+#include <entt/entity/registry.hpp>
+
 #include "core/components/texture.hpp"
-#include "core/map.hpp"
-#include "core/viewport.hpp"
+#include "core/components/viewport.hpp"
+#include "core/map_info.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
-#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -47,7 +49,7 @@ constexpr float _min_tile_height = 4;
 
 void offset_viewport(entt::registry& registry, const float dx, const float dy)
 {
-  auto& viewport = registry.ctx<Viewport>();
+  auto& viewport = registry.ctx().at<comp::Viewport>();
   viewport.x_offset += dx;
   viewport.y_offset += dy;
 }
@@ -59,7 +61,7 @@ void offset_bound_viewport(entt::registry& registry,
                            const float viewWidth,
                            const float viewHeight)
 {
-  auto& viewport = checked_get<Viewport>(registry, entity);
+  auto& viewport = checked_get<comp::Viewport>(registry, entity);
   viewport.x_offset += dx;
   viewport.y_offset += dy;
 
@@ -76,32 +78,35 @@ void offset_bound_viewport(entt::registry& registry,
 
 void pan_viewport_left(entt::registry& registry)
 {
-  auto& viewport = registry.ctx<Viewport>();
+  auto& viewport = registry.ctx().at<comp::Viewport>();
   viewport.x_offset += viewport.tile_width;
 }
 
 void pan_viewport_right(entt::registry& registry)
 {
-  auto& viewport = registry.ctx<Viewport>();
+  auto& viewport = registry.ctx().at<comp::Viewport>();
   viewport.x_offset -= viewport.tile_width;
 }
 
 void pan_viewport_up(entt::registry& registry)
 {
-  auto& viewport = registry.ctx<Viewport>();
+  auto& viewport = registry.ctx().at<comp::Viewport>();
   viewport.y_offset += viewport.tile_height;
 }
 
 void pan_viewport_down(entt::registry& registry)
 {
-  auto& viewport = registry.ctx<Viewport>();
+  auto& viewport = registry.ctx().at<comp::Viewport>();
   viewport.y_offset -= viewport.tile_height;
 }
 
 void reset_viewport_zoom(entt::registry& registry)
 {
-  const auto& map = registry.ctx<MapInfo>();
-  auto& viewport = registry.ctx<Viewport>();
+  auto& ctx = registry.ctx();
+
+  const auto& map = ctx.at<MapInfo>();
+  auto& viewport = ctx.at<comp::Viewport>();
+
   viewport.tile_width = 2.0f * static_cast<float>(map.tile_width);
   viewport.tile_height = 2.0f * static_cast<float>(map.tile_height);
 }
@@ -112,7 +117,7 @@ void decrease_viewport_zoom(entt::registry& registry,
 {
   TACTILE_ASSERT(can_decrease_viewport_zoom(registry));
 
-  auto& viewport = registry.ctx<Viewport>();
+  auto& viewport = registry.ctx().at<comp::Viewport>();
 
   // Percentages of map to the left of and above the cursor
   const auto px = (mouseX - viewport.x_offset) / viewport.tile_width;
@@ -136,7 +141,7 @@ void increase_viewport_zoom(entt::registry& registry,
                             const float mouseX,
                             const float mouseY)
 {
-  auto& viewport = registry.ctx<Viewport>();
+  auto& viewport = registry.ctx().at<comp::Viewport>();
 
   // Percentages of map to the left of and above the cursor
   const auto px = (mouseX - viewport.x_offset) / viewport.tile_width;
@@ -155,14 +160,15 @@ void increase_viewport_zoom(entt::registry& registry,
 
 auto can_decrease_viewport_zoom(const entt::registry& registry) -> bool
 {
-  const auto& viewport = registry.ctx<Viewport>();
+  const auto& viewport = registry.ctx().at<comp::Viewport>();
   return viewport.tile_height > _min_tile_height;
 }
 
 auto get_viewport_scaling_ratio(const entt::registry& registry) -> ViewportScalingRatio
 {
-  const auto& viewport = registry.ctx<Viewport>();
-  const auto& map = registry.ctx<MapInfo>();
+  const auto& ctx = registry.ctx();
+  const auto& viewport = ctx.at<comp::Viewport>();
+  const auto& map = ctx.at<MapInfo>();
 
   const auto xRatio = viewport.tile_width / static_cast<float>(map.tile_width);
   const auto yRatio = viewport.tile_height / static_cast<float>(map.tile_height);

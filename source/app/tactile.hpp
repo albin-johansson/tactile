@@ -19,13 +19,8 @@
 
 #pragma once
 
-#include <cstddef>        // size_t
-#include <cstdint>        // int{}_t, uint{}_t
-#include <functional>     // reference_wrapper, less
-#include <limits>         // numeric_limits
-#include <map>            // map
-#include <optional>       // optional, nullopt_t, nullopt
-#include <unordered_map>  // unordered_map
+#include <cstddef>  // size_t
+#include <cstdint>  // int{}_t, uint{}_t
 
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
@@ -37,11 +32,11 @@
 
 #define TACTILE_DEFAULT_MOVE(Class)  \
   Class(Class&&) noexcept = default; \
-  auto operator=(Class&&) noexcept->Class& = default;
+  auto operator=(Class&&) noexcept -> Class& = default;
 
 #define TACTILE_DELETE_MOVE(Class)  \
   Class(Class&&) noexcept = delete; \
-  auto operator=(Class&&) noexcept->Class& = delete;
+  auto operator=(Class&&) noexcept -> Class& = delete;
 
 namespace tactile {
 
@@ -60,36 +55,15 @@ using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
 
-inline constexpr auto min_float = (std::numeric_limits<float>::min)();
-inline constexpr auto max_float = (std::numeric_limits<float>::max)();
+using ContextID = int32;    ///< Identifier for attribute contexts (not persistent).
+using ComponentID = int32;  ///< Identifier for component definitions (not persistent).
 
-inline constexpr auto min_int = (std::numeric_limits<int>::min)();
-inline constexpr auto max_int = (std::numeric_limits<int>::max)();
+using MapID = int32;
+using LayerID = int32;
+using ObjectID = int32;
+using TilesetID = int32;
+using TileID = int32;
 
-inline constexpr auto max_uint = (std::numeric_limits<unsigned>::max)();
-
-using context_id = int32;    ///< Identifier for attribute contexts (not persistent).
-using component_id = int32;  ///< Identifier for component definitions (not persistent).
-using map_id = int32;
-using tileset_id = int32;
-using layer_id = int32;
-using object_id = int32;
-using tile_id = int32;
-
-constexpr tile_id empty_tile = 0;
-
-template <typename K, typename V>
-using TreeMap = std::map<K, V, std::less<>>;
-
-template <typename K, typename V>
-using HashMap = std::unordered_map<K, V>;
-
-template <typename T>
-using Ref = std::reference_wrapper<T>;
-
-template <typename T>
-using Maybe = std::optional<T>;
-
-constexpr std::nullopt_t nothing = std::nullopt;
+constexpr TileID empty_tile = 0;
 
 }  // namespace tactile

@@ -19,23 +19,13 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <boost/container/flat_map.hpp>
 
+#include "core/tile_pos.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-/**
- * \brief Shows a view of a component that is attached to a context.
- *
- * \param registry the map registry.
- * \param dispatcher the event dispatcher.
- * \param contextId the identifier of the associated context.
- * \param componentEntity the entity of the component to show.
- */
-void component_view(const entt::registry& registry,
-                    entt::dispatcher& dispatcher,
-                    context_id contextId,
-                    entt::entity componentEntity);
+using TileCache = boost::container::flat_map<TilePos, TileID>;
 
 }  // namespace tactile

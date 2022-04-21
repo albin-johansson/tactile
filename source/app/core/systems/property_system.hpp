@@ -22,7 +22,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
 #include "core/components/attributes.hpp"
@@ -158,7 +158,7 @@ void change_property_type(entt::registry& registry,
  *
  * \return a reference to the matching property.
  *
- * \throws tactile_error if there is no property with the specified name.
+ * \throws TactileError if there is no property with the specified name.
  *
  * \see find_property()
  */

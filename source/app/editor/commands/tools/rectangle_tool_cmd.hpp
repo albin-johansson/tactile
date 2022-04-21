@@ -19,7 +19,9 @@
 
 #pragma once
 
-#include "core/systems/object_system.hpp"
+#include <optional>  // optional
+
+#include "core/systems/layers/object_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
@@ -45,13 +47,13 @@ class RectangleToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayerId{};
+  LayerID mLayerId{};
   float mX{};
   float mY{};
   float mWidth{};
   float mHeight{};
-  Maybe<object_id> mObjectId;
-  Maybe<sys::RemoveObjectResult> mSnapshot;
+  std::optional<ObjectID> mObjectId;
+  std::optional<sys::RemoveObjectResult> mSnapshot;
 };
 
 /// \} End of group commands

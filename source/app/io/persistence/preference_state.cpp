@@ -23,16 +23,18 @@
 #include <ios>      // ios
 #include <utility>  // move
 
+#include <centurion/color.hpp>
 #include <magic_enum.hpp>
 
 #include "cfg/fonts.hpp"
+#include "core/common/enum.hpp"
 #include "misc/logging.hpp"
 #include "proto.hpp"
 
 namespace tactile {
 namespace {
 
-constexpr EditorTheme _def_theme = EditorTheme::nocturnal;
+constexpr EditorTheme _def_theme = EditorTheme::Nocturnal;
 constexpr cen::color _def_viewport_bg{60, 60, 60};
 
 constexpr auto _def_preferred_format = "YAML";
@@ -40,7 +42,7 @@ constexpr auto _def_preferred_format = "YAML";
 constexpr usize _def_command_capacity = 100;
 constexpr int32 _def_preferred_tile_width = 32;
 constexpr int32 _def_preferred_tile_height = 32;
-constexpr int32 _def_viewport_overlay_pos = cen::to_underlying(OverlayPos::bottom_left);
+constexpr int32 _def_viewport_overlay_pos = to_underlying(OverlayPos::BottomLeft);
 
 constexpr uint64 _bit_embed_tilesets = 1u << 0u;
 constexpr uint64 _bit_indent_output = 1u << 1u;
@@ -285,8 +287,7 @@ void PreferenceState::save(const std::filesystem::path& path)
   cfg.set_show_log_dock(is_log_dock_visible());
   cfg.set_show_component_dock(is_component_dock_visible());
   cfg.set_restore_layout(will_restore_layout());
-  cfg.set_viewport_overlay_pos(
-      proto::OverlayPos{cen::to_underlying(viewport_overlay_pos())});
+  cfg.set_viewport_overlay_pos(proto::OverlayPos{to_underlying(viewport_overlay_pos())});
   cfg.set_viewport_overlay_show_fps(viewport_overlay_show_fps());
 
   cfg.set_use_default_font(use_default_font());
@@ -490,7 +491,7 @@ auto PreferenceState::will_restore_last_session() const -> bool
 
 void PreferenceState::set_viewport_overlay_pos(const OverlayPos pos)
 {
-  mData->viewport_overlay_pos = cen::to_underlying(pos);
+  mData->viewport_overlay_pos = to_underlying(pos);
 }
 
 auto PreferenceState::viewport_overlay_pos() const -> OverlayPos

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "misc/throw.hpp"
 
@@ -55,21 +55,21 @@ namespace tactile::sys {
  *
  * \return a reference to the component.
  *
- * \throws tactile_error if the entity identifier is invalid or if the entity does not
+ * \throws TactileError if the entity identifier is invalid or if the entity does not
  * have the component.
  */
 template <typename T>
 [[nodiscard]] auto checked_get(entt::registry& registry, const entt::entity entity) -> T&
 {
   if (!registry.valid(entity)) {
-    throw_traced(TactileError{"Invalid entity identifier!"});
+    panic("Invalid entity identifier!");
   }
 
   if (auto* comp = registry.try_get<T>(entity)) {
     return *comp;
   }
   else {
-    throw_traced(TactileError{"Entity did not feature requested component!"});
+    panic("Entity did not feature requested component!");
   }
 }
 
@@ -78,14 +78,14 @@ template <typename T>
     -> const T&
 {
   if (!registry.valid(entity)) {
-    throw_traced(TactileError{"Invalid entity identifier!"});
+    panic("Invalid entity identifier!");
   }
 
   if (auto* comp = registry.try_get<T>(entity)) {
     return *comp;
   }
   else {
-    throw_traced(TactileError{"Entity did not feature requested component!"});
+    panic("Entity did not feature requested component!");
   }
 }
 

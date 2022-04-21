@@ -40,47 +40,6 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * Various editor themes
 * Insightful and helpful error messages when things go wrong, e.g. when parsing corrupted maps
 
-## Building
+## Documentation
 
-This section provides a high-level description of how to manually build the Tactile editor. The project makes use
-of [Vcpkg](https://github.com/microsoft/vcpkg) for third-party dependency management. As a result, building the code
-base is really quite straightforward. The process is also basically the same on all platforms.
-
-### Install Boost
-
-You'll need to install the Boost libraries on your system. This should be fairly straight forward. Make sure that you
-set the environment variable `BOOST_ROOT` to point to the root of your Boost installation.
-
-### Install Vcpkg
-
-You can install Vcpkg wherever you like, so it helps to set the environment variable `VCPKG_ROOT` to the path where
-you've installed Vcpkg. You can download Vcpkg through `git clone https://github.com/microsoft/vcpkg`. After you've
-downloaded Vcpkg, install it using the following command in the root of the downloaded repository.
-
-|   OS    | Command                       |
-|:-------:|:------------------------------|
-| Windows | `.\vcpkg\bootstrap-vcpkg.bat` |
-|  Unix   | `./vcpkg/bootstrap-vcpkg.sh`  |
-
-### Build the project
-
-Now, we can generate the build files. You don't have to use Ninja, but it is highly recommended. On all operating
-systems, you should use a separate build directory where all of our generated build files and (later) binaries will end
-up.
-
-```bash
-mkdir build
-cd build
-```
-
-Use the following commands to tell CMake to generate the build files and subsequently build the project. Note, if you
-are using an IDE, such as JetBrains CLion, you can specify CMake parameters in your CMake profile settings so that you
-can just build the project as per usual. In CLion 2021.2, you'll access these settings
-in `View -> Tool Windows -> CMake`, and then selecting `CMake Settings`. You can also just search for `CMake Settings`
-with `Shift+Shift`. Subsequently, in the `CMake Settings` window, add the parameters to the `CMake options` field.
-Specify a custom Vcpkg triplet by providing a `VCPKG_TARGET_TRIPLET` CMake parameter.
-
-```bash
-cmake .. -GNinja
-ninja
-```
+More documentation can be found in the [docs](./docs) directory.

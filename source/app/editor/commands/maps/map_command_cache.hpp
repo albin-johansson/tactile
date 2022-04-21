@@ -19,7 +19,10 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry
+#include <functional>  // less
+#include <map>         // map
+
+#include <entt/fwd.hpp>
 
 #include "core/tile_pos.hpp"
 #include "tactile.hpp"
@@ -28,8 +31,8 @@ namespace tactile {
 
 class MapCommandCache final
 {
-  using tile_cache = TreeMap<TilePos, tile_id>;
-  using layer_cache = TreeMap<layer_id, tile_cache>;
+  using tile_cache = std::map<TilePos, TileID, std::less<>>;
+  using layer_cache = std::map<LayerID, tile_cache, std::less<>>;
 
  public:
   void clear() noexcept;

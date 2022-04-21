@@ -22,9 +22,12 @@
 #include <memory>  // unique_ptr, make_unique
 #include <vector>  // vector
 
-#include "edit_shortcuts.hpp"
-#include "file_shortcuts.hpp"
-#include "view_shortcuts.hpp"
+#include <centurion/event.hpp>
+#include <entt/signal/dispatcher.hpp>
+
+#include "editor/shortcuts/edit_shortcuts.hpp"
+#include "editor/shortcuts/file_shortcuts.hpp"
+#include "editor/shortcuts/view_shortcuts.hpp"
 
 namespace tactile {
 namespace {
@@ -44,7 +47,6 @@ void load_default_shortcuts()
   // File
   _load_shortcut<NewMapShortcut>();
   _load_shortcut<OpenMapShortcut>();
-  _load_shortcut<OpenSettingsShortcut>();
   _load_shortcut<SaveShortcut>();
   _load_shortcut<SaveAsShortcut>();
 
@@ -60,12 +62,8 @@ void load_default_shortcuts()
   _load_shortcut<EnableEllipseToolShortcut>();
   _load_shortcut<EnablePointToolShortcut>();
 
-  _load_shortcut<AddRowShortcut>();
-  _load_shortcut<AddColumnShortcut>();
-  _load_shortcut<RemoveRowShortcut>();
-  _load_shortcut<RemoveColumnShortcut>();
-
-  _load_shortcut<AddTilesetShortcut>();
+  _load_shortcut<OpenComponentEditorShortcut>();
+  _load_shortcut<OpenSettingsShortcut>();
 
   // View
   _load_shortcut<CenterViewportShortcut>();
@@ -83,6 +81,14 @@ void load_default_shortcuts()
   _load_shortcut<PanLeftShortcut>();
   _load_shortcut<PanUpShortcut>();
   _load_shortcut<PanDownShortcut>();
+
+  // Map
+  _load_shortcut<AddTilesetShortcut>();
+
+  _load_shortcut<AddRowShortcut>();
+  _load_shortcut<AddColumnShortcut>();
+  _load_shortcut<RemoveRowShortcut>();
+  _load_shortcut<RemoveColumnShortcut>();
 }
 
 void update_shortcuts(const DocumentModel& model,

@@ -29,7 +29,7 @@ class CreateComponentAttributeDialog final : public AStringInputDialog
  public:
   CreateComponentAttributeDialog();
 
-  void show(component_id id);
+  void show(ComponentID id);
 
  protected:
   [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
@@ -38,7 +38,7 @@ class CreateComponentAttributeDialog final : public AStringInputDialog
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  component_id mComponentId{};
+  ComponentID mComponentId{};
 };
 
 }  // namespace tactile

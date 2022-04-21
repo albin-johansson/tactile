@@ -21,7 +21,7 @@
 
 #include <vector>  // vector
 
-#include <entt/entt.hpp>
+#include <entt/entity/entity.hpp>
 
 namespace tactile::comp {
 

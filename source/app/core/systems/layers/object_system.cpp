@@ -19,31 +19,34 @@
 
 #include "object_system.hpp"
 
-#include <string>   // string
-#include <utility>  // move
+#include <optional>  // optional
+#include <string>    // string
+#include <utility>   // move
 
-#include "context_system.hpp"
+#include <entt/entity/registry.hpp>
+
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/throw.hpp"
-#include "registry_system.hpp"
 
 namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto _make_object(entt::registry& registry,
-                                const layer_id layerId,
+                                const LayerID layerId,
                                 std::string name,
                                 const ObjectType type,
                                 const float x,
                                 const float y,
                                 const float width,
-                                const float height) -> object_id
+                                const float height) -> ObjectID
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& map = registry.ctx().at<MapInfo>();
   const auto id = map.next_object_id;
   ++map.next_object_id;
 
@@ -70,53 +73,53 @@ namespace {
 
 }  // namespace
 
-auto make_rectangle_object(entt::registry& registry,
-                           const layer_id layerId,
-                           const float x,
-                           const float y,
-                           const float width,
-                           const float height) -> object_id
+auto new_rectangle_object(entt::registry& registry,
+                          const LayerID layerId,
+                          const float x,
+                          const float y,
+                          const float width,
+                          const float height) -> ObjectID
 {
   return _make_object(registry,
                       layerId,
                       "Rectangle",
-                      ObjectType::rect,
+                      ObjectType::Rect,
                       x,
                       y,
                       width,
                       height);
 }
 
-auto make_ellipse_object(entt::registry& registry,
-                         const layer_id layerId,
-                         const float x,
-                         const float y,
-                         const float width,
-                         const float height) -> object_id
+auto new_ellipse_object(entt::registry& registry,
+                        const LayerID layerId,
+                        const float x,
+                        const float y,
+                        const float width,
+                        const float height) -> ObjectID
 {
   return _make_object(registry,
                       layerId,
                       "Ellipse",
-                      ObjectType::ellipse,
+                      ObjectType::Ellipse,
                       x,
                       y,
                       width,
                       height);
 }
 
-auto make_point_object(entt::registry& registry,
-                       const layer_id layerId,
-                       const float x,
-                       const float y) -> object_id
+auto new_point_object(entt::registry& registry,
+                      const LayerID layerId,
+                      const float x,
+                      const float y) -> ObjectID
 {
-  return _make_object(registry, layerId, "Point", ObjectType::point, x, y, 0, 0);
+  return _make_object(registry, layerId, "Point", ObjectType::Point, x, y, 0, 0);
 }
 
-auto remove_object(entt::registry& registry, const object_id id) -> RemoveObjectResult
+auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectResult
 {
-  const auto objectEntity = find_object(registry, id);
+  const auto objectEntity = get_object(registry, id);
 
-  Maybe<layer_id> layerId;
+  std::optional<LayerID> layerId;
   for (auto&& [layerEntity, layer, objectLayer] :
        registry.view<comp::Layer, comp::ObjectLayer>().each()) {
     if (std::erase(objectLayer.objects, objectEntity) > 0) {
@@ -125,12 +128,14 @@ auto remove_object(entt::registry& registry, const object_id id) -> RemoveObject
     }
   }
 
-  if (auto& activeContext = registry.ctx<comp::ActiveAttributeContext>();
+  auto& ctx = registry.ctx();
+
+  if (auto& activeContext = ctx.at<comp::ActiveAttributeContext>();
       activeContext.entity == objectEntity) {
     activeContext.entity = entt::null;
   }
 
-  if (auto& activeObject = registry.ctx<comp::ActiveObject>();
+  if (auto& activeObject = ctx.at<comp::ActiveObject>();
       activeObject.entity == objectEntity) {
     activeObject.entity = entt::null;
   }
@@ -156,7 +161,7 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot)
   layer.objects.push_back(objectEntity);
 }
 
-auto find_object(const entt::registry& registry, const object_id id) -> entt::entity
+auto find_object(const entt::registry& registry, const ObjectID id) -> entt::entity
 {
   for (auto&& [entity, object] : registry.view<comp::Object>().each()) {
     if (object.id == id) {
@@ -167,14 +172,14 @@ auto find_object(const entt::registry& registry, const object_id id) -> entt::en
   return entt::null;
 }
 
-auto get_object(const entt::registry& registry, const object_id id) -> entt::entity
+auto get_object(const entt::registry& registry, const ObjectID id) -> entt::entity
 {
   const auto entity = find_object(registry, id);
   if (entity != entt::null) {
     return entity;
   }
   else {
-    throw_traced(TactileError{"Invalid object identifier!"});
+    panic("Invalid object identifier!");
   }
 }
 

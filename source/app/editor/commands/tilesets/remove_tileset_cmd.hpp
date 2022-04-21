@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -29,7 +31,7 @@ namespace tactile {
 class RemoveTilesetCmd final : public ACommand
 {
  public:
-  RemoveTilesetCmd(RegistryRef registry, tileset_id id);
+  RemoveTilesetCmd(RegistryRef registry, TilesetID id);
 
   void undo() override;
 
@@ -42,8 +44,8 @@ class RemoveTilesetCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  tileset_id mTilesetId;
-  Maybe<sys::TilesetSnapshot> mSnapshot;
+  TilesetID mTilesetId;
+  std::optional<sys::TilesetSnapshot> mSnapshot;
 };
 
 }  // namespace tactile

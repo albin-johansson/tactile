@@ -19,9 +19,11 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "map_command_cache.hpp"
+#include "editor/commands/maps/map_command_cache.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -42,8 +44,8 @@ class ResizeMapCmd final : public ACommand
   usize mRows{};
   usize mCols{};
   MapCommandCache mCache;
-  Maybe<usize> mPrevRows{};
-  Maybe<usize> mPrevCols{};
+  std::optional<usize> mPrevRows{};
+  std::optional<usize> mPrevCols{};
 
   [[nodiscard]] auto is_lossy_resize() const -> bool;
 };

@@ -19,14 +19,15 @@
 
 #pragma once
 
+#include <type_traits>  // underlying_type_t
+
 namespace tactile {
 
-struct Viewport final
+template <typename Enum>
+[[nodiscard]] constexpr auto to_underlying(const Enum e) noexcept
+    -> std::underlying_type_t<Enum>
 {
-  float x_offset{};
-  float y_offset{};
-  float tile_width{};
-  float tile_height{};
-};
+  return static_cast<std::underlying_type_t<Enum>>(e);
+}
 
 }  // namespace tactile

@@ -19,124 +19,134 @@
 
 #include "application_events.hpp"
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "application.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/viewport_events.hpp"
+#include "editor/gui/menus/edit_menu.hpp"
+#include "editor/gui/menus/file_menu.hpp"
+#include "editor/gui/menus/map_menu.hpp"
+#include "editor/gui/properties/property_dock.hpp"
+#include "editor/gui/viewport/map_view.hpp"
 
 namespace tactile {
 
 using App = Application;
 
-void subscribe_to_events(App& app)
+void subscribe_to_events(App* app)
 {
-  app.connect<UndoEvent, &App::on_undo>();
-  app.connect<RedoEvent, &App::on_redo>();
-  app.connect<SetCommandCapacityEvent, &App::on_set_command_capacity>();
+  auto& d = app->get_dispatcher();
 
-  app.connect<SaveEvent, &App::on_save>();
-  app.connect<SaveAsEvent, &App::on_save_as>();
-  app.connect<OpenSaveAsDialogEvent, &App::on_open_save_as_dialog>();
-  app.connect<ShowSettingsEvent, &App::on_show_settings>();
+  d.sink<UndoEvent>().connect<&App::on_undo>(app);
+  d.sink<RedoEvent>().connect<&App::on_redo>(app);
+  d.sink<SetCommandCapacityEvent>().connect<&App::on_set_command_capacity>(app);
 
-  app.connect<ShowNewMapDialogEvent, &App::on_show_new_map_dialog>();
-  app.connect<ShowOpenMapDialogEvent, &App::on_show_open_map_dialog>();
-  app.connect<InspectMapEvent, &App::on_show_map_properties>();
-  app.connect<CreateMapEvent, &App::on_create_map>();
-  app.connect<CloseMapEvent, &App::on_close_map>();
-  app.connect<OpenMapEvent, &App::on_open_map>();
-  app.connect<SelectMapEvent, &App::on_select_map>();
+  d.sink<SaveEvent>().connect<&App::on_save>(app);
+  d.sink<SaveAsEvent>().connect<&App::on_save_as>(app);
+  d.sink<OpenSaveAsDialogEvent>().connect<&App::on_open_save_as_dialog>(app);
+  d.sink<ShowSettingsEvent>().connect<&show_settings_dialog>();
 
-  app.connect<SelectToolEvent, &App::on_select_tool>();
-  app.connect<ToolPressedEvent, &App::on_tool_pressed>();
-  app.connect<ToolDraggedEvent, &App::on_tool_dragged>();
-  app.connect<ToolReleasedEvent, &App::on_tool_released>();
-  app.connect<ToolEnteredEvent, &App::on_tool_entered>();
-  app.connect<ToolExitedEvent, &App::on_tool_exited>();
+  d.sink<ShowNewMapDialogEvent>().connect<&show_map_creation_dialog>();
+  d.sink<ShowOpenMapDialogEvent>().connect<&show_map_selector_dialog>();
+  d.sink<InspectMapEvent>().connect<&App::on_show_map_properties>(app);
+  d.sink<CreateMapEvent>().connect<&App::on_create_map>(app);
+  d.sink<CloseMapEvent>().connect<&App::on_close_map>(app);
+  d.sink<OpenMapEvent>().connect<&App::on_open_map>(app);
+  d.sink<SelectMapEvent>().connect<&App::on_select_map>(app);
 
-  app.connect<StampSequenceEvent, &App::on_stamp_sequence>();
-  app.connect<EraserSequenceEvent, &App::on_eraser_sequence>();
-  app.connect<FloodEvent, &App::on_flood>();
-  app.connect<AddRectangleEvent, &App::on_add_rectangle>();
-  app.connect<AddEllipseEvent, &App::on_add_ellipse>();
-  app.connect<AddPointEvent, &App::on_add_point>();
+  d.sink<SelectToolEvent>().connect<&App::on_select_tool>(app);
+  d.sink<ToolPressedEvent>().connect<&App::on_tool_pressed>(app);
+  d.sink<ToolDraggedEvent>().connect<&App::on_tool_dragged>(app);
+  d.sink<ToolReleasedEvent>().connect<&App::on_tool_released>(app);
+  d.sink<ToolEnteredEvent>().connect<&App::on_tool_entered>(app);
+  d.sink<ToolExitedEvent>().connect<&App::on_tool_exited>(app);
 
-  app.connect<CenterViewportEvent, &App::on_center_viewport>();
-  app.connect<OffsetViewportEvent, &App::on_offset_viewport>();
-  app.connect<OffsetBoundViewportEvent, &App::on_offset_bound_viewport>();
-  app.connect<PanLeftEvent, &App::on_pan_left>();
-  app.connect<PanRightEvent, &App::on_pan_right>();
-  app.connect<PanUpEvent, &App::on_pan_up>();
-  app.connect<PanDownEvent, &App::on_pan_down>();
-  app.connect<IncreaseZoomEvent, &App::on_increase_zoom>();
-  app.connect<DecreaseZoomEvent, &App::on_decrease_zoom>();
-  app.connect<ResetZoomEvent, &App::on_reset_zoom>();
-  app.connect<ResetFontSizeEvent, &App::on_reset_font_size>();
-  app.connect<IncreaseFontSizeEvent, &App::on_increase_font_size>();
-  app.connect<DecreaseFontSizeEvent, &App::on_decrease_font_size>();
+  d.sink<StampSequenceEvent>().connect<&App::on_stamp_sequence>(app);
+  d.sink<EraserSequenceEvent>().connect<&App::on_eraser_sequence>(app);
+  d.sink<FloodEvent>().connect<&App::on_flood>(app);
+  d.sink<AddRectangleEvent>().connect<&App::on_add_rectangle>(app);
+  d.sink<AddEllipseEvent>().connect<&App::on_add_ellipse>(app);
+  d.sink<AddPointEvent>().connect<&App::on_add_point>(app);
 
-  app.connect<ShowTilesetCreationDialogEvent, &App::on_show_tileset_creation_dialog>();
-  app.connect<AddTilesetEvent, &App::on_add_tileset>();
-  app.connect<RemoveTilesetEvent, &App::on_remove_tileset>();
-  app.connect<SelectTilesetEvent, &App::on_select_tileset>();
-  app.connect<SetTilesetSelectionEvent, &App::on_set_tileset_selection>();
-  app.connect<SetTilesetNameEvent, &App::on_set_tileset_name>();
+  d.sink<CenterViewportEvent>().connect<&center_map_viewport>();
+  d.sink<OffsetViewportEvent>().connect<&App::on_offset_viewport>(app);
+  d.sink<OffsetBoundViewportEvent>().connect<&App::on_offset_bound_viewport>(app);
+  d.sink<PanLeftEvent>().connect<&App::on_pan_left>(app);
+  d.sink<PanRightEvent>().connect<&App::on_pan_right>(app);
+  d.sink<PanUpEvent>().connect<&App::on_pan_up>(app);
+  d.sink<PanDownEvent>().connect<&App::on_pan_down>(app);
+  d.sink<IncreaseZoomEvent>().connect<&App::on_increase_zoom>(app);
+  d.sink<DecreaseZoomEvent>().connect<&App::on_decrease_zoom>(app);
+  d.sink<ResetZoomEvent>().connect<&App::on_reset_zoom>(app);
+  d.sink<ResetFontSizeEvent>().connect<&App::on_reset_font_size>(app);
+  d.sink<IncreaseFontSizeEvent>().connect<&App::on_increase_font_size>(app);
+  d.sink<DecreaseFontSizeEvent>().connect<&App::on_decrease_font_size>(app);
 
-  app.connect<AddRowEvent, &App::on_add_row>();
-  app.connect<AddColumnEvent, &App::on_add_column>();
-  app.connect<RemoveRowEvent, &App::on_remove_row>();
-  app.connect<RemoveColumnEvent, &App::on_remove_column>();
-  app.connect<ResizeMapEvent, &App::on_resize_map>();
-  app.connect<OpenResizeMapDialogEvent, &App::on_open_resize_map_dialog>();
+  d.sink<ShowTilesetCreationDialogEvent>().connect<&show_tileset_creation_dialog>();
+  d.sink<AddTilesetEvent>().connect<&App::on_add_tileset>(app);
+  d.sink<RemoveTilesetEvent>().connect<&App::on_remove_tileset>(app);
+  d.sink<SelectTilesetEvent>().connect<&App::on_select_tileset>(app);
+  d.sink<SetTilesetSelectionEvent>().connect<&App::on_set_tileset_selection>(app);
+  d.sink<SetTilesetNameEvent>().connect<&App::on_set_tileset_name>(app);
 
-  app.connect<AddLayerEvent, &App::on_add_layer>();
-  app.connect<RemoveLayerEvent, &App::on_remove_layer>();
-  app.connect<SelectLayerEvent, &App::on_select_layer>();
-  app.connect<MoveLayerUpEvent, &App::on_move_layer_up>();
-  app.connect<MoveLayerDownEvent, &App::on_move_layer_down>();
-  app.connect<DuplicateLayerEvent, &App::on_duplicate_layer>();
-  app.connect<SetLayerOpacityEvent, &App::on_set_layer_opacity>();
-  app.connect<SetLayerVisibleEvent, &App::on_set_layer_visible>();
-  app.connect<OpenRenameLayerDialogEvent, &App::on_open_rename_layer_dialog>();
-  app.connect<RenameLayerEvent, &App::on_rename_layer>();
+  d.sink<AddRowEvent>().connect<&App::on_add_row>(app);
+  d.sink<AddColumnEvent>().connect<&App::on_add_column>(app);
+  d.sink<RemoveRowEvent>().connect<&App::on_remove_row>(app);
+  d.sink<RemoveColumnEvent>().connect<&App::on_remove_column>(app);
+  d.sink<ResizeMapEvent>().connect<&App::on_resize_map>(app);
+  d.sink<OpenResizeMapDialogEvent>().connect<&App::on_open_resize_map_dialog>(app);
 
-  app.connect<SetObjectNameEvent, &App::on_set_object_name>();
-  app.connect<MoveObjectEvent, &App::on_move_object>();
-  app.connect<SetObjectVisibilityEvent, &App::on_set_object_visibility>();
-  app.connect<SetObjectTagEvent, &App::on_set_object_tag>();
-  app.connect<SpawnObjectContextMenuEvent, &App::on_spawn_object_context_menu>();
+  d.sink<AddLayerEvent>().connect<&App::on_add_layer>(app);
+  d.sink<RemoveLayerEvent>().connect<&App::on_remove_layer>(app);
+  d.sink<SelectLayerEvent>().connect<&App::on_select_layer>(app);
+  d.sink<MoveLayerUpEvent>().connect<&App::on_move_layer_up>(app);
+  d.sink<MoveLayerDownEvent>().connect<&App::on_move_layer_down>(app);
+  d.sink<DuplicateLayerEvent>().connect<&App::on_duplicate_layer>(app);
+  d.sink<SetLayerOpacityEvent>().connect<&App::on_set_layer_opacity>(app);
+  d.sink<SetLayerVisibleEvent>().connect<&App::on_set_layer_visible>(app);
+  d.sink<OpenRenameLayerDialogEvent>().connect<&App::on_open_rename_layer_dialog>(app);
+  d.sink<RenameLayerEvent>().connect<&App::on_rename_layer>(app);
 
-  app.connect<ShowAddPropertyDialogEvent, &App::on_show_add_property_dialog>();
-  app.connect<ShowRenamePropertyDialogEvent, &App::on_show_rename_property_dialog>();
-  app.connect<ShowChangePropertyTypeDialogEvent,
-              &App::on_show_change_property_type_dialog>();
-  app.connect<AddPropertyEvent, &App::on_add_property>();
-  app.connect<RemovePropertyEvent, &App::on_remove_property>();
-  app.connect<RenamePropertyEvent, &App::on_rename_property>();
-  app.connect<UpdatePropertyEvent, &App::on_update_property>();
-  app.connect<ChangePropertyTypeEvent, &App::on_change_property_type>();
-  app.connect<InspectContextEvent, &App::on_inspect_context>();
+  d.sink<SetObjectNameEvent>().connect<&App::on_set_object_name>(app);
+  d.sink<MoveObjectEvent>().connect<&App::on_move_object>(app);
+  d.sink<SetObjectVisibilityEvent>().connect<&App::on_set_object_visibility>(app);
+  d.sink<SetObjectTagEvent>().connect<&App::on_set_object_tag>(app);
+  d.sink<SpawnObjectContextMenuEvent>().connect<&App::on_spawn_object_context_menu>(app);
 
-  app.connect<OpenComponentEditorEvent, &App::on_open_component_editor>();
-  app.connect<CreateComponentDefEvent, &App::on_create_component_def>();
-  app.connect<RemoveComponentDefEvent, &App::on_remove_component_def>();
-  app.connect<RenameComponentDefEvent, &App::on_rename_component_def>();
-  app.connect<CreateComponentAttrEvent, &App::on_create_component_attr>();
-  app.connect<RemoveComponentAttrEvent, &App::on_remove_component_attr>();
-  app.connect<RenameComponentAttrEvent, &App::on_rename_component_attr>();
-  app.connect<DuplicateComponentAttrEvent, &App::on_duplicate_component_attr>();
-  app.connect<SetComponentAttrTypeEvent, &App::on_set_component_attr_type>();
-  app.connect<UpdateComponentDefAttrEvent, &App::on_update_component_def_attr>();
+  d.sink<ShowAddPropertyDialogEvent>().connect<&show_property_creation_dialog>();
+  d.sink<ShowRenamePropertyDialogEvent>().connect<&App::on_show_rename_property_dialog>(
+      app);
+  d.sink<ShowChangePropertyTypeDialogEvent>()
+      .connect<&App::on_show_change_property_type_dialog>(app);
+  d.sink<AddPropertyEvent>().connect<&App::on_add_property>(app);
+  d.sink<RemovePropertyEvent>().connect<&App::on_remove_property>(app);
+  d.sink<RenamePropertyEvent>().connect<&App::on_rename_property>(app);
+  d.sink<UpdatePropertyEvent>().connect<&App::on_update_property>(app);
+  d.sink<ChangePropertyTypeEvent>().connect<&App::on_change_property_type>(app);
+  d.sink<InspectContextEvent>().connect<&App::on_inspect_context>(app);
 
-  app.connect<AddComponentEvent, &App::on_add_component>();
-  app.connect<RemoveComponentEvent, &App::on_remove_component>();
-  app.connect<UpdateComponentEvent, &App::on_update_component>();
-  app.connect<ResetComponentValuesEvent, &App::on_reset_component_values>();
+  d.sink<OpenComponentEditorEvent>().connect<&App::on_open_component_editor>(app);
+  d.sink<CreateComponentDefEvent>().connect<&App::on_create_component_def>(app);
+  d.sink<RemoveComponentDefEvent>().connect<&App::on_remove_component_def>(app);
+  d.sink<RenameComponentDefEvent>().connect<&App::on_rename_component_def>(app);
+  d.sink<CreateComponentAttrEvent>().connect<&App::on_create_component_attr>(app);
+  d.sink<RemoveComponentAttrEvent>().connect<&App::on_remove_component_attr>(app);
+  d.sink<RenameComponentAttrEvent>().connect<&App::on_rename_component_attr>(app);
+  d.sink<DuplicateComponentAttrEvent>().connect<&App::on_duplicate_component_attr>(app);
+  d.sink<SetComponentAttrTypeEvent>().connect<&App::on_set_component_attr_type>(app);
+  d.sink<UpdateComponentDefAttrEvent>().connect<&App::on_update_component_def_attr>(app);
 
-  app.connect<ToggleUiEvent, &App::on_toggle_ui>();
-  app.connect<ReloadFontsEvent, &App::on_reload_fonts>();
-  app.connect<QuitEvent, &App::on_quit>();
+  d.sink<AddComponentEvent>().connect<&App::on_add_component>(app);
+  d.sink<RemoveComponentEvent>().connect<&App::on_remove_component>(app);
+  d.sink<UpdateComponentEvent>().connect<&App::on_update_component>(app);
+  d.sink<ResetComponentValuesEvent>().connect<&App::on_reset_component_values>(app);
+
+  d.sink<ToggleUiEvent>().connect<&App::on_toggle_ui>(app);
+  d.sink<ReloadFontsEvent>().connect<&App::on_reload_fonts>(app);
+  d.sink<QuitEvent>().connect<&App::on_quit>(app);
 }
 
 }  // namespace tactile

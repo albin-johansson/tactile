@@ -20,7 +20,7 @@
 #include "sdl_attributes.hpp"
 
 #include <SDL.h>
-#include <centurion.hpp>
+#include <centurion/opengl.hpp>
 
 #include "meta/build.hpp"
 

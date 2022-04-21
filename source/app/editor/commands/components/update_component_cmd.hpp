@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "core/attribute.hpp"
 #include "editor/commands/command.hpp"
@@ -32,8 +33,8 @@ class UpdateComponentCmd final : public ACommand
 {
  public:
   UpdateComponentCmd(RegistryRef registry,
-                     context_id contextId,
-                     component_id componentId,
+                     ContextID contextId,
+                     ComponentID componentId,
                      std::string attribute,
                      Attribute value);
 
@@ -50,11 +51,11 @@ class UpdateComponentCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  context_id mContextId{};
-  component_id mComponentId{};
+  ContextID mContextId{};
+  ComponentID mComponentId{};
   std::string mAttributeName;
   Attribute mUpdatedValue;
-  Maybe<Attribute> mPreviousValue;
+  std::optional<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

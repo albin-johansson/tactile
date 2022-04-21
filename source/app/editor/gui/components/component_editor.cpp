@@ -19,25 +19,31 @@
 
 #include "component_editor.hpp"
 
-#include <string>   // string
-#include <utility>  // move
+#include <optional>  // optional
+#include <string>    // string
+#include <utility>   // move
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/attribute.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
-#include "dialogs/create_component_attribute_dialog.hpp"
-#include "dialogs/create_component_dialog.hpp"
-#include "dialogs/rename_component_attribute_dialog.hpp"
-#include "dialogs/rename_component_dialog.hpp"
+#include "editor/constants.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/common/input_widgets.hpp"
+#include "editor/gui/components/dialogs/create_component_attribute_dialog.hpp"
+#include "editor/gui/components/dialogs/create_component_dialog.hpp"
+#include "editor/gui/components/dialogs/rename_component_attribute_dialog.hpp"
+#include "editor/gui/components/dialogs/rename_component_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/properties/dialogs/property_type_combo.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 
@@ -47,7 +53,7 @@ struct ComponentEditor::Data final
   CreateComponentAttributeDialog create_component_attr;
   RenameComponentDialog rename_component;
   RenameComponentAttributeDialog rename_component_attr;
-  Maybe<component_id> active_component;
+  std::optional<ComponentID> active_component;
 };
 
 ComponentEditor::ComponentEditor()
@@ -156,7 +162,7 @@ void ComponentEditor::show_component_combo_popup(const entt::registry& registry,
 
 void ComponentEditor::show_component_attributes(const entt::registry& registry,
                                                 entt::dispatcher& dispatcher,
-                                                const component_id id)
+                                                const ComponentID id)
 {
   auto& data = *mData;
   const auto& [defEntity, def] = sys::get_component_def(registry, id);
@@ -185,7 +191,7 @@ void ComponentEditor::show_component_attributes(const entt::registry& registry,
 }
 
 void ComponentEditor::show_component_attribute(entt::dispatcher& dispatcher,
-                                               const component_id id,
+                                               const ComponentID id,
                                                const std::string& name,
                                                const Attribute& value)
 {

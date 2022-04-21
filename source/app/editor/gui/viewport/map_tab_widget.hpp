@@ -19,20 +19,14 @@
 
 #pragma once
 
+#include <entt/fwd.hpp>
+
+#include "editor/fwd.hpp"
+
 namespace tactile {
 
-/**
- * \brief Updates the root dock space, call this function once each frame.
- *
- * \ingroup gui
- */
-void update_dock_space();
+void update_map_tabs(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-/**
- * \brief Resets all dock space widgets to the default layout.
- *
- * \ingroup gui
- */
-void reset_layout();
+void center_map_viewport();
 
 }  // namespace tactile

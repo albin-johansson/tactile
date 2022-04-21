@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <centurion/fwd.hpp>
+#include <entt/fwd.hpp>
+
+#include "editor/fwd.hpp"
 
 namespace tactile {
-
-class GraphicsCtx;
 
 void render_object(GraphicsCtx& graphics,
                    const entt::registry& registry,

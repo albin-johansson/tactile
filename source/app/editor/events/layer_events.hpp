@@ -36,49 +36,49 @@ struct AddLayerEvent final
 
 struct RemoveLayerEvent final
 {
-  layer_id id{};
+  LayerID id{};
 };
 
 struct DuplicateLayerEvent final
 {
-  layer_id id{};
+  LayerID id{};
 };
 
 struct SelectLayerEvent final
 {
-  layer_id id{};
+  LayerID id{};
 };
 
 struct MoveLayerUpEvent final
 {
-  layer_id id{};
+  LayerID id{};
 };
 
 struct MoveLayerDownEvent final
 {
-  layer_id id{};
+  LayerID id{};
 };
 
 struct SetLayerOpacityEvent final
 {
-  layer_id id{};
+  LayerID id{};
   float opacity{};
 };
 
 struct SetLayerVisibleEvent final
 {
-  layer_id id{};
+  LayerID id{};
   bool visible{};
 };
 
 struct OpenRenameLayerDialogEvent final
 {
-  layer_id id{};
+  LayerID id{};
 };
 
 struct RenameLayerEvent final
 {
-  layer_id id{};
+  LayerID id{};
   std::string name;
 };
 

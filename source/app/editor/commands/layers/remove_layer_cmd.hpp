@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -32,7 +34,7 @@ namespace tactile {
 class RemoveLayerCmd final : public ACommand
 {
  public:
-  RemoveLayerCmd(RegistryRef registry, layer_id id);
+  RemoveLayerCmd(RegistryRef registry, LayerID id);
 
   void undo() override;
 
@@ -45,8 +47,8 @@ class RemoveLayerCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayerId;
-  Maybe<sys::LayerSnapshot> mLayerSnapshot;
+  LayerID mLayerId;
+  std::optional<sys::LayerSnapshot> mLayerSnapshot;
 };
 
 /// \} End of group commands

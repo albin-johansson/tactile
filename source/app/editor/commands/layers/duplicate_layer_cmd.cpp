@@ -20,11 +20,12 @@
 #include "duplicate_layer_cmd.hpp"
 
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
 
-DuplicateLayerCmd::DuplicateLayerCmd(RegistryRef registry, const layer_id id)
+DuplicateLayerCmd::DuplicateLayerCmd(RegistryRef registry, const LayerID id)
     : ACommand{"Duplicate Layer"}
     , mRegistry{registry}
     , mLayerId{id}
@@ -34,8 +35,8 @@ void DuplicateLayerCmd::undo()
 {
   auto& registry = mRegistry.get();
 
-  auto&& [entity, layer] = sys::get_layer(registry, mNewLayerId.value());
-  sys::remove_layer(registry, entity);
+  const auto layerEntity = sys::get_layer(registry, mNewLayerId.value());
+  sys::remove_layer(registry, layerEntity);
 }
 
 void DuplicateLayerCmd::redo()
@@ -46,13 +47,13 @@ void DuplicateLayerCmd::redo()
   const auto entity = sys::duplicate_layer(registry, sourceEntity);
 
   if (!mNewLayerId) {
-    const auto& layer = registry.get<comp::Layer>(entity);
+    const auto& layer = sys::checked_get<comp::Layer>(registry, entity);
     mNewLayerId = layer.id;
   }
   else {
     // Reuse previous ID of duplicated layer
     TACTILE_ASSERT(sys::find_layer(registry, *mNewLayerId) == entt::null);
-    auto& layer = registry.get<comp::Layer>(entity);
+    auto& layer = sys::checked_get<comp::Layer>(registry, entity);
     layer.id = *mNewLayerId;
   }
 }

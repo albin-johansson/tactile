@@ -19,30 +19,28 @@
 
 #include "icons.hpp"
 
-#include "misc/throw.hpp"
+#include <optional>  // optional
+
 #include "io/directories.hpp"
+#include "misc/assert.hpp"
+#include "misc/throw.hpp"
 
 namespace tactile {
+namespace {
 
-IconManager::IconManager(TextureManager& textures)
-    : mTactileIcon{textures.load(find_resource("assets/icon.png")).value().id}
-{}
+constinit std::optional<uint> _tactile_icon;
 
-auto get_icon(const LayerType type) -> const char*
+}  // namespace
+
+void load_icons(TextureManager& textures)
 {
-  switch (type) {
-    case LayerType::tile_layer:
-      return TAC_ICON_TILE_LAYER;
+  _tactile_icon = textures.load(find_resource("assets/icon.png")).value().id;
+}
 
-    case LayerType::object_layer:
-      return TAC_ICON_OBJECT_LAYER;
-
-    case LayerType::group_layer:
-      return TAC_ICON_GROUP_LAYER;
-
-    default:
-      throw_traced(TactileError{"Failed to recognize layer type!"});
-  }
+auto get_tactile_icon() -> uint
+{
+  TACTILE_ASSERT(_tactile_icon.has_value());
+  return _tactile_icon.value();
 }
 
 }  // namespace tactile

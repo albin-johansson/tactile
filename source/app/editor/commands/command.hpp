@@ -21,8 +21,9 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
+#include "core/common/ref.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -43,8 +44,6 @@ class ACommand
  public:
   TACTILE_DELETE_COPY(ACommand)
   TACTILE_DEFAULT_MOVE(ACommand)
-
-  ACommand() = default;
 
   /**
    * \brief Creates a command.

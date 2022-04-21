@@ -19,7 +19,7 @@
 
 #include "about_dialog.hpp"
 
-#include <centurion.hpp>
+#include <centurion/system.hpp>
 #include <imgui.h>
 
 #include "editor/gui/common/button.hpp"

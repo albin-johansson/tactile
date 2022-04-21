@@ -34,7 +34,7 @@ RenameComponentAttributeDialog::RenameComponentAttributeDialog()
   set_input_hint("Attribute name");
 }
 
-void RenameComponentAttributeDialog::show(std::string previousName, const component_id id)
+void RenameComponentAttributeDialog::show(std::string previousName, const ComponentID id)
 {
   mComponentId = id;
   AStringInputDialog::show(std::move(previousName));

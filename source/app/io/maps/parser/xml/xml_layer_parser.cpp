@@ -198,21 +198,21 @@ namespace {
   layerData.visible = layerNode.attribute("visible").as_bool(true);
 
   if (std::strcmp(layerNode.name(), "layer") == 0) {
-    layerData.type = LayerType::tile_layer;
+    layerData.type = LayerType::TileLayer;
     if (const auto err = _parse_tile_layer(layerNode, layerData, rows, columns);
         err != ParseError::none) {
       return err;
     }
   }
   else if (std::strcmp(layerNode.name(), "objectgroup") == 0) {
-    layerData.type = LayerType::object_layer;
+    layerData.type = LayerType::ObjectLayer;
     if (const auto err = _parse_object_layer(layerNode, layerData);
         err != ParseError::none) {
       return err;
     }
   }
   else if (std::strcmp(layerNode.name(), "group") == 0) {
-    layerData.type = LayerType::group_layer;
+    layerData.type = LayerType::GroupLayer;
     auto& groupData = layerData.data.emplace<ir::GroupLayerData>();
 
     usize childIndex = 0;
@@ -231,7 +231,7 @@ namespace {
   }
   else {
     /* If we enter this branch, then the layer collection is broken */
-    throw_traced(TactileError{"Collected invalid layer node!"});
+    panic("Collected invalid layer node!");
   }
 
   if (const auto err = parse_properties(layerNode, layerData.context);
@@ -264,13 +264,13 @@ auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData) -> Pars
   objectData.visible = objectNode.attribute("visible").as_bool(true);
 
   if (!objectNode.child("point").empty()) {
-    objectData.type = ObjectType::point;
+    objectData.type = ObjectType::Point;
   }
   else if (!objectNode.child("ellipse").empty()) {
-    objectData.type = ObjectType::ellipse;
+    objectData.type = ObjectType::Ellipse;
   }
   else {
-    objectData.type = ObjectType::rect;
+    objectData.type = ObjectType::Rect;
   }
 
   if (const auto err = parse_properties(objectNode, objectData.context);

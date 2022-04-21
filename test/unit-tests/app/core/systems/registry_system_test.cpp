@@ -7,21 +7,22 @@
 #include "core/components/objects.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/tools.hpp"
-#include "core/map.hpp"
-#include "core/viewport.hpp"
+#include "core/components/viewport.hpp"
+#include "core/map_info.hpp"
 
 using namespace tactile;
 
 TEST(RegistrySystem, MakeDocumentRegistry)
 {
   const auto registry = sys::make_document_registry();
-  ASSERT_TRUE(registry.try_ctx<MapInfo>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveLayer>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveTileset>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveAttributeContext>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveTool>());
-  ASSERT_TRUE(registry.try_ctx<comp::ActiveObject>());
-  ASSERT_TRUE(registry.try_ctx<Viewport>());
-  ASSERT_TRUE(registry.try_ctx<comp::AttributeContext>());
-  ASSERT_TRUE(registry.try_ctx<comp::TilesetContext>());
+  const auto& ctx = registry.ctx();
+  ASSERT_TRUE(ctx.find<MapInfo>());
+  ASSERT_TRUE(ctx.find<comp::ActiveLayer>());
+  ASSERT_TRUE(ctx.find<comp::ActiveTileset>());
+  ASSERT_TRUE(ctx.find<comp::ActiveAttributeContext>());
+  ASSERT_TRUE(ctx.find<comp::ActiveTool>());
+  ASSERT_TRUE(ctx.find<comp::ActiveObject>());
+  ASSERT_TRUE(ctx.find<comp::Viewport>());
+  ASSERT_TRUE(ctx.find<comp::AttributeContext>());
+  ASSERT_TRUE(ctx.find<comp::TilesetContext>());
 }

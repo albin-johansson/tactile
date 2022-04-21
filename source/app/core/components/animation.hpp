@@ -21,8 +21,8 @@
 
 #include <vector>  // vector
 
-#include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <centurion/common.hpp>
+#include <entt/entity/entity.hpp>
 
 #include "tactile.hpp"
 
@@ -35,7 +35,7 @@ namespace tactile::comp {
  */
 struct AnimationFrame final
 {
-  tile_id tile{};         ///< Tile that will be rendered during the frame.
+  TileID tile{};          ///< Tile that will be rendered during the frame.
   cen::u64ms duration{};  ///< Duration of the frame.
 };
 

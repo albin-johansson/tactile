@@ -19,8 +19,10 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "editor/commands/command_id.hpp"
-#include "object_command.hpp"
+#include "editor/commands/objects/object_command.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -28,7 +30,7 @@ namespace tactile {
 class SetObjectVisibilityCmd final : public AObjectCommand
 {
  public:
-  SetObjectVisibilityCmd(RegistryRef registry, object_id id, bool visible);
+  SetObjectVisibilityCmd(RegistryRef registry, ObjectID id, bool visible);
 
   void undo() override;
 
@@ -41,7 +43,7 @@ class SetObjectVisibilityCmd final : public AObjectCommand
 
  private:
   bool mVisible;
-  Maybe<bool> mPreviousVisibility;
+  std::optional<bool> mPreviousVisibility;
 };
 
 }  // namespace tactile

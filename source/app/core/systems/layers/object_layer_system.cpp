@@ -19,12 +19,14 @@
 
 #include "object_layer_system.hpp"
 
+#include <entt/entity/registry.hpp>
+
 #include "core/components/objects.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/context_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "layer_system.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::sys {
@@ -38,7 +40,7 @@ namespace {
 {
   /* Points have no width or height, so we have to create a hitbox large enough to be easy
      for the user to click */
-  if (object.type == ObjectType::point) {
+  if (object.type == ObjectType::Point) {
     const auto width = static_cast<float>(mapTileWidth) / 2.0f;
     const auto height = static_cast<float>(mapTileHeight) / 2.0f;
 
@@ -57,7 +59,7 @@ namespace {
 
 }  // namespace
 
-auto get_object_layer(entt::registry& registry, const layer_id id)
+auto get_object_layer(entt::registry& registry, const LayerID id)
     -> std::pair<entt::entity, comp::ObjectLayer&>
 {
   const auto entity = find_layer(registry, id);
@@ -65,11 +67,11 @@ auto get_object_layer(entt::registry& registry, const layer_id id)
     return {entity, registry.get<comp::ObjectLayer>(entity)};
   }
   else {
-    throw_traced(TactileError{"Invalid object layer ID!"});
+    panic("Invalid object layer ID!");
   }
 }
 
-auto get_object_layer(const entt::registry& registry, const layer_id id)
+auto get_object_layer(const entt::registry& registry, const LayerID id)
     -> std::pair<entt::entity, const comp::ObjectLayer&>
 {
   const auto entity = find_layer(registry, id);
@@ -77,20 +79,20 @@ auto get_object_layer(const entt::registry& registry, const layer_id id)
     return {entity, registry.get<comp::ObjectLayer>(entity)};
   }
   else {
-    throw_traced(TactileError{"Invalid object layer ID!"});
+    panic("Invalid object layer ID!");
   }
 }
 
 auto has_object(const entt::registry& registry,
                 const comp::ObjectLayer& layer,
-                const object_id id) -> bool
+                const ObjectID id) -> bool
 {
   return find_object(registry, layer, id) != entt::null;
 }
 
 auto find_object(const entt::registry& registry,
                  const comp::ObjectLayer& layer,
-                 const object_id id) -> entt::entity
+                 const ObjectID id) -> entt::entity
 {
   for (const auto objectEntity : layer.objects) {
     const auto& object = checked_get<comp::Object>(registry, objectEntity);
@@ -107,11 +109,11 @@ auto find_object(const entt::registry& registry,
                  const float x,
                  const float y) -> entt::entity
 {
-  const auto& map = registry.ctx<MapInfo>();
+  const auto& map = registry.ctx().at<MapInfo>();
   const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
   for (const auto objectEntity : layer.objects) {
-    const auto& object = registry.get<comp::Object>(objectEntity);
+    const auto& object = checked_get<comp::Object>(registry, objectEntity);
     const auto bounds = _get_hit_detection_bounds(object,
                                                   static_cast<float>(map.tile_width),
                                                   static_cast<float>(map.tile_height),

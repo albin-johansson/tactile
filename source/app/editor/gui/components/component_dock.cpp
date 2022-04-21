@@ -19,6 +19,8 @@
 
 #include "component_dock.hpp"
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
@@ -28,7 +30,7 @@
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
-#include "editor/gui/components/views/component_view.hpp"
+#include "editor/gui/components/component_view.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -42,7 +44,7 @@ constexpr auto _add_component_popup_id = "##AddComponentButtonPopup";
 
 void _show_add_component_button_popup_content(const entt::registry& registry,
                                               entt::dispatcher& dispatcher,
-                                              const context_id contextId)
+                                              const ContextID contextId)
 {
   const auto view = registry.view<comp::ComponentDef>();
   if (view.empty()) {

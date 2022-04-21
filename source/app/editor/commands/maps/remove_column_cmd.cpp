@@ -20,7 +20,7 @@
 #include "remove_column_cmd.hpp"
 
 #include "core/algorithms/invoke_n.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
 #include "core/systems/map_system.hpp"
 
 namespace tactile {
@@ -40,7 +40,7 @@ void RemoveColumnCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto& map = registry.ctx<MapInfo>();
+  const auto& map = registry.ctx().at<MapInfo>();
   const auto begin = TilePos::from(0u, map.column_count - mColumns - 1u);
   const auto end = TilePos::from(map.row_count, map.column_count);
 

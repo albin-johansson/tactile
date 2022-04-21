@@ -1,24 +1,26 @@
 #include "core/utils/buffers.hpp"
 
+#include <array>  // array
+
 #include <gtest/gtest.h>
 
 using namespace tactile;
 
 TEST(BufferUtils, ZeroBuffer)
 {
-  std::array<char, 5> buffer;  // NOLINT
+  std::array buffer = {'0', '1', '2', '3', '4'};
   zero_buffer(buffer);
 
-  ASSERT_EQ(0, buffer.at(0));
-  ASSERT_EQ(0, buffer.at(1));
-  ASSERT_EQ(0, buffer.at(2));
-  ASSERT_EQ(0, buffer.at(3));
-  ASSERT_EQ(0, buffer.at(4));
+  ASSERT_EQ(0, buffer[0]);
+  ASSERT_EQ(0, buffer[1]);
+  ASSERT_EQ(0, buffer[2]);
+  ASSERT_EQ(0, buffer[3]);
+  ASSERT_EQ(0, buffer[4]);
 }
 
 TEST(BufferUtils, CopyStringIntoBuffer)
 {
-  std::array<char, 10> buffer;  // NOLINT
+  std::array buffer = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
   copy_string_into_buffer(buffer, "abcdef");
 
   ASSERT_EQ('a', buffer.at(0));
@@ -28,7 +30,7 @@ TEST(BufferUtils, CopyStringIntoBuffer)
   ASSERT_EQ('e', buffer.at(4));
   ASSERT_EQ('f', buffer.at(5));
 
-  // The buffer should have been zeroed
+  // The rest of the buffer should have been zeroed
   ASSERT_EQ(0, buffer.at(6));
   ASSERT_EQ(0, buffer.at(7));
   ASSERT_EQ(0, buffer.at(8));
@@ -37,7 +39,7 @@ TEST(BufferUtils, CopyStringIntoBuffer)
 
 TEST(BufferUtils, CopyStringIntoBufferThatIsTooSmall)
 {
-  std::array<char, 4> buffer;  // NOLINT
+  std::array buffer = {'0', '1', '2', '3'};
   copy_string_into_buffer(buffer, "abcdef");
 
   ASSERT_EQ('a', buffer.at(0));

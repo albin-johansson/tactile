@@ -19,14 +19,11 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <functional>  // less
 
 namespace tactile {
 
-class DocumentModel;
-
-void show_document_tab_view(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-void center_map_viewport();
+template <typename T>
+using Ref = std::reference_wrapper<T>;
 
 }  // namespace tactile

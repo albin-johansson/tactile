@@ -19,7 +19,9 @@
 
 #include "tile_layer_system.hpp"
 
-#include "layer_system.hpp"
+#include <entt/entity/registry.hpp>
+
+#include "core/systems/layers/layer_system.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::sys {
@@ -34,19 +36,19 @@ namespace {
 
 }  // namespace
 
-auto get_tile_layer_entity(const entt::registry& registry, const layer_id id)
+auto get_tile_layer_entity(const entt::registry& registry, const LayerID id)
     -> entt::entity
 {
-  const auto entity = sys::find_layer(registry, id);
+  const auto entity = find_layer(registry, id);
   if (entity != entt::null && registry.all_of<comp::TileLayer>(entity)) {
     return entity;
   }
   else {
-    throw_traced(TactileError{"Invalid tile layer identifier!"});
+    panic("Invalid tile layer identifier!");
   }
 }
 
-void set_tile(comp::TileLayer& layer, const TilePos& position, const tile_id tile)
+void set_tile(comp::TileLayer& layer, const TilePos& position, const TileID tile)
 {
   const auto row = position.row_index();
   const auto col = position.col_index();
@@ -55,7 +57,7 @@ void set_tile(comp::TileLayer& layer, const TilePos& position, const tile_id til
     layer.matrix[row][col] = tile;
   }
   else {
-    throw_traced(TactileError{"Invalid tile layer position!"});
+    panic("Invalid tile layer position!");
   }
 }
 
@@ -69,7 +71,7 @@ void set_tiles(comp::TileLayer& layer, const TileCache& tiles)
   }
 }
 
-auto get_tile(const comp::TileLayer& layer, const TilePos& position) -> tile_id
+auto get_tile(const comp::TileLayer& layer, const TilePos& position) -> TileID
 {
   const auto row = position.row_index();
   const auto col = position.col_index();

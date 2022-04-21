@@ -21,9 +21,9 @@
 
 #include <vector>  // vector
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
-#include "core/tile_pos.hpp"
+#include "core/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -40,7 +40,7 @@ namespace tactile {
 void flood(entt::registry& registry,
            entt::entity entity,
            const TilePos& origin,
-           tile_id replacement,
+           TileID replacement,
            std::vector<TilePos>& affected);
 
 }  // namespace tactile

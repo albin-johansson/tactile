@@ -24,7 +24,6 @@ target_include_directories(${TACTILE_LIB}
                            ${LIBRARY_DIR}/fontawesome
                            ${STB_INCLUDE_DIRS}
                            ${CPPCODEC_INCLUDE_DIRS}
-                           ${Boost_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
                            )
 
@@ -45,7 +44,9 @@ target_link_libraries(${TACTILE_LIB}
                       ZLIB::ZLIB
                       GLEW::GLEW
                       OpenGL::GL
-                      ${Boost_LIBRARIES}
+                      Boost::boost
+                      Boost::container
+                      Boost::exception
                       )
 
 target_compile_definitions(${TACTILE_LIB}
@@ -103,27 +104,34 @@ tactile_set_compile_options(${TACTILE_LIB})
 tactile_set_compile_options(${TACTILE_EXE})
 
 target_precompile_headers(${TACTILE_LIB} PRIVATE
-                          <cstdint>
-                          <cstddef>
-                          <memory>
-                          <utility>
+                          <algorithm>
                           <array>
-                          <vector>
+                          <charconv>
+                          <concepts>
+                          <cstddef>
+                          <cstdint>
+                          <cstring>
+                          <cstdlib>
+                          <cmath>
+                          <filesystem>
+                          <fstream>
+                          <functional>
+                          <limits>
                           <map>
-                          <unordered_map>
-                          <variant>
+                          <memory>
+                          <optional>
+                          <random>
+                          <span>
                           <string>
                           <string_view>
-                          <concepts>
-                          <functional>
+                          <system_error>
+                          <type_traits>
+                          <unordered_map>
+                          <utility>
+                          <variant>
+                          <vector>
 
-                          <centurion.hpp>
-                          <entt/entt.hpp>
                           <imgui.h>
-                          <fmt/format.h>
-                          <yaml-cpp/yaml.h>
-                          <nlohmann/json.hpp>
-                          <pugixml.hpp>
                           )
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})

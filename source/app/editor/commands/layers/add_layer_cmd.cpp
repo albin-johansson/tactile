@@ -21,6 +21,7 @@
 
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -52,22 +53,22 @@ void AddLayerCmd::redo()
 
     entt::entity entity{entt::null};
     switch (mLayerType) {
-      case LayerType::tile_layer: {
-        entity = sys::make_tile_layer(registry);
+      case LayerType::TileLayer: {
+        entity = sys::new_tile_layer(registry);
         break;
       }
-      case LayerType::object_layer: {
-        entity = sys::make_object_layer(registry);
+      case LayerType::ObjectLayer: {
+        entity = sys::new_object_layer(registry);
         break;
       }
-      case LayerType::group_layer: {
-        entity = sys::make_group_layer(registry);
+      case LayerType::GroupLayer: {
+        entity = sys::new_group_layer(registry);
         break;
       }
     }
 
     TACTILE_ASSERT(entity != entt::null);
-    mLayerId = registry.get<comp::Layer>(entity).id;
+    mLayerId = sys::checked_get<comp::Layer>(registry, entity).id;
 
     sys::sort_layers(registry);
   }

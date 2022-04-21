@@ -6,10 +6,17 @@
   "maintainers": [
     "albin-johansson"
   ],
-  "builtin-baseline": "7e7dad5fe20cdc085731343e0e197a7ae655555b",
+  "builtin-baseline": "e0c3408c778c54788393c4a739f6f3507aff77cb",
   "dependencies": [
-    "sdl2",
-    "sdl2-image",
+    "boost-assert",
+    "boost-container",
+    "boost-exception",
+    "boost-stacktrace",
+    "cppcodec",
+    "entt",
+    "fmt",
+    "glew",
+    "gtest",
     {
       "name": "imgui",
       "features": [
@@ -18,18 +25,15 @@
         "opengl3-binding"
       ]
     },
-    "glew",
-    "protobuf",
-    "entt",
-    "fmt",
-    "nlohmann-json",
-    "yaml-cpp",
-    "pugixml",
     "magic-enum",
+    "nlohmann-json",
+    "protobuf",
+    "pugixml",
+    "sdl2",
+    "sdl2-image",
     "stb",
-    "gtest",
     "tinyfiledialogs",
-    "cppcodec",
+    "yaml-cpp",
     "zlib"
   ]
 }

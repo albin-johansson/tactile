@@ -22,7 +22,9 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "core/map.hpp"
+#include <entt/entity/registry.hpp>
+
+#include "core/map_info.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"
@@ -42,7 +44,7 @@ void DocumentModel::update()
   }
 }
 
-auto DocumentModel::add_map(Document document) -> map_id
+auto DocumentModel::add_map(Document document) -> MapID
 {
   const auto id = mNextId;
 
@@ -56,7 +58,7 @@ auto DocumentModel::add_map(Document document) -> map_id
 auto DocumentModel::add_map(const int32 tileWidth,
                             const int32 tileHeight,
                             const usize rows,
-                            const usize columns) -> map_id
+                            const usize columns) -> MapID
 {
   TACTILE_ASSERT(tileWidth > 0);
   TACTILE_ASSERT(tileHeight > 0);
@@ -64,7 +66,7 @@ auto DocumentModel::add_map(const int32 tileWidth,
   Document document;
   document.registry = sys::make_document_registry();
 
-  auto& map = document.registry.ctx<MapInfo>();
+  auto& map = document.registry.ctx().at<MapInfo>();
   map.tile_width = tileWidth;
   map.tile_height = tileHeight;
   map.row_count = rows;
@@ -73,13 +75,13 @@ auto DocumentModel::add_map(const int32 tileWidth,
   return add_map(std::move(document));
 }
 
-void DocumentModel::select_map(const map_id id)
+void DocumentModel::select_map(const MapID id)
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   mActiveMap = id;
 }
 
-void DocumentModel::remove_map(const map_id id)
+void DocumentModel::remove_map(const MapID id)
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   mDocuments.erase(id);
@@ -95,13 +97,13 @@ void DocumentModel::remove_map(const map_id id)
   }
 }
 
-auto DocumentModel::has_path(const map_id id) const -> bool
+auto DocumentModel::has_path(const MapID id) const -> bool
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   return !mDocuments.at(id)->path.empty();
 }
 
-auto DocumentModel::get_path(const map_id id) const -> const std::filesystem::path&
+auto DocumentModel::get_path(const MapID id) const -> const std::filesystem::path&
 {
   TACTILE_ASSERT(mDocuments.contains(id));
   return mDocuments.at(id)->path;
@@ -115,7 +117,7 @@ auto DocumentModel::has_document_with_path(const std::filesystem::path& path) co
   });
 }
 
-auto DocumentModel::active_map_id() const -> Maybe<map_id>
+auto DocumentModel::active_map_id() const -> std::optional<MapID>
 {
   return mActiveMap;
 }
@@ -192,7 +194,7 @@ auto DocumentModel::get_active_registry() -> entt::registry&
     return mDocuments.at(*mActiveMap)->registry;
   }
   else {
-    throw_traced(TactileError{"No active registry to return!"});
+    panic("No active registry to return!");
   }
 }
 
@@ -202,7 +204,7 @@ auto DocumentModel::get_active_registry() const -> const entt::registry&
     return mDocuments.at(*mActiveMap)->registry;
   }
   else {
-    throw_traced(TactileError{"No active registry to return!"});
+    panic("No active registry to return!");
   }
 }
 
@@ -255,18 +257,18 @@ auto DocumentModel::is_tool_possible(const ToolType tool) const -> bool
   }
 
   switch (tool) {
-    case ToolType::stamp:
-    case ToolType::eraser:
+    case ToolType::Stamp:
+    case ToolType::Eraser:
       return sys::is_tile_layer_active(*registry);
 
-    case ToolType::bucket:
+    case ToolType::Bucket:
       return sys::is_tile_layer_active(*registry) &&
              sys::is_single_tile_selected_in_tileset(*registry);
 
-    case ToolType::object_selection:
-    case ToolType::rectangle:
-    case ToolType::ellipse:
-    case ToolType::point:
+    case ToolType::ObjectSelection:
+    case ToolType::Rectangle:
+    case ToolType::Ellipse:
+    case ToolType::Point:
       return sys::is_object_layer_active(*registry);
 
     default:

@@ -19,10 +19,8 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // registry
-
 #include "editor/commands/command_id.hpp"
-#include "object_command.hpp"
+#include "editor/commands/objects/object_command.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -34,7 +32,7 @@ class MoveObjectCmd final : public AObjectCommand
 {
  public:
   MoveObjectCmd(RegistryRef registry,
-                object_id id,
+                ObjectID id,
                 float oldX,
                 float oldY,
                 float newX,

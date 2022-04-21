@@ -21,15 +21,14 @@
 
 #include <memory>  // unique_ptr
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
-#include "core/attribute.hpp"
+#include "core/fwd.hpp"
+#include "editor/fwd.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 /**
  * \brief Used to manage the available component definitions.
@@ -60,10 +59,10 @@ class ComponentEditor final : public ADialog
 
   void show_component_attributes(const entt::registry& registry,
                                  entt::dispatcher& dispatcher,
-                                 component_id id);
+                                 ComponentID id);
 
   void show_component_attribute(entt::dispatcher& dispatcher,
-                                component_id id,
+                                ComponentID id,
                                 const std::string& name,
                                 const Attribute& value);
 };

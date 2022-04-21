@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "editor/commands/command_id.hpp"
-#include "object_command.hpp"
+#include "editor/commands/objects/object_command.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -30,7 +31,7 @@ namespace tactile {
 class SetObjectNameCmd final : public AObjectCommand
 {
  public:
-  SetObjectNameCmd(RegistryRef registry, object_id id, std::string name);
+  SetObjectNameCmd(RegistryRef registry, ObjectID id, std::string name);
 
   void undo() override;
 
@@ -45,7 +46,7 @@ class SetObjectNameCmd final : public AObjectCommand
 
  private:
   std::string mNewName;
-  Maybe<std::string> mOldName;
+  std::optional<std::string> mOldName;
 };
 
 }  // namespace tactile

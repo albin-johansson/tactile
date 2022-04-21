@@ -26,7 +26,7 @@
 namespace tactile {
 
 SetObjectNameCmd::SetObjectNameCmd(RegistryRef registry,
-                                   const object_id id,
+                                   const ObjectID id,
                                    std::string name)
     : AObjectCommand{"Set Object Name", registry, id}
     , mNewName{std::move(name)}

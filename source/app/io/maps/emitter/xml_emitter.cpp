@@ -53,39 +53,39 @@ void _append_properties(pugi::xml_node node, const ir::AttributeContextData& con
     const auto type = propertyValue.type();
 
     /* Properties with no type attribute are assumed to be string properties */
-    if (type != AttributeType::string) {
+    if (type != AttributeType::String) {
       propertyNode.append_attribute("type").set_value(stringify(type));
     }
 
     auto valueAttr = propertyNode.append_attribute("value");
 
     switch (type) {
-      case AttributeType::string:
+      case AttributeType::String:
         valueAttr.set_value(propertyValue.as_string().c_str());
         break;
 
-      case AttributeType::integer:
+      case AttributeType::Int:
         valueAttr.set_value(propertyValue.as_int());
         break;
 
-      case AttributeType::floating:
+      case AttributeType::Float:
         valueAttr.set_value(propertyValue.as_float());
         break;
 
-      case AttributeType::boolean:
+      case AttributeType::Bool:
         valueAttr.set_value(propertyValue.as_bool());
         break;
 
-      case AttributeType::file: {
-        const auto str = convert_to_forward_slashes(propertyValue.as_file());
+      case AttributeType::Path: {
+        const auto str = convert_to_forward_slashes(propertyValue.as_path());
         valueAttr.set_value(str.c_str());
         break;
       }
-      case AttributeType::color:
+      case AttributeType::Color:
         valueAttr.set_value(propertyValue.as_color().as_argb().c_str());
         break;
 
-      case AttributeType::object:
+      case AttributeType::Object:
         valueAttr.set_value(propertyValue.as_object());
         break;
     }
@@ -126,10 +126,10 @@ void _append_object(pugi::xml_node node, const ir::ObjectData& objectData)
   }
 
   /* Objects are assumed to be rectangles unless explicitly told otherwise */
-  if (objectData.type == ObjectType::point) {
+  if (objectData.type == ObjectType::Point) {
     objectNode.append_child("point");
   }
-  else if (objectData.type == ObjectType::ellipse) {
+  else if (objectData.type == ObjectType::Ellipse) {
     objectNode.append_child("ellipse");
   }
 
@@ -210,15 +210,15 @@ void _append_object_layer(pugi::xml_node root, const ir::LayerData& layerData)
 void _append_layer(pugi::xml_node root, const ir::LayerData& layerData)
 {
   switch (layerData.type) {
-    case LayerType::tile_layer:
+    case LayerType::TileLayer:
       _append_tile_layer(root, layerData);
       break;
 
-    case LayerType::object_layer:
+    case LayerType::ObjectLayer:
       _append_object_layer(root, layerData);
       break;
 
-    case LayerType::group_layer: {
+    case LayerType::GroupLayer: {
       const auto& groupLayerData = std::get<ir::GroupLayerData>(layerData.data);
 
       auto collection = root.append_child("group");
@@ -233,7 +233,7 @@ void _append_layer(pugi::xml_node root, const ir::LayerData& layerData)
     }
 
     default:
-      throw_traced(TactileError{"Invalid layer type!"});
+      panic("Invalid layer type!");
   }
 }
 

@@ -20,6 +20,7 @@
 #pragma once
 
 #include <filesystem>   // path
+#include <optional>     // optional
 #include <string>       // string
 #include <string_view>  // string_view
 
@@ -32,34 +33,35 @@ namespace tactile {
 
 NLOHMANN_JSON_SERIALIZE_ENUM(AttributeType,
                              {
-                                 {AttributeType::string, "string"},
-                                 {AttributeType::integer, "int"},
-                                 {AttributeType::floating, "float"},
-                                 {AttributeType::boolean, "bool"},
-                                 {AttributeType::object, "object"},
-                                 {AttributeType::color, "color"},
-                                 {AttributeType::file, "file"},
+                                 {AttributeType::String, "string"},
+                                 {AttributeType::Int, "int"},
+                                 {AttributeType::Float, "float"},
+                                 {AttributeType::Bool, "bool"},
+                                 {AttributeType::Object, "object"},
+                                 {AttributeType::Color, "color"},
+                                 {AttributeType::Path, "file"},
                              })
 
 void to_json(nlohmann::json& json, const Attribute& value);
 
 void write_json(const nlohmann::json& json, const std::filesystem::path& path);
 
-[[nodiscard]] auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>;
+[[nodiscard]] auto read_json(const std::filesystem::path& path)
+    -> std::optional<nlohmann::json>;
 
 [[nodiscard]] auto as_string(const nlohmann::json& json, std::string_view name)
-    -> Maybe<std::string>;
+    -> std::optional<std::string>;
 
 [[nodiscard]] auto as_int(const nlohmann::json& json, std::string_view name)
-    -> Maybe<int32>;
+    -> std::optional<int32>;
 
 [[nodiscard]] auto as_uint(const nlohmann::json& json, std::string_view name)
-    -> Maybe<uint32>;
+    -> std::optional<uint32>;
 
 [[nodiscard]] auto as_float(const nlohmann::json& json, std::string_view name)
-    -> Maybe<float>;
+    -> std::optional<float>;
 
 [[nodiscard]] auto as_bool(const nlohmann::json& json, std::string_view name)
-    -> Maybe<bool>;
+    -> std::optional<bool>;
 
 }  // namespace tactile

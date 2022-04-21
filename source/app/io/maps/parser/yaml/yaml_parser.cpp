@@ -65,14 +65,14 @@ namespace {
   }
 
   if (auto id = node["next-layer-id"]) {
-    data.next_layer_id = id.as<layer_id>();
+    data.next_layer_id = id.as<LayerID>();
   }
   else {
     return ParseError::no_map_next_layer_id;
   }
 
   if (auto id = node["next-object-id"]) {
-    data.next_object_id = id.as<object_id>();
+    data.next_object_id = id.as<ObjectID>();
   }
   else {
     return ParseError::no_map_next_object_id;

@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-RemoveTilesetCmd::RemoveTilesetCmd(RegistryRef registry, const tileset_id id)
+RemoveTilesetCmd::RemoveTilesetCmd(RegistryRef registry, const TilesetID id)
     : ACommand{"Remove Tileset"}
     , mRegistry{registry}
     , mTilesetId{id}
@@ -35,7 +35,7 @@ void RemoveTilesetCmd::undo()
   auto& registry = mRegistry.get();
   sys::restore_tileset(registry, mSnapshot.value());
 
-  auto& active = registry.ctx<comp::ActiveTileset>();
+  auto& active = registry.ctx().at<comp::ActiveTileset>();
   active.entity = sys::find_tileset(registry, mTilesetId);
 }
 

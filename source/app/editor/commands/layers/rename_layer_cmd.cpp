@@ -23,11 +23,12 @@
 
 #include "core/components/attributes.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
 
-RenameLayerCmd::RenameLayerCmd(RegistryRef registry, const layer_id id, std::string name)
+RenameLayerCmd::RenameLayerCmd(RegistryRef registry, const LayerID id, std::string name)
     : ACommand{"Rename Layer"}
     , mRegistry{registry}
     , mLayerId{id}
@@ -41,7 +42,7 @@ void RenameLayerCmd::undo()
   const auto entity = sys::find_layer(registry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<comp::AttributeContext>(entity);
+  auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
   context.name = mPreviousName.value();
 
   mPreviousName.reset();
@@ -54,7 +55,7 @@ void RenameLayerCmd::redo()
   const auto entity = sys::find_layer(registry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get<comp::AttributeContext>(entity);
+  auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
   mPreviousName = context.name;
   context.name = mName;
 }

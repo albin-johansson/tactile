@@ -19,19 +19,8 @@
 
 #pragma once
 
-#include <imgui.h>
-
 namespace tactile {
 
-/**
- * \brief Loads the default layout for a dock space.
- *
- * \param id the ID of the dock space.
- * \param resetVisibility `true` if the docks should have their visibility reset;
- *                        `false` otherwise.
- *
- * \ingroup gui
- */
-void load_default_layout(ImGuiID id, bool resetVisibility);
+void remove_tab_bar_from_next_window();
 
 }  // namespace tactile

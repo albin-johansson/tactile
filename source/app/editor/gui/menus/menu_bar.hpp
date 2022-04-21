@@ -19,43 +19,18 @@
 
 #pragma once
 
-#include <entt/entt.hpp>  // dispatcher
+#include <entt/fwd.hpp>
 
-#include "edit_menu.hpp"
-#include "file_menu.hpp"
-#include "help_menu.hpp"
-#include "map_menu.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
-class DocumentModel;
-
-class MenuBar final
-{
- public:
-  /**
-   * \brief Updates the state of the menu bar.
-   *
-   * \param model the associated model.
-   * \param dispatcher the event dispatcher that will be used.
-   */
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-  void show_settings_dialog();
-
-  void show_map_creation_dialog();
-
-  void show_open_map_dialog();
-
-  void show_tileset_creation_dialog();
-
-  void show_component_editor(const DocumentModel& model);
-
- private:
-  FileMenu mFileMenu;
-  EditMenu mEditMenu;
-  MapMenu mMapMenu;
-  HelpMenu mHelpMenu;
-};
+/**
+ * \brief Updates the state of the main menu bar.
+ *
+ * \param model the associated document model.
+ * \param dispatcher the event dispatcher that will be used.
+ */
+void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

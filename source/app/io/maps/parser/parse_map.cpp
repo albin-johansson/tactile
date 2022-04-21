@@ -25,6 +25,7 @@
 #include "meta/build.hpp"
 #include "meta/profile.hpp"
 #include "misc/logging.hpp"
+#include "misc/stacktrace.hpp"
 #include "misc/throw.hpp"
 #include "xml/xml_parser.hpp"
 #include "yaml/yaml_parser.hpp"
@@ -51,7 +52,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
     else if (ext == ".xml" || ext == ".tmx") {
       result = parse_xml_map(path);
     }
-    else if (ext == ".json") {
+    else if (ext == ".json" || ext == ".tmj") {
       result = parse_json_map(path);
     }
     else {

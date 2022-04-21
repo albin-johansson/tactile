@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
-#include "component_name_dialog.hpp"
 #include "core/components/attributes.hpp"
+#include "editor/gui/components/dialogs/component_name_dialog.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -37,13 +38,13 @@ class RenameComponentDialog final : public ComponentNameDialog
  public:
   RenameComponentDialog();
 
-  void show(std::string previousName, component_id id);
+  void show(std::string previousName, ComponentID id);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  Maybe<component_id> mComponentId;
+  std::optional<ComponentID> mComponentId;
 };
 
 }  // namespace tactile

@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
+#include <entt/entity/entity.hpp>
 
 #include "tactile.hpp"
 
@@ -35,11 +35,11 @@ namespace tactile {
  */
 struct MoveObjectEvent final
 {
-  object_id id{};  ///< ID of object to move.
-  float old_x{};   ///< Previous x-coordinate of the object.
-  float old_y{};   ///< Previous y-coordinaete of the object.
-  float new_x{};   ///< Updated x-coordinate of the object.
-  float new_y{};   ///< Updated y-coordinate of the object.
+  ObjectID id{};  ///< ID of object to move.
+  float old_x{};  ///< Previous x-coordinate of the object.
+  float old_y{};  ///< Previous y-coordinaete of the object.
+  float new_x{};  ///< Updated x-coordinate of the object.
+  float new_y{};  ///< Updated y-coordinate of the object.
 };
 
 /**
@@ -47,7 +47,7 @@ struct MoveObjectEvent final
  */
 struct SetObjectVisibilityEvent final
 {
-  object_id id{};  ///< ID of target object.
+  ObjectID id{};   ///< ID of target object.
   bool visible{};  ///< New visibility state.
 };
 
@@ -56,7 +56,7 @@ struct SetObjectVisibilityEvent final
  */
 struct SetObjectTagEvent final
 {
-  object_id id{};   ///< ID of target object.
+  ObjectID id{};    ///< ID of target object.
   std::string tag;  ///< The new object tag.
 };
 
@@ -65,18 +65,18 @@ struct SetObjectTagEvent final
  */
 struct SetObjectNameEvent final
 {
-  object_id id{};    ///< ID of target object.
+  ObjectID id{};     ///< ID of target object.
   std::string name;  ///< The new object name.
 };
 
 struct DuplicateObjectEvent final
 {
-  object_id id{};  ///< ID of the target object.
+  ObjectID id{};  ///< ID of the target object.
 };
 
 struct RemoveObjectEvent final
 {
-  object_id id{};  ///< ID of the target object.
+  ObjectID id{};  ///< ID of the target object.
 };
 
 struct SpawnObjectContextMenuEvent final

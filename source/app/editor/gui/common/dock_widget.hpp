@@ -21,14 +21,13 @@
 
 #include <memory>  // unique_ptr
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 #include <imgui.h>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
-
-class DocumentModel;
 
 class ADockWidget
 {
@@ -44,7 +43,7 @@ class ADockWidget
 
   [[nodiscard]] auto has_focus() const -> bool;
 
-  [[nodiscard]] auto has_mouse_hover() const  -> bool;
+  [[nodiscard]] auto has_mouse_hover() const -> bool;
 
  protected:
   virtual void on_update([[maybe_unused]] const DocumentModel& model,

@@ -19,12 +19,16 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <functional>     // less
+#include <map>            // map
+#include <unordered_map>  // unordered_map
 
 namespace tactile {
 
-class IconManager;
+template <typename K, typename V>
+using TreeMap = std::map<K, V, std::less<>>;
 
-void show_start_page_view(const IconManager& icons, entt::dispatcher& dispatcher);
+template <typename K, typename V>
+using HashMap = std::unordered_map<K, V>;
 
 }  // namespace tactile

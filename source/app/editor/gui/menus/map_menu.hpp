@@ -19,28 +19,14 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
+#include <entt/fwd.hpp>
 
-#include <entt/entt.hpp>
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
-class DocumentModel;
-class CreateTilesetDialog;
+void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-class MapMenu final
-{
- public:
-  MapMenu();
-
-  ~MapMenu() noexcept;
-
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-  void show_tileset_creation_dialog();
-
- private:
-  std::unique_ptr<CreateTilesetDialog> mCreateTilesetDialog;
-};
+void show_tileset_creation_dialog();
 
 }  // namespace tactile

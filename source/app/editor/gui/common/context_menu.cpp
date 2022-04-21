@@ -19,6 +19,8 @@
 
 #include "context_menu.hpp"
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "editor/gui/scoped.hpp"
 #include "misc/throw.hpp"
 
@@ -27,7 +29,7 @@ namespace tactile {
 ContextMenu::ContextMenu(const char* name) : mName{name}
 {
   if (!mName) {
-    throw_traced(TactileError{"Invalid null context menu name!"});
+    panic("Invalid null context menu name!");
   }
 }
 

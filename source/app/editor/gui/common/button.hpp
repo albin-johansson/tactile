@@ -42,7 +42,8 @@ auto button(const char* text,
             float width = 0,
             float height = 0) -> bool;
 
-auto icon_button(const char* icon, const char* tooltip = nullptr, bool enabled = true) -> bool;
+auto icon_button(const char* icon, const char* tooltip = nullptr, bool enabled = true)
+    -> bool;
 
 /**
  * \brief Shows a horizontally centered button.

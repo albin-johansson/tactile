@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/systems/component_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -29,9 +31,7 @@ namespace tactile {
 class RemoveComponentCmd final : public ACommand
 {
  public:
-  RemoveComponentCmd(RegistryRef registry,
-                     context_id contextId,
-                     component_id componentId);
+  RemoveComponentCmd(RegistryRef registry, ContextID contextId, ComponentID componentId);
 
   void undo() override;
 
@@ -44,9 +44,9 @@ class RemoveComponentCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  context_id mContextId{};
-  component_id mComponentId{};
-  Maybe<sys::RemoveComponentResult> mSnapshot;
+  ContextID mContextId{};
+  ComponentID mComponentId{};
+  std::optional<sys::RemoveComponentResult> mSnapshot;
 };
 
 }  // namespace tactile

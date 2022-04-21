@@ -19,16 +19,18 @@
 
 #include "tileset_tabs.hpp"
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
 #include "core/components/tiles.hpp"
+#include "core/systems/registry_system.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
-#include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/scoped.hpp"
-#include "tileset_view.hpp"
+#include "editor/gui/tilesets/tileset_view.hpp"
 
 namespace tactile {
 namespace {
@@ -36,7 +38,7 @@ namespace {
 constexpr auto _tab_bar_flags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
-void _update_context_menu(const tileset_id id,
+void _update_context_menu(const TilesetID id,
                           const entt::entity tilesetEntity,
                           entt::dispatcher& dispatcher)
 {
@@ -70,28 +72,27 @@ void _update_context_menu(const tileset_id id,
 
 }  // namespace
 
-void TilesetTabWidget::update(const entt::registry& registry,
-                              entt::dispatcher& dispatcher)
+void update_tileset_tabs(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (scoped::TabBar bar{"TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
+  if (scoped::TabBar bar{"##TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
-    const auto& activeTileset = registry.ctx<comp::ActiveTileset>();
+    const auto& activeTileset = registry.ctx().at<comp::ActiveTileset>();
     for (auto&& [entity, tileset] : registry.view<comp::Tileset>().each()) {
       const scoped::Id scope{tileset.id};
 
       const auto isActive = activeTileset.entity == entity;
-      const auto& context = registry.get<comp::AttributeContext>(entity);
+      const auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
 
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(),
                                &opened,
                                isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
-        mTilesetView.update(registry, entity, dispatcher);
+        update_tileset_view(registry, entity, dispatcher);
       }
 
       if (!opened) {
@@ -105,11 +106,6 @@ void TilesetTabWidget::update(const entt::registry& registry,
       }
     }
   }
-}
-
-auto TilesetTabWidget::get_tileset_view() const -> const TilesetView&
-{
-  return mTilesetView;
 }
 
 }  // namespace tactile

@@ -40,32 +40,32 @@ namespace tactile {
  */
 enum class EditorTheme
 {
-  dear_dark = 0,   ///< The standard Dear ImGui dark theme.
-  dear_light = 1,  ///< The standard Dear ImGui light theme.
-  ruby = 2,
-  sapphire = 3,
-  emerald = 4,
-  amethyst = 5,
-  amber = 6,
-  nocturnal = 7,
-  ash = 8,
-  diamond = 9,
-  joker = 10,
-  raspberry = 11
+  DearDark = 0,   ///< The standard Dear ImGui dark theme.
+  DearLight = 1,  ///< The standard Dear ImGui light theme.
+  Ruby = 2,
+  Sapphire = 3,
+  Emerald = 4,
+  Amethyst = 5,
+  Amber = 6,
+  Nocturnal = 7,
+  Ash = 8,
+  Diamond = 9,
+  Joker = 10,
+  Raspberry = 11
 };
 
-constexpr std::array themes = {EditorTheme::dear_dark,
-                               EditorTheme::dear_light,
-                               EditorTheme::ruby,
-                               EditorTheme::sapphire,
-                               EditorTheme::emerald,
-                               EditorTheme::amethyst,
-                               EditorTheme::amber,
-                               EditorTheme::diamond,
-                               EditorTheme::joker,
-                               EditorTheme::raspberry,
-                               EditorTheme::nocturnal,
-                               EditorTheme::ash};
+constexpr std::array themes = {EditorTheme::DearDark,
+                               EditorTheme::DearLight,
+                               EditorTheme::Ruby,
+                               EditorTheme::Sapphire,
+                               EditorTheme::Emerald,
+                               EditorTheme::Amethyst,
+                               EditorTheme::Amber,
+                               EditorTheme::Diamond,
+                               EditorTheme::Joker,
+                               EditorTheme::Raspberry,
+                               EditorTheme::Nocturnal,
+                               EditorTheme::Ash};
 
 [[nodiscard]] auto human_readable_name(EditorTheme theme) -> std::string_view;
 

@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
@@ -32,7 +33,7 @@ class SetComponentAttrTypeCmd final : public ACommand
 {
  public:
   SetComponentAttrTypeCmd(RegistryRef registry,
-                          component_id id,
+                          ComponentID id,
                           std::string attribute,
                           AttributeType type);
 
@@ -47,10 +48,10 @@ class SetComponentAttrTypeCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  component_id mComponentId;
+  ComponentID mComponentId;
   std::string mAttributeName;
   AttributeType mNewType;
-  Maybe<sys::SetComponentAttrTypeResult> mSnapshot;
+  std::optional<sys::SetComponentAttrTypeResult> mSnapshot;
 };
 
 }  // namespace tactile

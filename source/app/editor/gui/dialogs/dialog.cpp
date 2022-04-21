@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "dialog.hpp"
+#include "editor/gui/dialogs/dialog.hpp"
 
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
@@ -29,7 +29,7 @@ namespace tactile {
 ADialog::ADialog(const char* title) : mTitle{title}
 {
   if (!mTitle) {
-    throw_traced(TactileError{"Invalid null dialog title!"});
+    panic("Invalid null dialog title!");
   }
 }
 

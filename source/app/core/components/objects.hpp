@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
+#include <entt/entity/entity.hpp>
 
 #include "core/object_type.hpp"
 #include "tactile.hpp"
@@ -35,7 +35,7 @@ namespace tactile::comp {
  */
 struct Object final
 {
-  object_id id{};     ///< Unique object identifier.
+  ObjectID id{};      ///< Unique object identifier.
   float x{};          ///< X-coordinate.
   float y{};          ///< Y-coordinate.
   float width{};      ///< Object width (might be zero for points, etc.).

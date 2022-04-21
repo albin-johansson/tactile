@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 namespace tactile::sys {
 

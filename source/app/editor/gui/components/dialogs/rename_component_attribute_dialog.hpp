@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "core/components/attributes.hpp"
 #include "editor/gui/dialogs/string_input_dialog.hpp"
@@ -37,7 +38,7 @@ class RenameComponentAttributeDialog final : public AStringInputDialog
  public:
   RenameComponentAttributeDialog();
 
-  void show(std::string previousName, component_id id);
+  void show(std::string previousName, ComponentID id);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
@@ -46,7 +47,7 @@ class RenameComponentAttributeDialog final : public AStringInputDialog
       -> bool override;
 
  private:
-  Maybe<component_id> mComponentId;
+  std::optional<ComponentID> mComponentId;
 };
 
 }  // namespace tactile

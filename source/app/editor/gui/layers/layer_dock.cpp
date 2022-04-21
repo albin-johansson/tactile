@@ -19,21 +19,26 @@
 
 #include "layer_dock.hpp"
 
+#include <optional>  // optional
+
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "add_layer_context_menu.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "dialogs/rename_layer_dialog.hpp"
+#include "editor/constants.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
+#include "editor/gui/layers/add_layer_context_menu.hpp"
+#include "editor/gui/layers/dialogs/rename_layer_dialog.hpp"
 #include "editor/gui/layers/views/layer_item.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -45,16 +50,16 @@ namespace {
 
 inline RenameLayerDialog _rename_layer_dialog;
 inline AddLayerContextMenu _add_layer_context_menu;
-inline Maybe<layer_id> _rename_target_id;
+inline std::optional<LayerID> _rename_target_id;
 constinit bool _is_focused = false;
 
 void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto activeLayerEntity = registry.ctx<comp::ActiveLayer>().entity;
+  const auto activeLayerEntity = registry.ctx().at<comp::ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
-  Maybe<layer_id> activeLayerId;
+  std::optional<LayerID> activeLayerId;
   if (hasActiveLayer) {
     const auto& layer = sys::checked_get<comp::Layer>(registry, activeLayerEntity);
     activeLayerId = layer.id;
@@ -164,7 +169,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   prefs.set_layer_dock_visible(visible);
 }
 
-void show_rename_layer_dialog(const layer_id layerId)
+void show_rename_layer_dialog(const LayerID layerId)
 {
   _rename_target_id = layerId;
 }

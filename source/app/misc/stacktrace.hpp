@@ -26,8 +26,19 @@
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
 
+#include <boost/exception/all.hpp>
 #include <boost/stacktrace.hpp>
 
 #if TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
 #pragma GCC diagnostic pop
 #endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
+
+namespace tactile {
+
+namespace tags {
+struct TraceInfoTag;
+}  // namespace tags
+
+using TraceInfo = boost::error_info<tags::TraceInfoTag, boost::stacktrace::stacktrace>;
+
+}  // namespace tactile

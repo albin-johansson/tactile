@@ -17,39 +17,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "start_page_view.hpp"
+#pragma once
 
 #include <imgui.h>
-#include <imgui_internal.h>
-
-#include "editor/events/map_events.hpp"
-#include "editor/gui/alignment.hpp"
-#include "editor/gui/common/button.hpp"
-#include "editor/gui/icons.hpp"
-#include "editor/gui/textures.hpp"
 
 namespace tactile {
 
-void show_start_page_view(const IconManager& icons, entt::dispatcher& dispatcher)
-{
-  prepare_vertical_alignment_center(4);
+/**
+ * \brief Updates the root dock space, call this function once each frame.
+ *
+ * \ingroup gui
+ */
+void update_dock_space();
 
-  ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2{0, 64});
+/**
+ * \brief Loads the default layout for a dock space.
+ *
+ * \param id the ID of the dock space.
+ * \param resetVisibility `true` if the docks should have their visibility reset;
+ *                        `false` otherwise.
+ *
+ * \ingroup gui
+ */
+void load_default_layout(ImGuiID id, bool resetVisibility);
 
-  center_next_item_horizontally(128);
-  ImGui::Image(to_texture_id(icons.tactile_icon()), {128, 128});
-
-  ImGui::Spacing();
-  ImGui::Spacing();
-
-  if (centered_button("Create new map")) {
-    dispatcher.enqueue<ShowNewMapDialogEvent>();
-  }
-
-  ImGui::Spacing();
-  if (centered_button("Open existing map")) {
-    dispatcher.enqueue<ShowOpenMapDialogEvent>();
-  }
-}
+/**
+ * \brief Resets all dock space widgets to the default layout.
+ *
+ * \ingroup gui
+ */
+void reset_layout();
 
 }  // namespace tactile

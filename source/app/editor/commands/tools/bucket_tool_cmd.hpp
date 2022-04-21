@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <vector>  // vector
+#include <optional>  // optional
+#include <vector>    // vector
 
 #include "core/tile_pos.hpp"
 #include "editor/commands/command.hpp"
@@ -34,7 +35,7 @@ namespace tactile {
 class BucketToolCmd final : public ACommand
 {
  public:
-  BucketToolCmd(RegistryRef registry, TilePos origin, tile_id replacement);
+  BucketToolCmd(RegistryRef registry, TilePos origin, TileID replacement);
 
   void undo() override;
 
@@ -44,10 +45,10 @@ class BucketToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayer;
+  LayerID mLayer;
   TilePos mOrigin;
-  tile_id mReplacement;
-  Maybe<tile_id> mTarget;
+  TileID mReplacement;
+  std::optional<TileID> mTarget;
   std::vector<TilePos> mPositions;
 };
 

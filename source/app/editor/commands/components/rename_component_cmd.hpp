@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "core/components/attributes.hpp"
 #include "editor/commands/command.hpp"
@@ -31,7 +32,7 @@ namespace tactile {
 class RenameComponentCmd final : public ACommand
 {
  public:
-  RenameComponentCmd(RegistryRef registry, component_id id, std::string name);
+  RenameComponentCmd(RegistryRef registry, ComponentID id, std::string name);
 
   void undo() override;
 
@@ -44,9 +45,9 @@ class RenameComponentCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  component_id mComponentId{};
+  ComponentID mComponentId{};
   std::string mUpdatedName;
-  Maybe<std::string> mPreviousName;
+  std::optional<std::string> mPreviousName;
 };
 
 }  // namespace tactile

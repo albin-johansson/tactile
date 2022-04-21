@@ -19,17 +19,23 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
+
+#include "tactile.hpp"
 
 namespace tactile {
 
-class DocumentModel;
-
-void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-void update_map_view_object_context_menu(const entt::registry& registry,
-                                         entt::dispatcher& dispatcher);
-
-void open_object_context_menu();
+/**
+ * \brief Shows a view of a single component, attached to a context.
+ *
+ * \param registry the map registry.
+ * \param dispatcher the event dispatcher.
+ * \param contextId the identifier of the associated context.
+ * \param componentEntity the entity of the component to show.
+ */
+void component_view(const entt::registry& registry,
+                    entt::dispatcher& dispatcher,
+                    ContextID contextId,
+                    entt::entity componentEntity);
 
 }  // namespace tactile

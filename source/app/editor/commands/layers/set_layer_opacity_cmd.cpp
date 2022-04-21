@@ -20,11 +20,12 @@
 #include "set_layer_opacity_cmd.hpp"
 
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 
 namespace tactile {
 
 SetLayerOpacityCmd::SetLayerOpacityCmd(RegistryRef registry,
-                                       const layer_id id,
+                                       const LayerID id,
                                        const float opacity)
     : ACommand{"Set Layer Opacity"}
     , mRegistry{registry}
@@ -36,9 +37,10 @@ void SetLayerOpacityCmd::undo()
 {
   auto& registry = mRegistry.get();
 
-  auto&& [entity, layer] = sys::get_layer(registry, mLayerId);
-  layer.opacity = mPreviousOpacity.value();
+  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
 
+  layer.opacity = mPreviousOpacity.value();
   mPreviousOpacity.reset();
 }
 
@@ -46,9 +48,10 @@ void SetLayerOpacityCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  auto&& [entity, layer] = sys::get_layer(registry, mLayerId);
-  mPreviousOpacity = layer.opacity;
+  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
 
+  mPreviousOpacity = layer.opacity;
   layer.opacity = mOpacity;
 }
 

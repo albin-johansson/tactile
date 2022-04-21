@@ -47,7 +47,7 @@ void save_document(const Document& document)
   if (ext == ".yaml" || ext == ".yml") {
     emit_yaml_map(info);
   }
-  else if (ext == ".json") {
+  else if (ext == ".json" || ext == ".tmj") {
     emit_json_map(info);
   }
   else if (ext == ".xml" || ext == ".tmx") {

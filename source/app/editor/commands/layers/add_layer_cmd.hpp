@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -43,8 +45,8 @@ class AddLayerCmd final : public ACommand
  private:
   RegistryRef mRegistry;
   LayerType mLayerType;
-  Maybe<layer_id> mLayerId;
-  Maybe<sys::LayerSnapshot> mLayerSnapshot;
+  std::optional<LayerID> mLayerId;
+  std::optional<sys::LayerSnapshot> mLayerSnapshot;
 };
 
 /// \} End of group commands

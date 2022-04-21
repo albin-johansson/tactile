@@ -17,22 +17,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "document_tab_view.hpp"
+#include "map_tab_widget.hpp"
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
-#include "map_view.hpp"
+#include "editor/gui/viewport/map_view.hpp"
 #include "editor/model.hpp"
 
 namespace tactile {
 
-void show_document_tab_view(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_map_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::TabBar bar{"##MapViewportTabBar", ImGuiTabBarFlags_Reorderable};
-      bar.is_open()) {
+  if (scoped::TabBar bar{"##MapTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
     for (const auto& [id, document] : model) {
       const scoped::Id scope{id};
 
@@ -47,7 +48,7 @@ void show_document_tab_view(const DocumentModel& model, entt::dispatcher& dispat
         }
       }
 
-      const auto& context = document->registry.ctx<comp::AttributeContext>();
+      const auto& context = document->registry.ctx().at<comp::AttributeContext>();
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {

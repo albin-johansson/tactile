@@ -43,7 +43,7 @@ class RenamePropertyCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  context_id mContextId;
+  ContextID mContextId;
   std::string mOldName;
   std::string mNewName;
 };

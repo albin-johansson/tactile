@@ -19,12 +19,15 @@
 
 #include "toolbar.hpp"
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
 #include "core/systems/tileset_system.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/common/button.hpp"
+#include "editor/gui/common/style.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
@@ -92,11 +95,9 @@ void _show_extra_toolbar(auto callable)
 
 }  // namespace
 
-void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  ImGuiWindowClass wc{};
-  wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
-  ImGui::SetNextWindowClass(&wc);
+  remove_tab_bar_from_next_window();
 
   _prepare_window_position();
   ImGui::SetNextWindowBgAlpha(0.75f);
@@ -124,23 +125,23 @@ void show_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatc
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    _tool_button(model, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::stamp);
-    _tool_button(model, dispatcher, TAC_ICON_ERASER, "Eraser tool", ToolType::eraser);
-    _tool_button(model, dispatcher, TAC_ICON_BUCKET, "Bucket tool", ToolType::bucket);
+    _tool_button(model, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::Stamp);
+    _tool_button(model, dispatcher, TAC_ICON_ERASER, "Eraser tool", ToolType::Eraser);
+    _tool_button(model, dispatcher, TAC_ICON_BUCKET, "Bucket tool", ToolType::Bucket);
     _tool_button(model,
                  dispatcher,
                  TAC_ICON_OBJECT_SELECTION,
                  "Object selection tool",
-                 ToolType::object_selection);
+                 ToolType::ObjectSelection);
     _tool_button(model,
                  dispatcher,
                  TAC_ICON_RECTANGLE,
                  "Rectangle tool",
-                 ToolType::rectangle);
-    _tool_button(model, dispatcher, TAC_ICON_ELLIPSE, "Ellipse tool", ToolType::ellipse);
-    _tool_button(model, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::point);
+                 ToolType::Rectangle);
+    _tool_button(model, dispatcher, TAC_ICON_ELLIPSE, "Ellipse tool", ToolType::Ellipse);
+    _tool_button(model, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::Point);
 
-    if (model.is_tool_active(ToolType::stamp)) {
+    if (model.is_tool_active(ToolType::Stamp)) {
       const auto& registry = model.get_active_registry();
       _show_extra_toolbar([=, &registry] {
         if (icon_button(TAC_ICON_STAMP_RANDOMIZER,

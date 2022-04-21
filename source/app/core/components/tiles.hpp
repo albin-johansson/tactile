@@ -19,10 +19,12 @@
 
 #pragma once
 
-#include <vector>  // vector
+#include <optional>       // optional
+#include <unordered_map>  // unordered_map
+#include <vector>         // vector
 
-#include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <centurion/math.hpp>
+#include <entt/entity/entity.hpp>
 
 #include "core/region.hpp"
 #include "tactile.hpp"
@@ -36,13 +38,13 @@ namespace tactile::comp {
  */
 struct TilesetContext final
 {
-  tileset_id next_id{};    ///< Next available tileset ID.
-  tile_id next_tile_id{};  ///< Next available global tile ID.
+  TilesetID next_id{};    ///< Next available tileset ID.
+  TileID next_tile_id{};  ///< Next available global tile ID.
 
   /**
    * \brief Maps all global tile identifiers to the associated tileset.
    */
-  HashMap<tile_id, entt::entity> tile_to_tileset;
+  std::unordered_map<TileID, entt::entity> tile_to_tileset;
 };
 
 /**
@@ -52,9 +54,9 @@ struct TilesetContext final
  */
 struct Tileset final
 {
-  tileset_id id{};       ///< Unique ID associated with the tileset.
-  tile_id first_id{};    ///< First associated global tile ID.
-  tile_id last_id{};     ///< Last associated global tile ID (inclusive).
+  TilesetID id{};        ///< Unique ID associated with the tileset.
+  TileID first_id{};     ///< First associated global tile ID.
+  TileID last_id{};      ///< Last associated global tile ID (inclusive).
   int32 tile_width{};    ///< Width of tiles in the tileset.
   int32 tile_height{};   ///< Height of tiles in the tileset.
   int32 tile_count{};    ///< Number of tiles associated with the tileset.
@@ -83,7 +85,7 @@ struct UvTileSize final
  */
 struct MetaTile final
 {
-  tile_id id{};                       ///< The ID of the associated tile.
+  TileID id{};                        ///< The ID of the associated tile.
   std::vector<entt::entity> objects;  ///< Associated object entities.
 };
 
@@ -94,13 +96,13 @@ struct MetaTile final
  */
 struct TilesetCache final
 {
-  HashMap<tile_id, cen::irect> source_rects;  ///< Tileset source rectangles.
-  HashMap<tile_id, entt::entity> tiles;       ///< Additional tile info.
+  std::unordered_map<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
+  std::unordered_map<TileID, entt::entity> tiles;       ///< Additional tile info.
 
   /**
    * \brief Frame-by-frame cache that maps tiles to the tile that should be rendered.
    */
-  mutable HashMap<tile_id, tile_id> source_to_render;
+  mutable std::unordered_map<TileID, TileID> source_to_render;
 };
 
 /**
@@ -110,7 +112,7 @@ struct TilesetCache final
  */
 struct TilesetSelection final
 {
-  Maybe<Region> region;  ///< The currently selected region, if any.
+  std::optional<Region> region;  ///< The currently selected region, if any.
 };
 
 /**

@@ -19,6 +19,7 @@
 
 #include "add_layer_context_menu.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "editor/events/layer_events.hpp"
@@ -31,15 +32,15 @@ AddLayerContextMenu::AddLayerContextMenu() : ContextMenu{"AddLayerContextMenu"} 
 void AddLayerContextMenu::on_update(const DocumentModel&, entt::dispatcher& dispatcher)
 {
   if (ImGui::Selectable(TAC_ICON_TILE_LAYER " Tile layer")) {
-    dispatcher.enqueue<AddLayerEvent>(LayerType::tile_layer);
+    dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
   }
 
   if (ImGui::Selectable(TAC_ICON_OBJECT_LAYER " Object layer")) {
-    dispatcher.enqueue<AddLayerEvent>(LayerType::object_layer);
+    dispatcher.enqueue<AddLayerEvent>(LayerType::ObjectLayer);
   }
 
   if (ImGui::Selectable(TAC_ICON_GROUP_LAYER " Group layer")) {
-    dispatcher.enqueue<AddLayerEvent>(LayerType::group_layer);
+    dispatcher.enqueue<AddLayerEvent>(LayerType::GroupLayer);
   }
 }
 

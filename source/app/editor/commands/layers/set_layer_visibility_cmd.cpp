@@ -20,11 +20,12 @@
 #include "set_layer_visibility_cmd.hpp"
 
 #include "core/systems/layers/layer_system.hpp"
+#include "core/systems/registry_system.hpp"
 
 namespace tactile {
 
 SetLayerVisibilityCmd::SetLayerVisibilityCmd(RegistryRef registry,
-                                             const layer_id id,
+                                             const LayerID id,
                                              const bool visible)
     : ACommand{"Set Layer Visibility"}
     , mRegistry{registry}
@@ -36,9 +37,10 @@ void SetLayerVisibilityCmd::undo()
 {
   auto& registry = mRegistry.get();
 
-  const auto [entity, layer] = sys::get_layer(registry, mLayerId);
-  layer.visible = mPreviousVisibility.value();
+  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
 
+  layer.visible = mPreviousVisibility.value();
   mPreviousVisibility.reset();
 }
 
@@ -46,9 +48,10 @@ void SetLayerVisibilityCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  auto [entity, layer] = sys::get_layer(registry, mLayerId);
-  mPreviousVisibility = layer.visible;
+  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
 
+  mPreviousVisibility = layer.visible;
   layer.visible = mVisible;
 }
 

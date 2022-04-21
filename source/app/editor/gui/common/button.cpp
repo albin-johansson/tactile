@@ -55,7 +55,7 @@ auto icon_button(const char* icon, const char* tooltip, const bool enabled) -> b
   const auto& style = ImGui::GetStyle();
   const float height = ImGui::GetFontSize() + style.ItemSpacing.y * 2.0f;
   const float width = height;
-  return button(icon, tooltip, enabled, width, height );
+  return button(icon, tooltip, enabled, width, height);
 }
 
 auto centered_button(const char* text, const char* tooltip) -> bool

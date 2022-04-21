@@ -24,6 +24,7 @@
 
 #include "core/utils/buffers.hpp"
 #include "core/utils/colors.hpp"
+#include "editor/constants.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
@@ -31,46 +32,46 @@
 
 namespace tactile {
 
-auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
+auto input_attribute(const char* id, const Attribute& value) -> std::optional<Attribute>
 {
   switch (value.type()) {
-    case AttributeType::string: {
+    case AttributeType::String: {
       if (auto updated = input_string_with_hint(id, "Empty", value.as_string())) {
         return std::move(updated);
       }
       break;
     }
-    case AttributeType::integer: {
+    case AttributeType::Int: {
       if (const auto updated = input_int(id, value.as_int())) {
         return updated;
       }
       break;
     }
-    case AttributeType::floating: {
+    case AttributeType::Float: {
       if (const auto updated = input_float(id, value.as_float())) {
         return updated;
       }
       break;
     }
-    case AttributeType::boolean: {
+    case AttributeType::Bool: {
       if (const auto updated = input_bool(id, value.as_bool())) {
         return updated;
       }
       break;
     }
-    case AttributeType::file: {
-      if (auto updated = input_file(id, value.as_file())) {
+    case AttributeType::Path: {
+      if (auto updated = input_path(id, value.as_path())) {
         return std::move(updated);
       }
       break;
     }
-    case AttributeType::color: {
+    case AttributeType::Color: {
       if (const auto updated = input_color(id, value.as_color())) {
         return updated;
       }
       break;
     }
-    case AttributeType::object: {
+    case AttributeType::Object: {
       if (const auto updated = input_object(id, value.as_object())) {
         return updated;
       }
@@ -78,10 +79,10 @@ auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
     }
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
-auto input_int(const char* id, int value) -> Maybe<int>
+auto input_int(const char* id, int value) -> std::optional<int>
 {
   const scoped::Id scope{id};
 
@@ -94,11 +95,11 @@ auto input_int(const char* id, int value) -> Maybe<int>
     ImGui::SetTooltip("[int]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 auto input_float(const char* id, float value, const float min, const float max)
-    -> Maybe<float>
+    -> std::optional<float>
 {
   const scoped::Id scope{id};
 
@@ -119,7 +120,7 @@ auto input_float(const char* id, float value, const float min, const float max)
     ImGui::SetTooltip("[float]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 auto input_string_with_hint(const char* id,
@@ -127,7 +128,8 @@ auto input_string_with_hint(const char* id,
                             const std::string& value,
                             const char* label,
                             const ImGuiInputTextFlags flags,
-                            const ImGuiInputTextCallback filter) -> Maybe<std::string>
+                            const ImGuiInputTextCallback filter)
+    -> std::optional<std::string>
 {
   const scoped::Id scope{id};
 
@@ -157,19 +159,19 @@ auto input_string_with_hint(const char* id,
     ImGui::SetTooltip("[string]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 auto input_string(const char* id,
                   const std::string& value,
                   const char* label,
                   const ImGuiInputTextFlags flags,
-                  const ImGuiInputTextCallback filter) -> Maybe<std::string>
+                  const ImGuiInputTextCallback filter) -> std::optional<std::string>
 {
   return input_string_with_hint(id, nullptr, value, label, flags, filter);
 }
 
-auto input_bool(const char* id, bool value) -> Maybe<bool>
+auto input_bool(const char* id, bool value) -> std::optional<bool>
 {
   const scoped::Id scope{id};
 
@@ -181,10 +183,10 @@ auto input_bool(const char* id, bool value) -> Maybe<bool>
     ImGui::SetTooltip("[bool]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
-auto input_object(const char* id, object_t value) -> Maybe<object_t>
+auto input_object(const char* id, object_t value) -> std::optional<object_t>
 {
   const scoped::Id scope{id};
 
@@ -195,10 +197,10 @@ auto input_object(const char* id, object_t value) -> Maybe<object_t>
     ImGui::SetTooltip("[object]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
-auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
+auto input_color(const char* id, const cen::color value) -> std::optional<cen::color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
@@ -214,11 +216,11 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
     ImGui::SetTooltip("[color]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
-auto input_file(const char* id, const std::filesystem::path& value)
-    -> Maybe<std::filesystem::path>
+auto input_path(const char* id, const std::filesystem::path& value)
+    -> std::optional<std::filesystem::path>
 {
   const scoped::Id scope{id};
 
@@ -234,17 +236,17 @@ auto input_file(const char* id, const std::filesystem::path& value)
   auto str = value.filename().string();
 
   ImGui::SetNextItemWidth(-min_float);
-  ImGui::InputTextWithHint("##input_file",
+  ImGui::InputTextWithHint("##input_path",
                            "N/A",
                            str.data(),
                            str.capacity(),
                            ImGuiInputTextFlags_ReadOnly);
 
   if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[file]");
+    ImGui::SetTooltip("[path]");
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 }  // namespace tactile

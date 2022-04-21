@@ -19,15 +19,14 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
+#include "editor/fwd.hpp"
 #include "tactile.hpp"
 
 struct ImVec2;
 
 namespace tactile {
-
-class GraphicsCtx;
 
 /**
  * \brief Renders a single tile.
@@ -42,7 +41,7 @@ class GraphicsCtx;
  */
 void render_tile(GraphicsCtx& graphics,
                  const entt::registry& registry,
-                 tile_id tile,
+                 TileID tile,
                  int32 row,
                  int32 column);
 

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/components/attributes.hpp"
 #include "snapshot.hpp"
@@ -47,14 +47,14 @@ void reset_next_context_id() noexcept;
  *
  * \return the previous next context ID.
  */
-[[nodiscard]] auto get_and_update_next_context_id() noexcept -> context_id;
+[[nodiscard]] auto get_and_update_next_context_id() noexcept -> ContextID;
 
 /**
  * \brief Returns the next available context ID.
  *
  * \return a valid context ID.
  */
-[[nodiscard]] auto next_context_id() noexcept -> context_id;
+[[nodiscard]] auto next_context_id() noexcept -> ContextID;
 
 /**
  * \brief Adds an attribute context component to an entity.
@@ -112,12 +112,12 @@ void restore_attribute_context(entt::registry& registry,
  *
  * \return a reference to the found context.
  *
- * \throws tactile_error if the identifier is invalid.
+ * \throws TactileError if the identifier is invalid.
  */
-[[nodiscard]] auto get_context(entt::registry& registry, context_id id)
+[[nodiscard]] auto get_context(entt::registry& registry, ContextID id)
     -> comp::AttributeContext&;
 
-[[nodiscard]] auto get_context(const entt::registry& registry, context_id id)
+[[nodiscard]] auto get_context(const entt::registry& registry, ContextID id)
     -> const comp::AttributeContext&;
 
 /**
@@ -137,7 +137,7 @@ void restore_attribute_context(entt::registry& registry,
  *
  * \return the ID of the current context.
  */
-[[nodiscard]] auto current_context_id(const entt::registry& registry) -> context_id;
+[[nodiscard]] auto current_context_id(const entt::registry& registry) -> ContextID;
 
 /// \} End of group context-system
 

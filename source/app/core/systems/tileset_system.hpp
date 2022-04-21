@@ -19,8 +19,10 @@
 
 #pragma once
 
-#include <centurion.hpp>
-#include <entt/entt.hpp>
+#include <optional>  // optional
+
+#include <centurion/fwd.hpp>
+#include <entt/fwd.hpp>
 
 #include "core/components/texture.hpp"
 #include "core/region.hpp"
@@ -64,7 +66,7 @@ void update_tilesets(entt::registry& registry);
  * \return the created tileset entity.
  */
 auto make_tileset(entt::registry& registry,
-                  tile_id firstId,
+                  TileID firstId,
                   const comp::Texture& texture,
                   int32 tileWidth,
                   int32 tileHeight) -> entt::entity;
@@ -109,7 +111,7 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
  *
  * \param id the ID associated with the tileset that will be selected.
  */
-void select_tileset(entt::registry& registry, tileset_id id);
+void select_tileset(entt::registry& registry, TilesetID id);
 
 /**
  * \brief Removes the tileset associated with the specified ID.
@@ -123,7 +125,7 @@ void select_tileset(entt::registry& registry, tileset_id id);
  *
  * \param id the ID associated with the tileset that will be removed.
  */
-void remove_tileset(entt::registry& registry, tileset_id id);
+void remove_tileset(entt::registry& registry, TilesetID id);
 
 /**
  * \brief Sets the region of the active tileset that is selected.
@@ -143,15 +145,15 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *
  * \return the associated tileset entity; a null entity is returned if there is none.
  */
-[[nodiscard]] auto find_tileset(const entt::registry& registry, tileset_id id)
+[[nodiscard]] auto find_tileset(const entt::registry& registry, TilesetID id)
     -> entt::entity;
 
-[[nodiscard]] auto get_tileset_entity(const entt::registry& registry, tileset_id id)
+[[nodiscard]] auto get_tileset_entity(const entt::registry& registry, TilesetID id)
     -> entt::entity;
 
-[[nodiscard]] auto find_tile(const entt::registry& registry, tile_id id) -> entt::entity;
+[[nodiscard]] auto find_tile(const entt::registry& registry, TileID id) -> entt::entity;
 
-[[nodiscard]] auto get_tile_entity(const entt::registry& registry, tile_id id)
+[[nodiscard]] auto get_tile_entity(const entt::registry& registry, TileID id)
     -> entt::entity;
 
 /**
@@ -162,7 +164,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *
  * \return the found tileset entity; a null entity is returned otherwise.
  */
-[[nodiscard]] auto find_tileset_with_tile(const entt::registry& registry, tile_id id)
+[[nodiscard]] auto find_tileset_with_tile(const entt::registry& registry, TileID id)
     -> entt::entity;
 
 /**
@@ -214,7 +216,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_tile_to_render(const entt::registry& registry,
                                       entt::entity tilesetEntity,
-                                      tile_id id) -> tile_id;
+                                      TileID id) -> TileID;
 
 /**
  * \brief Returns the region out of the tileset texture that should be rendered when
@@ -233,7 +235,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_source_rect(const entt::registry& registry,
                                    entt::entity tilesetEntity,
-                                   tile_id id) -> const cen::irect&;
+                                   TileID id) -> const cen::irect&;
 
 /**
  * \brief Returns the identifier of a tile at a certain position in a tileset.
@@ -246,21 +248,21 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto get_tile_from_tileset(const entt::registry& registry,
                                          entt::entity entity,
-                                         const TilePos& position) -> tile_id;
+                                         const TilePos& position) -> TileID;
 
 /**
  * \brief Converts a global tile identifier to its local counterpart.
  *
- * \details A "local" tile identifier is a basically a tile index in the parent
- * tileset.
+ * \details A "local" tile identifier is a basically a tile index in the parent tileset.
  *
  * \param registry the associated registry.
  * \param global a global tile identifier that will be converted.
  *
- * \return the corresponding local tile identifier; `nothing` if something went wrong.
+ * \return the corresponding local tile identifier;
+ *         an empty optional if something went wrong.
  */
-[[nodiscard]] auto convert_to_local(const entt::registry& registry, tile_id global)
-    -> Maybe<tile_id>;
+[[nodiscard]] auto convert_to_local(const entt::registry& registry, TileID global)
+    -> std::optional<TileID>;
 
 /// \} End of tileset system
 

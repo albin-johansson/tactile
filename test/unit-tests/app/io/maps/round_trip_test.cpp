@@ -77,7 +77,7 @@ void _validate_layers(const ir::LayerData& sourceLayer,
   ASSERT_EQ(sourceLayer.opacity, restoredLayer.opacity);
   ASSERT_EQ(sourceLayer.visible, restoredLayer.visible);
 
-  if (sourceLayer.type == LayerType::tile_layer) {
+  if (sourceLayer.type == LayerType::TileLayer) {
     const auto& sourceTileData = std::get<ir::TileLayerData>(sourceLayer.data);
     const auto& restoredTileData = std::get<ir::TileLayerData>(restoredLayer.data);
 
@@ -85,12 +85,12 @@ void _validate_layers(const ir::LayerData& sourceLayer,
     ASSERT_EQ(sourceTileData.col_count, restoredTileData.col_count);
     ASSERT_EQ(sourceTileData.tiles, restoredTileData.tiles);
   }
-  else if (sourceLayer.type == LayerType::object_layer) {
+  else if (sourceLayer.type == LayerType::ObjectLayer) {
     const auto& sourceObjects = std::get<ir::ObjectLayerData>(sourceLayer.data);
     const auto& restoredObjects = std::get<ir::ObjectLayerData>(restoredLayer.data);
     _validate_object_layers(sourceObjects, restoredObjects);
   }
-  else if (sourceLayer.type == LayerType::group_layer) {
+  else if (sourceLayer.type == LayerType::GroupLayer) {
     const auto& sourceGroup = std::get<ir::GroupLayerData>(sourceLayer.data);
     const auto& restoredGroup = std::get<ir::GroupLayerData>(restoredLayer.data);
 
@@ -195,7 +195,7 @@ constexpr usize _col_count = 13;
   ir::LayerData data;
 
   data.name = "Ground";
-  data.type = LayerType::tile_layer;
+  data.type = LayerType::TileLayer;
 
   data.id = 1;
   data.index = 0;
@@ -225,7 +225,7 @@ constexpr usize _col_count = 13;
   ir::LayerData data;
 
   data.name = "Tile Detail Layers";
-  data.type = LayerType::group_layer;
+  data.type = LayerType::GroupLayer;
 
   data.id = 2;
   data.index = 1;
@@ -240,7 +240,7 @@ constexpr usize _col_count = 13;
   {
     auto& child = group.children.emplace_back(std::make_unique<ir::LayerData>());
     child->name = "Details 1";
-    child->type = LayerType::tile_layer;
+    child->type = LayerType::TileLayer;
 
     child->id = 3;
     child->index = 0;
@@ -260,7 +260,7 @@ constexpr usize _col_count = 13;
   {
     auto& child = group.children.emplace_back(std::make_unique<ir::LayerData>());
     child->name = "Details 2";
-    child->type = LayerType::tile_layer;
+    child->type = LayerType::TileLayer;
 
     child->id = 4;
     child->index = 1;
@@ -286,7 +286,7 @@ constexpr usize _col_count = 13;
   ir::LayerData data;
 
   data.name = "Objects";
-  data.type = LayerType::object_layer;
+  data.type = LayerType::ObjectLayer;
 
   data.id = 5;
   data.index = 2;
@@ -298,7 +298,7 @@ constexpr usize _col_count = 13;
 
   auto& point = objectLayerData.objects.emplace_back();
   point.name = "Point";
-  point.type = tactile::ObjectType::point;
+  point.type = ObjectType::Point;
   point.id = 34;
   point.x = 453;
   point.y = 328;
@@ -311,7 +311,7 @@ constexpr usize _col_count = 13;
 
   auto& rect = objectLayerData.objects.emplace_back();
   rect.name = "Rectangle";
-  rect.type = tactile::ObjectType::rect;
+  rect.type = ObjectType::Rect;
   rect.id = 26;
   rect.x = 854;
   rect.y = 654;
@@ -329,7 +329,7 @@ constexpr usize _col_count = 13;
 
   auto& ellipse = objectLayerData.objects.emplace_back();
   ellipse.name = "Ellipse";
-  ellipse.type = tactile::ObjectType::ellipse;
+  ellipse.type = ObjectType::Ellipse;
   ellipse.id = 54;
   ellipse.x = 193;
   ellipse.y = 587;
@@ -364,7 +364,7 @@ constexpr usize _col_count = 13;
 
   auto& objectData = data.fancy_tiles[80].objects.emplace_back();
   objectData.name = "Fancy Object";
-  objectData.type = ObjectType::point;
+  objectData.type = ObjectType::Point;
   objectData.id = 99;
   objectData.x = 23;
   objectData.y = 47;

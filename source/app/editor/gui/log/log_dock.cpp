@@ -19,6 +19,8 @@
 
 #include "log_dock.hpp"
 
+#include <optional>  // optional
+
 #include <imgui.h>
 
 #include "editor/gui/common/centered_text.hpp"
@@ -37,9 +39,11 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                               ImGuiWindowFlags_HorizontalScrollbar |
                               ImGuiWindowFlags_AlwaysAutoResize;
 
-// TODO should verbose/debug options be disabled in release builds?
+constinit LogLevel _log_filter = LogLevel::verbose;
+constinit bool _is_dock_focused = false;
+
 [[nodiscard]] auto _show_log_level_filter_combo(const LogLevel currentLevel)
-    -> Maybe<LogLevel>
+    -> std::optional<LogLevel>
 {
   static constexpr auto verboseFilter = "Everything";
   static constexpr auto debugFilter = "Debug / Information / Warnings / Errors";
@@ -100,7 +104,7 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
     }
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 [[nodiscard]] auto _color_for_level(const LogLevel level) -> ImVec4
@@ -122,11 +126,11 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
       return {1.00f, 0.27f, 0.00f, 1.00f};
 
     default:
-      throw_traced(TactileError{"Did not recognize log level!"});
+      panic("Did not recognize log level!");
   }
 }
 
-void _show_color_legend_hint()
+void _update_color_legend_hint()
 {
   ImGui::TextDisabled("(?)");
 
@@ -148,7 +152,7 @@ void _show_color_legend_hint()
   }
 }
 
-void _show_log_contents(const LogLevel filter)
+void _update_log_contents(const LogLevel filter)
 {
   scoped::StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
@@ -168,43 +172,47 @@ void _show_log_contents(const LogLevel filter)
 
 }  // namespace
 
-LogDock::LogDock() : ADockWidget{"Log", _window_flags}
+void update_log_dock()
 {
-  set_close_button_enabled(true);
-  set_focus_flags(ImGuiFocusedFlags_RootAndChildWindows);
-}
+  auto& prefs = get_preferences();
+  bool visible = prefs.is_log_dock_visible();
 
-void LogDock::on_update(const DocumentModel&, entt::dispatcher&)
-{
-  if (const auto level = _show_log_level_filter_combo(mLogLevel)) {
-    mLogLevel = *level;
+  if (!visible) {
+    return;
   }
 
-  ImGui::SameLine();
-  _show_color_legend_hint();
+  scoped::Window dock{"Log", _window_flags, &visible};
 
-  if (log_size(mLogLevel) != 0u) {
-    _show_log_contents(mLogLevel);
-  }
-  else {
-    centered_text("No logged messages match the current filter.");
-  }
+  _is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
-  if (auto popup = scoped::Popup::for_window("##LogDockContext"); popup.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
-      clear_log_history();
+  if (dock.is_open()) {
+    if (const auto level = _show_log_level_filter_combo(_log_filter)) {
+      _log_filter = *level;
+    }
+
+    ImGui::SameLine();
+    _update_color_legend_hint();
+
+    if (log_size(_log_filter) != 0u) {
+      _update_log_contents(_log_filter);
+    }
+    else {
+      centered_text("No logged messages match the current filter.");
+    }
+
+    if (auto popup = scoped::Popup::for_window("##LogDockContext"); popup.is_open()) {
+      if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
+        clear_log_history();
+      }
     }
   }
+
+  prefs.set_log_dock_visible(visible);
 }
 
-void LogDock::set_visible(const bool visible)
+auto is_log_dock_focused() -> bool
 {
-  get_preferences().set_log_dock_visible(visible);
-}
-
-auto LogDock::is_visible() const -> bool
-{
-  return get_preferences().is_log_dock_visible();
+  return _is_dock_focused;
 }
 
 }  // namespace tactile

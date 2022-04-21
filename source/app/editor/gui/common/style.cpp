@@ -17,41 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "dock_space.hpp"
+#include "style.hpp"
 
 #include <imgui.h>
-
-#include "io/directories.hpp"
-#include "io/persistence/preferences.hpp"
-#include "load_default_layout.hpp"
-#include "tactile.hpp"
+#include <imgui_internal.h>
 
 namespace tactile {
-namespace {
 
-constinit bool _is_initialized = false;
-constinit Maybe<ImGuiID> _root_id;
-
-}  // namespace
-
-void update_dock_space()
+void remove_tab_bar_from_next_window()
 {
-  _root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-  if (!_is_initialized) {
-    const auto size = ImGui::GetMainViewport()->Size;
-    if (size.x > 0 && size.y > 0) {
-      const auto& prefs = get_preferences();
-      if (!prefs.will_restore_layout() || !exists(widget_ini_path())) {
-        load_default_layout(_root_id.value(), false);
-      }
-      _is_initialized = true;
-    }
-  }
-}
-
-void reset_layout()
-{
-  load_default_layout(_root_id.value(), true);
+  ImGuiWindowClass wc{};
+  wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
+  ImGui::SetNextWindowClass(&wc);
 }
 
 }  // namespace tactile

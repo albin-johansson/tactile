@@ -19,9 +19,11 @@
 
 #include "animation_system.hpp"
 
-#include <centurion.hpp>
+#include <centurion/system.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "core/components/animation.hpp"
+#include "core/systems/registry_system.hpp"
 
 namespace tactile::sys {
 
@@ -31,7 +33,7 @@ void update_animations(entt::registry& registry)
     const auto now = cen::ticks64();
 
     const auto frameEntity = animation.frames.at(animation.index);
-    const auto& currentFrame = registry.get<comp::AnimationFrame>(frameEntity);
+    const auto& currentFrame = checked_get<comp::AnimationFrame>(registry, frameEntity);
 
     if (now - animation.last_update_time >= currentFrame.duration) {
       animation.last_update_time = now;

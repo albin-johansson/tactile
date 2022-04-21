@@ -19,12 +19,14 @@
 
 #include "map_system.hpp"
 
+#include <entt/entity/registry.hpp>
+
 #include "core/algorithms/invoke_n.hpp"
 #include "core/components/layers.hpp"
-#include "core/map.hpp"
+#include "core/map_info.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 #include "core/utils/sfinae.hpp"
 #include "core/utils/tiles.hpp"
-#include "layers/tile_layer_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {
@@ -45,7 +47,8 @@ template <typename T, is_unsigned<T> = 0>
 
 void add_row_to_map(entt::registry& registry)
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& ctx = registry.ctx();
+  auto& map = ctx.at<MapInfo>();
   ++map.row_count;
 
   for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
@@ -55,7 +58,8 @@ void add_row_to_map(entt::registry& registry)
 
 void add_column_to_map(entt::registry& registry)
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& ctx = registry.ctx();
+  auto& map = ctx.at<MapInfo>();
   ++map.column_count;
 
   for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
@@ -67,7 +71,8 @@ void add_column_to_map(entt::registry& registry)
 
 void remove_row_from_map(entt::registry& registry)
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& ctx = registry.ctx();
+  auto& map = ctx.at<MapInfo>();
   if (map.row_count > 1) {
     --map.row_count;
     for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
@@ -78,7 +83,8 @@ void remove_row_from_map(entt::registry& registry)
 
 void remove_column_from_map(entt::registry& registry)
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& ctx = registry.ctx();
+  auto& map = ctx.at<MapInfo>();
   if (map.column_count > 1) {
     --map.column_count;
 
@@ -91,9 +97,10 @@ void remove_column_from_map(entt::registry& registry)
   }
 }
 
-void resize_map(entt::registry& registry, usize nRows, usize nCols)
+void resize_map(entt::registry& registry, const usize nRows, const usize nCols)
 {
-  auto& map = registry.ctx<MapInfo>();
+  auto& ctx = registry.ctx();
+  auto& map = ctx.at<MapInfo>();
 
   if (const auto diff = get_diff(map.row_count, nRows); map.row_count < nRows) {
     invoke_n(diff, [&] { add_row_to_map(registry); });
@@ -112,7 +119,8 @@ void resize_map(entt::registry& registry, usize nRows, usize nCols)
 
 auto is_position_in_map(const entt::registry& registry, const TilePos& position) -> bool
 {
-  const auto& map = registry.ctx<MapInfo>();
+  const auto& ctx = registry.ctx();
+  const auto& map = ctx.at<MapInfo>();
 
   const auto row = position.row();
   const auto column = position.col();

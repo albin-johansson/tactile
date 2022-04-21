@@ -28,6 +28,6 @@ class Application;
  *
  * \param app the application to connect the events to.
  */
-void subscribe_to_events(Application& app);
+void subscribe_to_events(Application* app);
 
 }  // namespace tactile

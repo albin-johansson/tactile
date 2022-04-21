@@ -1,7 +1,9 @@
 #include "io/persistence/preference_state.hpp"
 
+#include <centurion/color.hpp>
 #include <gtest/gtest.h>
 
+#include "core/common/enum.hpp"
 #include "settings.pb.h"
 
 using namespace tactile;
@@ -10,7 +12,7 @@ TEST(PreferenceState, Defaults)
 {
   const PreferenceState state;
 
-  ASSERT_EQ(EditorTheme::nocturnal, state.get_theme());
+  ASSERT_EQ(EditorTheme::Nocturnal, state.get_theme());
 
   ASSERT_TRUE(state.is_grid_visible());
   ASSERT_FALSE(state.has_window_border());
@@ -37,8 +39,8 @@ TEST(PreferenceState, SetTheme)
 {
   PreferenceState state;
 
-  state.set_theme(EditorTheme::amber);
-  ASSERT_EQ(EditorTheme::amber, state.get_theme());
+  state.set_theme(EditorTheme::Amber);
+  ASSERT_EQ(EditorTheme::Amber, state.get_theme());
 }
 
 TEST(PreferenceState, SetViewportBg)
@@ -185,8 +187,8 @@ TEST(PreferenceState, SetViewportOverlayPos)
 {
   PreferenceState state;
 
-  state.set_viewport_overlay_pos(OverlayPos::bottom_right);
-  ASSERT_EQ(OverlayPos::bottom_right, state.viewport_overlay_pos());
+  state.set_viewport_overlay_pos(OverlayPos::BottomRight);
+  ASSERT_EQ(OverlayPos::BottomRight, state.viewport_overlay_pos());
 }
 
 TEST(PreferenceState, SetCommandCapacity)
@@ -225,22 +227,24 @@ TEST(PreferenceState, SetPreferredTileHeight)
 
 TEST(PreferenceState, EnsureThemeEnumsMatch)
 {
-  ASSERT_EQ(proto::THEME_DEAR_DARK, cen::to_underlying(EditorTheme::dear_dark));
-  ASSERT_EQ(proto::THEME_DEAR_LIGHT, cen::to_underlying(EditorTheme::dear_light));
-  ASSERT_EQ(proto::THEME_RUBY, cen::to_underlying(EditorTheme::ruby));
-  ASSERT_EQ(proto::THEME_SAPPHIRE, cen::to_underlying(EditorTheme::sapphire));
-  ASSERT_EQ(proto::THEME_EMERALD, cen::to_underlying(EditorTheme::emerald));
-  ASSERT_EQ(proto::THEME_AMETHYST, cen::to_underlying(EditorTheme::amethyst));
-  ASSERT_EQ(proto::THEME_AMBER, cen::to_underlying(EditorTheme::amber));
-  ASSERT_EQ(proto::THEME_NOCTURNAL, cen::to_underlying(EditorTheme::nocturnal));
-  ASSERT_EQ(proto::THEME_ASH, cen::to_underlying(EditorTheme::ash));
+  ASSERT_EQ(proto::THEME_DEAR_DARK, to_underlying(EditorTheme::DearDark));
+  ASSERT_EQ(proto::THEME_DEAR_LIGHT, to_underlying(EditorTheme::DearLight));
+  ASSERT_EQ(proto::THEME_RUBY, to_underlying(EditorTheme::Ruby));
+  ASSERT_EQ(proto::THEME_SAPPHIRE, to_underlying(EditorTheme::Sapphire));
+  ASSERT_EQ(proto::THEME_EMERALD, to_underlying(EditorTheme::Emerald));
+  ASSERT_EQ(proto::THEME_AMETHYST, to_underlying(EditorTheme::Amethyst));
+  ASSERT_EQ(proto::THEME_AMBER, to_underlying(EditorTheme::Amber));
+  ASSERT_EQ(proto::THEME_NOCTURNAL, to_underlying(EditorTheme::Nocturnal));
+  ASSERT_EQ(proto::THEME_ASH, to_underlying(EditorTheme::Ash));
+  ASSERT_EQ(proto::THEME_DIAMOND, to_underlying(EditorTheme::Diamond));
+  ASSERT_EQ(proto::THEME_JOKER, to_underlying(EditorTheme::Joker));
+  ASSERT_EQ(proto::THEME_RASPBERRY, to_underlying(EditorTheme::Raspberry));
 }
 
 TEST(PreferenceState, EnsureOverlayPosEnumsMatch)
 {
-  ASSERT_EQ(proto::OVERLAY_POS_TOP_LEFT, cen::to_underlying(OverlayPos::top_left));
-  ASSERT_EQ(proto::OVERLAY_POS_TOP_RIGHT, cen::to_underlying(OverlayPos::top_right));
-  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_RIGHT,
-            cen::to_underlying(OverlayPos::bottom_right));
-  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_LEFT, cen::to_underlying(OverlayPos::bottom_left));
+  ASSERT_EQ(proto::OVERLAY_POS_TOP_LEFT, to_underlying(OverlayPos::TopLeft));
+  ASSERT_EQ(proto::OVERLAY_POS_TOP_RIGHT, to_underlying(OverlayPos::TopRight));
+  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_RIGHT, to_underlying(OverlayPos::BottomRight));
+  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_LEFT, to_underlying(OverlayPos::BottomLeft));
 }

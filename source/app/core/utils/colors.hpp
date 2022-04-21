@@ -21,7 +21,7 @@
 
 #include <array>  // array
 
-#include <centurion.hpp>
+#include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "tactile.hpp"

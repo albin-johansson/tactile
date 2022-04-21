@@ -28,7 +28,7 @@ namespace tactile {
 class MoveLayerDownCmd final : public ACommand
 {
  public:
-  MoveLayerDownCmd(RegistryRef registry, layer_id id);
+  MoveLayerDownCmd(RegistryRef registry, LayerID id);
 
   void undo() override;
 
@@ -41,7 +41,7 @@ class MoveLayerDownCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayerId;
+  LayerID mLayerId;
 };
 
 }  // namespace tactile

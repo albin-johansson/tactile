@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
+#include <optional>  // optional
+#include <string>    // string
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -30,7 +31,7 @@ namespace tactile {
 class RenameLayerCmd final : public ACommand
 {
  public:
-  RenameLayerCmd(RegistryRef registry, layer_id id, std::string name);
+  RenameLayerCmd(RegistryRef registry, LayerID id, std::string name);
 
   void undo() override;
 
@@ -43,9 +44,9 @@ class RenameLayerCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  layer_id mLayerId;
+  LayerID mLayerId;
   std::string mName;
-  Maybe<std::string> mPreviousName;
+  std::optional<std::string> mPreviousName;
 };
 
 }  // namespace tactile

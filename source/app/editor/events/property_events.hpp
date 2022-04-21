@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include <entt/entt.hpp>
+#include <entt/entity/entity.hpp>
 
 #include "core/attribute.hpp"
 #include "tactile.hpp"

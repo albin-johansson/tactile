@@ -10,14 +10,14 @@ using namespace std::string_literals;
 TEST(Attribute, Defaults)
 {
   const Attribute value;
-  ASSERT_EQ(AttributeType::string, value.type());
+  ASSERT_EQ(AttributeType::String, value.type());
 
   ASSERT_TRUE(value.is_string());
   ASSERT_FALSE(value.is_int());
   ASSERT_FALSE(value.is_float());
   ASSERT_FALSE(value.is_bool());
   ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_file());
+  ASSERT_FALSE(value.is_path());
   ASSERT_FALSE(value.is_object());
 
   ASSERT_EQ("", value.as_string());
@@ -25,7 +25,7 @@ TEST(Attribute, Defaults)
   ASSERT_THROW(value.as_float(), TactileError);
   ASSERT_THROW(value.as_bool(), TactileError);
   ASSERT_THROW(value.as_color(), TactileError);
-  ASSERT_THROW(value.as_file(), TactileError);
+  ASSERT_THROW(value.as_path(), TactileError);
   ASSERT_THROW(value.as_object(), TactileError);
 }
 
@@ -41,7 +41,7 @@ TEST(Attribute, IntAttribute)
   ASSERT_FALSE(value.is_float());
   ASSERT_FALSE(value.is_bool());
   ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_file());
+  ASSERT_FALSE(value.is_path());
   ASSERT_FALSE(value.is_object());
 }
 
@@ -57,7 +57,7 @@ TEST(Attribute, FloatAttribute)
   ASSERT_FALSE(value.is_int());
   ASSERT_FALSE(value.is_bool());
   ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_file());
+  ASSERT_FALSE(value.is_path());
   ASSERT_FALSE(value.is_object());
 }
 
@@ -73,7 +73,7 @@ TEST(Attribute, StringAttribute)
   ASSERT_FALSE(value.is_float());
   ASSERT_FALSE(value.is_bool());
   ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_file());
+  ASSERT_FALSE(value.is_path());
   ASSERT_FALSE(value.is_object());
 }
 
@@ -89,7 +89,7 @@ TEST(Attribute, BoolAttribute)
   ASSERT_FALSE(value.is_int());
   ASSERT_FALSE(value.is_float());
   ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_file());
+  ASSERT_FALSE(value.is_path());
   ASSERT_FALSE(value.is_object());
 }
 
@@ -98,8 +98,8 @@ TEST(Attribute, FileAttribute)
   const std::filesystem::path file{"test-resources/foo.txt"};
   const Attribute value{file};
 
-  ASSERT_TRUE(value.is_file());
-  ASSERT_TRUE(value.try_as_file());
+  ASSERT_TRUE(value.is_path());
+  ASSERT_TRUE(value.try_as_path());
 
   ASSERT_FALSE(value.is_string());
   ASSERT_FALSE(value.is_int());
@@ -121,7 +121,7 @@ TEST(Attribute, ObjectAttribute)
   ASSERT_FALSE(value.is_float());
   ASSERT_FALSE(value.is_bool());
   ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_file());
+  ASSERT_FALSE(value.is_path());
 }
 
 TEST(Attribute, ColorAttribute)
@@ -135,7 +135,7 @@ TEST(Attribute, ColorAttribute)
   ASSERT_FALSE(value.is_int());
   ASSERT_FALSE(value.is_float());
   ASSERT_FALSE(value.is_bool());
-  ASSERT_FALSE(value.is_file());
+  ASSERT_FALSE(value.is_path());
   ASSERT_FALSE(value.is_object());
 }
 

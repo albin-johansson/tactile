@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <centurion.hpp>
+#include <centurion/mouse.hpp>
 
 #include "tile_pos.hpp"
 

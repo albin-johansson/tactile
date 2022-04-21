@@ -44,7 +44,7 @@ void PointToolCmd::redo()
     sys::restore_object(registry, mSnapshot.value());
   }
   else {
-    mObjectId = sys::make_point_object(registry, mLayerId, mPointX, mPointY);
+    mObjectId = sys::new_point_object(registry, mLayerId, mPointX, mPointY);
   }
 }
 

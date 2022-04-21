@@ -23,9 +23,9 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include <entt/entt.hpp>
+#include <entt/fwd.hpp>
 
-#include "dialog.hpp"
+#include "editor/gui/dialogs/dialog.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
