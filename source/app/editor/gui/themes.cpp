@@ -21,6 +21,7 @@
 
 #include <imgui.h>
 
+#include "meta/build.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile {
@@ -192,8 +193,12 @@ auto human_readable_name(const EditorTheme theme) -> std::string_view
 
 void apply_style(ImGuiStyle& style)
 {
-  style.WindowMenuButtonPosition = ImGuiDir_Right;
+  style.WindowMenuButtonPosition = ImGuiDir_Left;
   style.WindowBorderSize = 0;
+
+  if constexpr (on_osx) {
+    style.WindowTitleAlign.x = 0.5f;
+  }
 
   style.WindowPadding = ImVec2{10, 10};
   style.FramePadding = ImVec2{5, 5};
