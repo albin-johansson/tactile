@@ -7,7 +7,7 @@ env:
   SDL_VIDEODRIVER: x11
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
-  VCPKG_COMMIT_ID: 7f7f1a514599b040eed5a876b838b76689ebb291
+  VCPKG_COMMIT_ID: e0c3408c778c54788393c4a739f6f3507aff77cb
   VCPKG_CACHE_EDITION: 1
 
 jobs:
