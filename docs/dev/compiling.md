@@ -6,7 +6,7 @@ This document provides a guide for how to build the project.
   - [Install a C++ compiler](#install-a-c-compiler)
   - [Install Vcpkg](#install-vcpkg)
   - [Building the project](#building-the-project)
-  - [Configuring targets in JetBrains CLion](#configuring-targets-in-jetbrains-clion)
+  - [Configuring profiles in JetBrains CLion](#configuring-profiles-in-jetbrains-clion)
 
 Tactile uses [Vcpkg](https://github.com/microsoft/vcpkg), an open-source dependency manager for C++ libraries, developed by Microsoft. This makes building the Tactile editor really quite straightforward.
 
@@ -49,7 +49,7 @@ It is also worth noting that Vcpkg supports a variety of "triplets", which contr
 
 More information about Vcpkg triplets can be found [here](https://github.com/microsoft/vcpkg/docs/users/triplets.md).
 
-## Configuring targets in JetBrains CLion
+## Configuring profiles in JetBrains CLion
 
 If you're using an IDE such as JetBrains CLion, it is usually possible to configure CMake profiles to make building and/or running the project as simple as pressing a button.
 
