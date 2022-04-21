@@ -167,8 +167,8 @@ auto can_decrease_viewport_zoom(const entt::registry& registry) -> bool
 auto get_viewport_scaling_ratio(const entt::registry& registry) -> ViewportScalingRatio
 {
   const auto& ctx = registry.ctx();
-  const auto& viewport = registry.ctx().at<comp::Viewport>();
-  const auto& map = registry.ctx().at<MapInfo>();
+  const auto& viewport = ctx.at<comp::Viewport>();
+  const auto& map = ctx.at<MapInfo>();
 
   const auto xRatio = viewport.tile_width / static_cast<float>(map.tile_width);
   const auto yRatio = viewport.tile_height / static_cast<float>(map.tile_height);
