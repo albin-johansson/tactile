@@ -35,6 +35,7 @@ target_link_libraries(${TACTILE_LIB}
                       EnTT::EnTT
                       magic_enum::magic_enum
                       fmt::fmt
+                      glm::glm
                       protobuf::libprotobuf
                       yaml-cpp
                       nlohmann_json::nlohmann_json

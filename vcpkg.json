@@ -15,6 +15,7 @@
     "entt",
     "fmt",
     "glew",
+    "glm",
     "gtest",
     {
       "name": "imgui",

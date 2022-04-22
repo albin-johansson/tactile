@@ -73,15 +73,16 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     _row("EnTT", "MIT");
     _row("fmt", "MIT");
     _row("GLEW", "BSD/MIT");
+    _row("glm", "Happy Bunny/MIT"); /* Yes, there is a Happy Bunny license */
     _row("IconFontCppHeaders", "Zlib");
     _row("JSON for Modern C++", "MIT");
     _row("Magic Enum C++", "MIT");
-    _row("tinyfiledialogs", "Zlib");
     _row("Protocol Buffers", "BSD");
     _row("pugixml", "MIT");
     _row("SDL2", "Zlib");
     _row("SDL2_image", "Zlib");
     _row("stb_image", "MIT");
+    _row("tinyfiledialogs", "Zlib");
     _row("yaml-cpp", "MIT");
     _row("googletest", "BSD");
   }
