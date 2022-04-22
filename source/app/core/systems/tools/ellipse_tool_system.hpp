@@ -22,7 +22,7 @@
 #include <entt/fwd.hpp>
 
 #include "core/mouse_info.hpp"
-#include "core/tool_type.hpp"
+#include "core/tools/tool_type.hpp"
 
 namespace tactile::sys {
 
