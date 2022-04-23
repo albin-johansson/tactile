@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/tool_type.hpp"
+#include "core/tools/tool_type.hpp"
 
 namespace tactile::comp {
 
