@@ -29,8 +29,8 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "core/tools/tool_manager.hpp"
 #include "misc/assert.hpp"
 #include "misc/throw.hpp"
 
@@ -64,7 +64,7 @@ auto DocumentModel::add_map(const int32 tileWidth,
   TACTILE_ASSERT(tileHeight > 0);
 
   Document document;
-  document.registry = sys::make_document_registry();
+  document.registry = sys::new_map_document_registry();
 
   auto& map = document.registry.ctx().at<MapInfo>();
   map.tile_width = tileWidth;
@@ -245,7 +245,7 @@ auto DocumentModel::get_redo_text() const -> const std::string&
 auto DocumentModel::is_tool_active(const ToolType tool) const -> bool
 {
   const auto* registry = active_registry();
-  return registry && sys::is_tool_enabled(*registry, tool);
+  return registry && registry->ctx().at<ToolManager>().is_enabled(tool);
 }
 
 auto DocumentModel::is_tool_possible(const ToolType tool) const -> bool

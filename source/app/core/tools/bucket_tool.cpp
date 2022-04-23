@@ -17,9 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "bucket_tool_system.hpp"
+#include "bucket_tool.hpp"
 
-#include <entt/entity/registry.hpp>
+#include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/components/tiles.hpp"
@@ -28,22 +28,28 @@
 #include "core/systems/tileset_system.hpp"
 #include "editor/events/tool_events.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-void on_bucket_tool_pressed(entt::registry& registry,
+void BucketTool::on_pressed(entt::registry& registry,
                             entt::dispatcher& dispatcher,
                             const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
-      is_tile_layer_active(registry) && is_single_tile_selected_in_tileset(registry)) {
-    const auto entity = find_active_tileset(registry);
-    const auto& selection = checked_get<comp::TilesetSelection>(registry, entity);
+      sys::is_tile_layer_active(registry) &&
+      sys::is_single_tile_selected_in_tileset(registry)) {
+    const auto entity = sys::find_active_tileset(registry);
+    const auto& selection = sys::checked_get<comp::TilesetSelection>(registry, entity);
 
     const auto position = selection.region->begin;
-    const auto replacement = get_tile_from_tileset(registry, entity, position);
+    const auto replacement = sys::get_tile_from_tileset(registry, entity, position);
 
     dispatcher.enqueue<FloodEvent>(mouse.position_in_viewport, replacement);
   }
 }
 
-}  // namespace tactile::sys
+auto BucketTool::get_type() const -> ToolType
+{
+  return ToolType::Bucket;
+}
+
+}  // namespace tactile

@@ -321,7 +321,7 @@ auto restore_document_from_ir(const parsing::ParseData& data, TextureManager& te
 {
   Document document;
   document.path = data.path();
-  document.registry = sys::make_document_registry();
+  document.registry = sys::new_map_document_registry();
 
   const auto& mapData = data.data();
   _restore_component_definitions(document.registry, mapData);

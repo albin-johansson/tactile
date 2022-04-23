@@ -23,7 +23,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/tool_type.hpp"
+#include "core/tools/tool_type.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/tool_events.hpp"

@@ -39,7 +39,7 @@ struct TestData final
 
 [[nodiscard]] auto _new_test_data() -> TestData
 {
-  TestData data{.registry = sys::make_document_registry()};
+  TestData data{.registry = sys::new_map_document_registry()};
 
   const auto layerEntity = sys::new_object_layer(data.registry);
   const auto& layer = sys::checked_get<comp::Layer>(data.registry, layerEntity);

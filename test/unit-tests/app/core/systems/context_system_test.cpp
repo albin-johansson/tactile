@@ -16,14 +16,14 @@ TEST(ContextSystem, ResetNextContextId)
 
 TEST(ContextSystem, CurrentContext)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   ASSERT_NO_THROW({ auto& root [[maybe_unused]] = sys::current_context(registry); });
   ASSERT_EQ(1, sys::current_context_id(registry));
 }
 
 TEST(ContextSystem, AddAttributeContext)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto a = registry.create();
   const auto b = registry.create();
@@ -44,7 +44,7 @@ TEST(ContextSystem, AddAttributeContext)
 TEST(ContextSystem, CopyAttributeContext)
 {
   using namespace std::string_literals;
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto componentId = sys::make_component_def(registry, "Component");
   sys::make_component_attribute(registry, componentId, "number", 1'337);
@@ -75,7 +75,7 @@ TEST(ContextSystem, CopyAttributeContext)
 
 TEST(ContextSystem, RestoreAttributeContext)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto oldEntity = registry.create();
   const auto next = sys::next_context_id();

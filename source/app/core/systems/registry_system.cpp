@@ -28,10 +28,11 @@
 #include "core/map_info.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
+#include "core/tools/tool_manager.hpp"
 
 namespace tactile::sys {
 
-auto make_document_registry() -> entt::registry
+auto new_map_document_registry() -> entt::registry
 {
   entt::registry registry;
   auto& ctx = registry.ctx();
@@ -39,8 +40,9 @@ auto make_document_registry() -> entt::registry
   ctx.emplace<comp::ActiveLayer>();
   ctx.emplace<comp::ActiveTileset>();
   ctx.emplace<comp::ActiveAttributeContext>();
-  ctx.emplace<comp::ActiveTool>();
   ctx.emplace<comp::ActiveObject>();
+
+  ctx.emplace<ToolManager>();
 
   auto& map = ctx.emplace<MapInfo>();
   map.row_count = 5;

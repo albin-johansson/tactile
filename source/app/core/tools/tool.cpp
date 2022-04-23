@@ -17,16 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "tool.hpp"
 
-#include <entt/fwd.hpp>
+namespace tactile {
 
-#include "core/mouse_info.hpp"
+void ATool::on_enabled(entt::registry&, entt::dispatcher&) {}
 
-namespace tactile::sys {
+void ATool::on_disabled(entt::registry&, entt::dispatcher&) {}
 
-void on_point_tool_pressed(entt::registry& registry,
-                           entt::dispatcher& dispatcher,
-                           const MouseInfo& mouse);
+void ATool::on_entered(entt::registry&, entt::dispatcher&) {}
 
-}  // namespace tactile::sys
+void ATool::on_exited(entt::registry&, entt::dispatcher&) {}
+
+void ATool::on_pressed(entt::registry&, entt::dispatcher&, const MouseInfo&) {}
+
+void ATool::on_dragged(entt::registry&, entt::dispatcher&, const MouseInfo&) {}
+
+void ATool::on_released(entt::registry&, entt::dispatcher&, const MouseInfo&) {}
+
+}  // namespace tactile

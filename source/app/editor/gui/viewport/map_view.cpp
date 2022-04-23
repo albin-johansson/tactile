@@ -31,7 +31,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "core/systems/tools/tool_system.hpp"
+#include "core/tools/tool_manager.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
@@ -110,12 +110,14 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
     graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
   }
 
-  if (cursor.is_within_map &&  //
-      sys::is_tool_enabled(registry, ToolType::Stamp) &&
+  const auto& ctx = registry.ctx();
+  const auto& tools = ctx.at<ToolManager>();
+
+  if (cursor.is_within_map && tools.is_enabled(ToolType::Stamp) &&
       sys::is_tileset_selection_not_empty(registry)) {
     render_stamp_preview(registry, cursor.map_position, info);
   }
-  else if (sys::is_tool_enabled(registry, ToolType::Rectangle)) {
+  else if (tools.is_enabled(ToolType::Rectangle)) {
     if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
       const ImVec2 pos{stroke->start_x, stroke->start_y};
       const ImVec2 size{stroke->current_x - stroke->start_x,
@@ -126,7 +128,7 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
       graphics.draw_translated_rect_with_shadow(pos, size);
     }
   }
-  else if (sys::is_tool_enabled(registry, ToolType::Ellipse)) {
+  else if (tools.is_enabled(ToolType::Ellipse)) {
     if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
       const ImVec2 radius{(stroke->current_x - stroke->start_x),
                           (stroke->current_y - stroke->start_y)};

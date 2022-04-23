@@ -31,7 +31,7 @@ struct SimpleTreeConfig final
 [[nodiscard]] auto CreateTreeRegistrySimple() -> SimpleTreeConfig
 {
   SimpleTreeConfig cfg;
-  cfg.registry = sys::make_document_registry();
+  cfg.registry = sys::new_map_document_registry();
 
   cfg.a = cfg.registry.create();
   cfg.b = cfg.registry.create();

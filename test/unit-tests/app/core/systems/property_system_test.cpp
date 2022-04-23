@@ -16,7 +16,7 @@ class PropertySystemTest : public testing::Test
   void SetUp() override
   {
     sys::reset_next_context_id();
-    mRegistry = sys::make_document_registry();
+    mRegistry = sys::new_map_document_registry();
   }
 
   entt::registry mRegistry;

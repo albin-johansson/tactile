@@ -26,11 +26,11 @@
 namespace tactile::sys {
 
 /**
- * \brief Creates a registry with the expected context variables.
+ * \brief Creates a registry for a map document.
  *
  * \ingroup systems
  *
- * \details The created registry will feature the following context components:
+ * \details The registry will feature the following context components:
  * - `MapInfo`
  * - `Viewport`
  * - `TilesetContext`
@@ -38,12 +38,12 @@ namespace tactile::sys {
  * - `ActiveLayer`
  * - `ActiveTileset`
  * - `ActiveAttributeContext`
- * - `ActiveTool`
  * - `ActiveObject`
+ * - `ToolManager`
  *
- * \return a document registry.
+ * \return a map document registry.
  */
-[[nodiscard]] auto make_document_registry() -> entt::registry;
+[[nodiscard]] auto new_map_document_registry() -> entt::registry;
 
 /**
  * \brief Returns a component featured by an entity.

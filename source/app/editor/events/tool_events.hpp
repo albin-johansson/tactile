@@ -22,7 +22,7 @@
 #include "core/common/tile_cache.hpp"
 #include "core/mouse_info.hpp"
 #include "core/tile_pos.hpp"
-#include "core/tool_type.hpp"
+#include "core/tools/tool_type.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

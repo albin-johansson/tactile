@@ -9,18 +9,19 @@
 #include "core/components/tools.hpp"
 #include "core/components/viewport.hpp"
 #include "core/map_info.hpp"
+#include "core/tools/tool_manager.hpp"
 
 using namespace tactile;
 
-TEST(RegistrySystem, MakeDocumentRegistry)
+TEST(RegistrySystem, NewMapDocumentRegistry)
 {
-  const auto registry = sys::make_document_registry();
+  const auto registry = sys::new_map_document_registry();
   const auto& ctx = registry.ctx();
   ASSERT_TRUE(ctx.find<MapInfo>());
+  ASSERT_TRUE(ctx.find<ToolManager>());
   ASSERT_TRUE(ctx.find<comp::ActiveLayer>());
   ASSERT_TRUE(ctx.find<comp::ActiveTileset>());
   ASSERT_TRUE(ctx.find<comp::ActiveAttributeContext>());
-  ASSERT_TRUE(ctx.find<comp::ActiveTool>());
   ASSERT_TRUE(ctx.find<comp::ActiveObject>());
   ASSERT_TRUE(ctx.find<comp::Viewport>());
   ASSERT_TRUE(ctx.find<comp::AttributeContext>());

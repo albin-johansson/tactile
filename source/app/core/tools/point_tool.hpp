@@ -19,23 +19,18 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include "core/tools/tool.hpp"
 
-#include "core/mouse_info.hpp"
-#include "core/tools/tool_type.hpp"
+namespace tactile {
 
-namespace tactile::sys {
+class PointTool final : public ATool
+{
+ public:
+  void on_pressed(entt::registry& registry,
+                  entt::dispatcher& dispatcher,
+                  const MouseInfo& mouse) override;
 
-void on_ellipse_tool_disabled(entt::registry& registry, entt::dispatcher& dispatcher);
+  [[nodiscard]] auto get_type() const -> ToolType override;
+};
 
-void on_ellipse_tool_exited(entt::registry& registry, entt::dispatcher& dispatcher);
-
-void on_ellipse_tool_pressed(entt::registry& registry, const MouseInfo& mouse);
-
-void on_ellipse_tool_dragged(entt::registry& registry, const MouseInfo& mouse);
-
-void on_ellipse_tool_released(entt::registry& registry,
-                              entt::dispatcher& dispatcher,
-                              const MouseInfo& mouse);
-
-}  // namespace tactile::sys
+}  // namespace tactile

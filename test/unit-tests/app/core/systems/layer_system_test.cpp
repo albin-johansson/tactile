@@ -16,7 +16,7 @@ constexpr entt::entity null_entity = entt::null;
 
 TEST(LayerSystem, SortLayers)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   auto& active = registry.ctx().at<comp::ActiveLayer>();
 
   const auto a = sys::new_tile_layer(registry);
@@ -74,7 +74,7 @@ TEST(LayerSystem, SortLayers)
 
 TEST(LayerSystem, RemoveLayer)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   auto& active = registry.ctx().at<comp::ActiveLayer>();
 
   const auto a = sys::new_tile_layer(registry);
@@ -153,7 +153,7 @@ TEST(LayerSystem, DuplicateLayer)
 {
   // TODO improve this test
 
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto a = sys::new_tile_layer(registry);
   auto& layerA = registry.get<comp::Layer>(a);
@@ -172,7 +172,7 @@ TEST(LayerSystem, DuplicateLayer)
 
 TEST(LayerSystem, FindLayer)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   ASSERT_EQ(null_entity, sys::find_layer(registry, 1));
 
   const auto a = sys::new_tile_layer(registry);

@@ -25,7 +25,7 @@ constexpr entt::entity null_entity = entt::null;
 
 TEST(ComponentSystem, CreateComponentDef)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   ASSERT_FALSE(sys::is_component_name_taken(registry, "Foo"));
   ASSERT_FALSE(sys::is_component_name_taken(registry, "Bar"));
 
@@ -52,7 +52,7 @@ TEST(ComponentSystem, RemoveComponentDef)
 {
   const std::string name = "Definition";
 
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto def = sys::make_component_def(registry, name);
   ASSERT_TRUE(sys::is_component_name_taken(registry, name));
@@ -82,7 +82,7 @@ TEST(ComponentSystem, RemoveComponentDef)
 
 TEST(ComponentSystem, RenameComponentDef)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto def = sys::make_component_def(registry, "Foo");
   ASSERT_EQ("Foo", sys::get_component_def_name(registry, def));
@@ -93,7 +93,7 @@ TEST(ComponentSystem, RenameComponentDef)
 
 TEST(ComponentSystem, FindComponentDef)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto id = sys::make_component_def(registry, "Foo");
   ASSERT_NE(null_entity, sys::find_component_def(registry, id));
   ASSERT_EQ(null_entity, sys::find_component_def(registry, id + 1));
@@ -101,7 +101,7 @@ TEST(ComponentSystem, FindComponentDef)
 
 TEST(ComponentSystem, GetComponentDef)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto id = sys::make_component_def(registry, "Foo");
 
   const auto& ref = registry;
@@ -124,14 +124,14 @@ TEST(ComponentSystem, GetComponentDef)
 
 TEST(ComponentSystem, GetComponentDefName)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto id = sys::make_component_def(registry, "Hello");
   ASSERT_EQ("Hello", sys::get_component_def_name(registry, id));
 }
 
 TEST(ComponentSystem, CreateComponentAttribute)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto def = sys::make_component_def(registry, "Def");
   ASSERT_FALSE(sys::is_component_attribute_name_taken(registry, def, "A"));
 
@@ -141,7 +141,7 @@ TEST(ComponentSystem, CreateComponentAttribute)
 
 TEST(ComponentSystem, RemoveComponentAttribute)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto def = sys::make_component_def(registry, "Def");
 
   const auto a = CreateContext(registry);
@@ -174,7 +174,7 @@ TEST(ComponentSystem, RemoveComponentAttribute)
 
 TEST(ComponentSystem, RenameComponentAttribute)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto def = sys::make_component_def(registry, "Def");
 
   sys::make_component_attribute(registry, def, "A");
@@ -190,7 +190,7 @@ TEST(ComponentSystem, RenameComponentAttribute)
 
 TEST(ComponentSystem, DuplicateComponentAttribute)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto def = sys::make_component_def(registry, "Def");
 
   sys::make_component_attribute(registry, def, "A");
@@ -215,7 +215,7 @@ TEST(ComponentSystem, DuplicateComponentAttribute)
 
 TEST(ComponentSystem, SetComponentAttributeType)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto def = sys::make_component_def(registry, "Def");
 
   sys::make_component_attribute(registry, def, "A");
@@ -232,7 +232,7 @@ TEST(ComponentSystem, SetComponentAttributeValue)
 {
   using namespace std::string_literals;
 
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto def = sys::make_component_def(registry, "Def");
 
   ASSERT_THROW(sys::set_component_attribute_value(registry, def, "ABC", 42),
@@ -251,7 +251,7 @@ TEST(ComponentSystem, SetComponentAttributeValue)
 
 TEST(ComponentSystem, IsComponentAttributeNameTaken)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto def = sys::make_component_def(registry, "Def");
   ASSERT_FALSE(sys::is_component_attribute_name_taken(registry, def, "abc"));
 
@@ -261,7 +261,7 @@ TEST(ComponentSystem, IsComponentAttributeNameTaken)
 
 TEST(ComponentSystem, AddComponent)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto def = sys::make_component_def(registry, "Position");
   sys::make_component_attribute(registry, def, "X");
@@ -288,7 +288,7 @@ TEST(ComponentSystem, ResetComponent)
 {
   using namespace std::string_literals;
 
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
   const auto def = sys::make_component_def(registry, "Foo");
 
   sys::make_component_attribute(registry, def, "A", 42);
@@ -334,7 +334,7 @@ TEST(ComponentSystem, ResetComponent)
 
 TEST(ComponentSystem, HasComponent)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto a = CreateContext(registry);
   const auto b = CreateContext(registry);
@@ -357,7 +357,7 @@ TEST(ComponentSystem, HasComponent)
 
 TEST(ComponentSystem, RemoveComponent)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto a = sys::make_component_def(registry, "A");
   const auto b = sys::make_component_def(registry, "B");
@@ -383,7 +383,7 @@ TEST(ComponentSystem, RemoveComponent)
 
 TEST(ComponentSystem, GetComponent)
 {
-  auto registry = sys::make_document_registry();
+  auto registry = sys::new_map_document_registry();
 
   const auto a = sys::make_component_def(registry, "A");
   const auto b = sys::make_component_def(registry, "B");

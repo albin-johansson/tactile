@@ -17,24 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "point_tool_system.hpp"
+#include "point_tool.hpp"
 
-#include <entt/entity/registry.hpp>
+#include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/tool_events.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-void on_point_tool_pressed(entt::registry& registry,
+void PointTool::on_pressed(entt::registry& registry,
                            entt::dispatcher& dispatcher,
                            const MouseInfo& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
-      is_object_layer_active(registry)) {
-    const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
+      sys::is_object_layer_active(registry)) {
+    const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);
 
     const auto x = mouse.x / xRatio;
     const auto y = mouse.y / yRatio;
@@ -43,4 +44,9 @@ void on_point_tool_pressed(entt::registry& registry,
   }
 }
 
-}  // namespace tactile::sys
+auto PointTool::get_type() const -> ToolType
+{
+  return ToolType::Point;
+}
+
+}  // namespace tactile

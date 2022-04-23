@@ -19,22 +19,18 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include "core/tools/tool.hpp"
 
-#include "core/mouse_info.hpp"
+namespace tactile {
 
-namespace tactile::sys {
+class BucketTool final : public ATool
+{
+ public:
+  void on_pressed(entt::registry& registry,
+                  entt::dispatcher& dispatcher,
+                  const MouseInfo& mouse) override;
 
-void on_stamp_tool_disabled(entt::dispatcher& dispatcher);
+  [[nodiscard]] auto get_type() const -> ToolType override;
+};
 
-void on_stamp_tool_exited(entt::dispatcher& dispatcher);
-
-void on_stamp_tool_pressed(entt::registry& registry, const MouseInfo& mouse);
-
-void on_stamp_tool_dragged(entt::registry& registry, const MouseInfo& mouse);
-
-void on_stamp_tool_released(entt::registry& registry,
-                            entt::dispatcher& dispatcher,
-                            const MouseInfo& mouse);
-
-}  // namespace tactile::sys
+}  // namespace tactile

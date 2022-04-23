@@ -34,8 +34,8 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "core/tools/tool_manager.hpp"
 #include "core/utils/texture_manager.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
@@ -361,42 +361,49 @@ void Application::on_select_map(const SelectMapEvent& event)
 
 void Application::on_select_tool(const SelectToolEvent& event)
 {
-  auto& registry = mData->model.get_active_registry();
-  sys::select_tool(registry, mData->dispatcher, event.type);
+  if (auto* registry = mData->model.active_registry()) {
+    auto& tools = registry->ctx().at<ToolManager>();
+    tools.select_tool(event.type, *registry, mData->dispatcher);
+  }
 }
 
 void Application::on_tool_pressed(const ToolPressedEvent& event)
 {
   if (auto* registry = mData->model.active_registry()) {
-    sys::on_tool_pressed(*registry, mData->dispatcher, event.info);
+    auto& tools = registry->ctx().at<ToolManager>();
+    tools.on_pressed(*registry, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_dragged(const ToolDraggedEvent& event)
 {
   if (auto* registry = mData->model.active_registry()) {
-    sys::on_tool_dragged(*registry, mData->dispatcher, event.info);
+    auto& tools = registry->ctx().at<ToolManager>();
+    tools.on_dragged(*registry, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_released(const ToolReleasedEvent& event)
 {
   if (auto* registry = mData->model.active_registry()) {
-    sys::on_tool_released(*registry, mData->dispatcher, event.info);
+    auto& tools = registry->ctx().at<ToolManager>();
+    tools.on_released(*registry, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_entered()
 {
   if (auto* registry = mData->model.active_registry()) {
-    sys::on_tool_entered(*registry, mData->dispatcher);
+    auto& tools = registry->ctx().at<ToolManager>();
+    tools.on_entered(*registry, mData->dispatcher);
   }
 }
 
 void Application::on_tool_exited()
 {
   if (auto* registry = mData->model.active_registry()) {
-    sys::on_tool_exited(*registry, mData->dispatcher);
+    auto& tools = registry->ctx().at<ToolManager>();
+    tools.on_exited(*registry, mData->dispatcher);
   }
 }
 
