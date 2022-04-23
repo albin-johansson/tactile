@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-class ToolManager final : public ATool
+class ToolManager final : ATool
 {
  public:
   TACTILE_DELETE_COPY(ToolManager);
@@ -41,6 +41,9 @@ class ToolManager final : public ATool
   void select_tool(ToolType type, entt::registry& registry, entt::dispatcher& dispatcher);
 
   [[nodiscard]] auto is_enabled(ToolType type) const -> bool;
+
+  [[nodiscard]] auto is_available(const entt::registry& registry, ToolType type) const
+      -> bool;
 
   void draw_gizmos(const entt::registry& registry,
                    IRenderer& renderer,
@@ -66,8 +69,10 @@ class ToolManager final : public ATool
                    entt::dispatcher& dispatcher,
                    const MouseInfo& mouse) override;
 
-  /* Do not call this function, it will just throw an exception */
+  /* Do not call these functions, they will just raise exceptions */
   [[nodiscard, deprecated]] auto get_type() const -> ToolType override;
+  [[nodiscard, deprecated]] auto is_available(const entt::registry& registry) const
+      -> bool override;
 
  private:
   struct Data;

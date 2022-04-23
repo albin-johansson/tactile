@@ -132,6 +132,16 @@ void StampTool::on_released(entt::registry& registry,
   }
 }
 
+auto StampTool::is_available(const entt::registry& registry) const -> bool
+{
+  return sys::is_tile_layer_active(registry);
+}
+
+auto StampTool::get_type() const -> ToolType
+{
+  return ToolType::Stamp;
+}
+
 void StampTool::update_sequence(entt::registry& registry, const TilePos& cursor)
 {
   TACTILE_ASSERT(is_usable(registry));
@@ -183,11 +193,6 @@ auto StampTool::is_usable(const entt::registry& registry) const -> bool
 {
   return sys::is_tile_layer_active(registry) &&
          sys::is_tileset_selection_not_empty(registry);
-}
-
-auto StampTool::get_type() const -> ToolType
-{
-  return ToolType::Stamp;
 }
 
 }  // namespace tactile

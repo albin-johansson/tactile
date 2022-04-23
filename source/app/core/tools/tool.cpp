@@ -37,4 +37,9 @@ void ATool::on_dragged(entt::registry&, entt::dispatcher&, const MouseInfo&) {}
 
 void ATool::on_released(entt::registry&, entt::dispatcher&, const MouseInfo&) {}
 
+auto ATool::is_available(const entt::registry&) const -> bool
+{
+  return true;
+}
+
 }  // namespace tactile

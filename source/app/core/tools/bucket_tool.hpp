@@ -30,6 +30,8 @@ class BucketTool final : public ATool
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
+  [[nodiscard]] auto is_available(const entt::registry& registry) const -> bool override;
+
   [[nodiscard]] auto get_type() const -> ToolType override;
 };
 

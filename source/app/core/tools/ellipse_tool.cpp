@@ -35,7 +35,7 @@ namespace tactile {
 
 void EllipseTool::draw_gizmos(const entt::registry& registry,
                               IRenderer& renderer,
-                              const MouseInfo& ) const
+                              const MouseInfo&) const
 {
   if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
     const glm::vec2 radius{stroke->current_x - stroke->start_x,
@@ -90,6 +90,11 @@ void EllipseTool::on_released(entt::registry& registry,
   if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
     maybe_emit_event(registry, dispatcher);
   }
+}
+
+auto EllipseTool::is_available(const entt::registry& registry) const -> bool
+{
+  return sys::is_object_layer_active(registry);
 }
 
 auto EllipseTool::get_type() const -> ToolType

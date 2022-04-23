@@ -93,6 +93,11 @@ void RectangleTool::on_released(entt::registry& registry,
   }
 }
 
+auto RectangleTool::is_available(const entt::registry& registry) const -> bool
+{
+  return sys::is_object_layer_active(registry);
+}
+
 auto RectangleTool::get_type() const -> ToolType
 {
   return ToolType::Rectangle;

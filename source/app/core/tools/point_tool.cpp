@@ -44,6 +44,11 @@ void PointTool::on_pressed(entt::registry& registry,
   }
 }
 
+auto PointTool::is_available(const entt::registry& registry) const -> bool
+{
+  return sys::is_object_layer_active(registry);
+}
+
 auto PointTool::get_type() const -> ToolType
 {
   return ToolType::Point;

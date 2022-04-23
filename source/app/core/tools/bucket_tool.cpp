@@ -47,6 +47,12 @@ void BucketTool::on_pressed(entt::registry& registry,
   }
 }
 
+auto BucketTool::is_available(const entt::registry& registry) const -> bool
+{
+  return sys::is_tile_layer_active(registry) &&
+         sys::is_single_tile_selected_in_tileset(registry);
+}
+
 auto BucketTool::get_type() const -> ToolType
 {
   return ToolType::Bucket;

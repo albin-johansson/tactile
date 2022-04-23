@@ -55,6 +55,9 @@ class ATool
                            entt::dispatcher& dispatcher,
                            const MouseInfo& mouse);
 
+  [[nodiscard]] virtual auto is_available(const entt::registry& registry) const
+      -> bool = 0;
+
   [[nodiscard]] virtual auto get_type() const -> ToolType = 0;
 };
 

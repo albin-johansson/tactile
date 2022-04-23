@@ -112,6 +112,39 @@ auto ToolManager::is_enabled(const ToolType type) const -> bool
   }
 }
 
+auto ToolManager::is_available(const entt::registry& registry, const ToolType type) const
+    -> bool
+{
+  switch (type) {
+    case ToolType::None:
+      return false;
+
+    case ToolType::Stamp:
+      return mData->stamp.is_available(registry);
+
+    case ToolType::Eraser:
+      return mData->eraser.is_available(registry);
+
+    case ToolType::Bucket:
+      return mData->bucket.is_available(registry);
+
+    case ToolType::ObjectSelection:
+      return mData->object_selection.is_available(registry);
+
+    case ToolType::Rectangle:
+      return mData->rectangle.is_available(registry);
+
+    case ToolType::Ellipse:
+      return mData->ellipse.is_available(registry);
+
+    case ToolType::Point:
+      return mData->point.is_available(registry);
+
+    default:
+      panic("Invalid tool type!");
+  }
+}
+
 void ToolManager::draw_gizmos(const entt::registry& registry,
                               IRenderer& renderer,
                               const MouseInfo& mouse) const
@@ -177,6 +210,11 @@ void ToolManager::on_released(entt::registry& registry,
 }
 
 auto ToolManager::get_type() const -> ToolType
+{
+  panic("Invalid call!");
+}
+
+auto ToolManager::is_available(const entt::registry&) const -> bool
 {
   panic("Invalid call!");
 }

@@ -251,29 +251,7 @@ auto DocumentModel::is_tool_active(const ToolType tool) const -> bool
 auto DocumentModel::is_tool_possible(const ToolType tool) const -> bool
 {
   const auto* registry = active_registry();
-
-  if (!registry) {
-    return false;
-  }
-
-  switch (tool) {
-    case ToolType::Stamp:
-    case ToolType::Eraser:
-      return sys::is_tile_layer_active(*registry);
-
-    case ToolType::Bucket:
-      return sys::is_tile_layer_active(*registry) &&
-             sys::is_single_tile_selected_in_tileset(*registry);
-
-    case ToolType::ObjectSelection:
-    case ToolType::Rectangle:
-    case ToolType::Ellipse:
-    case ToolType::Point:
-      return sys::is_object_layer_active(*registry);
-
-    default:
-      return false;
-  }
+  return registry && registry->ctx().at<ToolManager>().is_available(*registry, tool);
 }
 
 }  // namespace tactile

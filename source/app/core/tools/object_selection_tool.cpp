@@ -119,6 +119,11 @@ void ObjectSelectionTool::on_released(entt::registry& registry,
   }
 }
 
+auto ObjectSelectionTool::is_available(const entt::registry& registry) const -> bool
+{
+  return sys::is_object_layer_active(registry);
+}
+
 auto ObjectSelectionTool::get_type() const -> ToolType
 {
   return ToolType::ObjectSelection;

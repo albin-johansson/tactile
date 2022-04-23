@@ -73,6 +73,11 @@ void EraserTool::on_released(entt::registry& registry,
   }
 }
 
+auto EraserTool::is_available(const entt::registry& registry) const -> bool
+{
+  return sys::is_tile_layer_active(registry);
+}
+
 auto EraserTool::get_type() const -> ToolType
 {
   return ToolType::Eraser;
