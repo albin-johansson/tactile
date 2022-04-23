@@ -29,9 +29,9 @@ namespace tactile {
 
 struct Document final
 {
-  entt::registry registry;
-  CommandStack commands;
-  std::filesystem::path path;
+  entt::registry registry;     ///< The document registry.
+  CommandStack commands;       ///< The history of commands.
+  std::filesystem::path path;  ///< Path to the associated save file (possibly empty).
 };
 
 }  // namespace tactile
