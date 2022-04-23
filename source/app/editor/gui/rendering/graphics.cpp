@@ -150,7 +150,7 @@ void GraphicsCtx::draw_rect(const glm::vec2& pos,
 {
   auto* list = ImGui::GetWindowDrawList();
 
-  const auto imMin = mOrigin + ImVec2{pos.x, pos.y};
+  const auto imMin = ImVec2{pos.x, pos.y};
   const auto imMax = imMin + ImVec2{size.x, size.y};
 
   list->AddRect(imMin, imMax, color_to_u32(color), 0.0f, 0, thickness);

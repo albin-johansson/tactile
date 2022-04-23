@@ -38,6 +38,23 @@ class GraphicsCtx final : public IRenderer
  public:
   explicit GraphicsCtx(const RenderInfo& info);
 
+  void draw_rect(const glm::vec2& pos,
+                 const glm::vec2& size,
+                 const cen::color& color,
+                 float thickness) override;
+
+  void draw_ellipse(const glm::vec2& center,
+                    const glm::vec2& radius,
+                    const cen::color& color,
+                    float thickness) override;
+
+  void render_image(uint texture,
+                    const glm::vec2& pos,
+                    const glm::vec2& size,
+                    const glm::vec2& uvMin,
+                    const glm::vec2& uvMax,
+                    uint8 opacity) override;
+
   void push_clip();
 
   void pop_clip();
@@ -45,17 +62,8 @@ class GraphicsCtx final : public IRenderer
   void clear();
 
   void draw_rect(const ImVec2& position, const ImVec2& size);
-  void draw_rect(const glm::vec2& pos,
-                   const glm::vec2& size,
-                   const cen::color& color,
-                   float thickness) override;
 
   void fill_rect(const ImVec2& position, const ImVec2& size);
-
-  void draw_ellipse(const glm::vec2& center,
-                      const glm::vec2& radius,
-                      const cen::color& color,
-                      float thickness) override;
 
   void draw_translated_rect(const ImVec2& position, const ImVec2& size);
 
@@ -74,13 +82,6 @@ class GraphicsCtx final : public IRenderer
   void draw_translated_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
 
   void render_image(uint texture, const ImVec2& position, const ImVec2& size);
-
-  void render_image(uint texture,
-                    const glm::vec2& pos,
-                    const glm::vec2& size,
-                    const glm::vec2& uvMin,
-                    const glm::vec2& uvMax,
-                    uint8 opacity) override;
 
   /**
    * \brief Renders a portion of a tileset texture.

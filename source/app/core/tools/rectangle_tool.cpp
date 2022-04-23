@@ -39,7 +39,7 @@ void RectangleTool::draw_gizmos(const entt::registry& registry,
                                 const MouseInfo&) const
 {
   if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
-    const glm::vec2 pos{stroke->start_x, stroke->start_y};
+    const auto pos = renderer.get_origin() + glm::vec2{stroke->start_x, stroke->start_y};
     const glm::vec2 size{stroke->current_x - stroke->start_x,
                          stroke->current_y - stroke->start_y};
 
