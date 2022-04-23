@@ -26,11 +26,9 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/components/tools.hpp"
 #include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "core/systems/tileset_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/object_events.hpp"
@@ -42,7 +40,6 @@
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_info.hpp"
 #include "editor/gui/rendering/render_map.hpp"
-#include "editor/gui/rendering/render_stamp_preview.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/viewport/toolbar.hpp"
 #include "editor/gui/viewport/viewport_cursor_info.hpp"
@@ -57,6 +54,19 @@ namespace {
 constexpr auto _object_context_menu_id = "##MapViewObjectContextMenu";
 constinit bool _will_center_viewport = false;
 
+/* Creates a mouse info struct, but does not set the button member */
+[[nodiscard]] auto _make_mouse_info(const ViewportCursorInfo& cursor) -> MouseInfo
+{
+  MouseInfo info;
+
+  info.x = cursor.raw_position.x;
+  info.y = cursor.raw_position.y;
+  info.position_in_viewport = cursor.map_position;
+  info.is_within_contents = cursor.is_within_map;
+
+  return info;
+}
+
 template <typename Event, typename T>
 void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
 {
@@ -64,11 +74,7 @@ void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, 
   const auto mid = query(ImGuiMouseButton_Middle);
   const auto right = query(ImGuiMouseButton_Right);
   if (left || mid || right) {
-    MouseInfo info;
-    info.x = cursor.raw_position.x;
-    info.y = cursor.raw_position.y;
-    info.position_in_viewport = cursor.map_position;
-    info.is_within_contents = cursor.is_within_map;
+    auto info = _make_mouse_info(cursor);
 
     if (left) {
       info.button = cen::mouse_button::left;
@@ -110,35 +116,8 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
     graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
   }
 
-  const auto& ctx = registry.ctx();
-  const auto& tools = ctx.at<ToolManager>();
-
-  if (cursor.is_within_map && tools.is_enabled(ToolType::Stamp) &&
-      sys::is_tileset_selection_not_empty(registry)) {
-    render_stamp_preview(registry, cursor.map_position, info);
-  }
-  else if (tools.is_enabled(ToolType::Rectangle)) {
-    if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
-      const ImVec2 pos{stroke->start_x, stroke->start_y};
-      const ImVec2 size{stroke->current_x - stroke->start_x,
-                        stroke->current_y - stroke->start_y};
-
-      graphics.set_draw_color(cen::colors::yellow);
-      graphics.set_line_thickness(1);
-      graphics.draw_translated_rect_with_shadow(pos, size);
-    }
-  }
-  else if (tools.is_enabled(ToolType::Ellipse)) {
-    if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
-      const ImVec2 radius{(stroke->current_x - stroke->start_x),
-                          (stroke->current_y - stroke->start_y)};
-      const ImVec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
-
-      graphics.set_draw_color(cen::colors::yellow);
-      graphics.set_line_thickness(1);
-      graphics.draw_translated_ellipse_with_shadow(center, radius);
-    }
-  }
+  const auto& tools = registry.ctx().at<ToolManager>();
+  tools.draw_gizmos(registry, graphics, _make_mouse_info(cursor));
 }
 
 void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)

@@ -23,13 +23,29 @@
 
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
+#include <glm/vec2.hpp>
 
 #include "core/components/tools.hpp"
+#include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/tool_events.hpp"
 
 namespace tactile {
+
+void EllipseTool::draw_gizmos(const entt::registry& registry,
+                              IRenderer& renderer,
+                              const MouseInfo& ) const
+{
+  if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
+    const glm::vec2 radius{stroke->current_x - stroke->start_x,
+                           stroke->current_y - stroke->start_y};
+    const glm::vec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
+
+    renderer.draw_ellipse(center + glm::vec2{1, 1}, radius, cen::colors::black);
+    renderer.draw_ellipse(center, radius, cen::colors::yellow);
+  }
+}
 
 void EllipseTool::on_disabled(entt::registry& registry, entt::dispatcher& dispatcher)
 {
@@ -42,7 +58,7 @@ void EllipseTool::on_exited(entt::registry& registry, entt::dispatcher& dispatch
 }
 
 void EllipseTool::on_pressed(entt::registry& registry,
-                             entt::dispatcher& dispatcher,
+                             entt::dispatcher&,
                              const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
@@ -56,7 +72,7 @@ void EllipseTool::on_pressed(entt::registry& registry,
 }
 
 void EllipseTool::on_dragged(entt::registry& registry,
-                             entt::dispatcher& dispatcher,
+                             entt::dispatcher&,
                              const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {

@@ -24,13 +24,29 @@
 
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
+#include <glm/vec2.hpp>
 
 #include "core/components/tools.hpp"
+#include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/tool_events.hpp"
 
 namespace tactile {
+
+void RectangleTool::draw_gizmos(const entt::registry& registry,
+                                IRenderer& renderer,
+                                const MouseInfo&) const
+{
+  if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
+    const glm::vec2 pos{stroke->start_x, stroke->start_y};
+    const glm::vec2 size{stroke->current_x - stroke->start_x,
+                         stroke->current_y - stroke->start_y};
+
+    renderer.draw_rect(pos + glm::vec2{1, 1}, size, cen::colors::black);
+    renderer.draw_rect(pos, size, cen::colors::yellow);
+  }
+}
 
 void RectangleTool::on_disabled(entt::registry& registry, entt::dispatcher& dispatcher)
 {
@@ -43,7 +59,7 @@ void RectangleTool::on_exited(entt::registry& registry, entt::dispatcher& dispat
 }
 
 void RectangleTool::on_pressed(entt::registry& registry,
-                               entt::dispatcher& dispatcher,
+                               entt::dispatcher&,
                                const MouseInfo& mouse)
 {
   if (sys::is_object_layer_active(registry) && mouse.is_within_contents &&
@@ -57,7 +73,7 @@ void RectangleTool::on_pressed(entt::registry& registry,
 }
 
 void RectangleTool::on_dragged(entt::registry& registry,
-                               entt::dispatcher& dispatcher,
+                               entt::dispatcher&,
                                const MouseInfo& mouse)
 {
   if (sys::is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {

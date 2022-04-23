@@ -24,15 +24,71 @@
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/algorithms/invoke_n.hpp"
+#include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "core/tile_pos.hpp"
 #include "editor/events/tool_events.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
+namespace {
+
+[[nodiscard]] constexpr auto _to_vec2(const TilePos& pos) noexcept -> glm::vec2
+{
+  return {static_cast<float>(pos.col()), static_cast<float>(pos.row())};
+}
+
+}  // namespace
+
+void StampTool::draw_gizmos(const entt::registry& registry,
+                            IRenderer& renderer,
+                            const MouseInfo& mouse) const
+{
+  if (!mouse.is_within_contents || !sys::is_tileset_selection_not_empty(registry)) {
+    return;
+  }
+
+  const auto& activeTileset = registry.ctx().at<comp::ActiveTileset>();
+
+  const auto& selection =
+      sys::checked_get<comp::TilesetSelection>(registry, activeTileset.entity);
+  if (!selection.region) {
+    return;
+  }
+
+  const auto& region = selection.region.value();
+
+  const auto selectionSize = region.end - region.begin;
+  const auto offset = selectionSize / TilePos{2, 2};
+
+  const auto& texture = sys::checked_get<comp::Texture>(registry, activeTileset.entity);
+  const auto& uv = sys::checked_get<comp::UvTileSize>(registry, activeTileset.entity);
+
+  const glm::vec2 uvVec{uv.width, uv.height};
+
+  const auto origin = renderer.get_origin();
+  const auto gridSize = renderer.get_grid_size();
+
+  invoke_mn(selectionSize.row(), selectionSize.col(), [&](int32 row, int32 col) {
+    const TilePos index{row, col};
+    const auto previewPos = mouse.position_in_viewport + index - offset;
+
+    if (sys::is_position_in_map(registry, previewPos)) {
+      const auto realPos = origin + _to_vec2(previewPos) * gridSize;
+
+      const auto uvMin = _to_vec2(region.begin + index) * uvVec;
+      const auto uvMax = uvMin + uvVec;
+
+      constexpr uint8 opacity = 150;
+      renderer.render_image(texture.id, realPos, gridSize, uvMin, uvMax, opacity);
+    }
+  });
+}
 
 void StampTool::on_disabled(entt::registry&, entt::dispatcher& dispatcher)
 {

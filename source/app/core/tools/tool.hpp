@@ -31,6 +31,10 @@ class ATool
  public:
   virtual ~ATool() noexcept = default;
 
+  virtual void draw_gizmos(const entt::registry& registry,
+                           IRenderer& renderer,
+                           const MouseInfo& mouse) const;
+
   virtual void on_enabled(entt::registry& registry, entt::dispatcher& dispatcher);
 
   virtual void on_disabled(entt::registry& registry, entt::dispatcher& dispatcher);

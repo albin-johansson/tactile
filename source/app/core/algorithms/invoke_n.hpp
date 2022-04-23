@@ -22,21 +22,45 @@
 namespace tactile {
 
 /**
- * \brief Invokes the supplied callable for the specified amount of times.
+ * \brief Invokes a function object N times.
  *
- * \tparam Integer the integral type that represents the number of invocations.
- * \tparam T the type of the callable.
+ * \tparam Int an integral type.
  *
  * \param n the amount of times the callable should be invoked.
- * \param callable the callable that will be invoked.
+ * \param callable a function object.
  *
  * \ingroup core
  */
-template <typename Integer, typename T>
-constexpr void invoke_n(const Integer n, T&& callable) noexcept(noexcept(callable()))
+template <typename Int>
+constexpr void invoke_n(const Int n, auto&& callable) noexcept(noexcept(callable()))
 {
-  for (Integer i = 0; i < n; ++i) {
+  for (Int i = 0; i < n; ++i) {
     callable();
+  }
+}
+
+/**
+ * \brief Invokes a function object M*N times.
+ *
+ * \details This function is a more functional approach to nested for-loops.
+ *
+ * \tparam Int an integral type.
+ *
+ * \param m the amount of times the outer loop is run.
+ * \param n the amount of times the inner loop is run (for each outer loop iteration).
+ * \param callable a function object. Must accept the current indices as arguments.
+ *
+ * \ingroup core
+ */
+template <typename Int>
+constexpr void invoke_mn(const Int m,
+                         const Int n,
+                         auto&& callable) noexcept(noexcept(callable(m, n)))
+{
+  for (Int i = 0; i < m; ++i) {
+    for (Int j = 0; j < n; ++j) {
+      callable(i, j);
+    }
   }
 }
 

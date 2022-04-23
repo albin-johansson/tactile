@@ -24,6 +24,7 @@
 #include <imgui.h>
 
 #include "core/region.hpp"
+#include "core/renderer.hpp"
 #include "editor/fwd.hpp"
 #include "tactile.hpp"
 
@@ -32,7 +33,7 @@ namespace tactile {
 /**
  * \brief Provides a common simplified rendering API.
  */
-class GraphicsCtx final
+class GraphicsCtx final : public IRenderer
 {
  public:
   explicit GraphicsCtx(const RenderInfo& info);
@@ -44,8 +45,17 @@ class GraphicsCtx final
   void clear();
 
   void draw_rect(const ImVec2& position, const ImVec2& size);
+  void draw_rect(const glm::vec2& pos,
+                   const glm::vec2& size,
+                   const cen::color& color,
+                   float thickness) override;
 
   void fill_rect(const ImVec2& position, const ImVec2& size);
+
+  void draw_ellipse(const glm::vec2& center,
+                      const glm::vec2& radius,
+                      const cen::color& color,
+                      float thickness) override;
 
   void draw_translated_rect(const ImVec2& position, const ImVec2& size);
 
@@ -64,6 +74,13 @@ class GraphicsCtx final
   void draw_translated_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
 
   void render_image(uint texture, const ImVec2& position, const ImVec2& size);
+
+  void render_image(uint texture,
+                    const glm::vec2& pos,
+                    const glm::vec2& size,
+                    const glm::vec2& uvMin,
+                    const glm::vec2& uvMax,
+                    uint8 opacity) override;
 
   /**
    * \brief Renders a portion of a tileset texture.
@@ -108,6 +125,16 @@ class GraphicsCtx final
 
   [[nodiscard]] auto origin() const -> const ImVec2& { return mOrigin; }
 
+  [[nodiscard]] auto get_origin() const -> glm::vec2 override
+  {
+    return {mOrigin.x, mOrigin.y};
+  }
+
+  [[nodiscard]] auto get_grid_size() const -> glm::vec2 override
+  {
+    return {mViewportTileSize.x, mViewportTileSize.y};
+  }
+
   [[nodiscard]] auto viewport_tile_size() const -> const ImVec2&
   {
     return mViewportTileSize;
@@ -133,7 +160,7 @@ class GraphicsCtx final
   cen::frect mBoundsRect;
   cen::color mDrawColor{cen::colors::black};
   float mLineThickness{1};
-  uint8 mOpacity{255};
+  uint8 mOpacity{0xFF};
 
   [[nodiscard]] auto get_draw_color() const -> uint32;
 

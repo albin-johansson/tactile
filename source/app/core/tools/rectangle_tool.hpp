@@ -26,6 +26,10 @@ namespace tactile {
 class RectangleTool final : public ATool
 {
  public:
+  void draw_gizmos(const entt::registry& registry,
+                   IRenderer& renderer,
+                   const MouseInfo& mouse) const override;
+
   void on_disabled(entt::registry& registry, entt::dispatcher& dispatcher) override;
 
   void on_exited(entt::registry& registry, entt::dispatcher& dispatcher) override;

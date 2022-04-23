@@ -112,6 +112,15 @@ auto ToolManager::is_enabled(const ToolType type) const -> bool
   }
 }
 
+void ToolManager::draw_gizmos(const entt::registry& registry,
+                              IRenderer& renderer,
+                              const MouseInfo& mouse) const
+{
+  if (auto* tool = mData->active_tool) {
+    tool->draw_gizmos(registry, renderer, mouse);
+  }
+}
+
 void ToolManager::on_enabled(entt::registry& registry, entt::dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {

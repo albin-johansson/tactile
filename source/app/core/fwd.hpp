@@ -27,6 +27,7 @@ struct Region;
 class Attribute;
 class TextureManager;
 class TilePos;
+class IRenderer;
 
 namespace comp {
 

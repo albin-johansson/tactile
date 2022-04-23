@@ -143,10 +143,36 @@ void GraphicsCtx::draw_rect(const ImVec2& position, const ImVec2& size)
   list->AddRect(position, position + size, get_draw_color(), 0, 0, mLineThickness);
 }
 
+void GraphicsCtx::draw_rect(const glm::vec2& pos,
+                            const glm::vec2& size,
+                            const cen::color& color,
+                            const float thickness)
+{
+  auto* list = ImGui::GetWindowDrawList();
+
+  const auto imMin = mOrigin + ImVec2{pos.x, pos.y};
+  const auto imMax = imMin + ImVec2{size.x, size.y};
+
+  list->AddRect(imMin, imMax, color_to_u32(color), 0.0f, 0, thickness);
+}
+
 void GraphicsCtx::fill_rect(const ImVec2& position, const ImVec2& size)
 {
   auto* list = ImGui::GetWindowDrawList();
   list->AddRectFilled(position, position + size, get_draw_color());
+}
+
+void GraphicsCtx::draw_ellipse(const glm::vec2& center,
+                               const glm::vec2& radius,
+                               const cen::color& color,
+                               const float thickness)
+{
+  const ImVec2 imCenter{center.x, center.y};
+  const ImVec2 imRadius{radius.x, radius.y};
+
+  set_draw_color(color);          // TODO remove
+  set_line_thickness(thickness);  // TODO remove
+  draw_translated_ellipse_with_shadow(imCenter, imRadius);
 }
 
 void GraphicsCtx::draw_translated_rect(const ImVec2& position, const ImVec2& size)
@@ -227,6 +253,29 @@ void GraphicsCtx::render_image(const uint texture,
 {
   auto* list = ImGui::GetWindowDrawList();
   list->AddImage(to_texture_id(texture), position, position + size);
+}
+
+void GraphicsCtx::render_image(const uint texture,
+                               const glm::vec2& pos,
+                               const glm::vec2& size,
+                               const glm::vec2& uvMin,
+                               const glm::vec2& uvMax,
+                               const uint8 opacity)
+{
+  auto* list = ImGui::GetWindowDrawList();
+
+  const auto imMin = ImVec2{pos.x, pos.y};
+  const auto imMax = imMin + ImVec2{size.x, size.y};
+
+  const ImVec2 imUvMin{uvMin.x, uvMin.y};
+  const ImVec2 imUvMax{uvMax.x, uvMax.y};
+
+  list->AddImage(to_texture_id(texture),
+                 imMin,
+                 imMax,
+                 imUvMin,
+                 imUvMax,
+                 IM_COL32(0xFF, 0xFF, 0xFF, opacity));
 }
 
 void GraphicsCtx::render_image(const uint texture,

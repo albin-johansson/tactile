@@ -21,6 +21,8 @@
 
 namespace tactile {
 
+void ATool::draw_gizmos(const entt::registry&, IRenderer&, const MouseInfo&) const {}
+
 void ATool::on_enabled(entt::registry&, entt::dispatcher&) {}
 
 void ATool::on_disabled(entt::registry&, entt::dispatcher&) {}
