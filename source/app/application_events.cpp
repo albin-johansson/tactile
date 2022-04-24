@@ -65,6 +65,7 @@ void subscribe_to_events(App* app)
   d.sink<ToolExitedEvent>().connect<&App::on_tool_exited>(app);
 
   d.sink<StampSequenceEvent>().connect<&App::on_stamp_sequence>(app);
+  d.sink<SetStampRandomizerEvent>().connect<&App::on_set_stamp_randomizer_event>(app);
   d.sink<EraserSequenceEvent>().connect<&App::on_eraser_sequence>(app);
   d.sink<FloodEvent>().connect<&App::on_flood>(app);
   d.sink<AddRectangleEvent>().connect<&App::on_add_rectangle>(app);

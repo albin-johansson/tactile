@@ -414,6 +414,10 @@ void Application::on_stamp_sequence(StampSequenceEvent event)
                           std::move(event.sequence));
 }
 
+void Application::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event)
+{
+}
+
 void Application::on_eraser_sequence(EraserSequenceEvent event)
 {
   _register<EraserToolCmd>(mData->model, std::move(event.old_state));

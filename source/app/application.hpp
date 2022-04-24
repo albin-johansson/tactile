@@ -117,6 +117,8 @@ class Application final : AEventLoop
 
   void on_stamp_sequence(StampSequenceEvent event);
 
+  void on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event);
+
   void on_eraser_sequence(EraserSequenceEvent event);
 
   void on_flood(const FloodEvent& event);

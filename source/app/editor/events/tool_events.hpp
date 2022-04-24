@@ -71,6 +71,11 @@ struct StampSequenceEvent final
   TileCache sequence;
 };
 
+struct SetStampRandomizerEvent final
+{
+  bool enabled{};  ///< Whether the randomizer mode is enabled.
+};
+
 struct EraserSequenceEvent final
 {
   TileCache old_state;
