@@ -17,7 +17,6 @@ add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 target_include_directories(${TACTILE_LIB}
                            PUBLIC
                            ${PROJECT_SOURCE_DIR}
-                           ${ROOT_DIR}/modules/tactile-base
 
                            SYSTEM PUBLIC
                            ${LIBRARY_DIR}/centurion
