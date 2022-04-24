@@ -92,31 +92,29 @@ namespace {
 
 void _visit_components(entt::registry& registry, auto callable)
 {
-  const auto& ctx = registry.ctx();
-  const auto& root = ctx.at<comp::AttributeContext>();
+  const auto& root = registry.ctx().at<comp::AttributeContext>();
   for (const auto compEntity : root.components) {
     auto& comp = checked_get<comp::Component>(registry, compEntity);
     callable(root.id, comp);
   }
 
-  for (auto&& [entity, ctx, comp] :
+  for (auto&& [entity, context, comp] :
        registry.view<comp::AttributeContext, comp::Component>().each()) {
-    callable(ctx.id, comp);
+    callable(context.id, comp);
   }
 }
 
 void _visit_components(const entt::registry& registry, auto callable)
 {
-  const auto& ctx = registry.ctx();
-  const auto& root = ctx.at<comp::AttributeContext>();
+  const auto& root = registry.ctx().at<comp::AttributeContext>();
   for (const auto compEntity : root.components) {
     const auto& comp = checked_get<comp::Component>(registry, compEntity);
     callable(root.id, comp);
   }
 
-  for (auto&& [entity, ctx, comp] :
+  for (auto&& [entity, context, comp] :
        registry.view<comp::AttributeContext, comp::Component>().each()) {
-    callable(ctx.id, comp);
+    callable(context.id, comp);
   }
 }
 
