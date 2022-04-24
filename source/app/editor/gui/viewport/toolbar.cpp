@@ -25,7 +25,9 @@
 #include <imgui_internal.h>
 
 #include "core/systems/tileset_system.hpp"
+#include "core/tools/tool_manager.hpp"
 #include "editor/events/tileset_events.hpp"
+#include "editor/events/tool_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/style.hpp"
 #include "editor/gui/icons.hpp"
@@ -44,6 +46,8 @@ constexpr auto _window_flags =
 constinit bool _toolbar_visible = false;
 constinit bool _toolbar_hovered = false;
 constinit bool _toolbar_focused = false;
+
+constexpr uint32 _highlight_color = IM_COL32(0, 180, 0, 255);
 
 void _prepare_window_position()
 {
@@ -65,7 +69,7 @@ void _tool_button(const DocumentModel& model,
   const auto selected = model.is_tool_active(tool);
 
   if (selected) {
-    ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 180, 0, 0xFF));
+    ImGui::PushStyleColor(ImGuiCol_Button, _highlight_color);
   }
 
   if (icon_button(icon, tooltip, model.is_tool_possible(tool))) {
@@ -142,13 +146,25 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
     _tool_button(model, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::Point);
 
     if (model.is_tool_active(ToolType::Stamp)) {
-      const auto& registry = model.get_active_registry();
-      _show_extra_toolbar([=, &registry] {
+      _show_extra_toolbar([&] {
+        const auto& registry = model.get_active_registry();
+        const auto& tools = registry.ctx().at<ToolManager>();
+        const auto selected = tools.is_stamp_random();
+
+        if (selected) {
+          ImGui::PushStyleColor(ImGuiCol_Button, _highlight_color);
+        }
+
+        // TODO add better way to check whether randomizer is available
         if (icon_button(TAC_ICON_STAMP_RANDOMIZER,
                         "Stamp random tile",
                         sys::is_tileset_selection_not_empty(registry) &&
                             !sys::is_single_tile_selected_in_tileset(registry))) {
-          // TODO emit randomizer mode event
+          dispatcher.enqueue<SetStampRandomizerEvent>(!selected);
+        }
+
+        if (selected) {
+          ImGui::PopStyleColor();
         }
       });
     }

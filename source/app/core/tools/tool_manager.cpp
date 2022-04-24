@@ -102,6 +102,11 @@ void ToolManager::select_tool(const ToolType type,
   }
 }
 
+void ToolManager::set_stamp_random_mode(const bool random)
+{
+  mData->stamp.set_random(random);
+}
+
 auto ToolManager::is_enabled(const ToolType type) const -> bool
 {
   if (auto* tool = mData->active_tool) {
@@ -110,6 +115,11 @@ auto ToolManager::is_enabled(const ToolType type) const -> bool
   else {
     return type == ToolType::None;
   }
+}
+
+auto ToolManager::is_stamp_random() const -> bool
+{
+  return mData->stamp.is_random();
 }
 
 auto ToolManager::is_available(const entt::registry& registry, const ToolType type) const

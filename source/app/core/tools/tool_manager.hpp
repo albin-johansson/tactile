@@ -40,7 +40,11 @@ class ToolManager final : ATool
 
   void select_tool(ToolType type, entt::registry& registry, entt::dispatcher& dispatcher);
 
+  void set_stamp_random_mode(bool random);
+
   [[nodiscard]] auto is_enabled(ToolType type) const -> bool;
+
+  [[nodiscard]] auto is_stamp_random() const -> bool;
 
   [[nodiscard]] auto is_available(const entt::registry& registry, ToolType type) const
       -> bool;

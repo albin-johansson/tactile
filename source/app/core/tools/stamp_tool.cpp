@@ -32,6 +32,7 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_pos.hpp"
+#include "core/utils/random.hpp"
 #include "editor/events/tool_events.hpp"
 #include "misc/assert.hpp"
 
@@ -50,6 +51,11 @@ void StampTool::draw_gizmos(const entt::registry& registry,
                             const MouseInfo& mouse) const
 {
   if (!mouse.is_within_contents || !sys::is_tileset_selection_not_empty(registry)) {
+    return;
+  }
+
+  // TODO implement preview when randomizer is enabled
+  if (mRandomMode) {
     return;
   }
 
@@ -108,6 +114,7 @@ void StampTool::on_pressed(entt::registry& registry,
       is_usable(registry)) {
     mPrevious.clear();
     mCurrent.clear();
+    mLastChangedPos.reset();
 
     update_sequence(registry, mouse.position_in_viewport);
   }
@@ -142,6 +149,16 @@ auto StampTool::get_type() const -> ToolType
   return ToolType::Stamp;
 }
 
+void StampTool::set_random(const bool random)
+{
+  mRandomMode = random;
+}
+
+auto StampTool::is_random() const -> bool
+{
+  return mRandomMode;
+}
+
 void StampTool::update_sequence(entt::registry& registry, const TilePos& cursor)
 {
   TACTILE_ASSERT(is_usable(registry));
@@ -149,23 +166,38 @@ void StampTool::update_sequence(entt::registry& registry, const TilePos& cursor)
   const auto layerEntity = sys::get_active_layer(registry);
   auto& layer = sys::checked_get<comp::TileLayer>(registry, layerEntity);
 
-  const auto tilesetEntity = sys::find_active_tileset(registry);
-  const auto& selection =
-      sys::checked_get<comp::TilesetSelection>(registry, tilesetEntity);
+  const auto tsetEntity = sys::find_active_tileset(registry);
+  const auto& selection = sys::checked_get<comp::TilesetSelection>(registry, tsetEntity);
+
   const auto& region = selection.region.value();
-
   const auto selectionSize = region.end - region.begin;
-  const auto previewOffset = selectionSize / TilePos{2, 2};
-  const auto endRow = selectionSize.row();
-  const auto endCol = selectionSize.col();
 
-  for (auto row = 0; row < endRow; ++row) {
-    for (auto col = 0; col < endCol; ++col) {
+  if (mRandomMode) {
+    if (mLastChangedPos != cursor) {
+      const auto index = next_random(0, (selectionSize.row() * selectionSize.col()) - 1);
+      const auto selectionPos =
+          region.begin + TilePos::from_index(index, selectionSize.col());
+      const auto tile = sys::get_tile_from_tileset(registry, tsetEntity, selectionPos);
+
+      if (!mPrevious.contains(cursor)) {
+        mPrevious.emplace(cursor, sys::get_tile(layer, cursor));
+      }
+
+      mCurrent[cursor] = tile;
+      sys::set_tile(layer, cursor, tile);
+    }
+
+    mLastChangedPos = cursor;
+  }
+  else {
+    const auto previewOffset = selectionSize / TilePos{2, 2};
+
+    invoke_mn(selectionSize.row(), selectionSize.col(), [&](int32 row, int32 col) {
       const TilePos index{row, col};
       const auto selectionPosition = region.begin + index;
 
       const auto tile =
-          sys::get_tile_from_tileset(registry, tilesetEntity, selectionPosition);
+          sys::get_tile_from_tileset(registry, tsetEntity, selectionPosition);
       if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
         if (sys::is_position_in_map(registry, pos)) {
@@ -176,7 +208,7 @@ void StampTool::update_sequence(entt::registry& registry, const TilePos& cursor)
           sys::set_tile(layer, pos, tile);
         }
       }
-    }
+    });
   }
 }
 
@@ -186,6 +218,7 @@ void StampTool::maybe_emit_event(entt::dispatcher& dispatcher)
     dispatcher.enqueue<StampSequenceEvent>(std::move(mPrevious), std::move(mCurrent));
     mPrevious.clear();
     mCurrent.clear();
+    mLastChangedPos.reset();
   }
 }
 

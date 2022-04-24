@@ -416,6 +416,9 @@ void Application::on_stamp_sequence(StampSequenceEvent event)
 
 void Application::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event)
 {
+  auto& registry = mData->model.get_active_registry();
+  auto& tools = registry.ctx().at<ToolManager>();
+  tools.set_stamp_random_mode(event.enabled);
 }
 
 void Application::on_eraser_sequence(EraserSequenceEvent event)

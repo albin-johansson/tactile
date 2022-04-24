@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include "core/common/tile_cache.hpp"
 #include "core/tools/tool.hpp"
 
@@ -26,6 +28,13 @@ namespace tactile {
 
 /**
  * \brief A tool used to draw (or "stamp") selected tileset tiles to tile layers.
+ *
+ * \details The stamp tool, in its default mode, will simply stamp the selected tiles in
+ * the active tileset to tile layers. It also has a "random" mode, where a single tile is
+ * randomly picked from the tile selection, and subsequently stamped to the tile layer.
+ *
+ * \note Changes are applied to the target tile layer immediately, and later submitted
+ * as a command when the user ends the sequence.
  *
  * \todo Right-click should erase tiles.
  */
@@ -56,9 +65,15 @@ class StampTool final : public ATool
 
   [[nodiscard]] auto get_type() const -> ToolType override;
 
+  void set_random(bool random);
+
+  [[nodiscard]] auto is_random() const -> bool;
+
  private:
   TileCache mPrevious;  ///< Previous tile state.
   TileCache mCurrent;   ///< The current stamp sequence.
+  std::optional<TilePos> mLastChangedPos;
+  bool mRandomMode{};
 
   void update_sequence(entt::registry& registry, const TilePos& cursor);
 

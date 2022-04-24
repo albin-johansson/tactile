@@ -28,6 +28,8 @@ namespace tactile {
 /**
  * \brief Provides general information about the mouse, used in response to mouse events.
  *
+ * \todo Button might not be set.
+ *
  * \ingroup core
  */
 struct MouseInfo final
