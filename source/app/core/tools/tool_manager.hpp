@@ -28,6 +28,9 @@
 
 namespace tactile {
 
+/**
+ * \brief Manages the tools associated with a map document.
+ */
 class ToolManager final : ATool
 {
  public:
@@ -73,14 +76,14 @@ class ToolManager final : ATool
                    entt::dispatcher& dispatcher,
                    const MouseInfo& mouse) override;
 
+ private:
+  struct Data;
+  std::unique_ptr<Data> mData;
+
   /* Do not call these functions, they will just raise exceptions */
   [[nodiscard, deprecated]] auto get_type() const -> ToolType override;
   [[nodiscard, deprecated]] auto is_available(const entt::registry& registry) const
       -> bool override;
-
- private:
-  struct Data;
-  std::unique_ptr<Data> mData;
 };
 
 }  // namespace tactile
