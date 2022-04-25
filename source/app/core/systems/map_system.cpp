@@ -21,7 +21,7 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "core/algorithms/invoke_n.hpp"
+#include "core/algorithms/invoke.hpp"
 #include "core/components/layers.hpp"
 #include "core/map_info.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"

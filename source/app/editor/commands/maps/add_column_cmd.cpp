@@ -19,7 +19,7 @@
 
 #include "add_column_cmd.hpp"
 
-#include "core/algorithms/invoke_n.hpp"
+#include "core/algorithms/invoke.hpp"
 #include "core/systems/map_system.hpp"
 
 namespace tactile {

@@ -24,7 +24,7 @@
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/algorithms/invoke_n.hpp"
+#include "core/algorithms/invoke.hpp"
 #include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"

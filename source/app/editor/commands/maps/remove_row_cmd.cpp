@@ -19,7 +19,7 @@
 
 #include "remove_row_cmd.hpp"
 
-#include "core/algorithms/invoke_n.hpp"
+#include "core/algorithms/invoke.hpp"
 #include "core/map_info.hpp"
 #include "core/systems/map_system.hpp"
 
