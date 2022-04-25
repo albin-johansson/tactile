@@ -32,17 +32,17 @@
 namespace tactile::sys {
 
 template <typename T>
-auto DuplicateComp(entt::registry& registry,
-                   const entt::entity source,
-                   const entt::entity destination) -> T&
+auto deep_copy(entt::registry& registry,
+               const entt::entity source,
+               const entt::entity destination) -> T&
 {
   return registry.emplace<T>(destination, registry.get<T>(source));
 }
 
 template <>
-inline auto DuplicateComp<comp::AttributeContext>(entt::registry& registry,
-                                                  const entt::entity source,
-                                                  const entt::entity destination)
+inline auto deep_copy<comp::AttributeContext>(entt::registry& registry,
+                                              const entt::entity source,
+                                              const entt::entity destination)
     -> comp::AttributeContext&
 {
   auto& context = add_attribute_context(registry, destination);
@@ -54,16 +54,16 @@ inline auto DuplicateComp<comp::AttributeContext>(entt::registry& registry,
     const auto propertyEntity = registry.create();
     context.properties.push_back(propertyEntity);
 
-    DuplicateComp<comp::Property>(registry, srcPropertyEntity, propertyEntity);
+    deep_copy<comp::Property>(registry, srcPropertyEntity, propertyEntity);
   }
 
   return context;
 }
 
 template <>
-inline auto DuplicateComp<comp::ObjectLayer>(entt::registry& registry,
-                                             const entt::entity source,
-                                             const entt::entity destination)
+inline auto deep_copy<comp::ObjectLayer>(entt::registry& registry,
+                                         const entt::entity source,
+                                         const entt::entity destination)
     -> comp::ObjectLayer&
 {
   auto& ctx = registry.ctx();
@@ -75,19 +75,14 @@ inline auto DuplicateComp<comp::ObjectLayer>(entt::registry& registry,
     const auto objectEntity = registry.create();
     layer.objects.push_back(objectEntity);
 
-    DuplicateComp<comp::AttributeContext>(registry, sourceObject, objectEntity);
+    deep_copy<comp::AttributeContext>(registry, sourceObject, objectEntity);
 
-    auto& object = DuplicateComp<comp::Object>(registry, sourceObject, objectEntity);
+    auto& object = deep_copy<comp::Object>(registry, sourceObject, objectEntity);
     object.id = map.next_object_id;
     ++map.next_object_id;
   }
 
   return layer;
 }
-
-auto duplicate_layer(entt::registry& registry,
-                     entt::entity entity,
-                     entt::entity parent,
-                     bool recursive) -> entt::entity;
 
 }  // namespace tactile::sys

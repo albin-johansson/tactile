@@ -351,7 +351,7 @@ auto duplicate_layer(entt::registry& registry,
   }
 
   {
-    auto& context = DuplicateComp<comp::AttributeContext>(registry, source, copy);
+    auto& context = deep_copy<comp::AttributeContext>(registry, source, copy);
     if (!recursive) {
       context.name += " (Copy)";
     }
@@ -360,7 +360,7 @@ auto duplicate_layer(entt::registry& registry,
   {
     auto& ctx = registry.ctx();
     auto& map = ctx.at<MapInfo>();
-    auto& layer = DuplicateComp<comp::Layer>(registry, source, copy);
+    auto& layer = deep_copy<comp::Layer>(registry, source, copy);
     layer.id = map.next_layer_id;
 
     if (!recursive) {
@@ -374,10 +374,10 @@ auto duplicate_layer(entt::registry& registry,
   }
 
   if (registry.all_of<comp::TileLayer>(source)) {
-    DuplicateComp<comp::TileLayer>(registry, source, copy);
+    deep_copy<comp::TileLayer>(registry, source, copy);
   }
   else if (registry.all_of<comp::ObjectLayer>(source)) {
-    DuplicateComp<comp::ObjectLayer>(registry, source, copy);
+    deep_copy<comp::ObjectLayer>(registry, source, copy);
   }
   else if (registry.all_of<comp::GroupLayer>(source)) {
     registry.emplace<comp::GroupLayer>(copy);
