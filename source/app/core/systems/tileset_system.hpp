@@ -32,7 +32,12 @@
 
 namespace tactile::sys {
 
-/// \name Tileset system
+/**
+ * \ingroup systems
+ * \defgroup tileset-system Tileset System
+ */
+
+/// \addtogroup tileset-system
 /// \{
 
 /**
@@ -41,7 +46,7 @@ namespace tactile::sys {
  * \details This function should be each frame, as it handles aspects related to tile
  * caching.
  *
- * \param registry the document registry.
+ * \param registry a document registry.
  */
 void update_tilesets(entt::registry& registry);
 
@@ -264,6 +269,6 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
 [[nodiscard]] auto convert_to_local(const entt::registry& registry, TileID global)
     -> std::optional<TileID>;
 
-/// \} End of tileset system
+/// \} End of group tileset-system
 
 }  // namespace tactile::sys
