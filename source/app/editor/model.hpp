@@ -26,9 +26,9 @@
 #include <boost/container/flat_map.hpp>
 #include <entt/fwd.hpp>
 
-#include "document.hpp"
-#include "events/command_events.hpp"
-#include "events/tool_events.hpp"
+#include "core/events/command_events.hpp"
+#include "core/events/tool_events.hpp"
+#include "editor/document.hpp"
 #include "tactile.hpp"
 
 namespace tactile {

@@ -24,7 +24,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "editor/events/property_events.hpp"
+#include "core/events/property_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "property_type_combo.hpp"
 

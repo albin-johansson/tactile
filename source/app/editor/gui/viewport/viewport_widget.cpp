@@ -23,8 +23,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "editor/events/map_events.hpp"
-#include "editor/events/tool_events.hpp"
+#include "core/events/map_events.hpp"
+#include "core/events/tool_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/style.hpp"

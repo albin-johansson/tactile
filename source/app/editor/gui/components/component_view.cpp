@@ -27,7 +27,7 @@
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "editor/events/component_events.hpp"
+#include "core/events/component_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"

@@ -26,7 +26,7 @@
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/context_system.hpp"
-#include "editor/events/component_events.hpp"
+#include "core/events/component_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"

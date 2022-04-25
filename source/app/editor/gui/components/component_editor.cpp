@@ -31,7 +31,7 @@
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "editor/constants.hpp"
-#include "editor/events/component_events.hpp"
+#include "core/events/component_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/common/input_widgets.hpp"

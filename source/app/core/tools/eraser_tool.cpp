@@ -29,7 +29,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "editor/events/tool_events.hpp"
+#include "core/events/tool_events.hpp"
 
 namespace tactile {
 

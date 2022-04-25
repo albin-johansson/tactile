@@ -32,7 +32,7 @@
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "editor/constants.hpp"
-#include "editor/events/layer_events.hpp"
+#include "core/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"

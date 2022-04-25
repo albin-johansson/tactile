@@ -23,7 +23,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "editor/events/misc_events.hpp"
+#include "core/events/misc_events.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"
