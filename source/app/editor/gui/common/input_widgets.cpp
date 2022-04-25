@@ -22,8 +22,8 @@
 #include <array>    // array
 #include <utility>  // move
 
+#include "colors.hpp"
 #include "core/utils/buffers.hpp"
-#include "core/utils/colors.hpp"
 #include "editor/constants.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"

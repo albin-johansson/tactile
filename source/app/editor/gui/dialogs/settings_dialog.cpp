@@ -24,11 +24,11 @@
 #include <imgui_internal.h>
 
 #include "cfg/fonts.hpp"
-#include "core/utils/colors.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/checkbox.hpp"
+#include "editor/gui/common/colors.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/themes.hpp"
 #include "io/persistence/preferences.hpp"

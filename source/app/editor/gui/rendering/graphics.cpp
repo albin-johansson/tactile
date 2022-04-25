@@ -25,7 +25,7 @@
 #include <imgui_internal.h>
 
 #include "core/region.hpp"
-#include "core/utils/colors.hpp"
+#include "editor/gui/common/colors.hpp"
 #include "editor/gui/textures.hpp"
 #include "misc/assert.hpp"
 #include "render_info.hpp"
