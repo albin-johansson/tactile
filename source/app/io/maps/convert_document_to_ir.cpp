@@ -19,8 +19,6 @@
 
 #include "convert_document_to_ir.hpp"
 
-#include <memory>  // make_unique
-
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/parent.hpp"

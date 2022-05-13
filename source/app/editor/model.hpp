@@ -20,12 +20,12 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <memory>      // unique_ptr
 #include <optional>    // optional
 
 #include <boost/container/flat_map.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/common/memory.hpp"
 #include "document.hpp"
 #include "events/command_events.hpp"
 #include "events/tool_events.hpp"
@@ -44,7 +44,7 @@ class DocumentModel final
 {
  public:
   // Documents are stored on the heap to ensure stability, which is important for commands
-  using document_map = boost::container::flat_map<MapID, std::unique_ptr<Document>>;
+  using document_map = boost::container::flat_map<MapID, Unique<Document>>;
   using const_iterator = document_map::const_iterator;
 
   /**

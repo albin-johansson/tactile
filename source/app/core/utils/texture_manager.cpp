@@ -21,22 +21,21 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 
-#include <memory>  // unique_ptr
-
 #include <GL/glew.h>
 #include <stb_image.h>
 
+#include "core/common/memory.hpp"
 #include "misc/logging.hpp"
 
 namespace tactile {
 namespace {
 
-struct texture_data_deleter final
+struct TextureDataDeleter final
 {
   void operator()(uchar* data) noexcept { stbi_image_free(data); }
 };
 
-using texture_data_ptr = std::unique_ptr<uchar, texture_data_deleter>;
+using TextureDataPtr = Unique<uchar, TextureDataDeleter>;
 
 }  // namespace
 
@@ -57,7 +56,7 @@ auto TextureManager::load(const std::filesystem::path& path)
   texture.path = path;
 
   // Load from file
-  texture_data_ptr data{
+  TextureDataPtr data{
       stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4)};
   if (!data) {
     return std::nullopt;

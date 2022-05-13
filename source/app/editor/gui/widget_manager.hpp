@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include <memory>    // unique_ptr
 #include <optional>  // optional
 #include <string>    // string
 
 #include <entt/fwd.hpp>
 
+#include "core/common/memory.hpp"
 #include "editor/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 #include "tactile.hpp"
@@ -49,7 +49,7 @@ class WidgetManager final
 
  private:
   struct Widgets;
-  std::unique_ptr<Widgets> mWidgets;
+  Unique<Widgets> mWidgets;
 };
 
 [[nodiscard]] auto is_editor_focused() -> bool;

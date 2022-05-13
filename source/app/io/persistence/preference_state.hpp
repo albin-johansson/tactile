@@ -20,12 +20,12 @@
 #pragma once
 
 #include <filesystem>   // path
-#include <memory>       // unique_ptr
 #include <string>       // string
 #include <string_view>  // string_view
 
 #include <centurion/fwd.hpp>
 
+#include "core/common/memory.hpp"
 #include "editor/gui/themes.hpp"
 #include "tactile.hpp"
 
@@ -146,7 +146,7 @@ class PreferenceState final
 
  private:
   struct Data;
-  std::unique_ptr<Data> mData;
+  Unique<Data> mData;
 
   void set_flag(uint64 flag, bool value) noexcept;
 

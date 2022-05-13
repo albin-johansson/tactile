@@ -20,13 +20,13 @@
 #pragma once
 
 #include <deque>     // deque
-#include <memory>    // unique_ptr
 #include <optional>  // optional
 #include <string>    // string
 #include <utility>   // move
 
-#include "command.hpp"
+#include "core/common/memory.hpp"
 #include "core/utils/sfinae.hpp"
+#include "editor/commands/command.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -208,7 +208,7 @@ class CommandStack final
   [[nodiscard]] auto capacity() const noexcept -> usize { return mCapacity; }
 
  private:
-  std::deque<std::unique_ptr<ACommand>> mStack;
+  std::deque<Unique<ACommand>> mStack;
   std::optional<usize> mIndex;
   std::optional<usize> mCleanIndex;
   usize mCapacity;

@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
+#include "core/common/memory.hpp"
 #include "core/tools/tool.hpp"
 #include "core/tools/tool_type.hpp"
 #include "misc/macros.hpp"
@@ -78,7 +77,7 @@ class ToolManager final : ATool
 
  private:
   struct Data;
-  std::unique_ptr<Data> mData;
+  Unique<Data> mData;
 
   /* Do not call these functions, they will just raise exceptions */
   [[nodiscard, deprecated]] auto get_type() const -> ToolType override;

@@ -20,7 +20,6 @@
 #include "xml_layer_parser.hpp"
 
 #include <cstring>  // strcmp
-#include <memory>   // make_unique
 #include <string>   // string
 #include <vector>   // vector
 

@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
 #include <entt/fwd.hpp>
 
+#include "core/common/memory.hpp"
 #include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
@@ -52,7 +51,7 @@ class ComponentEditor final : public ADialog
 
  private:
   struct Data;
-  std::unique_ptr<Data> mData;
+  Unique<Data> mData;
 
   void show_component_combo_popup(const entt::registry& registry,
                                   entt::dispatcher& dispatcher);

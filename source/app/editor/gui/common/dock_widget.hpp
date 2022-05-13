@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
 #include <entt/fwd.hpp>
 #include <imgui.h>
 
+#include "core/common/memory.hpp"
 #include "editor/fwd.hpp"
 #include "tactile.hpp"
 
@@ -60,7 +59,7 @@ class ADockWidget
 
  private:
   struct Data;
-  std::unique_ptr<Data> mData;
+  Unique<Data> mData;
 };
 
 }  // namespace tactile

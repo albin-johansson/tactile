@@ -19,12 +19,12 @@
 
 #include "shortcuts.hpp"
 
-#include <memory>  // unique_ptr, make_unique
 #include <vector>  // vector
 
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/common/memory.hpp"
 #include "editor/shortcuts/edit_shortcuts.hpp"
 #include "editor/shortcuts/file_shortcuts.hpp"
 #include "editor/shortcuts/view_shortcuts.hpp"
@@ -32,7 +32,7 @@
 namespace tactile {
 namespace {
 
-std::vector<std::unique_ptr<AShortcut>> _shortcuts;
+inline std::vector<Unique<AShortcut>> _shortcuts;
 
 template <typename T>
 void _load_shortcut()

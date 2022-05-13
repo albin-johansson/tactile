@@ -20,7 +20,6 @@
 #include "yaml_layer_parser.hpp"
 
 #include <algorithm>  // replace
-#include <memory>     // make_unique
 #include <string>     // string
 
 #include "core/utils/strings.hpp"

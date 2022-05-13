@@ -19,28 +19,26 @@
 
 #pragma once
 
-#include <filesystem>     // path
-#include <functional>     // less
-#include <map>            // map
-#include <memory>         // unique_ptr
-#include <string>         // string
-#include <unordered_map>  // unordered_map
-#include <variant>        // variant
-#include <vector>         // vector
+#include <filesystem>  // path
+#include <string>      // string
+#include <variant>     // variant
+#include <vector>      // vector
 
 #include "core/attribute.hpp"
+#include "core/common/associative.hpp"
+#include "core/common/memory.hpp"
 #include "core/layer_type.hpp"
 #include "core/object_type.hpp"
 #include "tactile.hpp"
 
 namespace tactile::ir {
 
-using ComponentMap = std::map<std::string, Attribute, std::less<>>;
+using ComponentMap = TreeMap<std::string, Attribute>;
 
 struct AttributeContextData final
 {
-  std::map<std::string, Attribute, std::less<>> properties;
-  std::map<std::string, ComponentMap, std::less<>> components;
+  TreeMap<std::string, Attribute> properties;
+  TreeMap<std::string, ComponentMap> components;
 };
 
 struct ObjectData final
@@ -84,7 +82,7 @@ struct GroupLayerData final
   TACTILE_DELETE_COPY(GroupLayerData);
   TACTILE_DEFAULT_MOVE(GroupLayerData);
 
-  std::vector<std::unique_ptr<LayerData>> children;
+  std::vector<Unique<LayerData>> children;
 };
 
 struct LayerData final
@@ -133,7 +131,7 @@ struct TilesetData final
   int32 image_width{};
   int32 image_height{};
 
-  std::unordered_map<TileID, MetaTileData> fancy_tiles;
+  HashMap<TileID, MetaTileData> fancy_tiles;
 
   AttributeContextData context;
 };
@@ -149,7 +147,7 @@ struct MapData
   int32 next_layer_id{};
   int32 next_object_id{};
 
-  std::map<std::string, ComponentMap, std::less<>> component_definitions;
+  TreeMap<std::string, ComponentMap> component_definitions;
 
   std::vector<TilesetData> tilesets;
   std::vector<LayerData> layers;

@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
 #include <centurion/event.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/common/memory.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/events/layer_events.hpp"
@@ -71,7 +70,7 @@ class Application final : AEventLoop
 
  private:
   struct Data;
-  std::unique_ptr<Data> mData;
+  Unique<Data> mData;
 
   [[nodiscard]] auto get_dispatcher() -> entt::dispatcher&;
 
