@@ -31,8 +31,8 @@ namespace tactile {
 class TextureManager final
 {
  public:
-  TACTILE_DEFAULT_COPY(TextureManager)
-  TACTILE_DEFAULT_MOVE(TextureManager)
+  TACTILE_DEFAULT_COPY(TextureManager);
+  TACTILE_DEFAULT_MOVE(TextureManager);
 
   TextureManager() = default;
 

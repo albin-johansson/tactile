@@ -24,19 +24,19 @@
 
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
-  auto operator=(const Class&)->Class& = default;
+  auto operator=(const Class&)->Class& = default
 
 #define TACTILE_DELETE_COPY(Class) \
   Class(const Class&) = delete;    \
-  auto operator=(const Class&)->Class& = delete;
+  auto operator=(const Class&)->Class& = delete
 
 #define TACTILE_DEFAULT_MOVE(Class)  \
   Class(Class&&) noexcept = default; \
-  auto operator=(Class&&) noexcept -> Class& = default;
+  auto operator=(Class&&) noexcept -> Class& = default
 
 #define TACTILE_DELETE_MOVE(Class)  \
   Class(Class&&) noexcept = delete; \
-  auto operator=(Class&&) noexcept -> Class& = delete;
+  auto operator=(Class&&) noexcept -> Class& = delete
 
 namespace tactile {
 

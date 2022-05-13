@@ -34,8 +34,8 @@ namespace tactile {
 class WidgetManager final
 {
  public:
-  TACTILE_DELETE_COPY(WidgetManager)
-  TACTILE_DEFAULT_MOVE(WidgetManager)
+  TACTILE_DELETE_COPY(WidgetManager);
+  TACTILE_DEFAULT_MOVE(WidgetManager);
 
   WidgetManager();
 

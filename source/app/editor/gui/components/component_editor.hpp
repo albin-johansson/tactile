@@ -38,8 +38,8 @@ namespace tactile {
 class ComponentEditor final : public ADialog
 {
  public:
-  TACTILE_DELETE_COPY(ComponentEditor)
-  TACTILE_DEFAULT_MOVE(ComponentEditor)
+  TACTILE_DELETE_COPY(ComponentEditor);
+  TACTILE_DEFAULT_MOVE(ComponentEditor);
 
   ComponentEditor();
 

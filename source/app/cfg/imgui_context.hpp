@@ -38,8 +38,8 @@ class ImGuiContext final
 
   ~ImGuiContext();
 
-  TACTILE_DEFAULT_COPY(ImGuiContext)
-  TACTILE_DEFAULT_MOVE(ImGuiContext)
+  TACTILE_DEFAULT_COPY(ImGuiContext);
+  TACTILE_DEFAULT_MOVE(ImGuiContext);
 
  private:
   /* This is used as a workaround to annoying unit test issues for Windows CI builds */

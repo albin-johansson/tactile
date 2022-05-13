@@ -30,8 +30,8 @@ namespace tactile::scoped {
 
 struct Id final
 {
-  TACTILE_DEFAULT_COPY(Id)
-  TACTILE_DEFAULT_MOVE(Id)
+  TACTILE_DEFAULT_COPY(Id);
+  TACTILE_DEFAULT_MOVE(Id);
 
   explicit Id(const void* ptr) { ImGui::PushID(ptr); }
 
@@ -44,8 +44,8 @@ struct Id final
 
 struct Disable final
 {
-  TACTILE_DEFAULT_COPY(Disable)
-  TACTILE_DEFAULT_MOVE(Disable)
+  TACTILE_DEFAULT_COPY(Disable);
+  TACTILE_DEFAULT_MOVE(Disable);
 
   explicit Disable(const bool disable = true) { ImGui::BeginDisabled(disable); }
 
@@ -54,8 +54,8 @@ struct Disable final
 
 struct Tooltip final
 {
-  TACTILE_DEFAULT_COPY(Tooltip)
-  TACTILE_DEFAULT_MOVE(Tooltip)
+  TACTILE_DEFAULT_COPY(Tooltip);
+  TACTILE_DEFAULT_MOVE(Tooltip);
 
   Tooltip() { ImGui::BeginTooltip(); }
 
@@ -65,8 +65,8 @@ struct Tooltip final
 class StyleVar final
 {
  public:
-  TACTILE_DEFAULT_COPY(StyleVar)
-  TACTILE_DEFAULT_MOVE(StyleVar)
+  TACTILE_DEFAULT_COPY(StyleVar);
+  TACTILE_DEFAULT_MOVE(StyleVar);
 
   StyleVar(const ImGuiStyleVar index, const ImVec2& value)
   {
@@ -95,8 +95,8 @@ class StyleVar final
 class StyleColor final
 {
  public:
-  TACTILE_DEFAULT_COPY(StyleColor)
-  TACTILE_DEFAULT_MOVE(StyleColor)
+  TACTILE_DEFAULT_COPY(StyleColor);
+  TACTILE_DEFAULT_MOVE(StyleColor);
 
   StyleColor(const ImGuiCol index, const ImVec4& color)
   {
@@ -124,8 +124,8 @@ class StyleColor final
 
 struct Group final
 {
-  TACTILE_DEFAULT_COPY(Group)
-  TACTILE_DEFAULT_MOVE(Group)
+  TACTILE_DEFAULT_COPY(Group);
+  TACTILE_DEFAULT_MOVE(Group);
 
   Group() { ImGui::BeginGroup(); }
 
@@ -135,8 +135,8 @@ struct Group final
 class Child final
 {
  public:
-  TACTILE_DEFAULT_COPY(Child)
-  TACTILE_DEFAULT_MOVE(Child)
+  TACTILE_DEFAULT_COPY(Child);
+  TACTILE_DEFAULT_MOVE(Child);
 
   explicit Child(const char* id,
                  const ImVec2& size = {0, 0},
@@ -156,8 +156,8 @@ class Child final
 class Combo final
 {
  public:
-  TACTILE_DEFAULT_COPY(Combo)
-  TACTILE_DEFAULT_MOVE(Combo)
+  TACTILE_DEFAULT_COPY(Combo);
+  TACTILE_DEFAULT_MOVE(Combo);
 
   Combo(const char* name, const char* current) : mOpen{ImGui::BeginCombo(name, current)}
   {}
@@ -178,8 +178,8 @@ class Combo final
 class TabBar final
 {
  public:
-  TACTILE_DEFAULT_COPY(TabBar)
-  TACTILE_DEFAULT_MOVE(TabBar)
+  TACTILE_DEFAULT_COPY(TabBar);
+  TACTILE_DEFAULT_MOVE(TabBar);
 
   explicit TabBar(const char* name, const ImGuiTabBarFlags flags = 0)
       : mOpen{ImGui::BeginTabBar(name, flags)}
@@ -201,8 +201,8 @@ class TabBar final
 class TabItem final
 {
  public:
-  TACTILE_DEFAULT_COPY(TabItem)
-  TACTILE_DEFAULT_MOVE(TabItem)
+  TACTILE_DEFAULT_COPY(TabItem);
+  TACTILE_DEFAULT_MOVE(TabItem);
 
   explicit TabItem(const char* name,
                    bool* open = nullptr,
@@ -226,8 +226,8 @@ class TabItem final
 class Table final
 {
  public:
-  TACTILE_DEFAULT_COPY(Table)
-  TACTILE_DEFAULT_MOVE(Table)
+  TACTILE_DEFAULT_COPY(Table);
+  TACTILE_DEFAULT_MOVE(Table);
 
   Table(const char* name, const int nColumns, const ImGuiTableFlags flags = 0)
       : mOpen{ImGui::BeginTable(name, nColumns, flags)}
@@ -249,8 +249,8 @@ class Table final
 class Popup final
 {
  public:
-  TACTILE_DEFAULT_COPY(Popup)
-  TACTILE_DEFAULT_MOVE(Popup)
+  TACTILE_DEFAULT_COPY(Popup);
+  TACTILE_DEFAULT_MOVE(Popup);
 
   explicit Popup(const char* name, const ImGuiWindowFlags flags = 0)
       : mOpen{ImGui::BeginPopup(name, flags)}
@@ -286,8 +286,8 @@ class Popup final
 class ListBox final
 {
  public:
-  TACTILE_DEFAULT_COPY(ListBox)
-  TACTILE_DEFAULT_MOVE(ListBox)
+  TACTILE_DEFAULT_COPY(ListBox);
+  TACTILE_DEFAULT_MOVE(ListBox);
 
   explicit ListBox(const char* label, const ImVec2& size = {0, 0})
       : mOpen{ImGui::BeginListBox(label, size)}
@@ -309,8 +309,8 @@ class ListBox final
 class Menu final
 {
  public:
-  TACTILE_DEFAULT_COPY(Menu)
-  TACTILE_DEFAULT_MOVE(Menu)
+  TACTILE_DEFAULT_COPY(Menu);
+  TACTILE_DEFAULT_MOVE(Menu);
 
   explicit Menu(const char* name, const bool enabled = true)
       : mOpen{ImGui::BeginMenu(name, enabled)}
@@ -332,8 +332,8 @@ class Menu final
 class Modal final
 {
  public:
-  TACTILE_DEFAULT_COPY(Modal)
-  TACTILE_DEFAULT_MOVE(Modal)
+  TACTILE_DEFAULT_COPY(Modal);
+  TACTILE_DEFAULT_MOVE(Modal);
 
   explicit Modal(const char* name, const ImGuiWindowFlags flags = 0, bool* open = nullptr)
       : mOpen{ImGui::BeginPopupModal(name, open, flags)}
@@ -363,8 +363,8 @@ class Window final
   inline static std::unordered_map<const char*, WindowData> window_data;
 
  public:
-  TACTILE_DEFAULT_COPY(Window)
-  TACTILE_DEFAULT_MOVE(Window)
+  TACTILE_DEFAULT_COPY(Window);
+  TACTILE_DEFAULT_MOVE(Window);
 
   explicit Window(const char* label,
                   const ImGuiWindowFlags flags = 0,
@@ -413,8 +413,8 @@ class Window final
 class TreeNode final
 {
  public:
-  TACTILE_DEFAULT_COPY(TreeNode)
-  TACTILE_DEFAULT_MOVE(TreeNode)
+  TACTILE_DEFAULT_COPY(TreeNode);
+  TACTILE_DEFAULT_MOVE(TreeNode);
 
   explicit TreeNode(const char* id, const ImGuiTreeNodeFlags flags = 0)
       : mOpen{ImGui::TreeNodeEx(id, flags)}

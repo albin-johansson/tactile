@@ -32,8 +32,8 @@ namespace tactile {
 class ADockWidget
 {
  public:
-  TACTILE_DELETE_COPY(ADockWidget)
-  TACTILE_DEFAULT_MOVE(ADockWidget)
+  TACTILE_DELETE_COPY(ADockWidget);
+  TACTILE_DEFAULT_MOVE(ADockWidget);
 
   ADockWidget(const char* title, ImGuiWindowFlags flags);
 

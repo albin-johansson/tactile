@@ -30,8 +30,8 @@ namespace tactile {
 class ViewportArea
 {
  public:
-  TACTILE_DEFAULT_COPY(ViewportArea)
-  TACTILE_DEFAULT_MOVE(ViewportArea)
+  TACTILE_DEFAULT_COPY(ViewportArea);
+  TACTILE_DEFAULT_MOVE(ViewportArea);
 
   ViewportArea() noexcept = default;
 

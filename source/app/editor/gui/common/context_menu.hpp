@@ -29,8 +29,8 @@ namespace tactile {
 class ContextMenu
 {
  public:
-  TACTILE_DEFAULT_COPY(ContextMenu)
-  TACTILE_DEFAULT_MOVE(ContextMenu)
+  TACTILE_DEFAULT_COPY(ContextMenu);
+  TACTILE_DEFAULT_MOVE(ContextMenu);
 
   explicit ContextMenu(const char* name);
 

@@ -30,8 +30,8 @@ namespace tactile {
 class AddPropertyDialog final : public ADialog
 {
  public:
-  TACTILE_DEFAULT_COPY(AddPropertyDialog)
-  TACTILE_DEFAULT_MOVE(AddPropertyDialog)
+  TACTILE_DEFAULT_COPY(AddPropertyDialog);
+  TACTILE_DEFAULT_MOVE(AddPropertyDialog);
 
   AddPropertyDialog();
 

@@ -33,8 +33,8 @@ namespace tactile {
 class SettingsDialog final : public ADialog
 {
  public:
-  TACTILE_DEFAULT_COPY(SettingsDialog)
-  TACTILE_DEFAULT_MOVE(SettingsDialog)
+  TACTILE_DEFAULT_COPY(SettingsDialog);
+  TACTILE_DEFAULT_MOVE(SettingsDialog);
 
   SettingsDialog();
 

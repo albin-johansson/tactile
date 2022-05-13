@@ -34,8 +34,8 @@ class AppConfiguration;
 class AEventLoop
 {
  public:
-  TACTILE_DEFAULT_COPY(AEventLoop)
-  TACTILE_DEFAULT_MOVE(AEventLoop)
+  TACTILE_DEFAULT_COPY(AEventLoop);
+  TACTILE_DEFAULT_MOVE(AEventLoop);
 
   explicit AEventLoop(AppConfiguration* cfg);
 

@@ -31,8 +31,8 @@ namespace tactile {
 class ChangePropertyTypeDialog final : public ADialog
 {
  public:
-  TACTILE_DEFAULT_COPY(ChangePropertyTypeDialog)
-  TACTILE_DEFAULT_MOVE(ChangePropertyTypeDialog)
+  TACTILE_DEFAULT_COPY(ChangePropertyTypeDialog);
+  TACTILE_DEFAULT_MOVE(ChangePropertyTypeDialog);
 
   ChangePropertyTypeDialog();
 

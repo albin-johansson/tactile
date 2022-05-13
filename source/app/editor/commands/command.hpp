@@ -42,8 +42,8 @@ using RegistryRef = Ref<entt::registry>;
 class ACommand
 {
  public:
-  TACTILE_DELETE_COPY(ACommand)
-  TACTILE_DEFAULT_MOVE(ACommand)
+  TACTILE_DELETE_COPY(ACommand);
+  TACTILE_DEFAULT_MOVE(ACommand);
 
   /**
    * \brief Creates a command.

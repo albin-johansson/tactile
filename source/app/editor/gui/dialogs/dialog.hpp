@@ -32,8 +32,8 @@ namespace tactile {
 class ADialog
 {
  public:
-  TACTILE_DEFAULT_COPY(ADialog)
-  TACTILE_DEFAULT_MOVE(ADialog)
+  TACTILE_DEFAULT_COPY(ADialog);
+  TACTILE_DEFAULT_MOVE(ADialog);
 
   /**
    * \brief Creates a dialog.
