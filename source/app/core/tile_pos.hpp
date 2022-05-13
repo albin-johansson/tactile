@@ -21,6 +21,7 @@
 
 #include <compare>  // <=>
 
+#include "misc/assert.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -74,11 +75,15 @@ class TilePos final
 
   /**
    * \brief Sets the row index associated with the position.
+   *
+   * \param row the new row index.
    */
   constexpr void set_row(const int32 row) noexcept { mRow = row; }
 
   /**
    * \brief Sets the column index associated with the position.
+   *
+   * \param column the new column index.
    */
   constexpr void set_col(const int32 column) noexcept { mCol = column; }
 
@@ -103,7 +108,7 @@ class TilePos final
    */
   [[nodiscard]] constexpr auto north() const noexcept -> TilePos
   {
-    return {mRow - 1, mCol};
+    return offset_by(-1, 0);
   }
 
   /**
@@ -113,7 +118,7 @@ class TilePos final
    */
   [[nodiscard]] constexpr auto south() const noexcept -> TilePos
   {
-    return {mRow + 1, mCol};
+    return offset_by(1, 0);
   }
 
   /**
@@ -124,7 +129,7 @@ class TilePos final
    */
   [[nodiscard]] constexpr auto west() const noexcept -> TilePos
   {
-    return {mRow, mCol - 1};
+    return offset_by(0, -1);
   }
 
   /**
@@ -135,7 +140,7 @@ class TilePos final
    */
   [[nodiscard]] constexpr auto east() const noexcept -> TilePos
   {
-    return {mRow, mCol + 1};
+    return offset_by(0, 1);
   }
 
   /**
@@ -161,6 +166,7 @@ class TilePos final
    */
   [[nodiscard]] constexpr auto row_index() const noexcept -> usize
   {
+    TACTILE_ASSERT(mRow >= 0);
     return static_cast<usize>(mRow);
   }
 
@@ -173,6 +179,7 @@ class TilePos final
    */
   [[nodiscard]] constexpr auto col_index() const noexcept -> usize
   {
+    TACTILE_ASSERT(mCol >= 0);
     return static_cast<usize>(mCol);
   }
 
