@@ -106,6 +106,7 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <algorithm>
                           <array>
                           <charconv>
+                          <chrono>
                           <concepts>
                           <cstddef>
                           <cstdint>
