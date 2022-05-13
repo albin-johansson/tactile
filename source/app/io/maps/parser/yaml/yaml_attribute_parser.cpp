@@ -62,8 +62,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_attribute_value(const YAML::Node& value,
-                                          const AttributeType type)
-    -> Maybe<Attribute>
+                                          const AttributeType type) -> Maybe<Attribute>
 {
   switch (type) {
     case AttributeType::String:

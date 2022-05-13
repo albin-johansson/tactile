@@ -56,11 +56,9 @@ namespace tactile {
 
 [[nodiscard]] auto input_bool(const char* id, bool value) -> Maybe<bool>;
 
-[[nodiscard]] auto input_object(const char* id, object_t value)
-    -> Maybe<object_t>;
+[[nodiscard]] auto input_object(const char* id, object_t value) -> Maybe<object_t>;
 
-[[nodiscard]] auto input_color(const char* id, cen::color value)
-    -> Maybe<cen::color>;
+[[nodiscard]] auto input_color(const char* id, cen::color value) -> Maybe<cen::color>;
 
 [[nodiscard]] auto input_path(const char* id, const std::filesystem::path& value)
     -> Maybe<std::filesystem::path>;

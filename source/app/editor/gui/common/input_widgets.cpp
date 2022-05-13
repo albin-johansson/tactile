@@ -128,8 +128,7 @@ auto input_string_with_hint(const char* id,
                             const std::string& value,
                             const char* label,
                             const ImGuiInputTextFlags flags,
-                            const ImGuiInputTextCallback filter)
-    -> Maybe<std::string>
+                            const ImGuiInputTextCallback filter) -> Maybe<std::string>
 {
   const scoped::Id scope{id};
 

@@ -56,8 +56,7 @@ constexpr std::array _items{std::make_pair("string", AttributeType::String),
   }
 }
 
-void _property_type_combo_impl(AttributeType& out,
-                               Maybe<AttributeType> previousType)
+void _property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previousType)
 {
   const auto currentIndex = _index_from_type(out);
   auto&& [currentName, currentType] = _items.at(currentIndex);

@@ -113,26 +113,22 @@ auto as_string(const nlohmann::json& json, const std::string_view name)
   return _as<std::string>(json, name);
 }
 
-auto as_int(const nlohmann::json& json, const std::string_view name)
-    -> Maybe<int32>
+auto as_int(const nlohmann::json& json, const std::string_view name) -> Maybe<int32>
 {
   return _as<int32>(json, name);
 }
 
-auto as_uint(const nlohmann::json& json, const std::string_view name)
-    -> Maybe<uint32>
+auto as_uint(const nlohmann::json& json, const std::string_view name) -> Maybe<uint32>
 {
   return _as<uint32>(json, name);
 }
 
-auto as_float(const nlohmann::json& json, const std::string_view name)
-    -> Maybe<float>
+auto as_float(const nlohmann::json& json, const std::string_view name) -> Maybe<float>
 {
   return _as<float>(json, name);
 }
 
-auto as_bool(const nlohmann::json& json, const std::string_view name)
-    -> Maybe<bool>
+auto as_bool(const nlohmann::json& json, const std::string_view name) -> Maybe<bool>
 {
   return _as<bool>(json, name);
 }

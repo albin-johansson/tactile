@@ -79,8 +79,7 @@ auto int_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<int3
   }
 }
 
-auto uint_attribute(pugi::xml_node node, const char* attributeName)
-    -> Maybe<uint32>
+auto uint_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<uint32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -95,8 +94,7 @@ auto uint_attribute(pugi::xml_node node, const char* attributeName)
   }
 }
 
-auto float_attribute(pugi::xml_node node, const char* attributeName)
-    -> Maybe<float>
+auto float_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<float>
 {
   TACTILE_ASSERT(attributeName);
 
