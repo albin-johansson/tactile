@@ -41,7 +41,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
     TACTILE_PROFILE_START
 
     if (!std::filesystem::exists(path)) {
-      result.set_error(ParseError::map_does_not_exist);
+      result.set_error(ParseError::MapDoesNotExist);
       return result;
     }
 
@@ -57,7 +57,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
     }
     else {
       log_error("Unsupported save file extension: {}", ext);
-      result.set_error(ParseError::unsupported_map_extension);
+      result.set_error(ParseError::UnsupportedMapExtension);
       return result;
     }
 
@@ -65,7 +65,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
   }
   catch (const std::exception& e) {
     log_error("Parser threw unhandled exception with message: '{}'\n", e.what());
-    result.set_error(ParseError::unknown);
+    result.set_error(ParseError::Unknown);
 
     if constexpr (is_debug_build) {
       if (const auto* stacktrace = boost::get_error_info<TraceInfo>(e)) {
@@ -75,7 +75,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
   }
   catch (...) {
     log_error("Parser threw non-exception value!");
-    result.set_error(ParseError::unknown);
+    result.set_error(ParseError::Unknown);
   }
 
   return result;

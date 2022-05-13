@@ -106,7 +106,7 @@ namespace {
     name = attributeName.as<std::string>();
   }
   else {
-    return ParseError::no_component_def_attribute_name;
+    return ParseError::NoComponentDefAttributeName;
   }
 
   AttributeType type{};
@@ -115,11 +115,11 @@ namespace {
       type = *parsedType;
     }
     else {
-      return ParseError::unsupported_component_def_attribute_type;
+      return ParseError::UnsupportedComponentDefAttributeType;
     }
   }
   else {
-    return ParseError::no_component_def_attribute_type;
+    return ParseError::NoComponentDefAttributeType;
   }
 
   auto& value = def[name];
@@ -153,7 +153,7 @@ namespace {
           value = *color;
         }
         else {
-          return ParseError::corrupt_component_def_attribute_value;
+          return ParseError::CorruptComponentDefAttributeValue;
         }
         break;
       }
@@ -163,7 +163,7 @@ namespace {
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_component_definition(const YAML::Node& node, ir::MapData& data)
@@ -174,7 +174,7 @@ namespace {
     type = name.as<std::string>();
   }
   else {
-    return ParseError::no_component_def_name;
+    return ParseError::NoComponentDefName;
   }
 
   auto& def = data.component_definitions[type];
@@ -182,13 +182,13 @@ namespace {
   if (auto attributeSeq = node["attributes"]) {
     for (auto attributeNode : attributeSeq) {
       if (const auto err = _parse_component_definition_attribute(attributeNode, def);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_component(const YAML::Node& node,
@@ -200,10 +200,10 @@ namespace {
     type = typeName.as<std::string>();
   }
   else {
-    return ParseError::no_component_type;
+    return ParseError::NoComponentType;
   }
 
-  // TODO invalid component type check, e.g. parse_error::invalid_component_type
+  // TODO invalid component type check, e.g. ParseError::InvalidComponentType
   const auto& prototype = map.component_definitions.at(type);
   auto& attributes = data.components[type];
 
@@ -214,7 +214,7 @@ namespace {
         attr = name.as<std::string>();
       }
       else {
-        return ParseError::no_component_attribute_name;
+        return ParseError::NoComponentAttributeName;
       }
 
       if (auto value = valueNode["value"]) {
@@ -223,16 +223,16 @@ namespace {
           attributes[attr] = std::move(*attributeValue);
         }
         else {
-          return ParseError::corrupt_component_attribute_value;
+          return ParseError::CorruptComponentAttributeValue;
         }
       }
       else {
-        return ParseError::no_component_attribute_value;
+        return ParseError::NoComponentAttributeValue;
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace
@@ -242,13 +242,13 @@ auto parse_component_definitions(const YAML::Node& node, ir::MapData& data) -> P
   if (auto sequence = node["component-definitions"]) {
     for (const auto& defNode : sequence) {
       if (const auto err = _parse_component_definition(defNode, data);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 auto parse_components(const YAML::Node& node,
@@ -258,13 +258,13 @@ auto parse_components(const YAML::Node& node,
   if (auto sequence = node["components"]) {
     for (const auto& componentNode : sequence) {
       if (const auto err = _parse_component(componentNode, map, data);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
@@ -279,7 +279,7 @@ auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
         propertyName = name.as<std::string>();
       }
       else {
-        return ParseError::no_property_name;
+        return ParseError::NoPropertyName;
       }
 
       if (auto type = propertyNode["type"]) {
@@ -287,11 +287,11 @@ auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
           propertyType = *parsedType;
         }
         else {
-          return ParseError::unsupported_property_type;
+          return ParseError::UnsupportedPropertyType;
         }
       }
       else {
-        return ParseError::no_property_type;
+        return ParseError::NoPropertyType;
       }
 
       if (auto valueAttr = propertyNode["value"]) {
@@ -299,16 +299,16 @@ auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
           data.properties[std::move(propertyName)] = std::move(*value);
         }
         else {
-          return ParseError::corrupt_property_value;
+          return ParseError::CorruptPropertyValue;
         }
       }
       else {
-        return ParseError::corrupt_property_value;  // TODO no_property_value
+        return ParseError::CorruptPropertyValue;  // TODO no_property_value
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace tactile::parsing

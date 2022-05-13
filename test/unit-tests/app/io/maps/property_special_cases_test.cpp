@@ -18,7 +18,7 @@ TEST_P(PropertySpecialCaseTest, Parsing)
 {
   const auto path = GetParam();
   const auto result = parsing::parse_map(path);
-  ASSERT_EQ(ParseError::none, result.error());
+  ASSERT_EQ(ParseError::None, result.error());
 
   const auto& data = result.data();
   ASSERT_EQ(3u, data.context.properties.size());

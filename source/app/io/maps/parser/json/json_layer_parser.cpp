@@ -37,13 +37,13 @@ namespace {
 
     for (const auto& [_, value] : iter->items()) {
       auto& objectData = objectLayerData.objects.emplace_back();
-      if (const auto err = parse_object(value, objectData); err != ParseError::none) {
+      if (const auto err = parse_object(value, objectData); err != ParseError::None) {
         return err;
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_tile_layer_data(const nlohmann::json& json,
@@ -53,17 +53,17 @@ namespace {
   /* We only support the CSV tile encoding, which is the implicit default */
   if (auto encoding = as_string(json, "encoding")) {
     if (encoding != "csv") {
-      return ParseError::unsupported_tile_layer_encoding;
+      return ParseError::UnsupportedTileLayerEncoding;
     }
   }
 
   if (!json.contains("data")) {
-    return ParseError::no_tile_layer_data;
+    return ParseError::NoTileLayerData;
   }
 
   const auto data = json.at("data");
   if (!data.is_array()) {
-    return ParseError::corrupt_tile_layer_data;
+    return ParseError::CorruptTileLayerData;
   }
 
   usize index = 0;
@@ -74,11 +74,11 @@ namespace {
       ++index;
     }
     else {
-      return ParseError::corrupt_tile_layer_data;
+      return ParseError::CorruptTileLayerData;
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_tile_layer(const nlohmann::json& json,
@@ -121,11 +121,11 @@ namespace {
 
   if (const auto err =
           _parse_tile_layer_data(json, tileLayerData.tiles, tileLayerData.col_count);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_layer(const nlohmann::json& json,
@@ -140,7 +140,7 @@ namespace {
     layerData.id = *id;
   }
   else {
-    return ParseError::no_layer_id;
+    return ParseError::NoLayerId;
   }
 
   layerData.name = as_string(json, "name").value_or("Layer");
@@ -151,14 +151,14 @@ namespace {
     if (type == "tilelayer") {
       layerData.type = LayerType::TileLayer;
       if (const auto err = _parse_tile_layer(json, layerData, rows, columns);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
     else if (type == "objectgroup") {
       layerData.type = LayerType::ObjectLayer;
       if (const auto err = _parse_object_layer(json, layerData);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
@@ -173,7 +173,7 @@ namespace {
 
         if (const auto err =
                 _parse_layer(value, *childLayerData, childIndex, rows, columns);
-            err != ParseError::none) {
+            err != ParseError::None) {
           return err;
         }
 
@@ -181,19 +181,19 @@ namespace {
       }
     }
     else {
-      return ParseError::unsupported_layer_type;
+      return ParseError::UnsupportedLayerType;
     }
   }
   else {
-    return ParseError::no_layer_type;
+    return ParseError::NoLayerType;
   }
 
   if (const auto err = parse_properties(json, layerData.context);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace
@@ -204,7 +204,7 @@ auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> Par
     objectData.id = *id;
   }
   else {
-    return ParseError::no_object_id;
+    return ParseError::NoObjectId;
   }
 
   objectData.name = as_string(json, "name").value_or("");
@@ -228,11 +228,11 @@ auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> Par
   }
 
   if (const auto err = parse_properties(json, objectData.context);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseError
@@ -241,7 +241,7 @@ auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseErro
 
   if (iter == json.end()) {
     log_warning("JSON map has no \"layers\" attribute, which is required!");
-    return ParseError::none;
+    return ParseError::None;
   }
 
   mapData.layers.reserve(iter->size());
@@ -252,14 +252,14 @@ auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseErro
 
     if (const auto err =
             _parse_layer(value, layerData, index, mapData.row_count, mapData.col_count);
-        err != ParseError::none) {
+        err != ParseError::None) {
       return err;
     }
 
     ++index;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace tactile::parsing

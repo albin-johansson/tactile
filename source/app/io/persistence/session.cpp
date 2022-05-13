@@ -52,7 +52,7 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
       const auto ir = parsing::parse_map(file);
-      if (ir.error() == parsing::ParseError::none) {
+      if (ir.error() == parsing::ParseError::None) {
         model.add_map(restore_document_from_ir(ir, textures));
       }
       else {

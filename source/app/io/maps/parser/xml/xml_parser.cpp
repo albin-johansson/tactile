@@ -34,14 +34,14 @@ namespace {
 [[nodiscard]] auto _validate_map(pugi::xml_node mapNode) -> ParseError
 {
   if (string_attribute(mapNode, "orientation") != "orthogonal") {
-    return ParseError::unsupported_map_orientation;
+    return ParseError::UnsupportedMapOrientation;
   }
 
   if (bool_attribute(mapNode, "infinite").value_or(false)) {
-    return ParseError::unsupported_infinite_map;
+    return ParseError::UnsupportedInfiniteMap;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& data)
@@ -49,12 +49,12 @@ namespace {
 {
   pugi::xml_document document;
   if (!document.load_file(path.c_str())) {
-    return ParseError::could_not_read_file;
+    return ParseError::CouldNotReadFile;
   }
 
   auto mapNode = document.child("map");
 
-  if (const auto err = _validate_map(mapNode); err != ParseError::none) {
+  if (const auto err = _validate_map(mapNode); err != ParseError::None) {
     return err;
   }
 
@@ -62,42 +62,42 @@ namespace {
     data.col_count = *width;
   }
   else {
-    return ParseError::no_map_width;
+    return ParseError::NoMapWidth;
   }
 
   if (const auto height = uint_attribute(mapNode, "height")) {
     data.row_count = *height;
   }
   else {
-    return ParseError::no_map_height;
+    return ParseError::NoMapHeight;
   }
 
   if (const auto tw = int_attribute(mapNode, "tilewidth")) {
     data.tile_width = *tw;
   }
   else {
-    return ParseError::no_map_tile_width;
+    return ParseError::NoMapTileWidth;
   }
 
   if (const auto th = int_attribute(mapNode, "tileheight")) {
     data.tile_height = *th;
   }
   else {
-    return ParseError::no_map_tile_height;
+    return ParseError::NoMapTileHeight;
   }
 
   if (const auto id = int_attribute(mapNode, "nextlayerid")) {
     data.next_layer_id = *id;
   }
   else {
-    return ParseError::no_map_next_layer_id;
+    return ParseError::NoMapNextLayerId;
   }
 
   if (const auto id = int_attribute(mapNode, "nextobjectid")) {
     data.next_object_id = *id;
   }
   else {
-    return ParseError::no_map_next_object_id;
+    return ParseError::NoMapNextObjectId;
   }
 
   const auto dir = path.parent_path();
@@ -105,20 +105,20 @@ namespace {
   for (auto tilesetNode : mapNode.children("tileset")) {
     auto& tilesetData = data.tilesets.emplace_back();
     if (const auto err = parse_tileset(tilesetNode, tilesetData, dir);
-        err != ParseError::none) {
+        err != ParseError::None) {
       return err;
     }
   }
 
-  if (const auto err = parse_layers(mapNode, data); err != ParseError::none) {
+  if (const auto err = parse_layers(mapNode, data); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = parse_properties(mapNode, data.context); err != ParseError::none) {
+  if (const auto err = parse_properties(mapNode, data.context); err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace

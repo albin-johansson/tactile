@@ -45,7 +45,7 @@ class ParseData final
  private:
   std::filesystem::path mPath;
   ir::MapData mData;
-  ParseError mError{ParseError::none};
+  ParseError mError{ParseError::None};
 };
 
 }  // namespace tactile::parsing

@@ -33,79 +33,79 @@ namespace {
 {
   const auto node = YAML::LoadFile(path.string());
   if (!node) {
-    return ParseError::could_not_read_file;
+    return ParseError::CouldNotReadFile;
   }
 
   if (auto rows = node["row-count"]) {
     data.row_count = rows.as<usize>();
   }
   else {
-    return ParseError::no_map_height;
+    return ParseError::NoMapHeight;
   }
 
   if (auto cols = node["column-count"]) {
     data.col_count = cols.as<usize>();
   }
   else {
-    return ParseError::no_map_width;
+    return ParseError::NoMapWidth;
   }
 
   if (auto tw = node["tile-width"]) {
     data.tile_width = tw.as<int32>();
   }
   else {
-    return ParseError::no_map_tile_width;
+    return ParseError::NoMapTileWidth;
   }
 
   if (auto th = node["tile-height"]) {
     data.tile_height = th.as<int32>();
   }
   else {
-    return ParseError::no_map_tile_height;
+    return ParseError::NoMapTileHeight;
   }
 
   if (auto id = node["next-layer-id"]) {
     data.next_layer_id = id.as<LayerID>();
   }
   else {
-    return ParseError::no_map_next_layer_id;
+    return ParseError::NoMapNextLayerId;
   }
 
   if (auto id = node["next-object-id"]) {
     data.next_object_id = id.as<ObjectID>();
   }
   else {
-    return ParseError::no_map_next_object_id;
+    return ParseError::NoMapNextObjectId;
   }
 
   const auto dir = path.parent_path();
 
-  if (const auto err = parse_component_definitions(node, data); err != ParseError::none) {
+  if (const auto err = parse_component_definitions(node, data); err != ParseError::None) {
     return err;
   }
 
   if (auto seq = node["tilesets"]) {
-    if (const auto err = parse_tilesets(seq, data, dir); err != ParseError::none) {
+    if (const auto err = parse_tilesets(seq, data, dir); err != ParseError::None) {
       return err;
     }
   }
 
   if (auto seq = node["layers"]) {
-    if (const auto err = parse_layers(seq, data); err != ParseError::none) {
+    if (const auto err = parse_layers(seq, data); err != ParseError::None) {
       return err;
     }
   }
 
-  if (const auto err = parse_properties(node, data.context); err != ParseError::none) {
+  if (const auto err = parse_properties(node, data.context); err != ParseError::None) {
     return err;
   }
 
   if (const auto err = parse_components(node, data, data.context);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace

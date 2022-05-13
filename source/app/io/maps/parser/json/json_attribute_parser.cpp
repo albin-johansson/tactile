@@ -66,15 +66,15 @@ namespace {
         value = *color;
       }
       else {
-        return ParseError::corrupt_property_value;
+        return ParseError::CorruptPropertyValue;
       }
     }
   }
   else {
-    return ParseError::unsupported_property_type;
+    return ParseError::UnsupportedPropertyType;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_property(const nlohmann::json& json,
@@ -86,21 +86,21 @@ namespace {
     propertyName = std::move(*name);
   }
   else {
-    return ParseError::no_property_name;
+    return ParseError::NoPropertyName;
   }
 
   auto& value = contextData.properties[std::move(propertyName)];
 
   if (auto type = as_string(json, "type")) {
-    if (const auto err = _parse_value(json, *type, value); err != ParseError::none) {
+    if (const auto err = _parse_value(json, *type, value); err != ParseError::None) {
       return err;
     }
   }
   else {
-    return ParseError::no_property_type;
+    return ParseError::NoPropertyType;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace
@@ -110,13 +110,13 @@ auto parse_properties(const nlohmann::json& json, ir::AttributeContextData& cont
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [_, value] : it->items()) {
-      if (const auto err = _parse_property(value, contextData); err != ParseError::none) {
+      if (const auto err = _parse_property(value, contextData); err != ParseError::None) {
         return err;
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace tactile::parsing

@@ -43,7 +43,7 @@ namespace {
     tileId = *id;
   }
   else {
-    return ParseError::no_fancy_tile_id;
+    return ParseError::NoFancyTileId;
   }
 
   auto& tileData = tilesetData.fancy_tiles[tileId];
@@ -58,14 +58,14 @@ namespace {
         frameData.local_id = *localId;
       }
       else {
-        return ParseError::no_animation_frame_tile;
+        return ParseError::NoAnimationFrameTile;
       }
 
       if (const auto duration = as_uint(frameJson, "duration")) {
         frameData.duration_ms = *duration;
       }
       else {
-        return ParseError::no_animation_frame_duration;
+        return ParseError::NoAnimationFrameDuration;
       }
     }
   }
@@ -77,7 +77,7 @@ namespace {
       for (const auto& [_, objectJson] : objectsIter->items()) {
         auto& objectData = tileData.objects.emplace_back();
         if (const auto err = parse_object(objectJson, objectData);
-            err != ParseError::none) {
+            err != ParseError::None) {
           return err;
         }
       }
@@ -85,11 +85,11 @@ namespace {
   }
 
   if (const auto err = parse_properties(json, tileData.context);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_fancy_tiles(const nlohmann::json& json,
@@ -98,13 +98,13 @@ namespace {
   if (json.contains("tiles")) {
     for (const auto& [_, value] : json.at("tiles").items()) {
       if (const auto err = _parse_fancy_tile(value, tilesetData);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_image_path(const nlohmann::json& json,
@@ -114,7 +114,7 @@ namespace {
   const auto relative = json.find("image");
 
   if (relative == json.end()) {
-    return ParseError::no_tileset_image_path;
+    return ParseError::NoTilesetImagePath;
   }
 
   auto absolute = std::filesystem::weakly_canonical(dir / relative->get<std::string>());
@@ -122,10 +122,10 @@ namespace {
     tilesetData.image_path = std::move(absolute);
   }
   else {
-    return ParseError::tileset_image_does_not_exist;
+    return ParseError::TilesetImageDoesNotExist;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_common_tileset_attributes(const nlohmann::json& json,
@@ -137,66 +137,66 @@ namespace {
     tilesetData.name = std::move(*name);
   }
   else {
-    return ParseError::no_tileset_name;
+    return ParseError::NoTilesetName;
   }
 
   if (const auto tw = as_int(json, "tilewidth")) {
     tilesetData.tile_width = *tw;
   }
   else {
-    return ParseError::no_tileset_tile_width;
+    return ParseError::NoTilesetTileWidth;
   }
 
   if (const auto th = as_int(json, "tileheight")) {
     tilesetData.tile_height = *th;
   }
   else {
-    return ParseError::no_tileset_tile_height;
+    return ParseError::NoTilesetTileHeight;
   }
 
   if (const auto count = as_int(json, "tilecount")) {
     tilesetData.tile_count = *count;
   }
   else {
-    return ParseError::no_tileset_tile_count;
+    return ParseError::NoTilesetTileCount;
   }
 
   if (const auto columns = as_int(json, "columns")) {
     tilesetData.column_count = *columns;
   }
   else {
-    return ParseError::no_tileset_column_count;
+    return ParseError::NoTilesetColumnCount;
   }
 
   if (const auto width = as_int(json, "imagewidth")) {
     tilesetData.image_width = *width;
   }
   else {
-    return ParseError::no_tileset_image_width;
+    return ParseError::NoTilesetImageWidth;
   }
 
   if (const auto height = as_int(json, "imageheight")) {
     tilesetData.image_height = *height;
   }
   else {
-    return ParseError::no_tileset_image_height;
+    return ParseError::NoTilesetImageHeight;
   }
 
   if (const auto err = _parse_image_path(json, tilesetData, dir);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
   if (const auto err = parse_properties(json, tilesetData.context);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = _parse_fancy_tiles(json, tilesetData); err != ParseError::none) {
+  if (const auto err = _parse_fancy_tiles(json, tilesetData); err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_external_tileset(const nlohmann::json& json,
@@ -209,14 +209,14 @@ namespace {
   const auto source = std::filesystem::weakly_canonical(dir / relative);
 
   if (!std::filesystem::exists(source)) {
-    return ParseError::external_tileset_does_not_exist;
+    return ParseError::ExternalTilesetDoesNotExist;
   }
 
   if (const auto external = read_json(source)) {
     return _parse_common_tileset_attributes(*external, tilesetData, dir);
   }
   else {
-    return ParseError::unknown_external_tileset_error;
+    return ParseError::UnknownExternalTilesetError;
   }
 }
 
@@ -228,7 +228,7 @@ namespace {
     tilesetData.first_tile = *firstTile;
   }
   else {
-    return ParseError::no_tileset_first_tile_id;
+    return ParseError::NoTilesetFirstTileId;
   }
 
   if (json.contains("source")) {
@@ -249,7 +249,7 @@ auto parse_tilesets(const nlohmann::json& json,
 
   if (iter == json.end()) {
     log_warning("JSON map has no \"tilesets\" attribute, which is required!");
-    return ParseError::none;
+    return ParseError::None;
   }
 
   mapData.tilesets.reserve(iter->size());
@@ -257,12 +257,12 @@ auto parse_tilesets(const nlohmann::json& json,
   for (const auto& [_, value] : iter->items()) {
     auto& tilesetData = mapData.tilesets.emplace_back();
     if (const auto err = _parse_tileset(value, tilesetData, dir);
-        err != ParseError::none) {
+        err != ParseError::None) {
       return err;
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace tactile::parsing

@@ -40,7 +40,7 @@ namespace {
       tileId = *id;
     }
     else {
-      return ParseError::no_fancy_tile_id;
+      return ParseError::NoFancyTileId;
     }
 
     auto& tileData = tilesetData.fancy_tiles[tileId];
@@ -52,32 +52,32 @@ namespace {
         frameData.local_id = *localId;
       }
       else {
-        return ParseError::no_animation_frame_tile;
+        return ParseError::NoAnimationFrameTile;
       }
 
       if (const auto duration = uint_attribute(frameNode, "duration")) {
         frameData.duration_ms = *duration;
       }
       else {
-        return ParseError::no_animation_frame_duration;
+        return ParseError::NoAnimationFrameDuration;
       }
     }
 
     for (auto objectNode : tileNode.child("objectgroup").children("object")) {
       auto& objectData = tileData.objects.emplace_back();
       if (const auto err = parse_object(objectNode, objectData);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
 
     if (const auto err = parse_properties(tileNode, tileData.context);
-        err != ParseError::none) {
+        err != ParseError::None) {
       return err;
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_image_info(pugi::xml_node tilesetNode,
@@ -90,19 +90,19 @@ namespace {
     tilesetData.image_width = *width;
   }
   else {
-    return ParseError::no_tileset_image_width;
+    return ParseError::NoTilesetImageWidth;
   }
 
   if (const auto height = int_attribute(imageNode, "height")) {
     tilesetData.image_height = *height;
   }
   else {
-    return ParseError::no_tileset_image_height;
+    return ParseError::NoTilesetImageHeight;
   }
 
   const auto relativePath = string_attribute(imageNode, "source");
   if (!relativePath) {
-    return ParseError::no_tileset_image_path;
+    return ParseError::NoTilesetImagePath;
   }
 
   auto absolutePath = std::filesystem::weakly_canonical(dir / *relativePath);
@@ -110,10 +110,10 @@ namespace {
     tilesetData.image_path = std::move(absolutePath);
   }
   else {
-    return ParseError::tileset_image_does_not_exist;
+    return ParseError::TilesetImageDoesNotExist;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_common_attributes(pugi::xml_node node,
@@ -125,52 +125,52 @@ namespace {
     tilesetData.name = std::move(*name);
   }
   else {
-    return ParseError::no_tileset_name;
+    return ParseError::NoTilesetName;
   }
 
   if (const auto tw = int_attribute(node, "tilewidth")) {
     tilesetData.tile_width = *tw;
   }
   else {
-    return ParseError::no_tileset_tile_width;
+    return ParseError::NoTilesetTileWidth;
   }
 
   if (const auto th = int_attribute(node, "tileheight")) {
     tilesetData.tile_height = *th;
   }
   else {
-    return ParseError::no_tileset_tile_height;
+    return ParseError::NoTilesetTileHeight;
   }
 
   if (const auto count = int_attribute(node, "tilecount")) {
     tilesetData.tile_count = *count;
   }
   else {
-    return ParseError::no_tileset_tile_count;
+    return ParseError::NoTilesetTileCount;
   }
 
   if (const auto columns = int_attribute(node, "columns")) {
     tilesetData.column_count = *columns;
   }
   else {
-    return ParseError::no_tileset_column_count;
+    return ParseError::NoTilesetColumnCount;
   }
 
   if (const auto err = _parse_image_info(node, tilesetData, dir);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = _parse_fancy_tiles(node, tilesetData); err != ParseError::none) {
+  if (const auto err = _parse_fancy_tiles(node, tilesetData); err != ParseError::None) {
     return err;
   }
 
   if (const auto err = parse_properties(node, tilesetData.context);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_external_tileset(pugi::xml_node node,
@@ -183,12 +183,12 @@ namespace {
   const auto sourcePath = std::filesystem::weakly_canonical(dir / relativePath);
 
   if (!std::filesystem::exists(sourcePath)) {
-    return ParseError::external_tileset_does_not_exist;
+    return ParseError::ExternalTilesetDoesNotExist;
   }
 
   pugi::xml_document document;
   if (!document.load_file(sourcePath.c_str())) {
-    return ParseError::unknown_external_tileset_error;
+    return ParseError::UnknownExternalTilesetError;
   }
 
   return _parse_common_attributes(document.child("tileset"), tilesetData, dir);
@@ -204,7 +204,7 @@ auto parse_tileset(pugi::xml_node node,
     tilesetData.first_tile = *firstTile;
   }
   else {
-    return ParseError::no_tileset_first_tile_id;
+    return ParseError::NoTilesetFirstTileId;
   }
 
   if (has_attribute(node, "source")) {

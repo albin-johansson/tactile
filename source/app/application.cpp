@@ -345,7 +345,7 @@ void Application::on_open_map(const OpenMapEvent& event)
   }
 
   const auto ir = parsing::parse_map(event.path);
-  if (ir.error() == parsing::ParseError::none) {
+  if (ir.error() == parsing::ParseError::None) {
     mData->model.add_map(restore_document_from_ir(ir, mData->textures));
     add_file_to_history(event.path);
   }

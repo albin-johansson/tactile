@@ -41,21 +41,21 @@ constexpr int32 _tileset_file_version = 1;
     frameTile = id.as<TileID>();
   }
   else {
-    return ParseError::no_animation_frame_tile;
+    return ParseError::NoAnimationFrameTile;
   }
 
   if (auto duration = node["duration"]) {
     frameDuration = duration.as<uint64>();
   }
   else {
-    return ParseError::no_animation_frame_duration;
+    return ParseError::NoAnimationFrameDuration;
   }
 
   auto& frame = tile.frames.emplace_back();
   frame.local_id = frameTile;
   frame.duration_ms = frameDuration;
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_fancy_tile(const YAML::Node& node,
@@ -68,7 +68,7 @@ constexpr int32 _tileset_file_version = 1;
     tileId = id.as<TileID>();
   }
   else {
-    return ParseError::no_fancy_tile_id;
+    return ParseError::NoFancyTileId;
   }
 
   auto& tile = tileset.fancy_tiles[tileId];
@@ -77,7 +77,7 @@ constexpr int32 _tileset_file_version = 1;
     tile.frames.reserve(sequence.size());
 
     for (const auto& frame : sequence) {
-      if (const auto err = _parse_animation_frame(frame, tile); err != ParseError::none) {
+      if (const auto err = _parse_animation_frame(frame, tile); err != ParseError::None) {
         return err;
       }
     }
@@ -89,22 +89,22 @@ constexpr int32 _tileset_file_version = 1;
     for (const auto& objectNode : sequence) {
       auto& object = tile.objects.emplace_back();
       if (const auto err = parse_object(objectNode, map, &object);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
   }
 
-  if (const auto err = parse_properties(node, tile.context); err != ParseError::none) {
+  if (const auto err = parse_properties(node, tile.context); err != ParseError::None) {
     return err;
   }
 
   if (const auto err = parse_components(node, map, tile.context);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_fancy_tiles(const YAML::Node& sequence,
@@ -114,12 +114,12 @@ constexpr int32 _tileset_file_version = 1;
   tileset.fancy_tiles.reserve(sequence.size());
 
   for (const auto& node : sequence) {
-    if (const auto err = _parse_fancy_tile(node, map, tileset); err != ParseError::none) {
+    if (const auto err = _parse_fancy_tile(node, map, tileset); err != ParseError::None) {
       return err;
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_tileset(const std::filesystem::path& source,
@@ -129,7 +129,7 @@ constexpr int32 _tileset_file_version = 1;
   try {
     const auto node = YAML::LoadFile(source.string());
     if (!node) {
-      return ParseError::unknown_external_tileset_error;
+      return ParseError::UnknownExternalTilesetError;
     }
 
     const auto dir = source.parent_path();
@@ -139,46 +139,46 @@ constexpr int32 _tileset_file_version = 1;
 
     if (auto version = node["version"]) {
       if (version.as<int32>() != _tileset_file_version) {
-        return ParseError::unsupported_tileset_version;
+        return ParseError::UnsupportedTilesetVersion;
       }
     }
     else {
-      return ParseError::no_tileset_version;
+      return ParseError::NoTilesetVersion;
     }
 
     if (auto name = node["name"]) {
       tileset.name = name.as<std::string>();
     }
     else {
-      return ParseError::no_tileset_name;
+      return ParseError::NoTilesetName;
     }
 
     if (auto count = node["tile-count"]) {
       tileset.tile_count = count.as<int32>();
     }
     else {
-      return ParseError::no_tileset_tile_count;
+      return ParseError::NoTilesetTileCount;
     }
 
     if (auto tw = node["tile-width"]) {
       tileset.tile_width = tw.as<int32>();
     }
     else {
-      return ParseError::no_tileset_tile_width;
+      return ParseError::NoTilesetTileWidth;
     }
 
     if (auto th = node["tile-height"]) {
       tileset.tile_height = th.as<int32>();
     }
     else {
-      return ParseError::no_tileset_tile_height;
+      return ParseError::NoTilesetTileHeight;
     }
 
     if (auto columns = node["column-count"]) {
       tileset.column_count = columns.as<int32>();
     }
     else {
-      return ParseError::no_tileset_column_count;
+      return ParseError::NoTilesetColumnCount;
     }
 
     if (auto rel = node["image-path"]) {
@@ -187,48 +187,48 @@ constexpr int32 _tileset_file_version = 1;
         tileset.image_path = std::move(abs);
       }
       else {
-        return ParseError::tileset_image_does_not_exist;
+        return ParseError::TilesetImageDoesNotExist;
       }
     }
     else {
-      return ParseError::no_tileset_image_path;
+      return ParseError::NoTilesetImagePath;
     }
 
     if (auto imageWidth = node["image-width"]) {
       tileset.image_width = imageWidth.as<int32>();
     }
     else {
-      return ParseError::no_tileset_image_width;
+      return ParseError::NoTilesetImageWidth;
     }
 
     if (auto imageHeight = node["image-height"]) {
       tileset.image_height = imageHeight.as<int32>();
     }
     else {
-      return ParseError::no_tileset_image_height;
+      return ParseError::NoTilesetImageHeight;
     }
 
     if (auto sequence = node["tiles"]) {
       if (const auto err = _parse_fancy_tiles(sequence, map, tileset);
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
 
     if (const auto err = parse_properties(node, tileset.context);
-        err != ParseError::none) {
+        err != ParseError::None) {
       return err;
     }
 
     if (const auto err = parse_components(node, map, tileset.context);
-        err != ParseError::none) {
+        err != ParseError::None) {
       return err;
     }
 
-    return ParseError::none;
+    return ParseError::None;
   }
   catch (...) {
-    return ParseError::unknown_external_tileset_error;
+    return ParseError::UnknownExternalTilesetError;
   }
 }
 
@@ -245,27 +245,27 @@ auto parse_tilesets(const YAML::Node& sequence,
     auto path = node["path"];
 
     if (!first) {
-      return ParseError::no_tileset_first_tile_id;
+      return ParseError::NoTilesetFirstTileId;
     }
 
     if (!path) {
-      return ParseError::no_external_tileset_path;
+      return ParseError::NoExternalTilesetPath;
     }
 
     const auto source = std::filesystem::weakly_canonical(dir / path.as<std::string>());
 
     if (std::filesystem::exists(source)) {
       if (const auto err = _parse_tileset(source, map, first.as<TileID>());
-          err != ParseError::none) {
+          err != ParseError::None) {
         return err;
       }
     }
     else {
-      return ParseError::external_tileset_does_not_exist;
+      return ParseError::ExternalTilesetDoesNotExist;
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace tactile::parsing
