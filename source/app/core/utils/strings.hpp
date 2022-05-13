@@ -58,7 +58,7 @@ template <typename T, is_integral<T> = 0>
   T value{};
 
   const auto* begin = str;
-  const auto* end = str + ((std::min))(length, std::strlen(str));
+  const auto* end = str + (std::min)(length, std::strlen(str));
   const auto [ptr, err] = std::from_chars(begin, end, value, base);
 
   if (err == std::errc{}) {
