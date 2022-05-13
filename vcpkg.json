@@ -12,6 +12,7 @@
     "boost-container",
     "boost-exception",
     "boost-stacktrace",
+    "boost-uuid",
     "entt",
     "fmt",
     "glew",
