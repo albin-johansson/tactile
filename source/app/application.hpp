@@ -24,16 +24,16 @@
 #include <centurion/event.hpp>
 #include <entt/fwd.hpp>
 
-#include "core/events/command_events.hpp"
-#include "core/events/component_events.hpp"
-#include "core/events/layer_events.hpp"
-#include "core/events/map_events.hpp"
-#include "core/events/misc_events.hpp"
-#include "core/events/object_events.hpp"
-#include "core/events/property_events.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/tool_events.hpp"
-#include "core/events/viewport_events.hpp"
+#include "editor/events/command_events.hpp"
+#include "editor/events/component_events.hpp"
+#include "editor/events/layer_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/misc_events.hpp"
+#include "editor/events/object_events.hpp"
+#include "editor/events/property_events.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/events/tool_events.hpp"
+#include "editor/events/viewport_events.hpp"
 #include "loop.hpp"
 #include "tactile.hpp"
 

@@ -26,8 +26,8 @@
 
 #include "core/systems/tileset_system.hpp"
 #include "core/tools/tool_manager.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/tool_events.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/events/tool_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/style.hpp"
 #include "editor/gui/icons.hpp"

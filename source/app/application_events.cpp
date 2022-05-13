@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "application.hpp"
-#include "core/events/map_events.hpp"
-#include "core/events/misc_events.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/viewport_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/misc_events.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/events/viewport_events.hpp"
 #include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/menus/file_menu.hpp"
 #include "editor/gui/menus/map_menu.hpp"

@@ -25,8 +25,8 @@
 
 #include "core/tools/tool_type.hpp"
 #include "core/utils/formatted_string.hpp"
-#include "core/events/command_events.hpp"
-#include "core/events/tool_events.hpp"
+#include "editor/events/command_events.hpp"
+#include "editor/events/tool_events.hpp"
 #include "editor/gui/components/component_editor.hpp"
 #include "editor/gui/dialogs/settings_dialog.hpp"
 #include "editor/gui/icons.hpp"

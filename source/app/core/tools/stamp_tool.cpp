@@ -33,7 +33,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_pos.hpp"
 #include "core/utils/random.hpp"
-#include "core/events/tool_events.hpp"
+#include "editor/events/tool_events.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

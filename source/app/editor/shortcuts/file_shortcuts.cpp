@@ -19,8 +19,8 @@
 
 #include "file_shortcuts.hpp"
 
-#include "core/events/map_events.hpp"
-#include "core/events/misc_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
 #include "mappings.hpp"

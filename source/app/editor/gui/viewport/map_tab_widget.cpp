@@ -24,7 +24,7 @@
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
-#include "core/events/map_events.hpp"
+#include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/model.hpp"

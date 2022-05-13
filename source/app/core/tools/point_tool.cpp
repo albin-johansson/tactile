@@ -25,7 +25,7 @@
 #include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "core/events/tool_events.hpp"
+#include "editor/events/tool_events.hpp"
 
 namespace tactile {
 

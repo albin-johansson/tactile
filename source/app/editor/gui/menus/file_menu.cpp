@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/map_events.hpp"
-#include "core/events/misc_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/misc_events.hpp"
 #include "editor/gui/dialogs/create_map_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"

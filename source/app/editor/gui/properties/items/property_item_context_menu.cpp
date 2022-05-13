@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/property_events.hpp"
+#include "editor/events/property_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 
