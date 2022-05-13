@@ -108,7 +108,7 @@ struct ComponentDef final
  */
 struct Component final
 {
-  ComponentID type;         ///< The ID of the component definition type.
+  ComponentID type{};       ///< The ID of the component definition type.
   ComponentAttrMap values;  ///< Current values.
 };
 
