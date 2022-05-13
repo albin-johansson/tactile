@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "editor/document.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
 

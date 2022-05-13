@@ -23,7 +23,7 @@
 
 #include <nlohmann/json_fwd.hpp>
 
-#include "io/maps/ir.hpp"
+#include "io/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
 namespace tactile::parsing {

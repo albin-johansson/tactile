@@ -22,10 +22,11 @@
 #include <filesystem>  // weakly_canonical, exists
 #include <utility>     // move
 
+#include "io/maps/ir.hpp"
+#include "io/maps/parser/xml/xml_attribute_parser.hpp"
+#include "io/maps/parser/xml/xml_layer_parser.hpp"
 #include "io/maps/xml_utils.hpp"
 #include "misc/assert.hpp"
-#include "xml_attribute_parser.hpp"
-#include "xml_layer_parser.hpp"
 
 namespace tactile::parsing {
 namespace {

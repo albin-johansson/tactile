@@ -26,6 +26,7 @@
 
 #include <centurion/color.hpp>
 
+#include "io/maps/ir.hpp"
 #include "io/maps/xml_utils.hpp"
 #include "misc/assert.hpp"
 

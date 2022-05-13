@@ -27,6 +27,8 @@
 
 #include <centurion/color.hpp>
 
+#include "io/maps/ir.hpp"
+
 namespace tactile::parsing {
 namespace {
 

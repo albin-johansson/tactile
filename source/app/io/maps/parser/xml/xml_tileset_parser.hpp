@@ -23,7 +23,8 @@
 
 #include <pugixml.hpp>
 
-#include "io/maps/parser/parse_data.hpp"
+#include "io/maps/ir.hpp"
+#include "io/maps/parser/parse_error.hpp"
 
 namespace tactile::parsing {
 

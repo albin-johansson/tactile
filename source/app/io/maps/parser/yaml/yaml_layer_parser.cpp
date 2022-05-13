@@ -25,7 +25,8 @@
 
 #include "core/utils/strings.hpp"
 #include "core/utils/tiles.hpp"
-#include "yaml_attribute_parser.hpp"
+#include "io/maps/ir.hpp"
+#include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
 
 namespace tactile::parsing {
 namespace {

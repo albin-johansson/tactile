@@ -19,21 +19,35 @@
 
 #pragma once
 
-#include <yaml-cpp/yaml.h>
+namespace tactile {
 
-#include "io/fwd.hpp"
-#include "io/maps/parser/parse_error.hpp"
+class FileDialog;
+class PreferenceState;
 
-namespace tactile::parsing {
+namespace emitter {
 
-[[nodiscard]] auto parse_component_definitions(const YAML::Node& node, ir::MapData& data)
-    -> ParseError;
+class EmitInfo;
 
-[[nodiscard]] auto parse_properties(const YAML::Node& node,
-                                    ir::AttributeContextData& context) -> ParseError;
+}  // namespace emitter
 
-[[nodiscard]] auto parse_components(const YAML::Node& node,
-                                    const ir::MapData& map,
-                                    ir::AttributeContextData& context) -> ParseError;
+namespace parsing {
 
-}  // namespace tactile::parsing
+class ParseData;
+
+}  // namespace parsing
+
+namespace ir {
+
+struct AttributeContextData;
+struct ObjectData;
+struct LayerData;
+struct TileLayerData;
+struct ObjectLayerData;
+struct GroupLayerData;
+struct MetaAnimationFrameData;
+struct MetaTileData;
+struct TilesetData;
+struct MapData;
+
+}  // namespace ir
+}  // namespace tactile

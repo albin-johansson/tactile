@@ -19,12 +19,11 @@
 
 #pragma once
 
+#include "core/fwd.hpp"
 #include "editor/document.hpp"
-#include "parser/parse_data.hpp"
+#include "io/fwd.hpp"
 
 namespace tactile {
-
-class TextureManager;
 
 /**
  * \brief Creates a map document from an intermediate map representation.

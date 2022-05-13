@@ -29,7 +29,7 @@
 #include <pugixml.hpp>
 
 #include "core/utils/strings.hpp"
-#include "emit_info.hpp"
+#include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"

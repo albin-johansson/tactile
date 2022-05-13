@@ -38,6 +38,8 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/utils/texture_manager.hpp"
+#include "io/maps/ir.hpp"
+#include "io/maps/parser/parse_data.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

@@ -21,14 +21,14 @@
 
 #include <exception>  // exception
 
-#include "json/json_parser.hpp"
+#include "io/maps/parser/json/json_parser.hpp"
+#include "io/maps/parser/xml/xml_parser.hpp"
+#include "io/maps/parser/yaml/yaml_parser.hpp"
 #include "meta/build.hpp"
 #include "meta/profile.hpp"
 #include "misc/logging.hpp"
 #include "misc/stacktrace.hpp"
 #include "misc/throw.hpp"
-#include "xml/xml_parser.hpp"
-#include "yaml/yaml_parser.hpp"
 
 namespace tactile::parsing {
 

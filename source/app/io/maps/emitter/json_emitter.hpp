@@ -19,9 +19,9 @@
 
 #pragma once
 
-namespace tactile::emitter {
+#include "io/fwd.hpp"
 
-class EmitInfo;
+namespace tactile::emitter {
 
 void emit_json_map(const EmitInfo& info);
 

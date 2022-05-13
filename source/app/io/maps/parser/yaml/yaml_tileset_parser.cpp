@@ -23,8 +23,10 @@
 #include <string>      // string
 #include <utility>     // move
 
-#include "yaml_attribute_parser.hpp"
-#include "yaml_layer_parser.hpp"
+#include "io/maps/ir.hpp"
+#include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
+#include "io/maps/parser/yaml/yaml_layer_parser.hpp"
+#include "tactile.hpp"
 
 namespace tactile::parsing {
 namespace {

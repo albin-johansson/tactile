@@ -20,8 +20,9 @@
 #include "json_layer_parser.hpp"
 
 #include "core/utils/tiles.hpp"
+#include "io/maps/ir.hpp"
 #include "io/maps/json_utils.hpp"
-#include "json_attribute_parser.hpp"
+#include "io/maps/parser/json/json_attribute_parser.hpp"
 #include "misc/logging.hpp"
 
 namespace tactile::parsing {

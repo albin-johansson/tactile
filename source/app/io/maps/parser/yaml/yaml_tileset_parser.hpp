@@ -23,8 +23,8 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "io/maps/parser/parse_data.hpp"
-#include "tactile.hpp"
+#include "io/fwd.hpp"
+#include "io/maps/parser/parse_error.hpp"
 
 namespace tactile::parsing {
 

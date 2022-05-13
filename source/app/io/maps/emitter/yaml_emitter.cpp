@@ -28,7 +28,7 @@
 
 #include "core/attribute.hpp"
 #include "core/utils/strings.hpp"
-#include "emit_info.hpp"
+#include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/yaml_utils.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"
