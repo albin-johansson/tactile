@@ -118,7 +118,7 @@ void _apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
   set(ImGuiCol_HeaderHovered, _with_alpha(cfg.accent, 0.80f));
   set(ImGuiCol_HeaderActive, cfg.selection);
 
-  set(ImGuiCol_TabActive, cfg.selection);
+  set(ImGuiCol_TabActive, cfg.selection); // TODO make more distinctive
   set(ImGuiCol_TabUnfocusedActive, _with_alpha(cfg.selection, 0.80f));
   set(ImGuiCol_Tab, _with_alpha(component, 0.25f));
   set(ImGuiCol_TabUnfocused, _with_alpha(component, 0.25f));
