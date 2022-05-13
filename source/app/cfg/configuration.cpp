@@ -23,7 +23,6 @@
 #include <exception>  // set_terminate
 
 #include <GL/glew.h>
-
 #include <centurion/system.hpp>
 
 #include "cfg/sdl_attributes.hpp"

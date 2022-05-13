@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
 #include <entt/fwd.hpp>
 
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "editor/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"

@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
 #include "core/attribute.hpp"
+#include "core/common/maybe.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 #include "tactile.hpp"
 
@@ -50,8 +50,8 @@ class ChangePropertyTypeDialog final : public ADialog
 
  private:
   AttributeType mCurrentType{AttributeType::String};
-  std::optional<std::string> mPropertyName;
-  std::optional<AttributeType> mPreviousType;
+  Maybe<std::string> mPropertyName;
+  Maybe<AttributeType> mPreviousType;
 };
 
 }  // namespace tactile

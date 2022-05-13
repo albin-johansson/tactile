@@ -42,8 +42,8 @@ namespace {
 constexpr cen::color _rubber_band_color{0, 0x44, 0xCC, 100};
 constexpr cen::color _grid_color{200, 200, 200, 40};
 
-constinit std::optional<float> _view_width;
-constinit std::optional<float> _view_height;
+constinit Maybe<float> _view_width;
+constinit Maybe<float> _view_height;
 
 void _update_viewport_offset(const entt::entity tilesetEntity,
                              entt::dispatcher& dispatcher,
@@ -139,12 +139,12 @@ void update_tileset_view(const entt::registry& registry,
   graphics.pop_clip();
 }
 
-auto get_tileset_view_width() -> std::optional<float>
+auto get_tileset_view_width() -> Maybe<float>
 {
   return _view_width;
 }
 
-auto get_tileset_view_height() -> std::optional<float>
+auto get_tileset_view_height() -> Maybe<float>
 {
   return _view_height;
 }

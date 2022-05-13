@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <deque>     // deque
-#include <optional>  // optional
-#include <string>    // string
-#include <utility>   // move
+#include <deque>    // deque
+#include <string>   // string
+#include <utility>  // move
 
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/utils/sfinae.hpp"
 #include "editor/commands/command.hpp"
@@ -187,7 +187,7 @@ class CommandStack final
    * \return the index of the current command;
    *         an empty optional is returned is there is no such command.
    */
-  [[nodiscard]] auto index() const noexcept -> std::optional<usize> { return mIndex; }
+  [[nodiscard]] auto index() const noexcept -> Maybe<usize> { return mIndex; }
 
   /**
    * \brief Returns the clean index, if there is one.
@@ -195,10 +195,7 @@ class CommandStack final
    * \return the index of the command considered to represent the clean state;
    *         an empty optional is returned is there is no clean index.
    */
-  [[nodiscard]] auto clean_index() const noexcept -> std::optional<usize>
-  {
-    return mCleanIndex;
-  }
+  [[nodiscard]] auto clean_index() const noexcept -> Maybe<usize> { return mCleanIndex; }
 
   /**
    * \brief Returns the maximum amount of commands that the stack can hold.
@@ -209,8 +206,8 @@ class CommandStack final
 
  private:
   std::deque<Unique<ACommand>> mStack;
-  std::optional<usize> mIndex;
-  std::optional<usize> mCleanIndex;
+  Maybe<usize> mIndex;
+  Maybe<usize> mCleanIndex;
   usize mCapacity;
 
   void remove_oldest_command();

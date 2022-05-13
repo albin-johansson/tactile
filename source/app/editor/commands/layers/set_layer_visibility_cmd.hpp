@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
@@ -45,7 +44,7 @@ class SetLayerVisibilityCmd final : public ACommand
   RegistryRef mRegistry;
   LayerID mLayerId;
   bool mVisible;
-  std::optional<bool> mPreviousVisibility;
+  Maybe<bool> mPreviousVisibility;
 };
 
 }  // namespace tactile

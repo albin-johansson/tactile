@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "core/region.hpp"
 #include "tactile.hpp"
 
@@ -39,6 +38,6 @@ namespace tactile {
  * \return the current selection; an empty optional if there is none.
  */
 [[nodiscard]] auto rubber_band(const ImVec2& offset, const ImVec2& tileSize)
-    -> std::optional<Region>;
+    -> Maybe<Region>;
 
 }  // namespace tactile

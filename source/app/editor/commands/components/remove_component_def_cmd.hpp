@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "editor/commands/command.hpp"
@@ -46,7 +45,7 @@ class RemoveComponentDefCmd final : public ACommand
  private:
   RegistryRef mRegistry;
   ComponentID mComponentId{};
-  std::optional<sys::RemoveComponentDefResult> mSnapshot;
+  Maybe<sys::RemoveComponentDefResult> mSnapshot;
 };
 
 }  // namespace tactile

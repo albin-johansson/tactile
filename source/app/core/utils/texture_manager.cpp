@@ -49,8 +49,7 @@ TextureManager::~TextureManager()
   mTextures.clear();
 }
 
-auto TextureManager::load(const std::filesystem::path& path)
-    -> std::optional<comp::Texture>
+auto TextureManager::load(const std::filesystem::path& path) -> Maybe<comp::Texture>
 {
   comp::Texture texture;
   texture.path = path;
@@ -59,7 +58,7 @@ auto TextureManager::load(const std::filesystem::path& path)
   TextureDataPtr data{
       stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4)};
   if (!data) {
-    return std::nullopt;
+    return nothing;
   }
 
   // Create a OpenGL texture identifier

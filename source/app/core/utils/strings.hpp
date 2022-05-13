@@ -23,11 +23,11 @@
 #include <charconv>      // from_chars
 #include <cstring>       // strlen
 #include <filesystem>    // path
-#include <optional>      // optional
 #include <string>        // string, stof
 #include <system_error>  // errc
 #include <vector>        // vector
 
+#include "core/common/maybe.hpp"
 #include "core/utils/sfinae.hpp"
 #include "tactile.hpp"
 
@@ -49,10 +49,10 @@ namespace tactile {
  */
 template <typename T, is_integral<T> = 0>
 [[nodiscard]] auto from_string(const char* str, const usize length, const int base)
-    -> std::optional<T>
+    -> Maybe<T>
 {
   if (!str) {
-    return std::nullopt;
+    return nothing;
   }
 
   T value{};
@@ -65,7 +65,7 @@ template <typename T, is_integral<T> = 0>
     return value;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -79,10 +79,10 @@ template <typename T, is_integral<T> = 0>
  *         an empty optional is returned upon failure.
  */
 template <typename T, is_integral<T> = 0>
-[[nodiscard]] auto from_string(const char* str, const int base = 10) -> std::optional<T>
+[[nodiscard]] auto from_string(const char* str, const int base = 10) -> Maybe<T>
 {
   if (!str) {
-    return std::nullopt;
+    return nothing;
   }
   else {
     return from_string<T>(str, std::strlen(str), base);
@@ -98,10 +98,10 @@ template <typename T, is_integral<T> = 0>
  *         an empty optional is returned upon failure.
  */
 template <typename T, is_floating<T> = 0>
-[[nodiscard]] auto from_string(const char* str) -> std::optional<T>
+[[nodiscard]] auto from_string(const char* str) -> Maybe<T>
 {
   if (!str) {
-    return std::nullopt;
+    return nothing;
   }
 
   /* We only do this check in the floating-point overload, because it's the only version
@@ -114,14 +114,14 @@ template <typename T, is_floating<T> = 0>
     return value;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 #else
   try {
     return static_cast<T>(std::stof(str));
   }
   catch (...) {
-    return std::nullopt;
+    return nothing;
   }
 #endif  // __cpp_lib_to_chars >= 201611L
 }

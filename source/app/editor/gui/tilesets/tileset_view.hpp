@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <optional>  // optional
-
 #include <entt/fwd.hpp>
 
+#include "core/common/maybe.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -31,8 +30,8 @@ void update_tileset_view(const entt::registry& registry,
                          entt::entity tilesetEntity,
                          entt::dispatcher& dispatcher);
 
-[[nodiscard]] auto get_tileset_view_width() -> std::optional<float>;
+[[nodiscard]] auto get_tileset_view_width() -> Maybe<float>;
 
-[[nodiscard]] auto get_tileset_view_height() -> std::optional<float>;
+[[nodiscard]] auto get_tileset_view_height() -> Maybe<float>;
 
 }  // namespace tactile

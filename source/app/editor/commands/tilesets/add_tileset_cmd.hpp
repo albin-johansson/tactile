@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "core/components/texture.hpp"
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
@@ -51,8 +50,8 @@ class AddTilesetCmd final : public ACommand
   comp::Texture mTexture;
   int32 mTileWidth;
   int32 mTileHeight;
-  std::optional<TilesetID> mTilesetId;
-  std::optional<sys::TilesetSnapshot> mSnapshot;
+  Maybe<TilesetID> mTilesetId;
+  Maybe<sys::TilesetSnapshot> mSnapshot;
 };
 
 }  // namespace tactile

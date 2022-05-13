@@ -19,15 +19,15 @@
 
 #include "component_editor.hpp"
 
-#include <optional>  // optional
-#include <string>    // string
-#include <utility>   // move
+#include <string>   // string
+#include <utility>  // move
 
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/attribute.hpp"
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "editor/constants.hpp"
@@ -53,7 +53,7 @@ struct ComponentEditor::Data final
   CreateComponentAttributeDialog create_component_attr;
   RenameComponentDialog rename_component;
   RenameComponentAttributeDialog rename_component_attr;
-  std::optional<ComponentID> active_component;
+  Maybe<ComponentID> active_component;
 };
 
 ComponentEditor::ComponentEditor()

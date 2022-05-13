@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
 #include "core/attribute.hpp"
+#include "core/common/maybe.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
@@ -48,7 +48,7 @@ class ChangePropertyTypeCmd final : public ACommand
   ContextID mContextId;
   std::string mName;
   AttributeType mPropertyType;
-  std::optional<Attribute> mPreviousValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

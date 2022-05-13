@@ -23,9 +23,9 @@
 #include <filesystem>  // path, exists
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
-#include <optional>    // optional
 #include <utility>     // move
 
+#include "core/common/maybe.hpp"
 #include "core/utils/strings.hpp"
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
@@ -41,7 +41,7 @@ constexpr usize _max_size = 10;
 
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
-inline std::optional<std::string> _last_closed_file;
+inline Maybe<std::string> _last_closed_file;
 inline std::deque<std::string> _history;
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&

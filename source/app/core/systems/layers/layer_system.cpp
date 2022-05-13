@@ -459,14 +459,14 @@ auto is_object_layer_active(const entt::registry& registry) -> bool
   }
 }
 
-auto get_active_layer_id(const entt::registry& registry) -> std::optional<LayerID>
+auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>
 {
   const auto& active = registry.ctx().at<comp::ActiveLayer>();
   if (active.entity != entt::null) {
     return checked_get<comp::Layer>(registry, active.entity).id;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 

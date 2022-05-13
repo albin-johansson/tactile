@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/tools/tool.hpp"
 
@@ -72,7 +71,7 @@ class StampTool final : public ATool
  private:
   TileCache mPrevious;  ///< Previous tile state.
   TileCache mCurrent;   ///< The current stamp sequence.
-  std::optional<TilePos> mLastChangedPos;
+  Maybe<TilePos> mLastChangedPos;
   bool mRandomMode{};
 
   void update_sequence(entt::registry& registry, const TilePos& cursor);

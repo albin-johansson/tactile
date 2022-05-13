@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include <optional>     // optional
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // pair
@@ -28,6 +27,7 @@
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "tactile.hpp"
 
@@ -162,7 +162,7 @@ void rename_component_def(entt::registry& registry, ComponentID compId, std::str
                                            std::string_view name) -> bool;
 
 [[nodiscard]] auto get_first_available_component_def(const entt::registry& registry)
-    -> std::optional<ComponentID>;
+    -> Maybe<ComponentID>;
 
 [[nodiscard]] auto find_component_def(const entt::registry& registry, ComponentID compId)
     -> entt::entity;

@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -47,7 +47,7 @@ class RenameComponentCmd final : public ACommand
   RegistryRef mRegistry;
   ComponentID mComponentId{};
   std::string mUpdatedName;
-  std::optional<std::string> mPreviousName;
+  Maybe<std::string> mPreviousName;
 };
 
 }  // namespace tactile

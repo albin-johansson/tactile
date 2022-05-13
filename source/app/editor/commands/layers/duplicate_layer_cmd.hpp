@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
@@ -44,7 +43,7 @@ class DuplicateLayerCmd final : public ACommand
  private:
   RegistryRef mRegistry;
   LayerID mLayerId;
-  std::optional<LayerID> mNewLayerId;
+  Maybe<LayerID> mNewLayerId;
 };
 
 }  // namespace tactile

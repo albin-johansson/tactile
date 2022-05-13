@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -46,7 +46,7 @@ class CreateComponentDefCmd final : public ACommand
  private:
   RegistryRef mRegistry;
   std::string mName;
-  std::optional<ComponentID> mComponentId;
+  Maybe<ComponentID> mComponentId;
 };
 
 }  // namespace tactile

@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <optional>  // optional
-
 #include <centurion/fwd.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/common/maybe.hpp"
 #include "core/components/texture.hpp"
 #include "core/region.hpp"
 #include "core/tile_pos.hpp"
@@ -267,7 +266,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *         an empty optional if something went wrong.
  */
 [[nodiscard]] auto convert_to_local(const entt::registry& registry, TileID global)
-    -> std::optional<TileID>;
+    -> Maybe<TileID>;
 
 /// \} End of group tileset-system
 

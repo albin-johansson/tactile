@@ -19,12 +19,12 @@
 
 #include "tileset_system.hpp"
 
-#include <unordered_map>  // unordered_map
-#include <utility>        // move
+#include <utility>  // move
 
 #include <centurion/math.hpp>
 #include <entt/entity/registry.hpp>
 
+#include "core/common/associative.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/texture.hpp"
@@ -41,9 +41,9 @@ namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto create_source_rect_cache(const comp::Tileset& tileset)
-    -> std::unordered_map<TileID, cen::irect>
+    -> HashMap<TileID, cen::irect>
 {
-  std::unordered_map<TileID, cen::irect> cache;
+  HashMap<TileID, cen::irect> cache;
 
   const auto amount = (tileset.last_id + 1) - tileset.first_id;
   cache.reserve(static_cast<usize>(amount));
@@ -410,7 +410,7 @@ auto get_tile_from_tileset(const entt::registry& registry,
 }
 
 auto convert_to_local(const entt::registry& registry, const TileID global)
-    -> std::optional<TileID>
+    -> Maybe<TileID>
 {
   const auto entity = find_tileset_with_tile(registry, global);
   if (entity != entt::null) {
@@ -418,7 +418,7 @@ auto convert_to_local(const entt::registry& registry, const TileID global)
     return global - tileset.first_id;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 

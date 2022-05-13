@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include <optional>  // optional
-
 #include <centurion/initialization.hpp>
 #include <centurion/opengl.hpp>
 #include <centurion/window.hpp>
 
-#include "imgui_context.hpp"
-#include "protobuf_context.hpp"
+#include "cfg/imgui_context.hpp"
+#include "cfg/protobuf_context.hpp"
+#include "core/common/maybe.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -50,9 +49,9 @@ class AppConfiguration final
   cen::img mIMG;
 
   /* Initialization of these members needs to be deferred */
-  std::optional<cen::window> mWindow;
-  std::optional<cen::gl_context> mOpenGL;
-  std::optional<ImGuiContext> mImGui;
+  Maybe<cen::window> mWindow;
+  Maybe<cen::gl_context> mOpenGL;
+  Maybe<ImGuiContext> mImGui;
 };
 
 }  // namespace tactile

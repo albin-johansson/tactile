@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "editor/commands/maps/map_command_cache.hpp"
@@ -44,8 +43,8 @@ class ResizeMapCmd final : public ACommand
   usize mRows{};
   usize mCols{};
   MapCommandCache mCache;
-  std::optional<usize> mPrevRows{};
-  std::optional<usize> mPrevCols{};
+  Maybe<usize> mPrevRows{};
+  Maybe<usize> mPrevCols{};
 
   [[nodiscard]] auto is_lossy_resize() const -> bool;
 };

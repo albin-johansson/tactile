@@ -20,20 +20,20 @@
 #include "yaml_attribute_parser.hpp"
 
 #include <filesystem>   // path
-#include <optional>     // optional
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // move
 
 #include <centurion/color.hpp>
 
+#include "core/common/maybe.hpp"
 #include "io/maps/ir.hpp"
 
 namespace tactile::parsing {
 namespace {
 
 [[nodiscard]] auto _parse_attribute_type(const std::string_view type)
-    -> std::optional<AttributeType>
+    -> Maybe<AttributeType>
 {
   if (type == "string") {
     return AttributeType::String;
@@ -57,13 +57,13 @@ namespace {
     return AttributeType::Path;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 
 [[nodiscard]] auto _parse_attribute_value(const YAML::Node& value,
                                           const AttributeType type)
-    -> std::optional<Attribute>
+    -> Maybe<Attribute>
 {
   switch (type) {
     case AttributeType::String:
@@ -88,14 +88,14 @@ namespace {
         return *color;
       }
       else {
-        return std::nullopt;
+        return nothing;
       }
     }
     case AttributeType::Object:
       return object_t{value.as<int32>()};
 
     default:
-      return std::nullopt;
+      return nothing;
   }
 }
 

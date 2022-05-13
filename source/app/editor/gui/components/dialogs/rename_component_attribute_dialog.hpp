@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "editor/gui/dialogs/string_input_dialog.hpp"
 #include "tactile.hpp"
@@ -47,7 +47,7 @@ class RenameComponentAttributeDialog final : public AStringInputDialog
       -> bool override;
 
  private:
-  std::optional<ComponentID> mComponentId;
+  Maybe<ComponentID> mComponentId;
 };
 
 }  // namespace tactile

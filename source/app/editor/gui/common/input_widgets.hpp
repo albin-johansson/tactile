@@ -20,24 +20,24 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <optional>    // optional
 #include <string>      // string
 
 #include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "core/attribute.hpp"
+#include "core/common/maybe.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
 [[nodiscard]] auto input_attribute(const char* id, const Attribute& value)
-    -> std::optional<Attribute>;
+    -> Maybe<Attribute>;
 
-[[nodiscard]] auto input_int(const char* id, int value) -> std::optional<int>;
+[[nodiscard]] auto input_int(const char* id, int value) -> Maybe<int>;
 
 [[nodiscard]] auto input_float(const char* id, float value, float min = 0, float max = 0)
-    -> std::optional<float>;
+    -> Maybe<float>;
 
 [[nodiscard]] auto input_string_with_hint(const char* id,
                                           const char* hint,
@@ -45,24 +45,24 @@ namespace tactile {
                                           const char* label = nullptr,
                                           ImGuiInputTextFlags flags = 0,
                                           ImGuiInputTextCallback filter = nullptr)
-    -> std::optional<std::string>;
+    -> Maybe<std::string>;
 
 [[nodiscard]] auto input_string(const char* id,
                                 const std::string& value,
                                 const char* label = nullptr,
                                 ImGuiInputTextFlags flags = 0,
                                 ImGuiInputTextCallback filter = nullptr)
-    -> std::optional<std::string>;
+    -> Maybe<std::string>;
 
-[[nodiscard]] auto input_bool(const char* id, bool value) -> std::optional<bool>;
+[[nodiscard]] auto input_bool(const char* id, bool value) -> Maybe<bool>;
 
 [[nodiscard]] auto input_object(const char* id, object_t value)
-    -> std::optional<object_t>;
+    -> Maybe<object_t>;
 
 [[nodiscard]] auto input_color(const char* id, cen::color value)
-    -> std::optional<cen::color>;
+    -> Maybe<cen::color>;
 
 [[nodiscard]] auto input_path(const char* id, const std::filesystem::path& value)
-    -> std::optional<std::filesystem::path>;
+    -> Maybe<std::filesystem::path>;
 
 }  // namespace tactile

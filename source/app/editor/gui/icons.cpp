@@ -19,8 +19,7 @@
 
 #include "icons.hpp"
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "io/directories.hpp"
 #include "misc/assert.hpp"
 #include "misc/throw.hpp"
@@ -28,7 +27,7 @@
 namespace tactile {
 namespace {
 
-constinit std::optional<uint> _tactile_icon;
+constinit Maybe<uint> _tactile_icon;
 
 }  // namespace
 

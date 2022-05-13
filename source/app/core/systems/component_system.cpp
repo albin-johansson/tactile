@@ -296,7 +296,7 @@ auto is_component_name_taken(const entt::registry& registry, const std::string_v
 }
 
 auto get_first_available_component_def(const entt::registry& registry)
-    -> std::optional<ComponentID>
+    -> Maybe<ComponentID>
 {
   if (!registry.storage<comp::ComponentDef>().empty()) {
     const auto entity = registry.view<comp::ComponentDef>().front();
@@ -304,7 +304,7 @@ auto get_first_available_component_def(const entt::registry& registry)
     return def.id;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 

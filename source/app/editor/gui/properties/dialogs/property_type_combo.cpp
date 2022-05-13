@@ -22,11 +22,11 @@
 #include <algorithm>  // find_if
 #include <array>      // array
 #include <cstring>    // strcmp
-#include <optional>   // optional
 #include <utility>    // pair, make_pair
 
 #include <imgui.h>
 
+#include "core/common/maybe.hpp"
 #include "editor/gui/scoped.hpp"
 #include "misc/throw.hpp"
 #include "tactile.hpp"
@@ -57,7 +57,7 @@ constexpr std::array _items{std::make_pair("string", AttributeType::String),
 }
 
 void _property_type_combo_impl(AttributeType& out,
-                               std::optional<AttributeType> previousType)
+                               Maybe<AttributeType> previousType)
 {
   const auto currentIndex = _index_from_type(out);
   auto&& [currentName, currentType] = _items.at(currentIndex);
@@ -82,7 +82,7 @@ void _property_type_combo_impl(AttributeType& out,
 
 void show_property_type_combo(AttributeType& out)
 {
-  _property_type_combo_impl(out, std::nullopt);
+  _property_type_combo_impl(out, nothing);
 }
 
 void show_property_type_combo(const AttributeType previous, AttributeType& out)

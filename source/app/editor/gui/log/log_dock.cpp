@@ -19,10 +19,9 @@
 
 #include "log_dock.hpp"
 
-#include <optional>  // optional
-
 #include <imgui.h>
 
+#include "core/common/maybe.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
@@ -43,7 +42,7 @@ constinit LogLevel _log_filter = LogLevel::verbose;
 constinit bool _is_dock_focused = false;
 
 [[nodiscard]] auto _show_log_level_filter_combo(const LogLevel currentLevel)
-    -> std::optional<LogLevel>
+    -> Maybe<LogLevel>
 {
   static constexpr auto verboseFilter = "Everything";
   static constexpr auto debugFilter = "Debug / Information / Warnings / Errors";
@@ -104,7 +103,7 @@ constinit bool _is_dock_focused = false;
     }
   }
 
-  return std::nullopt;
+  return nothing;
 }
 
 [[nodiscard]] auto _color_for_level(const LogLevel level) -> ImVec4

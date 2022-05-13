@@ -19,17 +19,16 @@
 
 #include "dock_space.hpp"
 
-#include <optional>  // optional
-
 #include <imgui_internal.h>
 
+#include "core/common/maybe.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile {
 namespace {
 
-constinit std::optional<ImGuiID> _root_id;
+constinit Maybe<ImGuiID> _root_id;
 
 }  // namespace
 

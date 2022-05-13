@@ -19,14 +19,14 @@
 
 #include "property_dock.hpp"
 
-#include <locale>    // locale, isalpha, isdigit, isspace
-#include <optional>  // optional
-#include <utility>   // move
+#include <locale>   // locale, isalpha, isdigit, isspace
+#include <utility>  // move
 
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
@@ -55,8 +55,8 @@ namespace tactile {
 namespace {
 
 inline PropertyItemContextMenuState _context_state;
-inline std::optional<std::string> _rename_target;
-inline std::optional<std::string> _change_type_target;
+inline Maybe<std::string> _rename_target;
+inline Maybe<std::string> _change_type_target;
 constinit bool _is_focused = false;
 
 inline AddPropertyDialog _add_dialog;
@@ -74,7 +74,7 @@ void _prepare_table_row(const char* label)
 
 [[nodiscard]] auto _native_name_row(const std::string& name,
                                     const bool validateAsFileName = false)
-    -> std::optional<std::string>
+    -> Maybe<std::string>
 {
   _prepare_table_row("Name");
 

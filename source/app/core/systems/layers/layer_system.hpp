@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
-#include <utility>   // pair
+#include <string>   // string
+#include <utility>  // pair
 
 #include <entt/fwd.hpp>
 
+#include "core/common/maybe.hpp"
 #include "core/components/layers.hpp"
 #include "core/map_info.hpp"
 #include "core/systems/snapshot.hpp"
@@ -162,8 +162,7 @@ void select_layer(entt::registry& registry, LayerID id);
 
 [[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto get_active_layer_id(const entt::registry& registry)
-    -> std::optional<LayerID>;
+[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>;
 
 /**
  * \brief Attempts to find the layer associated with the specified ID.

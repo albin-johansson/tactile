@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include <optional>       // optional
-#include <unordered_map>  // unordered_map
-#include <vector>         // vector
+#include <vector>  // vector
 
 #include <centurion/math.hpp>
 #include <entt/entity/entity.hpp>
 
+#include "core/common/associative.hpp"
+#include "core/common/maybe.hpp"
 #include "core/region.hpp"
 #include "tactile.hpp"
 
@@ -44,7 +44,7 @@ struct TilesetContext final
   /**
    * \brief Maps all global tile identifiers to the associated tileset.
    */
-  std::unordered_map<TileID, entt::entity> tile_to_tileset;
+  HashMap<TileID, entt::entity> tile_to_tileset;
 };
 
 /**
@@ -96,13 +96,13 @@ struct MetaTile final
  */
 struct TilesetCache final
 {
-  std::unordered_map<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
-  std::unordered_map<TileID, entt::entity> tiles;       ///< Additional tile info.
+  HashMap<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
+  HashMap<TileID, entt::entity> tiles;       ///< Additional tile info.
 
   /**
    * \brief Frame-by-frame cache that maps tiles to the tile that should be rendered.
    */
-  mutable std::unordered_map<TileID, TileID> source_to_render;
+  mutable HashMap<TileID, TileID> source_to_render;
 };
 
 /**
@@ -112,7 +112,7 @@ struct TilesetCache final
  */
 struct TilesetSelection final
 {
-  std::optional<Region> region;  ///< The currently selected region, if any.
+  Maybe<Region> region;  ///< The currently selected region, if any.
 };
 
 /**

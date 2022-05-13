@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "editor/gui/components/dialogs/component_name_dialog.hpp"
 #include "tactile.hpp"
@@ -44,7 +44,7 @@ class RenameComponentDialog final : public ComponentNameDialog
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  std::optional<ComponentID> mComponentId;
+  Maybe<ComponentID> mComponentId;
 };
 
 }  // namespace tactile

@@ -20,15 +20,15 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <optional>    // optional
 
 #include <boost/container/flat_map.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "document.hpp"
-#include "events/command_events.hpp"
-#include "events/tool_events.hpp"
+#include "editor/document.hpp"
+#include "editor/events/command_events.hpp"
+#include "editor/events/tool_events.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -159,7 +159,7 @@ class DocumentModel final
    *
    * \return the identifier of the active map.
    */
-  [[nodiscard]] auto active_map_id() const -> std::optional<MapID>;
+  [[nodiscard]] auto active_map_id() const -> Maybe<MapID>;
 
   /**
    * \brief Returns the currently active document, if there is one.
@@ -280,7 +280,7 @@ class DocumentModel final
 
  private:
   document_map mDocuments;
-  std::optional<MapID> mActiveMap;
+  Maybe<MapID> mActiveMap;
   MapID mNextId{1};
 };
 

@@ -29,7 +29,7 @@
 namespace tactile {
 
 auto rubber_band(const ImVec2& scrollOffset, const ImVec2& tileSize)
-    -> std::optional<Region>
+    -> Maybe<Region>
 {
   const auto toRow = [=](const float y) {
     const auto mod = y - std::fmod(y, tileSize.y);
@@ -94,7 +94,7 @@ auto rubber_band(const ImVec2& scrollOffset, const ImVec2& tileSize)
     }
   }
 
-  return std::nullopt;
+  return nothing;
 }
 
 }  // namespace tactile

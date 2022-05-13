@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <vector>    // vector
+#include <vector>  // vector
 
 #include <pugixml.hpp>
 
+#include "core/common/maybe.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
@@ -34,18 +34,18 @@ namespace tactile {
 [[nodiscard]] auto has_attribute(pugi::xml_node node, const char* attributeName) -> bool;
 
 [[nodiscard]] auto string_attribute(pugi::xml_node node, const char* attributeName)
-    -> std::optional<std::string>;
+    -> Maybe<std::string>;
 
 [[nodiscard]] auto int_attribute(pugi::xml_node node, const char* attributeName)
-    -> std::optional<int32>;
+    -> Maybe<int32>;
 
 [[nodiscard]] auto uint_attribute(pugi::xml_node node, const char* attributeName)
-    -> std::optional<uint32>;
+    -> Maybe<uint32>;
 
 [[nodiscard]] auto float_attribute(pugi::xml_node node, const char* attributeName)
-    -> std::optional<float>;
+    -> Maybe<float>;
 
 [[nodiscard]] auto bool_attribute(pugi::xml_node node, const char* attributeName)
-    -> std::optional<bool>;
+    -> Maybe<bool>;
 
 }  // namespace tactile

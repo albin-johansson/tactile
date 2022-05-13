@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
+#include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -53,7 +53,7 @@ class UpdateComponentAttrCmd final : public ACommand
   ComponentID mComponentId{};
   std::string mAttributeName;
   Attribute mUpdatedValue;
-  std::optional<Attribute> mPreviousValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

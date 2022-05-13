@@ -19,12 +19,12 @@
 
 #include "object_system.hpp"
 
-#include <optional>  // optional
-#include <string>    // string
-#include <utility>   // move
+#include <string>   // string
+#include <utility>  // move
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/maybe.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/map_info.hpp"
@@ -119,7 +119,7 @@ auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectR
 {
   const auto objectEntity = get_object(registry, id);
 
-  std::optional<LayerID> layerId;
+  Maybe<LayerID> layerId;
   for (auto&& [layerEntity, layer, objectLayer] :
        registry.view<comp::Layer, comp::ObjectLayer>().each()) {
     if (std::erase(objectLayer.objects, objectEntity) > 0) {

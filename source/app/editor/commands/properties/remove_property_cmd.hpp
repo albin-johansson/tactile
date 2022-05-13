@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <string>    // string
+#include <string>  // string
 
 #include "core/attribute.hpp"
+#include "core/common/maybe.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "tactile.hpp"
@@ -47,7 +47,7 @@ class RemovePropertyCmd final : public ACommand
   RegistryRef mRegistry;
   ContextID mContextId;
   std::string mName;
-  std::optional<Attribute> mPreviousValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

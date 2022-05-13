@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <optional>  // optional
-
+#include "core/common/maybe.hpp"
 #include "core/systems/layers/object_system.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -52,8 +51,8 @@ class EllipseToolCmd final : public ACommand
   float mY{};
   float mWidth{};  /* X-axis diameter */
   float mHeight{}; /* Y-axis diameter */
-  std::optional<ObjectID> mObjectId;
-  std::optional<sys::RemoveObjectResult> mSnapshot;
+  Maybe<ObjectID> mObjectId;
+  Maybe<sys::RemoveObjectResult> mSnapshot;
 };
 
 /// \} End of group commands
