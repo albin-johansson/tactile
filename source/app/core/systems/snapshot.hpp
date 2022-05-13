@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include <functional>  // less
-#include <map>         // map
-#include <optional>    // optional
-#include <string>      // string
-#include <vector>      // vector
+#include <optional>  // optional
+#include <string>    // string
+#include <vector>    // vector
 
 #include "core/attribute.hpp"
+#include "core/common/associative.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/texture.hpp"
@@ -36,15 +35,15 @@ namespace tactile::sys {
 
 struct ComponentSnapshot final
 {
-  std::map<std::string, Attribute, std::less<>> attributes;
+  TreeMap<std::string, Attribute> attributes;
 };
 
 struct AttributeContextSnapshot final
 {
   ContextID id{};
   std::string name;
-  std::map<std::string, Attribute, std::less<>> properties;
-  std::map<ComponentID, ComponentSnapshot, std::less<>> components;
+  TreeMap<std::string, Attribute> properties;
+  HashMap<ComponentID, ComponentSnapshot> components;
 };
 
 struct TilesetSnapshot final

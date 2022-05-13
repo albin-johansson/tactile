@@ -19,11 +19,9 @@
 
 #pragma once
 
-#include <functional>  // less
-#include <map>         // map
-
 #include <entt/fwd.hpp>
 
+#include "core/common/associative.hpp"
 #include "core/tile_pos.hpp"
 #include "tactile.hpp"
 
@@ -31,8 +29,8 @@ namespace tactile {
 
 class MapCommandCache final
 {
-  using tile_cache = std::map<TilePos, TileID, std::less<>>;
-  using layer_cache = std::map<LayerID, tile_cache, std::less<>>;
+  using TileCache = TreeMap<TilePos, TileID>;
+  using LayerCache = TreeMap<LayerID, TileCache>;
 
  public:
   void clear() noexcept;
@@ -46,7 +44,7 @@ class MapCommandCache final
   void merge_with(const MapCommandCache& other);
 
  private:
-  layer_cache mCache;
+  LayerCache mCache;
 };
 
 }  // namespace tactile

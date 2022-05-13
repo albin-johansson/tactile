@@ -19,19 +19,18 @@
 
 #pragma once
 
-#include <functional>  // less
-#include <map>         // map
-#include <string>      // string
-#include <vector>      // vector
+#include <string>  // string
+#include <vector>  // vector
 
 #include <entt/entity/entity.hpp>
 
 #include "core/attribute.hpp"
+#include "core/common/associative.hpp"
 #include "tactile.hpp"
 
 namespace tactile {
 
-using ComponentAttrMap = std::map<std::string, Attribute, std::less<>>;
+using ComponentAttrMap = TreeMap<std::string, Attribute>;
 
 }  // namespace tactile
 

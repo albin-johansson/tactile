@@ -19,16 +19,15 @@
 
 #pragma once
 
-#include <map>            // map
-#include <optional>       // optional
-#include <string>         // string
-#include <string_view>    // string_view
-#include <unordered_map>  // unordered_map
-#include <utility>        // pair
+#include <optional>     // optional
+#include <string>       // string
+#include <string_view>  // string_view
+#include <utility>      // pair
 
 #include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
+#include "core/common/associative.hpp"
 #include "core/components/attributes.hpp"
 #include "tactile.hpp"
 
@@ -44,19 +43,18 @@ namespace tactile::sys {
 
 struct RemoveComponentDefResult final
 {
-  ComponentID id{};             ///< Previous component ID.
-  std::string name;             ///< Previous component name.
-  ComponentAttrMap attributes;  ///< Removed component attributes.
-  std::unordered_map<ContextID, ComponentAttrMap>
-      values;  ///< Removed context attributes.
+  ComponentID id{};                             ///< Previous component ID.
+  std::string name;                             ///< Previous component name.
+  ComponentAttrMap attributes;                  ///< Removed component attributes.
+  HashMap<ContextID, ComponentAttrMap> values;  ///< Removed context attributes.
 };
 
 struct SetComponentAttrTypeResult final
 {
-  ComponentID comp_id{};                            ///< Affected component definition ID.
-  std::string attr_name;                            ///< Affected attribute name.
-  Attribute base_value;                             ///< Previous default value.
-  std::unordered_map<ContextID, Attribute> values;  ///< Previous values.
+  ComponentID comp_id{};                 ///< Affected component definition ID.
+  std::string attr_name;                 ///< Affected attribute name.
+  Attribute base_value;                  ///< Previous default value.
+  HashMap<ContextID, Attribute> values;  ///< Previous values.
 };
 
 struct RemoveComponentResult final
