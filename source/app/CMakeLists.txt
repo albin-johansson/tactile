@@ -113,6 +113,7 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <cstring>
                           <cstdlib>
                           <cmath>
+                          <deque>
                           <filesystem>
                           <fstream>
                           <functional>
