@@ -38,7 +38,7 @@ class RenameComponentAttributeDialog final : public AStringInputDialog
  public:
   RenameComponentAttributeDialog();
 
-  void show(std::string previousName, ComponentID id);
+  void show(std::string previousName, const ComponentID& id);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;

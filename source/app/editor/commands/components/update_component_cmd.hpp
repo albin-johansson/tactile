@@ -34,7 +34,7 @@ class UpdateComponentCmd final : public ACommand
  public:
   UpdateComponentCmd(RegistryRef registry,
                      ContextID contextId,
-                     ComponentID componentId,
+                     const ComponentID& componentId,
                      std::string attribute,
                      Attribute value);
 

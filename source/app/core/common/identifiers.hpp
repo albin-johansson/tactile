@@ -20,11 +20,12 @@
 #pragma once
 
 #include "core/common/ints.hpp"
+#include "core/common/uuid.hpp"
 
 namespace tactile {
 
-using ContextID = int32;    ///< Identifier for attribute contexts (not persistent).
-using ComponentID = int32;  ///< Identifier for component definitions (not persistent).
+using ContextID = int32;   ///< Identifier for attribute contexts (not persistent).
+using ComponentID = UUID;  ///< Identifier for component definitions (not persistent).
 
 using MapID = int32;
 using LayerID = int32;

@@ -30,7 +30,7 @@ namespace tactile {
 class CreateComponentAttrCmd final : public ACommand
 {
  public:
-  CreateComponentAttrCmd(RegistryRef registry, ComponentID id, std::string name);
+  CreateComponentAttrCmd(RegistryRef registry, const ComponentID& id, std::string name);
 
   void undo() override;
 

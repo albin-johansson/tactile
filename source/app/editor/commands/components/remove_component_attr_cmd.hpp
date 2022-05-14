@@ -32,7 +32,7 @@ class RemoveComponentAttrCmd final : public ACommand
 {
  public:
   RemoveComponentAttrCmd(RegistryRef registry,
-                         ComponentID componentId,
+                         const ComponentID& componentId,
                          std::string attribute);
 
   void undo() override;

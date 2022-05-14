@@ -58,10 +58,10 @@ class ComponentEditor final : public ADialog
 
   void show_component_attributes(const entt::registry& registry,
                                  entt::dispatcher& dispatcher,
-                                 ComponentID id);
+                                 const ComponentID& id);
 
   void show_component_attribute(entt::dispatcher& dispatcher,
-                                ComponentID id,
+                                const ComponentID& id,
                                 const std::string& name,
                                 const Attribute& value);
 };

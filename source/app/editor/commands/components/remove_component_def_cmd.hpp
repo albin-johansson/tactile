@@ -31,7 +31,7 @@ namespace tactile {
 class RemoveComponentDefCmd final : public ACommand
 {
  public:
-  RemoveComponentDefCmd(RegistryRef registry, ComponentID id);
+  RemoveComponentDefCmd(RegistryRef registry, const ComponentID& id);
 
   void undo() override;
 

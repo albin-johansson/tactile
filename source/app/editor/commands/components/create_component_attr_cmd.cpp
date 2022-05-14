@@ -26,7 +26,7 @@
 namespace tactile {
 
 CreateComponentAttrCmd::CreateComponentAttrCmd(RegistryRef registry,
-                                               const ComponentID id,
+                                               const ComponentID& id,
                                                std::string name)
     : ACommand{"Create Component Attribute"}
     , mRegistry{registry}

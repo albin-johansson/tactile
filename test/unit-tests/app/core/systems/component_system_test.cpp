@@ -96,7 +96,6 @@ TEST(ComponentSystem, FindComponentDef)
   auto registry = sys::new_map_document_registry();
   const auto id = sys::make_component_def(registry, "Foo");
   ASSERT_NE(null_entity, sys::find_component_def(registry, id));
-  ASSERT_EQ(null_entity, sys::find_component_def(registry, id + 1));
 }
 
 TEST(ComponentSystem, GetComponentDef)
@@ -106,8 +105,8 @@ TEST(ComponentSystem, GetComponentDef)
 
   const auto& ref = registry;
 
-  ASSERT_THROW(sys::get_component_def(registry, id + 1), TactileError);
-  ASSERT_THROW(sys::get_component_def(ref, id + 1), TactileError);
+  ASSERT_THROW(sys::get_component_def(registry, make_uuid()), TactileError);
+  ASSERT_THROW(sys::get_component_def(ref, make_uuid()), TactileError);
 
   {
     const auto [entity, def] = sys::get_component_def(registry, id);

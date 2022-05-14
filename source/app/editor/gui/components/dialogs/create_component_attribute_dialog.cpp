@@ -34,7 +34,7 @@ CreateComponentAttributeDialog::CreateComponentAttributeDialog()
   set_input_hint("Attribute name");
 }
 
-void CreateComponentAttributeDialog::show(const ComponentID id)
+void CreateComponentAttributeDialog::show(const ComponentID& id)
 {
   mComponentId = id;
   AStringInputDialog::show("");

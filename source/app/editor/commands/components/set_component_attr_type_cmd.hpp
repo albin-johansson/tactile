@@ -33,7 +33,7 @@ class SetComponentAttrTypeCmd final : public ACommand
 {
  public:
   SetComponentAttrTypeCmd(RegistryRef registry,
-                          ComponentID id,
+                          const ComponentID& id,
                           std::string attribute,
                           AttributeType type);
 

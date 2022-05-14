@@ -44,7 +44,7 @@ constexpr auto _table_flags =
 
 void _update_trailing_button_popup_content(entt::dispatcher& dispatcher,
                                            const ContextID contextId,
-                                           const ComponentID componentId)
+                                           const ComponentID& componentId)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
     dispatcher.enqueue<ResetComponentValuesEvent>(contextId, componentId);

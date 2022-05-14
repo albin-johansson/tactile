@@ -33,7 +33,7 @@ class UpdateComponentAttrCmd final : public ACommand
 {
  public:
   UpdateComponentAttrCmd(RegistryRef registry,
-                         ComponentID id,
+                         const ComponentID& id,
                          std::string attribute,
                          Attribute value);
 

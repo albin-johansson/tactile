@@ -32,7 +32,7 @@ namespace tactile {
 class RenameComponentCmd final : public ACommand
 {
  public:
-  RenameComponentCmd(RegistryRef registry, ComponentID id, std::string name);
+  RenameComponentCmd(RegistryRef registry, const ComponentID& id, std::string name);
 
   void undo() override;
 

@@ -24,7 +24,7 @@
 namespace tactile {
 
 SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(RegistryRef registry,
-                                                 const ComponentID id,
+                                                 const ComponentID& id,
                                                  std::string attribute,
                                                  const AttributeType type)
     : ACommand{"Set Component Attribute Type"}

@@ -29,7 +29,7 @@ class CreateComponentAttributeDialog final : public AStringInputDialog
  public:
   CreateComponentAttributeDialog();
 
-  void show(ComponentID id);
+  void show(const ComponentID& id);
 
  protected:
   [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const

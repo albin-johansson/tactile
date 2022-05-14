@@ -32,7 +32,7 @@ class DuplicateComponentAttrCmd final : public ACommand
 {
  public:
   DuplicateComponentAttrCmd(RegistryRef registry,
-                            ComponentID componentId,
+                            const ComponentID& componentId,
                             std::string attribute);
 
   void undo() override;

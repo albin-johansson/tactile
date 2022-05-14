@@ -22,6 +22,8 @@
 #include <string>  // string
 #include <vector>  // vector
 
+#include <boost/uuid/uuid_hash.hpp>
+
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
 #include "core/common/maybe.hpp"

@@ -26,7 +26,7 @@
 namespace tactile {
 
 RenameComponentCmd::RenameComponentCmd(RegistryRef registry,
-                                       const ComponentID id,
+                                       const ComponentID& id,
                                        std::string name)
     : ACommand{"Rename Component"}
     , mRegistry{registry}
