@@ -57,6 +57,7 @@ target_compile_definitions(${TACTILE_LIB}
                            BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
                            BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
+                           ENTT_STANDARD_CPP
                            )
 
 if (MSVC)
