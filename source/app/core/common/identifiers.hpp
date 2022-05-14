@@ -19,23 +19,19 @@
 
 #pragma once
 
-#define TACTILE_DECLARE_COPY(Class) \
-  Class(const Class&);              \
-  Class& operator=(const Class&)
+#include "core/common/ints.hpp"
 
-#define TACTILE_DECLARE_MOVE(Class) \
-  Class(Class&&) noexcept;          \
-  Class& operator=(Class&&) noexcept
+namespace tactile {
 
-#define TACTILE_DEFINE_COPY(Class)      \
-  Class::Class(const Class&) = default; \
-  Class& Class::operator=(const Class&) = default
+using ContextID = int32;    ///< Identifier for attribute contexts (not persistent).
+using ComponentID = int32;  ///< Identifier for component definitions (not persistent).
 
-#define TACTILE_DEFINE_MOVE(Class)          \
-  Class::Class(Class&&) noexcept = default; \
-  Class& Class::operator=(Class&&) noexcept = default
+using MapID = int32;
+using LayerID = int32;
+using ObjectID = int32;
+using TilesetID = int32;
+using TileID = int32;
 
-#define TACTILE_DECLARE_SPECIAL_MEMBERS(Class) \
-  TACTILE_DECLARE_COPY(Class);                 \
-  TACTILE_DECLARE_MOVE(Class);                 \
-  ~Class()
+inline constexpr TileID empty_tile = 0;
+
+}  // namespace tactile
