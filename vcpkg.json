@@ -32,6 +32,7 @@
     "pugixml",
     "sdl2",
     "sdl2-image",
+    "spdlog",
     "stb",
     "tinyfiledialogs",
     "yaml-cpp"

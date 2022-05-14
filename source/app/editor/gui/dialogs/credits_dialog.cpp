@@ -80,6 +80,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     _row("pugixml", "MIT");
     _row("SDL2", "Zlib");
     _row("SDL2_image", "Zlib");
+    _row("spdlog", "MIT");
     _row("stb_image", "MIT");
     _row("tinyfiledialogs", "Zlib");
     _row("yaml-cpp", "MIT");

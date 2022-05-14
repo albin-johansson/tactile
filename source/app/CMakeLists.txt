@@ -45,6 +45,7 @@ target_link_libraries(${TACTILE_LIB}
                       Boost::boost
                       Boost::container
                       Boost::exception
+                      spdlog::spdlog
                       )
 
 target_compile_definitions(${TACTILE_LIB}
@@ -58,6 +59,7 @@ target_compile_definitions(${TACTILE_LIB}
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
                            BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
                            ENTT_STANDARD_CPP
+                           SPDLOG_FMT_EXTERNAL
                            )
 
 if (MSVC)

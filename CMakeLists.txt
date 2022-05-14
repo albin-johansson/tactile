@@ -54,6 +54,7 @@ find_package(Protobuf CONFIG REQUIRED)
 find_package(pugixml CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2-image CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 find_package(tinyfiledialogs CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 
