@@ -39,15 +39,15 @@ StampToolCmd::StampToolCmd(RegistryRef registry,
 
 void StampToolCmd::undo()
 {
-  ApplySequence(mOldState);
+  apply_sequence(mOldState);
 }
 
 void StampToolCmd::redo()
 {
-  ApplySequence(mNewState);
+  apply_sequence(mNewState);
 }
 
-void StampToolCmd::ApplySequence(const TileCache& cache)
+void StampToolCmd::apply_sequence(const TileCache& cache)
 {
   auto& registry = mRegistry.get();
 

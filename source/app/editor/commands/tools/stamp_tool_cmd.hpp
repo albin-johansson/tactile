@@ -49,7 +49,7 @@ class StampToolCmd final : public ACommand
   TileCache mOldState;
   TileCache mNewState;
 
-  void ApplySequence(const TileCache& cache);
+  void apply_sequence(const TileCache& cache);
 };
 
 /// \} End of group commands
