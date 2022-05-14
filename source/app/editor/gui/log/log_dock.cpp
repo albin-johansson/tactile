@@ -27,7 +27,7 @@
 #include "editor/gui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {

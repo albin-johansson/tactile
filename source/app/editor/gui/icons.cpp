@@ -22,7 +22,7 @@
 #include "core/common/maybe.hpp"
 #include "io/directories.hpp"
 #include "misc/assert.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {

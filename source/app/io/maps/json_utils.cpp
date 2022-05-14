@@ -25,7 +25,7 @@
 
 #include "core/utils/strings.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {

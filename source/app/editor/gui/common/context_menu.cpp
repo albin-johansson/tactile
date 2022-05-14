@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "editor/gui/scoped.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 

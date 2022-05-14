@@ -20,7 +20,7 @@
 #include "yaml_utils.hpp"
 
 #include "core/utils/strings.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 

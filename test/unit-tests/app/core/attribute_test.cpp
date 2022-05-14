@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 using namespace tactile;
 using namespace std::string_literals;

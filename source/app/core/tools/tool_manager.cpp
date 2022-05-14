@@ -26,7 +26,7 @@
 #include "core/tools/point_tool.hpp"
 #include "core/tools/rectangle_tool.hpp"
 #include "core/tools/stamp_tool.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 

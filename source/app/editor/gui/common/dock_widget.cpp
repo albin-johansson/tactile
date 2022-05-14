@@ -21,7 +21,7 @@
 
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 

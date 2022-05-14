@@ -25,7 +25,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 using namespace tactile;
 

@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "meta/build.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {

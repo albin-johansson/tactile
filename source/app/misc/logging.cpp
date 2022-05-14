@@ -32,7 +32,7 @@
 #include "core/common/memory.hpp"
 #include "io/directories.hpp"
 #include "meta/build.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {

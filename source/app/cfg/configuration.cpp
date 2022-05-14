@@ -31,7 +31,7 @@
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 #if TACTILE_PLATFORM_WINDOWS
 

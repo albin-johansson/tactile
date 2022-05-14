@@ -20,7 +20,7 @@
 #include "attribute.hpp"
 
 #include "misc/assert.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 

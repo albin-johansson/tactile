@@ -31,8 +31,8 @@
 #include "meta/build.hpp"
 #include "meta/profile.hpp"
 #include "misc/logging.hpp"
+#include "misc/panic.hpp"
 #include "misc/stacktrace.hpp"
-#include "misc/throw.hpp"
 
 namespace tactile::parsing {
 

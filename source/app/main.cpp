@@ -26,7 +26,7 @@
 #include "cfg/configuration.hpp"
 #include "misc/crash.hpp"
 #include "misc/logging.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 auto main(int, char**) -> int
 {

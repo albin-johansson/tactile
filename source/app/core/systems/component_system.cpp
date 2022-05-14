@@ -31,7 +31,7 @@
 #include "core/systems/context_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile::sys {
 namespace {

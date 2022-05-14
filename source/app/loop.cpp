@@ -26,7 +26,7 @@
 
 #include "cfg/configuration.hpp"
 #include "cfg/fonts.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 

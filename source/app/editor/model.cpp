@@ -32,7 +32,7 @@
 #include "core/systems/viewport_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "misc/assert.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 

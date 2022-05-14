@@ -21,7 +21,7 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile::sys {
 

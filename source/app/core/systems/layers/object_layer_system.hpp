@@ -23,8 +23,8 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/components/layers.hpp"
 #include "core/common/identifiers.hpp"
+#include "core/components/layers.hpp"
 
 namespace tactile::sys {
 

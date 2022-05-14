@@ -21,7 +21,7 @@
 
 #include <magic_enum.hpp>
 
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile::parsing {
 

@@ -29,7 +29,7 @@
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "editor/gui/scoped.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {
