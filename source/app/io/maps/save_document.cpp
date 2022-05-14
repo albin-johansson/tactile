@@ -21,6 +21,9 @@
 
 #include <filesystem>  // absolute
 
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
+
 #include "editor/document.hpp"
 #include "io/maps/convert_document_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"
@@ -29,7 +32,6 @@
 #include "io/maps/emitter/yaml_emitter.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile {
 
@@ -39,7 +41,7 @@ void save_document(const Document& document)
   TACTILE_PROFILE_START
 
   const auto path = std::filesystem::absolute(document.path);
-  log_info("Trying to save map to {}", path);
+  spdlog::info("Trying to save map to {}", path);
 
   emitter::EmitInfo info{path, convert_document_to_ir(document)};
 
@@ -54,7 +56,7 @@ void save_document(const Document& document)
     emit_xml_map(info);
   }
   else {
-    log_error("Unsupported file extension {}", ext);
+    spdlog::error("Unsupported file extension {}", ext);
   }
 
   TACTILE_PROFILE_END("Emitted document")

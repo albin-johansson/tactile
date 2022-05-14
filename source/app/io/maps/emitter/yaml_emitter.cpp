@@ -24,6 +24,8 @@
 #include <sstream>  // stringstream
 #include <string>   // string
 
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
@@ -32,7 +34,6 @@
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/yaml_utils.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile::emitter {
 namespace {
@@ -328,7 +329,7 @@ void _emit_tileset_file(const EmitInfo& info,
   emitter << YAML::EndMap;
 
   const auto path = info.destination_dir() / filename;
-  log_debug("Saving external tileset to {}", path);
+  spdlog::debug("Saving external tileset to {}", path);
 
   std::ofstream stream{path, std::ios::out};
   stream << emitter.c_str();

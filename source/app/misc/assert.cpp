@@ -21,9 +21,11 @@
 
 #include <cstdlib>  // abort
 
-#include "crash.hpp"
-#include "logging.hpp"
-#include "stacktrace.hpp"
+#include <fmt/ostream.h>
+
+#include "misc/crash.hpp"
+#include "misc/logging.hpp"
+#include "misc/stacktrace.hpp"
 
 namespace boost {
 

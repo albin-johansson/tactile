@@ -25,12 +25,13 @@
 #include <ios>         // ios
 #include <utility>     // move
 
+#include <spdlog/spdlog.h>
+
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/utils/strings.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/proto.hpp"
-#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile {
@@ -54,7 +55,7 @@ inline std::deque<std::string> _history;
 
 void load_file_history()
 {
-  log_verbose("Loading file history...");
+  spdlog::debug("Loading file history...");
   std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
 
   proto::History h;
@@ -64,12 +65,12 @@ void load_file_history()
     }
 
     for (auto file : h.files()) {
-      log_debug("Loaded '{}' from file history", file);
+      spdlog::debug("Loaded '{}' from file history", file);
       _history.push_back(std::move(file));
     }
   }
   else {
-    log_warning("Failed to read history file (this is expected for first time runs)");
+    spdlog::warn("Failed to read history file (this is expected for first time runs)");
   }
 }
 
@@ -82,7 +83,7 @@ void save_file_history()
   }
 
   for (const auto& path : _history) {
-    log_debug("Saving '{}' to file history", path);
+    spdlog::debug("Saving '{}' to file history", path);
     h.add_files(path);
   }
 
@@ -90,14 +91,14 @@ void save_file_history()
     std::ofstream stream{get_file_path(),
                          std::ios::out | std::ios::trunc | std::ios::binary};
     if (!h.SerializeToOstream(&stream)) {
-      log_error("Failed to save file history!");
+      spdlog::error("Failed to save file history!");
     }
   }
 }
 
 void clear_file_history()
 {
-  log_verbose("Clearing file history...");
+  spdlog::debug("Clearing file history...");
   _history.clear();
 }
 
@@ -105,7 +106,7 @@ void add_file_to_history(const std::filesystem::path& path)
 {
   auto converted = convert_to_forward_slashes(path);
   if (std::find(_history.begin(), _history.end(), converted) == _history.end()) {
-    log_debug("Adding '{}' to history...", converted);
+    spdlog::debug("Adding '{}' to history...", converted);
     _history.push_back(std::move(converted));
 
     if (_history.size() > _max_size) {
@@ -113,14 +114,14 @@ void add_file_to_history(const std::filesystem::path& path)
     }
   }
   else {
-    log_debug("Did not add existing entry '{}' to file history", converted);
+    spdlog::debug("Did not add existing entry '{}' to file history", converted);
   }
 }
 
 void set_last_closed_file(const std::filesystem::path& path)
 {
   _last_closed_file = convert_to_forward_slashes(path);
-  log_verbose("Last closed file is now '{}'", *_last_closed_file);
+  spdlog::trace("Last closed file is now '{}'", *_last_closed_file);
 
   add_file_to_history(path);
 }

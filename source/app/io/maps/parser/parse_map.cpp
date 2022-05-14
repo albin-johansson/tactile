@@ -21,6 +21,10 @@
 
 #include <exception>  // exception
 
+#include <fmt/color.h>
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
+
 #include "io/maps/parser/json/json_parser.hpp"
 #include "io/maps/parser/xml/xml_parser.hpp"
 #include "io/maps/parser/yaml/yaml_parser.hpp"
@@ -34,7 +38,7 @@ namespace tactile::parsing {
 
 auto parse_map(const std::filesystem::path& path) -> ParseData
 {
-  log_info("Parsing map {}", path);
+  spdlog::info("Parsing map {}", path);
   ParseData result;
 
   try {
@@ -56,7 +60,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
       result = parse_json_map(path);
     }
     else {
-      log_error("Unsupported save file extension: {}", ext);
+      spdlog::error("Unsupported save file extension: {}", ext);
       result.set_error(ParseError::UnsupportedMapExtension);
       return result;
     }
@@ -64,7 +68,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
     TACTILE_PROFILE_END("Parsed map")
   }
   catch (const std::exception& e) {
-    log_error("Parser threw unhandled exception with message: '{}'\n", e.what());
+    spdlog::error("Parser threw unhandled exception with message: '{}'\n", e.what());
     result.set_error(ParseError::Unknown);
 
     if constexpr (is_debug_build) {
@@ -74,7 +78,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
     }
   }
   catch (...) {
-    log_error("Parser threw non-exception value!");
+    spdlog::error("Parser threw non-exception value!");
     result.set_error(ParseError::Unknown);
   }
 

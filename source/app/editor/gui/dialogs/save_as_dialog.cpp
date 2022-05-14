@@ -22,11 +22,12 @@
 #include <utility>  // move
 
 #include <entt/signal/dispatcher.hpp>
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
 
 #include "editor/events/misc_events.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile {
 
@@ -43,7 +44,7 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
     // TODO is this logic still required with new file dialogs?
     if (!hasValidExtension) {
       const auto& format = get_preferences().preferred_format();
-      log_warning("Invalid file extension '{}', assuming '{}'", ext, format);
+      spdlog::warn("Invalid file extension '{}', assuming '{}'", ext, format);
 
       if (format == "YAML") {
         path += ".yaml";
@@ -55,7 +56,7 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
         path += ".tmx";
       }
       else {
-        log_error("Could not amend requested file path with valid extension!");
+        spdlog::error("Could not amend requested file path with valid extension!");
         return;
       }
     }

@@ -25,6 +25,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <spdlog/spdlog.h>
 
 #include "application_events.hpp"
 #include "cfg/configuration.hpp"
@@ -58,7 +59,6 @@
 #include "io/persistence/preferences.hpp"
 #include "io/persistence/session.hpp"
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile {
 namespace {
@@ -71,7 +71,7 @@ void _execute(DocumentModel& model, Args&&... args)
     commands.push<Command>(document->registry, std::forward<Args>(args)...);
   }
   else {
-    log_error("Could not execute a command due to no active document!");
+    spdlog::error("Could not execute a command due to no active document!");
   }
 }
 
@@ -83,7 +83,7 @@ void _register(DocumentModel& model, Args&&... args)
     commands.push_without_redo<Command>(document->registry, std::forward<Args>(args)...);
   }
   else {
-    log_error("Could not register a command due to no active document!");
+    spdlog::error("Could not register a command due to no active document!");
   }
 }
 
@@ -340,7 +340,7 @@ void Application::on_open_map(const OpenMapEvent& event)
 {
   /* Just silently ignore the request if the map is already open */
   if (mData->model.has_document_with_path(event.path)) {
-    log_warning("Tried to open map that was already open!");
+    spdlog::warn("Tried to open map that was already open!");
     return;
   }
 
@@ -542,7 +542,7 @@ void Application::on_add_tileset(const AddTilesetEvent& event)
                             event.tile_height);
   }
   else {
-    log_error("Failed to load tileset texture!");
+    spdlog::error("Failed to load tileset texture!");
   }
 }
 

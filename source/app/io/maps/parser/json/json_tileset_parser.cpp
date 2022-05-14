@@ -24,13 +24,13 @@
 #include <utility>     // move
 
 #include <nlohmann/json.hpp>
+#include <spdlog/spdlog.h>
 
 #include "io/maps/ir.hpp"
 #include "io/maps/json_utils.hpp"
 #include "io/maps/parser/json/json_attribute_parser.hpp"
 #include "io/maps/parser/json/json_layer_parser.hpp"
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile::parsing {
 namespace {
@@ -249,7 +249,7 @@ auto parse_tilesets(const nlohmann::json& json,
   const auto iter = json.find("tilesets");
 
   if (iter == json.end()) {
-    log_warning("JSON map has no \"tilesets\" attribute, which is required!");
+    spdlog::warn("JSON map has no \"tilesets\" attribute, which is required!");
     return ParseError::None;
   }
 

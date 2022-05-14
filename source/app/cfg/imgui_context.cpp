@@ -22,11 +22,11 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
+#include <spdlog/spdlog.h>
 
 #include "editor/gui/themes.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile {
 
@@ -55,7 +55,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 
   style.WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;
 
-  log_debug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
+  spdlog::debug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
 }
 
 ImGuiContext::~ImGuiContext()

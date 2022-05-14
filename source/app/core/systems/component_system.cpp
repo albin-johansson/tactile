@@ -24,12 +24,13 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <entt/entity/registry.hpp>
 #include <fmt/format.h>
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
 
 #include "core/components/attributes.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::sys {
@@ -172,7 +173,7 @@ auto make_component_def(entt::registry& registry, std::string name) -> Component
 {
   TACTILE_ASSERT(!is_component_name_taken(registry, name));
 
-  log_debug("Creating component definition '{}'", name);
+  spdlog::debug("Creating component definition '{}'", name);
 
   const auto entity = registry.create();
 
@@ -190,7 +191,7 @@ void make_component_def(entt::registry& registry,
   TACTILE_ASSERT(!is_valid_component(registry, compId));
   TACTILE_ASSERT(!is_component_name_taken(registry, name));
 
-  log_debug("Creating component definition with explicit ID '{}'", compId);
+  spdlog::debug("Creating component definition with explicit ID '{}'", compId);
 
   const auto entity = registry.create();
 
@@ -202,7 +203,7 @@ void make_component_def(entt::registry& registry,
 auto remove_component_def(entt::registry& registry, const ComponentID& compId)
     -> RemoveComponentDefResult
 {
-  log_debug("Deleting component definition '{}'", compId);
+  spdlog::debug("Deleting component definition '{}'", compId);
 
   const auto [defEntity, def] = get_component_def(registry, compId);
 
@@ -246,7 +247,7 @@ auto remove_component_def(entt::registry& registry, const ComponentID& compId)
 
 void restore_component_def(entt::registry& registry, RemoveComponentDefResult snapshot)
 {
-  log_debug("Restoring component definition '{}'", snapshot.id);
+  spdlog::debug("Restoring component definition '{}'", snapshot.id);
 
   make_component_def(registry, snapshot.id, snapshot.name);
   for (auto&& [name, value] : snapshot.attributes) {
@@ -254,7 +255,7 @@ void restore_component_def(entt::registry& registry, RemoveComponentDefResult sn
   }
 
   for (auto&& [contextId, values] : snapshot.values) {
-    log_verbose("Restoring component '{}' for context '{}'", snapshot.id, contextId);
+    spdlog::trace("Restoring component '{}' for context '{}'", snapshot.id, contextId);
 
     auto& context = get_context(registry, contextId);
 
@@ -273,7 +274,7 @@ void rename_component_def(entt::registry& registry,
 {
   TACTILE_ASSERT(!is_component_name_taken(registry, name));
 
-  log_debug("Renaming component definition '{}' to '{}'", compId, name);
+  spdlog::debug("Renaming component definition '{}' to '{}'", compId, name);
 
   auto [entity, def] = get_component_def(registry, compId);
   def.name = std::move(name);
@@ -370,7 +371,7 @@ void make_component_attribute(entt::registry& registry,
                               const std::string& name,
                               const Attribute& value)
 {
-  log_debug("Adding attribute '{}' to component '{}'", name, compId);
+  spdlog::debug("Adding attribute '{}' to component '{}'", name, compId);
 
   auto [defEntity, def] = get_component_def(registry, compId);
   def.attributes[name] = value;
@@ -387,7 +388,7 @@ void remove_component_attribute(entt::registry& registry,
                                 const ComponentID& compId,
                                 const std::string_view name)
 {
-  log_debug("Removing attribute '{}' from component '{}'", name, compId);
+  spdlog::debug("Removing attribute '{}' from component '{}'", name, compId);
 
   TACTILE_ASSERT(find_component_def(registry, compId) != entt::null);
   TACTILE_ASSERT(is_component_attribute_name_taken(registry, compId, name));
@@ -413,10 +414,10 @@ void rename_component_attribute(entt::registry& registry,
 {
   TACTILE_ASSERT(!is_component_attribute_name_taken(registry, compId, updated));
 
-  log_debug("Renaming attribute '{}' in component '{}' to '{}'",
-            current,
-            compId,
-            updated);
+  spdlog::debug("Renaming attribute '{}' in component '{}' to '{}'",
+                current,
+                compId,
+                updated);
 
   auto [defEntity, def] = get_component_def(registry, compId);
 
@@ -431,7 +432,7 @@ auto duplicate_component_attribute(entt::registry& registry,
                                    const ComponentID& compId,
                                    const std::string_view attribute) -> std::string
 {
-  log_debug("Duplicating attribute '{}' in component '{}'", attribute, compId);
+  spdlog::debug("Duplicating attribute '{}' in component '{}'", attribute, compId);
 
   auto [defEntity, def] = get_component_def(registry, compId);
   auto iter = _get_component_def_attr(registry, compId, attribute);
@@ -453,10 +454,10 @@ auto set_component_attribute_type(entt::registry& registry,
                                   const std::string_view attrName,
                                   const AttributeType type) -> SetComponentAttrTypeResult
 {
-  log_verbose("Setting type of attribute '{}' in component '{}' to '{}'",
-              attrName,
-              compId,
-              type);
+  spdlog::trace("Setting type of attribute '{}' in component '{}' to '{}'",
+                attrName,
+                compId,
+                type);
 
   SetComponentAttrTypeResult result;
   result.comp_id = compId;
@@ -478,9 +479,9 @@ auto set_component_attribute_type(entt::registry& registry,
 void restore_component_attribute_type(entt::registry& registry,
                                       const SetComponentAttrTypeResult& snapshot)
 {
-  log_verbose("Restoring type of attribute '{}' in component '{}'",
-              snapshot.attr_name,
-              snapshot.comp_id);
+  spdlog::trace("Restoring type of attribute '{}' in component '{}'",
+                snapshot.attr_name,
+                snapshot.comp_id);
 
   {
     auto&& [entity, def] = get_component_def(registry, snapshot.comp_id);
@@ -568,7 +569,7 @@ auto remove_component(entt::registry& registry,
   TACTILE_ASSERT(find_component_def(registry, compId) != entt::null);
   TACTILE_ASSERT(has_component(registry, contextId, compId));
 
-  log_debug("Removing component '{}' from context '{}'", compId, contextId);
+  spdlog::debug("Removing component '{}' from context '{}'", compId, contextId);
 
   auto& context = get_context(registry, contextId);
   entt::entity match = entt::null;
@@ -600,9 +601,9 @@ void restore_component(entt::registry& registry, RemoveComponentResult snapshot)
   TACTILE_ASSERT(find_component_def(registry, snapshot.component) != entt::null);
   TACTILE_ASSERT(!has_component(registry, snapshot.context, snapshot.component));
 
-  log_debug("Restoring component '{}' for context '{}'",
-            snapshot.component,
-            snapshot.context);
+  spdlog::debug("Restoring component '{}' for context '{}'",
+                snapshot.component,
+                snapshot.context);
 
   auto& context = get_context(registry, snapshot.context);
 
@@ -632,7 +633,7 @@ auto reset_component(entt::registry& registry,
 {
   TACTILE_ASSERT(has_component(registry, contextId, compId));
 
-  log_debug("Resetting component '{}' in context '{}'", compId, contextId);
+  spdlog::debug("Resetting component '{}' in context '{}'", compId, contextId);
 
   const auto& [defEntity, def] = get_component_def(registry, compId);
   auto& component = _get_component(registry, contextId, compId);

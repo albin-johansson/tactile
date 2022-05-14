@@ -37,29 +37,30 @@ constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                               ImGuiWindowFlags_HorizontalScrollbar |
                               ImGuiWindowFlags_AlwaysAutoResize;
 
-constinit LogLevel _log_filter = LogLevel::verbose;
+constinit LogLevel _log_filter = LogLevel::debug;
 constinit bool _is_dock_focused = false;
 
 [[nodiscard]] auto _show_log_level_filter_combo(const LogLevel currentLevel)
     -> Maybe<LogLevel>
 {
-  static constexpr auto verboseFilter = "Everything";
-  static constexpr auto debugFilter = "Debug / Information / Warnings / Errors";
-  static constexpr auto infoFilter = "Information / Warnings / Errors";
-  static constexpr auto warningFilter = "Warnings / Errors";
+  static constexpr auto traceFilter = "Everything";
+  static constexpr auto debugFilter = "Debug";
+  static constexpr auto infoFilter = "Information";
+  static constexpr auto warningFilter = "Warnings";
   static constexpr auto errorFilter = "Errors";
+  static constexpr auto criticalFilter = "Critical";
 
-  static const auto comboWidth = ImGui::CalcTextSize(debugFilter).x * 1.2f;
+  static const auto comboWidth = ImGui::CalcTextSize(infoFilter).x * 2.0f;
 
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted("Filter:");
 
   ImGui::SameLine();
 
-  const char* filter = verboseFilter;
+  const char* filter = traceFilter;
   switch (currentLevel) {
-    case LogLevel::verbose:
-      filter = verboseFilter;
+    case LogLevel::trace:
+      filter = traceFilter;
       break;
 
     case LogLevel::debug:
@@ -70,19 +71,26 @@ constinit bool _is_dock_focused = false;
       filter = infoFilter;
       break;
 
-    case LogLevel::warning:
+    case LogLevel::warn:
       filter = warningFilter;
       break;
 
-    case LogLevel::error:
+    case LogLevel::err:
       filter = errorFilter;
+      break;
+
+    case LogLevel::critical:
+      filter = criticalFilter;
+      break;
+
+    default:
       break;
   }
 
   ImGui::SetNextItemWidth(comboWidth);
   if (scoped::Combo filterCombo{"##LogFilterCombo", filter}; filterCombo.is_open()) {
-    if (ImGui::MenuItem(verboseFilter)) {
-      return LogLevel::verbose;
+    if (ImGui::MenuItem(traceFilter)) {
+      return LogLevel::trace;
     }
 
     if (ImGui::MenuItem(debugFilter)) {
@@ -94,11 +102,15 @@ constinit bool _is_dock_focused = false;
     }
 
     if (ImGui::MenuItem(warningFilter)) {
-      return LogLevel::warning;
+      return LogLevel::warn;
     }
 
     if (ImGui::MenuItem(errorFilter)) {
-      return LogLevel::error;
+      return LogLevel::err;
+    }
+
+    if (ImGui::MenuItem(criticalFilter)) {
+      return LogLevel::critical;
     }
   }
 
@@ -108,7 +120,7 @@ constinit bool _is_dock_focused = false;
 [[nodiscard]] auto _color_for_level(const LogLevel level) -> ImVec4
 {
   switch (level) {
-    case LogLevel::verbose:
+    case LogLevel::trace:
       return {0.93f, 0.51f, 0.93f, 1.0f};
 
     case LogLevel::debug:
@@ -117,11 +129,14 @@ constinit bool _is_dock_focused = false;
     case LogLevel::info:
       return {1.0f, 1.0f, 1.0f, 1.00f};
 
-    case LogLevel::warning:
+    case LogLevel::warn:
       return {1.0f, 1.0f, 0.00f, 1.00f};
 
-    case LogLevel::error:
-      return {1.00f, 0.27f, 0.00f, 1.00f};
+    case LogLevel::err:
+      return {1.00f, 0.40f, 0.40f, 1.00f};
+
+    case LogLevel::critical:
+      return {1.00f, 0.00f, 0.00f, 1.00f};
 
     default:
       panic("Did not recognize log level!");
@@ -136,17 +151,19 @@ void _update_color_legend_hint()
     scoped::StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
     scoped::Tooltip tooltip;
 
-    static const auto verboseColor = _color_for_level(LogLevel::verbose);
+    static const auto verboseColor = _color_for_level(LogLevel::trace);
     static const auto debugColor = _color_for_level(LogLevel::debug);
     static const auto infoColor = _color_for_level(LogLevel::info);
-    static const auto warningColor = _color_for_level(LogLevel::warning);
-    static const auto errorColor = _color_for_level(LogLevel::error);
+    static const auto warningColor = _color_for_level(LogLevel::warn);
+    static const auto errorColor = _color_for_level(LogLevel::err);
+    static const auto criticalColor = _color_for_level(LogLevel::critical);
 
     ImGui::TextColored(verboseColor, "Verbose message");
     ImGui::TextColored(debugColor, "Debug message");
     ImGui::TextColored(infoColor, "Info message");
     ImGui::TextColored(warningColor, "Warning message");
     ImGui::TextColored(errorColor, "Error message");
+    ImGui::TextColored(criticalColor, "Critical message");
   }
 }
 
@@ -160,7 +177,7 @@ void _update_log_contents(const LogLevel filter)
 
     while (clipper.Step()) {
       for (auto i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {
-        const auto& [level, str] = get_filtered_log_entry(filter, static_cast<usize>(i));
+        const auto& [level, str] = get_log_entry(filter, static_cast<usize>(i));
         const auto color = _color_for_level(level);
         ImGui::TextColored(color, "%s", str.c_str());
       }

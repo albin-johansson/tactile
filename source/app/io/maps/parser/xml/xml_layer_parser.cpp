@@ -23,12 +23,13 @@
 #include <string>   // string
 #include <vector>   // vector
 
+#include <spdlog/spdlog.h>
+
 #include "core/utils/strings.hpp"
 #include "core/utils/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
 #include "io/maps/xml_utils.hpp"
-#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::parsing {
@@ -128,13 +129,13 @@ namespace {
     tileLayerData.col_count = *width;
 
     if (tileLayerData.col_count != columns) {
-      log_warning("XML tile layer width does not match map width, '{}' vs '{}'",
-                  tileLayerData.col_count,
-                  columns);
+      spdlog::warn("XML tile layer width does not match map width, '{}' vs '{}'",
+                   tileLayerData.col_count,
+                   columns);
     }
   }
   else {
-    log_warning("XML tile layer has no width information, assuming map width...");
+    spdlog::warn("XML tile layer has no width information, assuming map width...");
     tileLayerData.col_count = columns;
   }
 
@@ -142,13 +143,13 @@ namespace {
     tileLayerData.row_count = *height;
 
     if (tileLayerData.row_count != rows) {
-      log_warning("XML tile layer height does not match map height, '{}' vs '{}'",
-                  tileLayerData.row_count,
-                  rows);
+      spdlog::warn("XML tile layer height does not match map height, '{}' vs '{}'",
+                   tileLayerData.row_count,
+                   rows);
     }
   }
   else {
-    log_warning("XML tile layer has no height information, assuming map height...");
+    spdlog::warn("XML tile layer has no height information, assuming map height...");
     tileLayerData.row_count = rows;
   }
 

@@ -19,11 +19,12 @@
 
 #include "json_layer_parser.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include "core/utils/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/json_utils.hpp"
 #include "io/maps/parser/json/json_attribute_parser.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile::parsing {
 namespace {
@@ -93,13 +94,13 @@ namespace {
     tileLayerData.col_count = *width;
 
     if (tileLayerData.col_count != columns) {
-      log_warning("JSON tile layer width does not match map width, '{}' vs '{}'",
-                  tileLayerData.col_count,
-                  columns);
+      spdlog::warn("JSON tile layer width does not match map width, '{}' vs '{}'",
+                   tileLayerData.col_count,
+                   columns);
     }
   }
   else {
-    log_warning("JSON tile layer has no width information, assuming map width...");
+    spdlog::warn("JSON tile layer has no width information, assuming map width...");
     tileLayerData.col_count = columns;
   }
 
@@ -107,13 +108,13 @@ namespace {
     tileLayerData.row_count = *height;
 
     if (tileLayerData.row_count != rows) {
-      log_warning("JSON tile layer height does not match map height, '{}' vs '{}'",
-                  tileLayerData.row_count,
-                  rows);
+      spdlog::warn("JSON tile layer height does not match map height, '{}' vs '{}'",
+                   tileLayerData.row_count,
+                   rows);
     }
   }
   else {
-    log_warning("JSON tile layer has no height information, assuming map height...");
+    spdlog::warn("JSON tile layer has no height information, assuming map height...");
     tileLayerData.row_count = rows;
   }
 
@@ -241,7 +242,7 @@ auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseErro
   const auto iter = json.find("layers");
 
   if (iter == json.end()) {
-    log_warning("JSON map has no \"layers\" attribute, which is required!");
+    spdlog::warn("JSON map has no \"layers\" attribute, which is required!");
     return ParseError::None;
   }
 

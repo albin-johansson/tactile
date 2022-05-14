@@ -22,10 +22,10 @@
 #include <IconsFontAwesome6.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
+#include <spdlog/spdlog.h>
 
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile {
 namespace {
@@ -41,7 +41,7 @@ void reload_fonts()
   static const auto roboto = find_resource(_roboto_path).string();
   static const auto fa = find_resource(_fa_path).string();
 
-  log_debug("Reloading fonts...");
+  spdlog::debug("Reloading fonts...");
 
   auto& io = ImGui::GetIO();
   const auto scale = io.DisplayFramebufferScale;

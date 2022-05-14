@@ -23,13 +23,14 @@
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 
+#include <spdlog/spdlog.h>
+
 #include "core/utils/strings.hpp"
 #include "editor/model.hpp"
 #include "io/directories.hpp"
 #include "io/maps/parser/parse_map.hpp"
 #include "io/maps/restore_document_from_ir.hpp"
-#include "misc/logging.hpp"
-#include "proto.hpp"
+#include "io/persistence/proto.hpp"
 
 namespace tactile {
 namespace {
@@ -56,12 +57,12 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
         model.add_map(restore_document_from_ir(ir, textures));
       }
       else {
-        log_warning("Failed to restore map from last session!");
+        spdlog::warn("Failed to restore map from last session!");
       }
     }
   }
   else {
-    log_warning("Failed to parse binary session file!");
+    spdlog::warn("Failed to parse binary session file!");
   }
 }
 
@@ -78,7 +79,7 @@ void save_session(const DocumentModel& model)
   std::ofstream stream{_get_file_path(),
                        std::ios::out | std::ios::trunc | std::ios::binary};
   if (!session.SerializeToOstream(&stream)) {
-    log_error("Failed to save session file!");
+    spdlog::error("Failed to save session file!");
   }
 }
 

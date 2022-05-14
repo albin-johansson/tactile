@@ -25,10 +25,10 @@
 
 #include <centurion/color.hpp>
 #include <magic_enum.hpp>
+#include <spdlog/spdlog.h>
 
 #include "cfg/fonts.hpp"
 #include "core/common/enum.hpp"
-#include "misc/logging.hpp"
 #include "proto.hpp"
 
 namespace tactile {
@@ -74,7 +74,7 @@ constexpr uint64 _def_flags = _bit_show_grid |                  //
 }  // namespace
 
 #define PRINT_FLAG(Name, Mask) \
-  log_debug(Name "... {}", (mData->flags & (Mask)) ? "yes" : "no")
+  spdlog::debug(Name "... {}", (mData->flags & (Mask)) ? "yes" : "no")
 
 struct PreferenceState::Data
 {
@@ -118,18 +118,18 @@ PreferenceState::~PreferenceState() noexcept = default;
 
 void PreferenceState::print()
 {
-  log_debug("Theme... {}", magic_enum::enum_name(mData->theme));
-  log_debug("Viewport background... {}", mData->viewport_background.as_rgb());
+  spdlog::debug("Theme... {}", magic_enum::enum_name(mData->theme));
+  spdlog::debug("Viewport background... {}", mData->viewport_background.as_rgb());
 
-  log_debug("Command capacity... {}", mData->command_capacity);
-  log_debug("Preferred tile width... {}", mData->preferred_tile_width);
-  log_debug("Preferred tile height... {}", mData->preferred_tile_height);
+  spdlog::debug("Command capacity... {}", mData->command_capacity);
+  spdlog::debug("Preferred tile width... {}", mData->preferred_tile_width);
+  spdlog::debug("Preferred tile height... {}", mData->preferred_tile_height);
 
-  log_debug("Preferred format... {}", mData->preferred_format);
-  log_debug("Viewport overlay pos... {}", mData->viewport_overlay_pos);
+  spdlog::debug("Preferred format... {}", mData->preferred_format);
+  spdlog::debug("Viewport overlay pos... {}", mData->viewport_overlay_pos);
   PRINT_FLAG("Show FPS in viewport overlay", _bit_show_viewport_overlay_fps);
 
-  log_debug("Font size... {}", mData->font_size);
+  spdlog::debug("Font size... {}", mData->font_size);
   PRINT_FLAG("Use default font", _bit_use_default_font);
 
   PRINT_FLAG("Embed tilesets", _bit_embed_tilesets);
@@ -295,7 +295,7 @@ void PreferenceState::save(const std::filesystem::path& path)
 
   std::ofstream stream{path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
-    log_error("Failed to save preferences!");
+    spdlog::error("Failed to save preferences!");
   }
 }
 

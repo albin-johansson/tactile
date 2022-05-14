@@ -24,13 +24,13 @@
 
 #include <GL/glew.h>
 #include <centurion/system.hpp>
+#include <spdlog/spdlog.h>
 
 #include "cfg/sdl_attributes.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 
 #if TACTILE_PLATFORM_WINDOWS
@@ -84,13 +84,6 @@ AppConfiguration::AppConfiguration()
   /* Use terminate handler that doesn't do anything fancy, e.g. no logging */
   std::set_terminate([] { std::abort(); });
 
-  if constexpr (is_debug_build) {
-    set_log_level(LogLevel::verbose);
-  }
-  else {
-    set_log_level(LogLevel::info);
-  }
-
   init_sdl_attributes();
 
   mWindow.emplace("Tactile", cen::window::default_size(), _get_window_flags());
@@ -113,12 +106,12 @@ AppConfiguration::AppConfiguration()
   cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 
   if (glewInit() != GLEW_OK) {
-    log_error("Failed to initialize GLEW!");
+    spdlog::error("Failed to initialize GLEW!");
     panic("Failed to initialize GLEW!");
   }
 
-  log_debug("OpenGL version... {}", glGetString(GL_VERSION));
-  log_debug("OpenGL renderer... {}", glGetString(GL_RENDERER));
+  spdlog::debug("OpenGL version... {}", glGetString(GL_VERSION));
+  spdlog::debug("OpenGL renderer... {}", glGetString(GL_RENDERER));
 
   load_preferences();
 

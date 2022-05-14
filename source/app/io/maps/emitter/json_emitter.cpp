@@ -24,13 +24,13 @@
 
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
+#include <spdlog/spdlog.h>
 
 #include "core/utils/strings.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/json_utils.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile::emitter {
 namespace {
@@ -333,7 +333,7 @@ void emit_json_map(const EmitInfo& info)
   const auto& data = info.data();
 
   if (!data.component_definitions.empty()) {
-    log_warning("Component data will be ignored when saving the map as JSON!");
+    spdlog::warn("Component data will be ignored when saving the map as JSON!");
   }
 
   json["type"] = "map";

@@ -20,6 +20,8 @@
 #include <cstdlib>    // abort
 #include <exception>  // exception
 
+#include <fmt/ostream.h>
+
 #include "application.hpp"
 #include "cfg/configuration.hpp"
 #include "misc/crash.hpp"
@@ -29,6 +31,8 @@
 auto main(int, char**) -> int
 {
   try {
+    tactile::init_logger();
+
     tactile::AppConfiguration configuration;
     tactile::Application app{&configuration};
     app.start();

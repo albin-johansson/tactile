@@ -27,12 +27,12 @@
 
 #include <fmt/format.h>
 #include <pugixml.hpp>
+#include <spdlog/spdlog.h>
 
 #include "core/utils/strings.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::emitter {
@@ -381,7 +381,7 @@ void _append_root(pugi::xml_document& document, const EmitInfo& info)
 void emit_xml_map(const EmitInfo& info)
 {
   if (!info.data().component_definitions.empty()) {
-    log_warning("Component data will be ignored when saving the map as XML!");
+    spdlog::warn("Component data will be ignored when saving the map as XML!");
   }
 
   pugi::xml_document document;

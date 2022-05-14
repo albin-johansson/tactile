@@ -22,10 +22,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include <GL/glew.h>
+#include <spdlog/spdlog.h>
 #include <stb_image.h>
 
 #include "core/common/memory.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile {
 namespace {
@@ -42,7 +42,7 @@ using TextureDataPtr = Unique<uchar, TextureDataDeleter>;
 TextureManager::~TextureManager()
 {
   for (const auto texture : mTextures) {
-    log_debug("Deleting texture {}", texture);
+    spdlog::debug("Deleting texture {}", texture);
     glDeleteTextures(1, &texture);
   }
 
@@ -88,7 +88,7 @@ auto TextureManager::load(const std::filesystem::path& path) -> Maybe<comp::Text
                GL_UNSIGNED_BYTE,
                data.get());
 
-  log_debug("Loaded texture with ID {}", texture.id);
+  spdlog::debug("Loaded texture with ID {}", texture.id);
   mTextures.push_back(texture.id);
 
   return texture;

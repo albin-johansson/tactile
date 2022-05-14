@@ -22,8 +22,9 @@
 #include <filesystem>  // path, exists
 #include <utility>     // move
 
+#include <spdlog/spdlog.h>
+
 #include "io/directories.hpp"
-#include "misc/logging.hpp"
 
 namespace tactile {
 namespace {
@@ -47,7 +48,7 @@ void load_preferences()
     _settings.parse(path);
   }
   else {
-    log_info("Did not find a preferences file, assuming defaults");
+    spdlog::info("Did not find a preferences file, assuming defaults");
     save_preferences();
   }
 

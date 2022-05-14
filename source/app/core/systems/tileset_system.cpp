@@ -23,6 +23,7 @@
 
 #include <centurion/math.hpp>
 #include <entt/entity/registry.hpp>
+#include <spdlog/spdlog.h>
 
 #include "core/common/associative.hpp"
 #include "core/components/animation.hpp"
@@ -34,7 +35,6 @@
 #include "core/systems/registry_system.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
 #include "misc/throw.hpp"
 
 namespace tactile::sys {
@@ -132,7 +132,7 @@ auto make_tileset(entt::registry& registry,
   const auto id = tilesets.next_id;
   ++tilesets.next_id;
 
-  log_debug("Creating tileset with ID '{}'", id);
+  spdlog::debug("Creating tileset with ID '{}'", id);
 
   const auto tilesetEntity = registry.create();
   auto& tileset = registry.emplace<comp::Tileset>(tilesetEntity);
@@ -182,7 +182,7 @@ auto make_tileset(entt::registry& registry,
 
 auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity
 {
-  log_debug("Restoring tileset with ID '{}'", snapshot.core.id);
+  spdlog::debug("Restoring tileset with ID '{}'", snapshot.core.id);
   const auto tilesetEntity = registry.create();
 
   auto& tileset = registry.emplace<comp::Tileset>(tilesetEntity, snapshot.core);
@@ -217,7 +217,7 @@ auto copy_tileset(const entt::registry& registry, const entt::entity source)
 
 void select_tileset(entt::registry& registry, const TilesetID id)
 {
-  log_verbose("Selecting tileset '{}'", id);
+  spdlog::trace("Selecting tileset '{}'", id);
 
   const auto entity = find_tileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);
@@ -229,7 +229,7 @@ void select_tileset(entt::registry& registry, const TilesetID id)
 
 void remove_tileset(entt::registry& registry, const TilesetID id)
 {
-  log_debug("Removing tileset '{}'", id);
+  spdlog::debug("Removing tileset '{}'", id);
 
   const auto entity = find_tileset(registry, id);
   TACTILE_ASSERT(entity != entt::null);
