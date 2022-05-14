@@ -47,8 +47,6 @@ class AppConfiguration;
  */
 class Application final : AEventLoop
 {
-  friend void subscribe_to_events(Application* app);
-
  public:
   explicit Application(AppConfiguration* configuration);
 
@@ -70,6 +68,8 @@ class Application final : AEventLoop
  private:
   struct Data;
   Unique<Data> mData;
+
+  void subscribe_to_events();
 
   [[nodiscard]] auto get_dispatcher() -> entt::dispatcher&;
 

@@ -27,7 +27,6 @@
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
 
-#include "application_events.hpp"
 #include "cfg/configuration.hpp"
 #include "cfg/fonts.hpp"
 #include "core/components/attributes.hpp"
@@ -39,10 +38,16 @@
 #include "core/tools/tool_manager.hpp"
 #include "core/utils/texture_manager.hpp"
 #include "editor/commands/commands.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/misc_events.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/events/viewport_events.hpp"
 #include "editor/gui/dialogs/save_as_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/layers/layer_dock.hpp"
 #include "editor/gui/menus/edit_menu.hpp"
+#include "editor/gui/menus/file_menu.hpp"
+#include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/properties/property_dock.hpp"
 #include "editor/gui/tilesets/tileset_dock.hpp"
 #include "editor/gui/tilesets/tileset_view.hpp"
@@ -118,7 +123,7 @@ Application::Application(AppConfiguration* configuration)
 {
   mData->config = configuration;
 
-  subscribe_to_events(this);
+  subscribe_to_events();
   load_default_shortcuts();
   load_icons(mData->textures);
 }
@@ -180,6 +185,121 @@ void Application::on_event(const cen::event_handler& handler)
     default:
       break;
   }
+}
+
+void Application::subscribe_to_events()
+{
+  using Self = Application;
+  auto& d = get_dispatcher();
+
+  // clang-format off
+  d.sink<UndoEvent>().connect<&Self::on_undo>(this);
+  d.sink<RedoEvent>().connect<&Self::on_redo>(this);
+  d.sink<SetCommandCapacityEvent>().connect<&Self::on_set_command_capacity>(this);
+
+  d.sink<SaveEvent>().connect<&Self::on_save>(this);
+  d.sink<SaveAsEvent>().connect<&Self::on_save_as>(this);
+  d.sink<OpenSaveAsDialogEvent>().connect<&Self::on_open_save_as_dialog>(this);
+  d.sink<ShowSettingsEvent>().connect<&show_settings_dialog>();
+
+  d.sink<ShowNewMapDialogEvent>().connect<&show_map_creation_dialog>();
+  d.sink<ShowOpenMapDialogEvent>().connect<&show_map_selector_dialog>();
+  d.sink<InspectMapEvent>().connect<&Self::on_show_map_properties>(this);
+  d.sink<CreateMapEvent>().connect<&Self::on_create_map>(this);
+  d.sink<CloseMapEvent>().connect<&Self::on_close_map>(this);
+  d.sink<OpenMapEvent>().connect<&Self::on_open_map>(this);
+  d.sink<SelectMapEvent>().connect<&Self::on_select_map>(this);
+
+  d.sink<SelectToolEvent>().connect<&Self::on_select_tool>(this);
+  d.sink<ToolPressedEvent>().connect<&Self::on_tool_pressed>(this);
+  d.sink<ToolDraggedEvent>().connect<&Self::on_tool_dragged>(this);
+  d.sink<ToolReleasedEvent>().connect<&Self::on_tool_released>(this);
+  d.sink<ToolEnteredEvent>().connect<&Self::on_tool_entered>(this);
+  d.sink<ToolExitedEvent>().connect<&Self::on_tool_exited>(this);
+
+  d.sink<StampSequenceEvent>().connect<&Self::on_stamp_sequence>(this);
+  d.sink<SetStampRandomizerEvent>().connect<&Self::on_set_stamp_randomizer_event>(this);
+  d.sink<EraserSequenceEvent>().connect<&Self::on_eraser_sequence>(this);
+  d.sink<FloodEvent>().connect<&Self::on_flood>(this);
+  d.sink<AddRectangleEvent>().connect<&Self::on_add_rectangle>(this);
+  d.sink<AddEllipseEvent>().connect<&Self::on_add_ellipse>(this);
+  d.sink<AddPointEvent>().connect<&Self::on_add_point>(this);
+
+  d.sink<CenterViewportEvent>().connect<&center_map_viewport>();
+  d.sink<OffsetViewportEvent>().connect<&Self::on_offset_viewport>(this);
+  d.sink<OffsetBoundViewportEvent>().connect<&Self::on_offset_bound_viewport>(this);
+  d.sink<PanLeftEvent>().connect<&Self::on_pan_left>(this);
+  d.sink<PanRightEvent>().connect<&Self::on_pan_right>(this);
+  d.sink<PanUpEvent>().connect<&Self::on_pan_up>(this);
+  d.sink<PanDownEvent>().connect<&Self::on_pan_down>(this);
+  d.sink<IncreaseZoomEvent>().connect<&Self::on_increase_zoom>(this);
+  d.sink<DecreaseZoomEvent>().connect<&Self::on_decrease_zoom>(this);
+  d.sink<ResetZoomEvent>().connect<&Self::on_reset_zoom>(this);
+  d.sink<ResetFontSizeEvent>().connect<&Self::on_reset_font_size>(this);
+  d.sink<IncreaseFontSizeEvent>().connect<&Self::on_increase_font_size>(this);
+  d.sink<DecreaseFontSizeEvent>().connect<&Self::on_decrease_font_size>(this);
+
+  d.sink<ShowTilesetCreationDialogEvent>().connect<&show_tileset_creation_dialog>();
+  d.sink<AddTilesetEvent>().connect<&Self::on_add_tileset>(this);
+  d.sink<RemoveTilesetEvent>().connect<&Self::on_remove_tileset>(this);
+  d.sink<SelectTilesetEvent>().connect<&Self::on_select_tileset>(this);
+  d.sink<SetTilesetSelectionEvent>().connect<&Self::on_set_tileset_selection>(this);
+  d.sink<SetTilesetNameEvent>().connect<&Self::on_set_tileset_name>(this);
+
+  d.sink<AddRowEvent>().connect<&Self::on_add_row>(this);
+  d.sink<AddColumnEvent>().connect<&Self::on_add_column>(this);
+  d.sink<RemoveRowEvent>().connect<&Self::on_remove_row>(this);
+  d.sink<RemoveColumnEvent>().connect<&Self::on_remove_column>(this);
+  d.sink<ResizeMapEvent>().connect<&Self::on_resize_map>(this);
+  d.sink<OpenResizeMapDialogEvent>().connect<&Self::on_open_resize_map_dialog>(this);
+
+  d.sink<AddLayerEvent>().connect<&Self::on_add_layer>(this);
+  d.sink<RemoveLayerEvent>().connect<&Self::on_remove_layer>(this);
+  d.sink<SelectLayerEvent>().connect<&Self::on_select_layer>(this);
+  d.sink<MoveLayerUpEvent>().connect<&Self::on_move_layer_up>(this);
+  d.sink<MoveLayerDownEvent>().connect<&Self::on_move_layer_down>(this);
+  d.sink<DuplicateLayerEvent>().connect<&Self::on_duplicate_layer>(this);
+  d.sink<SetLayerOpacityEvent>().connect<&Self::on_set_layer_opacity>(this);
+  d.sink<SetLayerVisibleEvent>().connect<&Self::on_set_layer_visible>(this);
+  d.sink<OpenRenameLayerDialogEvent>().connect<&Self::on_open_rename_layer_dialog>(this);
+  d.sink<RenameLayerEvent>().connect<&Self::on_rename_layer>(this);
+
+  d.sink<SetObjectNameEvent>().connect<&Self::on_set_object_name>(this);
+  d.sink<MoveObjectEvent>().connect<&Self::on_move_object>(this);
+  d.sink<SetObjectVisibilityEvent>().connect<&Self::on_set_object_visibility>(this);
+  d.sink<SetObjectTagEvent>().connect<&Self::on_set_object_tag>(this);
+  d.sink<SpawnObjectContextMenuEvent>().connect<&Self::on_spawn_object_context_menu>(this);
+
+  d.sink<ShowAddPropertyDialogEvent>().connect<&show_property_creation_dialog>();
+  d.sink<ShowRenamePropertyDialogEvent>().connect<&Self::on_show_rename_property_dialog>(this);
+  d.sink<ShowChangePropertyTypeDialogEvent>().connect<&Self::on_show_change_property_type_dialog>(this);
+  d.sink<AddPropertyEvent>().connect<&Self::on_add_property>(this);
+  d.sink<RemovePropertyEvent>().connect<&Self::on_remove_property>(this);
+  d.sink<RenamePropertyEvent>().connect<&Self::on_rename_property>(this);
+  d.sink<UpdatePropertyEvent>().connect<&Self::on_update_property>(this);
+  d.sink<ChangePropertyTypeEvent>().connect<&Self::on_change_property_type>(this);
+  d.sink<InspectContextEvent>().connect<&Self::on_inspect_context>(this);
+
+  d.sink<OpenComponentEditorEvent>().connect<&Self::on_open_component_editor>(this);
+  d.sink<CreateComponentDefEvent>().connect<&Self::on_create_component_def>(this);
+  d.sink<RemoveComponentDefEvent>().connect<&Self::on_remove_component_def>(this);
+  d.sink<RenameComponentDefEvent>().connect<&Self::on_rename_component_def>(this);
+  d.sink<CreateComponentAttrEvent>().connect<&Self::on_create_component_attr>(this);
+  d.sink<RemoveComponentAttrEvent>().connect<&Self::on_remove_component_attr>(this);
+  d.sink<RenameComponentAttrEvent>().connect<&Self::on_rename_component_attr>(this);
+  d.sink<DuplicateComponentAttrEvent>().connect<&Self::on_duplicate_component_attr>(this);
+  d.sink<SetComponentAttrTypeEvent>().connect<&Self::on_set_component_attr_type>(this);
+  d.sink<UpdateComponentDefAttrEvent>().connect<&Self::on_update_component_def_attr>(this);
+
+  d.sink<AddComponentEvent>().connect<&Self::on_add_component>(this);
+  d.sink<RemoveComponentEvent>().connect<&Self::on_remove_component>(this);
+  d.sink<UpdateComponentEvent>().connect<&Self::on_update_component>(this);
+  d.sink<ResetComponentValuesEvent>().connect<&Self::on_reset_component_values>(this);
+
+  d.sink<ToggleUiEvent>().connect<&Self::on_toggle_ui>(this);
+  d.sink<ReloadFontsEvent>().connect<&Self::on_reload_fonts>(this);
+  d.sink<QuitEvent>().connect<&Self::on_quit>(this);
+  // clang-format on
 }
 
 auto Application::get_dispatcher() -> entt::dispatcher&
