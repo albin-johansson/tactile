@@ -22,7 +22,6 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

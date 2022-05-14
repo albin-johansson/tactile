@@ -19,8 +19,9 @@
 
 #pragma once
 
+#include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

@@ -26,8 +26,7 @@
 
 #include "core/attribute.hpp"
 #include "core/components/attributes.hpp"
-#include "snapshot.hpp"
-#include "tactile.hpp"
+#include "core/systems/snapshot.hpp"
 
 namespace tactile::sys {
 

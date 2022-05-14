@@ -21,11 +21,11 @@
 
 #include <vector>  // vector
 
+#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
 #include "core/tile_pos.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

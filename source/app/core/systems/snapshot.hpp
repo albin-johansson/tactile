@@ -26,12 +26,13 @@
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "tactile.hpp"
 
 namespace tactile::sys {
 

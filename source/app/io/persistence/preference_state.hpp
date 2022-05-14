@@ -25,9 +25,9 @@
 
 #include <centurion/fwd.hpp>
 
+#include "core/common/ints.hpp"
 #include "core/common/memory.hpp"
 #include "editor/gui/themes.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

@@ -22,9 +22,10 @@
 #include <filesystem>  // path
 #include <vector>      // vector
 
+#include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/texture.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

@@ -22,8 +22,8 @@
 #include <string>  // string
 
 #include "core/attribute.hpp"
+#include "core/common/identifiers.hpp"
 #include "core/components/attributes.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

@@ -26,5 +26,6 @@ struct RenderInfo;
 
 class DocumentModel;
 class GraphicsCtx;
+class WidgetManager;
 
 }  // namespace tactile

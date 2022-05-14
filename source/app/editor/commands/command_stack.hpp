@@ -23,11 +23,11 @@
 #include <string>   // string
 #include <utility>  // move
 
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/utils/sfinae.hpp"
 #include "editor/commands/command.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

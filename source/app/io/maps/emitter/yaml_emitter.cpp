@@ -27,12 +27,12 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
+#include "core/common/ints.hpp"
 #include "core/utils/strings.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/yaml_utils.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"
-#include "tactile.hpp"
 
 namespace tactile::emitter {
 namespace {

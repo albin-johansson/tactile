@@ -23,8 +23,6 @@
 
 #include <imgui.h>
 
-#include "tactile.hpp"
-
 namespace tactile {
 
 /// \addtogroup gui

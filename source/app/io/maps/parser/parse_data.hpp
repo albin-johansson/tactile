@@ -23,7 +23,6 @@
 
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_error.hpp"
-#include "tactile.hpp"
 
 namespace tactile::parsing {
 

@@ -22,9 +22,9 @@
 #include <string>  // string
 
 #include "core/attribute.hpp"
+#include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

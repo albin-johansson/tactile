@@ -23,6 +23,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/common/identifiers.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/context_system.hpp"
@@ -35,7 +36,6 @@
 #include "editor/gui/scoped.hpp"
 #include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 namespace {

@@ -5,6 +5,7 @@
 #include "core/algorithms/invoke.hpp"
 #include "core/map_info.hpp"
 #include "core/systems/registry_system.hpp"
+#include "core/tile_pos.hpp"
 
 using namespace tactile;
 

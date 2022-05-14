@@ -21,8 +21,8 @@
 
 #include <compare>  // <=>
 
+#include "core/common/ints.hpp"
 #include "misc/assert.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

@@ -23,8 +23,8 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/macros.hpp"
 #include "core/common/ref.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

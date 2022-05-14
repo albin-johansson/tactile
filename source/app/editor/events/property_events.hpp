@@ -24,7 +24,6 @@
 #include <entt/entity/entity.hpp>
 
 #include "core/attribute.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

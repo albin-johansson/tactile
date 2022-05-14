@@ -23,10 +23,10 @@
 #include <centurion/math.hpp>
 #include <imgui.h>
 
+#include "core/common/ints.hpp"
 #include "core/region.hpp"
 #include "core/renderer.hpp"
 #include "editor/fwd.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

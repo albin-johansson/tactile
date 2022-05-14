@@ -27,9 +27,10 @@
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
-#include "tactile.hpp"
 
 namespace tactile::sys {
 

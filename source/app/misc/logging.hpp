@@ -27,8 +27,8 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>  // included so that formatting types like std::filesystem::path works
 
+#include "core/common/ints.hpp"
 #include "meta/build.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 namespace logger {

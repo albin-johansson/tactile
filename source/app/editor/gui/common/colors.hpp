@@ -24,7 +24,7 @@
 #include <centurion/color.hpp>
 #include <imgui.h>
 
-#include "tactile.hpp"
+#include "core/common/ints.hpp"
 
 namespace tactile {
 

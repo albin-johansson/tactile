@@ -22,9 +22,9 @@
 #include <entt/fwd.hpp>
 #include <imgui.h>
 
+#include "core/common/macros.hpp"
 #include "core/common/memory.hpp"
 #include "editor/fwd.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

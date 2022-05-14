@@ -22,7 +22,6 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/maybe.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

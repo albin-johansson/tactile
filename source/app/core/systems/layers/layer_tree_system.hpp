@@ -21,7 +21,7 @@
 
 #include <entt/fwd.hpp>
 
-#include "tactile.hpp"
+#include "core/common/ints.hpp"
 
 namespace tactile::sys {
 

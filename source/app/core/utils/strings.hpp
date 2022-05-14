@@ -27,9 +27,9 @@
 #include <system_error>  // errc
 #include <vector>        // vector
 
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/utils/sfinae.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

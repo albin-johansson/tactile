@@ -34,7 +34,6 @@
 #include "editor/events/tool_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "loop.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

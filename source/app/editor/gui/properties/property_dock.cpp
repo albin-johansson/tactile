@@ -49,7 +49,6 @@
 #include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 namespace {

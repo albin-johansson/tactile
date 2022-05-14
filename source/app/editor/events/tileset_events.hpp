@@ -22,8 +22,9 @@
 #include <filesystem>  // path
 #include <string>      // string
 
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 #include "core/region.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

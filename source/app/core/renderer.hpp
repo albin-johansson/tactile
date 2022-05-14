@@ -22,7 +22,7 @@
 #include <centurion/fwd.hpp>
 #include <glm/vec2.hpp>
 
-#include "tactile.hpp"
+#include "core/common/ints.hpp"
 
 namespace tactile {
 

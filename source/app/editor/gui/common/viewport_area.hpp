@@ -22,8 +22,8 @@
 #include <centurion/mouse.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/common/macros.hpp"
 #include "editor/gui/rendering/render_info.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

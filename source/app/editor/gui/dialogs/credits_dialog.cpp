@@ -22,7 +22,6 @@
 #include <imgui.h>
 
 #include "editor/gui/scoped.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 namespace {

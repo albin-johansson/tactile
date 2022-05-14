@@ -25,13 +25,13 @@
 #include <ios>         // ios
 #include <utility>     // move
 
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/utils/strings.hpp"
 #include "io/directories.hpp"
+#include "io/persistence/proto.hpp"
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
-#include "proto.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 namespace {

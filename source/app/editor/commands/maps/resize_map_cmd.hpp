@@ -19,11 +19,11 @@
 
 #pragma once
 
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "editor/commands/maps/map_command_cache.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

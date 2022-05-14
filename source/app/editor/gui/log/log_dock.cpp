@@ -28,7 +28,6 @@
 #include "io/persistence/preferences.hpp"
 #include "misc/logging.hpp"
 #include "misc/throw.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 namespace {

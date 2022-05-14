@@ -26,7 +26,7 @@
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
-#include "tactile.hpp"
+#include "core/common/identifiers.hpp"
 
 namespace tactile {
 

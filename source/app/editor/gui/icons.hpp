@@ -21,9 +21,9 @@
 
 #include <IconsFontAwesome6.h>
 
+#include "core/common/ints.hpp"
 #include "core/layer_type.hpp"
 #include "core/utils/texture_manager.hpp"
-#include "tactile.hpp"
 
 /// \addtogroup gui
 /// \{

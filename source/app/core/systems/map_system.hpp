@@ -21,8 +21,8 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/tile_pos.hpp"
-#include "tactile.hpp"
+#include "core/common/ints.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile::sys {
 

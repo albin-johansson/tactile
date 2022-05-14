@@ -22,8 +22,8 @@
 #include <array>  // array
 
 #include "core/attribute.hpp"
+#include "core/common/macros.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

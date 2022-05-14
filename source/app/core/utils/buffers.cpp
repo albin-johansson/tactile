@@ -22,6 +22,7 @@
 #include <algorithm>  // find
 #include <cstring>    // memset
 
+#include "core/common/ints.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

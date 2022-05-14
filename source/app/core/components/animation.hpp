@@ -24,7 +24,8 @@
 #include <centurion/common.hpp>
 #include <entt/entity/entity.hpp>
 
-#include "tactile.hpp"
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 
 namespace tactile::comp {
 

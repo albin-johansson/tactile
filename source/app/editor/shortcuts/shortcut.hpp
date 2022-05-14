@@ -24,11 +24,8 @@
 #include <entt/fwd.hpp>
 
 #include "editor/fwd.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
-
-class WidgetManager;
 
 class AShortcut
 {

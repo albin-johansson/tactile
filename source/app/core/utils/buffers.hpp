@@ -23,8 +23,6 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include "tactile.hpp"
-
 namespace tactile {
 
 /// \addtogroup utils

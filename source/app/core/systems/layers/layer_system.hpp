@@ -24,11 +24,11 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/layers.hpp"
 #include "core/map_info.hpp"
 #include "core/systems/snapshot.hpp"
-#include "tactile.hpp"
 
 namespace tactile::sys {
 

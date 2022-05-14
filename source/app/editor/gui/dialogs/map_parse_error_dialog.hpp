@@ -22,7 +22,6 @@
 #include "core/common/maybe.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 #include "io/maps/parser/parse_error.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

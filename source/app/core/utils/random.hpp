@@ -22,8 +22,6 @@
 #include <random>       // mt19937, uniform_real_distribution, uniform_int_distribution
 #include <type_traits>  // is_floating_point_v
 
-#include "tactile.hpp"
-
 namespace tactile {
 
 using RandomEngine = std::mt19937;

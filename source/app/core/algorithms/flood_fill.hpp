@@ -23,8 +23,8 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/identifiers.hpp"
 #include "core/fwd.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

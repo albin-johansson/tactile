@@ -26,7 +26,6 @@
 #include "cfg/imgui_context.hpp"
 #include "cfg/protobuf_context.hpp"
 #include "core/common/maybe.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

@@ -21,9 +21,9 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/identifiers.hpp"
 #include "core/components/attributes.hpp"
 #include "snapshot.hpp"
-#include "tactile.hpp"
 
 namespace tactile::sys {
 

@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "core/common/ints.hpp"
 #include "core/components/layers.hpp"
 #include "core/utils/sfinae.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

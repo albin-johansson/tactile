@@ -22,12 +22,13 @@
 #include <centurion/fwd.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/texture.hpp"
 #include "core/region.hpp"
+#include "core/systems/snapshot.hpp"
 #include "core/tile_pos.hpp"
-#include "snapshot.hpp"
-#include "tactile.hpp"
 
 namespace tactile::sys {
 

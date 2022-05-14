@@ -24,7 +24,8 @@
 #include <imgui.h>
 
 #include "core/common/associative.hpp"
-#include "tactile.hpp"
+#include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
 
 namespace tactile::scoped {
 

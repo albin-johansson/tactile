@@ -26,10 +26,10 @@
 
 #include <imgui.h>
 
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "editor/gui/scoped.hpp"
 #include "misc/throw.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 namespace {

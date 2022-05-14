@@ -26,7 +26,7 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "tactile.hpp"
+#include "core/common/ints.hpp"
 
 namespace tactile {
 

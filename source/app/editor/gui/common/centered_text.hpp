@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include "tactile.hpp"
-
 namespace tactile {
 
 /**

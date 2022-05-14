@@ -25,6 +25,7 @@
 #include "core/components/layers.hpp"
 #include "core/map_info.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
+#include "core/tile_pos.hpp"
 #include "core/utils/sfinae.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/assert.hpp"

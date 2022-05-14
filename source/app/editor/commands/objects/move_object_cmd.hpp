@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "core/common/identifiers.hpp"
 #include "editor/commands/command_id.hpp"
 #include "editor/commands/objects/object_command.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

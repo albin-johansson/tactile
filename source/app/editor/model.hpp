@@ -24,12 +24,13 @@
 #include <boost/container/flat_map.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "editor/document.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/tool_events.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

@@ -23,7 +23,6 @@
 #include "core/common/memory.hpp"
 #include "core/tools/tool.hpp"
 #include "core/tools/tool_type.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

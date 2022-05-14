@@ -23,8 +23,8 @@
 
 #include <entt/entity/entity.hpp>
 
+#include "core/common/identifiers.hpp"
 #include "core/object_type.hpp"
-#include "tactile.hpp"
 
 namespace tactile::comp {
 

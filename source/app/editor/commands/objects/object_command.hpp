@@ -21,10 +21,10 @@
 
 #include <string>  // string
 
+#include "core/common/identifiers.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/objects.hpp"
 #include "editor/commands/command.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

@@ -21,11 +21,12 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/identifiers.hpp"
+#include "core/common/macros.hpp"
 #include "core/common/memory.hpp"
 #include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

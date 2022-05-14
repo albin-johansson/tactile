@@ -21,7 +21,8 @@
 
 #include <filesystem>  // path
 
-#include "tactile.hpp"
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 
 namespace tactile {
 

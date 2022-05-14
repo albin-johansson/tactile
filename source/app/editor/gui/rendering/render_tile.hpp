@@ -21,8 +21,9 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 #include "editor/fwd.hpp"
-#include "tactile.hpp"
 
 struct ImVec2;
 

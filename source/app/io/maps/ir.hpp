@@ -26,10 +26,12 @@
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
 #include "core/common/memory.hpp"
 #include "core/layer_type.hpp"
 #include "core/object_type.hpp"
-#include "tactile.hpp"
 
 namespace tactile::ir {
 
@@ -61,7 +63,7 @@ struct ObjectData final
 
 struct TileLayerData final
 {
-  /* The sizes are provided for convenience, they should mirror the map_data values */
+  /* The sizes are provided for convenience, they should mirror the MapData values */
   usize row_count{};
   usize col_count{};
   std::vector<std::vector<TileID>> tiles;

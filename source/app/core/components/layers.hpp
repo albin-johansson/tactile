@@ -23,8 +23,9 @@
 
 #include <entt/entity/entity.hpp>
 
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 #include "core/layer_type.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

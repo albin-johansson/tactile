@@ -23,7 +23,7 @@
 
 #include <entt/entity/entity.hpp>
 
-#include "tactile.hpp"
+#include "core/common/identifiers.hpp"
 
 namespace tactile {
 

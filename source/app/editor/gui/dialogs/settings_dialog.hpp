@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "core/common/macros.hpp"
 #include "editor/gui/dialogs/dialog.hpp"
 #include "io/persistence/preferences.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

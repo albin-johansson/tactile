@@ -23,11 +23,12 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "editor/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

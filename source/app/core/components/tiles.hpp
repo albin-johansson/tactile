@@ -25,9 +25,10 @@
 #include <entt/entity/entity.hpp>
 
 #include "core/common/associative.hpp"
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/region.hpp"
-#include "tactile.hpp"
 
 namespace tactile::comp {
 

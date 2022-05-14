@@ -22,7 +22,6 @@
 #include <filesystem>  // path
 
 #include "io/maps/ir.hpp"
-#include "tactile.hpp"
 
 namespace tactile::emitter {
 
