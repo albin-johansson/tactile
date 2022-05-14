@@ -21,9 +21,11 @@
 #include <exception>  // exception
 
 #include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
 
 #include "application.hpp"
 #include "cfg/configuration.hpp"
+#include "io/directories.hpp"
 #include "misc/crash.hpp"
 #include "misc/logging.hpp"
 #include "misc/panic.hpp"
@@ -32,6 +34,8 @@ auto main(int, char**) -> int
 {
   try {
     tactile::init_logger();
+
+    spdlog::info("Using persistent file directory {}", tactile::persistent_file_dir());
 
     tactile::AppConfiguration configuration;
     tactile::Application app{&configuration};
