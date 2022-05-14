@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <unordered_map>  // unordered_map
-#include <utility>        // forward
+#include <utility>  // forward
 
 #include <imgui.h>
 
+#include "core/common/associative.hpp"
 #include "tactile.hpp"
 
 namespace tactile::scoped {
@@ -360,7 +360,7 @@ class Window final
     bool is_hovered{};
   };
 
-  inline static std::unordered_map<const char*, WindowData> window_data;
+  inline static HashMap<const char*, WindowData> window_data;
 
  public:
   TACTILE_DEFAULT_COPY(Window);
