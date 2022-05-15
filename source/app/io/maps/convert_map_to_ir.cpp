@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "convert_document_to_ir.hpp"
+#include "convert_map_to_ir.hpp"
 
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
@@ -268,7 +268,7 @@ void _convert_basic_map_info(ir::MapData& data, const MapInfo& mapInfo)
 
 }  // namespace
 
-auto convert_document_to_ir(const Document& document) -> ir::MapData
+auto convert_map_to_ir(const Document& document) -> ir::MapData
 {
   TACTILE_PROFILE_START
 

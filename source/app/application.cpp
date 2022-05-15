@@ -58,7 +58,7 @@
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/maps/parser/parse_map.hpp"
-#include "io/maps/restore_document_from_ir.hpp"
+#include "io/maps/restore_map_from_ir.hpp"
 #include "io/maps/save_document.hpp"
 #include "io/persistence/history.hpp"
 #include "io/persistence/preferences.hpp"
@@ -466,7 +466,7 @@ void Application::on_open_map(const OpenMapEvent& event)
 
   const auto ir = parsing::parse_map(event.path);
   if (ir.error() == parsing::ParseError::None) {
-    mData->model.add_map(restore_document_from_ir(ir, mData->textures));
+    mData->model.add_map(restore_map_from_ir(ir, mData->textures));
     add_file_to_history(event.path);
   }
   else {

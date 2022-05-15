@@ -19,21 +19,11 @@
 
 #pragma once
 
-#include "core/fwd.hpp"
-#include "editor/document.hpp"
-#include "io/fwd.hpp"
+#include "editor/fwd.hpp"
+#include "io/maps/ir.hpp"
 
 namespace tactile {
 
-/**
- * \brief Creates a map document from an intermediate map representation.
- *
- * \param data the intermediate representation of the map data.
- * \param textures the texture manager that will be used.
- *
- * \return a document based on the intermediate representation.
- */
-[[nodiscard]] auto restore_document_from_ir(const parsing::ParseData& data,
-                                            TextureManager& textures) -> Document;
+[[nodiscard]] auto convert_map_to_ir(const Document& document) -> ir::MapData;
 
 }  // namespace tactile

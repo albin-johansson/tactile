@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "restore_document_from_ir.hpp"
+#include "restore_map_from_ir.hpp"
 
 #include <variant>  // get
 
@@ -318,7 +318,7 @@ void _restore_component_definitions(entt::registry& registry, const ir::MapData&
 
 }  // namespace
 
-auto restore_document_from_ir(const parsing::ParseData& data, TextureManager& textures)
+auto restore_map_from_ir(const parsing::ParseData& data, TextureManager& textures)
     -> Document
 {
   Document document;
