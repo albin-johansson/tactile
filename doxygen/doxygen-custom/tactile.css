@@ -1,0 +1,32 @@
+/* light-mode variable overrides go here */
+html {
+  --fragment-keywordtype: var(--fragment-keyword);
+  --fragment-keywordflow: var(--fragment-keyword);
+}
+
+/* dark-mode variable overrides go here */
+html.dark-mode {
+  --page-background-color: #151f2d;
+
+  --side-nav-background: var(--page-background-color);
+  --code-background: var(--page-background-color);
+
+  --primary-color: #3194E0;
+  --primary-dark-color: #2C82C4;
+
+  --code-foreground: #FF657A;
+
+  --fragment-background: #151B25;
+  --fragment-keyword: var(--code-foreground);
+  --fragment-keywordtype: var(--fragment-keyword);
+  --fragment-keywordflow: var(--fragment-keyword);
+  --fragment-linenumber-background: #151B25;
+}
+
+.directory .levels span {
+  color: gray;
+}
+
+address {
+  color: gray;
+}

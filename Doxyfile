@@ -1216,6 +1216,7 @@ HTML_EXTRA_STYLESHEET  = doxygen/doxygen-awesome.css \
                          doxygen/doxygen-custom/custom.css \
                          doxygen/doxygen-awesome-sidebar-only-darkmode-toggle.css \
                          doxygen/doxygen-custom/custom-alternative.css \
+                         doxygen/doxygen-custom/tactile.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
