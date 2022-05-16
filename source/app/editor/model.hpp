@@ -45,8 +45,8 @@ class DocumentModel final
 {
  public:
   // Documents are stored on the heap to ensure stability, which is important for commands
-  using document_map = boost::container::flat_map<MapID, Unique<Document>>;
-  using const_iterator = document_map::const_iterator;
+  using DocumentMap = boost::container::flat_map<MapID, Unique<Document>>;
+  using const_iterator = DocumentMap::const_iterator;
 
   /**
    * \brief Updates systems that need to be consistently updated, e.g. animations.
@@ -280,7 +280,7 @@ class DocumentModel final
   [[nodiscard]] auto end() const noexcept -> const_iterator { return mDocuments.end(); }
 
  private:
-  document_map mDocuments;
+  DocumentMap mDocuments;
   Maybe<MapID> mActiveMap;
   MapID mNextId{1};
 };
