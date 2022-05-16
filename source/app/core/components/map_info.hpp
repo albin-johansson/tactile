@@ -27,7 +27,7 @@ namespace tactile {
 /**
  * \brief Provides information about a map context.
  */
-struct MapInfo final
+struct MapInfo final  // TODO comp
 {
   usize row_count{};     ///< Total amount of rows.
   usize column_count{};  ///< Total amount of columns.

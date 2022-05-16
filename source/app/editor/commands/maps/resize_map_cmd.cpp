@@ -19,7 +19,7 @@
 
 #include "resize_map_cmd.hpp"
 
-#include "core/map_info.hpp"
+#include "core/components/map_info.hpp"
 #include "core/systems/map_system.hpp"
 
 namespace tactile {

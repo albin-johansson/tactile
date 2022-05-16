@@ -21,10 +21,10 @@
 
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
+#include "core/components/map_info.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/map_info.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"

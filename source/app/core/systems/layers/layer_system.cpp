@@ -27,9 +27,9 @@
 #include <fmt/format.h>
 
 #include "core/components/attributes.hpp"
+#include "core/components/map_info.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
-#include "core/map_info.hpp"
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"

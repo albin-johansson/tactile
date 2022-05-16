@@ -20,7 +20,7 @@
 #include "remove_column_cmd.hpp"
 
 #include "core/algorithms/invoke.hpp"
-#include "core/map_info.hpp"
+#include "core/components/map_info.hpp"
 #include "core/systems/map_system.hpp"
 
 namespace tactile {

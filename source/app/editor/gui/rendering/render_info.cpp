@@ -23,9 +23,9 @@
 
 #include <imgui_internal.h>
 
+#include "core/components/map_info.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
-#include "core/map_info.hpp"
 
 namespace tactile {
 namespace {

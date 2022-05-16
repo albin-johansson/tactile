@@ -23,7 +23,7 @@
 
 #include "core/algorithms/invoke.hpp"
 #include "core/components/layers.hpp"
-#include "core/map_info.hpp"
+#include "core/components/map_info.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/tile_pos.hpp"
 #include "core/utils/sfinae.hpp"

@@ -25,9 +25,9 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/components/map_info.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/viewport.hpp"
-#include "core/map_info.hpp"
 #include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
