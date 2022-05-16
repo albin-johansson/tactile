@@ -28,6 +28,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/region.hpp"
 
 namespace tactile::comp {
@@ -55,14 +56,24 @@ struct TilesetContext final
  */
 struct Tileset final
 {
-  TilesetID id{};        ///< Unique ID associated with the tileset.
-  TileID first_id{};     ///< First associated global tile ID.
-  TileID last_id{};      ///< Last associated global tile ID (inclusive).
-  int32 tile_width{};    ///< Width of tiles in the tileset.
-  int32 tile_height{};   ///< Height of tiles in the tileset.
-  int32 tile_count{};    ///< Number of tiles associated with the tileset.
-  int32 row_count{};     ///< Amount of tile rows.
-  int32 column_count{};  ///< Amount of tile columns.
+  TilesetID id{};                    ///< Unique ID associated with the tileset.
+  [[deprecated]] TileID first_id{};  ///< First associated global tile ID.
+  [[deprecated]] TileID last_id{};   ///< Last associated global tile ID (inclusive).
+  int32 tile_width{};                ///< Width of tiles in the tileset.
+  int32 tile_height{};               ///< Height of tiles in the tileset.
+  int32 tile_count{};                ///< Number of tiles associated with the tileset.
+  int32 row_count{};                 ///< Amount of tile rows.
+  int32 column_count{};              ///< Amount of tile columns.
+};
+
+/**
+ * \brief Component used in map registries to keep track of all added tilesets.
+ */
+struct TilesetRef final
+{
+  UUID source_tileset{};
+  TileID first_id{};
+  TileID last_id{};
 };
 
 /**
