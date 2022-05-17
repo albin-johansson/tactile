@@ -31,8 +31,8 @@
 namespace tactile::sys {
 namespace {
 
-void _validate_layer_node_entity(const entt::registry& registry,
-                                 const entt::entity entity)
+void _validate_layer_node_entity([[maybe_unused]] const entt::registry& registry,
+                                 [[maybe_unused]] const entt::entity entity)
 {
   TACTILE_ASSERT(entity != entt::null);
   TACTILE_ASSERT(registry.all_of<comp::LayerTreeNode>(entity));
