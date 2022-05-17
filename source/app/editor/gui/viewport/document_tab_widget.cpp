@@ -17,21 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "map_tab_widget.hpp"
+#include "document_tab_widget.hpp"
 
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
+#include "core/components/map_info.hpp"
+#include "core/components/tiles.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/viewport/map_view.hpp"
+#include "editor/gui/viewport/tileset_view.hpp"
 #include "editor/model.hpp"
 
 namespace tactile {
 
-void update_map_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::TabBar bar{"##MapTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
     for (const auto& [id, document] : model) {
@@ -48,11 +51,18 @@ void update_map_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
         }
       }
 
-      const auto& context = document->registry.ctx().at<comp::AttributeContext>();
+      const auto& ctx = document->registry.ctx();
+      const auto& context = ctx.at<comp::AttributeContext>();
+
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {
-          update_map_view(model, dispatcher);
+          if (ctx.contains<MapInfo>()) {
+            update_map_view(model, dispatcher);
+          }
+          else if (ctx.contains<comp::Tileset>()) {
+            update_tileset_view(model, dispatcher);
+          }
         }
       }
 

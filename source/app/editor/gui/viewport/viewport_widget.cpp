@@ -31,7 +31,7 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/textures.hpp"
-#include "editor/gui/viewport/map_tab_widget.hpp"
+#include "editor/gui/viewport/document_tab_widget.hpp"
 #include "editor/model.hpp"
 
 namespace tactile {
@@ -77,7 +77,7 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
     _mouse_within_window = scoped::Window::current_window_contains_mouse();
 
     if (model.has_active_document()) {
-      update_map_tabs(model, dispatcher);
+      update_document_tabs(model, dispatcher);
 
       if (window.mouse_entered()) {
         dispatcher.enqueue<ToolEnteredEvent>();
