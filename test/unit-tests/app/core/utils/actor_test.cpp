@@ -84,7 +84,7 @@ TEST(Actor, Get)
   entt::registry registry;
 
   const auto entity = registry.create();
-  registry.emplace<FooComponent>(entity, 10, 20);
+  registry.emplace<FooComponent>(entity, 10.0f, 20.0f);
 
   Actor actor{registry, entity};
   const auto& ref = actor;
