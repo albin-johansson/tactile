@@ -23,7 +23,7 @@
 #include <iomanip>  // setw
 #include <ios>      // ios
 
-#include "core/utils/strings.hpp"
+#include "core/common/filesystem.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/panic.hpp"
 

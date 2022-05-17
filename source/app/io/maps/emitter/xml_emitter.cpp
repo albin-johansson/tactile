@@ -29,7 +29,7 @@
 #include <pugixml.hpp>
 #include <spdlog/spdlog.h>
 
-#include "core/utils/strings.hpp"
+#include "core/common/filesystem.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"

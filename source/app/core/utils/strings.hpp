@@ -22,7 +22,6 @@
 #include <algorithm>     // min
 #include <charconv>      // from_chars
 #include <cstring>       // strlen
-#include <filesystem>    // path
 #include <string>        // string, stof
 #include <system_error>  // errc
 #include <vector>        // vector
@@ -125,19 +124,5 @@ template <typename T, is_floating<T> = 0>
   }
 #endif  // __cpp_lib_to_chars >= 201611L
 }
-
-/**
- * \brief Converts a path to a string that is guaranteed to use forward slashes.
- *
- * \details This function is useful when saving paths to files in a portable way. Since
- * all relevant operating systems understand forward slashes, even if some operating
- * systems prefer backslashes (such as Windows).
- *
- * \param path the file path that will be converted.
- *
- * \return a version of the path with forward slashes instead of backslashes.
- */
-[[nodiscard]] auto convert_to_forward_slashes(const std::filesystem::path& path)
-    -> std::string;
 
 }  // namespace tactile

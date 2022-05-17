@@ -26,7 +26,7 @@
 #include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
 
-#include "core/utils/strings.hpp"
+#include "core/common/filesystem.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/json_utils.hpp"
 #include "io/maps/tiled_info.hpp"

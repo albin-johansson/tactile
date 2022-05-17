@@ -17,26 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "strings.hpp"
+#pragma once
 
-#include <sstream>  // stringstream
-#include <utility>  // move
+#include <filesystem>  // path
+#include <string>      // string
 
 namespace tactile {
 
-auto split(const char* str, const char sep) -> std::vector<std::string>
-{
-  std::stringstream stream{str};
-  std::vector<std::string> tokens;
-
-  std::string token;
-  while (std::getline(stream, token, sep)) {
-    std::erase(token, '\n');
-    tokens.push_back(std::move(token));
-    token.clear();
-  }
-
-  return tokens;
-}
+/**
+ * \brief Converts a path to a string that is guaranteed to use forward slashes.
+ *
+ * \details This function is useful when saving paths to files in a portable way. Since
+ * all relevant operating systems understand forward slashes, even if some operating
+ * systems prefer backslashes (such as Windows).
+ *
+ * \param path the file path that will be converted.
+ *
+ * \return a version of the path with forward slashes instead of backslashes.
+ *
+ * \ingroup core
+ */
+[[nodiscard]] auto convert_to_forward_slashes(const std::filesystem::path& path)
+    -> std::string;
 
 }  // namespace tactile
