@@ -30,6 +30,8 @@ using RandomEngine = std::mt19937;
  * \brief Creates a seeded pseudo-random number generation engine.
  *
  * \return a seeded random engine.
+ *
+ * \ingroup core
  */
 [[nodiscard]] auto make_random_engine() -> RandomEngine;
 
@@ -40,6 +42,8 @@ using RandomEngine = std::mt19937;
  * \param max the maximum possible value.
  *
  * \return a random value in the range.
+ *
+ * \ingroup core
  */
 template <typename T>
 [[nodiscard]] auto next_random(const T min, const T max) -> T
@@ -58,6 +62,8 @@ template <typename T>
  * \brief Returns a random boolean value.
  *
  * \return a random boolean value.
+ *
+ * \ingroup core
  */
 [[nodiscard]] auto next_bool() -> bool;
 
@@ -65,6 +71,8 @@ template <typename T>
  * \brief Returns a random float in the interval [0, 1].
  *
  * \return a random normalized float.
+ *
+ * \ingroup core
  */
 [[nodiscard]] auto next_float() -> float;
 

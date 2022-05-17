@@ -25,6 +25,7 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/algorithms/invoke.hpp"
+#include "core/common/random.hpp"
 #include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
@@ -32,7 +33,6 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_pos.hpp"
-#include "core/utils/random.hpp"
 #include "editor/events/tool_events.hpp"
 #include "misc/assert.hpp"
 
