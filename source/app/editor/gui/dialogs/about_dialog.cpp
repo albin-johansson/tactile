@@ -24,8 +24,8 @@
 
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/icons.hpp"
+#include "meta/build.hpp"
 
-#define TAC_VER "0.4.0"
 #define TAC_URL "https://www.github.com/albin-johansson/tactile"
 #define TAC_LICENSE "GPL v3.0"
 
@@ -44,7 +44,8 @@ void AboutDialog::show()
 
 void AboutDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  ImGui::TextUnformatted("Tactile " TAC_VER " (C) Albin Johansson 2020-2022");
+  ImGui::TextUnformatted("Tactile " TACTILE_VERSION_STRING
+                         " (C) Albin Johansson 2020-2022");
   ImGui::Separator();
 
   ImGui::TextUnformatted(ICON_FA_SCALE_BALANCED

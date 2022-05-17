@@ -19,6 +19,8 @@
 
 #pragma once
 
+#define TACTILE_VERSION_STRING "0.4.0 [dev]"
+
 #ifdef NDEBUG
 #define TACTILE_DEBUG 0
 #else

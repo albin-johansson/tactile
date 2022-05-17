@@ -117,6 +117,8 @@ void init_logger()
   spdlog::set_default_logger(logger);
   spdlog::set_level(is_debug_build ? spdlog::level::trace : spdlog::level::info);
 
+  spdlog::info("Tactile version " TACTILE_VERSION_STRING);
+
   const auto time = fmt::localtime(std::time(nullptr));
   spdlog::info("Today is {:%A %Y-%m-%d}", time);
 }
