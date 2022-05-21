@@ -12,6 +12,7 @@ project(tactile
         VERSION 0.4.0
         LANGUAGES CXX)
 
+message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
 message("[Tactile]: Current version is ${CMAKE_PROJECT_VERSION}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
@@ -22,8 +23,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
   message("[Tactile]: Enabling IPO...")
   set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 endif ()
-
-message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARY_DIR ${ROOT_DIR}/lib)
