@@ -33,10 +33,11 @@
 
 namespace tactile::comp {
 
+/// \addtogroup components
+/// \{
+
 /**
  * \brief Context component that keeps track of the tileset state of a single tilemap.
- *
- * \ingroup components
  */
 struct TilesetContext final
 {
@@ -51,8 +52,6 @@ struct TilesetContext final
 
 /**
  * \brief Provides general information about a tileset.
- *
- * \ingroup components
  */
 struct Tileset final
 {
@@ -78,8 +77,6 @@ struct TilesetRef final
 
 /**
  * \brief Provides information about the size of a single tile in a tileset for rendering.
- *
- * \ingroup components
  */
 struct UvTileSize final
 {
@@ -92,8 +89,6 @@ struct UvTileSize final
  *
  * \details Tiles with aspects such as animations, properties or associated objects will
  * feature this component.
- *
- * \ingroup components
  */
 struct MetaTile final
 {
@@ -103,8 +98,6 @@ struct MetaTile final
 
 /**
  * \brief Contains cached information about a single tileset.
- *
- * \ingroup components
  */
 struct TilesetCache final
 {
@@ -119,8 +112,6 @@ struct TilesetCache final
 
 /**
  * \brief Represents the tile selection in a tileset.
- *
- * \ingroup components
  */
 struct TilesetSelection final
 {
@@ -129,12 +120,12 @@ struct TilesetSelection final
 
 /**
  * \brief Context component that keeps track of the active tileset.
- *
- * \ingroup components
  */
 struct ActiveTileset final
 {
   entt::entity entity{entt::null};  ///< The active tileset (might be null).
 };
+
+/// \} End of group components
 
 }  // namespace tactile::comp
