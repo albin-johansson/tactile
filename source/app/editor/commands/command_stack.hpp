@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include <deque>    // deque
-#include <string>   // string
-#include <utility>  // move
+#include <concepts>  // derived_from
+#include <deque>     // deque
+#include <string>    // string
+#include <utility>   // move
 
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "core/utils/sfinae.hpp"
 #include "editor/commands/command.hpp"
 
 namespace tactile {
@@ -74,7 +74,7 @@ class CommandStack final
    */
   void redo();
 
-  template <typename T, typename... Args, is_derived_from<ACommand, T> = 0>
+  template <std::derived_from<ACommand> T, typename... Args>
   void push_without_redo(Args&&... args)
   {
     if (size() == capacity()) {
@@ -100,7 +100,7 @@ class CommandStack final
    * \param args the arguments that will be forwarded to the command
    * constructor.
    */
-  template <typename T, typename... Args, is_derived_from<ACommand, T> = 0>
+  template <std::derived_from<ACommand> T, typename... Args>
   void push(Args&&... args)
   {
     if (size() == capacity()) {

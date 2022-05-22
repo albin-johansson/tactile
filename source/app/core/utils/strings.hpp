@@ -21,6 +21,7 @@
 
 #include <algorithm>     // min
 #include <charconv>      // from_chars
+#include <concepts>      // integral, floating_point
 #include <cstring>       // strlen
 #include <string>        // string, stof
 #include <system_error>  // errc
@@ -28,7 +29,6 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
-#include "core/utils/sfinae.hpp"
 
 namespace tactile {
 
@@ -46,7 +46,7 @@ namespace tactile {
  * \return an integer using the specified base;
  *         an empty optional is returned upon failure.
  */
-template <typename T, is_integral<T> = 0>
+template <std::integral T>
 [[nodiscard]] auto from_string(const char* str, const usize length, const int base)
     -> Maybe<T>
 {
@@ -77,7 +77,7 @@ template <typename T, is_integral<T> = 0>
  * \return an integer using the specified base;
  *         an empty optional is returned upon failure.
  */
-template <typename T, is_integral<T> = 0>
+template <std::integral T>
 [[nodiscard]] auto from_string(const char* str, const int base = 10) -> Maybe<T>
 {
   if (!str) {
@@ -96,7 +96,7 @@ template <typename T, is_integral<T> = 0>
  * \return the corresponding floating-point value;
  *         an empty optional is returned upon failure.
  */
-template <typename T, is_floating<T> = 0>
+template <std::floating_point T>
 [[nodiscard]] auto from_string(const char* str) -> Maybe<T>
 {
   if (!str) {

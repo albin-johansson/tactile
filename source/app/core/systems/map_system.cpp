@@ -19,6 +19,8 @@
 
 #include "map_system.hpp"
 
+#include <concepts>  // unsigned_integral
+
 #include <entt/entity/registry.hpp>
 
 #include "core/algorithms/invoke.hpp"
@@ -26,14 +28,13 @@
 #include "core/components/map_info.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/tile_pos.hpp"
-#include "core/utils/sfinae.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {
 namespace {
 
-template <typename T, is_unsigned<T> = 0>
+template <std::unsigned_integral T>
 [[nodiscard]] constexpr auto get_diff(const T a, const T b) noexcept -> T
 {
   if (a < b) {

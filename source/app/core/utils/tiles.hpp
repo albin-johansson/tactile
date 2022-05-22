@@ -19,9 +19,10 @@
 
 #pragma once
 
+#include <concepts>  // integral
+
 #include "core/common/ints.hpp"
 #include "core/components/layers.hpp"
-#include "core/utils/sfinae.hpp"
 
 namespace tactile {
 
@@ -43,7 +44,7 @@ struct MatrixCoords final
  *
  * \return a pair encoding the matrix coordinates as (row, column).
  */
-template <typename T, is_integral<T> = 0>
+template <std::integral T>
 [[nodiscard]] constexpr auto to_matrix_coords(const T index, const T nColumns) noexcept
     -> MatrixCoords<T>
 {
