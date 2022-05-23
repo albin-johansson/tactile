@@ -23,12 +23,12 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
-#include "core/common/ecs.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/property_events.hpp"
@@ -159,7 +159,7 @@ void layer_item_view(const entt::registry& registry,
                      const entt::entity layerEntity)
 {
   const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
-  const auto& activeLayer = registry.ctx().at<comp::ActiveLayer>();
+  const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
 
   const scoped::Id scope{layer.id};
 

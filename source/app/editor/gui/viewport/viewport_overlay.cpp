@@ -23,6 +23,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
@@ -71,7 +72,7 @@ void _prepare_position_and_pivot()
 void _show_mouse_tile_labels(const entt::registry& registry,
                              const ViewportCursorInfo& cursor)
 {
-  const auto& activeLayer = registry.ctx().at<comp::ActiveLayer>();
+  const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
 
   if (activeLayer.entity != entt::null) {
     if (const auto* layer = registry.try_get<comp::TileLayer>(activeLayer.entity)) {

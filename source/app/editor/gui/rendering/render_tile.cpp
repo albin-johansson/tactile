@@ -22,9 +22,9 @@
 #include <entt/entity/registry.hpp>
 #include <imgui.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/common/ecs.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/textures.hpp"
@@ -37,7 +37,7 @@ void render_tile(GraphicsCtx& graphics,
                  const int32 row,
                  const int32 column)
 {
-  const auto& context = registry.ctx().at<comp::TilesetContext>();
+  const auto& context = ctx_get<comp::TilesetContext>(registry);
   auto iter = context.tile_to_tileset.find(tile);
 
   if (iter == context.tile_to_tileset.end()) {

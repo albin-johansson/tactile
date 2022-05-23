@@ -37,10 +37,9 @@ namespace tactile {
 void update_tileset_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto& ctx = registry.ctx();
 
-  const auto& viewport = ctx.at<comp::Viewport>();
-  const auto& tileset = ctx.at<comp::Tileset>();
+  const auto& viewport = ctx_get<comp::Viewport>(registry);
+  const auto& tileset = ctx_get<comp::Tileset>(registry);
 
   const auto info = get_render_info(viewport, tileset);
   update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);

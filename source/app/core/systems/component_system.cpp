@@ -27,9 +27,9 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/context_system.hpp"
-#include "core/common/ecs.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
@@ -94,7 +94,7 @@ namespace {
 
 void _visit_components(entt::registry& registry, auto callable)
 {
-  const auto& root = registry.ctx().at<comp::AttributeContext>();
+  const auto& root = ctx_get<comp::AttributeContext>(registry);
   for (const auto compEntity : root.components) {
     auto& comp = checked_get<comp::Component>(registry, compEntity);
     callable(root.id, comp);
@@ -108,7 +108,7 @@ void _visit_components(entt::registry& registry, auto callable)
 
 void _visit_components(const entt::registry& registry, auto callable)
 {
-  const auto& root = registry.ctx().at<comp::AttributeContext>();
+  const auto& root = ctx_get<comp::AttributeContext>(registry);
   for (const auto compEntity : root.components) {
     const auto& comp = checked_get<comp::Component>(registry, compEntity);
     callable(root.id, comp);
@@ -230,8 +230,7 @@ auto remove_component_def(entt::registry& registry, const ComponentID& compId)
     });
   };
 
-  auto& ctx = registry.ctx();
-  auto& root = ctx.at<comp::AttributeContext>();
+  auto& root = ctx_get<comp::AttributeContext>(registry);
   cache(def.id, root);
   remove(root.components);
 

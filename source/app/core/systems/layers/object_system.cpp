@@ -24,6 +24,7 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/map_info.hpp"
@@ -31,7 +32,6 @@
 #include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
-#include "core/common/ecs.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::sys {
@@ -46,7 +46,7 @@ namespace {
                                 const float width,
                                 const float height) -> ObjectID
 {
-  auto& map = registry.ctx().at<MapInfo>();
+  auto& map = ctx_get<MapInfo>(registry);
   const auto id = map.next_object_id;
   ++map.next_object_id;
 
@@ -128,14 +128,12 @@ auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectR
     }
   }
 
-  auto& ctx = registry.ctx();
-
-  if (auto& activeContext = ctx.at<comp::ActiveAttributeContext>();
+  if (auto& activeContext = ctx_get<comp::ActiveAttributeContext>(registry);
       activeContext.entity == objectEntity) {
     activeContext.entity = entt::null;
   }
 
-  if (auto& activeObject = ctx.at<comp::ActiveObject>();
+  if (auto& activeObject = ctx_get<comp::ActiveObject>(registry);
       activeObject.entity == objectEntity) {
     activeObject.entity = entt::null;
   }

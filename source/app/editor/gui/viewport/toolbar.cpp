@@ -149,7 +149,7 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
     if (model.is_tool_active(ToolType::Stamp)) {
       _show_extra_toolbar([&] {
         const auto& registry = model.get_active_registry();
-        const auto& tools = registry.ctx().at<ToolManager>();
+        const auto& tools = ctx_get<ToolManager>(registry);
         const auto selected = tools.is_stamp_random();
 
         if (selected) {

@@ -52,8 +52,7 @@ void _render_layer(GraphicsCtx& graphics,
 void render_map(GraphicsCtx& graphics, const entt::registry& registry)
 {
   const auto& prefs = get_preferences();
-  const auto& ctx = registry.ctx();
-  const auto& activeLayer = ctx.at<comp::ActiveLayer>();
+  const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
 
   const bool highlightActiveLayer = prefs.highlight_active_layer();
 
@@ -82,7 +81,7 @@ void render_map(GraphicsCtx& graphics, const entt::registry& registry)
     }
   }
 
-  if (const auto& activeObject = ctx.at<comp::ActiveObject>();
+  if (const auto& activeObject = ctx_get<comp::ActiveObject>(registry);
       activeObject.entity != entt::null) {
     render_object(graphics, registry, activeObject.entity, cen::colors::yellow);
   }

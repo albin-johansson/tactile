@@ -46,7 +46,6 @@ void _convert_attribute_context(ir::AttributeContextData& data,
   }
 
   for (const auto componentEntity : context.components) {
-    const auto& component = sys::checked_get<comp::Component>(registry, componentEntity);
     const auto& component = checked_get<comp::Component>(registry, componentEntity);
     const auto type = sys::get_component_def_name(registry, component.type);
 
@@ -134,7 +133,7 @@ void _convert_layer(ir::LayerData& data,
       auto& tileLayerData = data.data.emplace<ir::TileLayerData>();
       tileLayerData.tiles = tileLayer.matrix;
 
-      const auto& mapInfo = registry.ctx().at<MapInfo>();
+      const auto& mapInfo = ctx_get<MapInfo>(registry);
       tileLayerData.row_count = mapInfo.row_count;
       tileLayerData.col_count = mapInfo.column_count;
 

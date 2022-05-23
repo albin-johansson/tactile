@@ -22,6 +22,7 @@
 #include <entt/entity/registry.hpp>
 #include <imgui.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "editor/gui/rendering/graphics.hpp"
@@ -30,11 +31,9 @@ namespace tactile {
 
 void render_tileset(GraphicsCtx& graphics, const entt::registry& registry)
 {
-  const auto& ctx = registry.ctx();
-
-  const auto& tileset = ctx.at<comp::Tileset>();
-  const auto& texture = ctx.at<comp::Texture>();
-  const auto& uvTileSize = ctx.at<comp::UvTileSize>();
+  const auto& tileset = ctx_get<comp::Tileset>(registry);
+  const auto& texture = ctx_get<comp::Texture>(registry);
+  const auto& uvTileSize = ctx_get<comp::UvTileSize>(registry);
 
   const auto tw = static_cast<float>(tileset.tile_width);
   const auto th = static_cast<float>(tileset.tile_height);

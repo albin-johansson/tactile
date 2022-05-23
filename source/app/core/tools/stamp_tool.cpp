@@ -31,7 +31,6 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
-#include "core/common/ecs.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_pos.hpp"
 #include "editor/events/tool_events.hpp"
@@ -60,7 +59,7 @@ void StampTool::draw_gizmos(const entt::registry& registry,
     return;
   }
 
-  const auto& activeTileset = registry.ctx().at<comp::ActiveTileset>();
+  const auto& activeTileset = ctx_get<comp::ActiveTileset>(registry);
 
   const auto& selection =
       checked_get<comp::TilesetSelection>(registry, activeTileset.entity);

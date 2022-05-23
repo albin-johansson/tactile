@@ -21,6 +21,7 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/map_info.hpp"
@@ -66,8 +67,7 @@ inline auto deep_copy<comp::ObjectLayer>(entt::registry& registry,
                                          const entt::entity destination)
     -> comp::ObjectLayer&
 {
-  auto& ctx = registry.ctx();
-  auto& map = ctx.at<MapInfo>();
+  auto& map = ctx_get<MapInfo>(registry);
   auto& layer = registry.emplace<comp::ObjectLayer>(destination);
 
   const auto& sourceLayer = registry.get<comp::ObjectLayer>(source);

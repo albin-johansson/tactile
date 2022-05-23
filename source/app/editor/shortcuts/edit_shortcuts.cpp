@@ -19,6 +19,7 @@
 
 #include "edit_shortcuts.hpp"
 
+#include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/component_events.hpp"
@@ -107,7 +108,7 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManag
     -> bool
 {
   if (const auto* registry = model.active_registry()) {
-    const auto& map = registry->ctx().at<MapInfo>();
+    const auto& map = ctx_get<MapInfo>(*registry);
     return map.row_count > 1;
   }
   else {
@@ -130,7 +131,7 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
                                       const WidgetManager&) const -> bool
 {
   if (const auto* registry = model.active_registry()) {
-    const auto& map = registry->ctx().at<MapInfo>();
+    const auto& map = ctx_get<MapInfo>(*registry);
     return map.column_count > 1;
   }
   else {

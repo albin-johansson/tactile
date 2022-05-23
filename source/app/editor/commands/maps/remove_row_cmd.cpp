@@ -20,6 +20,7 @@
 #include "remove_row_cmd.hpp"
 
 #include "core/algorithms/invoke.hpp"
+#include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "core/systems/map_system.hpp"
 
@@ -39,9 +40,7 @@ void RemoveRowCmd::undo()
 void RemoveRowCmd::redo()
 {
   auto& registry = mRegistry.get();
-
-  const auto& ctx = registry.ctx();
-  const auto& map = ctx.at<MapInfo>();
+  const auto& map = ctx_get<MapInfo>(registry);
 
   const auto begin = TilePos::from(map.row_count - mRows - 1u, 0u);
   const auto end = TilePos::from(map.row_count, map.column_count);

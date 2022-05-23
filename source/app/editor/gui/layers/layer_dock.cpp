@@ -23,13 +23,13 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/common/ecs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
-#include "core/common/ecs.hpp"
 #include "editor/constants.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"
@@ -55,7 +55,7 @@ constinit bool _is_focused = false;
 void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto activeLayerEntity = registry.ctx().at<comp::ActiveLayer>().entity;
+  const auto activeLayerEntity = ctx_get<comp::ActiveLayer>(registry).entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
   Maybe<LayerID> activeLayerId;

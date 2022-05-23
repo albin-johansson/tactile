@@ -52,7 +52,7 @@ void _restore_properties(entt::registry& registry,
   const auto count = source.properties.size();
 
   auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
-                                         : registry.ctx().at<comp::AttributeContext>();
+                                         : ctx_get<comp::AttributeContext>(registry);
   context.properties.reserve(count);
 
   for (const auto& [propertyName, propertyValue] : source.properties) {
@@ -71,7 +71,7 @@ void _restore_components(entt::registry& registry,
                          const ir::AttributeContextData& source)
 {
   auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
-                                         : registry.ctx().at<comp::AttributeContext>();
+                                         : ctx_get<comp::AttributeContext>(registry);
   context.components.reserve(source.components.size());
 
   for (const auto& [type, attributes] : source.components) {
@@ -81,7 +81,7 @@ void _restore_components(entt::registry& registry,
     const auto componentEntity = registry.create();
     context.components.push_back(componentEntity);
 
-    const auto& def = sys::checked_get<comp::ComponentDef>(registry, defEntity);
+    const auto& def = checked_get<comp::ComponentDef>(registry, defEntity);
     auto& component = registry.emplace<comp::Component>(componentEntity);
     component.type = def.id;
 
@@ -140,10 +140,10 @@ auto _restore_layer(entt::registry& registry,
                                               layerData.name,
                                               parent);
 
-  auto& node = sys::checked_get<comp::LayerTreeNode>(registry, entity);
+  auto& node = checked_get<comp::LayerTreeNode>(registry, entity);
   node.index = layerData.index;
 
-  auto& layer = sys::checked_get<comp::Layer>(registry, entity);
+  auto& layer = checked_get<comp::Layer>(registry, entity);
   layer.opacity = layerData.opacity;
   layer.visible = layerData.visible;
 
@@ -188,7 +188,7 @@ void _restore_layers(Document& document, const ir::MapData& mapData)
   sys::sort_layers(document.registry);
 
   if (!document.registry.storage<comp::LayerTreeNode>().empty()) {
-    auto& activeLayer = document.registry.ctx().at<comp::ActiveLayer>();
+    auto& activeLayer = ctx_get<comp::ActiveLayer>(document.registry);
     activeLayer.entity = document.registry.view<comp::LayerTreeNode>().front();
   }
 }
@@ -283,7 +283,7 @@ void _restore_tilesets(Document& document,
   }
 
   if (!document.registry.storage<comp::Tileset>().empty()) {
-    auto& activeTileset = document.registry.ctx().at<comp::ActiveTileset>();
+    auto& activeTileset = ctx_get<comp::ActiveTileset>(document.registry);
     activeTileset.entity = document.registry.view<comp::Tileset>().front();
   }
 }

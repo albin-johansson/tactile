@@ -26,9 +26,9 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/common/ecs.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/object_events.hpp"
@@ -116,7 +116,7 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
     graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
   }
 
-  const auto& tools = registry.ctx().at<ToolManager>();
+  const auto& tools = ctx_get<ToolManager>(registry);
   tools.draw_gizmos(registry, graphics, _make_mouse_info(cursor));
 }
 
@@ -178,10 +178,9 @@ void _update_context_menu([[maybe_unused]] const entt::registry& registry,
 void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto& ctx = registry.ctx();
 
-  const auto& viewport = ctx.at<comp::Viewport>();
-  const auto& map = ctx.at<MapInfo>();
+  const auto& viewport = ctx_get<comp::Viewport>(registry);
+  const auto& map = ctx_get<MapInfo>(registry);
 
   const auto info = get_render_info(viewport, map);
   update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
@@ -225,7 +224,7 @@ void update_map_view_object_context_menu(const entt::registry& registry,
                                          entt::dispatcher& dispatcher)
 {
   if (scoped::Popup popup{_object_context_menu_id}; popup.is_open()) {
-    const auto active = registry.ctx().at<comp::ActiveObject>();
+    const auto active = ctx_get<comp::ActiveObject>(registry);
 
     TACTILE_ASSERT(active.entity != entt::null);
     const auto& object = checked_get<comp::Object>(registry, active.entity);

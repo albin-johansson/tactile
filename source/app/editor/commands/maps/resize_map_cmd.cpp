@@ -19,6 +19,7 @@
 
 #include "resize_map_cmd.hpp"
 
+#include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "core/systems/map_system.hpp"
 
@@ -45,7 +46,7 @@ void ResizeMapCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto& map = registry.ctx().at<MapInfo>();
+  const auto& map = ctx_get<MapInfo>(registry);
   mPrevRows = map.row_count;
   mPrevCols = map.column_count;
 

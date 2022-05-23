@@ -20,6 +20,7 @@
 #include "remove_column_cmd.hpp"
 
 #include "core/algorithms/invoke.hpp"
+#include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "core/systems/map_system.hpp"
 
@@ -40,7 +41,7 @@ void RemoveColumnCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto& map = registry.ctx().at<MapInfo>();
+  const auto& map = ctx_get<MapInfo>(registry);
   const auto begin = TilePos::from(0u, map.column_count - mColumns - 1u);
   const auto end = TilePos::from(map.row_count, map.column_count);
 

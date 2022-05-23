@@ -27,7 +27,6 @@
 #include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
-#include "core/common/ecs.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/tool_events.hpp"
@@ -45,7 +44,7 @@ void ObjectSelectionTool::on_pressed(entt::registry& registry,
                                      const MouseInfo& mouse)
 {
   if (sys::is_object_layer_active(registry)) {
-    auto& active = registry.ctx().at<comp::ActiveObject>();
+    auto& active = ctx_get<comp::ActiveObject>(registry);
 
     const auto& [_, layer] =
         sys::get_object_layer(registry, sys::get_active_layer_id(registry).value());
@@ -87,7 +86,7 @@ void ObjectSelectionTool::on_dragged(entt::registry& registry,
                                      const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
-    const auto& active = registry.ctx().at<comp::ActiveObject>();
+    const auto& active = ctx_get<comp::ActiveObject>(registry);
     if (active.entity != entt::null) {
       if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.entity)) {
         auto& object = checked_get<comp::Object>(registry, active.entity);
@@ -133,7 +132,7 @@ auto ObjectSelectionTool::get_type() const -> ToolType
 void ObjectSelectionTool::maybe_emit_event(entt::registry& registry,
                                            entt::dispatcher& dispatcher)
 {
-  const auto entity = registry.ctx().at<comp::ActiveObject>().entity;
+  const auto entity = ctx_get<comp::ActiveObject>(registry).entity;
   if (entity != entt::null) {
     if (const auto* drag = registry.try_get<comp::ObjectDragInfo>(entity)) {
       const auto& object = checked_get<comp::Object>(registry, entity);
