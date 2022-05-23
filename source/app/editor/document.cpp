@@ -17,24 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "document.hpp"
 
-#include <filesystem>  // path
-
-#include <entt/entt.hpp>
-
-#include "core/common/uuid.hpp"
-#include "editor/commands/command_stack.hpp"
+#include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 
 namespace tactile {
 
-struct Document final
+auto Document::id() const -> const UUID&
 {
-  entt::registry registry;     ///< The document registry.
-  CommandStack commands;       ///< The history of commands.
-  std::filesystem::path path;  ///< Path to the associated save file (possibly empty).
-
-  [[nodiscard]] auto id() const -> const UUID&;
-};
+  return ctx_get<comp::AttributeContext>(registry).id;
+}
 
 }  // namespace tactile
