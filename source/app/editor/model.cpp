@@ -24,6 +24,7 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -245,13 +246,13 @@ auto DocumentModel::get_redo_text() const -> const std::string&
 auto DocumentModel::is_tool_active(const ToolType tool) const -> bool
 {
   const auto* registry = active_registry();
-  return registry && registry->ctx().at<ToolManager>().is_enabled(tool);
+  return registry && ctx_get<ToolManager>(*registry).is_enabled(tool);
 }
 
 auto DocumentModel::is_tool_possible(const ToolType tool) const -> bool
 {
   const auto* registry = active_registry();
-  return registry && registry->ctx().at<ToolManager>().is_available(*registry, tool);
+  return registry && ctx_get<ToolManager>(*registry).is_available(*registry, tool);
 }
 
 }  // namespace tactile
