@@ -29,7 +29,7 @@
 
 #include "core/components/attributes.hpp"
 #include "core/systems/context_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

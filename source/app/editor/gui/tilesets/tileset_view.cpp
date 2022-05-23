@@ -28,7 +28,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/common/rubber_band.hpp"
@@ -97,8 +97,8 @@ void update_tileset_view(const entt::registry& registry,
                          const entt::entity tilesetEntity,
                          entt::dispatcher& dispatcher)
 {
-  const auto& tileset = sys::checked_get<comp::Tileset>(registry, tilesetEntity);
-  const auto& viewport = sys::checked_get<comp::Viewport>(registry, tilesetEntity);
+  const auto& tileset = checked_get<comp::Tileset>(registry, tilesetEntity);
+  const auto& viewport = checked_get<comp::Viewport>(registry, tilesetEntity);
 
   const auto region = ImGui::GetContentRegionAvail();
   _view_width = region.x;
@@ -123,11 +123,11 @@ void update_tileset_view(const entt::registry& registry,
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
   _render_tileset_image(graphics,
-                        sys::checked_get<comp::Texture>(registry, tilesetEntity),
+                        checked_get<comp::Texture>(registry, tilesetEntity),
                         position);
 
   if (const auto& selection =
-          sys::checked_get<comp::TilesetSelection>(registry, tilesetEntity);
+          checked_get<comp::TilesetSelection>(registry, tilesetEntity);
       selection.region) {
     _render_selection(graphics, *selection.region, position, tileSize);
   }

@@ -23,7 +23,7 @@
 
 #include "core/components/attributes.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -42,7 +42,7 @@ void RenameLayerCmd::undo()
   const auto entity = sys::find_layer(registry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
+  auto& context = checked_get<comp::AttributeContext>(registry, entity);
   context.name = mPreviousName.value();
 
   mPreviousName.reset();
@@ -55,7 +55,7 @@ void RenameLayerCmd::redo()
   const auto entity = sys::find_layer(registry, mLayerId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
+  auto& context = checked_get<comp::AttributeContext>(registry, entity);
   mPreviousName = context.name;
   context.name = mName;
 }

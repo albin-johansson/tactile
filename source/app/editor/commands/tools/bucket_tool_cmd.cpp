@@ -23,7 +23,7 @@
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 
 namespace tactile {
 
@@ -42,7 +42,7 @@ void BucketToolCmd::undo()
   auto& registry = mRegistry.get();
 
   const auto layerEntity = sys::find_layer(registry, mLayer);
-  auto& layer = sys::checked_get<comp::TileLayer>(registry, layerEntity);
+  auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
 
   const auto target = mTarget.value();
   for (const auto& position : mPositions) {
@@ -58,7 +58,7 @@ void BucketToolCmd::redo()
   auto& registry = mRegistry.get();
 
   const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  const auto& layer = sys::checked_get<comp::TileLayer>(registry, entity);
+  const auto& layer = checked_get<comp::TileLayer>(registry, entity);
 
   mTarget = sys::get_tile(layer, mOrigin);
   flood(registry, entity, mOrigin, mReplacement, mPositions);

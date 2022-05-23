@@ -23,8 +23,8 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/common/ref.hpp"
-#include "core/systems/registry_system.hpp"
 
 namespace tactile {
 
@@ -75,13 +75,13 @@ class Actor final
   template <typename Component>
   [[nodiscard]] auto get() -> Component&
   {
-    return sys::checked_get<Component>(registry(), mEntity);
+    return checked_get<Component>(registry(), mEntity);
   }
 
   template <typename Component>
   [[nodiscard]] auto get() const -> const Component&
   {
-    return sys::checked_get<Component>(registry(), mEntity);
+    return checked_get<Component>(registry(), mEntity);
   }
 
   template <typename Component>

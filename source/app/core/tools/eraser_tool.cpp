@@ -24,11 +24,12 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/mouse_info.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "editor/events/tool_events.hpp"
 
 namespace tactile {
@@ -86,7 +87,7 @@ auto EraserTool::get_type() const -> ToolType
 void EraserTool::update_sequence(entt::registry& registry, const TilePos& cursor)
 {
   const auto entity = sys::get_active_layer(registry);
-  auto& layer = sys::checked_get<comp::TileLayer>(registry, entity);
+  auto& layer = checked_get<comp::TileLayer>(registry, entity);
 
   if (!mPrevState.contains(cursor)) {
     mPrevState.emplace(cursor, sys::get_tile(layer, cursor));

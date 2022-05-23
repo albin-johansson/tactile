@@ -22,9 +22,10 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/tiles.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/events/tool_events.hpp"
 
@@ -38,7 +39,7 @@ void BucketTool::on_pressed(entt::registry& registry,
       sys::is_tile_layer_active(registry) &&
       sys::is_single_tile_selected_in_tileset(registry)) {
     const auto entity = sys::find_active_tileset(registry);
-    const auto& selection = sys::checked_get<comp::TilesetSelection>(registry, entity);
+    const auto& selection = checked_get<comp::TilesetSelection>(registry, entity);
 
     const auto position = selection.region->begin;
     const auto replacement = sys::get_tile_from_tileset(registry, entity, position);

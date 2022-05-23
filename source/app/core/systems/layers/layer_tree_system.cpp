@@ -23,9 +23,9 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
-#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {

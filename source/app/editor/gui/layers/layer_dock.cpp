@@ -29,7 +29,7 @@
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "editor/constants.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/alignment.hpp"
@@ -60,7 +60,7 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
 
   Maybe<LayerID> activeLayerId;
   if (hasActiveLayer) {
-    const auto& layer = sys::checked_get<comp::Layer>(registry, activeLayerEntity);
+    const auto& layer = checked_get<comp::Layer>(registry, activeLayerEntity);
     activeLayerId = layer.id;
   }
 
@@ -104,7 +104,7 @@ void _update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatc
     const auto entity = sys::find_layer(registry, targetLayerId);
 
     TACTILE_ASSERT(entity != entt::null);
-    const auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
+    const auto& context = checked_get<comp::AttributeContext>(registry, entity);
 
     _rename_layer_dialog.show(targetLayerId, context.name);
     _rename_target_id.reset();
@@ -131,7 +131,7 @@ void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
       /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
          other components in the view query directly. */
       for (auto&& [entity, _] : registry.view<comp::LayerTreeNode>().each()) {
-        const auto& parent = sys::checked_get<comp::Parent>(registry, entity);
+        const auto& parent = checked_get<comp::Parent>(registry, entity);
         if (parent.entity == entt::null) {
           layer_item_view(registry, dispatcher, entity);
         }

@@ -25,12 +25,13 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/algorithms/invoke.hpp"
+#include "core/common/ecs.hpp"
 #include "core/common/random.hpp"
 #include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_pos.hpp"
 #include "editor/events/tool_events.hpp"
@@ -62,7 +63,7 @@ void StampTool::draw_gizmos(const entt::registry& registry,
   const auto& activeTileset = registry.ctx().at<comp::ActiveTileset>();
 
   const auto& selection =
-      sys::checked_get<comp::TilesetSelection>(registry, activeTileset.entity);
+      checked_get<comp::TilesetSelection>(registry, activeTileset.entity);
   if (!selection.region) {
     return;
   }
@@ -72,8 +73,8 @@ void StampTool::draw_gizmos(const entt::registry& registry,
   const auto selectionSize = region.end - region.begin;
   const auto offset = selectionSize / TilePos{2, 2};
 
-  const auto& texture = sys::checked_get<comp::Texture>(registry, activeTileset.entity);
-  const auto& uv = sys::checked_get<comp::UvTileSize>(registry, activeTileset.entity);
+  const auto& texture = checked_get<comp::Texture>(registry, activeTileset.entity);
+  const auto& uv = checked_get<comp::UvTileSize>(registry, activeTileset.entity);
 
   const glm::vec2 uvVec{uv.width, uv.height};
 
@@ -164,10 +165,10 @@ void StampTool::update_sequence(entt::registry& registry, const TilePos& cursor)
   TACTILE_ASSERT(is_usable(registry));
 
   const auto layerEntity = sys::get_active_layer(registry);
-  auto& layer = sys::checked_get<comp::TileLayer>(registry, layerEntity);
+  auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
 
   const auto tsetEntity = sys::find_active_tileset(registry);
-  const auto& selection = sys::checked_get<comp::TilesetSelection>(registry, tsetEntity);
+  const auto& selection = checked_get<comp::TilesetSelection>(registry, tsetEntity);
 
   const auto& region = selection.region.value();
   const auto selectionSize = region.end - region.begin;

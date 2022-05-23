@@ -24,7 +24,7 @@
 
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/textures.hpp"
@@ -46,8 +46,8 @@ void render_tile(GraphicsCtx& graphics,
 
   const auto tilesetEntity = iter->second;
   if (tilesetEntity != entt::null) {
-    const auto& texture = sys::checked_get<comp::Texture>(registry, tilesetEntity);
-    const auto& uvTileSize = sys::checked_get<comp::UvTileSize>(registry, tilesetEntity);
+    const auto& texture = checked_get<comp::Texture>(registry, tilesetEntity);
+    const auto& uvTileSize = checked_get<comp::UvTileSize>(registry, tilesetEntity);
 
     const auto tileToRender = sys::get_tile_to_render(registry, tilesetEntity, tile);
     const auto& sourceRect = sys::get_source_rect(registry, tilesetEntity, tileToRender);

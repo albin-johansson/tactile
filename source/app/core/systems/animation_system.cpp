@@ -22,8 +22,8 @@
 #include <centurion/system.hpp>
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/animation.hpp"
-#include "core/systems/registry_system.hpp"
 
 namespace tactile::sys {
 

@@ -31,7 +31,7 @@
 #include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::sys {

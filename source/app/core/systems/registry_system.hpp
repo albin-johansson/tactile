@@ -21,8 +21,6 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "misc/panic.hpp"
-
 namespace tactile::sys {
 
 /**
@@ -44,49 +42,5 @@ namespace tactile::sys {
  * \return a map document registry.
  */
 [[nodiscard]] auto new_map_document_registry() -> entt::registry;
-
-/**
- * \brief Returns a component featured by an entity.
- *
- * \tparam T the type of the component.
- *
- * \param registry the source registry.
- * \param entity the entity to query.
- *
- * \return a reference to the component.
- *
- * \throws TactileError if the entity identifier is invalid or if the entity does not
- * have the component.
- */
-template <typename T>
-[[nodiscard]] auto checked_get(entt::registry& registry, const entt::entity entity) -> T&
-{
-  if (!registry.valid(entity)) {
-    panic("Invalid entity identifier!");
-  }
-
-  if (auto* comp = registry.try_get<T>(entity)) {
-    return *comp;
-  }
-  else {
-    panic("Entity did not feature requested component!");
-  }
-}
-
-template <typename T>
-[[nodiscard]] auto checked_get(const entt::registry& registry, const entt::entity entity)
-    -> const T&
-{
-  if (!registry.valid(entity)) {
-    panic("Invalid entity identifier!");
-  }
-
-  if (auto* comp = registry.try_get<T>(entity)) {
-    return *comp;
-  }
-  else {
-    panic("Entity did not feature requested component!");
-  }
-}
 
 }  // namespace tactile::sys

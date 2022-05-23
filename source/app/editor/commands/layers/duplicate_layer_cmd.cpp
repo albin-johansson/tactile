@@ -20,7 +20,7 @@
 #include "duplicate_layer_cmd.hpp"
 
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -47,13 +47,13 @@ void DuplicateLayerCmd::redo()
   const auto entity = sys::duplicate_layer(registry, sourceEntity);
 
   if (!mNewLayerId) {
-    const auto& layer = sys::checked_get<comp::Layer>(registry, entity);
+    const auto& layer = checked_get<comp::Layer>(registry, entity);
     mNewLayerId = layer.id;
   }
   else {
     // Reuse previous ID of duplicated layer
     TACTILE_ASSERT(sys::find_layer(registry, *mNewLayerId) == entt::null);
-    auto& layer = sys::checked_get<comp::Layer>(registry, entity);
+    auto& layer = checked_get<comp::Layer>(registry, entity);
     layer.id = *mNewLayerId;
   }
 }

@@ -21,10 +21,10 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
-#include "core/systems/registry_system.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_object_layer.hpp"
 #include "editor/gui/rendering/render_tile_layer.hpp"
@@ -58,8 +58,8 @@ void render_map(GraphicsCtx& graphics, const entt::registry& registry)
   const bool highlightActiveLayer = prefs.highlight_active_layer();
 
   for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
-    const auto& layer = sys::checked_get<comp::Layer>(registry, entity);
-    const auto& parent = sys::checked_get<comp::Parent>(registry, entity);
+    const auto& layer = checked_get<comp::Layer>(registry, entity);
+    const auto& parent = checked_get<comp::Parent>(registry, entity);
 
     const auto* parentLayer = (parent.entity != entt::null)
                                   ? registry.try_get<comp::Layer>(parent.entity)

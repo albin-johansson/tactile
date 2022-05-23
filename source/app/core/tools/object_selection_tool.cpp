@@ -22,11 +22,12 @@
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/tools.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/tool_events.hpp"
@@ -55,7 +56,7 @@ void ObjectSelectionTool::on_pressed(entt::registry& registry,
         active.entity = objectEntity;
 
         if (objectEntity != entt::null) {
-          const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
+          const auto& object = checked_get<comp::Object>(registry, objectEntity);
 
           auto& drag = registry.emplace<comp::ObjectDragInfo>(objectEntity);
           drag.origin_object_x = object.x;
@@ -89,7 +90,7 @@ void ObjectSelectionTool::on_dragged(entt::registry& registry,
     const auto& active = registry.ctx().at<comp::ActiveObject>();
     if (active.entity != entt::null) {
       if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.entity)) {
-        auto& object = sys::checked_get<comp::Object>(registry, active.entity);
+        auto& object = checked_get<comp::Object>(registry, active.entity);
         if (mouse.is_within_contents) {
           const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);
           const auto dx = (mouse.x - drag->last_mouse_x) / xRatio;
@@ -135,7 +136,7 @@ void ObjectSelectionTool::maybe_emit_event(entt::registry& registry,
   const auto entity = registry.ctx().at<comp::ActiveObject>().entity;
   if (entity != entt::null) {
     if (const auto* drag = registry.try_get<comp::ObjectDragInfo>(entity)) {
-      const auto& object = sys::checked_get<comp::Object>(registry, entity);
+      const auto& object = checked_get<comp::Object>(registry, entity);
 
       /* Only emit an event if the object has been moved along any axis */
       if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {

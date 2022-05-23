@@ -29,7 +29,7 @@
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "misc/assert.hpp"
 
@@ -44,7 +44,7 @@ void _render_point_object(GraphicsCtx& graphics,
 {
   const float radius = (std::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
 
-  const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
+  const auto& object = checked_get<comp::Object>(registry, objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::Point);
 
   if (graphics.is_within_translated_bounds(position)) {
@@ -53,7 +53,7 @@ void _render_point_object(GraphicsCtx& graphics,
     graphics.draw_translated_circle_with_shadow(position, radius);
 
     const auto& context =
-        sys::checked_get<comp::AttributeContext>(registry, objectEntity);
+        checked_get<comp::AttributeContext>(registry, objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);
@@ -74,8 +74,8 @@ void _render_ellipse_object(GraphicsCtx& graphics,
                             const ImVec2& position,
                             const cen::color& color)
 {
-  const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
-  const auto& context = sys::checked_get<comp::AttributeContext>(registry, objectEntity);
+  const auto& object = checked_get<comp::Object>(registry, objectEntity);
+  const auto& context = checked_get<comp::AttributeContext>(registry, objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
   const ImVec2 size = {object.width, object.height};
@@ -106,7 +106,7 @@ void _render_rectangle_object(GraphicsCtx& graphics,
                               const ImVec2& position,
                               const cen::color& color)
 {
-  const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
+  const auto& object = checked_get<comp::Object>(registry, objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::Rect);
 
   const auto size = ImVec2{object.width, object.height} * graphics.tile_size_ratio();
@@ -117,7 +117,7 @@ void _render_rectangle_object(GraphicsCtx& graphics,
     graphics.draw_translated_rect_with_shadow(position, size);
 
     const auto& context =
-        sys::checked_get<comp::AttributeContext>(registry, objectEntity);
+        checked_get<comp::AttributeContext>(registry, objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);
@@ -138,7 +138,7 @@ void render_object(GraphicsCtx& graphics,
                    const entt::entity objectEntity,
                    const cen::color& color)
 {
-  const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
+  const auto& object = checked_get<comp::Object>(registry, objectEntity);
 
   if (!object.visible) {
     return;
@@ -166,8 +166,8 @@ void render_object_layer(GraphicsCtx& graphics,
                          const entt::entity layerEntity,
                          const float parentOpacity)
 {
-  const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
-  const auto& objectLayer = sys::checked_get<comp::ObjectLayer>(registry, layerEntity);
+  const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
+  const auto& objectLayer = checked_get<comp::ObjectLayer>(registry, layerEntity);
 
   const auto opacity = parentOpacity * layer.opacity;
   const auto objectColor = cen::color::from_norm(1, 0, 0, opacity);

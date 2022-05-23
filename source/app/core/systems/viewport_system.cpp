@@ -28,7 +28,7 @@
 #include "core/components/map_info.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/viewport.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {

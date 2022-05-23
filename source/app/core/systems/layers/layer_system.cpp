@@ -34,7 +34,7 @@
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/property_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/assert.hpp"
 

@@ -26,7 +26,7 @@
 
 #include "core/components/attributes.hpp"
 #include "core/systems/component_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/input_widgets.hpp"
@@ -85,7 +85,7 @@ void component_view(const entt::registry& registry,
                     const ContextID contextId,
                     const entt::entity componentEntity)
 {
-  const auto& component = sys::checked_get<comp::Component>(registry, componentEntity);
+  const auto& component = checked_get<comp::Component>(registry, componentEntity);
   const auto& name = sys::get_component_def_name(registry, component.type);
 
   const scoped::Id scope{name.c_str()};

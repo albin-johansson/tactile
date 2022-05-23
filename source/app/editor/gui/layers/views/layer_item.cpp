@@ -28,7 +28,7 @@
 #include "core/components/parent.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/property_events.hpp"
@@ -67,7 +67,7 @@ void _update_layer_item_popup(const entt::registry& registry,
 {
   if (auto popup = scoped::Popup::for_item("##LayerItemPopup"); popup.is_open()) {
     const auto layerEntity = sys::get_layer(registry, id);
-    const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
+    const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
       dispatcher.enqueue<InspectContextEvent>(layerEntity);
@@ -135,7 +135,7 @@ void _show_group_layer_item(const entt::registry& registry,
 
     _update_layer_item_popup(registry, dispatcher, layer.id);
 
-    const auto& node = sys::checked_get<comp::LayerTreeNode>(registry, layerEntity);
+    const auto& node = checked_get<comp::LayerTreeNode>(registry, layerEntity);
     for (const auto child : node.children) {
       layer_item_view(registry, dispatcher, child);
     }
@@ -158,7 +158,7 @@ void layer_item_view(const entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const entt::entity layerEntity)
 {
-  const auto& layer = sys::checked_get<comp::Layer>(registry, layerEntity);
+  const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
   const auto& activeLayer = registry.ctx().at<comp::ActiveLayer>();
 
   const scoped::Id scope{layer.id};
@@ -167,7 +167,7 @@ void layer_item_view(const entt::registry& registry,
   const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
                                    : _base_node_flags;
 
-  const auto& context = sys::checked_get<comp::AttributeContext>(registry, layerEntity);
+  const auto& context = checked_get<comp::AttributeContext>(registry, layerEntity);
   const FormattedString name{"{} {}", _get_icon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {

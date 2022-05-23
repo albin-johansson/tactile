@@ -28,7 +28,7 @@
 
 #include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/registry_system.hpp"
+#include "core/common/ecs.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/object_events.hpp"
@@ -228,7 +228,7 @@ void update_map_view_object_context_menu(const entt::registry& registry,
     const auto active = registry.ctx().at<comp::ActiveObject>();
 
     TACTILE_ASSERT(active.entity != entt::null);
-    const auto& object = sys::checked_get<comp::Object>(registry, active.entity);
+    const auto& object = checked_get<comp::Object>(registry, active.entity);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
       dispatcher.enqueue<InspectContextEvent>(active.entity);
