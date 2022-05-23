@@ -24,6 +24,7 @@
 
 #include <GL/glew.h>
 #include <centurion/system.hpp>
+#include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
 #include "cfg/sdl_attributes.hpp"
@@ -32,6 +33,7 @@
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
+#include "misc/stacktrace.hpp"
 
 #if TACTILE_PLATFORM_WINDOWS
 
@@ -79,10 +81,23 @@ void _win32_use_immersive_dark_mode([[maybe_unused]] cen::window& window)
 
 }  // namespace
 
+/* Keep the handler out of the anonymous namespace */
+inline void terminate_handler()
+{
+  try {
+    spdlog::critical("Into exile I must go. Failed I have.\n{}",
+                     boost::stacktrace::stacktrace{});
+  }
+  catch (...) {
+    /* Not much we can do */
+  }
+
+  std::abort();
+}
+
 AppConfiguration::AppConfiguration()
 {
-  /* Use terminate handler that doesn't do anything fancy, e.g. no logging */
-  std::set_terminate([] { std::abort(); });
+  std::set_terminate(&terminate_handler);
 
   init_sdl_attributes();
 

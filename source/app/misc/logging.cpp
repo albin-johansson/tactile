@@ -113,6 +113,7 @@ void init_logger()
 
   auto logger = std::make_shared<spdlog::logger>("tactile", sinks);
   logger->set_pattern("[%T.%f] %^{%l}%$ > %v");
+  logger->flush_on(LogLevel::critical);
 
   spdlog::set_default_logger(logger);
   spdlog::set_level(is_debug_build ? spdlog::level::trace : spdlog::level::info);
