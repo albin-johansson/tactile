@@ -42,10 +42,11 @@ auto main(int, char**) -> int
     return 0;
   }
   catch (const std::exception& e) {
-    spdlog::critical("Unhandled exception message: '{}'", e.what());
-
     if (const auto* stacktrace = boost::get_error_info<tactile::TraceInfo>(e)) {
-      spdlog::critical("{}", *stacktrace);
+      spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), *stacktrace);
+    }
+    else {
+      spdlog::critical("Unhandled exception message: '{}'", e.what());
     }
 
     return 1;
