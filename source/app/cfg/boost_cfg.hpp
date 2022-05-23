@@ -19,28 +19,22 @@
 
 #pragma once
 
-#include "meta/build.hpp"
+#include <ostream>  // basic_ostream
 
-#if TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
+#include <boost/stacktrace/stacktrace_fwd.hpp>
 
-#include <boost/exception/all.hpp>
-#include <boost/stacktrace.hpp>
+namespace boost::stacktrace {
 
-#if TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
-#pragma GCC diagnostic pop
-#endif  // TACTILE_COMPILER_GCC || TACTILE_COMPILER_CLANG
+template <class CharT, class TraitsT, class Allocator>
+auto stream_trace(std::basic_ostream<CharT, TraitsT>& stream,
+                  const basic_stacktrace<Allocator>& trace)
+    -> std::basic_ostream<CharT, TraitsT>&;
 
-#include "cfg/stacktrace_format.hpp"
+template <class CharT, class TraitsT>
+auto operator<<(std::basic_ostream<CharT, TraitsT>& stream, const stacktrace& trace)
+    -> std::basic_ostream<CharT, TraitsT>&
+{
+  return stream_trace(stream, trace);
+}
 
-namespace tactile {
-
-namespace tags {
-struct TraceInfoTag;
-}  // namespace tags
-
-using TraceInfo = boost::error_info<tags::TraceInfoTag, boost::stacktrace::stacktrace>;
-
-}  // namespace tactile
+}  // namespace boost::stacktrace

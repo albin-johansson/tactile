@@ -66,13 +66,15 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
     TACTILE_PROFILE_END("Parsed map")
   }
   catch (const std::exception& e) {
-    spdlog::error("Parser threw unhandled exception with message: '{}'\n", e.what());
     result.set_error(ParseError::Unknown);
 
-    if constexpr (is_debug_build) {
-      if (const auto* stacktrace = boost::get_error_info<TraceInfo>(e)) {
-        spdlog::error("{}\n", *stacktrace);
-      }
+    if (const auto* stacktrace = boost::get_error_info<TraceInfo>(e)) {
+      spdlog::error("Parser threw unhandled exception with message: '{}'\n{}",
+                    e.what(),
+                    *stacktrace);
+    }
+    else {
+      spdlog::error("Parser threw unhandled exception with message: '{}'\n", e.what());
     }
   }
   catch (...) {
