@@ -41,17 +41,4 @@ class TactileError : public std::exception
   std::string mTrace;
 };
 
-/**
- * \brief Throws an exception (of type TactileError) with embedded call stack information.
- *
- * \details This function should be used to raise all exceptions thrown in the codebase,
- * since the embedded stack trace information makes debugging code a lot easier.
- *
- * \param msg the exception message.
- */
-[[noreturn]] inline void panic(const char* msg)
-{
-  throw TactileError{msg};
-}
-
 }  // namespace tactile
