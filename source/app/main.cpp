@@ -17,7 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>    // abort
 #include <exception>  // exception
 
 #include <fmt/ostream.h>
@@ -26,30 +25,29 @@
 #include "application.hpp"
 #include "cfg/configuration.hpp"
 #include "io/directories.hpp"
-#include "misc/crash.hpp"
 #include "misc/logging.hpp"
-#include "misc/panic.hpp"
+#include "misc/stacktrace.hpp"
 
 auto main(int, char**) -> int
 {
-  try {
-    tactile::init_logger();
+  tactile::init_logger();
 
+  try {
     spdlog::info("Using persistent file directory {}", tactile::persistent_file_dir());
 
     tactile::AppConfiguration configuration;
     tactile::Application app{&configuration};
     app.start();
+
     return 0;
   }
   catch (const std::exception& e) {
-    tactile::print(fmt::color::hot_pink, "Unhandled exception message: '{}'\n", e.what());
+    spdlog::critical("Unhandled exception message: '{}'", e.what());
 
     if (const auto* stacktrace = boost::get_error_info<tactile::TraceInfo>(e)) {
-      tactile::print(fmt::color::hot_pink, "{}\n", *stacktrace);
-      tactile::dump_crash_info(*stacktrace);
+      spdlog::critical("{}", *stacktrace);
     }
 
-    std::abort();
+    return 1;
   }
 }

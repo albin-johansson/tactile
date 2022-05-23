@@ -19,33 +19,16 @@
 
 #pragma once
 
-#include <string>       // string
-#include <string_view>  // string_view
-#include <utility>      // pair, forward
+#include <string>   // string
+#include <utility>  // pair
 
-#include <fmt/color.h>
-#include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
 #include "core/common/ints.hpp"
-#include "meta/build.hpp"
 
 namespace tactile {
 
 using LogLevel = spdlog::level::level_enum;
-
-template <typename... Args>
-void print([[maybe_unused]] const fmt::color color,
-           const std::string_view fmt,
-           Args&&... args)
-{
-  if constexpr (on_windows) {
-    fmt::print(fmt::runtime(fmt), std::forward<Args>(args)...);
-  }
-  else {
-    fmt::print(fmt::fg(color), fmt, std::forward<Args>(args)...);
-  }
-}
 
 /**
  * \brief Initializes the logger, this must be called before any logging takes place.

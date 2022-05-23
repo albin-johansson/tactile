@@ -30,8 +30,6 @@
 #include "io/maps/parser/yaml/yaml_parser.hpp"
 #include "meta/build.hpp"
 #include "meta/profile.hpp"
-#include "misc/logging.hpp"
-#include "misc/panic.hpp"
 #include "misc/stacktrace.hpp"
 
 namespace tactile::parsing {
@@ -73,7 +71,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
 
     if constexpr (is_debug_build) {
       if (const auto* stacktrace = boost::get_error_info<TraceInfo>(e)) {
-        print(fmt::color::orange, "{}\n", *stacktrace);
+        spdlog::error("{}\n", *stacktrace);
       }
     }
   }
