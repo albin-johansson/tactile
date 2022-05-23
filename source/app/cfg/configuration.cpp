@@ -23,6 +23,7 @@
 #include <exception>  // set_terminate
 
 #include <GL/glew.h>
+#include <boost/stacktrace/stacktrace.hpp>
 #include <centurion/system.hpp>
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
@@ -33,7 +34,6 @@
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
-#include "misc/stacktrace.hpp"
 
 #if TACTILE_PLATFORM_WINDOWS
 

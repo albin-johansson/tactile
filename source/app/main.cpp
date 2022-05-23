@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <cstdlib>    // abort
 #include <exception>  // exception
 
 #include <fmt/ostream.h>
@@ -26,7 +27,7 @@
 #include "cfg/configuration.hpp"
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
-#include "misc/stacktrace.hpp"
+#include "misc/panic.hpp"
 
 auto main(int, char**) -> int
 {
@@ -41,14 +42,12 @@ auto main(int, char**) -> int
 
     return 0;
   }
+  catch (const tactile::TactileError& e) {
+    spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), e.trace());
+    std::abort();
+  }
   catch (const std::exception& e) {
-    if (const auto* stacktrace = boost::get_error_info<tactile::TraceInfo>(e)) {
-      spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), *stacktrace);
-    }
-    else {
-      spdlog::critical("Unhandled exception message: '{}'", e.what());
-    }
-
-    return 1;
+    spdlog::critical("Unhandled exception message: '{}'", e.what());
+    std::abort();
   }
 }

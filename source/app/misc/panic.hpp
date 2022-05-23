@@ -20,6 +20,7 @@
 #pragma once
 
 #include <exception>  // exception
+#include <string>     // string
 
 namespace tactile {
 
@@ -31,14 +32,15 @@ namespace tactile {
 class TactileError : public std::exception
 {
  public:
-  TactileError() noexcept = default;
+  explicit TactileError(const char* what);
 
-  explicit TactileError(const char* what) : mWhat{what ? what : "N/A"} {}
+  [[nodiscard]] auto trace() const -> const std::string& { return mTrace; }
 
   [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat; }
 
  private:
   const char* mWhat{"N/A"};
+  std::string mTrace;
 };
 
 /**
@@ -49,6 +51,9 @@ class TactileError : public std::exception
  *
  * \param msg the exception message.
  */
-[[noreturn]] void panic(const char* msg);
+[[noreturn]] inline void panic(const char* msg)
+{
+  throw TactileError{msg};
+}
 
 }  // namespace tactile

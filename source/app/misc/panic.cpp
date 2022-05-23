@@ -19,16 +19,19 @@
 
 #include "panic.hpp"
 
-#include <boost/exception/all.hpp>
+#include <sstream>  // stringstream
 
-#include "stacktrace.hpp"
+#include <boost/stacktrace.hpp>
 
 namespace tactile {
 
-void panic(const char* msg)
+TactileError::TactileError(const char* what) : mWhat{what ? what : "N/A"}
 {
-  throw boost::enable_error_info(TactileError{msg})
-      << TraceInfo{boost::stacktrace::stacktrace{}};
+  /* To avoid odd behavior whilst passing around stacktrace objects, we simply convert
+     the trace into a string, and log it later. */
+  std::stringstream stream;
+  stream << boost::stacktrace::stacktrace{};
+  mTrace = stream.str();
 }
 
 }  // namespace tactile
