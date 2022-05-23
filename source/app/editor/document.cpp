@@ -21,8 +21,20 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
+#include "core/components/map_info.hpp"
+#include "core/components/tiles.hpp"
 
 namespace tactile {
+
+auto Document::is_map() const -> bool
+{
+  return registry.ctx().contains<MapInfo>();
+}
+
+auto Document::is_tileset() const -> bool
+{
+  return registry.ctx().contains<comp::Tileset>();
+}
 
 auto Document::id() const -> const UUID&
 {

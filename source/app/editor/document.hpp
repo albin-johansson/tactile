@@ -34,6 +34,10 @@ struct Document final
   CommandStack commands;       ///< The history of commands.
   std::filesystem::path path;  ///< Path to the associated save file (possibly empty).
 
+  [[nodiscard]] auto is_map() const -> bool;
+
+  [[nodiscard]] auto is_tileset() const -> bool;
+
   [[nodiscard]] auto id() const -> const UUID&;
 };
 
