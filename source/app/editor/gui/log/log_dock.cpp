@@ -139,7 +139,7 @@ constinit bool _is_dock_focused = false;
       return {1.00f, 0.00f, 0.00f, 1.00f};
 
     default:
-      panic("Did not recognize log level!");
+      throw TactileError("Did not recognize log level!");
   }
 }
 

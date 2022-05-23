@@ -142,7 +142,7 @@ auto last_closed_file() -> const std::string&
     return _last_closed_file.value();
   }
   else {
-    panic("Invalid last closed file!");
+    throw TactileError("Invalid last closed file!");
   }
 }
 

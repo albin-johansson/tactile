@@ -151,7 +151,7 @@ auto ToolManager::is_available(const entt::registry& registry, const ToolType ty
       return mData->point.is_available(registry);
 
     default:
-      panic("Invalid tool type!");
+      throw TactileError{"Invalid tool type!"};
   }
 }
 
@@ -221,12 +221,12 @@ void ToolManager::on_released(entt::registry& registry,
 
 auto ToolManager::get_type() const -> ToolType
 {
-  panic("Invalid call!");
+  throw TactileError{"Invalid call!"};
 }
 
 auto ToolManager::is_available(const entt::registry&) const -> bool
 {
-  panic("Invalid call!");
+  throw TactileError{"Invalid call!"};
 }
 
 }  // namespace tactile

@@ -122,7 +122,7 @@ AppConfiguration::AppConfiguration()
 
   if (glewInit() != GLEW_OK) {
     spdlog::error("Failed to initialize GLEW!");
-    panic("Failed to initialize GLEW!");
+    throw TactileError{"Failed to initialize GLEW!"};
   }
 
   spdlog::debug("OpenGL version... {}", glGetString(GL_VERSION));

@@ -46,7 +46,7 @@ namespace {
     return iter;
   }
   else {
-    panic("Invalid component attribute name!");
+    throw TactileError{"Invalid component attribute name!"};
   }
 }
 
@@ -60,7 +60,7 @@ namespace {
     return iter;
   }
   else {
-    panic("Invalid component attribute name!");
+    throw TactileError{"Invalid component attribute name!"};
   }
 }
 
@@ -72,7 +72,7 @@ namespace {
     return iter;
   }
   else {
-    panic("Invalid component attribute name!");
+    throw TactileError{"Invalid component attribute name!"};
   }
 }
 
@@ -89,7 +89,7 @@ namespace {
     }
   }
 
-  panic("Did not find component!");
+  throw TactileError{"Did not find component!"};
 }
 
 void _visit_components(entt::registry& registry, auto callable)
@@ -335,7 +335,7 @@ auto get_component_def(entt::registry& registry, const ComponentID& compId)
     return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
-    panic("Failed to find component definition with specified ID!");
+    throw TactileError{"Failed to find component definition with specified ID!"};
   }
 }
 
@@ -347,7 +347,7 @@ auto get_component_def(const entt::registry& registry, const ComponentID& compId
     return {entity, checked_get<comp::ComponentDef>(registry, entity)};
   }
   else {
-    panic("Failed to find component definition with specified ID!");
+    throw TactileError{"Failed to find component definition with specified ID!"};
   }
 }
 
@@ -675,7 +675,7 @@ auto get_component(const entt::registry& registry,
     }
   }
 
-  panic("Context did not feature requested component!");
+  throw TactileError{"Context did not feature requested component!"};
 }
 
 auto get_component_attribute(const entt::registry& registry,
@@ -695,7 +695,7 @@ auto get_component_attribute(const entt::registry& registry,
     }
   }
 
-  panic("Did not find component attribute!");
+  throw TactileError{"Did not find component attribute!"};
 }
 
 auto get_component_count(const entt::registry& registry, const ContextID contextId)

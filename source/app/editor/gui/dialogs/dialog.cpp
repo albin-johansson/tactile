@@ -29,7 +29,7 @@ namespace tactile {
 ADialog::ADialog(const char* title) : mTitle{title}
 {
   if (!mTitle) {
-    panic("Invalid null dialog title!");
+    throw TactileError("Invalid null dialog title!");
   }
 }
 

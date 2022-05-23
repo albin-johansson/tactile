@@ -28,7 +28,7 @@ Actor::Actor(entt::registry& registry, entt::entity entity)
     , mEntity{entity}
 {
   if (!registry.valid(mEntity)) {
-    panic("Invalid entity identifier!");
+    throw TactileError{"Invalid entity identifier!"};
   }
 }
 

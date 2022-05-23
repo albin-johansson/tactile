@@ -57,7 +57,7 @@ constexpr int _base_node_flags =
       return TAC_ICON_GROUP_LAYER;
 
     default:
-      panic("Failed to recognize layer type!");
+      throw TactileError("Failed to recognize layer type!");
   }
 }
 

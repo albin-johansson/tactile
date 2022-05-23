@@ -233,7 +233,7 @@ void _append_layer(pugi::xml_node root, const ir::LayerData& layerData)
     }
 
     default:
-      panic("Invalid layer type!");
+      throw TactileError("Invalid layer type!");
   }
 }
 

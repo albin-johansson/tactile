@@ -67,7 +67,7 @@ auto get_object_layer(entt::registry& registry, const LayerID id)
     return {entity, registry.get<comp::ObjectLayer>(entity)};
   }
   else {
-    panic("Invalid object layer ID!");
+    throw TactileError{"Invalid object layer ID!"};
   }
 }
 
@@ -79,7 +79,7 @@ auto get_object_layer(const entt::registry& registry, const LayerID id)
     return {entity, registry.get<comp::ObjectLayer>(entity)};
   }
   else {
-    panic("Invalid object layer ID!");
+    throw TactileError{"Invalid object layer ID!"};
   }
 }
 

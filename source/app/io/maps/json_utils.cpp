@@ -77,7 +77,7 @@ void to_json(nlohmann::json& json, const Attribute& value)
       break;
 
     default:
-      panic("Invalid attribute type!");
+      throw TactileError("Invalid attribute type!");
   }
 }
 

@@ -78,7 +78,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
       }
     }
 
-    panic("Invalid index for filtered log entry!");
+    throw TactileError("Invalid index for filtered log entry!");
   }
 
   [[nodiscard]] auto count(const LogLevel filter) const -> usize

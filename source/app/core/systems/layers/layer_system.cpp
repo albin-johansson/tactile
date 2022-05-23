@@ -413,7 +413,7 @@ auto get_layer_entity(const entt::registry& registry, const LayerID id) -> entt:
     return entity;
   }
   else {
-    panic("Invalid layer ID!");
+    throw TactileError{"Invalid layer ID!"};
   }
 }
 
@@ -425,7 +425,7 @@ auto get_layer(const entt::registry& registry, const LayerID id) -> entt::entity
     return entity;
   }
   else {
-    panic("Invalid layer identifier!");
+    throw TactileError{"Invalid layer identifier!"};
   }
 }
 

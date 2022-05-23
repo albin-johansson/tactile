@@ -26,8 +26,6 @@ namespace tactile {
 
 /**
  * \brief The exception type used for all exceptions thrown in the codebase.
- *
- * \see panic(const char*)
  */
 class TactileError : public std::exception
 {
