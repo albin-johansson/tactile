@@ -19,6 +19,7 @@
 
 #include "convert_map_to_ir.hpp"
 
+#include "core/common/ecs.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/map_info.hpp"
@@ -29,6 +30,7 @@
 #include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/document.hpp"
+#include "editor/model.hpp"
 #include "meta/profile.hpp"
 
 namespace tactile {
@@ -39,12 +41,13 @@ void _convert_attribute_context(ir::AttributeContextData& data,
                                 const entt::registry& registry)
 {
   for (const auto propertyEntity : context.properties) {
-    const auto& property = sys::checked_get<comp::Property>(registry, propertyEntity);
+    const auto& property = checked_get<comp::Property>(registry, propertyEntity);
     data.properties[property.name] = property.value;
   }
 
   for (const auto componentEntity : context.components) {
     const auto& component = sys::checked_get<comp::Component>(registry, componentEntity);
+    const auto& component = checked_get<comp::Component>(registry, componentEntity);
     const auto type = sys::get_component_def_name(registry, component.type);
 
     auto& attributes = data.components[type];
@@ -83,13 +86,12 @@ void _convert_object_layer(ir::ObjectLayerData& data,
                            const entt::registry& registry,
                            const entt::entity entity)
 {
-  const auto& objectLayer = sys::checked_get<comp::ObjectLayer>(registry, entity);
+  const auto& objectLayer = checked_get<comp::ObjectLayer>(registry, entity);
   data.objects.reserve(objectLayer.objects.size());
 
   for (const auto objectEntity : objectLayer.objects) {
-    const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
-    const auto& context =
-        sys::checked_get<comp::AttributeContext>(registry, objectEntity);
+    const auto& object = checked_get<comp::Object>(registry, objectEntity);
+    const auto& context = checked_get<comp::AttributeContext>(registry, objectEntity);
 
     auto& objectData = data.objects.emplace_back();
     _convert_object(objectData, object, context, registry);
@@ -100,7 +102,7 @@ void _convert_group_layer(ir::GroupLayerData& data,
                           const entt::registry& registry,
                           const entt::entity entity)
 {
-  const auto& node = sys::checked_get<comp::LayerTreeNode>(registry, entity);
+  const auto& node = checked_get<comp::LayerTreeNode>(registry, entity);
   data.children.reserve(node.children.size());
 
   usize index = 0;
@@ -116,7 +118,7 @@ void _convert_layer(ir::LayerData& data,
                     const entt::registry& registry,
                     const entt::entity entity)
 {
-  const auto& layer = sys::checked_get<comp::Layer>(registry, entity);
+  const auto& layer = checked_get<comp::Layer>(registry, entity);
 
   data.index = index;
 
@@ -127,7 +129,7 @@ void _convert_layer(ir::LayerData& data,
 
   switch (layer.type) {
     case LayerType::TileLayer: {
-      const auto& tileLayer = sys::checked_get<comp::TileLayer>(registry, entity);
+      const auto& tileLayer = checked_get<comp::TileLayer>(registry, entity);
 
       auto& tileLayerData = data.data.emplace<ir::TileLayerData>();
       tileLayerData.tiles = tileLayer.matrix;
@@ -150,7 +152,7 @@ void _convert_layer(ir::LayerData& data,
     }
   }
 
-  const auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
+  const auto& context = checked_get<comp::AttributeContext>(registry, entity);
   data.name = context.name;
   _convert_attribute_context(data.context, context, registry);
 }
@@ -161,7 +163,7 @@ void _convert_layers(ir::MapData& data, const entt::registry& registry)
 
   /* Only iterate top-level layers */
   for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
-    const auto& parent = sys::checked_get<comp::Parent>(registry, entity);
+    const auto& parent = checked_get<comp::Parent>(registry, entity);
     if (parent.entity == entt::null) {
       auto& layerData = data.layers.emplace_back();
       _convert_layer(layerData, index, registry, entity);
@@ -177,7 +179,7 @@ void _convert_fancy_tile_animation(ir::MetaTileData& data,
   data.frames.reserve(animation.frames.size());
 
   for (const auto frameEntity : animation.frames) {
-    const auto& frame = sys::checked_get<comp::AnimationFrame>(registry, frameEntity);
+    const auto& frame = checked_get<comp::AnimationFrame>(registry, frameEntity);
 
     auto& frameData = data.frames.emplace_back();
     frameData.local_id = sys::convert_to_local(registry, frame.tile).value();
@@ -210,9 +212,9 @@ void _convert_fancy_tiles(ir::TilesetData& data,
 
         if (!tile.objects.empty()) {
           for (const auto objectEntity : tile.objects) {
-            const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
+            const auto& object = checked_get<comp::Object>(registry, objectEntity);
             const auto& objectContext =
-                sys::checked_get<comp::AttributeContext>(registry, objectEntity);
+                checked_get<comp::AttributeContext>(registry, objectEntity);
 
             auto& objectData = tileData.objects.emplace_back();
             _convert_object(objectData, object, objectContext, registry);
