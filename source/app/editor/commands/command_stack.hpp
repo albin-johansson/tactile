@@ -25,6 +25,7 @@
 #include <utility>   // move
 
 #include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "editor/commands/command.hpp"
@@ -40,6 +41,9 @@ class CommandStack final
 {
  public:
   CommandStack();
+
+  TACTILE_DELETE_COPY(CommandStack);
+  TACTILE_DEFAULT_MOVE(CommandStack);
 
   /**
    * \brief Clears the command stack of all commands.
