@@ -23,6 +23,7 @@
 #include <string_view>  // string_view
 #include <utility>      // pair
 
+#include <boost/uuid/uuid_hash.hpp>
 #include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"

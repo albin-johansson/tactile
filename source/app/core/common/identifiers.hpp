@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-using ContextID = int32;   ///< Identifier for attribute contexts (not persistent).
+using ContextID = UUID;    ///< Identifier for attribute contexts (not persistent).
 using ComponentID = UUID;  ///< Identifier for component definitions (not persistent).
 
 using MapID = int32;

@@ -23,35 +23,13 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/property_system.hpp"
-#include "core/systems/registry_system.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::sys {
-namespace {
-
-/* Identifier used to distinguish attribute contexts, generated on a
-   session-by-session basis and not stored anywhere in save files. */
-inline ContextID _next_context_id{1};
-
-}  // namespace
-
-void reset_next_context_id() noexcept
-{
-  _next_context_id = 1;
-}
-
-auto get_and_update_next_context_id() noexcept -> ContextID
-{
-  return _next_context_id++;
-}
-
-auto next_context_id() noexcept -> ContextID
-{
-  return _next_context_id;
-}
 
 auto add_attribute_context(entt::registry& registry, const entt::entity entity)
     -> comp::AttributeContext&
@@ -59,7 +37,7 @@ auto add_attribute_context(entt::registry& registry, const entt::entity entity)
   TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.emplace<comp::AttributeContext>(entity);
-  context.id = get_and_update_next_context_id();
+  context.id = make_uuid();
 
   return context;
 }
@@ -115,7 +93,7 @@ void restore_attribute_context(entt::registry& registry,
 
 auto get_context(entt::registry& registry, const ContextID id) -> comp::AttributeContext&
 {
-  if (auto& context = registry.ctx().at<comp::AttributeContext>(); context.id == id) {
+  if (auto& context = ctx_get<comp::AttributeContext>(registry); context.id == id) {
     return context;
   }
 
@@ -125,14 +103,13 @@ auto get_context(entt::registry& registry, const ContextID id) -> comp::Attribut
     }
   }
 
-  panic("No matching attribute context!");
+  throw TactileError{"No matching attribute context!"};
 }
 
 auto get_context(const entt::registry& registry, const ContextID id)
     -> const comp::AttributeContext&
 {
-  if (const auto& context = registry.ctx().at<comp::AttributeContext>();
-      context.id == id) {
+  if (const auto& context = ctx_get<comp::AttributeContext>(registry); context.id == id) {
     return context;
   }
 
@@ -142,16 +119,15 @@ auto get_context(const entt::registry& registry, const ContextID id)
     }
   }
 
-  panic("No matching attribute context!");
+  throw TactileError{"No matching attribute context!"};
 }
 
 auto current_context(const entt::registry& registry) -> const comp::AttributeContext&
 {
-  const auto& ctx = registry.ctx();
-  const auto& current = ctx.at<comp::ActiveAttributeContext>();
+  const auto& current = ctx_get<comp::ActiveAttributeContext>(registry);
   return (current.entity != entt::null)
              ? checked_get<comp::AttributeContext>(registry, current.entity)
-             : ctx.at<comp::AttributeContext>();
+             : ctx_get<comp::AttributeContext>(registry);
 }
 
 auto current_context_id(const entt::registry& registry) -> ContextID

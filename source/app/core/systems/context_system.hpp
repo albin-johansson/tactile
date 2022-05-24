@@ -36,27 +36,6 @@ namespace tactile::sys {
 /// \{
 
 /**
- * \brief Resets the next context ID.
- *
- * \warning This function is provided for testing purposes, do not use otherwise.
- */
-void reset_next_context_id() noexcept;
-
-/**
- * \brief Increments the next available context ID and returns the previous value.
- *
- * \return the previous next context ID.
- */
-[[nodiscard]] auto get_and_update_next_context_id() noexcept -> ContextID;
-
-/**
- * \brief Returns the next available context ID.
- *
- * \return a valid context ID.
- */
-[[nodiscard]] auto next_context_id() noexcept -> ContextID;
-
-/**
  * \brief Adds an attribute context component to an entity.
  *
  * \details The created attribute context will automatically be assigned a unique ID.
