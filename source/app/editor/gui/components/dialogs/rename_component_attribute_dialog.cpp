@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "core/systems/component_system.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/model.hpp"

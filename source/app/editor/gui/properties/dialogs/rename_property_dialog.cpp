@@ -19,6 +19,8 @@
 
 #include "rename_property_dialog.hpp"
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "editor/events/property_events.hpp"

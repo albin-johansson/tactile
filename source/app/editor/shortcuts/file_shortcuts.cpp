@@ -19,11 +19,13 @@
 
 #include "file_shortcuts.hpp"
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
-#include "mappings.hpp"
+#include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {
 

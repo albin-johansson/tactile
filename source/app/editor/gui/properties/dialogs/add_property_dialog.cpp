@@ -19,6 +19,7 @@
 
 #include "add_property_dialog.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/systems/context_system.hpp"

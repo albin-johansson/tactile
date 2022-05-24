@@ -19,6 +19,8 @@
 
 #include "edit_shortcuts.hpp"
 
+#include <entt/signal/dispatcher.hpp>
+
 #include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "editor/events/command_events.hpp"
@@ -30,7 +32,7 @@
 #include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
-#include "mappings.hpp"
+#include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {
 
