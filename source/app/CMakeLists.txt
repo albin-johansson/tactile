@@ -122,6 +122,7 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <fstream>
                           <functional>
                           <limits>
+                          <locale>
                           <map>
                           <memory>
                           <optional>
