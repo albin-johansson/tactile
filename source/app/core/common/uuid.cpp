@@ -19,7 +19,10 @@
 
 #include "uuid.hpp"
 
+#include <functional>  // hash
+
 #include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_hash.hpp>
 
 namespace tactile {
 
@@ -27,6 +30,11 @@ auto make_uuid() -> boost::uuids::uuid
 {
   static boost::uuids::random_generator generator;
   return generator();
+}
+
+auto hash(const UUID& uuid) -> usize
+{
+  return std::hash<UUID>{}(uuid);
 }
 
 }  // namespace tactile
