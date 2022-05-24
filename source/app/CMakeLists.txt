@@ -57,7 +57,6 @@ target_compile_definitions(${TACTILE_LIB}
                            GLEW_NO_GLU
                            BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
-                           BOOST_USER_CONFIG="cfg/boost_cfg.hpp"
                            BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
                            ENTT_STANDARD_CPP
                            SPDLOG_FMT_EXTERNAL
