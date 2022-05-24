@@ -55,7 +55,7 @@ auto new_map_document_registry() -> entt::registry
   viewport.y_offset = 0;
 
   auto& context = ctx.emplace<comp::AttributeContext>();
-  context.id = get_and_update_next_context_id();
+  context.id = make_uuid();
   context.name = "Map";
 
   auto& tilesets = ctx.emplace<comp::TilesetContext>();
