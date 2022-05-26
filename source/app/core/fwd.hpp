@@ -28,6 +28,7 @@ class Attribute;
 class TextureManager;
 class TilePos;
 class IRenderer;
+class ToolManager;
 
 namespace comp {
 
