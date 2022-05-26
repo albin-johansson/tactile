@@ -66,6 +66,9 @@ class Actor final
    */
   Actor(entt::registry& registry, entt::entity entity);
 
+  /// Creates an actor that wraps a new entity in a registry
+  [[nodiscard]] static auto of(entt::registry& registry) -> Actor;
+
   template <typename Component, typename... Args>
   auto add(Args&&... args) -> Component&
   {

@@ -32,4 +32,9 @@ Actor::Actor(entt::registry& registry, entt::entity entity)
   }
 }
 
+auto Actor::of(entt::registry& registry) -> Actor
+{
+  return Actor{registry, registry.create()};
+}
+
 }  // namespace tactile
