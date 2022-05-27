@@ -701,7 +701,7 @@ void Application::on_add_tileset(const AddTilesetEvent& event)
 
 void Application::on_remove_tileset(const RemoveTilesetEvent& event)
 {
-  _execute<RemoveTilesetCmd>(mData->model, event.id);
+  mData->model.remove_tileset(event.tileset_id);
 }
 
 void Application::on_select_tileset(const SelectTilesetEvent& event)
