@@ -26,6 +26,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "editor/gui/rendering/graphics.hpp"
+#include "io/persistence/preferences.hpp"
 
 namespace tactile {
 
@@ -48,6 +49,12 @@ void render_tileset(GraphicsCtx& graphics, const entt::registry& registry)
       const auto position = graphics.from_matrix_to_absolute(row, col);
       graphics.render_translated_image(texture.id, source, position, uv);
     }
+  }
+
+  if (get_preferences().is_grid_visible()) {
+    graphics.set_line_thickness(1.0f);
+    graphics.set_draw_color(cen::colors::white.with_alpha(20));
+    graphics.render_translated_grid();
   }
 }
 
