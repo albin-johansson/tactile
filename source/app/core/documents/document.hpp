@@ -29,6 +29,7 @@
 
 namespace tactile {
 
+/// Abstract base class for document representations.
 class ADocument
 {
  public:
@@ -36,26 +37,36 @@ class ADocument
 
   virtual ~ADocument() noexcept = default;
 
+  /// Updates the state of the document.
   virtual void update() = 0;
 
+  /// Sets the file path associated with the document.
   void set_path(std::filesystem::path path);
 
+  /// Indicates whether the document represents a map.
   [[nodiscard]] auto is_map() const -> bool;
 
+  /// Indicates whether the document represents a tileset.
   [[nodiscard]] auto is_tileset() const -> bool;
 
+  /// Indicates whether the document has a defined path.
   [[nodiscard]] auto has_path() const -> bool;
 
+  /// Returns the previously set document path, throwing if there is none.
   [[nodiscard]] auto get_path() const -> const std::filesystem::path&;
 
+  /// Returns the document command history.
   [[nodiscard]] auto get_history() -> CommandStack&;
   [[nodiscard]] auto get_history() const -> const CommandStack&;
 
+  /// Returns the associated registry.
   [[nodiscard]] auto get_registry() -> entt::registry& { return mRegistry; };
   [[nodiscard]] auto get_registry() const -> const entt::registry& { return mRegistry; }
 
+  /// Returns the identifier associated with the document.
   [[nodiscard]] auto id() const -> const UUID&;
 
+  /// Returns the type of the document.
   [[nodiscard]] virtual auto get_type() const -> DocumentType = 0;
 
  protected:
