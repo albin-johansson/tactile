@@ -26,7 +26,7 @@
 
 #include "core/systems/tileset_system.hpp"
 #include "core/tools/tool_manager.hpp"
-#include "editor/commands/command_stack.hpp"
+#include "core/commands/command_stack.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/command_events.hpp"
 #include "core/events/tileset_events.hpp"

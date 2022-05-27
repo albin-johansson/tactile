@@ -23,7 +23,7 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
-#include "editor/commands/command_stack.hpp"
+#include "core/commands/command_stack.hpp"
 
 namespace tactile {
 

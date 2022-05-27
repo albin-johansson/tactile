@@ -29,7 +29,7 @@
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/tools/tool_manager.hpp"
-#include "editor/commands/command_stack.hpp"
+#include "core/commands/command_stack.hpp"
 
 namespace tactile::sys {
 

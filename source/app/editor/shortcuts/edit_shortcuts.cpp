@@ -23,7 +23,7 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
-#include "editor/commands/command_stack.hpp"
+#include "core/commands/command_stack.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/command_events.hpp"
 #include "core/events/component_events.hpp"

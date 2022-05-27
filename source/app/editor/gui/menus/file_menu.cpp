@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "editor/commands/command_stack.hpp"
+#include "core/commands/command_stack.hpp"
 #include "core/events/document_events.hpp"
 #include "core/events/map_events.hpp"
 #include "core/events/misc_events.hpp"

@@ -43,7 +43,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tilesets/tileset_document_system.hpp"
 #include "core/utils/texture_manager.hpp"
-#include "editor/commands/command_stack.hpp"
+#include "core/commands/command_stack.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "editor/model.hpp"

@@ -26,7 +26,7 @@
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
 #include "core/systems/context_system.hpp"
-#include "editor/commands/command_stack.hpp"
+#include "core/commands/command_stack.hpp"
 
 namespace tactile::sys {
 

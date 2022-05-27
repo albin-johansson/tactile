@@ -21,7 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "editor/commands/command_stack.hpp"
+#include "core/commands/command_stack.hpp"
 #include "core/events/map_events.hpp"
 #include "core/events/misc_events.hpp"
 #include "editor/gui/widget_manager.hpp"
