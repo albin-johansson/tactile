@@ -30,8 +30,8 @@
 #include "core/tools/tool_manager.hpp"
 #include "editor/commands/command_stack.hpp"
 #include "editor/commands/commands.hpp"
-#include "editor/documents/map_document.hpp"
-#include "editor/documents/tileset_document.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/documents/tileset_document.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

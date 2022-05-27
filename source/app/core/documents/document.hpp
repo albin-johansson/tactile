@@ -24,7 +24,7 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/common/uuid.hpp"
-#include "editor/documents/document_type.hpp"
+#include "core/documents/document_type.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile {

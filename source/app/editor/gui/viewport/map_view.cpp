@@ -30,7 +30,7 @@
 #include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/tools/tool_manager.hpp"
-#include "editor/documents/map_document.hpp"
+#include "core/documents/map_document.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"

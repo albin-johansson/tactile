@@ -24,8 +24,8 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "editor/document.hpp"
-#include "editor/documents/map_document.hpp"
+#include "core/documents/document.hpp"
+#include "core/documents/map_document.hpp"
 #include "editor/model.hpp"
 #include "io/maps/convert_map_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"

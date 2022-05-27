@@ -21,9 +21,9 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/documents/document.hpp"
 #include "core/fwd.hpp"
 #include "core/tools/tool_type.hpp"
-#include "editor/document.hpp"
 
 namespace tactile {
 

@@ -26,7 +26,7 @@
 #include "core/tools/tool_type.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/commands/command_stack.hpp"
-#include "editor/documents/map_document.hpp"
+#include "core/documents/map_document.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/tool_events.hpp"
 #include "editor/gui/components/component_editor.hpp"

@@ -24,7 +24,7 @@
 #include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "editor/commands/command_stack.hpp"
-#include "editor/documents/map_document.hpp"
+#include "core/documents/map_document.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/events/map_events.hpp"

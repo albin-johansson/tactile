@@ -26,7 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/common/filesystem.hpp"
-#include "editor/documents/map_document.hpp"
+#include "core/documents/map_document.hpp"
 #include "editor/model.hpp"
 #include "io/directories.hpp"
 #include "io/maps/parser/parse_map.hpp"

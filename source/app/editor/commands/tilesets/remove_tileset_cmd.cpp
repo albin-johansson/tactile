@@ -20,8 +20,8 @@
 #include "remove_tileset_cmd.hpp"
 
 #include "core/systems/tileset_system.hpp"
-#include "editor/documents/map_document.hpp"
-#include "editor/documents/tileset_document.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/documents/tileset_document.hpp"
 #include "editor/model.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
