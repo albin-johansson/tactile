@@ -20,6 +20,8 @@
 #include "remove_tileset_cmd.hpp"
 
 #include "core/systems/tileset_system.hpp"
+#include "editor/documents/map_document.hpp"
+#include "editor/documents/tileset_document.hpp"
 #include "editor/model.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
@@ -32,7 +34,7 @@ RemoveTilesetCmd::RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId)
     , mTilesetId{tilesetId}
 {
   if (!mModel) {
-    throw TactileError("Invalid null model!");
+    throw TactileError{"Invalid null model!"};
   }
 
   TACTILE_ASSERT(mModel->active_document_id().has_value());
@@ -41,23 +43,37 @@ RemoveTilesetCmd::RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId)
 
 void RemoveTilesetCmd::undo()
 {
-  //  auto& registry = mRegistry.get();
-  //  sys::restore_tileset(registry, mSnapshot.value());
-  //
-  //  auto& active = registry.ctx().at<comp::ActiveTileset>();
-  //  active.entity = sys::find_tileset(registry, mTilesetId);
+  TACTILE_ASSERT(mTileset != nullptr);
+  TACTILE_ASSERT(mModel->active_document_id() == mMapId);
+
+  auto map = mModel->get_map(mMapId);
+  auto& mapRegistry = map->get_registry();
+
+  sys::attach_tileset(mapRegistry, mTilesetId, mTileset->info());
+
+  // TODO select tileset
 }
 
 void RemoveTilesetCmd::redo()
 {
-//  auto& document = mModel->get_document(mMapId);
-//  sys::detach_tileset(document.registry, mTilesetId);
+  TACTILE_ASSERT(mModel->active_document_id() == mMapId);
 
-  //  const auto entity = sys::find_tileset(mRegistry, mTilesetId);
-  //  TACTILE_ASSERT(entity != entt::null);
-  //
-  //  mSnapshot = sys::copy_tileset(mRegistry, entity);
-  //  sys::remove_tileset(mRegistry, mTilesetId);
+  mTileset = mModel->get_tileset(mTilesetId);
+
+  // TODO close the document, if open
+
+  auto map = mModel->get_map(mMapId);
+  auto& mapRegistry = map->get_registry();
+
+  const auto tilesetEntity = sys::find_tileset(mapRegistry, mTilesetId);
+  auto& activeTileset = ctx_get<comp::ActiveTileset>(mapRegistry);
+
+  if (tilesetEntity == activeTileset.entity) {
+    activeTileset.entity = entt::null;  // TODO try to pick another tileset
+  }
+
+  // TODO use the snapshot? (maybe not necessary if tset document is isolated)
+  sys::detach_tileset(mapRegistry, mTilesetId);
 }
 
 }  // namespace tactile

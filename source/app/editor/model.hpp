@@ -45,7 +45,8 @@ namespace tactile {
  */
 class DocumentModel final
 {
-  friend class AddTilesetCmd;  // Let this command register tileset documents
+  friend class AddTilesetCmd;
+  friend class RemoveTilesetCmd;
 
  public:
   using VisitorFunc = std::function<void(const UUID&)>;
@@ -57,16 +58,26 @@ class DocumentModel final
   void each(const VisitorFunc& func) const;
 
   /**
-   * \brief Creates an empty map document with the specified attributes.
+   * Creates an empty map document with the specified attributes.
    *
    * \param tileSize the global tile size in the map.
    * \param rows the initial amount of rows in the map.
    * \param columns the initial amount of columns in the map.
    *
-   * \return a unique document identifier.
+   * \return the map document ID.
    */
   auto add_map(const Vector2i& tileSize, usize rows, usize columns) -> UUID;
 
+  /**
+   * Creates a tileset document and adds it to the active map document.
+   *
+   * \param texture the tileset texture.
+   * \param tileSize the logical tileset tile size.
+   *
+   * \return the tileset document ID.
+   *
+   * \see AddTilesetCmd
+   */
   auto add_tileset(const comp::Texture& texture, const Vector2i& tileSize) -> UUID;
 
   void attach_tileset_to(const UUID& mapId, const UUID& tilesetId);
@@ -76,6 +87,8 @@ class DocumentModel final
   void select_document(const UUID& id);
 
   void remove_document(const UUID& id);
+
+  void remove_tileset(const UUID& id);
 
   void set_command_capacity(usize capacity);
 
@@ -130,6 +143,9 @@ class DocumentModel final
 
   void register_map(Shared<MapDocument> document);
   void register_tileset(Shared<TilesetDocument> document);
+
+  auto unregister_map(const UUID& id) -> Shared<MapDocument>;
+  auto unregister_tileset(const UUID& id) -> Shared<TilesetDocument>;
 };
 
 }  // namespace tactile

@@ -25,7 +25,6 @@
 
 #include "core/components/map_info.hpp"
 #include "core/systems/animation_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "editor/commands/command_stack.hpp"
@@ -128,6 +127,21 @@ void DocumentModel::remove_document(const UUID& id)
 
   if (!mActiveDocument && !mDocuments.empty()) {
     mActiveDocument = mDocuments.begin()->first;
+  }
+}
+
+void DocumentModel::remove_tileset(const UUID& id)
+{
+  if (!is_tileset(id)) {
+    throw TactileError{"Document is not a tileset!"};
+  }
+
+  if (mActiveDocument && is_map(*mActiveDocument)) {
+    auto map = get_map(*mActiveDocument);
+    map->get_history().push<RemoveTilesetCmd>(this, id);
+  }
+  else {
+    throw TactileError{"No active map!"};
   }
 }
 
@@ -343,6 +357,26 @@ void DocumentModel::register_tileset(Shared<TilesetDocument> document)
 {
   mDocuments[document->id()] = document;
   mTilesets[document->id()] = std::move(document);
+}
+
+auto DocumentModel::unregister_map(const UUID& id) -> Shared<MapDocument>
+{
+  auto map = get_map(id);
+
+  mDocuments.erase(id);
+  mMaps.erase(id);
+
+  return map;
+}
+
+auto DocumentModel::unregister_tileset(const UUID& id) -> Shared<TilesetDocument>
+{
+  auto tileset = get_tileset(id);
+
+  mDocuments.erase(id);
+  mTilesets.erase(id);
+
+  return tileset;
 }
 
 }  // namespace tactile
