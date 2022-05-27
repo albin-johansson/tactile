@@ -125,8 +125,10 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <map>
                           <memory>
                           <optional>
+                          <ostream>
                           <random>
                           <span>
+                          <sstream>
                           <string>
                           <string_view>
                           <system_error>
@@ -135,8 +137,6 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <utility>
                           <variant>
                           <vector>
-
-                          <imgui.h>
                           )
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
