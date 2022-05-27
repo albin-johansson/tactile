@@ -321,7 +321,7 @@ void Application::save_current_files_to_history()
 {
   mData->model.each([this](const UUID& id) {
     // TODO
-    const auto document = mModel->model.get_document(id);
+    const auto document = mData->model.get_document(id);
     // if (document.open && document.has_path()) {
     //   add_file_to_history(document.path());
     // }
