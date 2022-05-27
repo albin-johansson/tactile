@@ -26,10 +26,15 @@ struct Region;
 
 class Attribute;
 class TilePos;
+
 class DocumentModel;
 class ADocument;
 class MapDocument;
 class TilesetDocument;
+
+class ACommand;
+class CommandStack;
+
 class TextureManager;
 class IRenderer;
 class ToolManager;

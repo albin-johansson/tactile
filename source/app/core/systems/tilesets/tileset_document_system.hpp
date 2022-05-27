@@ -23,7 +23,6 @@
 
 #include "core/common/math.hpp"
 #include "core/fwd.hpp"
-#include "editor/fwd.hpp"
 
 namespace tactile::sys {
 

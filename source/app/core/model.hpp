@@ -37,7 +37,6 @@
 #include "core/fwd.hpp"
 #include "core/tools/tool_type.hpp"
 #include "core/utils/actor.hpp"
-#include "editor/fwd.hpp"
 
 namespace tactile {
 

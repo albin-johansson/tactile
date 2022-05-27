@@ -25,7 +25,7 @@
 
 #include "core/common/uuid.hpp"
 #include "core/documents/document_type.hpp"
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 

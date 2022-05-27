@@ -23,8 +23,6 @@ namespace tactile {
 
 struct RenderInfo;
 
-class CommandStack;
-
 class GraphicsCtx;
 class WidgetManager;
 
