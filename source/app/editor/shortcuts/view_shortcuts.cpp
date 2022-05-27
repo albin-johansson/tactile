@@ -23,6 +23,7 @@
 #include <imgui_internal.h>
 
 #include "cfg/fonts.hpp"
+#include "core/systems/viewport_system.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -61,7 +62,8 @@ void DecreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
 auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
                                               const WidgetManager&) const -> bool
 {
-  return model.can_decrease_viewport_tile_size();
+  const auto* document = model.active_document();
+  return document && sys::can_decrease_viewport_zoom(document->get_registry());
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -214,6 +216,12 @@ void ToggleLayerHighlightShortcut::activate(entt::dispatcher&)
 {
   auto& prefs = get_preferences();
   prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
+}
+
+auto ToggleLayerHighlightShortcut::is_enabled(const DocumentModel& model,
+                                              const WidgetManager&) const -> bool
+{
+  return model.is_map_active();
 }
 
 /* ------------------------------------------------------------------------------------ */

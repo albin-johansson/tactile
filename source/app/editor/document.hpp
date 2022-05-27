@@ -21,24 +21,45 @@
 
 #include <filesystem>  // path
 
-#include <entt/entt.hpp>
+#include <entt/entity/registry.hpp>
 
 #include "core/common/uuid.hpp"
-#include "editor/commands/command_stack.hpp"
+#include "editor/documents/document_type.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
-struct Document final
+class ADocument
 {
-  entt::registry registry;     ///< The document registry.
-  CommandStack commands;       ///< The history of commands.
-  std::filesystem::path path;  ///< Path to the associated save file (possibly empty).
+ public:
+  explicit ADocument(entt::registry registry);
+
+  virtual ~ADocument() noexcept = default;
+
+  virtual void update() = 0;
+
+  void set_path(std::filesystem::path path);
 
   [[nodiscard]] auto is_map() const -> bool;
 
   [[nodiscard]] auto is_tileset() const -> bool;
 
+  [[nodiscard]] auto has_path() const -> bool;
+
+  [[nodiscard]] auto get_path() const -> const std::filesystem::path&;
+
+  [[nodiscard]] auto get_history() -> CommandStack&;
+  [[nodiscard]] auto get_history() const -> const CommandStack&;
+
+  [[nodiscard]] auto get_registry() -> entt::registry& { return mRegistry; };
+  [[nodiscard]] auto get_registry() const -> const entt::registry& { return mRegistry; }
+
   [[nodiscard]] auto id() const -> const UUID&;
+
+  [[nodiscard]] virtual auto get_type() const -> DocumentType = 0;
+
+ protected:
+  entt::registry mRegistry;
 };
 
 }  // namespace tactile

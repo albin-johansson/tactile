@@ -22,6 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "editor/commands/command_stack.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/gui/dialogs/create_map_dialog.hpp"
@@ -101,6 +102,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   if (scoped::Menu menu{"File"}; menu.is_open()) {
     const auto hasActiveDocument = model.has_active_document();
+    const auto* document = model.active_document();
 
     if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
       state.map_creation_dialog.show();
@@ -116,7 +118,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
                         TACTILE_PRIMARY_MOD "+S",
                         false,
-                        model.is_save_possible())) {
+                        document && !document->get_history().is_clean())) {
       dispatcher.enqueue<SaveEvent>();
     }
 
@@ -129,8 +131,11 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Map", nullptr, false, hasActiveDocument)) {
-      dispatcher.enqueue<CloseMapEvent>(model.active_map_id().value());
+    if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Document",
+                        nullptr,
+                        false,
+                        hasActiveDocument)) {
+      dispatcher.enqueue<CloseDocumentEvent>(model.active_document_id().value());
     }
 
     ImGui::Separator();

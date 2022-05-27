@@ -23,14 +23,15 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/tiles.hpp"
-#include "core/systems/registry_system.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/tilesets/tileset_view.hpp"
+#include "editor/model.hpp"
 
 namespace tactile {
 namespace {
@@ -38,7 +39,7 @@ namespace {
 constexpr auto _tab_bar_flags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
-void _update_context_menu(const TilesetID id,
+void _update_context_menu(const UUID& id,
                           const entt::entity tilesetEntity,
                           entt::dispatcher& dispatcher)
 {
@@ -72,7 +73,7 @@ void _update_context_menu(const TilesetID id,
 
 }  // namespace
 
-void update_tileset_tabs(const entt::registry& registry, entt::dispatcher& dispatcher)
+void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::TabBar bar{"##TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
@@ -80,29 +81,34 @@ void update_tileset_tabs(const entt::registry& registry, entt::dispatcher& dispa
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
-    const auto& activeTileset = registry.ctx().at<comp::ActiveTileset>();
-    for (auto&& [entity, tileset] : registry.view<comp::Tileset>().each()) {
-      const scoped::Id scope{tileset.id};
+    const auto& mapRegistry = model.get_active_registry();
+
+    const auto& activeTileset = ctx_get<comp::ActiveTileset>(mapRegistry);
+    for (auto&& [entity, ref] : mapRegistry.view<comp::TilesetRef>().each()) {
+      //      const scoped::Id scope{ref.first_id};
+      const scoped::Id scope{static_cast<int>(hash(ref.source_tileset))};
 
       const auto isActive = activeTileset.entity == entity;
-      const auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
+
+      // FIXME context is invalid for tileset references
+      const auto& context = checked_get<comp::AttributeContext>(mapRegistry, entity);
 
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(),
                                &opened,
                                isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
-        update_tileset_view(registry, entity, dispatcher);
+        update_tileset_view(model, ref.source_tileset, dispatcher);
       }
 
       if (!opened) {
-        dispatcher.enqueue<RemoveTilesetEvent>(tileset.id);
+        dispatcher.enqueue<RemoveTilesetEvent>(ref.source_tileset);
       }
       else if (ImGui::IsItemActivated()) {
-        dispatcher.enqueue<SelectTilesetEvent>(tileset.id);
+        dispatcher.enqueue<SelectTilesetEvent>(ref.source_tileset);
       }
       else {
-        _update_context_menu(tileset.id, entity, dispatcher);
+        _update_context_menu(context.id, entity, dispatcher);
       }
     }
   }

@@ -21,16 +21,21 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
+/**
+ * \brief Command for removing a tileset from the active map document.
+ */
 class RemoveTilesetCmd final : public ACommand
 {
  public:
-  RemoveTilesetCmd(RegistryRef registry, TilesetID id);
+  RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId);
 
   void undo() override;
 
@@ -42,8 +47,11 @@ class RemoveTilesetCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  TilesetID mTilesetId;
+  DocumentModel* mModel{};
+
+  UUID mTilesetId{};
+  UUID mMapId{};
+
   Maybe<sys::TilesetSnapshot> mSnapshot;
 };
 

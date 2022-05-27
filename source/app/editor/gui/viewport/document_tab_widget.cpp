@@ -24,8 +24,7 @@
 #include <imgui.h>
 
 #include "core/components/attributes.hpp"
-#include "core/components/map_info.hpp"
-#include "core/components/tiles.hpp"
+#include "editor/commands/command_stack.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/viewport/map_view.hpp"
@@ -36,43 +35,44 @@ namespace tactile {
 
 void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::TabBar bar{"##MapTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
-    for (const auto& [id, document] : model) {
-      const scoped::Id scope{id};
+  if (scoped::TabBar bar{"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
+    model.each([&](const UUID& documentId) {
+      const scoped::Id scope{static_cast<int>(hash(documentId))};
 
       ImGuiTabItemFlags flags = 0;
-      const auto isActive = model.active_map_id() == id;
+      const auto isActive = model.active_document_id() == documentId;
+      const auto document = model.get_document(documentId);
 
       if (isActive) {
         flags |= ImGuiTabItemFlags_SetSelected;
 
-        if (!model.is_clean()) {
+        if (!document->get_history().is_clean()) {
           flags |= ImGuiTabItemFlags_UnsavedDocument;
         }
       }
 
-      const auto& context = ctx_get<comp::AttributeContext>(document.registry);
+      const auto& registry = document->get_registry();
+      const auto& context = ctx_get<comp::AttributeContext>(registry);
 
       bool opened = true;
       if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {
-          const auto& ctx = document.registry.ctx();
-          if (ctx.contains<MapInfo>()) {
+          if (model.is_map(documentId)) {
             update_map_view(model, dispatcher);
           }
-          else if (ctx.contains<comp::Tileset>()) {
+          if (model.is_tileset(documentId)) {
             update_tileset_view(model, dispatcher);
           }
         }
       }
 
       if (!opened) {
-        dispatcher.enqueue<CloseMapEvent>(id);
+        dispatcher.enqueue<CloseDocumentEvent>(documentId);
       }
       else if (ImGui::IsItemActivated()) {
-        dispatcher.enqueue<SelectMapEvent>(id);
+        dispatcher.enqueue<SelectDocumentEvent>(documentId);
       }
-    }
+    });
   }
 }
 

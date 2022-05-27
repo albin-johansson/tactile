@@ -25,16 +25,21 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
-#include "core/common/ecs.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "editor/documents/map_document.hpp"
+#include "editor/documents/tileset_document.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/common/rubber_band.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_info.hpp"
+#include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 namespace {
@@ -93,18 +98,27 @@ void _render_tileset_image(GraphicsCtx& graphics,
 
 }  // namespace
 
-void update_tileset_view(const entt::registry& registry,
-                         const entt::entity tilesetEntity,
+void update_tileset_view(const DocumentModel& model,
+                         const UUID& tilesetId,
                          entt::dispatcher& dispatcher)
 {
-  const auto& tileset = checked_get<comp::Tileset>(registry, tilesetEntity);
-  const auto& viewport = checked_get<comp::Viewport>(registry, tilesetEntity);
+  const auto activeDocumentId = model.active_document_id().value();
+
+  const auto mapDoc = model.get_map(activeDocumentId);
+  const auto tilesetDoc = model.get_tileset(tilesetId);
+
+  const auto& mapRegistry = mapDoc->get_registry();
+  const auto& tilesetInfo = tilesetDoc->info();
+  const auto& texture = tilesetDoc->texture();
+
+  const auto tilesetEntity = sys::find_tileset(mapRegistry, tilesetId);
+  const auto& viewport = checked_get<comp::Viewport>(mapRegistry, tilesetEntity);
 
   const auto region = ImGui::GetContentRegionAvail();
   _view_width = region.x;
   _view_height = region.y;
 
-  const auto info = get_render_info(viewport, tileset);
+  const auto info = get_render_info(viewport, tilesetInfo);
   _update_viewport_offset(tilesetEntity, dispatcher, info.canvas_br - info.canvas_tl);
 
   GraphicsCtx graphics{info};
@@ -112,8 +126,8 @@ void update_tileset_view(const entt::registry& registry,
   graphics.clear();
 
   const ImVec2 offset{viewport.x_offset, viewport.y_offset};
-  const ImVec2 tileSize = {static_cast<float>(tileset.tile_width),
-                           static_cast<float>(tileset.tile_height)};
+  const ImVec2 tileSize = {static_cast<float>(tilesetInfo.tile_width),
+                           static_cast<float>(tilesetInfo.tile_height)};
 
   if (const auto selection = rubber_band(offset, tileSize)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
@@ -122,12 +136,10 @@ void update_tileset_view(const entt::registry& registry,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  _render_tileset_image(graphics,
-                        checked_get<comp::Texture>(registry, tilesetEntity),
-                        position);
+  _render_tileset_image(graphics, texture, position);
 
   if (const auto& selection =
-          checked_get<comp::TilesetSelection>(registry, tilesetEntity);
+          checked_get<comp::TilesetSelection>(mapRegistry, tilesetEntity);
       selection.region) {
     _render_selection(graphics, *selection.region, position, tileSize);
   }

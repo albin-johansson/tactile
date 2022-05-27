@@ -50,9 +50,14 @@ void WidgetManager::update(const DocumentModel& model, entt::dispatcher& dispatc
   update_menu_bar(model, dispatcher);
   update_dock_space();
 
-  if (model.has_active_document()) {
-    update_layer_dock(model, dispatcher);
-    update_tileset_dock(model, dispatcher);
+  const auto* document = model.active_document();
+
+  if (document) {
+    if (document->is_map()) {
+      update_layer_dock(model, dispatcher);
+      update_tileset_dock(model, dispatcher);
+    }
+
     update_property_dock(model, dispatcher);
     update_component_dock(model, dispatcher);
     update_log_dock();
@@ -60,7 +65,8 @@ void WidgetManager::update(const DocumentModel& model, entt::dispatcher& dispatc
 
   update_viewport_widget(model, dispatcher);
 
-  if (const auto* registry = model.active_registry()) {
+  if (document && document->is_map()) {
+    const auto* registry = model.active_registry();
     update_map_view_object_context_menu(*registry, dispatcher);
   }
 

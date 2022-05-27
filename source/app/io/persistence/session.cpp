@@ -26,6 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/common/filesystem.hpp"
+#include "editor/documents/map_document.hpp"
 #include "editor/model.hpp"
 #include "io/directories.hpp"
 #include "io/maps/parser/parse_map.hpp"
@@ -54,7 +55,7 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
     for (const auto& file : session.files()) {
       const auto ir = parsing::parse_map(file);
       if (ir.error() == parsing::ParseError::None) {
-        model.add_map(restore_map_from_ir(ir, textures));
+        restore_map_from_ir(ir, model, textures);
       }
       else {
         spdlog::warn("Failed to restore map from last session!");
@@ -69,12 +70,15 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
 void save_session(const DocumentModel& model)
 {
   proto::Session session;
-  for (const auto& [id, document] : model) {
-    if (!document->path.empty()) {
-      const auto documentPath = std::filesystem::absolute(document->path);
-      session.add_files(convert_to_forward_slashes(documentPath));
+  model.each([&](const UUID& id) {
+    if (model.is_map(id)) {
+      const auto map = model.get_map(id);
+      if (map->has_path()) {
+        const auto documentPath = std::filesystem::absolute(map->get_path());
+        session.add_files(convert_to_forward_slashes(documentPath));
+      }
     }
-  }
+  });
 
   std::ofstream stream{_get_file_path(),
                        std::ios::out | std::ios::trunc | std::ios::binary};

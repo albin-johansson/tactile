@@ -19,23 +19,33 @@
 
 #pragma once
 
+#include <glm/vec2.hpp>
+
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/ref.hpp"
+#include "core/common/uuid.hpp"
 #include "core/components/texture.hpp"
 #include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
+/**
+ * \brief Command for creating tilesets.
+ */
 class AddTilesetCmd final : public ACommand
 {
  public:
-  AddTilesetCmd(RegistryRef registry,
+  AddTilesetCmd(DocumentModel* model,
+                const UUID& mapId,
+                const UUID& tilesetId,
                 comp::Texture texture,
-                int32 tileWidth,
-                int32 tileHeight);
+                const glm::ivec2& tileSize);
 
   void undo() override;
 
@@ -47,11 +57,14 @@ class AddTilesetCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
+  DocumentModel* mModel{};
+  UUID mMapId{};      ///< The ID of the map document the tileset should be added to.
+  UUID mTilesetId{};  ///< The ID of the added tileset document.
+
   comp::Texture mTexture;
-  int32 mTileWidth;
-  int32 mTileHeight;
-  Maybe<TilesetID> mTilesetId;
+  glm::ivec2 mTileSize{};
+
+  Shared<TilesetDocument> mTileset;
   Maybe<sys::TilesetSnapshot> mSnapshot;
 };
 

@@ -19,19 +19,19 @@
 
 #include "model.hpp"
 
-#include <algorithm>  // any_of
-#include <utility>    // move
+#include <utility>  // move
 
-#include <entt/entity/registry.hpp>
+#include <spdlog/spdlog.h>
 
-#include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "core/systems/viewport_system.hpp"
 #include "core/tools/tool_manager.hpp"
+#include "editor/commands/command_stack.hpp"
+#include "editor/commands/commands.hpp"
+#include "editor/documents/map_document.hpp"
+#include "editor/documents/tileset_document.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
@@ -39,140 +39,196 @@ namespace tactile {
 
 void DocumentModel::update()
 {
-  if (auto* registry = active_registry()) {
-    sys::update_tilesets(*registry);
-    sys::update_animations(*registry);
+  if (auto* document = active_document()) {
+    document->update();
   }
 }
 
-auto DocumentModel::add_map(Document document) -> MapID
+void DocumentModel::each(const VisitorFunc& func) const
 {
-  const auto id = mNextId;
-
-  mDocuments.emplace(id, std::make_unique<Document>(std::move(document)));
-  mActiveMap = id;
-
-  ++mNextId;
-  return id;
+  // TODO handle open documents?
+  for (auto& [id, document] : mDocuments) {
+    func(id);
+  }
 }
 
-auto DocumentModel::add_map(const int32 tileWidth,
-                            const int32 tileHeight,
+auto DocumentModel::add_map(const Vector2i& tileSize,
                             const usize rows,
-                            const usize columns) -> MapID
+                            const usize columns) -> UUID
 {
-  TACTILE_ASSERT(tileWidth > 0);
-  TACTILE_ASSERT(tileHeight > 0);
+  // TODO move this to a command
 
-  Document document;
-  document.registry = sys::new_map_document_registry();
+  TACTILE_ASSERT(tileSize.x > 0);
+  TACTILE_ASSERT(tileSize.y > 0);
 
-  auto& map = document.registry.ctx().at<MapInfo>();
-  map.tile_width = tileWidth;
-  map.tile_height = tileHeight;
-  map.row_count = rows;
-  map.column_count = columns;
+  auto map = std::make_shared<MapDocument>(tileSize, rows, columns);
+  register_map(map);
 
-  return add_map(std::move(document));
+  return map->id();
 }
 
-void DocumentModel::select_map(const MapID id)
+auto DocumentModel::add_tileset(const comp::Texture& texture, const Vector2i& tileSize)
+    -> UUID
 {
-  TACTILE_ASSERT(mDocuments.contains(id));
-  mActiveMap = id;
-}
+  if (mActiveDocument) {
+    auto map = get_map(*mActiveDocument);
+    const auto tilesetId = make_uuid();
 
-void DocumentModel::remove_map(const MapID id)
-{
-  TACTILE_ASSERT(mDocuments.contains(id));
-  mDocuments.erase(id);
+    auto& commands = map->get_history();
+    commands.push<AddTilesetCmd>(this, map->id(), tilesetId, texture, tileSize);
 
-  if (mActiveMap == id) {
-    if (!mDocuments.empty()) {
-      const auto iter = mDocuments.nth(0);
-      mActiveMap = iter->first;
-    }
-    else {
-      mActiveMap.reset();
-    }
+    return tilesetId;
+  }
+  else {
+    throw TactileError{"No active map to add tileset to!"};
   }
 }
 
-auto DocumentModel::has_path(const MapID id) const -> bool
+void DocumentModel::attach_tileset_to(const UUID& mapId, const UUID& tilesetId)
 {
-  TACTILE_ASSERT(mDocuments.contains(id));
-  return !mDocuments.at(id)->path.empty();
+  auto map = get_map(mapId);
+  auto tileset = get_tileset(tilesetId);
+  sys::attach_tileset(map->get_registry(), tilesetId, tileset->info());
 }
 
-auto DocumentModel::get_path(const MapID id) const -> const std::filesystem::path&
+void DocumentModel::detach_tileset_from(const UUID& mapId, const UUID& tilesetId)
+{
+  // TODO
+}
+
+void DocumentModel::select_document(const UUID& id)
+{
+  if (mDocuments.contains(id)) {
+    mActiveDocument = id;
+  }
+  else {
+    throw TactileError{"Invalid document identifier!"};
+  }
+}
+
+void DocumentModel::remove_document(const UUID& id)
 {
   TACTILE_ASSERT(mDocuments.contains(id));
-  return mDocuments.at(id)->path;
+
+  if (mActiveDocument == id) {
+    mActiveDocument.reset();
+  }
+
+  if (is_map(id)) {
+    auto map = get_map(id);
+    auto& registry = map->get_registry();
+    for (auto&& [entity, ref] : registry.view<comp::TilesetRef>().each()) {
+      // TODO close if embedded
+    }
+  }
+
+  mDocuments.erase(id);
+  mMaps.erase(id);
+  mTilesets.erase(id);
+
+  if (!mActiveDocument && !mDocuments.empty()) {
+    mActiveDocument = mDocuments.begin()->first;
+  }
 }
 
 auto DocumentModel::has_document_with_path(const std::filesystem::path& path) const
     -> bool
 {
-  return std::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
-    return pair.second->path == path;
-  });
+  for (auto&& [id, document] : mDocuments) {
+    if (document->get_path() == path) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
-auto DocumentModel::active_map_id() const -> Maybe<MapID>
+auto DocumentModel::get_document(const UUID& id) -> Shared<ADocument>
 {
-  return mActiveMap;
+  if (const auto iter = mDocuments.find(id); iter != mDocuments.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid document identifier!"};
+  }
+}
+
+auto DocumentModel::get_document(const UUID& id) const -> Shared<const ADocument>
+{
+  if (const auto iter = mDocuments.find(id); iter != mDocuments.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid document identifier!"};
+  }
+}
+
+auto DocumentModel::active_document_id() const -> Maybe<UUID>
+{
+  return mActiveDocument;
 }
 
 auto DocumentModel::has_active_document() const -> bool
 {
-  return mActiveMap.has_value();
+  return mActiveDocument.has_value();
 }
 
-auto DocumentModel::is_save_possible() const -> bool
+auto DocumentModel::is_map_active() const -> bool
 {
-  if (mActiveMap) {
-    const auto& document = mDocuments.at(*mActiveMap);
-    return !document->commands.is_clean();
+  if (mActiveDocument) {
+    return is_map(*mActiveDocument);
   }
   else {
     return false;
   }
 }
 
-auto DocumentModel::can_decrease_viewport_tile_size() const -> bool
+auto DocumentModel::is_tileset_active() const -> bool
 {
-  if (has_active_document()) {
-    const auto& document = mDocuments.at(*mActiveMap);
-    return sys::can_decrease_viewport_zoom(document->registry);
+  if (mActiveDocument) {
+    return is_tileset(*mActiveDocument);
   }
-
-  return false;
+  else {
+    return false;
+  }
 }
 
-auto DocumentModel::active_document() -> Document*
+auto DocumentModel::active_document() -> ADocument*
 {
-  if (mActiveMap) {
-    return mDocuments.at(*mActiveMap).get();
+  if (mActiveDocument) {
+    TACTILE_ASSERT(mDocuments.contains(*mActiveDocument));
+    return mDocuments.at(*mActiveDocument).get();
   }
   else {
     return nullptr;
   }
 }
 
-auto DocumentModel::active_document() const -> const Document*
+auto DocumentModel::active_document() const -> const ADocument*
 {
-  if (mActiveMap) {
-    return mDocuments.at(*mActiveMap).get();
+  if (mActiveDocument) {
+    TACTILE_ASSERT(mDocuments.contains(*mActiveDocument));
+    return mDocuments.at(*mActiveDocument).get();
   }
   else {
     return nullptr;
+  }
+}
+
+auto DocumentModel::get_active_document() const -> const ADocument&
+{
+  if (const auto* document = active_document()) {
+    return *document;
+  }
+  else {
+    throw TactileError{"No active document!"};
   }
 }
 
 auto DocumentModel::active_registry() -> entt::registry*
 {
-  if (mActiveMap) {
-    return &mDocuments.at(*mActiveMap)->registry;
+  if (auto* document = active_document()) {
+    return &document->get_registry();
   }
   else {
     return nullptr;
@@ -181,78 +237,112 @@ auto DocumentModel::active_registry() -> entt::registry*
 
 auto DocumentModel::active_registry() const -> const entt::registry*
 {
-  if (mActiveMap) {
-    return &mDocuments.at(*mActiveMap)->registry;
+  if (const auto* document = active_document()) {
+    return &document->get_registry();
   }
   else {
     return nullptr;
   }
 }
 
-auto DocumentModel::get_active_registry() -> entt::registry&
+auto DocumentModel::get_registry(const UUID& documentId) const -> const entt::registry&
 {
-  if (mActiveMap) {
-    return mDocuments.at(*mActiveMap)->registry;
+  if (const auto iter = mDocuments.find(documentId); iter != mDocuments.end()) {
+    return iter->second->get_registry();
   }
   else {
-    panic("No active registry to return!");
+    throw TactileError{"Invalid document identifier!"};
+  }
+}
+
+auto DocumentModel::get_active_registry() -> entt::registry&
+{
+  if (auto* registry = active_registry()) {
+    return *registry;
+  }
+  else {
+    throw TactileError{"No active registry!"};
   }
 }
 
 auto DocumentModel::get_active_registry() const -> const entt::registry&
 {
-  if (mActiveMap) {
-    return mDocuments.at(*mActiveMap)->registry;
+  if (const auto* registry = active_registry()) {
+    return *registry;
   }
   else {
-    panic("No active registry to return!");
+    throw TactileError{"No active registry!"};
   }
 }
 
 void DocumentModel::set_command_capacity(const usize capacity)
 {
   for (auto& [id, document] : mDocuments) {
-    document->commands.set_capacity(capacity);
+    auto& commands = document->get_history();
+    commands.set_capacity(capacity);
   }
 }
 
-auto DocumentModel::is_clean() const -> bool
+auto DocumentModel::is_map(const UUID& id) const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.is_clean();
+  return mMaps.contains(id);
 }
 
-auto DocumentModel::can_undo() const -> bool
+auto DocumentModel::is_tileset(const UUID& id) const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.can_undo();
+  return mTilesets.contains(id);
 }
 
-auto DocumentModel::can_redo() const -> bool
+auto DocumentModel::get_map(const UUID& id) -> Shared<MapDocument>
 {
-  return mActiveMap && mDocuments.at(*mActiveMap)->commands.can_redo();
+  if (const auto iter = mMaps.find(id); iter != mMaps.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid map document identifier!"};
+  }
 }
 
-auto DocumentModel::get_undo_text() const -> const std::string&
+auto DocumentModel::get_map(const UUID& id) const -> Shared<const MapDocument>
 {
-  TACTILE_ASSERT(can_undo());
-  return mDocuments.at(mActiveMap.value())->commands.get_undo_text();
+  if (const auto iter = mMaps.find(id); iter != mMaps.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid map document identifier!"};
+  }
 }
 
-auto DocumentModel::get_redo_text() const -> const std::string&
+auto DocumentModel::get_tileset(const UUID& id) -> Shared<TilesetDocument>
 {
-  TACTILE_ASSERT(can_redo());
-  return mDocuments.at(mActiveMap.value())->commands.get_redo_text();
+  if (const auto iter = mTilesets.find(id); iter != mTilesets.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid tileset document identifier!"};
+  }
 }
 
-auto DocumentModel::is_tool_active(const ToolType tool) const -> bool
+auto DocumentModel::get_tileset(const UUID& id) const -> Shared<const TilesetDocument>
 {
-  const auto* registry = active_registry();
-  return registry && ctx_get<ToolManager>(*registry).is_enabled(tool);
+  if (const auto iter = mTilesets.find(id); iter != mTilesets.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid tileset document identifier!"};
+  }
 }
 
-auto DocumentModel::is_tool_possible(const ToolType tool) const -> bool
+void DocumentModel::register_map(Shared<MapDocument> document)
 {
-  const auto* registry = active_registry();
-  return registry && ctx_get<ToolManager>(*registry).is_available(*registry, tool);
+  mDocuments[document->id()] = document;
+  mMaps[document->id()] = std::move(document);
+}
+
+void DocumentModel::register_tileset(Shared<TilesetDocument> document)
+{
+  mDocuments[document->id()] = document;
+  mTilesets[document->id()] = std::move(document);
 }
 
 }  // namespace tactile

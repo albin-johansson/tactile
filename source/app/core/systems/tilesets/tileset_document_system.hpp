@@ -19,19 +19,16 @@
 
 #pragma once
 
-#include "core/common/uuid.hpp"
+#include <entt/entity/registry.hpp>
+
+#include "core/common/math.hpp"
+#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
-namespace tactile {
+namespace tactile::sys {
 
-/**
- * \brief Saves a map document.
- *
- * \param model the document model in use.
- * \param documentId the ID of the map document that will be saved.
- *
- * \ingroup io
- */
-void save_document(const DocumentModel& model, const UUID& documentId);
+[[nodiscard]] auto new_tileset_document_registry(const comp::Texture& texture,
+                                                 const Vector2i& tileSize)
+    -> entt::registry;
 
-}  // namespace tactile
+}  // namespace tactile::sys

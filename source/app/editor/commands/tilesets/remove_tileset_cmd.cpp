@@ -20,32 +20,44 @@
 #include "remove_tileset_cmd.hpp"
 
 #include "core/systems/tileset_system.hpp"
+#include "editor/model.hpp"
 #include "misc/assert.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-RemoveTilesetCmd::RemoveTilesetCmd(RegistryRef registry, const TilesetID id)
+RemoveTilesetCmd::RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId)
     : ACommand{"Remove Tileset"}
-    , mRegistry{registry}
-    , mTilesetId{id}
-{}
+    , mModel{model}
+    , mTilesetId{tilesetId}
+{
+  if (!mModel) {
+    throw TactileError("Invalid null model!");
+  }
+
+  TACTILE_ASSERT(mModel->active_document_id().has_value());
+  mMapId = mModel->active_document_id().value();
+}
 
 void RemoveTilesetCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::restore_tileset(registry, mSnapshot.value());
-
-  auto& active = registry.ctx().at<comp::ActiveTileset>();
-  active.entity = sys::find_tileset(registry, mTilesetId);
+  //  auto& registry = mRegistry.get();
+  //  sys::restore_tileset(registry, mSnapshot.value());
+  //
+  //  auto& active = registry.ctx().at<comp::ActiveTileset>();
+  //  active.entity = sys::find_tileset(registry, mTilesetId);
 }
 
 void RemoveTilesetCmd::redo()
 {
-  const auto entity = sys::find_tileset(mRegistry, mTilesetId);
-  TACTILE_ASSERT(entity != entt::null);
+//  auto& document = mModel->get_document(mMapId);
+//  sys::detach_tileset(document.registry, mTilesetId);
 
-  mSnapshot = sys::copy_tileset(mRegistry, entity);
-  sys::remove_tileset(mRegistry, mTilesetId);
+  //  const auto entity = sys::find_tileset(mRegistry, mTilesetId);
+  //  TACTILE_ASSERT(entity != entt::null);
+  //
+  //  mSnapshot = sys::copy_tileset(mRegistry, entity);
+  //  sys::remove_tileset(mRegistry, mTilesetId);
 }
 
 }  // namespace tactile

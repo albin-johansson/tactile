@@ -26,6 +26,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/common/ecs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
@@ -34,7 +35,6 @@
 #include "core/components/tiles.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
-#include "core/systems/registry_system.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
@@ -155,23 +155,31 @@ void _show_native_tileset_properties(const std::string& name,
 {
   _native_read_only_row("Type", "Tileset");
 
-  if constexpr (is_debug_build) {
-    _native_read_only_row("ID", tileset.id);
-  }
-
   if (const auto updatedName = _native_name_row(name, true);
       updatedName && !updatedName->empty()) {
-    dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
+    // TODO dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
   }
 
-  _native_read_only_row("First tile ID", tileset.first_id);
-  _native_read_only_row("Last tile ID", tileset.last_id);
-
-  _native_read_only_row("Tile count", tileset.tile_count);
+  _native_read_only_row("Tile count", tileset.tile_count());
   _native_read_only_row("Column count", tileset.column_count);
 
   _native_read_only_row("Tile width", tileset.tile_width);
   _native_read_only_row("Tile height", tileset.tile_height);
+}
+
+void _show_native_tileset_ref_properties(const std::string& name,
+                                         const comp::TilesetRef& tileset,
+                                         entt::dispatcher&)
+{
+  _native_read_only_row("Name", name.c_str());
+  _native_read_only_row("Type", "Tileset (Reference)");
+
+  _native_read_only_row("Tile Count", tileset.last_id - tileset.first_id);
+
+  _native_read_only_row("First Tile ID", tileset.first_id);
+  _native_read_only_row("Last Tile ID", tileset.last_id);
+
+  _native_read_only_row("Embedded", tileset.embedded);
 }
 
 void _show_native_layer_properties(const comp::Layer& layer, entt::dispatcher& dispatcher)
@@ -264,7 +272,7 @@ void show_custom_properties(const entt::registry& registry,
   bool first = true;
 
   for (const auto entity : context.properties) {
-    const auto& property = sys::checked_get<comp::Property>(registry, entity);
+    const auto& property = checked_get<comp::Property>(registry, entity);
 
     const auto& name = property.name;
     const auto& value = property.value;
@@ -307,22 +315,33 @@ void show_custom_properties(const entt::registry& registry,
   }
 }
 
-void _update_property_table(const entt::registry& registry, entt::dispatcher& dispatcher)
+void _update_property_table(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
-  const auto& ctx = registry.ctx();
-  const auto& current = ctx.at<comp::ActiveAttributeContext>();
+  const auto documentId = model.active_document_id().value();
+  const auto& registry = model.get_registry(documentId);
+  const auto& current = ctx_get<comp::ActiveAttributeContext>(registry);
   const auto& context = sys::current_context(registry);
 
   if (scoped::Table table{"##PropertyTable", 2, flags}; table.is_open()) {
     if (current.entity == entt::null) {
-      _show_native_map_properties(context.name, ctx.at<MapInfo>());
+      if (model.is_map(documentId)) {
+        const auto& map = ctx_get<MapInfo>(registry);
+        _show_native_map_properties(context.name, map);
+      }
+      else if (model.is_tileset(documentId)) {
+        const auto& tileset = ctx_get<comp::Tileset>(registry);
+        _show_native_tileset_properties(context.name, tileset, dispatcher);
+      }
     }
     else {
       if (const auto* tileset = registry.try_get<comp::Tileset>(current.entity)) {
         _show_native_tileset_properties(context.name, *tileset, dispatcher);
+      }
+      if (const auto* tilesetRef = registry.try_get<comp::TilesetRef>(current.entity)) {
+        _show_native_tileset_ref_properties(context.name, *tilesetRef, dispatcher);
       }
       else if (const auto* layer = registry.try_get<comp::Layer>(current.entity)) {
         _show_native_layer_properties(*layer, dispatcher);
@@ -381,8 +400,7 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
   _is_focused = window.is_open() && window.has_focus();
 
   if (window.is_open()) {
-    const auto& registry = model.get_active_registry();
-    _update_property_table(registry, dispatcher);
+    _update_property_table(model, dispatcher);
 
     _add_dialog.update(model, dispatcher);
     _rename_dialog.update(model, dispatcher);

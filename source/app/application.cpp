@@ -21,22 +21,25 @@
 
 #include <utility>  // move, forward
 
+#include <boost/stacktrace.hpp>
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
+#include <glm/vec2.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
 
 #include "cfg/configuration.hpp"
 #include "cfg/fonts.hpp"
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "core/utils/texture_manager.hpp"
+#include "editor/commands/command_stack.hpp"
 #include "editor/commands/commands.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
@@ -69,11 +72,12 @@ namespace tactile {
 namespace {
 
 template <typename Command, typename... Args>
-void _execute(DocumentModel& model, Args&&... args)
+[[deprecated]] void _execute(DocumentModel& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
-    auto& commands = document->commands;
-    commands.push<Command>(document->registry, std::forward<Args>(args)...);
+    auto& registry = document->get_registry();
+    auto& commands = document->get_history();
+    commands.push<Command>(registry, std::forward<Args>(args)...);
   }
   else {
     spdlog::error("Could not execute a command due to no active document!");
@@ -81,11 +85,12 @@ void _execute(DocumentModel& model, Args&&... args)
 }
 
 template <typename Command, typename... Args>
-void _register(DocumentModel& model, Args&&... args)
+[[deprecated]] void _register(DocumentModel& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
-    auto& commands = document->commands;
-    commands.push_without_redo<Command>(document->registry, std::forward<Args>(args)...);
+    auto& registry = document->get_registry();
+    auto& commands = document->get_history();
+    commands.push_without_redo<Command>(registry, std::forward<Args>(args)...);
   }
   else {
     spdlog::error("Could not register a command due to no active document!");
@@ -187,6 +192,11 @@ void Application::on_event(const cen::event_handler& handler)
   }
 }
 
+auto Application::active_document() -> ADocument*
+{
+  return mData->model.active_document();
+}
+
 void Application::subscribe_to_events()
 {
   using Self = Application;
@@ -206,9 +216,9 @@ void Application::subscribe_to_events()
   d.sink<ShowOpenMapDialogEvent>().connect<&show_map_selector_dialog>();
   d.sink<InspectMapEvent>().connect<&Self::on_show_map_properties>(this);
   d.sink<CreateMapEvent>().connect<&Self::on_create_map>(this);
-  d.sink<CloseMapEvent>().connect<&Self::on_close_map>(this);
+  d.sink<CloseDocumentEvent>().connect<&Self::on_close_document>(this);
   d.sink<OpenMapEvent>().connect<&Self::on_open_map>(this);
-  d.sink<SelectMapEvent>().connect<&Self::on_select_map>(this);
+  d.sink<SelectDocumentEvent>().connect<&Self::on_select_document>(this);
 
   d.sink<SelectToolEvent>().connect<&Self::on_select_tool>(this);
   d.sink<ToolPressedEvent>().connect<&Self::on_tool_pressed>(this);
@@ -309,11 +319,13 @@ auto Application::get_dispatcher() -> entt::dispatcher&
 
 void Application::save_current_files_to_history()
 {
-  for (const auto& [id, document] : mData->model) {
-    if (!document->path.empty()) {
-      add_file_to_history(document->path);
-    }
-  }
+  mData->model.each([this](const UUID& id) {
+    // TODO
+    const auto document = mModel->model.get_document(id);
+    // if (document.open && document.has_path()) {
+    //   add_file_to_history(document.path());
+    // }
+  });
 }
 
 void Application::on_keyboard_event(cen::keyboard_event event)
@@ -334,45 +346,43 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
      keep this code closer to the actual widgets. */
 
   constexpr float scaling = 4.0f;
+  const auto* document = active_document();
 
-  auto& data = *mData;
-  const auto* registry = data.model.active_registry();
-
-  if (registry && !ImGui::GetTopMostPopupModal()) {
+  if (document && !ImGui::GetTopMostPopupModal()) {
+    const auto& registry = document->get_registry();
     if (is_mouse_within_viewport()) {
-      const auto& ctx = registry->ctx();
-      const auto& viewport = ctx.at<comp::Viewport>();
+      const auto& viewport = ctx_get<comp::Viewport>(registry);
       if (cen::is_active(primary_modifier)) {
         const auto y = event.precise_y();
         if (y > 0) {
-          data.dispatcher.enqueue<IncreaseZoomEvent>();
+          mData->dispatcher.enqueue<IncreaseZoomEvent>();
         }
-        else if (y < 0 && sys::can_decrease_viewport_zoom(*registry)) {
-          data.dispatcher.enqueue<DecreaseZoomEvent>();
+        else if (y < 0 && sys::can_decrease_viewport_zoom(registry)) {
+          mData->dispatcher.enqueue<DecreaseZoomEvent>();
         }
       }
       else {
         const auto dx = event.precise_x() * (viewport.tile_width / scaling);
         const auto dy = event.precise_y() * (viewport.tile_height / scaling);
-        data.dispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+        mData->dispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
       }
     }
     else if (is_tileset_dock_hovered()) {
       const auto width = get_tileset_view_width();
       const auto height = get_tileset_view_height();
       if (width && height) {
-        const auto entity = sys::find_active_tileset(*registry);
+        const auto entity = sys::find_active_tileset(registry);
         TACTILE_ASSERT(entity != entt::null);
 
-        const auto& viewport = sys::checked_get<comp::Viewport>(*registry, entity);
+        const auto& viewport = checked_get<comp::Viewport>(registry, entity);
 
         const auto dx = event.precise_x() * (viewport.tile_width / scaling);
         const auto dy = event.precise_y() * (viewport.tile_height / scaling);
-        data.dispatcher.enqueue<OffsetBoundViewportEvent>(entity,
-                                                          -dx,
-                                                          dy,
-                                                          *width,
-                                                          *height);
+        mData->dispatcher.enqueue<OffsetBoundViewportEvent>(entity,
+                                                            -dx,
+                                                            dy,
+                                                            *width,
+                                                            *height);
       }
     }
   }
@@ -380,15 +390,17 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
 void Application::on_undo()
 {
-  if (auto* document = mData->model.active_document()) {
-    document->commands.undo();
+  if (auto* document = active_document()) {
+    auto& commands = document->get_history();
+    commands.undo();
   }
 }
 
 void Application::on_redo()
 {
-  if (auto* document = mData->model.active_document()) {
-    document->commands.redo();
+  if (auto* document = active_document()) {
+    auto& commands = document->get_history();
+    commands.redo();
   }
 }
 
@@ -399,14 +411,20 @@ void Application::on_set_command_capacity(const SetCommandCapacityEvent& event)
 
 void Application::on_save()
 {
-  if (auto* document = mData->model.active_document()) {
-    if (!document->path.empty()) {
-      save_document(*document);
-      document->commands.mark_as_clean();
+  if (auto* document = active_document()) {
+    if (document->has_path()) {
+      if (document->is_map()) {
+        save_document(mData->model, document->id());
 
-      auto& ctx = document->registry.ctx();
-      auto& context = ctx.at<comp::AttributeContext>();
-      context.name = document->path.filename().string();
+        auto& commands = document->get_history();
+        commands.mark_as_clean();
+
+        // auto& context = ctx_get<comp::AttributeContext>(document->registry);
+        // context.name = document->path().filename().string();
+      }
+      else {
+        spdlog::warn("Cannot yet save changes to tilesets!");
+      }
     }
     else {
       on_open_save_as_dialog();
@@ -416,44 +434,43 @@ void Application::on_save()
 
 void Application::on_save_as(const SaveAsEvent& event)
 {
-  if (auto* document = mData->model.active_document()) {
-    document->path = event.path;
+  if (auto* document = active_document()) {
+    document->set_path(event.path);
     on_save();
   }
 }
 
 void Application::on_open_save_as_dialog()
 {
-  if (mData->model.has_active_document()) {
+  if (active_document() != nullptr) {
     show_save_as_dialog(mData->dispatcher);
   }
 }
 
 void Application::on_show_map_properties()
 {
-  if (auto* registry = mData->model.active_registry()) {
-    auto& ctx = registry->ctx();
-    auto& current = ctx.at<comp::ActiveAttributeContext>();
+  if (auto* document = active_document()) {
+    auto& registry = document->get_registry();
+    auto& current = ctx_get<comp::ActiveAttributeContext>(registry);
     current.entity = entt::null;
   }
 }
 
 void Application::on_create_map(const CreateMapEvent& event)
 {
-  const auto id = mData->model.add_map(event.tile_width,
-                                       event.tile_height,
+  const auto id = mData->model.add_map({event.tile_width, event.tile_height},
                                        event.row_count,
                                        event.column_count);
-  mData->model.select_map(id);
+  mData->model.select_document(id);
 }
 
-void Application::on_close_map(const CloseMapEvent& event)
+void Application::on_close_document(const CloseDocumentEvent& event)
 {
-  auto& model = mData->model;
-  if (model.has_path(event.id)) {
-    set_last_closed_file(model.get_path(event.id));
+  const auto document = mData->model.get_document(event.id);
+  if (document->has_path()) {
+    set_last_closed_file(document->get_path());
   }
-  model.remove_map(event.id);
+  mData->model.remove_document(event.id);
 }
 
 void Application::on_open_map(const OpenMapEvent& event)
@@ -466,7 +483,7 @@ void Application::on_open_map(const OpenMapEvent& event)
 
   const auto ir = parsing::parse_map(event.path);
   if (ir.error() == parsing::ParseError::None) {
-    mData->model.add_map(restore_map_from_ir(ir, mData->textures));
+    restore_map_from_ir(ir, mData->model, mData->textures);
     add_file_to_history(event.path);
   }
   else {
@@ -474,56 +491,74 @@ void Application::on_open_map(const OpenMapEvent& event)
   }
 }
 
-void Application::on_select_map(const SelectMapEvent& event)
+void Application::on_select_document(const SelectDocumentEvent& event)
 {
-  mData->model.select_map(event.id);
+  mData->model.select_document(event.id);
 }
 
 void Application::on_select_tool(const SelectToolEvent& event)
 {
-  if (auto* registry = mData->model.active_registry()) {
-    auto& tools = registry->ctx().at<ToolManager>();
-    tools.select_tool(event.type, *registry, mData->dispatcher);
+  if (auto* document = active_document()) {
+    if (document->is_map()) {
+      auto& registry = document->get_registry();
+      auto& tools = ctx_get<ToolManager>(registry);
+      tools.select_tool(event.type, registry, mData->dispatcher);
+    }
   }
 }
 
 void Application::on_tool_pressed(const ToolPressedEvent& event)
 {
-  if (auto* registry = mData->model.active_registry()) {
-    auto& tools = registry->ctx().at<ToolManager>();
-    tools.on_pressed(*registry, mData->dispatcher, event.info);
+  if (auto* document = active_document()) {
+    if (document->is_map()) {
+      auto& registry = document->get_registry();
+      auto& tools = ctx_get<ToolManager>(registry);
+      tools.on_pressed(registry, mData->dispatcher, event.info);
+    }
   }
 }
 
 void Application::on_tool_dragged(const ToolDraggedEvent& event)
 {
-  if (auto* registry = mData->model.active_registry()) {
-    auto& tools = registry->ctx().at<ToolManager>();
-    tools.on_dragged(*registry, mData->dispatcher, event.info);
+  if (auto* document = active_document()) {
+    if (document->is_map()) {
+      auto& registry = document->get_registry();
+      auto& tools = ctx_get<ToolManager>(registry);
+      tools.on_dragged(registry, mData->dispatcher, event.info);
+    }
   }
 }
 
 void Application::on_tool_released(const ToolReleasedEvent& event)
 {
-  if (auto* registry = mData->model.active_registry()) {
-    auto& tools = registry->ctx().at<ToolManager>();
-    tools.on_released(*registry, mData->dispatcher, event.info);
+  if (auto* document = active_document()) {
+    if (document->is_map()) {
+      auto& registry = document->get_registry();
+      auto& tools = ctx_get<ToolManager>(registry);
+      tools.on_released(registry, mData->dispatcher, event.info);
+    }
   }
 }
 
 void Application::on_tool_entered()
 {
-  if (auto* registry = mData->model.active_registry()) {
-    auto& tools = registry->ctx().at<ToolManager>();
-    tools.on_entered(*registry, mData->dispatcher);
+  if (auto* document = active_document()) {
+    if (document->is_map()) {
+      auto& registry = document->get_registry();
+      auto& tools = ctx_get<ToolManager>(registry);
+      tools.on_entered(registry, mData->dispatcher);
+    }
   }
 }
 
 void Application::on_tool_exited()
 {
-  if (auto* registry = mData->model.active_registry()) {
-    auto& tools = registry->ctx().at<ToolManager>();
-    tools.on_exited(*registry, mData->dispatcher);
+  if (auto* document = active_document()) {
+    if (document->is_map()) {
+      auto& registry = document->get_registry();
+      auto& tools = ctx_get<ToolManager>(registry);
+      tools.on_exited(registry, mData->dispatcher);
+    }
   }
 }
 
@@ -537,7 +572,7 @@ void Application::on_stamp_sequence(StampSequenceEvent event)
 void Application::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event)
 {
   auto& registry = mData->model.get_active_registry();
-  auto& tools = registry.ctx().at<ToolManager>();
+  auto& tools = ctx_get<ToolManager>(registry);
   tools.set_stamp_random_mode(event.enabled);
 }
 
@@ -574,6 +609,7 @@ void Application::on_offset_viewport(const OffsetViewportEvent& event)
 
 void Application::on_offset_bound_viewport(const OffsetBoundViewportEvent& event)
 {
+  // FIXME broken
   auto& registry = mData->model.get_active_registry();
   sys::offset_bound_viewport(registry,
                              event.entity,
@@ -656,10 +692,7 @@ void Application::on_decrease_font_size()
 void Application::on_add_tileset(const AddTilesetEvent& event)
 {
   if (auto info = mData->textures.load(event.path)) {
-    _execute<AddTilesetCmd>(mData->model,
-                            std::move(*info),
-                            event.tile_width,
-                            event.tile_height);
+    mData->model.add_tileset(*info, {event.tile_width, event.tile_height});
   }
   else {
     spdlog::error("Failed to load tileset texture!");
@@ -674,7 +707,7 @@ void Application::on_remove_tileset(const RemoveTilesetEvent& event)
 void Application::on_select_tileset(const SelectTilesetEvent& event)
 {
   auto& registry = mData->model.get_active_registry();
-  sys::select_tileset(registry, event.id);
+  sys::select_tileset(registry, event.tileset_id);
 }
 
 void Application::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
@@ -716,8 +749,7 @@ void Application::on_resize_map(const ResizeMapEvent& event)
 void Application::on_open_resize_map_dialog()
 {
   if (auto* registry = mData->model.active_registry()) {
-    const auto& ctx = registry->ctx();
-    const auto& map = ctx.at<MapInfo>();
+    const auto& map = ctx_get<MapInfo>(*registry);
     mData->widgets.show_resize_map_dialog(map.row_count, map.column_count);
   }
 }
@@ -844,8 +876,7 @@ void Application::on_change_property_type(const ChangePropertyTypeEvent& event)
 void Application::on_inspect_context(const InspectContextEvent& event)
 {
   auto& registry = mData->model.get_active_registry();
-  auto& ctx = registry.ctx();
-  auto& current = ctx.at<comp::ActiveAttributeContext>();
+  auto& current = ctx_get<comp::ActiveAttributeContext>(registry);
   current.entity = event.entity;
 }
 

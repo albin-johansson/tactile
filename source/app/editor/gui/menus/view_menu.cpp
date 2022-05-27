@@ -23,6 +23,7 @@
 #include <imgui.h>
 
 #include "cfg/fonts.hpp"
+#include "core/systems/viewport_system.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/dock_space.hpp"
@@ -35,9 +36,9 @@
 namespace tactile {
 namespace {
 
-void _update_widgets_menu(const bool hasActiveMap)
+void _update_widgets_menu(const DocumentModel& model)
 {
-  if (scoped::Menu menu{"Widgets", hasActiveMap}; menu.is_open()) {
+  if (scoped::Menu menu{"Widgets", model.has_active_document()}; menu.is_open()) {
     if (ImGui::MenuItem("Reset Layout")) {
       reset_layout();
     }
@@ -50,12 +51,15 @@ void _update_widgets_menu(const bool hasActiveMap)
       prefs.set_property_dock_visible(!prefs.is_property_dock_visible());
     }
 
-    if (ImGui::MenuItem("Layers", nullptr, prefs.is_layer_dock_visible())) {
-      prefs.set_layer_dock_visible(!prefs.is_layer_dock_visible());
-    }
+    {
+      scoped::Disable disableIf{!model.is_map_active()};
+      if (ImGui::MenuItem("Layers", nullptr, prefs.is_layer_dock_visible())) {
+        prefs.set_layer_dock_visible(!prefs.is_layer_dock_visible());
+      }
 
-    if (ImGui::MenuItem("Tilesets", nullptr, prefs.is_tileset_dock_visible())) {
-      prefs.set_tileset_dock_visible(!prefs.is_tileset_dock_visible());
+      if (ImGui::MenuItem("Tilesets", nullptr, prefs.is_tileset_dock_visible())) {
+        prefs.set_tileset_dock_visible(!prefs.is_tileset_dock_visible());
+      }
     }
 
     if (ImGui::MenuItem("Log", nullptr, prefs.is_log_dock_visible())) {
@@ -73,8 +77,10 @@ void _update_widgets_menu(const bool hasActiveMap)
 void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (scoped::Menu menu{"View"}; menu.is_open()) {
+    const auto* document = model.active_document();
     const auto hasActiveDocument = model.has_active_document();
-    _update_widgets_menu(hasActiveDocument);
+
+    _update_widgets_menu(model);
 
     ImGui::Separator();
 
@@ -105,10 +111,11 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<IncreaseZoomEvent>();
     }
 
-    if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease Zoom",
-                        TACTILE_PRIMARY_MOD "+Minus",
-                        false,
-                        model.can_decrease_viewport_tile_size())) {
+    if (ImGui::MenuItem(
+            TAC_ICON_ZOOM_OUT " Decrease Zoom",
+            TACTILE_PRIMARY_MOD "+Minus",
+            false,
+            document && sys::can_decrease_viewport_zoom(document->get_registry()))) {
       dispatcher.enqueue<DecreaseZoomEvent>();
     }
 
@@ -176,7 +183,7 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem("Highlight Active Layer",
                         "H",
                         prefs.highlight_active_layer(),
-                        hasActiveDocument)) {
+                        model.is_map_active())) {
       prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
     }
 

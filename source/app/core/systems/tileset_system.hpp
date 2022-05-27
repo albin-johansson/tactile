@@ -25,6 +25,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/components/texture.hpp"
 #include "core/region.hpp"
 #include "core/systems/snapshot.hpp"
@@ -49,38 +50,6 @@ namespace tactile::sys {
  * \param registry a document registry.
  */
 void update_tilesets(entt::registry& registry);
-
-/**
- * \brief Creates a tileset entity.
- *
- * \details The created entity will feature the following components:
- * - `AttributeContext`
- * - `Tileset`
- * - `TilesetCache`
- * - `TilesetSelection`
- * - `Texture`
- * - `UvTileSize`
- * - `Viewport`
- *
- * \param registry the document registry.
- * \param firstId the first global tile ID associated with the tileset.
- * \param texture information about the associated texture.
- * \param tileWidth the width of tiles in the tileset.
- * \param tileHeight the height of tiles in the tileset.
- *
- * \return the created tileset entity.
- */
-auto make_tileset(entt::registry& registry,
-                  TileID firstId,
-                  const comp::Texture& texture,
-                  int32 tileWidth,
-                  int32 tileHeight) -> entt::entity;
-
-// This overload should be used when the user adds new tilesets (i.e. not from parsing)
-auto make_tileset(entt::registry& registry,
-                  const comp::Texture& texture,
-                  int32 tileWidth,
-                  int32 tileHeight) -> entt::entity;
 
 /**
  * \brief Restores a tileset from a snapshot.
@@ -116,7 +85,7 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
  *
  * \param id the ID associated with the tileset that will be selected.
  */
-void select_tileset(entt::registry& registry, TilesetID id);
+void select_tileset(entt::registry& registry, const UUID& id);
 
 /**
  * \brief Removes the tileset associated with the specified ID.
@@ -130,7 +99,16 @@ void select_tileset(entt::registry& registry, TilesetID id);
  *
  * \param id the ID associated with the tileset that will be removed.
  */
-void remove_tileset(entt::registry& registry, TilesetID id);
+void remove_tileset(entt::registry& registry, const UUID& id);
+
+/// Attaches a tileset to a map registry.
+void attach_tileset(entt::registry& mapRegistry,
+                    const UUID& tilesetId,
+                    const comp::Tileset& tileset);
+
+// Removes a tileset from a map registry.
+auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId)
+    -> TilesetSnapshot;
 
 /**
  * \brief Sets the region of the active tileset that is selected.
@@ -150,10 +128,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *
  * \return the associated tileset entity; a null entity is returned if there is none.
  */
-[[nodiscard]] auto find_tileset(const entt::registry& registry, TilesetID id)
-    -> entt::entity;
-
-[[nodiscard]] auto get_tileset_entity(const entt::registry& registry, TilesetID id)
+[[nodiscard]] auto find_tileset(const entt::registry& registry, const UUID& id)
     -> entt::entity;
 
 [[nodiscard]] auto find_tile(const entt::registry& registry, TileID id) -> entt::entity;
@@ -213,13 +188,13 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  * tiles. In other words, this function will simply return the supplied tile for
  * non-animated tiles.
  *
- * \param registry the document registry.
+ * \param mapRegistry the document registry.
  * \param tilesetEntity the parent tileset entity.
  * \param id the tile to query.
  *
  * \return the tile that should be rendered when the specified tile is encountered.
  */
-[[nodiscard]] auto get_tile_to_render(const entt::registry& registry,
+[[nodiscard]] auto get_tile_to_render(const entt::registry& mapRegistry,
                                       entt::entity tilesetEntity,
                                       TileID id) -> TileID;
 
@@ -230,7 +205,7 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  * \note You should use the identifier returned by `get_tile_to_render()` when calling
  * this function.
  *
- * \param registry the associated registry.
+ * \param mapRegistry the associated registry.
  * \param tilesetEntity the parent tileset entity.
  * \param id the identifier for the tile that will be queried.
  *
@@ -238,21 +213,21 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *
  * \see `get_tile_to_render()`
  */
-[[nodiscard]] auto get_source_rect(const entt::registry& registry,
+[[nodiscard]] auto get_source_rect(const entt::registry& mapRegistry,
                                    entt::entity tilesetEntity,
                                    TileID id) -> const cen::irect&;
 
 /**
  * \brief Returns the identifier of a tile at a certain position in a tileset.
  *
- * \param registry the registry that will be queried.
- * \param entity the tileset entity.
+ * \param mapRegistry the registry that will be queried.
+ * \param tilesetEntity the tileset entity.
  * \param position the position of the tile in the tileset.
  *
  * \return the identifier of the found tile; the empty tile is returned otherwise.
  */
-[[nodiscard]] auto get_tile_from_tileset(const entt::registry& registry,
-                                         entt::entity entity,
+[[nodiscard]] auto get_tile_from_tileset(const entt::registry& mapRegistry,
+                                         entt::entity tilesetEntity,
                                          const TilePos& position) -> TileID;
 
 /**
@@ -260,13 +235,13 @@ void update_tileset_selection(entt::registry& registry, const Region& region);
  *
  * \details A "local" tile identifier is a basically a tile index in the parent tileset.
  *
- * \param registry the associated registry.
+ * \param mapRegistry the associated registry.
  * \param global a global tile identifier that will be converted.
  *
  * \return the corresponding local tile identifier;
  *         an empty optional if something went wrong.
  */
-[[nodiscard]] auto convert_to_local(const entt::registry& registry, TileID global)
+[[nodiscard]] auto convert_to_local(const entt::registry& mapRegistry, TileID global)
     -> Maybe<TileID>;
 
 /// \} End of group tileset-system

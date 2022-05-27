@@ -27,9 +27,9 @@
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/systems/component_system.hpp"
-#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "editor/document.hpp"
+#include "editor/documents/map_document.hpp"
+#include "editor/documents/tileset_document.hpp"
 #include "editor/model.hpp"
 #include "meta/profile.hpp"
 
@@ -187,7 +187,7 @@ void _convert_fancy_tile_animation(ir::MetaTileData& data,
 }
 
 void _convert_fancy_tiles(ir::TilesetData& data,
-                          const comp::Tileset& tileset,
+                          const comp::TilesetRef& tileset,
                           const entt::registry& registry)
 {
   for (auto&& [entity, tile, context] :
@@ -224,24 +224,30 @@ void _convert_fancy_tiles(ir::TilesetData& data,
   }
 }
 
-void _convert_tilesets(ir::MapData& data, const entt::registry& registry)
+void _convert_tilesets(const DocumentModel& model,
+                       const entt::registry& mapRegistry,
+                       ir::MapData& data)
 {
-  for (auto&& [entity, tileset, texture, context] :
-       registry.view<comp::Tileset, comp::Texture, comp::AttributeContext>().each()) {
+  for (auto&& [entity, tilesetRef, context] :
+       mapRegistry.view<comp::TilesetRef, comp::AttributeContext>().each()) {
     auto& tilesetData = data.tilesets.emplace_back();
     tilesetData.name = context.name;
 
-    tilesetData.first_tile = tileset.first_id;
+    const auto tilesetDocument = model.get_tileset(tilesetRef.source_tileset);
+    const auto& tilesetRegistry = tilesetDocument->get_registry();
+    const auto& tileset = ctx_get<comp::Tileset>(tilesetRegistry);
+    const auto& texture = ctx_get<comp::Texture>(tilesetRegistry);
+
+    tilesetData.first_tile = tilesetRef.first_id;
     tilesetData.tile_width = tileset.tile_width;
     tilesetData.tile_height = tileset.tile_height;
-    tilesetData.tile_count = tileset.tile_count;
     tilesetData.column_count = tileset.column_count;
 
     tilesetData.image_path = texture.path;
     tilesetData.image_width = texture.width;
     tilesetData.image_height = texture.height;
 
-    _convert_fancy_tiles(tilesetData, tileset, registry);
+    _convert_fancy_tiles(tilesetData, tilesetRef, mapRegistry);
   }
 }
 
@@ -269,23 +275,25 @@ void _convert_basic_map_info(ir::MapData& data, const MapInfo& mapInfo)
 
 }  // namespace
 
-auto convert_map_to_ir(const Document& document) -> ir::MapData
+auto convert_map_to_ir(const DocumentModel& model, const UUID& documentId) -> ir::MapData
 {
   TACTILE_PROFILE_START
 
-  const auto& registry = document.registry;
-  const auto& ctx = registry.ctx();
+  const auto document = model.get_map(documentId);
+  const auto& mapRegistry = document->get_registry();
 
   ir::MapData data;
-  _convert_basic_map_info(data, ctx.at<MapInfo>());
+  _convert_basic_map_info(data, ctx_get<MapInfo>(mapRegistry));
 
-  _convert_component_definitions(data, registry);
-  _convert_tilesets(data, registry);
+  _convert_component_definitions(data, mapRegistry);
+  _convert_tilesets(model, mapRegistry, data);
 
-  data.layers.reserve(registry.storage<comp::Layer>().size());
-  _convert_layers(data, registry);
+  data.layers.reserve(mapRegistry.storage<comp::Layer>().size());
+  _convert_layers(data, mapRegistry);
 
-  _convert_attribute_context(data.context, ctx.at<comp::AttributeContext>(), registry);
+  _convert_attribute_context(data.context,
+                             ctx_get<comp::AttributeContext>(mapRegistry),
+                             mapRegistry);
 
   TACTILE_PROFILE_END("Converted document to IR")
   return data;

@@ -79,12 +79,15 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
     if (model.has_active_document()) {
       update_document_tabs(model, dispatcher);
 
-      if (window.mouse_entered()) {
-        dispatcher.enqueue<ToolEnteredEvent>();
-      }
+      const auto& document = model.get_active_document();
+      if (document.is_map()) {
+        if (window.mouse_entered()) {
+          dispatcher.enqueue<ToolEnteredEvent>();
+        }
 
-      if (window.mouse_exited()) {
-        dispatcher.enqueue<ToolExitedEvent>();
+        if (window.mouse_exited()) {
+          dispatcher.enqueue<ToolExitedEvent>();
+        }
       }
     }
     else {

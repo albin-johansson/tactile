@@ -23,6 +23,8 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
+#include "editor/commands/command_stack.hpp"
+#include "editor/documents/map_document.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/component_events.hpp"
 #include "editor/events/map_events.hpp"
@@ -46,7 +48,8 @@ void UndoShortcut::activate(entt::dispatcher& dispatcher)
 auto UndoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
-  return model.can_undo();
+  const auto* document = model.active_document();
+  return document && document->get_history().can_undo();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -61,7 +64,8 @@ void RedoShortcut::activate(entt::dispatcher& dispatcher)
 auto RedoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
-  return model.can_redo();
+  const auto* document = model.active_document();
+  return document && document->get_history().can_redo();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -109,13 +113,15 @@ void RemoveRowShortcut::activate(entt::dispatcher& dispatcher)
 auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
-  if (const auto* registry = model.active_registry()) {
-    const auto& map = ctx_get<MapInfo>(*registry);
-    return map.row_count > 1;
+  if (model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& info = model.get_map(id)->info();
+      return info.row_count > 1;
+    }
   }
-  else {
-    return false;
-  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -132,13 +138,15 @@ void RemoveColumnShortcut::activate(entt::dispatcher& dispatcher)
 auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
                                       const WidgetManager&) const -> bool
 {
-  if (const auto* registry = model.active_registry()) {
-    const auto& map = ctx_get<MapInfo>(*registry);
-    return map.column_count > 1;
+  if (model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& info = model.get_map(id)->info();
+      return info.column_count > 1;
+    }
   }
-  else {
-    return false;
-  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -169,7 +177,15 @@ void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
 auto EnableBucketShortcut::is_enabled(const DocumentModel& model,
                                       const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::Bucket) && is_editor_focused();
+  if (is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto map = model.get_map(id);
+      return map->is_tool_possible(ToolType::Bucket);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -184,7 +200,15 @@ void EnableEraserShortcut::activate(entt::dispatcher& dispatcher)
 auto EnableEraserShortcut::is_enabled(const DocumentModel& model,
                                       const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::Eraser) && is_editor_focused();
+  if (is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto map = model.get_map(id);
+      return map->is_tool_possible(ToolType::Eraser);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -199,7 +223,15 @@ void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
 auto EnableStampShortcut::is_enabled(const DocumentModel& model,
                                      const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::Stamp) && is_editor_focused();
+  if (is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto map = model.get_map(id);
+      return map->is_tool_possible(ToolType::Stamp);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -216,7 +248,15 @@ void EnableObjectSelectionShortcut::activate(entt::dispatcher& dispatcher)
 auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model,
                                                const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::ObjectSelection) && is_editor_focused();
+  if (is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto map = model.get_map(id);
+      return map->is_tool_possible(ToolType::ObjectSelection);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -232,7 +272,15 @@ void EnableRectangleToolShortcut::activate(entt::dispatcher& dispatcher)
 auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model,
                                              const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::Rectangle) && is_editor_focused();
+  if (is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto map = model.get_map(id);
+      return map->is_tool_possible(ToolType::Rectangle);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -247,7 +295,15 @@ void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
 auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model,
                                            const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::Ellipse) && is_editor_focused();
+  if (is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto map = model.get_map(id);
+      return map->is_tool_possible(ToolType::Ellipse);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -262,7 +318,15 @@ void EnablePointToolShortcut::activate(entt::dispatcher& dispatcher)
 auto EnablePointToolShortcut::is_enabled(const DocumentModel& model,
                                          const WidgetManager&) const -> bool
 {
-  return model.is_tool_possible(ToolType::Point) && is_editor_focused();
+  if (is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto map = model.get_map(id);
+      return map->is_tool_possible(ToolType::Point);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */

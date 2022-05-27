@@ -19,26 +19,59 @@
 
 #include "document.hpp"
 
+#include <utility>  // move
+
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
-#include "core/components/map_info.hpp"
-#include "core/components/tiles.hpp"
+#include "editor/commands/command_stack.hpp"
 
 namespace tactile {
 
-auto Document::is_map() const -> bool
+ADocument::ADocument(entt::registry registry) : mRegistry{std::move(registry)} {}
+
+void ADocument::set_path(std::filesystem::path path)
 {
-  return registry.ctx().contains<MapInfo>();
+  if (mRegistry.ctx().contains<std::filesystem::path>()) {
+    ctx_get<std::filesystem::path>(mRegistry) = std::move(path);
+  }
+  else {
+    mRegistry.ctx().emplace<std::filesystem::path>(std::move(path));
+  }
 }
 
-auto Document::is_tileset() const -> bool
+auto ADocument::has_path() const -> bool
 {
-  return registry.ctx().contains<comp::Tileset>();
+  return mRegistry.ctx().contains<std::filesystem::path>();
 }
 
-auto Document::id() const -> const UUID&
+auto ADocument::get_path() const -> const std::filesystem::path&
 {
-  return ctx_get<comp::AttributeContext>(registry).id;
+  return ctx_get<std::filesystem::path>(mRegistry);
+}
+
+auto ADocument::get_history() -> CommandStack&
+{
+  return ctx_get<CommandStack>(mRegistry);
+}
+
+auto ADocument::get_history() const -> const CommandStack&
+{
+  return ctx_get<CommandStack>(mRegistry);
+}
+
+auto ADocument::is_map() const -> bool
+{
+  return get_type() == DocumentType::Map;
+}
+
+auto ADocument::is_tileset() const -> bool
+{
+  return get_type() == DocumentType::Tileset;
+}
+
+auto ADocument::id() const -> const UUID&
+{
+  return ctx_get<comp::AttributeContext>(mRegistry).id;
 }
 
 }  // namespace tactile

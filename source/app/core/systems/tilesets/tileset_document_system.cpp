@@ -17,50 +17,53 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "registry_system.hpp"
+#include "tileset_document_system.hpp"
+
+#include <glm/vec2.hpp>
 
 #include "core/components/attributes.hpp"
-#include "core/components/layers.hpp"
-#include "core/components/map_info.hpp"
-#include "core/components/objects.hpp"
+#include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/components/tools.hpp"
 #include "core/components/viewport.hpp"
 #include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
-#include "core/tools/tool_manager.hpp"
 #include "editor/commands/command_stack.hpp"
 
 namespace tactile::sys {
 
-auto new_map_document_registry() -> entt::registry
+auto new_tileset_document_registry(const comp::Texture& texture,
+                                   const glm::ivec2& tileSize) -> entt::registry
 {
   entt::registry registry;
 
   auto& ctx = registry.ctx();
-  ctx.emplace<comp::ActiveLayer>();
-  ctx.emplace<comp::ActiveTileset>();
-  ctx.emplace<comp::ActiveAttributeContext>();
-  ctx.emplace<comp::ActiveObject>();
-  ctx.emplace<ToolManager>();
   ctx.emplace<CommandStack>();
+  ctx.emplace<comp::Texture>(texture);
+  ctx.emplace<comp::ActiveAttributeContext>();
 
-  auto& map = ctx.emplace<MapInfo>();
-  map.row_count = 5;
-  map.column_count = 5;
+  auto& tileset = ctx.emplace<comp::Tileset>();
+  tileset.tile_width = tileSize.x;
+  tileset.tile_height = tileSize.y;
+
+  tileset.row_count = texture.height / tileset.tile_height;
+  tileset.column_count = texture.width / tileset.tile_width;
+
+  auto& cache = ctx.emplace<comp::TilesetCache>();
+  // TODO do something with the cache?
 
   auto& viewport = ctx.emplace<comp::Viewport>();
-  viewport.tile_width = 64;
-  viewport.tile_height = 64;
+  viewport.tile_width = static_cast<float>(tileSize.x);
+  viewport.tile_height = static_cast<float>(tileSize.y);
   viewport.x_offset = 0;
   viewport.y_offset = 0;
 
+  auto& uv = ctx.emplace<comp::UvTileSize>();
+  uv.width = static_cast<float>(tileset.tile_width) / static_cast<float>(texture.width);
+  uv.height =
+      static_cast<float>(tileset.tile_height) / static_cast<float>(texture.height);
+
   auto& context = ctx.emplace<comp::AttributeContext>();
   context.id = make_uuid();
-  context.name = "Map";
-
-  auto& tilesets = ctx.emplace<comp::TilesetContext>();
-  tilesets.next_tile_id = 1;
+  context.name = "Tileset";
 
   return registry;
 }

@@ -125,6 +125,9 @@ struct ToggleLayerHighlightShortcut final : AShortcut
   ToggleLayerHighlightShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto is_enabled(const DocumentModel& model,
+                                const WidgetManager& widgets) const -> bool override;
 };
 
 struct ToggleUiShortcut final : AShortcut

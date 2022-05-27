@@ -33,6 +33,7 @@
 #include "editor/events/tileset_events.hpp"
 #include "editor/events/tool_events.hpp"
 #include "editor/events/viewport_events.hpp"
+#include "editor/fwd.hpp"
 #include "loop.hpp"
 
 namespace tactile {
@@ -69,6 +70,8 @@ class Application final : AEventLoop
   struct Data;
   Unique<Data> mData;
 
+  [[nodiscard]] auto active_document() -> ADocument*;
+
   void subscribe_to_events();
 
   [[nodiscard]] auto get_dispatcher() -> entt::dispatcher&;
@@ -95,11 +98,11 @@ class Application final : AEventLoop
 
   void on_create_map(const CreateMapEvent& event);
 
-  void on_close_map(const CloseMapEvent& event);
+  void on_close_document(const CloseDocumentEvent& event);
 
   void on_open_map(const OpenMapEvent& event);
 
-  void on_select_map(const SelectMapEvent& event);
+  void on_select_document(const SelectDocumentEvent& event);
 
   void on_select_tool(const SelectToolEvent& event);
 

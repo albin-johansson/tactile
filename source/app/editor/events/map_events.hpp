@@ -23,6 +23,7 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/uuid.hpp"
 
 namespace tactile {
 
@@ -55,9 +56,9 @@ struct CreateMapEvent final
   usize column_count{};
 };
 
-struct CloseMapEvent final
+struct CloseDocumentEvent final
 {
-  MapID id{};
+  UUID id{};
 };
 
 struct OpenMapEvent final
@@ -65,9 +66,9 @@ struct OpenMapEvent final
   std::filesystem::path path;
 };
 
-struct SelectMapEvent final
+struct SelectDocumentEvent final
 {
-  MapID id{};
+  UUID id{};
 };
 
 struct InspectMapEvent final

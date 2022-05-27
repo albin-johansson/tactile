@@ -21,8 +21,10 @@
 
 #include <entt/fwd.hpp>
 
+#include "editor/fwd.hpp"
+
 namespace tactile {
 
-void update_tileset_tabs(const entt::registry& registry, entt::dispatcher& dispatcher);
+void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

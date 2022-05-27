@@ -21,6 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "editor/commands/command_stack.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
 #include "editor/gui/widget_manager.hpp"
@@ -57,7 +58,8 @@ void SaveShortcut::activate(entt::dispatcher& dispatcher)
 auto SaveShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
-  return model.is_save_possible();
+  const auto* document = model.active_document();
+  return document && !document->get_history().is_clean();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -74,7 +76,7 @@ void SaveAsShortcut::activate(entt::dispatcher& dispatcher)
 auto SaveAsShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
     -> bool
 {
-  return model.is_save_possible();
+  return model.has_active_document();
 }
 
 }  // namespace tactile

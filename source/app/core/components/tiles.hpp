@@ -37,32 +37,30 @@ namespace tactile::comp {
 /// \{
 
 /**
- * \brief Context component that keeps track of the tileset state of a single tilemap.
+ * \brief Context component that keeps track of the tileset state of a single map.
  */
 struct TilesetContext final
 {
-  TilesetID next_id{};    ///< Next available tileset ID.
   TileID next_tile_id{};  ///< Next available global tile ID.
-
-  /**
-   * \brief Maps all global tile identifiers to the associated tileset.
-   */
-  HashMap<TileID, entt::entity> tile_to_tileset;
+  [[deprecated]] HashMap<TileID, entt::entity> tile_to_tileset;
 };
 
 /**
  * \brief Provides general information about a tileset.
+ *
+ * \todo Use ivec2 for tile size.
  */
 struct Tileset final
 {
-  TilesetID id{};                    ///< Unique ID associated with the tileset.
-  [[deprecated]] TileID first_id{};  ///< First associated global tile ID.
-  [[deprecated]] TileID last_id{};   ///< Last associated global tile ID (inclusive).
-  int32 tile_width{};                ///< Width of tiles in the tileset.
-  int32 tile_height{};               ///< Height of tiles in the tileset.
-  int32 tile_count{};                ///< Number of tiles associated with the tileset.
-  int32 row_count{};                 ///< Amount of tile rows.
-  int32 column_count{};              ///< Amount of tile columns.
+  int32 tile_width{};    ///< Width of tiles in the tileset.
+  int32 tile_height{};   ///< Height of tiles in the tileset.
+  int32 row_count{};     ///< Amount of tile rows.
+  int32 column_count{};  ///< Amount of tile columns.
+
+  [[nodiscard]] auto tile_count() const noexcept -> int32
+  {
+    return row_count * column_count;
+  }
 };
 
 /**
@@ -70,9 +68,10 @@ struct Tileset final
  */
 struct TilesetRef final
 {
-  UUID source_tileset{};
-  TileID first_id{};
-  TileID last_id{};
+  UUID source_tileset{};  ///< The source tileset document.
+  TileID first_id{};      ///< First associated global tile ID.
+  TileID last_id{};       ///< Last associated global tile ID (inclusive).
+  bool embedded : 1 {};   ///< Is this tileset embedded in the map?
 };
 
 /**

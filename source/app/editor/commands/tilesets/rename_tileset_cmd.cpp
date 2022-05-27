@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
-#include "core/systems/registry_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "misc/assert.hpp"
 
@@ -39,25 +39,27 @@ RenameTilesetCmd::RenameTilesetCmd(RegistryRef registry,
 
 void RenameTilesetCmd::undo()
 {
-  auto& registry = mRegistry.get();
+  // TODO
+  /*auto& registry = mRegistry.get();
 
   const auto entity = sys::find_tileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
-  context.name = mOldName.value();
+  auto& context = checked_get<comp::AttributeContext>(registry, entity);
+  context.name = mOldName.value();*/
 }
 
 void RenameTilesetCmd::redo()
 {
-  auto& registry = mRegistry.get();
+  // TODO
+  /*auto& registry = mRegistry.get();
 
   const auto entity = sys::find_tileset(registry, mTilesetId);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
+  auto& context = checked_get<comp::AttributeContext>(registry, entity);
   mOldName = context.name;
-  context.name = mNewName;
+  context.name = mNewName;*/
 }
 
 auto RenameTilesetCmd::merge_with(const ACommand& cmd) -> bool

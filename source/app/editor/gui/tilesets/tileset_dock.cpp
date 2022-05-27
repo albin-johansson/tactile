@@ -70,7 +70,7 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
 
   if (dock.is_open()) {
     const auto& registry = model.get_active_registry();
-    if (registry.view<comp::Tileset>().empty()) {
+    if (registry.view<comp::TilesetRef>().empty()) {
       prepare_vertical_alignment_center(2);
       centered_text("Current map has no tilesets!");
 
@@ -81,7 +81,7 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
       }
     }
     else {
-      update_tileset_tabs(registry, dispatcher);
+      update_tileset_tabs(model, dispatcher);
     }
   }
 

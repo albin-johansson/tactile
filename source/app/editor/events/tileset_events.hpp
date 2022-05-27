@@ -24,6 +24,7 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/uuid.hpp"
 #include "core/region.hpp"
 
 namespace tactile {
@@ -43,12 +44,12 @@ struct AddTilesetEvent final
 
 struct RemoveTilesetEvent final
 {
-  TilesetID id{};
+  UUID tileset_id{};
 };
 
 struct SelectTilesetEvent final
 {
-  TilesetID id{};
+  UUID tileset_id{};
 };
 
 struct SetTilesetSelectionEvent final

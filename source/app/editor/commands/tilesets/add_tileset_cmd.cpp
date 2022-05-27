@@ -19,50 +19,68 @@
 
 #include "add_tileset_cmd.hpp"
 
+#include <memory>   // make_shared
 #include <utility>  // move
 
+#include "core/components/attributes.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_document_system.hpp"
+#include "editor/documents/map_document.hpp"
+#include "editor/documents/tileset_document.hpp"
+#include "editor/model.hpp"
 #include "misc/assert.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-AddTilesetCmd::AddTilesetCmd(RegistryRef registry,
+AddTilesetCmd::AddTilesetCmd(DocumentModel* model,
+                             const UUID& mapId,
+                             const UUID& tilesetId,
                              comp::Texture texture,
-                             const int32 tileWidth,
-                             const int32 tileHeight)
+                             const glm::ivec2& tileSize)
     : ACommand{"Add Tileset"}
-    , mRegistry{registry}
+    , mModel{model}
+    , mMapId{mapId}
+    , mTilesetId{tilesetId}
     , mTexture{std::move(texture)}
-    , mTileWidth{tileWidth}
-    , mTileHeight{tileHeight}
-{}
+    , mTileSize{tileSize}
+{
+  if (!mModel) {
+    throw TactileError{"Invalid null model!"};
+  }
+}
 
 void AddTilesetCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  const auto id = mTilesetId.value();
-
-  const auto entity = sys::find_tileset(registry, id);
-  TACTILE_ASSERT(entity != entt::null);
-
-  mSnapshot = sys::copy_tileset(registry, entity);
-  sys::remove_tileset(registry, id);
+  // TODO
+  //  auto& registry = mModel->document_registry();
+  //  auto& mapDocument = mModel->get_document(mMapId);
+  //
+  //  for (auto&& [entity, ref] : mapDocument.registry.view<comp::TilesetRef>().each()) {
+  //    if (ref.source_tileset == mTilesetId) {
+  //      mapDocument.registry.destroy(entity);
+  //      break;
+  //    }
+  //  }
+  //
+  //  for (auto&& [entity, tileset, context] :
+  //       registry.view<comp::Tileset, comp::AttributeContext>().each()) {
+  //    if (context.id == mTilesetId) {
+  //      registry.destroy(entity);
+  //      break;
+  //    }
+  //  }
 }
 
 void AddTilesetCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  if (!mSnapshot) {
-    const auto entity = sys::make_tileset(registry, mTexture, mTileWidth, mTileHeight);
-    const auto& tileset = registry.get<comp::Tileset>(entity);
-    mTilesetId = tileset.id;
+  if (!mTileset) {
+    mTileset = std::make_shared<TilesetDocument>(mTilesetId, mTexture, mTileSize);
   }
-  else {
-    sys::restore_tileset(registry, *mSnapshot);
-  }
+  mModel->register_tileset(mTileset);
 
-  auto& active = registry.ctx().at<comp::ActiveTileset>();
-  active.entity = sys::find_tileset(registry, mTilesetId.value());
+  auto mapDocument = mModel->get_map(mMapId);
+  sys::attach_tileset(mapDocument->get_registry(), mTilesetId, mTileset->info());
 }
 
 }  // namespace tactile

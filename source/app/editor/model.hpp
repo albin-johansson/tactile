@@ -20,107 +20,64 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <functional>  // function
 
-#include <boost/container/flat_map.hpp>
+#include <boost/uuid/uuid_hash.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/common/associative.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
+#include "core/tools/tool_type.hpp"
+#include "core/utils/actor.hpp"
 #include "editor/document.hpp"
-#include "editor/events/command_events.hpp"
-#include "editor/events/tool_events.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
 /**
- * \brief Represents a facade between the editor and the underlying core documents.
- *
- * \details This class manages all open documents and their respective registries. Other
- * than managing documents, this class provides several utilities for querying the state
- * of the core model from the perspective of the editor (GUI).
+ * \brief A facade between the editor and the underlying core documents.
  */
 class DocumentModel final
 {
- public:
-  // Documents are stored on the heap to ensure stability, which is important for commands
-  using DocumentMap = boost::container::flat_map<MapID, Unique<Document>>;
-  using const_iterator = DocumentMap::const_iterator;
+  friend class AddTilesetCmd;  // Let this command register tileset documents
 
-  /**
-   * \brief Updates systems that need to be consistently updated, e.g. animations.
-   */
+ public:
+  using VisitorFunc = std::function<void(const UUID&)>;
+
+  /// Updates systems that need to be consistently updated, e.g. animations.
   void update();
 
-  /// \name Document functions
-  /// \{
+  /// Visits each open document.
+  void each(const VisitorFunc& func) const;
 
   /**
-   * \brief Creates a map based on an existing document representation.
+   * \brief Creates an empty map document with the specified attributes.
    *
-   * \details This function is intended to be used when restoring parsed maps.
-   *
-   * \param document the document data.
-   *
-   * \return the unique identifier assigned to the map.
-   */
-  auto add_map(Document document) -> MapID;
-
-  /**
-   * \brief Creates an empty map with the specified attributes.
-   *
-   * \param tileWidth the global tile width in the map.
-   * \param tileHeight the global tile height in the map.
+   * \param tileSize the global tile size in the map.
    * \param rows the initial amount of rows in the map.
    * \param columns the initial amount of columns in the map.
    *
-   * \return the unique identifier assigned to the map.
+   * \return a unique document identifier.
    */
-  auto add_map(int32 tileWidth, int32 tileHeight, usize rows, usize columns) -> MapID;
+  auto add_map(const Vector2i& tileSize, usize rows, usize columns) -> UUID;
 
-  /**
-   * \brief Makes a specific map active.
-   *
-   * \pre the map ID must be valid.
-   *
-   * \param id the identifier of the map that will be selected.
-   */
-  void select_map(MapID id);
+  auto add_tileset(const comp::Texture& texture, const Vector2i& tileSize) -> UUID;
 
-  /**
-   * \brief Closes a currently open map.
-   *
-   * \pre the map ID must be valid.
-   *
-   * \details If the specified map is active, this function will try to make the first
-   * found open map active, if there is one.
-   *
-   * \param id the identifier of the map that will be closed.
-   */
-  void remove_map(MapID id);
+  void attach_tileset_to(const UUID& mapId, const UUID& tilesetId);
 
-  /**
-   * \brief Indicates whether a specific map has an associated file path.
-   *
-   * \pre the map ID must be valid.
-   *
-   * \param id the identifier of the map that will be queried.
-   *
-   * \return `true` if the map has a file path; `false` otherwise.
-   */
-  [[nodiscard]] auto has_path(MapID id) const -> bool;
+  void detach_tileset_from(const UUID& mapId, const UUID& tilesetId);
 
-  /**
-   * \brief Returns the (potentially empty) file path associated with a map.
-   *
-   * \pre the map ID must be valid.
-   *
-   * \param id the identifier of the map that will be queried.
-   *
-   * \return the associated file path.
-   */
-  [[nodiscard]] auto get_path(MapID id) const -> const std::filesystem::path&;
+  void select_document(const UUID& id);
+
+  void remove_document(const UUID& id);
+
+  void set_command_capacity(usize capacity);
 
   /**
    * \brief Indicates whether there is an open document associated with a file path.
@@ -133,156 +90,46 @@ class DocumentModel final
   [[nodiscard]] auto has_document_with_path(const std::filesystem::path& path) const
       -> bool;
 
-  /**
-   * \brief Indicates whether there is an active document.
-   *
-   * \return `true` if there is an active document; `false` otherwise.
-   */
   [[nodiscard]] auto has_active_document() const -> bool;
+  [[nodiscard]] auto is_map_active() const -> bool;
+  [[nodiscard]] auto is_tileset_active() const -> bool;
 
-  /**
-   * \brief Indicates whether the current document can be saved.
-   *
-   * \return `true` if the document can be saved; `false` otherwise.
-   */
-  [[nodiscard]] auto is_save_possible() const -> bool;
+  [[nodiscard]] auto active_document() -> ADocument*;
+  [[nodiscard]] auto active_document() const -> const ADocument*;
 
-  /**
-   * \brief Indicates whether the viewport tile size can be decreased in the current
-   * document.
-   *
-   * \return `true` if the viewport tile size can be decreased; `false` otherwise.
-   */
-  [[nodiscard]] auto can_decrease_viewport_tile_size() const -> bool;
+  [[nodiscard]] auto get_active_document() const -> const ADocument&;
 
-  /**
-   * \brief Returns the identifier of the currently active map, if there is one.
-   *
-   * \return the identifier of the active map.
-   */
-  [[nodiscard]] auto active_map_id() const -> Maybe<MapID>;
-
-  /**
-   * \brief Returns the currently active document, if there is one.
-   *
-   * \return a (potentially null) pointer to the active document.
-   */
-  [[nodiscard]] auto active_document() -> Document*;
-
-  /// \copydoc active_document()
-  [[nodiscard]] auto active_document() const -> const Document*;
-
-  /**
-   * \brief Returns the currently active registry, if there is one.
-   *
-   * \return a (potentially null) pointer to the active registry.
-   */
   [[nodiscard]] auto active_registry() -> entt::registry*;
-
-  /// \copydoc active_registry()
   [[nodiscard]] auto active_registry() const -> const entt::registry*;
 
-  /**
-   * \brief Returns the currently active registry.
-   *
-   * \return a reference to the current registry.
-   *
-   * \throws TactileError if there is no active registry.
-   */
-  [[nodiscard]] auto get_active_registry() -> entt::registry&;
+  [[nodiscard]] auto get_registry(const UUID& documentId) const -> const entt::registry&;
 
-  /// \copydoc get_active_registry()
+  [[nodiscard]] auto get_active_registry() -> entt::registry&;
   [[nodiscard]] auto get_active_registry() const -> const entt::registry&;
 
-  /// \} End of document functions
+  [[nodiscard]] auto is_map(const UUID& id) const -> bool;
+  [[nodiscard]] auto is_tileset(const UUID& id) const -> bool;
 
-  /// \name Command stack functions
-  /// \{
+  [[nodiscard]] auto get_document(const UUID& id) -> Shared<ADocument>;
+  [[nodiscard]] auto get_document(const UUID& id) const -> Shared<const ADocument>;
 
-  /**
-   * \brief Sets the capacity of the undo stack.
-   *
-   * \details All open documents will have their command stack capacity updated.
-   *
-   * \param capacity the new command stack capacity.
-   */
-  void set_command_capacity(usize capacity);
+  [[nodiscard]] auto get_map(const UUID& id) -> Shared<MapDocument>;
+  [[nodiscard]] auto get_map(const UUID& id) const -> Shared<const MapDocument>;
 
-  /**
-   * \brief Indicates whether the current command stack state is "clean".
-   *
-   * \return `true` if the command stack is clean; `false` otherwise.
-   */
-  [[nodiscard]] auto is_clean() const -> bool;
+  [[nodiscard]] auto get_tileset(const UUID& id) -> Shared<TilesetDocument>;
+  [[nodiscard]] auto get_tileset(const UUID& id) const -> Shared<const TilesetDocument>;
 
-  /**
-   * \brief Indicates whether the current command stack has an undoable command.
-   *
-   * \return `true` if there is an undoable command; `false` otherwise.
-   */
-  [[nodiscard]] auto can_undo() const -> bool;
-
-  /**
-   * \brief Indicates whether the current command stack has an redoable command.
-   *
-   * \return `true` if there is an redoable command; `false` otherwise.
-   */
-  [[nodiscard]] auto can_redo() const -> bool;
-
-  /**
-   * \brief Returns the text associated with the current undoable command.
-   *
-   * \pre there must be an undoable command.
-   *
-   * \return the command text.
-   */
-  [[nodiscard]] auto get_undo_text() const -> const std::string&;
-
-  /**
-   * \brief Returns the text associated with the current redoable command.
-   *
-   * \pre there must be a redoable command.
-   *
-   * \return the command text.
-   */
-  [[nodiscard]] auto get_redo_text() const -> const std::string&;
-
-  /// \} End of command stack functions
-
-  /// \name Mouse tool functions
-  /// \{
-
-  /**
-   * \brief Indicates whether a specific mouse tool is active.
-   *
-   * \details This function can safely be called without an active registry.
-   *
-   * \return `true` if the tool is active; `false` otherwise.
-   */
-  [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;
-
-  /**
-   * \brief Indicates whether a specific mouse tool is usable.
-   *
-   * \details This function can safely be called without an active registry.
-   *
-   * \return `true` if the tool is usable; `false` otherwise.
-   */
-  [[nodiscard]] auto is_tool_possible(ToolType tool) const -> bool;
-
-  /// \} End of mouse tool functions
-
-  [[nodiscard]] auto begin() const noexcept -> const_iterator
-  {
-    return mDocuments.begin();
-  }
-
-  [[nodiscard]] auto end() const noexcept -> const_iterator { return mDocuments.end(); }
+  [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
  private:
-  DocumentMap mDocuments;
-  Maybe<MapID> mActiveMap;
-  MapID mNextId{1};
+  // TODO track open documents
+  HashMap<UUID, Shared<ADocument>> mDocuments;  // Holds all documents
+  HashMap<UUID, Shared<MapDocument>> mMaps;
+  HashMap<UUID, Shared<TilesetDocument>> mTilesets;
+  Maybe<UUID> mActiveDocument;
+
+  void register_map(Shared<MapDocument> document);
+  void register_tileset(Shared<TilesetDocument> document);
 };
 
 }  // namespace tactile
