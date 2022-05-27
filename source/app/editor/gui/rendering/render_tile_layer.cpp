@@ -21,10 +21,10 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/region.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "core/common/ecs.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_tile.hpp"
 

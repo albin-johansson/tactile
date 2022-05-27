@@ -19,6 +19,7 @@
 
 #include "registry_system.hpp"
 
+#include "core/commands/command_stack.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/map_info.hpp"
@@ -29,7 +30,6 @@
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/tools/tool_manager.hpp"
-#include "core/commands/command_stack.hpp"
 
 namespace tactile::sys {
 

@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/utils/buffers.hpp"
 #include "core/events/tileset_events.hpp"
+#include "core/utils/buffers.hpp"
 #include "editor/gui/common/button.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"

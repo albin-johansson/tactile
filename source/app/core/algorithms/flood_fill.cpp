@@ -26,7 +26,6 @@
 #include "core/common/ecs.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
-#include "core/common/ecs.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {

@@ -24,10 +24,10 @@
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/attributes.hpp"
-#include "core/systems/component_system.hpp"
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/events/component_events.hpp"
+#include "core/systems/component_system.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/input_widgets.hpp"
 #include "editor/gui/icons.hpp"

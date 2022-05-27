@@ -19,9 +19,9 @@
 
 #include "add_layer_cmd.hpp"
 
+#include "core/common/ecs.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
-#include "core/common/ecs.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

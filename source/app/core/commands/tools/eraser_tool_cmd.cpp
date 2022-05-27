@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
+#include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "core/common/ecs.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

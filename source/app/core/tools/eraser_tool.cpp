@@ -26,11 +26,10 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
+#include "core/events/tool_events.hpp"
 #include "core/mouse_info.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "core/common/ecs.hpp"
-#include "core/events/tool_events.hpp"
 
 namespace tactile {
 

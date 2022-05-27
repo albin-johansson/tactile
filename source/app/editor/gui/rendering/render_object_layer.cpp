@@ -26,10 +26,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
-#include "core/common/ecs.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "misc/assert.hpp"
 
@@ -52,8 +52,7 @@ void _render_point_object(GraphicsCtx& graphics,
     graphics.set_line_thickness(2.0f);
     graphics.draw_translated_circle_with_shadow(position, radius);
 
-    const auto& context =
-        checked_get<comp::AttributeContext>(registry, objectEntity);
+    const auto& context = checked_get<comp::AttributeContext>(registry, objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);
@@ -116,8 +115,7 @@ void _render_rectangle_object(GraphicsCtx& graphics,
     graphics.set_line_thickness(2.0f);
     graphics.draw_translated_rect_with_shadow(position, size);
 
-    const auto& context =
-        checked_get<comp::AttributeContext>(registry, objectEntity);
+    const auto& context = checked_get<comp::AttributeContext>(registry, objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);
