@@ -26,6 +26,7 @@
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/tiles.hpp"
+#include "editor/events/document_events.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/icons.hpp"
@@ -39,7 +40,8 @@ namespace {
 constexpr auto _tab_bar_flags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
-void _update_context_menu(const UUID& id,
+void _update_context_menu(const DocumentModel& model,
+                          const UUID& documentId,
                           const entt::entity tilesetEntity,
                           entt::dispatcher& dispatcher)
 {
@@ -65,8 +67,17 @@ void _update_context_menu(const UUID& id,
 
     ImGui::Separator();
 
+    {
+      scoped::Disable disable{model.is_open(documentId)};
+      if (ImGui::MenuItem("Open Tileset")) {
+        dispatcher.enqueue<OpenDocumentEvent>(documentId);
+      }
+    }
+
+    ImGui::Separator();
+
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Tileset")) {
-      dispatcher.enqueue<RemoveTilesetEvent>(id);
+      dispatcher.enqueue<RemoveTilesetEvent>(documentId);
     }
   }
 }
@@ -85,7 +96,6 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
 
     const auto& activeTileset = ctx_get<comp::ActiveTileset>(mapRegistry);
     for (auto&& [entity, ref] : mapRegistry.view<comp::TilesetRef>().each()) {
-      //      const scoped::Id scope{ref.first_id};
       const scoped::Id scope{static_cast<int>(hash(ref.source_tileset))};
 
       const auto isActive = activeTileset.entity == entity;
@@ -108,7 +118,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
         dispatcher.enqueue<SelectTilesetEvent>(ref.source_tileset);
       }
       else {
-        _update_context_menu(context.id, entity, dispatcher);
+        _update_context_menu(model, ref.source_tileset, entity, dispatcher);
       }
     }
   }

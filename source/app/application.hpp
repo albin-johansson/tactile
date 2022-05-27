@@ -25,6 +25,7 @@
 #include "core/common/memory.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/component_events.hpp"
+#include "editor/events/document_events.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/misc_events.hpp"
@@ -99,6 +100,8 @@ class Application final : AEventLoop
   void on_create_map(const CreateMapEvent& event);
 
   void on_close_document(const CloseDocumentEvent& event);
+
+  void on_open_document(const OpenDocumentEvent& event);
 
   void on_open_map(const OpenMapEvent& event);
 

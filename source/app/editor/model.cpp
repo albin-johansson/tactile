@@ -118,35 +118,17 @@ void DocumentModel::close_document(const UUID& id)
   const auto iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
   if (iter != mOpenDocuments.end()) {
     mOpenDocuments.erase(iter);
+
+    if (mActiveDocument == id) {
+      mActiveDocument.reset();
+    }
+
+    if (!mActiveDocument && !mOpenDocuments.empty()) {
+      mActiveDocument = mOpenDocuments.front();
+    }
   }
   else {
     throw TactileError{"Cannot close document that was not open!"};
-  }
-}
-
-// TODO is this function redundant?
-void DocumentModel::remove_document(const UUID& id)
-{
-  TACTILE_ASSERT(mDocuments.contains(id));
-
-  if (mActiveDocument == id) {
-    mActiveDocument.reset();
-  }
-
-  if (is_map(id)) {
-    auto map = get_map(id);
-    auto& mapRegistry = map->get_registry();
-    for (auto&& [entity, ref] : mapRegistry.view<comp::TilesetRef>().each()) {
-      // TODO close if embedded
-    }
-  }
-
-  mDocuments.erase(id);
-  mMaps.erase(id);
-  mTilesets.erase(id);
-
-  if (!mActiveDocument && !mDocuments.empty()) {
-    mActiveDocument = mDocuments.begin()->first;
   }
 }
 

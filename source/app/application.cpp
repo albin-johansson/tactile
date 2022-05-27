@@ -216,8 +216,10 @@ void Application::subscribe_to_events()
   d.sink<ShowOpenMapDialogEvent>().connect<&show_map_selector_dialog>();
   d.sink<InspectMapEvent>().connect<&Self::on_show_map_properties>(this);
   d.sink<CreateMapEvent>().connect<&Self::on_create_map>(this);
-  d.sink<CloseDocumentEvent>().connect<&Self::on_close_document>(this);
   d.sink<OpenMapEvent>().connect<&Self::on_open_map>(this);
+
+  d.sink<OpenDocumentEvent>().connect<&Self::on_open_document>(this);
+  d.sink<CloseDocumentEvent>().connect<&Self::on_close_document>(this);
   d.sink<SelectDocumentEvent>().connect<&Self::on_select_document>(this);
 
   d.sink<SelectToolEvent>().connect<&Self::on_select_tool>(this);
@@ -467,12 +469,20 @@ void Application::on_create_map(const CreateMapEvent& event)
 void Application::on_close_document(const CloseDocumentEvent& event)
 {
   const auto document = mData->model.get_document(event.id);
-  if (document->has_path()) {
+
+  if (document->is_map() && document->has_path()) {
     set_last_closed_file(document->get_path());
   }
-  mData->model.remove_document(event.id);
+
+  mData->model.close_document(event.id);
 }
 
+void Application::on_open_document(const OpenDocumentEvent& event)
+{
+  mData->model.open_document(event.document_id);
+}
+
+// TODO consider renaming event
 void Application::on_open_map(const OpenMapEvent& event)
 {
   /* Just silently ignore the request if the map is already open */

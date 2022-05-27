@@ -79,14 +79,16 @@ class DocumentModel final
    */
   auto add_tileset(const comp::Texture& texture, const Vector2i& tileSize) -> UUID;
 
+  /// Makes a specific document active.
   void select_document(const UUID& id);
 
+  /// Opens a document as a separate tab.
   void open_document(const UUID& id);
 
+  /// Closes an open document, but does not remove it!
   void close_document(const UUID& id);
 
-  void remove_document(const UUID& id);
-
+  /// Removes a tileset from the active map document.
   void remove_tileset(const UUID& id);
 
   void set_command_capacity(usize capacity);
