@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "editor/events/viewport_events.hpp"
+#include "core/events/viewport_events.hpp"
 
 namespace tactile {
 namespace {

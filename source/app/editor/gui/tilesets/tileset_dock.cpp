@@ -24,7 +24,7 @@
 #include <imgui.h>
 
 #include "core/components/tiles.hpp"
-#include "editor/events/tileset_events.hpp"
+#include "core/events/tileset_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"

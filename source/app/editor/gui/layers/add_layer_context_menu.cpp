@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "editor/events/layer_events.hpp"
+#include "core/events/layer_events.hpp"
 #include "editor/gui/icons.hpp"
 
 namespace tactile {

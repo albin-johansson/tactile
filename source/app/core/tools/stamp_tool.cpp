@@ -35,7 +35,7 @@
 #include "core/tile_pos.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
-#include "editor/events/tool_events.hpp"
+#include "core/events/tool_events.hpp"
 #include "editor/model.hpp"
 #include "misc/assert.hpp"
 

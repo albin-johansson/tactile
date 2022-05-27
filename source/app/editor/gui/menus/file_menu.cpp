@@ -23,9 +23,9 @@
 #include <imgui.h>
 
 #include "editor/commands/command_stack.hpp"
-#include "editor/events/document_events.hpp"
-#include "editor/events/map_events.hpp"
-#include "editor/events/misc_events.hpp"
+#include "core/events/document_events.hpp"
+#include "core/events/map_events.hpp"
+#include "core/events/misc_events.hpp"
 #include "editor/gui/dialogs/create_map_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"

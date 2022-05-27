@@ -24,8 +24,8 @@
 
 #include "cfg/fonts.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "editor/events/misc_events.hpp"
-#include "editor/events/viewport_events.hpp"
+#include "core/events/misc_events.hpp"
+#include "core/events/viewport_events.hpp"
 #include "editor/gui/widget_manager.hpp"
 #include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
