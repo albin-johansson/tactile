@@ -23,6 +23,9 @@
 
 namespace tactile {
 
+/// Opens a directory in the OS file explorer
+void open_directory(const std::filesystem::path& dir);
+
 /**
  * \brief Returns the path to a resource.
  *

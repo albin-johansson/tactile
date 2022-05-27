@@ -24,6 +24,7 @@
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
+#include "io/directories.hpp"
 #include "meta/build.hpp"
 
 namespace tactile {
@@ -41,6 +42,12 @@ void update_debug_menu()
       ImGui::Separator();
       show_demo = ImGui::MenuItem("Show Demo Window...");
       show_style_editor = ImGui::MenuItem("Show Style Editor...");
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem("Open Persistent File Directory...")) {
+      open_directory(persistent_file_dir());
     }
   }
 
