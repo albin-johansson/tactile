@@ -24,10 +24,11 @@
 
 namespace tactile {
 
-using ContextID = UUID;    ///< Identifier for attribute contexts (not persistent).
-using ComponentID = UUID;  ///< Identifier for component definitions (not persistent).
+// TODO remove most of these identifiers
 
-using MapID = int32;
+using ContextID = UUID;
+using ComponentID = UUID;
+
 using LayerID = int32;
 using ObjectID = int32;
 using TilesetID = int32;
