@@ -21,6 +21,7 @@
 
 #include <gtest/gtest.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/property_system.hpp"
@@ -42,7 +43,7 @@ struct TestData final
   TestData data{.registry = sys::new_map_document_registry()};
 
   const auto layerEntity = sys::new_object_layer(data.registry);
-  const auto& layer = sys::checked_get<comp::Layer>(data.registry, layerEntity);
+  const auto& layer = checked_get<comp::Layer>(data.registry, layerEntity);
 
   data.layer_id = layer.id;
 
@@ -63,7 +64,7 @@ void _verify_new_object(const TestData& data,
   ASSERT_TRUE(data.registry.all_of<comp::Object>(objectEntity));
   ASSERT_TRUE(data.registry.all_of<comp::AttributeContext>(objectEntity));
 
-  const auto& object = sys::checked_get<comp::Object>(data.registry, objectEntity);
+  const auto& object = checked_get<comp::Object>(data.registry, objectEntity);
 
   ASSERT_EQ(id, object.id);
   ASSERT_EQ(type, object.type);
@@ -150,11 +151,11 @@ TEST(ObjectSystem, RemoveAndRestoreObject)
   {
     const auto objectEntity = sys::get_object(data.registry, id);
 
-    auto& object = sys::checked_get<comp::Object>(data.registry, objectEntity);
+    auto& object = checked_get<comp::Object>(data.registry, objectEntity);
     object.tag = "tag";
     object.visible = false;
 
-    auto& context = sys::checked_get<comp::AttributeContext>(data.registry, objectEntity);
+    auto& context = checked_get<comp::AttributeContext>(data.registry, objectEntity);
     context.name = "tag";
 
     sys::add_property(data.registry, context, "int", 42);
@@ -168,7 +169,7 @@ TEST(ObjectSystem, RemoveAndRestoreObject)
 
   const auto objectEntity = sys::get_object(data.registry, id);
 
-  const auto& object = sys::checked_get<comp::Object>(data.registry, objectEntity);
+  const auto& object = checked_get<comp::Object>(data.registry, objectEntity);
   ASSERT_EQ(id, object.id);
   ASSERT_EQ(ObjectType::Rect, object.type);
   ASSERT_EQ(x, object.x);
@@ -178,8 +179,7 @@ TEST(ObjectSystem, RemoveAndRestoreObject)
   ASSERT_EQ("tag", object.tag);
   ASSERT_FALSE(object.visible);
 
-  const auto& context =
-      sys::checked_get<comp::AttributeContext>(data.registry, objectEntity);
+  const auto& context = checked_get<comp::AttributeContext>(data.registry, objectEntity);
 
   ASSERT_EQ(42, sys::get_property(data.registry, context, "int").value);
 }

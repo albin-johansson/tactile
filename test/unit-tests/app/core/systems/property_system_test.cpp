@@ -13,11 +13,7 @@ using namespace tactile;
 class PropertySystemTest : public testing::Test
 {
  protected:
-  void SetUp() override
-  {
-    sys::reset_next_context_id();
-    mRegistry = sys::new_map_document_registry();
-  }
+  void SetUp() override { mRegistry = sys::new_map_document_registry(); }
 
   entt::registry mRegistry;
 };
@@ -99,7 +95,6 @@ TEST_F(PropertySystemTest, GetContext)
 {
   ASSERT_NO_THROW(
       sys::get_context(mRegistry, mRegistry.ctx().at<comp::AttributeContext>().id));
-  ASSERT_THROW(sys::get_context(mRegistry, sys::next_context_id()), TactileError);
 }
 
 TEST_F(PropertySystemTest, GetProperty)

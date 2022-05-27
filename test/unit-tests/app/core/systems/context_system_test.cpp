@@ -8,17 +8,10 @@
 
 using namespace tactile;
 
-TEST(ContextSystem, ResetNextContextId)
-{
-  sys::reset_next_context_id();
-  ASSERT_EQ(1, sys::next_context_id());
-}
-
 TEST(ContextSystem, CurrentContext)
 {
   auto registry = sys::new_map_document_registry();
   ASSERT_NO_THROW({ auto& root [[maybe_unused]] = sys::current_context(registry); });
-  ASSERT_EQ(1, sys::current_context_id(registry));
 }
 
 TEST(ContextSystem, AddAttributeContext)
@@ -29,13 +22,12 @@ TEST(ContextSystem, AddAttributeContext)
   const auto b = registry.create();
 
   const auto& first = sys::add_attribute_context(registry, a);
-  ASSERT_GT(first.id, 0);
   ASSERT_TRUE(first.name.empty());
   ASSERT_TRUE(first.properties.empty());
   ASSERT_TRUE(first.components.empty());
 
   const auto& second = sys::add_attribute_context(registry, b);
-  ASSERT_GT(second.id, first.id);
+  ASSERT_NE(second.id, first.id);
   ASSERT_TRUE(second.name.empty());
   ASSERT_TRUE(second.properties.empty());
   ASSERT_TRUE(second.components.empty());
@@ -78,13 +70,10 @@ TEST(ContextSystem, RestoreAttributeContext)
   auto registry = sys::new_map_document_registry();
 
   const auto oldEntity = registry.create();
-  const auto next = sys::next_context_id();
 
   {
     auto& context = sys::add_attribute_context(registry, oldEntity);
     context.name = "ABC";
-
-    ASSERT_EQ(next, context.id);
 
     sys::add_property(registry, context, "A", 12);
     sys::add_property(registry, context, "B", 3.14f);
@@ -100,7 +89,6 @@ TEST(ContextSystem, RestoreAttributeContext)
     sys::restore_attribute_context(registry, newEntity, snapshot);
 
     const auto& context = registry.get<comp::AttributeContext>(newEntity);
-    ASSERT_EQ(next, context.id);
     ASSERT_EQ("ABC", context.name);
 
     ASSERT_TRUE(sys::has_property_with_name(registry, context, "A"));

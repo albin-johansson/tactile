@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "core/common/filesystem.hpp"
+
 using namespace tactile;
 
 TEST(StringUtils, IntegerFromString)
