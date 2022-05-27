@@ -67,7 +67,7 @@ inline auto deep_copy<comp::ObjectLayer>(entt::registry& registry,
                                          const entt::entity destination)
     -> comp::ObjectLayer&
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
   auto& layer = registry.emplace<comp::ObjectLayer>(destination);
 
   const auto& sourceLayer = registry.get<comp::ObjectLayer>(source);

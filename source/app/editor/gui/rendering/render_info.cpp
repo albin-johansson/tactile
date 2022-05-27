@@ -85,10 +85,11 @@ namespace {
 
 }  // namespace
 
-auto get_render_info(const comp::Viewport& viewport, const MapInfo& map) -> RenderInfo
+auto get_render_info(const comp::Viewport& viewport, const comp::MapInfo& map)
+    -> RenderInfo
 {
-  const ImVec2 tileSize{static_cast<float>(map.tile_width),
-                        static_cast<float>(map.tile_height)};
+  const ImVec2 tileSize{static_cast<float>(map.tile_size.x),
+                        static_cast<float>(map.tile_size.y)};
   return _get_render_info(viewport,
                           tileSize,
                           static_cast<int32>(map.row_count),

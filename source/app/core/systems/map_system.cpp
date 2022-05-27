@@ -50,7 +50,7 @@ template <std::unsigned_integral T>
 
 void add_row_to_map(entt::registry& registry)
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
   ++map.row_count;
 
   for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
@@ -60,7 +60,7 @@ void add_row_to_map(entt::registry& registry)
 
 void add_column_to_map(entt::registry& registry)
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
   ++map.column_count;
 
   for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
@@ -72,7 +72,7 @@ void add_column_to_map(entt::registry& registry)
 
 void remove_row_from_map(entt::registry& registry)
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
   if (map.row_count > 1) {
     --map.row_count;
     for (auto&& [entity, layer] : registry.view<comp::TileLayer>().each()) {
@@ -83,7 +83,7 @@ void remove_row_from_map(entt::registry& registry)
 
 void remove_column_from_map(entt::registry& registry)
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
   if (map.column_count > 1) {
     --map.column_count;
 
@@ -98,7 +98,7 @@ void remove_column_from_map(entt::registry& registry)
 
 void resize_map(entt::registry& registry, const usize nRows, const usize nCols)
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
 
   if (const auto diff = get_diff(map.row_count, nRows); map.row_count < nRows) {
     invoke_n(diff, [&] { add_row_to_map(registry); });
@@ -117,7 +117,7 @@ void resize_map(entt::registry& registry, const usize nRows, const usize nCols)
 
 auto is_position_in_map(const entt::registry& registry, const TilePos& position) -> bool
 {
-  const auto& map = ctx_get<MapInfo>(registry);
+  const auto& map = ctx_get<comp::MapInfo>(registry);
 
   const auto row = position.row();
   const auto column = position.col();

@@ -133,7 +133,7 @@ void _convert_layer(ir::LayerData& data,
       auto& tileLayerData = data.data.emplace<ir::TileLayerData>();
       tileLayerData.tiles = tileLayer.matrix;
 
-      const auto& mapInfo = ctx_get<MapInfo>(registry);
+      const auto& mapInfo = ctx_get<comp::MapInfo>(registry);
       tileLayerData.row_count = mapInfo.row_count;
       tileLayerData.col_count = mapInfo.column_count;
 
@@ -261,13 +261,13 @@ void _convert_component_definitions(ir::MapData& data, const entt::registry& reg
   }
 }
 
-void _convert_basic_map_info(ir::MapData& data, const MapInfo& mapInfo)
+void _convert_basic_map_info(ir::MapData& data, const comp::MapInfo& mapInfo)
 {
   data.row_count = mapInfo.row_count;
   data.col_count = mapInfo.column_count;
 
-  data.tile_width = mapInfo.tile_width;
-  data.tile_height = mapInfo.tile_height;
+  data.tile_width = mapInfo.tile_size.x;
+  data.tile_height = mapInfo.tile_size.y;
 
   data.next_layer_id = mapInfo.next_layer_id;
   data.next_object_id = mapInfo.next_object_id;
@@ -283,7 +283,7 @@ auto convert_map_to_ir(const DocumentModel& model, const UUID& documentId) -> ir
   const auto& mapRegistry = document->get_registry();
 
   ir::MapData data;
-  _convert_basic_map_info(data, ctx_get<MapInfo>(mapRegistry));
+  _convert_basic_map_info(data, ctx_get<comp::MapInfo>(mapRegistry));
 
   _convert_component_definitions(data, mapRegistry);
   _convert_tilesets(model, mapRegistry, data);

@@ -102,11 +102,11 @@ void pan_viewport_down(entt::registry& registry)
 
 void reset_viewport_zoom(entt::registry& registry)
 {
-  const auto& map = ctx_get<MapInfo>(registry);
+  const auto& map = ctx_get<comp::MapInfo>(registry);
   auto& viewport = ctx_get<comp::Viewport>(registry);
 
-  viewport.tile_width = 2.0f * static_cast<float>(map.tile_width);
-  viewport.tile_height = 2.0f * static_cast<float>(map.tile_height);
+  viewport.tile_width = 2.0f * static_cast<float>(map.tile_size.x);
+  viewport.tile_height = 2.0f * static_cast<float>(map.tile_size.y);
 }
 
 void decrease_viewport_zoom(entt::registry& registry,
@@ -165,10 +165,10 @@ auto can_decrease_viewport_zoom(const entt::registry& registry) -> bool
 auto get_viewport_scaling_ratio(const entt::registry& registry) -> ViewportScalingRatio
 {
   const auto& viewport = ctx_get<comp::Viewport>(registry);
-  const auto& map = ctx_get<MapInfo>(registry);
+  const auto& map = ctx_get<comp::MapInfo>(registry);
 
-  const auto xRatio = viewport.tile_width / static_cast<float>(map.tile_width);
-  const auto yRatio = viewport.tile_height / static_cast<float>(map.tile_height);
+  const auto xRatio = viewport.tile_width / static_cast<float>(map.tile_size.x);
+  const auto yRatio = viewport.tile_height / static_cast<float>(map.tile_size.y);
 
   return {xRatio, yRatio};
 }

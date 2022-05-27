@@ -45,7 +45,7 @@ auto new_map_document_registry() -> entt::registry
   ctx.emplace<ToolManager>();
   ctx.emplace<CommandStack>();
 
-  auto& map = ctx.emplace<MapInfo>();
+  auto& map = ctx.emplace<comp::MapInfo>();
   map.row_count = 5;
   map.column_count = 5;
 

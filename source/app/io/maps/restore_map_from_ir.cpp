@@ -343,11 +343,11 @@ void restore_map_from_ir(const parsing::ParseData& data,
   auto& context = ctx_get<comp::AttributeContext>(mapRegistry);
   context.name = path.filename().string();
 
-  auto& info = ctx_get<MapInfo>(mapRegistry);
+  auto& info = ctx_get<comp::MapInfo>(mapRegistry);
   info.next_layer_id = mapData.next_layer_id;
   info.next_object_id = mapData.next_object_id;
-  info.tile_width = mapData.tile_width;
-  info.tile_height = mapData.tile_height;
+  info.tile_size.x = mapData.tile_width;
+  info.tile_size.y = mapData.tile_height;
   info.row_count = mapData.row_count;
   info.column_count = mapData.col_count;
 

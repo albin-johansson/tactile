@@ -41,7 +41,7 @@ void RemoveColumnCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto& map = ctx_get<MapInfo>(registry);
+  const auto& map = ctx_get<comp::MapInfo>(registry);
   const auto begin = TilePos::from(0u, map.column_count - mColumns - 1u);
   const auto end = TilePos::from(map.row_count, map.column_count);
 

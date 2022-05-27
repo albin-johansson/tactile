@@ -180,7 +180,7 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
   const auto& registry = model.get_active_registry();
 
   const auto& viewport = ctx_get<comp::Viewport>(registry);
-  const auto& map = ctx_get<MapInfo>(registry);
+  const auto& map = ctx_get<comp::MapInfo>(registry);
 
   const auto info = get_render_info(viewport, map);
   update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);

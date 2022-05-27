@@ -46,7 +46,7 @@ namespace {
                                 const float width,
                                 const float height) -> ObjectID
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
   const auto id = map.next_object_id;
   ++map.next_object_id;
 

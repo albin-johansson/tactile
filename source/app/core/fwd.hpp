@@ -21,7 +21,6 @@
 
 namespace tactile {
 
-struct MapInfo;
 struct MouseInfo;
 struct Region;
 
@@ -52,6 +51,7 @@ struct Property;
 struct ComponentDef;
 struct Component;
 
+struct MapInfo;
 struct Layer;
 struct TileLayer;
 struct ObjectLayer;

@@ -181,7 +181,7 @@ auto new_layer_skeleton(entt::registry& registry,
 
 auto new_tile_layer(entt::registry& registry) -> entt::entity
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
 
   const auto entity =
       new_layer_skeleton(registry,
@@ -200,7 +200,7 @@ auto new_tile_layer(entt::registry& registry) -> entt::entity
 
 auto new_object_layer(entt::registry& registry) -> entt::entity
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
 
   const auto entity =
       new_layer_skeleton(registry,
@@ -218,7 +218,7 @@ auto new_object_layer(entt::registry& registry) -> entt::entity
 
 auto new_group_layer(entt::registry& registry) -> entt::entity
 {
-  auto& map = ctx_get<MapInfo>(registry);
+  auto& map = ctx_get<comp::MapInfo>(registry);
 
   const auto entity =
       new_layer_skeleton(registry,
@@ -357,7 +357,7 @@ auto duplicate_layer(entt::registry& registry,
   }
 
   {
-    auto& map = ctx_get<MapInfo>(registry);
+    auto& map = ctx_get<comp::MapInfo>(registry);
     auto& layer = deep_copy<comp::Layer>(registry, source, copy);
     layer.id = map.next_layer_id;
 

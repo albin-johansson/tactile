@@ -17,8 +17,8 @@ TEST(RegistrySystem, NewMapDocumentRegistry)
 {
   const auto registry = sys::new_map_document_registry();
   const auto& ctx = registry.ctx();
-  ASSERT_TRUE(ctx.find<MapInfo>());
   ASSERT_TRUE(ctx.find<ToolManager>());
+  ASSERT_TRUE(ctx.find<comp::MapInfo>());
   ASSERT_TRUE(ctx.find<comp::ActiveLayer>());
   ASSERT_TRUE(ctx.find<comp::ActiveTileset>());
   ASSERT_TRUE(ctx.find<comp::ActiveAttributeContext>());

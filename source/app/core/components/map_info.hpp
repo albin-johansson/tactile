@@ -21,27 +21,25 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/math.hpp"
 
-namespace tactile {
+namespace tactile::comp {
 
 /**
- * \brief Provides information about a map context.
+ * Provides information about a map context.
+ *
+ * \ingroup components
  */
-struct MapInfo final  // TODO comp
+struct MapInfo final
 {
-  usize row_count{};     ///< Total amount of rows.
-  usize column_count{};  ///< Total amount of columns.
-
-  // TODO ivec2
-  int32 tile_width{};   ///< Logical width of all tiles.
-  int32 tile_height{};  ///< Logical height of all tiles.
-
-  LayerID next_layer_id{1};    ///< The next available layer identifier.
-  ObjectID next_object_id{1};  ///< The next available object identifier.
-
+  usize row_count{};             ///< Total amount of rows.
+  usize column_count{};          ///< Total amount of columns.
+  Vector2i tile_size{};          ///< Logical size of all tiles.
+  LayerID next_layer_id{1};      ///< The next available layer identifier.
+  ObjectID next_object_id{1};    ///< The next available object identifier.
   int32 tile_layer_suffix{1};    ///< Incrementing tile layer suffix.
   int32 object_layer_suffix{1};  ///< Incrementing object layer suffix.
   int32 group_layer_suffix{1};   ///< Incrementing group layer suffix.
 };
 
-}  // namespace tactile
+}  // namespace tactile::comp

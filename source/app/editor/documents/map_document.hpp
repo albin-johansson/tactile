@@ -32,7 +32,7 @@ namespace tactile {
  *
  * \details Map document registries have the following context components:
  * - `CommandStack`
- * - `MapInfo`
+ * - `comp::MapInfo`
  * - `ToolManager`
  * - `comp::AttributeContext`
  * - `comp::ActiveAttributeContext`
@@ -52,7 +52,7 @@ class MapDocument final : public ADocument
   [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;
   [[nodiscard]] auto is_tool_possible(ToolType tool) const -> bool;
 
-  [[nodiscard]] auto info() const -> const MapInfo&;
+  [[nodiscard]] auto info() const -> const comp::MapInfo&;
 
   [[nodiscard]] auto tile_size() const -> Vector2i;
 

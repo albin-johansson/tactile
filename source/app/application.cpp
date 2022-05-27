@@ -749,7 +749,7 @@ void Application::on_resize_map(const ResizeMapEvent& event)
 void Application::on_open_resize_map_dialog()
 {
   if (auto* registry = mData->model.active_registry()) {
-    const auto& map = ctx_get<MapInfo>(*registry);
+    const auto& map = ctx_get<comp::MapInfo>(*registry);
     mData->widgets.show_resize_map_dialog(map.row_count, map.column_count);
   }
 }

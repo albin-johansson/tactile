@@ -29,7 +29,7 @@ namespace tactile::sys {
  * \ingroup systems
  *
  * \details The registry will feature the following context components:
- * - `MapInfo`
+ * - `comp::MapInfo`
  * - `Viewport`
  * - `TilesetContext`
  * - `AttributeContext`

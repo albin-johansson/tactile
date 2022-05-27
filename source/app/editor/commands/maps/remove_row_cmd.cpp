@@ -40,7 +40,7 @@ void RemoveRowCmd::undo()
 void RemoveRowCmd::redo()
 {
   auto& registry = mRegistry.get();
-  const auto& map = ctx_get<MapInfo>(registry);
+  const auto& map = ctx_get<comp::MapInfo>(registry);
 
   const auto begin = TilePos::from(map.row_count - mRows - 1u, 0u);
   const auto end = TilePos::from(map.row_count, map.column_count);

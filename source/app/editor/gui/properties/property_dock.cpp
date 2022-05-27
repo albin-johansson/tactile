@@ -137,13 +137,13 @@ void _native_read_only_row(const char* label, const usize value)
   ImGui::Text("%llu", static_cast<ulonglong>(value)); /* Cast to avoid format warnings */
 }
 
-void _show_native_map_properties(const std::string& name, const MapInfo& map)
+void _show_native_map_properties(const std::string& name, const comp::MapInfo& map)
 {
   _native_read_only_row("Type", "Map");
   _native_read_only_row("Name", name.c_str());
 
-  _native_read_only_row("Tile width", map.tile_width);
-  _native_read_only_row("Tile height", map.tile_height);
+  _native_read_only_row("Tile width", map.tile_size.x);
+  _native_read_only_row("Tile height", map.tile_size.y);
 
   _native_read_only_row("Row count", map.row_count);
   _native_read_only_row("Column count", map.column_count);
@@ -151,7 +151,7 @@ void _show_native_map_properties(const std::string& name, const MapInfo& map)
 
 void _show_native_tileset_properties(const std::string& name,
                                      const comp::Tileset& tileset,
-                                     entt::dispatcher& dispatcher)
+                                     entt::dispatcher&)
 {
   _native_read_only_row("Type", "Tileset");
 
@@ -328,7 +328,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
   if (scoped::Table table{"##PropertyTable", 2, flags}; table.is_open()) {
     if (current.entity == entt::null) {
       if (model.is_map(documentId)) {
-        const auto& map = ctx_get<MapInfo>(registry);
+        const auto& map = ctx_get<comp::MapInfo>(registry);
         _show_native_map_properties(context.name, map);
       }
       else if (model.is_tileset(documentId)) {

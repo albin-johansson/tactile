@@ -34,9 +34,8 @@ namespace tactile {
 MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize columns)
     : ADocument{sys::new_map_document_registry()}
 {
-  auto& info = ctx_get<MapInfo>(mRegistry);
-  info.tile_width = tileSize.x;
-  info.tile_height = tileSize.y;
+  auto& info = ctx_get<comp::MapInfo>(mRegistry);
+  info.tile_size = tileSize;
   info.row_count = rows;
   info.column_count = columns;
 
@@ -60,15 +59,15 @@ auto MapDocument::is_tool_possible(const ToolType tool) const -> bool
   return get_tools().is_available(mRegistry, tool);
 }
 
-auto MapDocument::info() const -> const MapInfo&
+auto MapDocument::info() const -> const comp::MapInfo&
 {
-  return ctx_get<MapInfo>(mRegistry);
+  return ctx_get<comp::MapInfo>(mRegistry);
 }
 
 auto MapDocument::tile_size() const -> Vector2i
 {
-  const auto& info = ctx_get<MapInfo>(mRegistry);
-  return {info.tile_width, info.tile_height};
+  const auto& info = ctx_get<comp::MapInfo>(mRegistry);
+  return info.tile_size;
 }
 
 auto MapDocument::get_tools() -> ToolManager&

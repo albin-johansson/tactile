@@ -33,16 +33,15 @@ namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto _get_hit_detection_bounds(const comp::Object& object,
-                                             const float mapTileWidth,
-                                             const float mapTileHeight,
+                                             const Vector2f& mapTileSize,
                                              const float xRatio,
                                              const float yRatio) -> cen::frect
 {
   /* Points have no width or height, so we have to create a hitbox large enough to be easy
      for the user to click */
   if (object.type == ObjectType::Point) {
-    const auto width = static_cast<float>(mapTileWidth) / 2.0f;
-    const auto height = static_cast<float>(mapTileHeight) / 2.0f;
+    const auto width = static_cast<float>(mapTileSize.x) / 2.0f;
+    const auto height = static_cast<float>(mapTileSize.y) / 2.0f;
 
     return {(object.x - (width / 2.0f)) * xRatio,
             (object.y - (height / 2.0f)) * yRatio,
@@ -109,16 +108,12 @@ auto find_object(const entt::registry& registry,
                  const float x,
                  const float y) -> entt::entity
 {
-  const auto& map = ctx_get<MapInfo>(registry);
+  const auto& map = ctx_get<comp::MapInfo>(registry);
   const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
 
   for (const auto objectEntity : layer.objects) {
     const auto& object = checked_get<comp::Object>(registry, objectEntity);
-    const auto bounds = _get_hit_detection_bounds(object,
-                                                  static_cast<float>(map.tile_width),
-                                                  static_cast<float>(map.tile_height),
-                                                  xRatio,
-                                                  yRatio);
+    const auto bounds = _get_hit_detection_bounds(object, map.tile_size, xRatio, yRatio);
     if (bounds.contains({x, y})) {
       return objectEntity;
     }
