@@ -21,6 +21,7 @@
 
 #include <filesystem>  // path
 #include <functional>  // function
+#include <vector>      // vector
 
 #include <boost/uuid/uuid_hash.hpp>
 #include <entt/fwd.hpp>
@@ -80,11 +81,11 @@ class DocumentModel final
    */
   auto add_tileset(const comp::Texture& texture, const Vector2i& tileSize) -> UUID;
 
-  void attach_tileset_to(const UUID& mapId, const UUID& tilesetId);
-
-  void detach_tileset_from(const UUID& mapId, const UUID& tilesetId);
-
   void select_document(const UUID& id);
+
+  void open_document(const UUID& id);
+
+  void close_document(const UUID& id);
 
   void remove_document(const UUID& id);
 
@@ -120,6 +121,9 @@ class DocumentModel final
   [[nodiscard]] auto get_active_registry() -> entt::registry&;
   [[nodiscard]] auto get_active_registry() const -> const entt::registry&;
 
+  /// Indicates whether a document is open.
+  [[nodiscard]] auto is_open(const UUID& id) const -> bool;
+
   [[nodiscard]] auto is_map(const UUID& id) const -> bool;
   [[nodiscard]] auto is_tileset(const UUID& id) const -> bool;
 
@@ -135,10 +139,10 @@ class DocumentModel final
   [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
  private:
-  // TODO track open documents
   HashMap<UUID, Shared<ADocument>> mDocuments;  // Holds all documents
   HashMap<UUID, Shared<MapDocument>> mMaps;
   HashMap<UUID, Shared<TilesetDocument>> mTilesets;
+  std::vector<UUID> mOpenDocuments;  // The documents open in the editor
   Maybe<UUID> mActiveDocument;
 
   void register_map(Shared<MapDocument> document);

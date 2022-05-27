@@ -19,7 +19,8 @@
 
 #include "model.hpp"
 
-#include <utility>  // move
+#include <algorithm>  // find
+#include <utility>    // move
 
 #include <spdlog/spdlog.h>
 
@@ -45,8 +46,7 @@ void DocumentModel::update()
 
 void DocumentModel::each(const VisitorFunc& func) const
 {
-  // TODO handle open documents?
-  for (auto& [id, document] : mDocuments) {
+  for (const auto& id : mOpenDocuments) {
     func(id);
   }
 }
@@ -61,7 +61,9 @@ auto DocumentModel::add_map(const Vector2i& tileSize,
   TACTILE_ASSERT(tileSize.y > 0);
 
   auto map = std::make_shared<MapDocument>(tileSize, rows, columns);
+
   register_map(map);
+  mOpenDocuments.push_back(map->id());
 
   return map->id();
 }
@@ -83,18 +85,6 @@ auto DocumentModel::add_tileset(const comp::Texture& texture, const Vector2i& ti
   }
 }
 
-void DocumentModel::attach_tileset_to(const UUID& mapId, const UUID& tilesetId)
-{
-  auto map = get_map(mapId);
-  auto tileset = get_tileset(tilesetId);
-  sys::attach_tileset(map->get_registry(), tilesetId, tileset->info());
-}
-
-void DocumentModel::detach_tileset_from(const UUID& mapId, const UUID& tilesetId)
-{
-  // TODO
-}
-
 void DocumentModel::select_document(const UUID& id)
 {
   if (mDocuments.contains(id)) {
@@ -105,6 +95,36 @@ void DocumentModel::select_document(const UUID& id)
   }
 }
 
+void DocumentModel::open_document(const UUID& id)
+{
+  if (!mDocuments.contains(id)) {
+    throw TactileError{"Cannot open document that does not exist!"};
+  }
+
+  if (!is_open(id)) {
+    mOpenDocuments.push_back(id);
+  }
+  else {
+    throw TactileError{"Cannot open document that was already open!"};
+  }
+}
+
+void DocumentModel::close_document(const UUID& id)
+{
+  if (!mDocuments.contains(id)) {
+    throw TactileError{"Cannot close document that does not exist!"};
+  }
+
+  const auto iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
+  if (iter != mOpenDocuments.end()) {
+    mOpenDocuments.erase(iter);
+  }
+  else {
+    throw TactileError{"Cannot close document that was not open!"};
+  }
+}
+
+// TODO is this function redundant?
 void DocumentModel::remove_document(const UUID& id)
 {
   TACTILE_ASSERT(mDocuments.contains(id));
@@ -115,8 +135,8 @@ void DocumentModel::remove_document(const UUID& id)
 
   if (is_map(id)) {
     auto map = get_map(id);
-    auto& registry = map->get_registry();
-    for (auto&& [entity, ref] : registry.view<comp::TilesetRef>().each()) {
+    auto& mapRegistry = map->get_registry();
+    for (auto&& [entity, ref] : mapRegistry.view<comp::TilesetRef>().each()) {
       // TODO close if embedded
     }
   }
@@ -297,6 +317,12 @@ void DocumentModel::set_command_capacity(const usize capacity)
   }
 }
 
+auto DocumentModel::is_open(const UUID& id) const -> bool
+{
+  const auto iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
+  return iter != mOpenDocuments.end();
+}
+
 auto DocumentModel::is_map(const UUID& id) const -> bool
 {
   return mMaps.contains(id);
@@ -365,6 +391,7 @@ auto DocumentModel::unregister_map(const UUID& id) -> Shared<MapDocument>
 
   mDocuments.erase(id);
   mMaps.erase(id);
+  std::erase(mOpenDocuments, id);
 
   return map;
 }
@@ -375,6 +402,7 @@ auto DocumentModel::unregister_tileset(const UUID& id) -> Shared<TilesetDocument
 
   mDocuments.erase(id);
   mTilesets.erase(id);
+  std::erase(mOpenDocuments, id);
 
   return tileset;
 }

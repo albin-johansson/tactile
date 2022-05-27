@@ -26,6 +26,7 @@
 #include "editor/documents/map_document.hpp"
 #include "editor/documents/tileset_document.hpp"
 #include "editor/model.hpp"
+#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -49,20 +50,28 @@ AddTilesetCmd::AddTilesetCmd(DocumentModel* model,
 
 void AddTilesetCmd::undo()
 {
+  if (mModel->is_open(mTilesetId)) {
+    mModel->close_document(mTilesetId);
+  }
+
+  TACTILE_ASSERT(!mModel->is_open(mTilesetId));
+  TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
+
   auto map = mModel->get_map(mMapId);
   auto& mapRegistry = map->get_registry();
-
-  // TODO deal with tileset document potentially being open
-
   sys::detach_tileset(mapRegistry, mTilesetId);
 }
 
 void AddTilesetCmd::redo()
 {
+  /* We only need to create and register the document once */
   if (!mTileset) {
     mTileset = std::make_shared<TilesetDocument>(mTilesetId, mTexture, mTileSize);
+    mModel->register_tileset(mTileset);
   }
-  mModel->register_tileset(mTileset);
+
+  TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
+  TACTILE_ASSERT(mModel->is_map(mMapId));
 
   auto map = mModel->get_map(mMapId);
   auto& mapRegistry = map->get_registry();
