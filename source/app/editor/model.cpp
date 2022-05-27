@@ -168,7 +168,7 @@ void DocumentModel::remove_tileset(const UUID& id)
 auto DocumentModel::has_document_with_path(const std::filesystem::path& path) const
     -> bool
 {
-  for (auto&& [id, document] : mDocuments) {
+  for (const auto& [id, document] : mDocuments) {
     if (document->get_path() == path) {
       return true;
     }

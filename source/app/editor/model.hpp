@@ -41,9 +41,7 @@
 
 namespace tactile {
 
-/**
- * \brief A facade between the editor and the underlying core documents.
- */
+/// The primary facade between the editor and the underlying core documents.
 class DocumentModel final
 {
   friend class AddTilesetCmd;
@@ -93,38 +91,44 @@ class DocumentModel final
 
   void set_command_capacity(usize capacity);
 
-  /**
-   * \brief Indicates whether there is an open document associated with a file path.
-   *
-   * \param path the file path that will be checked.
-   *
-   * \return `true` if there is a document associated with the file path; `false`
-   * otherwise.
-   */
+  /// Indicates whether any of the loaded documents are located at the specific path.
   [[nodiscard]] auto has_document_with_path(const std::filesystem::path& path) const
       -> bool;
 
+  /// Indicates whether there is an active document, of any type.
   [[nodiscard]] auto has_active_document() const -> bool;
+
+  /// Indicates whether a map document is currently active.
   [[nodiscard]] auto is_map_active() const -> bool;
+
+  /// Indicates whether a tileset document is currently active.
   [[nodiscard]] auto is_tileset_active() const -> bool;
 
+  /// Returns a pointer to the active document, if there is one.
   [[nodiscard]] auto active_document() -> ADocument*;
   [[nodiscard]] auto active_document() const -> const ADocument*;
 
+  /// Returns the active document.
   [[nodiscard]] auto get_active_document() const -> const ADocument&;
 
+  /// Returns a pointer to the registry of the active document, if there is one.
   [[nodiscard]] auto active_registry() -> entt::registry*;
   [[nodiscard]] auto active_registry() const -> const entt::registry*;
 
+  /// Returns the registry of a specific document.
   [[nodiscard]] auto get_registry(const UUID& documentId) const -> const entt::registry&;
 
+  /// Returns the registry of the active document.
   [[nodiscard]] auto get_active_registry() -> entt::registry&;
   [[nodiscard]] auto get_active_registry() const -> const entt::registry&;
 
   /// Indicates whether a document is open.
   [[nodiscard]] auto is_open(const UUID& id) const -> bool;
 
+  /// Indicates whether a document represents a map.
   [[nodiscard]] auto is_map(const UUID& id) const -> bool;
+
+  /// Indicates whether a document represents a tileset.
   [[nodiscard]] auto is_tileset(const UUID& id) const -> bool;
 
   [[nodiscard]] auto get_document(const UUID& id) -> Shared<ADocument>;
@@ -139,11 +143,11 @@ class DocumentModel final
   [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
  private:
-  HashMap<UUID, Shared<ADocument>> mDocuments;  // Holds all documents
+  HashMap<UUID, Shared<ADocument>> mDocuments;  // All _loaded_ documents
   HashMap<UUID, Shared<MapDocument>> mMaps;
   HashMap<UUID, Shared<TilesetDocument>> mTilesets;
-  std::vector<UUID> mOpenDocuments;  // The documents open in the editor
-  Maybe<UUID> mActiveDocument;
+  std::vector<UUID> mOpenDocuments;  // All _open_ documents in the editor
+  Maybe<UUID> mActiveDocument;       // ID of the active document.
 
   void register_map(Shared<MapDocument> document);
   void register_tileset(Shared<TilesetDocument> document);
