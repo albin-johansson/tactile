@@ -20,9 +20,9 @@
 #pragma once
 
 #include <centurion/fwd.hpp>
-#include <glm/vec2.hpp>
 
 #include "core/common/ints.hpp"
+#include "core/common/math.hpp"
 
 namespace tactile {
 
@@ -35,25 +35,25 @@ class IRenderer
   virtual ~IRenderer() noexcept = default;
 
   virtual void render_image(uint texture,
-                            const glm::vec2& pos,
-                            const glm::vec2& size,
-                            const glm::vec2& uvMin,
-                            const glm::vec2& uvMax,
+                            const Vector2f& pos,
+                            const Vector2f& size,
+                            const Vector2f& uvMin,
+                            const Vector2f& uvMax,
                             uint8 opacity = 0xFF) = 0;
 
-  virtual void draw_ellipse(const glm::vec2& center,
-                            const glm::vec2& radius,
+  virtual void draw_ellipse(const Vector2f& center,
+                            const Vector2f& radius,
                             const cen::color& color,
                             float thickness = 1.0f) = 0;
 
-  virtual void draw_rect(const glm::vec2& pos,
-                         const glm::vec2& size,
+  virtual void draw_rect(const Vector2f& pos,
+                         const Vector2f& size,
                          const cen::color& color,
                          float thickness = 1.0f) = 0;
 
-  [[nodiscard]] virtual auto get_origin() const -> glm::vec2 = 0;
+  [[nodiscard]] virtual auto get_origin() const -> Vector2f = 0;
 
-  [[nodiscard]] virtual auto get_grid_size() const -> glm::vec2 = 0;
+  [[nodiscard]] virtual auto get_grid_size() const -> Vector2f = 0;
 };
 
 }  // namespace tactile

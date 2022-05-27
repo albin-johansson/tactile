@@ -38,21 +38,21 @@ class GraphicsCtx final : public IRenderer
  public:
   explicit GraphicsCtx(const RenderInfo& info);
 
-  void draw_rect(const glm::vec2& pos,
-                 const glm::vec2& size,
+  void draw_rect(const Vector2f& pos,
+                 const Vector2f& size,
                  const cen::color& color,
                  float thickness) override;
 
-  void draw_ellipse(const glm::vec2& center,
-                    const glm::vec2& radius,
+  void draw_ellipse(const Vector2f& center,
+                    const Vector2f& radius,
                     const cen::color& color,
                     float thickness) override;
 
   void render_image(uint texture,
-                    const glm::vec2& pos,
-                    const glm::vec2& size,
-                    const glm::vec2& uvMin,
-                    const glm::vec2& uvMax,
+                    const Vector2f& pos,
+                    const Vector2f& size,
+                    const Vector2f& uvMin,
+                    const Vector2f& uvMax,
                     uint8 opacity) override;
 
   void push_clip();
@@ -126,12 +126,12 @@ class GraphicsCtx final : public IRenderer
 
   [[nodiscard]] auto origin() const -> const ImVec2& { return mOrigin; }
 
-  [[nodiscard]] auto get_origin() const -> glm::vec2 override
+  [[nodiscard]] auto get_origin() const -> Vector2f override
   {
     return {mOrigin.x, mOrigin.y};
   }
 
-  [[nodiscard]] auto get_grid_size() const -> glm::vec2 override
+  [[nodiscard]] auto get_grid_size() const -> Vector2f override
   {
     return {mViewportTileSize.x, mViewportTileSize.y};
   }

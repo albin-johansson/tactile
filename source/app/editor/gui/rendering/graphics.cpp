@@ -143,8 +143,8 @@ void GraphicsCtx::draw_rect(const ImVec2& position, const ImVec2& size)
   list->AddRect(position, position + size, get_draw_color(), 0, 0, mLineThickness);
 }
 
-void GraphicsCtx::draw_rect(const glm::vec2& pos,
-                            const glm::vec2& size,
+void GraphicsCtx::draw_rect(const Vector2f& pos,
+                            const Vector2f& size,
                             const cen::color& color,
                             const float thickness)
 {
@@ -162,8 +162,8 @@ void GraphicsCtx::fill_rect(const ImVec2& position, const ImVec2& size)
   list->AddRectFilled(position, position + size, get_draw_color());
 }
 
-void GraphicsCtx::draw_ellipse(const glm::vec2& center,
-                               const glm::vec2& radius,
+void GraphicsCtx::draw_ellipse(const Vector2f& center,
+                               const Vector2f& radius,
                                const cen::color& color,
                                const float thickness)
 {
@@ -256,10 +256,10 @@ void GraphicsCtx::render_image(const uint texture,
 }
 
 void GraphicsCtx::render_image(const uint texture,
-                               const glm::vec2& pos,
-                               const glm::vec2& size,
-                               const glm::vec2& uvMin,
-                               const glm::vec2& uvMax,
+                               const Vector2f& pos,
+                               const Vector2f& size,
+                               const Vector2f& uvMin,
+                               const Vector2f& uvMax,
                                const uint8 opacity)
 {
   auto* list = ImGui::GetWindowDrawList();
