@@ -30,6 +30,7 @@
 #include "core/components/viewport.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/tools/tool_manager.hpp"
+#include "editor/documents/map_document.hpp"
 #include "editor/events/map_events.hpp"
 #include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
@@ -106,18 +107,20 @@ void _center_viewport(entt::dispatcher& dispatcher,
 }
 
 void _draw_cursor_gizmos(GraphicsCtx& graphics,
-                         const entt::registry& registry,
+                         const DocumentModel& model,
+                         const MapDocument& document,
                          const ViewportCursorInfo& cursor,
                          const RenderInfo& info)
 {
+  const auto& registry = document.get_registry();
   if (cursor.is_within_map && sys::is_tile_layer_active(registry)) {
     graphics.set_draw_color(cen::colors::lime.with_alpha(200));
     graphics.set_line_thickness(2);
     graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
   }
 
-  const auto& tools = ctx_get<ToolManager>(registry);
-  tools.draw_gizmos(registry, graphics, _make_mouse_info(cursor));
+  const auto& tools = document.get_tools();
+  tools.draw_gizmos(model, graphics, _make_mouse_info(cursor));
 }
 
 void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
@@ -146,9 +149,7 @@ void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
   }
 }
 
-void _update_context_menu([[maybe_unused]] const entt::registry& registry,
-                          entt::dispatcher& dispatcher,
-                          [[maybe_unused]] const ViewportCursorInfo& cursor)
+void _update_context_menu(entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
@@ -177,12 +178,12 @@ void _update_context_menu([[maybe_unused]] const entt::registry& registry,
 
 void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  const auto& registry = model.get_active_registry();
+  const auto map = model.get_map(model.active_document_id().value());
 
-  const auto& viewport = ctx_get<comp::Viewport>(registry);
-  const auto& map = ctx_get<comp::MapInfo>(registry);
+  const auto& registry = map->get_registry();
+  const auto& viewport = map->viewport();
 
-  const auto info = get_render_info(viewport, map);
+  const auto info = get_render_info(viewport, map->info());
   update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
 
   GraphicsCtx graphics{info};
@@ -204,12 +205,12 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   render_map(graphics, registry);
 
-  const auto cursor = GetViewportCursorInfo(info);
+  const auto cursor = GetViewportCursorInfo(info);  // TODO rename function
   _poll_mouse(dispatcher, cursor);
 
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
                                  ImGui::GetWindowContentRegionMax())) {
-    _draw_cursor_gizmos(graphics, registry, cursor, info);
+    _draw_cursor_gizmos(graphics, model, *map, cursor, info);
   }
 
   graphics.pop_clip();
@@ -217,7 +218,7 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
   update_viewport_toolbar(model, dispatcher);
   update_viewport_overlay(registry, cursor);
 
-  _update_context_menu(registry, dispatcher, cursor);
+  _update_context_menu(dispatcher);
 }
 
 void update_map_view_object_context_menu(const entt::registry& registry,

@@ -55,6 +55,12 @@ auto TilesetDocument::tile_size() const -> Vector2i
   return {tileset.tile_width, tileset.tile_height};
 }
 
+auto TilesetDocument::uv_size() const -> Vector2f
+{
+  const auto& uv = ctx_get<comp::UvTileSize>(mRegistry);
+  return {uv.width, uv.height};
+}
+
 auto TilesetDocument::texture() const -> const comp::Texture&
 {
   return ctx_get<comp::Texture>(mRegistry);

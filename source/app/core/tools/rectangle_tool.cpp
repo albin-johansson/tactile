@@ -22,28 +22,30 @@
 #include <algorithm>  // min
 #include <cmath>      // abs
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <glm/vec2.hpp>
 
+#include "core/common/math.hpp"
 #include "core/components/tools.hpp"
 #include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/tool_events.hpp"
+#include "editor/model.hpp"
 
 namespace tactile {
 
-void RectangleTool::draw_gizmos(const entt::registry& registry,
+void RectangleTool::draw_gizmos(const DocumentModel& model,
                                 IRenderer& renderer,
                                 const MouseInfo&) const
 {
+  const auto& registry = model.get_active_registry();
   if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
     const auto pos = renderer.get_origin() + glm::vec2{stroke->start_x, stroke->start_y};
-    const glm::vec2 size{stroke->current_x - stroke->start_x,
-                         stroke->current_y - stroke->start_y};
+    const Vector2f size{stroke->current_x - stroke->start_x,
+                        stroke->current_y - stroke->start_y};
 
-    renderer.draw_rect(pos + glm::vec2{1, 1}, size, cen::colors::black);
+    renderer.draw_rect(pos + Vector2f{1, 1}, size, cen::colors::black);
     renderer.draw_rect(pos, size, cen::colors::yellow);
   }
 }

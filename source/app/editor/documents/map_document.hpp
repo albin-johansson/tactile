@@ -54,6 +54,8 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto info() const -> const comp::MapInfo&;
 
+  [[nodiscard]] auto viewport() const -> const comp::Viewport&;
+
   [[nodiscard]] auto tile_size() const -> Vector2i;
 
   [[nodiscard]] auto get_tools() -> ToolManager&;

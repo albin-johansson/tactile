@@ -155,12 +155,12 @@ auto ToolManager::is_available(const entt::registry& registry, const ToolType ty
   }
 }
 
-void ToolManager::draw_gizmos(const entt::registry& registry,
+void ToolManager::draw_gizmos(const DocumentModel& model,
                               IRenderer& renderer,
                               const MouseInfo& mouse) const
 {
   if (auto* tool = mData->active_tool) {
-    tool->draw_gizmos(registry, renderer, mouse);
+    tool->draw_gizmos(model, renderer, mouse);
   }
 }
 

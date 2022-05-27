@@ -30,13 +30,15 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/events/tool_events.hpp"
+#include "editor/model.hpp"
 
 namespace tactile {
 
-void EllipseTool::draw_gizmos(const entt::registry& registry,
+void EllipseTool::draw_gizmos(const DocumentModel& model,
                               IRenderer& renderer,
                               const MouseInfo&) const
 {
+  const auto& registry = model.get_active_registry();
   if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
     const glm::vec2 radius{stroke->current_x - stroke->start_x,
                            stroke->current_y - stroke->start_y};

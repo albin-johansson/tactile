@@ -23,6 +23,7 @@
 
 #include "core/fwd.hpp"
 #include "core/tools/tool_type.hpp"
+#include "editor/fwd.hpp"
 
 namespace tactile {
 
@@ -31,7 +32,7 @@ class ATool
  public:
   virtual ~ATool() noexcept = default;
 
-  virtual void draw_gizmos(const entt::registry& registry,
+  virtual void draw_gizmos(const DocumentModel& model,
                            IRenderer& renderer,
                            const MouseInfo& mouse) const;
 

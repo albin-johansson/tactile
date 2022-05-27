@@ -64,6 +64,11 @@ auto MapDocument::info() const -> const comp::MapInfo&
   return ctx_get<comp::MapInfo>(mRegistry);
 }
 
+auto MapDocument::viewport() const -> const comp::Viewport&
+{
+  return ctx_get<comp::Viewport>(mRegistry);
+}
+
 auto MapDocument::tile_size() const -> Vector2i
 {
   const auto& info = ctx_get<comp::MapInfo>(mRegistry);

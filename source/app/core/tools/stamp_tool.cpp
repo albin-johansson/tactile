@@ -33,7 +33,10 @@
 #include "core/systems/map_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/tile_pos.hpp"
+#include "editor/documents/map_document.hpp"
+#include "editor/documents/tileset_document.hpp"
 #include "editor/events/tool_events.hpp"
+#include "editor/model.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -46,10 +49,16 @@ namespace {
 
 }  // namespace
 
-void StampTool::draw_gizmos(const entt::registry& registry,
+void StampTool::draw_gizmos(const DocumentModel& model,
                             IRenderer& renderer,
                             const MouseInfo& mouse) const
 {
+  TACTILE_ASSERT(model.is_map_active());
+
+  const auto mapId = model.active_document_id().value();
+  const auto map = model.get_map(mapId);
+  const auto& registry = map->get_registry();
+
   if (!mouse.is_within_contents || !sys::is_tileset_selection_not_empty(registry)) {
     return;
   }
@@ -72,10 +81,11 @@ void StampTool::draw_gizmos(const entt::registry& registry,
   const auto selectionSize = region.end - region.begin;
   const auto offset = selectionSize / TilePos{2, 2};
 
-  const auto& texture = checked_get<comp::Texture>(registry, activeTileset.entity);
-  const auto& uv = checked_get<comp::UvTileSize>(registry, activeTileset.entity);
+  const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, activeTileset.entity);
+  const auto tileset = model.get_tileset(tilesetRef.source_tileset);
 
-  const glm::vec2 uvVec{uv.width, uv.height};
+  const auto& texture = tileset->texture();
+  const auto& uv = tileset->uv_size();
 
   const auto origin = renderer.get_origin();
   const auto gridSize = renderer.get_grid_size();
@@ -87,8 +97,8 @@ void StampTool::draw_gizmos(const entt::registry& registry,
     if (sys::is_position_in_map(registry, previewPos)) {
       const auto realPos = origin + _to_vec2(previewPos) * gridSize;
 
-      const auto uvMin = _to_vec2(region.begin + index) * uvVec;
-      const auto uvMax = uvMin + uvVec;
+      const auto uvMin = _to_vec2(region.begin + index) * uv;
+      const auto uvMax = uvMin + uv;
 
       constexpr uint8 opacity = 150;
       renderer.render_image(texture.id, realPos, gridSize, uvMin, uvMax, opacity);

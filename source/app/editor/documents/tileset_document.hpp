@@ -56,6 +56,8 @@ class TilesetDocument final : public ADocument
 
   [[nodiscard]] auto tile_size() const -> Vector2i;
 
+  [[nodiscard]] auto uv_size() const -> Vector2f;
+
   [[nodiscard]] auto texture() const -> const comp::Texture&;
 
   [[nodiscard]] auto get_type() const -> DocumentType override

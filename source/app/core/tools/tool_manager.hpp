@@ -50,7 +50,7 @@ class ToolManager final : ATool
   [[nodiscard]] auto is_available(const entt::registry& registry, ToolType type) const
       -> bool;
 
-  void draw_gizmos(const entt::registry& registry,
+  void draw_gizmos(const DocumentModel& model,
                    IRenderer& renderer,
                    const MouseInfo& mouse) const override;
 
