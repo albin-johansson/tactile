@@ -25,7 +25,7 @@
 
 #include "core/components/attributes.hpp"
 #include "editor/commands/command_stack.hpp"
-#include "editor/events/map_events.hpp"
+#include "editor/events/document_events.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/tileset_view.hpp"
