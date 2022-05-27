@@ -24,7 +24,7 @@
 #include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 

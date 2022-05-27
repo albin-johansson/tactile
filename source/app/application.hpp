@@ -34,7 +34,7 @@
 #include "core/events/tileset_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/events/viewport_events.hpp"
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 #include "loop.hpp"
 
 namespace tactile {

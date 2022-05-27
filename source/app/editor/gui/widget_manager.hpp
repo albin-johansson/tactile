@@ -27,7 +27,7 @@
 #include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
 namespace tactile {

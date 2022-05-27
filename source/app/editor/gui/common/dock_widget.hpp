@@ -24,7 +24,7 @@
 
 #include "core/common/macros.hpp"
 #include "core/common/memory.hpp"
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 

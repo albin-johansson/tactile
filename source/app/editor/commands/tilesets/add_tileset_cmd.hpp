@@ -23,9 +23,9 @@
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/components/texture.hpp"
+#include "core/fwd.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
-#include "editor/fwd.hpp"
 
 namespace tactile {
 

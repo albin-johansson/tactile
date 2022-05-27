@@ -25,8 +25,12 @@ struct MouseInfo;
 struct Region;
 
 class Attribute;
-class TextureManager;
 class TilePos;
+class DocumentModel;
+class ADocument;
+class MapDocument;
+class TilesetDocument;
+class TextureManager;
 class IRenderer;
 class ToolManager;
 

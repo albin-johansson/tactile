@@ -23,10 +23,6 @@ namespace tactile {
 
 struct RenderInfo;
 
-class DocumentModel;
-class ADocument;
-class MapDocument;
-class TilesetDocument;
 class CommandStack;
 
 class GraphicsCtx;

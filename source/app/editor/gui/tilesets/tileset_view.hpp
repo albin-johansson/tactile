@@ -23,7 +23,7 @@
 
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 

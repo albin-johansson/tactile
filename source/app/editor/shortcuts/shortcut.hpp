@@ -23,6 +23,7 @@
 #include <centurion/keyboard.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile {

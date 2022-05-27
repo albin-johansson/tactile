@@ -22,7 +22,7 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/macros.hpp"
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 

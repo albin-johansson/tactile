@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 #include "io/maps/ir.hpp"
 
 namespace tactile {
