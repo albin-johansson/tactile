@@ -21,7 +21,7 @@
 
 #include <filesystem>  // path
 
-namespace tactile {
+namespace tactile::io {
 
 /// \addtogroup io
 /// \{
@@ -59,4 +59,4 @@ void open_directory(const std::filesystem::path& dir);
 
 /// \} End of group io
 
-}  // namespace tactile
+}  // namespace tactile::io

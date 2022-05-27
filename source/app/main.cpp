@@ -34,7 +34,8 @@ auto main(int, char**) -> int
   tactile::init_logger();
 
   try {
-    spdlog::info("Using persistent file directory {}", tactile::persistent_file_dir());
+    spdlog::info("Using persistent file directory {}",
+                 tactile::io::persistent_file_dir());
 
     tactile::AppConfiguration configuration;
     tactile::Application app{&configuration};

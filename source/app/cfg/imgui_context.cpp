@@ -39,7 +39,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= static_cast<ImGuiConfigFlags>(ImGuiConfigFlags_DockingEnable);
   io.WantCaptureKeyboard = true;
 
-  static const auto ini = widget_ini_path().string();
+  static const auto ini = io::widget_ini_path().string();
   io.IniFilename = ini.c_str();
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());

@@ -110,7 +110,8 @@ AppConfiguration::AppConfiguration()
 #ifdef TACTILE_BUILD_APP_BUNDLE
   const auto iconPath = find_resource("Tactile.icns");
 #else
-  const auto iconPath = find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
+  const auto iconPath =
+      io::find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
 #endif
 
   mWindow->set_icon(cen::surface{iconPath.string()});

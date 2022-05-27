@@ -29,7 +29,7 @@
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 void open_directory(const std::filesystem::path& dir)
 {
@@ -72,4 +72,4 @@ auto persistent_file_dir() -> const std::filesystem::path&
   return path;
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

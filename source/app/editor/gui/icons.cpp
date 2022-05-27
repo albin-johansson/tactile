@@ -33,7 +33,7 @@ constinit Maybe<uint> _tactile_icon;
 
 void load_icons(TextureManager& textures)
 {
-  _tactile_icon = textures.load(find_resource("assets/icon.png")).value().id;
+  _tactile_icon = textures.load(io::find_resource("assets/icon.png")).value().id;
 }
 
 auto get_tactile_icon() -> uint

@@ -42,7 +42,7 @@ void update_dock_space()
     if (size.x > 0 && size.y > 0) {
       const auto& prefs = get_preferences();
 
-      if (!prefs.will_restore_layout() || !exists(widget_ini_path())) {
+      if (!prefs.will_restore_layout() || !exists(io::widget_ini_path())) {
         load_default_layout(_root_id.value(), false);
       }
 

@@ -104,7 +104,7 @@ inline Shared<HistorySink> _history_sink;
 
 void init_logger()
 {
-  const auto path = persistent_file_dir() / "logs" / "tactile_log.txt";
+  const auto path = io::persistent_file_dir() / "logs" / "tactile_log.txt";
 
   auto cs = std::make_shared<spdlog::sinks::stdout_color_sink_st>();
   auto fs = std::make_shared<spdlog::sinks::basic_file_sink_st>(path.string(), true);

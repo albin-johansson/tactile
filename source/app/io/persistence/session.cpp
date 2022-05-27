@@ -40,7 +40,7 @@ constexpr int _format_version [[maybe_unused]] = 1;
 
 [[nodiscard]] auto _get_file_path() -> const std::filesystem::path&
 {
-  static const auto path = persistent_file_dir() / "session.bin";
+  static const auto path = io::persistent_file_dir() / "session.bin";
   return path;
 }
 

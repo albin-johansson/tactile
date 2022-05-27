@@ -38,8 +38,8 @@ constexpr ImWchar _icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 void reload_fonts()
 {
-  static const auto roboto = find_resource(_roboto_path).string();
-  static const auto fa = find_resource(_fa_path).string();
+  static const auto roboto = io::find_resource(_roboto_path).string();
+  static const auto fa = io::find_resource(_fa_path).string();
 
   spdlog::debug("Reloading fonts...");
 
