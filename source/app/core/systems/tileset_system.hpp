@@ -36,6 +36,14 @@ namespace tactile::sys {
 /**
  * \ingroup systems
  * \defgroup tileset-system Tileset System
+ *
+ * \brief Manages available tilesets.
+ *
+ * \details There are two kinds of tilesets that are handled in slightly different ways.
+ * First, there are tileset documents, which have their own registries. These documents
+ * may exist at runtime even if no maps are using them. The second type of tilesets are
+ * _tileset references_, these are stored in map registries and reference a loaded tileset
+ * document.
  */
 
 /// \addtogroup tileset-system
