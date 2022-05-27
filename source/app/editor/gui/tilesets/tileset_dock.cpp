@@ -25,13 +25,13 @@
 
 #include "core/components/tiles.hpp"
 #include "core/events/tileset_events.hpp"
+#include "core/model.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/tilesets/tileset_tabs.hpp"
-#include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile {

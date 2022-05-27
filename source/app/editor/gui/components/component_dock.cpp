@@ -25,16 +25,16 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/components/attributes.hpp"
+#include "core/events/component_events.hpp"
+#include "core/model.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/context_system.hpp"
-#include "core/events/component_events.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/components/component_view.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile {

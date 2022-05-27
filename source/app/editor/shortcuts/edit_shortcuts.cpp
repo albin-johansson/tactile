@@ -21,9 +21,9 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/commands/command_stack.hpp"
 #include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
-#include "core/commands/command_stack.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/command_events.hpp"
 #include "core/events/component_events.hpp"
@@ -31,9 +31,9 @@
 #include "core/events/misc_events.hpp"
 #include "core/events/tileset_events.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/model.hpp"
 #include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/widget_manager.hpp"
-#include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {

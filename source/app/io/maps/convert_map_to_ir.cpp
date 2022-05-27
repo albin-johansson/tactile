@@ -26,11 +26,11 @@
 #include "core/components/parent.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/systems/component_system.hpp"
-#include "core/systems/tileset_system.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
-#include "editor/model.hpp"
+#include "core/model.hpp"
+#include "core/systems/component_system.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "meta/profile.hpp"
 
 namespace tactile {

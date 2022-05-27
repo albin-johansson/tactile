@@ -24,18 +24,18 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/systems/tileset_system.hpp"
-#include "core/tools/tool_manager.hpp"
 #include "core/commands/command_stack.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/command_events.hpp"
 #include "core/events/tileset_events.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/model.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "core/tools/tool_manager.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/style.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 namespace {

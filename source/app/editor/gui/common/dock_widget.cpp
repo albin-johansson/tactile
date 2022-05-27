@@ -19,8 +19,8 @@
 
 #include "dock_widget.hpp"
 
+#include "core/model.hpp"
 #include "editor/gui/scoped.hpp"
-#include "editor/model.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

@@ -29,9 +29,10 @@
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
 #include "core/components/attributes.hpp"
+#include "core/events/component_events.hpp"
+#include "core/model.hpp"
 #include "core/systems/component_system.hpp"
 #include "editor/constants.hpp"
-#include "core/events/component_events.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/centered_text.hpp"
 #include "editor/gui/common/input_widgets.hpp"
@@ -42,7 +43,6 @@
 #include "editor/gui/icons.hpp"
 #include "editor/gui/properties/dialogs/property_type_combo.hpp"
 #include "editor/gui/scoped.hpp"
-#include "editor/model.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

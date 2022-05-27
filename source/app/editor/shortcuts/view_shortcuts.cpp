@@ -23,11 +23,11 @@
 #include <imgui_internal.h>
 
 #include "cfg/fonts.hpp"
-#include "core/systems/viewport_system.hpp"
 #include "core/events/misc_events.hpp"
 #include "core/events/viewport_events.hpp"
+#include "core/model.hpp"
+#include "core/systems/viewport_system.hpp"
 #include "editor/gui/widget_manager.hpp"
-#include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "io/persistence/preferences.hpp"
 

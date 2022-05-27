@@ -26,7 +26,7 @@
 
 #include "core/documents/document.hpp"
 #include "core/documents/map_document.hpp"
-#include "editor/model.hpp"
+#include "core/model.hpp"
 #include "io/maps/convert_map_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/emitter/json_emitter.hpp"

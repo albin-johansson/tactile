@@ -19,6 +19,7 @@
 
 #include "widget_manager.hpp"
 
+#include "core/model.hpp"
 #include "editor/gui/components/component_dock.hpp"
 #include "editor/gui/dialogs/map_parse_error_dialog.hpp"
 #include "editor/gui/dialogs/resize_map_dialog.hpp"
@@ -31,7 +32,6 @@
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/toolbar.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 

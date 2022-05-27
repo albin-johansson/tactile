@@ -23,17 +23,17 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/tools/tool_type.hpp"
-#include "core/utils/formatted_string.hpp"
 #include "core/commands/command_stack.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/command_events.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/model.hpp"
+#include "core/tools/tool_type.hpp"
+#include "core/utils/formatted_string.hpp"
 #include "editor/gui/components/component_editor.hpp"
 #include "editor/gui/dialogs/settings_dialog.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
-#include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {

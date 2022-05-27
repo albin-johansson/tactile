@@ -27,6 +27,7 @@
 #include <glm/vec2.hpp>
 #include <spdlog/spdlog.h>
 
+#include "core/commands/command_stack.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
@@ -34,6 +35,9 @@
 #include "core/components/objects.hpp"
 #include "core/components/tiles.hpp"
 #include "core/documents/document.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/documents/tileset_document.hpp"
+#include "core/model.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -43,10 +47,6 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tilesets/tileset_document_system.hpp"
 #include "core/utils/texture_manager.hpp"
-#include "core/commands/command_stack.hpp"
-#include "core/documents/map_document.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "editor/model.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_data.hpp"
 #include "misc/assert.hpp"

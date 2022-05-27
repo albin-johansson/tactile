@@ -25,11 +25,11 @@
 
 #include "core/components/map_info.hpp"
 #include "core/components/viewport.hpp"
+#include "core/model.hpp"
 #include "editor/gui/common/mouse_tracker.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_info.hpp"
 #include "editor/gui/rendering/render_tileset.hpp"
-#include "editor/model.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile {

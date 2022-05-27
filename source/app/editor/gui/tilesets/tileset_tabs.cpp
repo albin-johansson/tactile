@@ -29,10 +29,10 @@
 #include "core/events/document_events.hpp"
 #include "core/events/property_events.hpp"
 #include "core/events/tileset_events.hpp"
+#include "core/model.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/tilesets/tileset_view.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 namespace {

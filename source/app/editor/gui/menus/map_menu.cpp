@@ -23,10 +23,10 @@
 #include <imgui.h>
 
 #include "core/events/map_events.hpp"
+#include "core/model.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/tilesets/dialogs/create_tileset_dialog.hpp"
-#include "editor/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {

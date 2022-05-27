@@ -27,7 +27,7 @@
 
 #include "core/common/filesystem.hpp"
 #include "core/documents/map_document.hpp"
-#include "editor/model.hpp"
+#include "core/model.hpp"
 #include "io/directories.hpp"
 #include "io/maps/parser/parse_map.hpp"
 #include "io/maps/restore_map_from_ir.hpp"

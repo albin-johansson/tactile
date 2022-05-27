@@ -21,13 +21,13 @@
 
 #include <imgui.h>
 
+#include "core/model.hpp"
 #include "editor/gui/menus/debug_menu.hpp"
 #include "editor/gui/menus/edit_menu.hpp"
 #include "editor/gui/menus/file_menu.hpp"
 #include "editor/gui/menus/help_menu.hpp"
 #include "editor/gui/menus/map_menu.hpp"
 #include "editor/gui/menus/view_menu.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 

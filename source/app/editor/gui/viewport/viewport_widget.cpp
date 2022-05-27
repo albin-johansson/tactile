@@ -25,6 +25,7 @@
 
 #include "core/events/map_events.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/model.hpp"
 #include "editor/gui/alignment.hpp"
 #include "editor/gui/common/button.hpp"
 #include "editor/gui/common/style.hpp"
@@ -32,7 +33,6 @@
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/textures.hpp"
 #include "editor/gui/viewport/document_tab_widget.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 namespace {

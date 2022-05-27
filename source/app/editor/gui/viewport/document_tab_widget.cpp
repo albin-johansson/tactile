@@ -23,13 +23,13 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/components/attributes.hpp"
 #include "core/commands/command_stack.hpp"
+#include "core/components/attributes.hpp"
 #include "core/events/document_events.hpp"
+#include "core/model.hpp"
 #include "editor/gui/scoped.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/tileset_view.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 

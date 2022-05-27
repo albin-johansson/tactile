@@ -19,8 +19,8 @@
 
 #include "component_name_dialog.hpp"
 
+#include "core/model.hpp"
 #include "core/systems/component_system.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 

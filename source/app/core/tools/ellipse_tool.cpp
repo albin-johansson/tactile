@@ -26,11 +26,11 @@
 #include <glm/vec2.hpp>
 
 #include "core/components/tools.hpp"
+#include "core/events/tool_events.hpp"
+#include "core/model.hpp"
 #include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "core/events/tool_events.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 

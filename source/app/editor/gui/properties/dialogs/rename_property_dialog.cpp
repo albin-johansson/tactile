@@ -21,10 +21,10 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/events/property_events.hpp"
+#include "core/model.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
-#include "core/events/property_events.hpp"
-#include "editor/model.hpp"
 
 namespace tactile {
 
