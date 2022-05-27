@@ -21,6 +21,7 @@
 
 namespace tactile {
 
+struct MapInfo;
 struct MouseInfo;
 struct Region;
 
