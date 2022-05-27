@@ -22,13 +22,10 @@
 #include <memory>   // make_shared
 #include <utility>  // move
 
-#include "core/components/attributes.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "core/systems/tilesets/tileset_document_system.hpp"
 #include "editor/documents/map_document.hpp"
 #include "editor/documents/tileset_document.hpp"
 #include "editor/model.hpp"
-#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -37,7 +34,7 @@ AddTilesetCmd::AddTilesetCmd(DocumentModel* model,
                              const UUID& mapId,
                              const UUID& tilesetId,
                              comp::Texture texture,
-                             const glm::ivec2& tileSize)
+                             const Vector2i& tileSize)
     : ACommand{"Add Tileset"}
     , mModel{model}
     , mMapId{mapId}
@@ -52,24 +49,12 @@ AddTilesetCmd::AddTilesetCmd(DocumentModel* model,
 
 void AddTilesetCmd::undo()
 {
-  // TODO
-  //  auto& registry = mModel->document_registry();
-  //  auto& mapDocument = mModel->get_document(mMapId);
-  //
-  //  for (auto&& [entity, ref] : mapDocument.registry.view<comp::TilesetRef>().each()) {
-  //    if (ref.source_tileset == mTilesetId) {
-  //      mapDocument.registry.destroy(entity);
-  //      break;
-  //    }
-  //  }
-  //
-  //  for (auto&& [entity, tileset, context] :
-  //       registry.view<comp::Tileset, comp::AttributeContext>().each()) {
-  //    if (context.id == mTilesetId) {
-  //      registry.destroy(entity);
-  //      break;
-  //    }
-  //  }
+  auto map = mModel->get_map(mMapId);
+  auto& mapRegistry = map->get_registry();
+
+  // TODO deal with tileset document potentially being open
+
+  sys::detach_tileset(mapRegistry, mTilesetId);
 }
 
 void AddTilesetCmd::redo()
@@ -79,8 +64,10 @@ void AddTilesetCmd::redo()
   }
   mModel->register_tileset(mTileset);
 
-  auto mapDocument = mModel->get_map(mMapId);
-  sys::attach_tileset(mapDocument->get_registry(), mTilesetId, mTileset->info());
+  auto map = mModel->get_map(mMapId);
+  auto& mapRegistry = map->get_registry();
+
+  sys::attach_tileset(mapRegistry, mTilesetId, mTileset->info());
 }
 
 }  // namespace tactile

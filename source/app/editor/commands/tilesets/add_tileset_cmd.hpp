@@ -19,33 +19,34 @@
 
 #pragma once
 
-#include <glm/vec2.hpp>
-
-#include "core/common/identifiers.hpp"
-#include "core/common/ints.hpp"
-#include "core/common/maybe.hpp"
+#include "core/common/math.hpp"
 #include "core/common/memory.hpp"
-#include "core/common/ref.hpp"
 #include "core/common/uuid.hpp"
 #include "core/components/texture.hpp"
-#include "core/systems/snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile {
 
-/**
- * \brief Command for creating tilesets.
- */
+/// Command for creating a tileset and attaching it to a map document.
 class AddTilesetCmd final : public ACommand
 {
  public:
+  /**
+   * Creates a command.
+   *
+   * \param model the associated document model.
+   * \param mapId the ID of the target map.
+   * \param tilesetId the ID of the new tileset.
+   * \param texture the tileset texture.
+   * \param tileSize the tileset logical tile size.
+   */
   AddTilesetCmd(DocumentModel* model,
                 const UUID& mapId,
                 const UUID& tilesetId,
                 comp::Texture texture,
-                const glm::ivec2& tileSize);
+                const Vector2i& tileSize);
 
   void undo() override;
 
@@ -58,14 +59,11 @@ class AddTilesetCmd final : public ACommand
 
  private:
   DocumentModel* mModel{};
-  UUID mMapId{};      ///< The ID of the map document the tileset should be added to.
-  UUID mTilesetId{};  ///< The ID of the added tileset document.
-
+  UUID mMapId{};
+  UUID mTilesetId{};
   comp::Texture mTexture;
-  glm::ivec2 mTileSize{};
-
-  Shared<TilesetDocument> mTileset;
-  Maybe<sys::TilesetSnapshot> mSnapshot;
+  Vector2i mTileSize{};
+  Shared<TilesetDocument> mTileset;  ///< The created tileset (initially null)
 };
 
 }  // namespace tactile

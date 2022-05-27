@@ -222,8 +222,10 @@ auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId) -> Tiles
     const auto& tilesetRef = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
 
     TilesetSnapshot snapshot;
-    snapshot.uv = checked_get<comp::UvTileSize>(mapRegistry, tilesetEntity);
+    // TODO remove snapshot.uv
     snapshot.selection = checked_get<comp::TilesetSelection>(mapRegistry, tilesetEntity);
+
+    mapRegistry.destroy(tilesetEntity);
 
     return snapshot;
   }
