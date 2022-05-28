@@ -25,8 +25,8 @@
 #include "core/events/map_events.hpp"
 #include "core/events/misc_events.hpp"
 #include "core/model.hpp"
-#include "editor/ui/widgets.hpp"
 #include "editor/shortcuts/mappings.hpp"
+#include "editor/ui/widgets.hpp"
 
 namespace tactile {
 
@@ -55,8 +55,7 @@ void SaveShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SaveEvent>();
 }
 
-auto SaveShortcut::is_enabled(const DocumentModel& model) const
-    -> bool
+auto SaveShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   const auto* document = model.active_document();
   return document && !document->get_history().is_clean();
@@ -73,8 +72,7 @@ void SaveAsShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<OpenSaveAsDialogEvent>();
 }
 
-auto SaveAsShortcut::is_enabled(const DocumentModel& model) const
-    -> bool
+auto SaveAsShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }

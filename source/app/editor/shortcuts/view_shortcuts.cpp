@@ -27,8 +27,8 @@
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "editor/ui/widgets.hpp"
 #include "editor/shortcuts/mappings.hpp"
+#include "editor/ui/widgets.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile {
