@@ -19,7 +19,7 @@
 
 #include "model.hpp"
 
-#include <algorithm>  // find
+#include <algorithm>  // any_of, find
 #include <utility>    // move
 
 #include <spdlog/spdlog.h>
@@ -178,13 +178,10 @@ void DocumentModel::remove_tileset(const UUID& id)
 auto DocumentModel::has_document_with_path(const std::filesystem::path& path) const
     -> bool
 {
-  for (const auto& [id, document] : mDocuments) {
-    if (document->has_path() && document->get_path() == path) {
-      return true;
-    }
-  }
-
-  return false;
+  return std::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
+    const auto& document = pair.second;
+    return document->has_path() && document->get_path() == path;
+  });
 }
 
 auto DocumentModel::get_id_for_path(const std::filesystem::path& path) const -> UUID
