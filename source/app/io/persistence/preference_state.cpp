@@ -31,7 +31,7 @@
 #include "core/common/enum.hpp"
 #include "proto.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 constexpr EditorTheme _def_theme = EditorTheme::Nocturnal;
@@ -589,4 +589,4 @@ auto PreferenceState::test_flag(const uint64 flag) const noexcept -> bool
   return mData->flags & flag;
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

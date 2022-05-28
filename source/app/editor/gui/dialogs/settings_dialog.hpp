@@ -52,8 +52,8 @@ class SettingsDialog final : public ADialog
   void on_apply(entt::dispatcher& dispatcher) override;
 
  private:
-  PreferenceState mSnapshot;     ///< The original settings when the dialog was opened.
-  PreferenceState mGuiSettings;  ///< The value of the settings in the GUI.
+  io::PreferenceState mSnapshot;  ///< The original settings when the dialog was opened.
+  io::PreferenceState mGuiSettings;  ///< The value of the settings in the GUI.
 
   void apply_settings(entt::dispatcher& dispatcher);
 

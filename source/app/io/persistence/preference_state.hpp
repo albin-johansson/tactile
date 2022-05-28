@@ -29,7 +29,7 @@
 #include "core/common/memory.hpp"
 #include "editor/gui/themes.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 /**
  * \brief Encodes different viewport overlay positions.
@@ -155,4 +155,4 @@ class PreferenceState final
   [[nodiscard]] auto test_flag(uint64 flag) const noexcept -> bool;
 };
 
-}  // namespace tactile
+}  // namespace tactile::io

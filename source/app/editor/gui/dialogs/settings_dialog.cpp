@@ -36,7 +36,7 @@
 namespace tactile {
 namespace {
 
-void _update_preview_settings(const PreferenceState& prefs)
+void _update_preview_settings(const io::PreferenceState& prefs)
 {
   apply_theme(ImGui::GetStyle(), prefs.get_theme());
   ImGui::GetStyle().WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;

@@ -50,9 +50,9 @@ void _prepare_position_and_pivot()
 
   const auto corner = io::get_preferences().viewport_overlay_pos();
   const bool isRight =
-      corner == OverlayPos::TopRight || corner == OverlayPos::BottomRight;
+      corner == io::OverlayPos::TopRight || corner == io::OverlayPos::BottomRight;
   const bool isBottom =
-      corner == OverlayPos::BottomLeft || corner == OverlayPos::BottomRight;
+      corner == io::OverlayPos::BottomLeft || corner == io::OverlayPos::BottomRight;
 
   const float padding = 10.0f;
 
@@ -104,20 +104,20 @@ void _update_overlay_context_menu()
     auto& prefs = io::get_preferences();
     const auto corner = prefs.viewport_overlay_pos();
 
-    if (ImGui::MenuItem("Top-left", nullptr, corner == OverlayPos::TopLeft)) {
-      prefs.set_viewport_overlay_pos(OverlayPos::TopLeft);
+    if (ImGui::MenuItem("Top-left", nullptr, corner == io::OverlayPos::TopLeft)) {
+      prefs.set_viewport_overlay_pos(io::OverlayPos::TopLeft);
     }
 
-    if (ImGui::MenuItem("Top-right", nullptr, corner == OverlayPos::TopRight)) {
-      prefs.set_viewport_overlay_pos(OverlayPos::TopRight);
+    if (ImGui::MenuItem("Top-right", nullptr, corner == io::OverlayPos::TopRight)) {
+      prefs.set_viewport_overlay_pos(io::OverlayPos::TopRight);
     }
 
-    if (ImGui::MenuItem("Bottom-left", nullptr, corner == OverlayPos::BottomLeft)) {
-      prefs.set_viewport_overlay_pos(OverlayPos::BottomLeft);
+    if (ImGui::MenuItem("Bottom-left", nullptr, corner == io::OverlayPos::BottomLeft)) {
+      prefs.set_viewport_overlay_pos(io::OverlayPos::BottomLeft);
     }
 
-    if (ImGui::MenuItem("Bottom-right", nullptr, corner == OverlayPos::BottomRight)) {
-      prefs.set_viewport_overlay_pos(OverlayPos::BottomRight);
+    if (ImGui::MenuItem("Bottom-right", nullptr, corner == io::OverlayPos::BottomRight)) {
+      prefs.set_viewport_overlay_pos(io::OverlayPos::BottomRight);
     }
 
     ImGui::Separator();
