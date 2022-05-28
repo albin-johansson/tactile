@@ -414,7 +414,7 @@ void Application::on_save()
   if (auto* document = active_document()) {
     if (document->has_path()) {
       if (document->is_map()) {
-        save_document(mData->model, document->id());
+        io::save_document(mData->model, document->id());
 
         auto& commands = document->get_history();
         commands.mark_as_clean();
@@ -497,8 +497,8 @@ void Application::on_open_map(const OpenMapEvent& event)
     return;
   }
 
-  const auto ir = parsing::parse_map(event.path);
-  if (ir.error() == parsing::ParseError::None) {
+  const auto ir = io::parse_map(event.path);
+  if (ir.error() == io::ParseError::None) {
     restore_map_from_ir(ir, mData->model, mData->textures);
     io::add_file_to_history(event.path);
   }

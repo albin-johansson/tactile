@@ -22,9 +22,9 @@
 #include "core/fwd.hpp"
 #include "io/maps/ir.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 [[nodiscard]] auto convert_map_to_ir(const DocumentModel& model, const UUID& documentId)
     -> ir::MapData;
 
-}  // namespace tactile
+}  // namespace tactile::io

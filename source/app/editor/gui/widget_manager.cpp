@@ -80,7 +80,7 @@ void WidgetManager::show_resize_map_dialog(const usize currentRows,
   mWidgets->resize_map_dialog.show(currentRows, currentColumns);
 }
 
-void WidgetManager::show_map_import_error_dialog(const parsing::ParseError error)
+void WidgetManager::show_map_import_error_dialog(const io::ParseError error)
 {
   mWidgets->map_parse_error_dialog.show(error);
 }

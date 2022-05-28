@@ -26,7 +26,7 @@
 #include "io/maps/json_utils.hpp"
 #include "io/maps/parser/json/json_attribute_parser.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_object_layer(const nlohmann::json& json,
@@ -264,4 +264,4 @@ auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseErro
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

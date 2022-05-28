@@ -53,8 +53,8 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
   std::ifstream stream{_get_file_path(), std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
-      const auto ir = parsing::parse_map(file);
-      if (ir.error() == parsing::ParseError::None) {
+      const auto ir = parse_map(file);
+      if (ir.error() == ParseError::None) {
         restore_map_from_ir(ir, model, textures);
       }
       else {

@@ -30,7 +30,7 @@
 #include "meta/profile.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 auto parse_map(const std::filesystem::path& path) -> ParseData
 {
@@ -81,4 +81,4 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
   return result;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

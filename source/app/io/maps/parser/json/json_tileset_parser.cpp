@@ -32,7 +32,7 @@
 #include "io/maps/parser/json/json_layer_parser.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_fancy_tile(const nlohmann::json& json,
@@ -266,4 +266,4 @@ auto parse_tilesets(const nlohmann::json& json,
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

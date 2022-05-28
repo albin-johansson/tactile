@@ -26,7 +26,7 @@
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 [[nodiscard]] auto collect_children(pugi::xml_node source, const char* name)
     -> std::vector<pugi::xml_node>;
@@ -48,4 +48,4 @@ namespace tactile {
 [[nodiscard]] auto bool_attribute(pugi::xml_node node, const char* attributeName)
     -> Maybe<bool>;
 
-}  // namespace tactile
+}  // namespace tactile::io

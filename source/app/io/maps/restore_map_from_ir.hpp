@@ -23,7 +23,7 @@
 #include "editor/fwd.hpp"
 #include "io/fwd.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 /**
  * \brief Restores a map document from an intermediate map representation.
@@ -32,8 +32,8 @@ namespace tactile {
  * \param model the target document model.
  * \param textures the texture manager that will be used.
  */
-void restore_map_from_ir(const parsing::ParseData& data,
+void restore_map_from_ir(const ParseData& data,
                          DocumentModel& model,
                          TextureManager& textures);
 
-}  // namespace tactile
+}  // namespace tactile::io

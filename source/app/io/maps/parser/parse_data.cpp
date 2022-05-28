@@ -19,7 +19,7 @@
 
 #include "parse_data.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 void ParseData::set_path(const std::filesystem::path& path)
 {
@@ -51,4 +51,4 @@ auto ParseData::data() const -> const ir::MapData&
   return mData;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

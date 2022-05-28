@@ -30,7 +30,7 @@
 #include "io/maps/xml_utils.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_value(pugi::xml_node node, const char* type, Attribute& value)
@@ -118,4 +118,4 @@ auto parse_properties(pugi::xml_node node, ir::AttributeContextData& context)
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

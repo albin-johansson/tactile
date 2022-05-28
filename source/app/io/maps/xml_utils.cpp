@@ -25,7 +25,7 @@
 #include "editor/constants.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 auto collect_children(pugi::xml_node source, const char* name)
     -> std::vector<pugi::xml_node>
@@ -122,4 +122,4 @@ auto bool_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<boo
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

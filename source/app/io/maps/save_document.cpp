@@ -35,7 +35,7 @@
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 void save_document(const DocumentModel& model, const UUID& documentId)
 {
@@ -47,7 +47,7 @@ void save_document(const DocumentModel& model, const UUID& documentId)
   const auto path = std::filesystem::absolute(document.get_path());
   spdlog::info("Trying to save map to {}", path);
 
-  emitter::EmitInfo info{path, convert_map_to_ir(model, documentId)};
+  EmitInfo info{path, convert_map_to_ir(model, documentId)};
 
   const auto ext = path.extension();
   if (ext == ".yaml" || ext == ".yml") {
@@ -66,4 +66,4 @@ void save_document(const DocumentModel& model, const UUID& documentId)
   TACTILE_PROFILE_END("Emitted document")
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

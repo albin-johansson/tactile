@@ -28,7 +28,7 @@
 #include "io/maps/ir.hpp"
 #include "io/maps/json_utils.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_value(const nlohmann::json& json,
@@ -120,4 +120,4 @@ auto parse_properties(const nlohmann::json& json, ir::AttributeContextData& cont
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

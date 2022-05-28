@@ -32,7 +32,7 @@
 #include "io/maps/xml_utils.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _collect_layer_nodes(pugi::xml_node mapNode)
@@ -303,4 +303,4 @@ auto parse_layers(pugi::xml_node mapNode, ir::MapData& mapData) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

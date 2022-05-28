@@ -107,6 +107,8 @@ auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>
   }
 }
 
+namespace io {
+
 auto as_string(const nlohmann::json& json, const std::string_view name)
     -> Maybe<std::string>
 {
@@ -133,4 +135,5 @@ auto as_bool(const nlohmann::json& json, const std::string_view name) -> Maybe<b
   return _as<bool>(json, name);
 }
 
+}  // namespace io
 }  // namespace tactile

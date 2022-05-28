@@ -24,7 +24,7 @@
 #include "io/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 [[nodiscard]] auto parse_object(const YAML::Node& node,
                                 const ir::MapData& map,
@@ -33,4 +33,4 @@ namespace tactile::parsing {
 [[nodiscard]] auto parse_layers(const YAML::Node& sequence, ir::MapData& data)
     -> ParseError;
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

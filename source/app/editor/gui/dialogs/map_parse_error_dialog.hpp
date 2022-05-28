@@ -33,13 +33,13 @@ class MapParseErrorDialog final : public ADialog
  public:
   MapParseErrorDialog();
 
-  void show(parsing::ParseError error);
+  void show(io::ParseError error);
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 
  private:
-  Maybe<parsing::ParseError> mError;
+  Maybe<io::ParseError> mError;
 };
 
 }  // namespace tactile

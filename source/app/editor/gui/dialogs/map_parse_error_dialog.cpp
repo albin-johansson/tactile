@@ -30,7 +30,7 @@ MapParseErrorDialog::MapParseErrorDialog() : ADialog{"Map Parse Error"}
   set_close_button_label(nullptr);
 }
 
-void MapParseErrorDialog::show(const parsing::ParseError error)
+void MapParseErrorDialog::show(const io::ParseError error)
 {
   mError = error;
   make_visible();
@@ -40,7 +40,7 @@ void MapParseErrorDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   ImGui::TextUnformatted(
       "Oops, something went wrong when parsing the map! " TAC_ICON_ERROR);
-  ImGui::Text("Cause: %s", parsing::to_cause(mError.value()).data());
+  ImGui::Text("Cause: %s", io::to_cause(mError.value()).data());
 }
 
 }  // namespace tactile

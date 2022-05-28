@@ -28,7 +28,7 @@
 #include "io/maps/parser/json/json_layer_parser.hpp"
 #include "io/maps/parser/json/json_tileset_parser.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _validate_map(const nlohmann::json& json) -> ParseError
@@ -130,4 +130,4 @@ auto parse_json_map(const std::filesystem::path& path) -> ParseData
   return result;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

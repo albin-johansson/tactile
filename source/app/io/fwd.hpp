@@ -25,15 +25,9 @@ class PreferenceState;
 
 namespace io {
 class FileDialog;
-}  // namespace io
-
-namespace emitter {
 class EmitInfo;
-}  // namespace emitter
-
-namespace parsing {
 class ParseData;
-}  // namespace parsing
+}  // namespace io
 
 namespace ir {
 struct AttributeContextData;

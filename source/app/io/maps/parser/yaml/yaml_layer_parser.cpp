@@ -27,7 +27,7 @@
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_layer(const YAML::Node& node,
@@ -310,4 +310,4 @@ auto parse_layers(const YAML::Node& sequence, ir::MapData& map) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

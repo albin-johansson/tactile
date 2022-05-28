@@ -33,7 +33,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "meta/profile.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 void _convert_attribute_context(ir::AttributeContextData& data,
@@ -299,4 +299,4 @@ auto convert_map_to_ir(const DocumentModel& model, const UUID& documentId) -> ir
   return data;
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

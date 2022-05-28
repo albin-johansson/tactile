@@ -22,7 +22,7 @@
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 /**
  * \brief Saves a map document.
@@ -34,4 +34,4 @@ namespace tactile {
  */
 void save_document(const DocumentModel& model, const UUID& documentId);
 
-}  // namespace tactile
+}  // namespace tactile::io

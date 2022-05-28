@@ -28,7 +28,7 @@
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
 #include "io/maps/parser/yaml/yaml_layer_parser.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 constexpr int32 _tileset_file_version = 1;
@@ -270,4 +270,4 @@ auto parse_tilesets(const YAML::Node& sequence,
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

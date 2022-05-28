@@ -25,7 +25,7 @@
 #include "io/maps/parser/yaml/yaml_layer_parser.hpp"
 #include "io/maps/parser/yaml/yaml_tileset_parser.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& data)
@@ -121,4 +121,4 @@ auto parse_yaml_map(const std::filesystem::path& path) -> ParseData
   return result;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

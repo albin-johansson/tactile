@@ -35,7 +35,7 @@
 #include "io/maps/yaml_utils.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile::emitter {
+namespace tactile::io {
 namespace {
 
 constexpr int tileset_node_version = 1;
@@ -157,7 +157,7 @@ void _emit_tile_layer_data(YAML::Emitter& emitter,
                            const usize rows,
                            const usize columns)
 {
-  const bool fold = io::get_preferences().fold_tile_data();
+  const bool fold = get_preferences().fold_tile_data();
 
   emitter << YAML::Key << "data";
 
@@ -437,4 +437,4 @@ void emit_yaml_map(const EmitInfo& info)
   stream << emitter.c_str();
 }
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

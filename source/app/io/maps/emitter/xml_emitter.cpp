@@ -35,7 +35,7 @@
 #include "io/persistence/preferences.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::emitter {
+namespace tactile::io {
 namespace {
 
 void _append_properties(pugi::xml_node node, const ir::AttributeContextData& contextData)
@@ -170,7 +170,7 @@ void _append_tile_layer(pugi::xml_node root, const ir::LayerData& layerData)
   std::stringstream stream;
   usize index = 0;
 
-  const bool foldTileData = io::get_preferences().fold_tile_data();
+  const bool foldTileData = get_preferences().fold_tile_data();
 
   for (usize row = 0; row < tileLayerData.row_count; ++row) {
     for (usize col = 0; col < tileLayerData.col_count; ++col) {
@@ -332,7 +332,7 @@ void _append_tileset(pugi::xml_node root,
                      const ir::TilesetData& tilesetData,
                      const std::filesystem::path& dir)
 {
-  const auto& prefs = io::get_preferences();
+  const auto& prefs = get_preferences();
   if (prefs.embed_tilesets()) {
     _append_embedded_tileset(root, tilesetData, dir);
   }
@@ -391,4 +391,4 @@ void emit_xml_map(const EmitInfo& info)
   document.save(stream, " ");
 }
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

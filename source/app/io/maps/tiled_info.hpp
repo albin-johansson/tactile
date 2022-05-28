@@ -19,10 +19,10 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::io {
 
 inline constexpr auto tiled_version = "1.8.2";
 inline constexpr auto tiled_json_format_version = "1.8";
 inline constexpr auto tiled_xml_format_version = "1.8";
 
-}  // namespace tactile
+}  // namespace tactile::io

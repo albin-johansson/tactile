@@ -28,7 +28,7 @@
 #include "io/maps/parser/xml/xml_tileset_parser.hpp"
 #include "io/maps/xml_utils.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _validate_map(pugi::xml_node mapNode) -> ParseError
@@ -134,4 +134,4 @@ auto parse_xml_map(const std::filesystem::path& path) -> ParseData
   return result;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

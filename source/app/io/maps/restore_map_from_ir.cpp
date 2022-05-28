@@ -47,7 +47,7 @@
 #include "io/maps/parser/parse_data.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 void _restore_properties(entt::registry& registry,
@@ -314,7 +314,7 @@ void _restore_component_definitions(entt::registry& registry, const ir::MapData&
 
 }  // namespace
 
-void restore_map_from_ir(const parsing::ParseData& data,
+void restore_map_from_ir(const ParseData& data,
                          DocumentModel& model,
                          TextureManager& textures)
 {
@@ -355,4 +355,4 @@ void restore_map_from_ir(const parsing::ParseData& data,
   document->get_history().clear();
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

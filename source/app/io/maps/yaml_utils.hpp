@@ -23,10 +23,10 @@
 
 #include "core/attribute.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&;
 
 auto operator<<(YAML::Emitter& emitter, AttributeType type) -> YAML::Emitter&;
 
-}  // namespace tactile
+}  // namespace tactile::io

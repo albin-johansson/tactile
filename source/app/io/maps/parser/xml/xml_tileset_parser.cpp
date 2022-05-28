@@ -28,7 +28,7 @@
 #include "io/maps/xml_utils.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_fancy_tiles(pugi::xml_node tilesetNode,
@@ -216,4 +216,4 @@ auto parse_tileset(pugi::xml_node node,
   }
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

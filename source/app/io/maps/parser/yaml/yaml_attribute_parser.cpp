@@ -29,7 +29,7 @@
 #include "core/common/maybe.hpp"
 #include "io/maps/ir.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_attribute_type(const std::string_view type)
@@ -312,4 +312,4 @@ auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

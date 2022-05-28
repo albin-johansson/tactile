@@ -48,6 +48,8 @@ void write_json(const nlohmann::json& json, const std::filesystem::path& path);
 
 [[nodiscard]] auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>;
 
+namespace io {
+
 [[nodiscard]] auto as_string(const nlohmann::json& json, std::string_view name)
     -> Maybe<std::string>;
 
@@ -63,4 +65,5 @@ void write_json(const nlohmann::json& json, const std::filesystem::path& path);
 [[nodiscard]] auto as_bool(const nlohmann::json& json, std::string_view name)
     -> Maybe<bool>;
 
+}  // namespace io
 }  // namespace tactile
