@@ -23,7 +23,7 @@
 #include "editor/ui/dialogs/dialog.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Provides the interface for all available persistent settings.
@@ -64,4 +64,4 @@ class SettingsDialog final : public ADialog
   void update_export_tab();
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

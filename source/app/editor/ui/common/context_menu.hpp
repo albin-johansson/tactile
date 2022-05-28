@@ -24,7 +24,7 @@
 #include "core/common/macros.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class ContextMenu
 {
@@ -50,4 +50,4 @@ class ContextMenu
   bool mShow{};
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

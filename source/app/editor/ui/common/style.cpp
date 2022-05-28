@@ -22,7 +22,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-namespace tactile {
+namespace tactile::ui {
 
 void remove_tab_bar_from_next_window()
 {
@@ -31,4 +31,4 @@ void remove_tab_bar_from_next_window()
   ImGui::SetNextWindowClass(&wc);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

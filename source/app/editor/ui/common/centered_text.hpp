@@ -19,7 +19,7 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Shows a centered label.
@@ -30,4 +30,4 @@ namespace tactile {
  */
 void centered_text(const char* text);
 
-}  // namespace tactile
+}  // namespace tactile::ui

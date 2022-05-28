@@ -25,7 +25,7 @@
 #include "core/common/macros.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class AddPropertyDialog final : public ADialog
 {
@@ -52,4 +52,4 @@ class AddPropertyDialog final : public ADialog
   AttributeType mPropertyType{AttributeType::String};
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

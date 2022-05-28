@@ -24,7 +24,7 @@
 
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void centered_text(const char* text)
 {
@@ -39,4 +39,4 @@ void centered_text(const char* text)
   ImGui::TextUnformatted(text);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -23,7 +23,7 @@
 
 #include <entt/fwd.hpp>
 
-namespace tactile {
+namespace tactile::ui {
 
 struct PropertyItemContextMenuState final
 {
@@ -36,4 +36,4 @@ auto property_item_context_menu(entt::dispatcher& dispatcher,
                                 const std::string& name,
                                 PropertyItemContextMenuState& state) -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -23,7 +23,7 @@
 
 #include "core/common/ints.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Converts an OpenGL texture identifier to a Dear ImGui texture identifier.
@@ -36,4 +36,4 @@ namespace tactile {
  */
 [[nodiscard]] auto to_texture_id(uint texture) noexcept -> ImTextureID;
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -22,7 +22,7 @@
 #include "core/components/attributes.hpp"
 #include "editor/ui/dialogs/string_input_dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class CreateComponentAttributeDialog final : public AStringInputDialog
 {
@@ -41,4 +41,4 @@ class CreateComponentAttributeDialog final : public AStringInputDialog
   ComponentID mComponentId{};
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

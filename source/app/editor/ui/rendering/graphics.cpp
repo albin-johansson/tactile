@@ -30,7 +30,7 @@
 #include "misc/assert.hpp"
 #include "render_info.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 [[nodiscard]] auto _convert_bounds_to_rect(const RenderInfo& info) -> cen::frect
@@ -391,4 +391,4 @@ auto GraphicsCtx::get_shadow_draw_color() const -> uint32
   return color_to_u32(cen::colors::black.with_alpha(mOpacity));
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

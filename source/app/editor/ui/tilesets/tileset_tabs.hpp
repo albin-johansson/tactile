@@ -23,8 +23,8 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-}  // namespace tactile
+}  // namespace tactile::ui

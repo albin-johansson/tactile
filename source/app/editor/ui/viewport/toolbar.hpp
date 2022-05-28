@@ -23,7 +23,7 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \name Toolbar functions
 /// \{
@@ -38,4 +38,4 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
 
 /// \} End of toolbar functions
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -30,7 +30,7 @@
 #include "editor/ui/scoped.hpp"
 #include "io/file_dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
 {
@@ -248,4 +248,4 @@ auto input_path(const char* id, const std::filesystem::path& value)
   return nothing;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

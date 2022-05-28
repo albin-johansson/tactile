@@ -28,7 +28,7 @@
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 [[nodiscard]] auto input_attribute(const char* id, const Attribute& value)
     -> Maybe<Attribute>;
@@ -62,4 +62,4 @@ namespace tactile {
 [[nodiscard]] auto input_path(const char* id, const std::filesystem::path& value)
     -> Maybe<std::filesystem::path>;
 
-}  // namespace tactile
+}  // namespace tactile::ui

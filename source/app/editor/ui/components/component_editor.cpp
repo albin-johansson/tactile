@@ -45,7 +45,7 @@
 #include "editor/ui/scoped.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 struct ComponentEditor::Data final
 {
@@ -240,4 +240,4 @@ void ComponentEditor::show_component_attribute(entt::dispatcher& dispatcher,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

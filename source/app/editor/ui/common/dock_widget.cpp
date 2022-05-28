@@ -23,7 +23,7 @@
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 struct ADockWidget::Data final
 {
@@ -88,4 +88,4 @@ auto ADockWidget::has_mouse_hover() const -> bool
   return mData->contains_mouse;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

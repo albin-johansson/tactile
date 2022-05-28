@@ -24,7 +24,7 @@
 #include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * Renders a map.
@@ -39,4 +39,4 @@ void render_map(GraphicsCtx& graphics,
                 const DocumentModel& model,
                 const MapDocument& map);
 
-}  // namespace tactile
+}  // namespace tactile::ui

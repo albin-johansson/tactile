@@ -32,7 +32,7 @@
 #include "editor/ui/rendering/render_tileset.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_tileset_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -54,4 +54,4 @@ void update_tileset_view(const DocumentModel& model, entt::dispatcher& dispatche
   graphics.pop_clip();
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

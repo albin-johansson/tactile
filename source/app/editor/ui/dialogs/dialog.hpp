@@ -24,7 +24,7 @@
 #include "core/common/macros.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Serves as the base implementation of all modal dialogs.
@@ -145,4 +145,4 @@ class ADialog
   bool mShow{};
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

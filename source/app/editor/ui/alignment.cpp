@@ -23,7 +23,7 @@
 
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void center_next_window_on_appearance()
 {
@@ -76,4 +76,4 @@ auto standard_component_width(const char* text) -> float
   return ImGui::CalcTextSize(text).x + (ImGui::GetStyle().FramePadding.x * 2.0f);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

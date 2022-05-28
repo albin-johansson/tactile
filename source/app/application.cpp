@@ -128,7 +128,7 @@ Application::Application(AppConfiguration* configuration)
 
   subscribe_to_events();
   load_default_shortcuts();
-  load_icons(mData->textures);
+  ui::load_icons(mData->textures);
 }
 
 Application::~Application() noexcept = default;
@@ -235,7 +235,7 @@ void Application::subscribe_to_events()
   d.sink<AddEllipseEvent>().connect<&Self::on_add_ellipse>(this);
   d.sink<AddPointEvent>().connect<&Self::on_add_point>(this);
 
-  d.sink<CenterViewportEvent>().connect<&center_map_viewport>();
+  d.sink<CenterViewportEvent>().connect<&ui::center_map_viewport>();
   d.sink<OffsetViewportEvent>().connect<&Self::on_offset_viewport>(this);
   d.sink<OffsetBoundViewportEvent>().connect<&Self::on_offset_bound_viewport>(this);
   d.sink<PanLeftEvent>().connect<&Self::on_pan_left>(this);
@@ -280,7 +280,7 @@ void Application::subscribe_to_events()
   d.sink<SetObjectTagEvent>().connect<&Self::on_set_object_tag>(this);
   d.sink<SpawnObjectContextMenuEvent>().connect<&Self::on_spawn_object_context_menu>(this);
 
-  d.sink<ShowAddPropertyDialogEvent>().connect<&show_property_creation_dialog>();
+  d.sink<ShowAddPropertyDialogEvent>().connect<&ui::show_property_creation_dialog>();
   d.sink<ShowRenamePropertyDialogEvent>().connect<&Self::on_show_rename_property_dialog>(this);
   d.sink<ShowChangePropertyTypeDialogEvent>().connect<&Self::on_show_change_property_type_dialog>(this);
   d.sink<AddPropertyEvent>().connect<&Self::on_add_property>(this);
@@ -349,7 +349,7 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
   if (document && !ImGui::GetTopMostPopupModal()) {
     const auto& registry = document->get_registry();
-    if (is_mouse_within_viewport()) {
+    if (ui::is_mouse_within_viewport()) {
       const auto& viewport = ctx_get<comp::Viewport>(registry);
       if (cen::is_active(primary_modifier)) {
         const auto y = event.precise_y();
@@ -366,9 +366,9 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
         mData->dispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
       }
     }
-    else if (is_tileset_dock_hovered()) {
-      const auto width = get_tileset_view_width();
-      const auto height = get_tileset_view_height();
+    else if (ui::is_tileset_dock_hovered()) {
+      const auto width = ui::get_tileset_view_width();
+      const auto height = ui::get_tileset_view_height();
       if (width && height) {
         const auto entity = sys::find_active_tileset(registry);
         TACTILE_ASSERT(entity != entt::null);
@@ -443,7 +443,7 @@ void Application::on_save_as(const SaveAsEvent& event)
 void Application::on_open_save_as_dialog()
 {
   if (active_document() != nullptr) {
-    show_save_as_dialog(mData->dispatcher);
+    ui::show_save_as_dialog(mData->dispatcher);
   }
 }
 
@@ -813,7 +813,7 @@ void Application::on_set_layer_visible(const SetLayerVisibleEvent& event)
 
 void Application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
 {
-  show_rename_layer_dialog(event.id);
+  ui::show_rename_layer_dialog(event.id);
 }
 
 void Application::on_rename_layer(const RenameLayerEvent& event)
@@ -848,19 +848,19 @@ void Application::on_set_object_tag(const SetObjectTagEvent& event)
 
 void Application::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
 {
-  open_object_context_menu();
+  ui::open_object_context_menu();
 }
 
 void Application::on_show_rename_property_dialog(
     const ShowRenamePropertyDialogEvent& event)
 {
-  show_rename_property_dialog(event.name);
+  ui::show_rename_property_dialog(event.name);
 }
 
 void Application::on_show_change_property_type_dialog(
     const ShowChangePropertyTypeDialogEvent& event)
 {
-  show_change_property_type_dialog(event.name, event.current_type);
+  ui::show_change_property_type_dialog(event.name, event.current_type);
 }
 
 void Application::on_add_property(const AddPropertyEvent& event)

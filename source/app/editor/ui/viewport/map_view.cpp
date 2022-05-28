@@ -49,7 +49,7 @@
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _object_context_menu_id = "##MapViewObjectContextMenu";
@@ -269,4 +269,4 @@ void open_object_context_menu()
                    ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

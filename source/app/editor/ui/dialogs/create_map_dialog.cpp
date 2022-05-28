@@ -27,7 +27,7 @@
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 CreateMapDialog::CreateMapDialog() : ADialog{"Create New Map"}
 {
@@ -100,4 +100,4 @@ auto CreateMapDialog::is_current_input_valid(const DocumentModel&) const -> bool
   return (mTileWidth > 0) && (mTileHeight > 0) && (mRows > 0) && (mColumns > 0);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

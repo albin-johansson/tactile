@@ -21,7 +21,7 @@
 
 #include "editor/ui/dialogs/dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Provides information about third-party dependencies.
@@ -37,4 +37,4 @@ class CreditsDialog final : public ADialog
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

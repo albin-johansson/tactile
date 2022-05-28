@@ -19,8 +19,8 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::ui {
 
 void remove_tab_bar_from_next_window();
 
-}  // namespace tactile
+}  // namespace tactile::ui

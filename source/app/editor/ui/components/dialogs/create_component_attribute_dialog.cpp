@@ -27,7 +27,7 @@
 #include "core/model.hpp"
 #include "core/systems/component_system.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 CreateComponentAttributeDialog::CreateComponentAttributeDialog()
     : AStringInputDialog{"Create Attribute"}
@@ -56,4 +56,4 @@ void CreateComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
                                                std::string{current_input()});
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

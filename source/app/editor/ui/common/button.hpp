@@ -19,7 +19,7 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Shows a button.
@@ -55,4 +55,4 @@ auto icon_button(const char* icon, const char* tooltip = nullptr, bool enabled =
  */
 auto centered_button(const char* label, const char* tooltip = nullptr) -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::ui

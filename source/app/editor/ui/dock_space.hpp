@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Updates the root dock space, call this function once each frame.
@@ -48,4 +48,4 @@ void load_default_layout(ImGuiID id, bool resetVisibility);
  */
 void reset_layout();
 
-}  // namespace tactile
+}  // namespace tactile::ui

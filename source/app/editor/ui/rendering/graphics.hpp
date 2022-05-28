@@ -28,7 +28,7 @@
 #include "core/renderer.hpp"
 #include "editor/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Provides a common simplified rendering API.
@@ -168,4 +168,4 @@ class GraphicsCtx final : public IRenderer
   [[nodiscard]] auto get_shadow_draw_color() const -> uint32;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

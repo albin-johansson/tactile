@@ -31,7 +31,7 @@
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr std::array _items{std::make_pair("string", AttributeType::String),
@@ -89,4 +89,4 @@ void show_property_type_combo(const AttributeType previous, AttributeType& out)
   _property_type_combo_impl(out, previous);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

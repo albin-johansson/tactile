@@ -23,8 +23,8 @@
 
 #include "editor/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void render_tileset(GraphicsCtx& graphics, const entt::registry& registry);
 
-}  // namespace tactile
+}  // namespace tactile::ui

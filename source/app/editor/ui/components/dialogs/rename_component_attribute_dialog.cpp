@@ -27,7 +27,7 @@
 #include "core/model.hpp"
 #include "core/systems/component_system.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 RenameComponentAttributeDialog::RenameComponentAttributeDialog()
     : AStringInputDialog{"Rename Component Attribute"}
@@ -57,4 +57,4 @@ auto RenameComponentAttributeDialog::validate(const DocumentModel& model,
          !sys::is_component_attribute_name_taken(registry, mComponentId.value(), input);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -21,7 +21,7 @@
 
 #include "editor/ui/components/dialogs/component_name_dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Used to create new component definitions.
@@ -39,4 +39,4 @@ class CreateComponentDialog final : public ComponentNameDialog
   void on_accept(entt::dispatcher& dispatcher) override;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

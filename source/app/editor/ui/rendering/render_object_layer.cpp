@@ -33,7 +33,7 @@
 #include "editor/ui/rendering/graphics.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 void _render_point_object(GraphicsCtx& graphics,
@@ -175,4 +175,4 @@ void render_object_layer(GraphicsCtx& graphics,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

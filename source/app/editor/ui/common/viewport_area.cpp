@@ -25,7 +25,7 @@
 #include "core/common/maybe.hpp"
 #include "core/mouse_info.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 [[nodiscard]] auto check_for(auto&& query) -> Maybe<cen::mouse_button>
@@ -114,4 +114,4 @@ void ViewportArea::check_released(const entt::registry& registry,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

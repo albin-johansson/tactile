@@ -34,7 +34,7 @@
 #include "editor/ui/tilesets/tileset_tabs.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
@@ -98,4 +98,4 @@ auto is_tileset_dock_hovered() -> bool
   return _get_state().is_hovered;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

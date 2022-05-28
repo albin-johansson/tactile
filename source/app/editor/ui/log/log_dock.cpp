@@ -29,7 +29,7 @@
 #include "misc/logging.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
@@ -230,4 +230,4 @@ auto is_log_dock_focused() -> bool
   return _is_dock_focused;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

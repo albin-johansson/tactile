@@ -23,7 +23,7 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \name Component dock functions
 /// \{
@@ -40,4 +40,4 @@ void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatc
 
 /// \} End of component dock functions
 
-}  // namespace tactile
+}  // namespace tactile::ui

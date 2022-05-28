@@ -28,7 +28,7 @@
 #include "editor/fwd.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Used to manage the available component definitions.
@@ -67,4 +67,4 @@ class ComponentEditor final : public ADialog
                                 const Attribute& value);
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

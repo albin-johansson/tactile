@@ -23,7 +23,7 @@
 
 #include <imgui.h>
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \addtogroup gui
 /// \{
@@ -91,4 +91,4 @@ auto right_align_next_item(const char* text) -> float;
 
 /// \} End of group gui
 
-}  // namespace tactile
+}  // namespace tactile::ui

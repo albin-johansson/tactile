@@ -21,10 +21,10 @@
 
 #include "core/attribute.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void show_property_type_combo(AttributeType& out);
 
 void show_property_type_combo(AttributeType previous, AttributeType& out);
 
-}  // namespace tactile
+}  // namespace tactile::ui

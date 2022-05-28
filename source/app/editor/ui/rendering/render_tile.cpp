@@ -32,7 +32,7 @@
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/textures.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void render_tile(GraphicsCtx& graphics,
                  const DocumentModel& model,
@@ -72,4 +72,4 @@ void render_tile(GraphicsCtx& graphics,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -19,7 +19,7 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Shows a checkbox.
@@ -34,4 +34,4 @@ namespace tactile {
  */
 auto checkbox(const char* label, bool* value, const char* tooltip = nullptr) -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::ui

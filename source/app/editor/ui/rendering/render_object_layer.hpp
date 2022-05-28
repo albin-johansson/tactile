@@ -24,7 +24,7 @@
 
 #include "editor/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void render_object(GraphicsCtx& graphics,
                    const entt::registry& registry,
@@ -46,4 +46,4 @@ void render_object_layer(GraphicsCtx& graphics,
                          entt::entity layerEntity,
                          float parentOpacity);
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -24,7 +24,7 @@
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constinit Maybe<uint> _tactile_icon;
@@ -42,4 +42,4 @@ auto get_tactile_icon() -> uint
   return _tactile_icon.value();
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

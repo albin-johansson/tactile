@@ -33,7 +33,7 @@
 #include "editor/ui/themes.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 void _update_preview_settings(const io::PreferenceState& prefs)
@@ -276,4 +276,4 @@ void SettingsDialog::update_export_tab()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

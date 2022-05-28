@@ -23,7 +23,7 @@
 
 #include "core/common/identifiers.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Shows a view of a single component, attached to a context.
@@ -38,4 +38,4 @@ void component_view(const entt::registry& registry,
                     ContextID contextId,
                     entt::entity componentEntity);
 
-}  // namespace tactile
+}  // namespace tactile::ui

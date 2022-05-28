@@ -26,7 +26,7 @@
 #include "core/attribute.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \name Property dock functions
 /// \{
@@ -43,4 +43,4 @@ void show_change_property_type_dialog(std::string name, AttributeType type);
 
 /// \} End of property dock functions
 
-}  // namespace tactile
+}  // namespace tactile::ui

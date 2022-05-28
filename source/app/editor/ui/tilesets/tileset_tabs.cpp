@@ -34,7 +34,7 @@
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tilesets/tileset_view.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _tab_bar_flags =
@@ -124,4 +124,4 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -25,7 +25,7 @@
 #include "core/common/macros.hpp"
 #include "editor/ui/rendering/render_info.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class ViewportArea
 {
@@ -60,4 +60,4 @@ class ViewportArea
   void check_released(const entt::registry& registry, entt::dispatcher& dispatcher);
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

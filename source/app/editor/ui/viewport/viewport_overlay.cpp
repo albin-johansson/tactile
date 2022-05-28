@@ -32,7 +32,7 @@
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _window_flags =
@@ -171,4 +171,4 @@ void update_viewport_overlay(const entt::registry& registry,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

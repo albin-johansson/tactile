@@ -23,7 +23,7 @@
 #include "core/common/macros.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Used to change the dimensions of a tilemap.
@@ -50,4 +50,4 @@ class ResizeMapDialog final : public ADialog
   usize mColumns{};
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

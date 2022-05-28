@@ -23,7 +23,7 @@
 #include "core/common/maybe.hpp"
 #include "editor/ui/dialogs/string_input_dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Used to change the name of an existing layer.
@@ -47,4 +47,4 @@ class RenameLayerDialog final : public AStringInputDialog
   Maybe<std::string> mOldName;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

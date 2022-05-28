@@ -24,7 +24,7 @@
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 ADialog::ADialog(const char* title) : mTitle{title}
 {
@@ -97,4 +97,4 @@ void ADialog::set_close_button_label(const char* label)
   mCloseButtonLabel = label;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

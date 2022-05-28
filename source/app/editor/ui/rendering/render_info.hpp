@@ -24,7 +24,7 @@
 #include "core/fwd.hpp"
 #include "core/region.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \addtogroup rendering
 /// \{
@@ -58,4 +58,4 @@ struct RenderInfo final
 
 /// \} End of group rendering
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -24,7 +24,7 @@
 #include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * Renders a tile layer.
@@ -43,4 +43,4 @@ void render_tile_layer(GraphicsCtx& graphics,
                        entt::entity layerEntity,
                        float parentOpacity);
 
-}  // namespace tactile
+}  // namespace tactile::ui

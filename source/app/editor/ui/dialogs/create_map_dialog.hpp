@@ -21,7 +21,7 @@
 
 #include "editor/ui/dialogs/dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Represents the dialog used to create new tilemaps.
@@ -50,4 +50,4 @@ class CreateMapDialog final : public ADialog
   int mColumns{};
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

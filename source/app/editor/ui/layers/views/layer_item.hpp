@@ -21,7 +21,7 @@
 
 #include <entt/fwd.hpp>
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Shows a widget for a single layer in a map.
@@ -36,4 +36,4 @@ void layer_item_view(const entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      entt::entity layerEntity);
 
-}  // namespace tactile
+}  // namespace tactile::ui

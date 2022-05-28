@@ -41,7 +41,7 @@
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr cen::color _rubber_band_color{0, 0x44, 0xCC, 100};
@@ -161,4 +161,4 @@ auto get_tileset_view_height() -> Maybe<float>
   return _view_height;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

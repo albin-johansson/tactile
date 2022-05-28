@@ -37,7 +37,7 @@
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _window_flags =
@@ -199,4 +199,4 @@ auto is_toolbar_focused() -> bool
   return _toolbar_focused;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

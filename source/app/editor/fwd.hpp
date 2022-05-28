@@ -19,10 +19,11 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::ui {
 
 struct RenderInfo;
+struct ViewportCursorInfo;
 
 class GraphicsCtx;
 
-}  // namespace tactile
+}  // namespace tactile::ui

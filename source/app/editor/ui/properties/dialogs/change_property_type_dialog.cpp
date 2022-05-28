@@ -28,7 +28,7 @@
 #include "editor/ui/common/button.hpp"
 #include "property_type_combo.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 ChangePropertyTypeDialog::ChangePropertyTypeDialog() : ADialog{"Change Property Type"}
 {
@@ -62,4 +62,4 @@ auto ChangePropertyTypeDialog::is_current_input_valid(const DocumentModel&) cons
   return mCurrentType != mPreviousType.value();
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

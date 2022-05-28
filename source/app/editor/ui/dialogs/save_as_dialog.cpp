@@ -29,7 +29,7 @@
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void show_save_as_dialog(entt::dispatcher& dispatcher)
 {
@@ -65,4 +65,4 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

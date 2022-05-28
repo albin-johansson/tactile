@@ -25,7 +25,7 @@
 #include "core/events/layer_events.hpp"
 #include "editor/ui/icons.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 AddLayerContextMenu::AddLayerContextMenu() : ContextMenu{"AddLayerContextMenu"} {}
 
@@ -44,4 +44,4 @@ void AddLayerContextMenu::on_update(const DocumentModel&, entt::dispatcher& disp
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

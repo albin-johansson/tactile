@@ -24,7 +24,7 @@
 #include "meta/build.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr float _accent_opacity = 0.65f;
@@ -285,4 +285,4 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

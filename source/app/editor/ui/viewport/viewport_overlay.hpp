@@ -21,11 +21,11 @@
 
 #include <entt/fwd.hpp>
 
-namespace tactile {
+#include "editor/fwd.hpp"
 
-struct ViewportCursorInfo;
+namespace tactile::ui {
 
 void update_viewport_overlay(const entt::registry& registry,
                              const ViewportCursorInfo& cursor);
 
-}  // namespace tactile
+}  // namespace tactile::ui

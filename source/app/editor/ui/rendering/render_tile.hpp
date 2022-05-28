@@ -28,7 +28,7 @@
 
 struct ImVec2;
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * Renders a single tile.
@@ -49,4 +49,4 @@ void render_tile(GraphicsCtx& graphics,
                  int32 row,
                  int32 column);
 
-}  // namespace tactile
+}  // namespace tactile::ui

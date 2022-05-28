@@ -23,7 +23,7 @@
 
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 auto checkbox(const char* label, bool* value, const char* tooltip) -> bool
 {
@@ -38,4 +38,4 @@ auto checkbox(const char* label, bool* value, const char* tooltip) -> bool
   return changed;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

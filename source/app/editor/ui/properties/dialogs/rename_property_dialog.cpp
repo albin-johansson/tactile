@@ -26,7 +26,7 @@
 #include "core/systems/context_system.hpp"
 #include "core/systems/property_system.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog{"Rename Property"}
 {
@@ -46,4 +46,4 @@ auto RenamePropertyDialog::validate(const DocumentModel& model,
   return !input.empty() && !sys::has_property_with_name(registry, context, input);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -27,7 +27,7 @@
 
 #include "editor/ui/dialogs/dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief An abstract class representing dialogs which provide a string input field.
@@ -84,4 +84,4 @@ class AStringInputDialog : public ADialog
   bool mShouldAcquireFocus{};
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

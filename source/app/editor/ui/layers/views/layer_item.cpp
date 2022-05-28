@@ -36,7 +36,7 @@
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr int _base_node_flags =
@@ -187,4 +187,4 @@ void layer_item_view(const entt::registry& registry,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

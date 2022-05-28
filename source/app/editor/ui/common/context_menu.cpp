@@ -24,7 +24,7 @@
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 ContextMenu::ContextMenu(const char* name) : mName{name}
 {
@@ -50,4 +50,4 @@ void ContextMenu::show()
   mShow = true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

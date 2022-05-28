@@ -28,7 +28,7 @@
 #include "editor/ui/rendering/graphics.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void render_tileset(GraphicsCtx& graphics, const entt::registry& registry)
 {
@@ -58,4 +58,4 @@ void render_tileset(GraphicsCtx& graphics, const entt::registry& registry)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

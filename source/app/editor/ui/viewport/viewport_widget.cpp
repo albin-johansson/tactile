@@ -34,7 +34,7 @@
 #include "editor/ui/textures.hpp"
 #include "editor/ui/viewport/document_tab_widget.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
@@ -110,4 +110,4 @@ auto is_mouse_within_viewport() noexcept -> bool
   return _mouse_within_window;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

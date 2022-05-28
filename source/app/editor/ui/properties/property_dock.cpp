@@ -50,7 +50,7 @@
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 inline PropertyItemContextMenuState _context_state;
@@ -430,4 +430,4 @@ auto is_property_dock_focused() -> bool
   return _is_focused;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

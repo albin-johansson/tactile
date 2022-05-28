@@ -29,7 +29,7 @@
 #define TAC_URL "https://www.github.com/albin-johansson/tactile"
 #define TAC_LICENSE "GPL v3.0"
 
-namespace tactile {
+namespace tactile::ui {
 
 AboutDialog::AboutDialog() : ADialog{"About Tactile"}
 {
@@ -66,4 +66,4 @@ void AboutDialog::on_update(const DocumentModel&, entt::dispatcher&)
   ImGui::TextUnformatted(ICON_FA_FONT_AWESOME " Icons by Font Awesome.");
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

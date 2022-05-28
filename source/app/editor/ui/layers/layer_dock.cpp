@@ -44,7 +44,7 @@
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 inline RenameLayerDialog _rename_layer_dialog;
@@ -178,4 +178,4 @@ auto is_layer_dock_focused() -> bool
   return _is_focused;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

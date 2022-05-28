@@ -25,7 +25,7 @@
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constinit Maybe<ImGuiID> _root_id;
@@ -82,4 +82,4 @@ void reset_layout()
   load_default_layout(_root_id.value(), true);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

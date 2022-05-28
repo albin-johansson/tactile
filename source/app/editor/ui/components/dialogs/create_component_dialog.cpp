@@ -25,7 +25,7 @@
 
 #include "core/events/component_events.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 CreateComponentDialog::CreateComponentDialog() : ComponentNameDialog{"Create Component"}
 {
@@ -43,4 +43,4 @@ void CreateComponentDialog::on_accept(entt::dispatcher& dispatcher)
   dispatcher.enqueue<CreateComponentDefEvent>(std::string{current_input()});
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

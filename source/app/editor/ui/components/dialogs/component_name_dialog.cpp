@@ -22,7 +22,7 @@
 #include "core/model.hpp"
 #include "core/systems/component_system.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 auto ComponentNameDialog::validate(const DocumentModel& model,
                                    const std::string_view input) const -> bool
@@ -31,4 +31,4 @@ auto ComponentNameDialog::validate(const DocumentModel& model,
   return !input.empty() && !sys::is_component_name_taken(registry, input);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

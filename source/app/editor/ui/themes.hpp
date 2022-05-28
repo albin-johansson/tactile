@@ -23,7 +23,7 @@
 
 struct ImGuiStyle;
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \addtogroup gui
 /// \{
@@ -90,4 +90,4 @@ void apply_theme(ImGuiStyle& style, EditorTheme theme);
 
 /// \} End of group gui
 
-}  // namespace tactile
+}  // namespace tactile::ui

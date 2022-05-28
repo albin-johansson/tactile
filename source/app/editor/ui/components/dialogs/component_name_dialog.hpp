@@ -21,7 +21,7 @@
 
 #include "editor/ui/dialogs/string_input_dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class ComponentNameDialog : public AStringInputDialog
 {
@@ -32,4 +32,4 @@ class ComponentNameDialog : public AStringInputDialog
       -> bool final;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

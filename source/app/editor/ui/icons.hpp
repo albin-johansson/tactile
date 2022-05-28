@@ -102,7 +102,7 @@
 
 /// \} End of group gui
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Loads some icons to be used in the GUI.
@@ -118,4 +118,4 @@ void load_icons(TextureManager& textures);
  */
 [[nodiscard]] auto get_tactile_icon() -> uint;
 
-}  // namespace tactile
+}  // namespace tactile::ui

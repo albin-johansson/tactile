@@ -24,7 +24,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \name Layer dock functions
 /// \{
@@ -61,4 +61,4 @@ void show_rename_layer_dialog(LayerID layerId);
 
 /// \} End of layer dock functions
 
-}  // namespace tactile
+}  // namespace tactile::ui

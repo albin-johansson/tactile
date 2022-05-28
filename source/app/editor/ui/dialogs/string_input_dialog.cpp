@@ -25,7 +25,7 @@
 
 #include "core/utils/buffers.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 AStringInputDialog::AStringInputDialog(const char* title) : ADialog{title} {}
 
@@ -69,4 +69,4 @@ auto AStringInputDialog::previous_input() const -> const std::string&
   return mPrevious;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

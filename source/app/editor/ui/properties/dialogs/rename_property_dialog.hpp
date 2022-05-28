@@ -22,7 +22,7 @@
 #include "core/common/macros.hpp"
 #include "editor/ui/dialogs/string_input_dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class RenamePropertyDialog final : public AStringInputDialog
 {
@@ -41,4 +41,4 @@ class RenamePropertyDialog final : public AStringInputDialog
       -> bool override;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -23,7 +23,7 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \name Viewport widget functions
 /// \{
@@ -42,4 +42,4 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
 
 /// \} End of viewport widget functions
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -27,7 +27,7 @@
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 [[nodiscard]] auto _get_render_bounds(const ImVec2& tl,
@@ -104,4 +104,4 @@ auto get_render_info(const comp::Viewport& viewport, const comp::Tileset& tilese
   return _get_render_info(viewport, tileSize, tileset.row_count, tileset.column_count);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

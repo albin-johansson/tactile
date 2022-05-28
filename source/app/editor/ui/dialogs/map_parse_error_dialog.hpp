@@ -23,7 +23,7 @@
 #include "editor/ui/dialogs/dialog.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Provides information about a failed attempt to parse a map.
@@ -42,4 +42,4 @@ class MapParseErrorDialog final : public ADialog
   Maybe<io::ParseError> mError;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

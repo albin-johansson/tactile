@@ -33,7 +33,7 @@
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _header_flags =
@@ -128,4 +128,4 @@ void component_view(const entt::registry& registry,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

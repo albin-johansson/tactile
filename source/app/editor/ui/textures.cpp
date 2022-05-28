@@ -21,7 +21,7 @@
 
 #include <cstdint>  // uintptr_t
 
-namespace tactile {
+namespace tactile::ui {
 
 auto to_texture_id(const uint texture) noexcept -> ImTextureID
 {
@@ -29,4 +29,4 @@ auto to_texture_id(const uint texture) noexcept -> ImTextureID
   return reinterpret_cast<ImTextureID>(value);  // NOLINT
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

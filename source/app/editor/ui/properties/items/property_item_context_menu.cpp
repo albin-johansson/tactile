@@ -26,7 +26,7 @@
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 auto property_item_context_menu(entt::dispatcher& dispatcher,
                                 const std::string& name,
@@ -49,4 +49,4 @@ auto property_item_context_menu(entt::dispatcher& dispatcher,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

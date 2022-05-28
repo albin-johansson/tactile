@@ -31,7 +31,7 @@
 #include "editor/ui/rendering/render_tile_layer.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 void _render_layer(GraphicsCtx& graphics,
@@ -104,4 +104,4 @@ void render_map(GraphicsCtx& graphics, const DocumentModel& model, const MapDocu
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

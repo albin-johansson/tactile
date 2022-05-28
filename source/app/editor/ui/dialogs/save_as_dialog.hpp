@@ -21,7 +21,7 @@
 
 #include <entt/fwd.hpp>
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Opens the blocking "Save As..." file dialog.
@@ -30,4 +30,4 @@ namespace tactile {
  */
 void show_save_as_dialog(entt::dispatcher& dispatcher);
 
-}  // namespace tactile
+}  // namespace tactile::ui

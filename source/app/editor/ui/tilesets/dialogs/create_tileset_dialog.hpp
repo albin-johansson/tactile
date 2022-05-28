@@ -24,7 +24,7 @@
 
 #include "editor/ui/dialogs/dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class CreateTilesetDialog final : public ADialog
 {
@@ -50,4 +50,4 @@ class CreateTilesetDialog final : public ADialog
   void ShowImageFileDialog();
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

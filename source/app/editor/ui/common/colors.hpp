@@ -26,7 +26,7 @@
 
 #include "core/common/ints.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Converts a color into an array of normalized color components.
@@ -63,4 +63,4 @@ namespace tactile {
                                1.0f);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

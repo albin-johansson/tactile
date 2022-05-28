@@ -25,7 +25,7 @@
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_tileset_view(const DocumentModel& model,
                          const UUID& tilesetId,
@@ -35,4 +35,4 @@ void update_tileset_view(const DocumentModel& model,
 
 [[nodiscard]] auto get_tileset_view_height() -> Maybe<float>;
 
-}  // namespace tactile
+}  // namespace tactile::ui

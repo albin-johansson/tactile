@@ -23,7 +23,7 @@
 
 #include "editor/ui/icons.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 MapParseErrorDialog::MapParseErrorDialog() : ADialog{"Map Parse Error"}
 {
@@ -43,4 +43,4 @@ void MapParseErrorDialog::on_update(const DocumentModel&, entt::dispatcher&)
   ImGui::Text("Cause: %s", io::to_cause(mError.value()).data());
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

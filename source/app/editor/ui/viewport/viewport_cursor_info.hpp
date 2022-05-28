@@ -24,7 +24,7 @@
 #include "core/tile_pos.hpp"
 #include "editor/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 struct ViewportCursorInfo final
 {
@@ -37,4 +37,4 @@ struct ViewportCursorInfo final
 
 [[nodiscard]] auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo;
 
-}  // namespace tactile
+}  // namespace tactile::ui

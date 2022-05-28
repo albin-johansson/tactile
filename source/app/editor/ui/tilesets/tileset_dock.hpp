@@ -23,7 +23,7 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
@@ -31,4 +31,4 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
 
 [[nodiscard]] auto is_tileset_dock_hovered() -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::ui

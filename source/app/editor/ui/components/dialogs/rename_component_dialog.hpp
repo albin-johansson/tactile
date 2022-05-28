@@ -26,7 +26,7 @@
 #include "core/components/attributes.hpp"
 #include "editor/ui/components/dialogs/component_name_dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * \brief Used to change the name of a component definition.
@@ -47,4 +47,4 @@ class RenameComponentDialog final : public ComponentNameDialog
   Maybe<ComponentID> mComponentId;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

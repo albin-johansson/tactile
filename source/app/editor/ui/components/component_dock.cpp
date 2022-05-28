@@ -37,7 +37,7 @@
 #include "editor/ui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _add_component_popup_id = "##AddComponentButtonPopup";
@@ -117,4 +117,4 @@ void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatc
   prefs.set_component_dock_visible(visible);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

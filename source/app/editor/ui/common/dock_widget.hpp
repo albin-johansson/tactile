@@ -26,7 +26,7 @@
 #include "core/common/memory.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class ADockWidget
 {
@@ -62,4 +62,4 @@ class ADockWidget
   Unique<Data> mData;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -25,7 +25,7 @@
 #include "editor/ui/scoped.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 auto button(const char* text,
             const char* tooltip,
@@ -68,4 +68,4 @@ auto centered_button(const char* text, const char* tooltip) -> bool
   return button(text, tooltip);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

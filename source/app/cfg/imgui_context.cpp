@@ -50,7 +50,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   const auto& prefs = io::get_preferences();
   auto& style = ImGui::GetStyle();
 
-  apply_style(style);
+  ui::apply_style(style);
   apply_theme(style, prefs.get_theme());
 
   style.WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;

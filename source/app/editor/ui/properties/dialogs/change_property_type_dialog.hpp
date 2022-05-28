@@ -26,7 +26,7 @@
 #include "core/common/maybe.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class ChangePropertyTypeDialog final : public ADialog
 {
@@ -54,4 +54,4 @@ class ChangePropertyTypeDialog final : public ADialog
   Maybe<AttributeType> mPreviousType;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

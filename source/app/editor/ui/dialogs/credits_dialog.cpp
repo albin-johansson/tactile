@@ -23,7 +23,7 @@
 
 #include "editor/ui/scoped.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _table_flags = ImGuiTableFlags_RowBg |      //
@@ -88,4 +88,4 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

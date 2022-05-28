@@ -12,7 +12,7 @@ TEST(PreferenceState, Defaults)
 {
   const io::PreferenceState state;
 
-  ASSERT_EQ(EditorTheme::Nocturnal, state.get_theme());
+  ASSERT_EQ(ui::EditorTheme::Nocturnal, state.get_theme());
 
   ASSERT_TRUE(state.is_grid_visible());
   ASSERT_FALSE(state.has_window_border());
@@ -39,8 +39,8 @@ TEST(PreferenceState, SetTheme)
 {
   io::PreferenceState state;
 
-  state.set_theme(EditorTheme::Amber);
-  ASSERT_EQ(EditorTheme::Amber, state.get_theme());
+  state.set_theme(ui::EditorTheme::Amber);
+  ASSERT_EQ(ui::EditorTheme::Amber, state.get_theme());
 }
 
 TEST(PreferenceState, SetViewportBg)
@@ -227,18 +227,18 @@ TEST(PreferenceState, SetPreferredTileHeight)
 
 TEST(PreferenceState, EnsureThemeEnumsMatch)
 {
-  ASSERT_EQ(proto::THEME_DEAR_DARK, to_underlying(EditorTheme::DearDark));
-  ASSERT_EQ(proto::THEME_DEAR_LIGHT, to_underlying(EditorTheme::DearLight));
-  ASSERT_EQ(proto::THEME_RUBY, to_underlying(EditorTheme::Ruby));
-  ASSERT_EQ(proto::THEME_SAPPHIRE, to_underlying(EditorTheme::Sapphire));
-  ASSERT_EQ(proto::THEME_EMERALD, to_underlying(EditorTheme::Emerald));
-  ASSERT_EQ(proto::THEME_AMETHYST, to_underlying(EditorTheme::Amethyst));
-  ASSERT_EQ(proto::THEME_AMBER, to_underlying(EditorTheme::Amber));
-  ASSERT_EQ(proto::THEME_NOCTURNAL, to_underlying(EditorTheme::Nocturnal));
-  ASSERT_EQ(proto::THEME_ASH, to_underlying(EditorTheme::Ash));
-  ASSERT_EQ(proto::THEME_DIAMOND, to_underlying(EditorTheme::Diamond));
-  ASSERT_EQ(proto::THEME_JOKER, to_underlying(EditorTheme::Joker));
-  ASSERT_EQ(proto::THEME_RASPBERRY, to_underlying(EditorTheme::Raspberry));
+  ASSERT_EQ(proto::THEME_DEAR_DARK, to_underlying(ui::EditorTheme::DearDark));
+  ASSERT_EQ(proto::THEME_DEAR_LIGHT, to_underlying(ui::EditorTheme::DearLight));
+  ASSERT_EQ(proto::THEME_RUBY, to_underlying(ui::EditorTheme::Ruby));
+  ASSERT_EQ(proto::THEME_SAPPHIRE, to_underlying(ui::EditorTheme::Sapphire));
+  ASSERT_EQ(proto::THEME_EMERALD, to_underlying(ui::EditorTheme::Emerald));
+  ASSERT_EQ(proto::THEME_AMETHYST, to_underlying(ui::EditorTheme::Amethyst));
+  ASSERT_EQ(proto::THEME_AMBER, to_underlying(ui::EditorTheme::Amber));
+  ASSERT_EQ(proto::THEME_NOCTURNAL, to_underlying(ui::EditorTheme::Nocturnal));
+  ASSERT_EQ(proto::THEME_ASH, to_underlying(ui::EditorTheme::Ash));
+  ASSERT_EQ(proto::THEME_DIAMOND, to_underlying(ui::EditorTheme::Diamond));
+  ASSERT_EQ(proto::THEME_JOKER, to_underlying(ui::EditorTheme::Joker));
+  ASSERT_EQ(proto::THEME_RASPBERRY, to_underlying(ui::EditorTheme::Raspberry));
 }
 
 TEST(PreferenceState, EnsureOverlayPosEnumsMatch)

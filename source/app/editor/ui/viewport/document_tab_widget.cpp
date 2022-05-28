@@ -31,7 +31,7 @@
 #include "editor/ui/viewport/map_view.hpp"
 #include "editor/ui/viewport/tileset_view.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -76,4 +76,4 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

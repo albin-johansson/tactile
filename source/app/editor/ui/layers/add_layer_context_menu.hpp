@@ -21,7 +21,7 @@
 
 #include "editor/ui/common/context_menu.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 class AddLayerContextMenu final : public ContextMenu
 {
@@ -32,4 +32,4 @@ class AddLayerContextMenu final : public ContextMenu
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui
