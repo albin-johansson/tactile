@@ -257,6 +257,17 @@ auto DocumentModel::active_document() const -> const ADocument*
   }
 }
 
+auto DocumentModel::active_map() -> MapDocument*
+{
+  if (mActiveDocument) {
+    TACTILE_ASSERT(mMaps.contains(*mActiveDocument));
+    return mMaps.at(*mActiveDocument).get();
+  }
+  else {
+    return nullptr;
+  }
+}
+
 auto DocumentModel::get_active_document() const -> const ADocument&
 {
   if (const auto* document = active_document()) {

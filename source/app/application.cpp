@@ -35,6 +35,7 @@
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/viewport.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/events/map_events.hpp"
 #include "core/events/misc_events.hpp"
 #include "core/events/tileset_events.hpp"
@@ -763,9 +764,9 @@ void Application::on_resize_map(const ResizeMapEvent& event)
 
 void Application::on_open_resize_map_dialog()
 {
-  if (auto* registry = mData->model.active_registry()) {
-    const auto& map = ctx_get<comp::MapInfo>(*registry);
-    ui::show_resize_map_dialog(map.row_count, map.column_count);
+  if (auto* map = mData->model.active_map()) {
+    const auto& info = map->info();
+    ui::show_resize_map_dialog(info.row_count, info.column_count);
   }
 }
 
@@ -781,8 +782,8 @@ void Application::on_remove_layer(const RemoveLayerEvent& event)
 
 void Application::on_select_layer(const SelectLayerEvent& event)
 {
-  if (auto* registry = mData->model.active_registry()) {
-    sys::select_layer(*registry, event.id);
+  if (auto* map = mData->model.active_map()) {
+    sys::select_layer(map->get_registry(), event.id);
   }
 }
 

@@ -117,6 +117,8 @@ class DocumentModel final
   [[nodiscard]] auto active_document() -> ADocument*;
   [[nodiscard]] auto active_document() const -> const ADocument*;
 
+  [[nodiscard]] auto active_map() -> MapDocument*;
+
   /// Returns the active document.
   [[nodiscard]] auto get_active_document() const -> const ADocument&;
 
