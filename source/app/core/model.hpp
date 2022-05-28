@@ -125,7 +125,7 @@ class DocumentModel final
   [[nodiscard]] auto active_registry() const -> const entt::registry*;
 
   /// Returns the registry of a specific document.
-  [[nodiscard]] auto get_registry(const UUID& documentId) const -> const entt::registry&;
+  [[nodiscard]] auto get_registry(const UUID& id) const -> const entt::registry&;
 
   /// Returns the registry of the active document.
   [[nodiscard]] auto get_active_registry() -> entt::registry&;
@@ -141,15 +141,11 @@ class DocumentModel final
   [[nodiscard]] auto is_tileset(const UUID& id) const -> bool;
 
   [[nodiscard]] auto get_document(const UUID& id) -> Shared<ADocument>;
-  [[nodiscard]] auto get_document(const UUID& id) const -> Shared<const ADocument>;
-
   [[nodiscard]] auto get_map(const UUID& id) -> Shared<MapDocument>;
-  [[nodiscard]] auto get_map(const UUID& id) const -> Shared<const MapDocument>;
-
   [[nodiscard]] auto get_tileset(const UUID& id) -> Shared<TilesetDocument>;
-  [[nodiscard]] auto get_tileset(const UUID& id) const -> Shared<const TilesetDocument>;
 
   /// Getters that do not require a copy of shared pointers, which can be expensive
+  [[nodiscard]] auto view_document(const UUID& id) const -> const ADocument&;
   [[nodiscard]] auto view_map(const UUID& id) const -> const MapDocument&;
   [[nodiscard]] auto view_tileset(const UUID& id) const -> const TilesetDocument&;
 

@@ -41,17 +41,17 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
 
       ImGuiTabItemFlags flags = 0;
       const auto isActive = model.active_document_id() == documentId;
-      const auto document = model.get_document(documentId);
+      const auto& document = model.view_document(documentId);
 
       if (isActive) {
         flags |= ImGuiTabItemFlags_SetSelected;
 
-        if (!document->get_history().is_clean()) {
+        if (!document.get_history().is_clean()) {
           flags |= ImGuiTabItemFlags_UnsavedDocument;
         }
       }
 
-      const auto& registry = document->get_registry();
+      const auto& registry = document.get_registry();
       const auto& context = ctx_get<comp::AttributeContext>(registry);
 
       bool opened = true;

@@ -83,10 +83,10 @@ void StampTool::draw_gizmos(const DocumentModel& model,
   const auto offset = selectionSize / TilePos{2, 2};
 
   const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, activeTileset.entity);
-  const auto tileset = model.get_tileset(tilesetRef.source_tileset);
+  const auto& tileset = model.view_tileset(tilesetRef.source_tileset);
 
-  const auto& texture = tileset->texture();
-  const auto& uv = tileset->uv_size();
+  const auto& texture = tileset.texture();
+  const auto& uv = tileset.uv_size();
 
   const auto origin = renderer.get_origin();
   const auto gridSize = renderer.get_grid_size();

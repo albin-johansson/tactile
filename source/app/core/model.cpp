@@ -205,16 +205,6 @@ auto DocumentModel::get_document(const UUID& id) -> Shared<ADocument>
   }
 }
 
-auto DocumentModel::get_document(const UUID& id) const -> Shared<const ADocument>
-{
-  if (const auto iter = mDocuments.find(id); iter != mDocuments.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid document identifier!"};
-  }
-}
-
 auto DocumentModel::active_document_id() const -> Maybe<UUID>
 {
   return mActiveDocument;
@@ -297,14 +287,9 @@ auto DocumentModel::active_registry() const -> const entt::registry*
   }
 }
 
-auto DocumentModel::get_registry(const UUID& documentId) const -> const entt::registry&
+auto DocumentModel::get_registry(const UUID& id) const -> const entt::registry&
 {
-  if (const auto iter = mDocuments.find(documentId); iter != mDocuments.end()) {
-    return iter->second->get_registry();
-  }
-  else {
-    throw TactileError{"Invalid document identifier!"};
-  }
+  return view_document(id).get_registry();
 }
 
 auto DocumentModel::get_active_registry() -> entt::registry&
@@ -361,16 +346,6 @@ auto DocumentModel::get_map(const UUID& id) -> Shared<MapDocument>
   }
 }
 
-auto DocumentModel::get_map(const UUID& id) const -> Shared<const MapDocument>
-{
-  if (const auto iter = mMaps.find(id); iter != mMaps.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid map document identifier!"};
-  }
-}
-
 auto DocumentModel::get_tileset(const UUID& id) -> Shared<TilesetDocument>
 {
   if (const auto iter = mTilesets.find(id); iter != mTilesets.end()) {
@@ -381,13 +356,13 @@ auto DocumentModel::get_tileset(const UUID& id) -> Shared<TilesetDocument>
   }
 }
 
-auto DocumentModel::get_tileset(const UUID& id) const -> Shared<const TilesetDocument>
+auto DocumentModel::view_document(const UUID& id) const -> const ADocument&
 {
-  if (const auto iter = mTilesets.find(id); iter != mTilesets.end()) {
-    return iter->second;
+  if (const auto iter = mDocuments.find(id); iter != mDocuments.end()) {
+    return *iter->second;
   }
   else {
-    throw TactileError{"Invalid tileset document identifier!"};
+    throw TactileError{"Invalid document identifier!"};
   }
 }
 
