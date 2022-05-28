@@ -151,7 +151,7 @@ auto DocumentModel::has_document_with_path(const std::filesystem::path& path) co
     -> bool
 {
   for (const auto& [id, document] : mDocuments) {
-    if (document->get_path() == path) {
+    if (document->has_path() && document->get_path() == path) {
       return true;
     }
   }
