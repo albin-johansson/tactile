@@ -137,7 +137,7 @@ Application::~Application() noexcept = default;
 
 void Application::on_startup()
 {
-  load_file_history();
+  io::load_file_history();
 
   if (get_preferences().will_restore_last_session()) {
     restore_last_session(mData->model, mData->textures);
@@ -152,7 +152,7 @@ void Application::on_shutdown()
   save_current_files_to_history();
   save_preferences();
   save_session(mData->model);
-  save_file_history();
+  io::save_file_history();
 
   auto& window = mData->config->window();
   window.hide();
@@ -324,7 +324,7 @@ void Application::save_current_files_to_history()
   mData->model.each([this](const UUID& id) {
     const auto document = mData->model.get_document(id);
     if (document->is_map() && document->has_path()) {
-      add_file_to_history(document->get_path());
+      io::add_file_to_history(document->get_path());
     }
   });
 }
@@ -471,7 +471,7 @@ void Application::on_close_document(const CloseDocumentEvent& event)
   const auto document = mData->model.get_document(event.id);
 
   if (document->is_map() && document->has_path()) {
-    set_last_closed_file(document->get_path());
+    io::set_last_closed_file(document->get_path());
   }
 
   mData->model.close_document(event.id);
@@ -501,7 +501,7 @@ void Application::on_open_map(const OpenMapEvent& event)
   const auto ir = parsing::parse_map(event.path);
   if (ir.error() == parsing::ParseError::None) {
     restore_map_from_ir(ir, mData->model, mData->textures);
-    add_file_to_history(event.path);
+    io::add_file_to_history(event.path);
   }
   else {
     mData->widgets.show_map_import_error_dialog(ir.error());

@@ -34,7 +34,7 @@
 #include "io/persistence/proto.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 // constexpr int _format_version = 1;
@@ -142,8 +142,8 @@ auto last_closed_file() -> const std::string&
     return _last_closed_file.value();
   }
   else {
-    throw TactileError("Invalid last closed file!");
+    throw TactileError{"Invalid last closed file!"};
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::io
