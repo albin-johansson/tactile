@@ -23,7 +23,6 @@
 #include <cmath>      // abs
 
 #include <entt/signal/dispatcher.hpp>
-#include <glm/vec2.hpp>
 
 #include "core/common/math.hpp"
 #include "core/components/tools.hpp"
@@ -41,7 +40,7 @@ void RectangleTool::draw_gizmos(const DocumentModel& model,
 {
   const auto& registry = model.get_active_registry();
   if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
-    const auto pos = renderer.get_origin() + glm::vec2{stroke->start_x, stroke->start_y};
+    const auto pos = renderer.get_origin() + Vector2f{stroke->start_x, stroke->start_y};
     const Vector2f size{stroke->current_x - stroke->start_x,
                         stroke->current_y - stroke->start_y};
 

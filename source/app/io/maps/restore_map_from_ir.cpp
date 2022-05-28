@@ -24,7 +24,6 @@
 
 #include <entt/entity/registry.hpp>
 #include <fmt/format.h>
-#include <glm/vec2.hpp>
 #include <spdlog/spdlog.h>
 
 #include "core/commands/command_stack.hpp"
@@ -43,10 +42,6 @@
 #include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
-#include "core/systems/property_system.hpp"
-#include "core/systems/registry_system.hpp"
-#include "core/systems/tileset_system.hpp"
-#include "core/systems/tilesets/tileset_document_system.hpp"
 #include "core/utils/texture_manager.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_data.hpp"

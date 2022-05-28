@@ -26,6 +26,7 @@
 
 #include "core/algorithms/invoke.hpp"
 #include "core/common/ecs.hpp"
+#include "core/common/math.hpp"
 #include "core/common/random.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
@@ -42,7 +43,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] constexpr auto _to_vec2(const TilePos& pos) noexcept -> glm::vec2
+[[nodiscard]] constexpr auto _to_vec2(const TilePos& pos) noexcept -> Vector2f
 {
   return {static_cast<float>(pos.col()), static_cast<float>(pos.row())};
 }

@@ -23,8 +23,8 @@
 
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
-#include <glm/vec2.hpp>
 
+#include "core/common/math.hpp"
 #include "core/components/tools.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
@@ -40,11 +40,11 @@ void EllipseTool::draw_gizmos(const DocumentModel& model,
 {
   const auto& registry = model.get_active_registry();
   if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
-    const glm::vec2 radius{stroke->current_x - stroke->start_x,
-                           stroke->current_y - stroke->start_y};
-    const glm::vec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
+    const Vector2f radius{stroke->current_x - stroke->start_x,
+                          stroke->current_y - stroke->start_y};
+    const Vector2f center{stroke->start_x + radius.x, stroke->start_y + radius.y};
 
-    renderer.draw_ellipse(center + glm::vec2{1, 1}, radius, cen::colors::black);
+    renderer.draw_ellipse(center + Vector2f{1, 1}, radius, cen::colors::black);
     renderer.draw_ellipse(center, radius, cen::colors::yellow);
   }
 }
