@@ -45,7 +45,7 @@ void _update_widgets_menu(const DocumentModel& model)
 
     ImGui::Separator();
 
-    auto& prefs = get_preferences();
+    auto& prefs = io::get_preferences();
 
     if (ImGui::MenuItem("Properties", nullptr, prefs.is_property_dock_visible())) {
       prefs.set_property_dock_visible(!prefs.is_property_dock_visible());
@@ -93,7 +93,7 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    auto& prefs = get_preferences();
+    auto& prefs = io::get_preferences();
 
     if (bool visible = prefs.is_grid_visible();
         ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid",

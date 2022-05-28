@@ -51,7 +51,7 @@ SettingsDialog::SettingsDialog() : ADialog{"Settings"}
 
 void SettingsDialog::show()
 {
-  mSnapshot = get_preferences();
+  mSnapshot = io::get_preferences();
   mGuiSettings = mSnapshot;
   make_visible();
 }
@@ -68,24 +68,24 @@ void SettingsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 void SettingsDialog::on_cancel()
 {
   /* Reset any changes we made for preview purposes */
-  _update_preview_settings(get_preferences());
+  _update_preview_settings(io::get_preferences());
 }
 
 void SettingsDialog::on_accept(entt::dispatcher& dispatcher)
 {
   apply_settings(dispatcher);
-  _update_preview_settings(get_preferences());
+  _update_preview_settings(io::get_preferences());
 }
 
 void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
 {
   apply_settings(dispatcher);
-  _update_preview_settings(get_preferences());
+  _update_preview_settings(io::get_preferences());
 }
 
 void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 {
-  set_preferences(mGuiSettings);
+  io::set_preferences(mGuiSettings);
 
   if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
     dispatcher.enqueue<SetCommandCapacityEvent>(mGuiSettings.command_capacity());

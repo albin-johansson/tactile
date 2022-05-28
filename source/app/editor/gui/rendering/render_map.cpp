@@ -53,7 +53,7 @@ void _render_layer(GraphicsCtx& graphics,
 
 void render_map(GraphicsCtx& graphics, const DocumentModel& model, const MapDocument& map)
 {
-  const auto& prefs = get_preferences();
+  const auto& prefs = io::get_preferences();
 
   const auto& registry = map.get_registry();
   const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
@@ -98,7 +98,7 @@ void render_map(GraphicsCtx& graphics, const DocumentModel& model, const MapDocu
 
   graphics.set_line_thickness(1.0f);
 
-  if (get_preferences().is_grid_visible()) {
+  if (io::get_preferences().is_grid_visible()) {
     graphics.set_draw_color(cen::colors::white.with_alpha(20));
     graphics.render_translated_grid();
   }

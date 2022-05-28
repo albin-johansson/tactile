@@ -138,7 +138,7 @@ void Application::on_startup()
 {
   io::load_file_history();
 
-  if (get_preferences().will_restore_last_session()) {
+  if (io::get_preferences().will_restore_last_session()) {
     io::restore_last_session(mData->model, mData->textures);
   }
 
@@ -149,7 +149,7 @@ void Application::on_startup()
 void Application::on_shutdown()
 {
   save_current_files_to_history();
-  save_preferences();
+  io::save_preferences();
   io::save_session(mData->model);
   io::save_file_history();
 
@@ -681,13 +681,13 @@ void Application::on_reset_zoom()
 
 void Application::on_reset_font_size()
 {
-  get_preferences().set_font_size(get_default_font_size());
+  io::get_preferences().set_font_size(get_default_font_size());
   mData->reload_fonts = true;
 }
 
 void Application::on_increase_font_size()
 {
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
 
   TACTILE_ASSERT(prefs.font_size() + 2 <= get_max_font_size());
   prefs.set_font_size(prefs.font_size() + 2);
@@ -697,7 +697,7 @@ void Application::on_increase_font_size()
 
 void Application::on_decrease_font_size()
 {
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
 
   TACTILE_ASSERT(prefs.font_size() - 2 >= get_min_font_size());
   prefs.set_font_size(prefs.font_size() - 2);
@@ -978,7 +978,7 @@ void Application::on_toggle_ui()
 
   static bool show = false;
 
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
   auto& state = mData->widget_show_state;
 
   if (!show) {

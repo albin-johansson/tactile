@@ -148,7 +148,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   TACTILE_ASSERT(model.has_active_document());
 
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
   bool visible = prefs.is_layer_dock_visible();
 
   if (!visible) {

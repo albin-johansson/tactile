@@ -48,7 +48,7 @@ void reload_fonts()
 
   io.Fonts->Clear();
 
-  const auto& prefs = get_preferences();
+  const auto& prefs = io::get_preferences();
   const auto useDefaultFont = prefs.use_default_font();
   const auto size = useDefaultFont ? 13.0f : static_cast<float>(prefs.font_size());
 

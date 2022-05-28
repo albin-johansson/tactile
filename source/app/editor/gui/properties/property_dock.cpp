@@ -387,7 +387,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
 
 void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
 
   bool visible = prefs.is_property_dock_visible();
   if (!visible) {

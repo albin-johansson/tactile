@@ -188,7 +188,7 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   GraphicsCtx graphics{info};
 
-  graphics.set_draw_color(get_preferences().viewport_bg());
+  graphics.set_draw_color(io::get_preferences().viewport_bg());
   graphics.clear();
 
   graphics.push_clip();

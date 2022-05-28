@@ -51,7 +51,7 @@ void render_tileset(GraphicsCtx& graphics, const entt::registry& registry)
     }
   }
 
-  if (get_preferences().is_grid_visible()) {
+  if (io::get_preferences().is_grid_visible()) {
     graphics.set_line_thickness(1.0f);
     graphics.set_draw_color(cen::colors::white.with_alpha(20));
     graphics.render_translated_grid();

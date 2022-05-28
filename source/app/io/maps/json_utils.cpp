@@ -85,7 +85,7 @@ void write_json(const nlohmann::json& json, const std::filesystem::path& path)
 {
   std::ofstream stream{path, std::ios::out | std::ios::trunc};
 
-  if (get_preferences().indent_output()) {
+  if (io::get_preferences().indent_output()) {
     stream << std::setw(2);
   }
 

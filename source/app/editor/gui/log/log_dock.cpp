@@ -189,7 +189,7 @@ void _update_log_contents(const LogLevel filter)
 
 void update_log_dock()
 {
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
   bool visible = prefs.is_log_dock_visible();
 
   if (!visible) {

@@ -97,7 +97,7 @@ void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
 auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&,
                                           const WidgetManager&) const -> bool
 {
-  const auto& prefs = get_preferences();
+  const auto& prefs = io::get_preferences();
 
   /* Check for modals to avoid case of changing font size when settings dialog is open */
   return !ImGui::GetTopMostPopupModal() &&  //
@@ -119,7 +119,7 @@ void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
 auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&,
                                           const WidgetManager&) const -> bool
 {
-  const auto& prefs = get_preferences();
+  const auto& prefs = io::get_preferences();
 
   /* Check for modals to avoid case of changing font size when settings dialog is open */
   return !ImGui::GetTopMostPopupModal() &&  //
@@ -202,7 +202,7 @@ ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, primary_
 
 void ToggleGridShortcut::activate(entt::dispatcher&)
 {
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
   prefs.set_grid_visible(!prefs.is_grid_visible());
 }
 
@@ -214,7 +214,7 @@ ToggleLayerHighlightShortcut::ToggleLayerHighlightShortcut()
 
 void ToggleLayerHighlightShortcut::activate(entt::dispatcher&)
 {
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
   prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
 }
 

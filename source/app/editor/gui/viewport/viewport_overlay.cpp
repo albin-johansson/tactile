@@ -48,7 +48,7 @@ void _prepare_position_and_pivot()
   const auto pos = ImGui::GetWindowPos();
   const auto size = ImGui::GetWindowSize();
 
-  const auto corner = get_preferences().viewport_overlay_pos();
+  const auto corner = io::get_preferences().viewport_overlay_pos();
   const bool isRight =
       corner == OverlayPos::TopRight || corner == OverlayPos::BottomRight;
   const bool isBottom =
@@ -101,7 +101,7 @@ void _show_mouse_tile_labels(const entt::registry& registry,
 void _update_overlay_context_menu()
 {
   if (auto popup = scoped::Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
-    auto& prefs = get_preferences();
+    auto& prefs = io::get_preferences();
     const auto corner = prefs.viewport_overlay_pos();
 
     if (ImGui::MenuItem("Top-left", nullptr, corner == OverlayPos::TopLeft)) {
@@ -140,7 +140,7 @@ void update_viewport_overlay(const entt::registry& registry,
   scoped::Window window{"##ViewportOverlay", _window_flags};
 
   if (window.is_open()) {
-    if (get_preferences().viewport_overlay_show_fps()) {
+    if (io::get_preferences().viewport_overlay_show_fps()) {
       const auto& io = ImGui::GetIO();
       ImGui::Text("%.2f ms (%.1f FPS)", 1'000.0f * io.DeltaTime, io.Framerate);
       ImGui::Separator();

@@ -100,7 +100,7 @@ void _show_contents(const entt::registry& registry, entt::dispatcher& dispatcher
 
 void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
   bool visible = prefs.is_component_dock_visible();
 
   if (!visible) {

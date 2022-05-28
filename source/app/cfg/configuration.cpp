@@ -129,7 +129,7 @@ AppConfiguration::AppConfiguration()
   spdlog::debug("OpenGL version... {}", glGetString(GL_VERSION));
   spdlog::debug("OpenGL renderer... {}", glGetString(GL_RENDERER));
 
-  load_preferences();
+  io::load_preferences();
 
   TACTILE_ASSERT(mOpenGL.has_value());
   mImGui.emplace(*mWindow, *mOpenGL);

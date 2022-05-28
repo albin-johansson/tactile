@@ -122,7 +122,7 @@ void update_tileset_view(const DocumentModel& model,
   _update_viewport_offset(tilesetEntity, dispatcher, info.canvas_br - info.canvas_tl);
 
   GraphicsCtx graphics{info};
-  graphics.set_draw_color(get_preferences().viewport_bg());
+  graphics.set_draw_color(io::get_preferences().viewport_bg());
   graphics.clear();
 
   const ImVec2 offset{viewport.x_offset, viewport.y_offset};

@@ -36,7 +36,7 @@ CreateMapDialog::CreateMapDialog() : ADialog{"Create New Map"}
 
 void CreateMapDialog::show()
 {
-  const auto& prefs = get_preferences();
+  const auto& prefs = io::get_preferences();
   mTileWidth = prefs.preferred_tile_width();
   mTileHeight = prefs.preferred_tile_height();
 

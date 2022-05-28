@@ -40,7 +40,7 @@ void update_dock_space()
   if (!initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
-      const auto& prefs = get_preferences();
+      const auto& prefs = io::get_preferences();
 
       if (!prefs.will_restore_layout() || !exists(io::widget_ini_path())) {
         load_default_layout(_root_id.value(), false);
@@ -73,7 +73,7 @@ void load_default_layout(ImGuiID id, const bool resetVisibility)
   ImGui::DockBuilderFinish(id);
 
   if (resetVisibility) {
-    get_preferences().reset_dock_visibilities();
+    io::get_preferences().reset_dock_visibilities();
   }
 }
 

@@ -303,7 +303,7 @@ void _create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& 
 [[nodiscard]] auto _emit_tileset(const EmitInfo& info, const ir::TilesetData& data)
     -> nlohmann::json
 {
-  if (get_preferences().embed_tilesets()) {
+  if (io::get_preferences().embed_tilesets()) {
     return _emit_embedded_tileset(info, data);
   }
   else {

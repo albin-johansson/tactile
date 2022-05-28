@@ -40,7 +40,7 @@ void CreateTilesetDialog::open()
   zero_buffer(mPathPreviewBuffer);
   mFullImagePath.clear();
 
-  const auto& prefs = get_preferences();
+  const auto& prefs = io::get_preferences();
   mTileWidth = prefs.preferred_tile_width();
   mTileHeight = prefs.preferred_tile_height();
 

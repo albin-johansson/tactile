@@ -157,7 +157,7 @@ void _emit_tile_layer_data(YAML::Emitter& emitter,
                            const usize rows,
                            const usize columns)
 {
-  const bool fold = get_preferences().fold_tile_data();
+  const bool fold = io::get_preferences().fold_tile_data();
 
   emitter << YAML::Key << "data";
 

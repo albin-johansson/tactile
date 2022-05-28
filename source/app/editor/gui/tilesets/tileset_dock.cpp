@@ -55,7 +55,7 @@ struct TilesetDockState final
 
 void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& prefs = get_preferences();
+  auto& prefs = io::get_preferences();
   bool visible = prefs.is_tileset_dock_visible();
 
   if (!visible) {
