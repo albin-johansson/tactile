@@ -28,6 +28,15 @@
 
 namespace tactile {
 
+// TODO
+// struct Shortcut final
+// {
+//   void (*trigger)(entt::dispatcher&) = nullptr;
+//   bool (*is_enabled)(const DocumentModel&) = nullptr;
+//   cen::scan_code key;
+//   cen::key_mod mods{cen::key_mod::none};
+// };
+
 class AShortcut
 {
  public:
