@@ -24,7 +24,6 @@
 #include <boost/stacktrace.hpp>
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
-#include <glm/vec2.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
