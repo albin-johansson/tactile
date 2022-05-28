@@ -58,7 +58,7 @@ void SettingsDialog::show()
 
 void SettingsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  if (scoped::TabBar bar{"##SettingsTabBar"}; bar.is_open()) {
+  if (TabBar bar{"##SettingsTabBar"}; bar.is_open()) {
     update_behavior_tab();
     update_appearance_tab();
     update_export_tab();
@@ -101,7 +101,7 @@ void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 
 void SettingsDialog::update_behavior_tab()
 {
-  if (scoped::TabItem item{"Behavior"}; item.is_open()) {
+  if (TabItem item{"Behavior"}; item.is_open()) {
     ImGui::Spacing();
     if (button("Restore Defaults")) {
       mGuiSettings.reset_behavior_preferences();
@@ -148,7 +148,7 @@ void SettingsDialog::update_behavior_tab()
 
 void SettingsDialog::update_appearance_tab()
 {
-  if (scoped::TabItem item{"Appearance"}; item.is_open()) {
+  if (TabItem item{"Appearance"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
@@ -159,8 +159,7 @@ void SettingsDialog::update_appearance_tab()
     ImGui::Spacing();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (scoped::Combo combo{"Theme",
-                            human_readable_name(mGuiSettings.get_theme()).data()};
+    if (Combo combo{"Theme", human_readable_name(mGuiSettings.get_theme()).data()};
         combo.is_open()) {
       for (const auto theme : themes) {
         if (ImGui::Selectable(human_readable_name(theme).data())) {
@@ -202,7 +201,7 @@ void SettingsDialog::update_appearance_tab()
     }
 
     {
-      scoped::Disable disableIf{mGuiSettings.use_default_font()};
+      Disable disableIf{mGuiSettings.use_default_font()};
 
       ImGui::AlignTextToFramePadding();
       ImGui::TextUnformatted("Font size:");
@@ -224,7 +223,7 @@ void SettingsDialog::update_appearance_tab()
 
 void SettingsDialog::update_export_tab()
 {
-  if (scoped::TabItem item{"Export"}; item.is_open()) {
+  if (TabItem item{"Export"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
@@ -234,7 +233,7 @@ void SettingsDialog::update_export_tab()
 
     ImGui::Spacing();
 
-    if (scoped::Combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
+    if (Combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
         format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
         mGuiSettings.set_preferred_format("YAML");

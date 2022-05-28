@@ -43,7 +43,7 @@ void ADialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
   center_next_window_on_appearance();
 
   constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  if (scoped::Modal modal{mTitle, flags}; modal.is_open()) {
+  if (Modal modal{mTitle, flags}; modal.is_open()) {
     on_update(model, dispatcher);
 
     ImGui::Spacing();

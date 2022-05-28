@@ -53,7 +53,7 @@ void _update_trailing_button_popup_content(entt::dispatcher& dispatcher,
   ImGui::Separator();
 
   {
-    scoped::Disable disable;
+    Disable disable;
     if (ImGui::MenuItem(TAC_ICON_COPY " Copy Component")) {
       // TODO
     }
@@ -68,9 +68,9 @@ void _update_trailing_button_popup_content(entt::dispatcher& dispatcher,
 
 auto _update_trailing_button() -> bool
 {
-  scoped::StyleColor button{ImGuiCol_Button, IM_COL32_BLACK_TRANS};
-  scoped::StyleColor buttonHovered{ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS};
-  scoped::StyleColor buttonActive{ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS};
+  StyleColor button{ImGuiCol_Button, IM_COL32_BLACK_TRANS};
+  StyleColor buttonHovered{ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS};
+  StyleColor buttonActive{ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS};
 
   right_align_next_item(TAC_ICON_THREE_DOTS);
   const auto pressed = ImGui::SmallButton(TAC_ICON_THREE_DOTS);
@@ -88,7 +88,7 @@ void component_view(const entt::registry& registry,
   const auto& component = checked_get<comp::Component>(registry, componentEntity);
   const auto& name = sys::get_component_def_name(registry, component.type);
 
-  const scoped::Id scope{name.c_str()};
+  const Scope scope{name.c_str()};
 
   if (ImGui::CollapsingHeader(name.c_str(), _header_flags)) {
     ImGui::SameLine();
@@ -96,13 +96,13 @@ void component_view(const entt::registry& registry,
       ImGui::OpenPopup("##ComponentPopup");
     }
 
-    if (auto popup = scoped::Popup::for_item("##ComponentPopup"); popup.is_open()) {
+    if (auto popup = Popup::for_item("##ComponentPopup"); popup.is_open()) {
       _update_trailing_button_popup_content(dispatcher, contextId, component.type);
     }
 
-    if (scoped::Table table{"##AttributeTable", 2, _table_flags}; table.is_open()) {
+    if (Table table{"##AttributeTable", 2, _table_flags}; table.is_open()) {
       for (const auto& [attributeName, attribute] : component.values) {
-        const scoped::Id attrScope{attributeName.c_str()};
+        const Scope attrScope{attributeName.c_str()};
 
         ImGui::TableNextRow();
         ImGui::TableNextColumn();
@@ -122,7 +122,7 @@ void component_view(const entt::registry& registry,
   }
   else {
     /* Show a disabled button when collapsed, to avoid having the button disappear */
-    scoped::Disable disable;
+    Disable disable;
     ImGui::SameLine();
     _update_trailing_button();
   }

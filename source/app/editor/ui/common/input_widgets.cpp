@@ -84,7 +84,7 @@ auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
 
 auto input_int(const char* id, int value) -> Maybe<int>
 {
-  const scoped::Id scope{id};
+  const Scope scope{id};
 
   ImGui::SetNextItemWidth(-min_float);
   if (ImGui::DragInt("##input_int", &value)) {
@@ -101,7 +101,7 @@ auto input_int(const char* id, int value) -> Maybe<int>
 auto input_float(const char* id, float value, const float min, const float max)
     -> Maybe<float>
 {
-  const scoped::Id scope{id};
+  const Scope scope{id};
 
   ImGui::SetNextItemWidth(-min_float);
 
@@ -130,7 +130,7 @@ auto input_string_with_hint(const char* id,
                             const ImGuiInputTextFlags flags,
                             const ImGuiInputTextCallback filter) -> Maybe<std::string>
 {
-  const scoped::Id scope{id};
+  const Scope scope{id};
 
   std::array<char, 100> buffer;  // NOLINT safely uninitialized
   copy_string_into_buffer(buffer, value);
@@ -172,7 +172,7 @@ auto input_string(const char* id,
 
 auto input_bool(const char* id, bool value) -> Maybe<bool>
 {
-  const scoped::Id scope{id};
+  const Scope scope{id};
 
   if (ImGui::Checkbox("##input_bool", &value)) {
     return value;
@@ -187,7 +187,7 @@ auto input_bool(const char* id, bool value) -> Maybe<bool>
 
 auto input_object(const char* id, object_t value) -> Maybe<object_t>
 {
-  const scoped::Id scope{id};
+  const Scope scope{id};
 
   // TODO
   ImGui::Text("%i", value);
@@ -204,7 +204,7 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
 
-  const scoped::Id scope{id};
+  const Scope scope{id};
 
   auto arr = color_to_array(value);
   if (ImGui::ColorEdit4("##input_color", arr.data(), flags)) {
@@ -221,7 +221,7 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
 auto input_path(const char* id, const std::filesystem::path& value)
     -> Maybe<std::filesystem::path>
 {
-  const scoped::Id scope{id};
+  const Scope scope{id};
 
   if (button(TAC_ICON_THREE_DOTS)) {
     auto dialog = io::FileDialog::open_file();

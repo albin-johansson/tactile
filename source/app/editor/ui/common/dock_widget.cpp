@@ -57,7 +57,7 @@ void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatche
 
   bool* show = mData->has_close_button ? &visible : nullptr;
 
-  scoped::Window dock{mData->title, mData->window_flags, show};
+  Window dock{mData->title, mData->window_flags, show};
   mData->has_focus = dock.has_focus(mData->focus_flags);
   mData->contains_mouse = ImGui::IsWindowHovered(mData->focus_flags);
 

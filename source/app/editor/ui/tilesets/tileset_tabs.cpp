@@ -45,7 +45,7 @@ void _update_context_menu(const DocumentModel& model,
                           const entt::entity tilesetEntity,
                           entt::dispatcher& dispatcher)
 {
-  if (auto popup = scoped::Popup::for_item("##TilesetTabContext"); popup.is_open()) {
+  if (auto popup = Popup::for_item("##TilesetTabContext"); popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
@@ -59,7 +59,7 @@ void _update_context_menu(const DocumentModel& model,
     ImGui::Separator();
 
     {
-      scoped::Disable disable;
+      Disable disable;
       if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Tileset")) {
         // TODO
       }
@@ -68,7 +68,7 @@ void _update_context_menu(const DocumentModel& model,
     ImGui::Separator();
 
     {
-      scoped::Disable disable{model.is_open(documentId)};
+      Disable disable{model.is_open(documentId)};
       if (ImGui::MenuItem("Open Tileset")) {
         dispatcher.enqueue<OpenDocumentEvent>(documentId);
       }
@@ -86,7 +86,7 @@ void _update_context_menu(const DocumentModel& model,
 
 void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::TabBar bar{"##TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
+  if (TabBar bar{"##TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
@@ -96,7 +96,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
 
     const auto& activeTileset = ctx_get<comp::ActiveTileset>(mapRegistry);
     for (auto&& [entity, ref] : mapRegistry.view<comp::TilesetRef>().each()) {
-      const scoped::Id scope{static_cast<int>(hash(ref.source_tileset))};
+      const Scope scope{static_cast<int>(hash(ref.source_tileset))};
 
       const auto isActive = activeTileset.entity == entity;
 
@@ -104,9 +104,9 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
       const auto& context = checked_get<comp::AttributeContext>(mapRegistry, entity);
 
       bool opened = true;
-      if (scoped::TabItem item{context.name.c_str(),
-                               &opened,
-                               isActive ? ImGuiTabItemFlags_SetSelected : 0};
+      if (TabItem item{context.name.c_str(),
+                       &opened,
+                       isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
         update_tileset_view(model, ref.source_tileset, dispatcher);
       }

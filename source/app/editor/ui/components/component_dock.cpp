@@ -48,12 +48,12 @@ void _show_add_component_button_popup_content(const entt::registry& registry,
 {
   const auto view = registry.view<comp::ComponentDef>();
   if (view.empty()) {
-    scoped::Disable disable;
+    Disable disable;
     ImGui::TextUnformatted("No available components");
   }
   else {
     for (auto [defEntity, def] : view.each()) {
-      scoped::Disable disable{sys::has_component(registry, contextId, def.id)};
+      Disable disable{sys::has_component(registry, contextId, def.id)};
 
       if (ImGui::MenuItem(def.name.c_str())) {
         dispatcher.enqueue<AddComponentEvent>(contextId, def.id);
@@ -72,7 +72,7 @@ void _show_contents(const entt::registry& registry, entt::dispatcher& dispatcher
   const auto& context = sys::current_context(registry);
   ImGui::Text("Context: %s", context.name.c_str());
 
-  if (scoped::Child pane{"##ComponentsChild"}; pane.is_open()) {
+  if (Child pane{"##ComponentsChild"}; pane.is_open()) {
     if (context.components.empty()) {
       prepare_vertical_alignment_center(2);
       centered_text("There are no components associated with the current context.");
@@ -90,7 +90,7 @@ void _show_contents(const entt::registry& registry, entt::dispatcher& dispatcher
       ImGui::OpenPopup(_add_component_popup_id);
     }
 
-    if (scoped::Popup popup{_add_component_popup_id}; popup.is_open()) {
+    if (Popup popup{_add_component_popup_id}; popup.is_open()) {
       _show_add_component_button_popup_content(registry, dispatcher, context.id);
     }
   }
@@ -109,7 +109,7 @@ void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatc
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
-  if (scoped::Window dock{"Components", flags, &visible}; dock.is_open()) {
+  if (Window dock{"Components", flags, &visible}; dock.is_open()) {
     const auto& registry = model.get_active_registry();
     _show_contents(registry, dispatcher);
   }

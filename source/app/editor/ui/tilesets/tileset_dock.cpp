@@ -62,7 +62,7 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
     return;
   }
 
-  scoped::Window dock{"Tilesets", _window_flags, &visible};
+  Window dock{"Tilesets", _window_flags, &visible};
 
   auto& state = _get_state();
   state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);

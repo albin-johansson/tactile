@@ -38,7 +38,7 @@ namespace {
 
 void _update_widgets_menu(const DocumentModel& model)
 {
-  if (scoped::Menu menu{"Widgets", model.has_active_document()}; menu.is_open()) {
+  if (Menu menu{"Widgets", model.has_active_document()}; menu.is_open()) {
     if (ImGui::MenuItem("Reset Layout")) {
       reset_layout();
     }
@@ -52,7 +52,7 @@ void _update_widgets_menu(const DocumentModel& model)
     }
 
     {
-      scoped::Disable disableIf{!model.is_map_active()};
+      Disable disableIf{!model.is_map_active()};
       if (ImGui::MenuItem("Layers", nullptr, prefs.is_layer_dock_visible())) {
         prefs.set_layer_dock_visible(!prefs.is_layer_dock_visible());
       }
@@ -76,7 +76,7 @@ void _update_widgets_menu(const DocumentModel& model)
 
 void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::Menu menu{"View"}; menu.is_open()) {
+  if (Menu menu{"View"}; menu.is_open()) {
     const auto* document = model.active_document();
     const auto hasActiveDocument = model.has_active_document();
 

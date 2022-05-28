@@ -67,14 +67,14 @@ void _update_start_page(entt::dispatcher& dispatcher)
 
 void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {4, 4}};
+  StyleVar padding{ImGuiStyleVar_WindowPadding, {4, 4}};
   remove_tab_bar_from_next_window();
 
-  scoped::Window window{"Viewport", _window_flags};
+  Window window{"Viewport", _window_flags};
   if (window.is_open()) {
     padding.pop();
     _has_focus = ImGui::IsWindowFocused();
-    _mouse_within_window = scoped::Window::current_window_contains_mouse();
+    _mouse_within_window = Window::current_window_contains_mouse();
 
     if (model.has_active_document()) {
       update_document_tabs(model, dispatcher);

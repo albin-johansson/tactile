@@ -64,7 +64,7 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
     activeLayerId = layer.id;
   }
 
-  scoped::Group group;
+  Group group;
 
   if (icon_button(TAC_ICON_ADD, "Add new layer")) {
     _add_layer_context_menu.show();
@@ -118,7 +118,7 @@ void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   _update_side_buttons(model, dispatcher);
 
   ImGui::SameLine();
-  scoped::Group group;
+  Group group;
 
   const auto& registry = model.get_active_registry();
   if (registry.view<comp::Layer>().empty()) {
@@ -127,7 +127,7 @@ void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
   else {
     const ImVec2 size{-min_float, -min_float};
-    if (scoped::ListBox list{"##LayerTreeNode", size}; list.is_open()) {
+    if (ListBox list{"##LayerTreeNode", size}; list.is_open()) {
       /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
          other components in the view query directly. */
       for (auto&& [entity, _] : registry.view<comp::LayerTreeNode>().each()) {
@@ -157,7 +157,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse;
 
-  scoped::Window dock{"Layers", flags, &visible};
+  Window dock{"Layers", flags, &visible};
   _is_focused = dock.is_open() &&  //
                 ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
 

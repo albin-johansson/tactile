@@ -277,7 +277,7 @@ void show_custom_properties(const entt::registry& registry,
     const auto& name = property.name;
     const auto& value = property.value;
 
-    const scoped::Id scope{name.c_str()};
+    const Scope scope{name.c_str()};
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();
@@ -325,7 +325,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
   const auto& current = ctx_get<comp::ActiveAttributeContext>(registry);
   const auto& context = sys::current_context(registry);
 
-  if (scoped::Table table{"##PropertyTable", 2, flags}; table.is_open()) {
+  if (Table table{"##PropertyTable", 2, flags}; table.is_open()) {
     if (current.entity == entt::null) {
       if (model.is_map(documentId)) {
         const auto& map = ctx_get<comp::MapInfo>(registry);
@@ -355,8 +355,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
     show_custom_properties(registry, dispatcher, context, isItemContextOpen);
 
     if (!isItemContextOpen) {
-      if (auto popup = scoped::Popup::for_window("##PropertyTableContext");
-          popup.is_open()) {
+      if (auto popup = Popup::for_window("##PropertyTableContext"); popup.is_open()) {
         _context_state.show_add_dialog =
             ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
       }
@@ -396,7 +395,7 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
-  scoped::Window window{"Properties", flags, &visible};
+  Window window{"Properties", flags, &visible};
   _is_focused = window.is_open() && window.has_focus();
 
   if (window.is_open()) {

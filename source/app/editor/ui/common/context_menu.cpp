@@ -35,7 +35,7 @@ ContextMenu::ContextMenu(const char* name) : mName{name}
 
 void ContextMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::Popup popup{mName}; popup.is_open()) {
+  if (Popup popup{mName}; popup.is_open()) {
     on_update(model, dispatcher);
   }
 

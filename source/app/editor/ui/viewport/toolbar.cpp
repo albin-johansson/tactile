@@ -90,7 +90,7 @@ void _show_extra_toolbar(auto callable)
   const auto& style = ImGui::GetStyle();
   _prepare_window_position({_toolbar_width + style.ItemInnerSpacing.x, 0});
 
-  if (scoped::Window extra{"##ToolbarWindowExtra", _window_flags}; extra.is_open()) {
+  if (Window extra{"##ToolbarWindowExtra", _window_flags}; extra.is_open()) {
     /* Prevent other mouse events in the viewport by treating both toolbars as one */
     if (!_toolbar_hovered) {
       _toolbar_hovered = ImGui::IsWindowHovered();
@@ -109,11 +109,11 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
   _prepare_window_position();
   ImGui::SetNextWindowBgAlpha(0.75f);
 
-  scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {6, 6}};
+  StyleVar padding{ImGuiStyleVar_WindowPadding, {6, 6}};
 
   const auto& map = model.view_map(model.active_document_id().value());
 
-  if (scoped::Window window{"##ToolbarWindow", _window_flags}; window.is_open()) {
+  if (Window window{"##ToolbarWindow", _window_flags}; window.is_open()) {
     _toolbar_visible = true;
     _toolbar_hovered = ImGui::IsWindowHovered();
     _toolbar_focused = window.has_focus();

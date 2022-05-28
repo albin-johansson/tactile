@@ -100,7 +100,7 @@ void _show_mouse_tile_labels(const entt::registry& registry,
 
 void _update_overlay_context_menu()
 {
-  if (auto popup = scoped::Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
+  if (auto popup = Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     auto& prefs = io::get_preferences();
     const auto corner = prefs.viewport_overlay_pos();
 
@@ -137,7 +137,7 @@ void update_viewport_overlay(const entt::registry& registry,
   _prepare_position_and_pivot();
 
   ImGui::SetNextWindowBgAlpha(_opacity);
-  scoped::Window window{"##ViewportOverlay", _window_flags};
+  Window window{"##ViewportOverlay", _window_flags};
 
   if (window.is_open()) {
     if (io::get_preferences().viewport_overlay_show_fps()) {

@@ -35,9 +35,9 @@ namespace tactile::ui {
 
 void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::TabBar bar{"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
+  if (TabBar bar{"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
     model.each([&](const UUID& documentId) {
-      const scoped::Id scope{static_cast<int>(hash(documentId))};
+      const Scope scope{static_cast<int>(hash(documentId))};
 
       ImGuiTabItemFlags flags = 0;
       const auto isActive = model.active_document_id() == documentId;
@@ -55,7 +55,7 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
       const auto& context = ctx_get<comp::AttributeContext>(registry);
 
       bool opened = true;
-      if (scoped::TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
+      if (TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {
           if (model.is_map(documentId)) {
             update_map_view(model, dispatcher);

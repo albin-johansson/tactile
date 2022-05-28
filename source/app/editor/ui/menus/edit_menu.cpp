@@ -55,7 +55,7 @@ namespace {
 
 void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (scoped::Menu menu{"Edit"}; menu.is_open()) {
+  if (Menu menu{"Edit"}; menu.is_open()) {
     const auto* document = model.active_document();
 
     const auto canUndo = document && document->get_history().can_undo();

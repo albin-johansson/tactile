@@ -51,7 +51,7 @@ void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& state = _get_state();
 
-  if (scoped::Menu menu{"Help"}; menu.is_open()) {
+  if (Menu menu{"Help"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
       state.about_dialog.show();
     }

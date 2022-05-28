@@ -27,20 +27,20 @@
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
 
-namespace tactile::scoped {
+namespace tactile::ui {
 
-struct Id final
+struct Scope final
 {
-  TACTILE_DEFAULT_COPY(Id);
-  TACTILE_DEFAULT_MOVE(Id);
+  TACTILE_DEFAULT_COPY(Scope);
+  TACTILE_DEFAULT_MOVE(Scope);
 
-  explicit Id(const void* ptr) { ImGui::PushID(ptr); }
+  explicit Scope(const void* ptr) { ImGui::PushID(ptr); }
 
-  explicit Id(const char* str) { ImGui::PushID(str); }
+  explicit Scope(const char* str) { ImGui::PushID(str); }
 
-  explicit Id(const int id) { ImGui::PushID(id); }
+  explicit Scope(const int id) { ImGui::PushID(id); }
 
-  ~Id() { ImGui::PopID(); }
+  ~Scope() { ImGui::PopID(); }
 };
 
 struct Disable final
@@ -442,4 +442,4 @@ class TreeNode final
   bool mOpen{};
 };
 
-}  // namespace tactile::scoped
+}  // namespace tactile::ui
