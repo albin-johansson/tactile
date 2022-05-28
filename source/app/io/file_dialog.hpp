@@ -21,7 +21,7 @@
 
 #include <filesystem>  // path
 
-namespace tactile {
+namespace tactile::io {
 
 /**
  * \brief Utility class for importing and saving files.
@@ -52,4 +52,4 @@ class FileDialog final
   FileDialog(const char* path);
 };
 
-}  // namespace tactile
+}  // namespace tactile::io

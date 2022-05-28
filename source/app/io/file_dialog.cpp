@@ -23,7 +23,7 @@
 
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 constexpr int _num_map_patterns = 6;
@@ -97,4 +97,4 @@ auto FileDialog::save_image() -> FileDialog
                                 _image_pattern_descriptor)};
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

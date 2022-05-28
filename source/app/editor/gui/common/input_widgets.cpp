@@ -224,7 +224,7 @@ auto input_path(const char* id, const std::filesystem::path& value)
   const scoped::Id scope{id};
 
   if (button(TAC_ICON_THREE_DOTS)) {
-    auto dialog = FileDialog::open_file();
+    auto dialog = io::FileDialog::open_file();
     if (dialog.is_okay()) {
       return dialog.path();
     }

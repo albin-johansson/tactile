@@ -51,7 +51,7 @@ struct FileMenuState final
 
 void _update_map_file_dialog(entt::dispatcher& dispatcher)
 {
-  auto dialog = FileDialog::open_map();
+  auto dialog = io::FileDialog::open_map();
 
   if (dialog.is_okay()) {
     dispatcher.enqueue<OpenMapEvent>(dialog.path());
