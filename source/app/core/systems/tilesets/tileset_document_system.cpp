@@ -19,19 +19,16 @@
 
 #include "tileset_document_system.hpp"
 
-#include <glm/vec2.hpp>
-
+#include "core/commands/command_stack.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/commands/command_stack.hpp"
 
 namespace tactile::sys {
 
-auto new_tileset_document_registry(const comp::Texture& texture,
-                                   const glm::ivec2& tileSize) -> entt::registry
+auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i& tileSize)
+    -> entt::registry
 {
   entt::registry registry;
 
