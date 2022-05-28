@@ -23,14 +23,9 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
-/**
- * \brief Updates the state of the main menu bar.
- *
- * \param model the associated document model.
- * \param dispatcher the event dispatcher that will be used.
- */
+/// Updates the state of the main menu bar.
 void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -19,8 +19,8 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_debug_menu();
 
-}  // namespace tactile
+}  // namespace tactile::ui

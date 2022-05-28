@@ -29,7 +29,7 @@
 #include "editor/ui/menus/map_menu.hpp"
 #include "editor/ui/menus/view_menu.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -45,4 +45,4 @@ void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

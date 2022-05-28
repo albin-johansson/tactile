@@ -23,7 +23,7 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
 
@@ -31,4 +31,4 @@ void show_map_creation_dialog();
 
 void show_map_selector_dialog();
 
-}  // namespace tactile
+}  // namespace tactile::ui

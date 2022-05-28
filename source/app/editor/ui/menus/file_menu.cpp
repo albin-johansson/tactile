@@ -27,14 +27,14 @@
 #include "core/events/map_events.hpp"
 #include "core/events/misc_events.hpp"
 #include "core/model.hpp"
+#include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/dialogs/create_map_dialog.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
-#include "editor/shortcuts/mappings.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/history.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 struct FileMenuState final
@@ -163,4 +163,4 @@ void show_map_selector_dialog()
   _get_state().show_map_selector = true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -27,13 +27,13 @@
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/dock_space.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
-#include "editor/shortcuts/mappings.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 void _update_widgets_menu(const DocumentModel& model)
@@ -195,4 +195,4 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

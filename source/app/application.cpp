@@ -45,6 +45,8 @@
 #include "core/systems/viewport_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "core/utils/texture_manager.hpp"
+#include "editor/shortcuts/mappings.hpp"
+#include "editor/shortcuts/shortcuts.hpp"
 #include "editor/ui/dialogs/save_as_dialog.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/layers/layer_dock.hpp"
@@ -57,8 +59,6 @@
 #include "editor/ui/viewport/map_view.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 #include "editor/ui/widgets.hpp"
-#include "editor/shortcuts/mappings.hpp"
-#include "editor/shortcuts/shortcuts.hpp"
 #include "io/maps/parser/parse_map.hpp"
 #include "io/maps/restore_map_from_ir.hpp"
 #include "io/maps/save_document.hpp"
@@ -208,10 +208,10 @@ void Application::subscribe_to_events()
   d.sink<SaveEvent>().connect<&Self::on_save>(this);
   d.sink<SaveAsEvent>().connect<&Self::on_save_as>(this);
   d.sink<OpenSaveAsDialogEvent>().connect<&Self::on_open_save_as_dialog>(this);
-  d.sink<ShowSettingsEvent>().connect<&show_settings_dialog>();
+  d.sink<ShowSettingsEvent>().connect<&ui::show_settings_dialog>();
 
-  d.sink<ShowNewMapDialogEvent>().connect<&show_map_creation_dialog>();
-  d.sink<ShowOpenMapDialogEvent>().connect<&show_map_selector_dialog>();
+  d.sink<ShowNewMapDialogEvent>().connect<&ui::show_map_creation_dialog>();
+  d.sink<ShowOpenMapDialogEvent>().connect<&ui::show_map_selector_dialog>();
   d.sink<InspectMapEvent>().connect<&Self::on_show_map_properties>(this);
   d.sink<CreateMapEvent>().connect<&Self::on_create_map>(this);
   d.sink<OpenMapEvent>().connect<&Self::on_open_map>(this);
@@ -249,7 +249,7 @@ void Application::subscribe_to_events()
   d.sink<IncreaseFontSizeEvent>().connect<&Self::on_increase_font_size>(this);
   d.sink<DecreaseFontSizeEvent>().connect<&Self::on_decrease_font_size>(this);
 
-  d.sink<ShowTilesetCreationDialogEvent>().connect<&show_tileset_creation_dialog>();
+  d.sink<ShowTilesetCreationDialogEvent>().connect<&ui::show_tileset_creation_dialog>();
   d.sink<AddTilesetEvent>().connect<&Self::on_add_tileset>(this);
   d.sink<RemoveTilesetEvent>().connect<&Self::on_remove_tileset>(this);
   d.sink<SelectTilesetEvent>().connect<&Self::on_select_tileset>(this);
@@ -897,7 +897,7 @@ void Application::on_inspect_context(const InspectContextEvent& event)
 
 void Application::on_open_component_editor()
 {
-  show_component_editor(mData->model);
+  ui::show_component_editor(mData->model);
 }
 
 void Application::on_create_component_def(const CreateComponentDefEvent& event)

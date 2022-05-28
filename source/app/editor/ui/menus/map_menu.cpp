@@ -24,12 +24,12 @@
 
 #include "core/events/map_events.hpp"
 #include "core/model.hpp"
+#include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tilesets/dialogs/create_tileset_dialog.hpp"
-#include "editor/shortcuts/mappings.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 struct MapMenuState final
@@ -92,4 +92,4 @@ void show_tileset_creation_dialog()
   _get_state().tileset_creation_dialog.open();
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -23,10 +23,10 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 void show_tileset_creation_dialog();
 
-}  // namespace tactile
+}  // namespace tactile::ui

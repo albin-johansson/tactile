@@ -30,13 +30,13 @@
 #include "core/model.hpp"
 #include "core/tools/tool_type.hpp"
 #include "core/utils/formatted_string.hpp"
+#include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/components/component_editor.hpp"
 #include "editor/ui/dialogs/settings_dialog.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
-#include "editor/shortcuts/mappings.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 [[nodiscard]] auto _get_settings_dialog() -> SettingsDialog&
@@ -160,4 +160,4 @@ void show_component_editor(const DocumentModel& model)
   _get_component_editor().show(model);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui
