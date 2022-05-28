@@ -101,6 +101,9 @@ class DocumentModel final
   [[nodiscard]] auto has_document_with_path(const std::filesystem::path& path) const
       -> bool;
 
+  /// Returns the document ID of the loaded document with the specified path.
+  [[nodiscard]] auto get_id_for_path(const std::filesystem::path& path) const -> UUID;
+
   /// Indicates whether there is an active document, of any type.
   [[nodiscard]] auto has_active_document() const -> bool;
 

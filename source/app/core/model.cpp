@@ -125,6 +125,10 @@ void DocumentModel::open_document(const UUID& id)
 
   if (!is_open(id)) {
     mOpenDocuments.push_back(id);
+
+    if (!mActiveDocument) {
+      mActiveDocument = id;
+    }
   }
   else {
     throw TactileError{"Cannot open document that was already open!"};
@@ -148,6 +152,8 @@ void DocumentModel::close_document(const UUID& id)
     if (!mActiveDocument && !mOpenDocuments.empty()) {
       mActiveDocument = mOpenDocuments.front();
     }
+
+    TACTILE_ASSERT(!is_open(id));
   }
   else {
     throw TactileError{"Cannot close document that was not open!"};
@@ -179,6 +185,17 @@ auto DocumentModel::has_document_with_path(const std::filesystem::path& path) co
   }
 
   return false;
+}
+
+auto DocumentModel::get_id_for_path(const std::filesystem::path& path) const -> UUID
+{
+  for (const auto& [id, document] : mDocuments) {
+    if (document->has_path() && document->get_path() == path) {
+      return id;
+    }
+  }
+
+  throw TactileError{"No document with the specified path!"};
 }
 
 auto DocumentModel::get_document(const UUID& id) -> Shared<ADocument>

@@ -322,11 +322,10 @@ auto Application::get_dispatcher() -> entt::dispatcher&
 void Application::save_current_files_to_history()
 {
   mData->model.each([this](const UUID& id) {
-    // TODO
     const auto document = mData->model.get_document(id);
-    // if (document.open && document.has_path()) {
-    //   add_file_to_history(document.path());
-    // }
+    if (document->is_map() && document->has_path()) {
+      add_file_to_history(document->get_path());
+    }
   });
 }
 
@@ -421,8 +420,9 @@ void Application::on_save()
         auto& commands = document->get_history();
         commands.mark_as_clean();
 
-        // auto& context = ctx_get<comp::AttributeContext>(document->registry);
-        // context.name = document->path().filename().string();
+        auto& registry = document->get_registry();
+        auto& context = ctx_get<comp::AttributeContext>(registry);
+        context.name = document->get_path().filename().string();
       }
       else {
         spdlog::warn("Cannot yet save changes to tilesets!");
@@ -485,9 +485,16 @@ void Application::on_open_document(const OpenDocumentEvent& event)
 // TODO consider renaming event
 void Application::on_open_map(const OpenMapEvent& event)
 {
-  /* Just silently ignore the request if the map is already open */
   if (mData->model.has_document_with_path(event.path)) {
-    spdlog::warn("Tried to open map that was already open!");
+    const auto id = mData->model.get_id_for_path(event.path);
+
+    if (mData->model.is_open(id)) {
+      spdlog::warn("Tried to open map that was already open!");
+    }
+    else {
+      mData->model.open_document(id);
+    }
+
     return;
   }
 
