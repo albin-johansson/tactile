@@ -25,7 +25,7 @@
 #include "core/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /// Updates the state of the GUI.
 void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
@@ -36,4 +36,4 @@ void show_map_import_error_dialog(io::ParseError error);
 
 [[nodiscard]] auto is_editor_focused() -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::ui

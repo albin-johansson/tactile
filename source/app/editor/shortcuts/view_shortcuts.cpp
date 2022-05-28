@@ -225,7 +225,7 @@ void ToggleUiShortcut::activate(entt::dispatcher& dispatcher)
 
 auto ToggleUiShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.has_active_document() && is_editor_focused();
+  return model.has_active_document() && ui::is_editor_focused();
 }
 
 }  // namespace tactile

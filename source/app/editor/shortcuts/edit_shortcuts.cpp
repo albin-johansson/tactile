@@ -169,7 +169,7 @@ void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
 
 auto EnableBucketShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (is_editor_focused() && model.has_active_document()) {
+  if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
@@ -191,7 +191,7 @@ void EnableEraserShortcut::activate(entt::dispatcher& dispatcher)
 
 auto EnableEraserShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (is_editor_focused() && model.has_active_document()) {
+  if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
@@ -213,7 +213,7 @@ void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
 
 auto EnableStampShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (is_editor_focused() && model.has_active_document()) {
+  if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
@@ -237,7 +237,7 @@ void EnableObjectSelectionShortcut::activate(entt::dispatcher& dispatcher)
 
 auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (is_editor_focused() && model.has_active_document()) {
+  if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
@@ -260,7 +260,7 @@ void EnableRectangleToolShortcut::activate(entt::dispatcher& dispatcher)
 
 auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (is_editor_focused() && model.has_active_document()) {
+  if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
@@ -282,7 +282,7 @@ void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
 
 auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (is_editor_focused() && model.has_active_document()) {
+  if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
@@ -304,7 +304,7 @@ void EnablePointToolShortcut::activate(entt::dispatcher& dispatcher)
 
 auto EnablePointToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (is_editor_focused() && model.has_active_document()) {
+  if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);

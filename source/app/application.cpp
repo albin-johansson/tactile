@@ -169,7 +169,7 @@ void Application::on_update()
   auto& data = *mData;
   data.dispatcher.update();
   data.model.update();
-  update_widgets(data.model, data.dispatcher);
+  ui::update_widgets(data.model, data.dispatcher);
 }
 
 void Application::on_event(const cen::event_handler& handler)
@@ -502,7 +502,7 @@ void Application::on_open_map(const OpenMapEvent& event)
     io::add_file_to_history(event.path);
   }
   else {
-    show_map_import_error_dialog(ir.error());
+    ui::show_map_import_error_dialog(ir.error());
   }
 }
 
@@ -765,7 +765,7 @@ void Application::on_open_resize_map_dialog()
 {
   if (auto* registry = mData->model.active_registry()) {
     const auto& map = ctx_get<comp::MapInfo>(*registry);
-    show_resize_map_dialog(map.row_count, map.column_count);
+    ui::show_resize_map_dialog(map.row_count, map.column_count);
   }
 }
 

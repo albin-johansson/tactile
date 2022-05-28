@@ -33,7 +33,7 @@
 #include "editor/gui/viewport/toolbar.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 inline ResizeMapDialog _resize_map_dialog;
@@ -86,4 +86,4 @@ auto is_editor_focused() -> bool
          is_tileset_dock_focused() || is_property_dock_focused() || is_log_dock_focused();
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui
