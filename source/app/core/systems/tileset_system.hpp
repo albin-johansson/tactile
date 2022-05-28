@@ -73,7 +73,8 @@ void select_tileset(entt::registry& registry, const UUID& id);
 /// Attaches a tileset to a map registry.
 void attach_tileset(entt::registry& mapRegistry,
                     const UUID& tilesetId,
-                    const comp::Tileset& tileset);
+                    const comp::Tileset& tileset,
+                    Maybe<TileID> firstTile = nothing);
 
 // Removes a tileset from a map registry.
 auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId)

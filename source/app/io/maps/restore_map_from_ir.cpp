@@ -28,6 +28,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/commands/command_stack.hpp"
+#include "core/common/math.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
@@ -274,15 +275,12 @@ void _restore_tileset(DocumentModel& model,
   // loaded multiple times
 
   const auto texture = textures.load(tilesetData.image_path).value();
+  const Vector2i tileSize{tilesetData.tile_width, tilesetData.tile_height};
 
-  const auto tileSize = glm::ivec2{tilesetData.tile_width, tilesetData.tile_height};
-  const auto tilesetId = model.add_tileset(texture, tileSize);
+  const auto tilesetId = model.restore_tileset(texture, tileSize, tilesetData.first_tile);
 
   auto tileset = model.get_tileset(tilesetId);
   auto& tilesetRegistry = tileset->get_registry();
-
-  // TODO all tilesets should be stored as separate documents. So when an external tileset
-  // is later changed to be embedded, all we do is create a copy of a tileset document
 
   ctx_get<comp::AttributeContext>(tilesetRegistry).name = tilesetData.name;
 

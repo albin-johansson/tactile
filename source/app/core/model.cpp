@@ -85,6 +85,28 @@ auto DocumentModel::add_tileset(const comp::Texture& texture, const Vector2i& ti
   }
 }
 
+auto DocumentModel::restore_tileset(const comp::Texture& texture,
+                                    const Vector2i& tileSize,
+                                    const TileID firstTile) -> UUID
+{
+  if (mActiveDocument) {
+    auto map = get_map(*mActiveDocument);
+
+    const auto tilesetId = make_uuid();
+    auto tileset = std::make_shared<TilesetDocument>(tilesetId, texture, tileSize);
+
+    register_tileset(tileset);
+
+    auto& mapRegistry = map->get_registry();
+    sys::attach_tileset(mapRegistry, tilesetId, tileset->info(), firstTile);
+
+    return tilesetId;
+  }
+  else {
+    throw TactileError{"No active map to restore tileset to!"};
+  }
+}
+
 void DocumentModel::select_document(const UUID& id)
 {
   if (mDocuments.contains(id)) {

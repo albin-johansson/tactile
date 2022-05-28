@@ -132,7 +132,8 @@ void select_tileset(entt::registry& registry, const UUID& id)
 
 void attach_tileset(entt::registry& mapRegistry,
                     const UUID& tilesetId,
-                    const comp::Tileset& tileset)
+                    const comp::Tileset& tileset,
+                    const Maybe<TileID> firstTile)
 {
   auto& tilesets = ctx_get<comp::TilesetContext>(mapRegistry);
 
@@ -149,10 +150,12 @@ void attach_tileset(entt::registry& mapRegistry,
   ref.source_tileset = tilesetId;
   ref.embedded = false;  // FIXME
 
-  ref.first_id = tilesets.next_tile_id;
+  ref.first_id = firstTile ? *firstTile : tilesets.next_tile_id;
   ref.last_id = ref.first_id + tileset.tile_count();
 
-  tilesets.next_tile_id = ref.last_id + 1;
+  if (!firstTile) {
+    tilesets.next_tile_id = ref.last_id + 1;
+  }
 
   mapRegistry.emplace<comp::Tileset>(tilesetEntity, tileset);
   mapRegistry.emplace<comp::TilesetSelection>(tilesetEntity);

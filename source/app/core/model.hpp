@@ -78,6 +78,11 @@ class DocumentModel final
    */
   auto add_tileset(const comp::Texture& texture, const Vector2i& tileSize) -> UUID;
 
+  /// Restores a tileset, intended to be used after parsing maps.
+  auto restore_tileset(const comp::Texture& texture,
+                       const Vector2i& tileSize,
+                       TileID firstTile) -> UUID;
+
   /// Makes a specific document active.
   void select_document(const UUID& id);
 
