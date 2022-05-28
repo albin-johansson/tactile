@@ -23,6 +23,7 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
 struct ImVec2;
@@ -30,18 +31,20 @@ struct ImVec2;
 namespace tactile {
 
 /**
- * \brief Renders a single tile.
+ * Renders a single tile.
  *
  * \ingroup rendering
  *
  * \param graphics the graphics context that will be used.
- * \param registry the active registry.
+ * \param model the associated document model.
+ * \param map the parent map.
  * \param tile the tile that will be rendered.
  * \param row the row coordinate of the tile.
  * \param column the column coordinate of the tile.
  */
 void render_tile(GraphicsCtx& graphics,
-                 const entt::registry& registry,
+                 const DocumentModel& model,
+                 const MapDocument& map,
                  TileID tile,
                  int32 row,
                  int32 column);

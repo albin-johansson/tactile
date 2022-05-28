@@ -25,6 +25,9 @@
 #include "core/common/ecs.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/documents/tileset_document.hpp"
+#include "core/model.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/textures.hpp"
@@ -32,12 +35,14 @@
 namespace tactile {
 
 void render_tile(GraphicsCtx& graphics,
-                 const entt::registry& registry,
+                 const DocumentModel& model,
+                 const MapDocument& map,
                  const TileID tile,
                  const int32 row,
                  const int32 column)
 {
-  const auto& context = ctx_get<comp::TilesetContext>(registry);
+  const auto& mapRegistry = map.get_registry();
+  const auto& context = ctx_get<comp::TilesetContext>(mapRegistry);
   auto iter = context.tile_to_tileset.find(tile);
 
   if (iter == context.tile_to_tileset.end()) {
@@ -46,17 +51,21 @@ void render_tile(GraphicsCtx& graphics,
 
   const auto tilesetEntity = iter->second;
   if (tilesetEntity != entt::null) {
-    const auto& texture = checked_get<comp::Texture>(registry, tilesetEntity);
-    const auto& uvTileSize = checked_get<comp::UvTileSize>(registry, tilesetEntity);
+    const auto& ref = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
 
-    const auto tileToRender = sys::get_tile_to_render(registry, tilesetEntity, tile);
-    const auto& sourceRect = sys::get_source_rect(registry, tilesetEntity, tileToRender);
+    const auto& tileset = model.view_tileset(ref.source_tileset);
+    const auto& texture = tileset.texture();
+    const auto& uvSize = tileset.uv_size();
+
+    const auto tileToRender = sys::get_tile_to_render(mapRegistry, tilesetEntity, tile);
+    const auto& sourceRect =
+        sys::get_source_rect(mapRegistry, tilesetEntity, tileToRender);
 
     const ImVec4 source{static_cast<float>(sourceRect.x()),
                         static_cast<float>(sourceRect.y()),
                         static_cast<float>(sourceRect.width()),
                         static_cast<float>(sourceRect.height())};
-    const ImVec2 uv{uvTileSize.width, uvTileSize.height};
+    const ImVec2 uv{uvSize.x, uvSize.y};
 
     const auto position = graphics.from_matrix_to_absolute(row, column);
     graphics.render_translated_image(texture.id, source, position, uv);

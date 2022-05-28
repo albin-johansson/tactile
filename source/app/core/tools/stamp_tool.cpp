@@ -56,8 +56,8 @@ void StampTool::draw_gizmos(const DocumentModel& model,
   TACTILE_ASSERT(model.is_map_active());
 
   const auto mapId = model.active_document_id().value();
-  const auto map = model.get_map(mapId);
-  const auto& registry = map->get_registry();
+  const auto& map = model.view_map(mapId);
+  const auto& registry = map.get_registry();
 
   if (!mouse.is_within_contents || !sys::is_tileset_selection_not_empty(registry)) {
     return;

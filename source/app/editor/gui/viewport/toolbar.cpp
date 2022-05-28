@@ -111,7 +111,7 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
 
   scoped::StyleVar padding{ImGuiStyleVar_WindowPadding, {6, 6}};
 
-  const auto map = model.get_map(model.active_document_id().value());
+  const auto& map = model.view_map(model.active_document_id().value());
 
   if (scoped::Window window{"##ToolbarWindow", _window_flags}; window.is_open()) {
     _toolbar_visible = true;
@@ -119,7 +119,7 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
     _toolbar_focused = window.has_focus();
     _toolbar_width = ImGui::GetWindowSize().x;
 
-    const auto& commands = map->get_history();
+    const auto& commands = map.get_history();
 
     if (icon_button(TAC_ICON_UNDO, "Undo", commands.can_undo())) {
       dispatcher.enqueue<UndoEvent>();
@@ -137,21 +137,21 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    _tool_button(*map, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::Stamp);
-    _tool_button(*map, dispatcher, TAC_ICON_ERASER, "Eraser tool", ToolType::Eraser);
-    _tool_button(*map, dispatcher, TAC_ICON_BUCKET, "Bucket tool", ToolType::Bucket);
-    _tool_button(*map,
+    _tool_button(map, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::Stamp);
+    _tool_button(map, dispatcher, TAC_ICON_ERASER, "Eraser tool", ToolType::Eraser);
+    _tool_button(map, dispatcher, TAC_ICON_BUCKET, "Bucket tool", ToolType::Bucket);
+    _tool_button(map,
                  dispatcher,
                  TAC_ICON_OBJECT_SELECTION,
                  "Object selection tool",
                  ToolType::ObjectSelection);
-    _tool_button(*map,
+    _tool_button(map,
                  dispatcher,
                  TAC_ICON_RECTANGLE,
                  "Rectangle tool",
                  ToolType::Rectangle);
-    _tool_button(*map, dispatcher, TAC_ICON_ELLIPSE, "Ellipse tool", ToolType::Ellipse);
-    _tool_button(*map, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::Point);
+    _tool_button(map, dispatcher, TAC_ICON_ELLIPSE, "Ellipse tool", ToolType::Ellipse);
+    _tool_button(map, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::Point);
   }
   else {
     _toolbar_visible = false;
@@ -159,10 +159,10 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
     _toolbar_focused = false;
   }
 
-  if (_toolbar_visible && map->is_tool_active(ToolType::Stamp)) {
+  if (_toolbar_visible && map.is_tool_active(ToolType::Stamp)) {
     _show_extra_toolbar([&] {
-      const auto& registry = map->get_registry();
-      const auto& tools = map->get_tools();
+      const auto& registry = map.get_registry();
+      const auto& tools = map.get_tools();
       const auto selected = tools.is_stamp_random();
 
       if (selected) {

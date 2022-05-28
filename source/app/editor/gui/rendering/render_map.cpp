@@ -25,6 +25,7 @@
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
+#include "core/documents/map_document.hpp"
 #include "editor/gui/rendering/graphics.hpp"
 #include "editor/gui/rendering/render_object_layer.hpp"
 #include "editor/gui/rendering/render_tile_layer.hpp"
@@ -34,24 +35,27 @@ namespace tactile {
 namespace {
 
 void _render_layer(GraphicsCtx& graphics,
-                   const entt::registry& registry,
+                   const DocumentModel& model,
+                   const MapDocument& map,
                    const entt::entity layerEntity,
                    const comp::Layer& layer,
                    const float parentOpacity)
 {
   if (layer.type == LayerType::TileLayer) {
-    render_tile_layer(graphics, registry, layerEntity, parentOpacity);
+    render_tile_layer(graphics, model, map, layerEntity, parentOpacity);
   }
   else if (layer.type == LayerType::ObjectLayer) {
-    render_object_layer(graphics, registry, layerEntity, parentOpacity);
+    render_object_layer(graphics, map.get_registry(), layerEntity, parentOpacity);
   }
 }
 
 }  // namespace
 
-void render_map(GraphicsCtx& graphics, const entt::registry& registry)
+void render_map(GraphicsCtx& graphics, const DocumentModel& model, const MapDocument& map)
 {
   const auto& prefs = get_preferences();
+
+  const auto& registry = map.get_registry();
   const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
 
   const bool highlightActiveLayer = prefs.highlight_active_layer();
@@ -69,13 +73,19 @@ void render_map(GraphicsCtx& graphics, const entt::registry& registry)
       if (!parentLayer || parentLayer->visible) {
         if (highlightActiveLayer) {
           _render_layer(graphics,
-                        registry,
+                        model,
+                        map,
                         entity,
                         layer,
                         activeLayer.entity == entity ? 1.0f : 0.5f);
         }
         else {
-          _render_layer(graphics, registry, entity, layer, parentOpacity * layer.opacity);
+          _render_layer(graphics,
+                        model,
+                        map,
+                        entity,
+                        layer,
+                        parentOpacity * layer.opacity);
         }
       }
     }

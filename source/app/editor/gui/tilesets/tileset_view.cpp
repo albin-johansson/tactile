@@ -104,12 +104,12 @@ void update_tileset_view(const DocumentModel& model,
 {
   const auto activeDocumentId = model.active_document_id().value();
 
-  const auto mapDoc = model.get_map(activeDocumentId);
-  const auto tilesetDoc = model.get_tileset(tilesetId);
+  const auto& mapDoc = model.view_map(activeDocumentId);
+  const auto& tilesetDoc = model.view_tileset(tilesetId);
 
-  const auto& mapRegistry = mapDoc->get_registry();
-  const auto& tilesetInfo = tilesetDoc->info();
-  const auto& texture = tilesetDoc->texture();
+  const auto& mapRegistry = mapDoc.get_registry();
+  const auto& tilesetInfo = tilesetDoc.info();
+  const auto& texture = tilesetDoc.texture();
 
   const auto tilesetEntity = sys::find_tileset(mapRegistry, tilesetId);
   const auto& viewport = checked_get<comp::Viewport>(mapRegistry, tilesetEntity);

@@ -60,31 +60,6 @@ namespace tactile::sys {
 void update_tilesets(entt::registry& registry);
 
 /**
- * \brief Restores a tileset from a snapshot.
- *
- * \param registry the registry that will host the restored tileset.
- * \param snapshot the snapshot of the tileset that will be restored.
- *
- * \return the entity identifier of the restored tileset.
- *
- * \see copy_tileset()
- */
-auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity;
-
-/**
- * \brief Creates a snapshot of a tileset.
- *
- * \param registry the registry that hosts the tileset.
- * \param source the source tileset entity to create a snapshot of.
- *
- * \return a snapshot of the tileset.
- *
- * \see restore_tileset()
- */
-[[nodiscard]] auto copy_tileset(const entt::registry& registry, entt::entity source)
-    -> TilesetSnapshot;
-
-/**
  * \brief Selects the tileset associated with the specified ID.
  *
  * \pre `id` must be associated with an existing tileset.
@@ -94,20 +69,6 @@ auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt
  * \param id the ID associated with the tileset that will be selected.
  */
 void select_tileset(entt::registry& registry, const UUID& id);
-
-/**
- * \brief Removes the tileset associated with the specified ID.
- *
- * \pre `id` must be associated with an existing tileset.
- *
- * \details The active tileset is either reset or changed to another available tileset if
- * the specified tileset is active at the time of invocation.
- *
- * \param registry the associated registry.
- *
- * \param id the ID associated with the tileset that will be removed.
- */
-void remove_tileset(entt::registry& registry, const UUID& id);
 
 /// Attaches a tileset to a map registry.
 void attach_tileset(entt::registry& mapRegistry,

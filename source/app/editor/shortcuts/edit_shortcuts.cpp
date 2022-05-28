@@ -116,7 +116,7 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManag
   if (model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto& info = model.get_map(id)->info();
+      const auto& info = model.view_map(id).info();
       return info.row_count > 1;
     }
   }
@@ -141,7 +141,7 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
   if (model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto& info = model.get_map(id)->info();
+      const auto& info = model.view_map(id).info();
       return info.column_count > 1;
     }
   }
@@ -180,8 +180,8 @@ auto EnableBucketShortcut::is_enabled(const DocumentModel& model,
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto map = model.get_map(id);
-      return map->is_tool_possible(ToolType::Bucket);
+      const auto& map = model.view_map(id);
+      return map.is_tool_possible(ToolType::Bucket);
     }
   }
 
@@ -203,8 +203,8 @@ auto EnableEraserShortcut::is_enabled(const DocumentModel& model,
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto map = model.get_map(id);
-      return map->is_tool_possible(ToolType::Eraser);
+      const auto& map = model.view_map(id);
+      return map.is_tool_possible(ToolType::Eraser);
     }
   }
 
@@ -226,8 +226,8 @@ auto EnableStampShortcut::is_enabled(const DocumentModel& model,
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto map = model.get_map(id);
-      return map->is_tool_possible(ToolType::Stamp);
+      const auto& map = model.view_map(id);
+      return map.is_tool_possible(ToolType::Stamp);
     }
   }
 
@@ -251,8 +251,8 @@ auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model,
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto map = model.get_map(id);
-      return map->is_tool_possible(ToolType::ObjectSelection);
+      const auto& map = model.view_map(id);
+      return map.is_tool_possible(ToolType::ObjectSelection);
     }
   }
 
@@ -275,8 +275,8 @@ auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model,
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto map = model.get_map(id);
-      return map->is_tool_possible(ToolType::Rectangle);
+      const auto& map = model.view_map(id);
+      return map.is_tool_possible(ToolType::Rectangle);
     }
   }
 
@@ -298,8 +298,8 @@ auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model,
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto map = model.get_map(id);
-      return map->is_tool_possible(ToolType::Ellipse);
+      const auto& map = model.view_map(id);
+      return map.is_tool_possible(ToolType::Ellipse);
     }
   }
 
@@ -321,8 +321,8 @@ auto EnablePointToolShortcut::is_enabled(const DocumentModel& model,
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto map = model.get_map(id);
-      return map->is_tool_possible(ToolType::Point);
+      const auto& map = model.view_map(id);
+      return map.is_tool_possible(ToolType::Point);
     }
   }
 

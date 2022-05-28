@@ -141,6 +141,10 @@ class DocumentModel final
   [[nodiscard]] auto get_tileset(const UUID& id) -> Shared<TilesetDocument>;
   [[nodiscard]] auto get_tileset(const UUID& id) const -> Shared<const TilesetDocument>;
 
+  /// Getters that do not require a copy of shared pointers, which can be expensive
+  [[nodiscard]] auto view_map(const UUID& id) const -> const MapDocument&;
+  [[nodiscard]] auto view_tileset(const UUID& id) const -> const TilesetDocument&;
+
   [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
  private:

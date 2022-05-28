@@ -178,12 +178,12 @@ void _update_context_menu(entt::dispatcher& dispatcher)
 
 void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  const auto map = model.get_map(model.active_document_id().value());
+  const auto& map = model.view_map(model.active_document_id().value());
 
-  const auto& registry = map->get_registry();
-  const auto& viewport = map->viewport();
+  const auto& registry = map.get_registry();
+  const auto& viewport = map.viewport();
 
-  const auto info = get_render_info(viewport, map->info());
+  const auto info = get_render_info(viewport, map.info());
   update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
 
   GraphicsCtx graphics{info};
@@ -203,14 +203,14 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
     _will_center_viewport = false;
   }
 
-  render_map(graphics, registry);
+  render_map(graphics, model, map);
 
   const auto cursor = GetViewportCursorInfo(info);  // TODO rename function
   _poll_mouse(dispatcher, cursor);
 
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
                                  ImGui::GetWindowContentRegionMax())) {
-    _draw_cursor_gizmos(graphics, model, *map, cursor, info);
+    _draw_cursor_gizmos(graphics, model, map, cursor, info);
   }
 
   graphics.pop_clip();

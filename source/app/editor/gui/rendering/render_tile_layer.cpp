@@ -23,6 +23,7 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/region.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "editor/gui/rendering/graphics.hpp"
@@ -31,10 +32,12 @@
 namespace tactile {
 
 void render_tile_layer(GraphicsCtx& graphics,
-                       const entt::registry& registry,
+                       const DocumentModel& model,
+                       const MapDocument& map,
                        const entt::entity layerEntity,
                        const float parentOpacity)
 {
+  const auto& registry = map.get_registry();
   const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
   const auto& tileLayer = checked_get<comp::TileLayer>(registry, layerEntity);
 
@@ -48,7 +51,7 @@ void render_tile_layer(GraphicsCtx& graphics,
     for (auto col = bounds.begin.col(); col < endCol; ++col) {
       const auto tile = sys::get_tile(tileLayer, {row, col});
       if (tile != empty_tile) {
-        render_tile(graphics, registry, tile, row, col);
+        render_tile(graphics, model, map, tile, row, col);
       }
     }
   }

@@ -233,10 +233,10 @@ void _convert_tilesets(const DocumentModel& model,
     auto& tilesetData = data.tilesets.emplace_back();
     tilesetData.name = context.name;
 
-    const auto tilesetDocument = model.get_tileset(tilesetRef.source_tileset);
-    const auto& tilesetRegistry = tilesetDocument->get_registry();
-    const auto& tileset = ctx_get<comp::Tileset>(tilesetRegistry);
-    const auto& texture = ctx_get<comp::Texture>(tilesetRegistry);
+    const auto& tilesetDocument = model.view_tileset(tilesetRef.source_tileset);
+    const auto& tilesetRegistry = tilesetDocument.get_registry();
+    const auto& tileset = tilesetDocument.info();
+    const auto& texture = tilesetDocument.texture();
 
     tilesetData.first_tile = tilesetRef.first_id;
     tilesetData.tile_width = tileset.tile_width;
@@ -279,11 +279,11 @@ auto convert_map_to_ir(const DocumentModel& model, const UUID& documentId) -> ir
 {
   TACTILE_PROFILE_START
 
-  const auto document = model.get_map(documentId);
-  const auto& mapRegistry = document->get_registry();
+  const auto& document = model.view_map(documentId);
+  const auto& mapRegistry = document.get_registry();
 
   ir::MapData data;
-  _convert_basic_map_info(data, ctx_get<comp::MapInfo>(mapRegistry));
+  _convert_basic_map_info(data, document.info());
 
   _convert_component_definitions(data, mapRegistry);
   _convert_tilesets(model, mapRegistry, data);

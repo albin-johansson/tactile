@@ -21,18 +21,22 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile {
 
 /**
- * \brief Renders a map.
- *
- * \ingroup rendering
+ * Renders a map.
  *
  * \param graphics the graphics context that will be used.
- * \param registry the registry associated with the map that will rendered.
+ * \param model the associated document model.
+ * \param map the map that will be rendered.
+ *
+ * \ingroup rendering
  */
-void render_map(GraphicsCtx& graphics, const entt::registry& registry);
+void render_map(GraphicsCtx& graphics,
+                const DocumentModel& model,
+                const MapDocument& map);
 
 }  // namespace tactile

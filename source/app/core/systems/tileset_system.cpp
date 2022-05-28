@@ -62,10 +62,11 @@ namespace {
   return cache;
 }
 
-void _refresh_tileset_cache(entt::registry& mapRegistry, const entt::entity tilesetEntity)
+void _refresh_tileset_cache(entt::registry& mapRegistry,
+                            const entt::entity tilesetEntity,
+                            const comp::Tileset& tileset)
 {
   const auto& ref = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
-  const auto& tileset = checked_get<comp::Tileset>(mapRegistry, tilesetEntity);
 
   auto& cache = mapRegistry.emplace_or_replace<comp::TilesetCache>(tilesetEntity);
   cache.source_rects = _create_source_rect_cache(ref, tileset);
@@ -120,40 +121,6 @@ void update_tilesets(entt::registry& registry)
   }
 }
 
-auto restore_tileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity
-{
-  const auto tilesetEntity = registry.create();
-
-  auto& tileset = registry.emplace<comp::Tileset>(tilesetEntity, snapshot.core);
-  registry.emplace<comp::TilesetSelection>(tilesetEntity, snapshot.selection);
-  registry.emplace<comp::Texture>(tilesetEntity, snapshot.texture);
-  registry.emplace<comp::UvTileSize>(tilesetEntity, snapshot.uv);
-
-  _add_viewport(registry, tilesetEntity, tileset.tile_width, tileset.tile_height);
-
-  _refresh_tileset_cache(registry, tilesetEntity);
-  _register_new_tiles_in_tile_context(registry, tilesetEntity);
-
-  restore_attribute_context(registry, tilesetEntity, std::move(snapshot.context));
-
-  return tilesetEntity;
-}
-
-auto copy_tileset(const entt::registry& registry, const entt::entity source)
-    -> TilesetSnapshot
-{
-  TACTILE_ASSERT(source != entt::null);
-  TilesetSnapshot snapshot;
-
-  snapshot.core = checked_get<comp::Tileset>(registry, source);
-  snapshot.selection = checked_get<comp::TilesetSelection>(registry, source);
-  snapshot.texture = checked_get<comp::Texture>(registry, source);
-  snapshot.uv = checked_get<comp::UvTileSize>(registry, source);
-  snapshot.context = copy_attribute_context(registry, source);
-
-  return snapshot;
-}
-
 void select_tileset(entt::registry& registry, const UUID& id)
 {
   const auto entity = find_tileset(registry, id);
@@ -161,30 +128,6 @@ void select_tileset(entt::registry& registry, const UUID& id)
 
   auto& activeTileset = ctx_get<comp::ActiveTileset>(registry);
   activeTileset.entity = entity;
-}
-
-void remove_tileset(entt::registry& registry, const UUID& id)
-{
-  const auto entity = find_tileset(registry, id);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& activeTileset = ctx_get<comp::ActiveTileset>(registry);
-  if (entity == activeTileset.entity) {
-    activeTileset.entity = entt::null;
-  }
-
-  auto& activeContext = ctx_get<comp::ActiveAttributeContext>(registry);
-  if (entity == activeContext.entity) {
-    activeContext.entity = entt::null;
-  }
-
-  _unregister_tiles_from_tile_context(registry, entity);
-
-  registry.destroy(entity);
-
-  if (!registry.view<comp::Tileset>().empty()) {
-    activeTileset.entity = registry.view<comp::Tileset>().front();
-  }
 }
 
 void attach_tileset(entt::registry& mapRegistry,
@@ -213,6 +156,9 @@ void attach_tileset(entt::registry& mapRegistry,
 
   mapRegistry.emplace<comp::Tileset>(tilesetEntity, tileset);
   mapRegistry.emplace<comp::TilesetSelection>(tilesetEntity);
+
+  _register_new_tiles_in_tile_context(mapRegistry, tilesetEntity);
+  _refresh_tileset_cache(mapRegistry, tilesetEntity, tileset);
 }
 
 auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId) -> TilesetSnapshot

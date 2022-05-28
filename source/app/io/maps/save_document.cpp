@@ -41,10 +41,10 @@ void save_document(const DocumentModel& model, const UUID& documentId)
 {
   TACTILE_PROFILE_START
 
-  const auto document = model.get_map(documentId);
-  TACTILE_ASSERT(document->has_path());
+  const auto& document = model.view_map(documentId);
+  TACTILE_ASSERT(document.has_path());
 
-  const auto path = std::filesystem::absolute(document->get_path());
+  const auto path = std::filesystem::absolute(document.get_path());
   spdlog::info("Trying to save map to {}", path);
 
   emitter::EmitInfo info{path, convert_map_to_ir(model, documentId)};

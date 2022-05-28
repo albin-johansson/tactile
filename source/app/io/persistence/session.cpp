@@ -72,9 +72,9 @@ void save_session(const DocumentModel& model)
   proto::Session session;
   model.each([&](const UUID& id) {
     if (model.is_map(id)) {
-      const auto map = model.get_map(id);
-      if (map->has_path()) {
-        const auto documentPath = std::filesystem::absolute(map->get_path());
+      const auto& map = model.view_map(id);
+      if (map.has_path()) {
+        const auto documentPath = std::filesystem::absolute(map.get_path());
         session.add_files(convert_to_forward_slashes(documentPath));
       }
     }
