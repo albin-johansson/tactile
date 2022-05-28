@@ -10,7 +10,7 @@ using namespace tactile;
 
 TEST(PreferenceState, Defaults)
 {
-  const PreferenceState state;
+  const io::PreferenceState state;
 
   ASSERT_EQ(EditorTheme::Nocturnal, state.get_theme());
 
@@ -37,7 +37,7 @@ TEST(PreferenceState, Defaults)
 
 TEST(PreferenceState, SetTheme)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_theme(EditorTheme::Amber);
   ASSERT_EQ(EditorTheme::Amber, state.get_theme());
@@ -45,7 +45,7 @@ TEST(PreferenceState, SetTheme)
 
 TEST(PreferenceState, SetViewportBg)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_viewport_bg(cen::colors::rebecca_purple);
   ASSERT_EQ(cen::colors::rebecca_purple, state.viewport_bg());
@@ -53,7 +53,7 @@ TEST(PreferenceState, SetViewportBg)
 
 TEST(PreferenceState, SetWindowBorder)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_window_border(true);
   ASSERT_TRUE(state.has_window_border());
@@ -64,7 +64,7 @@ TEST(PreferenceState, SetWindowBorder)
 
 TEST(PreferenceState, SetLayerDockVisible)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_layer_dock_visible(true);
   ASSERT_TRUE(state.is_layer_dock_visible());
@@ -75,7 +75,7 @@ TEST(PreferenceState, SetLayerDockVisible)
 
 TEST(PreferenceState, SetTilesetDockVisible)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_tileset_dock_visible(true);
   ASSERT_TRUE(state.is_tileset_dock_visible());
@@ -86,7 +86,7 @@ TEST(PreferenceState, SetTilesetDockVisible)
 
 TEST(PreferenceState, SetPropertiesDockVisible)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_property_dock_visible(true);
   ASSERT_TRUE(state.is_property_dock_visible());
@@ -97,7 +97,7 @@ TEST(PreferenceState, SetPropertiesDockVisible)
 
 TEST(PreferenceState, SetComponentDockVisible)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_component_dock_visible(true);
   ASSERT_TRUE(state.is_component_dock_visible());
@@ -108,7 +108,7 @@ TEST(PreferenceState, SetComponentDockVisible)
 
 TEST(PreferenceState, SetLogDockVisible)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_log_dock_visible(true);
   ASSERT_TRUE(state.is_log_dock_visible());
@@ -119,7 +119,7 @@ TEST(PreferenceState, SetLogDockVisible)
 
 TEST(PreferenceState, SetGridVisible)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_grid_visible(true);
   ASSERT_TRUE(state.is_grid_visible());
@@ -130,7 +130,7 @@ TEST(PreferenceState, SetGridVisible)
 
 TEST(PreferenceState, SetEmbedTilesets)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_embed_tilesets(true);
   ASSERT_TRUE(state.embed_tilesets());
@@ -141,7 +141,7 @@ TEST(PreferenceState, SetEmbedTilesets)
 
 TEST(PreferenceState, SetFoldTileData)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_fold_tile_data(true);
   ASSERT_TRUE(state.fold_tile_data());
@@ -152,7 +152,7 @@ TEST(PreferenceState, SetFoldTileData)
 
 TEST(PreferenceState, SetIndentOutput)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_indent_output(true);
   ASSERT_TRUE(state.indent_output());
@@ -163,7 +163,7 @@ TEST(PreferenceState, SetIndentOutput)
 
 TEST(PreferenceState, SetWillRestoreLayout)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_will_restore_layout(true);
   ASSERT_TRUE(state.will_restore_layout());
@@ -174,7 +174,7 @@ TEST(PreferenceState, SetWillRestoreLayout)
 
 TEST(PreferenceState, SetWillRestoreLastSession)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_will_restore_last_session(true);
   ASSERT_TRUE(state.will_restore_last_session());
@@ -185,15 +185,15 @@ TEST(PreferenceState, SetWillRestoreLastSession)
 
 TEST(PreferenceState, SetViewportOverlayPos)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
-  state.set_viewport_overlay_pos(OverlayPos::BottomRight);
-  ASSERT_EQ(OverlayPos::BottomRight, state.viewport_overlay_pos());
+  state.set_viewport_overlay_pos(io::OverlayPos::BottomRight);
+  ASSERT_EQ(io::OverlayPos::BottomRight, state.viewport_overlay_pos());
 }
 
 TEST(PreferenceState, SetCommandCapacity)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_command_capacity(42u);
   ASSERT_EQ(42u, state.command_capacity());
@@ -201,7 +201,7 @@ TEST(PreferenceState, SetCommandCapacity)
 
 TEST(PreferenceState, SetPreferredFormat)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_preferred_format("JSON");
   ASSERT_EQ("JSON", state.preferred_format());
@@ -209,7 +209,7 @@ TEST(PreferenceState, SetPreferredFormat)
 
 TEST(PreferenceState, SetPreferredTileWidth)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_preferred_tile_width(128);
   ASSERT_EQ(128, state.preferred_tile_width());
@@ -218,7 +218,7 @@ TEST(PreferenceState, SetPreferredTileWidth)
 
 TEST(PreferenceState, SetPreferredTileHeight)
 {
-  PreferenceState state;
+  io::PreferenceState state;
 
   state.set_preferred_tile_height(853);
   ASSERT_EQ(32, state.preferred_tile_width());
@@ -243,8 +243,8 @@ TEST(PreferenceState, EnsureThemeEnumsMatch)
 
 TEST(PreferenceState, EnsureOverlayPosEnumsMatch)
 {
-  ASSERT_EQ(proto::OVERLAY_POS_TOP_LEFT, to_underlying(OverlayPos::TopLeft));
-  ASSERT_EQ(proto::OVERLAY_POS_TOP_RIGHT, to_underlying(OverlayPos::TopRight));
-  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_RIGHT, to_underlying(OverlayPos::BottomRight));
-  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_LEFT, to_underlying(OverlayPos::BottomLeft));
+  ASSERT_EQ(proto::OVERLAY_POS_TOP_LEFT, to_underlying(io::OverlayPos::TopLeft));
+  ASSERT_EQ(proto::OVERLAY_POS_TOP_RIGHT, to_underlying(io::OverlayPos::TopRight));
+  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_RIGHT, to_underlying(io::OverlayPos::BottomRight));
+  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_LEFT, to_underlying(io::OverlayPos::BottomLeft));
 }

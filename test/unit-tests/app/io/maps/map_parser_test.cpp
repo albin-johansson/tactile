@@ -22,7 +22,7 @@
 
 using namespace tactile;
 
-using parsing::ParseError;
+using io::ParseError;
 
 namespace {
 
@@ -203,7 +203,7 @@ TEST_P(MapParserTest, Parsing)
 {
   const auto [path, expected] = GetParam();
 
-  const auto result = parsing::parse_map(path);
+  const auto result = io::parse_map(path);
   ASSERT_EQ(expected, result.error());
 }
 

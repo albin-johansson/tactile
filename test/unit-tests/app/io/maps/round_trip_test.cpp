@@ -447,12 +447,12 @@ constexpr usize _col_count = 13;
 
 TEST(RoundTrip, YAML)
 {
-  const emitter::EmitInfo emitter{std::filesystem::absolute("test_map.yaml"),
-                                  _create_source_data(true)};
-  emitter::emit_yaml_map(emitter);
+  const io::EmitInfo emitter{std::filesystem::absolute("test_map.yaml"),
+                             _create_source_data(true)};
+  io::emit_yaml_map(emitter);
 
-  const auto result = parsing::parse_map("test_map.yaml");
-  ASSERT_EQ(parsing::ParseError::None, result.error());
+  const auto result = io::parse_map("test_map.yaml");
+  ASSERT_EQ(io::ParseError::None, result.error());
 
   const auto& source = emitter.data();
   const auto& restored = result.data();
@@ -465,14 +465,14 @@ TEST(RoundTrip, YAML)
 
 TEST(RoundTrip, JSON)
 {
-  const emitter::EmitInfo emitter{std::filesystem::absolute("test_map.json"),
-                                  _create_source_data(false)};
-  emitter::emit_json_map(emitter);
+  const io::EmitInfo emitter{std::filesystem::absolute("test_map.json"),
+                             _create_source_data(false)};
+  io::emit_json_map(emitter);
 
-  const auto result = parsing::parse_map("test_map.json");
-  ASSERT_EQ(parsing::ParseError::None, result.error());
+  const auto result = io::parse_map("test_map.json");
+  ASSERT_EQ(io::ParseError::None, result.error());
 
-  ASSERT_EQ(parsing::ParseError::None, result.error());
+  ASSERT_EQ(io::ParseError::None, result.error());
 
   const auto& source = emitter.data();
   const auto& restored = result.data();
@@ -484,12 +484,12 @@ TEST(RoundTrip, JSON)
 
 TEST(RoundTrip, XML)
 {
-  const emitter::EmitInfo emitter{std::filesystem::absolute("test_map.tmx"),
-                                  _create_source_data(false)};
-  emitter::emit_xml_map(emitter);
+  const io::EmitInfo emitter{std::filesystem::absolute("test_map.tmx"),
+                             _create_source_data(false)};
+  io::emit_xml_map(emitter);
 
-  const auto result = parsing::parse_map("test_map.tmx");
-  ASSERT_EQ(parsing::ParseError::None, result.error());
+  const auto result = io::parse_map("test_map.tmx");
+  ASSERT_EQ(io::ParseError::None, result.error());
 
   const auto& source = emitter.data();
   const auto& restored = result.data();
