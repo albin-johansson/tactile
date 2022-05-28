@@ -38,25 +38,19 @@ auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i&
   ctx.emplace<comp::ActiveAttributeContext>();
 
   auto& tileset = ctx.emplace<comp::Tileset>();
-  tileset.tile_width = tileSize.x;
-  tileset.tile_height = tileSize.y;
-
-  tileset.row_count = texture.height / tileset.tile_height;
-  tileset.column_count = texture.width / tileset.tile_width;
+  tileset.tile_size = tileSize;
+  tileset.row_count = texture.size.y / tileset.tile_size.y;
+  tileset.column_count = texture.size.x / tileset.tile_size.x;
 
   auto& cache = ctx.emplace<comp::TilesetCache>();
   // TODO do something with the cache?
 
   auto& viewport = ctx.emplace<comp::Viewport>();
-  viewport.tile_width = static_cast<float>(tileSize.x);
-  viewport.tile_height = static_cast<float>(tileSize.y);
-  viewport.x_offset = 0;
-  viewport.y_offset = 0;
+  viewport.offset = {0, 0};
+  viewport.tile_size = tileSize;
 
   auto& uv = ctx.emplace<comp::UvTileSize>();
-  uv.width = static_cast<float>(tileset.tile_width) / static_cast<float>(texture.width);
-  uv.height =
-      static_cast<float>(tileset.tile_height) / static_cast<float>(texture.height);
+  uv.size = Vector2f{tileset.tile_size} / Vector2f{texture.size};
 
   auto& context = ctx.emplace<comp::AttributeContext>();
   context.id = make_uuid();

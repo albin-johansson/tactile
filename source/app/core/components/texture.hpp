@@ -22,19 +22,19 @@
 #include <filesystem>  // path
 
 #include "core/common/ints.hpp"
+#include "core/common/math.hpp"
 
 namespace tactile::comp {
 
 /**
- * \brief Represents an OpenGL texture.
+ * Represents a loaded OpenGL texture.
  *
  * \ingroup components
  */
 struct Texture final
 {
   uint id{};                   ///< The OpenGL texture identifier.
-  int width{};                 ///< The texture pixel width.
-  int height{};                ///< The texture pixel height.
+  Vector2i size{};             ///< Texture size in pixels.
   std::filesystem::path path;  ///< Source file path.
 };
 

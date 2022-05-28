@@ -19,14 +19,14 @@
 
 #pragma once
 
+#include "core/common/math.hpp"
+
 namespace tactile::comp {
 
 struct Viewport final
 {
-  float x_offset{};
-  float y_offset{};
-  float tile_width{};
-  float tile_height{};
+  Vector2f offset{};
+  Vector2f tile_size{};
 };
 
 }  // namespace tactile::comp

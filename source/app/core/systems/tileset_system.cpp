@@ -53,10 +53,10 @@ namespace {
     const auto index = id - ref.first_id;
 
     const auto [row, col] = to_matrix_coords(index, tileset.column_count);
-    const auto x = col * tileset.tile_width;
-    const auto y = row * tileset.tile_height;
+    const auto x = col * tileset.tile_size.x;
+    const auto y = row * tileset.tile_size.y;
 
-    cache[id] = cen::irect{x, y, tileset.tile_width, tileset.tile_height};
+    cache[id] = cen::irect{x, y, tileset.tile_size.x, tileset.tile_size.y};
   }
 
   return cache;
@@ -102,14 +102,11 @@ void _unregister_tiles_from_tile_context(entt::registry& mapRegistry,
 
 void _add_viewport(entt::registry& registry,
                    const entt::entity tilesetEntity,
-                   const int32 tileWidth,
-                   const int32 tileHeight)
+                   const Vector2i& tileSize)
 {
   auto& viewport = registry.emplace<comp::Viewport>(tilesetEntity);
-  viewport.x_offset = 0;
-  viewport.y_offset = 0;
-  viewport.tile_width = static_cast<float>(tileWidth);
-  viewport.tile_height = static_cast<float>(tileHeight);
+  viewport.offset = {0, 0};
+  viewport.tile_size = tileSize;
 }
 
 }  // namespace
@@ -143,8 +140,7 @@ void attach_tileset(entt::registry& mapRegistry,
   context.name = "TilesetRef";  // FIXME
 
   auto& viewport = mapRegistry.emplace<comp::Viewport>(tilesetEntity);
-  viewport.tile_width = static_cast<float>(tileset.tile_width);
-  viewport.tile_height = static_cast<float>(tileset.tile_height);
+  viewport.tile_size = tileset.tile_size;
 
   auto& ref = mapRegistry.emplace<comp::TilesetRef>(tilesetEntity);
   ref.source_tileset = tilesetId;

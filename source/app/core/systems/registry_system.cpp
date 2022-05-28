@@ -50,10 +50,8 @@ auto new_map_document_registry() -> entt::registry
   map.column_count = 5;
 
   auto& viewport = ctx.emplace<comp::Viewport>();
-  viewport.tile_width = 64;
-  viewport.tile_height = 64;
-  viewport.x_offset = 0;
-  viewport.y_offset = 0;
+  viewport.offset = {0, 0};
+  viewport.tile_size = {64, 64};
 
   auto& context = ctx.emplace<comp::AttributeContext>();
   context.id = make_uuid();

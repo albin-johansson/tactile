@@ -97,11 +97,11 @@ void _center_viewport(entt::dispatcher& dispatcher,
                       const float nRows,
                       const float nCols)
 {
-  const auto width = nCols * viewport.tile_width;
-  const auto height = nRows * viewport.tile_height;
+  const auto width = nCols * viewport.tile_size.x;
+  const auto height = nRows * viewport.tile_size.y;
 
-  const auto dx = std::round(((canvasSize.x - width) / 2.0f) - viewport.x_offset);
-  const auto dy = std::round(((canvasSize.y - height) / 2.0f) - viewport.y_offset);
+  const auto dx = std::round(((canvasSize.x - width) / 2.0f) - viewport.offset.x);
+  const auto dy = std::round(((canvasSize.y - height) / 2.0f) - viewport.offset.y);
 
   dispatcher.enqueue<OffsetViewportEvent>(dx, dy);
 }

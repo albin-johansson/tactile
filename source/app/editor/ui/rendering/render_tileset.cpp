@@ -36,14 +36,14 @@ void render_tileset(GraphicsCtx& graphics, const entt::registry& registry)
   const auto& texture = ctx_get<comp::Texture>(registry);
   const auto& uvTileSize = ctx_get<comp::UvTileSize>(registry);
 
-  const auto tw = static_cast<float>(tileset.tile_width);
-  const auto th = static_cast<float>(tileset.tile_height);
-  const ImVec2 uv{uvTileSize.width, uvTileSize.height};
+  const auto tw = static_cast<float>(tileset.tile_size.x);
+  const auto th = static_cast<float>(tileset.tile_size.y);
+  const ImVec2 uv{uvTileSize.size.x, uvTileSize.size.y};
 
   for (int32 row = 0; row < tileset.row_count; ++row) {
     for (int32 col = 0; col < tileset.column_count; ++col) {
-      const ImVec4 source{static_cast<float>(col * tileset.tile_width),
-                          static_cast<float>(row * tileset.tile_height),
+      const ImVec4 source{static_cast<float>(col * tileset.tile_size.x),
+                          static_cast<float>(row * tileset.tile_size.y),
                           tw,
                           th};
       const auto position = graphics.from_matrix_to_absolute(row, col);

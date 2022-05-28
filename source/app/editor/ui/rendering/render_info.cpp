@@ -64,10 +64,10 @@ namespace {
   info.canvas_tl = ImGui::GetCursorScreenPos();
   info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
 
-  info.origin = info.canvas_tl + ImVec2{viewport.x_offset, viewport.y_offset};
+  info.origin = info.canvas_tl + ImVec2{viewport.offset.x, viewport.offset.y};
 
   info.tile_size = logicalTileSize;
-  info.grid_size = {viewport.tile_width, viewport.tile_height};
+  info.grid_size = {viewport.tile_size.x, viewport.tile_size.y};
   info.ratio = info.grid_size / info.tile_size;
 
   info.row_count = static_cast<float>(rows);
@@ -99,8 +99,8 @@ auto get_render_info(const comp::Viewport& viewport, const comp::MapInfo& map)
 auto get_render_info(const comp::Viewport& viewport, const comp::Tileset& tileset)
     -> RenderInfo
 {
-  const ImVec2 tileSize{static_cast<float>(tileset.tile_width),
-                        static_cast<float>(tileset.tile_height)};
+  const ImVec2 tileSize{static_cast<float>(tileset.tile_size.x),
+                        static_cast<float>(tileset.tile_size.y)};
   return _get_render_info(viewport, tileSize, tileset.row_count, tileset.column_count);
 }
 

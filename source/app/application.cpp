@@ -361,8 +361,8 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
         }
       }
       else {
-        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
-        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
+        const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
+        const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
         mData->dispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
       }
     }
@@ -375,8 +375,8 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
         const auto& viewport = checked_get<comp::Viewport>(registry, entity);
 
-        const auto dx = event.precise_x() * (viewport.tile_width / scaling);
-        const auto dy = event.precise_y() * (viewport.tile_height / scaling);
+        const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
+        const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
         mData->dispatcher.enqueue<OffsetBoundViewportEvent>(entity,
                                                             -dx,
                                                             dy,

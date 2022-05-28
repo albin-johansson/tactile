@@ -239,13 +239,13 @@ void _convert_tilesets(const DocumentModel& model,
     const auto& texture = tilesetDocument.texture();
 
     tilesetData.first_tile = tilesetRef.first_id;
-    tilesetData.tile_width = tileset.tile_width;
-    tilesetData.tile_height = tileset.tile_height;
+    tilesetData.tile_width = tileset.tile_size.x;
+    tilesetData.tile_height = tileset.tile_size.y;
     tilesetData.column_count = tileset.column_count;
 
     tilesetData.image_path = texture.path;
-    tilesetData.image_width = texture.width;
-    tilesetData.image_height = texture.height;
+    tilesetData.image_width = texture.size.x;
+    tilesetData.image_height = texture.size.y;
 
     _convert_fancy_tiles(tilesetData, tilesetRef, mapRegistry);
   }

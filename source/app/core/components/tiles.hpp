@@ -27,6 +27,7 @@
 #include "core/common/associative.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 #include "core/region.hpp"
@@ -37,23 +38,22 @@ namespace tactile::comp {
 /// \{
 
 /**
- * \brief Context component that keeps track of the tileset state of a single map.
+ * Context component that keeps track of the tileset state of a single map.
  */
 struct TilesetContext final
 {
   TileID next_tile_id{};  ///< Next available global tile ID.
-  [[deprecated]] HashMap<TileID, entt::entity> tile_to_tileset;
+  HashMap<TileID, entt::entity> tile_to_tileset;
 };
 
 /**
- * \brief Provides general information about a tileset.
+ * Provides general information about a tileset.
  *
  * \todo Use ivec2 for tile size.
  */
 struct Tileset final
 {
-  int32 tile_width{};    ///< Width of tiles in the tileset.
-  int32 tile_height{};   ///< Height of tiles in the tileset.
+  Vector2i tile_size{};  ///< Logical size of tiles.
   int32 row_count{};     ///< Amount of tile rows.
   int32 column_count{};  ///< Amount of tile columns.
 
@@ -64,7 +64,7 @@ struct Tileset final
 };
 
 /**
- * \brief Component used in map registries to keep track of all added tilesets.
+ * Component used in map registries to keep track of all added tilesets.
  */
 struct TilesetRef final
 {
@@ -75,19 +75,18 @@ struct TilesetRef final
 };
 
 /**
- * \brief Provides information about the size of a single tile in a tileset for rendering.
+ * Provides information about the size of a single tile in a tileset for rendering.
  */
 struct UvTileSize final
 {
-  float width{};
-  float height{};
+  Vector2f size{};
 };
 
 /**
- * \brief Component that provides meta-information about tileset tiles.
+ * Component that provides meta-information about tileset tiles.
  *
- * \details Tiles with aspects such as animations, properties or associated objects will
- * feature this component.
+ * Tiles with aspects such as animations, properties or associated objects will feature
+ * this component.
  */
 struct MetaTile final
 {
@@ -96,7 +95,7 @@ struct MetaTile final
 };
 
 /**
- * \brief Contains cached information about a single tileset.
+ * Contains cached information about a single tileset.
  */
 struct TilesetCache final
 {
@@ -104,13 +103,13 @@ struct TilesetCache final
   HashMap<TileID, entt::entity> tiles;       ///< Additional tile info.
 
   /**
-   * \brief Frame-by-frame cache that maps tiles to the tile that should be rendered.
+   * Frame-by-frame cache that maps tiles to the tile that should be rendered.
    */
   mutable HashMap<TileID, TileID> source_to_render;
 };
 
 /**
- * \brief Represents the tile selection in a tileset.
+ * Represents the tile selection in a tileset.
  */
 struct TilesetSelection final
 {
@@ -118,7 +117,7 @@ struct TilesetSelection final
 };
 
 /**
- * \brief Context component that keeps track of the active tileset.
+ * Context component that keeps track of the active tileset.
  */
 struct ActiveTileset final
 {

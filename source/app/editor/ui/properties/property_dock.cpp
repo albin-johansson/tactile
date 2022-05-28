@@ -163,8 +163,8 @@ void _show_native_tileset_properties(const std::string& name,
   _native_read_only_row("Tile count", tileset.tile_count());
   _native_read_only_row("Column count", tileset.column_count);
 
-  _native_read_only_row("Tile width", tileset.tile_width);
-  _native_read_only_row("Tile height", tileset.tile_height);
+  _native_read_only_row("Tile width", tileset.tile_size.x);
+  _native_read_only_row("Tile height", tileset.tile_size.y);
 }
 
 void _show_native_tileset_ref_properties(const std::string& name,

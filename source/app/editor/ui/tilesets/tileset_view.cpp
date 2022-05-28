@@ -91,8 +91,8 @@ void _render_tileset_image(GraphicsCtx& graphics,
                            const comp::Texture& texture,
                            const ImVec2& position)
 {
-  const ImVec2 size = {static_cast<float>(texture.width),
-                       static_cast<float>(texture.height)};
+  const ImVec2 size = {static_cast<float>(texture.size.x),
+                       static_cast<float>(texture.size.y)};
   graphics.render_image(texture.id, position, size);
 }
 
@@ -125,9 +125,9 @@ void update_tileset_view(const DocumentModel& model,
   graphics.set_draw_color(io::get_preferences().viewport_bg());
   graphics.clear();
 
-  const ImVec2 offset{viewport.x_offset, viewport.y_offset};
-  const ImVec2 tileSize = {static_cast<float>(tilesetInfo.tile_width),
-                           static_cast<float>(tilesetInfo.tile_height)};
+  const ImVec2 offset{viewport.offset.x, viewport.offset.y};
+  const ImVec2 tileSize = {static_cast<float>(tilesetInfo.tile_size.x),
+                           static_cast<float>(tilesetInfo.tile_size.y)};
 
   if (const auto selection = rubber_band(offset, tileSize)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);

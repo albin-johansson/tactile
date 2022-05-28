@@ -52,13 +52,13 @@ auto TilesetDocument::info() const -> const comp::Tileset&
 auto TilesetDocument::tile_size() const -> Vector2i
 {
   const auto& tileset = info();
-  return {tileset.tile_width, tileset.tile_height};
+  return tileset.tile_size;
 }
 
 auto TilesetDocument::uv_size() const -> Vector2f
 {
   const auto& uv = ctx_get<comp::UvTileSize>(mRegistry);
-  return {uv.width, uv.height};
+  return uv.size;
 }
 
 auto TilesetDocument::texture() const -> const comp::Texture&
