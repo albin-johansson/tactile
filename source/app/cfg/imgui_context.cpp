@@ -24,7 +24,7 @@
 #include <imgui_impl_sdl.h>
 #include <spdlog/spdlog.h>
 
-#include "editor/gui/themes.hpp"
+#include "editor/ui/themes.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 

@@ -32,8 +32,8 @@
 #include "core/events/tileset_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
-#include "editor/gui/menus/map_menu.hpp"
-#include "editor/gui/widgets.hpp"
+#include "editor/ui/menus/map_menu.hpp"
+#include "editor/ui/widgets.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {

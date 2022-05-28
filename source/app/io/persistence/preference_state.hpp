@@ -27,7 +27,7 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/memory.hpp"
-#include "editor/gui/themes.hpp"
+#include "editor/ui/themes.hpp"
 
 namespace tactile::io {
 

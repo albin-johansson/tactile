@@ -1,4 +1,4 @@
-#include "editor/gui/common/colors.hpp"
+#include "editor/ui/common/colors.hpp"
 
 #include <gtest/gtest.h>
 
