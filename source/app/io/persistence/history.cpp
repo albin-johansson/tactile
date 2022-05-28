@@ -47,7 +47,7 @@ inline std::deque<std::string> _history;
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&
 {
-  static const auto path = io::persistent_file_dir() / "history.bin";
+  static const auto path = persistent_file_dir() / "history.bin";
   return path;
 }
 
