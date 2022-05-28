@@ -26,12 +26,9 @@
 
 namespace tactile {
 
-class WidgetManager;
-
 void load_default_shortcuts();
 
 void update_shortcuts(const DocumentModel& model,
-                      const WidgetManager& widgets,
                       const cen::keyboard_event& event,
                       entt::dispatcher& dispatcher);
 

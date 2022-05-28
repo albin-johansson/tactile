@@ -56,7 +56,7 @@
 #include "editor/gui/tilesets/tileset_view.hpp"
 #include "editor/gui/viewport/map_view.hpp"
 #include "editor/gui/viewport/viewport_widget.hpp"
-#include "editor/gui/widget_manager.hpp"
+#include "editor/gui/widgets.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/maps/parser/parse_map.hpp"
@@ -116,7 +116,6 @@ struct Application::Data final
   entt::dispatcher dispatcher;
   DocumentModel model;
   TextureManager textures;
-  WidgetManager widgets;
   WidgetShowState widget_show_state;
   bool reload_fonts{};
 };
@@ -170,7 +169,7 @@ void Application::on_update()
   auto& data = *mData;
   data.dispatcher.update();
   data.model.update();
-  data.widgets.update(data.model, data.dispatcher);
+  update_widgets(data.model, data.dispatcher);
 }
 
 void Application::on_event(const cen::event_handler& handler)
@@ -336,7 +335,7 @@ void Application::on_keyboard_event(cen::keyboard_event event)
   event.set_modifier(cen::key_mod::mode, false);
 
   auto& data = *mData;
-  update_shortcuts(data.model, data.widgets, event, data.dispatcher);
+  update_shortcuts(data.model, event, data.dispatcher);
 }
 
 void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
@@ -503,7 +502,7 @@ void Application::on_open_map(const OpenMapEvent& event)
     io::add_file_to_history(event.path);
   }
   else {
-    mData->widgets.show_map_import_error_dialog(ir.error());
+    show_map_import_error_dialog(ir.error());
   }
 }
 
@@ -766,7 +765,7 @@ void Application::on_open_resize_map_dialog()
 {
   if (auto* registry = mData->model.active_registry()) {
     const auto& map = ctx_get<comp::MapInfo>(*registry);
-    mData->widgets.show_resize_map_dialog(map.row_count, map.column_count);
+    show_resize_map_dialog(map.row_count, map.column_count);
   }
 }
 

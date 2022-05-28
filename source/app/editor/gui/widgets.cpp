@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "widget_manager.hpp"
+#include "widgets.hpp"
 
 #include "core/model.hpp"
 #include "editor/gui/components/component_dock.hpp"
@@ -34,18 +34,14 @@
 #include "editor/gui/viewport/viewport_widget.hpp"
 
 namespace tactile {
+namespace {
 
-struct WidgetManager::Widgets final
-{
-  ResizeMapDialog resize_map_dialog;
-  MapParseErrorDialog map_parse_error_dialog;
-};
+inline ResizeMapDialog _resize_map_dialog;
+inline MapParseErrorDialog _map_parse_error_dialog;
 
-WidgetManager::WidgetManager() : mWidgets{std::make_unique<Widgets>()} {}
+}  // namespace
 
-WidgetManager::~WidgetManager() noexcept = default;
-
-void WidgetManager::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   update_menu_bar(model, dispatcher);
   update_dock_space();
@@ -70,19 +66,18 @@ void WidgetManager::update(const DocumentModel& model, entt::dispatcher& dispatc
     update_map_view_object_context_menu(*registry, dispatcher);
   }
 
-  mWidgets->resize_map_dialog.update(model, dispatcher);
-  mWidgets->map_parse_error_dialog.update(model, dispatcher);
+  _resize_map_dialog.update(model, dispatcher);
+  _map_parse_error_dialog.update(model, dispatcher);
 }
 
-void WidgetManager::show_resize_map_dialog(const usize currentRows,
-                                           const usize currentColumns)
+void show_resize_map_dialog(const usize currentRows, const usize currentColumns)
 {
-  mWidgets->resize_map_dialog.show(currentRows, currentColumns);
+  _resize_map_dialog.show(currentRows, currentColumns);
 }
 
-void WidgetManager::show_map_import_error_dialog(const io::ParseError error)
+void show_map_import_error_dialog(const io::ParseError error)
 {
-  mWidgets->map_parse_error_dialog.show(error);
+  _map_parse_error_dialog.show(error);
 }
 
 auto is_editor_focused() -> bool

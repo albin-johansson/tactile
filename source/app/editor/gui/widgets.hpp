@@ -19,39 +19,20 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <entt/fwd.hpp>
 
 #include "core/common/ints.hpp"
-#include "core/common/macros.hpp"
-#include "core/common/maybe.hpp"
-#include "core/common/memory.hpp"
 #include "core/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
 namespace tactile {
 
-class WidgetManager final
-{
- public:
-  TACTILE_DELETE_COPY(WidgetManager);
-  TACTILE_DEFAULT_MOVE(WidgetManager);
+/// Updates the state of the GUI.
+void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-  WidgetManager();
+void show_resize_map_dialog(usize currentRows, usize currentColumns);
 
-  ~WidgetManager() noexcept;
-
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-  void show_resize_map_dialog(usize currentRows, usize currentColumns);
-
-  void show_map_import_error_dialog(io::ParseError error);
-
- private:
-  struct Widgets;
-  Unique<Widgets> mWidgets;
-};
+void show_map_import_error_dialog(io::ParseError error);
 
 [[nodiscard]] auto is_editor_focused() -> bool;
 

@@ -33,7 +33,7 @@
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
 #include "editor/gui/menus/map_menu.hpp"
-#include "editor/gui/widget_manager.hpp"
+#include "editor/gui/widgets.hpp"
 #include "editor/shortcuts/mappings.hpp"
 
 namespace tactile {
@@ -45,8 +45,7 @@ void UndoShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<UndoEvent>();
 }
 
-auto UndoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto UndoShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   const auto* document = model.active_document();
   return document && document->get_history().can_undo();
@@ -61,8 +60,7 @@ void RedoShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RedoEvent>();
 }
 
-auto RedoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto RedoShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   const auto* document = model.active_document();
   return document && document->get_history().can_redo();
@@ -77,8 +75,7 @@ void AddRowShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<AddRowEvent>();
 }
 
-auto AddRowShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto AddRowShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -93,8 +90,7 @@ void AddColumnShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<AddColumnEvent>();
 }
 
-auto AddColumnShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto AddColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -110,8 +106,7 @@ void RemoveRowShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RemoveRowEvent>();
 }
 
-auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto RemoveRowShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (model.has_active_document()) {
     const auto id = model.active_document_id().value();
@@ -135,8 +130,7 @@ void RemoveColumnShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RemoveColumnEvent>();
 }
 
-auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager&) const -> bool
+auto RemoveColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (model.has_active_document()) {
     const auto id = model.active_document_id().value();
@@ -159,8 +153,7 @@ void AddTilesetShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
 }
 
-auto AddTilesetShortcut::is_enabled(const DocumentModel& model,
-                                    const WidgetManager&) const -> bool
+auto AddTilesetShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -174,8 +167,7 @@ void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
 }
 
-auto EnableBucketShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager&) const -> bool
+auto EnableBucketShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
@@ -197,8 +189,7 @@ void EnableEraserShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
 }
 
-auto EnableEraserShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager&) const -> bool
+auto EnableEraserShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
@@ -220,8 +211,7 @@ void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
 }
 
-auto EnableStampShortcut::is_enabled(const DocumentModel& model,
-                                     const WidgetManager&) const -> bool
+auto EnableStampShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
@@ -245,8 +235,7 @@ void EnableObjectSelectionShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
 }
 
-auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model,
-                                               const WidgetManager&) const -> bool
+auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
@@ -269,8 +258,7 @@ void EnableRectangleToolShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Rectangle);
 }
 
-auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model,
-                                             const WidgetManager&) const -> bool
+auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
@@ -292,8 +280,7 @@ void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Ellipse);
 }
 
-auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model,
-                                           const WidgetManager&) const -> bool
+auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();
@@ -315,8 +302,7 @@ void EnablePointToolShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Point);
 }
 
-auto EnablePointToolShortcut::is_enabled(const DocumentModel& model,
-                                         const WidgetManager&) const -> bool
+auto EnablePointToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   if (is_editor_focused() && model.has_active_document()) {
     const auto id = model.active_document_id().value();

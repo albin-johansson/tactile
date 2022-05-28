@@ -27,7 +27,7 @@
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "editor/gui/widget_manager.hpp"
+#include "editor/gui/widgets.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "io/persistence/preferences.hpp"
 
@@ -42,8 +42,7 @@ void CenterViewportShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<CenterViewportEvent>();
 }
 
-auto CenterViewportShortcut::is_enabled(const DocumentModel& model,
-                                        const WidgetManager&) const -> bool
+auto CenterViewportShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -59,8 +58,7 @@ void DecreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<DecreaseZoomEvent>();
 }
 
-auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
-                                              const WidgetManager&) const -> bool
+auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   const auto* document = model.active_document();
   return document && sys::can_decrease_viewport_zoom(document->get_registry());
@@ -77,8 +75,7 @@ void IncreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<IncreaseZoomEvent>();
 }
 
-auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
-                                              const WidgetManager&) const -> bool
+auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -94,8 +91,7 @@ void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<IncreaseFontSizeEvent>();
 }
 
-auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&,
-                                          const WidgetManager&) const -> bool
+auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 {
   const auto& prefs = io::get_preferences();
 
@@ -116,8 +112,7 @@ void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<DecreaseFontSizeEvent>();
 }
 
-auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&,
-                                          const WidgetManager&) const -> bool
+auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 {
   const auto& prefs = io::get_preferences();
 
@@ -138,8 +133,7 @@ void PanUpShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanUpEvent>();
 }
 
-auto PanUpShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto PanUpShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -155,8 +149,7 @@ void PanDownShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanDownEvent>();
 }
 
-auto PanDownShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto PanDownShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -172,8 +165,7 @@ void PanLeftShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanLeftEvent>();
 }
 
-auto PanLeftShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto PanLeftShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -189,8 +181,7 @@ void PanRightShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanRightEvent>();
 }
 
-auto PanRightShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto PanRightShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -218,8 +209,7 @@ void ToggleLayerHighlightShortcut::activate(entt::dispatcher&)
   prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
 }
 
-auto ToggleLayerHighlightShortcut::is_enabled(const DocumentModel& model,
-                                              const WidgetManager&) const -> bool
+auto ToggleLayerHighlightShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.is_map_active();
 }
@@ -233,8 +223,7 @@ void ToggleUiShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ToggleUiEvent>();
 }
 
-auto ToggleUiShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto ToggleUiShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document() && is_editor_focused();
 }

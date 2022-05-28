@@ -24,6 +24,5 @@ namespace tactile {
 struct RenderInfo;
 
 class GraphicsCtx;
-class WidgetManager;
 
 }  // namespace tactile

@@ -22,11 +22,10 @@
 namespace tactile {
 
 void AShortcut::poll(const DocumentModel& model,
-                     const WidgetManager& widgets,
                      const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher)
 {
-  if (is_enabled(model, widgets)) {
+  if (is_enabled(model)) {
     if (event.pressed() && event.scan() == mKey && event.is_only_active(mModifiers)) {
       activate(dispatcher);
     }
