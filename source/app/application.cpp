@@ -139,7 +139,7 @@ void Application::on_startup()
   io::load_file_history();
 
   if (get_preferences().will_restore_last_session()) {
-    restore_last_session(mData->model, mData->textures);
+    io::restore_last_session(mData->model, mData->textures);
   }
 
   auto& window = mData->config->window();
@@ -150,7 +150,7 @@ void Application::on_shutdown()
 {
   save_current_files_to_history();
   save_preferences();
-  save_session(mData->model);
+  io::save_session(mData->model);
   io::save_file_history();
 
   auto& window = mData->config->window();
