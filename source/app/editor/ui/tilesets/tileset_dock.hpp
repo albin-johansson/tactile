@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <centurion/fwd.hpp>
 #include <entt/fwd.hpp>
 
 #include "core/fwd.hpp"
@@ -26,6 +27,10 @@
 namespace tactile::ui {
 
 void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
+
+void tileset_dock_mouse_wheel_event_handler(const entt::registry& registry,
+                                            entt::dispatcher& dispatcher,
+                                            const cen::mouse_wheel_event& event);
 
 [[nodiscard]] auto is_tileset_dock_focused() -> bool;
 

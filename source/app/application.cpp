@@ -56,7 +56,6 @@
 #include "editor/ui/menus/map_menu.hpp"
 #include "editor/ui/properties/property_dock.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
-#include "editor/ui/tilesets/tileset_view.hpp"
 #include "editor/ui/viewport/map_view.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 #include "editor/ui/widgets.hpp"
@@ -368,11 +367,7 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
       }
     }
     else if (ui::is_tileset_dock_hovered()) {
-      const auto entity = sys::find_active_tileset(registry);
-      const auto& viewport = checked_get<comp::Viewport>(registry, entity);
-      const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
-      const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
-      mData->dispatcher.enqueue<OffsetViewportEvent>(entity, -dx, dy);
+      ui::tileset_dock_mouse_wheel_event_handler(registry, mData->dispatcher, event);
     }
   }
 }

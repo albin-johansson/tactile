@@ -19,13 +19,18 @@
 
 #include "tileset_dock.hpp"
 
+#include <centurion/mouse_events.hpp>
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/common/ecs.hpp"
 #include "core/components/tiles.hpp"
+#include "core/components/viewport.hpp"
 #include "core/events/tileset_events.hpp"
+#include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/button.hpp"
 #include "editor/ui/common/centered_text.hpp"
@@ -86,6 +91,21 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
   }
 
   prefs.set_tileset_dock_visible(visible);
+}
+
+void tileset_dock_mouse_wheel_event_handler(const entt::registry& registry,
+                                            entt::dispatcher& dispatcher,
+                                            const cen::mouse_wheel_event& event)
+{
+  constexpr float scaling = 4.0f;
+
+  const auto tilesetEntity = sys::find_active_tileset(registry);
+  const auto& viewport = checked_get<comp::Viewport>(registry, tilesetEntity);
+
+  const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
+  const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
+
+  dispatcher.enqueue<OffsetViewportEvent>(tilesetEntity, -dx, dy);
 }
 
 auto is_tileset_dock_focused() -> bool
