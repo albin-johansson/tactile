@@ -23,10 +23,18 @@
 
 namespace tactile::comp {
 
+/// Optional component used to limit viewport offsets.
+struct ViewportLimits final
+{
+  Vector2f min_offset{};
+  Vector2f max_offset{};
+};
+
+/// Component that provides information about a viewport.
 struct Viewport final
 {
-  Vector2f offset{};
-  Vector2f tile_size{};
+  Vector2f offset{};     ///< The viewport offset.
+  Vector2f tile_size{};  ///< The graphical tile size used in the viewport.
 };
 
 }  // namespace tactile::comp

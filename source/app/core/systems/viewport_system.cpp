@@ -27,7 +27,6 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
-#include "core/components/texture.hpp"
 #include "core/components/viewport.hpp"
 #include "misc/assert.hpp"
 
@@ -54,25 +53,24 @@ void offset_viewport(entt::registry& registry, const float dx, const float dy)
   viewport.offset.y += dy;
 }
 
-void offset_bound_viewport(entt::registry& registry,
-                           const entt::entity entity,
-                           const float dx,
-                           const float dy,
-                           const float viewWidth,
-                           const float viewHeight)
+void offset_viewport(entt::registry& registry,
+                     const entt::entity entity,
+                     const Vector2f& offset)
 {
-  auto& viewport = checked_get<comp::Viewport>(registry, entity);
-  viewport.offset.x += dx;
-  viewport.offset.y += dy;
+  auto& viewport = entity != entt::null ? checked_get<comp::Viewport>(registry, entity)
+                                        : ctx_get<comp::Viewport>(registry);
 
-  viewport.offset.x = (std::min)(0.0f, viewport.offset.x);
-  viewport.offset.y = (std::min)(0.0f, viewport.offset.y);
+  viewport.offset += offset;
 
-  const auto& texture = checked_get<comp::Texture>(registry, entity);
-  const Vector2f textureSize = texture.size;
+  if (entity != entt::null) {
+    if (auto* limits = registry.try_get<comp::ViewportLimits>(entity)) {
+      viewport.offset.x = (std::min)(limits->min_offset.x, viewport.offset.x);
+      viewport.offset.y = (std::min)(limits->min_offset.y, viewport.offset.y);
 
-  viewport.offset.x = (std::max)(-textureSize.x + viewWidth, viewport.offset.x);
-  viewport.offset.y = (std::max)(-textureSize.y + viewHeight, viewport.offset.y);
+      viewport.offset.x = (std::max)(limits->max_offset.x, viewport.offset.x);
+      viewport.offset.y = (std::max)(limits->max_offset.y, viewport.offset.y);
+    }
+  }
 }
 
 void pan_viewport_left(entt::registry& registry)

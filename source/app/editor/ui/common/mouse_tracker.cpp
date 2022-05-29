@@ -38,7 +38,7 @@ void update_viewport_offset(const ImVec2& viewportSize, entt::dispatcher& dispat
   ImGui::InvisibleButton("update_viewport_offset", viewportSize, _button_flags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
-    dispatcher.enqueue<OffsetViewportEvent>(io.MouseDelta.x, io.MouseDelta.y);
+    dispatcher.enqueue<OffsetViewportEvent>(entt::null, io.MouseDelta.x, io.MouseDelta.y);
   }
 }
 

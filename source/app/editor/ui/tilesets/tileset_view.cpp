@@ -47,13 +47,22 @@ namespace {
 constexpr cen::color _rubber_band_color{0, 0x44, 0xCC, 100};
 constexpr cen::color _grid_color{200, 200, 200, 40};
 
-constinit Maybe<float> _view_width;
-constinit Maybe<float> _view_height;
-
-void _update_viewport_offset(const entt::entity tilesetEntity,
+void _update_viewport_offset(const entt::registry& mapRegistry,
+                             const entt::entity tilesetEntity,
+                             const comp::Texture& tilesetTexture,
                              entt::dispatcher& dispatcher,
                              const ImVec2& viewportSize)
 {
+  const auto& limits = checked_get<comp::ViewportLimits>(mapRegistry, tilesetEntity);
+
+  const Vector2f textureSize{tilesetTexture.size};
+  const Vector2f maxOffset{viewportSize.x - textureSize.x,
+                           viewportSize.y - textureSize.y};
+
+  dispatcher.enqueue<UpdateViewportLimitsEvent>(tilesetEntity,
+                                                limits.min_offset,
+                                                maxOffset);
+
   ImGui::InvisibleButton("##TilesetViewInvisibleButton",
                          viewportSize,
                          ImGuiButtonFlags_MouseButtonLeft |
@@ -62,11 +71,9 @@ void _update_viewport_offset(const entt::entity tilesetEntity,
 
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
-    dispatcher.enqueue<OffsetBoundViewportEvent>(tilesetEntity,
-                                                 io.MouseDelta.x,
-                                                 io.MouseDelta.y,
-                                                 viewportSize.x,
-                                                 viewportSize.y);
+    dispatcher.enqueue<OffsetViewportEvent>(tilesetEntity,
+                                            io.MouseDelta.x,
+                                            io.MouseDelta.y);
   }
 }
 
@@ -114,12 +121,12 @@ void update_tileset_view(const DocumentModel& model,
   const auto tilesetEntity = sys::find_tileset(mapRegistry, tilesetId);
   const auto& viewport = checked_get<comp::Viewport>(mapRegistry, tilesetEntity);
 
-  const auto region = ImGui::GetContentRegionAvail();
-  _view_width = region.x;
-  _view_height = region.y;
-
   const auto info = get_render_info(viewport, tilesetInfo);
-  _update_viewport_offset(tilesetEntity, dispatcher, info.canvas_br - info.canvas_tl);
+  _update_viewport_offset(mapRegistry,
+                          tilesetEntity,
+                          texture,
+                          dispatcher,
+                          info.canvas_br - info.canvas_tl);
 
   GraphicsCtx graphics{info};
   graphics.set_draw_color(io::get_preferences().viewport_bg());
@@ -149,16 +156,6 @@ void update_tileset_view(const DocumentModel& model,
   graphics.render_translated_grid();
 
   graphics.pop_clip();
-}
-
-auto get_tileset_view_width() -> Maybe<float>
-{
-  return _view_width;
-}
-
-auto get_tileset_view_height() -> Maybe<float>
-{
-  return _view_height;
 }
 
 }  // namespace tactile::ui

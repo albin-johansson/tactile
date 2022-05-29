@@ -21,6 +21,8 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/math.hpp"
+
 namespace tactile::sys {
 
 /// \name Viewport system
@@ -41,25 +43,9 @@ struct ViewportScalingRatio final
  */
 void offset_viewport(entt::registry& registry, float dx, float dy);
 
-/**
- * \brief Offsets a viewport that is bound to the size of an underlying texture.
- *
- * \pre The entity must feature a viewport component.
- * \pre The entity must feature a texture component.
- *
- * \param registry the source registry.
- * \param entity the entity that provides the viewport and texture components.
- * \param dx the x-axis offset.
- * \param dy the y-axis offset.
- * \param viewWidth the width of the viewport.
- * \param viewHeight the height of the viewport.
- */
-void offset_bound_viewport(entt::registry& registry,
-                           entt::entity entity,
-                           float dx,
-                           float dy,
-                           float viewWidth,
-                           float viewHeight);
+void offset_viewport(entt::registry& registry,
+                     entt::entity entity,
+                     const Vector2f& offset);
 
 /**
  * \brief Pans the viewport to the left.

@@ -21,7 +21,6 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
@@ -30,9 +29,5 @@ namespace tactile::ui {
 void update_tileset_view(const DocumentModel& model,
                          const UUID& tilesetId,
                          entt::dispatcher& dispatcher);
-
-[[nodiscard]] auto get_tileset_view_width() -> Maybe<float>;
-
-[[nodiscard]] auto get_tileset_view_height() -> Maybe<float>;
 
 }  // namespace tactile::ui

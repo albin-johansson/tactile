@@ -237,8 +237,8 @@ void Application::subscribe_to_events()
   d.sink<AddPointEvent>().connect<&Self::on_add_point>(this);
 
   d.sink<CenterViewportEvent>().connect<&ui::center_map_viewport>();
+  d.sink<UpdateViewportLimitsEvent>().connect<&Self::on_update_viewport_limits>(this);
   d.sink<OffsetViewportEvent>().connect<&Self::on_offset_viewport>(this);
-  d.sink<OffsetBoundViewportEvent>().connect<&Self::on_offset_bound_viewport>(this);
   d.sink<PanLeftEvent>().connect<&Self::on_pan_left>(this);
   d.sink<PanRightEvent>().connect<&Self::on_pan_right>(this);
   d.sink<PanUpEvent>().connect<&Self::on_pan_up>(this);
@@ -364,26 +364,15 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
       else {
         const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
         const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
-        mData->dispatcher.enqueue<OffsetViewportEvent>(-dx, dy);
+        mData->dispatcher.enqueue<OffsetViewportEvent>(entt::null, -dx, dy);
       }
     }
     else if (ui::is_tileset_dock_hovered()) {
-      const auto width = ui::get_tileset_view_width();
-      const auto height = ui::get_tileset_view_height();
-      if (width && height) {
-        const auto entity = sys::find_active_tileset(registry);
-        TACTILE_ASSERT(entity != entt::null);
-
-        const auto& viewport = checked_get<comp::Viewport>(registry, entity);
-
-        const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
-        const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
-        mData->dispatcher.enqueue<OffsetBoundViewportEvent>(entity,
-                                                            -dx,
-                                                            dy,
-                                                            *width,
-                                                            *height);
-      }
+      const auto entity = sys::find_active_tileset(registry);
+      const auto& viewport = checked_get<comp::Viewport>(registry, entity);
+      const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
+      const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
+      mData->dispatcher.enqueue<OffsetViewportEvent>(entity, -dx, dy);
     }
   }
 }
@@ -617,22 +606,18 @@ void Application::on_add_point(const AddPointEvent& event)
   _execute<PointToolCmd>(mData->model, event.x, event.y);
 }
 
+void Application::on_update_viewport_limits(const UpdateViewportLimitsEvent& event)
+{
+  auto& registry = mData->model.get_active_registry();
+  auto& limits = checked_get<comp::ViewportLimits>(registry, event.viewport_entity);
+  limits.min_offset = event.min_offset;
+  limits.max_offset = event.max_offset;
+}
+
 void Application::on_offset_viewport(const OffsetViewportEvent& event)
 {
   auto& registry = mData->model.get_active_registry();
-  sys::offset_viewport(registry, event.dx, event.dy);
-}
-
-void Application::on_offset_bound_viewport(const OffsetBoundViewportEvent& event)
-{
-  // FIXME broken
-  auto& registry = mData->model.get_active_registry();
-  sys::offset_bound_viewport(registry,
-                             event.entity,
-                             event.dx,
-                             event.dy,
-                             event.view_width,
-                             event.view_height);
+  sys::offset_viewport(registry, event.viewport_entity, {event.dx, event.dy});
 }
 
 void Application::on_pan_left()

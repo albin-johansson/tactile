@@ -103,7 +103,7 @@ void _center_viewport(entt::dispatcher& dispatcher,
   const auto dx = std::round(((canvasSize.x - width) / 2.0f) - viewport.offset.x);
   const auto dy = std::round(((canvasSize.y - height) / 2.0f) - viewport.offset.y);
 
-  dispatcher.enqueue<OffsetViewportEvent>(dx, dy);
+  dispatcher.enqueue<OffsetViewportEvent>(entt::null, dx, dy);
 }
 
 void _draw_cursor_gizmos(GraphicsCtx& graphics,

@@ -21,6 +21,8 @@
 
 #include <entt/entity/entity.hpp>
 
+#include "core/common/math.hpp"
+
 namespace tactile {
 
 /// \addtogroup events
@@ -38,22 +40,18 @@ struct DecreaseZoomEvent final
 struct IncreaseZoomEvent final
 {};
 
-struct OffsetViewportEvent final
+struct UpdateViewportLimitsEvent final
 {
-  float dx{};
-  float dy{};
+  entt::entity viewport_entity{entt::null};
+  Vector2f min_offset{};
+  Vector2f max_offset{};
 };
 
-/**
- * \brief Offset a viewport that cannot exceed the bounds of the shown content.
- */
-struct OffsetBoundViewportEvent final
+struct OffsetViewportEvent final
 {
-  entt::entity entity{entt::null};
+  entt::entity viewport_entity{entt::null};
   float dx{};
   float dy{};
-  float view_width{};
-  float view_height{};
 };
 
 struct PanUpEvent final

@@ -142,6 +142,10 @@ void attach_tileset(entt::registry& mapRegistry,
   auto& viewport = mapRegistry.emplace<comp::Viewport>(tilesetEntity);
   viewport.tile_size = tileset.tile_size;
 
+  auto& limits = mapRegistry.emplace<comp::ViewportLimits>(tilesetEntity);
+  limits.min_offset = {0, 0};
+  limits.max_offset = {0, 0};  // This is set later by the tileset view
+
   auto& ref = mapRegistry.emplace<comp::TilesetRef>(tilesetEntity);
   ref.source_tileset = tilesetId;
   ref.embedded = false;  // FIXME
