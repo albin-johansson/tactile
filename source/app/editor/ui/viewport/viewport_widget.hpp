@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <centurion/fwd.hpp>
 #include <entt/fwd.hpp>
 
 #include "core/fwd.hpp"
@@ -28,13 +29,12 @@ namespace tactile::ui {
 /// \name Viewport widget functions
 /// \{
 
-/**
- * \brief Updates the state of the primary viewport widget.
- *
- * \param model the current document model.
- * \param dispatcher the event dispatcher that will be used.
- */
+/// Updates the state of the primary viewport widget.
 void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispatcher);
+
+void viewport_widget_mouse_wheel_event_handler(const entt::registry& registry,
+                                               entt::dispatcher& dispatcher,
+                                               const cen::mouse_wheel_event& event);
 
 [[nodiscard]] auto is_viewport_focused() noexcept -> bool;
 

@@ -340,31 +340,15 @@ void Application::on_keyboard_event(cen::keyboard_event event)
 
 void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
-  /* This function is ugly and awkward, but there doesn't seem to be a good way to handle
-     mouse "wheel" events using the public ImGui APIs. Otherwise, it would be nicer to
-     keep this code closer to the actual widgets. */
+  /* There doesn't seem to be a good way to handle mouse "wheel" events using the public
+     ImGui APIs. Otherwise, it would be nicer to keep this code closer to the actual
+     widgets. */
 
-  constexpr float scaling = 4.0f;
   const auto* document = active_document();
-
   if (document && !ImGui::GetTopMostPopupModal()) {
     const auto& registry = document->get_registry();
     if (ui::is_mouse_within_viewport()) {
-      const auto& viewport = ctx_get<comp::Viewport>(registry);
-      if (cen::is_active(primary_modifier)) {
-        const auto y = event.precise_y();
-        if (y > 0) {
-          mData->dispatcher.enqueue<IncreaseZoomEvent>();
-        }
-        else if (y < 0 && sys::can_decrease_viewport_zoom(registry)) {
-          mData->dispatcher.enqueue<DecreaseZoomEvent>();
-        }
-      }
-      else {
-        const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
-        const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
-        mData->dispatcher.enqueue<OffsetViewportEvent>(entt::null, -dx, dy);
-      }
+      ui::viewport_widget_mouse_wheel_event_handler(registry, mData->dispatcher, event);
     }
     else if (ui::is_tileset_dock_hovered()) {
       ui::tileset_dock_mouse_wheel_event_handler(registry, mData->dispatcher, event);
