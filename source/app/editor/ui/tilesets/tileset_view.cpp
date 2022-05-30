@@ -39,7 +39,6 @@
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_info.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/assert.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -59,9 +58,11 @@ void _update_viewport_offset(const entt::registry& mapRegistry,
   const Vector2f maxOffset{viewportSize.x - textureSize.x,
                            viewportSize.y - textureSize.y};
 
-  dispatcher.enqueue<UpdateViewportLimitsEvent>(tilesetEntity,
-                                                limits.min_offset,
-                                                maxOffset);
+  if (maxOffset != limits.max_offset) {
+    dispatcher.enqueue<UpdateViewportLimitsEvent>(tilesetEntity,
+                                                  limits.min_offset,
+                                                  maxOffset);
+  }
 
   ImGui::InvisibleButton("##TilesetViewInvisibleButton",
                          viewportSize,
