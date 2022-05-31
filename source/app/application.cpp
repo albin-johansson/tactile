@@ -195,6 +195,11 @@ auto Application::active_document() -> ADocument*
   return mData->model.active_document();
 }
 
+auto Application::active_map_document() -> MapDocument*
+{
+  return mData->model.active_map();
+}
+
 void Application::subscribe_to_events()
 {
   using Self = Application;
@@ -383,13 +388,8 @@ void Application::on_save()
     if (document->has_path()) {
       if (document->is_map()) {
         io::save_document(mData->model, document->id());
-
-        auto& commands = document->get_history();
-        commands.mark_as_clean();
-
-        auto& registry = document->get_registry();
-        auto& context = ctx_get<comp::AttributeContext>(registry);
-        context.name = document->get_path().filename().string();
+        document->get_history().mark_as_clean();
+        document->set_name(document->get_path().filename().string());
       }
       else {
         spdlog::warn("Cannot yet save changes to tilesets!");
@@ -482,67 +482,55 @@ void Application::on_select_document(const SelectDocumentEvent& event)
 
 void Application::on_select_tool(const SelectToolEvent& event)
 {
-  if (auto* document = active_document()) {
-    if (document->is_map()) {
-      auto& registry = document->get_registry();
-      auto& tools = ctx_get<ToolManager>(registry);
-      tools.select_tool(event.type, registry, mData->dispatcher);
-    }
+  if (auto* document = active_map_document()) {
+    auto& registry = document->get_registry();
+    auto& tools = document->get_tools();
+    tools.select_tool(event.type, registry, mData->dispatcher);
   }
 }
 
 void Application::on_tool_pressed(const ToolPressedEvent& event)
 {
-  if (auto* document = active_document()) {
-    if (document->is_map()) {
-      auto& registry = document->get_registry();
-      auto& tools = ctx_get<ToolManager>(registry);
-      tools.on_pressed(registry, mData->dispatcher, event.info);
-    }
+  if (auto* document = active_map_document()) {
+    auto& registry = document->get_registry();
+    auto& tools = document->get_tools();
+    tools.on_pressed(registry, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_dragged(const ToolDraggedEvent& event)
 {
-  if (auto* document = active_document()) {
-    if (document->is_map()) {
-      auto& registry = document->get_registry();
-      auto& tools = ctx_get<ToolManager>(registry);
-      tools.on_dragged(registry, mData->dispatcher, event.info);
-    }
+  if (auto* document = active_map_document()) {
+    auto& registry = document->get_registry();
+    auto& tools = document->get_tools();
+    tools.on_dragged(registry, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_released(const ToolReleasedEvent& event)
 {
-  if (auto* document = active_document()) {
-    if (document->is_map()) {
-      auto& registry = document->get_registry();
-      auto& tools = ctx_get<ToolManager>(registry);
-      tools.on_released(registry, mData->dispatcher, event.info);
-    }
+  if (auto* document = active_map_document()) {
+    auto& registry = document->get_registry();
+    auto& tools = document->get_tools();
+    tools.on_released(registry, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_entered()
 {
-  if (auto* document = active_document()) {
-    if (document->is_map()) {
-      auto& registry = document->get_registry();
-      auto& tools = ctx_get<ToolManager>(registry);
-      tools.on_entered(registry, mData->dispatcher);
-    }
+  if (auto* document = active_map_document()) {
+    auto& registry = document->get_registry();
+    auto& tools = document->get_tools();
+    tools.on_entered(registry, mData->dispatcher);
   }
 }
 
 void Application::on_tool_exited()
 {
-  if (auto* document = active_document()) {
-    if (document->is_map()) {
-      auto& registry = document->get_registry();
-      auto& tools = ctx_get<ToolManager>(registry);
-      tools.on_exited(registry, mData->dispatcher);
-    }
+  if (auto* document = active_map_document()) {
+    auto& registry = document->get_registry();
+    auto& tools = document->get_tools();
+    tools.on_exited(registry, mData->dispatcher);
   }
 }
 
@@ -555,9 +543,10 @@ void Application::on_stamp_sequence(StampSequenceEvent event)
 
 void Application::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event)
 {
-  auto& registry = mData->model.get_active_registry();
-  auto& tools = ctx_get<ToolManager>(registry);
-  tools.set_stamp_random_mode(event.enabled);
+  if (auto* document = active_map_document()) {
+    auto& tools = document->get_tools();
+    tools.set_stamp_random_mode(event.enabled);
+  }
 }
 
 void Application::on_eraser_sequence(EraserSequenceEvent event)
@@ -728,8 +717,8 @@ void Application::on_resize_map(const ResizeMapEvent& event)
 
 void Application::on_open_resize_map_dialog()
 {
-  if (auto* map = mData->model.active_map()) {
-    const auto& info = map->info();
+  if (auto* document = active_map_document()) {
+    const auto& info = document->info();
     ui::show_resize_map_dialog(info.row_count, info.column_count);
   }
 }
@@ -746,8 +735,8 @@ void Application::on_remove_layer(const RemoveLayerEvent& event)
 
 void Application::on_select_layer(const SelectLayerEvent& event)
 {
-  if (auto* map = mData->model.active_map()) {
-    sys::select_layer(map->get_registry(), event.id);
+  if (auto* document = active_map_document()) {
+    sys::select_layer(document->get_registry(), event.id);
   }
 }
 

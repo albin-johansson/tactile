@@ -29,6 +29,12 @@ namespace tactile {
 
 ADocument::ADocument(entt::registry registry) : mRegistry{std::move(registry)} {}
 
+void ADocument::set_name(std::string name)
+{
+  auto& context = ctx_get<comp::AttributeContext>(mRegistry);
+  context.name = std::move(name);
+}
+
 void ADocument::set_path(std::filesystem::path path)
 {
   if (mRegistry.ctx().contains<std::filesystem::path>()) {

@@ -20,6 +20,7 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <string>      // string
 
 #include <entt/entity/registry.hpp>
 
@@ -39,6 +40,9 @@ class ADocument
 
   /// Updates the state of the document.
   virtual void update() = 0;
+
+  /// Sets the name of the root document context.
+  void set_name(std::string name);
 
   /// Sets the file path associated with the document.
   void set_path(std::filesystem::path path);

@@ -72,6 +72,7 @@ class Application final : AEventLoop
   Unique<Data> mData;
 
   [[nodiscard]] auto active_document() -> ADocument*;
+  [[nodiscard]] auto active_map_document() -> MapDocument*;
 
   void subscribe_to_events();
 
