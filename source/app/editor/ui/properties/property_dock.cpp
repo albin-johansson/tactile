@@ -396,7 +396,7 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
   Window window{"Properties", flags, &visible};
-  _is_focused = window.is_open() && window.has_focus();
+  _is_focused = window.has_focus();
 
   if (window.is_open()) {
     _update_property_table(model, dispatcher);
