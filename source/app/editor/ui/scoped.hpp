@@ -357,8 +357,8 @@ class Window final
 {
   struct WindowData final
   {
-    bool was_hovered{};
-    bool is_hovered{};
+    bool was_hovered : 1 {};
+    bool is_hovered : 1 {};
   };
 
   inline static HashMap<const char*, WindowData> window_data;
