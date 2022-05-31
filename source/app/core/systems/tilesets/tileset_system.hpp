@@ -37,9 +37,9 @@ namespace tactile::sys {
  * \ingroup systems
  * \defgroup tileset-system Tileset System
  *
- * \brief Manages available tilesets.
+ * Manages available tilesets.
  *
- * \details There are two kinds of tilesets that are handled in slightly different ways.
+ * There are two kinds of tilesets that are handled in slightly different ways.
  * First, there are tileset documents, which have their own registries. These documents
  * may exist at runtime even if no maps are using them. The second type of tilesets are
  * _tileset references_, these are stored in map registries and reference a loaded tileset
@@ -119,7 +119,7 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
     -> entt::entity;
 
 /**
- * \brief Attempts to find the tileset that contains a specific tile.
+ * Attempts to find the tileset that contains a specific tile.
  *
  * \param registry the associated registry.
  * \param id the tile ID located in the tileset to find.
@@ -130,7 +130,7 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
     -> entt::entity;
 
 /**
- * \brief Returns the active tileset entity, if there is one.
+ * Returns the active tileset entity, if there is one.
  *
  * \param registry the document registry.
  *
@@ -139,7 +139,7 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
 [[nodiscard]] auto find_active_tileset(const entt::registry& registry) -> entt::entity;
 
 /**
- * \brief Indicates whether or not the active tileset has a non-empty tile selection.
+ * Indicates whether or not the active tileset has a non-empty tile selection.
  *
  * \param registry the registry that will be queried.
  *
@@ -151,7 +151,7 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
 [[nodiscard]] auto is_tileset_selection_not_empty(const entt::registry& registry) -> bool;
 
 /**
- * \brief Indicates whether or not the active tileset has a _single_ tile selected.
+ * Indicates whether or not the active tileset has a _single_ tile selected.
  *
  * \param registry the registry that will be queried.
  *
@@ -164,9 +164,9 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
     -> bool;
 
 /**
- * \brief Returns the rendered appearance of a tile.
+ * Returns the rendered appearance of a tile.
  *
- * \details This function is used to determine the correct tile to render for animated
+ * This function is used to determine the correct tile to render for animated
  * tiles. In other words, this function will simply return the supplied tile for
  * non-animated tiles.
  *
@@ -181,7 +181,7 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
                                       TileID id) -> TileID;
 
 /**
- * \brief Returns the region out of the tileset texture that should be rendered when
+ * Returns the region out of the tileset texture that should be rendered when
  * rendering the specified tile.
  *
  * \note You should use the identifier returned by `get_tile_to_render()` when calling
@@ -200,7 +200,7 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
                                    TileID id) -> const cen::irect&;
 
 /**
- * \brief Returns the identifier of a tile at a certain position in a tileset.
+ * Returns the identifier of a tile at a certain position in a tileset.
  *
  * \param mapRegistry the registry that will be queried.
  * \param tilesetEntity the tileset entity.
@@ -213,9 +213,9 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
                                          const TilePos& position) -> TileID;
 
 /**
- * \brief Converts a global tile identifier to its local counterpart.
+ * Converts a global tile identifier to its local counterpart.
  *
- * \details A "local" tile identifier is a basically a tile index in the parent tileset.
+ * A "local" tile identifier is a just a tile index in the parent tileset.
  *
  * \param mapRegistry the associated registry.
  * \param global a global tile identifier that will be converted.
