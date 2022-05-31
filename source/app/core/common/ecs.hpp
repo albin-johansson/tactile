@@ -94,7 +94,7 @@ template <typename T>
 }
 
 /// Performs a linear search for an entity with a component that matches a predicate.
-template <typename T, std::predicate<T> P>
+template <typename T, std::predicate<const T&> P>
 [[nodiscard]] auto find_one(const entt::registry& registry, P&& predicate) -> entt::entity
 {
   for (auto&& [entity, comp] : registry.view<T>().each()) {
