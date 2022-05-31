@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <concepts>  // predicate
+
 #include <entt/entity/registry.hpp>
 
 #include "misc/panic.hpp"
@@ -89,6 +91,19 @@ template <typename T>
   else {
     throw TactileError{"Context did not feature requested component!"};
   }
+}
+
+/// Performs a linear search for an entity with a component that matches a predicate.
+template <typename T, std::predicate<T> P>
+[[nodiscard]] auto find_one(const entt::registry& registry, P&& predicate) -> entt::entity
+{
+  for (auto&& [entity, comp] : registry.view<T>().each()) {
+    if (predicate(comp)) {
+      return entity;
+    }
+  }
+
+  return entt::null;
 }
 
 }  // namespace tactile

@@ -50,55 +50,67 @@ namespace tactile::sys {
 /// \{
 
 /**
- * \brief Updates the state of tilesets.
+ * Updates the state of all tilesets in a map.
  *
- * \details This function should be each frame, as it handles aspects related to tile
- * caching.
+ * This function should be each frame, as it handles aspects related to tile caching.
  *
- * \param registry a document registry.
+ * \param mapRegistry a map document registry.
  */
-void update_tilesets(entt::registry& registry);
+void update_tilesets(entt::registry& mapRegistry);
 
 /**
- * \brief Selects the tileset associated with the specified ID.
+ * Selects the tileset associated with the specified ID.
  *
  * \pre `id` must be associated with an existing tileset.
  *
- * \param registry the associated registry.
- *
- * \param id the ID associated with the tileset that will be selected.
+ * \param mapRegistry a map document registry.
+ * \param id the ID of the tileset to select.
  */
-void select_tileset(entt::registry& registry, const UUID& id);
+void select_tileset(entt::registry& mapRegistry, const UUID& id);
 
-/// Attaches a tileset to a map registry.
+/**
+ * Attaches a tileset to a map document.
+ *
+ * \param mapRegistry a map document registry.
+ * \param tilesetId the ID of the external tileset document.
+ * \param tileset the basic tileset information.
+ * \param firstTile optional first tile identifier for the tileset.
+ */
 void attach_tileset(entt::registry& mapRegistry,
                     const UUID& tilesetId,
                     const comp::Tileset& tileset,
                     Maybe<TileID> firstTile = nothing);
 
-// Removes a tileset from a map registry.
+/**
+ * Detaches a tileset from a map document.
+ *
+ * \param mapRegistry a map document registry.
+ * \param tilesetId the ID of the external tileset document.
+ *
+ * \return a snapshot of the removed tileset.
+ */
 auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId)
     -> TilesetSnapshot;
 
 /**
- * \brief Sets the region of the active tileset that is selected.
+ * Sets the region of the active tileset that is selected.
  *
  * \pre There must be an active tileset when this function is invoked.
  *
- * \param registry the registry that will be modified.
+ * \param mapRegistry the registry that will be modified.
  * \param region the region of the tileset that will be selected.
  */
-void update_tileset_selection(entt::registry& registry, const Region& region);
+void update_tileset_selection(entt::registry& mapRegistry, const Region& region);
 
 /**
- * \brief Attempts to find the tileset associated with the specified ID.
+ * Attempts to find a tileset with a specific ID.
  *
- * \param registry the associated registry.
+ * \param mapRegistry the associated registry.
  * \param id the ID associated with the desired tileset.
  *
  * \return the associated tileset entity; a null entity is returned if there is none.
  */
-[[nodiscard]] auto find_tileset(const entt::registry& registry, const UUID& id)
+[[nodiscard]] auto find_tileset(const entt::registry& mapRegistry, const UUID& id)
     -> entt::entity;
 
 [[nodiscard]] auto find_tile(const entt::registry& registry, TileID id) -> entt::entity;

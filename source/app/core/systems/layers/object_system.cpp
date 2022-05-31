@@ -161,13 +161,9 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot)
 
 auto find_object(const entt::registry& registry, const ObjectID id) -> entt::entity
 {
-  for (auto&& [entity, object] : registry.view<comp::Object>().each()) {
-    if (object.id == id) {
-      return entity;
-    }
-  }
-
-  return entt::null;
+  return find_one<comp::Object>(registry, [id](const comp::Object& object) {
+    return object.id == id;
+  });
 }
 
 auto get_object(const entt::registry& registry, const ObjectID id) -> entt::entity

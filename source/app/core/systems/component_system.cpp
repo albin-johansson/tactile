@@ -306,25 +306,17 @@ auto get_first_available_component_def(const entt::registry& registry)
 auto find_component_def(const entt::registry& registry, const ComponentID& compId)
     -> entt::entity
 {
-  for (auto&& [entity, component] : registry.view<comp::ComponentDef>().each()) {
-    if (component.id == compId) {
-      return entity;
-    }
-  }
-
-  return entt::null;
+  return find_one<comp::ComponentDef>(registry, [&](const comp::ComponentDef& def) {
+    return def.id == compId;
+  });
 }
 
 auto find_component_def(const entt::registry& registry, const std::string_view name)
     -> entt::entity
 {
-  for (auto&& [entity, def] : registry.view<comp::ComponentDef>().each()) {
-    if (def.name == name) {
-      return entity;
-    }
-  }
-
-  return entt::null;
+  return find_one<comp::ComponentDef>(registry, [name](const comp::ComponentDef& def) {
+    return def.name == name;
+  });
 }
 
 auto get_component_def(entt::registry& registry, const ComponentID& compId)

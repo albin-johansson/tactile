@@ -397,13 +397,8 @@ void select_layer(entt::registry& registry, const LayerID id)
 
 auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entity
 {
-  for (auto&& [entity, layer] : registry.view<comp::Layer>().each()) {
-    if (layer.id == id) {
-      return entity;
-    }
-  }
-
-  return entt::null;
+  return find_one<comp::Layer>(registry,
+                               [id](const comp::Layer& layer) { return layer.id == id; });
 }
 
 auto get_layer_entity(const entt::registry& registry, const LayerID id) -> entt::entity
