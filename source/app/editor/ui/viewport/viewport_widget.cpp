@@ -79,8 +79,8 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
   Window window{"Viewport", _window_flags};
   if (window.is_open()) {
     padding.pop();
-    _has_focus = ImGui::IsWindowFocused();
-    _mouse_within_window = Window::current_window_contains_mouse();
+    _has_focus = window.has_focus();
+    _mouse_within_window = window.is_hovered();
 
     if (model.has_active_document()) {
       update_document_tabs(model, dispatcher);

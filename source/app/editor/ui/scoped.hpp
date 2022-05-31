@@ -375,7 +375,7 @@ class Window final
   {
     auto& data = window_data[label];
     data.was_hovered = data.is_hovered;
-    data.is_hovered = current_window_contains_mouse();
+    data.is_hovered = is_hovered();
   }
 
   ~Window() { ImGui::End(); }
@@ -384,8 +384,6 @@ class Window final
   {
     return mOpen && ImGui::IsWindowFocused(flags);
   }
-
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
   [[nodiscard]] auto mouse_entered() const noexcept -> bool
   {
@@ -399,12 +397,17 @@ class Window final
     return data.was_hovered && !data.is_hovered;
   }
 
-  [[nodiscard]] static auto current_window_contains_mouse() -> bool
+  [[nodiscard]] static auto contains_mouse() -> bool
   {
-    const auto min = ImGui::GetWindowContentRegionMin();
-    const auto max = ImGui::GetWindowContentRegionMax();
-    return ImGui::IsMouseHoveringRect(min, max);
+    const auto pos = ImGui::GetWindowPos();
+    const auto size = ImGui::GetWindowSize();
+    const auto max = ImVec2{pos.x + size.x, pos.y + size.y};
+    return ImGui::IsMouseHoveringRect(pos, max);
   }
+
+  [[nodiscard]] auto is_hovered() const -> bool { return mOpen && contains_mouse(); }
+
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   const char* mLabel{};

@@ -133,8 +133,7 @@ void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
     return;
   }
 
-  if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
-                                 ImGui::GetWindowContentRegionMax())) {
+  if (Window::contains_mouse()) {
     _check_for<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseClicked(button);
     });
@@ -208,8 +207,7 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
   const auto cursor = GetViewportCursorInfo(info);  // TODO rename function
   _poll_mouse(dispatcher, cursor);
 
-  if (ImGui::IsMouseHoveringRect(ImGui::GetWindowContentRegionMin(),
-                                 ImGui::GetWindowContentRegionMax())) {
+  if (Window::contains_mouse()) {
     _draw_cursor_gizmos(graphics, model, map, cursor, info);
   }
 
