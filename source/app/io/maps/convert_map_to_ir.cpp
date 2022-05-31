@@ -234,7 +234,6 @@ void _convert_tilesets(const DocumentModel& model,
     tilesetData.name = context.name;
 
     const auto& tilesetDocument = model.view_tileset(tilesetRef.source_tileset);
-    const auto& tilesetRegistry = tilesetDocument.get_registry();
     const auto& tileset = tilesetDocument.info();
     const auto& texture = tilesetDocument.texture();
 
