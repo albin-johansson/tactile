@@ -77,10 +77,11 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
   remove_tab_bar_from_next_window();
 
   Window window{"Viewport", _window_flags};
+  _has_focus = window.has_focus();
+  _mouse_within_window = window.is_hovered();
+
   if (window.is_open()) {
     padding.pop();
-    _has_focus = window.has_focus();
-    _mouse_within_window = window.is_hovered();
 
     if (model.has_active_document()) {
       update_document_tabs(model, dispatcher);
@@ -99,10 +100,6 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
     else {
       _update_start_page(dispatcher);
     }
-  }
-  else {
-    _has_focus = false;
-    _mouse_within_window = false;
   }
 }
 
