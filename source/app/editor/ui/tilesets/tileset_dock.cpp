@@ -30,7 +30,7 @@
 #include "core/events/tileset_events.hpp"
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/button.hpp"
 #include "editor/ui/common/centered_text.hpp"

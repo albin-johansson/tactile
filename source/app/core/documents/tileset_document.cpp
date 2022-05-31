@@ -25,8 +25,8 @@
 #include "core/components/attributes.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
-#include "core/systems/tileset_system.hpp"
 #include "core/systems/tilesets/tileset_document_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 
 namespace tactile {
 

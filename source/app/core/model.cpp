@@ -30,7 +30,7 @@
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/systems/animation_system.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"

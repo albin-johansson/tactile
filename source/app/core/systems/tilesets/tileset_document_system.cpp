@@ -42,7 +42,7 @@ auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i&
   tileset.row_count = texture.size.y / tileset.tile_size.y;
   tileset.column_count = texture.size.x / tileset.tile_size.x;
 
-  auto& cache = ctx.emplace<comp::TilesetCache>();
+  ctx.emplace<comp::TilesetCache>();
   // TODO do something with the cache?
 
   auto& viewport = ctx.emplace<comp::Viewport>();

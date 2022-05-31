@@ -26,7 +26,7 @@
 #include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"

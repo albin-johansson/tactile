@@ -22,7 +22,7 @@
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

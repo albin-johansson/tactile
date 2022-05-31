@@ -30,7 +30,7 @@
 #include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
 #include "core/systems/component_system.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "meta/profile.hpp"
 
 namespace tactile::io {

@@ -30,7 +30,7 @@
 #include "core/events/tileset_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "editor/ui/common/button.hpp"
 #include "editor/ui/common/style.hpp"

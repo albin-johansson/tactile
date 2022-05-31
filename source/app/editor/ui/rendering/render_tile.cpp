@@ -28,7 +28,7 @@
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/textures.hpp"
 

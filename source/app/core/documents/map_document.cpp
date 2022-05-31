@@ -26,7 +26,7 @@
 #include "core/components/map_info.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/registry_system.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "core/tools/tool_manager.hpp"
 
 namespace tactile {

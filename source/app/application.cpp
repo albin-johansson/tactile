@@ -42,7 +42,7 @@
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "core/utils/texture_manager.hpp"

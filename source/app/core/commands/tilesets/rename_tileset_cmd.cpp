@@ -23,7 +23,7 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
-#include "core/systems/tileset_system.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
