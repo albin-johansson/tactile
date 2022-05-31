@@ -260,12 +260,12 @@ auto DocumentModel::active_document() const -> const ADocument*
 auto DocumentModel::active_map() -> MapDocument*
 {
   if (mActiveDocument) {
-    TACTILE_ASSERT(mMaps.contains(*mActiveDocument));
-    return mMaps.at(*mActiveDocument).get();
+    if (const auto iter = mMaps.find(*mActiveDocument); iter != mMaps.end()) {
+      return iter->second.get();
+    }
   }
-  else {
-    return nullptr;
-  }
+
+  return nullptr;
 }
 
 auto DocumentModel::get_active_document() const -> const ADocument&
