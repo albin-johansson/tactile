@@ -28,6 +28,7 @@
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"
+#include "core/commands/objects/move_object_cmd.hpp"
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/map_info.hpp"
@@ -84,6 +85,13 @@ void MapDocument::resize(const usize rows, const usize cols)
 void MapDocument::fix_tiles()
 {
   get_history().push<FixTilesInMapCmd>(this);
+}
+
+void MapDocument::move_object(const UUID& objectId,
+                              const Vector2f& previous,
+                              const Vector2f& updated)
+{
+  get_history().push<MoveObjectCmd>(this, objectId, previous, updated);
 }
 
 auto MapDocument::is_tool_active(const ToolType tool) const -> bool

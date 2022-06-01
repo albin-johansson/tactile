@@ -800,12 +800,9 @@ void Application::on_set_object_name(const SetObjectNameEvent& event)
 
 void Application::on_move_object(const MoveObjectEvent& event)
 {
-  _register<MoveObjectCmd>(mData->model,
-                           event.id,
-                           event.old_x,
-                           event.old_y,
-                           event.new_x,
-                           event.new_y);
+  if (auto* map = active_map_document()) {
+    map->move_object(event.id, event.previous, event.updated);
+  }
 }
 
 void Application::on_set_object_visibility(const SetObjectVisibilityEvent& event)

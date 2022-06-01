@@ -24,22 +24,19 @@
 #include <entt/entity/entity.hpp>
 
 #include "core/common/identifiers.hpp"
+#include "core/common/math.hpp"
 
 namespace tactile {
 
 /// \addtogroup events
 /// \{
 
-/**
- * \brief Emitted after an object has been moved.
- */
+/// Emitted after an object has been moved.
 struct MoveObjectEvent final
 {
-  ObjectID id{};  ///< ID of object to move.
-  float old_x{};  ///< Previous x-coordinate of the object.
-  float old_y{};  ///< Previous y-coordinaete of the object.
-  float new_x{};  ///< Updated x-coordinate of the object.
-  float new_y{};  ///< Updated y-coordinate of the object.
+  UUID id{};          ///< ID of the object to move.
+  Vector2f previous;  ///< Previous position of the object.
+  Vector2f updated;   ///< Updated position of the object.
 };
 
 /**

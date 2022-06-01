@@ -21,6 +21,7 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/common/uuid.hpp"
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
 #include "core/tools/tool_type.hpp"
@@ -60,6 +61,10 @@ class MapDocument final : public ADocument
   void resize(usize rows, usize cols);
 
   void fix_tiles();
+
+  void move_object(const UUID& objectId,
+                   const Vector2f& previous,
+                   const Vector2f& updated);
 
   [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;
   [[nodiscard]] auto is_tool_possible(ToolType tool) const -> bool;

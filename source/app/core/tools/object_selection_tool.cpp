@@ -23,6 +23,7 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/tools.hpp"
 #include "core/events/object_events.hpp"
@@ -139,11 +140,11 @@ void ObjectSelectionTool::maybe_emit_event(entt::registry& registry,
 
       /* Only emit an event if the object has been moved along any axis */
       if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
-        dispatcher.enqueue<MoveObjectEvent>(object.id,
-                                            drag->origin_object_x,
-                                            drag->origin_object_y,
-                                            object.x,
-                                            object.y);
+        const auto& context = checked_get<comp::AttributeContext>(registry, entity);
+        dispatcher.enqueue<MoveObjectEvent>(
+            context.id,
+            Vector2f{drag->origin_object_x, drag->origin_object_y},
+            Vector2f{object.x, object.y});
       }
 
       registry.remove<comp::ObjectDragInfo>(entity);

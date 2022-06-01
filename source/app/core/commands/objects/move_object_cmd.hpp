@@ -19,24 +19,24 @@
 
 #pragma once
 
+#include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
-#include "object_command.hpp"
+#include "core/common/math.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
-/// \addtogroup commands
-/// \{
-
-class MoveObjectCmd final : public AObjectCommand
+/// Command for moving an object in a map.
+/// \ingroup commands
+class MoveObjectCmd final : public ACommand
 {
  public:
-  MoveObjectCmd(RegistryRef registry,
-                ObjectID id,
-                float oldX,
-                float oldY,
-                float newX,
-                float newY);
+  MoveObjectCmd(MapDocument* map,
+                const UUID& objectId,
+                const Vector2f& previous,
+                const Vector2f& updated);
 
   void undo() override;
 
@@ -48,12 +48,10 @@ class MoveObjectCmd final : public AObjectCommand
   }
 
  private:
-  float mOldX{};
-  float mOldY{};
-  float mNewX{};
-  float mNewY{};
+  MapDocument* mMap{};
+  UUID mObjectId{};
+  Vector2f mPreviousPos{};
+  Vector2f mUpdatedPos{};
 };
-
-/// \} End of group commands
 
 }  // namespace tactile
