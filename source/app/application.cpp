@@ -707,12 +707,16 @@ void Application::on_add_column()
 
 void Application::on_remove_row()
 {
-  _execute<RemoveRowCmd>(mData->model);
+  if (auto* map = active_map_document()) {
+    map->remove_row();
+  }
 }
 
 void Application::on_remove_column()
 {
-  _execute<RemoveColumnCmd>(mData->model);
+  if (auto* map = active_map_document()) {
+    map->remove_column();
+  }
 }
 
 void Application::on_resize_map(const ResizeMapEvent& event)

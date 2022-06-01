@@ -21,15 +21,16 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
+#include "core/commands/maps/map_command_cache.hpp"
 #include "core/common/ints.hpp"
-#include "map_command_cache.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class RemoveRowCmd final : public ACommand
 {
  public:
-  explicit RemoveRowCmd(RegistryRef registry);
+  explicit RemoveRowCmd(MapDocument* map);
 
   void undo() override;
 
@@ -40,7 +41,7 @@ class RemoveRowCmd final : public ACommand
   [[nodiscard]] auto id() const noexcept -> int override { return CommandId::remove_row; }
 
  private:
-  RegistryRef mRegistry;
+  MapDocument* mMap{};
   MapCommandCache mCache;
   usize mRows{1};
 };

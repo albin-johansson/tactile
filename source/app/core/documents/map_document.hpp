@@ -53,6 +53,10 @@ class MapDocument final : public ADocument
 
   void add_column();
 
+  void remove_row();
+
+  void remove_column();
+
   void resize(usize rows, usize cols);
 
   void fix_tiles();

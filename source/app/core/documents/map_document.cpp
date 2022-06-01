@@ -25,6 +25,8 @@
 #include "core/commands/maps/add_column_cmd.hpp"
 #include "core/commands/maps/add_row_cmd.hpp"
 #include "core/commands/maps/fix_tiles_in_map_cmd.hpp"
+#include "core/commands/maps/remove_column_cmd.hpp"
+#include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
@@ -62,6 +64,16 @@ void MapDocument::add_row()
 void MapDocument::add_column()
 {
   get_history().push<AddColumnCmd>(this);
+}
+
+void MapDocument::remove_row()
+{
+  get_history().push<RemoveRowCmd>(this);
+}
+
+void MapDocument::remove_column()
+{
+  get_history().push<RemoveColumnCmd>(this);
 }
 
 void MapDocument::resize(const usize rows, const usize cols)

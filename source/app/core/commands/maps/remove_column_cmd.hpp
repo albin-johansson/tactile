@@ -21,15 +21,16 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
+#include "core/commands/maps/map_command_cache.hpp"
 #include "core/common/ints.hpp"
-#include "map_command_cache.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class RemoveColumnCmd final : public ACommand
 {
  public:
-  explicit RemoveColumnCmd(RegistryRef registry);
+  explicit RemoveColumnCmd(MapDocument* map);
 
   void undo() override;
 
@@ -43,7 +44,7 @@ class RemoveColumnCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
+  MapDocument* mMap{};
   MapCommandCache mCache;
   usize mColumns{1};
 };
