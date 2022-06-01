@@ -49,7 +49,7 @@ void RemoveTilesetCmd::undo()
   auto map = mModel->get_map(mMapId);
   auto& mapRegistry = map->get_registry();
 
-  sys::attach_tileset(mapRegistry, mTilesetId, mTileset->info());
+  sys::attach_tileset(mapRegistry, mTilesetId, mTileset->info(), mFirstTile.value());
 
   // TODO select tileset
 }
@@ -66,6 +66,9 @@ void RemoveTilesetCmd::redo()
   auto& mapRegistry = map->get_registry();
 
   const auto tilesetEntity = sys::find_tileset(mapRegistry, mTilesetId);
+  const auto& ref = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
+  mFirstTile = ref.first_id;
+
   auto& activeTileset = ctx_get<comp::ActiveTileset>(mapRegistry);
 
   if (tilesetEntity == activeTileset.entity) {
