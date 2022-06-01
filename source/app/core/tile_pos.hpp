@@ -21,6 +21,8 @@
 
 #include <compare>  // <=>
 
+#include <boost/container_hash/hash.hpp>
+
 #include "core/common/ints.hpp"
 #include "misc/assert.hpp"
 
@@ -246,3 +248,19 @@ class TilePos final
 /// \} End of group core
 
 }  // namespace tactile
+
+namespace std {
+
+template <>
+struct hash<tactile::TilePos> final
+{
+  [[nodiscard]] auto operator()(const tactile::TilePos& pos) const -> size_t
+  {
+    size_t res = 0;
+    boost::hash_combine(res, pos.row());
+    boost::hash_combine(res, pos.col());
+    return res;
+  }
+};
+
+}  // namespace std
