@@ -693,12 +693,16 @@ void Application::on_set_tileset_name(const SetTilesetNameEvent& event)
 
 void Application::on_add_row()
 {
-  _execute<AddRowCmd>(mData->model);
+  if (auto* map = active_map_document()) {
+    map->add_row();
+  }
 }
 
 void Application::on_add_column()
 {
-  _execute<AddColumnCmd>(mData->model);
+  if (auto* map = active_map_document()) {
+    map->add_column();
+  }
 }
 
 void Application::on_remove_row()

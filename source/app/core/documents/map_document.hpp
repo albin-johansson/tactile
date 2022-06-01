@@ -49,6 +49,10 @@ class MapDocument final : public ADocument
 
   void update() override;
 
+  void add_row();
+
+  void add_column();
+
   void fix_tiles();
 
   [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;

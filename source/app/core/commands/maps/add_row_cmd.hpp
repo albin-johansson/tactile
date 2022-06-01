@@ -22,13 +22,14 @@
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
 #include "core/common/ints.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class AddRowCmd final : public ACommand
 {
  public:
-  explicit AddRowCmd(RegistryRef registry);
+  explicit AddRowCmd(MapDocument* map);
 
   void undo() override;
 
@@ -39,7 +40,7 @@ class AddRowCmd final : public ACommand
   [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_row; }
 
  private:
-  RegistryRef mRegistry;
+  MapDocument* mMap{};
   usize mRows{1};
 };
 

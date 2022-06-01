@@ -20,21 +20,29 @@
 #include "add_row_cmd.hpp"
 
 #include "core/algorithms/invoke.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/systems/map_system.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-AddRowCmd::AddRowCmd(RegistryRef registry) : ACommand{"Add Row(s)"}, mRegistry{registry}
-{}
+AddRowCmd::AddRowCmd(MapDocument* map) : ACommand{"Add Row(s)"}, mMap{map}
+{
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
+  }
+}
 
 void AddRowCmd::undo()
 {
-  invoke_n(mRows, [this] { sys::remove_row_from_map(mRegistry); });
+  auto& registry = mMap->get_registry();
+  invoke_n(mRows, [&] { sys::remove_row_from_map(registry); });
 }
 
 void AddRowCmd::redo()
 {
-  invoke_n(mRows, [this] { sys::add_row_to_map(mRegistry); });
+  auto& registry = mMap->get_registry();
+  invoke_n(mRows, [&] { sys::add_row_to_map(registry); });
 }
 
 auto AddRowCmd::merge_with(const ACommand& cmd) -> bool

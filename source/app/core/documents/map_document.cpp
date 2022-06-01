@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/commands/command_stack.hpp"
+#include "core/commands/maps/add_column_cmd.hpp"
+#include "core/commands/maps/add_row_cmd.hpp"
 #include "core/commands/maps/fix_tiles_in_map_cmd.hpp"
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
@@ -49,6 +51,16 @@ void MapDocument::update()
 {
   sys::update_tilesets(mRegistry);
   sys::update_animations(mRegistry);
+}
+
+void MapDocument::add_row()
+{
+  get_history().push<AddRowCmd>(this);
+}
+
+void MapDocument::add_column()
+{
+  get_history().push<AddColumnCmd>(this);
 }
 
 void MapDocument::fix_tiles()
