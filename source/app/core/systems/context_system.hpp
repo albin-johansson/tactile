@@ -22,6 +22,7 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/identifiers.hpp"
+#include "core/common/uuid.hpp"
 #include "core/components/attributes.hpp"
 #include "snapshot.hpp"
 
@@ -82,6 +83,17 @@ auto add_attribute_context(entt::registry& registry, entt::entity entity)
 void restore_attribute_context(entt::registry& registry,
                                entt::entity entity,
                                AttributeContextSnapshot snapshot);
+
+/**
+ * Finds an entity with a specific context identifier.
+ *
+ * \param registry the source registry.
+ * \param id the context identifier to look for.
+ *
+ * \return a possibly null entity.
+ */
+[[nodiscard]] auto find_context(const entt::registry& registry, const UUID& id)
+    -> entt::entity;
 
 /**
  * \brief Returns the context associated with an identifier.

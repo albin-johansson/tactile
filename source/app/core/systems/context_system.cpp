@@ -91,6 +91,14 @@ void restore_attribute_context(entt::registry& registry,
   }
 }
 
+auto find_context(const entt::registry& registry, const UUID& id) -> entt::entity
+{
+  // TODO ContextCache component to improve linear search
+  return find_one<comp::AttributeContext>(
+      registry,
+      [&](const comp::AttributeContext& context) { return context.id == id; });
+}
+
 auto get_context(entt::registry& registry, const ContextID id) -> comp::AttributeContext&
 {
   if (auto& context = ctx_get<comp::AttributeContext>(registry); context.id == id) {
