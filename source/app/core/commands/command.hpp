@@ -41,7 +41,7 @@ class ACommand
   TACTILE_DEFAULT_MOVE(ACommand);
 
   /**
-   * \brief Creates a command.
+   * Creates a command.
    *
    * \param text a short human-readable command name.
    */
@@ -50,65 +50,57 @@ class ACommand
   virtual ~ACommand() = default;
 
   /**
-   * \brief Reverts the effect of the command.
+   * Reverts the effect of the command.
    *
-   * \details This function should revert the effects of having previously
-   * called `redo()`.
+   * This function should revert the effects of having previously called `redo()`.
    */
   virtual void undo() = 0;
 
   /**
-   * \brief Applies the effects of the command.
+   * Applies the effects of the command.
    *
-   * \details This function is called whenever a command is pushed onto the
-   * command stack.
-   *
-   * \see `command_stack::push`
+   * This function is called whenever a command is pushed onto the command stack.
    */
   virtual void redo() = 0;
 
   /**
-   * \brief Returns a identifier unique for the command type.
+   * Returns a identifier unique for the command type.
    *
-   * \details This function is mainly designed to be used when overriding the
+   * This function is mainly designed to be used when overriding the
    * `merge_with()` function, where it can be used to efficiently test if two
    * commands are of the same type, since the parameter type is `ACommand`.
    *
-   * \return an identifier unique to the command class.
+   * \return an identifier unique for the command class.
    *
-   * \see `command_id`
+   * \see `CommandId`
    */
   [[nodiscard]] virtual auto id() const -> int = 0;
 
   /**
-   * \brief Attempts to merge the supplied command into *this* command.
+   * Attempts to merge the supplied command into this command.
    *
-   * \details Override this function in order to enable reducing the amount of
+   * Override this function in order to enable reducing the amount of
    * commands on the command stack when it makes sense to chain a group of
    * commands of the same type together. For example, this is used to combine
    * consecutive "Add Row" commands.
    *
-   * \details Use the `id()` function to efficiently filter out commands of
+   * Use the `id()` function to efficiently filter out commands of
    * differing types.
    *
-   * \note This function is only called on the command on top of the command
+   * Note, this function is only called on the command on top of the command
    * stack.
    *
    * \param cmd the command that will potentially be merged into *this* command.
    *
    * \return `true` if the supplied command was merged into *this* command;
-   * `false` otherwise.
+   *         `false` otherwise.
    */
   [[nodiscard]] virtual auto merge_with([[maybe_unused]] const ACommand& cmd) -> bool
   {
     return false;
   }
 
-  /**
-   * \brief Returns a short human-readable string that describes the command.
-   *
-   * \return the name of the command.
-   */
+  /// Returns a short human-readable string that describes the command.
   [[nodiscard]] auto text() const -> const std::string& { return mText; }
 
  private:
