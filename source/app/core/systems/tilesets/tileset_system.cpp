@@ -158,12 +158,11 @@ auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId) -> Tiles
 {
   const auto tilesetEntity = find_tileset(mapRegistry, tilesetId);
   if (tilesetEntity != entt::null) {
-    const auto& tilesetRef = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
-
-    TilesetSnapshot snapshot;
     // TODO remove snapshot.uv
+    TilesetSnapshot snapshot;
     snapshot.selection = checked_get<comp::TilesetSelection>(mapRegistry, tilesetEntity);
 
+    _unregister_tiles_from_tile_context(mapRegistry, tilesetEntity);
     mapRegistry.destroy(tilesetEntity);
 
     return snapshot;
