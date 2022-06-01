@@ -53,6 +53,8 @@ class MapDocument final : public ADocument
 
   void add_column();
 
+  void resize(usize rows, usize cols);
+
   void fix_tiles();
 
   [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;

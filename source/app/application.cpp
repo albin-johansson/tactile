@@ -717,7 +717,9 @@ void Application::on_remove_column()
 
 void Application::on_resize_map(const ResizeMapEvent& event)
 {
-  _execute<ResizeMapCmd>(mData->model, event.row_count, event.col_count);
+  if (auto* map = active_map_document()) {
+    map->resize(event.row_count, event.col_count);
+  }
 }
 
 void Application::on_fix_tiles_in_map()

@@ -21,16 +21,17 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
+#include "core/commands/maps/map_command_cache.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
-#include "map_command_cache.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class ResizeMapCmd final : public ACommand
 {
  public:
-  ResizeMapCmd(RegistryRef registry, usize nRows, usize nCols);
+  ResizeMapCmd(MapDocument* map, usize nRows, usize nCols);
 
   void undo() override;
 
@@ -39,7 +40,7 @@ class ResizeMapCmd final : public ACommand
   [[nodiscard]] auto id() const noexcept -> int override { return CommandId::resize_map; }
 
  private:
-  RegistryRef mRegistry;
+  MapDocument* mMap{};
   usize mRows{};
   usize mCols{};
   MapCommandCache mCache;

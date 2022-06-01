@@ -21,20 +21,26 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/systems/map_system.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-ResizeMapCmd::ResizeMapCmd(RegistryRef registry, const usize nRows, const usize nCols)
+ResizeMapCmd::ResizeMapCmd(MapDocument* map, const usize nRows, const usize nCols)
     : ACommand{"Resize Map"}
-    , mRegistry{registry}
+    , mMap{map}
     , mRows{nRows}
     , mCols{nCols}
-{}
+{
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
+  }
+}
 
 void ResizeMapCmd::undo()
 {
-  auto& registry = mRegistry.get();
+  auto& registry = mMap->get_registry();
   sys::resize_map(registry, mPrevRows.value(), mPrevCols.value());
 
   if (is_lossy_resize()) {
@@ -44,7 +50,7 @@ void ResizeMapCmd::undo()
 
 void ResizeMapCmd::redo()
 {
-  auto& registry = mRegistry.get();
+  auto& registry = mMap->get_registry();
 
   const auto& map = ctx_get<comp::MapInfo>(registry);
   mPrevRows = map.row_count;
