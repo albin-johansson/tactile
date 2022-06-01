@@ -266,6 +266,7 @@ void Application::subscribe_to_events()
   d.sink<RemoveRowEvent>().connect<&Self::on_remove_row>(this);
   d.sink<RemoveColumnEvent>().connect<&Self::on_remove_column>(this);
   d.sink<ResizeMapEvent>().connect<&Self::on_resize_map>(this);
+  d.sink<FixTilesInMapEvent>().connect<&Self::on_fix_tiles_in_map>(this);
   d.sink<OpenResizeMapDialogEvent>().connect<&Self::on_open_resize_map_dialog>(this);
 
   d.sink<AddLayerEvent>().connect<&Self::on_add_layer>(this);
@@ -713,6 +714,13 @@ void Application::on_remove_column()
 void Application::on_resize_map(const ResizeMapEvent& event)
 {
   _execute<ResizeMapCmd>(mData->model, event.row_count, event.col_count);
+}
+
+void Application::on_fix_tiles_in_map()
+{
+  if (auto* map = active_map_document()) {
+    map->fix_tiles();
+  }
 }
 
 void Application::on_open_resize_map_dialog()

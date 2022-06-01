@@ -79,6 +79,12 @@ void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
+    if (ImGui::MenuItem(TAC_ICON_REPAIR " Fix Invalid Tiles...")) {
+      dispatcher.enqueue<FixTilesInMapEvent>();
+    }
+
+    ImGui::Separator();
+
     if (ImGui::MenuItem("Resize Map...")) {
       dispatcher.enqueue<OpenResizeMapDialogEvent>();
     }

@@ -44,6 +44,7 @@
 #include "core/commands/layers/set_layer_visibility_cmd.hpp"
 #include "core/commands/maps/add_column_cmd.hpp"
 #include "core/commands/maps/add_row_cmd.hpp"
+#include "core/commands/maps/fix_tiles_in_map_cmd.hpp"
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"

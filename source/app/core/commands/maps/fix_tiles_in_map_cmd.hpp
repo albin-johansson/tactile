@@ -19,62 +19,31 @@
 
 #pragma once
 
-#include <filesystem>  // path
-
-#include "core/common/identifiers.hpp"
-#include "core/common/ints.hpp"
+#include "core/commands/command.hpp"
+#include "core/commands/command_id.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
+#include "core/systems/map_system.hpp"
 
 namespace tactile {
 
-/// \addtogroup events
-/// \{
-
-struct ShowNewMapDialogEvent final
-{};
-
-struct ShowOpenMapDialogEvent final
-{};
-
-struct AddRowEvent final
-{};
-
-struct AddColumnEvent final
-{};
-
-struct RemoveRowEvent final
-{};
-
-struct RemoveColumnEvent final
-{};
-
-struct CreateMapEvent final
+class FixTilesInMapCmd final : public ACommand
 {
-  int32 tile_width{};
-  int32 tile_height{};
-  usize row_count{};
-  usize column_count{};
+ public:
+  explicit FixTilesInMapCmd(MapDocument* map);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return CommandId::fix_tiles_in_map;
+  }
+
+ private:
+  MapDocument* mMap{};
+  sys::FixTilesInMapResult mResult;
 };
-
-struct OpenMapEvent final
-{
-  std::filesystem::path path;
-};
-
-struct InspectMapEvent final
-{};
-
-struct OpenResizeMapDialogEvent final
-{};
-
-struct ResizeMapEvent final
-{
-  usize row_count{};
-  usize col_count{};
-};
-
-struct FixTilesInMapEvent final
-{};
-
-/// \} End of group events
 
 }  // namespace tactile

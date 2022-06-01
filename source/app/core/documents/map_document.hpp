@@ -49,6 +49,8 @@ class MapDocument final : public ADocument
 
   void update() override;
 
+  void fix_tiles();
+
   [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;
   [[nodiscard]] auto is_tool_possible(ToolType tool) const -> bool;
 

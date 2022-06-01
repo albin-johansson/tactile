@@ -19,31 +19,47 @@
 
 #include "map_system.hpp"
 
+#include <cmath>
 #include <concepts>  // unsigned_integral
 
 #include <entt/entity/registry.hpp>
 
 #include "core/algorithms/invoke.hpp"
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/map_info.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
-#include "core/tile_pos.hpp"
+#include "core/systems/tilesets/tileset_system.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {
 namespace {
 
+// TODO move to core/common/math.hpp
 template <std::unsigned_integral T>
 [[nodiscard]] constexpr auto get_diff(const T a, const T b) noexcept -> T
 {
-  if (a < b) {
-    return b - a;
-  }
-  else {
-    return a - b;
-  }
+  return (a < b) ? (b - a) : (a - b);
+}
+
+[[nodiscard]] auto _fix_tiles_in_layer(comp::TileLayer& layer,
+                                       const comp::TilesetContext& tilesets,
+                                       const usize rows,
+                                       const usize cols) -> HashMap<TilePos, TileID>
+{
+  HashMap<TilePos, TileID> previous;
+
+  invoke_mn(rows, cols, [&](const usize row, const usize col) {
+    const auto tileId = layer.matrix[row][col];
+    if (!tilesets.tile_to_tileset.contains(tileId)) {
+      previous[TilePos::from(row, col)] = layer.matrix[row][col];
+      layer.matrix[row][col] = empty_tile;
+    }
+  });
+
+  return previous;
 }
 
 }  // namespace
@@ -113,6 +129,22 @@ void resize_map(entt::registry& registry, const usize nRows, const usize nCols)
   else {
     invoke_n(diff, [&] { remove_column_from_map(registry); });
   }
+}
+
+auto fix_tiles_in_map(entt::registry& registry) -> FixTilesInMapResult
+{
+  FixTilesInMapResult result;
+
+  const auto& info = ctx_get<comp::MapInfo>(registry);
+  const auto& tilesets = ctx_get<comp::TilesetContext>(registry);
+
+  for (auto&& [entity, layer, context] :
+       registry.view<comp::TileLayer, comp::AttributeContext>().each()) {
+    const auto& id = context.id;
+    result[id] = _fix_tiles_in_layer(layer, tilesets, info.row_count, info.column_count);
+  }
+
+  return result;
 }
 
 auto is_position_in_map(const entt::registry& registry, const TilePos& position) -> bool

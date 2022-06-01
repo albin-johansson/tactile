@@ -33,6 +33,7 @@ struct CommandId final
     remove_row,
     remove_column,
     resize_map,
+    fix_tiles_in_map,
 
     add_layer,
     remove_layer,

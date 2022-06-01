@@ -178,6 +178,8 @@ class Application final : AEventLoop
 
   void on_resize_map(const ResizeMapEvent& event);
 
+  void on_fix_tiles_in_map();
+
   void on_open_resize_map_dialog();
 
   void on_add_layer(const AddLayerEvent& event);

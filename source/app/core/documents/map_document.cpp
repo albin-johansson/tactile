@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "core/commands/command_stack.hpp"
+#include "core/commands/maps/fix_tiles_in_map_cmd.hpp"
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/map_info.hpp"
@@ -47,6 +49,11 @@ void MapDocument::update()
 {
   sys::update_tilesets(mRegistry);
   sys::update_animations(mRegistry);
+}
+
+void MapDocument::fix_tiles()
+{
+  get_history().push<FixTilesInMapCmd>(this);
 }
 
 auto MapDocument::is_tool_active(const ToolType tool) const -> bool
