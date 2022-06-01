@@ -31,14 +31,9 @@ namespace tactile {
 /// \addtogroup commands
 /// \{
 
-/**
- * \brief All commands are expected to take this as their first constructor parameter.
- */
 using RegistryRef = Ref<entt::registry>;
 
-/**
- * \brief The abstract base class of all command implementations.
- */
+/// The abstract base class of all command implementations.
 class ACommand
 {
  public:
