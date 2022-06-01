@@ -95,6 +95,7 @@ class DocumentModel final
   /// Removes a tileset from the active map document.
   void remove_tileset(const UUID& id);
 
+  /// Sets the undo stack capacity of all loaded documents.
   void set_command_capacity(usize capacity);
 
   /// Indicates whether any of the loaded documents are located at the specific path.
