@@ -23,6 +23,7 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "misc/assert.hpp"
@@ -32,7 +33,7 @@ namespace tactile {
 EraserToolCmd::EraserToolCmd(RegistryRef registry, TileCache&& oldState)
     : ACommand{"Eraser Sequence"}
     , mRegistry{registry}
-    , mLayer{sys::get_active_layer_id(registry).value()}
+    , mLayerId{sys::get_active_layer_id(registry).value()}
     , mOldState{std::move(oldState)}
 {}
 
@@ -40,8 +41,8 @@ void EraserToolCmd::undo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  auto& layer = checked_get<comp::TileLayer>(registry, entity);
+  const auto layerEntity = sys::find_context(registry, mLayerId);
+  auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
 
   sys::set_tiles(layer, mOldState);
 }
@@ -50,9 +51,7 @@ void EraserToolCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::find_layer(registry, mLayer);
-  TACTILE_ASSERT(entity != entt::null);
-
+  const auto entity = sys::find_context(registry, mLayerId);
   auto& matrix = checked_get<comp::TileLayer>(registry, entity).matrix;
   for (const auto& [position, _] : mOldState) {
     TACTILE_ASSERT(position.row_index() < matrix.size());

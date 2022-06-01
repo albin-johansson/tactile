@@ -71,7 +71,7 @@ namespace tactile {
 namespace {
 
 template <typename Command, typename... Args>
-[[deprecated]] void _execute(DocumentModel& model, Args&&... args)
+void _execute(DocumentModel& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
     auto& registry = document->get_registry();
@@ -84,7 +84,7 @@ template <typename Command, typename... Args>
 }
 
 template <typename Command, typename... Args>
-[[deprecated]] void _register(DocumentModel& model, Args&&... args)
+void _register(DocumentModel& model, Args&&... args)
 {
   if (auto* document = model.active_document()) {
     auto& registry = document->get_registry();
@@ -743,12 +743,16 @@ void Application::on_open_resize_map_dialog()
 
 void Application::on_add_layer(const AddLayerEvent& event)
 {
-  _execute<AddLayerCmd>(mData->model, event.type);
+  if (auto* map = active_map_document()) {
+    map->add_layer(event.type);
+  }
 }
 
 void Application::on_remove_layer(const RemoveLayerEvent& event)
 {
-  _execute<RemoveLayerCmd>(mData->model, event.id);
+  if (auto* map = active_map_document()) {
+    map->remove_layer(event.id);
+  }
 }
 
 void Application::on_select_layer(const SelectLayerEvent& event)
@@ -760,27 +764,37 @@ void Application::on_select_layer(const SelectLayerEvent& event)
 
 void Application::on_move_layer_up(const MoveLayerUpEvent& event)
 {
-  _execute<MoveLayerUpCmd>(mData->model, event.id);
+  if (auto* map = active_map_document()) {
+    map->move_layer_up(event.id);
+  }
 }
 
 void Application::on_move_layer_down(const MoveLayerDownEvent& event)
 {
-  _execute<MoveLayerDownCmd>(mData->model, event.id);
+  if (auto* map = active_map_document()) {
+    map->move_layer_down(event.id);
+  }
 }
 
 void Application::on_duplicate_layer(const DuplicateLayerEvent& event)
 {
-  _execute<DuplicateLayerCmd>(mData->model, event.id);
+  if (auto* map = active_map_document()) {
+    map->duplicate_layer(event.id);
+  }
 }
 
 void Application::on_set_layer_opacity(const SetLayerOpacityEvent& event)
 {
-  _execute<SetLayerOpacityCmd>(mData->model, event.id, event.opacity);
+  if (auto* map = active_map_document()) {
+    map->set_layer_opacity(event.id, event.opacity);
+  }
 }
 
 void Application::on_set_layer_visible(const SetLayerVisibleEvent& event)
 {
-  _execute<SetLayerVisibilityCmd>(mData->model, event.id, event.visible);
+  if (auto* map = active_map_document()) {
+    map->set_layer_visible(event.id, event.visible);
+  }
 }
 
 void Application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
@@ -790,7 +804,9 @@ void Application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& 
 
 void Application::on_rename_layer(const RenameLayerEvent& event)
 {
-  _execute<RenameLayerCmd>(mData->model, event.id, event.name);
+  if (auto* map = active_map_document()) {
+    map->rename_layer(event.id, event.name);
+  }
 }
 
 void Application::on_set_object_name(const SetObjectNameEvent& event)

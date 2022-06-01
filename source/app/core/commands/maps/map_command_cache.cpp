@@ -21,6 +21,7 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
@@ -48,9 +49,9 @@ void MapCommandCache::save_tiles(const entt::registry& registry,
                                  const TilePos& begin,
                                  const TilePos& end)
 {
-  for (auto&& [entity, layer, tileLayer] :
-       registry.view<comp::Layer, comp::TileLayer>().each()) {
-    auto& tileCache = mCache[layer.id];
+  for (auto&& [entity, context, layer, tileLayer] :
+       registry.view<comp::AttributeContext, comp::Layer, comp::TileLayer>().each()) {
+    auto& tileCache = mCache[context.id];
 
     const auto endRow = end.row();
     const auto endCol = end.col();

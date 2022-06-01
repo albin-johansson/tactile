@@ -50,8 +50,8 @@ namespace tactile::comp {
  */
 struct AttributeContext final
 {
-  ContextID id{};    ///< The unique context identifier (not persistent).
-  std::string name;  ///< The name of the context.
+  ContextID id{};  ///< The unique context identifier (not persistent).
+  std::string name;               ///< The name of the context.
   std::vector<entt::entity> properties;  ///< All associated properties.
   std::vector<entt::entity> components;  ///< All associated components.
 };

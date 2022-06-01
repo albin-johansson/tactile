@@ -21,7 +21,7 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/common/identifiers.hpp"
+#include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
 namespace tactile::ui {
@@ -48,7 +48,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
  *
  * \ingroup gui
  */
-void show_rename_layer_dialog(LayerID layerId);
+void show_rename_layer_dialog(const UUID& layerId);
 
 /**
  * \brief Indicates whether the layer dock widget has input focus.

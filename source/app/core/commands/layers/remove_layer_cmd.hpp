@@ -21,8 +21,9 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 #include "core/systems/snapshot.hpp"
 
 namespace tactile {
@@ -33,7 +34,7 @@ namespace tactile {
 class RemoveLayerCmd final : public ACommand
 {
  public:
-  RemoveLayerCmd(RegistryRef registry, LayerID id);
+  RemoveLayerCmd(MapDocument* map, const UUID& layerId);
 
   void undo() override;
 
@@ -45,8 +46,8 @@ class RemoveLayerCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  LayerID mLayerId;
+  MapDocument* mMap{};
+  UUID mLayerId{};
   Maybe<sys::LayerSnapshot> mLayerSnapshot;
 };
 

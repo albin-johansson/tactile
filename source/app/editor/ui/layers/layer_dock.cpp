@@ -30,6 +30,7 @@
 #include "core/components/parent.hpp"
 #include "core/events/layer_events.hpp"
 #include "core/model.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "editor/constants.hpp"
@@ -49,7 +50,7 @@ namespace {
 
 inline RenameLayerDialog _rename_layer_dialog;
 inline AddLayerContextMenu _add_layer_context_menu;
-inline Maybe<LayerID> _rename_target_id;
+inline Maybe<UUID> _rename_target_id;
 constinit bool _is_focused = false;
 
 void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
@@ -58,10 +59,11 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
   const auto activeLayerEntity = ctx_get<comp::ActiveLayer>(registry).entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
-  Maybe<LayerID> activeLayerId;
+  Maybe<UUID> activeLayerId;
   if (hasActiveLayer) {
-    const auto& layer = checked_get<comp::Layer>(registry, activeLayerEntity);
-    activeLayerId = layer.id;
+    const auto& context =
+        checked_get<comp::AttributeContext>(registry, activeLayerEntity);
+    activeLayerId = context.id;
   }
 
   Group group;
@@ -101,7 +103,7 @@ void _update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatc
     const auto targetLayerId = *_rename_target_id;
 
     const auto& registry = model.get_active_registry();
-    const auto entity = sys::find_layer(registry, targetLayerId);
+    const auto entity = sys::find_context(registry, targetLayerId);
 
     TACTILE_ASSERT(entity != entt::null);
     const auto& context = checked_get<comp::AttributeContext>(registry, entity);
@@ -168,7 +170,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   prefs.set_layer_dock_visible(visible);
 }
 
-void show_rename_layer_dialog(const LayerID layerId)
+void show_rename_layer_dialog(const UUID& layerId)
 {
   _rename_target_id = layerId;
 }

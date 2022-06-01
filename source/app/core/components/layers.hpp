@@ -47,10 +47,10 @@ namespace comp {
  */
 struct Layer final
 {
-  LayerID id{};         ///< Unique layer ID.
-  LayerType type{};     ///< The specific layer type.
-  float opacity{1.0f};  ///< Opacity of the layer, in the range [0, 1].
-  bool visible{true};   ///< Whether or not the layer is rendered.
+  [[deprecated]] LayerID id{};  ///< Unique layer ID.
+  LayerType type{};             ///< The specific layer type.
+  float opacity{1.0f};          ///< Opacity of the layer, in the range [0, 1].
+  bool visible{true};           ///< Whether or not the layer is rendered.
 };
 
 /**

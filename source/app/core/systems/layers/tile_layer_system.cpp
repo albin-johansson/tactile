@@ -21,6 +21,7 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "misc/panic.hpp"
 
@@ -36,10 +37,10 @@ namespace {
 
 }  // namespace
 
-auto get_tile_layer_entity(const entt::registry& registry, const LayerID id)
+auto get_tile_layer_entity(const entt::registry& registry, const UUID& id)
     -> entt::entity
 {
-  const auto entity = find_layer(registry, id);
+  const auto entity = find_context(registry, id);
   if (entity != entt::null && registry.all_of<comp::TileLayer>(entity)) {
     return entity;
   }

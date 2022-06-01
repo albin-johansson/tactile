@@ -22,6 +22,7 @@
 #include <string>  // string
 
 #include "core/common/identifiers.hpp"
+#include "core/common/uuid.hpp"
 #include "core/layer_type.hpp"
 
 namespace tactile {
@@ -36,49 +37,49 @@ struct AddLayerEvent final
 
 struct RemoveLayerEvent final
 {
-  LayerID id{};
+  UUID id{};
 };
 
 struct DuplicateLayerEvent final
 {
-  LayerID id{};
+  UUID id{};
 };
 
 struct SelectLayerEvent final
 {
-  LayerID id{};
+  UUID id{};
 };
 
 struct MoveLayerUpEvent final
 {
-  LayerID id{};
+  UUID id{};
 };
 
 struct MoveLayerDownEvent final
 {
-  LayerID id{};
+  UUID id{};
 };
 
 struct SetLayerOpacityEvent final
 {
-  LayerID id{};
+  UUID id{};
   float opacity{};
 };
 
 struct SetLayerVisibleEvent final
 {
-  LayerID id{};
+  UUID id{};
   bool visible{};
 };
 
 struct OpenRenameLayerDialogEvent final
 {
-  LayerID id{};
+  UUID id{};
 };
 
 struct RenameLayerEvent final
 {
-  LayerID id{};
+  UUID id{};
   std::string name;
 };
 

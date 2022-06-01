@@ -19,28 +19,35 @@
 
 #include "move_layer_down_cmd.hpp"
 
+#include "core/documents/map_document.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-MoveLayerDownCmd::MoveLayerDownCmd(RegistryRef registry, const LayerID id)
+MoveLayerDownCmd::MoveLayerDownCmd(MapDocument* map, const UUID& layerId)
     : ACommand{"Move Layer Down"}
-    , mRegistry{registry}
-    , mLayerId{id}
-{}
+    , mMap{map}
+    , mLayerId{layerId}
+{
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
+  }
+}
 
 void MoveLayerDownCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  auto& registry = mMap->get_registry();
+  const auto layerEntity = sys::find_context(registry, mLayerId);
   sys::move_layer_up(registry, layerEntity);
 }
 
 void MoveLayerDownCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  auto& registry = mMap->get_registry();
+  const auto layerEntity = sys::find_context(registry, mLayerId);
   sys::move_layer_down(registry, layerEntity);
 }
 

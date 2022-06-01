@@ -19,28 +19,38 @@
 
 #include "remove_layer_cmd.hpp"
 
+#include "core/documents/map_document.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "misc/assert.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-RemoveLayerCmd::RemoveLayerCmd(RegistryRef registry, const LayerID id)
+RemoveLayerCmd::RemoveLayerCmd(MapDocument* map, const UUID& layerId)
     : ACommand{"Remove Layer"}
-    , mRegistry{registry}
-    , mLayerId{id}
-{}
+    , mMap{map}
+    , mLayerId{layerId}
+{
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
+  }
+}
 
 void RemoveLayerCmd::undo()
 {
-  sys::restore_layer(mRegistry, mLayerSnapshot.value());
+  auto& registry = mMap->get_registry();
+  sys::restore_layer(registry, mLayerSnapshot.value());
 }
 
 void RemoveLayerCmd::redo()
 {
-  const auto entity = sys::find_layer(mRegistry, mLayerId);
-  TACTILE_ASSERT(entity != entt::null);
+  auto& registry = mMap->get_registry();
 
-  mLayerSnapshot = sys::remove_layer(mRegistry, entity);
+  const auto layerEntity = sys::find_context(registry, mLayerId);
+  TACTILE_ASSERT(layerEntity != entt::null);
+
+  mLayerSnapshot = sys::remove_layer(registry, layerEntity);
 }
 
 }  // namespace tactile

@@ -23,13 +23,15 @@
 #include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class SetLayerVisibilityCmd final : public ACommand
 {
  public:
-  SetLayerVisibilityCmd(RegistryRef registry, LayerID id, bool visible);
+  SetLayerVisibilityCmd(MapDocument* map, const UUID& layerId, bool visible);
 
   void undo() override;
 
@@ -41,8 +43,8 @@ class SetLayerVisibilityCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  LayerID mLayerId;
+  MapDocument* mMap{};
+  UUID mLayerId{};
   bool mVisible;
   Maybe<bool> mPreviousVisibility;
 };

@@ -84,6 +84,8 @@ void restore_attribute_context(entt::registry& registry,
                                entt::entity entity,
                                AttributeContextSnapshot snapshot);
 
+void set_context_id(comp::AttributeContext& context, const UUID& id);
+
 /**
  * Finds an entity with a specific context identifier.
  *

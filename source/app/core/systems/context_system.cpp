@@ -91,6 +91,12 @@ void restore_attribute_context(entt::registry& registry,
   }
 }
 
+void set_context_id(comp::AttributeContext& context, const UUID& id)
+{
+  context.id = id;
+  // TODO update cache in the future
+}
+
 auto find_context(const entt::registry& registry, const UUID& id) -> entt::entity
 {
   // TODO ContextCache component to improve linear search

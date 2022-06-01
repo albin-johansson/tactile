@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include "core/common/ecs.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
@@ -32,7 +33,7 @@ StampToolCmd::StampToolCmd(RegistryRef registry,
                            TileCache&& newState)
     : ACommand{"Stamp Sequence"}
     , mRegistry{registry}
-    , mLayer{sys::get_active_layer_id(registry).value()}
+    , mLayerId{sys::get_active_layer_id(registry).value()}
     , mOldState{std::move(oldState)}
     , mNewState{std::move(newState)}
 {}
@@ -51,8 +52,8 @@ void StampToolCmd::apply_sequence(const TileCache& cache)
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::get_tile_layer_entity(registry, mLayer);
-  auto& layer = checked_get<comp::TileLayer>(registry, entity);
+  const auto layerEntity = sys::find_context(registry, mLayerId);
+  auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
 
   sys::set_tiles(layer, cache);
 }

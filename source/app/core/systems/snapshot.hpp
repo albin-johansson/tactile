@@ -29,6 +29,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/texture.hpp"
@@ -69,7 +70,7 @@ struct LayerSnapshot final
   usize index{};
   comp::Layer core;
   AttributeContextSnapshot context;
-  Maybe<LayerID> parent;
+  Maybe<UUID> parent;
   Maybe<TileMatrix> tiles;
   Maybe<std::vector<ObjectSnapshot>> objects;
   Maybe<std::vector<LayerSnapshot>> children;

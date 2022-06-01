@@ -38,7 +38,7 @@ namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto _make_object(entt::registry& registry,
-                                const LayerID layerId,
+                                const UUID& layerId,
                                 std::string name,
                                 const ObjectType type,
                                 const float x,
@@ -74,7 +74,7 @@ namespace {
 }  // namespace
 
 auto new_rectangle_object(entt::registry& registry,
-                          const LayerID layerId,
+                          const UUID& layerId,
                           const float x,
                           const float y,
                           const float width,
@@ -91,7 +91,7 @@ auto new_rectangle_object(entt::registry& registry,
 }
 
 auto new_ellipse_object(entt::registry& registry,
-                        const LayerID layerId,
+                        const UUID& layerId,
                         const float x,
                         const float y,
                         const float width,
@@ -108,7 +108,7 @@ auto new_ellipse_object(entt::registry& registry,
 }
 
 auto new_point_object(entt::registry& registry,
-                      const LayerID layerId,
+                      const UUID& layerId,
                       const float x,
                       const float y) -> ObjectID
 {
@@ -119,11 +119,11 @@ auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectR
 {
   const auto objectEntity = get_object(registry, id);
 
-  Maybe<LayerID> layerId;
-  for (auto&& [layerEntity, layer, objectLayer] :
-       registry.view<comp::Layer, comp::ObjectLayer>().each()) {
+  Maybe<UUID> layerId;
+  for (auto&& [layerEntity, context, layer, objectLayer] :
+       registry.view<comp::AttributeContext, comp::Layer, comp::ObjectLayer>().each()) {
     if (std::erase(objectLayer.objects, objectEntity) > 0) {
-      layerId = layer.id;
+      layerId = context.id;
       break;
     }
   }

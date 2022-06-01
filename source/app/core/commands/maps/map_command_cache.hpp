@@ -23,6 +23,7 @@
 
 #include "core/common/associative.hpp"
 #include "core/common/identifiers.hpp"
+#include "core/common/uuid.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {
@@ -30,7 +31,7 @@ namespace tactile {
 class MapCommandCache final
 {
   using TileCache = TreeMap<TilePos, TileID>;
-  using LayerCache = TreeMap<LayerID, TileCache>;
+  using LayerCache = TreeMap<UUID, TileCache>;
 
  public:
   void clear() noexcept;

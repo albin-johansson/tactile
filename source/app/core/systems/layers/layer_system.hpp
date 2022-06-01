@@ -26,6 +26,7 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/map_info.hpp"
 #include "core/systems/snapshot.hpp"
@@ -158,36 +159,11 @@ auto duplicate_layer(entt::registry& registry,
  *
  * \throws TactileError if there is no layer with the specified ID.
  */
-void select_layer(entt::registry& registry, LayerID id);
+void select_layer(entt::registry& registry, const UUID& id);
 
 [[nodiscard]] auto get_active_layer(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>;
-
-/**
- * \brief Attempts to find the layer associated with the specified ID.
- *
- * \param registry a map registry.
- * \param id the ID associated with the desired layer.
- *
- * \return the associated layer entity; a null entity is returned if there is none.
- */
-[[nodiscard]] auto find_layer(const entt::registry& registry, LayerID id) -> entt::entity;
-
-[[nodiscard, deprecated]] auto get_layer_entity(const entt::registry& registry,
-                                                LayerID id) -> entt::entity;
-
-/**
- * \brief Returns the layer entity associated with a layer ID.
- *
- * \param registry the document registry.
- * \param id the ID associated with the desired layer.
- *
- * \return a layer entity.
- *
- * \throws TactileError if the ID is invalid.
- */
-[[nodiscard]] auto get_layer(const entt::registry& registry, LayerID id) -> entt::entity;
+[[nodiscard]] auto get_active_layer_id(const entt::registry& registry) -> Maybe<UUID>;
 
 [[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;
 

@@ -25,6 +25,7 @@
 #include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {
@@ -45,9 +46,9 @@ class BucketToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  LayerID mLayer;
+  UUID mLayerId{};
   TilePos mOrigin;
-  TileID mReplacement;
+  TileID mReplacement{};
   Maybe<TileID> mTarget;
   std::vector<TilePos> mPositions;
 };

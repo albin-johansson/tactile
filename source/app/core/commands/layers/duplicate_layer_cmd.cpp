@@ -20,41 +20,48 @@
 #include "duplicate_layer_cmd.hpp"
 
 #include "core/common/ecs.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "misc/assert.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-DuplicateLayerCmd::DuplicateLayerCmd(RegistryRef registry, const LayerID id)
+DuplicateLayerCmd::DuplicateLayerCmd(MapDocument* map, const UUID& layerId)
     : ACommand{"Duplicate Layer"}
-    , mRegistry{registry}
-    , mLayerId{id}
-{}
+    , mMap{map}
+    , mLayerId{layerId}
+{
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
+  }
+}
 
 void DuplicateLayerCmd::undo()
 {
-  auto& registry = mRegistry.get();
+  auto& registry = mMap->get_registry();
 
-  const auto layerEntity = sys::get_layer(registry, mNewLayerId.value());
+  const auto layerEntity = sys::find_context(registry, mNewLayerId.value());
   sys::remove_layer(registry, layerEntity);
 }
 
 void DuplicateLayerCmd::redo()
 {
-  auto& registry = mRegistry.get();
+  auto& registry = mMap->get_registry();
 
-  const auto sourceEntity = sys::find_layer(registry, mLayerId);
+  const auto sourceEntity = sys::find_context(registry, mLayerId);
   const auto entity = sys::duplicate_layer(registry, sourceEntity);
 
   if (!mNewLayerId) {
-    const auto& layer = checked_get<comp::Layer>(registry, entity);
-    mNewLayerId = layer.id;
+    const auto& context = checked_get<comp::AttributeContext>(registry, entity);
+    mNewLayerId = context.id;
   }
   else {
     // Reuse previous ID of duplicated layer
-    TACTILE_ASSERT(sys::find_layer(registry, *mNewLayerId) == entt::null);
-    auto& layer = checked_get<comp::Layer>(registry, entity);
-    layer.id = *mNewLayerId;
+    TACTILE_ASSERT(sys::find_context(registry, *mNewLayerId) == entt::null);
+    auto& context = checked_get<comp::AttributeContext>(registry, entity);
+    sys::set_context_id(context, *mNewLayerId);
   }
 }
 

@@ -24,6 +24,7 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/identifiers.hpp"
+#include "core/common/uuid.hpp"
 #include "core/components/layers.hpp"
 
 namespace tactile::sys {
@@ -39,10 +40,10 @@ namespace tactile::sys {
 /// \name Object functions
 /// \{
 
-[[nodiscard]] auto get_object_layer(entt::registry& registry, LayerID id)
+[[nodiscard]] auto get_object_layer(entt::registry& registry, const UUID& id)
     -> std::pair<entt::entity, comp::ObjectLayer&>;
 
-[[nodiscard]] auto get_object_layer(const entt::registry& registry, LayerID id)
+[[nodiscard]] auto get_object_layer(const entt::registry& registry, const UUID& id)
     -> std::pair<entt::entity, const comp::ObjectLayer&>;
 
 [[nodiscard]] auto has_object(const entt::registry& registry,

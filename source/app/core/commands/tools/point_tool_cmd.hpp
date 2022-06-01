@@ -23,6 +23,7 @@
 #include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/systems/layers/object_system.hpp"
 
 namespace tactile {
@@ -43,7 +44,7 @@ class PointToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  LayerID mLayerId{};
+  UUID mLayerId{};
   float mPointX{};
   float mPointY{};
   Maybe<ObjectID> mObjectId;

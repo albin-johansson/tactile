@@ -23,15 +23,16 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class RenameLayerCmd final : public ACommand
 {
  public:
-  RenameLayerCmd(RegistryRef registry, LayerID id, std::string name);
+  RenameLayerCmd(MapDocument* map, const UUID& layerId, std::string name);
 
   void undo() override;
 
@@ -43,8 +44,8 @@ class RenameLayerCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  LayerID mLayerId;
+  MapDocument* mMap{};
+  UUID mLayerId{};
   std::string mName;
   Maybe<std::string> mPreviousName;
 };

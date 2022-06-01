@@ -35,7 +35,7 @@ namespace {
 struct TestData final
 {
   entt::registry registry;
-  LayerID layer_id{};
+  UUID layer_id{};
 };
 
 [[nodiscard]] auto _new_test_data() -> TestData
@@ -43,9 +43,9 @@ struct TestData final
   TestData data{.registry = sys::new_map_document_registry()};
 
   const auto layerEntity = sys::new_object_layer(data.registry);
-  const auto& layer = checked_get<comp::Layer>(data.registry, layerEntity);
+  const auto& context = checked_get<comp::AttributeContext>(data.registry, layerEntity);
 
-  data.layer_id = layer.id;
+  data.layer_id = context.id;
 
   return data;
 }

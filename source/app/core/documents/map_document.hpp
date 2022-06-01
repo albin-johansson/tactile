@@ -19,11 +19,14 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
+#include "core/layer_type.hpp"
 #include "core/tools/tool_type.hpp"
 
 namespace tactile {
@@ -61,6 +64,22 @@ class MapDocument final : public ADocument
   void resize(usize rows, usize cols);
 
   void fix_tiles();
+
+  void add_layer(LayerType type);
+
+  void remove_layer(const UUID& layerId);
+
+  void duplicate_layer(const UUID& layerId);
+
+  void rename_layer(const UUID& layerId, std::string name);
+
+  void move_layer_up(const UUID& layerId);
+
+  void move_layer_down(const UUID& layerId);
+
+  void set_layer_opacity(const UUID& layerId, float opacity);
+
+  void set_layer_visible(const UUID& layerId, bool visible);
 
   void move_object(const UUID& objectId,
                    const Vector2f& previous,

@@ -89,7 +89,7 @@ namespace {
 
   const auto parentEntity = checked_get<comp::Parent>(registry, source).entity;
   if (parentEntity != entt::null) {
-    snapshot.parent = checked_get<comp::Layer>(registry, parentEntity).id;
+    snapshot.parent = checked_get<comp::AttributeContext>(registry, parentEntity).id;
   }
 
   switch (snapshot.core.type) {
@@ -258,7 +258,7 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
 {
   entt::entity parent{entt::null};
   if (snapshot.parent.has_value()) {
-    parent = find_layer(registry, *snapshot.parent);
+    parent = find_context(registry, *snapshot.parent);
   }
 
   const auto entity = new_layer_skeleton(registry,
@@ -389,39 +389,10 @@ auto duplicate_layer(entt::registry& registry,
   return copy;
 }
 
-void select_layer(entt::registry& registry, const LayerID id)
+void select_layer(entt::registry& registry, const UUID& id)
 {
   auto& active = ctx_get<comp::ActiveLayer>(registry);
-  active.entity = get_layer(registry, id);
-}
-
-auto find_layer(const entt::registry& registry, const LayerID id) -> entt::entity
-{
-  return find_one<comp::Layer>(registry,
-                               [id](const comp::Layer& layer) { return layer.id == id; });
-}
-
-auto get_layer_entity(const entt::registry& registry, const LayerID id) -> entt::entity
-{
-  const auto entity = find_layer(registry, id);
-  if (entity != entt::null && registry.all_of<comp::Layer>(entity)) {
-    return entity;
-  }
-  else {
-    throw TactileError{"Invalid layer ID!"};
-  }
-}
-
-auto get_layer(const entt::registry& registry, const LayerID id) -> entt::entity
-{
-  const auto entity = find_layer(registry, id);
-  if (entity != entt::null) {
-    TACTILE_ASSERT(registry.all_of<comp::Layer>(entity));
-    return entity;
-  }
-  else {
-    throw TactileError{"Invalid layer identifier!"};
-  }
+  active.entity = find_context(registry, id);
 }
 
 auto get_active_layer(const entt::registry& registry) -> entt::entity
@@ -452,11 +423,11 @@ auto is_object_layer_active(const entt::registry& registry) -> bool
   }
 }
 
-auto get_active_layer_id(const entt::registry& registry) -> Maybe<LayerID>
+auto get_active_layer_id(const entt::registry& registry) -> Maybe<UUID>
 {
   const auto& active = ctx_get<comp::ActiveLayer>(registry);
   if (active.entity != entt::null) {
-    return checked_get<comp::Layer>(registry, active.entity).id;
+    return checked_get<comp::AttributeContext>(registry, active.entity).id;
   }
   else {
     return nothing;

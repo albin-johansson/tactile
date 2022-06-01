@@ -51,7 +51,7 @@ namespace tactile::sys {
  *
  * \throws TactileError if the identifier is invalid.
  */
-[[nodiscard]] auto get_tile_layer_entity(const entt::registry& registry, LayerID id)
+[[nodiscard]] auto get_tile_layer_entity(const entt::registry& registry, const UUID& id)
     -> entt::entity;
 
 /**

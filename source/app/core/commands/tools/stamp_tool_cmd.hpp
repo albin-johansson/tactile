@@ -23,6 +23,7 @@
 #include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/tile_cache.hpp"
+#include "core/common/uuid.hpp"
 
 namespace tactile {
 
@@ -45,7 +46,7 @@ class StampToolCmd final : public ACommand
 
  private:
   RegistryRef mRegistry;
-  LayerID mLayer;
+  UUID mLayerId{};
   TileCache mOldState;
   TileCache mNewState;
 

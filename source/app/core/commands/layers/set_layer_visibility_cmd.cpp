@@ -20,24 +20,31 @@
 #include "set_layer_visibility_cmd.hpp"
 
 #include "core/common/ecs.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-SetLayerVisibilityCmd::SetLayerVisibilityCmd(RegistryRef registry,
-                                             const LayerID id,
+SetLayerVisibilityCmd::SetLayerVisibilityCmd(MapDocument* map,
+                                             const UUID& layerId,
                                              const bool visible)
     : ACommand{"Set Layer Visibility"}
-    , mRegistry{registry}
-    , mLayerId{id}
+    , mMap{map}
+    , mLayerId{layerId}
     , mVisible{visible}
-{}
+{
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
+  }
+}
 
 void SetLayerVisibilityCmd::undo()
 {
-  auto& registry = mRegistry.get();
+  auto& registry = mMap->get_registry();
 
-  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  const auto layerEntity = sys::find_context(registry, mLayerId);
   auto& layer = checked_get<comp::Layer>(registry, layerEntity);
 
   layer.visible = mPreviousVisibility.value();
@@ -46,9 +53,9 @@ void SetLayerVisibilityCmd::undo()
 
 void SetLayerVisibilityCmd::redo()
 {
-  auto& registry = mRegistry.get();
+  auto& registry = mMap->get_registry();
 
-  const auto layerEntity = sys::get_layer(registry, mLayerId);
+  const auto layerEntity = sys::find_context(registry, mLayerId);
   auto& layer = checked_get<comp::Layer>(registry, layerEntity);
 
   mPreviousVisibility = layer.visible;

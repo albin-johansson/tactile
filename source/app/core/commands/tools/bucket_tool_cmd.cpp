@@ -22,6 +22,7 @@
 #include "core/algorithms/flood_fill.hpp"
 #include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
@@ -32,7 +33,7 @@ BucketToolCmd::BucketToolCmd(RegistryRef registry,
                              const TileID replacement)
     : ACommand{"Bucket Fill"}
     , mRegistry{registry}
-    , mLayer{sys::get_active_layer_id(registry).value()}
+    , mLayerId{sys::get_active_layer_id(registry).value()}
     , mOrigin{origin}
     , mReplacement{replacement}
 {}
@@ -41,7 +42,7 @@ void BucketToolCmd::undo()
 {
   auto& registry = mRegistry.get();
 
-  const auto layerEntity = sys::find_layer(registry, mLayer);
+  const auto layerEntity = sys::find_context(registry, mLayerId);
   auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
 
   const auto target = mTarget.value();
@@ -57,7 +58,7 @@ void BucketToolCmd::redo()
 {
   auto& registry = mRegistry.get();
 
-  const auto entity = sys::get_tile_layer_entity(registry, mLayer);
+  const auto entity = sys::find_context(registry, mLayerId);
   const auto& layer = checked_get<comp::TileLayer>(registry, entity);
 
   mTarget = sys::get_tile(layer, mOrigin);

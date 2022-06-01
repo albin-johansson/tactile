@@ -169,15 +169,3 @@ TEST(LayerSystem, DuplicateLayer)
   ASSERT_EQ(layerA.opacity, layerB.opacity);
   ASSERT_EQ(layerA.visible, layerB.visible);
 }
-
-TEST(LayerSystem, FindLayer)
-{
-  auto registry = sys::new_map_document_registry();
-  ASSERT_EQ(null_entity, sys::find_layer(registry, 1));
-
-  const auto a = sys::new_tile_layer(registry);
-  const auto b = sys::new_object_layer(registry);
-
-  ASSERT_EQ(a, sys::find_layer(registry, 1));
-  ASSERT_EQ(b, sys::find_layer(registry, 2));
-}

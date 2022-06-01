@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "editor/ui/dialogs/string_input_dialog.hpp"
 
 namespace tactile::ui {
@@ -34,7 +34,7 @@ class RenameLayerDialog final : public AStringInputDialog
  public:
   RenameLayerDialog();
 
-  void show(LayerID id, std::string oldName);
+  void show(const UUID& layerId, std::string oldName);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
@@ -43,7 +43,7 @@ class RenameLayerDialog final : public AStringInputDialog
       -> bool override;
 
  private:
-  Maybe<LayerID> mTargetId;
+  Maybe<UUID> mTargetId;
   Maybe<std::string> mOldName;
 };
 

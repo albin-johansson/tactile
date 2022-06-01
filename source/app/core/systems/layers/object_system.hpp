@@ -22,6 +22,7 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/identifiers.hpp"
+#include "core/common/uuid.hpp"
 #include "core/components/objects.hpp"
 #include "core/systems/snapshot.hpp"
 
@@ -54,7 +55,7 @@ namespace tactile::sys {
  * \return the identifier assigned to the object.
  */
 auto new_rectangle_object(entt::registry& registry,
-                          LayerID layerId,
+                          const UUID& layerId,
                           float x,
                           float y,
                           float width,
@@ -79,7 +80,7 @@ auto new_rectangle_object(entt::registry& registry,
  * \return the identifier assigned to the object.
  */
 auto new_ellipse_object(entt::registry& registry,
-                        LayerID layerId,
+                        const UUID& layerId,
                         float x,
                         float y,
                         float width,
@@ -101,12 +102,12 @@ auto new_ellipse_object(entt::registry& registry,
  *
  * \return the identifier assigned to the object.
  */
-auto new_point_object(entt::registry& registry, LayerID layerId, float x, float y)
+auto new_point_object(entt::registry& registry, const UUID& layerId, float x, float y)
     -> ObjectID;
 
 struct RemoveObjectResult final
 {
-  LayerID layer{};
+  UUID layer{};
   comp::Object object;
   AttributeContextSnapshot context;
 };

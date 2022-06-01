@@ -22,6 +22,14 @@
 #include <utility>  // move
 
 #include "core/commands/command_stack.hpp"
+#include "core/commands/layers/add_layer_cmd.hpp"
+#include "core/commands/layers/duplicate_layer_cmd.hpp"
+#include "core/commands/layers/move_layer_down_cmd.hpp"
+#include "core/commands/layers/move_layer_up_cmd.hpp"
+#include "core/commands/layers/remove_layer_cmd.hpp"
+#include "core/commands/layers/rename_layer_cmd.hpp"
+#include "core/commands/layers/set_layer_opacity_cmd.hpp"
+#include "core/commands/layers/set_layer_visibility_cmd.hpp"
 #include "core/commands/maps/add_column_cmd.hpp"
 #include "core/commands/maps/add_row_cmd.hpp"
 #include "core/commands/maps/fix_tiles_in_map_cmd.hpp"
@@ -85,6 +93,46 @@ void MapDocument::resize(const usize rows, const usize cols)
 void MapDocument::fix_tiles()
 {
   get_history().push<FixTilesInMapCmd>(this);
+}
+
+void MapDocument::add_layer(const LayerType type)
+{
+  get_history().push<AddLayerCmd>(this, type);
+}
+
+void MapDocument::remove_layer(const UUID& layerId)
+{
+  get_history().push<RemoveLayerCmd>(this, layerId);
+}
+
+void MapDocument::duplicate_layer(const UUID& layerId)
+{
+  get_history().push<DuplicateLayerCmd>(this, layerId);
+}
+
+void MapDocument::rename_layer(const UUID& layerId, std::string name)
+{
+  get_history().push<RenameLayerCmd>(this, layerId, std::move(name));
+}
+
+void MapDocument::move_layer_up(const UUID& layerId)
+{
+  get_history().push<MoveLayerUpCmd>(this, layerId);
+}
+
+void MapDocument::move_layer_down(const UUID& layerId)
+{
+  get_history().push<MoveLayerDownCmd>(this, layerId);
+}
+
+void MapDocument::set_layer_opacity(const UUID& layerId, const float opacity)
+{
+  get_history().push<SetLayerOpacityCmd>(this, layerId, opacity);
+}
+
+void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
+{
+  get_history().push<SetLayerVisibilityCmd>(this, layerId, visible);
 }
 
 void MapDocument::move_object(const UUID& objectId,

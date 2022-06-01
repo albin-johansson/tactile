@@ -20,37 +20,44 @@
 #include "add_layer_cmd.hpp"
 
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "misc/assert.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-AddLayerCmd::AddLayerCmd(RegistryRef registry, const LayerType type)
+AddLayerCmd::AddLayerCmd(MapDocument* map, const LayerType type)
     : ACommand{"Add Layer"}
-    , mRegistry{registry}
+    , mMap{map}
     , mLayerType{type}
-{}
+{
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
+  }
+}
 
 void AddLayerCmd::undo()
 {
-  auto& registry = mRegistry.get();
+  auto& registry = mMap->get_registry();
 
-  const auto id = mLayerId.value();
-  const auto entity = sys::find_layer(registry, id);
-  TACTILE_ASSERT(entity != entt::null);
+  const auto layerEntity = sys::find_context(registry, mLayerId.value());
+  TACTILE_ASSERT(layerEntity != entt::null);
 
-  mLayerSnapshot = sys::remove_layer(registry, entity);
+  mLayerSnapshot = sys::remove_layer(registry, layerEntity);
 }
 
 void AddLayerCmd::redo()
 {
+  auto& registry = mMap->get_registry();
+
   if (mLayerSnapshot) {
-    sys::restore_layer(mRegistry, *mLayerSnapshot);
+    sys::restore_layer(registry, *mLayerSnapshot);
   }
   else {
-    auto& registry = mRegistry.get();
-
     entt::entity entity{entt::null};
     switch (mLayerType) {
       case LayerType::TileLayer: {
@@ -68,7 +75,7 @@ void AddLayerCmd::redo()
     }
 
     TACTILE_ASSERT(entity != entt::null);
-    mLayerId = checked_get<comp::Layer>(registry, entity).id;
+    mLayerId = checked_get<comp::AttributeContext>(registry, entity).id;
 
     sys::sort_layers(registry);
   }

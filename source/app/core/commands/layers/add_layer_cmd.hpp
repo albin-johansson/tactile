@@ -21,8 +21,9 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 #include "core/systems/snapshot.hpp"
 
 namespace tactile {
@@ -33,7 +34,7 @@ namespace tactile {
 class AddLayerCmd final : public ACommand
 {
  public:
-  AddLayerCmd(RegistryRef registry, LayerType type);
+  AddLayerCmd(MapDocument* map, LayerType type);
 
   void undo() override;
 
@@ -42,9 +43,9 @@ class AddLayerCmd final : public ACommand
   [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_layer; }
 
  private:
-  RegistryRef mRegistry;
+  MapDocument* mMap{};
   LayerType mLayerType;
-  Maybe<LayerID> mLayerId;
+  Maybe<UUID> mLayerId;
   Maybe<sys::LayerSnapshot> mLayerSnapshot;
 };
 
