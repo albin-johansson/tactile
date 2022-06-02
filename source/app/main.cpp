@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>    // abort
+#include <cstdlib>    // abort, EXIT_SUCCESS
 #include <exception>  // exception
 
 #include <fmt/ostream.h>
@@ -41,7 +41,7 @@ auto main(int, char**) -> int
     tactile::Application app{&configuration};
     app.start();
 
-    return 0;
+    return EXIT_SUCCESS;
   }
   catch (const tactile::TactileError& e) {
     spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), e.trace());
