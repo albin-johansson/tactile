@@ -98,16 +98,14 @@ void _register(DocumentModel& model, Args&&... args)
 
 }  // namespace
 
-/**
- * \brief Tracks visibility of widgets for the "Toggle UI" feature.
- */
+/// Tracks visibility of widgets for the "Toggle UI" feature.
 struct WidgetShowState final
 {
-  bool prev_show_layer_dock{};
-  bool prev_show_tileset_dock{};
-  bool prev_show_property_dock{};
-  bool prev_show_log_dock{};
-  bool prev_show_component_dock{};
+  bool prev_show_layer_dock : 1 {};
+  bool prev_show_tileset_dock : 1 {};
+  bool prev_show_property_dock : 1 {};
+  bool prev_show_log_dock : 1 {};
+  bool prev_show_component_dock : 1 {};
 };
 
 struct Application::Data final
@@ -117,7 +115,7 @@ struct Application::Data final
   DocumentModel model;
   TextureManager textures;
   WidgetShowState widget_show_state;
-  bool reload_fonts{};
+  bool reload_fonts : 1 {};
 };
 
 Application::Application(AppConfiguration* configuration)
