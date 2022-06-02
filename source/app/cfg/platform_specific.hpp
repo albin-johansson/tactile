@@ -19,13 +19,11 @@
 
 #pragma once
 
+#include <centurion/window.hpp>
+
 namespace tactile {
 
-/**
- * \brief Initializes SDL hints.
- *
- * \ingroup cfg
- */
-void init_sdl_attributes();
+/// Makes the window title bar dark (specific to Windows)
+void use_immersive_dark_mode(cen::window& window);
 
 }  // namespace tactile
