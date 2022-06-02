@@ -19,11 +19,20 @@
 
 #pragma once
 
+#include <concepts>  // unsigned_integral
+
 #include <glm/vec2.hpp>
 
 namespace tactile {
 
 using Vector2f = glm::vec2;
 using Vector2i = glm::ivec2;
+
+/// Returns the difference between two unsigned integers
+template <std::unsigned_integral T>
+[[nodiscard]] constexpr auto udiff(const T a, const T b) noexcept -> T
+{
+  return (a < b) ? (b - a) : (a - b);
+}
 
 }  // namespace tactile

@@ -26,6 +26,7 @@
 
 #include "core/algorithms/invoke.hpp"
 #include "core/common/ecs.hpp"
+#include "core/common/math.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/map_info.hpp"
@@ -36,13 +37,6 @@
 
 namespace tactile::sys {
 namespace {
-
-// TODO move to core/common/math.hpp
-template <std::unsigned_integral T>
-[[nodiscard]] constexpr auto get_diff(const T a, const T b) noexcept -> T
-{
-  return (a < b) ? (b - a) : (a - b);
-}
 
 [[nodiscard]] auto _fix_tiles_in_layer(comp::TileLayer& layer,
                                        const comp::TilesetContext& tilesets,
@@ -116,14 +110,14 @@ void resize_map(entt::registry& registry, const usize nRows, const usize nCols)
 {
   auto& map = ctx_get<comp::MapInfo>(registry);
 
-  if (const auto diff = get_diff(map.row_count, nRows); map.row_count < nRows) {
+  if (const auto diff = udiff(map.row_count, nRows); map.row_count < nRows) {
     invoke_n(diff, [&] { add_row_to_map(registry); });
   }
   else {
     invoke_n(diff, [&] { remove_row_from_map(registry); });
   }
 
-  if (const auto diff = get_diff(map.column_count, nCols); map.column_count < nCols) {
+  if (const auto diff = udiff(map.column_count, nCols); map.column_count < nCols) {
     invoke_n(diff, [&] { add_column_to_map(registry); });
   }
   else {
