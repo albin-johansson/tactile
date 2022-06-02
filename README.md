@@ -6,7 +6,7 @@
 [![CI: Ubuntu](https://github.com/albin-johansson/tactile/actions/workflows/ubuntu.yml/badge.svg?branch=dev)](https://github.com/albin-johansson/tactile/actions/workflows/ubuntu.yml)
 [![CI: macOS](https://github.com/albin-johansson/tactile/actions/workflows/macos.yml/badge.svg?branch=dev)](https://github.com/albin-johansson/tactile/actions/workflows/macos.yml)
 
-A tilemap editor that aims to be easy-to-use, fast and lightweight.
+A tilemap editor that aims to be simple, fast and lightweight.
 
 ![Splash](meta/splash/splash-0.3.0.png)
 
