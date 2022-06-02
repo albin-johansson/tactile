@@ -27,40 +27,22 @@ namespace tactile {
 /// \{
 
 /**
- * \brief Reloads the main and icon fonts.
+ * Reloads the main and icon fonts.
  *
- * \details This is meant to be called every time the application has reason to believe
+ * This is meant to be called every time the application has reason to believe
  * that the fonts need to be reloaded, e.g. when the reported display framebuffer size
  * changes. This information may change during the first couple of frames of the
  * application, so this needs to be dynamically handled.
  */
 void reload_fonts();
 
-/**
- * \brief Returns the default font size.
- *
- * \note This function always returns the same size.
- *
- * \return the default font size.
- */
+/// Returns the default font size.
 [[nodiscard]] auto get_default_font_size() -> int32;
 
-/**
- * \brief Returns the smallest acceptable font size.
- *
- * \note This function always returns the same size.
- *
- * \return the minimal font size.
- */
+/// Returns the smallest acceptable font size.
 [[nodiscard]] auto get_min_font_size() -> int32;
 
-/**
- * \brief Returns the largest acceptable font size.
- *
- * \note This function always returns the same size.
- *
- * \return the maximal font size.
- */
+/// Returns the largest acceptable font size.
 [[nodiscard]] auto get_max_font_size() -> int32;
 
 /// \} End of font functions
