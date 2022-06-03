@@ -57,7 +57,6 @@ namespace tactile::sys {
  * - `Parent`
  *
  * \param registry the associated registry.
- * \param id the unique identifier associated with the layer.
  * \param type the specific layer type.
  * \param name the name of the layer.
  * \param parent the parent layer entity, can safely be null.
@@ -65,7 +64,6 @@ namespace tactile::sys {
  * \return the created layer entity.
  */
 auto new_layer_skeleton(entt::registry& registry,
-                        LayerID id,
                         LayerType type,
                         std::string name,
                         entt::entity parent = entt::null) -> entt::entity;

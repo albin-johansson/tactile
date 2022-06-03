@@ -121,7 +121,8 @@ void _convert_layer(ir::LayerData& data,
 
   data.index = index;
 
-  data.id = layer.id;
+  /* We don't use plain integer IDs for layers, but this approximation should work */
+  data.id = static_cast<int32>(index) + 1;
   data.type = layer.type;
   data.opacity = layer.opacity;
   data.visible = layer.visible;
@@ -268,7 +269,6 @@ void _convert_basic_map_info(ir::MapData& data, const comp::MapInfo& mapInfo)
   data.tile_width = mapInfo.tile_size.x;
   data.tile_height = mapInfo.tile_size.y;
 
-  data.next_layer_id = mapInfo.next_layer_id;
   data.next_object_id = mapInfo.next_object_id;
 }
 

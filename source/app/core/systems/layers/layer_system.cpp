@@ -142,7 +142,6 @@ void _restore_layer_index(entt::registry& registry,
 }  // namespace
 
 auto new_layer_skeleton(entt::registry& registry,
-                        const LayerID id,
                         const LayerType type,
                         std::string name,
                         const entt::entity parent) -> entt::entity
@@ -156,7 +155,6 @@ auto new_layer_skeleton(entt::registry& registry,
 
   {
     auto& layer = registry.emplace<comp::Layer>(entity);
-    layer.id = id;
     layer.type = type;
     layer.visible = true;
     layer.opacity = 1.0f;
@@ -185,11 +183,9 @@ auto new_tile_layer(entt::registry& registry) -> entt::entity
 
   const auto entity =
       new_layer_skeleton(registry,
-                         map.next_layer_id,
                          LayerType::TileLayer,
                          fmt::format("Tile Layer {}", map.tile_layer_suffix),
                          _new_layer_parent(registry));
-  ++map.next_layer_id;
   ++map.tile_layer_suffix;
 
   auto& tileLayer = registry.emplace<comp::TileLayer>(entity);
@@ -204,11 +200,9 @@ auto new_object_layer(entt::registry& registry) -> entt::entity
 
   const auto entity =
       new_layer_skeleton(registry,
-                         map.next_layer_id,
                          LayerType::ObjectLayer,
                          fmt::format("Object Layer {}", map.object_layer_suffix),
                          _new_layer_parent(registry));
-  ++map.next_layer_id;
   ++map.object_layer_suffix;
 
   registry.emplace<comp::ObjectLayer>(entity);
@@ -222,11 +216,9 @@ auto new_group_layer(entt::registry& registry) -> entt::entity
 
   const auto entity =
       new_layer_skeleton(registry,
-                         map.next_layer_id,
                          LayerType::GroupLayer,
                          fmt::format("Group Layer {}", map.group_layer_suffix),
                          _new_layer_parent(registry));
-  ++map.next_layer_id;
   ++map.group_layer_suffix;
 
   registry.emplace<comp::GroupLayer>(entity);
@@ -262,7 +254,6 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
   }
 
   const auto entity = new_layer_skeleton(registry,
-                                         snapshot.core.id,
                                          snapshot.core.type,
                                          snapshot.context.name,
                                          parent);
@@ -357,9 +348,7 @@ auto duplicate_layer(entt::registry& registry,
   }
 
   {
-    auto& map = ctx_get<comp::MapInfo>(registry);
-    auto& layer = deep_copy<comp::Layer>(registry, source, copy);
-    layer.id = map.next_layer_id;
+    deep_copy<comp::Layer>(registry, source, copy);
 
     if (!recursive) {
       const auto sourceNode = checked_get<comp::LayerTreeNode>(registry, source);
@@ -367,8 +356,6 @@ auto duplicate_layer(entt::registry& registry,
       auto& node = checked_get<comp::LayerTreeNode>(registry, copy);
       node.index = sourceNode.index + 1u;
     }
-
-    ++map.next_layer_id;
   }
 
   if (registry.all_of<comp::TileLayer>(source)) {

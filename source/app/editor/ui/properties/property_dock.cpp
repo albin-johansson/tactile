@@ -182,7 +182,9 @@ void _show_native_tileset_ref_properties(const std::string& name,
   _native_read_only_row("Embedded", tileset.embedded);
 }
 
-void _show_native_layer_properties(const comp::Layer& layer, entt::dispatcher& dispatcher)
+void _show_native_layer_properties(const comp::AttributeContext& context,
+                                   const comp::Layer& layer,
+                                   entt::dispatcher& dispatcher)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
@@ -198,21 +200,17 @@ void _show_native_layer_properties(const comp::Layer& layer, entt::dispatcher& d
       break;
   }
 
-  if constexpr (is_debug_build) {
-    _native_read_only_row("ID", layer.id);
-  }
-
   _prepare_table_row("Opacity");
   ImGui::TableNextColumn();
   if (const auto value =
           input_float("##_native_opacity_row", layer.opacity, 0.0f, 1.0f)) {
-    dispatcher.enqueue<SetLayerOpacityEvent>(layer.id, *value);
+    dispatcher.enqueue<SetLayerOpacityEvent>(context.id, *value);
   }
 
   _prepare_table_row("Visible");
   ImGui::TableNextColumn();
   if (const auto value = input_bool("##_native_visibility_row", layer.visible)) {
-    dispatcher.enqueue<SetLayerVisibleEvent>(layer.id, *value);
+    dispatcher.enqueue<SetLayerVisibleEvent>(context.id, *value);
   }
 }
 
@@ -344,7 +342,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
         _show_native_tileset_ref_properties(context.name, *tilesetRef, dispatcher);
       }
       else if (const auto* layer = registry.try_get<comp::Layer>(current.entity)) {
-        _show_native_layer_properties(*layer, dispatcher);
+        _show_native_layer_properties(context, *layer, dispatcher);
       }
       else if (const auto* object = registry.try_get<comp::Object>(current.entity)) {
         _show_native_object_properties(context.name, *object, dispatcher);

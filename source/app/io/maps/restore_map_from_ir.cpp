@@ -139,11 +139,8 @@ auto _restore_layer(entt::registry& registry,
                     const ir::LayerData& layerData,
                     const entt::entity parent = entt::null) -> entt::entity
 {
-  const auto entity = sys::new_layer_skeleton(registry,  //
-                                              layerData.id,
-                                              layerData.type,
-                                              layerData.name,
-                                              parent);
+  const auto entity =
+      sys::new_layer_skeleton(registry, layerData.type, layerData.name, parent);
 
   auto& node = checked_get<comp::LayerTreeNode>(registry, entity);
   node.index = layerData.index;
@@ -337,7 +334,6 @@ void restore_map_from_ir(const ParseData& data,
   context.name = path.filename().string();
 
   auto& info = ctx_get<comp::MapInfo>(mapRegistry);
-  info.next_layer_id = mapData.next_layer_id;
   info.next_object_id = mapData.next_object_id;
   info.tile_size.x = mapData.tile_width;
   info.tile_size.y = mapData.tile_height;

@@ -120,7 +120,6 @@ void _update_layer_item_popup(const entt::registry& registry,
 void _show_group_layer_item(const entt::registry& registry,
                             entt::dispatcher& dispatcher,
                             const entt::entity layerEntity,
-                            const comp::Layer& layer,
                             const ImGuiTreeNodeFlags flags,
                             const char* name)
 {
@@ -160,16 +159,17 @@ void layer_item_view(const entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const entt::entity layerEntity)
 {
-  const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
   const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
 
-  const Scope scope{layer.id};
+  const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
+  const auto& context = checked_get<comp::AttributeContext>(registry, layerEntity);
+
+  const Scope scope{static_cast<int>(hash(context.id))};
 
   const auto isActiveLayer = layerEntity == activeLayer.entity;
   const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
                                    : _base_node_flags;
 
-  const auto& context = checked_get<comp::AttributeContext>(registry, layerEntity);
   const FormattedString name{"{} {}", _get_icon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {
@@ -185,7 +185,7 @@ void layer_item_view(const entt::registry& registry,
     _update_layer_item_popup(registry, dispatcher, context.id);
   }
   else {
-    _show_group_layer_item(registry, dispatcher, layerEntity, layer, flags, name.data());
+    _show_group_layer_item(registry, dispatcher, layerEntity, flags, name.data());
   }
 }
 

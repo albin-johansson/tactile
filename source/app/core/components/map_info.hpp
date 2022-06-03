@@ -35,7 +35,6 @@ struct MapInfo final
   usize row_count{};             ///< Total amount of rows.
   usize column_count{};          ///< Total amount of columns.
   Vector2i tile_size{};          ///< Logical size of all tiles.
-  LayerID next_layer_id{1};      ///< The next available layer identifier.
   ObjectID next_object_id{1};    ///< The next available object identifier.
   int32 tile_layer_suffix{1};    ///< Incrementing tile layer suffix.
   int32 object_layer_suffix{1};  ///< Incrementing object layer suffix.
