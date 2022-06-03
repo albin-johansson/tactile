@@ -27,13 +27,15 @@
 #include "cfg/protobuf_context.hpp"
 #include "core/common/maybe.hpp"
 
+/**
+ * \defgroup cfg Configuration
+ * \brief Contains utilities related to the configuration of the application.
+ */
+
 namespace tactile {
 
-/**
- * \brief Handles the configuration of the application window, OpenGL context, etc.
- *
- * \ingroup cfg
- */
+/// Handles the configuration of the application window, OpenGL context, etc.
+/// \ingroup cfg
 class AppConfiguration final
 {
  public:

@@ -20,12 +20,6 @@
 #pragma once
 
 /**
- * \defgroup cfg Configuration
- *
- * \brief Contains utilities related to the configuration of the application.
- */
-
-/**
  * \defgroup core Core
  *
  * \brief Contains the core data and logic of the Tactile editor.
