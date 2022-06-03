@@ -29,7 +29,6 @@
 #include <spdlog/spdlog.h>
 
 #include "cfg/configuration.hpp"
-#include "cfg/fonts.hpp"
 #include "core/commands/command_stack.hpp"
 #include "core/commands/commands.hpp"
 #include "core/common/ecs.hpp"
@@ -49,6 +48,7 @@
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "editor/ui/dialogs/save_as_dialog.hpp"
+#include "editor/ui/fonts.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/layers/layer_dock.hpp"
 #include "editor/ui/menus/edit_menu.hpp"
@@ -157,7 +157,7 @@ void Application::on_shutdown()
 void Application::on_pre_update()
 {
   if (mData->reload_fonts) {
-    reload_fonts();
+    ui::reload_fonts();
     mData->reload_fonts = false;
   }
 }
@@ -633,7 +633,7 @@ void Application::on_reset_zoom()
 
 void Application::on_reset_font_size()
 {
-  io::get_preferences().set_font_size(get_default_font_size());
+  io::get_preferences().set_font_size(ui::get_default_font_size());
   mData->reload_fonts = true;
 }
 
@@ -641,7 +641,7 @@ void Application::on_increase_font_size()
 {
   auto& prefs = io::get_preferences();
 
-  TACTILE_ASSERT(prefs.font_size() + 2 <= get_max_font_size());
+  TACTILE_ASSERT(prefs.font_size() + 2 <= ui::get_max_font_size());
   prefs.set_font_size(prefs.font_size() + 2);
 
   mData->reload_fonts = true;
@@ -651,7 +651,7 @@ void Application::on_decrease_font_size()
 {
   auto& prefs = io::get_preferences();
 
-  TACTILE_ASSERT(prefs.font_size() - 2 >= get_min_font_size());
+  TACTILE_ASSERT(prefs.font_size() - 2 >= ui::get_min_font_size());
   prefs.set_font_size(prefs.font_size() - 2);
 
   mData->reload_fonts = true;

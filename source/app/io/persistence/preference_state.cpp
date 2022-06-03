@@ -27,8 +27,8 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "cfg/fonts.hpp"
 #include "core/common/enum.hpp"
+#include "editor/ui/fonts.hpp"
 #include "proto.hpp"
 
 namespace tactile::io {
@@ -88,7 +88,7 @@ struct PreferenceState::Data
   int32 preferred_tile_width{_def_preferred_tile_width};
   int32 preferred_tile_height{_def_preferred_tile_height};
   int32 viewport_overlay_pos{_def_viewport_overlay_pos};
-  int32 font_size{get_default_font_size()};
+  int32 font_size{ui::get_default_font_size()};
 
   uint64 flags{_def_flags};
 };
@@ -311,7 +311,7 @@ void PreferenceState::reset_appearance_preferences()
   reset_flag(_bit_restore_layout);
 
   reset_flag(_bit_use_default_font);
-  mData->font_size = get_default_font_size();
+  mData->font_size = ui::get_default_font_size();
 }
 
 void PreferenceState::reset_behavior_preferences()

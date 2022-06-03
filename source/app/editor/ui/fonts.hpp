@@ -21,7 +21,7 @@
 
 #include "core/common/ints.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 /// \name Font functions
 /// \{
@@ -36,6 +36,12 @@ namespace tactile {
  */
 void reload_fonts();
 
+/// Indicates whether it's possible to increase the font size.
+[[nodiscard]] auto can_increase_font_size() -> bool;
+
+/// Indicates whether it's possible to decrease the font size.
+[[nodiscard]] auto can_decrease_font_size() -> bool;
+
 /// Returns the default font size.
 [[nodiscard]] auto get_default_font_size() -> int32;
 
@@ -47,4 +53,4 @@ void reload_fonts();
 
 /// \} End of font functions
 
-}  // namespace tactile
+}  // namespace tactile::ui

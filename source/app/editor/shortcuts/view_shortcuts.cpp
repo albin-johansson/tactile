@@ -22,12 +22,12 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
-#include "cfg/fonts.hpp"
 #include "core/events/misc_events.hpp"
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/shortcuts/mappings.hpp"
+#include "editor/ui/fonts.hpp"
 #include "editor/ui/widgets.hpp"
 #include "io/persistence/preferences.hpp"
 
@@ -93,12 +93,8 @@ void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
 
 auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 {
-  const auto& prefs = io::get_preferences();
-
   /* Check for modals to avoid case of changing font size when settings dialog is open */
-  return !ImGui::GetTopMostPopupModal() &&  //
-         !prefs.use_default_font() &&       //
-         prefs.font_size() < get_max_font_size();
+  return !ImGui::GetTopMostPopupModal() && ui::can_increase_font_size();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -114,12 +110,8 @@ void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
 
 auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 {
-  const auto& prefs = io::get_preferences();
-
   /* Check for modals to avoid case of changing font size when settings dialog is open */
-  return !ImGui::GetTopMostPopupModal() &&  //
-         !prefs.use_default_font() &&       //
-         prefs.font_size() > get_min_font_size();
+  return !ImGui::GetTopMostPopupModal() && ui::can_decrease_font_size();
 }
 
 /* ------------------------------------------------------------------------------------ */

@@ -22,13 +22,13 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "cfg/fonts.hpp"
 #include "core/events/misc_events.hpp"
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/dock_space.hpp"
+#include "editor/ui/fonts.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
@@ -128,19 +128,17 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    const auto fontSize = prefs.font_size();
-
     if (ImGui::MenuItem("Increase Font Size",
                         TACTILE_PRIMARY_MOD "+Shift+Plus",
                         false,
-                        !prefs.use_default_font() && fontSize < get_max_font_size())) {
+                        can_increase_font_size())) {
       dispatcher.enqueue<IncreaseFontSizeEvent>();
     }
 
     if (ImGui::MenuItem("Decrease Font Size",
                         TACTILE_PRIMARY_MOD "+Shift+Minus",
                         false,
-                        !prefs.use_default_font() && fontSize > get_min_font_size())) {
+                        can_decrease_font_size())) {
       dispatcher.enqueue<DecreaseFontSizeEvent>();
     }
 

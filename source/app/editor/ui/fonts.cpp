@@ -27,7 +27,7 @@
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 constexpr auto _roboto_path = "assets/fonts/roboto/Roboto-Regular.ttf";
@@ -79,6 +79,18 @@ void reload_fonts()
   ImGui::GetStyle().ScaleAllSizes(1.0f);
 }
 
+auto can_increase_font_size() -> bool
+{
+  const auto& prefs = io::get_preferences();
+  return !prefs.use_default_font() && prefs.font_size() < get_max_font_size();
+}
+
+auto can_decrease_font_size() -> bool
+{
+  const auto& prefs = io::get_preferences();
+  return !prefs.use_default_font() && prefs.font_size() > get_min_font_size();
+}
+
 auto get_default_font_size() -> int32
 {
   return 14;
@@ -94,4 +106,4 @@ auto get_max_font_size() -> int32
   return 32;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

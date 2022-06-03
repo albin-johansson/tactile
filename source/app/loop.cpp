@@ -25,7 +25,7 @@
 #include <imgui_impl_sdl.h>
 
 #include "cfg/configuration.hpp"
-#include "cfg/fonts.hpp"
+#include "editor/ui/fonts.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -54,7 +54,7 @@ void AEventLoop::start()
        we know that we will load the fonts at least once. */
     if (const auto& scale = io.DisplayFramebufferScale; prevScale.x != scale.x) {
       prevScale = scale;
-      reload_fonts();
+      ui::reload_fonts();
     }
 
     on_pre_update();
