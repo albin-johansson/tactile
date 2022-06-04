@@ -53,6 +53,7 @@ class TilesetDocument final : public ADocument
 
   void update() override;
 
+  /// Returns the local ID of a tile at a specific position.
   [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileID;
 
   [[nodiscard]] auto info() const -> const comp::Tileset&;
