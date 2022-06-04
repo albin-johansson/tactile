@@ -59,6 +59,9 @@ class ADocument
   /// Returns the previously set document path, throwing if there is none.
   [[nodiscard]] auto get_path() const -> const std::filesystem::path&;
 
+  /// Returns the name of the root document context.
+  [[nodiscard]] auto get_name() const -> const std::string&;
+
   /// Returns the document command history.
   [[nodiscard]] auto get_history() -> CommandStack&;
   [[nodiscard]] auto get_history() const -> const CommandStack&;

@@ -55,6 +55,11 @@ auto ADocument::get_path() const -> const std::filesystem::path&
   return ctx_get<std::filesystem::path>(mRegistry);
 }
 
+auto ADocument::get_name() const -> const std::string&
+{
+  return ctx_get<comp::AttributeContext>(mRegistry).name;
+}
+
 auto ADocument::get_history() -> CommandStack&
 {
   return ctx_get<CommandStack>(mRegistry);
