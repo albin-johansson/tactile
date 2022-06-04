@@ -369,6 +369,7 @@ void _update_conditional_tileset_button(const DocumentModel& model,
     else {
       if (centered_button("Open Tileset")) {
         dispatcher.enqueue<OpenDocumentEvent>(ref.source_tileset);
+        dispatcher.enqueue<SelectDocumentEvent>(ref.source_tileset);
       }
     }
   }
