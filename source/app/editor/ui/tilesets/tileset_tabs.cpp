@@ -26,6 +26,7 @@
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/tiles.hpp"
+#include "core/documents/tileset_document.hpp"
 #include "core/events/document_events.hpp"
 #include "core/events/property_events.hpp"
 #include "core/events/tileset_events.hpp"
@@ -33,6 +34,7 @@
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tilesets/tileset_view.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -86,6 +88,8 @@ void _update_context_menu(const DocumentModel& model,
 
 void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
+  TACTILE_ASSERT(model.is_map_active());
+
   if (TabBar bar{"##TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
@@ -100,11 +104,11 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
 
       const auto isActive = activeTileset.entity == entity;
 
-      // FIXME context is invalid for tileset references
-      const auto& context = checked_get<comp::AttributeContext>(mapRegistry, entity);
+      const auto& document = model.view_tileset(ref.source_tileset);
+      const auto& name = document.get_name();
 
       bool opened = true;
-      if (TabItem item{context.name.c_str(),
+      if (TabItem item{name.c_str(),
                        &opened,
                        isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
