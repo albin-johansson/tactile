@@ -25,13 +25,6 @@
 
 namespace tactile::ui {
 
-void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-void update_map_view_object_context_menu(const entt::registry& registry,
-                                         entt::dispatcher& dispatcher);
-
-void center_map_viewport();
-
-void open_object_context_menu();
+void show_tileset_viewport(const TilesetDocument& tileset, entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

@@ -29,7 +29,7 @@
 #include "editor/ui/menus/menu_bar.hpp"
 #include "editor/ui/properties/property_dock.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
-#include "editor/ui/viewport/map_view.hpp"
+#include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 

@@ -56,7 +56,7 @@
 #include "editor/ui/menus/map_menu.hpp"
 #include "editor/ui/properties/property_dock.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
-#include "editor/ui/viewport/map_view.hpp"
+#include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 #include "editor/ui/widgets.hpp"
 #include "io/maps/parser/parse_map.hpp"

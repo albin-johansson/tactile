@@ -28,8 +28,8 @@
 #include "core/events/document_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/scoped.hpp"
-#include "editor/ui/viewport/map_view.hpp"
-#include "editor/ui/viewport/tileset_view.hpp"
+#include "editor/ui/viewport/map_viewport.hpp"
+#include "editor/ui/viewport/tileset_viewport.hpp"
 
 namespace tactile::ui {
 
@@ -58,10 +58,10 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
       if (TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {
           if (model.is_map(documentId)) {
-            update_map_view(model, dispatcher);
+            show_map_viewport(model, model.view_map(documentId), dispatcher);
           }
           if (model.is_tileset(documentId)) {
-            update_tileset_view(model, dispatcher);
+            show_tileset_viewport(model.view_tileset(documentId), dispatcher);
           }
         }
       }

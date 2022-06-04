@@ -17,30 +17,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tileset_view.hpp"
+#include "tileset_viewport.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
-#include "core/components/map_info.hpp"
 #include "core/components/viewport.hpp"
 #include "core/documents/tileset_document.hpp"
-#include "core/model.hpp"
 #include "editor/ui/common/mouse_tracker.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_info.hpp"
 #include "editor/ui/rendering/render_tileset.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/assert.hpp"
 
 namespace tactile::ui {
 
-void update_tileset_view(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_tileset_viewport(const TilesetDocument& tileset, entt::dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(model.is_tileset_active());
-  const auto& tileset = model.view_tileset(model.active_document_id().value());
-
   const auto& viewport = tileset.viewport();
   const auto& info = tileset.info();
 

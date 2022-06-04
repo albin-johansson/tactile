@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "map_view.hpp"
+#include "map_viewport.hpp"
 
 #include <cmath>  // round
 
@@ -175,10 +175,10 @@ void _update_context_menu(entt::dispatcher& dispatcher)
 
 }  // namespace
 
-void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_map_viewport(const DocumentModel& model,
+                       const MapDocument& map,
+                       entt::dispatcher& dispatcher)
 {
-  const auto& map = model.view_map(model.active_document_id().value());
-
   const auto& registry = map.get_registry();
   const auto& viewport = map.viewport();
 
