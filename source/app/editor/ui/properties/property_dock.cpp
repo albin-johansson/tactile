@@ -171,8 +171,8 @@ void _show_native_tileset_ref_properties(const std::string& name,
                                          const comp::TilesetRef& tileset,
                                          entt::dispatcher&)
 {
+  _native_read_only_row("Type", "Tileset");
   _native_read_only_row("Name", name.c_str());
-  _native_read_only_row("Type", "Tileset (Reference)");
 
   _native_read_only_row("Tile Count", tileset.last_id - tileset.first_id);
 
