@@ -252,6 +252,7 @@ void _restore_fancy_tiles(entt::registry& registry,
     auto& context = sys::add_attribute_context(registry, tileEntity);
     context.name = fmt::format("Tile {}", tile.id);
 
+    // FIXME tilesets with components are broken (wrong registry, add component documents?)
     _restore_properties(registry, tileEntity, tileData.context);
     _restore_components(registry, tileEntity, tileData.context);
   }
