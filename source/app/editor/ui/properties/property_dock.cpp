@@ -372,9 +372,9 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
   }
 
   if (_context_state.show_change_type_dialog) {
-    const auto& name = _change_type_target.value();
-    const auto type = sys::get_property(registry, context, name).value.type();
-    dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(name, type);
+    const auto& targetName = _change_type_target.value();
+    const auto type = sys::get_property(registry, context, targetName).value.type();
+    dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(targetName, type);
     _change_type_target.reset();
     _context_state.show_change_type_dialog = false;
   }
