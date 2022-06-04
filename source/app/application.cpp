@@ -482,54 +482,48 @@ void Application::on_select_document(const SelectDocumentEvent& event)
 void Application::on_select_tool(const SelectToolEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& registry = document->get_registry();
     auto& tools = document->get_tools();
-    tools.select_tool(event.type, registry, mData->dispatcher);
+    tools.select_tool(event.type, mData->model, mData->dispatcher);
   }
 }
 
 void Application::on_tool_pressed(const ToolPressedEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& registry = document->get_registry();
     auto& tools = document->get_tools();
-    tools.on_pressed(registry, mData->dispatcher, event.info);
+    tools.on_pressed(mData->model, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_dragged(const ToolDraggedEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& registry = document->get_registry();
     auto& tools = document->get_tools();
-    tools.on_dragged(registry, mData->dispatcher, event.info);
+    tools.on_dragged(mData->model, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_released(const ToolReleasedEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& registry = document->get_registry();
     auto& tools = document->get_tools();
-    tools.on_released(registry, mData->dispatcher, event.info);
+    tools.on_released(mData->model, mData->dispatcher, event.info);
   }
 }
 
 void Application::on_tool_entered()
 {
   if (auto* document = active_map_document()) {
-    auto& registry = document->get_registry();
     auto& tools = document->get_tools();
-    tools.on_entered(registry, mData->dispatcher);
+    tools.on_entered(mData->model, mData->dispatcher);
   }
 }
 
 void Application::on_tool_exited()
 {
   if (auto* document = active_map_document()) {
-    auto& registry = document->get_registry();
     auto& tools = document->get_tools();
-    tools.on_exited(registry, mData->dispatcher);
+    tools.on_exited(mData->model, mData->dispatcher);
   }
 }
 

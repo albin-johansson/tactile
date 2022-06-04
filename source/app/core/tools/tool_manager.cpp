@@ -50,11 +50,11 @@ ToolManager::ToolManager() : mData{std::make_unique<Data>()} {}
 ToolManager::~ToolManager() noexcept = default;
 
 void ToolManager::select_tool(const ToolType type,
-                              entt::registry& registry,
+                              DocumentModel& model,
                               entt::dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
-    tool->on_disabled(registry, dispatcher);
+    tool->on_disabled(model, dispatcher);
   }
 
   /* Selecting an already active tool disables it */
@@ -98,7 +98,7 @@ void ToolManager::select_tool(const ToolType type,
   }
 
   if (auto* tool = mData->active_tool) {
-    tool->on_enabled(registry, dispatcher);
+    tool->on_enabled(model, dispatcher);
   }
 }
 
@@ -122,7 +122,7 @@ auto ToolManager::is_stamp_random() const -> bool
   return mData->stamp.is_random();
 }
 
-auto ToolManager::is_available(const entt::registry& registry, const ToolType type) const
+auto ToolManager::is_available(const DocumentModel& model, const ToolType type) const
     -> bool
 {
   switch (type) {
@@ -130,25 +130,25 @@ auto ToolManager::is_available(const entt::registry& registry, const ToolType ty
       return false;
 
     case ToolType::Stamp:
-      return mData->stamp.is_available(registry);
+      return mData->stamp.is_available(model);
 
     case ToolType::Eraser:
-      return mData->eraser.is_available(registry);
+      return mData->eraser.is_available(model);
 
     case ToolType::Bucket:
-      return mData->bucket.is_available(registry);
+      return mData->bucket.is_available(model);
 
     case ToolType::ObjectSelection:
-      return mData->object_selection.is_available(registry);
+      return mData->object_selection.is_available(model);
 
     case ToolType::Rectangle:
-      return mData->rectangle.is_available(registry);
+      return mData->rectangle.is_available(model);
 
     case ToolType::Ellipse:
-      return mData->ellipse.is_available(registry);
+      return mData->ellipse.is_available(model);
 
     case ToolType::Point:
-      return mData->point.is_available(registry);
+      return mData->point.is_available(model);
 
     default:
       throw TactileError{"Invalid tool type!"};
@@ -164,58 +164,58 @@ void ToolManager::draw_gizmos(const DocumentModel& model,
   }
 }
 
-void ToolManager::on_enabled(entt::registry& registry, entt::dispatcher& dispatcher)
+void ToolManager::on_enabled(DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
-    tool->on_enabled(registry, dispatcher);
+    tool->on_enabled(model, dispatcher);
   }
 }
 
-void ToolManager::on_disabled(entt::registry& registry, entt::dispatcher& dispatcher)
+void ToolManager::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
-    tool->on_disabled(registry, dispatcher);
+    tool->on_disabled(model, dispatcher);
   }
 }
 
-void ToolManager::on_entered(entt::registry& registry, entt::dispatcher& dispatcher)
+void ToolManager::on_entered(DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
-    tool->on_entered(registry, dispatcher);
+    tool->on_entered(model, dispatcher);
   }
 }
 
-void ToolManager::on_exited(entt::registry& registry, entt::dispatcher& dispatcher)
+void ToolManager::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
-    tool->on_exited(registry, dispatcher);
+    tool->on_exited(model, dispatcher);
   }
 }
 
-void ToolManager::on_pressed(entt::registry& registry,
+void ToolManager::on_pressed(DocumentModel& model,
                              entt::dispatcher& dispatcher,
                              const MouseInfo& mouse)
 {
   if (auto* tool = mData->active_tool) {
-    tool->on_pressed(registry, dispatcher, mouse);
+    tool->on_pressed(model, dispatcher, mouse);
   }
 }
 
-void ToolManager::on_dragged(entt::registry& registry,
+void ToolManager::on_dragged(DocumentModel& model,
                              entt::dispatcher& dispatcher,
                              const MouseInfo& mouse)
 {
   if (auto* tool = mData->active_tool) {
-    tool->on_dragged(registry, dispatcher, mouse);
+    tool->on_dragged(model, dispatcher, mouse);
   }
 }
 
-void ToolManager::on_released(entt::registry& registry,
+void ToolManager::on_released(DocumentModel& model,
                               entt::dispatcher& dispatcher,
                               const MouseInfo& mouse)
 {
   if (auto* tool = mData->active_tool) {
-    tool->on_released(registry, dispatcher, mouse);
+    tool->on_released(model, dispatcher, mouse);
   }
 }
 
@@ -224,7 +224,7 @@ auto ToolManager::get_type() const -> ToolType
   throw TactileError{"Invalid call!"};
 }
 
-auto ToolManager::is_available(const entt::registry&) const -> bool
+auto ToolManager::is_available(const DocumentModel&) const -> bool
 {
   throw TactileError{"Invalid call!"};
 }

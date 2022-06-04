@@ -39,7 +39,7 @@ class ToolManager final : ATool
 
   ~ToolManager() noexcept override;
 
-  void select_tool(ToolType type, entt::registry& registry, entt::dispatcher& dispatcher);
+  void select_tool(ToolType type, DocumentModel& model, entt::dispatcher& dispatcher);
 
   void set_stamp_random_mode(bool random);
 
@@ -47,30 +47,30 @@ class ToolManager final : ATool
 
   [[nodiscard]] auto is_stamp_random() const -> bool;
 
-  [[nodiscard]] auto is_available(const entt::registry& registry, ToolType type) const
+  [[nodiscard]] auto is_available(const DocumentModel& model, ToolType type) const
       -> bool;
 
   void draw_gizmos(const DocumentModel& model,
                    IRenderer& renderer,
                    const MouseInfo& mouse) const override;
 
-  void on_enabled(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_enabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_disabled(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_entered(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_entered(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_exited(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(entt::registry& registry,
+  void on_pressed(DocumentModel& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_dragged(entt::registry& registry,
+  void on_dragged(DocumentModel& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_released(entt::registry& registry,
+  void on_released(DocumentModel& model,
                    entt::dispatcher& dispatcher,
                    const MouseInfo& mouse) override;
 
@@ -80,7 +80,7 @@ class ToolManager final : ATool
 
   /* Do not call these functions, they will just raise exceptions */
   [[nodiscard, deprecated]] auto get_type() const -> ToolType override;
-  [[nodiscard, deprecated]] auto is_available(const entt::registry& registry) const
+  [[nodiscard, deprecated]] auto is_available(const DocumentModel& model) const
       -> bool override;
 };
 

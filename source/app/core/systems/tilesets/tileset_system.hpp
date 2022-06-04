@@ -200,19 +200,6 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
                                    TileID id) -> const cen::irect&;
 
 /**
- * Returns the identifier of a tile at a certain position in a tileset.
- *
- * \param mapRegistry the registry that will be queried.
- * \param tilesetEntity the tileset entity.
- * \param position the position of the tile in the tileset.
- *
- * \return the identifier of the found tile; the empty tile is returned otherwise.
- */
-[[nodiscard]] auto get_tile_from_tileset(const entt::registry& mapRegistry,
-                                         entt::entity tilesetEntity,
-                                         const TilePos& position) -> TileID;
-
-/**
  * Converts a global tile identifier to its local counterpart.
  *
  * A "local" tile identifier is a just a tile index in the parent tileset.

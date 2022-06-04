@@ -107,17 +107,17 @@ void StampTool::draw_gizmos(const DocumentModel& model,
   });
 }
 
-void StampTool::on_disabled(entt::registry&, entt::dispatcher& dispatcher)
+void StampTool::on_disabled(DocumentModel&, entt::dispatcher& dispatcher)
 {
   maybe_emit_event(dispatcher);
 }
 
-void StampTool::on_exited(entt::registry&, entt::dispatcher& dispatcher)
+void StampTool::on_exited(DocumentModel&, entt::dispatcher& dispatcher)
 {
   maybe_emit_event(dispatcher);
 }
 
-void StampTool::on_pressed(entt::registry& registry,
+void StampTool::on_pressed(DocumentModel& registry,
                            entt::dispatcher&,
                            const MouseInfo& mouse)
 {
@@ -131,7 +131,7 @@ void StampTool::on_pressed(entt::registry& registry,
   }
 }
 
-void StampTool::on_dragged(entt::registry& registry,
+void StampTool::on_dragged(DocumentModel& registry,
                            entt::dispatcher&,
                            const MouseInfo& mouse)
 {
@@ -141,7 +141,7 @@ void StampTool::on_dragged(entt::registry& registry,
   }
 }
 
-void StampTool::on_released(entt::registry& registry,
+void StampTool::on_released(DocumentModel& registry,
                             entt::dispatcher& dispatcher,
                             const MouseInfo& mouse)
 {
@@ -150,8 +150,9 @@ void StampTool::on_released(entt::registry& registry,
   }
 }
 
-auto StampTool::is_available(const entt::registry& registry) const -> bool
+auto StampTool::is_available(const DocumentModel& model) const -> bool
 {
+  const auto& registry = model.get_active_registry();
   return sys::is_tile_layer_active(registry);
 }
 
@@ -170,15 +171,19 @@ auto StampTool::is_random() const -> bool
   return mRandomMode;
 }
 
-void StampTool::update_sequence(entt::registry& registry, const TilePos& cursor)
+void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
 {
-  TACTILE_ASSERT(is_usable(registry));
+  TACTILE_ASSERT(is_usable(model));
+  auto& registry = model.get_active_registry();
 
   const auto layerEntity = sys::get_active_layer(registry);
   auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
 
-  const auto tsetEntity = sys::find_active_tileset(registry);
-  const auto& selection = checked_get<comp::TilesetSelection>(registry, tsetEntity);
+  const auto tilesetEntity = sys::find_active_tileset(registry);
+  const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, tilesetEntity);
+  const auto& selection = checked_get<comp::TilesetSelection>(registry, tilesetEntity);
+
+  const auto& tileset = model.view_tileset(tilesetRef.source_tileset);
 
   const auto& region = selection.region.value();
   const auto selectionSize = region.end - region.begin;
@@ -188,7 +193,7 @@ void StampTool::update_sequence(entt::registry& registry, const TilePos& cursor)
       const auto index = next_random(0, (selectionSize.row() * selectionSize.col()) - 1);
       const auto selectionPos =
           region.begin + TilePos::from_index(index, selectionSize.col());
-      const auto tile = sys::get_tile_from_tileset(registry, tsetEntity, selectionPos);
+      const auto tile = tilesetRef.first_id + tileset.tile_at(selectionPos);
 
       if (!mPrevious.contains(cursor)) {
         mPrevious.emplace(cursor, sys::get_tile(layer, cursor));
@@ -207,8 +212,7 @@ void StampTool::update_sequence(entt::registry& registry, const TilePos& cursor)
       const TilePos index{row, col};
       const auto selectionPosition = region.begin + index;
 
-      const auto tile =
-          sys::get_tile_from_tileset(registry, tsetEntity, selectionPosition);
+      const auto tile = tilesetRef.first_id + tileset.tile_at(selectionPosition);
       if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
         if (sys::is_position_in_map(registry, pos)) {
@@ -233,8 +237,9 @@ void StampTool::maybe_emit_event(entt::dispatcher& dispatcher)
   }
 }
 
-auto StampTool::is_usable(const entt::registry& registry) const -> bool
+auto StampTool::is_usable(const DocumentModel& model) const -> bool
 {
+  const auto& registry = model.get_active_registry();
   return sys::is_tile_layer_active(registry) &&
          sys::is_tileset_selection_not_empty(registry);
 }

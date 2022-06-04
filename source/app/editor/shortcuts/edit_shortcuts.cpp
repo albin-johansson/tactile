@@ -32,6 +32,7 @@
 #include "core/events/tileset_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
+#include "core/tools/tool_manager.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/menus/map_menu.hpp"
 #include "editor/ui/widgets.hpp"
@@ -173,7 +174,7 @@ auto EnableBucketShortcut::is_enabled(const DocumentModel& model) const -> bool
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
-      return map.is_tool_possible(ToolType::Bucket);
+      return map.get_tools().is_available(model, ToolType::Bucket);
     }
   }
 
@@ -195,7 +196,7 @@ auto EnableEraserShortcut::is_enabled(const DocumentModel& model) const -> bool
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
-      return map.is_tool_possible(ToolType::Eraser);
+      return map.get_tools().is_available(model, ToolType::Eraser);
     }
   }
 
@@ -217,7 +218,7 @@ auto EnableStampShortcut::is_enabled(const DocumentModel& model) const -> bool
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
-      return map.is_tool_possible(ToolType::Stamp);
+      return map.get_tools().is_available(model, ToolType::Stamp);
     }
   }
 
@@ -241,7 +242,7 @@ auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model) const
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
-      return map.is_tool_possible(ToolType::ObjectSelection);
+      return map.get_tools().is_available(model, ToolType::ObjectSelection);
     }
   }
 
@@ -264,7 +265,7 @@ auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model) const -
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
-      return map.is_tool_possible(ToolType::Rectangle);
+      return map.get_tools().is_available(model, ToolType::Rectangle);
     }
   }
 
@@ -286,7 +287,7 @@ auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model) const -> 
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
-      return map.is_tool_possible(ToolType::Ellipse);
+      return map.get_tools().is_available(model, ToolType::Ellipse);
     }
   }
 
@@ -308,7 +309,7 @@ auto EnablePointToolShortcut::is_enabled(const DocumentModel& model) const -> bo
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
-      return map.is_tool_possible(ToolType::Point);
+      return map.get_tools().is_available(model, ToolType::Point);
     }
   }
 

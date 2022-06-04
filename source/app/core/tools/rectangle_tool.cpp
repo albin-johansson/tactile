@@ -27,6 +27,7 @@
 #include "core/common/math.hpp"
 #include "core/components/tools.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/fwd.hpp"
 #include "core/model.hpp"
 #include "core/renderer.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -49,20 +50,21 @@ void RectangleTool::draw_gizmos(const DocumentModel& model,
   }
 }
 
-void RectangleTool::on_disabled(entt::registry& registry, entt::dispatcher& dispatcher)
+void RectangleTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(registry, dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void RectangleTool::on_exited(entt::registry& registry, entt::dispatcher& dispatcher)
+void RectangleTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(registry, dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void RectangleTool::on_pressed(entt::registry& registry,
+void RectangleTool::on_pressed(DocumentModel& model,
                                entt::dispatcher&,
                                const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (sys::is_object_layer_active(registry) && mouse.is_within_contents &&
       mouse.button == cen::mouse_button::left) {
     auto& stroke = registry.ctx().emplace<comp::CurrentRectangleStroke>();
@@ -73,10 +75,11 @@ void RectangleTool::on_pressed(entt::registry& registry,
   }
 }
 
-void RectangleTool::on_dragged(entt::registry& registry,
+void RectangleTool::on_dragged(DocumentModel& model,
                                entt::dispatcher&,
                                const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (sys::is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {
     if (auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
       stroke->current_x = mouse.x;
@@ -85,17 +88,19 @@ void RectangleTool::on_dragged(entt::registry& registry,
   }
 }
 
-void RectangleTool::on_released(entt::registry& registry,
+void RectangleTool::on_released(DocumentModel& model,
                                 entt::dispatcher& dispatcher,
                                 const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (sys::is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {
-    maybe_emit_event(registry, dispatcher);
+    maybe_emit_event(model, dispatcher);
   }
 }
 
-auto RectangleTool::is_available(const entt::registry& registry) const -> bool
+auto RectangleTool::is_available(const DocumentModel& model) const -> bool
 {
+  const auto& registry = model.get_active_registry();
   return sys::is_object_layer_active(registry);
 }
 
@@ -104,9 +109,9 @@ auto RectangleTool::get_type() const -> ToolType
   return ToolType::Rectangle;
 }
 
-void RectangleTool::maybe_emit_event(entt::registry& registry,
-                                     entt::dispatcher& dispatcher)
+void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
 {
+  auto& registry = model.get_active_registry();
   auto& ctx = registry.ctx();
   if (const auto* stroke = ctx.find<comp::CurrentRectangleStroke>()) {
     const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);

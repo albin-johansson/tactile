@@ -26,11 +26,11 @@ namespace tactile {
 class PointTool final : public ATool
 {
  public:
-  void on_pressed(entt::registry& registry,
+  void on_pressed(DocumentModel& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  [[nodiscard]] auto is_available(const entt::registry& registry) const -> bool override;
+  [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
   [[nodiscard]] auto get_type() const -> ToolType override;
 };

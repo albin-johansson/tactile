@@ -28,22 +28,23 @@
 #include "core/components/tools.hpp"
 #include "core/events/object_events.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/model.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 
 namespace tactile {
 
-void ObjectSelectionTool::on_exited(entt::registry& registry,
-                                    entt::dispatcher& dispatcher)
+void ObjectSelectionTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(registry, dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void ObjectSelectionTool::on_pressed(entt::registry& registry,
+void ObjectSelectionTool::on_pressed(DocumentModel& model,
                                      entt::dispatcher& dispatcher,
                                      const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (sys::is_object_layer_active(registry)) {
     auto& active = ctx_get<comp::ActiveObject>(registry);
 
@@ -82,10 +83,11 @@ void ObjectSelectionTool::on_pressed(entt::registry& registry,
   }
 }
 
-void ObjectSelectionTool::on_dragged(entt::registry& registry,
+void ObjectSelectionTool::on_dragged(DocumentModel& model,
                                      entt::dispatcher& dispatcher,
                                      const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
     const auto& active = ctx_get<comp::ActiveObject>(registry);
     if (active.entity != entt::null) {
@@ -104,24 +106,26 @@ void ObjectSelectionTool::on_dragged(entt::registry& registry,
         }
         else {
           /* Stop if the user drags the object outside the map */
-          maybe_emit_event(registry, dispatcher);
+          maybe_emit_event(model, dispatcher);
         }
       }
     }
   }
 }
 
-void ObjectSelectionTool::on_released(entt::registry& registry,
+void ObjectSelectionTool::on_released(DocumentModel& model,
                                       entt::dispatcher& dispatcher,
                                       const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
-    maybe_emit_event(registry, dispatcher);
+    maybe_emit_event(model, dispatcher);
   }
 }
 
-auto ObjectSelectionTool::is_available(const entt::registry& registry) const -> bool
+auto ObjectSelectionTool::is_available(const DocumentModel& model) const -> bool
 {
+  const auto& registry = model.get_active_registry();
   return sys::is_object_layer_active(registry);
 }
 
@@ -130,9 +134,10 @@ auto ObjectSelectionTool::get_type() const -> ToolType
   return ToolType::ObjectSelection;
 }
 
-void ObjectSelectionTool::maybe_emit_event(entt::registry& registry,
+void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
                                            entt::dispatcher& dispatcher)
 {
+  auto& registry = model.get_active_registry();
   const auto entity = ctx_get<comp::ActiveObject>(registry).entity;
   if (entity != entt::null) {
     if (const auto* drag = registry.try_get<comp::ObjectDragInfo>(entity)) {

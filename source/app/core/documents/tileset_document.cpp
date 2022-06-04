@@ -44,6 +44,22 @@ void TilesetDocument::update()
   cache.source_to_render.clear();
 }
 
+auto TilesetDocument::tile_at(const TilePos& pos) const -> TileID
+{
+  const auto& ts = info();
+
+  const auto row = pos.row();
+  const auto col = pos.col();
+
+  if (row >= 0 && col >= 0 && row < ts.row_count && col < ts.column_count) {
+    const TileID local = row * ts.column_count + col;
+    return local;
+  }
+  else {
+    return empty_tile;
+  }
+}
+
 auto TilesetDocument::info() const -> const comp::Tileset&
 {
   return ctx_get<comp::Tileset>(mRegistry);

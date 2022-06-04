@@ -28,6 +28,7 @@
 #include "core/events/command_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
+#include "core/tools/tool_manager.hpp"
 #include "core/tools/tool_type.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/shortcuts/mappings.hpp"
@@ -80,52 +81,60 @@ void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     const auto* map = dynamic_cast<const MapDocument*>(document);
 
+    const auto isToolActive = [&](const ToolType tool) {
+      return map && map->get_tools().is_enabled(tool);
+    };
+
+    const auto isToolPossible = [&](const ToolType tool) {
+      return map && map->get_tools().is_available(model, tool);
+    };
+
     if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp Tool",
                         "S",
-                        map && map->is_tool_active(ToolType::Stamp),
-                        map && map->is_tool_possible(ToolType::Stamp))) {
+                        isToolActive(ToolType::Stamp),
+                        isToolPossible(ToolType::Stamp))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
     }
 
     if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket Tool",
                         "B",
-                        map && map->is_tool_active(ToolType::Bucket),
-                        map && map->is_tool_possible(ToolType::Bucket))) {
+                        isToolActive(ToolType::Bucket),
+                        isToolPossible(ToolType::Bucket))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser Tool",
                         "E",
-                        map && map->is_tool_active(ToolType::Eraser),
-                        map && map->is_tool_possible(ToolType::Eraser))) {
+                        isToolActive(ToolType::Eraser),
+                        isToolPossible(ToolType::Eraser))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
     }
 
     if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection Tool",
                         "Q",
-                        map && map->is_tool_active(ToolType::ObjectSelection),
-                        map && map->is_tool_possible(ToolType::ObjectSelection))) {
+                        isToolActive(ToolType::ObjectSelection),
+                        isToolPossible(ToolType::ObjectSelection))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
     }
 
     if (ImGui::MenuItem(TAC_ICON_RECTANGLE " Rectangle Tool",
                         "R",
-                        map && map->is_tool_active(ToolType::Rectangle),
-                        map && map->is_tool_possible(ToolType::Rectangle))) {
+                        isToolActive(ToolType::Rectangle),
+                        isToolPossible(ToolType::Rectangle))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Rectangle);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ELLIPSE " Ellipse Tool",
                         "T",
-                        map && map->is_tool_active(ToolType::Ellipse),
-                        map && map->is_tool_possible(ToolType::Ellipse))) {
+                        isToolActive(ToolType::Ellipse),
+                        isToolPossible(ToolType::Ellipse))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Ellipse);
     }
 
     if (ImGui::MenuItem(TAC_ICON_POINT " Point Tool",
                         "Y",
-                        map && map->is_tool_active(ToolType::Point),
-                        map && map->is_tool_possible(ToolType::Point))) {
+                        isToolActive(ToolType::Point),
+                        isToolPossible(ToolType::Point))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Point);
     }
 

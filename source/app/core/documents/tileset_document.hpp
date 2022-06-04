@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
 #include "core/documents/document.hpp"
@@ -51,6 +52,8 @@ class TilesetDocument final : public ADocument
   TilesetDocument(const UUID& id, const comp::Texture& texture, const Vector2i& tileSize);
 
   void update() override;
+
+  [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileID;
 
   [[nodiscard]] auto info() const -> const comp::Tileset&;
 

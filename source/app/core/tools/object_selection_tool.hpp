@@ -26,26 +26,26 @@ namespace tactile {
 class ObjectSelectionTool final : public ATool
 {
  public:
-  void on_exited(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(entt::registry& registry,
+  void on_pressed(DocumentModel& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_dragged(entt::registry& registry,
+  void on_dragged(DocumentModel& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_released(entt::registry& registry,
+  void on_released(DocumentModel& model,
                    entt::dispatcher& dispatcher,
                    const MouseInfo& mouse) override;
 
-  [[nodiscard]] auto is_available(const entt::registry& registry) const -> bool override;
+  [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
   [[nodiscard]] auto get_type() const -> ToolType override;
 
  private:
-  void maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher);
+  void maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher);
 };
 
 }  // namespace tactile

@@ -64,19 +64,20 @@ void _prepare_window_position(const ImVec2& offset = {})
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _tool_button(const MapDocument& document,
+void _tool_button(const DocumentModel& model,
+                  const ToolManager& tools,
                   entt::dispatcher& dispatcher,
                   const char* icon,
                   const char* tooltip,
                   const ToolType tool)
 {
-  const auto selected = document.is_tool_active(tool);
+  const auto selected = tools.is_enabled(tool);
 
   if (selected) {
     ImGui::PushStyleColor(ImGuiCol_Button, _highlight_color);
   }
 
-  if (icon_button(icon, tooltip, document.is_tool_possible(tool))) {
+  if (icon_button(icon, tooltip, tools.is_available(model, tool))) {
     dispatcher.enqueue<SelectToolEvent>(tool);
   }
 
@@ -112,6 +113,7 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
   StyleVar padding{ImGuiStyleVar_WindowPadding, {6, 6}};
 
   const auto& map = model.view_map(model.active_document_id().value());
+  const auto& tools = map.get_tools();
 
   if (Window window{"##ToolbarWindow", _window_flags}; window.is_open()) {
     _toolbar_visible = true;
@@ -137,21 +139,38 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    _tool_button(map, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::Stamp);
-    _tool_button(map, dispatcher, TAC_ICON_ERASER, "Eraser tool", ToolType::Eraser);
-    _tool_button(map, dispatcher, TAC_ICON_BUCKET, "Bucket tool", ToolType::Bucket);
-    _tool_button(map,
+    _tool_button(model, tools, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::Stamp);
+    _tool_button(model,
+                 tools,
+                 dispatcher,
+                 TAC_ICON_ERASER,
+                 "Eraser tool",
+                 ToolType::Eraser);
+    _tool_button(model,
+                 tools,
+                 dispatcher,
+                 TAC_ICON_BUCKET,
+                 "Bucket tool",
+                 ToolType::Bucket);
+    _tool_button(model,
+                 tools,
                  dispatcher,
                  TAC_ICON_OBJECT_SELECTION,
                  "Object selection tool",
                  ToolType::ObjectSelection);
-    _tool_button(map,
+    _tool_button(model,
+                 tools,
                  dispatcher,
                  TAC_ICON_RECTANGLE,
                  "Rectangle tool",
                  ToolType::Rectangle);
-    _tool_button(map, dispatcher, TAC_ICON_ELLIPSE, "Ellipse tool", ToolType::Ellipse);
-    _tool_button(map, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::Point);
+    _tool_button(model,
+                 tools,
+                 dispatcher,
+                 TAC_ICON_ELLIPSE,
+                 "Ellipse tool",
+                 ToolType::Ellipse);
+    _tool_button(model, tools, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::Point);
   }
   else {
     _toolbar_visible = false;
@@ -159,7 +178,7 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
     _toolbar_focused = false;
   }
 
-  if (_toolbar_visible && map.is_tool_active(ToolType::Stamp)) {
+  if (_toolbar_visible && tools.is_enabled(ToolType::Stamp)) {
     _show_extra_toolbar([&] {
       const auto& registry = map.get_registry();
       const auto& tools = map.get_tools();

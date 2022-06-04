@@ -85,9 +85,6 @@ class MapDocument final : public ADocument
                    const Vector2f& previous,
                    const Vector2f& updated);
 
-  [[nodiscard]] auto is_tool_active(ToolType tool) const -> bool;
-  [[nodiscard]] auto is_tool_possible(ToolType tool) const -> bool;
-
   [[nodiscard]] auto info() const -> const comp::MapInfo&;
 
   [[nodiscard]] auto viewport() const -> const comp::Viewport&;

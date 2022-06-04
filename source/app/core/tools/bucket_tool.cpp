@@ -24,31 +24,38 @@
 
 #include "core/common/ecs.hpp"
 #include "core/components/tiles.hpp"
+#include "core/documents/tileset_document.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/model.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tilesets/tileset_system.hpp"
 
 namespace tactile {
 
-void BucketTool::on_pressed(entt::registry& registry,
+void BucketTool::on_pressed(DocumentModel& model,
                             entt::dispatcher& dispatcher,
                             const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       sys::is_tile_layer_active(registry) &&
       sys::is_single_tile_selected_in_tileset(registry)) {
-    const auto entity = sys::find_active_tileset(registry);
-    const auto& selection = checked_get<comp::TilesetSelection>(registry, entity);
+    const auto tilesetEntity = sys::find_active_tileset(registry);
 
+    const auto& selection = checked_get<comp::TilesetSelection>(registry, tilesetEntity);
+    const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, tilesetEntity);
+
+    const auto& tileset = model.view_tileset(tilesetRef.source_tileset);
     const auto position = selection.region->begin;
-    const auto replacement = sys::get_tile_from_tileset(registry, entity, position);
+    const auto replacement = tilesetRef.first_id + tileset.tile_at(position);
 
     dispatcher.enqueue<FloodEvent>(mouse.position_in_viewport, replacement);
   }
 }
 
-auto BucketTool::is_available(const entt::registry& registry) const -> bool
+auto BucketTool::is_available(const DocumentModel& model) const -> bool
 {
+  const auto& registry = model.get_active_registry();
   return sys::is_tile_layer_active(registry) &&
          sys::is_single_tile_selected_in_tileset(registry);
 }

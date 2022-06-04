@@ -285,25 +285,6 @@ auto get_source_rect(const entt::registry& mapRegistry,
   }
 }
 
-auto get_tile_from_tileset(const entt::registry& mapRegistry,
-                           const entt::entity tilesetEntity,
-                           const TilePos& position) -> TileID
-{
-  const auto& ref = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
-  const auto& tileset = checked_get<comp::Tileset>(mapRegistry, tilesetEntity);
-
-  const auto row = position.row();
-  const auto col = position.col();
-
-  if (row >= 0 && col >= 0 && row < tileset.row_count && col < tileset.column_count) {
-    const auto index = row * tileset.column_count + col;
-    return ref.first_id + TileID{index};
-  }
-  else {
-    return empty_tile;
-  }
-}
-
 auto convert_to_local(const entt::registry& mapRegistry, const TileID global)
     -> Maybe<TileID>
 {

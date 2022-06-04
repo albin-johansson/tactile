@@ -24,15 +24,17 @@
 
 #include "core/components/tools.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/model.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
 
 namespace tactile {
 
-void PointTool::on_pressed(entt::registry& registry,
+void PointTool::on_pressed(DocumentModel& model,
                            entt::dispatcher& dispatcher,
                            const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       sys::is_object_layer_active(registry)) {
     const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);
@@ -44,8 +46,9 @@ void PointTool::on_pressed(entt::registry& registry,
   }
 }
 
-auto PointTool::is_available(const entt::registry& registry) const -> bool
+auto PointTool::is_available(const DocumentModel& model) const -> bool
 {
+  const auto& registry = model.get_active_registry();
   return sys::is_object_layer_active(registry);
 }
 

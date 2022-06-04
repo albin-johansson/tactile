@@ -49,20 +49,21 @@ void EllipseTool::draw_gizmos(const DocumentModel& model,
   }
 }
 
-void EllipseTool::on_disabled(entt::registry& registry, entt::dispatcher& dispatcher)
+void EllipseTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(registry, dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void EllipseTool::on_exited(entt::registry& registry, entt::dispatcher& dispatcher)
+void EllipseTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(registry, dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void EllipseTool::on_pressed(entt::registry& registry,
+void EllipseTool::on_pressed(DocumentModel& model,
                              entt::dispatcher&,
                              const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       sys::is_object_layer_active(registry)) {
     auto& stroke = registry.ctx().emplace<comp::CurrentEllipseStroke>();
@@ -73,10 +74,11 @@ void EllipseTool::on_pressed(entt::registry& registry,
   }
 }
 
-void EllipseTool::on_dragged(entt::registry& registry,
+void EllipseTool::on_dragged(DocumentModel& model,
                              entt::dispatcher&,
                              const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
     if (auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
       stroke->current_x = mouse.x;
@@ -85,17 +87,19 @@ void EllipseTool::on_dragged(entt::registry& registry,
   }
 }
 
-void EllipseTool::on_released(entt::registry& registry,
+void EllipseTool::on_released(DocumentModel& model,
                               entt::dispatcher& dispatcher,
                               const MouseInfo& mouse)
 {
+  auto& registry = model.get_active_registry();
   if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
-    maybe_emit_event(registry, dispatcher);
+    maybe_emit_event(model, dispatcher);
   }
 }
 
-auto EllipseTool::is_available(const entt::registry& registry) const -> bool
+auto EllipseTool::is_available(const DocumentModel& model) const -> bool
 {
+  const auto& registry = model.get_active_registry();
   return sys::is_object_layer_active(registry);
 }
 
@@ -104,8 +108,9 @@ auto EllipseTool::get_type() const -> ToolType
   return ToolType::Ellipse;
 }
 
-void EllipseTool::maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
+void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
 {
+  auto& registry = model.get_active_registry();
   auto& ctx = registry.ctx();
   if (const auto* stroke = ctx.find<comp::CurrentEllipseStroke>()) {
     const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);

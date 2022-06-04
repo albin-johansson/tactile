@@ -44,23 +44,23 @@ class StampTool final : public ATool
                    IRenderer& renderer,
                    const MouseInfo& mouse) const override;
 
-  void on_disabled(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_exited(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(entt::registry& registry,
+  void on_pressed(DocumentModel& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_dragged(entt::registry& registry,
+  void on_dragged(DocumentModel& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_released(entt::registry& registry,
+  void on_released(DocumentModel& model,
                    entt::dispatcher& dispatcher,
                    const MouseInfo& mouse) override;
 
-  [[nodiscard]] auto is_available(const entt::registry& registry) const -> bool override;
+  [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
   [[nodiscard]] auto get_type() const -> ToolType override;
 
@@ -74,11 +74,11 @@ class StampTool final : public ATool
   Maybe<TilePos> mLastChangedPos;
   bool mRandomMode{};
 
-  void update_sequence(entt::registry& registry, const TilePos& cursor);
+  void update_sequence(DocumentModel& model, const TilePos& cursor);
 
   void maybe_emit_event(entt::dispatcher& dispatcher);
 
-  [[nodiscard]] auto is_usable(const entt::registry& registry) const -> bool;
+  [[nodiscard]] auto is_usable(const DocumentModel& model) const -> bool;
 };
 
 }  // namespace tactile

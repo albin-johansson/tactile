@@ -142,16 +142,6 @@ void MapDocument::move_object(const UUID& objectId,
   get_history().push<MoveObjectCmd>(this, objectId, previous, updated);
 }
 
-auto MapDocument::is_tool_active(const ToolType tool) const -> bool
-{
-  return get_tools().is_enabled(tool);
-}
-
-auto MapDocument::is_tool_possible(const ToolType tool) const -> bool
-{
-  return get_tools().is_available(mRegistry, tool);
-}
-
 auto MapDocument::info() const -> const comp::MapInfo&
 {
   return ctx_get<comp::MapInfo>(mRegistry);
