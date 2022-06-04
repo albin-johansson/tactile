@@ -43,6 +43,10 @@ void open_directory(const std::filesystem::path& dir)
       static const auto cmd = fmt::format("explorer \"{}\"", path);
       std::system(cmd.c_str());
     }
+    else if constexpr (on_linux) {
+      static const auto cmd = fmt::format("xdg-open \"{}\"", path);
+      std::system(cmd.c_str());
+    }
     else {
       spdlog::warn("Cannot open file explorer on this platform!");
     }
