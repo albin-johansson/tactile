@@ -25,27 +25,27 @@
 #include "core/common/ecs.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
+#include "core/documents/tileset_document.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile::ui {
 
-void render_tileset(GraphicsCtx& graphics, const entt::registry& registry)
+void render_tileset(GraphicsCtx& graphics, const TilesetDocument& tileset)
 {
-  const auto& tileset = ctx_get<comp::Tileset>(registry);
-  const auto& texture = ctx_get<comp::Texture>(registry);
-  const auto& uvTileSize = ctx_get<comp::UvTileSize>(registry);
+  const auto& info = tileset.info();
+  const auto& texture = tileset.texture();
+  const auto& uvTileSize = tileset.uv_size();
 
-  const auto tw = static_cast<float>(tileset.tile_size.x);
-  const auto th = static_cast<float>(tileset.tile_size.y);
-  const ImVec2 uv{uvTileSize.size.x, uvTileSize.size.y};
+  const Vector2f tileSize = tileset.tile_size();
+  const ImVec2 uv{uvTileSize.x, uvTileSize.y};
 
-  for (int32 row = 0; row < tileset.row_count; ++row) {
-    for (int32 col = 0; col < tileset.column_count; ++col) {
-      const ImVec4 source{static_cast<float>(col * tileset.tile_size.x),
-                          static_cast<float>(row * tileset.tile_size.y),
-                          tw,
-                          th};
+  for (int32 row = 0; row < info.row_count; ++row) {
+    for (int32 col = 0; col < info.column_count; ++col) {
+      const ImVec4 source{static_cast<float>(col * info.tile_size.x),
+                          static_cast<float>(row * info.tile_size.y),
+                          tileSize.x,
+                          tileSize.y};
       const auto position = graphics.from_matrix_to_absolute(row, col);
       graphics.render_translated_image(texture.id, source, position, uv);
     }

@@ -21,10 +21,11 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile::ui {
 
-void render_tileset(GraphicsCtx& graphics, const entt::registry& registry);
+void render_tileset(GraphicsCtx& graphics, const TilesetDocument& tileset);
 
 }  // namespace tactile::ui

@@ -60,6 +60,8 @@ class TilesetDocument final : public ADocument
 
   [[nodiscard]] auto texture() const -> const comp::Texture&;
 
+  [[nodiscard]] auto viewport() const -> const comp::Viewport&;
+
   [[nodiscard]] auto get_type() const -> DocumentType override
   {
     return DocumentType::Tileset;

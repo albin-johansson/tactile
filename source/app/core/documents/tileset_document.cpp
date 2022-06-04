@@ -66,4 +66,9 @@ auto TilesetDocument::texture() const -> const comp::Texture&
   return ctx_get<comp::Texture>(mRegistry);
 }
 
+auto TilesetDocument::viewport() const -> const comp::Viewport&
+{
+  return ctx_get<comp::Viewport>(mRegistry);
+}
+
 }  // namespace tactile

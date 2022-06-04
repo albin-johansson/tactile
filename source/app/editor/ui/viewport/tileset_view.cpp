@@ -25,32 +25,35 @@
 
 #include "core/components/map_info.hpp"
 #include "core/components/viewport.hpp"
+#include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
 #include "editor/ui/common/mouse_tracker.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_info.hpp"
 #include "editor/ui/rendering/render_tileset.hpp"
 #include "io/persistence/preferences.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 
 void update_tileset_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  const auto& registry = model.get_active_registry();
+  TACTILE_ASSERT(model.is_tileset_active());
+  const auto& tileset = model.view_tileset(model.active_document_id().value());
 
-  const auto& viewport = ctx_get<comp::Viewport>(registry);
-  const auto& tileset = ctx_get<comp::Tileset>(registry);
+  const auto& viewport = tileset.viewport();
+  const auto& info = tileset.info();
 
-  const auto info = get_render_info(viewport, tileset);
-  update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
+  const auto renderInfo = get_render_info(viewport, info);
+  update_viewport_offset(renderInfo.canvas_br - renderInfo.canvas_tl, dispatcher);
 
-  GraphicsCtx graphics{info};
+  GraphicsCtx graphics{renderInfo};
 
   graphics.set_draw_color(io::get_preferences().viewport_bg());
   graphics.clear();
 
   graphics.push_clip();
-  render_tileset(graphics, registry);
+  render_tileset(graphics, tileset);
   graphics.pop_clip();
 }
 
