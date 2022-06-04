@@ -204,7 +204,7 @@ void update_map_view(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   render_map(graphics, model, map);
 
-  const auto cursor = GetViewportCursorInfo(info);  // TODO rename function
+  const auto cursor = get_viewport_cursor_info(info);
   _poll_mouse(dispatcher, cursor);
 
   if (Window::contains_mouse()) {
