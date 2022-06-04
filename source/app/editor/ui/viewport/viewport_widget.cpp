@@ -86,8 +86,7 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
     if (model.has_active_document()) {
       update_document_tabs(model, dispatcher);
 
-      const auto& document = model.get_active_document();
-      if (document.is_map()) {
+      if (model.is_map_active()) {
         if (window.mouse_entered()) {
           dispatcher.enqueue<ToolEnteredEvent>();
         }

@@ -29,7 +29,6 @@
 #include "editor/ui/menus/menu_bar.hpp"
 #include "editor/ui/properties/property_dock.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
-#include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 
@@ -60,11 +59,6 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 
   update_viewport_widget(model, dispatcher);
-
-  if (document && document->is_map()) {
-    const auto* registry = model.active_registry();
-    update_map_view_object_context_menu(*registry, dispatcher);
-  }
 
   _resize_map_dialog.update(model, dispatcher);
   _map_parse_error_dialog.update(model, dispatcher);

@@ -54,6 +54,7 @@ namespace {
 
 constexpr auto _object_context_menu_id = "##MapViewObjectContextMenu";
 constinit bool _will_center_viewport = false;
+constinit bool _open_object_context_menu = false;
 
 /* Creates a mouse info struct, but does not set the button member */
 [[nodiscard]] auto _make_mouse_info(const ViewportCursorInfo& cursor) -> MouseInfo
@@ -173,6 +174,49 @@ void _update_context_menu(entt::dispatcher& dispatcher)
   }
 }
 
+void _update_map_view_object_context_menu(const entt::registry& registry,
+                                          entt::dispatcher& dispatcher)
+{
+  if (Popup popup{_object_context_menu_id}; popup.is_open()) {
+    const auto active = ctx_get<comp::ActiveObject>(registry);
+
+    TACTILE_ASSERT(active.entity != entt::null);
+    const auto& object = checked_get<comp::Object>(registry, active.entity);
+
+    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
+      dispatcher.enqueue<InspectContextEvent>(active.entity);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Object Visibility",
+                        nullptr,
+                        object.visible)) {
+      dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, !object.visible);
+    }
+
+    // TODO implement the object actions
+    Disable disable;
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
+      dispatcher.enqueue<DuplicateObjectEvent>(object.id);
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
+      dispatcher.enqueue<RemoveObjectEvent>(object.id);
+    }
+  }
+
+  if (_open_object_context_menu) {
+    ImGui::OpenPopup(_object_context_menu_id,
+                     ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
+    _open_object_context_menu = false;
+  }
+}
+
 }  // namespace
 
 void show_map_viewport(const DocumentModel& model,
@@ -217,43 +261,7 @@ void show_map_viewport(const DocumentModel& model,
   update_viewport_overlay(registry, cursor);
 
   _update_context_menu(dispatcher);
-}
-
-void update_map_view_object_context_menu(const entt::registry& registry,
-                                         entt::dispatcher& dispatcher)
-{
-  if (Popup popup{_object_context_menu_id}; popup.is_open()) {
-    const auto active = ctx_get<comp::ActiveObject>(registry);
-
-    TACTILE_ASSERT(active.entity != entt::null);
-    const auto& object = checked_get<comp::Object>(registry, active.entity);
-
-    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
-      dispatcher.enqueue<InspectContextEvent>(active.entity);
-    }
-
-    ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Object Visibility",
-                        nullptr,
-                        object.visible)) {
-      dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, !object.visible);
-    }
-
-    // TODO implement the object actions
-    Disable disable;
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
-      dispatcher.enqueue<DuplicateObjectEvent>(object.id);
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
-      dispatcher.enqueue<RemoveObjectEvent>(object.id);
-    }
-  }
+  _update_map_view_object_context_menu(registry, dispatcher);
 }
 
 void center_map_viewport()
@@ -263,8 +271,7 @@ void center_map_viewport()
 
 void open_object_context_menu()
 {
-  ImGui::OpenPopup(_object_context_menu_id,
-                   ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
+  _open_object_context_menu = true;
 }
 
 }  // namespace tactile::ui
