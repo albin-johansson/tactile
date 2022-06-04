@@ -17,33 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "menu_bar.hpp"
+#include "tileset_menu.hpp"
 
 #include <imgui.h>
 
 #include "core/model.hpp"
-#include "editor/ui/menus/debug_menu.hpp"
-#include "editor/ui/menus/edit_menu.hpp"
-#include "editor/ui/menus/file_menu.hpp"
-#include "editor/ui/menus/help_menu.hpp"
-#include "editor/ui/menus/map_menu.hpp"
-#include "editor/ui/menus/tileset_menu.hpp"
-#include "editor/ui/menus/view_menu.hpp"
+#include "editor/ui/icons.hpp"
+#include "editor/ui/scoped.hpp"
 
 namespace tactile::ui {
 
-void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_tileset_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMainMenuBar()) {
-    update_file_menu(model, dispatcher);
-    update_edit_menu(model, dispatcher);
-    update_view_menu(model, dispatcher);
-    update_map_menu(model, dispatcher);
-    update_tileset_menu(model, dispatcher);
-    update_help_menu(model, dispatcher);
-    update_debug_menu();
+  Disable disable{!model.is_tileset_active()};
 
-    ImGui::EndMainMenuBar();
+  if (Menu menu{"Tileset"}; menu.is_open()) {
+    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
+      // TODO dispatcher.enqueue<InspectTilesetEvent>();
+    }
   }
 }
 
