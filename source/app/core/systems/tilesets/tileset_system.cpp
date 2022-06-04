@@ -127,9 +127,6 @@ void attach_tileset(entt::registry& mapRegistry,
 
   const auto tilesetEntity = mapRegistry.create();
 
-  auto& context = mapRegistry.emplace<comp::AttributeContext>(tilesetEntity);
-  context.name = "TilesetRef";  // FIXME
-
   auto& viewport = mapRegistry.emplace<comp::Viewport>(tilesetEntity);
   viewport.tile_size = tileset.tile_size;
 
@@ -144,7 +141,6 @@ void attach_tileset(entt::registry& mapRegistry,
     tilesets.next_tile_id = ref.last_id + 1;
   }
 
-  mapRegistry.emplace<comp::Tileset>(tilesetEntity, tileset);
   mapRegistry.emplace<comp::TilesetSelection>(tilesetEntity);
 
   /* The limits are defined by the tileset view */
