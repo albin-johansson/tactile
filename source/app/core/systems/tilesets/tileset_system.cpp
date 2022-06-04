@@ -32,6 +32,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
+#include "core/documents/tileset_document.hpp"
 #include "core/systems/context_system.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/assert.hpp"
@@ -64,13 +65,13 @@ namespace {
 
 void _refresh_tileset_cache(entt::registry& mapRegistry,
                             const entt::entity tilesetEntity,
+                            const comp::TilesetRef& ref,
                             const comp::Tileset& tileset)
 {
-  const auto& ref = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
-
   auto& cache = mapRegistry.emplace_or_replace<comp::TilesetCache>(tilesetEntity);
   cache.source_rects = _create_source_rect_cache(ref, tileset);
 
+  // FIXME tileset refs have no meta tiles in the map registry
   for (auto&& [tileEntity, tile] : mapRegistry.view<comp::MetaTile>().each()) {
     if (tile.id >= ref.first_id && tile.id <= ref.last_id) {
       cache.tiles.try_emplace(tile.id, tileEntity);
@@ -147,7 +148,7 @@ void attach_tileset(entt::registry& mapRegistry,
   mapRegistry.emplace<comp::ViewportLimits>(tilesetEntity);
 
   _register_new_tiles_in_tile_context(mapRegistry, tilesetEntity);
-  _refresh_tileset_cache(mapRegistry, tilesetEntity, tileset);
+  _refresh_tileset_cache(mapRegistry, tilesetEntity, ref, tileset);
 }
 
 auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId) -> TilesetSnapshot
