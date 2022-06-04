@@ -25,25 +25,19 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/tiles.hpp"
 #include "core/layer_type.hpp"
 
-namespace tactile {
-
-using TileRow = std::vector<TileID>;
-using TileMatrix = std::vector<TileRow>;
-
-namespace comp {
+namespace tactile::comp {
 
 /**
- * \brief Component that provides common aspects of layers.
+ * Component that provides common aspects of layers.
  *
- * \details This component is used by all different kinds of layers.
+ * This component is featured by all layer entities.
  *
  * \see TileLayer
  * \see ObjectLayer
  * \see GroupLayer
- *
- * \ingroup components
  */
 struct Layer final
 {
@@ -52,56 +46,33 @@ struct Layer final
   bool visible{true};   ///< Whether or not the layer is rendered.
 };
 
-/**
- * \brief Component that represents plain tile layers.
- *
- * \ingroup components
- */
+/// Component that represents plain tile layers.
 struct TileLayer final
 {
   TileMatrix matrix;  ///< The associated matrix of tile identifiers.
 };
 
-/**
- * \brief Component that represents object layers.
- *
- * \see Object
- *
- * \ingroup components
- */
+/// Component that represents object layers.
 struct ObjectLayer final
 {
   std::vector<entt::entity> objects;  ///< The associated object entities.
 };
 
-/**
- * \brief Tag component used to denote group layers.
- *
- * \ingroup components
- */
+/// Tag component used to denote group layers.
 struct GroupLayer final
 {};
 
-/**
- * \brief Component used to represent the layer hierarchy.
- *
- * \ingroup components
- */
+/// Component used to represent the layer hierarchy.
 struct LayerTreeNode final
 {
   usize index{};                       ///< Local index, i.e. relative to tree siblings.
   std::vector<entt::entity> children;  ///< All associated child nodes.
 };
 
-/**
- * \brief Context component that keeps track of the active layer.
- *
- * \ingroup components
- */
+/// Context component that keeps track of the active layer.
 struct ActiveLayer final
 {
   entt::entity entity{entt::null};  ///< The currently active layer, can be null.
 };
 
-}  // namespace comp
-}  // namespace tactile
+}  // namespace tactile::comp

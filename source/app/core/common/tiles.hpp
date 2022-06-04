@@ -21,29 +21,11 @@
 
 #include <vector>  // vector
 
-#include <centurion/common.hpp>
-#include <entt/entity/entity.hpp>
-
 #include "core/common/identifiers.hpp"
-#include "core/common/ints.hpp"
 
-namespace tactile::comp {
+namespace tactile {
 
-/// Component that represents a single frame in an animation.
-/// \ingroup components
-struct AnimationFrame final
-{
-  TileID tile{};          ///< Tile that will be rendered during the frame.
-  cen::u64ms duration{};  ///< Duration of the frame.
-};
+using TileRow = std::vector<TileID>;
+using TileMatrix = std::vector<TileRow>;
 
-/// Component that represents a tile animation.
-/// \ingroup components
-struct Animation final
-{
-  usize index{};                     ///< Index of the current frame.
-  cen::u64ms last_update_time{};     ///< When a frame was last changed.
-  std::vector<entt::entity> frames;  ///< The associated frames.
-};
-
-}  // namespace tactile::comp
+}  // namespace tactile
