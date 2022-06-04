@@ -73,6 +73,7 @@ void _update_context_menu(const DocumentModel& model,
       Disable disable{model.is_open(documentId)};
       if (ImGui::MenuItem(TAC_ICON_OPEN " Open Tileset")) {
         dispatcher.enqueue<OpenDocumentEvent>(documentId);
+        dispatcher.enqueue<SelectDocumentEvent>(documentId);
       }
     }
 
