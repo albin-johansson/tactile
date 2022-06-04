@@ -65,8 +65,10 @@ void load_file_history()
     }
 
     for (auto file : h.files()) {
-      spdlog::debug("Loaded '{}' from file history", file);
-      _history.push_back(std::move(file));
+      if (std::filesystem::exists(file)) {
+        spdlog::debug("Loaded '{}' from file history", file);
+        _history.push_back(std::move(file));
+      }
     }
   }
   else {
@@ -87,12 +89,10 @@ void save_file_history()
     h.add_files(path);
   }
 
-  {
-    std::ofstream stream{get_file_path(),
-                         std::ios::out | std::ios::trunc | std::ios::binary};
-    if (!h.SerializeToOstream(&stream)) {
-      spdlog::error("Failed to save file history!");
-    }
+  std::ofstream stream{get_file_path(),
+                       std::ios::out | std::ios::trunc | std::ios::binary};
+  if (!h.SerializeToOstream(&stream)) {
+    spdlog::error("Failed to save file history!");
   }
 }
 
