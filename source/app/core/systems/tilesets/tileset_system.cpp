@@ -19,21 +19,11 @@
 
 #include "tileset_system.hpp"
 
-#include <utility>  // move
-
-#include <centurion/math.hpp>
 #include <entt/entity/registry.hpp>
-#include <spdlog/spdlog.h>
 
-#include "core/common/associative.hpp"
 #include "core/common/ecs.hpp"
-#include "core/components/animation.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/systems/context_system.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
