@@ -28,17 +28,6 @@
 
 namespace tactile::sys {
 
-/**
- * \ingroup layer-system
- * \defgroup object-layer-system Object Layer System
- */
-
-/// \addtogroup object-layer-system
-/// \{
-
-/// \name Object functions
-/// \{
-
 [[nodiscard]] auto find_object(const entt::registry& registry,
                                const comp::ObjectLayer& layer,
                                ObjectID id) -> entt::entity;
@@ -62,9 +51,5 @@ namespace tactile::sys {
 [[nodiscard]] auto find_object(const entt::registry& registry,
                                const comp::ObjectLayer& layer,
                                const Vector2f& pos) -> entt::entity;
-
-/// \} End of object functions
-
-/// \} End of group object-layer-system
 
 }  // namespace tactile::sys
