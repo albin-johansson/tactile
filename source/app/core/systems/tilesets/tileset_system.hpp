@@ -50,15 +50,6 @@ namespace tactile::sys {
 /// \{
 
 /**
- * Updates the state of all tilesets in a map.
- *
- * This function should be each frame, as it handles aspects related to tile caching.
- *
- * \param mapRegistry a map document registry.
- */
-void update_tilesets(entt::registry& mapRegistry);
-
-/**
  * Selects the tileset associated with the specified ID.
  *
  * \pre `id` must be associated with an existing tileset.
@@ -110,11 +101,6 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
 [[nodiscard]] auto find_tileset(const entt::registry& mapRegistry, const UUID& id)
     -> entt::entity;
 
-[[nodiscard]] auto find_tile(const entt::registry& registry, TileID id) -> entt::entity;
-
-[[nodiscard]] auto get_tile_entity(const entt::registry& registry, TileID id)
-    -> entt::entity;
-
 /**
  * Attempts to find the tileset that contains a specific tile.
  *
@@ -159,42 +145,6 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
  */
 [[nodiscard]] auto is_single_tile_selected_in_tileset(const entt::registry& registry)
     -> bool;
-
-/**
- * Returns the rendered appearance of a tile.
- *
- * This function is used to determine the correct tile to render for animated
- * tiles. In other words, this function will simply return the supplied tile for
- * non-animated tiles.
- *
- * \param mapRegistry the document registry.
- * \param tilesetEntity the parent tileset entity.
- * \param id the tile to query.
- *
- * \return the tile that should be rendered when the specified tile is encountered.
- */
-[[nodiscard]] auto get_tile_to_render(const entt::registry& mapRegistry,
-                                      entt::entity tilesetEntity,
-                                      TileID id) -> TileID;
-
-/**
- * Returns the region out of the tileset texture that should be rendered when
- * rendering the specified tile.
- *
- * \note You should use the identifier returned by `get_tile_to_render()` when calling
- * this function.
- *
- * \param mapRegistry the associated registry.
- * \param tilesetEntity the parent tileset entity.
- * \param id the identifier for the tile that will be queried.
- *
- * \return the region of the tileset texture that should be rendered for the tile.
- *
- * \see `get_tile_to_render()`
- */
-[[nodiscard]] auto get_source_rect(const entt::registry& mapRegistry,
-                                   entt::entity tilesetEntity,
-                                   TileID id) -> const cen::irect&;
 
 /**
  * Converts a global tile identifier to its local counterpart.

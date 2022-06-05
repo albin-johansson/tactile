@@ -61,7 +61,6 @@ MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize
 
 void MapDocument::update()
 {
-  sys::update_tilesets(mRegistry);
   sys::update_animations(mRegistry);
 }
 

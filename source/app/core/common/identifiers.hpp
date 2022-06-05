@@ -34,6 +34,8 @@ using ObjectID = int32;
 using TilesetID = int32;
 using TileID = int32;
 
+using TileIndex = int32;
+
 inline constexpr TileID empty_tile = 0;
 
 }  // namespace tactile

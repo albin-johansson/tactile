@@ -22,11 +22,13 @@
 #include <utility>  // move
 
 #include "core/common/ecs.hpp"
+#include "core/components/animation.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
+#include "core/systems/animation_system.hpp"
 #include "core/systems/tilesets/tileset_document_system.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
+#include "core/utils/tiles.hpp"
 
 namespace tactile {
 
@@ -40,8 +42,9 @@ TilesetDocument::TilesetDocument(const UUID& id,
 
 void TilesetDocument::update()
 {
-  auto& cache = ctx_get<comp::TilesetCache>(mRegistry);
-  cache.source_to_render.clear();
+  get_cache().display_tiles.clear();
+
+  sys::update_animations(mRegistry);
 }
 
 auto TilesetDocument::tile_at(const TilePos& pos) const -> TileID
@@ -57,6 +60,45 @@ auto TilesetDocument::tile_at(const TilePos& pos) const -> TileID
   else {
     return empty_tile;
   }
+}
+
+auto TilesetDocument::tile_source(const TileIndex index) const -> const cen::irect&
+{
+  const auto& cache = get_cache();
+  if (const auto iter = cache.source_rects.find(index);
+      iter != cache.source_rects.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid tile index!"};
+  }
+}
+
+auto TilesetDocument::get_displayed_tile(const TileIndex index) const -> TileIndex
+{
+  const auto& cache = get_cache();
+
+  /* Check for already cached tile to render */
+  if (const auto iter = cache.display_tiles.find(index);
+      iter != cache.display_tiles.end()) {
+    return iter->second;
+  }
+
+  if (const auto iter = cache.tiles.find(index); iter != cache.tiles.end()) {
+    const auto entity = iter->second;
+
+    if (const auto* animation = mRegistry.try_get<comp::Animation>(entity)) {
+      const auto frameEntity = animation->frames.at(animation->index);
+      const auto& frame = checked_get<comp::AnimationFrame>(mRegistry, frameEntity);
+
+      /* This cache is cleared before each frame */
+      cache.display_tiles[index] = frame.tile_index;
+
+      return frame.tile_index;
+    }
+  }
+
+  return index;
 }
 
 auto TilesetDocument::info() const -> const comp::Tileset&
@@ -84,6 +126,11 @@ auto TilesetDocument::texture() const -> const comp::Texture&
 auto TilesetDocument::viewport() const -> const comp::Viewport&
 {
   return ctx_get<comp::Viewport>(mRegistry);
+}
+
+auto TilesetDocument::get_cache() const -> const comp::TilesetCache&
+{
+  return ctx_get<comp::TilesetCache>(mRegistry);
 }
 
 }  // namespace tactile

@@ -41,44 +41,6 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _create_source_rect_cache(const comp::TilesetRef& ref,
-                                             const comp::Tileset& tileset)
-    -> HashMap<TileID, cen::irect>
-{
-  HashMap<TileID, cen::irect> cache;
-
-  const auto amount = (ref.last_id + 1) - ref.first_id;
-  cache.reserve(static_cast<usize>(amount));
-
-  for (TileID id{ref.first_id}; id <= ref.last_id; ++id) {
-    const auto index = id - ref.first_id;
-
-    const auto [row, col] = to_matrix_coords(index, tileset.column_count);
-    const auto x = col * tileset.tile_size.x;
-    const auto y = row * tileset.tile_size.y;
-
-    cache[id] = cen::irect{x, y, tileset.tile_size.x, tileset.tile_size.y};
-  }
-
-  return cache;
-}
-
-void _refresh_tileset_cache(entt::registry& mapRegistry,
-                            const entt::entity tilesetEntity,
-                            const comp::TilesetRef& ref,
-                            const comp::Tileset& tileset)
-{
-  auto& cache = mapRegistry.emplace_or_replace<comp::TilesetCache>(tilesetEntity);
-  cache.source_rects = _create_source_rect_cache(ref, tileset);
-
-  // FIXME tileset refs have no meta tiles in the map registry
-  for (auto&& [tileEntity, tile] : mapRegistry.view<comp::MetaTile>().each()) {
-    if (tile.id >= ref.first_id && tile.id <= ref.last_id) {
-      cache.tiles.try_emplace(tile.id, tileEntity);
-    }
-  }
-}
-
 void _register_new_tiles_in_tile_context(entt::registry& mapRegistry,
                                          const entt::entity tilesetEntity)
 {
@@ -102,13 +64,6 @@ void _unregister_tiles_from_tile_context(entt::registry& mapRegistry,
 }
 
 }  // namespace
-
-void update_tilesets(entt::registry& mapRegistry)
-{
-  for (auto&& [entity, cache] : mapRegistry.view<comp::TilesetCache>().each()) {
-    cache.source_to_render.clear();
-  }
-}
 
 void select_tileset(entt::registry& mapRegistry, const UUID& id)
 {
@@ -148,7 +103,6 @@ void attach_tileset(entt::registry& mapRegistry,
   mapRegistry.emplace<comp::ViewportLimits>(tilesetEntity);
 
   _register_new_tiles_in_tile_context(mapRegistry, tilesetEntity);
-  _refresh_tileset_cache(mapRegistry, tilesetEntity, ref, tileset);
 }
 
 void detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId)
@@ -179,27 +133,10 @@ auto find_tileset(const entt::registry& mapRegistry, const UUID& id) -> entt::en
   });
 }
 
-auto find_tile(const entt::registry& registry, const TileID id) -> entt::entity
-{
-  return find_one<comp::MetaTile>(registry, [id](const comp::MetaTile& tile) {
-    return tile.id == id;
-  });
-}
-
-auto get_tile_entity(const entt::registry& registry, const TileID id) -> entt::entity
-{
-  const auto entity = find_tile(registry, id);
-  if (entity != entt::null) {
-    return entity;
-  }
-  else {
-    throw TactileError{"Invalid tile ID!"};
-  }
-}
-
 auto find_tileset_with_tile(const entt::registry& registry, const TileID id)
     -> entt::entity
 {
+  // TODO this can be made much faster if ranges are cached in a context component
   return find_one<comp::TilesetRef>(registry, [id](const comp::TilesetRef& ref) {
     return id >= ref.first_id && id <= ref.last_id;
   });
@@ -235,48 +172,6 @@ auto is_single_tile_selected_in_tileset(const entt::registry& registry) -> bool
   }
 
   return false;
-}
-
-auto get_tile_to_render(const entt::registry& mapRegistry,
-                        const entt::entity tilesetEntity,
-                        const TileID id) -> TileID
-{
-  const auto& cache = checked_get<comp::TilesetCache>(mapRegistry, tilesetEntity);
-
-  /* Check for already cached tile to render */
-  if (const auto iter = cache.source_to_render.find(id);
-      iter != cache.source_to_render.end()) {
-    return iter->second;
-  }
-
-  if (const auto iter = cache.tiles.find(id); iter != cache.tiles.end()) {
-    const auto entity = iter->second;
-
-    if (const auto* animation = mapRegistry.try_get<comp::Animation>(entity)) {
-      const auto frameEntity = animation->frames.at(animation->index);
-      const auto& frame = checked_get<comp::AnimationFrame>(mapRegistry, frameEntity);
-
-      /* This cache is cleared before each frame */
-      cache.source_to_render[id] = frame.tile;
-
-      return frame.tile;
-    }
-  }
-
-  return id;
-}
-
-auto get_source_rect(const entt::registry& mapRegistry,
-                     const entt::entity tilesetEntity,
-                     const TileID id) -> const cen::irect&
-{
-  const auto& cache = checked_get<comp::TilesetCache>(mapRegistry, tilesetEntity);
-  if (const auto iter = cache.source_rects.find(id); iter != cache.source_rects.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid tile identifier!"};
-  }
 }
 
 auto convert_to_local(const entt::registry& mapRegistry, const TileID global)

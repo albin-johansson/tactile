@@ -24,8 +24,31 @@
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
+#include "core/utils/tiles.hpp"
 
 namespace tactile::sys {
+namespace {
+
+[[nodiscard]] auto _create_source_rect_cache(const comp::Tileset& info)
+    -> HashMap<TileIndex, cen::irect>
+{
+  HashMap<TileIndex, cen::irect> cache;
+  cache.reserve(static_cast<usize>(info.tile_count()));
+
+  const auto n = info.tile_count();
+  for (TileIndex index = 0; index < n; ++index) {
+    const auto [row, col] = to_matrix_coords(index, info.column_count);
+
+    const auto x = col * info.tile_size.x;
+    const auto y = row * info.tile_size.y;
+
+    cache[index] = cen::irect{x, y, info.tile_size.x, info.tile_size.y};
+  }
+
+  return cache;
+}
+
+}  // namespace
 
 auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i& tileSize)
     -> entt::registry
@@ -42,8 +65,8 @@ auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i&
   tileset.row_count = texture.size.y / tileset.tile_size.y;
   tileset.column_count = texture.size.x / tileset.tile_size.x;
 
-  ctx.emplace<comp::TilesetCache>();
-  // TODO do something with the cache?
+  auto& cache = ctx.emplace<comp::TilesetCache>();
+  cache.source_rects = _create_source_rect_cache(tileset);
 
   auto& viewport = ctx.emplace<comp::Viewport>();
   viewport.offset = {0, 0};

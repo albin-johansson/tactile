@@ -43,6 +43,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/utils/texture_manager.hpp"
+#include "core/utils/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_data.hpp"
 #include "misc/assert.hpp"
@@ -198,7 +199,6 @@ void _restore_layers(MapDocument& document, const ir::MapData& mapData)
 
 void _restore_tile_animation(entt::registry& registry,
                              const entt::entity tileEntity,
-                             const int32 firstGlobalId,
                              const ir::MetaTileData& tileData)
 {
   auto& animation = registry.emplace<comp::Animation>(tileEntity);
@@ -208,7 +208,7 @@ void _restore_tile_animation(entt::registry& registry,
     const auto frameEntity = registry.create();
 
     auto& frame = registry.emplace<comp::AnimationFrame>(frameEntity);
-    frame.tile = firstGlobalId + frameData.local_id;
+    frame.tile_index = frameData.local_id;
     frame.duration = cen::u64ms{frameData.duration_ms};
 
     animation.frames.push_back(frameEntity);
@@ -227,34 +227,32 @@ void _restore_fancy_tile_objects(entt::registry& registry,
   }
 }
 
-void _restore_fancy_tiles(entt::registry& registry,
+void _restore_fancy_tiles(entt::registry& tilesetRegistry,
                           comp::TilesetCache& cache,
                           const ir::TilesetData& tilesetData)
 {
-  const auto firstGlobalId = tilesetData.first_tile;
+  for (const auto& [index, tileData] : tilesetData.fancy_tiles) {
+    const auto tileEntity = tilesetRegistry.create();
+    cache.tiles[index] = tileEntity;
 
-  for (const auto& [id, tileData] : tilesetData.fancy_tiles) {
-    const auto tileEntity = registry.create();
-
-    auto& tile = registry.emplace<comp::MetaTile>(tileEntity);
-    tile.id = firstGlobalId + id;
-
-    cache.tiles[tile.id] = tileEntity;
+    auto& tile = tilesetRegistry.emplace<comp::MetaTile>(tileEntity);
+    tile.index = index;
 
     if (!tileData.frames.empty()) {
-      _restore_tile_animation(registry, tileEntity, firstGlobalId, tileData);
+      _restore_tile_animation(tilesetRegistry, tileEntity, tileData);
     }
 
     if (!tileData.objects.empty()) {
-      _restore_fancy_tile_objects(registry, tile, tileData);
+      _restore_fancy_tile_objects(tilesetRegistry, tile, tileData);
     }
 
-    auto& context = sys::add_attribute_context(registry, tileEntity);
-    context.name = fmt::format("Tile {}", tile.id);
+    auto& context = sys::add_attribute_context(tilesetRegistry, tileEntity);
+    context.name = fmt::format("Tile #{}", tile.index);
 
-    // FIXME tilesets with components are broken (wrong registry, add component documents?)
-    _restore_properties(registry, tileEntity, tileData.context);
-    _restore_components(registry, tileEntity, tileData.context);
+    // FIXME tilesets with components are broken (wrong registry, add component
+    // documents?)
+    _restore_properties(tilesetRegistry, tileEntity, tileData.context);
+    _restore_components(tilesetRegistry, tileEntity, tileData.context);
   }
 }
 

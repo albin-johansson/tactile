@@ -33,8 +33,8 @@ namespace tactile::comp {
 /// \ingroup components
 struct AnimationFrame final
 {
-  TileID tile{};          ///< Tile that will be rendered during the frame.
-  cen::u64ms duration{};  ///< Duration of the frame.
+  TileIndex tile_index{};  ///< Tile that will be rendered during the frame.
+  cen::u64ms duration{};   ///< Duration of the frame.
 };
 
 /// Component that represents a tile animation.

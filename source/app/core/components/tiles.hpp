@@ -31,6 +31,7 @@
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 #include "core/region.hpp"
+#include "core/tile_pos.hpp"
 
 namespace tactile::comp {
 
@@ -90,22 +91,20 @@ struct UvTileSize final
  */
 struct MetaTile final
 {
-  TileID id{};                        ///< The ID of the associated tile.
+  TileIndex index{};                  ///< Local index in the tileset.
   std::vector<entt::entity> objects;  ///< Associated object entities.
 };
 
 /**
- * Contains cached information about a single tileset.
+ * Context component that contains cached information about a single tileset.
  */
 struct TilesetCache final
 {
-  HashMap<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
-  HashMap<TileID, entt::entity> tiles;       ///< Additional tile info.
+  HashMap<TileIndex, cen::irect> source_rects;  ///< Tileset source rectangles.
+  HashMap<TileIndex, entt::entity> tiles;       ///< Additional tile info.
 
-  /**
-   * Frame-by-frame cache that maps tiles to the tile that should be rendered.
-   */
-  mutable HashMap<TileID, TileID> source_to_render;
+  /// Frame-by-frame cache that maps tiles to the tile that should be rendered.
+  mutable HashMap<TileIndex, TileIndex> display_tiles;
 };
 
 /**

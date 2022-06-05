@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <centurion/math.hpp>
+
 #include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
@@ -56,6 +58,10 @@ class TilesetDocument final : public ADocument
   /// Returns the local ID of a tile at a specific position.
   [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileID;
 
+  [[nodiscard]] auto tile_source(TileIndex index) const -> const cen::irect&;
+
+  [[nodiscard]] auto get_displayed_tile(TileIndex index) const -> TileIndex;
+
   [[nodiscard]] auto info() const -> const comp::Tileset&;
 
   [[nodiscard]] auto tile_size() const -> Vector2i;
@@ -65,6 +71,8 @@ class TilesetDocument final : public ADocument
   [[nodiscard]] auto texture() const -> const comp::Texture&;
 
   [[nodiscard]] auto viewport() const -> const comp::Viewport&;
+
+  [[nodiscard]] auto get_cache() const -> const comp::TilesetCache&;
 
   [[nodiscard]] auto get_type() const -> DocumentType override
   {

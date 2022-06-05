@@ -28,9 +28,9 @@
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/textures.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 
@@ -41,6 +41,8 @@ void render_tile(GraphicsCtx& graphics,
                  const int32 row,
                  const int32 column)
 {
+  TACTILE_ASSERT(tile != empty_tile);
+
   const auto& mapRegistry = map.get_registry();
   const auto& context = ctx_get<comp::TilesetContext>(mapRegistry);
   auto iter = context.tile_to_tileset.find(tile);
@@ -57,14 +59,13 @@ void render_tile(GraphicsCtx& graphics,
     const auto& texture = tileset.texture();
     const auto& uvSize = tileset.uv_size();
 
-    const auto tileToRender = sys::get_tile_to_render(mapRegistry, tilesetEntity, tile);
-    const auto& sourceRect =
-        sys::get_source_rect(mapRegistry, tilesetEntity, tileToRender);
+    const auto tileIndex = tileset.get_displayed_tile(tile - ref.first_id);
+    const auto sourceRect = cen::cast<cen::frect>(tileset.tile_source(tileIndex));
 
-    const ImVec4 source{static_cast<float>(sourceRect.x()),
-                        static_cast<float>(sourceRect.y()),
-                        static_cast<float>(sourceRect.width()),
-                        static_cast<float>(sourceRect.height())};
+    const ImVec4 source{sourceRect.x(),
+                        sourceRect.y(),
+                        sourceRect.width(),
+                        sourceRect.height()};
     const ImVec2 uv{uvSize.x, uvSize.y};
 
     const auto position = graphics.from_matrix_to_absolute(row, column);

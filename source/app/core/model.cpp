@@ -39,7 +39,7 @@ namespace tactile {
 
 void DocumentModel::update()
 {
-  if (auto* document = active_document()) {
+  for (const auto& [id, document] : mDocuments) {
     document->update();
   }
 }

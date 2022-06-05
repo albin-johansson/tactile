@@ -182,7 +182,7 @@ void _convert_fancy_tile_animation(ir::MetaTileData& data,
     const auto& frame = checked_get<comp::AnimationFrame>(registry, frameEntity);
 
     auto& frameData = data.frames.emplace_back();
-    frameData.local_id = sys::convert_to_local(registry, frame.tile).value();
+    frameData.local_id = frame.tile_index;
     frameData.duration_ms = frame.duration.count();
   }
 }
@@ -193,14 +193,14 @@ void _convert_fancy_tiles(ir::TilesetData& data,
 {
   for (auto&& [entity, tile, context] :
        registry.view<comp::MetaTile, comp::AttributeContext>().each()) {
-    if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
+    const auto tileId = tileset.first_id + tile.index;
+    if (tileId >= tileset.first_id && tileId <= tileset.last_id) {
       const bool interesting = registry.all_of<comp::Animation>(entity) ||
                                !context.properties.empty() ||
                                !context.properties.empty() || !tile.objects.empty();
 
       if (interesting) {
-        const auto local = sys::convert_to_local(registry, tile.id).value();
-        auto& tileData = data.fancy_tiles[local];
+        auto& tileData = data.fancy_tiles[tile.index];
 
         if (const auto* animation = registry.try_get<comp::Animation>(entity)) {
           _convert_fancy_tile_animation(tileData, *animation, registry);
