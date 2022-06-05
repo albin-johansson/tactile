@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <utility>  // pair
-
 #include <entt/fwd.hpp>
 
 #include "core/common/identifiers.hpp"
+#include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
 #include "core/components/layers.hpp"
 
@@ -40,24 +39,14 @@ namespace tactile::sys {
 /// \name Object functions
 /// \{
 
-[[nodiscard]] auto get_object_layer(entt::registry& registry, const UUID& id)
-    -> std::pair<entt::entity, comp::ObjectLayer&>;
-
-[[nodiscard]] auto get_object_layer(const entt::registry& registry, const UUID& id)
-    -> std::pair<entt::entity, const comp::ObjectLayer&>;
-
-[[nodiscard]] auto has_object(const entt::registry& registry,
-                              const comp::ObjectLayer& layer,
-                              ObjectID id) -> bool;
-
 [[nodiscard]] auto find_object(const entt::registry& registry,
                                const comp::ObjectLayer& layer,
                                ObjectID id) -> entt::entity;
 
 /**
- * \brief Finds an object in the specified layer that contains the supplied coordinates.
+ * Finds an object in the specified layer that contains the supplied coordinates.
  *
- * \details This function is designed to be used to find objects at the location that the
+ * This function is designed to be used to find objects at the location that the
  * user has clicked in the map. As a result, this function takes care of the relationship
  * between viewport coordinates and logical coordinates. It also handles aspects such as
  * points having no width/height, so that points can be detected using this approach as
@@ -65,16 +54,14 @@ namespace tactile::sys {
  *
  * \param registry the current map registry.
  * \param layer the source object layer.
- * \param x the viewport relative x-coordinate.
- * \param y the viewport relative y-coordinate.
+ * \param pos the viewport relative coordinate.
  *
  * \return an object entity that contains the specified coordinates;
  *         a null entity is returned if there is none.
  */
 [[nodiscard]] auto find_object(const entt::registry& registry,
                                const comp::ObjectLayer& layer,
-                               float x,
-                               float y) -> entt::entity;
+                               const Vector2f& pos) -> entt::entity;
 
 /// \} End of object functions
 

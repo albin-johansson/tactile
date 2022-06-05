@@ -50,7 +50,8 @@ namespace {
   const auto id = map.next_object_id;
   ++map.next_object_id;
 
-  auto&& [layerEntity, objectLayer] = get_object_layer(registry, layerId);
+  const auto layerEntity = find_context(registry, layerId);
+  auto& objectLayer = checked_get<comp::ObjectLayer>(registry, layerEntity);
 
   const auto objectEntity = registry.create();
   objectLayer.objects.push_back(objectEntity);
@@ -155,7 +156,8 @@ void restore_object(entt::registry& registry, RemoveObjectResult snapshot)
   registry.emplace<comp::Object>(objectEntity, std::move(snapshot.object));
   restore_attribute_context(registry, objectEntity, std::move(snapshot.context));
 
-  auto&& [layerEntity, layer] = get_object_layer(registry, snapshot.layer);
+  const auto layerEntity = find_context(registry, snapshot.layer);
+  auto& layer = checked_get<comp::ObjectLayer>(registry, layerEntity);
   layer.objects.push_back(objectEntity);
 }
 

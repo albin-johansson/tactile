@@ -47,10 +47,9 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
   auto& registry = model.get_active_registry();
   if (sys::is_object_layer_active(registry)) {
     auto& active = ctx_get<comp::ActiveState>(registry);
+    auto& layer = checked_get<comp::ObjectLayer>(registry, active.layer);
 
-    const auto& [_, layer] =
-        sys::get_object_layer(registry, sys::get_active_layer_id(registry).value());
-    const auto objectEntity = sys::find_object(registry, layer, mouse.x, mouse.y);
+    const auto objectEntity = sys::find_object(registry, layer, {mouse.x, mouse.y});
 
     switch (mouse.button) {
       case cen::mouse_button::left: {
