@@ -40,7 +40,7 @@ namespace {
 
 constexpr int tileset_node_version = 1;
 
-void _emit_properties(YAML::Emitter& emitter, const ir::AttributeContextData& context)
+void _emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
 {
   if (!context.properties.empty()) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
@@ -57,7 +57,7 @@ void _emit_properties(YAML::Emitter& emitter, const ir::AttributeContextData& co
   }
 }
 
-void _emit_components(YAML::Emitter& emitter, const ir::AttributeContextData& context)
+void _emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
 {
   if (!context.components.empty()) {
     emitter << YAML::Key << "components" << YAML::BeginSeq;

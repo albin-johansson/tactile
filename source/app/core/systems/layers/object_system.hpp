@@ -43,7 +43,7 @@ namespace tactile::sys {
  *
  * \details The created entity will feature the following components:
  * - `Object`
- * - `AttributeContext`
+ * - `Context`
  *
  * \param registry the document registry.
  * \param layerId the object layer to add the object to.
@@ -68,7 +68,7 @@ auto new_rectangle_object(entt::registry& registry,
  *
  * \details The created entity will feature the following components:
  * - `Object`
- * - `AttributeContext`
+ * - `Context`
  *
  * \param registry the document registry.
  * \param layerId the object layer to add the object to.
@@ -93,7 +93,7 @@ auto new_ellipse_object(entt::registry& registry,
  *
  * \details The created entity will feature the following components:
  * - `Object`
- * - `AttributeContext`
+ * - `Context`
  *
  * \param registry the map registry.
  * \param layerId the object layer to add the object to.

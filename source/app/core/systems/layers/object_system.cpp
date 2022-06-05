@@ -121,14 +121,14 @@ auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectR
 
   Maybe<UUID> layerId;
   for (auto&& [layerEntity, context, layer, objectLayer] :
-       registry.view<comp::AttributeContext, comp::Layer, comp::ObjectLayer>().each()) {
+       registry.view<comp::Context, comp::Layer, comp::ObjectLayer>().each()) {
     if (std::erase(objectLayer.objects, objectEntity) > 0) {
       layerId = context.id;
       break;
     }
   }
 
-  if (auto& activeContext = ctx_get<comp::ActiveAttributeContext>(registry);
+  if (auto& activeContext = ctx_get<comp::ActiveContext>(registry);
       activeContext.entity == objectEntity) {
     activeContext.entity = entt::null;
   }

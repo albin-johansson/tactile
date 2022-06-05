@@ -41,14 +41,14 @@ auto deep_copy(entt::registry& registry,
 }
 
 template <>
-inline auto deep_copy<comp::AttributeContext>(entt::registry& registry,
+inline auto deep_copy<comp::Context>(entt::registry& registry,
                                               const entt::entity source,
                                               const entt::entity destination)
-    -> comp::AttributeContext&
+    -> comp::Context&
 {
   auto& context = register_context(registry, destination);
 
-  const auto& srcContext = registry.get<comp::AttributeContext>(source);
+  const auto& srcContext = registry.get<comp::Context>(source);
   context.name = srcContext.name;
 
   for (const auto srcPropertyEntity : srcContext.properties) {
@@ -75,7 +75,7 @@ inline auto deep_copy<comp::ObjectLayer>(entt::registry& registry,
     const auto objectEntity = registry.create();
     layer.objects.push_back(objectEntity);
 
-    deep_copy<comp::AttributeContext>(registry, sourceObject, objectEntity);
+    deep_copy<comp::Context>(registry, sourceObject, objectEntity);
 
     auto& object = deep_copy<comp::Object>(registry, sourceObject, objectEntity);
     object.id = map.next_object_id;

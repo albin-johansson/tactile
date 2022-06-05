@@ -194,7 +194,7 @@ namespace {
 
 [[nodiscard]] auto _parse_component(const YAML::Node& node,
                                     const ir::MapData& map,
-                                    ir::AttributeContextData& data) -> ParseError
+                                    ir::ContextData& data) -> ParseError
 {
   std::string type;
   if (auto typeName = node["type"]) {
@@ -254,7 +254,7 @@ auto parse_component_definitions(const YAML::Node& node, ir::MapData& data) -> P
 
 auto parse_components(const YAML::Node& node,
                       const ir::MapData& map,
-                      ir::AttributeContextData& data) -> ParseError
+                      ir::ContextData& data) -> ParseError
 {
   if (auto sequence = node["components"]) {
     for (const auto& componentNode : sequence) {
@@ -268,7 +268,7 @@ auto parse_components(const YAML::Node& node,
   return ParseError::None;
 }
 
-auto parse_properties(const YAML::Node& node, ir::AttributeContextData& data)
+auto parse_properties(const YAML::Node& node, ir::ContextData& data)
     -> ParseError
 {
   if (auto sequence = node["properties"]) {

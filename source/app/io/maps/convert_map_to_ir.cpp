@@ -36,8 +36,8 @@
 namespace tactile::io {
 namespace {
 
-void _convert_attribute_context(ir::AttributeContextData& data,
-                                const comp::AttributeContext& context,
+void _convert_attribute_context(ir::ContextData& data,
+                                const comp::Context& context,
                                 const entt::registry& registry)
 {
   for (const auto propertyEntity : context.properties) {
@@ -58,7 +58,7 @@ void _convert_attribute_context(ir::AttributeContextData& data,
 
 void _convert_object(ir::ObjectData& data,
                      const comp::Object& object,
-                     const comp::AttributeContext& context,
+                     const comp::Context& context,
                      const entt::registry& registry)
 {
   data.id = object.id;
@@ -90,7 +90,7 @@ void _convert_object_layer(ir::ObjectLayerData& data,
 
   for (const auto objectEntity : objectLayer.objects) {
     const auto& object = checked_get<comp::Object>(registry, objectEntity);
-    const auto& context = checked_get<comp::AttributeContext>(registry, objectEntity);
+    const auto& context = checked_get<comp::Context>(registry, objectEntity);
 
     auto& objectData = data.objects.emplace_back();
     _convert_object(objectData, object, context, registry);
@@ -152,7 +152,7 @@ void _convert_layer(ir::LayerData& data,
     }
   }
 
-  const auto& context = checked_get<comp::AttributeContext>(registry, entity);
+  const auto& context = checked_get<comp::Context>(registry, entity);
   data.name = context.name;
   _convert_attribute_context(data.context, context, registry);
 }
@@ -192,7 +192,7 @@ void _convert_fancy_tiles(ir::TilesetData& data,
                           const entt::registry& registry)
 {
   for (auto&& [entity, tile, context] :
-       registry.view<comp::MetaTile, comp::AttributeContext>().each()) {
+       registry.view<comp::MetaTile, comp::Context>().each()) {
     const auto tileId = tileset.first_id + tile.index;
     if (tileId >= tileset.first_id && tileId <= tileset.last_id) {
       const bool interesting = registry.all_of<comp::Animation>(entity) ||
@@ -214,7 +214,7 @@ void _convert_fancy_tiles(ir::TilesetData& data,
           for (const auto objectEntity : tile.objects) {
             const auto& object = checked_get<comp::Object>(registry, objectEntity);
             const auto& objectContext =
-                checked_get<comp::AttributeContext>(registry, objectEntity);
+                checked_get<comp::Context>(registry, objectEntity);
 
             auto& objectData = tileData.objects.emplace_back();
             _convert_object(objectData, object, objectContext, registry);
@@ -230,7 +230,7 @@ void _convert_tilesets(const DocumentModel& model,
                        ir::MapData& data)
 {
   for (auto&& [entity, tilesetRef, context] :
-       mapRegistry.view<comp::TilesetRef, comp::AttributeContext>().each()) {
+       mapRegistry.view<comp::TilesetRef, comp::Context>().each()) {
     auto& tilesetData = data.tilesets.emplace_back();
     tilesetData.name = context.name;
 
@@ -291,7 +291,7 @@ auto convert_map_to_ir(const DocumentModel& model, const UUID& documentId) -> ir
   _convert_layers(data, mapRegistry);
 
   _convert_attribute_context(data.context,
-                             ctx_get<comp::AttributeContext>(mapRegistry),
+                             ctx_get<comp::Context>(mapRegistry),
                              mapRegistry);
 
   TACTILE_PROFILE_END("Converted document to IR")

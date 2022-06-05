@@ -32,10 +32,10 @@ namespace tactile::sys {
  * - `comp::MapInfo`
  * - `Viewport`
  * - `TilesetContext`
- * - `AttributeContext`
+ * - `Context`
  * - `ActiveLayer`
  * - `ActiveTileset`
- * - `ActiveAttributeContext`
+ * - `ActiveContext`
  * - `ActiveObject`
  * - `ContextMapping`
  * - `ToolManager`

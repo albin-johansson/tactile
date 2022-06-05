@@ -59,7 +59,7 @@ void destroy_entity(entt::registry& registry, entt::entity entity);
  * \return the attached attribute context component.
  */
 auto register_context(entt::registry& registry, entt::entity entity)
-    -> comp::AttributeContext&;
+    -> comp::Context&;
 
 /**
  * \brief Creates a snapshot of the state of a attribute context.
@@ -95,7 +95,7 @@ void restore_attribute_context(entt::registry& registry,
                                AttributeContextSnapshot snapshot);
 
 void set_context_id(entt::registry& registry,
-                    comp::AttributeContext& context,
+                    comp::Context& context,
                     const UUID& id);
 
 /**
@@ -120,10 +120,10 @@ void set_context_id(entt::registry& registry,
  * \throws TactileError if the identifier is invalid.
  */
 [[nodiscard]] auto get_context(entt::registry& registry, const UUID& id)
-    -> comp::AttributeContext&;
+    -> comp::Context&;
 
 [[nodiscard]] auto get_context(const entt::registry& registry, const UUID& id)
-    -> const comp::AttributeContext&;
+    -> const comp::Context&;
 
 /**
  * \brief Returns the currently active attribute context.
@@ -133,7 +133,7 @@ void set_context_id(entt::registry& registry,
  * \return the current context.
  */
 [[nodiscard]] auto current_context(const entt::registry& registry)
-    -> const comp::AttributeContext&;
+    -> const comp::Context&;
 
 /// \} End of group context-system
 

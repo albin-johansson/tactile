@@ -41,7 +41,7 @@ auto new_map_document_registry() -> entt::registry
   auto& ctx = registry.ctx();
   ctx.emplace<comp::ActiveLayer>();
   ctx.emplace<comp::ActiveTileset>();
-  ctx.emplace<comp::ActiveAttributeContext>();
+  ctx.emplace<comp::ActiveContext>();
   ctx.emplace<comp::ActiveObject>();
   ctx.emplace<comp::ContextMapping>();
   ctx.emplace<ToolManager>();
@@ -55,7 +55,7 @@ auto new_map_document_registry() -> entt::registry
   viewport.offset = {0, 0};
   viewport.tile_size = {64, 64};
 
-  auto& context = ctx.emplace<comp::AttributeContext>();
+  auto& context = ctx.emplace<comp::Context>();
   context.id = make_uuid();
   context.name = "Map";
 

@@ -89,7 +89,7 @@ namespace {
 
   const auto parentEntity = checked_get<comp::Parent>(registry, source).entity;
   if (parentEntity != entt::null) {
-    snapshot.parent = checked_get<comp::AttributeContext>(registry, parentEntity).id;
+    snapshot.parent = checked_get<comp::Context>(registry, parentEntity).id;
   }
 
   switch (snapshot.core.type) {
@@ -239,7 +239,7 @@ auto remove_layer(entt::registry& registry, const entt::entity entity) -> LayerS
   };
 
   maybe_reset(ctx_get<comp::ActiveLayer>(registry).entity, entity);
-  maybe_reset(ctx_get<comp::ActiveAttributeContext>(registry).entity, entity);
+  maybe_reset(ctx_get<comp::ActiveContext>(registry).entity, entity);
 
   destroy_layer_node(registry, entity);
 
@@ -341,7 +341,7 @@ auto duplicate_layer(entt::registry& registry,
   }
 
   {
-    auto& context = deep_copy<comp::AttributeContext>(registry, source, copy);
+    auto& context = deep_copy<comp::Context>(registry, source, copy);
     if (!recursive) {
       context.name += " (Copy)";
     }
@@ -414,7 +414,7 @@ auto get_active_layer_id(const entt::registry& registry) -> Maybe<UUID>
 {
   const auto& active = ctx_get<comp::ActiveLayer>(registry);
   if (active.entity != entt::null) {
-    return checked_get<comp::AttributeContext>(registry, active.entity).id;
+    return checked_get<comp::Context>(registry, active.entity).id;
   }
   else {
     return nothing;

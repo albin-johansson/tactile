@@ -123,7 +123,7 @@ void _show_group_layer_item(const entt::registry& registry,
                             const ImGuiTreeNodeFlags flags,
                             const char* name)
 {
-  const auto& context = checked_get<comp::AttributeContext>(registry, layerEntity);
+  const auto& context = checked_get<comp::Context>(registry, layerEntity);
 
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
   if (TreeNode treeNode{"##GroupLayerTreeNode", flags, "%s", name}; treeNode.is_open()) {
@@ -162,7 +162,7 @@ void layer_item_view(const entt::registry& registry,
   const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
 
   const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
-  const auto& context = checked_get<comp::AttributeContext>(registry, layerEntity);
+  const auto& context = checked_get<comp::Context>(registry, layerEntity);
 
   const Scope scope{static_cast<int>(hash(context.id))};
 

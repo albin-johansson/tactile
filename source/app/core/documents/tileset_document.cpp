@@ -37,7 +37,7 @@ TilesetDocument::TilesetDocument(const UUID& id,
                                  const Vector2i& tileSize)
     : ADocument{sys::new_tileset_document_registry(texture, tileSize)}
 {
-  ctx_get<comp::AttributeContext>(mRegistry).id = id;
+  ctx_get<comp::Context>(mRegistry).id = id;
 }
 
 void TilesetDocument::update()

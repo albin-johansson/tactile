@@ -94,28 +94,28 @@ namespace {
 
 void _visit_components(entt::registry& registry, auto callable)
 {
-  const auto& root = ctx_get<comp::AttributeContext>(registry);
+  const auto& root = ctx_get<comp::Context>(registry);
   for (const auto compEntity : root.components) {
     auto& comp = checked_get<comp::Component>(registry, compEntity);
     callable(root.id, comp);
   }
 
   for (auto&& [entity, context, comp] :
-       registry.view<comp::AttributeContext, comp::Component>().each()) {
+       registry.view<comp::Context, comp::Component>().each()) {
     callable(context.id, comp);
   }
 }
 
 void _visit_components(const entt::registry& registry, auto callable)
 {
-  const auto& root = ctx_get<comp::AttributeContext>(registry);
+  const auto& root = ctx_get<comp::Context>(registry);
   for (const auto compEntity : root.components) {
     const auto& comp = checked_get<comp::Component>(registry, compEntity);
     callable(root.id, comp);
   }
 
   for (auto&& [entity, context, comp] :
-       registry.view<comp::AttributeContext, comp::Component>().each()) {
+       registry.view<comp::Context, comp::Component>().each()) {
     callable(context.id, comp);
   }
 }
@@ -213,7 +213,7 @@ auto remove_component_def(entt::registry& registry, const ComponentID& compId)
   result.attributes = def.attributes;
 
   /* Cache attributes from components that will be removed */
-  auto cache = [&](const ComponentID& compId, const comp::AttributeContext& context) {
+  auto cache = [&](const ComponentID& compId, const comp::Context& context) {
     for (const auto componentEntity : context.components) {
       const auto& component = checked_get<comp::Component>(registry, componentEntity);
       if (component.type == compId) {
@@ -230,11 +230,11 @@ auto remove_component_def(entt::registry& registry, const ComponentID& compId)
     });
   };
 
-  auto& root = ctx_get<comp::AttributeContext>(registry);
+  auto& root = ctx_get<comp::Context>(registry);
   cache(def.id, root);
   remove(root.components);
 
-  for (auto&& [entity, context] : registry.view<comp::AttributeContext>().each()) {
+  for (auto&& [entity, context] : registry.view<comp::Context>().each()) {
     cache(def.id, context);
     remove(context.components);
   }

@@ -38,7 +38,7 @@
 namespace tactile::io {
 namespace {
 
-void _append_properties(pugi::xml_node node, const ir::AttributeContextData& contextData)
+void _append_properties(pugi::xml_node node, const ir::ContextData& contextData)
 {
   if (contextData.properties.empty()) {
     return;

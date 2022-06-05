@@ -54,7 +54,7 @@ TEST_F(PropertySystemTest, RemoveProperty)
 
 TEST_F(PropertySystemTest, RenameProperty)
 {
-  auto& context = mRegistry.ctx().at<comp::AttributeContext>();
+  auto& context = mRegistry.ctx().at<comp::Context>();
 
   sys::add_property(mRegistry, context, "abc", AttributeType::Color);
   ASSERT_TRUE(sys::has_property_with_name(mRegistry, context, "abc"));
@@ -66,7 +66,7 @@ TEST_F(PropertySystemTest, RenameProperty)
 
 TEST_F(PropertySystemTest, UpdateProperty)
 {
-  auto& context = mRegistry.ctx().at<comp::AttributeContext>();
+  auto& context = mRegistry.ctx().at<comp::Context>();
 
   sys::add_property(mRegistry, context, "xyz", 45.3f);
   ASSERT_EQ(45.3f, sys::get_property(mRegistry, context, "xyz").value.as_float());
@@ -77,7 +77,7 @@ TEST_F(PropertySystemTest, UpdateProperty)
 
 TEST_F(PropertySystemTest, ChangePropertyType)
 {
-  auto& context = mRegistry.ctx().at<comp::AttributeContext>();
+  auto& context = mRegistry.ctx().at<comp::Context>();
 
   sys::add_property(mRegistry, context, "foo", 123);
   ASSERT_TRUE(sys::get_property(mRegistry, context, "foo").value.is_int());
@@ -94,12 +94,12 @@ TEST_F(PropertySystemTest, ChangePropertyType)
 TEST_F(PropertySystemTest, GetContext)
 {
   ASSERT_NO_THROW(
-      sys::get_context(mRegistry, mRegistry.ctx().at<comp::AttributeContext>().id));
+      sys::get_context(mRegistry, mRegistry.ctx().at<comp::Context>().id));
 }
 
 TEST_F(PropertySystemTest, GetProperty)
 {
-  auto& context = mRegistry.ctx().at<comp::AttributeContext>();
+  auto& context = mRegistry.ctx().at<comp::Context>();
   ASSERT_THROW(sys::get_property(mRegistry, context, "foo"), TactileError);
 
   sys::add_property(mRegistry, context, "foo", 42);

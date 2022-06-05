@@ -43,7 +43,7 @@ struct TestData final
   TestData data{.registry = sys::new_map_document_registry()};
 
   const auto layerEntity = sys::new_object_layer(data.registry);
-  const auto& context = checked_get<comp::AttributeContext>(data.registry, layerEntity);
+  const auto& context = checked_get<comp::Context>(data.registry, layerEntity);
 
   data.layer_id = context.id;
 
@@ -62,7 +62,7 @@ void _verify_new_object(const TestData& data,
   const auto objectEntity = sys::get_object(data.registry, id);
 
   ASSERT_TRUE(data.registry.all_of<comp::Object>(objectEntity));
-  ASSERT_TRUE(data.registry.all_of<comp::AttributeContext>(objectEntity));
+  ASSERT_TRUE(data.registry.all_of<comp::Context>(objectEntity));
 
   const auto& object = checked_get<comp::Object>(data.registry, objectEntity);
 
@@ -155,7 +155,7 @@ TEST(ObjectSystem, RemoveAndRestoreObject)
     object.tag = "tag";
     object.visible = false;
 
-    auto& context = checked_get<comp::AttributeContext>(data.registry, objectEntity);
+    auto& context = checked_get<comp::Context>(data.registry, objectEntity);
     context.name = "tag";
 
     sys::add_property(data.registry, context, "int", 42);
@@ -179,7 +179,7 @@ TEST(ObjectSystem, RemoveAndRestoreObject)
   ASSERT_EQ("tag", object.tag);
   ASSERT_FALSE(object.visible);
 
-  const auto& context = checked_get<comp::AttributeContext>(data.registry, objectEntity);
+  const auto& context = checked_get<comp::Context>(data.registry, objectEntity);
 
   ASSERT_EQ(42, sys::get_property(data.registry, context, "int").value);
 }

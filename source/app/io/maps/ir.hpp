@@ -37,7 +37,7 @@ namespace tactile::ir {
 
 using ComponentMap = TreeMap<std::string, Attribute>;
 
-struct AttributeContextData final
+struct ContextData final
 {
   TreeMap<std::string, Attribute> properties;
   TreeMap<std::string, ComponentMap> components;
@@ -56,7 +56,7 @@ struct ObjectData final
   std::string name;
   std::string tag;
 
-  AttributeContextData context;
+  ContextData context;
 
   bool visible{};
 };
@@ -99,7 +99,7 @@ struct LayerData final
   std::string name;
   data_type data;
 
-  AttributeContextData context;
+  ContextData context;
 
   float opacity{};
   bool visible{};
@@ -115,7 +115,7 @@ struct MetaTileData final
 {
   std::vector<ObjectData> objects;
   std::vector<MetaAnimationFrameData> frames;
-  AttributeContextData context;
+  ContextData context;
 };
 
 struct TilesetData final
@@ -135,7 +135,7 @@ struct TilesetData final
 
   HashMap<TileID, MetaTileData> fancy_tiles;
 
-  AttributeContextData context;
+  ContextData context;
 };
 
 struct MapData
@@ -154,7 +154,7 @@ struct MapData
   std::vector<TilesetData> tilesets;
   std::vector<LayerData> layers;
 
-  AttributeContextData context;
+  ContextData context;
 };
 
 }  // namespace tactile::ir

@@ -79,7 +79,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_property(const nlohmann::json& json,
-                                   ir::AttributeContextData& contextData) -> ParseError
+                                   ir::ContextData& contextData) -> ParseError
 {
   std::string propertyName;
 
@@ -106,7 +106,7 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(const nlohmann::json& json, ir::AttributeContextData& contextData)
+auto parse_properties(const nlohmann::json& json, ir::ContextData& contextData)
     -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {

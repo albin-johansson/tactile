@@ -35,7 +35,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _emit_properties(const ir::AttributeContextData& data)
+[[nodiscard]] auto _emit_properties(const ir::ContextData& data)
     -> nlohmann::json
 {
   auto array = nlohmann::json::array();

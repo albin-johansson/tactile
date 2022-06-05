@@ -59,7 +59,7 @@ auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i&
   auto& ctx = registry.ctx();
   ctx.emplace<CommandStack>();
   ctx.emplace<comp::Texture>(texture);
-  ctx.emplace<comp::ActiveAttributeContext>();
+  ctx.emplace<comp::ActiveContext>();
   ctx.emplace<comp::ContextMapping>();
 
   auto& tileset = ctx.emplace<comp::Tileset>();
@@ -77,7 +77,7 @@ auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i&
   auto& uv = ctx.emplace<comp::UvTileSize>();
   uv.size = Vector2f{tileset.tile_size} / Vector2f{texture.size};
 
-  auto& context = ctx.emplace<comp::AttributeContext>();
+  auto& context = ctx.emplace<comp::Context>();
   context.id = make_uuid();
   context.name = "Tileset";
 

@@ -31,7 +31,7 @@
 namespace tactile::sys {
 
 void add_property(entt::registry& registry,
-                  comp::AttributeContext& context,
+                  comp::Context& context,
                   std::string name,
                   const AttributeType type)
 {
@@ -47,7 +47,7 @@ void add_property(entt::registry& registry,
 }
 
 void add_property(entt::registry& registry,
-                  comp::AttributeContext& context,
+                  comp::Context& context,
                   std::string name,
                   Attribute value)
 {
@@ -63,7 +63,7 @@ void add_property(entt::registry& registry,
 }
 
 void remove_property(entt::registry& registry,
-                     comp::AttributeContext& context,
+                     comp::Context& context,
                      const std::string_view name)
 {
   const auto entity = find_property(registry, context, name);
@@ -74,7 +74,7 @@ void remove_property(entt::registry& registry,
 }
 
 void rename_property(entt::registry& registry,
-                     comp::AttributeContext& context,
+                     comp::Context& context,
                      const std::string_view oldName,
                      std::string newName)
 {
@@ -87,7 +87,7 @@ void rename_property(entt::registry& registry,
 }
 
 void update_property(entt::registry& registry,
-                     comp::AttributeContext& context,
+                     comp::Context& context,
                      const std::string_view name,
                      Attribute value)
 {
@@ -97,7 +97,7 @@ void update_property(entt::registry& registry,
 }
 
 void change_property_type(entt::registry& registry,
-                          comp::AttributeContext& context,
+                          comp::Context& context,
                           const std::string_view name,
                           const AttributeType type)
 {
@@ -107,7 +107,7 @@ void change_property_type(entt::registry& registry,
 }
 
 auto find_property(const entt::registry& registry,
-                   const comp::AttributeContext& context,
+                   const comp::Context& context,
                    const std::string_view name) -> entt::entity
 {
   for (const auto entity : context.properties) {
@@ -121,7 +121,7 @@ auto find_property(const entt::registry& registry,
 }
 
 auto get_property(const entt::registry& registry,
-                  const comp::AttributeContext& context,
+                  const comp::Context& context,
                   const std::string_view name) -> const comp::Property&
 {
   const auto entity = find_property(registry, context, name);
@@ -129,7 +129,7 @@ auto get_property(const entt::registry& registry,
 }
 
 auto has_property_with_name(const entt::registry& registry,
-                            const comp::AttributeContext& context,
+                            const comp::Context& context,
                             const std::string_view name) -> bool
 {
   return find_property(registry, context, name) != entt::null;

@@ -54,13 +54,13 @@ void DuplicateLayerCmd::redo()
   const auto entity = sys::duplicate_layer(registry, sourceEntity);
 
   if (!mNewLayerId) {
-    const auto& context = checked_get<comp::AttributeContext>(registry, entity);
+    const auto& context = checked_get<comp::Context>(registry, entity);
     mNewLayerId = context.id;
   }
   else {
     // Reuse previous ID of duplicated layer
     TACTILE_ASSERT(sys::find_context(registry, *mNewLayerId) == entt::null);
-    auto& context = checked_get<comp::AttributeContext>(registry, entity);
+    auto& context = checked_get<comp::Context>(registry, entity);
     sys::set_context_id(registry, context, *mNewLayerId);
   }
 }

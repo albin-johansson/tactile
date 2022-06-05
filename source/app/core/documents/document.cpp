@@ -31,7 +31,7 @@ ADocument::ADocument(entt::registry registry) : mRegistry{std::move(registry)} {
 
 void ADocument::set_name(std::string name)
 {
-  auto& context = ctx_get<comp::AttributeContext>(mRegistry);
+  auto& context = ctx_get<comp::Context>(mRegistry);
   context.name = std::move(name);
 }
 
@@ -57,7 +57,7 @@ auto ADocument::get_path() const -> const std::filesystem::path&
 
 auto ADocument::get_name() const -> const std::string&
 {
-  return ctx_get<comp::AttributeContext>(mRegistry).name;
+  return ctx_get<comp::Context>(mRegistry).name;
 }
 
 auto ADocument::get_history() -> CommandStack&
@@ -82,7 +82,7 @@ auto ADocument::is_tileset() const -> bool
 
 auto ADocument::id() const -> const UUID&
 {
-  return ctx_get<comp::AttributeContext>(mRegistry).id;
+  return ctx_get<comp::Context>(mRegistry).id;
 }
 
 }  // namespace tactile

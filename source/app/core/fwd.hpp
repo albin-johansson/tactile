@@ -41,7 +41,7 @@ class ToolManager;
 
 namespace comp {
 
-struct ActiveAttributeContext;
+struct ActiveContext;
 struct ActiveLayer;
 struct ActiveObject;
 struct ActiveTileset;
@@ -55,7 +55,7 @@ struct Animation;
 struct Viewport;
 struct Parent;
 
-struct AttributeContext;
+struct Context;
 struct Property;
 struct ComponentDef;
 struct Component;

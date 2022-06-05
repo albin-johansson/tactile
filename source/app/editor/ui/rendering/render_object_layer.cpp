@@ -52,7 +52,7 @@ void _render_point_object(GraphicsCtx& graphics,
     graphics.set_line_thickness(2.0f);
     graphics.draw_translated_circle_with_shadow(position, radius);
 
-    const auto& context = checked_get<comp::AttributeContext>(registry, objectEntity);
+    const auto& context = checked_get<comp::Context>(registry, objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);
@@ -74,7 +74,7 @@ void _render_ellipse_object(GraphicsCtx& graphics,
                             const cen::color& color)
 {
   const auto& object = checked_get<comp::Object>(registry, objectEntity);
-  const auto& context = checked_get<comp::AttributeContext>(registry, objectEntity);
+  const auto& context = checked_get<comp::Context>(registry, objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
   const ImVec2 size = {object.width, object.height};
@@ -115,7 +115,7 @@ void _render_rectangle_object(GraphicsCtx& graphics,
     graphics.set_line_thickness(2.0f);
     graphics.draw_translated_rect_with_shadow(position, size);
 
-    const auto& context = checked_get<comp::AttributeContext>(registry, objectEntity);
+    const auto& context = checked_get<comp::Context>(registry, objectEntity);
     if (!context.name.empty()) {
       const auto* name = context.name.c_str();
       const auto textSize = ImGui::CalcTextSize(name);

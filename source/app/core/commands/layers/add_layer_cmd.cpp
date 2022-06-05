@@ -75,7 +75,7 @@ void AddLayerCmd::redo()
     }
 
     TACTILE_ASSERT(entity != entt::null);
-    mLayerId = checked_get<comp::AttributeContext>(registry, entity).id;
+    mLayerId = checked_get<comp::Context>(registry, entity).id;
 
     sys::sort_layers(registry);
   }

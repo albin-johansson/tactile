@@ -145,7 +145,7 @@ void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
 
       /* Only emit an event if the object has been moved along any axis */
       if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
-        const auto& context = checked_get<comp::AttributeContext>(registry, entity);
+        const auto& context = checked_get<comp::Context>(registry, entity);
         dispatcher.enqueue<MoveObjectEvent>(
             context.id,
             Vector2f{drag->origin_object_x, drag->origin_object_y},

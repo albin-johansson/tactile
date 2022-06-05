@@ -189,7 +189,7 @@ void _show_native_tileset_ref_properties(const TilesetDocument& document,
   _native_read_only_row("Embedded", ref.embedded);
 }
 
-void _show_native_layer_properties(const comp::AttributeContext& context,
+void _show_native_layer_properties(const comp::Context& context,
                                    const comp::Layer& layer,
                                    entt::dispatcher& dispatcher)
 {
@@ -271,7 +271,7 @@ void _show_native_object_properties(const std::string& name,
 
 void _show_custom_properties(const entt::registry& registry,
                              entt::dispatcher& dispatcher,
-                             const comp::AttributeContext& context,
+                             const comp::Context& context,
                              bool& isItemContextOpen)
 {
   bool first = true;
@@ -322,7 +322,7 @@ void _show_custom_properties(const entt::registry& registry,
 
 void _show_native_properties(const DocumentModel& model,
                              const entt::registry& registry,
-                             const comp::ActiveAttributeContext& current,
+                             const comp::ActiveContext& current,
                              const std::string& name,
                              entt::dispatcher& dispatcher)
 {
@@ -345,7 +345,7 @@ void _show_native_properties(const DocumentModel& model,
       _show_native_tileset_ref_properties(tileset, *tilesetRef);
     }
     else if (const auto* layer = registry.try_get<comp::Layer>(current.entity)) {
-      const auto& context = checked_get<comp::AttributeContext>(registry, current.entity);
+      const auto& context = checked_get<comp::Context>(registry, current.entity);
       _show_native_layer_properties(context, *layer, dispatcher);
     }
     else if (const auto* object = registry.try_get<comp::Object>(current.entity)) {
@@ -356,7 +356,7 @@ void _show_native_properties(const DocumentModel& model,
 
 void _update_conditional_tileset_button(const DocumentModel& model,
                                         const entt::registry& registry,
-                                        const comp::ActiveAttributeContext& current,
+                                        const comp::ActiveContext& current,
                                         entt::dispatcher& dispatcher)
 {
   if (current.entity != entt::null && registry.all_of<comp::TilesetRef>(current.entity)) {
@@ -377,14 +377,14 @@ void _update_conditional_tileset_button(const DocumentModel& model,
 
 [[nodiscard]] auto _context_to_show(const DocumentModel& model,
                                     const entt::registry& activeRegistry)
-    -> const comp::AttributeContext&
+    -> const comp::Context&
 {
-  const auto& current = ctx_get<comp::ActiveAttributeContext>(activeRegistry);
+  const auto& current = ctx_get<comp::ActiveContext>(activeRegistry);
   if (current.entity != entt::null &&
       activeRegistry.all_of<comp::TilesetRef>(current.entity)) {
     const auto& ref = checked_get<comp::TilesetRef>(activeRegistry, current.entity);
     const auto& tileset = model.view_tileset(ref.source_tileset);
-    return ctx_get<comp::AttributeContext>(tileset.get_registry());
+    return ctx_get<comp::Context>(tileset.get_registry());
   }
   else {
     return sys::current_context(activeRegistry);
@@ -399,7 +399,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
   const auto documentId = model.active_document_id().value();
   const auto& registry = model.get_registry(documentId);
 
-  const auto& current = ctx_get<comp::ActiveAttributeContext>(registry);
+  const auto& current = ctx_get<comp::ActiveContext>(registry);
   const auto& context = _context_to_show(model, registry);
 
   _update_conditional_tileset_button(model, registry, current, dispatcher);

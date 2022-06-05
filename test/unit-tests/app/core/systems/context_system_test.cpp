@@ -88,7 +88,7 @@ TEST(ContextSystem, RestoreAttributeContext)
     const auto newEntity = registry.create();
     sys::restore_attribute_context(registry, newEntity, snapshot);
 
-    const auto& context = registry.get<comp::AttributeContext>(newEntity);
+    const auto& context = registry.get<comp::Context>(newEntity);
     ASSERT_EQ("ABC", context.name);
 
     ASSERT_TRUE(sys::has_property_with_name(registry, context, "A"));

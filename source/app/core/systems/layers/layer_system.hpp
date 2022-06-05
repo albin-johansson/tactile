@@ -51,7 +51,7 @@ namespace tactile::sys {
  * \pre `parent` is either a group layer or null.
  *
  * \details The created entity will feature the following components:
- * - `AttributeContext`
+ * - `Context`
  * - `Layer`
  * - `LayerTreeNode`
  * - `Parent`
@@ -79,7 +79,7 @@ auto new_layer_skeleton(entt::registry& registry,
  * - `LayerTreeNode`
  * - `TileLayer`
  * - `Parent`
- * - `AttributeContext`
+ * - `Context`
  *
  * \param registry the document registry.
  *
@@ -98,7 +98,7 @@ auto new_tile_layer(entt::registry& registry) -> entt::entity;
  * - `LayerTreeNode`
  * - `ObjectLayer`
  * - `Parent`
- * - `AttributeContext`
+ * - `Context`
  *
  * \param registry the document registry.
  *
@@ -117,7 +117,7 @@ auto new_object_layer(entt::registry& registry) -> entt::entity;
  * - `LayerTreeNode`
  * - `GroupLayer`
  * - `Parent`
- * - `AttributeContext`
+ * - `Context`
  *
  * \param registry the document registry.
  *

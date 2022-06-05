@@ -38,8 +38,8 @@ namespace tactile {
  * - `CommandStack`
  * - `comp::MapInfo`
  * - `ToolManager`
- * - `comp::AttributeContext`
- * - `comp::ActiveAttributeContext`
+ * - `comp::Context`
+ * - `comp::ActiveContext`
  * - `comp::ActiveLayer`
  * - `comp::ActiveTileset`
  * - `comp::ActiveObject`

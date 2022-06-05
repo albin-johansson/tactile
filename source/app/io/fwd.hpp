@@ -30,7 +30,7 @@ class ParseData;
 }  // namespace io
 
 namespace ir {
-struct AttributeContextData;
+struct ContextData;
 struct ObjectData;
 struct LayerData;
 struct TileLayerData;

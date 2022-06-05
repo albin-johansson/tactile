@@ -21,9 +21,9 @@ TEST(RegistrySystem, NewMapDocumentRegistry)
   ASSERT_TRUE(ctx.find<comp::MapInfo>());
   ASSERT_TRUE(ctx.find<comp::ActiveLayer>());
   ASSERT_TRUE(ctx.find<comp::ActiveTileset>());
-  ASSERT_TRUE(ctx.find<comp::ActiveAttributeContext>());
+  ASSERT_TRUE(ctx.find<comp::ActiveContext>());
   ASSERT_TRUE(ctx.find<comp::ActiveObject>());
   ASSERT_TRUE(ctx.find<comp::Viewport>());
-  ASSERT_TRUE(ctx.find<comp::AttributeContext>());
+  ASSERT_TRUE(ctx.find<comp::Context>());
   ASSERT_TRUE(ctx.find<comp::TilesetContext>());
 }

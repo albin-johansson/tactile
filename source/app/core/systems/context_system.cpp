@@ -46,7 +46,7 @@ void _unregister_context(entt::registry& registry, const UUID& id)
 
 void destroy_entity(entt::registry& registry, const entt::entity entity)
 {
-  if (auto* context = registry.try_get<comp::AttributeContext>(entity)) {
+  if (auto* context = registry.try_get<comp::Context>(entity)) {
     _unregister_context(registry, context->id);
   }
 
@@ -54,11 +54,11 @@ void destroy_entity(entt::registry& registry, const entt::entity entity)
 }
 
 auto register_context(entt::registry& registry, const entt::entity entity)
-    -> comp::AttributeContext&
+    -> comp::Context&
 {
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.emplace<comp::AttributeContext>(entity);
+  auto& context = registry.emplace<comp::Context>(entity);
   context.id = make_uuid();
 
   auto& mapping = ctx_get<comp::ContextMapping>(registry);
@@ -70,7 +70,7 @@ auto register_context(entt::registry& registry, const entt::entity entity)
 auto copy_attribute_context(const entt::registry& registry, const entt::entity source)
     -> AttributeContextSnapshot
 {
-  const auto& context = checked_get<comp::AttributeContext>(registry, source);
+  const auto& context = checked_get<comp::Context>(registry, source);
 
   AttributeContextSnapshot snapshot;
   snapshot.id = context.id;
@@ -99,7 +99,7 @@ void restore_attribute_context(entt::registry& registry,
 {
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& context = registry.get_or_emplace<comp::AttributeContext>(entity);
+  auto& context = registry.get_or_emplace<comp::Context>(entity);
   context.id = snapshot.id;
   context.name = std::move(snapshot.name);
 
@@ -122,7 +122,7 @@ void restore_attribute_context(entt::registry& registry,
 }
 
 void set_context_id(entt::registry& registry,
-                    comp::AttributeContext& context,
+                    comp::Context& context,
                     const UUID& id)
 {
   auto& mapping = ctx_get<comp::ContextMapping>(registry);
@@ -145,13 +145,13 @@ auto find_context(const entt::registry& registry, const UUID& id) -> entt::entit
   }
 }
 
-auto get_context(entt::registry& registry, const UUID& id) -> comp::AttributeContext&
+auto get_context(entt::registry& registry, const UUID& id) -> comp::Context&
 {
-  if (auto& context = ctx_get<comp::AttributeContext>(registry); context.id == id) {
+  if (auto& context = ctx_get<comp::Context>(registry); context.id == id) {
     return context;
   }
 
-  for (auto&& [entity, context] : registry.view<comp::AttributeContext>().each()) {
+  for (auto&& [entity, context] : registry.view<comp::Context>().each()) {
     if (context.id == id) {
       return context;
     }
@@ -161,13 +161,13 @@ auto get_context(entt::registry& registry, const UUID& id) -> comp::AttributeCon
 }
 
 auto get_context(const entt::registry& registry, const UUID& id)
-    -> const comp::AttributeContext&
+    -> const comp::Context&
 {
-  if (const auto& context = ctx_get<comp::AttributeContext>(registry); context.id == id) {
+  if (const auto& context = ctx_get<comp::Context>(registry); context.id == id) {
     return context;
   }
 
-  for (auto&& [entity, context] : registry.view<comp::AttributeContext>().each()) {
+  for (auto&& [entity, context] : registry.view<comp::Context>().each()) {
     if (context.id == id) {
       return context;
     }
@@ -176,12 +176,12 @@ auto get_context(const entt::registry& registry, const UUID& id)
   throw TactileError{"No matching attribute context!"};
 }
 
-auto current_context(const entt::registry& registry) -> const comp::AttributeContext&
+auto current_context(const entt::registry& registry) -> const comp::Context&
 {
-  const auto& current = ctx_get<comp::ActiveAttributeContext>(registry);
+  const auto& current = ctx_get<comp::ActiveContext>(registry);
   return (current.entity != entt::null)
-             ? checked_get<comp::AttributeContext>(registry, current.entity)
-             : ctx_get<comp::AttributeContext>(registry);
+             ? checked_get<comp::Context>(registry, current.entity)
+             : ctx_get<comp::Context>(registry);
 }
 
 }  // namespace tactile::sys

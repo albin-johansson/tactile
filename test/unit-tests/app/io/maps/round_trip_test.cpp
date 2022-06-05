@@ -22,8 +22,8 @@ using namespace std::string_literals;
 
 namespace {
 
-void _validate_contexts(const ir::AttributeContextData& source,
-                        const ir::AttributeContextData& restored)
+void _validate_contexts(const ir::ContextData& source,
+                        const ir::ContextData& restored)
 {
   ASSERT_EQ(source.properties.size(), restored.properties.size());
   ASSERT_EQ(source.components.size(), restored.components.size());

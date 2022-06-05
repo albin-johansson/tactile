@@ -36,7 +36,7 @@ class AObjectCommand : public ACommand
  protected:
   [[nodiscard]] auto target_object() -> comp::Object&;
 
-  [[nodiscard]] auto target_object_context() const -> comp::AttributeContext&;
+  [[nodiscard]] auto target_object_context() const -> comp::Context&;
 
   [[nodiscard]] auto target_object_id() const noexcept -> ObjectID { return mObjectId; }
 

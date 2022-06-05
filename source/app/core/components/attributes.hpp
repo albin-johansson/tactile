@@ -37,9 +37,9 @@ using ComponentAttrMap = TreeMap<std::string, Attribute>;
 namespace tactile::comp {
 
 /**
- * \brief Featured by all entities that can host properties and components.
+ * Featured by all entities that can host properties and components.
  *
- * \details This component is featured by many different kinds of items, such as:
+ * This component is featured by many different kinds of items, such as:
  * - Maps
  * - Layers
  * - Tilesets
@@ -48,29 +48,29 @@ namespace tactile::comp {
  *
  * \ingroup components
  */
-struct AttributeContext final
+struct Context final
 {
-  ContextID id{};  ///< The unique context identifier (not persistent).
-  std::string name;               ///< The name of the context.
+  ContextID id{};  ///< Unique context identifier (not persistent).
+  std::string name;
   std::vector<entt::entity> properties;  ///< All associated properties.
   std::vector<entt::entity> components;  ///< All associated components.
 };
 
 /**
- * \brief Context component that keeps track of the current attribute context.
+ * Context component that keeps track of the current attribute context.
  *
- * \details There is always an active attribute context, a null active entity is used to
+ * There is always an active attribute context, a null active entity is used to
  * indicate that the root map is the active context.
  *
  * \ingroup components
  */
-struct ActiveAttributeContext final
+struct ActiveContext final
 {
   entt::entity entity{entt::null};  ///< The current context entity (may be null).
 };
 
 /**
- * \brief Component that represents a named attribute value.
+ * Component that represents a named attribute value.
  *
  * \ingroup components
  */
@@ -81,13 +81,12 @@ struct Property final
 };
 
 /**
- * \brief Describes the structure of a component.
+ * Describes the structure of a component.
  *
- * \details Component definitions are unique to each map (for now).
+ * Component definitions are unique to each map (for now).
  *
  * \todo A possible use case for projects could be to provide common component
  * definitions.
- *
  * \todo Should it be possible to import component definitions from existing maps?
  *
  * \ingroup components
@@ -100,9 +99,9 @@ struct ComponentDef final
 };
 
 /**
- * \brief Represents a user-defined bundle of properties.
+ * Represents a user-defined bundle of properties.
  *
- * \details Components are supported by all attribute contexts.
+ * Components are supported by all attribute contexts.
  *
  * \ingroup components
  */

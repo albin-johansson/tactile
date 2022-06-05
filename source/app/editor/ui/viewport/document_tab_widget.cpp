@@ -52,7 +52,7 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
       }
 
       const auto& registry = document.get_registry();
-      const auto& context = ctx_get<comp::AttributeContext>(registry);
+      const auto& context = ctx_get<comp::Context>(registry);
 
       bool opened = true;
       if (TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {

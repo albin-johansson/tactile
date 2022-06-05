@@ -62,7 +62,7 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
   Maybe<UUID> activeLayerId;
   if (hasActiveLayer) {
     const auto& context =
-        checked_get<comp::AttributeContext>(registry, activeLayerEntity);
+        checked_get<comp::Context>(registry, activeLayerEntity);
     activeLayerId = context.id;
   }
 
@@ -106,7 +106,7 @@ void _update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatc
     const auto entity = sys::find_context(registry, targetLayerId);
 
     TACTILE_ASSERT(entity != entt::null);
-    const auto& context = checked_get<comp::AttributeContext>(registry, entity);
+    const auto& context = checked_get<comp::Context>(registry, entity);
 
     _rename_layer_dialog.show(targetLayerId, context.name);
     _rename_target_id.reset();

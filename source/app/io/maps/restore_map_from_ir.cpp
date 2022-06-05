@@ -53,12 +53,12 @@ namespace {
 
 void _restore_properties(entt::registry& registry,
                          const entt::entity entity,
-                         const ir::AttributeContextData& source)
+                         const ir::ContextData& source)
 {
   const auto count = source.properties.size();
 
-  auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
-                                         : ctx_get<comp::AttributeContext>(registry);
+  auto& context = (entity != entt::null) ? registry.get<comp::Context>(entity)
+                                         : ctx_get<comp::Context>(registry);
   context.properties.reserve(count);
 
   for (const auto& [propertyName, propertyValue] : source.properties) {
@@ -74,10 +74,10 @@ void _restore_properties(entt::registry& registry,
 
 void _restore_components(entt::registry& registry,
                          const entt::entity entity,
-                         const ir::AttributeContextData& source)
+                         const ir::ContextData& source)
 {
-  auto& context = (entity != entt::null) ? registry.get<comp::AttributeContext>(entity)
-                                         : ctx_get<comp::AttributeContext>(registry);
+  auto& context = (entity != entt::null) ? registry.get<comp::Context>(entity)
+                                         : ctx_get<comp::Context>(registry);
   context.components.reserve(source.components.size());
 
   for (const auto& [type, attributes] : source.components) {
@@ -273,7 +273,7 @@ void _restore_tileset(DocumentModel& model,
   auto tileset = model.get_tileset(tilesetId);
   auto& tilesetRegistry = tileset->get_registry();
 
-  ctx_get<comp::AttributeContext>(tilesetRegistry).name = tilesetData.name;
+  ctx_get<comp::Context>(tilesetRegistry).name = tilesetData.name;
 
   auto& cache = ctx_get<comp::TilesetCache>(tilesetRegistry);
   _restore_fancy_tiles(tilesetRegistry, cache, tilesetData);
@@ -329,7 +329,7 @@ void restore_map_from_ir(const ParseData& data,
   const auto path = std::filesystem::absolute(data.path());
   mapRegistry.ctx().emplace<std::filesystem::path>(path);
 
-  auto& context = ctx_get<comp::AttributeContext>(mapRegistry);
+  auto& context = ctx_get<comp::Context>(mapRegistry);
   context.name = path.filename().string();
 
   auto& info = ctx_get<comp::MapInfo>(mapRegistry);

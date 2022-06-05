@@ -49,7 +49,7 @@ void RenameLayerCmd::undo()
   const auto layerEntity = sys::find_context(registry, mLayerId);
   TACTILE_ASSERT(layerEntity != entt::null);
 
-  auto& context = checked_get<comp::AttributeContext>(registry, layerEntity);
+  auto& context = checked_get<comp::Context>(registry, layerEntity);
   context.name = mPreviousName.value();
 
   mPreviousName.reset();
@@ -62,7 +62,7 @@ void RenameLayerCmd::redo()
   const auto layerEntity = sys::find_context(registry, mLayerId);
   TACTILE_ASSERT(layerEntity != entt::null);
 
-  auto& context = checked_get<comp::AttributeContext>(registry, layerEntity);
+  auto& context = checked_get<comp::Context>(registry, layerEntity);
   mPreviousName = context.name;
   context.name = mName;
 }

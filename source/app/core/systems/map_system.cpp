@@ -133,7 +133,7 @@ auto fix_tiles_in_map(entt::registry& registry) -> FixTilesInMapResult
   const auto& tilesets = ctx_get<comp::TilesetContext>(registry);
 
   for (auto&& [entity, layer, context] :
-       registry.view<comp::TileLayer, comp::AttributeContext>().each()) {
+       registry.view<comp::TileLayer, comp::Context>().each()) {
     const auto& id = context.id;
     result[id] = _fix_tiles_in_layer(layer, tilesets, info.row_count, info.column_count);
   }

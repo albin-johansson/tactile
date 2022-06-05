@@ -34,14 +34,14 @@ AObjectCommand::AObjectCommand(std::string name, RegistryRef registry, const Obj
     , mObjectId{id}
 {}
 
-auto AObjectCommand::target_object_context() const -> comp::AttributeContext&
+auto AObjectCommand::target_object_context() const -> comp::Context&
 {
   auto& registry = mRegistry.get();
 
   const auto entity = sys::find_object(registry, mObjectId);
   TACTILE_ASSERT(entity != entt::null);
 
-  return checked_get<comp::AttributeContext>(registry, entity);
+  return checked_get<comp::Context>(registry, entity);
 }
 
 auto AObjectCommand::target_object() -> comp::Object&

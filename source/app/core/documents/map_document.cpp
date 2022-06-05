@@ -55,7 +55,7 @@ MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize
   info.row_count = rows;
   info.column_count = columns;
 
-  auto& context = ctx_get<comp::AttributeContext>(mRegistry);
+  auto& context = ctx_get<comp::Context>(mRegistry);
   context.name = "Map";
 }
 

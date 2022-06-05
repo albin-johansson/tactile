@@ -38,8 +38,8 @@ namespace tactile {
  *
  * \details Tileset document registries have the following context components:
  * - `CommandStack`
- * - `comp::AttributeContext`
- * - `comp::ActiveAttributeContext`
+ * - `comp::Context`
+ * - `comp::ActiveContext`
  * - `comp::ContextMapping`
  * - `comp::Tileset`
  * - `comp::TilesetCache`
