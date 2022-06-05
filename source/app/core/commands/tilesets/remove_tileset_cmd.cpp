@@ -75,7 +75,6 @@ void RemoveTilesetCmd::redo()
     activeTileset.entity = entt::null;  // TODO try to pick another tileset
   }
 
-  // TODO use the snapshot? (maybe not necessary if tset document is isolated)
   sys::detach_tileset(mapRegistry, mTilesetId);
 }
 
