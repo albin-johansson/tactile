@@ -424,9 +424,11 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
       bool isItemContextOpen = false;
       _show_custom_properties(registry, dispatcher, context, isItemContextOpen);
 
-      if (auto popup = Popup::for_window("##PropertyTableContext");
-          !isItemContextOpen && popup.is_open()) {
-        _context_state.show_add_dialog = ImGui::MenuItem(TAC_ICON_ADD " Add Property...");
+      if (!isItemContextOpen) {
+        if (auto popup = Popup::for_window("##PropertyTableContext"); popup.is_open()) {
+          _context_state.show_add_dialog =
+              ImGui::MenuItem(TAC_ICON_ADD " Add Property...");
+        }
       }
     }
   }
