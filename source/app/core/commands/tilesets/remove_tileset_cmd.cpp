@@ -50,8 +50,7 @@ void RemoveTilesetCmd::undo()
   auto& mapRegistry = map->get_registry();
 
   sys::attach_tileset(mapRegistry, mTilesetId, mTileset->info(), mFirstTile.value());
-
-  // TODO select tileset
+  sys::select_tileset(mapRegistry, mTilesetId);
 }
 
 void RemoveTilesetCmd::redo()
@@ -60,8 +59,6 @@ void RemoveTilesetCmd::redo()
 
   mTileset = mModel->get_tileset(mTilesetId);
 
-  // TODO close the document, if open
-
   auto map = mModel->get_map(mMapId);
   auto& mapRegistry = map->get_registry();
 
@@ -69,13 +66,17 @@ void RemoveTilesetCmd::redo()
   const auto& ref = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
   mFirstTile = ref.first_id;
 
-  auto& activeTileset = ctx_get<comp::ActiveTileset>(mapRegistry);
-
-  if (tilesetEntity == activeTileset.entity) {
-    activeTileset.entity = entt::null;  // TODO try to pick another tileset
+  if (ref.embedded) {
+    mModel->close_document(mTilesetId);
   }
 
   sys::detach_tileset(mapRegistry, mTilesetId);
+
+  auto& active = ctx_get<comp::ActiveTileset>(mapRegistry);
+  if (tilesetEntity == active.entity) {
+    const auto view = mapRegistry.view<comp::TilesetRef>();
+    active.entity = view.empty() ? entt::null : view.front();
+  }
 }
 
 }  // namespace tactile
