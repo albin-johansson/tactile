@@ -17,7 +17,7 @@ constexpr entt::entity null_entity = entt::null;
 [[nodiscard]] auto CreateContext(entt::registry& registry) -> ContextID
 {
   const auto entity = registry.create();
-  const auto& context = sys::add_attribute_context(registry, entity);
+  const auto& context = sys::register_context(registry, entity);
   return context.id;
 }
 

@@ -114,7 +114,7 @@ auto _restore_object(entt::registry& registry, const ir::ObjectData& objectData)
   object.tag = objectData.tag;
   object.visible = objectData.visible;
 
-  auto& context = sys::add_attribute_context(registry, objectEntity);
+  auto& context = sys::register_context(registry, objectEntity);
   context.name = objectData.name;
 
   _restore_properties(registry, objectEntity, objectData.context);
@@ -246,7 +246,7 @@ void _restore_fancy_tiles(entt::registry& tilesetRegistry,
       _restore_fancy_tile_objects(tilesetRegistry, tile, tileData);
     }
 
-    auto& context = sys::add_attribute_context(tilesetRegistry, tileEntity);
+    auto& context = sys::register_context(tilesetRegistry, tileEntity);
     context.name = fmt::format("Tile #{}", tile.index);
 
     // FIXME tilesets with components are broken (wrong registry, add component

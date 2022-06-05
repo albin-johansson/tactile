@@ -55,7 +55,7 @@ namespace {
   const auto objectEntity = registry.create();
   objectLayer.objects.push_back(objectEntity);
 
-  auto& context = add_attribute_context(registry, objectEntity);
+  auto& context = register_context(registry, objectEntity);
   context.name = std::move(name);
 
   auto& object = registry.emplace<comp::Object>(objectEntity);

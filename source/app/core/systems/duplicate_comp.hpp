@@ -46,7 +46,7 @@ inline auto deep_copy<comp::AttributeContext>(entt::registry& registry,
                                               const entt::entity destination)
     -> comp::AttributeContext&
 {
-  auto& context = add_attribute_context(registry, destination);
+  auto& context = register_context(registry, destination);
 
   const auto& srcContext = registry.get<comp::AttributeContext>(source);
   context.name = srcContext.name;

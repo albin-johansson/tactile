@@ -21,7 +21,7 @@ class PropertySystemTest : public testing::Test
 TEST_F(PropertySystemTest, AddPropertyWithType)
 {
   const auto entity = mRegistry.create();
-  auto& context = sys::add_attribute_context(mRegistry, entity);
+  auto& context = sys::register_context(mRegistry, entity);
 
   sys::add_property(mRegistry, context, "str", AttributeType::String);
   ASSERT_TRUE(sys::has_property_with_name(mRegistry, context, "str"));
@@ -31,7 +31,7 @@ TEST_F(PropertySystemTest, AddPropertyWithType)
 TEST_F(PropertySystemTest, AddPropertyWithValue)
 {
   const auto entity = mRegistry.create();
-  auto& context = sys::add_attribute_context(mRegistry, entity);
+  auto& context = sys::register_context(mRegistry, entity);
 
   sys::add_property(mRegistry, context, "int", 123);
   ASSERT_TRUE(sys::has_property_with_name(mRegistry, context, "int"));
@@ -41,7 +41,7 @@ TEST_F(PropertySystemTest, AddPropertyWithValue)
 TEST_F(PropertySystemTest, RemoveProperty)
 {
   const auto entity = mRegistry.create();
-  auto& context = sys::add_attribute_context(mRegistry, entity);
+  auto& context = sys::register_context(mRegistry, entity);
 
   sys::add_property(mRegistry, context, "X", AttributeType::Int);
   ASSERT_TRUE(sys::has_property_with_name(mRegistry, context, "X"));

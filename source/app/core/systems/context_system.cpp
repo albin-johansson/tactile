@@ -31,7 +31,7 @@
 
 namespace tactile::sys {
 
-auto add_attribute_context(entt::registry& registry, const entt::entity entity)
+auto register_context(entt::registry& registry, entt::entity entity)
     -> comp::AttributeContext&
 {
   TACTILE_ASSERT(entity != entt::null);

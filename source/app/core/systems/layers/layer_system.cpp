@@ -170,7 +170,7 @@ auto new_layer_skeleton(entt::registry& registry,
   }
 
   {
-    auto& context = add_attribute_context(registry, entity);
+    auto& context = register_context(registry, entity);
     context.name = std::move(name);
   }
 

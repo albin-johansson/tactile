@@ -21,12 +21,12 @@ TEST(ContextSystem, AddAttributeContext)
   const auto a = registry.create();
   const auto b = registry.create();
 
-  const auto& first = sys::add_attribute_context(registry, a);
+  const auto& first = sys::register_context(registry, a);
   ASSERT_TRUE(first.name.empty());
   ASSERT_TRUE(first.properties.empty());
   ASSERT_TRUE(first.components.empty());
 
-  const auto& second = sys::add_attribute_context(registry, b);
+  const auto& second = sys::register_context(registry, b);
   ASSERT_NE(second.id, first.id);
   ASSERT_TRUE(second.name.empty());
   ASSERT_TRUE(second.properties.empty());
@@ -43,7 +43,7 @@ TEST(ContextSystem, CopyAttributeContext)
   sys::make_component_attribute(registry, componentId, "str", "hello"s);
 
   const auto entity = registry.create();
-  auto& context = sys::add_attribute_context(registry, entity);
+  auto& context = sys::register_context(registry, entity);
   context.name = "Foo";
 
   sys::add_component(registry, context.id, componentId);
@@ -72,7 +72,7 @@ TEST(ContextSystem, RestoreAttributeContext)
   const auto oldEntity = registry.create();
 
   {
-    auto& context = sys::add_attribute_context(registry, oldEntity);
+    auto& context = sys::register_context(registry, oldEntity);
     context.name = "ABC";
 
     sys::add_property(registry, context, "A", 12);

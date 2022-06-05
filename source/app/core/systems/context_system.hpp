@@ -48,7 +48,7 @@ namespace tactile::sys {
  *
  * \return the created attribute context.
  */
-auto add_attribute_context(entt::registry& registry, entt::entity entity)
+auto register_context(entt::registry& registry, entt::entity entity)
     -> comp::AttributeContext&;
 
 /**
