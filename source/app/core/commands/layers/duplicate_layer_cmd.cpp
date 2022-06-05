@@ -61,7 +61,7 @@ void DuplicateLayerCmd::redo()
     // Reuse previous ID of duplicated layer
     TACTILE_ASSERT(sys::find_context(registry, *mNewLayerId) == entt::null);
     auto& context = checked_get<comp::AttributeContext>(registry, entity);
-    sys::set_context_id(context, *mNewLayerId);
+    sys::set_context_id(registry, context, *mNewLayerId);
   }
 }
 

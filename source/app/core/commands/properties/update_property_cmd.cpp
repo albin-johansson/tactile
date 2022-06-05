@@ -31,7 +31,7 @@ UpdatePropertyCmd::UpdatePropertyCmd(RegistryRef registry,
                                      Attribute value)
     : ACommand{"update Property"}
     , mRegistry{registry}
-    , mContextId{sys::current_context_id(mRegistry)}
+    , mContextId{sys::current_context(mRegistry).id}
     , mName{std::move(name)}
     , mNewValue{std::move(value)}
 {}

@@ -21,6 +21,7 @@
 
 #include "core/commands/command_stack.hpp"
 #include "core/components/attributes.hpp"
+#include "core/components/contexts.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/map_info.hpp"
 #include "core/components/objects.hpp"
@@ -42,6 +43,7 @@ auto new_map_document_registry() -> entt::registry
   ctx.emplace<comp::ActiveTileset>();
   ctx.emplace<comp::ActiveAttributeContext>();
   ctx.emplace<comp::ActiveObject>();
+  ctx.emplace<comp::ContextMapping>();
   ctx.emplace<ToolManager>();
   ctx.emplace<CommandStack>();
 

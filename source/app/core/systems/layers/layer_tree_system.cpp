@@ -26,6 +26,7 @@
 #include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/parent.hpp"
+#include "core/systems/context_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {
@@ -71,7 +72,8 @@ void _destroy_child_nodes(entt::registry& registry, const entt::entity entity)
     if (registry.all_of<comp::LayerTreeNode>(child)) {
       _destroy_child_nodes(registry, child);
     }
-    registry.destroy(child);
+
+    destroy_entity(registry, child);
   }
 }
 
@@ -172,7 +174,7 @@ void destroy_layer_node(entt::registry& registry, const entt::entity entity)
     _destroy_child_nodes(registry, entity);
   }
 
-  registry.destroy(entity);
+  destroy_entity(registry, entity);
   sort_layers(registry);
 }
 

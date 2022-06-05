@@ -43,6 +43,7 @@ namespace tactile {
  * - `comp::ActiveLayer`
  * - `comp::ActiveTileset`
  * - `comp::ActiveObject`
+ * - `comp::ContextMapping`
  * - `comp::TilesetContext`
  * - `comp::Viewport`
  */

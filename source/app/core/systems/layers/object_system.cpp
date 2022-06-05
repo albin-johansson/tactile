@@ -143,7 +143,7 @@ auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectR
   result.object = checked_get<comp::Object>(registry, objectEntity);
   result.context = copy_attribute_context(registry, objectEntity);
 
-  registry.destroy(objectEntity);
+  destroy_entity(registry, objectEntity);
 
   return result;
 }

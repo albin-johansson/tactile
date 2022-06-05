@@ -21,6 +21,7 @@
 
 #include "core/commands/command_stack.hpp"
 #include "core/components/attributes.hpp"
+#include "core/components/contexts.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
@@ -59,6 +60,7 @@ auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i&
   ctx.emplace<CommandStack>();
   ctx.emplace<comp::Texture>(texture);
   ctx.emplace<comp::ActiveAttributeContext>();
+  ctx.emplace<comp::ContextMapping>();
 
   auto& tileset = ctx.emplace<comp::Tileset>();
   tileset.tile_size = tileSize;

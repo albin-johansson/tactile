@@ -239,7 +239,7 @@ auto remove_component_def(entt::registry& registry, const ComponentID& compId)
     remove(context.components);
   }
 
-  registry.destroy(defEntity);
+  destroy_entity(registry, defEntity);
 
   return result;
 }
@@ -575,7 +575,7 @@ auto remove_component(entt::registry& registry,
       snapshot.values = component.values;
       match = componentEntity;
 
-      registry.destroy(componentEntity);
+      destroy_entity(registry, componentEntity);
     }
   }
 

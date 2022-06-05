@@ -24,20 +24,45 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/common/ecs.hpp"
+#include "core/components/contexts.hpp"
 #include "core/systems/component_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::sys {
+namespace {
 
-auto register_context(entt::registry& registry, entt::entity entity)
+void _unregister_context(entt::registry& registry, const UUID& id)
+{
+  auto& mapping = ctx_get<comp::ContextMapping>(registry);
+  const auto count = mapping.entities.erase(id);
+  if (count == 0) {
+    throw TactileError{"Invalid context identifier!"};
+  }
+}
+
+}  // namespace
+
+void destroy_entity(entt::registry& registry, const entt::entity entity)
+{
+  if (auto* context = registry.try_get<comp::AttributeContext>(entity)) {
+    _unregister_context(registry, context->id);
+  }
+
+  registry.destroy(entity);
+}
+
+auto register_context(entt::registry& registry, const entt::entity entity)
     -> comp::AttributeContext&
 {
   TACTILE_ASSERT(entity != entt::null);
 
   auto& context = registry.emplace<comp::AttributeContext>(entity);
   context.id = make_uuid();
+
+  auto& mapping = ctx_get<comp::ContextMapping>(registry);
+  mapping.entities[context.id] = entity;
 
   return context;
 }
@@ -78,6 +103,11 @@ void restore_attribute_context(entt::registry& registry,
   context.id = snapshot.id;
   context.name = std::move(snapshot.name);
 
+  auto& mapping = ctx_get<comp::ContextMapping>(registry);
+  TACTILE_ASSERT(!mapping.entities.contains(context.id));
+
+  mapping.entities[context.id] = entity;
+
   for (auto&& [propertyName, propertyValue] : snapshot.properties) {
     add_property(registry, context, propertyName, propertyValue);
   }
@@ -91,21 +121,31 @@ void restore_attribute_context(entt::registry& registry,
   }
 }
 
-void set_context_id(comp::AttributeContext& context, const UUID& id)
+void set_context_id(entt::registry& registry,
+                    comp::AttributeContext& context,
+                    const UUID& id)
 {
+  auto& mapping = ctx_get<comp::ContextMapping>(registry);
+  const auto entity = mapping.entities.at(context.id);
+
+  mapping.entities.erase(context.id);
+  mapping.entities[id] = entity;
+
   context.id = id;
-  // TODO update cache in the future
 }
 
 auto find_context(const entt::registry& registry, const UUID& id) -> entt::entity
 {
-  // TODO ContextCache component to improve linear search
-  return find_one<comp::AttributeContext>(
-      registry,
-      [&](const comp::AttributeContext& context) { return context.id == id; });
+  const auto& mapping = ctx_get<comp::ContextMapping>(registry);
+  if (const auto iter = mapping.entities.find(id); iter != mapping.entities.end()) {
+    return iter->second;
+  }
+  else {
+    return entt::null;
+  }
 }
 
-auto get_context(entt::registry& registry, const ContextID id) -> comp::AttributeContext&
+auto get_context(entt::registry& registry, const UUID& id) -> comp::AttributeContext&
 {
   if (auto& context = ctx_get<comp::AttributeContext>(registry); context.id == id) {
     return context;
@@ -120,7 +160,7 @@ auto get_context(entt::registry& registry, const ContextID id) -> comp::Attribut
   throw TactileError{"No matching attribute context!"};
 }
 
-auto get_context(const entt::registry& registry, const ContextID id)
+auto get_context(const entt::registry& registry, const UUID& id)
     -> const comp::AttributeContext&
 {
   if (const auto& context = ctx_get<comp::AttributeContext>(registry); context.id == id) {
@@ -142,12 +182,6 @@ auto current_context(const entt::registry& registry) -> const comp::AttributeCon
   return (current.entity != entt::null)
              ? checked_get<comp::AttributeContext>(registry, current.entity)
              : ctx_get<comp::AttributeContext>(registry);
-}
-
-auto current_context_id(const entt::registry& registry) -> ContextID
-{
-  const auto& context = current_context(registry);
-  return context.id;
 }
 
 }  // namespace tactile::sys

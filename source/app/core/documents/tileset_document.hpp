@@ -40,6 +40,7 @@ namespace tactile {
  * - `CommandStack`
  * - `comp::AttributeContext`
  * - `comp::ActiveAttributeContext`
+ * - `comp::ContextMapping`
  * - `comp::Tileset`
  * - `comp::TilesetCache`
  * - `comp::UvTileSize`

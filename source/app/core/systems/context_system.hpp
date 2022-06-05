@@ -37,16 +37,26 @@ namespace tactile::sys {
 /// \{
 
 /**
- * \brief Adds an attribute context component to an entity.
+ * Destroys an entity and unregisters the associated context, if there is one.
  *
- * \details The created attribute context will automatically be assigned a unique ID.
+ * This function should always be used to destroy entities, even for non-context
+ * entities, to maintain forward-compatibility.
  *
- * \pre The entity identifier cannot be null.
+ * \param registry the associated registry.
+ * \param entity the entity that will be destroyed.
+ */
+void destroy_entity(entt::registry& registry, entt::entity entity);
+
+/**
+ * Registers an entity as an attribute context.
  *
- * \param registry the document registry.
- * \param entity the entity that will be assigned an attribute context.
+ * The created attribute context will automatically be assigned a unique ID. All attribute
+ * contexts must be initialized using this function!
  *
- * \return the created attribute context.
+ * \param registry the associated registry.
+ * \param entity the entity that will be registered.
+ *
+ * \return the attached attribute context component.
  */
 auto register_context(entt::registry& registry, entt::entity entity)
     -> comp::AttributeContext&;
@@ -84,7 +94,9 @@ void restore_attribute_context(entt::registry& registry,
                                entt::entity entity,
                                AttributeContextSnapshot snapshot);
 
-void set_context_id(comp::AttributeContext& context, const UUID& id);
+void set_context_id(entt::registry& registry,
+                    comp::AttributeContext& context,
+                    const UUID& id);
 
 /**
  * Finds an entity with a specific context identifier.
@@ -107,10 +119,10 @@ void set_context_id(comp::AttributeContext& context, const UUID& id);
  *
  * \throws TactileError if the identifier is invalid.
  */
-[[nodiscard]] auto get_context(entt::registry& registry, ContextID id)
+[[nodiscard]] auto get_context(entt::registry& registry, const UUID& id)
     -> comp::AttributeContext&;
 
-[[nodiscard]] auto get_context(const entt::registry& registry, ContextID id)
+[[nodiscard]] auto get_context(const entt::registry& registry, const UUID& id)
     -> const comp::AttributeContext&;
 
 /**
@@ -122,15 +134,6 @@ void set_context_id(comp::AttributeContext& context, const UUID& id);
  */
 [[nodiscard]] auto current_context(const entt::registry& registry)
     -> const comp::AttributeContext&;
-
-/**
- * \brief Returns the identifier associated with the current context.
- *
- * \param registry the document registry.
- *
- * \return the ID of the current context.
- */
-[[nodiscard]] auto current_context_id(const entt::registry& registry) -> ContextID;
 
 /// \} End of group context-system
 

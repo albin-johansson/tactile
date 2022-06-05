@@ -31,7 +31,7 @@ ChangePropertyTypeCmd::ChangePropertyTypeCmd(RegistryRef registry,
                                              const AttributeType type)
     : ACommand{"Change Property Type"}
     , mRegistry{registry}
-    , mContextId{sys::current_context_id(mRegistry)}
+    , mContextId{sys::current_context(mRegistry).id}
     , mName{std::move(name)}
     , mPropertyType{type}
 {}

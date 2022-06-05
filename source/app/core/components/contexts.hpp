@@ -19,29 +19,19 @@
 
 #pragma once
 
-#include <entt/entity/registry.hpp>
+#include <boost/uuid/uuid_hash.hpp>
+#include <entt/entity/entity.hpp>
 
-namespace tactile::sys {
+#include "core/common/associative.hpp"
+#include "core/common/uuid.hpp"
 
-/**
- * \brief Creates a registry for a map document.
- *
- * \ingroup systems
- *
- * \details The registry will feature the following context components:
- * - `comp::MapInfo`
- * - `Viewport`
- * - `TilesetContext`
- * - `AttributeContext`
- * - `ActiveLayer`
- * - `ActiveTileset`
- * - `ActiveAttributeContext`
- * - `ActiveObject`
- * - `ContextMapping`
- * - `ToolManager`
- *
- * \return a map document registry.
- */
-[[nodiscard]] auto new_map_document_registry() -> entt::registry;
+namespace tactile::comp {
 
-}  // namespace tactile::sys
+/// Context component used to efficiently keep track of all attribute context entities.
+/// \ingroup components
+struct ContextMapping final
+{
+  HashMap<UUID, entt::entity> entities;
+};
+
+}  // namespace tactile::comp

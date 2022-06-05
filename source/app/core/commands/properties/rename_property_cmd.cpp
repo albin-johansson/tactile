@@ -31,7 +31,7 @@ RenamePropertyCmd::RenamePropertyCmd(RegistryRef registry,
                                      std::string newName)
     : ACommand{"Rename Property"}
     , mRegistry{registry}
-    , mContextId{sys::current_context_id(mRegistry)}
+    , mContextId{sys::current_context(mRegistry).id}
     , mOldName{std::move(oldName)}
     , mNewName{std::move(newName)}
 {}

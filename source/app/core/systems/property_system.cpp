@@ -25,6 +25,7 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/common/ecs.hpp"
+#include "core/systems/context_system.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {
@@ -69,7 +70,7 @@ void remove_property(entt::registry& registry,
   TACTILE_ASSERT(entity != entt::null);
 
   std::erase(context.properties, entity);
-  registry.destroy(entity);
+  destroy_entity(registry, entity);
 }
 
 void rename_property(entt::registry& registry,

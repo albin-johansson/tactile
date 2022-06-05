@@ -24,6 +24,7 @@
 #include "core/common/ecs.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
@@ -100,7 +101,7 @@ void detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId)
   const auto tilesetEntity = find_tileset(mapRegistry, tilesetId);
   if (tilesetEntity != entt::null) {
     _unregister_tiles_from_tile_context(mapRegistry, tilesetEntity);
-    mapRegistry.destroy(tilesetEntity);
+    destroy_entity(mapRegistry, tilesetEntity);
   }
   else {
     throw TactileError{"Invalid tileset identifier!"};

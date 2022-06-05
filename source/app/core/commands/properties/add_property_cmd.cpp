@@ -31,7 +31,7 @@ AddPropertyCmd::AddPropertyCmd(RegistryRef registry,
                                const AttributeType type)
     : ACommand{"Add Property"}
     , mRegistry{registry}
-    , mContextId{sys::current_context_id(mRegistry)}
+    , mContextId{sys::current_context(mRegistry).id}
     , mName{std::move(name)}
     , mType{type}
 {}
