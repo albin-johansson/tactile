@@ -86,11 +86,8 @@ void attach_tileset(entt::registry& mapRegistry,
  *
  * \param mapRegistry a map document registry.
  * \param tilesetId the ID of the external tileset document.
- *
- * \return a snapshot of the removed tileset.
  */
-auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId)
-    -> TilesetSnapshot;
+void detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId);
 
 /**
  * Sets the region of the active tileset that is selected.

@@ -50,15 +50,6 @@ struct AttributeContextSnapshot final
   HashMap<ComponentID, ComponentSnapshot> components;
 };
 
-struct TilesetSnapshot final
-{
-  comp::Tileset core;
-  comp::TilesetSelection selection;
-  comp::Texture texture;
-  comp::UvTileSize uv;
-  AttributeContextSnapshot context;
-};
-
 struct ObjectSnapshot final
 {
   comp::Object core;

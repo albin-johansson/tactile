@@ -151,18 +151,12 @@ void attach_tileset(entt::registry& mapRegistry,
   _refresh_tileset_cache(mapRegistry, tilesetEntity, ref, tileset);
 }
 
-auto detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId) -> TilesetSnapshot
+void detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId)
 {
   const auto tilesetEntity = find_tileset(mapRegistry, tilesetId);
   if (tilesetEntity != entt::null) {
-    // TODO remove snapshot.uv
-    TilesetSnapshot snapshot;
-    snapshot.selection = checked_get<comp::TilesetSelection>(mapRegistry, tilesetEntity);
-
     _unregister_tiles_from_tile_context(mapRegistry, tilesetEntity);
     mapRegistry.destroy(tilesetEntity);
-
-    return snapshot;
   }
   else {
     throw TactileError{"Invalid tileset identifier!"};
