@@ -88,7 +88,7 @@ auto TilesetDocument::get_displayed_tile(const TileIndex index) const -> TileInd
     const auto entity = iter->second;
 
     if (const auto* animation = mRegistry.try_get<comp::Animation>(entity)) {
-      const auto frameEntity = animation->frames.at(animation->index);
+      const auto frameEntity = animation->current_frame();
       const auto& frame = checked_get<comp::AnimationFrame>(mRegistry, frameEntity);
 
       /* This cache is cleared before each frame */

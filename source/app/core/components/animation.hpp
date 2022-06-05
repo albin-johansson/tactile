@@ -44,6 +44,8 @@ struct Animation final
   usize index{};                     ///< Index of the current frame.
   cen::u64ms last_update_time{};     ///< When a frame was last changed.
   std::vector<entt::entity> frames;  ///< The associated frames.
+
+  [[nodiscard]] auto current_frame() const -> entt::entity { return frames.at(index); }
 };
 
 }  // namespace tactile::comp
