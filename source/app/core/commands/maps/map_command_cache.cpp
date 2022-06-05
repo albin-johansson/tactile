@@ -21,8 +21,10 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
+#include "core/systems/context_system.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 
@@ -36,8 +38,8 @@ void MapCommandCache::clear() noexcept
 void MapCommandCache::restore_tiles(entt::registry& registry)
 {
   for (const auto& [layerId, tileCache] : mCache) {
-    const auto entity = sys::get_tile_layer_entity(registry, layerId);
-    auto& layer = registry.get<comp::TileLayer>(entity);
+    const auto entity = sys::find_context(registry, layerId);
+    auto& layer = checked_get<comp::TileLayer>(registry, entity);
 
     for (const auto& [position, tileId] : tileCache) {
       sys::set_tile(layer, position, tileId);
