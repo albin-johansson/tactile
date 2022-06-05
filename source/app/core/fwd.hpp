@@ -45,7 +45,6 @@ struct ActiveContext;
 struct ActiveLayer;
 struct ActiveObject;
 struct ActiveTileset;
-struct ActiveTool;
 
 struct CurrentRectangleStroke;
 struct CurrentEllipseStroke;
