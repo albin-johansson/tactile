@@ -56,12 +56,12 @@ constinit bool _is_focused = false;
 void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& registry = model.get_active_registry();
-  const auto activeLayerEntity = ctx_get<comp::ActiveLayer>(registry).entity;
-  const auto hasActiveLayer = activeLayerEntity != entt::null;
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  const auto hasActiveLayer = active.layer != entt::null;
 
   Maybe<UUID> activeLayerId;
   if (hasActiveLayer) {
-    const auto& context = checked_get<comp::Context>(registry, activeLayerEntity);
+    const auto& context = checked_get<comp::Context>(registry, active.layer);
     activeLayerId = context.id;
   }
 
@@ -81,17 +81,15 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
     dispatcher.enqueue<DuplicateLayerEvent>(activeLayerId.value());
   }
 
-  if (icon_button(
-          TAC_ICON_MOVE_UP,
-          "Move layer up",
-          hasActiveLayer && sys::can_move_layer_up(registry, activeLayerEntity))) {
+  if (icon_button(TAC_ICON_MOVE_UP,
+                  "Move layer up",
+                  hasActiveLayer && sys::can_move_layer_up(registry, active.layer))) {
     dispatcher.enqueue<MoveLayerUpEvent>(activeLayerId.value());
   }
 
-  if (icon_button(
-          TAC_ICON_MOVE_DOWN,
-          "Move layer down",
-          hasActiveLayer && sys::can_move_layer_down(registry, activeLayerEntity))) {
+  if (icon_button(TAC_ICON_MOVE_DOWN,
+                  "Move layer down",
+                  hasActiveLayer && sys::can_move_layer_down(registry, active.layer))) {
     dispatcher.enqueue<MoveLayerDownEvent>(activeLayerId.value());
   }
 }

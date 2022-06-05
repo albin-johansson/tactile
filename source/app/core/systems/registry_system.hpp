@@ -30,14 +30,11 @@ namespace tactile::sys {
  *
  * \details The registry will feature the following context components:
  * - `comp::MapInfo`
- * - `Viewport`
- * - `TilesetContext`
- * - `Context`
- * - `ActiveLayer`
- * - `ActiveTileset`
- * - `ActiveContext`
- * - `ActiveObject`
- * - `ContextMapping`
+ * - `comp::Viewport`
+ * - `comp::TilesetContext`
+ * - `comp::Context`
+ * - `comp::ActiveState`
+ * - `comp::ContextMapping`
  * - `ToolManager`
  *
  * \return a map document registry.

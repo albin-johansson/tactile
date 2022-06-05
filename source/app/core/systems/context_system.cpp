@@ -175,9 +175,9 @@ auto get_context(const entt::registry& registry, const UUID& id) -> const comp::
 
 auto current_context(const entt::registry& registry) -> const comp::Context&
 {
-  const auto& current = ctx_get<comp::ActiveContext>(registry);
-  return (current.entity != entt::null)
-             ? checked_get<comp::Context>(registry, current.entity)
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  return (active.context != entt::null)
+             ? checked_get<comp::Context>(registry, active.context)
              : ctx_get<comp::Context>(registry);
 }
 

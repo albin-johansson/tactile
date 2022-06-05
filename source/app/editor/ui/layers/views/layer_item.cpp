@@ -159,14 +159,14 @@ void layer_item_view(const entt::registry& registry,
                      entt::dispatcher& dispatcher,
                      const entt::entity layerEntity)
 {
-  const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
 
   const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
   const auto& context = checked_get<comp::Context>(registry, layerEntity);
 
   const Scope scope{static_cast<int>(hash(context.id))};
 
-  const auto isActiveLayer = layerEntity == activeLayer.entity;
+  const auto isActiveLayer = layerEntity == active.layer;
   const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
                                    : _base_node_flags;
 

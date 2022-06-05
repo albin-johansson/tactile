@@ -69,10 +69,4 @@ struct LayerTreeNode final
   std::vector<entt::entity> children;  ///< All associated child nodes.
 };
 
-/// Context component that keeps track of the active layer.
-struct ActiveLayer final
-{
-  entt::entity entity{entt::null};  ///< The currently active layer, can be null.
-};
-
 }  // namespace tactile::comp

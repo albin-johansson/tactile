@@ -192,8 +192,8 @@ void _restore_layers(MapDocument& document, const ir::MapData& mapData)
   sys::sort_layers(registry);
 
   if (!registry.storage<comp::LayerTreeNode>().empty()) {
-    auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
-    activeLayer.entity = registry.view<comp::LayerTreeNode>().front();
+    auto& active = ctx_get<comp::ActiveState>(registry);
+    active.layer = registry.view<comp::LayerTreeNode>().front();
   }
 }
 
@@ -293,8 +293,8 @@ void _restore_tilesets(DocumentModel& model,
 
   auto& registry = map.get_registry();
   if (!registry.storage<comp::TilesetRef>().empty()) {
-    auto& activeTileset = ctx_get<comp::ActiveTileset>(registry);
-    activeTileset.entity = registry.view<comp::TilesetRef>().front();
+    auto& active = ctx_get<comp::ActiveState>(registry);
+    active.tileset = registry.view<comp::TilesetRef>().front();
   }
 }
 

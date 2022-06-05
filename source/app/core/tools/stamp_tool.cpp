@@ -28,6 +28,7 @@
 #include "core/common/ecs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/random.hpp"
+#include "core/components/attributes.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/events/tool_events.hpp"
@@ -69,10 +70,9 @@ void StampTool::draw_gizmos(const DocumentModel& model,
     return;
   }
 
-  const auto& activeTileset = ctx_get<comp::ActiveTileset>(registry);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
 
-  const auto& selection =
-      checked_get<comp::TilesetSelection>(registry, activeTileset.entity);
+  const auto& selection = checked_get<comp::TilesetSelection>(registry, active.tileset);
   if (!selection.region) {
     return;
   }
@@ -82,7 +82,7 @@ void StampTool::draw_gizmos(const DocumentModel& model,
   const auto selectionSize = region.end - region.begin;
   const auto offset = selectionSize / TilePos{2, 2};
 
-  const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, activeTileset.entity);
+  const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, active.tileset);
   const auto& tileset = model.view_tileset(tilesetRef.source_tileset);
 
   const auto& texture = tileset.texture();

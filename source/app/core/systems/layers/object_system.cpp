@@ -128,14 +128,14 @@ auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectR
     }
   }
 
-  if (auto& activeContext = ctx_get<comp::ActiveContext>(registry);
-      activeContext.entity == objectEntity) {
-    activeContext.entity = entt::null;
+  auto& active = ctx_get<comp::ActiveState>(registry);
+
+  if (active.context == objectEntity) {
+    active.context = entt::null;
   }
 
-  if (auto& activeObject = ctx_get<comp::ActiveObject>(registry);
-      activeObject.entity == objectEntity) {
-    activeObject.entity = entt::null;
+  if (active.object == objectEntity) {
+    active.object = entt::null;
   }
 
   RemoveObjectResult result;

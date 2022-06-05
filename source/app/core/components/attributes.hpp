@@ -36,6 +36,14 @@ using ComponentAttrMap = TreeMap<std::string, Attribute>;
 
 namespace tactile::comp {
 
+struct ActiveState final
+{
+  entt::entity context{entt::null};
+  entt::entity tileset{entt::null};
+  entt::entity layer{entt::null};
+  entt::entity object{entt::null};
+};
+
 /**
  * Featured by all entities that can host properties and components.
  *
@@ -54,19 +62,6 @@ struct Context final
   std::string name;
   std::vector<entt::entity> properties;  ///< All associated properties.
   std::vector<entt::entity> components;  ///< All associated components.
-};
-
-/**
- * Context component that keeps track of the current attribute context.
- *
- * There is always an active attribute context, a null active entity is used to
- * indicate that the root map is the active context.
- *
- * \ingroup components
- */
-struct ActiveContext final
-{
-  entt::entity entity{entt::null};  ///< The current context entity (may be null).
 };
 
 /**

@@ -99,11 +99,11 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
 
     const auto& mapRegistry = model.get_active_registry();
 
-    const auto& activeTileset = ctx_get<comp::ActiveTileset>(mapRegistry);
+    const auto& active = ctx_get<comp::ActiveState>(mapRegistry);
     for (auto&& [entity, ref] : mapRegistry.view<comp::TilesetRef>().each()) {
       const Scope scope{static_cast<int>(hash(ref.source_tileset))};
 
-      const auto isActive = activeTileset.entity == entity;
+      const auto isActive = active.tileset == entity;
 
       const auto& document = model.view_tileset(ref.source_tileset);
       const auto& name = document.get_name();

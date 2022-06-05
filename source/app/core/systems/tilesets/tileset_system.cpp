@@ -22,6 +22,7 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
 #include "core/systems/context_system.hpp"
@@ -61,8 +62,8 @@ void select_tileset(entt::registry& mapRegistry, const UUID& id)
   const auto entity = find_tileset(mapRegistry, id);
   TACTILE_ASSERT(entity != entt::null);
 
-  auto& active = ctx_get<comp::ActiveTileset>(mapRegistry);
-  active.entity = entity;
+  auto& active = ctx_get<comp::ActiveState>(mapRegistry);
+  active.tileset = entity;
 }
 
 void attach_tileset(entt::registry& mapRegistry,
@@ -110,10 +111,10 @@ void detach_tileset(entt::registry& mapRegistry, const UUID& tilesetId)
 
 void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
 {
-  auto& active = ctx_get<comp::ActiveTileset>(mapRegistry);
-  TACTILE_ASSERT(active.entity != entt::null);
+  auto& active = ctx_get<comp::ActiveState>(mapRegistry);
+  TACTILE_ASSERT(active.tileset != entt::null);
 
-  auto& selection = checked_get<comp::TilesetSelection>(mapRegistry, active.entity);
+  auto& selection = checked_get<comp::TilesetSelection>(mapRegistry, active.tileset);
   selection.region = region;
 }
 
@@ -135,15 +136,15 @@ auto find_tileset_with_tile(const entt::registry& registry, const TileID id)
 
 auto find_active_tileset(const entt::registry& registry) -> entt::entity
 {
-  const auto& active = ctx_get<comp::ActiveTileset>(registry);
-  return active.entity;
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  return active.tileset;
 }
 
 auto is_tileset_selection_not_empty(const entt::registry& registry) -> bool
 {
-  const auto& active = ctx_get<comp::ActiveTileset>(registry);
-  if (active.entity != entt::null) {
-    const auto& selection = checked_get<comp::TilesetSelection>(registry, active.entity);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  if (active.tileset != entt::null) {
+    const auto& selection = checked_get<comp::TilesetSelection>(registry, active.tileset);
     return selection.region.has_value();
   }
   else {
@@ -153,9 +154,9 @@ auto is_tileset_selection_not_empty(const entt::registry& registry) -> bool
 
 auto is_single_tile_selected_in_tileset(const entt::registry& registry) -> bool
 {
-  const auto& active = ctx_get<comp::ActiveTileset>(registry);
-  if (active.entity != entt::null) {
-    const auto& selection = checked_get<comp::TilesetSelection>(registry, active.entity);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  if (active.tileset != entt::null) {
+    const auto& selection = checked_get<comp::TilesetSelection>(registry, active.tileset);
     if (selection.region) {
       const auto& region = *selection.region;
       return (region.end - region.begin) == TilePos{1, 1};

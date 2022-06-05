@@ -46,16 +46,6 @@ struct Object final
 };
 
 /**
- * \brief Context component used to keep track of active object.
- *
- * \ingroup components
- */
-struct ActiveObject final
-{
-  entt::entity entity{entt::null};  ///< The currently active object (possibly null).
-};
-
-/**
  * \brief Component that provides temporary information about dragged objects.
  *
  * \ingroup components

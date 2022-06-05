@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_tree_system.hpp"
 #include "core/systems/registry_system.hpp"
@@ -17,26 +19,26 @@ constexpr entt::entity null_entity = entt::null;
 TEST(LayerSystem, SortLayers)
 {
   auto registry = sys::new_map_document_registry();
-  auto& active = registry.ctx().at<comp::ActiveLayer>();
+  auto& active = ctx_get<comp::ActiveState>(registry);
 
   const auto a = sys::new_tile_layer(registry);
   const auto b = sys::new_object_layer(registry);
   const auto c = sys::new_group_layer(registry);
 
-  active.entity = c;
+  active.layer = c;
   const auto d = sys::new_tile_layer(registry);
   const auto e = sys::new_tile_layer(registry);
   const auto f = sys::new_group_layer(registry);
 
-  active.entity = f;
+  active.layer = f;
   const auto g = sys::new_tile_layer(registry);
   const auto h = sys::new_tile_layer(registry);
 
-  active.entity = c;
+  active.layer = c;
   const auto i = sys::new_tile_layer(registry);
   const auto j = sys::new_tile_layer(registry);
 
-  active.entity = entt::null;
+  active.layer = entt::null;
   const auto k = sys::new_object_layer(registry);
 
   /*
@@ -75,21 +77,21 @@ TEST(LayerSystem, SortLayers)
 TEST(LayerSystem, RemoveLayer)
 {
   auto registry = sys::new_map_document_registry();
-  auto& active = registry.ctx().at<comp::ActiveLayer>();
+  auto& active = registry.ctx().at<comp::ActiveState>();
 
   const auto a = sys::new_tile_layer(registry);
   const auto b = sys::new_group_layer(registry);
 
-  active.entity = b;
+  active.layer = b;
   const auto c = sys::new_object_layer(registry);
   const auto d = sys::new_object_layer(registry);
   const auto e = sys::new_group_layer(registry);
 
-  active.entity = e;
+  active.layer = e;
   const auto f = sys::new_tile_layer(registry);
   const auto g = sys::new_tile_layer(registry);
 
-  active.entity = entt::null;
+  active.layer = entt::null;
   const auto h = sys::new_tile_layer(registry);
 
   ASSERT_EQ(0, sys::layer_local_index(registry, a));

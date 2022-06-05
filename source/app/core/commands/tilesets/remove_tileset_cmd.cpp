@@ -19,6 +19,7 @@
 
 #include "remove_tileset_cmd.hpp"
 
+#include "core/components/attributes.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
@@ -72,10 +73,10 @@ void RemoveTilesetCmd::redo()
 
   sys::detach_tileset(mapRegistry, mTilesetId);
 
-  auto& active = ctx_get<comp::ActiveTileset>(mapRegistry);
-  if (tilesetEntity == active.entity) {
+  auto& active = ctx_get<comp::ActiveState>(mapRegistry);
+  if (tilesetEntity == active.tileset) {
     const auto view = mapRegistry.view<comp::TilesetRef>();
-    active.entity = view.empty() ? entt::null : view.front();
+    active.tileset = view.empty() ? entt::null : view.front();
   }
 }
 

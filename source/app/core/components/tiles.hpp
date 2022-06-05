@@ -115,14 +115,6 @@ struct TilesetSelection final
   Maybe<Region> region;  ///< The currently selected region, if any.
 };
 
-/**
- * Context component that keeps track of the active tileset.
- */
-struct ActiveTileset final
-{
-  entt::entity entity{entt::null};  ///< The active tileset (might be null).
-};
-
 /// \} End of group components
 
 }  // namespace tactile::comp

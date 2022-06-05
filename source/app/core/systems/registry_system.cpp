@@ -39,10 +39,7 @@ auto new_map_document_registry() -> entt::registry
   entt::registry registry;
 
   auto& ctx = registry.ctx();
-  ctx.emplace<comp::ActiveLayer>();
-  ctx.emplace<comp::ActiveTileset>();
-  ctx.emplace<comp::ActiveContext>();
-  ctx.emplace<comp::ActiveObject>();
+  ctx.emplace<comp::ActiveState>();
   ctx.emplace<comp::ContextMapping>();
   ctx.emplace<ToolManager>();
   ctx.emplace<CommandStack>();

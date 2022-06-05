@@ -46,7 +46,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
 {
   auto& registry = model.get_active_registry();
   if (sys::is_object_layer_active(registry)) {
-    auto& active = ctx_get<comp::ActiveObject>(registry);
+    auto& active = ctx_get<comp::ActiveState>(registry);
 
     const auto& [_, layer] =
         sys::get_object_layer(registry, sys::get_active_layer_id(registry).value());
@@ -54,7 +54,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
 
     switch (mouse.button) {
       case cen::mouse_button::left: {
-        active.entity = objectEntity;
+        active.object = objectEntity;
 
         if (objectEntity != entt::null) {
           const auto& object = checked_get<comp::Object>(registry, objectEntity);
@@ -69,7 +69,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
         break;
       }
       case cen::mouse_button::right: {
-        active.entity = objectEntity;
+        active.object = objectEntity;
 
         if (objectEntity != entt::null) {
           dispatcher.enqueue<SpawnObjectContextMenuEvent>(objectEntity);
@@ -89,10 +89,10 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
 {
   auto& registry = model.get_active_registry();
   if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
-    const auto& active = ctx_get<comp::ActiveObject>(registry);
-    if (active.entity != entt::null) {
-      if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.entity)) {
-        auto& object = checked_get<comp::Object>(registry, active.entity);
+    const auto& active = ctx_get<comp::ActiveState>(registry);
+    if (active.object != entt::null) {
+      if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.object)) {
+        auto& object = checked_get<comp::Object>(registry, active.object);
         if (mouse.is_within_contents) {
           const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);
           const auto dx = (mouse.x - drag->last_mouse_x) / xRatio;
@@ -138,21 +138,21 @@ void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
                                            entt::dispatcher& dispatcher)
 {
   auto& registry = model.get_active_registry();
-  const auto entity = ctx_get<comp::ActiveObject>(registry).entity;
-  if (entity != entt::null) {
-    if (const auto* drag = registry.try_get<comp::ObjectDragInfo>(entity)) {
-      const auto& object = checked_get<comp::Object>(registry, entity);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  if (active.object != entt::null) {
+    if (const auto* drag = registry.try_get<comp::ObjectDragInfo>(active.object)) {
+      const auto& object = checked_get<comp::Object>(registry, active.object);
 
       /* Only emit an event if the object has been moved along any axis */
       if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
-        const auto& context = checked_get<comp::Context>(registry, entity);
+        const auto& context = checked_get<comp::Context>(registry, active.object);
         dispatcher.enqueue<MoveObjectEvent>(
             context.id,
             Vector2f{drag->origin_object_x, drag->origin_object_y},
             Vector2f{object.x, object.y});
       }
 
-      registry.remove<comp::ObjectDragInfo>(entity);
+      registry.remove<comp::ObjectDragInfo>(active.object);
     }
   }
 }

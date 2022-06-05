@@ -27,6 +27,7 @@
 #include <imgui_internal.h>
 
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/viewport.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/map_events.hpp"
@@ -178,13 +179,13 @@ void _update_map_view_object_context_menu(const entt::registry& registry,
                                           entt::dispatcher& dispatcher)
 {
   if (Popup popup{_object_context_menu_id}; popup.is_open()) {
-    const auto active = ctx_get<comp::ActiveObject>(registry);
+    const auto& active = ctx_get<comp::ActiveState>(registry);
 
-    TACTILE_ASSERT(active.entity != entt::null);
-    const auto& object = checked_get<comp::Object>(registry, active.entity);
+    TACTILE_ASSERT(active.object != entt::null);
+    const auto& object = checked_get<comp::Object>(registry, active.object);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
-      dispatcher.enqueue<InspectContextEvent>(active.entity);
+      dispatcher.enqueue<InspectContextEvent>(active.object);
     }
 
     ImGui::Separator();

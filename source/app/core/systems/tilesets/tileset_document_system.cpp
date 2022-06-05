@@ -59,7 +59,7 @@ auto new_tileset_document_registry(const comp::Texture& texture, const Vector2i&
   auto& ctx = registry.ctx();
   ctx.emplace<CommandStack>();
   ctx.emplace<comp::Texture>(texture);
-  ctx.emplace<comp::ActiveContext>();
+  ctx.emplace<comp::ActiveState>();
   ctx.emplace<comp::ContextMapping>();
 
   auto& tileset = ctx.emplace<comp::Tileset>();

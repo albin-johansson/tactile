@@ -22,6 +22,7 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/components/parent.hpp"
@@ -56,7 +57,7 @@ void render_map(GraphicsCtx& graphics, const DocumentModel& model, const MapDocu
   const auto& prefs = io::get_preferences();
 
   const auto& registry = map.get_registry();
-  const auto& activeLayer = ctx_get<comp::ActiveLayer>(registry);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
 
   const bool highlightActiveLayer = prefs.highlight_active_layer();
 
@@ -77,7 +78,7 @@ void render_map(GraphicsCtx& graphics, const DocumentModel& model, const MapDocu
                         map,
                         entity,
                         layer,
-                        activeLayer.entity == entity ? 1.0f : 0.5f);
+                        active.layer == entity ? 1.0f : 0.5f);
         }
         else {
           _render_layer(graphics,
@@ -91,9 +92,8 @@ void render_map(GraphicsCtx& graphics, const DocumentModel& model, const MapDocu
     }
   }
 
-  if (const auto& activeObject = ctx_get<comp::ActiveObject>(registry);
-      activeObject.entity != entt::null) {
-    render_object(graphics, registry, activeObject.entity, cen::colors::yellow);
+  if (active.object != entt::null) {
+    render_object(graphics, registry, active.object, cen::colors::yellow);
   }
 
   graphics.set_line_thickness(1.0f);

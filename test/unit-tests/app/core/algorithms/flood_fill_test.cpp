@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
@@ -16,7 +18,7 @@ TEST(FloodFill, flood)
   const auto entity = sys::new_tile_layer(registry);
   auto& layer = registry.get<comp::TileLayer>(entity);
 
-  registry.ctx().at<comp::ActiveLayer>().entity = entity;
+  ctx_get<comp::ActiveState>(registry).layer = entity;
 
   /* 0  0  0  0  0
      0  0  0  0  0

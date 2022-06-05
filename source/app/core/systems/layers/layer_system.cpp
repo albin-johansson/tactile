@@ -43,9 +43,9 @@ namespace {
 
 [[nodiscard]] auto _new_layer_parent(const entt::registry& registry) -> entt::entity
 {
-  const auto active = ctx_get<comp::ActiveLayer>(registry);
-  if (active.entity != entt::null && registry.all_of<comp::GroupLayer>(active.entity)) {
-    return active.entity;
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  if (active.layer != entt::null && registry.all_of<comp::GroupLayer>(active.layer)) {
+    return active.layer;
   }
   {
     return entt::null;
@@ -238,8 +238,8 @@ auto remove_layer(entt::registry& registry, const entt::entity entity) -> LayerS
     }
   };
 
-  maybe_reset(ctx_get<comp::ActiveLayer>(registry).entity, entity);
-  maybe_reset(ctx_get<comp::ActiveContext>(registry).entity, entity);
+  maybe_reset(ctx_get<comp::ActiveState>(registry).layer, entity);
+  maybe_reset(ctx_get<comp::ActiveState>(registry).context, entity);
 
   destroy_layer_node(registry, entity);
 
@@ -376,21 +376,21 @@ auto duplicate_layer(entt::registry& registry,
 
 void select_layer(entt::registry& registry, const UUID& id)
 {
-  auto& active = ctx_get<comp::ActiveLayer>(registry);
-  active.entity = find_context(registry, id);
+  auto& active = ctx_get<comp::ActiveState>(registry);
+  active.layer = find_context(registry, id);
 }
 
 auto get_active_layer(const entt::registry& registry) -> entt::entity
 {
-  const auto& active = ctx_get<comp::ActiveLayer>(registry);
-  return active.entity;
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  return active.layer;
 }
 
 auto is_tile_layer_active(const entt::registry& registry) -> bool
 {
-  const auto& active = ctx_get<comp::ActiveLayer>(registry);
-  if (active.entity != entt::null) {
-    return registry.all_of<comp::TileLayer>(active.entity);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  if (active.layer != entt::null) {
+    return registry.all_of<comp::TileLayer>(active.layer);
   }
   else {
     return false;
@@ -399,9 +399,9 @@ auto is_tile_layer_active(const entt::registry& registry) -> bool
 
 auto is_object_layer_active(const entt::registry& registry) -> bool
 {
-  const auto& active = ctx_get<comp::ActiveLayer>(registry);
-  if (active.entity != entt::null) {
-    return registry.all_of<comp::ObjectLayer>(active.entity);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  if (active.layer != entt::null) {
+    return registry.all_of<comp::ObjectLayer>(active.layer);
   }
   else {
     return false;
@@ -410,9 +410,9 @@ auto is_object_layer_active(const entt::registry& registry) -> bool
 
 auto get_active_layer_id(const entt::registry& registry) -> Maybe<UUID>
 {
-  const auto& active = ctx_get<comp::ActiveLayer>(registry);
-  if (active.entity != entt::null) {
-    return checked_get<comp::Context>(registry, active.entity).id;
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  if (active.layer != entt::null) {
+    return checked_get<comp::Context>(registry, active.layer).id;
   }
   else {
     return nothing;

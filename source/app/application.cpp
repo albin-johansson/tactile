@@ -419,8 +419,8 @@ void Application::on_show_map_properties()
 {
   if (auto* document = active_document()) {
     auto& registry = document->get_registry();
-    auto& current = ctx_get<comp::ActiveContext>(registry);
-    current.entity = entt::null;
+    auto& active = ctx_get<comp::ActiveState>(registry);
+    active.context = entt::null;
   }
 }
 
@@ -869,8 +869,8 @@ void Application::on_change_property_type(const ChangePropertyTypeEvent& event)
 void Application::on_inspect_context(const InspectContextEvent& event)
 {
   auto& registry = mData->model.get_active_registry();
-  auto& current = ctx_get<comp::ActiveContext>(registry);
-  current.entity = event.entity;
+  auto& active = ctx_get<comp::ActiveState>(registry);
+  active.context = event.entity;
 }
 
 void Application::on_open_component_editor()
