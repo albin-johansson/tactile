@@ -58,8 +58,7 @@ void destroy_entity(entt::registry& registry, entt::entity entity);
  *
  * \return the attached attribute context component.
  */
-auto register_context(entt::registry& registry, entt::entity entity)
-    -> comp::Context&;
+auto register_context(entt::registry& registry, entt::entity entity) -> comp::Context&;
 
 /**
  * \brief Creates a snapshot of the state of a attribute context.
@@ -94,9 +93,7 @@ void restore_attribute_context(entt::registry& registry,
                                entt::entity entity,
                                AttributeContextSnapshot snapshot);
 
-void set_context_id(entt::registry& registry,
-                    comp::Context& context,
-                    const UUID& id);
+void set_context_id(entt::registry& registry, comp::Context& context, const UUID& id);
 
 /**
  * Finds an entity with a specific context identifier.

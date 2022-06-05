@@ -61,8 +61,7 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
 
   Maybe<UUID> activeLayerId;
   if (hasActiveLayer) {
-    const auto& context =
-        checked_get<comp::Context>(registry, activeLayerEntity);
+    const auto& context = checked_get<comp::Context>(registry, activeLayerEntity);
     activeLayerId = context.id;
   }
 

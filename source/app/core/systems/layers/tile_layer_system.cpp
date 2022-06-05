@@ -37,8 +37,7 @@ namespace {
 
 }  // namespace
 
-auto get_tile_layer_entity(const entt::registry& registry, const UUID& id)
-    -> entt::entity
+auto get_tile_layer_entity(const entt::registry& registry, const UUID& id) -> entt::entity
 {
   const auto entity = find_context(registry, id);
   if (entity != entt::null && registry.all_of<comp::TileLayer>(entity)) {

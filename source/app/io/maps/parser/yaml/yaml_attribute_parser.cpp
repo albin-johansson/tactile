@@ -268,8 +268,7 @@ auto parse_components(const YAML::Node& node,
   return ParseError::None;
 }
 
-auto parse_properties(const YAML::Node& node, ir::ContextData& data)
-    -> ParseError
+auto parse_properties(const YAML::Node& node, ir::ContextData& data) -> ParseError
 {
   if (auto sequence = node["properties"]) {
     for (const auto& propertyNode : sequence) {

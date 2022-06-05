@@ -72,7 +72,6 @@ void _init_sdl_attributes()
   return flags;
 }
 
-
 }  // namespace
 
 /* Keep the handler out of the anonymous namespace */

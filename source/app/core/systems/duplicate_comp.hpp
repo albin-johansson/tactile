@@ -42,9 +42,8 @@ auto deep_copy(entt::registry& registry,
 
 template <>
 inline auto deep_copy<comp::Context>(entt::registry& registry,
-                                              const entt::entity source,
-                                              const entt::entity destination)
-    -> comp::Context&
+                                     const entt::entity source,
+                                     const entt::entity destination) -> comp::Context&
 {
   auto& context = register_context(registry, destination);
 

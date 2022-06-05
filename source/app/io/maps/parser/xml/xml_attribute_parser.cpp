@@ -105,8 +105,7 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(pugi::xml_node node, ir::ContextData& context)
-    -> ParseError
+auto parse_properties(pugi::xml_node node, ir::ContextData& context) -> ParseError
 {
   for (const auto propertyNode : node.child("properties").children("property")) {
     if (const auto err = _parse_property(propertyNode, context);

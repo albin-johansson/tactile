@@ -253,10 +253,8 @@ auto restore_layer(entt::registry& registry, LayerSnapshot snapshot) -> entt::en
     parent = find_context(registry, *snapshot.parent);
   }
 
-  const auto entity = new_layer_skeleton(registry,
-                                         snapshot.core.type,
-                                         snapshot.context.name,
-                                         parent);
+  const auto entity =
+      new_layer_skeleton(registry, snapshot.core.type, snapshot.context.name, parent);
 
   {
     auto& layer = checked_get<comp::Layer>(registry, entity);

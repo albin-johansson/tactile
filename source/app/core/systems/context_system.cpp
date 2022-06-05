@@ -121,9 +121,7 @@ void restore_attribute_context(entt::registry& registry,
   }
 }
 
-void set_context_id(entt::registry& registry,
-                    comp::Context& context,
-                    const UUID& id)
+void set_context_id(entt::registry& registry, comp::Context& context, const UUID& id)
 {
   auto& mapping = ctx_get<comp::ContextMapping>(registry);
   const auto entity = mapping.entities.at(context.id);
@@ -160,8 +158,7 @@ auto get_context(entt::registry& registry, const UUID& id) -> comp::Context&
   throw TactileError{"No matching attribute context!"};
 }
 
-auto get_context(const entt::registry& registry, const UUID& id)
-    -> const comp::Context&
+auto get_context(const entt::registry& registry, const UUID& id) -> const comp::Context&
 {
   if (const auto& context = ctx_get<comp::Context>(registry); context.id == id) {
     return context;
