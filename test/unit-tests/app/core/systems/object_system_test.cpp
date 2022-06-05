@@ -54,10 +54,8 @@ struct TestData final
 void _verify_new_object(const TestData& data,
                         const ObjectID id,
                         const ObjectType type,
-                        const float x,
-                        const float y,
-                        const float width,
-                        const float height)
+                        const Vector2f& pos,
+                        const Vector2f& size)
 {
   const auto objectEntity = sys::get_object(data.registry, id);
 
@@ -69,10 +67,10 @@ void _verify_new_object(const TestData& data,
   ASSERT_EQ(id, object.id);
   ASSERT_EQ(type, object.type);
 
-  ASSERT_EQ(x, object.x);
-  ASSERT_EQ(y, object.y);
-  ASSERT_EQ(width, object.width);
-  ASSERT_EQ(height, object.height);
+  ASSERT_EQ(pos.x, object.x);
+  ASSERT_EQ(pos.y, object.y);
+  ASSERT_EQ(size.x, object.width);
+  ASSERT_EQ(size.y, object.height);
 
   ASSERT_TRUE(object.visible);
   ASSERT_TRUE(object.tag.empty());
@@ -84,41 +82,32 @@ TEST(ObjectSystem, NewRectangleObject)
 {
   auto data = _new_test_data();
 
-  const auto x = 84.3f;
-  const auto y = 748.9f;
-  const auto width = 432.6f;
-  const auto height = 254.0f;
+  const Vector2f pos{84.3f, 748.9f};
+  const Vector2f size{432.6f, 254.0f};
 
-  const auto id =
-      sys::new_rectangle_object(data.registry, data.layer_id, x, y, width, height);
-
-  _verify_new_object(data, id, ObjectType::Rect, x, y, width, height);
+  const auto id = sys::new_rectangle_object(data.registry, data.layer_id, pos, size);
+  _verify_new_object(data, id, ObjectType::Rect, pos, size);
 }
 
 TEST(ObjectSystem, NewEllipseObject)
 {
   auto data = _new_test_data();
 
-  const auto x = 12.3f;
-  const auto y = -83.2f;
-  const auto width = 942.1f;
-  const auto height = 4'218.7f;
+  const Vector2f pos{12.3f, -83.2f};
+  const Vector2f size{942.1f, 4'218.7f};
 
-  const auto id =
-      sys::new_ellipse_object(data.registry, data.layer_id, x, y, width, height);
-
-  _verify_new_object(data, id, ObjectType::Ellipse, x, y, width, height);
+  const auto id = sys::new_ellipse_object(data.registry, data.layer_id, pos, size);
+  _verify_new_object(data, id, ObjectType::Ellipse, pos, size);
 }
 
 TEST(ObjectSystem, NewPointObject)
 {
   auto data = _new_test_data();
 
-  const auto x = 12.3f;
-  const auto y = -83.2f;
+  const Vector2f pos{12.3f, -83.2f};
 
-  const auto id = sys::new_point_object(data.registry, data.layer_id, x, y);
-  _verify_new_object(data, id, ObjectType::Point, x, y, 0, 0);
+  const auto id = sys::new_point_object(data.registry, data.layer_id, pos);
+  _verify_new_object(data, id, ObjectType::Point, pos, {0, 0});
 }
 
 TEST(ObjectSystem, RemoveObject)
@@ -126,7 +115,7 @@ TEST(ObjectSystem, RemoveObject)
   auto data = _new_test_data();
   ASSERT_THROW(sys::remove_object(data.registry, 1), TactileError);
 
-  const auto id = sys::new_point_object(data.registry, data.layer_id, 0, 0);
+  const auto id = sys::new_point_object(data.registry, data.layer_id, {0, 0});
   const auto snapshot = sys::remove_object(data.registry, id);
 
   ASSERT_EQ(entt::entity{entt::null}, sys::find_object(data.registry, id));
@@ -140,13 +129,10 @@ TEST(ObjectSystem, RemoveAndRestoreObject)
 {
   auto data = _new_test_data();
 
-  const auto x = 74.3f;
-  const auto y = 745.9f;
-  const auto width = 83.1f;
-  const auto height = 23.6f;
+  const Vector2f pos{74.3f, 745.9f};
+  const Vector2f size{83.1f, 23.6f};
 
-  const auto id =
-      sys::new_rectangle_object(data.registry, data.layer_id, x, y, width, height);
+  const auto id = sys::new_rectangle_object(data.registry, data.layer_id, pos, size);
 
   {
     const auto objectEntity = sys::get_object(data.registry, id);
@@ -172,10 +158,10 @@ TEST(ObjectSystem, RemoveAndRestoreObject)
   const auto& object = checked_get<comp::Object>(data.registry, objectEntity);
   ASSERT_EQ(id, object.id);
   ASSERT_EQ(ObjectType::Rect, object.type);
-  ASSERT_EQ(x, object.x);
-  ASSERT_EQ(y, object.y);
-  ASSERT_EQ(width, object.width);
-  ASSERT_EQ(height, object.height);
+  ASSERT_EQ(pos.x, object.x);
+  ASSERT_EQ(pos.y, object.y);
+  ASSERT_EQ(size.x, object.width);
+  ASSERT_EQ(size.y, object.height);
   ASSERT_EQ("tag", object.tag);
   ASSERT_FALSE(object.visible);
 

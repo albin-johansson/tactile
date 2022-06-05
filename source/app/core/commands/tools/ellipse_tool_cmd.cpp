@@ -24,17 +24,13 @@
 namespace tactile {
 
 EllipseToolCmd::EllipseToolCmd(RegistryRef registry,
-                               const float x,
-                               const float y,
-                               const float width,
-                               const float height)
+                               const Vector2f& pos,
+                               const Vector2f& size)
     : ACommand{"Add Ellipse"}
     , mRegistry{registry}
     , mLayerId{sys::get_active_layer_id(registry).value()}
-    , mX{x}
-    , mY{y}
-    , mWidth{width}
-    , mHeight{height}
+    , mPos{pos}
+    , mSize{size}
 {}
 
 void EllipseToolCmd::undo()
@@ -50,7 +46,7 @@ void EllipseToolCmd::redo()
     sys::restore_object(registry, mSnapshot.value());
   }
   else {
-    mObjectId = sys::new_ellipse_object(registry, mLayerId, mX, mY, mWidth, mHeight);
+    mObjectId = sys::new_ellipse_object(registry, mLayerId, mPos, mSize);
   }
 }
 

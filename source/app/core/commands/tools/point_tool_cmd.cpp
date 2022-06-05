@@ -23,12 +23,11 @@
 
 namespace tactile {
 
-PointToolCmd::PointToolCmd(RegistryRef registry, const float x, const float y)
+PointToolCmd::PointToolCmd(RegistryRef registry, const Vector2f& pos)
     : ACommand{"Add Point"}
     , mRegistry{registry}
     , mLayerId{sys::get_active_layer_id(registry).value()}
-    , mPointX{x}
-    , mPointY{y}
+    , mPos{pos}
 {}
 
 void PointToolCmd::undo()
@@ -44,7 +43,7 @@ void PointToolCmd::redo()
     sys::restore_object(registry, mSnapshot.value());
   }
   else {
-    mObjectId = sys::new_point_object(registry, mLayerId, mPointX, mPointY);
+    mObjectId = sys::new_point_object(registry, mLayerId, mPos);
   }
 }
 

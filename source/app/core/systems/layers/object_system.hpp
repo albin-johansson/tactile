@@ -22,88 +22,12 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/identifiers.hpp"
+#include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/objects.hpp"
+#include "core/fwd.hpp"
 #include "core/systems/snapshot.hpp"
 
 namespace tactile::sys {
-
-/**
- * \ingroup systems
- * \defgroup object-system Object System
- */
-
-/// \addtogroup object-system
-/// \{
-
-/**
- * \brief Adds a new rectangle object to an object layer.
- *
- * \pre The specified layer must be an object layer.
- *
- * \details The created entity will feature the following components:
- * - `Object`
- * - `Context`
- *
- * \param registry the document registry.
- * \param layerId the object layer to add the object to.
- * \param x the rectangle x-coordinate.
- * \param y the rectangle y-coordinate.
- * \param width the rectangle width.
- * \param height the rectangle height.
- *
- * \return the identifier assigned to the object.
- */
-auto new_rectangle_object(entt::registry& registry,
-                          const UUID& layerId,
-                          float x,
-                          float y,
-                          float width,
-                          float height) -> ObjectID;
-
-/**
- * \brief Adds a new ellipse object to an object layer.
- *
- * \pre The specified layer must be an object layer.
- *
- * \details The created entity will feature the following components:
- * - `Object`
- * - `Context`
- *
- * \param registry the document registry.
- * \param layerId the object layer to add the object to.
- * \param x the ellipse x-coordinate.
- * \param y the ellipse y-coordinate.
- * \param width the ellipse width.
- * \param height the ellipse height.
- *
- * \return the identifier assigned to the object.
- */
-auto new_ellipse_object(entt::registry& registry,
-                        const UUID& layerId,
-                        float x,
-                        float y,
-                        float width,
-                        float height) -> ObjectID;
-
-/**
- * \brief Adds a new point object to an object layer.
- *
- * \pre The specified layer must be an object layer.
- *
- * \details The created entity will feature the following components:
- * - `Object`
- * - `Context`
- *
- * \param registry the map registry.
- * \param layerId the object layer to add the object to.
- * \param x the point x-coordinate.
- * \param y the point y-coordinate.
- *
- * \return the identifier assigned to the object.
- */
-auto new_point_object(entt::registry& registry, const UUID& layerId, float x, float y)
-    -> ObjectID;
 
 struct RemoveObjectResult final
 {
@@ -113,21 +37,77 @@ struct RemoveObjectResult final
 };
 
 /**
- * \brief Removes an object.
+ * Adds a new rectangle to an object layer.
  *
- * \details This function will also remove the object from the associated object layer.
+ * The created entity will feature the following components:
+ * - `comp::Object`
+ * - `comp::Context`
+ *
+ * \param registry the document registry.
+ * \param layerId the object layer to add the object to.
+ * \param pos the object position.
+ * \param size the object size.
+ *
+ * \return the identifier assigned to the object.
+ */
+auto new_rectangle_object(entt::registry& registry,
+                          const UUID& layerId,
+                          const Vector2f& pos,
+                          const Vector2f& size) -> ObjectID;
+
+/**
+ * Adds a new ellipse to an object layer.
+ *
+ * The created entity will feature the following components:
+ * - `comp::Object`
+ * - `comp::Context`
+ *
+ * \param registry the document registry.
+ * \param layerId the object layer to add the object to.
+ * \param pos the object position.
+ * \param size the object size.
+ *
+ * \return the identifier assigned to the object.
+ */
+auto new_ellipse_object(entt::registry& registry,
+                        const UUID& layerId,
+                        const Vector2f& pos,
+                        const Vector2f& size) -> ObjectID;
+
+/**
+ * Adds a new point to an object layer.
+ *
+ * \pre The specified layer must be an object layer.
+ *
+ * The created entity will feature the following components:
+ * - `comp::Object`
+ * - `comp::Context`
+ *
+ * \param registry the map registry.
+ * \param layerId the object layer to add the object to.
+ * \param pos the object position.
+ *
+ * \return the identifier assigned to the object.
+ */
+auto new_point_object(entt::registry& registry, const UUID& layerId, const Vector2f& pos)
+    -> ObjectID;
+
+/**
+ * Removes an object.
+ *
+ * This also removes the object from its associated object layer.
  *
  * \param registry the map registry.
  * \param id the identifier associated with the object to remove.
  *
  * \return a snapshot of the removed object.
  *
- * \throws TactileError if the object ID is invalid.
+ * \throws TactileError if the identifier is invalid.
  */
 auto remove_object(entt::registry& registry, ObjectID id) -> RemoveObjectResult;
 
 /**
- * \brief Restores a previously removed object.
+ * Restores a previously removed object.
  *
  * \param registry the map registry.
  * \param snapshot the snapshot information.
@@ -135,29 +115,28 @@ auto remove_object(entt::registry& registry, ObjectID id) -> RemoveObjectResult;
 void restore_object(entt::registry& registry, RemoveObjectResult snapshot);
 
 /**
- * \brief Returns the object entity associated with a specific ID.
+ * Returns the object entity associated with a specific ID.
  *
  * \param registry the document registry.
  * \param id the ID associated with the desired object.
  *
- * \return the found entity; a null entity is returned if no object is found.
+ * \return the found entity;
+ *         a null entity if no object is found.
  */
 [[nodiscard]] auto find_object(const entt::registry& registry, ObjectID id)
     -> entt::entity;
 
 /**
- * \brief Returns the object entity associated with a specific ID.
+ * Returns the object entity associated with a specific ID.
  *
  * \param registry the document registry.
- * \param id the ID associated with the desired object.
+ * \param id the ID of the desired object.
  *
  * \return the found entity.
  *
- * \throws TactileError if the object identifier is invalid.
+ * \throws TactileError if the identifier is invalid.
  */
 [[nodiscard]] auto get_object(const entt::registry& registry, ObjectID id)
     -> entt::entity;
-
-/// \} End of group object-system
 
 }  // namespace tactile::sys

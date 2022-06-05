@@ -30,8 +30,6 @@
 #include "core/components/map_info.hpp"
 #include "core/components/objects.hpp"
 #include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/object_layer_system.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::sys {
@@ -41,10 +39,8 @@ namespace {
                                 const UUID& layerId,
                                 std::string name,
                                 const ObjectType type,
-                                const float x,
-                                const float y,
-                                const float width,
-                                const float height) -> ObjectID
+                                const Vector2f& pos,
+                                const Vector2f& size) -> ObjectID
 {
   auto& map = ctx_get<comp::MapInfo>(registry);
   const auto id = map.next_object_id;
@@ -63,10 +59,10 @@ namespace {
   object.id = id;
   object.type = type;
 
-  object.x = x;
-  object.y = y;
-  object.width = width;
-  object.height = height;
+  object.x = pos.x;
+  object.y = pos.y;
+  object.width = size.x;
+  object.height = size.y;
   object.visible = true;
 
   return id;
@@ -76,44 +72,24 @@ namespace {
 
 auto new_rectangle_object(entt::registry& registry,
                           const UUID& layerId,
-                          const float x,
-                          const float y,
-                          const float width,
-                          const float height) -> ObjectID
+                          const Vector2f& pos,
+                          const Vector2f& size) -> ObjectID
 {
-  return _make_object(registry,
-                      layerId,
-                      "Rectangle",
-                      ObjectType::Rect,
-                      x,
-                      y,
-                      width,
-                      height);
+  return _make_object(registry, layerId, "Rectangle", ObjectType::Rect, pos, size);
 }
 
 auto new_ellipse_object(entt::registry& registry,
                         const UUID& layerId,
-                        const float x,
-                        const float y,
-                        const float width,
-                        const float height) -> ObjectID
+                        const Vector2f& pos,
+                        const Vector2f& size) -> ObjectID
 {
-  return _make_object(registry,
-                      layerId,
-                      "Ellipse",
-                      ObjectType::Ellipse,
-                      x,
-                      y,
-                      width,
-                      height);
+  return _make_object(registry, layerId, "Ellipse", ObjectType::Ellipse, pos, size);
 }
 
-auto new_point_object(entt::registry& registry,
-                      const UUID& layerId,
-                      const float x,
-                      const float y) -> ObjectID
+auto new_point_object(entt::registry& registry, const UUID& layerId, const Vector2f& pos)
+    -> ObjectID
 {
-  return _make_object(registry, layerId, "Point", ObjectType::Point, x, y, 0, 0);
+  return _make_object(registry, layerId, "Point", ObjectType::Point, pos, {0, 0});
 }
 
 auto remove_object(entt::registry& registry, const ObjectID id) -> RemoveObjectResult

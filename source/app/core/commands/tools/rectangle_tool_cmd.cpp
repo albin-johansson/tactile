@@ -24,17 +24,13 @@
 namespace tactile {
 
 RectangleToolCmd::RectangleToolCmd(RegistryRef registry,
-                                   const float x,
-                                   const float y,
-                                   const float width,
-                                   const float height)
+                                   const Vector2f& pos,
+                                   const Vector2f& size)
     : ACommand{"Add Rectangle"}
     , mRegistry{registry}
     , mLayerId{sys::get_active_layer_id(registry).value()}
-    , mX{x}
-    , mY{y}
-    , mWidth{width}
-    , mHeight{height}
+    , mPos{pos}
+    , mSize{size}
 {}
 
 void RectangleToolCmd::undo()
@@ -50,7 +46,7 @@ void RectangleToolCmd::redo()
     sys::restore_object(registry, mSnapshot.value());
   }
   else {
-    mObjectId = sys::new_rectangle_object(registry, mLayerId, mX, mY, mWidth, mHeight);
+    mObjectId = sys::new_rectangle_object(registry, mLayerId, mPos, mSize);
   }
 }
 
