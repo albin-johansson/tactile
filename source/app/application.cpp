@@ -577,6 +577,7 @@ void Application::on_update_viewport_limits(const UpdateViewportLimitsEvent& eve
 
 void Application::on_offset_viewport(const OffsetViewportEvent& event)
 {
+  // FIXME possible crash if tileset is removed when offsetting viewport
   auto& registry = mData->model.get_active_registry();
   sys::offset_viewport(registry, event.viewport_entity, {event.dx, event.dy});
 }
