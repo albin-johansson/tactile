@@ -23,8 +23,7 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
-#include "core/common/uuid.hpp"
-#include "core/components/layers.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile::sys {
 
