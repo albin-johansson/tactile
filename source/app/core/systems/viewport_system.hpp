@@ -25,11 +25,8 @@
 
 namespace tactile::sys {
 
-/// \name Viewport system
-/// \{
-
 /**
- * \brief Offsets the current viewport.
+ * Offsets the current viewport.
  *
  * \param registry the document registry.
  * \param offset the offset in both axes.
@@ -41,42 +38,42 @@ void offset_viewport(entt::registry& registry,
                      const Vector2f& offset);
 
 /**
- * \brief Pans the viewport to the left.
+ * Pans the viewport to the left.
  *
  * \param registry the document registry.
  */
 void pan_viewport_left(entt::registry& registry);
 
 /**
- * \brief Pans the viewport to the right.
+ * Pans the viewport to the right.
  *
  * \param registry the document registry.
  */
 void pan_viewport_right(entt::registry& registry);
 
 /**
- * \brief Pans the viewport upwards.
+ * Pans the viewport upwards.
  *
  * \param registry the document registry.
  */
 void pan_viewport_up(entt::registry& registry);
 
 /**
- * \brief Pans the viewport downwards.
+ * Pans the viewport downwards.
  *
  * \param registry the document registry.
  */
 void pan_viewport_down(entt::registry& registry);
 
 /**
- * \brief Resets the zoom (viewport tile size) to the default.
+ * Resets the zoom (viewport tile size) to the default.
  *
  * \param registry the document registry.
  */
 void reset_viewport_zoom(entt::registry& registry);
 
 /**
- * \brief Decreases the viewport zoom.
+ * Decreases the viewport zoom.
  *
  * \pre The viewport tile size must be large enough to support a decrease.
  *
@@ -86,7 +83,7 @@ void reset_viewport_zoom(entt::registry& registry);
 void decrease_viewport_zoom(entt::registry& registry, const Vector2f& mousePos);
 
 /**
- * \brief Increases the viewport zoom.
+ * Increases the viewport zoom.
  *
  * \param registry the document registry.
  * \param mousePos the mouse coordinate.
@@ -94,25 +91,21 @@ void decrease_viewport_zoom(entt::registry& registry, const Vector2f& mousePos);
 void increase_viewport_zoom(entt::registry& registry, const Vector2f& mousePos);
 
 /**
- * \brief Indicates whether or not the viewport zoom can be decreased.
+ * Indicates whether or not the viewport zoom can be decreased.
  *
  * \param registry the document registry.
  *
  * \return `true` if the viewport zoom can be decreased; `false` otherwise.
- *
- * \see `decrease_viewport_zoom()`
  */
 [[nodiscard]] auto can_decrease_viewport_zoom(const entt::registry& registry) -> bool;
 
 /**
- * \brief Returns the relationship between the viewport and logical tile sizes.
+ * Returns the relationship between the viewport and logical tile sizes.
  *
  * \param registry the current registry.
  *
  * \return the ratio between the viewport tile size and the map tile size.
  */
 [[nodiscard]] auto get_viewport_scaling_ratio(const entt::registry& registry) -> Vector2f;
-
-/// \} End of viewport system
 
 }  // namespace tactile::sys
