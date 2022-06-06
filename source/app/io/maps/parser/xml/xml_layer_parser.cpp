@@ -257,10 +257,10 @@ auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData) -> Pars
   objectData.name = objectNode.attribute("name").as_string("");
   objectData.tag = objectNode.attribute("type").as_string("");
 
-  objectData.x = objectNode.attribute("x").as_float(0);
-  objectData.y = objectNode.attribute("y").as_float(0);
-  objectData.width = objectNode.attribute("width").as_float(0);
-  objectData.height = objectNode.attribute("height").as_float(0);
+  objectData.pos.x = objectNode.attribute("x").as_float(0);
+  objectData.pos.y = objectNode.attribute("y").as_float(0);
+  objectData.size.x = objectNode.attribute("width").as_float(0);
+  objectData.size.y = objectNode.attribute("height").as_float(0);
 
   objectData.visible = objectNode.attribute("visible").as_bool(true);
 

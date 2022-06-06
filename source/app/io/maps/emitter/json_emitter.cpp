@@ -58,10 +58,10 @@ namespace {
 
   json["id"] = data.id;
   json["name"] = data.name;
-  json["x"] = data.x;
-  json["y"] = data.y;
-  json["width"] = data.width;
-  json["height"] = data.height;
+  json["x"] = data.pos.x;
+  json["y"] = data.pos.y;
+  json["width"] = data.size.x;
+  json["height"] = data.size.y;
   json["visible"] = data.visible;
   json["type"] = data.tag;
   json["rotation"] = 0;
@@ -240,16 +240,16 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   json["name"] = data.name;
   json["columns"] = data.column_count;
 
-  json["tilewidth"] = data.tile_width;
-  json["tileheight"] = data.tile_height;
+  json["tilewidth"] = data.tile_size.x;
+  json["tileheight"] = data.tile_size.y;
   json["tilecount"] = data.tile_count;
 
   const auto imagePath =
       std::filesystem::relative(data.image_path, info.destination_dir());
   json["image"] = convert_to_forward_slashes(imagePath);
 
-  json["imagewidth"] = data.image_width;
-  json["imageheight"] = data.image_height;
+  json["imagewidth"] = data.image_size.x;
+  json["imageheight"] = data.image_size.y;
 
   json["margin"] = 0;
   json["spacing"] = 0;
@@ -339,8 +339,8 @@ void emit_json_map(const EmitInfo& info)
   json["width"] = data.col_count;
   json["height"] = data.row_count;
 
-  json["tilewidth"] = data.tile_width;
-  json["tileheight"] = data.tile_height;
+  json["tilewidth"] = data.tile_size.x;
+  json["tileheight"] = data.tile_size.y;
 
   json["nextlayerid"] = data.next_layer_id;
   json["nextobjectid"] = data.next_object_id;

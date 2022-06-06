@@ -22,8 +22,7 @@ using namespace std::string_literals;
 
 namespace {
 
-void _validate_contexts(const ir::ContextData& source,
-                        const ir::ContextData& restored)
+void _validate_contexts(const ir::ContextData& source, const ir::ContextData& restored)
 {
   ASSERT_EQ(source.properties.size(), restored.properties.size());
   ASSERT_EQ(source.components.size(), restored.components.size());
@@ -41,10 +40,8 @@ void _validate_objects(const ir::ObjectData& source, const ir::ObjectData& resto
   ASSERT_EQ(source.id, restored.id);
   ASSERT_EQ(source.type, restored.type);
 
-  ASSERT_EQ(source.x, restored.x);
-  ASSERT_EQ(source.y, restored.y);
-  ASSERT_EQ(source.width, restored.width);
-  ASSERT_EQ(source.height, restored.height);
+  ASSERT_EQ(source.pos, restored.pos);
+  ASSERT_EQ(source.size, restored.size);
 
   ASSERT_EQ(source.name, restored.name);
   ASSERT_EQ(source.tag, restored.tag);
@@ -151,12 +148,10 @@ void _validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
     ASSERT_EQ(sourceTileset.tile_count, restoredTileset.tile_count);
     ASSERT_EQ(sourceTileset.column_count, restoredTileset.column_count);
 
-    ASSERT_EQ(sourceTileset.tile_width, restoredTileset.tile_width);
-    ASSERT_EQ(sourceTileset.tile_height, restoredTileset.tile_height);
+    ASSERT_EQ(sourceTileset.tile_size, restoredTileset.tile_size);
 
     // ASSERT_EQ(sourceTileset.image_path, restoredTileset.image_path);
-    ASSERT_EQ(sourceTileset.image_width, restoredTileset.image_width);
-    ASSERT_EQ(sourceTileset.image_height, restoredTileset.image_height);
+    ASSERT_EQ(sourceTileset.image_size, restoredTileset.image_size);
 
     ASSERT_EQ(sourceTileset.fancy_tiles.size(), restoredTileset.fancy_tiles.size());
     for (const auto& [id, sourceTile] : sourceTileset.fancy_tiles) {
@@ -180,8 +175,7 @@ void _validate_basic_map_info(const ir::MapData& source, const ir::MapData& rest
   ASSERT_EQ(source.row_count, restored.row_count);
   ASSERT_EQ(source.col_count, restored.col_count);
 
-  ASSERT_EQ(source.tile_width, restored.tile_width);
-  ASSERT_EQ(source.tile_height, restored.tile_height);
+  ASSERT_EQ(source.tile_size, restored.tile_size);
 
   ASSERT_EQ(source.next_object_id, restored.next_object_id);
   ASSERT_EQ(source.next_layer_id, restored.next_layer_id);
@@ -300,8 +294,8 @@ constexpr usize _col_count = 13;
   point.name = "Point";
   point.type = ObjectType::Point;
   point.id = 34;
-  point.x = 453;
-  point.y = 328;
+  point.pos.x = 453;
+  point.pos.y = 328;
   point.tag = "point-tag";
   point.visible = true;
 
@@ -313,10 +307,10 @@ constexpr usize _col_count = 13;
   rect.name = "Rectangle";
   rect.type = ObjectType::Rect;
   rect.id = 26;
-  rect.x = 854;
-  rect.y = 654;
-  rect.width = 123;
-  rect.height = 68;
+  rect.pos.x = 854;
+  rect.pos.y = 654;
+  rect.size.x = 123;
+  rect.size.y = 68;
   rect.tag = "rect-tag";
   rect.visible = true;
 
@@ -331,10 +325,10 @@ constexpr usize _col_count = 13;
   ellipse.name = "Ellipse";
   ellipse.type = ObjectType::Ellipse;
   ellipse.id = 54;
-  ellipse.x = 193;
-  ellipse.y = 587;
-  ellipse.width = 34;
-  ellipse.height = 39;
+  ellipse.pos.x = 193;
+  ellipse.pos.y = 587;
+  ellipse.size.x = 34;
+  ellipse.size.y = 39;
   ellipse.visible = true;
 
   return data;
@@ -348,15 +342,15 @@ constexpr usize _col_count = 13;
 
   data.first_tile = 1;
 
-  data.tile_width = 33;
-  data.tile_height = 32;
+  data.tile_size.x = 33;
+  data.tile_size.y = 32;
 
   data.tile_count = 768;
   data.column_count = 28;
 
   data.image_path = "test-resources/terrain.png";
-  data.image_width = 1'024;
-  data.image_height = 1'023;
+  data.image_size.x = 1'024;
+  data.image_size.y = 1'023;
 
   data.fancy_tiles[155].frames = {{.local_id = 155, .duration_ms = 150},
                                   {.local_id = 156, .duration_ms = 120},
@@ -366,8 +360,8 @@ constexpr usize _col_count = 13;
   objectData.name = "Fancy Object";
   objectData.type = ObjectType::Point;
   objectData.id = 99;
-  objectData.x = 23;
-  objectData.y = 47;
+  objectData.pos.x = 23;
+  objectData.pos.y = 47;
   objectData.visible = false;
 
   data.fancy_tiles[27].context.properties["tile-float"] = 45.3f;
@@ -386,8 +380,8 @@ constexpr usize _col_count = 13;
 {
   ir::MapData data;
 
-  data.tile_width = 32;
-  data.tile_height = 28;
+  data.tile_size.x = 32;
+  data.tile_size.y = 28;
 
   data.next_layer_id = 5;
   data.next_object_id = 8;

@@ -212,10 +212,10 @@ auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> Par
   objectData.name = as_string(json, "name").value_or("");
   objectData.tag = as_string(json, "type").value_or("");
 
-  objectData.x = as_float(json, "x").value_or(0.0f);
-  objectData.y = as_float(json, "y").value_or(0.0f);
-  objectData.width = as_float(json, "width").value_or(0.0f);
-  objectData.height = as_float(json, "height").value_or(0.0f);
+  objectData.pos.x = as_float(json, "x").value_or(0.0f);
+  objectData.pos.y = as_float(json, "y").value_or(0.0f);
+  objectData.size.x = as_float(json, "width").value_or(0.0f);
+  objectData.size.y = as_float(json, "height").value_or(0.0f);
 
   objectData.visible = as_bool(json, "visible").value_or(true);
 

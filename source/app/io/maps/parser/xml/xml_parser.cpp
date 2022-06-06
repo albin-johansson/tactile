@@ -73,14 +73,14 @@ namespace {
   }
 
   if (const auto tw = int_attribute(mapNode, "tilewidth")) {
-    data.tile_width = *tw;
+    data.tile_size.x = *tw;
   }
   else {
     return ParseError::NoMapTileWidth;
   }
 
   if (const auto th = int_attribute(mapNode, "tileheight")) {
-    data.tile_height = *th;
+    data.tile_size.y = *th;
   }
   else {
     return ParseError::NoMapTileHeight;

@@ -29,6 +29,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
+#include "core/common/math.hpp"
 #include "core/common/memory.hpp"
 #include "core/layer_type.hpp"
 #include "core/object_type.hpp"
@@ -48,10 +49,8 @@ struct ObjectData final
   ObjectID id{};
   ObjectType type{};
 
-  float x{};
-  float y{};
-  float width{};
-  float height{};
+  Vector2f pos{};
+  Vector2f size{};
 
   std::string name;
   std::string tag;
@@ -123,15 +122,13 @@ struct TilesetData final
   std::string name;
   TileID first_tile{};
 
-  int32 tile_width{};
-  int32 tile_height{};
+  Vector2i tile_size{};
 
   int32 tile_count{};
   int32 column_count{};
 
   std::filesystem::path image_path;
-  int32 image_width{};
-  int32 image_height{};
+  Vector2i image_size{};
 
   HashMap<TileID, MetaTileData> fancy_tiles;
 
@@ -143,8 +140,7 @@ struct MapData
   usize row_count{};
   usize col_count{};
 
-  int32 tile_width{};
-  int32 tile_height{};
+  Vector2i tile_size{};
 
   int32 next_layer_id{};
   int32 next_object_id{};

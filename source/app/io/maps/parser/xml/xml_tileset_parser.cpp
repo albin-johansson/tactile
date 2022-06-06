@@ -88,14 +88,14 @@ namespace {
   auto imageNode = tilesetNode.child("image");
 
   if (const auto width = int_attribute(imageNode, "width")) {
-    tilesetData.image_width = *width;
+    tilesetData.image_size.x = *width;
   }
   else {
     return ParseError::NoTilesetImageWidth;
   }
 
   if (const auto height = int_attribute(imageNode, "height")) {
-    tilesetData.image_height = *height;
+    tilesetData.image_size.y = *height;
   }
   else {
     return ParseError::NoTilesetImageHeight;
@@ -130,14 +130,14 @@ namespace {
   }
 
   if (const auto tw = int_attribute(node, "tilewidth")) {
-    tilesetData.tile_width = *tw;
+    tilesetData.tile_size.x = *tw;
   }
   else {
     return ParseError::NoTilesetTileWidth;
   }
 
   if (const auto th = int_attribute(node, "tileheight")) {
-    tilesetData.tile_height = *th;
+    tilesetData.tile_size.y = *th;
   }
   else {
     return ParseError::NoTilesetTileHeight;

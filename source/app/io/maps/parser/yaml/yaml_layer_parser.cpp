@@ -253,31 +253,31 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData
   }
 
   if (auto x = node["x"]) {
-    object->x = x.as<float>();
+    object->pos.x = x.as<float>();
   }
   else {
-    object->x = 0;
+    object->pos.x = 0;
   }
 
   if (auto y = node["y"]) {
-    object->y = y.as<float>();
+    object->pos.y = y.as<float>();
   }
   else {
-    object->y = 0;
+    object->pos.y = 0;
   }
 
   if (auto width = node["width"]) {
-    object->width = width.as<float>();
+    object->size.x = width.as<float>();
   }
   else {
-    object->width = 0;
+    object->size.x = 0;
   }
 
   if (auto height = node["height"]) {
-    object->height = height.as<float>();
+    object->size.y = height.as<float>();
   }
   else {
-    object->height = 0;
+    object->size.y = 0;
   }
 
   if (const auto err = parse_properties(node, object->context); err != ParseError::None) {

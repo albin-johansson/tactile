@@ -64,10 +64,8 @@ void _convert_object(ir::ObjectData& data,
   data.id = object.id;
   data.type = object.type;
 
-  data.x = object.pos.x;
-  data.y = object.pos.y;
-  data.width = object.size.x;
-  data.height = object.size.y;
+  data.pos = object.pos;
+  data.size = object.size;
 
   data.tag = object.tag;
   data.visible = object.visible;
@@ -239,13 +237,11 @@ void _convert_tilesets(const DocumentModel& model,
     const auto& texture = tilesetDocument.texture();
 
     tilesetData.first_tile = tilesetRef.first_id;
-    tilesetData.tile_width = tileset.tile_size.x;
-    tilesetData.tile_height = tileset.tile_size.y;
+    tilesetData.tile_size = tileset.tile_size;
     tilesetData.column_count = tileset.column_count;
 
     tilesetData.image_path = texture.path;
-    tilesetData.image_width = texture.size.x;
-    tilesetData.image_height = texture.size.y;
+    tilesetData.image_size = texture.size;
 
     _convert_fancy_tiles(tilesetData, tilesetRef, mapRegistry);
   }
@@ -265,10 +261,7 @@ void _convert_basic_map_info(ir::MapData& data, const comp::MapInfo& mapInfo)
 {
   data.row_count = mapInfo.row_count;
   data.col_count = mapInfo.column_count;
-
-  data.tile_width = mapInfo.tile_size.x;
-  data.tile_height = mapInfo.tile_size.y;
-
+  data.tile_size = mapInfo.tile_size;
   data.next_object_id = mapInfo.next_object_id;
 }
 

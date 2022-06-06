@@ -105,20 +105,20 @@ void _append_object(pugi::xml_node node, const ir::ObjectData& objectData)
     objectNode.append_attribute("type").set_value(objectData.tag.c_str());
   }
 
-  if (objectData.x != 0.0f) {
-    objectNode.append_attribute("x").set_value(objectData.x);
+  if (objectData.pos.x != 0.0f) {
+    objectNode.append_attribute("x").set_value(objectData.pos.x);
   }
 
-  if (objectData.y != 0.0f) {
-    objectNode.append_attribute("y").set_value(objectData.y);
+  if (objectData.pos.y != 0.0f) {
+    objectNode.append_attribute("y").set_value(objectData.pos.y);
   }
 
-  if (objectData.width != 0.0f) {
-    objectNode.append_attribute("width").set_value(objectData.width);
+  if (objectData.size.x != 0.0f) {
+    objectNode.append_attribute("width").set_value(objectData.size.x);
   }
 
-  if (objectData.height != 0.0f) {
-    objectNode.append_attribute("height").set_value(objectData.height);
+  if (objectData.size.y != 0.0f) {
+    objectNode.append_attribute("height").set_value(objectData.size.y);
   }
 
   if (!objectData.visible) {
@@ -272,8 +272,8 @@ void _append_common_tileset_attributes(pugi::xml_node node,
 {
   node.append_attribute("name").set_value(tilesetData.name.c_str());
 
-  node.append_attribute("tilewidth").set_value(tilesetData.tile_width);
-  node.append_attribute("tileheight").set_value(tilesetData.tile_height);
+  node.append_attribute("tilewidth").set_value(tilesetData.tile_size.x);
+  node.append_attribute("tileheight").set_value(tilesetData.tile_size.y);
 
   node.append_attribute("tilecount").set_value(tilesetData.tile_count);
   node.append_attribute("columns").set_value(tilesetData.column_count);
@@ -285,8 +285,8 @@ void _append_common_tileset_attributes(pugi::xml_node node,
         std::filesystem::relative(tilesetData.image_path, dir));
     imageNode.append_attribute("source").set_value(source.c_str());
 
-    imageNode.append_attribute("width").set_value(tilesetData.image_width);
-    imageNode.append_attribute("height").set_value(tilesetData.image_height);
+    imageNode.append_attribute("width").set_value(tilesetData.image_size.x);
+    imageNode.append_attribute("height").set_value(tilesetData.image_size.y);
   }
 
   _append_fancy_tiles(node, tilesetData);
@@ -356,8 +356,8 @@ void _append_root(pugi::xml_document& document, const EmitInfo& info)
   root.append_attribute("renderorder").set_value("right-down");
   root.append_attribute("infinite").set_value(0);
 
-  root.append_attribute("tilewidth").set_value(mapData.tile_width);
-  root.append_attribute("tileheight").set_value(mapData.tile_height);
+  root.append_attribute("tilewidth").set_value(mapData.tile_size.x);
+  root.append_attribute("tileheight").set_value(mapData.tile_size.y);
 
   root.append_attribute("width").set_value(mapData.col_count);
   root.append_attribute("height").set_value(mapData.row_count);

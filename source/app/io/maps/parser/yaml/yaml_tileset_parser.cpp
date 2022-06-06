@@ -163,14 +163,14 @@ constexpr int32 _tileset_file_version = 1;
     }
 
     if (auto tw = node["tile-width"]) {
-      tileset.tile_width = tw.as<int32>();
+      tileset.tile_size.x = tw.as<int32>();
     }
     else {
       return ParseError::NoTilesetTileWidth;
     }
 
     if (auto th = node["tile-height"]) {
-      tileset.tile_height = th.as<int32>();
+      tileset.tile_size.y = th.as<int32>();
     }
     else {
       return ParseError::NoTilesetTileHeight;
@@ -197,14 +197,14 @@ constexpr int32 _tileset_file_version = 1;
     }
 
     if (auto imageWidth = node["image-width"]) {
-      tileset.image_width = imageWidth.as<int32>();
+      tileset.image_size.x = imageWidth.as<int32>();
     }
     else {
       return ParseError::NoTilesetImageWidth;
     }
 
     if (auto imageHeight = node["image-height"]) {
-      tileset.image_height = imageHeight.as<int32>();
+      tileset.image_size.y = imageHeight.as<int32>();
     }
     else {
       return ParseError::NoTilesetImageHeight;

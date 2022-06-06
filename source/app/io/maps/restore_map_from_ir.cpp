@@ -106,10 +106,8 @@ auto _restore_object(entt::registry& registry, const ir::ObjectData& objectData)
   object.id = objectData.id;
   object.type = objectData.type;
 
-  object.pos.x = objectData.x;
-  object.pos.y = objectData.y;
-  object.size.x = objectData.width;
-  object.size.y = objectData.height;
+  object.pos = objectData.pos;
+  object.size = objectData.size;
 
   object.tag = objectData.tag;
   object.visible = objectData.visible;
@@ -266,9 +264,9 @@ void _restore_tileset(DocumentModel& model,
   // loaded multiple times
 
   const auto texture = textures.load(tilesetData.image_path).value();
-  const Vector2i tileSize{tilesetData.tile_width, tilesetData.tile_height};
 
-  const auto tilesetId = model.restore_tileset(texture, tileSize, tilesetData.first_tile);
+  const auto tilesetId =
+      model.restore_tileset(texture, tilesetData.tile_size, tilesetData.first_tile);
 
   auto tileset = model.get_tileset(tilesetId);
   auto& tilesetRegistry = tileset->get_registry();
@@ -316,9 +314,8 @@ void restore_map_from_ir(const ParseData& data,
 {
   const auto& mapData = data.data();
 
-  const auto mapId = model.add_map({mapData.tile_width, mapData.tile_height},
-                                   mapData.row_count,
-                                   mapData.col_count);
+  const auto mapId =
+      model.add_map(mapData.tile_size, mapData.row_count, mapData.col_count);
   model.select_document(mapId);
 
   auto document = model.get_map(mapId);
@@ -334,8 +331,7 @@ void restore_map_from_ir(const ParseData& data,
 
   auto& info = ctx_get<comp::MapInfo>(mapRegistry);
   info.next_object_id = mapData.next_object_id;
-  info.tile_size.x = mapData.tile_width;
-  info.tile_size.y = mapData.tile_height;
+  info.tile_size = mapData.tile_size;
   info.row_count = mapData.row_count;
   info.column_count = mapData.col_count;
 

@@ -72,14 +72,14 @@ namespace {
   }
 
   if (const auto tw = as_int(*json, "tilewidth")) {
-    mapData.tile_width = *tw;
+    mapData.tile_size.x = *tw;
   }
   else {
     return ParseError::NoMapTileWidth;
   }
 
   if (const auto th = as_int(*json, "tileheight")) {
-    mapData.tile_height = *th;
+    mapData.tile_size.y = *th;
   }
   else {
     return ParseError::NoMapTileHeight;

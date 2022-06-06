@@ -51,14 +51,14 @@ namespace {
   }
 
   if (auto tw = node["tile-width"]) {
-    data.tile_width = tw.as<int32>();
+    data.tile_size.x = tw.as<int32>();
   }
   else {
     return ParseError::NoMapTileWidth;
   }
 
   if (auto th = node["tile-height"]) {
-    data.tile_height = th.as<int32>();
+    data.tile_size.y = th.as<int32>();
   }
   else {
     return ParseError::NoMapTileHeight;
