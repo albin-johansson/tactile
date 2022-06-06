@@ -41,10 +41,7 @@ class ToolManager;
 
 namespace comp {
 
-struct ActiveContext;
-struct ActiveLayer;
-struct ActiveObject;
-struct ActiveTileset;
+struct ActiveState;
 
 struct CurrentRectangleStroke;
 struct CurrentEllipseStroke;

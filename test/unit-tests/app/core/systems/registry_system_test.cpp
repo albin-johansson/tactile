@@ -19,10 +19,7 @@ TEST(RegistrySystem, NewMapDocumentRegistry)
   const auto& ctx = registry.ctx();
   ASSERT_TRUE(ctx.find<ToolManager>());
   ASSERT_TRUE(ctx.find<comp::MapInfo>());
-  ASSERT_TRUE(ctx.find<comp::ActiveLayer>());
-  ASSERT_TRUE(ctx.find<comp::ActiveTileset>());
-  ASSERT_TRUE(ctx.find<comp::ActiveContext>());
-  ASSERT_TRUE(ctx.find<comp::ActiveObject>());
+  ASSERT_TRUE(ctx.find<comp::ActiveState>());
   ASSERT_TRUE(ctx.find<comp::Viewport>());
   ASSERT_TRUE(ctx.find<comp::Context>());
   ASSERT_TRUE(ctx.find<comp::TilesetContext>());
