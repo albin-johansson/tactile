@@ -28,7 +28,7 @@ namespace tactile::io {
 
 [[nodiscard]] auto parse_object(const YAML::Node& node,
                                 const ir::MapData& map,
-                                ir::ObjectData* object) -> ParseError;
+                                ir::ObjectData& object) -> ParseError;
 
 [[nodiscard]] auto parse_layers(const YAML::Node& sequence, ir::MapData& data)
     -> ParseError;

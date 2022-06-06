@@ -94,7 +94,7 @@ namespace {
 
     for (const auto& objectNode : sequence) {
       auto& object = objectLayer.objects.emplace_back();
-      if (const auto err = parse_object(objectNode, map, &object);
+      if (const auto err = parse_object(objectNode, map, object);
           err != ParseError::None) {
         return err;
       }
@@ -208,11 +208,11 @@ namespace {
 
 }  // namespace
 
-auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData* object)
+auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData& object)
     -> ParseError
 {
   if (auto id = node["id"]) {
-    object->id = id.as<ObjectID>();
+    object.id = id.as<ObjectID>();
   }
   else {
     return ParseError::NoObjectId;
@@ -221,13 +221,13 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData
   if (auto type = node["type"]) {
     const auto str = type.as<std::string>();
     if (str == "point") {
-      object->type = ObjectType::Point;
+      object.type = ObjectType::Point;
     }
     else if (str == "rect") {
-      object->type = ObjectType::Rect;
+      object.type = ObjectType::Rect;
     }
     else if (str == "ellipse") {
-      object->type = ObjectType::Ellipse;
+      object.type = ObjectType::Ellipse;
     }
     else {
       return ParseError::UnsupportedObjectType;
@@ -238,53 +238,53 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData
   }
 
   if (auto name = node["name"]) {
-    object->name = name.as<std::string>();
+    object.name = name.as<std::string>();
   }
 
   if (auto tag = node["tag"]) {
-    object->tag = tag.as<std::string>();
+    object.tag = tag.as<std::string>();
   }
 
   if (auto visible = node["visible"]) {
-    object->visible = visible.as<bool>();
+    object.visible = visible.as<bool>();
   }
   else {
-    object->visible = true;
+    object.visible = true;
   }
 
   if (auto x = node["x"]) {
-    object->pos.x = x.as<float>();
+    object.pos.x = x.as<float>();
   }
   else {
-    object->pos.x = 0;
+    object.pos.x = 0;
   }
 
   if (auto y = node["y"]) {
-    object->pos.y = y.as<float>();
+    object.pos.y = y.as<float>();
   }
   else {
-    object->pos.y = 0;
+    object.pos.y = 0;
   }
 
   if (auto width = node["width"]) {
-    object->size.x = width.as<float>();
+    object.size.x = width.as<float>();
   }
   else {
-    object->size.x = 0;
+    object.size.x = 0;
   }
 
   if (auto height = node["height"]) {
-    object->size.y = height.as<float>();
+    object.size.y = height.as<float>();
   }
   else {
-    object->size.y = 0;
+    object.size.y = 0;
   }
 
-  if (const auto err = parse_properties(node, object->context); err != ParseError::None) {
+  if (const auto err = parse_properties(node, object.context); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = parse_components(node, map, object->context);
+  if (const auto err = parse_components(node, map, object.context);
       err != ParseError::None) {
     return err;
   }

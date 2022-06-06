@@ -90,7 +90,7 @@ constexpr int32 _tileset_file_version = 1;
 
     for (const auto& objectNode : sequence) {
       auto& object = tile.objects.emplace_back();
-      if (const auto err = parse_object(objectNode, map, &object);
+      if (const auto err = parse_object(objectNode, map, object);
           err != ParseError::None) {
         return err;
       }
