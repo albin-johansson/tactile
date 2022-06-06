@@ -25,24 +25,13 @@
 #include <entt/fwd.hpp>
 
 #include "core/attribute.hpp"
-#include "core/components/attributes.hpp"
+#include "core/fwd.hpp"
 #include "core/systems/snapshot.hpp"
 
 namespace tactile::sys {
 
 /**
- * \ingroup systems
- * \defgroup property-system Property System
- */
-
-/// \addtogroup property-system
-/// \{
-
-/// \name Property system
-/// \{
-
-/**
- * \brief Adds a property to an attribute context.
+ * Adds a property to an attribute context.
  *
  * \pre The supplied name must be unique within the attribute context.
  *
@@ -57,7 +46,7 @@ void add_property(entt::registry& registry,
                   AttributeType type);
 
 /**
- * \brief Adds a property to an attribute context.
+ * Adds a property to an attribute context.
  *
  * \pre The name must be unique within the attribute context.
  *
@@ -72,7 +61,7 @@ void add_property(entt::registry& registry,
                   Attribute value);
 
 /**
- * \brief Removes a property from an attribute context.
+ * Removes a property from an attribute context.
  *
  * \pre The context must feature a property with the specified name.
  *
@@ -85,7 +74,7 @@ void remove_property(entt::registry& registry,
                      std::string_view name);
 
 /**
- * \brief Renames a property in an attribute context.
+ * Renames a property in an attribute context.
  *
  * \pre The context must feature a property with the _old_ name.
  * \pre The context must _not_ feature a property with the _new_ name.
@@ -101,7 +90,7 @@ void rename_property(entt::registry& registry,
                      std::string newName);
 
 /**
- * \brief Updates the value of an existing property.
+ * Updates the value of an existing property.
  *
  * \pre The context must feature a property with the specified name.
  *
@@ -116,9 +105,9 @@ void update_property(entt::registry& registry,
                      Attribute value);
 
 /**
- * \brief Changes the type of the value of an existing property.
+ * Changes the type of the value of an existing property.
  *
- * \details The property will assume the default value of the specified type.
+ * The property will assume the default value of the specified type.
  *
  * \pre The context must feature a property with the specified name.
  *
@@ -133,23 +122,20 @@ void change_property_type(entt::registry& registry,
                           AttributeType type);
 
 /**
- * \brief Attempts to find a property in a context with a specific name.
+ * Attempts to find a property in a context with a specific name.
  *
  * \param registry the document registry.
  * \param context the attribute context that will be queried.
  * \param name the name of the desired property.
  *
  * \return the found property entity; the null entity is returned if there was no match.
- *
- * \see has_property_with_name()
- * \see get_property()
  */
 [[nodiscard]] auto find_property(const entt::registry& registry,
                                  const comp::Context& context,
                                  std::string_view name) -> entt::entity;
 
 /**
- * \brief Returns a property in an attribute context with a specific name.
+ * Returns a property in an attribute context with a specific name.
  *
  * \param registry the document registry.
  * \param context the attribute context that will be queried.
@@ -158,35 +144,26 @@ void change_property_type(entt::registry& registry,
  * \return a reference to the matching property.
  *
  * \throws TactileError if there is no property with the specified name.
- *
- * \see find_property()
  */
 [[nodiscard]] auto get_property(const entt::registry& registry,
                                 const comp::Context& context,
                                 std::string_view name) -> const comp::Property&;
 
 /**
- * \brief Indicates whether or not an attribute context has a property with a certain
- * name.
+ * Indicates whether or not an attribute context has a property with a certain name.
  *
- * \note Use the `find_property()` function if you intend to make use of the property
+ * Note, use the `find_property()` function if you intend to make use of the property
  * entity, in order to avoid unnecessary lookups.
  *
  * \param registry the document registry.
  * \param context the attribute context that will be queried..
  * \param name the name of the property to look for.
  *
- * \return `true` if the context has a property with the specified name; `false`
- * otherwise.
- *
- * \see find_property()
+ * \return `true` if the context has a property with the specified name;
+ *         `false` otherwise.
  */
 [[nodiscard]] auto has_property_with_name(const entt::registry& registry,
                                           const comp::Context& context,
                                           std::string_view name) -> bool;
-
-/// \} End of property system
-
-/// \} End of group property-system
 
 }  // namespace tactile::sys

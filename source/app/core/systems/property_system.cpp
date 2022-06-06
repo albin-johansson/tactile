@@ -25,7 +25,9 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/systems/context_system.hpp"
+#include "core/utils/actor.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::sys {
@@ -37,13 +39,13 @@ void add_property(entt::registry& registry,
 {
   TACTILE_ASSERT(!has_property_with_name(registry, context, name));
 
-  const auto entity = registry.create();
+  auto actor = Actor::of(registry);
 
-  auto& property = registry.emplace<comp::Property>(entity);
+  auto& property = actor.add<comp::Property>();
   property.name = std::move(name);
   property.value.reset_to_default(type);
 
-  context.properties.push_back(entity);
+  context.properties.push_back(actor.entity());
 }
 
 void add_property(entt::registry& registry,
@@ -53,18 +55,18 @@ void add_property(entt::registry& registry,
 {
   TACTILE_ASSERT(!has_property_with_name(registry, context, name));
 
-  const auto entity = registry.create();
+  auto actor = Actor::of(registry);
 
-  auto& property = registry.emplace<comp::Property>(entity);
+  auto& property = actor.add<comp::Property>();
   property.name = std::move(name);
   property.value = std::move(value);
 
-  context.properties.push_back(entity);
+  context.properties.push_back(actor.entity());
 }
 
 void remove_property(entt::registry& registry,
                      comp::Context& context,
-                     const std::string_view name)
+                     std::string_view name)
 {
   const auto entity = find_property(registry, context, name);
   TACTILE_ASSERT(entity != entt::null);
@@ -75,7 +77,7 @@ void remove_property(entt::registry& registry,
 
 void rename_property(entt::registry& registry,
                      comp::Context& context,
-                     const std::string_view oldName,
+                     std::string_view oldName,
                      std::string newName)
 {
   TACTILE_ASSERT(has_property_with_name(registry, context, oldName));
@@ -88,7 +90,7 @@ void rename_property(entt::registry& registry,
 
 void update_property(entt::registry& registry,
                      comp::Context& context,
-                     const std::string_view name,
+                     std::string_view name,
                      Attribute value)
 {
   const auto entity = find_property(registry, context, name);
@@ -98,7 +100,7 @@ void update_property(entt::registry& registry,
 
 void change_property_type(entt::registry& registry,
                           comp::Context& context,
-                          const std::string_view name,
+                          std::string_view name,
                           const AttributeType type)
 {
   const auto entity = find_property(registry, context, name);
@@ -108,7 +110,7 @@ void change_property_type(entt::registry& registry,
 
 auto find_property(const entt::registry& registry,
                    const comp::Context& context,
-                   const std::string_view name) -> entt::entity
+                   std::string_view name) -> entt::entity
 {
   for (const auto entity : context.properties) {
     const auto& property = checked_get<comp::Property>(registry, entity);
@@ -122,7 +124,7 @@ auto find_property(const entt::registry& registry,
 
 auto get_property(const entt::registry& registry,
                   const comp::Context& context,
-                  const std::string_view name) -> const comp::Property&
+                  std::string_view name) -> const comp::Property&
 {
   const auto entity = find_property(registry, context, name);
   return checked_get<comp::Property>(registry, entity);
@@ -130,7 +132,7 @@ auto get_property(const entt::registry& registry,
 
 auto has_property_with_name(const entt::registry& registry,
                             const comp::Context& context,
-                            const std::string_view name) -> bool
+                            std::string_view name) -> bool
 {
   return find_property(registry, context, name) != entt::null;
 }
