@@ -19,46 +19,40 @@
 
 #pragma once
 
+#include <concepts>  // integral, invocable
+
 namespace tactile {
 
 /**
- * \brief Invokes a function object N times.
- *
- * \tparam Int an integral type.
+ * Invokes a function object N times.
  *
  * \param n the amount of times the callable should be invoked.
  * \param callable a function object.
- *
- * \ingroup core
  */
-template <typename Int>
-constexpr void invoke_n(const Int n, auto&& callable) noexcept(noexcept(callable()))
+template <std::integral T, std::invocable U>
+constexpr void invoke_n(const T n, U&& callable) noexcept(noexcept(callable()))
 {
-  for (Int i = 0; i < n; ++i) {
+  for (T i = 0; i < n; ++i) {
     callable();
   }
 }
 
 /**
- * \brief Invokes a function object M*N times.
+ * Invokes a function object M*N times.
  *
- * \details This function is a more functional approach to nested for-loops.
- *
- * \tparam Int an integral type.
+ * This function is a more functional approach to nested for-loops.
  *
  * \param m the amount of times the outer loop is run.
  * \param n the amount of times the inner loop is run (for each outer loop iteration).
- * \param callable a function object. Must accept the current indices as arguments.
- *
- * \ingroup core
+ * \param callable a function object.
  */
-template <typename Int>
-constexpr void invoke_mn(const Int m,
-                         const Int n,
-                         auto&& callable) noexcept(noexcept(callable(m, n)))
+template <std::integral T, std::invocable<T, T> U>
+constexpr void invoke_mn(const T m,
+                         const T n,
+                         U&& callable) noexcept(noexcept(callable(m, n)))
 {
-  for (Int i = 0; i < m; ++i) {
-    for (Int j = 0; j < n; ++j) {
+  for (T i = 0; i < m; ++i) {
+    for (T j = 0; j < n; ++j) {
       callable(i, j);
     }
   }
