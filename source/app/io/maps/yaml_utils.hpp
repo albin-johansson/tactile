@@ -19,11 +19,38 @@
 
 #pragma once
 
+#include <utility>  // move
+
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
 
 namespace tactile::io {
+
+/// Reads an attribute to a destination variable, returns false on failure.
+template <typename T>
+auto read_attribute(const YAML::Node& node, const char* name, T& result) -> bool
+{
+  if (auto attr = node[name]) {
+    result = attr.as<T>();
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+/// Reads an attribute to a destination variable, uses the fallback value on failure.
+template <typename T>
+void read_attribute(const YAML::Node& node, const char* name, T& result, T fallback)
+{
+  if (auto attr = node[name]) {
+    result = attr.as<T>();
+  }
+  else {
+    result = std::move(fallback);
+  }
+}
 
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&;
 

@@ -26,6 +26,9 @@
 #include "core/utils/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
+#include "io/maps/yaml_utils.hpp"
+
+using namespace std::string_literals;
 
 namespace tactile::io {
 namespace {
@@ -55,28 +58,27 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer(const YAML::Node& node,
-                                     ir::LayerData& data,
+                                     ir::LayerData& layerData,
                                      const usize rows,
                                      const usize columns) -> ParseError
 {
-  data.type = LayerType::TileLayer;
+  layerData.type = LayerType::TileLayer;
 
-  auto& tileLayer = data.data.emplace<ir::TileLayerData>();
+  auto& tileLayer = layerData.data.emplace<ir::TileLayerData>();
   tileLayer.row_count = rows;
   tileLayer.col_count = columns;
   tileLayer.tiles = make_tile_matrix(rows, columns);
 
-  if (auto tiles = node["data"]) {
-    auto rawTiles = tiles.as<std::string>();
-    std::replace(rawTiles.begin(), rawTiles.end(), '\n', ' ');
-
-    if (const auto err = _parse_tile_layer_data(tileLayer, columns, rawTiles);
-        err != ParseError::None) {
-      return err;
-    }
-  }
-  else {
+  std::string data;
+  if (!read_attribute(node, "data", data)) {
     return ParseError::NoTileLayerData;
+  }
+
+  std::replace(data.begin(), data.end(), '\n', ' ');
+
+  if (const auto err = _parse_tile_layer_data(tileLayer, columns, data);
+      err != ParseError::None) {
+    return err;
   }
 
   return ParseError::None;
@@ -137,61 +139,37 @@ namespace {
 {
   layer.index = index;
 
-  if (auto identifier = node["id"]) {
-    layer.id = identifier.as<LayerID>();
-  }
-  else {
+  if (!read_attribute(node, "id", layer.id)) {
     return ParseError::NoLayerId;
   }
 
-  if (auto opacity = node["opacity"]) {
-    layer.opacity = opacity.as<float>();
-  }
-  else {
-    layer.opacity = 1.0f;
-  }
+  read_attribute(node, "opacity", layer.opacity, 1.0f);
+  read_attribute(node, "visible", layer.visible, true);
+  read_attribute(node, "name", layer.name, "Layer"s);
 
-  if (auto visible = node["visible"]) {
-    layer.visible = visible.as<bool>();
-  }
-  else {
-    layer.visible = true;
-  }
-
-  if (auto name = node["name"]) {
-    layer.name = name.as<std::string>();
-  }
-  else {
-    layer.name = "Layer";
-  }
-
-  if (auto type = node["type"]) {
-    const auto value = type.as<std::string>();
-
-    if (value == "tile-layer") {
-      if (const auto err = _parse_tile_layer(node, layer, map.row_count, map.col_count);
-          err != ParseError::None) {
-        return err;
-      }
-    }
-    else if (value == "object-layer") {
-      if (const auto err = _parse_object_layer(node, map, layer);
-          err != ParseError::None) {
-        return err;
-      }
-    }
-    else if (value == "group-layer") {
-      if (const auto err = _parse_group_layer(node, map, layer);
-          err != ParseError::None) {
-        return err;
-      }
-    }
-    else {
-      return ParseError::UnsupportedLayerType;
-    }
-  }
-  else {
+  std::string type;
+  if (!read_attribute(node, "type", type)) {
     return ParseError::NoLayerType;
+  }
+
+  if (type == "tile-layer") {
+    if (const auto err = _parse_tile_layer(node, layer, map.row_count, map.col_count);
+        err != ParseError::None) {
+      return err;
+    }
+  }
+  else if (type == "object-layer") {
+    if (const auto err = _parse_object_layer(node, map, layer); err != ParseError::None) {
+      return err;
+    }
+  }
+  else if (type == "group-layer") {
+    if (const auto err = _parse_group_layer(node, map, layer); err != ParseError::None) {
+      return err;
+    }
+  }
+  else {
+    return ParseError::UnsupportedLayerType;
   }
 
   if (const auto err = parse_properties(node, layer.context); err != ParseError::None) {
@@ -211,74 +189,37 @@ namespace {
 auto parse_object(const YAML::Node& node, const ir::MapData& map, ir::ObjectData& object)
     -> ParseError
 {
-  if (auto id = node["id"]) {
-    object.id = id.as<ObjectID>();
-  }
-  else {
+  if (!read_attribute(node, "id", object.id)) {
     return ParseError::NoObjectId;
   }
 
-  if (auto type = node["type"]) {
-    const auto str = type.as<std::string>();
-    if (str == "point") {
-      object.type = ObjectType::Point;
-    }
-    else if (str == "rect") {
-      object.type = ObjectType::Rect;
-    }
-    else if (str == "ellipse") {
-      object.type = ObjectType::Ellipse;
-    }
-    else {
-      return ParseError::UnsupportedObjectType;
-    }
-  }
-  else {
+  std::string type;
+  if (!read_attribute(node, "type", type)) {
     return ParseError::NoObjectType;
   }
 
-  if (auto name = node["name"]) {
-    object.name = name.as<std::string>();
+  if (type == "point") {
+    object.type = ObjectType::Point;
   }
-
-  if (auto tag = node["tag"]) {
-    object.tag = tag.as<std::string>();
+  else if (type == "rect") {
+    object.type = ObjectType::Rect;
   }
-
-  if (auto visible = node["visible"]) {
-    object.visible = visible.as<bool>();
+  else if (type == "ellipse") {
+    object.type = ObjectType::Ellipse;
   }
   else {
-    object.visible = true;
+    return ParseError::UnsupportedObjectType;
   }
 
-  if (auto x = node["x"]) {
-    object.pos.x = x.as<float>();
-  }
-  else {
-    object.pos.x = 0;
-  }
+  read_attribute(node, "name", object.name);
+  read_attribute(node, "tag", object.tag);
 
-  if (auto y = node["y"]) {
-    object.pos.y = y.as<float>();
-  }
-  else {
-    object.pos.y = 0;
-  }
+  read_attribute(node, "visible", object.visible, true);
 
-  if (auto width = node["width"]) {
-    object.size.x = width.as<float>();
-  }
-  else {
-    object.size.x = 0;
-  }
-
-  if (auto height = node["height"]) {
-    object.size.y = height.as<float>();
-  }
-  else {
-    object.size.y = 0;
-  }
+  read_attribute(node, "x", object.pos.x, 0.0f);
+  read_attribute(node, "y", object.pos.y, 0.0f);
+  read_attribute(node, "width", object.size.x, 0.0f);
+  read_attribute(node, "height", object.size.y, 0.0f);
 
   if (const auto err = parse_properties(node, object.context); err != ParseError::None) {
     return err;

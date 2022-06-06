@@ -28,6 +28,7 @@
 
 #include "core/common/maybe.hpp"
 #include "io/maps/ir.hpp"
+#include "io/maps/yaml_utils.hpp"
 
 namespace tactile::io {
 namespace {
@@ -103,24 +104,21 @@ namespace {
     -> ParseError
 {
   std::string name;
-  if (auto attributeName = node["name"]) {
-    name = attributeName.as<std::string>();
-  }
-  else {
+  if (!read_attribute(node, "name", name)) {
     return ParseError::NoComponentDefAttributeName;
   }
 
+  std::string typeName;
+  if (!read_attribute(node, "type", typeName)) {
+    return ParseError::NoComponentDefAttributeType;
+  }
+
   AttributeType type{};
-  if (auto attributeType = node["type"]) {
-    if (const auto parsedType = _parse_attribute_type(attributeType.as<std::string>())) {
-      type = *parsedType;
-    }
-    else {
-      return ParseError::UnsupportedComponentDefAttributeType;
-    }
+  if (const auto parsedType = _parse_attribute_type(typeName)) {
+    type = *parsedType;
   }
   else {
-    return ParseError::NoComponentDefAttributeType;
+    return ParseError::UnsupportedComponentDefAttributeType;
   }
 
   auto& value = def[name];
@@ -171,10 +169,7 @@ namespace {
     -> ParseError
 {
   std::string type;
-  if (auto name = node["name"]) {
-    type = name.as<std::string>();
-  }
-  else {
+  if (!read_attribute(node, "name", type)) {
     return ParseError::NoComponentDefName;
   }
 
@@ -197,10 +192,7 @@ namespace {
                                     ir::ContextData& data) -> ParseError
 {
   std::string type;
-  if (auto typeName = node["type"]) {
-    type = typeName.as<std::string>();
-  }
-  else {
+  if (!read_attribute(node, "type", type)) {
     return ParseError::NoComponentType;
   }
 
@@ -210,18 +202,15 @@ namespace {
 
   if (auto sequence = node["values"]) {
     for (const auto& valueNode : sequence) {
-      std::string attr;
-      if (auto name = valueNode["name"]) {
-        attr = name.as<std::string>();
-      }
-      else {
+      std::string attrName;
+      if (!read_attribute(valueNode, "name", attrName)) {
         return ParseError::NoComponentAttributeName;
       }
 
       if (auto value = valueNode["value"]) {
-        const auto attrType = prototype.at(attr).type();
+        const auto attrType = prototype.at(attrName).type();
         if (auto attributeValue = _parse_attribute_value(value, attrType)) {
-          attributes[attr] = std::move(*attributeValue);
+          attributes[attrName] = std::move(*attributeValue);
         }
         else {
           return ParseError::CorruptComponentAttributeValue;
@@ -273,25 +262,21 @@ auto parse_properties(const YAML::Node& node, ir::ContextData& data) -> ParseErr
   if (auto sequence = node["properties"]) {
     for (const auto& propertyNode : sequence) {
       std::string propertyName;
-      AttributeType propertyType{};
-
-      if (auto name = propertyNode["name"]) {
-        propertyName = name.as<std::string>();
-      }
-      else {
+      if (!read_attribute(propertyNode, "name", propertyName)) {
         return ParseError::NoPropertyName;
       }
 
-      if (auto type = propertyNode["type"]) {
-        if (auto parsedType = _parse_attribute_type(type.as<std::string>())) {
-          propertyType = *parsedType;
-        }
-        else {
-          return ParseError::UnsupportedPropertyType;
-        }
+      std::string type;
+      if (!read_attribute(propertyNode, "type", type)) {
+        return ParseError::NoPropertyType;
+      }
+
+      AttributeType propertyType{};
+      if (auto parsedType = _parse_attribute_type(type)) {
+        propertyType = *parsedType;
       }
       else {
-        return ParseError::NoPropertyType;
+        return ParseError::UnsupportedPropertyType;
       }
 
       if (auto valueAttr = propertyNode["value"]) {
