@@ -115,8 +115,10 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <cstdint>
                           <cstring>
                           <cstdlib>
+                          <ctime>
                           <cmath>
                           <deque>
+                          <exception>
                           <filesystem>
                           <fstream>
                           <functional>
@@ -127,6 +129,7 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <memory>
                           <optional>
                           <ostream>
+                          <queue>
                           <random>
                           <span>
                           <sstream>
