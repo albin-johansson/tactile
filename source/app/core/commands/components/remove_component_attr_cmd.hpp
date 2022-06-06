@@ -39,9 +39,9 @@ class RemoveComponentAttrCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::remove_component_attribute;
+    return CommandId::RemoveComponentAttribute;
   }
 
  private:

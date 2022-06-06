@@ -35,9 +35,9 @@ class SetObjectVisibilityCmd final : public AObjectCommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::set_object_visibility;
+    return CommandId::SetObjectVisible;
   }
 
  private:

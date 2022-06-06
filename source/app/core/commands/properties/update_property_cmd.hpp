@@ -40,9 +40,9 @@ class UpdatePropertyCmd final : public ACommand
 
   [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::update_property;
+    return CommandId::UpdateProperty;
   }
 
  private:

@@ -39,9 +39,9 @@ class StampToolCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::stamp_sequence;
+    return CommandId::StampSequence;
   }
 
  private:

@@ -37,9 +37,9 @@ class AddPropertyCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::add_property;
+    return CommandId::AddProperty;
   }
 
  private:

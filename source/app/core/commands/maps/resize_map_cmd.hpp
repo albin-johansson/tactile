@@ -37,7 +37,10 @@ class ResizeMapCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::resize_map; }
+  [[nodiscard]] auto id() const noexcept -> CommandId override
+  {
+    return CommandId::ResizeMap;
+  }
 
  private:
   MapDocument* mMap{};

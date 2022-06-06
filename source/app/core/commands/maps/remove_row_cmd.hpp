@@ -38,7 +38,10 @@ class RemoveRowCmd final : public ACommand
 
   [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
-  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::remove_row; }
+  [[nodiscard]] auto id() const noexcept -> CommandId override
+  {
+    return CommandId::MapRemoveRow;
+  }
 
  private:
   MapDocument* mMap{};

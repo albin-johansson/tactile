@@ -36,9 +36,9 @@ class FixTilesInMapCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::fix_tiles_in_map;
+    return CommandId::FixTilesInMap;
   }
 
  private:

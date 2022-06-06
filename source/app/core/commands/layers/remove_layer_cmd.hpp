@@ -40,9 +40,9 @@ class RemoveLayerCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::remove_layer;
+    return CommandId::RemoveLayer;
   }
 
  private:

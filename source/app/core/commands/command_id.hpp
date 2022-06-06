@@ -21,69 +21,61 @@
 
 namespace tactile {
 
-/// \addtogroup commands
-/// \{
-
-struct CommandId final
+enum class CommandId
 {
-  enum Value
-  {
-    add_row,
-    add_column,
-    remove_row,
-    remove_column,
-    resize_map,
-    fix_tiles_in_map,
+  MapAddRow,
+  MapAddColumn,
+  MapRemoveRow,
+  MapRemoveColumn,
+  ResizeMap,
+  FixTilesInMap,
 
-    add_layer,
-    remove_layer,
-    duplicate_layer,
-    move_layer_up,
-    move_layer_down,
-    set_layer_opacity,
-    set_layer_visible,
-    rename_layer,
+  AddLayer,
+  RemoveLayer,
+  DuplicateLayer,
+  MoveLayerUp,
+  MoveLayerDown,
+  SetLayerOpacity,
+  SetLayerVisible,
+  RenameLayer,
 
-    add_property,
-    remove_property,
-    rename_property,
-    update_property,
-    change_property_type,
+  AddProperty,
+  RemoveProperty,
+  RenameProperty,
+  UpdateProperty,
+  ChangePropertyType,
 
-    stamp_sequence,
-    eraser_sequence,
-    bucket,
-    add_rectangle,
-    add_ellipse,
-    add_point,
+  StampSequence,
+  EraserSequence,
+  Bucket,
+  AddRectangle,
+  AddEllipse,
+  AddPoint,
 
-    add_tileset,
-    remove_tileset,
-    set_tileset_name,
+  AddTileset,
+  RemoveTileset,
+  SetTilesetName,
 
-    set_object_name,
-    move_object,
-    set_object_tag,
-    set_object_visibility,
+  SetObjectName,
+  MoveObject,
+  SetObjectTag,
+  SetObjectVisible,
 
-    create_component_def,
-    remove_component_def,
-    rename_component,
+  CreateComponent,
+  RemoveComponent,
+  RenameComponent,
 
-    create_component_def_attribute,
-    remove_component_attribute,
-    rename_component_attribute,
-    set_component_attribute_type,
-    update_component_attribute,
-    duplicate_component_attribute,
+  CreateComponentAttribute,
+  RemoveComponentAttribute,
+  RenameComponentAttribute,
+  SetComponentAttributeType,
+  UpdateComponentAttribute,
+  DuplicateComponentAttribute,
 
-    add_component,
-    remove_component,
-    update_component,
-    reset_component
-  };
+  AttachComponent,
+  DetachComponent,
+  UpdateComponent,
+  reset_component
 };
-
-/// \} End of group commands
 
 }  // namespace tactile

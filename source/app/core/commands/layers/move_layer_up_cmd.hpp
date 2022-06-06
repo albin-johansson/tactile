@@ -35,9 +35,9 @@ class MoveLayerUpCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::move_layer_up;
+    return CommandId::MoveLayerUp;
   }
 
  private:

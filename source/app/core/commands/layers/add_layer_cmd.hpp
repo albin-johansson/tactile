@@ -40,7 +40,10 @@ class AddLayerCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override { return CommandId::add_layer; }
+  [[nodiscard]] auto id() const noexcept -> CommandId override
+  {
+    return CommandId::AddLayer;
+  }
 
  private:
   MapDocument* mMap{};

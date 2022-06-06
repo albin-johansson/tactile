@@ -23,6 +23,7 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "core/commands/command_id.hpp"
 #include "core/common/macros.hpp"
 #include "core/common/ref.hpp"
 
@@ -71,10 +72,8 @@ class ACommand
    * commands are of the same type, since the parameter type is `ACommand`.
    *
    * \return an identifier unique for the command class.
-   *
-   * \see `CommandId`
    */
-  [[nodiscard]] virtual auto id() const -> int = 0;
+  [[nodiscard]] virtual auto id() const -> CommandId = 0;
 
   /**
    * Attempts to merge the supplied command into this command.

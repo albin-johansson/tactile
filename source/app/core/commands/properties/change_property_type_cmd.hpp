@@ -38,9 +38,9 @@ class ChangePropertyTypeCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> int override
+  [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::change_property_type;
+    return CommandId::ChangePropertyType;
   }
 
  private:
