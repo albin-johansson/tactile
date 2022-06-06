@@ -34,27 +34,19 @@
 namespace tactile::sys {
 
 /**
- * \ingroup systems
- * \defgroup layer-system Layer System
- */
-
-/// \addtogroup layer-system
-/// \{
-
-/**
- * \brief Creates a basic layer entity.
+ * Creates a basic layer entity.
  *
- * \details This function is used internally by the other layer factory functions, and
- * does not produce ready-to-use layer entities. The purpose of exposing this function is
- * to make restoring documents post-parsing easier.
+ * This function is used internally by the other layer factory functions, and does not
+ * produce ready-to-use layer entities. The purpose of exposing this function is to make
+ * restoring documents post parsing easier.
  *
  * \pre `parent` is either a group layer or null.
  *
- * \details The created entity will feature the following components:
- * - `Context`
- * - `Layer`
- * - `LayerTreeNode`
- * - `Parent`
+ * The created entity will feature the following components:
+ * - `comp::Context`
+ * - `comp::Layer`
+ * - `comp::LayerTreeNode`
+ * - `comp::Parent`
  *
  * \param registry the associated registry.
  * \param type the specific layer type.
@@ -69,17 +61,17 @@ auto new_layer_skeleton(entt::registry& registry,
                         entt::entity parent = entt::null) -> entt::entity;
 
 /**
- * \brief Creates a tile layer entity.
+ * Creates a tile layer entity.
  *
- * \details The created layer will be added as a child layer if the active layer at
- * the time of invocation is a group layer.
+ * The created layer will be added as a child layer if the active layer at the time of
+ * invocation is a group layer.
  *
- * \details The created entity will feature the following components:
- * - `Layer`
- * - `LayerTreeNode`
- * - `TileLayer`
- * - `Parent`
- * - `Context`
+ * The created entity will feature the following components:
+ * - `comp::Layer`
+ * - `comp::LayerTreeNode`
+ * - `comp::TileLayer`
+ * - `comp::Parent`
+ * - `comp::Context`
  *
  * \param registry the document registry.
  *
@@ -88,17 +80,17 @@ auto new_layer_skeleton(entt::registry& registry,
 auto new_tile_layer(entt::registry& registry) -> entt::entity;
 
 /**
- * \brief Creates an object layer entity.
+ * Creates an object layer entity.
  *
- * \details The created layer will be added as a child layer if the active layer at
- * the time of invocation is a group layer.
+ * The created layer will be added as a child layer if the active layer at the time of
+ * invocation is a group layer.
  *
- * \details The created entity will feature the following components:
- * - `Layer`
- * - `LayerTreeNode`
- * - `ObjectLayer`
- * - `Parent`
- * - `Context`
+ * The created entity will feature the following components:
+ * - `comp::Layer`
+ * - `comp::LayerTreeNode`
+ * - `comp::ObjectLayer`
+ * - `comp::Parent`
+ * - `comp::Context`
  *
  * \param registry the document registry.
  *
@@ -107,17 +99,17 @@ auto new_tile_layer(entt::registry& registry) -> entt::entity;
 auto new_object_layer(entt::registry& registry) -> entt::entity;
 
 /**
- * \brief Creates a group layer entity.
+ * Creates a group layer entity.
  *
- * \details The created layer will be added as a child layer if the active layer at
- * the time of invocation is a group layer.
+ * The created layer will be added as a child layer if the active layer at the time of
+ * invocation is a group layer.
  *
- * \details The created entity will feature the following components:
- * - `Layer`
- * - `LayerTreeNode`
- * - `GroupLayer`
- * - `Parent`
- * - `Context`
+ * The created entity will feature the following components:
+ * - `comp::Layer`
+ * - `comp::LayerTreeNode`
+ * - `comp::GroupLayer`
+ * - `comp::Parent`
+ * - `comp::Context`
  *
  * \param registry the document registry.
  *
@@ -126,12 +118,12 @@ auto new_object_layer(entt::registry& registry) -> entt::entity;
 auto new_group_layer(entt::registry& registry) -> entt::entity;
 
 /**
- * \brief Removes the layer associated with the specified ID.
+ * Removes the layer associated with the specified ID.
  *
  * \pre `entity` must be associated with an existing layer.
  *
- * \details The active layer is is reset if the specified layer is active at the time
- * of invocation. This function will also repair the layer indices.
+ * The active layer is is reset if the specified layer is active at the time of
+ * invocation. This function will also repair the layer indices.
  *
  * \param registry a map registry.
  * \param entity the layer entity that will be removed.
@@ -150,7 +142,7 @@ auto duplicate_layer(entt::registry& registry,
                      bool recursive) -> entt::entity;
 
 /**
- * \brief Selects the layer associated with the specified ID.
+ * Selects the layer associated with the specified ID.
  *
  * \param registry the document registry.
  * \param id the ID of the layer that will be selected.
@@ -166,7 +158,5 @@ void select_layer(entt::registry& registry, const UUID& id);
 [[nodiscard]] auto is_tile_layer_active(const entt::registry& registry) -> bool;
 
 [[nodiscard]] auto is_object_layer_active(const entt::registry& registry) -> bool;
-
-/// \} End of group layer-system
 
 }  // namespace tactile::sys
