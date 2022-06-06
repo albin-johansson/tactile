@@ -1,4 +1,4 @@
-#include "core/algorithms/flood_fill.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 
 #include <gtest/gtest.h>
 
@@ -6,12 +6,11 @@
 #include "core/components/attributes.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/registry_system.hpp"
 
 using namespace tactile;
 
-TEST(FloodFill, flood)
+TEST(TileLayerSystem, flood)
 {
   auto registry = sys::new_map_document_registry();
 
@@ -46,7 +45,7 @@ TEST(FloodFill, flood)
 
   {
     std::vector<TilePos> affected;
-    flood(registry, entity, {4, 1}, 2, affected);
+    sys::flood(layer, {4, 1}, 2, affected);
   }
 
   /* 0  0  0  0  0
@@ -87,7 +86,7 @@ TEST(FloodFill, flood)
 
   {
     std::vector<TilePos> affected;
-    flood(registry, entity, {3, 1}, 3, affected);
+    sys::flood(layer, {3, 1}, 3, affected);
   }
 
   /* 0  0  0  0  0

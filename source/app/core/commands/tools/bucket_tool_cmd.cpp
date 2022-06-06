@@ -19,7 +19,6 @@
 
 #include "bucket_tool_cmd.hpp"
 
-#include "core/algorithms/flood_fill.hpp"
 #include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/context_system.hpp"
@@ -59,10 +58,10 @@ void BucketToolCmd::redo()
   auto& registry = mRegistry.get();
 
   const auto entity = sys::find_context(registry, mLayerId);
-  const auto& layer = checked_get<comp::TileLayer>(registry, entity);
+  auto& layer = checked_get<comp::TileLayer>(registry, entity);
 
   mTarget = sys::get_tile(layer, mOrigin);
-  flood(registry, entity, mOrigin, mReplacement, mPositions);
+  sys::flood(layer, mOrigin, mReplacement, mPositions);
 }
 
 }  // namespace tactile

@@ -19,32 +19,63 @@
 
 #include "tile_layer_system.hpp"
 
+#include <queue>  // queue
+
 #include <entt/entity/registry.hpp>
 
+#include "core/common/ecs.hpp"
 #include "core/components/layers.hpp"
 #include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
+#include "core/systems/map_system.hpp"
+#include "core/tile_pos.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::sys {
-namespace {
 
-[[nodiscard]] auto _is_valid_position(const comp::TileLayer& layer,
-                                      const usize row,
-                                      const usize col) -> bool
+void flood(comp::TileLayer& layer,
+           const TilePos& origin,
+           const TileID replacement,
+           std::vector<TilePos>& affected)
 {
-  return row < layer.matrix.size() && col < layer.matrix[0].size();
-}
+  const auto target = get_tile(layer, origin);
 
-}  // namespace
+  if (!is_valid_position(layer, origin) || (target == replacement)) {
+    return;
+  }
+
+  std::queue<TilePos> positions;
+  positions.push(origin);
+
+  set_tile(layer, origin, replacement);
+  affected.push_back(origin);
+
+  auto update = [&](const TilePos& position) {
+    if (is_valid_position(layer, position)) {
+      const auto tile = get_tile(layer, position);
+      if (tile == target) {
+        set_tile(layer, position, replacement);
+        affected.push_back(position);
+        positions.push(position);
+      }
+    }
+  };
+
+  while (!positions.empty()) {
+    const auto position = positions.front();
+    positions.pop();
+
+    update(position.west());
+    update(position.east());
+    update(position.south());
+    update(position.north());
+  }
+}
 
 void set_tile(comp::TileLayer& layer, const TilePos& pos, const TileID tile)
 {
-  const auto row = pos.row_index();
-  const auto col = pos.col_index();
-
-  if (_is_valid_position(layer, row, col)) {
-    layer.matrix[row][col] = tile;
+  if (is_valid_position(layer, pos)) {
+    layer.matrix[pos.row_index()][pos.col_index()] = tile;
   }
   else {
     throw TactileError{"Invalid tile layer position!"};
@@ -53,21 +84,16 @@ void set_tile(comp::TileLayer& layer, const TilePos& pos, const TileID tile)
 
 void set_tiles(comp::TileLayer& layer, const TileCache& tiles)
 {
-  for (const auto& [position, tile] : tiles) {
-    const auto row = position.row_index();
-    const auto col = position.col_index();
-    TACTILE_ASSERT(_is_valid_position(layer, row, col));
-    layer.matrix[row][col] = tile;
+  for (const auto& [pos, tile] : tiles) {
+    TACTILE_ASSERT(is_valid_position(layer, pos));
+    layer.matrix[pos.row_index()][pos.col_index()] = tile;
   }
 }
 
 auto get_tile(const comp::TileLayer& layer, const TilePos& pos) -> TileID
 {
-  const auto row = pos.row_index();
-  const auto col = pos.col_index();
-
-  if (_is_valid_position(layer, row, col)) {
-    return layer.matrix[row][col];
+  if (is_valid_position(layer, pos)) {
+    return layer.matrix[pos.row_index()][pos.col_index()];
   }
   else {
     return empty_tile;
@@ -89,6 +115,14 @@ void each_tile(const comp::TileLayer& layer,
       callable(row, col, id);
     }
   }
+}
+
+auto is_valid_position(const comp::TileLayer& layer, const TilePos& pos) -> bool
+{
+  return pos.row() >= 0 &&  //
+         pos.col() >= 0 &&  //
+         pos.row_index() < layer.matrix.size() &&
+         pos.col_index() < layer.matrix.at(0).size();
 }
 
 }  // namespace tactile::sys

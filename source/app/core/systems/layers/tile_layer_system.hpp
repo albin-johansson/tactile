@@ -20,6 +20,7 @@
 #pragma once
 
 #include <functional>  // function
+#include <vector>      // vector
 
 #include <entt/fwd.hpp>
 
@@ -30,6 +31,19 @@
 #include "misc/assert.hpp"
 
 namespace tactile::sys {
+
+/**
+ * Floods a tile layer with a tile at the specified location.
+ *
+ * \param layer the target tile layer.
+ * \param origin the origin position of the flood fill.
+ * \param replacement the tile identifier used to replace the origin identifier.
+ * \param[out] affected the positions of the tiles affected by the flood fill.
+ */
+void flood(comp::TileLayer& layer,
+           const TilePos& origin,
+           TileID replacement,
+           std::vector<TilePos>& affected);
 
 /**
  * Sets the value of a tile.
@@ -71,5 +85,9 @@ void set_tiles(comp::TileLayer& layer, const TileCache& tiles);
  */
 void each_tile(const comp::TileLayer& layer,
                const std::function<void(usize, usize, TileID)>& callable);
+
+/// Indicates whether a position is valid in a tile layer.
+[[nodiscard]] auto is_valid_position(const comp::TileLayer& layer, const TilePos& pos)
+    -> bool;
 
 }  // namespace tactile::sys
