@@ -179,9 +179,9 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   const auto layerEntity = sys::get_active_layer(registry);
   auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
 
-  const auto tilesetEntity = sys::find_active_tileset(registry);
-  const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, tilesetEntity);
-  const auto& selection = checked_get<comp::TilesetSelection>(registry, tilesetEntity);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, active.tileset);
+  const auto& selection = checked_get<comp::TilesetSelection>(registry, active.tileset);
 
   const auto& tileset = model.view_tileset(tilesetRef.source_tileset);
 

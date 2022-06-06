@@ -23,6 +23,7 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/tiles.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/events/tool_events.hpp"
@@ -40,10 +41,10 @@ void BucketTool::on_pressed(DocumentModel& model,
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       sys::is_tile_layer_active(registry) &&
       sys::is_single_tile_selected_in_tileset(registry)) {
-    const auto tilesetEntity = sys::find_active_tileset(registry);
+    const auto& active = ctx_get<comp::ActiveState>(registry);
 
-    const auto& selection = checked_get<comp::TilesetSelection>(registry, tilesetEntity);
-    const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, tilesetEntity);
+    const auto& selection = checked_get<comp::TilesetSelection>(registry, active.tileset);
+    const auto& tilesetRef = checked_get<comp::TilesetRef>(registry, active.tileset);
 
     const auto& tileset = model.view_tileset(tilesetRef.source_tileset);
     const auto position = selection.region->begin;

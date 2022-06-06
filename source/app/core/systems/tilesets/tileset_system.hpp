@@ -34,22 +34,6 @@
 namespace tactile::sys {
 
 /**
- * \ingroup systems
- * \defgroup tileset-system Tileset System
- *
- * Manages available tilesets.
- *
- * There are two kinds of tilesets that are handled in slightly different ways.
- * First, there are tileset documents, which have their own registries. These documents
- * may exist at runtime even if no maps are using them. The second type of tilesets are
- * _tileset references_, these are stored in map registries and reference a loaded tileset
- * document.
- */
-
-/// \addtogroup tileset-system
-/// \{
-
-/**
  * Selects the tileset associated with the specified ID.
  *
  * \pre `id` must be associated with an existing tileset.
@@ -113,15 +97,6 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
     -> entt::entity;
 
 /**
- * Returns the active tileset entity, if there is one.
- *
- * \param registry the document registry.
- *
- * \return the active tileset entity; a null entity is returned if there is none.
- */
-[[nodiscard]] auto find_active_tileset(const entt::registry& registry) -> entt::entity;
-
-/**
  * Indicates whether or not the active tileset has a non-empty tile selection.
  *
  * \param registry the registry that will be queried.
@@ -159,7 +134,5 @@ void update_tileset_selection(entt::registry& mapRegistry, const Region& region)
  */
 [[nodiscard]] auto convert_to_local(const entt::registry& mapRegistry, TileID global)
     -> Maybe<TileID>;
-
-/// \} End of group tileset-system
 
 }  // namespace tactile::sys

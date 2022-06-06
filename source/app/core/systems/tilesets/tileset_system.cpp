@@ -134,12 +134,6 @@ auto find_tileset_with_tile(const entt::registry& registry, const TileID id)
   });
 }
 
-auto find_active_tileset(const entt::registry& registry) -> entt::entity
-{
-  const auto& active = ctx_get<comp::ActiveState>(registry);
-  return active.tileset;
-}
-
 auto is_tileset_selection_not_empty(const entt::registry& registry) -> bool
 {
   const auto& active = ctx_get<comp::ActiveState>(registry);

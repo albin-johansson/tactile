@@ -25,6 +25,7 @@
 #include <imgui.h>
 
 #include "core/common/ecs.hpp"
+#include "core/components/attributes.hpp"
 #include "core/components/tiles.hpp"
 #include "core/components/viewport.hpp"
 #include "core/events/tileset_events.hpp"
@@ -99,13 +100,13 @@ void tileset_dock_mouse_wheel_event_handler(const entt::registry& registry,
 {
   constexpr float scaling = 4.0f;
 
-  const auto tilesetEntity = sys::find_active_tileset(registry);
-  const auto& viewport = checked_get<comp::Viewport>(registry, tilesetEntity);
+  const auto& active = ctx_get<comp::ActiveState>(registry);
+  const auto& viewport = checked_get<comp::Viewport>(registry, active.tileset);
 
   const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
   const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
 
-  dispatcher.enqueue<OffsetViewportEvent>(tilesetEntity, -dx, dy);
+  dispatcher.enqueue<OffsetViewportEvent>(active.tileset, -dx, dy);
 }
 
 auto is_tileset_dock_focused() -> bool
