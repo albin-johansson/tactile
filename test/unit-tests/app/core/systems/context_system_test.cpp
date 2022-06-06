@@ -83,6 +83,7 @@ TEST(ContextSystem, RestoreAttributeContext)
   }
 
   const auto snapshot = sys::copy_attribute_context(registry, oldEntity);
+  sys::destroy_entity(registry, oldEntity);
 
   {
     const auto newEntity = registry.create();
