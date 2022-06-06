@@ -24,38 +24,27 @@
 #include <entt/entity/entity.hpp>
 
 #include "core/common/identifiers.hpp"
+#include "core/common/math.hpp"
 #include "core/object_type.hpp"
 
 namespace tactile::comp {
 
-/**
- * \brief Component that represents objects located in object layers.
- *
- * \ingroup components
- */
+/// Component that represents objects located in object layers.
 struct Object final
 {
   ObjectID id{};      ///< Unique object identifier.
-  float x{};          ///< X-coordinate.
-  float y{};          ///< Y-coordinate.
-  float width{};      ///< Object width (might be zero for points, etc.).
-  float height{};     ///< Object height (might be zero for points, etc.).
+  Vector2f pos{};     ///< Object position.
+  Vector2f size{};    ///< Object size (might be zero).
   ObjectType type{};  ///< Specific object type.
   std::string tag;    ///< Optional user-provided type.
   bool visible{};     ///< Whether or not the object is rendered.
 };
 
-/**
- * \brief Component that provides temporary information about dragged objects.
- *
- * \ingroup components
- */
+/// Component that provides temporary information about dragged objects.
 struct ObjectDragInfo final
 {
-  float origin_object_x{};  ///< Object X-coordinate at the drag start.
-  float origin_object_y{};  ///< Object Y-coordinate at the drag start.
-  float last_mouse_x{};     ///< Mouse viewport x-coordinate at last update.
-  float last_mouse_y{};     ///< Mouse viewport y-coordinate at last update.
+  Vector2f origin_object_pos{};  ///< Object position at drag start.
+  Vector2f last_mouse_pos{};     ///< Mouse viewport position at last update.
 };
 
 }  // namespace tactile::comp

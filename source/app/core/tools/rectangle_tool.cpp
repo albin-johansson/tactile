@@ -19,10 +19,8 @@
 
 #include "rectangle_tool.hpp"
 
-#include <algorithm>  // min
-#include <cmath>      // abs
-
 #include <entt/signal/dispatcher.hpp>
+#include <glm/common.hpp>
 
 #include "core/common/math.hpp"
 #include "core/components/tools.hpp"
@@ -41,9 +39,8 @@ void RectangleTool::draw_gizmos(const DocumentModel& model,
 {
   const auto& registry = model.get_active_registry();
   if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
-    const auto pos = renderer.get_origin() + Vector2f{stroke->start_x, stroke->start_y};
-    const Vector2f size{stroke->current_x - stroke->start_x,
-                        stroke->current_y - stroke->start_y};
+    const auto pos = renderer.get_origin() + stroke->start;
+    const auto size = stroke->current - stroke->start;
 
     renderer.draw_rect(pos + Vector2f{1, 1}, size, cen::colors::black);
     renderer.draw_rect(pos, size, cen::colors::yellow);
@@ -68,10 +65,8 @@ void RectangleTool::on_pressed(DocumentModel& model,
   if (sys::is_object_layer_active(registry) && mouse.is_within_contents &&
       mouse.button == cen::mouse_button::left) {
     auto& stroke = registry.ctx().emplace<comp::CurrentRectangleStroke>();
-    stroke.start_x = mouse.x;
-    stroke.start_y = mouse.y;
-    stroke.current_x = stroke.start_x;
-    stroke.current_y = stroke.start_y;
+    stroke.start = mouse.pos;
+    stroke.current = stroke.start;
   }
 }
 
@@ -82,8 +77,7 @@ void RectangleTool::on_dragged(DocumentModel& model,
   auto& registry = model.get_active_registry();
   if (sys::is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {
     if (auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
-      stroke->current_x = mouse.x;
-      stroke->current_y = mouse.y;
+      stroke->current = mouse.pos;
     }
   }
 }
@@ -114,15 +108,13 @@ void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dis
   auto& registry = model.get_active_registry();
   auto& ctx = registry.ctx();
   if (const auto* stroke = ctx.find<comp::CurrentRectangleStroke>()) {
-    const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);
+    const auto ratio = sys::get_viewport_scaling_ratio(registry);
 
-    const auto x = (std::min)(stroke->start_x, stroke->current_x) / xRatio;
-    const auto y = (std::min)(stroke->start_y, stroke->current_y) / yRatio;
-    const auto width = std::abs(stroke->current_x - stroke->start_x) / xRatio;
-    const auto height = std::abs(stroke->current_y - stroke->start_y) / yRatio;
+    const auto pos = (glm::min)(stroke->start, stroke->current) / ratio;
+    const auto size = glm::abs(stroke->current - stroke->start) / ratio;
 
-    if (width != 0 && height != 0) {
-      dispatcher.enqueue<AddRectangleEvent>(x, y, width, height);
+    if (size.x != 0 && size.y != 0) {
+      dispatcher.enqueue<AddRectangleEvent>(pos, size);
     }
 
     ctx.erase<comp::CurrentRectangleStroke>();

@@ -106,10 +106,10 @@ auto _restore_object(entt::registry& registry, const ir::ObjectData& objectData)
   object.id = objectData.id;
   object.type = objectData.type;
 
-  object.x = objectData.x;
-  object.y = objectData.y;
-  object.width = objectData.width;
-  object.height = objectData.height;
+  object.pos.x = objectData.x;
+  object.pos.y = objectData.y;
+  object.size.x = objectData.width;
+  object.size.y = objectData.height;
 
   object.tag = objectData.tag;
   object.visible = objectData.visible;

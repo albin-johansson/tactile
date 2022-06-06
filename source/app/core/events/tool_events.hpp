@@ -20,6 +20,7 @@
 #pragma once
 
 #include "core/common/identifiers.hpp"
+#include "core/common/math.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/mouse_info.hpp"
 #include "core/tile_pos.hpp"
@@ -92,10 +93,8 @@ struct FloodEvent final
  */
 struct AddRectangleEvent final
 {
-  float x{};
-  float y{};
-  float width{};
-  float height{};
+  Vector2f pos{};
+  Vector2f size{};
 };
 
 /**
@@ -103,10 +102,8 @@ struct AddRectangleEvent final
  */
 struct AddEllipseEvent final
 {
-  float x{};
-  float y{};
-  float width{};
-  float height{};
+  Vector2f pos{};
+  Vector2f size{};
 };
 
 /**
@@ -114,8 +111,7 @@ struct AddEllipseEvent final
  */
 struct AddPointEvent final
 {
-  float x{};
-  float y{};
+  Vector2f pos{};
 };
 
 /// \} End of group events

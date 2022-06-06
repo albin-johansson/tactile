@@ -19,11 +19,11 @@
 
 #include "viewport_system.hpp"
 
-#include <algorithm>  // min, max
+#include <algorithm>  // max
 #include <cmath>      // round
-#include <utility>    // pair
 
 #include <entt/entity/registry.hpp>
+#include <glm/common.hpp>
 
 #include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
@@ -36,21 +36,19 @@ namespace {
 constexpr float _min_tile_height = 4;
 
 [[nodiscard]] auto _get_viewport_offset_delta(const float tileWidth, const float ratio)
-    -> std::pair<float, float>
+    -> Vector2f
 {
   const auto dx = std::round((std::max)(2.0f, tileWidth * 0.05f));
   const auto dy = dx / ratio;
-
   return {dx, dy};
 }
 
 }  // namespace
 
-void offset_viewport(entt::registry& registry, const float dx, const float dy)
+void offset_viewport(entt::registry& registry, const Vector2f& offset)
 {
   auto& viewport = ctx_get<comp::Viewport>(registry);
-  viewport.offset.x += dx;
-  viewport.offset.y += dy;
+  viewport.offset += offset;
 }
 
 void offset_viewport(entt::registry& registry,
@@ -64,11 +62,8 @@ void offset_viewport(entt::registry& registry,
 
   if (entity != entt::null) {
     if (auto* limits = registry.try_get<comp::ViewportLimits>(entity)) {
-      viewport.offset.x = (std::min)(limits->min_offset.x, viewport.offset.x);
-      viewport.offset.y = (std::min)(limits->min_offset.y, viewport.offset.y);
-
-      viewport.offset.x = (std::max)(limits->max_offset.x, viewport.offset.x);
-      viewport.offset.y = (std::max)(limits->max_offset.y, viewport.offset.y);
+      viewport.offset = (glm::min)(limits->min_offset, viewport.offset);
+      viewport.offset = (glm::max)(limits->max_offset, viewport.offset);
     }
   }
 }
@@ -101,56 +96,44 @@ void reset_viewport_zoom(entt::registry& registry)
 {
   const auto& map = ctx_get<comp::MapInfo>(registry);
   auto& viewport = ctx_get<comp::Viewport>(registry);
-
-  viewport.tile_size.x = 2.0f * static_cast<float>(map.tile_size.x);
-  viewport.tile_size.y = 2.0f * static_cast<float>(map.tile_size.y);
+  viewport.tile_size = map.tile_size * 2;
 }
 
-void decrease_viewport_zoom(entt::registry& registry,
-                            const float mouseX,
-                            const float mouseY)
+void decrease_viewport_zoom(entt::registry& registry, const Vector2f& mousePos)
 {
   TACTILE_ASSERT(can_decrease_viewport_zoom(registry));
 
   auto& viewport = ctx_get<comp::Viewport>(registry);
 
   // Percentages of map to the left of and above the cursor
-  const auto px = (mouseX - viewport.offset.x) / viewport.tile_size.x;
-  const auto py = (mouseY - viewport.offset.y) / viewport.tile_size.y;
+  const auto per = (mousePos - viewport.offset) / viewport.tile_size;
 
   {
     const auto ratio = viewport.tile_size.x / viewport.tile_size.y;
-    const auto [dx, dy] = _get_viewport_offset_delta(viewport.tile_size.x, ratio);
-    viewport.tile_size.x -= dx;
-    viewport.tile_size.y -= dy;
+    const auto delta = _get_viewport_offset_delta(viewport.tile_size.x, ratio);
+    viewport.tile_size -= delta;
 
-    viewport.tile_size.x = (std::max)(_min_tile_height * ratio, viewport.tile_size.x);
-    viewport.tile_size.y = (std::max)(_min_tile_height, viewport.tile_size.y);
+    const Vector2f minimum{_min_tile_height * ratio, _min_tile_height};
+    viewport.tile_size = (glm::max)(minimum, viewport.tile_size);
   }
 
-  viewport.offset.x = mouseX - (px * viewport.tile_size.x);
-  viewport.offset.y = mouseY - (py * viewport.tile_size.y);
+  viewport.offset = mousePos - (per * viewport.tile_size);
 }
 
-void increase_viewport_zoom(entt::registry& registry,
-                            const float mouseX,
-                            const float mouseY)
+void increase_viewport_zoom(entt::registry& registry, const Vector2f& mousePos)
 {
   auto& viewport = ctx_get<comp::Viewport>(registry);
 
   // Percentages of map to the left of and above the cursor
-  const auto px = (mouseX - viewport.offset.x) / viewport.tile_size.x;
-  const auto py = (mouseY - viewport.offset.y) / viewport.tile_size.y;
+  const auto per = (mousePos - viewport.offset) / viewport.tile_size;
 
   {
     const auto ratio = viewport.tile_size.x / viewport.tile_size.y;
-    const auto [dx, dy] = _get_viewport_offset_delta(viewport.tile_size.x, ratio);
-    viewport.tile_size.x += dx;
-    viewport.tile_size.y += dy;
+    const auto delta = _get_viewport_offset_delta(viewport.tile_size.x, ratio);
+    viewport.tile_size += delta;
   }
 
-  viewport.offset.x = mouseX - (px * viewport.tile_size.x);
-  viewport.offset.y = mouseY - (py * viewport.tile_size.y);
+  viewport.offset = mousePos - (per * viewport.tile_size);
 }
 
 auto can_decrease_viewport_zoom(const entt::registry& registry) -> bool
@@ -159,12 +142,11 @@ auto can_decrease_viewport_zoom(const entt::registry& registry) -> bool
   return viewport.tile_size.y > _min_tile_height;
 }
 
-auto get_viewport_scaling_ratio(const entt::registry& registry) -> ViewportScalingRatio
+auto get_viewport_scaling_ratio(const entt::registry& registry) -> Vector2f
 {
   const auto& viewport = ctx_get<comp::Viewport>(registry);
   const auto& map = ctx_get<comp::MapInfo>(registry);
-  const auto ratio = viewport.tile_size / Vector2f{map.tile_size};
-  return {ratio.x, ratio.y};
+  return viewport.tile_size / Vector2f{map.tile_size};
 }
 
 }  // namespace tactile::sys

@@ -554,21 +554,17 @@ void Application::on_flood(const FloodEvent& event)
 
 void Application::on_add_rectangle(const AddRectangleEvent& event)
 {
-  _execute<RectangleToolCmd>(mData->model,
-                             Vector2f{event.x, event.y},
-                             Vector2f{event.width, event.height});
+  _execute<RectangleToolCmd>(mData->model, event.pos, event.size);
 }
 
 void Application::on_add_ellipse(const AddEllipseEvent& event)
 {
-  _execute<EllipseToolCmd>(mData->model,
-                           Vector2f{event.x, event.y},
-                           Vector2f{event.width, event.height});
+  _execute<EllipseToolCmd>(mData->model, event.pos, event.size);
 }
 
 void Application::on_add_point(const AddPointEvent& event)
 {
-  _execute<PointToolCmd>(mData->model, Vector2f{event.x, event.y});
+  _execute<PointToolCmd>(mData->model, event.pos);
 }
 
 void Application::on_update_viewport_limits(const UpdateViewportLimitsEvent& event)
@@ -614,14 +610,14 @@ void Application::on_increase_zoom()
 {
   auto& registry = mData->model.get_active_registry();
   const auto mousePos = ImGui::GetIO().MousePos;
-  sys::increase_viewport_zoom(registry, mousePos.x, mousePos.y);
+  sys::increase_viewport_zoom(registry, Vector2f{mousePos.x, mousePos.y});
 }
 
 void Application::on_decrease_zoom()
 {
   auto& registry = mData->model.get_active_registry();
   const auto mousePos = ImGui::GetIO().MousePos;
-  sys::decrease_viewport_zoom(registry, mousePos.x, mousePos.y);
+  sys::decrease_viewport_zoom(registry, Vector2f{mousePos.x, mousePos.y});
 }
 
 void Application::on_reset_zoom()

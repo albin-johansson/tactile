@@ -35,22 +35,16 @@ namespace {
                                              const Vector2f& mapTileSize,
                                              const Vector2f& ratio) -> cen::frect
 {
-  /* Points have no width or height, so we have to create a hitbox large enough to be easy
-     for the user to click */
+  // Add artificial hitbox for points, large enough to be easy for the user to click
   if (object.type == ObjectType::Point) {
-    const auto size = mapTileSize * 0.5f;
-    const auto scaledSize = size * ratio;
-
-    return {(object.x - (size.x / 2.0f)) * ratio.x,
-            (object.y - (size.y / 2.0f)) * ratio.y,
-            scaledSize.x,
-            scaledSize.y};
+    const auto pos = (object.pos - (mapTileSize * 0.25f)) * ratio;
+    const auto size = (mapTileSize * 0.5f) * ratio;
+    return {pos.x, pos.y, size.x, size.y};
   }
   else {
-    return {object.x * ratio.x,
-            object.y * ratio.y,
-            object.width * ratio.x,
-            object.height * ratio.y};
+    const auto pos = object.pos * ratio;
+    const auto size = object.pos * ratio;
+    return {pos.x, pos.y, size.x, size.y};
   }
 }
 
@@ -75,9 +69,7 @@ auto find_object(const entt::registry& registry,
                  const Vector2f& pos) -> entt::entity
 {
   const auto& info = ctx_get<comp::MapInfo>(registry);
-
-  const auto [xRatio, yRatio] = get_viewport_scaling_ratio(registry);
-  const Vector2f ratio{xRatio, yRatio};
+  const auto ratio = get_viewport_scaling_ratio(registry);
 
   for (const auto objectEntity : layer.objects) {
     const auto& object = checked_get<comp::Object>(registry, objectEntity);

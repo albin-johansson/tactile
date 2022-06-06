@@ -28,20 +28,13 @@ namespace tactile::sys {
 /// \name Viewport system
 /// \{
 
-struct ViewportScalingRatio final
-{
-  float x{};
-  float y{};
-};
-
 /**
  * \brief Offsets the current viewport.
  *
  * \param registry the document registry.
- * \param dx the x-axis offset.
- * \param dy the y-axis offset.
+ * \param offset the offset in both axes.
  */
-void offset_viewport(entt::registry& registry, float dx, float dy);
+void offset_viewport(entt::registry& registry, const Vector2f& offset);
 
 void offset_viewport(entt::registry& registry,
                      entt::entity entity,
@@ -88,21 +81,17 @@ void reset_viewport_zoom(entt::registry& registry);
  * \pre The viewport tile size must be large enough to support a decrease.
  *
  * \param registry the document registry.
- * \param mouseX the mouse x-coordinate.
- * \param mouseY the mouse y-coordinate
- *
- * \see `can_decrease_viewport_zoom()`
+ * \param mousePos the mouse coordinate.
  */
-void decrease_viewport_zoom(entt::registry& registry, float mouseX, float mouseY);
+void decrease_viewport_zoom(entt::registry& registry, const Vector2f& mousePos);
 
 /**
  * \brief Increases the viewport zoom.
  *
  * \param registry the document registry.
- * \param mouseX the mouse x-coordinate.
- * \param mouseY the mouse y-coordinate
+ * \param mousePos the mouse coordinate.
  */
-void increase_viewport_zoom(entt::registry& registry, float mouseX, float mouseY);
+void increase_viewport_zoom(entt::registry& registry, const Vector2f& mousePos);
 
 /**
  * \brief Indicates whether or not the viewport zoom can be decreased.
@@ -122,8 +111,7 @@ void increase_viewport_zoom(entt::registry& registry, float mouseX, float mouseY
  *
  * \return the ratio between the viewport tile size and the map tile size.
  */
-[[nodiscard]] auto get_viewport_scaling_ratio(const entt::registry& registry)
-    -> ViewportScalingRatio;
+[[nodiscard]] auto get_viewport_scaling_ratio(const entt::registry& registry) -> Vector2f;
 
 /// \} End of viewport system
 

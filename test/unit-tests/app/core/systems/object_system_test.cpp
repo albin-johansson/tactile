@@ -67,10 +67,8 @@ void _verify_new_object(const TestData& data,
   ASSERT_EQ(id, object.id);
   ASSERT_EQ(type, object.type);
 
-  ASSERT_EQ(pos.x, object.x);
-  ASSERT_EQ(pos.y, object.y);
-  ASSERT_EQ(size.x, object.width);
-  ASSERT_EQ(size.y, object.height);
+  ASSERT_EQ(pos, object.pos);
+  ASSERT_EQ(size, object.size);
 
   ASSERT_TRUE(object.visible);
   ASSERT_TRUE(object.tag.empty());
@@ -158,10 +156,8 @@ TEST(ObjectSystem, RemoveAndRestoreObject)
   const auto& object = checked_get<comp::Object>(data.registry, objectEntity);
   ASSERT_EQ(id, object.id);
   ASSERT_EQ(ObjectType::Rect, object.type);
-  ASSERT_EQ(pos.x, object.x);
-  ASSERT_EQ(pos.y, object.y);
-  ASSERT_EQ(size.x, object.width);
-  ASSERT_EQ(size.y, object.height);
+  ASSERT_EQ(pos, object.pos);
+  ASSERT_EQ(size, object.size);
   ASSERT_EQ("tag", object.tag);
   ASSERT_FALSE(object.visible);
 

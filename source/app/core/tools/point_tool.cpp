@@ -37,12 +37,9 @@ void PointTool::on_pressed(DocumentModel& model,
   auto& registry = model.get_active_registry();
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       sys::is_object_layer_active(registry)) {
-    const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);
-
-    const auto x = mouse.x / xRatio;
-    const auto y = mouse.y / yRatio;
-
-    dispatcher.enqueue<AddPointEvent>(x, y);
+    const auto ratio = sys::get_viewport_scaling_ratio(registry);
+    const auto pos = mouse.pos / ratio;
+    dispatcher.enqueue<AddPointEvent>(pos);
   }
 }
 

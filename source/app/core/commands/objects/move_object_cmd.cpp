@@ -48,8 +48,7 @@ void MoveObjectCmd::undo()
 
   const auto objectEntity = sys::find_context(registry, mObjectId);
   auto& object = checked_get<comp::Object>(registry, objectEntity);
-  object.x = mPreviousPos.x;
-  object.y = mPreviousPos.y;
+  object.pos = mPreviousPos;
 }
 
 void MoveObjectCmd::redo()
@@ -58,8 +57,7 @@ void MoveObjectCmd::redo()
 
   const auto objectEntity = sys::find_context(registry, mObjectId);
   auto& object = checked_get<comp::Object>(registry, objectEntity);
-  object.x = mUpdatedPos.x;
-  object.y = mUpdatedPos.y;
+  object.pos = mUpdatedPos;
 }
 
 }  // namespace tactile

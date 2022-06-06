@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/tools/tool_type.hpp"
+#include "core/common/math.hpp"
 
 namespace tactile::comp {
 
@@ -30,10 +30,8 @@ namespace tactile::comp {
  */
 struct CurrentRectangleStroke final
 {
-  float start_x{};
-  float start_y{};
-  float current_x{};
-  float current_y{};
+  Vector2f start{};
+  Vector2f current{};
 };
 
 /**
@@ -43,10 +41,8 @@ struct CurrentRectangleStroke final
  */
 struct CurrentEllipseStroke final
 {
-  float start_x{};
-  float start_y{};
-  float current_x{};
-  float current_y{};
+  Vector2f start{};
+  Vector2f current{};
 };
 
 }  // namespace tactile::comp

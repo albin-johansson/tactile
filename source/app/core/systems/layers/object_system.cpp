@@ -58,11 +58,8 @@ namespace {
   auto& object = registry.emplace<comp::Object>(objectEntity);
   object.id = id;
   object.type = type;
-
-  object.x = pos.x;
-  object.y = pos.y;
-  object.width = size.x;
-  object.height = size.y;
+  object.pos = pos;
+  object.size = size;
   object.visible = true;
 
   return id;

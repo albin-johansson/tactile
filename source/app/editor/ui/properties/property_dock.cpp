@@ -247,12 +247,12 @@ void _show_native_object_properties(const std::string& name,
     dispatcher.enqueue<SetObjectNameEvent>(object.id, *updatedName);
   }
 
-  _native_read_only_row("X", object.x);
-  _native_read_only_row("Y", object.y);
+  _native_read_only_row("X", object.pos.x);
+  _native_read_only_row("Y", object.pos.y);
 
   if (object.type != ObjectType::Point) {
-    _native_read_only_row("Width", object.width);
-    _native_read_only_row("Height", object.height);
+    _native_read_only_row("Width", object.size.x);
+    _native_read_only_row("Height", object.size.y);
   }
 
   _prepare_table_row("Visible");

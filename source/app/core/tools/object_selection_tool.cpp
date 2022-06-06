@@ -49,7 +49,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
     auto& active = ctx_get<comp::ActiveState>(registry);
     auto& layer = checked_get<comp::ObjectLayer>(registry, active.layer);
 
-    const auto objectEntity = sys::find_object(registry, layer, {mouse.x, mouse.y});
+    const auto objectEntity = sys::find_object(registry, layer, mouse.pos);
 
     switch (mouse.button) {
       case cen::mouse_button::left: {
@@ -59,10 +59,8 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
           const auto& object = checked_get<comp::Object>(registry, objectEntity);
 
           auto& drag = registry.emplace<comp::ObjectDragInfo>(objectEntity);
-          drag.origin_object_x = object.x;
-          drag.origin_object_y = object.y;
-          drag.last_mouse_x = mouse.x;
-          drag.last_mouse_y = mouse.y;
+          drag.origin_object_pos = object.pos;
+          drag.last_mouse_pos = mouse.pos;
         }
 
         break;
@@ -93,15 +91,11 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
       if (auto* drag = registry.try_get<comp::ObjectDragInfo>(active.object)) {
         auto& object = checked_get<comp::Object>(registry, active.object);
         if (mouse.is_within_contents) {
-          const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);
-          const auto dx = (mouse.x - drag->last_mouse_x) / xRatio;
-          const auto dy = (mouse.y - drag->last_mouse_y) / yRatio;
+          const auto ratio = sys::get_viewport_scaling_ratio(registry);
+          const auto delta = (mouse.pos - drag->last_mouse_pos) / ratio;
 
-          object.x += dx;
-          object.y += dy;
-
-          drag->last_mouse_x = mouse.x;
-          drag->last_mouse_y = mouse.y;
+          object.pos += delta;
+          drag->last_mouse_pos = mouse.pos;
         }
         else {
           /* Stop if the user drags the object outside the map */
@@ -143,12 +137,11 @@ void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
       const auto& object = checked_get<comp::Object>(registry, active.object);
 
       /* Only emit an event if the object has been moved along any axis */
-      if (drag->origin_object_x != object.x || drag->origin_object_y != object.y) {
+      if (drag->origin_object_pos != object.pos) {
         const auto& context = checked_get<comp::Context>(registry, active.object);
-        dispatcher.enqueue<MoveObjectEvent>(
-            context.id,
-            Vector2f{drag->origin_object_x, drag->origin_object_y},
-            Vector2f{object.x, object.y});
+        dispatcher.enqueue<MoveObjectEvent>(context.id,
+                                            drag->origin_object_pos,
+                                            object.pos);
       }
 
       registry.remove<comp::ObjectDragInfo>(active.object);

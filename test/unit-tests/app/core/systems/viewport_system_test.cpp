@@ -21,11 +21,11 @@ TEST_F(ViewportSystemTest, OffsetViewport)
   ASSERT_EQ(0, viewport.offset.x);
   ASSERT_EQ(0, viewport.offset.y);
 
-  sys::offset_viewport(mRegistry, 42.5f, 27.3f);
+  sys::offset_viewport(mRegistry, {42.5f, 27.3f});
   ASSERT_EQ(42.5f, viewport.offset.x);
   ASSERT_EQ(27.3f, viewport.offset.y);
 
-  sys::offset_viewport(mRegistry, -12.0f, -1.9f);
+  sys::offset_viewport(mRegistry, {-12.0f, -1.9f});
   ASSERT_EQ(42.5f - 12.0f, viewport.offset.x);
   ASSERT_EQ(27.3f - 1.9f, viewport.offset.y);
 }
@@ -81,7 +81,7 @@ TEST_F(ViewportSystemTest, DecreaseViewportZoom)
   const auto width = viewport.tile_size.x;
   const auto height = viewport.tile_size.y;
 
-  sys::decrease_viewport_zoom(mRegistry, 0, 0);
+  sys::decrease_viewport_zoom(mRegistry, {0, 0});
 
   ASSERT_LT(viewport.tile_size.x, width);
   ASSERT_LT(viewport.tile_size.y, height);

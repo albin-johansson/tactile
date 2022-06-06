@@ -21,7 +21,8 @@
 
 #include <centurion/mouse.hpp>
 
-#include "tile_pos.hpp"
+#include "core/common/math.hpp"
+#include "core/tile_pos.hpp"
 
 namespace tactile {
 
@@ -34,8 +35,7 @@ namespace tactile {
  */
 struct MouseInfo final
 {
-  float x{};                     ///< The mouse x-coordinate.
-  float y{};                     ///< The mouse y-coordinate.
+  Vector2f pos{};                ///< The raw mouse position.
   TilePos position_in_viewport;  ///< The hovered tile position.
   cen::mouse_button button{};    ///< The activated mouse button.
   bool is_within_contents{};     ///< Is the mouse within the tile contents?

@@ -64,10 +64,10 @@ void _convert_object(ir::ObjectData& data,
   data.id = object.id;
   data.type = object.type;
 
-  data.x = object.x;
-  data.y = object.y;
-  data.width = object.width;
-  data.height = object.height;
+  data.x = object.pos.x;
+  data.y = object.pos.y;
+  data.width = object.size.x;
+  data.height = object.size.y;
 
   data.tag = object.tag;
   data.visible = object.visible;

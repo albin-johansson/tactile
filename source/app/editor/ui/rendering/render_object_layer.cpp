@@ -77,7 +77,7 @@ void _render_ellipse_object(GraphicsCtx& graphics,
   const auto& context = checked_get<comp::Context>(registry, objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
-  const ImVec2 size = {object.width, object.height};
+  const ImVec2 size = {object.size.x, object.size.y};
 
   const auto radius = ImVec2{0.5f, 0.5f} * size * graphics.tile_size_ratio();
   const auto center = position + radius;
@@ -108,7 +108,7 @@ void _render_rectangle_object(GraphicsCtx& graphics,
   const auto& object = checked_get<comp::Object>(registry, objectEntity);
   TACTILE_ASSERT(object.type == ObjectType::Rect);
 
-  const auto size = ImVec2{object.width, object.height} * graphics.tile_size_ratio();
+  const auto size = ImVec2{object.size.x, object.size.y} * graphics.tile_size_ratio();
 
   if (graphics.is_intersecting_bounds(position, size)) {
     graphics.set_draw_color(color);
@@ -142,7 +142,7 @@ void render_object(GraphicsCtx& graphics,
     return;
   }
 
-  const auto position = ImVec2{object.x, object.y} * graphics.tile_size_ratio();
+  const auto position = ImVec2{object.pos.x, object.pos.y} * graphics.tile_size_ratio();
 
   switch (object.type) {
     case ObjectType::Point:

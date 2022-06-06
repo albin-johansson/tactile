@@ -62,8 +62,8 @@ constinit bool _open_object_context_menu = false;
 {
   MouseInfo info;
 
-  info.x = cursor.raw_position.x;
-  info.y = cursor.raw_position.y;
+  info.pos.x = cursor.raw_position.x;
+  info.pos.y = cursor.raw_position.y;
   info.position_in_viewport = cursor.map_position;
   info.is_within_contents = cursor.is_within_map;
 
