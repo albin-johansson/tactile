@@ -36,7 +36,7 @@ namespace tactile {
 class BucketToolCmd final : public ACommand
 {
  public:
-  BucketToolCmd(RegistryRef registry, TilePos origin, TileID replacement);
+  BucketToolCmd(RegistryRef registry, const TilePos& origin, TileID replacement);
 
   void undo() override;
 
