@@ -24,8 +24,8 @@
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/algorithms/invoke.hpp"
 #include "core/common/ecs.hpp"
+#include "core/common/functional.hpp"
 #include "core/common/math.hpp"
 #include "core/common/random.hpp"
 #include "core/components/attributes.hpp"

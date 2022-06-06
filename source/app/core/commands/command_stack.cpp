@@ -19,7 +19,7 @@
 
 #include "command_stack.hpp"
 
-#include "core/algorithms/invoke.hpp"
+#include "core/common/functional.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 

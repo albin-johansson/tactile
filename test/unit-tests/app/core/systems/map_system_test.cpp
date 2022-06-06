@@ -2,8 +2,8 @@
 
 #include <gtest/gtest.h>
 
-#include "core/algorithms/invoke.hpp"
 #include "core/common/ecs.hpp"
+#include "core/common/functional.hpp"
 #include "core/common/random.hpp"
 #include "core/components/map_info.hpp"
 #include "core/systems/layers/layer_system.hpp"

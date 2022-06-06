@@ -19,7 +19,7 @@
 
 #include "add_row_cmd.hpp"
 
-#include "core/algorithms/invoke.hpp"
+#include "core/common/functional.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/systems/map_system.hpp"
 #include "misc/panic.hpp"

@@ -19,7 +19,7 @@
 
 #include "remove_column_cmd.hpp"
 
-#include "core/algorithms/invoke.hpp"
+#include "core/common/functional.hpp"
 #include "core/components/map_info.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/systems/map_system.hpp"

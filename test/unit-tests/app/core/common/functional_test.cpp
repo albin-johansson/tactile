@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/algorithms/invoke.hpp"
+#include "core/common/functional.hpp"
 
 using namespace tactile;
 
