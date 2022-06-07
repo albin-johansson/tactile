@@ -21,16 +21,16 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
-class AddComponentCmd final : public ACommand
+/// Command for attaching a component to a context.
+class AttachComponentCmd final : public ACommand
 {
  public:
-  AddComponentCmd(RegistryRef registry,
-                  ContextID contextId,
-                  const ComponentID& componentId);
+  AttachComponentCmd(ADocument* document, const UUID& contextId, const UUID& componentId);
 
   void undo() override;
 
@@ -42,9 +42,9 @@ class AddComponentCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ContextID mContextId{};
-  ComponentID mComponentId{};
+  ADocument* mDocument{};
+  UUID mContextId{};
+  UUID mComponentId{};
 };
 
 }  // namespace tactile

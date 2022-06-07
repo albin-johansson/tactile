@@ -925,7 +925,9 @@ void Application::on_update_component_def_attr(const UpdateComponentDefAttrEvent
 
 void Application::on_add_component(const AddComponentEvent& event)
 {
-  _execute<AddComponentCmd>(mData->model, event.context, event.component);
+  if (auto* document = active_document()) {
+    document->attach_component(event.context, event.component);
+  }
 }
 
 void Application::on_remove_component(const RemoveComponentEvent& event)

@@ -21,7 +21,7 @@
 
 /* Convenience header that includes all other command headers */
 
-#include "core/commands/components/add_component_cmd.hpp"
+#include "core/commands/components/attach_component_cmd.hpp"
 #include "core/commands/components/create_component_attr_cmd.hpp"
 #include "core/commands/components/create_component_def_cmd.hpp"
 #include "core/commands/components/duplicate_component_attr_cmd.hpp"

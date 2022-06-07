@@ -113,7 +113,7 @@ void restore_attribute_context(entt::registry& registry,
   }
 
   for (auto&& [componentId, componentValue] : snapshot.components) {
-    auto& component = add_component(registry, context.id, componentId);
+    auto& component = attach_component(registry, context.id, componentId);
 
     for (const auto& [attrName, attrValue] : componentValue.attributes) {
       component.values.at(attrName) = attrValue;

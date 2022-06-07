@@ -17,31 +17,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_component_cmd.hpp"
+#include "attach_component_cmd.hpp"
 
+#include "core/documents/document.hpp"
 #include "core/systems/component_system.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-AddComponentCmd::AddComponentCmd(RegistryRef registry,
-                                 const ContextID contextId,
-                                 const ComponentID& componentId)
-    : ACommand{"Add Component"}
-    , mRegistry{registry}
+AttachComponentCmd::AttachComponentCmd(ADocument* document,
+                                       const UUID& contextId,
+                                       const UUID& componentId)
+    : ACommand{"Attach Component"}
+    , mDocument{document}
     , mContextId{contextId}
     , mComponentId{componentId}
-{}
-
-void AddComponentCmd::undo()
 {
-  auto& registry = mRegistry.get();
+  if (!mDocument) {
+    throw TactileError{"Invalid null document!"};
+  }
+}
+
+void AttachComponentCmd::undo()
+{
+  auto& registry = mDocument->get_registry();
   sys::remove_component(registry, mContextId, mComponentId);
 }
 
-void AddComponentCmd::redo()
+void AttachComponentCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  sys::add_component(registry, mContextId, mComponentId);
+  auto& registry = mDocument->get_registry();
+  sys::attach_component(registry, mContextId, mComponentId);
 }
 
 }  // namespace tactile

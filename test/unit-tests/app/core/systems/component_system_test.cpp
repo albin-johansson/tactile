@@ -62,9 +62,9 @@ TEST(ComponentSystem, RemoveComponentDef)
   const auto b = CreateContext(registry);
   const auto c = CreateContext(registry);
 
-  sys::add_component(registry, a, def);
-  sys::add_component(registry, b, def);
-  sys::add_component(registry, c, def);
+  sys::attach_component(registry, a, def);
+  sys::attach_component(registry, b, def);
+  sys::attach_component(registry, c, def);
 
   ASSERT_TRUE(sys::has_component(registry, a, def));
   ASSERT_TRUE(sys::has_component(registry, b, def));
@@ -146,8 +146,8 @@ TEST(ComponentSystem, RemoveComponentAttribute)
   const auto a = CreateContext(registry);
   const auto b = CreateContext(registry);
 
-  sys::add_component(registry, a, def);
-  sys::add_component(registry, b, def);
+  sys::attach_component(registry, a, def);
+  sys::attach_component(registry, b, def);
 
   sys::make_component_attribute(registry, def, "A");
   sys::make_component_attribute(registry, def, "B");
@@ -273,7 +273,7 @@ TEST(ComponentSystem, AddComponent)
   sys::set_component_attribute_value(registry, def, "Y", -3.5f);
 
   const auto entity = CreateContext(registry);
-  auto& component = sys::add_component(registry, entity, def);
+  auto& component = sys::attach_component(registry, entity, def);
   ASSERT_EQ(def, component.type);
   ASSERT_EQ(2u, component.values.size());
 
@@ -297,8 +297,8 @@ TEST(ComponentSystem, ResetComponent)
   const auto a = CreateContext(registry);
   const auto b = CreateContext(registry);
 
-  sys::add_component(registry, a, def);
-  sys::add_component(registry, b, def);
+  sys::attach_component(registry, a, def);
+  sys::attach_component(registry, b, def);
 
   sys::update_component(registry, b, def, "A", 123);
   sys::update_component(registry, b, def, "B", "Coo"s);
@@ -343,7 +343,7 @@ TEST(ComponentSystem, HasComponent)
   ASSERT_FALSE(sys::has_component(registry, a, def));
   ASSERT_FALSE(sys::has_component(registry, b, def));
 
-  sys::add_component(registry, a, def);
+  sys::attach_component(registry, a, def);
 
   ASSERT_TRUE(sys::has_component(registry, a, def));
   ASSERT_FALSE(sys::has_component(registry, b, def));
@@ -362,8 +362,8 @@ TEST(ComponentSystem, RemoveComponent)
   const auto b = sys::make_component_def(registry, "B");
 
   const auto entity = CreateContext(registry);
-  sys::add_component(registry, entity, a);
-  sys::add_component(registry, entity, b);
+  sys::attach_component(registry, entity, a);
+  sys::attach_component(registry, entity, b);
 
   ASSERT_TRUE(sys::has_component(registry, entity, a));
   ASSERT_TRUE(sys::has_component(registry, entity, b));
@@ -391,7 +391,7 @@ TEST(ComponentSystem, GetComponent)
   ASSERT_THROW(sys::get_component(registry, entity, a), TactileError);
   ASSERT_THROW(sys::get_component(registry, entity, b), TactileError);
 
-  sys::add_component(registry, entity, a);
+  sys::attach_component(registry, entity, a);
   ASSERT_NO_THROW(sys::get_component(registry, entity, a));
   ASSERT_THROW(sys::get_component(registry, entity, b), TactileError);
 

@@ -46,7 +46,7 @@ TEST(ContextSystem, CopyAttributeContext)
   auto& context = sys::register_context(registry, entity);
   context.name = "Foo";
 
-  sys::add_component(registry, context.id, componentId);
+  sys::attach_component(registry, context.id, componentId);
 
   sys::add_property(registry, context, "A", 123);
   sys::add_property(registry, context, "B", "abc"s);

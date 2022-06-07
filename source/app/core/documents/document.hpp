@@ -47,6 +47,8 @@ class ADocument
   /// Sets the file path associated with the document.
   void set_path(std::filesystem::path path);
 
+  void attach_component(const UUID& contextId, const UUID& componentId);
+
   /// Indicates whether the document represents a map.
   [[nodiscard]] auto is_map() const -> bool;
 

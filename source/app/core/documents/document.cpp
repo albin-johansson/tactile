@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include "core/commands/command_stack.hpp"
+#include "core/commands/components/attach_component_cmd.hpp"
 #include "core/common/ecs.hpp"
 #include "core/components/attributes.hpp"
 
@@ -43,6 +44,11 @@ void ADocument::set_path(std::filesystem::path path)
   else {
     mRegistry.ctx().emplace<std::filesystem::path>(std::move(path));
   }
+}
+
+void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
+{
+  get_history().push<AttachComponentCmd>(this, contextId, componentId);
 }
 
 auto ADocument::has_path() const -> bool
