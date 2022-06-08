@@ -39,6 +39,8 @@ class TextureManager;
 class IRenderer;
 class ToolManager;
 
+class Actor;
+
 namespace comp {
 
 struct ActiveState;
