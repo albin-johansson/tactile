@@ -19,9 +19,14 @@
 
 #pragma once
 
-#include <concepts>  // integral, invocable
+#include <concepts>     // integral, invocable
+#include <type_traits>  // is_invocable_r_v
 
 namespace tactile {
+
+/// A concept similar to std::invocable, but with explicit return type
+template <typename T, typename Ret, typename... Args>
+concept Callable = std::is_invocable_r_v<Ret, T, Args...>;
 
 /**
  * Invokes a function object N times.
