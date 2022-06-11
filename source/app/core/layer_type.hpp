@@ -21,11 +21,7 @@
 
 namespace tactile {
 
-/**
- * \brief Represents all of the supported layer types.
- *
- * \ingroup core
- */
+/// Represents all of the supported layer types.
 enum class LayerType
 {
   TileLayer,
