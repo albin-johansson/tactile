@@ -284,7 +284,7 @@ void GroupLayer::move_layer_up(const UUID& id)
   };
 
   LayerMutatorVisitor visitor{id, op};
-  each(visitor);
+  accept(visitor);
 
   if (!valid) {
     throw TactileError{"Invalid layer identifier"};
@@ -306,7 +306,7 @@ void GroupLayer::move_layer_down(const UUID& id)
   };
 
   LayerMutatorVisitor visitor{id, op};
-  each(visitor);
+  accept(visitor);
 
   if (!valid) {
     throw TactileError{"Invalid layer identifier"};
