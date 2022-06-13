@@ -49,6 +49,7 @@ class IContext;
 class ComponentBundle;
 class PropertyBundle;
 
+class TileLayer;
 }  // namespace core
 
 namespace comp {
