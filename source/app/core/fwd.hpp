@@ -41,6 +41,16 @@ class ToolManager;
 
 class Actor;
 
+namespace core {
+
+class IElement;
+class IContext;
+
+class ComponentBundle;
+class PropertyBundle;
+
+}  // namespace core
+
 namespace comp {
 
 struct ActiveState;
