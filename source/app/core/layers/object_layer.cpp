@@ -48,6 +48,11 @@ void ObjectLayer::set_visible(const bool visible)
   mDelegate.set_visible(visible);
 }
 
+auto ObjectLayer::object_count() const -> usize
+{
+  return mObjects.size();
+}
+
 auto ObjectLayer::get_opacity() const -> float
 {
   return mDelegate.get_opacity();

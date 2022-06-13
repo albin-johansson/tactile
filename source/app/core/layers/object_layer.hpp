@@ -23,6 +23,7 @@
 
 #include "core/common/associative.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/ints.hpp"
 #include "core/layers/layer.hpp"
 #include "core/layers/layer_delegate.hpp"
 #include "core/layers/object.hpp"
@@ -40,6 +41,8 @@ class ObjectLayer final : public ILayer
   void set_opacity(float opacity) override;
 
   void set_visible(bool visible) override;
+
+  [[nodiscard]] auto object_count() const -> usize;
 
   [[nodiscard]] auto get_opacity() const -> float override;
 
