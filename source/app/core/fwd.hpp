@@ -43,13 +43,22 @@ class Actor;
 
 namespace core {
 
+struct Object;
+
 class IElement;
 class IContext;
 
 class ComponentBundle;
 class PropertyBundle;
+class ContextDelegate;
 
+class ILayerVisitor;
+class IConstLayerVisitor;
+class ILayer;
 class TileLayer;
+class ObjectLayer;
+class GroupLayer;
+class LayerDelegate;
 }  // namespace core
 
 namespace comp {
