@@ -42,7 +42,7 @@ TEST(TilePosition, SetRow)
   ASSERT_EQ(row, position.row());
 }
 
-TEST(TilePosition, SetColumn)
+TEST(TilePosition, SetCol)
 {
   TilePos position;
 
@@ -60,28 +60,28 @@ TEST(TilePosition, OffsetBy)
   ASSERT_EQ(10, result.col());
 }
 
-TEST(TilePosition, GetRow)
+TEST(TilePosition, Row)
 {
   const TilePos position{8'324, 0};
   ASSERT_EQ(8'324, position.row());
 }
 
-TEST(TilePosition, GetColumn)
+TEST(TilePosition, Col)
 {
   const TilePos position{0, 493};
   ASSERT_EQ(493, position.col());
 }
 
-TEST(TilePosition, GetRowIndex)
+TEST(TilePosition, URow)
 {
   const TilePos position{6'532, 0};
-  ASSERT_EQ(6'532u, position.row_index());
+  ASSERT_EQ(6'532u, position.urow());
 }
 
-TEST(TilePosition, GetColIndex)
+TEST(TilePosition, UCol)
 {
   const TilePos position{0, 18'343};
-  ASSERT_EQ(18'343u, position.col_index());
+  ASSERT_EQ(18'343u, position.ucol());
 }
 
 TEST(TilePosition, RowToY)

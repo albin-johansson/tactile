@@ -54,9 +54,9 @@ void EraserToolCmd::redo()
   const auto entity = sys::find_context(registry, mLayerId);
   auto& matrix = checked_get<comp::TileLayer>(registry, entity).matrix;
   for (const auto& [position, _] : mOldState) {
-    TACTILE_ASSERT(position.row_index() < matrix.size());
-    TACTILE_ASSERT(position.col_index() < matrix.front().size());
-    matrix[position.row_index()][position.col_index()] = empty_tile;
+    TACTILE_ASSERT(position.urow() < matrix.size());
+    TACTILE_ASSERT(position.ucol() < matrix.front().size());
+    matrix[position.urow()][position.ucol()] = empty_tile;
   }
 }
 

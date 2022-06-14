@@ -159,7 +159,7 @@ void TileLayer::set_visible(const bool visible)
 void TileLayer::set_tile(const TilePos& pos, const TileID id)
 {
   if (is_valid(pos)) {
-    mTiles[pos.row_index()][pos.col_index()] = id;
+    mTiles[pos.urow()][pos.ucol()] = id;
   }
   else {
     throw TactileError{"Invalid position!"};
@@ -169,7 +169,7 @@ void TileLayer::set_tile(const TilePos& pos, const TileID id)
 auto TileLayer::tile_at(const TilePos& pos) const -> TileID
 {
   if (is_valid(pos)) {
-    return mTiles[pos.row_index()][pos.col_index()];
+    return mTiles[pos.urow()][pos.ucol()];
   }
   else {
     throw TactileError{"Invalid position!"};
@@ -178,10 +178,10 @@ auto TileLayer::tile_at(const TilePos& pos) const -> TileID
 
 auto TileLayer::is_valid(const TilePos& pos) const -> bool
 {
-  return pos.row() >= 0 &&                 //
-         pos.col() >= 0 &&                 //
-         pos.row_index() < row_count() &&  //
-         pos.col_index() < column_count();
+  return pos.row() >= 0 &&            //
+         pos.col() >= 0 &&            //
+         pos.urow() < row_count() &&  //
+         pos.ucol() < column_count();
 }
 
 auto TileLayer::row_count() const -> usize

@@ -166,7 +166,7 @@ class TilePos final
    *
    * \return the raw row index.
    */
-  [[nodiscard]] constexpr auto row_index() const noexcept -> usize
+  [[nodiscard]] constexpr auto urow() const noexcept -> usize
   {
     TACTILE_ASSERT(mRow >= 0);
     return static_cast<usize>(mRow);
@@ -179,7 +179,7 @@ class TilePos final
    *
    * \return the raw column index.
    */
-  [[nodiscard]] constexpr auto col_index() const noexcept -> usize
+  [[nodiscard]] constexpr auto ucol() const noexcept -> usize
   {
     TACTILE_ASSERT(mCol >= 0);
     return static_cast<usize>(mCol);

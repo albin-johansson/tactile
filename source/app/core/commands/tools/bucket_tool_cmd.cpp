@@ -46,7 +46,7 @@ void BucketToolCmd::undo()
 
   const auto target = mTarget.value();
   for (const auto& position : mPositions) {
-    layer.matrix[position.row_index()][position.col_index()] = target;
+    layer.matrix[position.urow()][position.ucol()] = target;
   }
 
   mPositions.clear();

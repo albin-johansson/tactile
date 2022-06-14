@@ -75,7 +75,7 @@ void flood(comp::TileLayer& layer,
 void set_tile(comp::TileLayer& layer, const TilePos& pos, const TileID tile)
 {
   if (is_valid_position(layer, pos)) {
-    layer.matrix[pos.row_index()][pos.col_index()] = tile;
+    layer.matrix[pos.urow()][pos.ucol()] = tile;
   }
   else {
     throw TactileError{"Invalid tile layer position!"};
@@ -86,14 +86,14 @@ void set_tiles(comp::TileLayer& layer, const TileCache& tiles)
 {
   for (const auto& [pos, tile] : tiles) {
     TACTILE_ASSERT(is_valid_position(layer, pos));
-    layer.matrix[pos.row_index()][pos.col_index()] = tile;
+    layer.matrix[pos.urow()][pos.ucol()] = tile;
   }
 }
 
 auto get_tile(const comp::TileLayer& layer, const TilePos& pos) -> TileID
 {
   if (is_valid_position(layer, pos)) {
-    return layer.matrix[pos.row_index()][pos.col_index()];
+    return layer.matrix[pos.urow()][pos.ucol()];
   }
   else {
     return empty_tile;
@@ -121,8 +121,7 @@ auto is_valid_position(const comp::TileLayer& layer, const TilePos& pos) -> bool
 {
   return pos.row() >= 0 &&  //
          pos.col() >= 0 &&  //
-         pos.row_index() < layer.matrix.size() &&
-         pos.col_index() < layer.matrix.at(0).size();
+         pos.urow() < layer.matrix.size() && pos.ucol() < layer.matrix.at(0).size();
 }
 
 }  // namespace tactile::sys
