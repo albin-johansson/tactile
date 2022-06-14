@@ -19,8 +19,10 @@
 
 #pragma once
 
-#include <concepts>     // integral, invocable
+#include <concepts>     // integral, invocable, predicate
 #include <type_traits>  // is_invocable_r_v
+
+#include "misc/panic.hpp"
 
 namespace tactile {
 
@@ -61,6 +63,14 @@ constexpr void invoke_mn(const T m,
       callable(i, j);
     }
   }
+}
+
+/// Ensures that a value matches a predicate and returns it, throws otherwise.
+template <typename T, std::predicate<const T&> U>
+constexpr auto require_that(T value, U&& predicate) -> T
+{
+  return predicate(value) ? value
+                          : throw TactileError{"Value did not match requirements!"};
 }
 
 }  // namespace tactile
