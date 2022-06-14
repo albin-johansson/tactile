@@ -56,6 +56,8 @@ class TileLayer final : public ILayer
   void remove_row();
   void remove_column();
 
+  void resize(usize rows, usize columns);
+
   void set_opacity(float opacity) override;
 
   void set_visible(bool visible) override;

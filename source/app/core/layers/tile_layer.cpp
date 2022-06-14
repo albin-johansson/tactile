@@ -21,6 +21,8 @@
 
 #include <queue>  // queue
 
+#include "core/common/functional.hpp"
+#include "core/common/math.hpp"
 #include "core/layers/layer_visitor.hpp"
 #include "core/tile_pos.hpp"
 #include "core/utils/tiles.hpp"
@@ -103,11 +105,46 @@ void TileLayer::add_row()
   mTiles.push_back(make_tile_row(column_count()));
 }
 
-void TileLayer::add_column() {}
+void TileLayer::add_column()
+{
+  for (auto& row : mTiles) {
+    row.push_back(empty_tile);
+  }
+}
 
-void TileLayer::remove_row() {}
+void TileLayer::remove_row()
+{
+  TACTILE_ASSERT(row_count() > 1);
+  mTiles.pop_back();
+}
 
-void TileLayer::remove_column() {}
+void TileLayer::remove_column()
+{
+  for (auto& row : mTiles) {
+    TACTILE_ASSERT(row.size() > 1);
+    row.pop_back();
+  }
+}
+
+void TileLayer::resize(const usize rows, const usize columns)
+{
+  const auto currentRows = row_count();
+  const auto currentCols = column_count();
+
+  if (const auto n = udiff(currentRows, rows); currentRows < rows) {
+    invoke_n(n, [this] { add_row(); });
+  }
+  else {
+    invoke_n(n, [this] { remove_row(); });
+  }
+
+  if (const auto n = udiff(currentCols, columns); currentCols < columns) {
+    invoke_n(n, [this] { add_column(); });
+  }
+  else {
+    invoke_n(n, [this] { remove_column(); });
+  }
+}
 
 void TileLayer::set_opacity(const float opacity)
 {
