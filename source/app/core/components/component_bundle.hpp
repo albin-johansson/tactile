@@ -21,8 +21,11 @@
 
 #include "core/common/associative.hpp"
 
+#include "core/common/uuid.hpp"
+
 namespace tactile::core {
 
+/// Manages a set of components attached to a context.
 class ComponentBundle final
 {
  public:

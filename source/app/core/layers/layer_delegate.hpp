@@ -21,8 +21,8 @@
 
 #include "core/common/macros.hpp"
 #include "core/common/uuid.hpp"
+#include "core/components/component_bundle.hpp"
 #include "core/property_bundle.hpp"
-#include "core/component_bundle.hpp"
 
 namespace tactile::core {
 
