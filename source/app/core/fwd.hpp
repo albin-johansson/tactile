@@ -43,8 +43,6 @@ class Actor;
 
 namespace core {
 
-struct Object;
-
 class IElement;
 class IContext;
 
@@ -52,6 +50,7 @@ class ComponentBundle;
 class PropertyBundle;
 class ContextDelegate;
 
+class Object;
 class ILayerVisitor;
 class IConstLayerVisitor;
 class ILayer;

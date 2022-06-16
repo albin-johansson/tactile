@@ -22,17 +22,50 @@
 #include <string>  // string
 
 #include "core/common/math.hpp"
+#include "core/context.hpp"
+#include "core/context_delegate.hpp"
 #include "core/object_type.hpp"
 
 namespace tactile::core {
 
-struct Object final
+class Object final : public IContext
 {
-  Vector2f pos{};                     ///< Object position.
-  Vector2f size{};                    ///< Object size (might be zero).
-  ObjectType type{ObjectType::Rect};  ///< Specific object type.
-  std::string tag;                    ///< Optional user-provided tag.
-  bool visible : 1 {true};
+ public:
+  void set_pos(const Vector2f& pos);
+
+  void set_size(const Vector2f& size);
+
+  void set_type(ObjectType type);
+
+  void set_tag(std::string tag);
+
+  void set_visible(bool visible);
+
+  [[nodiscard]] auto get_props() -> PropertyBundle& override;
+  [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
+
+  [[nodiscard]] auto get_comps() -> ComponentBundle& override;
+  [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+
+  [[nodiscard]] auto get_uuid() const -> const UUID& override;
+
+  [[nodiscard]] auto get_type() const noexcept -> ObjectType { return mType; }
+
+  [[nodiscard]] auto get_pos() const noexcept -> const Vector2f& { return mPos; }
+
+  [[nodiscard]] auto get_size() const noexcept -> const Vector2f& { return mSize; }
+
+  [[nodiscard]] auto get_tag() const -> const std::string& { return mTag; }
+
+  [[nodiscard]] auto is_visible() const noexcept -> bool { return mVisible; }
+
+ private:
+  ContextDelegate mDelegate;
+  Vector2f mPos{};                     /// Object position.
+  Vector2f mSize{};                    /// Object size (might be zero).
+  ObjectType mType{ObjectType::Rect};  /// Specific object type.
+  std::string mTag;                    /// Optional user-provided tag.
+  bool mVisible : 1 {true};
 };
 
 }  // namespace tactile::core
