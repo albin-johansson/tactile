@@ -50,6 +50,8 @@ class ComponentBundle;
 class PropertyBundle;
 class ContextDelegate;
 
+class Viewport;
+
 class Object;
 class ILayerVisitor;
 class IConstLayerVisitor;
