@@ -24,9 +24,7 @@
 
 namespace tactile {
 
-/**
- * \brief The exception type used for all exceptions thrown in the codebase.
- */
+/// The exception type used for all exceptions thrown in the codebase.
 class TactileError : public std::exception
 {
  public:
