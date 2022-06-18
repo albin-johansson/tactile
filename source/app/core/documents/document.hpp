@@ -69,8 +69,11 @@ class ADocument
   [[nodiscard]] auto get_history() const -> const CommandStack&;
 
   /// Returns the associated registry.
-  [[nodiscard]] auto get_registry() -> entt::registry& { return mRegistry; };
-  [[nodiscard]] auto get_registry() const -> const entt::registry& { return mRegistry; }
+  [[nodiscard, deprecated]] auto get_registry() -> entt::registry& { return mRegistry; };
+  [[nodiscard, deprecated]] auto get_registry() const -> const entt::registry&
+  {
+    return mRegistry;
+  }
 
   /// Returns the identifier associated with the document.
   [[nodiscard]] auto id() const -> const UUID&;
