@@ -19,7 +19,10 @@
 
 #include "object_layer.hpp"
 
+#include <utility>  // move
+
 #include "core/layers/layer_visitor.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile::core {
 
@@ -48,9 +51,38 @@ void ObjectLayer::set_visible(const bool visible)
   mDelegate.set_visible(visible);
 }
 
+void ObjectLayer::add_object(Object object)
+{
+  const auto id = object.get_uuid();
+  mObjects[id] = std::move(object);
+}
+
+void ObjectLayer::reserve_objects(const usize n)
+{
+  mObjects.reserve(n);
+}
+
+void ObjectLayer::select_object(const Maybe<UUID>& id)
+{
+  mActiveObject = id;
+  if (mActiveObject && !mObjects.contains(*mActiveObject)) {
+    throw TactileError{"Invalid object identifier!"};
+  }
+}
+
 auto ObjectLayer::object_count() const -> usize
 {
   return mObjects.size();
+}
+
+auto ObjectLayer::active_object_id() const -> Maybe<UUID>
+{
+  return mActiveObject;
+}
+
+auto ObjectLayer::get_object(const UUID& id) const -> const Object&
+{
+  return lookup(mObjects, id);
 }
 
 auto ObjectLayer::get_opacity() const -> float

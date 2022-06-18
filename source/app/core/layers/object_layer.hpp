@@ -22,8 +22,9 @@
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/common/associative.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/layers/layer.hpp"
 #include "core/layers/layer_delegate.hpp"
 #include "core/layers/object.hpp"
@@ -42,7 +43,17 @@ class ObjectLayer final : public ILayer
 
   void set_visible(bool visible) override;
 
+  void add_object(Object object);
+
+  void reserve_objects(usize n);
+
+  void select_object(const Maybe<UUID>& id);
+
   [[nodiscard]] auto object_count() const -> usize;
+
+  [[nodiscard]] auto active_object_id() const -> Maybe<UUID>;
+
+  [[nodiscard]] auto get_object(const UUID& id) const -> const Object&;
 
   [[nodiscard]] auto get_opacity() const -> float override;
 
@@ -63,9 +74,13 @@ class ObjectLayer final : public ILayer
     return LayerType::ObjectLayer;
   }
 
+  [[nodiscard]] auto begin() const noexcept { return mObjects.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mObjects.end(); }
+
  private:
   LayerDelegate mDelegate;
   HashMap<UUID, Object> mObjects;
+  Maybe<UUID> mActiveObject;
 };
 
 }  // namespace tactile::core
