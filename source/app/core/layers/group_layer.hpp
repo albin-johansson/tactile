@@ -74,7 +74,29 @@ class GroupLayer final : public ILayer
 
   [[nodiscard]] auto get_layer(const UUID& id) -> Shared<ILayer>;
 
+  [[nodiscard]] auto view_layer(const UUID& id) -> ILayer&;
   [[nodiscard]] auto view_layer(const UUID& id) const -> const ILayer&;
+
+  [[nodiscard]] auto view_tile_layer(const UUID& id) -> TileLayer&;
+  [[nodiscard]] auto view_tile_layer(const UUID& id) const -> const TileLayer&;
+
+  [[nodiscard]] auto view_object_layer(const UUID& id) -> ObjectLayer&;
+  [[nodiscard]] auto view_object_layer(const UUID& id) const -> const ObjectLayer&;
+
+  [[nodiscard]] auto view_group_layer(const UUID& id) -> GroupLayer&;
+  [[nodiscard]] auto view_group_layer(const UUID& id) const -> const GroupLayer&;
+
+  [[nodiscard]] auto find_layer(const UUID& id) -> ILayer*;
+  [[nodiscard]] auto find_layer(const UUID& id) const -> const ILayer*;
+
+  [[nodiscard]] auto find_tile_layer(const UUID& id) -> TileLayer*;
+  [[nodiscard]] auto find_tile_layer(const UUID& id) const -> const TileLayer*;
+
+  [[nodiscard]] auto find_object_layer(const UUID& id) -> ObjectLayer*;
+  [[nodiscard]] auto find_object_layer(const UUID& id) const -> const ObjectLayer*;
+
+  [[nodiscard]] auto find_group_layer(const UUID& id) -> GroupLayer*;
+  [[nodiscard]] auto find_group_layer(const UUID& id) const -> const GroupLayer*;
 
   [[nodiscard]] auto get_opacity() const -> float override;
 
@@ -101,11 +123,6 @@ class GroupLayer final : public ILayer
  private:
   LayerDelegate mDelegate;
   LayerStorage mLayers;
-
-  [[nodiscard]] auto find(const UUID& id) -> ILayer*;
-  [[nodiscard]] auto find(const UUID& id) const -> const ILayer*;
-
-  [[nodiscard]] auto find_group(const UUID& id) -> GroupLayer*;
 };
 
 }  // namespace tactile::core
