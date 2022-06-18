@@ -19,12 +19,10 @@
 
 #include "document_tab_widget.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/commands/command_stack.hpp"
-#include "core/components/attributes.hpp"
 #include "core/events/document_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/scoped.hpp"
@@ -39,10 +37,12 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
     model.each([&](const UUID& documentId) {
       const Scope scope{static_cast<int>(hash(documentId))};
 
-      ImGuiTabItemFlags flags = 0;
       const auto isActive = model.active_document_id() == documentId;
-      const auto& document = model.view_document(documentId);
 
+      const auto& document = model.view_document(documentId);
+      const auto& name = document.get_name();
+
+      ImGuiTabItemFlags flags = 0;
       if (isActive) {
         flags |= ImGuiTabItemFlags_SetSelected;
 
@@ -51,11 +51,8 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
         }
       }
 
-      const auto& registry = document.get_registry();
-      const auto& context = ctx_get<comp::Context>(registry);
-
       bool opened = true;
-      if (TabItem item{context.name.c_str(), &opened, flags}; item.is_open()) {
+      if (TabItem item{name.c_str(), &opened, flags}; item.is_open()) {
         if (isActive) {
           if (model.is_map(documentId)) {
             show_map_viewport(model, model.view_map(documentId), dispatcher);
