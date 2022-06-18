@@ -49,12 +49,8 @@ void ComponentDefinition::add_attr(std::string key, Attribute value)
 
 void ComponentDefinition::update_attr(std::string_view key, Attribute value)
 {
-  if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
-    iter->second = std::move(value);
-  }
-  else {
-    throw TactileError{"Tried to update non-existent attribute!"};
-  }
+  auto& attribute = lookup_in(mAttributes, key);
+  attribute = std::move(value);
 }
 
 void ComponentDefinition::remove_attr(std::string_view key)
@@ -85,32 +81,22 @@ void ComponentDefinition::rename_attr(std::string_view current, std::string upda
 
 auto ComponentDefinition::duplicate_attr(std::string_view key) -> std::string
 {
-  if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
-    auto value = iter->second;
+  auto value = lookup_in(mAttributes, key);
 
-    int suffix = 1;
-    std::string newKey;
-    do {
-      newKey = fmt::format("{} ({})", iter->first, suffix);
-      ++suffix;
-    } while (mAttributes.contains(newKey));
+  int suffix = 1;
+  std::string newKey;
+  do {
+    newKey = fmt::format("{} ({})", iter->first, suffix);
+    ++suffix;
+  } while (mAttributes.contains(newKey));
 
-    mAttributes[newKey] = std::move(value);
-    return newKey;
-  }
-  else {
-    throw TactileError{"Tried to duplicate non-existent attribute!"};
-  }
+  mAttributes[newKey] = std::move(value);
+  return newKey;
 }
 
 auto ComponentDefinition::get_attr(std::string_view key) const -> const Attribute&
 {
-  if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid attribute key!"};
-  }
+  return lookup_in(mAttributes, key);
 }
 
 auto ComponentDefinition::has_attr(std::string_view key) const -> bool

@@ -23,6 +23,8 @@
 #include <map>            // map
 #include <unordered_map>  // unordered_map
 
+#include "misc/panic.hpp"
+
 namespace tactile {
 
 template <typename K, typename V>
@@ -30,5 +32,49 @@ using TreeMap = std::map<K, V, std::less<>>;
 
 template <typename K, typename V>
 using HashMap = std::unordered_map<K, V>;
+
+template <typename K, typename V>
+[[nodiscard]] auto lookup_in(TreeMap<K, V>& map, auto&& key) -> V&
+{
+  if (const auto iter = map.find(key); iter != map.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid key!"};
+  }
+}
+
+template <typename K, typename V>
+[[nodiscard]] auto lookup_in(const TreeMap<K, V>& map, auto&& key) -> const V&
+{
+  if (const auto iter = map.find(key); iter != map.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid key!"};
+  }
+}
+
+template <typename K, typename V>
+[[nodiscard]] auto lookup_in(HashMap<K, V>& map, auto&& key) -> V&
+{
+  if (const auto iter = map.find(key); iter != map.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid key!"};
+  }
+}
+
+template <typename K, typename V>
+[[nodiscard]] auto lookup_in(const HashMap<K, V>& map, auto&& key) -> const V&
+{
+  if (const auto iter = map.find(key); iter != map.end()) {
+    return iter->second;
+  }
+  else {
+    throw TactileError{"Invalid key!"};
+  }
+}
 
 }  // namespace tactile

@@ -65,13 +65,7 @@ auto TilesetDocument::tile_at(const TilePos& pos) const -> TileID
 auto TilesetDocument::tile_source(const TileIndex index) const -> const cen::irect&
 {
   const auto& cache = get_cache();
-  if (const auto iter = cache.source_rects.find(index);
-      iter != cache.source_rects.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid tile index!"};
-  }
+  return lookup_in(cache.source_rects, index);
 }
 
 auto TilesetDocument::get_displayed_tile(const TileIndex index) const -> TileIndex

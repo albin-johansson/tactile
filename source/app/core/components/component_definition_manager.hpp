@@ -66,6 +66,7 @@ class ComponentDefinitionManager final
   void rename_comp(const UUID& id, std::string name);
 
   /// Returns the component definition for a specific ID.
+  [[nodiscard]] auto at(const UUID& id) -> ComponentDefinition&;
   [[nodiscard]] auto at(const UUID& id) const -> const ComponentDefinition&;
 
   /// Indicates whether there is a component with a specific name.

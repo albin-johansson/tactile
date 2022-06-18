@@ -197,12 +197,7 @@ auto DocumentModel::get_id_for_path(const std::filesystem::path& path) const -> 
 
 auto DocumentModel::get_document(const UUID& id) -> Shared<ADocument>
 {
-  if (const auto iter = mDocuments.find(id); iter != mDocuments.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid document identifier!"};
-  }
+  return lookup_in(mDocuments, id);
 }
 
 auto DocumentModel::active_document_id() const -> Maybe<UUID>
@@ -349,52 +344,27 @@ auto DocumentModel::is_tileset(const UUID& id) const -> bool
 
 auto DocumentModel::get_map(const UUID& id) -> Shared<MapDocument>
 {
-  if (const auto iter = mMaps.find(id); iter != mMaps.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid map document identifier!"};
-  }
+  return lookup_in(mMaps, id);
 }
 
 auto DocumentModel::get_tileset(const UUID& id) -> Shared<TilesetDocument>
 {
-  if (const auto iter = mTilesets.find(id); iter != mTilesets.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid tileset document identifier!"};
-  }
+  return lookup_in(mTilesets, id);
 }
 
 auto DocumentModel::view_document(const UUID& id) const -> const ADocument&
 {
-  if (const auto iter = mDocuments.find(id); iter != mDocuments.end()) {
-    return *iter->second;
-  }
-  else {
-    throw TactileError{"Invalid document identifier!"};
-  }
+  return *lookup_in(mDocuments, id);
 }
 
 auto DocumentModel::view_map(const UUID& id) const -> const MapDocument&
 {
-  if (const auto iter = mMaps.find(id); iter != mMaps.end()) {
-    return *iter->second;
-  }
-  else {
-    throw TactileError{"Invalid map document identifier!"};
-  }
+  return *lookup_in(mMaps, id);
 }
 
 auto DocumentModel::view_tileset(const UUID& id) const -> const TilesetDocument&
 {
-  if (const auto iter = mTilesets.find(id); iter != mTilesets.end()) {
-    return *iter->second;
-  }
-  else {
-    throw TactileError{"Invalid tileset document identifier!"};
-  }
+  return *lookup_in(mTilesets, id);
 }
 
 void DocumentModel::register_map(Shared<MapDocument> document)

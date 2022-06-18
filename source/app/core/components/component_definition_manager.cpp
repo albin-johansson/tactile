@@ -57,22 +57,20 @@ void ComponentDefinitionManager::rename_comp(const UUID& id, std::string name)
     throw TactileError{"New component name was not unique!"};
   }
 
-  if (const auto iter = mDefs.find(id); iter != mDefs.end()) {
-    auto& def = iter->second;
-    def.set_name(std::move(name));
-  }
-  else {
-    throw TactileError{"Tried to rename non-existent component definition!"};
-  }
+  auto& def = lookup_in(mDefs, id);
+  def.set_name(std::move(name));
+}
+
+auto ComponentDefinitionManager::at(const UUID& id) -> ComponentDefinition&
+{
+  return lookup_in(mDefs, id);
 }
 
 auto ComponentDefinitionManager::at(const UUID& id) const -> const ComponentDefinition&
 {
-  if (const auto iter = mDefs.find(id); iter != mDefs.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError{"Invalid component definition identifier!"};
+  return lookup_in(mDefs, id);
+}
+
   }
 }
 
