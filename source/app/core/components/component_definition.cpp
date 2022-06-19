@@ -86,7 +86,7 @@ auto ComponentDefinition::duplicate_attr(std::string_view key) -> std::string
   int suffix = 1;
   std::string newKey;
   do {
-    newKey = fmt::format("{} ({})", iter->first, suffix);
+    newKey = fmt::format("{} ({})", key, suffix);
     ++suffix;
   } while (mAttributes.contains(newKey));
 
