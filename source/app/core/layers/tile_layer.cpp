@@ -195,6 +195,11 @@ auto TileLayer::column_count() const -> usize
   return mTiles.at(0).size();
 }
 
+auto TileLayer::get_tiles() const -> const TileMatrix&
+{
+  return mTiles;
+}
+
 auto TileLayer::get_opacity() const -> float
 {
   return mDelegate.get_opacity();

@@ -72,6 +72,8 @@ class TileLayer final : public ILayer
 
   [[nodiscard]] auto column_count() const -> usize;
 
+  [[nodiscard]] auto get_tiles() const -> const TileMatrix&;
+
   [[nodiscard]] auto get_opacity() const -> float override;
 
   [[nodiscard]] auto is_visible() const -> bool override;
