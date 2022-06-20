@@ -51,6 +51,8 @@ class Tile final : public IContext
 
   [[nodiscard]] auto object_capacity() const -> usize;
 
+  [[nodiscard]] auto get_objects() const -> const HashMap<UUID, Object>&;
+
   [[nodiscard]] auto is_animated() const -> bool;
 
   [[nodiscard]] auto get_animation() const -> const TileAnimation&;

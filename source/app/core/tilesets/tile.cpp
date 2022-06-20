@@ -58,6 +58,11 @@ auto Tile::object_capacity() const -> usize
   return mObjects.bucket_count();
 }
 
+auto Tile::get_objects() const -> const HashMap<UUID, Object>&
+{
+  return mObjects;
+}
+
 auto Tile::is_animated() const -> bool
 {
   return mAnimation.has_value();
