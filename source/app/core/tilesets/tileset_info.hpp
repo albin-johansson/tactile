@@ -33,8 +33,6 @@ struct TilesetInfo final
   uint texture_id{};                   /// The associated OpenGL texture identifier.
   Vector2i texture_size{};             /// The size of the texture.
   Vector2i tile_size{};                /// Logical tile size.
-  int32 row_count{};                   /// The amount of tile rows.
-  int32 column_count{};                /// The amount of tile columns.
 };
 
 }  // namespace tactile::core
