@@ -93,7 +93,7 @@ struct LayerData final
   LayerID id{};
   LayerType type{};
 
-  usize index{};
+  usize index{};  /// Local index.
 
   std::string name;
   data_type data;
@@ -130,7 +130,7 @@ struct TilesetData final
   std::filesystem::path image_path;
   Vector2i image_size{};
 
-  HashMap<TileID, MetaTileData> fancy_tiles;
+  HashMap<TileIndex, MetaTileData> fancy_tiles;
 
   ContextData context;
 };
