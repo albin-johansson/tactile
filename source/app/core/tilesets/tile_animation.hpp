@@ -54,6 +54,9 @@ class TileAnimation final
 
   [[nodiscard]] auto size() const -> usize;
 
+  [[nodiscard]] auto begin() const noexcept { return mFrames.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mFrames.end(); }
+
  private:
   std::vector<Frame> mFrames;
   usize mIndex{};
