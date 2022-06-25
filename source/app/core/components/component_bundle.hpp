@@ -19,9 +19,12 @@
 
 #pragma once
 
-#include "core/common/associative.hpp"
+#include <boost/uuid/uuid_hash.hpp>
 
+#include "core/common/associative.hpp"
+#include "core/common/ints.hpp"
 #include "core/common/uuid.hpp"
+#include "core/components/component.hpp"
 
 namespace tactile::core {
 
@@ -31,8 +34,19 @@ class ComponentBundle final
  public:
   // TODO
 
+  void add(Component component);
+
+  void erase(const UUID& componentId);
+
+  [[nodiscard]] auto at(const UUID& componentId) -> Component&;
+  [[nodiscard]] auto at(const UUID& componentId) const -> const Component&;
+
+  [[nodiscard]] auto size() const -> usize;
+
+  [[nodiscard]] auto empty() const -> bool;
+
  private:
-  //  TreeMap<std::string, Component> mComps;
+  HashMap<UUID, Component> mComps;
 };
 
 }  // namespace tactile::core

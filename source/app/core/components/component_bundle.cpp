@@ -19,8 +19,50 @@
 
 #include "component_bundle.hpp"
 
+#include <utility>  // move
+
+#include "misc/panic.hpp"
+
 namespace tactile::core {
 
+void ComponentBundle::add(Component component)
+{
+  if (mComps.contains(component.definition_id())) {
+    throw TactileError{"Bundle cannot hold multiple components of same type!"};
+  }
 
-
+  const auto componentId = component.definition_id();
+  mComps.try_emplace(componentId, std::move(component));
 }
+
+void ComponentBundle::erase(const UUID& componentId)
+{
+  if (const auto iter = mComps.find(componentId); iter != mComps.end()) {
+    mComps.erase(iter);
+  }
+  else {
+    throw TactileError{"Tried to remove non-existent component from bundle!"};
+  }
+}
+
+auto ComponentBundle::at(const UUID& componentId) -> Component&
+{
+  return lookup_in(mComps, componentId);
+}
+
+auto ComponentBundle::at(const UUID& componentId) const -> const Component&
+{
+  return lookup_in(mComps, componentId);
+}
+
+auto ComponentBundle::size() const -> usize
+{
+  return mComps.size();
+}
+
+auto ComponentBundle::empty() const -> bool
+{
+  return mComps.empty();
+}
+
+}  // namespace tactile::core
