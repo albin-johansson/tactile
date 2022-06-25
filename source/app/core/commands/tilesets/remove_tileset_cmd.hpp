@@ -45,11 +45,11 @@ class RemoveTilesetCmd final : public ACommand
   }
 
  private:
-  DocumentModel* mModel{};
-  UUID mTilesetId{};
-  UUID mMapId{};
-  Shared<TilesetDocument> mTileset;
-  Maybe<TileID> mFirstTile;
+  DocumentModel*          mModel{};
+  UUID                    mTilesetId{};
+  UUID                    mMapId{};
+  Shared<TilesetDocument> mTilesetDocument;
+  Maybe<TileID>           mFirstTile;
 };
 
 }  // namespace tactile

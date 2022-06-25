@@ -25,23 +25,20 @@
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-AddTilesetCmd::AddTilesetCmd(DocumentModel* model,
-                             const UUID& mapId,
-                             const UUID& tilesetId,
-                             comp::Texture texture,
-                             const Vector2i& tileSize)
+AddTilesetCmd::AddTilesetCmd(DocumentModel*           model,
+                             const UUID&              mapId,
+                             const UUID&              tilesetId,
+                             const core::TilesetInfo& info)
     : ACommand{"Add Tileset"}
     , mModel{model}
     , mMapId{mapId}
     , mTilesetId{tilesetId}
-    , mTexture{std::move(texture)}
-    , mTileSize{tileSize}
+    , mTilesetInfo{info}
 {
   if (!mModel) {
     throw TactileError{"Invalid null model!"};
@@ -57,26 +54,26 @@ void AddTilesetCmd::undo()
   TACTILE_ASSERT(!mModel->is_open(mTilesetId));
   TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
 
-  auto map = mModel->get_map(mMapId);
-  auto& mapRegistry = map->get_registry();
-  sys::detach_tileset(mapRegistry, mTilesetId);
+  auto  mapDocument = mModel->get_map(mMapId);
+  auto& map = mapDocument->get_map();
+  map.detach_tileset(mTilesetId);
 }
 
 void AddTilesetCmd::redo()
 {
   /* We only need to create and register the document once */
   if (!mTileset) {
-    mTileset = std::make_shared<TilesetDocument>(mTilesetId, mTexture, mTileSize);
+    mTileset = std::make_shared<TilesetDocument>(mTilesetId, mTilesetInfo);
     mModel->register_tileset(mTileset);
   }
 
   TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
   TACTILE_ASSERT(mModel->is_map(mMapId));
 
-  auto map = mModel->get_map(mMapId);
-  auto& mapRegistry = map->get_registry();
+  auto  mapDocument = mModel->get_map(mMapId);
+  auto& map = mapDocument->get_map();
 
-  sys::attach_tileset(mapRegistry, mTilesetId, mTileset->info());
+  map.attach_tileset(mTileset->get_tileset(), false);
 }
 
 }  // namespace tactile

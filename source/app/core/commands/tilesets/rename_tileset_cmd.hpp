@@ -22,16 +22,16 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class RenameTilesetCmd final : public ACommand
 {
  public:
-  RenameTilesetCmd(RegistryRef registry, TilesetID id, std::string name);
+  RenameTilesetCmd(TilesetDocument* document, std::string name);
 
   void undo() override;
 
@@ -45,9 +45,8 @@ class RenameTilesetCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  TilesetID mTilesetId;
-  std::string mNewName;
+  TilesetDocument*   mDocument{};
+  std::string        mNewName;
   Maybe<std::string> mOldName;
 };
 

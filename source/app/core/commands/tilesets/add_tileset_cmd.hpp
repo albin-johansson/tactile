@@ -24,8 +24,8 @@
 #include "core/common/math.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/texture.hpp"
 #include "core/fwd.hpp"
+#include "core/tilesets/tileset_info.hpp"
 
 namespace tactile {
 
@@ -33,20 +33,10 @@ namespace tactile {
 class AddTilesetCmd final : public ACommand
 {
  public:
-  /**
-   * Creates a command.
-   *
-   * \param model the associated document model.
-   * \param mapId the ID of the target map.
-   * \param tilesetId the ID of the new tileset.
-   * \param texture the tileset texture.
-   * \param tileSize the tileset logical tile size.
-   */
-  AddTilesetCmd(DocumentModel* model,
-                const UUID& mapId,
-                const UUID& tilesetId,
-                comp::Texture texture,
-                const Vector2i& tileSize);
+  AddTilesetCmd(DocumentModel*           model,
+                const UUID&              mapId,
+                const UUID&              tilesetId,
+                const core::TilesetInfo& info);
 
   void undo() override;
 
@@ -58,12 +48,11 @@ class AddTilesetCmd final : public ACommand
   }
 
  private:
-  DocumentModel* mModel{};
-  UUID mMapId{};
-  UUID mTilesetId{};
-  comp::Texture mTexture;
-  Vector2i mTileSize{};
-  Shared<TilesetDocument> mTileset;  ///< The created tileset (initially null)
+  DocumentModel*          mModel{};
+  UUID                    mMapId{};
+  UUID                    mTilesetId{};
+  core::TilesetInfo       mTilesetInfo;
+  Shared<TilesetDocument> mTileset;  /// The created tileset
 };
 
 }  // namespace tactile

@@ -19,11 +19,11 @@
 
 #include "remove_tileset_cmd.hpp"
 
-#include "core/components/attributes.hpp"
+#include <utility>  // move
+
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
@@ -44,40 +44,36 @@ RemoveTilesetCmd::RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId)
 
 void RemoveTilesetCmd::undo()
 {
-  TACTILE_ASSERT(mTileset != nullptr);
+  TACTILE_ASSERT(mTilesetDocument != nullptr);
   TACTILE_ASSERT(mModel->active_document_id() == mMapId);
 
-  auto map = mModel->get_map(mMapId);
-  auto& mapRegistry = map->get_registry();
+  auto  mapDocument = mModel->get_map(mMapId);
+  auto& map = mapDocument->get_map();
 
-  sys::attach_tileset(mapRegistry, mTilesetId, mTileset->info(), mFirstTile.value());
-  sys::select_tileset(mapRegistry, mTilesetId);
+  auto       tileset = mTilesetDocument->get_tileset();
+  const auto tilesetId = tileset->get_uuid();
+
+  map.attach_tileset(std::move(tileset), mFirstTile.value(), false);  // TODO
+  map.select_tileset(tilesetId);
 }
 
 void RemoveTilesetCmd::redo()
 {
   TACTILE_ASSERT(mModel->active_document_id() == mMapId);
+  mTilesetDocument = mModel->get_tileset(mTilesetId);
 
-  mTileset = mModel->get_tileset(mTilesetId);
+  auto  mapDocument = mModel->get_map(mMapId);
+  auto& map = mapDocument->get_map();
 
-  auto map = mModel->get_map(mMapId);
-  auto& mapRegistry = map->get_registry();
+  const auto& tilesets = map.get_tilesets();
+  const auto& tilesetRef = tilesets.get_ref(mTilesetId);
+  mFirstTile = tilesetRef.first_tile;
 
-  const auto tilesetEntity = sys::find_tileset(mapRegistry, mTilesetId);
-  const auto& ref = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
-  mFirstTile = ref.first_id;
-
-  if (ref.embedded) {
+  if (tilesetRef.embedded) {
     mModel->close_document(mTilesetId);
   }
 
-  sys::detach_tileset(mapRegistry, mTilesetId);
-
-  auto& active = ctx_get<comp::ActiveState>(mapRegistry);
-  if (tilesetEntity == active.tileset) {
-    const auto view = mapRegistry.view<comp::TilesetRef>();
-    active.tileset = view.empty() ? entt::null : view.front();
-  }
+  map.detach_tileset(mTilesetId);
 }
 
 }  // namespace tactile

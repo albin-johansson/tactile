@@ -21,52 +21,46 @@
 
 #include <utility>  // move
 
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
-#include "misc/assert.hpp"
+#include "core/documents/tileset_document.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-RenameTilesetCmd::RenameTilesetCmd(RegistryRef registry,
-                                   const TilesetID id,
-                                   std::string name)
+RenameTilesetCmd::RenameTilesetCmd(TilesetDocument* document, std::string name)
     : ACommand{"Rename Tileset"}
-    , mRegistry{registry}
-    , mTilesetId{id}
+    , mDocument{document}
     , mNewName{std::move(name)}
-{}
+{
+  if (!mDocument) {
+    throw TactileError{"Invalid tileset null document!"};
+  }
+}
 
 void RenameTilesetCmd::undo()
 {
-  // TODO
-  /*auto& registry = mRegistry.get();
+  auto& tileset = mDocument->view_tileset();
 
-  const auto entity = sys::find_tileset(registry, mTilesetId);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& context = checked_get<comp::AttributeContext>(registry, entity);
-  context.name = mOldName.value();*/
+  tileset.set_name(mOldName.value());
+  mOldName.reset();
 }
 
 void RenameTilesetCmd::redo()
 {
-  // TODO
-  /*auto& registry = mRegistry.get();
+  auto& tileset = mDocument->view_tileset();
 
-  const auto entity = sys::find_tileset(registry, mTilesetId);
-  TACTILE_ASSERT(entity != entt::null);
-
-  auto& context = checked_get<comp::AttributeContext>(registry, entity);
-  mOldName = context.name;
-  context.name = mNewName;*/
+  mOldName = tileset.get_name();
+  tileset.set_name(mNewName);
 }
 
 auto RenameTilesetCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const RenameTilesetCmd&>(cmd);
-    if (mTilesetId == other.mTilesetId) {
+
+    const auto& tileset = mDocument->view_tileset();
+    const auto& otherTileset = other.mDocument->view_tileset();
+
+    if (tileset.get_uuid() == otherTileset.get_uuid()) {
       mNewName = other.mNewName;
       return true;
     }
