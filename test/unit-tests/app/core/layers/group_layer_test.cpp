@@ -51,6 +51,50 @@ TEST(GroupLayer, Defaults)
   ASSERT_EQ(0u, counter.count);
 }
 
+TEST(GroupLayer, SimpleEach)
+{
+  GroupLayer root;
+
+  auto t1 = TileLayer::make();
+  auto g1 = GroupLayer::make();
+  auto o1 = ObjectLayer::make();
+
+  root.add_layer(t1);
+  root.add_layer(g1);
+  root.add_layer(g1->get_uuid(), o1);
+
+  ASSERT_EQ(3, root.layer_count());
+
+  ASSERT_EQ(nothing, t1->get_parent());
+  ASSERT_EQ(nothing, g1->get_parent());
+  ASSERT_EQ(g1->get_uuid(), o1->get_parent());
+
+  usize count = 0;
+  root.each([&](const ILayer* layer) {
+    ASSERT_TRUE(layer != nullptr);
+    ++count;
+
+    switch (layer->get_type()) {
+      case LayerType::TileLayer:
+        ASSERT_FALSE(layer->get_parent().has_value());
+        ASSERT_EQ(0, root.get_global_index(layer->get_uuid()));
+        break;
+
+      case LayerType::ObjectLayer:
+        ASSERT_EQ(g1->get_uuid(), layer->get_parent());
+        ASSERT_EQ(2, root.get_global_index(layer->get_uuid()));
+        break;
+
+      case LayerType::GroupLayer:
+        ASSERT_FALSE(layer->get_parent().has_value());
+        ASSERT_EQ(1, root.get_global_index(layer->get_uuid()));
+        break;
+    }
+  });
+
+  ASSERT_EQ(3u, count);
+}
+
 TEST(GroupLayer, AddLayer)
 {
   GroupLayer root;
@@ -62,6 +106,7 @@ TEST(GroupLayer, AddLayer)
   ASSERT_EQ(1u, root.layer_count());
   ASSERT_EQ(0u, root.get_local_index(t1->get_uuid()));
   ASSERT_EQ(0u, root.get_global_index(t1->get_uuid()));
+  ASSERT_EQ(nothing, t1->get_parent());
 
   auto t2 = TileLayer::make();
   root.add_layer(t2);
@@ -71,12 +116,13 @@ TEST(GroupLayer, AddLayer)
   ASSERT_EQ(1u, root.get_local_index(t2->get_uuid()));
   ASSERT_EQ(0u, root.get_global_index(t1->get_uuid()));
   ASSERT_EQ(1u, root.get_global_index(t2->get_uuid()));
+  ASSERT_EQ(nothing, t2->get_parent());
 
   auto g1 = GroupLayer::make();
   auto t3 = TileLayer::make();
 
   root.add_layer(g1);
-  g1->add_layer(t3);
+  root.add_layer(g1->get_uuid(), t3);
 
   ASSERT_EQ(4u, root.layer_count());
 
@@ -89,6 +135,9 @@ TEST(GroupLayer, AddLayer)
   ASSERT_EQ(1u, root.get_global_index(t2->get_uuid()));
   ASSERT_EQ(2u, root.get_global_index(g1->get_uuid()));
   ASSERT_EQ(3u, root.get_global_index(t3->get_uuid()));
+
+  ASSERT_EQ(nothing, g1->get_parent());
+  ASSERT_EQ(g1->get_uuid(), t3->get_parent());
 }
 
 TEST(GroupLayer, AddLayerToParent)
