@@ -20,33 +20,23 @@
 #pragma once
 
 #include <string>  // string
+#include <vector>  // vector
 
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
 #include "core/layer_type.hpp"
+#include "core/map.hpp"
+#include "core/tools/tool_manager.hpp"
 #include "core/tools/tool_type.hpp"
+#include "core/viewport.hpp"
 
 namespace tactile {
 
-/**
- * \brief Represents a loaded map.
- *
- * \details Map document registries have the following context components:
- * - `CommandStack`
- * - `comp::MapInfo`
- * - `ToolManager`
- * - `comp::Context`
- * - `comp::ActiveContext`
- * - `comp::ActiveLayer`
- * - `comp::ActiveTileset`
- * - `comp::ActiveObject`
- * - `comp::ContextMapping`
- * - `comp::TilesetContext`
- * - `comp::Viewport`
- */
+/// Represents a loaded map.
 class MapDocument final : public ADocument
 {
  public:
@@ -82,23 +72,37 @@ class MapDocument final : public ADocument
 
   void set_layer_visible(const UUID& layerId, bool visible);
 
-  void move_object(const UUID& objectId,
+  void move_object(const UUID&     objectId,
                    const Vector2f& previous,
                    const Vector2f& updated);
 
-  [[nodiscard]] auto info() const -> const comp::MapInfo&;
+  void set_name(std::string name) override;
 
-  [[nodiscard]] auto viewport() const -> const comp::Viewport&;
-
-  [[nodiscard]] auto tile_size() const -> Vector2i;
+  [[nodiscard]] auto get_name() const -> const std::string& override;
 
   [[nodiscard]] auto get_tools() -> ToolManager&;
   [[nodiscard]] auto get_tools() const -> const ToolManager&;
+
+  [[nodiscard]] auto get_viewport() -> core::Viewport& override { return mViewport; }
+
+  [[nodiscard]] auto get_viewport() const -> const core::Viewport& override
+  {
+    return mViewport;
+  }
 
   [[nodiscard]] auto get_type() const -> DocumentType override
   {
     return DocumentType::Map;
   }
+
+  [[nodiscard]] auto get_map() -> core::Map& { return mMap; }
+  [[nodiscard]] auto get_map() const -> const core::Map& { return mMap; }
+
+ private:
+  core::Map      mMap;
+  core::Viewport mViewport;
+  ToolManager    mTools;
+  // TODO active context
 };
 
 }  // namespace tactile

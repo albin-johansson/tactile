@@ -21,41 +21,45 @@
 
 #include <utility>  // move
 
-#include "core/common/ecs.hpp"
-#include "core/components/animation.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/texture.hpp"
-#include "core/components/tiles.hpp"
-#include "core/systems/animation_system.hpp"
-#include "core/systems/tilesets/tileset_document_system.hpp"
+#include "core/tilesets/tileset_info.hpp"
 #include "core/utils/tiles.hpp"
 
 namespace tactile {
 
-TilesetDocument::TilesetDocument(const UUID& id,
-                                 const comp::Texture& texture,
-                                 const Vector2i& tileSize)
-    : ADocument{sys::new_tileset_document_registry(texture, tileSize)}
-{
-  ctx_get<comp::Context>(mRegistry).id = id;
-}
+TilesetDocument::TilesetDocument(const UUID& id, const core::TilesetInfo& info)
+    : mTileset{std::make_shared<core::Tileset>(id, info)}
+{}
+
+TilesetDocument::TilesetDocument(const core::TilesetInfo& info)
+    : mTileset{std::make_shared<core::Tileset>(info)}
+{}
 
 void TilesetDocument::update()
 {
-  get_cache().display_tiles.clear();
-
-  sys::update_animations(mRegistry);
+  //  get_cache().display_tiles.clear();
+  //
+  //  sys::update_animations(mRegistry);
 }
 
-auto TilesetDocument::tile_at(const TilePos& pos) const -> TileID
+void TilesetDocument::set_name(std::string name)
 {
-  const auto& ts = info();
+  mTileset->set_name(std::move(name));
+}
+
+auto TilesetDocument::get_name() const -> const std::string&
+{
+  return mTileset->get_name();
+}
+
+auto TilesetDocument::tile_at(const TilePos& pos) const -> TileIndex
+{
+  const auto& tileset = *mTileset;
 
   const auto row = pos.row();
   const auto col = pos.col();
 
-  if (row >= 0 && col >= 0 && row < ts.row_count && col < ts.column_count) {
-    return row * ts.column_count + col;
+  if (row >= 0 && col >= 0 && row < tileset.row_count() && col < tileset.column_count()) {
+    return row * tileset.column_count() + col;
   }
   else {
     return empty_tile;
@@ -64,67 +68,38 @@ auto TilesetDocument::tile_at(const TilePos& pos) const -> TileID
 
 auto TilesetDocument::tile_source(const TileIndex index) const -> const cen::irect&
 {
-  const auto& cache = get_cache();
-  return lookup_in(cache.source_rects, index);
+  throw TactileError{"Not implemented"};
+  //  const auto& cache = get_cache();
+  //  return lookup_in(cache.source_rects, index);
 }
 
 auto TilesetDocument::get_displayed_tile(const TileIndex index) const -> TileIndex
 {
-  const auto& cache = get_cache();
+  /*const auto& cache = get_cache();
 
-  /* Check for already cached tile to render */
-  if (const auto iter = cache.display_tiles.find(index);
-      iter != cache.display_tiles.end()) {
-    return iter->second;
-  }
+  */
+  /* Check for already cached tile to render */ /*
+ if (const auto iter = cache.display_tiles.find(index);
+     iter != cache.display_tiles.end()) {
+   return iter->second;
+ }
 
-  if (const auto iter = cache.tiles.find(index); iter != cache.tiles.end()) {
-    const auto entity = iter->second;
+ if (const auto iter = cache.tiles.find(index); iter != cache.tiles.end()) {
+   const auto entity = iter->second;
 
-    if (const auto* animation = mRegistry.try_get<comp::Animation>(entity)) {
-      const auto frameEntity = animation->current_frame();
-      const auto& frame = checked_get<comp::AnimationFrame>(mRegistry, frameEntity);
+   if (const auto* animation = mRegistry.try_get<comp::Animation>(entity)) {
+     const auto frameEntity = animation->current_frame();
+     const auto& frame = checked_get<comp::AnimationFrame>(mRegistry, frameEntity);
 
-      /* This cache is cleared before each frame */
-      cache.display_tiles[index] = frame.tile_index;
+     */
+  /* This cache is cleared before each frame */ /*
+ cache.display_tiles[index] = frame.tile_index;
 
-      return frame.tile_index;
-    }
-  }
-
+ return frame.tile_index;
+}
+}
+*/
   return index;
-}
-
-auto TilesetDocument::info() const -> const comp::Tileset&
-{
-  return ctx_get<comp::Tileset>(mRegistry);
-}
-
-auto TilesetDocument::tile_size() const -> Vector2i
-{
-  const auto& tileset = info();
-  return tileset.tile_size;
-}
-
-auto TilesetDocument::uv_size() const -> Vector2f
-{
-  const auto& uv = ctx_get<comp::UvTileSize>(mRegistry);
-  return uv.size;
-}
-
-auto TilesetDocument::texture() const -> const comp::Texture&
-{
-  return ctx_get<comp::Texture>(mRegistry);
-}
-
-auto TilesetDocument::viewport() const -> const comp::Viewport&
-{
-  return ctx_get<comp::Viewport>(mRegistry);
-}
-
-auto TilesetDocument::get_cache() const -> const comp::TilesetCache&
-{
-  return ctx_get<comp::TilesetCache>(mRegistry);
 }
 
 }  // namespace tactile

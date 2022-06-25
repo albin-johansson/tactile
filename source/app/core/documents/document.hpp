@@ -22,8 +22,9 @@
 #include <filesystem>  // path
 #include <string>      // string
 
-#include <entt/entity/registry.hpp>
-
+#include "core/commands/command_stack.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/documents/document_type.hpp"
 #include "core/fwd.hpp"
@@ -34,20 +35,23 @@ namespace tactile {
 class ADocument
 {
  public:
-  explicit ADocument(entt::registry registry);
-
   virtual ~ADocument() noexcept = default;
 
   /// Updates the state of the document.
   virtual void update() = 0;
 
   /// Sets the name of the root document context.
-  void set_name(std::string name);
+  virtual void set_name(std::string name) = 0;
 
   /// Sets the file path associated with the document.
   void set_path(std::filesystem::path path);
 
   void attach_component(const UUID& contextId, const UUID& componentId);
+
+  void set_component_index(Shared<core::ComponentIndex> index);
+
+  [[nodiscard]] auto get_component_index() -> Shared<core::ComponentIndex>;
+  [[nodiscard]] auto get_component_index() const -> Shared<const core::ComponentIndex>;
 
   /// Indicates whether the document represents a map.
   [[nodiscard]] auto is_map() const -> bool;
@@ -61,28 +65,23 @@ class ADocument
   /// Returns the previously set document path, throwing if there is none.
   [[nodiscard]] auto get_path() const -> const std::filesystem::path&;
 
-  /// Returns the name of the root document context.
-  [[nodiscard]] auto get_name() const -> const std::string&;
-
   /// Returns the document command history.
   [[nodiscard]] auto get_history() -> CommandStack&;
   [[nodiscard]] auto get_history() const -> const CommandStack&;
 
-  /// Returns the associated registry.
-  [[nodiscard, deprecated]] auto get_registry() -> entt::registry& { return mRegistry; };
-  [[nodiscard, deprecated]] auto get_registry() const -> const entt::registry&
-  {
-    return mRegistry;
-  }
+  [[nodiscard]] virtual auto get_viewport() -> core::Viewport& = 0;
+  [[nodiscard]] virtual auto get_viewport() const -> const core::Viewport& = 0;
 
-  /// Returns the identifier associated with the document.
-  [[nodiscard]] auto id() const -> const UUID&;
+  /// Returns the name of the root document context.
+  [[nodiscard]] virtual auto get_name() const -> const std::string& = 0;
 
   /// Returns the type of the document.
   [[nodiscard]] virtual auto get_type() const -> DocumentType = 0;
 
  protected:
-  entt::registry mRegistry;
+  CommandStack                 mCommands;
+  Shared<core::ComponentIndex> mComponentIndex;
+  Maybe<std::filesystem::path> mPath;
 };
 
 }  // namespace tactile

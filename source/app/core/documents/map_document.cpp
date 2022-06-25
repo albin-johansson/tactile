@@ -19,9 +19,9 @@
 
 #include "map_document.hpp"
 
-#include <utility>  // move
+#include <algorithm>  // find_if
+#include <utility>    // move
 
-#include "core/commands/command_stack.hpp"
 #include "core/commands/layers/add_layer_cmd.hpp"
 #include "core/commands/layers/duplicate_layer_cmd.hpp"
 #include "core/commands/layers/move_layer_down_cmd.hpp"
@@ -37,31 +37,18 @@
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"
 #include "core/commands/objects/move_object_cmd.hpp"
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/map_info.hpp"
-#include "core/systems/animation_system.hpp"
-#include "core/systems/registry_system.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
-#include "core/tools/tool_manager.hpp"
 
 namespace tactile {
 
 MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize columns)
-    : ADocument{sys::new_map_document_registry()}
 {
-  auto& info = ctx_get<comp::MapInfo>(mRegistry);
-  info.tile_size = tileSize;
-  info.row_count = rows;
-  info.column_count = columns;
-
-  auto& context = ctx_get<comp::Context>(mRegistry);
-  context.name = "Map";
+  mMap.resize(rows, columns);
+  mMap.set_tile_size(tileSize);
 }
 
 void MapDocument::update()
 {
-  sys::update_animations(mRegistry);
+  // TODO sys::update_animations(mRegistry);
 }
 
 void MapDocument::add_row()
@@ -134,37 +121,31 @@ void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
   get_history().push<SetLayerVisibilityCmd>(this, layerId, visible);
 }
 
-void MapDocument::move_object(const UUID& objectId,
+void MapDocument::move_object(const UUID&     objectId,
                               const Vector2f& previous,
                               const Vector2f& updated)
 {
   get_history().push<MoveObjectCmd>(this, objectId, previous, updated);
 }
 
-auto MapDocument::info() const -> const comp::MapInfo&
+void MapDocument::set_name(std::string name)
 {
-  return ctx_get<comp::MapInfo>(mRegistry);
+  mMap.set_name(name);
 }
 
-auto MapDocument::viewport() const -> const comp::Viewport&
+auto MapDocument::get_name() const -> const std::string&
 {
-  return ctx_get<comp::Viewport>(mRegistry);
-}
-
-auto MapDocument::tile_size() const -> Vector2i
-{
-  const auto& info = ctx_get<comp::MapInfo>(mRegistry);
-  return info.tile_size;
+  return mMap.get_name();
 }
 
 auto MapDocument::get_tools() -> ToolManager&
 {
-  return ctx_get<ToolManager>(mRegistry);
+  return mTools;
 }
 
 auto MapDocument::get_tools() const -> const ToolManager&
 {
-  return ctx_get<ToolManager>(mRegistry);
+  return mTools;
 }
 
 }  // namespace tactile

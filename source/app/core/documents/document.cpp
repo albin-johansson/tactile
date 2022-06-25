@@ -23,27 +23,12 @@
 
 #include "core/commands/command_stack.hpp"
 #include "core/commands/components/attach_component_cmd.hpp"
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
 
 namespace tactile {
 
-ADocument::ADocument(entt::registry registry) : mRegistry{std::move(registry)} {}
-
-void ADocument::set_name(std::string name)
-{
-  auto& context = ctx_get<comp::Context>(mRegistry);
-  context.name = std::move(name);
-}
-
 void ADocument::set_path(std::filesystem::path path)
 {
-  if (mRegistry.ctx().contains<std::filesystem::path>()) {
-    ctx_get<std::filesystem::path>(mRegistry) = std::move(path);
-  }
-  else {
-    mRegistry.ctx().emplace<std::filesystem::path>(std::move(path));
-  }
+  mPath = std::move(path);
 }
 
 void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
@@ -51,29 +36,39 @@ void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
   get_history().push<AttachComponentCmd>(this, contextId, componentId);
 }
 
+void ADocument::set_component_index(Shared<core::ComponentIndex> index)
+{
+  mComponentIndex = std::move(index);
+}
+
+auto ADocument::get_component_index() -> Shared<core::ComponentIndex>
+{
+  return mComponentIndex;
+}
+
+auto ADocument::get_component_index() const -> Shared<const core::ComponentIndex>
+{
+  return mComponentIndex;
+}
+
 auto ADocument::has_path() const -> bool
 {
-  return mRegistry.ctx().contains<std::filesystem::path>();
+  return mPath.has_value();
 }
 
 auto ADocument::get_path() const -> const std::filesystem::path&
 {
-  return ctx_get<std::filesystem::path>(mRegistry);
-}
-
-auto ADocument::get_name() const -> const std::string&
-{
-  return ctx_get<comp::Context>(mRegistry).name;
+  return mPath.value();
 }
 
 auto ADocument::get_history() -> CommandStack&
 {
-  return ctx_get<CommandStack>(mRegistry);
+  return mCommands;
 }
 
 auto ADocument::get_history() const -> const CommandStack&
 {
-  return ctx_get<CommandStack>(mRegistry);
+  return mCommands;
 }
 
 auto ADocument::is_map() const -> bool
@@ -84,11 +79,6 @@ auto ADocument::is_map() const -> bool
 auto ADocument::is_tileset() const -> bool
 {
   return get_type() == DocumentType::Tileset;
-}
-
-auto ADocument::id() const -> const UUID&
-{
-  return ctx_get<comp::Context>(mRegistry).id;
 }
 
 }  // namespace tactile

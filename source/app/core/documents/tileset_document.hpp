@@ -23,62 +23,62 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
+#include "core/tilesets/tileset.hpp"
+#include "core/viewport.hpp"
 
 namespace tactile {
 
 /**
- * \brief Represents a tileset (both embedded and external).
+ * Represents a loaded tileset.
  *
- * \details The document model holds a tileset document for each tileset attached to a
- * map. However, tileset documents can be shared across multiple maps as long as they are
+ * The document model holds a tileset document for each tileset attached to a map.
+ * However, tileset documents can be shared across multiple maps as long as they are
  * external.
- *
- * \details Tileset document registries have the following context components:
- * - `CommandStack`
- * - `comp::Context`
- * - `comp::ActiveContext`
- * - `comp::ContextMapping`
- * - `comp::Tileset`
- * - `comp::TilesetCache`
- * - `comp::UvTileSize`
- * - `comp::Texture`
- * - `comp::Viewport`
- *
- * \see `comp::TilesetRef`
  */
 class TilesetDocument final : public ADocument
 {
  public:
-  TilesetDocument(const UUID& id, const comp::Texture& texture, const Vector2i& tileSize);
+  TilesetDocument(const UUID& id, const core::TilesetInfo& info);
+
+  explicit TilesetDocument(const core::TilesetInfo& info);
 
   void update() override;
 
+  void set_name(std::string name) override;
+
+  [[nodiscard]] auto get_name() const -> const std::string& override;
+
   /// Returns the local ID of a tile at a specific position.
-  [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileID;
+  [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileIndex;
 
   [[nodiscard]] auto tile_source(TileIndex index) const -> const cen::irect&;
 
   [[nodiscard]] auto get_displayed_tile(TileIndex index) const -> TileIndex;
 
-  [[nodiscard]] auto info() const -> const comp::Tileset&;
+  [[nodiscard]] auto get_viewport() -> core::Viewport& override { return mViewport; }
 
-  [[nodiscard]] auto tile_size() const -> Vector2i;
-
-  [[nodiscard]] auto uv_size() const -> Vector2f;
-
-  [[nodiscard]] auto texture() const -> const comp::Texture&;
-
-  [[nodiscard]] auto viewport() const -> const comp::Viewport&;
-
-  [[nodiscard]] auto get_cache() const -> const comp::TilesetCache&;
+  [[nodiscard]] auto get_viewport() const -> const core::Viewport& override
+  {
+    return mViewport;
+  }
 
   [[nodiscard]] auto get_type() const -> DocumentType override
   {
     return DocumentType::Tileset;
   }
+
+  [[nodiscard]] auto get_tileset() -> Shared<core::Tileset> { return mTileset; }
+
+  [[nodiscard]] auto view_tileset() -> core::Tileset& { return *mTileset; }
+  [[nodiscard]] auto view_tileset() const -> const core::Tileset& { return *mTileset; }
+
+ private:
+  Shared<core::Tileset> mTileset;
+  core::Viewport        mViewport;
 };
 
 }  // namespace tactile
