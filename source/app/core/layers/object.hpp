@@ -49,6 +49,8 @@ class Object final : public IContext
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
+  [[nodiscard]] auto get_name() const -> const std::string& override;
+
   [[nodiscard]] auto get_type() const noexcept -> ObjectType { return mType; }
 
   [[nodiscard]] auto get_pos() const noexcept -> const Vector2f& { return mPos; }

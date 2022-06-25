@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include "core/common/uuid.hpp"
 #include "core/components/component_bundle.hpp"
 #include "core/property_bundle.hpp"
@@ -36,12 +38,15 @@ class ContextDelegate final
 
   [[nodiscard]] auto get_uuid() const -> const UUID&;
 
+  [[nodiscard]] auto get_name() const -> const std::string&;
+
   [[nodiscard]] auto clone() const -> ContextDelegate;
 
  private:
   UUID mId{make_uuid()};
   PropertyBundle mProps;
   ComponentBundle mComps;
+  std::string mName;
 };
 
 }  // namespace tactile::core

@@ -108,6 +108,8 @@ class GroupLayer final : public ILayer
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
+  [[nodiscard]] auto get_name() const -> const std::string& override;
+
   [[nodiscard]] auto get_props() -> PropertyBundle& override;
   [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
 

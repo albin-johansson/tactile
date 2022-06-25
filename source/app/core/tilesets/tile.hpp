@@ -65,6 +65,8 @@ class Tile final : public IContext
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
+  [[nodiscard]] auto get_name() const -> const std::string& override;
+
   [[nodiscard]] auto index() const noexcept -> TileIndex { return mIndex; }
 
  private:

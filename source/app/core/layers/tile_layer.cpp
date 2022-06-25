@@ -228,6 +228,11 @@ auto TileLayer::get_uuid() const -> const UUID&
   return mDelegate.get_uuid();
 }
 
+auto TileLayer::get_name() const -> const std::string&
+{
+  return mDelegate.get_name();
+}
+
 auto TileLayer::get_props() -> PropertyBundle&
 {
   return mDelegate.get_props();

@@ -103,4 +103,9 @@ auto Tile::get_uuid() const -> const UUID&
   return mDelegate.get_uuid();
 }
 
+auto Tile::get_name() const -> const std::string&
+{
+  return mDelegate.get_name();
+}
+
 }  // namespace tactile::core

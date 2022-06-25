@@ -73,4 +73,9 @@ auto Object::get_uuid() const -> const UUID&
   return mDelegate.get_uuid();
 }
 
+auto Object::get_name() const -> const std::string&
+{
+  return mDelegate.get_name();
+}
+
 }  // namespace tactile::core

@@ -647,6 +647,11 @@ auto GroupLayer::get_uuid() const -> const UUID&
   return mDelegate.get_uuid();
 }
 
+auto GroupLayer::get_name() const -> const std::string&
+{
+  return mDelegate.get_name();
+}
+
 auto GroupLayer::get_props() -> PropertyBundle&
 {
   return mDelegate.get_props();

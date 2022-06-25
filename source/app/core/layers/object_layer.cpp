@@ -107,6 +107,11 @@ auto ObjectLayer::clone() const -> Shared<ILayer>
   return copy;
 }
 
+auto ObjectLayer::get_name() const -> const std::string&
+{
+  return mDelegate.get_name();
+}
+
 auto ObjectLayer::get_props() -> PropertyBundle&
 {
   return mDelegate.get_props();

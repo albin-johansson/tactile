@@ -46,6 +46,11 @@ auto ContextDelegate::get_uuid() const -> const UUID&
   return mId;
 }
 
+auto ContextDelegate::get_name() const -> const std::string&
+{
+  return mName;
+}
+
 auto ContextDelegate::clone() const -> ContextDelegate
 {
   ContextDelegate other;

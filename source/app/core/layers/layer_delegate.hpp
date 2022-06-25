@@ -48,6 +48,8 @@ class LayerDelegate final
 
   [[nodiscard]] auto get_parent() const -> const Maybe<UUID>&;
 
+  [[nodiscard]] auto get_name() const -> const std::string&;
+
   [[nodiscard]] auto get_props() -> PropertyBundle&;
   [[nodiscard]] auto get_props() const -> const PropertyBundle&;
 

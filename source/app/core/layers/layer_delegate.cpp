@@ -60,6 +60,11 @@ auto LayerDelegate::get_parent() const -> const Maybe<UUID>&
   return mParentId;
 }
 
+auto LayerDelegate::get_name() const -> const std::string&
+{
+  return mContext.get_name();
+}
+
 auto LayerDelegate::get_props() -> PropertyBundle&
 {
   return mContext.get_props();

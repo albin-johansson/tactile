@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include "core/element.hpp"
 #include "core/fwd.hpp"
 
@@ -35,6 +37,8 @@ class IContext : public IElement
 
   [[nodiscard]] virtual auto get_comps() -> ComponentBundle& = 0;
   [[nodiscard]] virtual auto get_comps() const -> const ComponentBundle& = 0;
+
+  [[nodiscard]] virtual auto get_name() const -> const std::string& = 0;
 };
 
 }  // namespace tactile::core
