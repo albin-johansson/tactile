@@ -43,6 +43,8 @@ class ObjectLayer final : public ILayer
 
   void set_visible(bool visible) override;
 
+  void set_parent(const Maybe<UUID>& parentId) override;
+
   void add_object(Object object);
 
   void reserve_objects(usize n);
@@ -66,6 +68,8 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto get_comps() -> ComponentBundle& override;
   [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+
+  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 

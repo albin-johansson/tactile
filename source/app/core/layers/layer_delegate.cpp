@@ -35,6 +35,11 @@ void LayerDelegate::set_visible(const bool visible)
   mVisible = visible;
 }
 
+void LayerDelegate::set_parent(const Maybe<UUID>& id)
+{
+  mParentId = id;
+}
+
 auto LayerDelegate::get_opacity() const -> float
 {
   return mOpacity;
@@ -50,24 +55,29 @@ auto LayerDelegate::get_uuid() const -> const UUID&
   return mId;
 }
 
+auto LayerDelegate::get_parent() const -> const Maybe<UUID>&
+{
+  return mParentId;
+}
+
 auto LayerDelegate::get_props() -> PropertyBundle&
 {
-  return mProps;
+  return mContext.get_props();
 }
 
 auto LayerDelegate::get_props() const -> const PropertyBundle&
 {
-  return mProps;
+  return mContext.get_props();
 }
 
 auto LayerDelegate::get_comps() -> ComponentBundle&
 {
-  return mComps;
+  return mContext.get_comps();
 }
 
 auto LayerDelegate::get_comps() const -> const ComponentBundle&
 {
-  return mComps;
+  return mContext.get_comps();
 }
 
 auto LayerDelegate::clone() const -> LayerDelegate
@@ -75,8 +85,8 @@ auto LayerDelegate::clone() const -> LayerDelegate
   LayerDelegate result;
 
   result.mId = make_uuid();
-  result.mProps = mProps;
-  result.mComps = mComps;
+  result.mParentId = mParentId;
+  result.mContext = mContext.clone();
   result.mOpacity = mOpacity;
   result.mVisible = mVisible;
 

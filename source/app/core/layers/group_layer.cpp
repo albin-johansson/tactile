@@ -24,6 +24,7 @@
 #include <utility>    // move
 
 #include "core/common/maybe.hpp"
+#include "core/common/ref.hpp"
 #include "core/layers/layer_visitor.hpp"
 #include "core/layers/object_layer.hpp"
 #include "core/layers/tile_layer.hpp"
@@ -33,8 +34,10 @@
 namespace tactile::core {
 namespace {
 
-using VisitorFunc = GroupLayer::VisitorFunc;
-using ConstVisitorFunc = GroupLayer::ConstVisitorFunc;
+using LayerStorage = GroupLayer::LayerStorage;
+using VisitorFunc = std::function<void(LayerStorage&, LayerStorage::iterator)>;
+using ConstVisitorFunc =
+    std::function<void(const LayerStorage&, LayerStorage::const_iterator)>;
 
 #pragma region Layer visitor implementations
 
@@ -280,10 +283,26 @@ void GroupLayer::each(IConstLayerVisitor& visitor) const
   }
 }
 
+void GroupLayer::each(const SimpleVisitor& visitor) const
+{
+  struct Visitor final : IConstLayerVisitor
+  {
+    const SimpleVisitor* func{};  // Pointer to avoid copying the function object
+    void visit(const TileLayer& layer) override { (*func)(&layer); }
+    void visit(const ObjectLayer& layer) override { (*func)(&layer); }
+    void visit(const GroupLayer& layer) override { (*func)(&layer); }
+  };
+
+  Visitor v;
+  v.func = &visitor;
+  each(v);
+}
+
 void GroupLayer::add_layer(const UUID& parent, Shared<ILayer> layer)
 {
   if (auto* group = find_group_layer(parent)) {
-    group->add_layer(std::move(layer));
+    group->add_layer(layer);
+    layer->set_parent(parent);
   }
   else {
     throw TactileError{"Invalid parent layer!"};
@@ -293,6 +312,7 @@ void GroupLayer::add_layer(const UUID& parent, Shared<ILayer> layer)
 void GroupLayer::add_layer(Shared<ILayer> layer)
 {
   if (layer) {
+    layer->set_parent(nothing);
     mLayers.push_back(std::move(layer));
   }
   else {
@@ -372,6 +392,11 @@ void GroupLayer::set_opacity(const float opacity)
 void GroupLayer::set_visible(const bool visible)
 {
   mDelegate.set_visible(visible);
+}
+
+void GroupLayer::set_parent(const Maybe<UUID>& parentId)
+{
+  mDelegate.set_parent(parentId);
 }
 
 auto GroupLayer::layer_count() const -> usize
@@ -640,6 +665,11 @@ auto GroupLayer::get_comps() -> ComponentBundle&
 auto GroupLayer::get_comps() const -> const ComponentBundle&
 {
   return mDelegate.get_comps();
+}
+
+auto GroupLayer::get_parent() const -> Maybe<UUID>
+{
+  return mDelegate.get_parent();
 }
 
 }  // namespace tactile::core

@@ -62,6 +62,8 @@ class TileLayer final : public ILayer
 
   void set_visible(bool visible) override;
 
+  void set_parent(const Maybe<UUID>& parentId) override;
+
   void set_tile(const TilePos& pos, TileID id);
 
   [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileID;
@@ -87,6 +89,8 @@ class TileLayer final : public ILayer
 
   [[nodiscard]] auto get_comps() -> ComponentBundle& override;
   [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+
+  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
 
   [[nodiscard]] auto get_type() const -> LayerType override
   {

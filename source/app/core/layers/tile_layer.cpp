@@ -156,6 +156,11 @@ void TileLayer::set_visible(const bool visible)
   mDelegate.set_visible(visible);
 }
 
+void TileLayer::set_parent(const Maybe<UUID>& parentId)
+{
+  mDelegate.set_parent(parentId);
+}
+
 void TileLayer::set_tile(const TilePos& pos, const TileID id)
 {
   if (is_valid(pos)) {
@@ -241,6 +246,11 @@ auto TileLayer::get_comps() -> ComponentBundle&
 auto TileLayer::get_comps() const -> const ComponentBundle&
 {
   return mDelegate.get_comps();
+}
+
+auto TileLayer::get_parent() const -> Maybe<UUID>
+{
+  return mDelegate.get_parent();
 }
 
 }  // namespace tactile::core

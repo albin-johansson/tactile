@@ -35,9 +35,7 @@ class GroupLayer final : public ILayer
 {
  public:
   using LayerStorage = std::vector<Shared<ILayer>>;
-  using VisitorFunc = std::function<void(LayerStorage&, LayerStorage::iterator)>;
-  using ConstVisitorFunc =
-      std::function<void(const LayerStorage&, LayerStorage::const_iterator)>;
+  using SimpleVisitor = std::function<void(const ILayer*)>;
 
   [[nodiscard]] static auto make() -> Shared<GroupLayer>;
 
@@ -47,6 +45,8 @@ class GroupLayer final : public ILayer
   /// Behaves the same as accept(), except for not including itself (the root)
   void each(ILayerVisitor& visitor);
   void each(IConstLayerVisitor& visitor) const;
+
+  void each(const SimpleVisitor& visitor) const;
 
   void add_layer(const UUID& parent, Shared<ILayer> layer);
   void add_layer(Shared<ILayer> layer);
@@ -59,6 +59,8 @@ class GroupLayer final : public ILayer
   void set_opacity(float opacity) override;
 
   void set_visible(bool visible) override;
+
+  void set_parent(const Maybe<UUID>& parentId) override;
 
   [[nodiscard]] auto layer_count() const -> usize;
 
@@ -111,6 +113,8 @@ class GroupLayer final : public ILayer
 
   [[nodiscard]] auto get_comps() -> ComponentBundle& override;
   [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+
+  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
 
   [[nodiscard]] auto storage() -> LayerStorage& { return mLayers; }
   [[nodiscard]] auto storage() const -> const LayerStorage& { return mLayers; }

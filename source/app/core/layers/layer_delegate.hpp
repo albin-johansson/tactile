@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/common/macros.hpp"
+#include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_bundle.hpp"
-#include "core/property_bundle.hpp"
+#include "core/context_delegate.hpp"
 
 namespace tactile::core {
 
@@ -38,11 +38,15 @@ class LayerDelegate final
 
   void set_visible(bool visible);
 
+  void set_parent(const Maybe<UUID>& id);
+
   [[nodiscard]] auto get_opacity() const -> float;
 
   [[nodiscard]] auto is_visible() const -> bool;
 
   [[nodiscard]] auto get_uuid() const -> const UUID&;
+
+  [[nodiscard]] auto get_parent() const -> const Maybe<UUID>&;
 
   [[nodiscard]] auto get_props() -> PropertyBundle&;
   [[nodiscard]] auto get_props() const -> const PropertyBundle&;
@@ -54,8 +58,8 @@ class LayerDelegate final
 
  private:
   UUID mId{};
-  PropertyBundle mProps;
-  ComponentBundle mComps;
+  Maybe<UUID> mParentId{};
+  ContextDelegate mContext;
   float mOpacity{1.0f};
   bool mVisible : 1 {true};
 };

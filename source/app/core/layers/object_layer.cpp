@@ -51,6 +51,11 @@ void ObjectLayer::set_visible(const bool visible)
   mDelegate.set_visible(visible);
 }
 
+void ObjectLayer::set_parent(const Maybe<UUID>& parentId)
+{
+  mDelegate.set_parent(parentId);
+}
+
 void ObjectLayer::add_object(Object object)
 {
   const auto id = object.get_uuid();
@@ -125,6 +130,11 @@ auto ObjectLayer::get_comps() const -> const ComponentBundle&
 auto ObjectLayer::get_uuid() const -> const UUID&
 {
   return mDelegate.get_uuid();
+}
+
+auto ObjectLayer::get_parent() const -> Maybe<UUID>
+{
+  return mDelegate.get_parent();
 }
 
 }  // namespace tactile::core

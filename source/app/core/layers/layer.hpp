@@ -19,7 +19,9 @@
 
 #pragma once
 
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
 #include "core/context.hpp"
 #include "core/fwd.hpp"
 #include "core/layer_type.hpp"
@@ -41,6 +43,9 @@ class ILayer : public IContext
   /// Sets whether the layer is rendered.
   virtual void set_visible(bool visible) = 0;
 
+  /// Sets the parent layer ID.
+  virtual void set_parent(const Maybe<UUID>& parentId) = 0;
+
   /// Returns the layer opacity, in the range [0, 1].
   [[nodiscard]] virtual auto get_opacity() const -> float = 0;
 
@@ -52,6 +57,9 @@ class ILayer : public IContext
 
   /// Returns the type tag of the layer instance.
   [[nodiscard]] virtual auto get_type() const -> LayerType = 0;
+
+  /// Returns the parent group layer ID, if there is one.
+  [[nodiscard]] virtual auto get_parent() const -> Maybe<UUID> = 0;
 };
 
 }  // namespace tactile::core
