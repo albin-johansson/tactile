@@ -45,6 +45,11 @@ void Viewport::reset_limits()
   mLimits.reset();
 }
 
+void Viewport::reset_zoom()
+{
+  mCellSize = {64, 64};  // TODO
+}
+
 void Viewport::offset(const Vector2f& delta)
 {
   mOffset += delta;
@@ -110,6 +115,11 @@ void Viewport::set_cell_size(const Vector2f& size)
 void Viewport::set_limits(const ViewportLimits& limits)
 {
   mLimits = limits;
+}
+
+auto Viewport::can_zoom_out() const -> bool
+{
+  return mCellSize.y > _min_tile_height;
 }
 
 }  // namespace tactile::core

@@ -35,6 +35,8 @@ class Viewport final
  public:
   void reset_limits();
 
+  void reset_zoom();
+
   void offset(const Vector2f& delta);
 
   void pan_left();
@@ -52,6 +54,8 @@ class Viewport final
   void set_cell_size(const Vector2f& size);
 
   void set_limits(const ViewportLimits& limits);
+
+  [[nodiscard]] auto can_zoom_out() const -> bool;
 
   [[nodiscard]] auto get_offset() const noexcept -> const Vector2f& { return mOffset; }
 
