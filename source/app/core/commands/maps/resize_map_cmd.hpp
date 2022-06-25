@@ -31,7 +31,7 @@ namespace tactile {
 class ResizeMapCmd final : public ACommand
 {
  public:
-  ResizeMapCmd(MapDocument* map, usize nRows, usize nCols);
+  ResizeMapCmd(MapDocument* document, usize nRows, usize nCols);
 
   void undo() override;
 
@@ -43,12 +43,12 @@ class ResizeMapCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  usize mRows{};
-  usize mCols{};
+  MapDocument*    mDocument{};
+  usize           mRows{};
+  usize           mCols{};
   MapCommandCache mCache;
-  Maybe<usize> mPrevRows{};
-  Maybe<usize> mPrevCols{};
+  Maybe<usize>    mPrevRows{};
+  Maybe<usize>    mPrevCols{};
 
   [[nodiscard]] auto is_lossy_resize() const -> bool;
 };

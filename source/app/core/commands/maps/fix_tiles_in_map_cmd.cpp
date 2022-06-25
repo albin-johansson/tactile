@@ -19,34 +19,30 @@
 
 #include "fix_tiles_in_map_cmd.hpp"
 
-#include "core/common/ecs.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
+#include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-FixTilesInMapCmd::FixTilesInMapCmd(MapDocument* map)
+FixTilesInMapCmd::FixTilesInMapCmd(MapDocument* document)
     : ACommand{"Fix Tiles In Map"}
-    , mMap{map}
+    , mDocument{document}
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
   }
 }
 
 void FixTilesInMapCmd::undo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
 
-  for (const auto& [id, previous] : mResult) {
-    const auto layerEntity = sys::find_context(registry, id);
-    auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
+  for (const auto& [layerId, previous] : mResult) {
+    auto& layer = map.view_tile_layer(layerId);
 
     for (const auto& [pos, tile] : previous) {
-      sys::set_tile(layer, pos, tile);
+      layer.set_tile(pos, tile);
     }
   }
 
@@ -55,8 +51,8 @@ void FixTilesInMapCmd::undo()
 
 void FixTilesInMapCmd::redo()
 {
-  auto& registry = mMap->get_registry();
-  mResult = sys::fix_tiles_in_map(registry);
+  auto& map = mDocument->get_map();
+  mResult = map.fix_tiles();
 }
 
 }  // namespace tactile

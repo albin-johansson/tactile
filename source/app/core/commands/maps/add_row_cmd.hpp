@@ -29,7 +29,7 @@ namespace tactile {
 class AddRowCmd final : public ACommand
 {
  public:
-  explicit AddRowCmd(MapDocument* map);
+  explicit AddRowCmd(MapDocument* document);
 
   void undo() override;
 
@@ -43,8 +43,8 @@ class AddRowCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  usize mRows{1};
+  MapDocument* mDocument{};
+  usize        mRows{1};
 };
 
 }  // namespace tactile

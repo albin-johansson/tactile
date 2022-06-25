@@ -23,14 +23,14 @@
 #include "core/commands/command_id.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
-#include "core/systems/map_system.hpp"
+#include "core/map.hpp"
 
 namespace tactile {
 
 class FixTilesInMapCmd final : public ACommand
 {
  public:
-  explicit FixTilesInMapCmd(MapDocument* map);
+  explicit FixTilesInMapCmd(MapDocument* document);
 
   void undo() override;
 
@@ -42,8 +42,8 @@ class FixTilesInMapCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  sys::FixTilesInMapResult mResult;
+  MapDocument*              mDocument{};
+  core::Map::FixTilesResult mResult;
 };
 
 }  // namespace tactile

@@ -19,7 +19,6 @@
 
 #include "resize_map_cmd.hpp"
 
-#include "core/common/ecs.hpp"
 #include "core/components/map_info.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/systems/map_system.hpp"
@@ -27,49 +26,48 @@
 
 namespace tactile {
 
-ResizeMapCmd::ResizeMapCmd(MapDocument* map, const usize nRows, const usize nCols)
+ResizeMapCmd::ResizeMapCmd(MapDocument* document, const usize nRows, const usize nCols)
     : ACommand{"Resize Map"}
-    , mMap{map}
+    , mDocument{document}
     , mRows{nRows}
     , mCols{nCols}
 {
-  if (!mMap) {
+  if (!mDocument) {
     throw TactileError{"Invalid null map!"};
   }
 }
 
 void ResizeMapCmd::undo()
 {
-  auto& registry = mMap->get_registry();
-  sys::resize_map(registry, mPrevRows.value(), mPrevCols.value());
+  auto& map = mDocument->get_map();
+  map.resize(mPrevRows.value(), mPrevCols.value());
 
   if (is_lossy_resize()) {
-    mCache.restore_tiles(registry);
+    mCache.restore_tiles(map);
   }
 }
 
 void ResizeMapCmd::redo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
 
-  const auto& map = ctx_get<comp::MapInfo>(registry);
-  mPrevRows = map.row_count;
-  mPrevCols = map.column_count;
+  mPrevRows = map.row_count();
+  mPrevCols = map.column_count();
 
   if (is_lossy_resize()) {
-    const auto rows = map.row_count;
-    const auto cols = map.column_count;
+    const auto rows = map.row_count();
+    const auto cols = map.column_count();
 
     mCache.clear();
-    mCache.save_tiles(registry,
+    mCache.save_tiles(map,
                       TilePos::from(rows - (mPrevRows.value() - mRows), 0u),
                       TilePos::from(rows, cols));
-    mCache.save_tiles(registry,
+    mCache.save_tiles(map,
                       TilePos::from(0u, cols - (mPrevCols.value() - mCols)),
                       TilePos::from(rows, cols));
   }
 
-  sys::resize_map(registry, mRows, mCols);
+  map.resize(mRows, mCols);
 }
 
 auto ResizeMapCmd::is_lossy_resize() const -> bool

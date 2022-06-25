@@ -30,7 +30,7 @@ namespace tactile {
 class RemoveRowCmd final : public ACommand
 {
  public:
-  explicit RemoveRowCmd(MapDocument* map);
+  explicit RemoveRowCmd(MapDocument* document);
 
   void undo() override;
 
@@ -44,9 +44,9 @@ class RemoveRowCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
+  MapDocument*    mDocument{};
   MapCommandCache mCache;
-  usize mRows{1};
+  usize           mRows{1};
 };
 
 }  // namespace tactile

@@ -20,39 +20,38 @@
 #include "remove_row_cmd.hpp"
 
 #include "core/common/functional.hpp"
-#include "core/components/map_info.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/systems/map_system.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-RemoveRowCmd::RemoveRowCmd(MapDocument* map) : ACommand{"Remove Row(s)"}, mMap{map}
+RemoveRowCmd::RemoveRowCmd(MapDocument* document)
+    : ACommand{"Remove Row(s)"}
+    , mDocument{document}
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
   }
 }
 
 void RemoveRowCmd::undo()
 {
-  auto& registry = mMap->get_registry();
-  invoke_n(mRows, [&] { sys::add_row_to_map(registry); });
-  mCache.restore_tiles(registry);
+  auto& map = mDocument->get_map();
+  invoke_n(mRows, [&] { map.add_row(); });
+  mCache.restore_tiles(map);
 }
 
 void RemoveRowCmd::redo()
 {
-  auto& registry = mMap->get_registry();
-  const auto& info = mMap->info();
+  auto& map = mDocument->get_map();
 
-  const auto begin = TilePos::from(info.row_count - mRows - 1u, 0u);
-  const auto end = TilePos::from(info.row_count, info.column_count);
+  const auto begin = TilePos::from(map.row_count() - mRows - 1u, 0u);
+  const auto end = TilePos::from(map.row_count(), map.column_count());
 
   mCache.clear();
-  mCache.save_tiles(registry, begin, end);
+  mCache.save_tiles(map, begin, end);
 
-  invoke_n(mRows, [&] { sys::remove_row_from_map(registry); });
+  invoke_n(mRows, [&] { map.remove_row(); });
 }
 
 auto RemoveRowCmd::merge_with(const ACommand& cmd) -> bool

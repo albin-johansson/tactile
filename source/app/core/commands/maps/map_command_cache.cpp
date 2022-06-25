@@ -19,52 +19,59 @@
 
 #include "map_command_cache.hpp"
 
-#include <entt/entity/registry.hpp>
-
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/layers.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
+#include "core/layers/layer_visitor.hpp"
+#include "core/layers/tile_layer.hpp"
+#include "core/map.hpp"
 
 namespace tactile {
 
-void MapCommandCache::clear() noexcept
+struct SaveTilesVisitor final : core::IConstLayerVisitor
 {
-  mCache.clear();
-}
+  MapCommandCache* self{};
+  TilePos          begin;
+  TilePos          end;
 
-void MapCommandCache::restore_tiles(entt::registry& registry)
-{
-  for (const auto& [layerId, tileCache] : mCache) {
-    const auto entity = sys::find_context(registry, layerId);
-    auto& layer = checked_get<comp::TileLayer>(registry, entity);
-
-    for (const auto& [position, tileId] : tileCache) {
-      sys::set_tile(layer, position, tileId);
-    }
-  }
-}
-
-void MapCommandCache::save_tiles(const entt::registry& registry,
-                                 const TilePos& begin,
-                                 const TilePos& end)
-{
-  for (auto&& [entity, context, layer, tileLayer] :
-       registry.view<comp::Context, comp::Layer, comp::TileLayer>().each()) {
-    auto& tileCache = mCache[context.id];
+  void visit(const core::TileLayer& layer) override
+  {
+    auto& tileCache = self->mCache[layer.get_uuid()];
 
     const auto endRow = end.row();
     const auto endCol = end.col();
     for (auto row = begin.row(); row < endRow; ++row) {
       for (auto col = begin.col(); col < endCol; ++col) {
         const TilePos position{row, col};
-        const auto tile = sys::get_tile(tileLayer, position);
+        const auto    tile = layer.tile_at(position);
         tileCache.try_emplace(position, tile);
       }
     }
   }
+};
+
+void MapCommandCache::clear() noexcept
+{
+  mCache.clear();
+}
+
+void MapCommandCache::restore_tiles(core::Map& map)
+{
+  for (const auto& [layerId, tileCache] : mCache) {
+    auto& layer = map.view_tile_layer(layerId);
+
+    for (const auto& [position, tileId] : tileCache) {
+      layer.set_tile(position, tileId);
+    }
+  }
+}
+
+void MapCommandCache::save_tiles(const core::Map& map,
+                                 const TilePos&   begin,
+                                 const TilePos&   end)
+{
+  SaveTilesVisitor visitor;
+  visitor.self = this;
+  visitor.begin = begin;
+  visitor.end = end;
+  map.visit_layers(visitor);
 }
 
 void MapCommandCache::merge_with(const MapCommandCache& other)

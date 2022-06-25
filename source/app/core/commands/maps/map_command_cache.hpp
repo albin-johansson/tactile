@@ -19,28 +19,27 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
 #include "core/common/associative.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {
 
 class MapCommandCache final
 {
+  friend struct SaveTilesVisitor;
+
   using TileCache = TreeMap<TilePos, TileID>;
   using LayerCache = TreeMap<UUID, TileCache>;
 
  public:
   void clear() noexcept;
 
-  void restore_tiles(entt::registry& registry);
+  void restore_tiles(core::Map& map);
 
-  void save_tiles(const entt::registry& registry,
-                  const TilePos& begin,
-                  const TilePos& end);
+  void save_tiles(const core::Map& map, const TilePos& begin, const TilePos& end);
 
   void merge_with(const MapCommandCache& other);
 

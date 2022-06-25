@@ -21,28 +21,29 @@
 
 #include "core/common/functional.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/systems/map_system.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-AddColumnCmd::AddColumnCmd(MapDocument* map) : ACommand{"Add Column(s)"}, mMap{map}
+AddColumnCmd::AddColumnCmd(MapDocument* document)
+    : ACommand{"Add Column(s)"}
+    , mDocument{document}
 {
-  if (!mMap) {
+  if (!mDocument) {
     throw TactileError{"Invalid null map!"};
   }
 }
 
 void AddColumnCmd::undo()
 {
-  auto& registry = mMap->get_registry();
-  invoke_n(mColumns, [&] { sys::remove_column_from_map(registry); });
+  auto& map = mDocument->get_map();
+  invoke_n(mColumns, [&] { map.remove_column(); });
 }
 
 void AddColumnCmd::redo()
 {
-  auto& registry = mMap->get_registry();
-  invoke_n(mColumns, [&] { sys::add_column_to_map(registry); });
+  auto& map = mDocument->get_map();
+  invoke_n(mColumns, [&] { map.add_column(); });
 }
 
 auto AddColumnCmd::merge_with(const ACommand& cmd) -> bool
