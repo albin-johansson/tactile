@@ -23,8 +23,8 @@
 #include <iterator>   // distance
 #include <utility>    // move
 
+#include "core/common/functional.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/ref.hpp"
 #include "core/layers/layer_visitor.hpp"
 #include "core/layers/object_layer.hpp"
 #include "core/layers/tile_layer.hpp"

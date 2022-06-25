@@ -24,8 +24,8 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/commands/command_id.hpp"
+#include "core/common/functional.hpp"
 #include "core/common/macros.hpp"
-#include "core/common/ref.hpp"
 
 namespace tactile {
 

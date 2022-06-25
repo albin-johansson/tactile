@@ -24,7 +24,7 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/common/ecs.hpp"
-#include "core/common/ref.hpp"
+#include "core/common/functional.hpp"
 
 namespace tactile {
 
