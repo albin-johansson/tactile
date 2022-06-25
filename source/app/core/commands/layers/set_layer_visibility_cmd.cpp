@@ -19,47 +19,40 @@
 
 #include "set_layer_visibility_cmd.hpp"
 
-#include "core/common/ecs.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-SetLayerVisibilityCmd::SetLayerVisibilityCmd(MapDocument* map,
-                                             const UUID& layerId,
-                                             const bool visible)
+SetLayerVisibilityCmd::SetLayerVisibilityCmd(MapDocument* document,
+                                             const UUID&  layerId,
+                                             const bool   visible)
     : ACommand{"Set Layer Visibility"}
-    , mMap{map}
+    , mDocument{document}
     , mLayerId{layerId}
     , mVisible{visible}
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
   }
 }
 
 void SetLayerVisibilityCmd::undo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_layer(mLayerId);
 
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  auto& layer = checked_get<comp::Layer>(registry, layerEntity);
-
-  layer.visible = mPreviousVisibility.value();
+  layer.set_visible(mPreviousVisibility.value());
   mPreviousVisibility.reset();
 }
 
 void SetLayerVisibilityCmd::redo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_layer(mLayerId);
 
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  auto& layer = checked_get<comp::Layer>(registry, layerEntity);
-
-  mPreviousVisibility = layer.visible;
-  layer.visible = mVisible;
+  mPreviousVisibility = layer.is_visible();
+  layer.set_visible(mVisible);
 }
 
 }  // namespace tactile

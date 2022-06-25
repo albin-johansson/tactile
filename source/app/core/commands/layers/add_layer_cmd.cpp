@@ -19,65 +19,56 @@
 
 #include "add_layer_cmd.hpp"
 
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/layer_tree_system.hpp"
-#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-AddLayerCmd::AddLayerCmd(MapDocument* map, const LayerType type)
+AddLayerCmd::AddLayerCmd(MapDocument* document, const LayerType type)
     : ACommand{"Add Layer"}
-    , mMap{map}
+    , mDocument{document}
     , mLayerType{type}
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
   }
 }
 
 void AddLayerCmd::undo()
 {
-  auto& registry = mMap->get_registry();
-
-  const auto layerEntity = sys::find_context(registry, mLayerId.value());
-  TACTILE_ASSERT(layerEntity != entt::null);
-
-  mLayerSnapshot = sys::remove_layer(registry, layerEntity);
+  auto& map = mDocument->get_map();
+  map.remove_layer(mLayer->get_uuid());
 }
 
 void AddLayerCmd::redo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
 
-  if (mLayerSnapshot) {
-    sys::restore_layer(registry, *mLayerSnapshot);
+  if (mLayer) {
+    map.add_layer(mLayer, mLayer->get_parent());
   }
   else {
-    entt::entity entity{entt::null};
+    const auto  activeLayerId = map.active_layer_id();
+    Maybe<UUID> id;
+
     switch (mLayerType) {
       case LayerType::TileLayer: {
-        entity = sys::new_tile_layer(registry);
+        id = map.add_tile_layer(activeLayerId);
         break;
       }
       case LayerType::ObjectLayer: {
-        entity = sys::new_object_layer(registry);
+        id = map.add_object_layer(activeLayerId);
         break;
       }
       case LayerType::GroupLayer: {
-        entity = sys::new_group_layer(registry);
+        id = map.add_group_layer(activeLayerId);
         break;
       }
+      default:
+        throw TactileError{"Invalid layer type!"};
     }
 
-    TACTILE_ASSERT(entity != entt::null);
-    mLayerId = checked_get<comp::Context>(registry, entity).id;
-
-    sys::sort_layers(registry);
+    mLayer = map.get_layer(id.value());
   }
 }
 

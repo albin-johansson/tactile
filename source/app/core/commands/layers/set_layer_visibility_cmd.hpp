@@ -31,7 +31,7 @@ namespace tactile {
 class SetLayerVisibilityCmd final : public ACommand
 {
  public:
-  SetLayerVisibilityCmd(MapDocument* map, const UUID& layerId, bool visible);
+  SetLayerVisibilityCmd(MapDocument* document, const UUID& layerId, bool visible);
 
   void undo() override;
 
@@ -43,10 +43,10 @@ class SetLayerVisibilityCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  UUID mLayerId{};
-  bool mVisible;
-  Maybe<bool> mPreviousVisibility;
+  MapDocument* mDocument{};
+  UUID         mLayerId{};
+  bool         mVisible{};
+  Maybe<bool>  mPreviousVisibility;
 };
 
 }  // namespace tactile

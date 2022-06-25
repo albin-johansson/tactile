@@ -32,7 +32,7 @@ namespace tactile {
 class RenameLayerCmd final : public ACommand
 {
  public:
-  RenameLayerCmd(MapDocument* map, const UUID& layerId, std::string name);
+  RenameLayerCmd(MapDocument* document, const UUID& layerId, std::string name);
 
   void undo() override;
 
@@ -44,9 +44,9 @@ class RenameLayerCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  UUID mLayerId{};
-  std::string mName;
+  MapDocument*       mDocument{};
+  UUID               mLayerId{};
+  std::string        mName;
   Maybe<std::string> mPreviousName;
 };
 

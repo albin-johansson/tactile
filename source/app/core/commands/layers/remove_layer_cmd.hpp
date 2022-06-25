@@ -22,19 +22,16 @@
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
-#include "core/systems/snapshot.hpp"
 
 namespace tactile {
-
-/// \addtogroup commands
-/// \{
 
 class RemoveLayerCmd final : public ACommand
 {
  public:
-  RemoveLayerCmd(MapDocument* map, const UUID& layerId);
+  RemoveLayerCmd(MapDocument* document, const UUID& layerId);
 
   void undo() override;
 
@@ -46,11 +43,8 @@ class RemoveLayerCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  UUID mLayerId{};
-  Maybe<sys::LayerSnapshot> mLayerSnapshot;
+  MapDocument*         mDocument{};
+  Shared<core::ILayer> mLayer;
 };
-
-/// \} End of group commands
 
 }  // namespace tactile

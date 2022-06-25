@@ -30,7 +30,7 @@ namespace tactile {
 class SetLayerOpacityCmd final : public ACommand
 {
  public:
-  SetLayerOpacityCmd(MapDocument* map, const UUID& layerId, float opacity);
+  SetLayerOpacityCmd(MapDocument* document, const UUID& layerId, float opacity);
 
   void undo() override;
 
@@ -44,9 +44,9 @@ class SetLayerOpacityCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  UUID mLayerId{};
-  float mOpacity{};
+  MapDocument* mDocument{};
+  UUID         mLayerId{};
+  float        mOpacity{};
   Maybe<float> mPreviousOpacity;
 };
 

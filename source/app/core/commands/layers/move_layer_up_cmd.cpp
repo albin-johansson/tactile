@@ -20,35 +20,30 @@
 #include "move_layer_up_cmd.hpp"
 
 #include "core/documents/map_document.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/layer_tree_system.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-MoveLayerUpCmd::MoveLayerUpCmd(MapDocument* map, const UUID& layerId)
+MoveLayerUpCmd::MoveLayerUpCmd(MapDocument* document, const UUID& layerId)
     : ACommand{"Move Layer Up"}
-    , mMap{map}
+    , mDocument{document}
     , mLayerId{layerId}
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
   }
 }
 
 void MoveLayerUpCmd::undo()
 {
-  auto& registry = mMap->get_registry();
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  sys::move_layer_down(registry, layerEntity);
+  auto& map = mDocument->get_map();
+  map.move_layer_down(mLayerId);
 }
 
 void MoveLayerUpCmd::redo()
 {
-  auto& registry = mMap->get_registry();
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  sys::move_layer_up(registry, layerEntity);
+  auto& map = mDocument->get_map();
+  map.move_layer_up(mLayerId);
 }
 
 }  // namespace tactile

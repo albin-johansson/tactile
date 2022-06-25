@@ -21,7 +21,7 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
-#include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
@@ -30,7 +30,7 @@ namespace tactile {
 class DuplicateLayerCmd final : public ACommand
 {
  public:
-  DuplicateLayerCmd(MapDocument* map, const UUID& layerId);
+  DuplicateLayerCmd(MapDocument* document, const UUID& layerId);
 
   void undo() override;
 
@@ -42,9 +42,9 @@ class DuplicateLayerCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  UUID mLayerId{};
-  Maybe<UUID> mNewLayerId;
+  MapDocument*         mDocument{};
+  UUID                 mLayerId{};
+  Shared<core::ILayer> mNewLayer;
 };
 
 }  // namespace tactile

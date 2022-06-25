@@ -22,19 +22,17 @@
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
-#include "core/systems/snapshot.hpp"
+#include "core/layer_type.hpp"
 
 namespace tactile {
-
-/// \addtogroup commands
-/// \{
 
 class AddLayerCmd final : public ACommand
 {
  public:
-  AddLayerCmd(MapDocument* map, LayerType type);
+  AddLayerCmd(MapDocument* document, LayerType type);
 
   void undo() override;
 
@@ -46,12 +44,9 @@ class AddLayerCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  LayerType mLayerType;
-  Maybe<UUID> mLayerId;
-  Maybe<sys::LayerSnapshot> mLayerSnapshot;
+  MapDocument*         mDocument{};
+  LayerType            mLayerType;
+  Shared<core::ILayer> mLayer;
 };
-
-/// \} End of group commands
 
 }  // namespace tactile

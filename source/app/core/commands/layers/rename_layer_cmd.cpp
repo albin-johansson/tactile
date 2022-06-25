@@ -21,50 +21,40 @@
 
 #include <utility>  // move
 
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-RenameLayerCmd::RenameLayerCmd(MapDocument* map, const UUID& layerId, std::string name)
+RenameLayerCmd::RenameLayerCmd(MapDocument* document,
+                               const UUID&  layerId,
+                               std::string  name)
     : ACommand{"Rename Layer"}
-    , mMap{map}
+    , mDocument{document}
     , mLayerId{layerId}
     , mName{std::move(name)}
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
   }
 }
 
 void RenameLayerCmd::undo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_layer(mLayerId);
 
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  TACTILE_ASSERT(layerEntity != entt::null);
-
-  auto& context = checked_get<comp::Context>(registry, layerEntity);
-  context.name = mPreviousName.value();
-
+  layer.set_name(mPreviousName.value());
   mPreviousName.reset();
 }
 
 void RenameLayerCmd::redo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_layer(mLayerId);
 
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  TACTILE_ASSERT(layerEntity != entt::null);
-
-  auto& context = checked_get<comp::Context>(registry, layerEntity);
-  mPreviousName = context.name;
-  context.name = mName;
+  mPreviousName = layer.get_name();
+  layer.set_name(mName);
 }
 
 }  // namespace tactile

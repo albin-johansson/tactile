@@ -19,46 +19,40 @@
 
 #include "set_layer_opacity_cmd.hpp"
 
-#include "core/common/ecs.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/systems/context_system.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-SetLayerOpacityCmd::SetLayerOpacityCmd(MapDocument* map,
-                                       const UUID& layerId,
-                                       const float opacity)
+SetLayerOpacityCmd::SetLayerOpacityCmd(MapDocument* document,
+                                       const UUID&  layerId,
+                                       const float  opacity)
     : ACommand{"Set Layer Opacity"}
-    , mMap{map}
+    , mDocument{document}
     , mLayerId{layerId}
     , mOpacity{opacity}
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
   }
 }
 
 void SetLayerOpacityCmd::undo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_layer(mLayerId);
 
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  auto& layer = checked_get<comp::Layer>(registry, layerEntity);
-
-  layer.opacity = mPreviousOpacity.value();
+  layer.set_opacity(mPreviousOpacity.value());
   mPreviousOpacity.reset();
 }
 
 void SetLayerOpacityCmd::redo()
 {
-  auto& registry = mMap->get_registry();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_layer(mLayerId);
 
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  auto& layer = checked_get<comp::Layer>(registry, layerEntity);
-
-  mPreviousOpacity = layer.opacity;
-  layer.opacity = mOpacity;
+  mPreviousOpacity = layer.get_opacity();
+  layer.set_opacity(mOpacity);
 }
 
 auto SetLayerOpacityCmd::merge_with(const ACommand& cmd) -> bool

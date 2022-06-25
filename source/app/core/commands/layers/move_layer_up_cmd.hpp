@@ -29,7 +29,7 @@ namespace tactile {
 class MoveLayerUpCmd final : public ACommand
 {
  public:
-  MoveLayerUpCmd(MapDocument* map, const UUID& layerId);
+  MoveLayerUpCmd(MapDocument* document, const UUID& layerId);
 
   void undo() override;
 
@@ -41,8 +41,8 @@ class MoveLayerUpCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  UUID mLayerId{};
+  MapDocument* mDocument{};
+  UUID         mLayerId{};
 };
 
 }  // namespace tactile
