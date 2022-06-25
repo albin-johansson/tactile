@@ -30,6 +30,10 @@ namespace tactile::core {
 class ContextDelegate final
 {
  public:
+  explicit ContextDelegate(const UUID& id);
+
+  ContextDelegate() : ContextDelegate{make_uuid()} {}
+
   void set_name(std::string name);
 
   [[nodiscard]] auto get_props() -> PropertyBundle&;
