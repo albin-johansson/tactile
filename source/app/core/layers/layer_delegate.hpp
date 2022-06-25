@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
@@ -39,6 +41,8 @@ class LayerDelegate final
   void set_visible(bool visible);
 
   void set_parent(const Maybe<UUID>& id);
+
+  void set_name(std::string name);
 
   [[nodiscard]] auto get_opacity() const -> float;
 

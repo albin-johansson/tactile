@@ -19,7 +19,14 @@
 
 #include "context_delegate.hpp"
 
+#include <utility>  // move
+
 namespace tactile::core {
+
+void ContextDelegate::set_name(std::string name)
+{
+  mName = std::move(name);
+}
 
 auto ContextDelegate::get_props() -> PropertyBundle&
 {
@@ -54,6 +61,7 @@ auto ContextDelegate::get_name() const -> const std::string&
 auto ContextDelegate::clone() const -> ContextDelegate
 {
   ContextDelegate other;
+  other.mName = mName;
   other.mProps = mProps;
   other.mComps = mComps;
   return other;

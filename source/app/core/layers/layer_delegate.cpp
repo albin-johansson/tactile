@@ -20,6 +20,7 @@
 #include "layer_delegate.hpp"
 
 #include <algorithm>  // clamp
+#include <utility>    // move
 
 namespace tactile::core {
 
@@ -38,6 +39,11 @@ void LayerDelegate::set_visible(const bool visible)
 void LayerDelegate::set_parent(const Maybe<UUID>& id)
 {
   mParentId = id;
+}
+
+void LayerDelegate::set_name(std::string name)
+{
+  mContext.set_name(std::move(name));
 }
 
 auto LayerDelegate::get_opacity() const -> float

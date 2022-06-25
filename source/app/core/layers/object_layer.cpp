@@ -56,6 +56,11 @@ void ObjectLayer::set_parent(const Maybe<UUID>& parentId)
   mDelegate.set_parent(parentId);
 }
 
+void ObjectLayer::set_name(std::string name)
+{
+  mDelegate.set_name(std::move(name));
+}
+
 void ObjectLayer::add_object(Object object)
 {
   const auto id = object.get_uuid();

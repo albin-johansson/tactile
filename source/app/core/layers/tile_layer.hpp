@@ -64,6 +64,8 @@ class TileLayer final : public ILayer
 
   void set_parent(const Maybe<UUID>& parentId) override;
 
+  void set_name(std::string name) override;
+
   void set_tile(const TilePos& pos, TileID id);
 
   [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileID;

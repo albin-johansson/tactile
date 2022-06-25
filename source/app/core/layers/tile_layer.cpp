@@ -19,7 +19,8 @@
 
 #include "tile_layer.hpp"
 
-#include <queue>  // queue
+#include <queue>    // queue
+#include <utility>  // move
 
 #include "core/common/functional.hpp"
 #include "core/common/math.hpp"
@@ -159,6 +160,11 @@ void TileLayer::set_visible(const bool visible)
 void TileLayer::set_parent(const Maybe<UUID>& parentId)
 {
   mDelegate.set_parent(parentId);
+}
+
+void TileLayer::set_name(std::string name)
+{
+  mDelegate.set_name(std::move(name));
 }
 
 void TileLayer::set_tile(const TilePos& pos, const TileID id)

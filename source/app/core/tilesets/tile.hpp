@@ -47,6 +47,8 @@ class Tile final : public IContext
 
   void set_animation(TileAnimation animation);
 
+  void set_name(std::string name) override;
+
   [[nodiscard]] auto object_count() const -> usize;
 
   [[nodiscard]] auto object_capacity() const -> usize;

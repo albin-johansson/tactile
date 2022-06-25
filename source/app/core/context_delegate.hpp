@@ -30,6 +30,8 @@ namespace tactile::core {
 class ContextDelegate final
 {
  public:
+  void set_name(std::string name);
+
   [[nodiscard]] auto get_props() -> PropertyBundle&;
   [[nodiscard]] auto get_props() const -> const PropertyBundle&;
 

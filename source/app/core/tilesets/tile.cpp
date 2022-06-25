@@ -48,6 +48,11 @@ void Tile::set_animation(TileAnimation animation)
   mAnimation = std::move(animation);
 }
 
+void Tile::set_name(std::string name)
+{
+  mDelegate.set_name(std::move(name));
+}
+
 auto Tile::object_count() const -> usize
 {
   return mObjects.size();

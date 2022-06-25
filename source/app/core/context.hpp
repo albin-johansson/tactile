@@ -32,6 +32,8 @@ class IContext : public IElement
  public:
   virtual ~IContext() noexcept = default;
 
+  virtual void set_name(std::string name) = 0;
+
   [[nodiscard]] virtual auto get_props() -> PropertyBundle& = 0;
   [[nodiscard]] virtual auto get_props() const -> const PropertyBundle& = 0;
 

@@ -48,6 +48,11 @@ void Object::set_visible(const bool visible)
   mVisible = visible;
 }
 
+void Object::set_name(std::string name)
+{
+  mDelegate.set_name(std::move(name));
+}
+
 auto Object::get_props() -> PropertyBundle&
 {
   return mDelegate.get_props();

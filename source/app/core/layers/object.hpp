@@ -41,6 +41,8 @@ class Object final : public IContext
 
   void set_visible(bool visible);
 
+  void set_name(std::string name) override;
+
   [[nodiscard]] auto get_props() -> PropertyBundle& override;
   [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
 

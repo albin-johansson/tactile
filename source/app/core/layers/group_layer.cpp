@@ -399,6 +399,11 @@ void GroupLayer::set_parent(const Maybe<UUID>& parentId)
   mDelegate.set_parent(parentId);
 }
 
+void GroupLayer::set_name(std::string name)
+{
+  mDelegate.set_name(std::move(name));
+}
+
 auto GroupLayer::layer_count() const -> usize
 {
   CountingVisitor visitor;
