@@ -32,7 +32,7 @@
 namespace tactile::core {
 
 /// Manages a set of component definitions.
-class ComponentDefinitionManager final
+class ComponentIndex final
 {
  public:
   /**
@@ -69,11 +69,20 @@ class ComponentDefinitionManager final
   [[nodiscard]] auto at(const UUID& id) -> ComponentDefinition&;
   [[nodiscard]] auto at(const UUID& id) const -> const ComponentDefinition&;
 
+  [[nodiscard]] auto with_name(std::string_view name) -> ComponentDefinition&;
+
+  [[nodiscard]] auto contains(const UUID& id) const -> bool;
+
   /// Indicates whether there is a component with a specific name.
   [[nodiscard]] auto contains(std::string_view name) const -> bool;
 
   /// Returns the amount of component definition.
   [[nodiscard]] auto size() const -> usize;
+
+  [[nodiscard]] auto empty() const -> bool;
+
+  [[nodiscard]] auto begin() const noexcept { return mDefs.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mDefs.end(); }
 
  private:
   HashMap<UUID, ComponentDefinition> mDefs;

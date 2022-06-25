@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "component_definition_manager.hpp"
+#include "component_index.hpp"
 
 #include <algorithm>  // any_of
 #include <utility>    // move
@@ -26,7 +26,7 @@
 
 namespace tactile::core {
 
-auto ComponentDefinitionManager::define_comp(std::string name) -> UUID
+auto ComponentIndex::define_comp(std::string name) -> UUID
 {
   if (contains(name)) {
     throw TactileError{"Component definition name is not unique!"};
@@ -41,7 +41,7 @@ auto ComponentDefinitionManager::define_comp(std::string name) -> UUID
   return id;
 }
 
-void ComponentDefinitionManager::remove_comp(const UUID& id)
+void ComponentIndex::remove_comp(const UUID& id)
 {
   if (const auto iter = mDefs.find(id); iter != mDefs.end()) {
     mDefs.erase(iter);
@@ -51,7 +51,7 @@ void ComponentDefinitionManager::remove_comp(const UUID& id)
   }
 }
 
-void ComponentDefinitionManager::rename_comp(const UUID& id, std::string name)
+void ComponentIndex::rename_comp(const UUID& id, std::string name)
 {
   if (contains(name)) {
     throw TactileError{"New component name was not unique!"};
@@ -61,29 +61,47 @@ void ComponentDefinitionManager::rename_comp(const UUID& id, std::string name)
   def.set_name(std::move(name));
 }
 
-auto ComponentDefinitionManager::at(const UUID& id) -> ComponentDefinition&
+auto ComponentIndex::at(const UUID& id) -> ComponentDefinition&
 {
   return lookup_in(mDefs, id);
 }
 
-auto ComponentDefinitionManager::at(const UUID& id) const -> const ComponentDefinition&
+auto ComponentIndex::at(const UUID& id) const -> const ComponentDefinition&
 {
   return lookup_in(mDefs, id);
 }
 
+auto ComponentIndex::with_name(std::string_view name) -> ComponentDefinition&
+{
+  for (auto& [id, def] : mDefs) {
+    if (def.get_name() == name) {
+      return def;
+    }
   }
+
+  throw TactileError{"Invalid component name!"};
 }
 
-auto ComponentDefinitionManager::contains(std::string_view name) const -> bool
+auto ComponentIndex::contains(const UUID& id) const -> bool
+{
+  return mDefs.contains(id);
+}
+
+auto ComponentIndex::contains(std::string_view name) const -> bool
 {
   return std::any_of(mDefs.begin(), mDefs.end(), [name](const auto& pair) {
     return pair.second.get_name() == name;
   });
 }
 
-auto ComponentDefinitionManager::size() const -> usize
+auto ComponentIndex::size() const -> usize
 {
   return mDefs.size();
+}
+
+auto ComponentIndex::empty() const -> bool
+{
+  return mDefs.empty();
 }
 
 }  // namespace tactile::core
