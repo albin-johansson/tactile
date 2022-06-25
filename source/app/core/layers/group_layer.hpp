@@ -53,6 +53,8 @@ class GroupLayer final : public ILayer
 
   auto remove_layer(const UUID& id) -> Shared<ILayer>;
 
+  auto duplicate_layer(const UUID& id) -> Shared<ILayer>;
+
   void move_layer_up(const UUID& id);
   void move_layer_down(const UUID& id);
 

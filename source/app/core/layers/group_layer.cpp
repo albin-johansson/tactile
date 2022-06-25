@@ -340,6 +340,26 @@ auto GroupLayer::remove_layer(const UUID& id) -> Shared<ILayer>
   }
 }
 
+auto GroupLayer::duplicate_layer(const UUID& id) -> Shared<ILayer>
+{
+  Shared<ILayer> layer;
+
+  auto op = [&](LayerStorage& storage, LayerStorage::iterator iter) {
+    layer = (*iter)->clone();
+    storage.insert(iter + 1, layer);
+  };
+
+  LayerMutatorVisitor visitor{id, op};
+  accept(visitor);
+
+  if (layer) {
+    return layer;
+  }
+  else {
+    throw TactileError{"Invalid layer identifier!"};
+  }
+}
+
 void GroupLayer::move_layer_up(const UUID& id)
 {
   bool valid = false;
