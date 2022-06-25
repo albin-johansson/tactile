@@ -60,6 +60,12 @@ class TileLayer;
 class ObjectLayer;
 class GroupLayer;
 class LayerDelegate;
+
+struct TilesetInfo;
+struct TilesetRef;
+class TilesetBundle;
+class Tileset;
+
 }  // namespace core
 
 namespace comp {
