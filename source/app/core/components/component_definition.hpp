@@ -26,6 +26,7 @@
 #include "core/common/associative.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/uuid.hpp"
+#include "core/components/component.hpp"
 #include "core/element.hpp"
 
 namespace tactile::core {
@@ -34,6 +35,8 @@ namespace tactile::core {
 class ComponentDefinition final : public IElement
 {
  public:
+  [[nodiscard]] auto instantiate() const -> Component;
+
   /**
    * Creates a new attribute.
    *

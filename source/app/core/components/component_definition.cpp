@@ -27,6 +27,11 @@
 
 namespace tactile::core {
 
+auto ComponentDefinition::instantiate() const -> Component
+{
+  return {mId, mAttributes};
+}
+
 void ComponentDefinition::add_attr(std::string key, const AttributeType type)
 {
   if (!mAttributes.contains(key)) {
