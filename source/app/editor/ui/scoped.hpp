@@ -26,6 +26,7 @@
 #include "core/common/associative.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
+#include "core/common/uuid.hpp"
 
 namespace tactile::ui {
 
@@ -37,6 +38,8 @@ struct Scope final
   explicit Scope(const void* ptr) { ImGui::PushID(ptr); }
 
   explicit Scope(const char* str) { ImGui::PushID(str); }
+
+  explicit Scope(const UUID& id) { ImGui::PushID(static_cast<int>(hash(id))); }
 
   explicit Scope(const int id) { ImGui::PushID(id); }
 
