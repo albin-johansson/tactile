@@ -50,6 +50,9 @@ class ComponentBundle;
 class PropertyBundle;
 class ContextDelegate;
 
+class ComponentDefinition;
+class ComponentIndex;
+
 class Viewport;
 
 class Object;
