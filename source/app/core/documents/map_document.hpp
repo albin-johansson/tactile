@@ -81,6 +81,8 @@ class MapDocument final : public ADocument
 
   void flood(const UUID& layerId, const TilePos& origin, TileID replacement);
 
+  void add_rectangle(const UUID& layerId, const Vector2f& pos, const Vector2f& size);
+
   void add_ellipse(const UUID& layerId, const Vector2f& pos, const Vector2f& size);
 
   void move_object(const UUID&     layerId,

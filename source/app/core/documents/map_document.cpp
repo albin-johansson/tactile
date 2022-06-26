@@ -40,6 +40,7 @@
 #include "core/commands/tools/bucket_tool_cmd.hpp"
 #include "core/commands/tools/ellipse_tool_cmd.hpp"
 #include "core/commands/tools/eraser_tool_cmd.hpp"
+#include "core/commands/tools/rectangle_tool_cmd.hpp"
 #include "core/commands/tools/stamp_tool_cmd.hpp"
 
 namespace tactile {
@@ -145,6 +146,13 @@ void MapDocument::flood(const UUID&    layerId,
                         const TileID   replacement)
 {
   get_history().push<BucketToolCmd>(this, layerId, origin, replacement);
+}
+
+void MapDocument::add_rectangle(const UUID&     layerId,
+                                const Vector2f& pos,
+                                const Vector2f& size)
+{
+  get_history().push<RectangleToolCmd>(this, layerId, pos, size);
 }
 
 void MapDocument::add_ellipse(const UUID&     layerId,

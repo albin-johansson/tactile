@@ -97,6 +97,7 @@ struct FloodEvent final
  */
 struct AddRectangleEvent final
 {
+  UUID     layer_id{};
   Vector2f pos{};
   Vector2f size{};
 };

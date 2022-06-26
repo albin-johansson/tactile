@@ -23,13 +23,10 @@
 #include <glm/common.hpp>
 
 #include "core/common/math.hpp"
-#include "core/components/tools.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/events/tool_events.hpp"
-#include "core/fwd.hpp"
 #include "core/model.hpp"
 #include "core/renderer.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/viewport_system.hpp"
 
 namespace tactile {
 
@@ -37,10 +34,9 @@ void RectangleTool::draw_gizmos(const DocumentModel& model,
                                 IRenderer& renderer,
                                 const MouseInfo&) const
 {
-  const auto& registry = model.get_active_registry();
-  if (const auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
-    const auto pos = renderer.get_origin() + stroke->start;
-    const auto size = stroke->current - stroke->start;
+  if (mStroke) {
+    const auto pos = renderer.get_origin() + mStroke->start;
+    const auto size = mStroke->current - mStroke->start;
 
     renderer.draw_rect(pos + Vector2f{1, 1}, size, cen::colors::black);
     renderer.draw_rect(pos, size, cen::colors::yellow);
@@ -61,10 +57,9 @@ void RectangleTool::on_pressed(DocumentModel& model,
                                entt::dispatcher&,
                                const MouseInfo& mouse)
 {
-  auto& registry = model.get_active_registry();
-  if (sys::is_object_layer_active(registry) && mouse.is_within_contents &&
-      mouse.button == cen::mouse_button::left) {
-    auto& stroke = registry.ctx().emplace<comp::CurrentRectangleStroke>();
+  if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
+      is_available(model)) {
+    auto& stroke = mStroke.emplace();
     stroke.start = mouse.pos;
     stroke.current = stroke.start;
   }
@@ -74,11 +69,8 @@ void RectangleTool::on_dragged(DocumentModel& model,
                                entt::dispatcher&,
                                const MouseInfo& mouse)
 {
-  auto& registry = model.get_active_registry();
-  if (sys::is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {
-    if (auto* stroke = registry.ctx().find<comp::CurrentRectangleStroke>()) {
-      stroke->current = mouse.pos;
-    }
+  if (mStroke && mouse.button == cen::mouse_button::left && is_available(model)) {
+    mStroke->current = mouse.pos;
   }
 }
 
@@ -86,38 +78,35 @@ void RectangleTool::on_released(DocumentModel& model,
                                 entt::dispatcher& dispatcher,
                                 const MouseInfo& mouse)
 {
-  auto& registry = model.get_active_registry();
-  if (sys::is_object_layer_active(registry) && mouse.button == cen::mouse_button::left) {
+  if (mouse.button == cen::mouse_button::left && is_available(model)) {
     maybe_emit_event(model, dispatcher);
   }
 }
 
 auto RectangleTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& registry = model.get_active_registry();
-  return sys::is_object_layer_active(registry);
-}
-
-auto RectangleTool::get_type() const -> ToolType
-{
-  return ToolType::Rectangle;
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
+  return map.is_active_layer(LayerType::ObjectLayer);
 }
 
 void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& registry = model.get_active_registry();
-  auto& ctx = registry.ctx();
-  if (const auto* stroke = ctx.find<comp::CurrentRectangleStroke>()) {
-    const auto ratio = sys::get_viewport_scaling_ratio(registry);
+  if (mStroke) {
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+    const auto& viewport = document.get_viewport();
 
-    const auto pos = (glm::min)(stroke->start, stroke->current) / ratio;
-    const auto size = glm::abs(stroke->current - stroke->start) / ratio;
+    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
+    const auto pos = (glm::min)(mStroke->start, mStroke->current) / ratio;
+    const auto size = glm::abs(mStroke->current - mStroke->start) / ratio;
 
     if (size.x != 0 && size.y != 0) {
-      dispatcher.enqueue<AddRectangleEvent>(pos, size);
+      const auto layerId = map.active_layer_id().value();
+      dispatcher.enqueue<AddRectangleEvent>(layerId, pos, size);
     }
 
-    ctx.erase<comp::CurrentRectangleStroke>();
+    mStroke.reset();
   }
 }
 

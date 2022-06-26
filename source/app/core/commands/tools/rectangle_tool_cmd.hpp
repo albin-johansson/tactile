@@ -20,22 +20,20 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/systems/layers/object_system.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
-
-/// \addtogroup commands
-/// \{
 
 class RectangleToolCmd final : public ACommand
 {
  public:
-  RectangleToolCmd(RegistryRef registry, const Vector2f& pos, const Vector2f& size);
+  RectangleToolCmd(MapDocument*    document,
+                   const UUID&     layerId,
+                   const Vector2f& pos,
+                   const Vector2f& size);
 
   void undo() override;
 
@@ -47,14 +45,11 @@ class RectangleToolCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  UUID mLayerId{};
-  Vector2f mPos{};
-  Vector2f mSize{};
-  Maybe<ObjectID> mObjectId;
-  Maybe<sys::RemoveObjectResult> mSnapshot;
+  MapDocument* mDocument{};
+  UUID         mLayerId{};
+  Vector2f     mPos{};
+  Vector2f     mSize{};
+  Maybe<UUID>  mObjectId;
 };
-
-/// \} End of group commands
 
 }  // namespace tactile
