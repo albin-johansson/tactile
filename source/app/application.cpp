@@ -777,7 +777,8 @@ void Application::on_remove_layer(const RemoveLayerEvent& event)
 void Application::on_select_layer(const SelectLayerEvent& event)
 {
   if (auto* document = active_map_document()) {
-    sys::select_layer(document->get_registry(), event.id);
+    auto& map = document->get_map();
+    map.select_layer(event.id);
   }
 }
 
