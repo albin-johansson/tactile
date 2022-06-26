@@ -65,11 +65,11 @@ class Object final : public IContext
 
  private:
   ContextDelegate mDelegate;
-  Vector2f mPos{};                     /// Object position.
-  Vector2f mSize{};                    /// Object size (might be zero).
-  ObjectType mType{ObjectType::Rect};  /// Specific object type.
-  std::string mTag;                    /// Optional user-provided tag.
-  bool mVisible : 1 {true};
+  Vector2f        mPos{};                   /// Object position.
+  Vector2f        mSize{};                  /// Object size (might be zero).
+  ObjectType      mType{ObjectType::Rect};  /// Specific object type.
+  std::string     mTag;                     /// Optional user-provided tag.
+  bool            mVisible : 1 {true};
 };
 
 }  // namespace tactile::core
