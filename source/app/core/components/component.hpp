@@ -41,8 +41,11 @@ class Component final
 
   [[nodiscard]] auto definition_id() const -> const UUID& { return mDefinitionId; }
 
+  [[nodiscard]] auto begin() const noexcept { return mAttributes.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mAttributes.end(); }
+
  private:
-  UUID mDefinitionId;
+  UUID         mDefinitionId;
   AttributeMap mAttributes;
 };
 

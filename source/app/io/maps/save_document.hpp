@@ -19,19 +19,11 @@
 
 #pragma once
 
-#include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
 namespace tactile::io {
 
-/**
- * \brief Saves a map document.
- *
- * \param model the document model in use.
- * \param documentId the ID of the map document that will be saved.
- *
- * \ingroup io
- */
-void save_document(const DocumentModel& model, const UUID& documentId);
+/// Saves a map document.
+void save_document(const MapDocument& document);
 
 }  // namespace tactile::io

@@ -24,7 +24,6 @@
 
 namespace tactile::io {
 
-[[nodiscard]] auto convert_map_to_ir(const DocumentModel& model, const UUID& documentId)
-    -> ir::MapData;
+[[nodiscard]] auto convert_map_to_ir(const MapDocument& document) -> ir::MapData;
 
 }  // namespace tactile::io

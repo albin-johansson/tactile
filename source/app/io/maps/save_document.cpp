@@ -24,9 +24,7 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "core/documents/document.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/model.hpp"
 #include "io/maps/convert_map_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/emitter/json_emitter.hpp"
@@ -37,17 +35,15 @@
 
 namespace tactile::io {
 
-void save_document(const DocumentModel& model, const UUID& documentId)
+void save_document(const MapDocument& document)
 {
   TACTILE_PROFILE_START
-
-  const auto& document = model.view_map(documentId);
   TACTILE_ASSERT(document.has_path());
 
   const auto path = std::filesystem::absolute(document.get_path());
   spdlog::info("Trying to save map to {}", path);
 
-  EmitInfo info{path, convert_map_to_ir(model, documentId)};
+  EmitInfo info{path, convert_map_to_ir(document)};
 
   const auto ext = path.extension();
   if (ext == ".yaml" || ext == ".yml") {

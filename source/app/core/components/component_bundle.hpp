@@ -45,6 +45,9 @@ class ComponentBundle final
 
   [[nodiscard]] auto empty() const -> bool;
 
+  [[nodiscard]] auto begin() const noexcept { return mComps.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mComps.end(); }
+
  private:
   HashMap<UUID, Component> mComps;
 };

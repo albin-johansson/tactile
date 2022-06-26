@@ -383,16 +383,13 @@ void Application::on_set_command_capacity(const SetCommandCapacityEvent& event)
 
 void Application::on_save()
 {
-  if (auto* document = active_document()) {
+  // TODO ability to save tileset documents
+  if (auto* document = active_map_document()) {
     if (document->has_path()) {
-      if (document->is_map()) {
-        io::save_document(mData->model, document->id());
-        document->get_history().mark_as_clean();
-        document->set_name(document->get_path().filename().string());
-      }
-      else {
-        spdlog::warn("Cannot yet save changes to tilesets!");
-      }
+      io::save_document(*document);
+
+      document->get_history().mark_as_clean();
+      document->set_name(document->get_path().filename().string());
     }
     else {
       on_open_save_as_dialog();
