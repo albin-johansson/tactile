@@ -26,6 +26,7 @@
 
 #include "core/region.hpp"
 #include "editor/ui/common/colors.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/textures.hpp"
 #include "misc/assert.hpp"
 #include "render_info.hpp"
@@ -35,19 +36,9 @@ namespace {
 
 [[nodiscard]] auto _convert_bounds_to_rect(const RenderInfo& info) -> cen::frect
 {
-  const auto begin = info.bounds.begin;
-
-  const auto gridWidth = info.grid_size.x;
-  const auto gridHeight = info.grid_size.y;
-
-  const ImVec2 index{static_cast<float>(begin.col()), static_cast<float>(begin.row())};
-  const auto pos = info.origin + (index * info.grid_size);
-
-  const auto size = info.bounds.end - info.bounds.begin;
-  const auto width = static_cast<float>(size.col()) * gridWidth;
-  const auto height = static_cast<float>(size.row()) * gridHeight;
-
-  return {pos.x, pos.y, width, height};
+  const auto pos = info.origin + (from_pos(info.bounds.begin) * info.grid_size);
+  const auto size = from_pos(info.bounds.end - info.bounds.begin) * info.grid_size;
+  return {pos.x, pos.y, size.x, size.y};
 }
 
 void _path_elliptical_arc_to(ImDrawList* self,
@@ -150,8 +141,8 @@ void GraphicsCtx::draw_rect(const Vector2f& pos,
 {
   auto* list = ImGui::GetWindowDrawList();
 
-  const auto imMin = ImVec2{pos.x, pos.y};
-  const auto imMax = imMin + ImVec2{size.x, size.y};
+  const auto imMin = from_vec(pos);
+  const auto imMax = imMin + from_vec(size);
 
   list->AddRect(imMin, imMax, color_to_u32(color), 0.0f, 0, thickness);
 }
@@ -264,17 +255,14 @@ void GraphicsCtx::render_image(const uint texture,
 {
   auto* list = ImGui::GetWindowDrawList();
 
-  const auto imMin = ImVec2{pos.x, pos.y};
-  const auto imMax = imMin + ImVec2{size.x, size.y};
-
-  const ImVec2 imUvMin{uvMin.x, uvMin.y};
-  const ImVec2 imUvMax{uvMax.x, uvMax.y};
+  const auto imMin = from_vec(pos);
+  const auto imMax = imMin + from_vec(size);
 
   list->AddImage(to_texture_id(texture),
                  imMin,
                  imMax,
-                 imUvMin,
-                 imUvMax,
+                 from_vec(uvMin),
+                 from_vec(uvMax),
                  IM_COL32(0xFF, 0xFF, 0xFF, opacity));
 }
 
@@ -283,11 +271,10 @@ void GraphicsCtx::render_image(const uint texture,
                                const ImVec2& position,
                                const ImVec2& uv)
 {
-  const auto row = source.y / source.w;
-  const auto col = source.x / source.z;
+  const ImVec2 index{source.x / source.z, source.y / source.w};
 
-  const auto uvMin = ImVec2{col * uv.x, row * uv.y};
-  const auto uvMax = uvMin + ImVec2{uv.x, uv.y};
+  const auto uvMin = index * uv;
+  const auto uvMax = uvMin + uv;
 
   auto* list = ImGui::GetWindowDrawList();
   list->AddImage(to_texture_id(texture),

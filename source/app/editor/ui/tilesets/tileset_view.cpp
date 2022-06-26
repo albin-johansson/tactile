@@ -30,6 +30,7 @@
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/common/rubber_band.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_info.hpp"
 #include "io/persistence/preferences.hpp"
@@ -72,23 +73,11 @@ void _render_selection(GraphicsCtx& graphics,
 {
   const auto diff = selection.end - selection.begin;
 
-  const ImVec2 origin{static_cast<float>(selection.begin.col()) * tileSize.x,
-                      static_cast<float>(selection.begin.row()) * tileSize.y};
-
-  const ImVec2 size{static_cast<float>(diff.col()) * tileSize.x,
-                    static_cast<float>(diff.row()) * tileSize.y};
+  const auto origin = from_pos(selection.begin) * tileSize;
+  const auto size = from_pos(diff) * tileSize;
 
   graphics.set_draw_color(_rubber_band_color);
   graphics.fill_rect(min + origin, size);
-}
-
-void _render_tileset_image(GraphicsCtx&         graphics,
-                           const core::Tileset& tileset,
-                           const ImVec2&        position)
-{
-  const ImVec2 size = {static_cast<float>(tileset.texture_size().x),
-                       static_cast<float>(tileset.texture_size().y)};
-  graphics.render_image(tileset.texture_id(), position, size);
 }
 
 }  // namespace
@@ -111,9 +100,8 @@ void update_tileset_view(const DocumentModel& model,
   graphics.set_draw_color(io::get_preferences().viewport_bg());
   graphics.clear();
 
-  const ImVec2 offset{viewport.get_offset().x, viewport.get_offset().y};
-  const ImVec2 tileSize = {static_cast<float>(tileset->tile_size().x),
-                           static_cast<float>(tileset->tile_size().y)};
+  const auto offset = from_vec(viewport.get_offset());
+  const auto tileSize = from_vec(tileset->tile_size());
 
   if (const auto selection = rubber_band(offset, tileSize)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
@@ -122,7 +110,9 @@ void update_tileset_view(const DocumentModel& model,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  _render_tileset_image(graphics, *tileset, position);
+  graphics.render_image(tileset->texture_id(),
+                        position,
+                        from_vec(tileset->texture_size()));
 
   const auto& selection = tilesetRef.selection;
   if (selection.has_value()) {
