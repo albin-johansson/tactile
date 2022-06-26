@@ -529,9 +529,11 @@ void Application::on_tool_exited()
 
 void Application::on_stamp_sequence(StampSequenceEvent event)
 {
-  _register<StampToolCmd>(mData->model,
-                          std::move(event.old_state),
-                          std::move(event.sequence));
+  if (auto* document = active_map_document()) {
+    document->register_stamp_sequence(event.layer_id,
+                                      std::move(event.old_state),
+                                      std::move(event.sequence));
+  }
 }
 
 void Application::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event)

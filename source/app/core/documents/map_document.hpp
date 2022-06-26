@@ -25,6 +25,7 @@
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
 #include "core/common/memory.hpp"
+#include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
@@ -71,6 +72,10 @@ class MapDocument final : public ADocument
   void set_layer_opacity(const UUID& layerId, float opacity);
 
   void set_layer_visible(const UUID& layerId, bool visible);
+
+  void register_stamp_sequence(const UUID& layerId,
+                               TileCache   previous,
+                               TileCache   sequence);
 
   void flood(const UUID& layerId, const TilePos& origin, TileID replacement);
 

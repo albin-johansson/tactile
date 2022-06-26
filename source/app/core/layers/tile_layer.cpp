@@ -169,7 +169,7 @@ void TileLayer::set_name(std::string name)
 
 void TileLayer::set_tile(const TilePos& pos, const TileID id)
 {
-  if (is_valid(pos)) {
+  if (is_valid(pos)) [[likely]] {
     mTiles[pos.urow()][pos.ucol()] = id;
   }
   else {
@@ -177,9 +177,16 @@ void TileLayer::set_tile(const TilePos& pos, const TileID id)
   }
 }
 
+void TileLayer::set_tiles(const TileCache& cache)
+{
+  for (const auto& [pos, tile] : cache) {
+    set_tile(pos, tile);
+  }
+}
+
 auto TileLayer::tile_at(const TilePos& pos) const -> TileID
 {
-  if (is_valid(pos)) {
+  if (is_valid(pos)) [[likely]] {
     return mTiles[pos.urow()][pos.ucol()];
   }
   else {

@@ -39,6 +39,7 @@
 #include "core/commands/objects/move_object_cmd.hpp"
 #include "core/commands/tools/bucket_tool_cmd.hpp"
 #include "core/commands/tools/ellipse_tool_cmd.hpp"
+#include "core/commands/tools/stamp_tool_cmd.hpp"
 
 namespace tactile {
 
@@ -121,6 +122,16 @@ void MapDocument::set_layer_opacity(const UUID& layerId, const float opacity)
 void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
 {
   get_history().push<SetLayerVisibilityCmd>(this, layerId, visible);
+}
+
+void MapDocument::register_stamp_sequence(const UUID& layerId,
+                                          TileCache   previous,
+                                          TileCache   sequence)
+{
+  get_history().push_without_redo<StampToolCmd>(this,
+                                                layerId,
+                                                std::move(previous),
+                                                std::move(sequence));
 }
 
 void MapDocument::flood(const UUID&    layerId,

@@ -69,6 +69,7 @@ struct SelectToolEvent final
 
 struct StampSequenceEvent final
 {
+  UUID      layer_id{};
   TileCache old_state;
   TileCache sequence;
 };

@@ -23,6 +23,7 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/tile_cache.hpp"
 #include "core/common/tiles.hpp"
 #include "core/fwd.hpp"
 #include "core/layers/layer.hpp"
@@ -67,6 +68,8 @@ class TileLayer final : public ILayer
   void set_name(std::string name) override;
 
   void set_tile(const TilePos& pos, TileID id);
+
+  void set_tiles(const TileCache& cache);
 
   [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileID;
 

@@ -20,20 +20,20 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
-
-/// \addtogroup commands
-/// \{
 
 class StampToolCmd final : public ACommand
 {
  public:
-  StampToolCmd(RegistryRef registry, TileCache&& oldState, TileCache&& newState);
+  StampToolCmd(MapDocument* document,
+               const UUID&  layerId,
+               TileCache    oldState,
+               TileCache    newState);
 
   void undo() override;
 
@@ -45,14 +45,12 @@ class StampToolCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  UUID mLayerId{};
-  TileCache mOldState;
-  TileCache mNewState;
+  MapDocument* mDocument{};
+  UUID         mLayerId{};
+  TileCache    mOldState;
+  TileCache    mNewState;
 
   void apply_sequence(const TileCache& cache);
 };
-
-/// \} End of group commands
 
 }  // namespace tactile
