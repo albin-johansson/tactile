@@ -55,8 +55,8 @@ void Viewport::offset(const Vector2f& delta)
   mOffset += delta;
 
   if (mLimits) {
-    mOffset = (glm::max)(mLimits->min_offset, mOffset);
-    mOffset = (glm::min)(mLimits->max_offset, mOffset);
+    mOffset = (glm::min)(mLimits->min_offset, mOffset);
+    mOffset = (glm::max)(mLimits->max_offset, mOffset);
   }
 }
 
