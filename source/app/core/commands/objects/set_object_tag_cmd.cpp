@@ -21,33 +21,52 @@
 
 #include <utility>  // move
 
-#include "core/components/objects.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/layers/object_layer.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-SetObjectTagCmd::SetObjectTagCmd(RegistryRef registry, const ObjectID id, std::string tag)
-    : AObjectCommand{"Set Object Tag", registry, id}
+SetObjectTagCmd::SetObjectTagCmd(MapDocument* document,
+                                 const UUID&  layerId,
+                                 const UUID&  objectId,
+                                 std::string  tag)
+    : ACommand{"Set Object Tag"}
+    , mDocument{document}
+    , mLayerId{layerId}
+    , mObjectId{objectId}
     , mNewTag{std::move(tag)}
-{}
+{
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
+  }
+}
 
 void SetObjectTagCmd::undo()
 {
-  auto& object = target_object();
-  object.tag = mOldTag.value();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+  auto& object = layer.get_object(mObjectId);
+
+  object.set_tag(mOldTag.value());
+  mOldTag.reset();
 }
 
 void SetObjectTagCmd::redo()
 {
-  auto& object = target_object();
-  mOldTag = object.tag;
-  object.tag = mNewTag;
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+  auto& object = layer.get_object(mObjectId);
+
+  mOldTag = object.get_tag();
+  object.set_tag(mNewTag);
 }
 
 auto SetObjectTagCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const SetObjectTagCmd&>(cmd);
-    if (target_object_id() == other.target_object_id()) {
+    if (mLayerId == other.mLayerId && mObjectId == other.mObjectId) {
       mNewTag = other.mNewTag;
       return true;
     }

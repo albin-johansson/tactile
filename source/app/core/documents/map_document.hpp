@@ -94,6 +94,8 @@ class MapDocument final : public ADocument
 
   void set_object_visible(const UUID& layerId, const UUID& objectId, bool visible);
 
+  void set_object_tag(const UUID& layerId, const UUID& objectId, std::string tag);
+
   void set_name(std::string name) override;
 
   [[nodiscard]] auto get_name() const -> const std::string& override;

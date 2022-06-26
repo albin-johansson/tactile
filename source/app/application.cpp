@@ -863,7 +863,9 @@ void Application::on_set_object_visible(const SetObjectVisibleEvent& event)
 
 void Application::on_set_object_tag(const SetObjectTagEvent& event)
 {
-  _execute<SetObjectTagCmd>(mData->model, event.id, event.tag);
+  if (auto* document = active_map_document()) {
+    document->set_object_tag(event.layer_id, event.object_id, event.tag);
+  }
 }
 
 void Application::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
