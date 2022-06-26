@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include <fmt/format.h>
+
 #include "core/common/functional.hpp"
 #include "core/layers/layer_visitor.hpp"
 #include "core/layers/object_layer.hpp"
@@ -170,17 +172,32 @@ auto Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parentId)
 
 auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
 {
-  return add_layer(TileLayer::make(mRowCount, mColCount), parentId);
+  auto layer = TileLayer::make(mRowCount, mColCount);
+
+  layer->set_name(fmt::format("Tile Layer {}", mTileLayerSuffix));
+  ++mTileLayerSuffix;
+
+  return add_layer(std::move(layer), parentId);
 }
 
 auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
 {
-  return add_layer(ObjectLayer::make(), parentId);
+  auto layer = ObjectLayer::make();
+
+  layer->set_name(fmt::format("Object Layer {}", mObjectLayerSuffix));
+  ++mObjectLayerSuffix;
+
+  return add_layer(std::move(layer), parentId);
 }
 
 auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
 {
-  return add_layer(GroupLayer::make(), parentId);
+  auto layer = GroupLayer::make();
+
+  layer->set_name(fmt::format("Group Layer {}", mGroupLayerSuffix));
+  ++mGroupLayerSuffix;
+
+  return add_layer(std::move(layer), parentId);
 }
 
 void Map::visit_layers(IConstLayerVisitor& visitor) const
@@ -195,6 +212,9 @@ void Map::visit_layers(const VisitorFunc& visitor) const
 
 auto Map::remove_layer(const UUID& id) -> Shared<ILayer>
 {
+  if (mActiveLayer == id) {
+    mActiveLayer.reset();
+  }
   return mRootLayer.remove_layer(id);
 }
 
