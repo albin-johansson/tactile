@@ -681,7 +681,12 @@ void Application::on_decrease_font_size()
 void Application::on_add_tileset(const AddTilesetEvent& event)
 {
   if (auto info = mData->textures.load(event.path)) {
-    mData->model.add_tileset(*info, {event.tile_width, event.tile_height});
+    const core::TilesetInfo tilesetInfo{
+        .texture_path = info->path,
+        .texture_id = info->id,
+        .texture_size = info->size,
+        .tile_size = {event.tile_width, event.tile_height}};
+    mData->model.add_tileset(tilesetInfo);
   }
   else {
     spdlog::error("Failed to load tileset texture!");
