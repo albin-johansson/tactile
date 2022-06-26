@@ -586,46 +586,60 @@ void Application::on_offset_viewport(const OffsetViewportEvent& event)
 
 void Application::on_pan_left()
 {
-  auto& registry = mData->model.get_active_registry();
-  sys::pan_viewport_left(registry);
+  if (auto* document = active_document()) {
+    auto& viewport = document->get_viewport();
+    viewport.pan_left();
+  }
 }
 
 void Application::on_pan_right()
 {
-  auto& registry = mData->model.get_active_registry();
-  sys::pan_viewport_right(registry);
+  if (auto* document = active_document()) {
+    auto& viewport = document->get_viewport();
+    viewport.pan_right();
+  }
 }
 
 void Application::on_pan_up()
 {
-  auto& registry = mData->model.get_active_registry();
-  sys::pan_viewport_up(registry);
+  if (auto* document = active_document()) {
+    auto& viewport = document->get_viewport();
+    viewport.pan_up();
+  }
 }
 
 void Application::on_pan_down()
 {
-  auto& registry = mData->model.get_active_registry();
-  sys::pan_viewport_down(registry);
+  if (auto* document = active_document()) {
+    auto& viewport = document->get_viewport();
+    viewport.pan_down();
+  }
 }
 
 void Application::on_increase_zoom()
 {
-  auto& registry = mData->model.get_active_registry();
-  const auto mousePos = ImGui::GetIO().MousePos;
-  sys::increase_viewport_zoom(registry, Vector2f{mousePos.x, mousePos.y});
+  if (auto* document = active_document()) {
+    auto&      viewport = document->get_viewport();
+    const auto mousePos = ImGui::GetIO().MousePos;
+    viewport.zoom_in(Vector2f{mousePos.x, mousePos.y});
+  }
 }
 
 void Application::on_decrease_zoom()
 {
-  auto& registry = mData->model.get_active_registry();
-  const auto mousePos = ImGui::GetIO().MousePos;
-  sys::decrease_viewport_zoom(registry, Vector2f{mousePos.x, mousePos.y});
+  if (auto* document = active_document()) {
+    auto&      viewport = document->get_viewport();
+    const auto mousePos = ImGui::GetIO().MousePos;
+    viewport.zoom_out(Vector2f{mousePos.x, mousePos.y});
+  }
 }
 
 void Application::on_reset_zoom()
 {
-  auto& registry = mData->model.get_active_registry();
-  sys::reset_viewport_zoom(registry);
+  if (auto* document = active_document()) {
+    auto& viewport = document->get_viewport();
+    viewport.reset_zoom();
+  }
 }
 
 void Application::on_reset_font_size()
