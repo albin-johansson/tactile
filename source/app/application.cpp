@@ -695,8 +695,10 @@ void Application::on_remove_tileset(const RemoveTilesetEvent& event)
 
 void Application::on_select_tileset(const SelectTilesetEvent& event)
 {
-  auto& registry = mData->model.get_active_registry();
-  sys::select_tileset(registry, event.tileset_id);
+  if (auto* document = active_map_document()) {
+    auto& tilesets = document->get_map().get_tilesets();
+    tilesets.select_tileset(event.tileset_id);
+  }
 }
 
 void Application::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
