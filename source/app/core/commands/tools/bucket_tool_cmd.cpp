@@ -19,34 +19,35 @@
 
 #include "bucket_tool_cmd.hpp"
 
-#include "core/common/ecs.hpp"
-#include "core/components/layers.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/layers/tile_layer.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-BucketToolCmd::BucketToolCmd(RegistryRef registry,
+BucketToolCmd::BucketToolCmd(MapDocument*   document,
+                             const UUID&    layerId,
                              const TilePos& origin,
-                             const TileID replacement)
+                             const TileID   replacement)
     : ACommand{"Bucket Fill"}
-    , mRegistry{registry}
-    , mLayerId{sys::get_active_layer_id(registry).value()}
+    , mDocument{document}
+    , mLayerId{layerId}
     , mOrigin{origin}
     , mReplacement{replacement}
-{}
+{
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
+  }
+}
 
 void BucketToolCmd::undo()
 {
-  auto& registry = mRegistry.get();
-
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_tile_layer(mLayerId);
 
   const auto target = mTarget.value();
   for (const auto& position : mPositions) {
-    layer.matrix[position.urow()][position.ucol()] = target;
+    layer.set_tile(position, target);
   }
 
   mPositions.clear();
@@ -55,13 +56,11 @@ void BucketToolCmd::undo()
 
 void BucketToolCmd::redo()
 {
-  auto& registry = mRegistry.get();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_tile_layer(mLayerId);
 
-  const auto entity = sys::find_context(registry, mLayerId);
-  auto& layer = checked_get<comp::TileLayer>(registry, entity);
-
-  mTarget = sys::get_tile(layer, mOrigin);
-  sys::flood(layer, mOrigin, mReplacement, mPositions);
+  mTarget = layer.tile_at(mOrigin);
+  layer.flood(mOrigin, mReplacement, &mPositions);
 }
 
 }  // namespace tactile

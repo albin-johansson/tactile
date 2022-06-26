@@ -37,6 +37,7 @@
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"
 #include "core/commands/objects/move_object_cmd.hpp"
+#include "core/commands/tools/bucket_tool_cmd.hpp"
 #include "core/commands/tools/ellipse_tool_cmd.hpp"
 
 namespace tactile {
@@ -120,6 +121,13 @@ void MapDocument::set_layer_opacity(const UUID& layerId, const float opacity)
 void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
 {
   get_history().push<SetLayerVisibilityCmd>(this, layerId, visible);
+}
+
+void MapDocument::flood(const UUID&    layerId,
+                        const TilePos& origin,
+                        const TileID   replacement)
+{
+  get_history().push<BucketToolCmd>(this, layerId, origin, replacement);
 }
 
 void MapDocument::add_ellipse(const UUID&     layerId,

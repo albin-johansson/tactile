@@ -36,7 +36,8 @@ void BucketTool::on_pressed(DocumentModel& model,
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       is_available(model)) {
     const auto& document = model.require_active_map();
-    const auto& tilesets = document.get_map().get_tilesets();
+    const auto& map = document.get_map();
+    const auto& tilesets = map.get_tilesets();
 
     const auto  tilesetId = tilesets.active_tileset_id().value();
     const auto& tilesetRef = tilesets.get_ref(tilesetId);
@@ -45,7 +46,8 @@ void BucketTool::on_pressed(DocumentModel& model,
     const auto selectedPos = tilesetRef.selection->begin;
     const auto replacement = tilesetRef.first_tile + tileset->index_of(selectedPos);
 
-    dispatcher.enqueue<FloodEvent>(mouse.position_in_viewport, replacement);
+    const auto layerId = map.active_layer_id().value();
+    dispatcher.enqueue<FloodEvent>(layerId, mouse.position_in_viewport, replacement);
   }
 }
 

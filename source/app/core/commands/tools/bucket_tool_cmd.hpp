@@ -22,21 +22,21 @@
 #include <vector>  // vector
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {
 
-/// \addtogroup commands
-/// \{
-
 class BucketToolCmd final : public ACommand
 {
  public:
-  BucketToolCmd(RegistryRef registry, const TilePos& origin, TileID replacement);
+  BucketToolCmd(MapDocument*   document,
+                const UUID&    layerId,
+                const TilePos& origin,
+                TileID         replacement);
 
   void undo() override;
 
@@ -48,14 +48,12 @@ class BucketToolCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  UUID mLayerId{};
-  TilePos mOrigin;
-  TileID mReplacement{};
-  Maybe<TileID> mTarget;
+  MapDocument*         mDocument{};
+  UUID                 mLayerId{};
+  TilePos              mOrigin;
+  TileID               mReplacement{};
+  Maybe<TileID>        mTarget;
   std::vector<TilePos> mPositions;
 };
-
-/// \} End of group commands
 
 }  // namespace tactile

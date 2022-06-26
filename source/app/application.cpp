@@ -549,7 +549,9 @@ void Application::on_eraser_sequence(EraserSequenceEvent event)
 
 void Application::on_flood(const FloodEvent& event)
 {
-  _execute<BucketToolCmd>(mData->model, event.origin, event.replacement);
+  if (auto* document = active_map_document()) {
+    document->flood(event.layer_id, event.origin, event.replacement);
+  }
 }
 
 void Application::on_add_rectangle(const AddRectangleEvent& event)

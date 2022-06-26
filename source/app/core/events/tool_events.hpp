@@ -85,8 +85,9 @@ struct EraserSequenceEvent final
 
 struct FloodEvent final
 {
+  UUID    layer_id{};
   TilePos origin;
-  TileID replacement{};
+  TileID  replacement{};
 };
 
 /**
