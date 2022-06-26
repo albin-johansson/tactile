@@ -37,6 +37,7 @@
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"
 #include "core/commands/objects/move_object_cmd.hpp"
+#include "core/commands/objects/set_object_visible_cmd.hpp"
 #include "core/commands/tools/bucket_tool_cmd.hpp"
 #include "core/commands/tools/ellipse_tool_cmd.hpp"
 #include "core/commands/tools/eraser_tool_cmd.hpp"
@@ -174,6 +175,13 @@ void MapDocument::move_object(const UUID&     layerId,
                               const Vector2f& updated)
 {
   get_history().push<MoveObjectCmd>(this, layerId, objectId, previous, updated);
+}
+
+void MapDocument::set_object_visible(const UUID& layerId,
+                                     const UUID& objectId,
+                                     const bool  visible)
+{
+  get_history().push<SetObjectVisibleCmd>(this, layerId, objectId, visible);
 }
 
 void MapDocument::set_name(std::string name)

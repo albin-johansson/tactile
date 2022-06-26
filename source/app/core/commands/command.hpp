@@ -29,10 +29,7 @@
 
 namespace tactile {
 
-/// \addtogroup commands
-/// \{
-
-using RegistryRef = Ref<entt::registry>;
+using RegistryRef [[deprecated]] = Ref<entt::registry>;
 
 /// The abstract base class of all command implementations.
 class ACommand
@@ -105,7 +102,5 @@ class ACommand
  private:
   std::string mText;
 };
-
-/// \} End of group commands
 
 }  // namespace tactile

@@ -206,7 +206,7 @@ class Application final : AEventLoop
 
   void on_move_object(const MoveObjectEvent& event);
 
-  void on_set_object_visibility(const SetObjectVisibilityEvent& event);
+  void on_set_object_visible(const SetObjectVisibleEvent& event);
 
   void on_set_object_tag(const SetObjectTagEvent& event);
 

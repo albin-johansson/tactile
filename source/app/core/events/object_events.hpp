@@ -25,11 +25,10 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
+#include "core/common/uuid.hpp"
 
 namespace tactile {
 
-/// \addtogroup events
-/// \{
 
 /// Emitted after an object has been moved.
 struct MoveObjectEvent final
@@ -40,13 +39,12 @@ struct MoveObjectEvent final
   Vector2f updated;      /// Updated position of the object.
 };
 
-/**
- * \brief Emitted when the visibility of an object should be changed.
- */
-struct SetObjectVisibilityEvent final
+/// Emitted when the visibility of an object should be changed.
+struct SetObjectVisibleEvent final
 {
-  ObjectID id{};   ///< ID of target object.
-  bool visible{};  ///< New visibility state.
+  UUID layer_id{};   /// Object layer ID.
+  UUID object_id{};  /// ID of the target object.
+  bool visible{};    /// New visibility state.
 };
 
 /**
@@ -82,7 +80,5 @@ struct SpawnObjectContextMenuEvent final
   UUID layer_id{};
   UUID object_id{};
 };
-
-/// \} End of group events
 
 }  // namespace tactile

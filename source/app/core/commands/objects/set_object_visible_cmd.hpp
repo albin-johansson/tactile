@@ -19,17 +19,20 @@
 
 #pragma once
 
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
+#include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
-#include "object_command.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
-class SetObjectVisibilityCmd final : public AObjectCommand
+class SetObjectVisibleCmd final : public ACommand
 {
  public:
-  SetObjectVisibilityCmd(RegistryRef registry, ObjectID id, bool visible);
+  SetObjectVisibleCmd(MapDocument* document,
+                      const UUID&  layerId,
+                      const UUID&  objectId,
+                      bool         visible);
 
   void undo() override;
 
@@ -41,8 +44,11 @@ class SetObjectVisibilityCmd final : public AObjectCommand
   }
 
  private:
-  bool mVisible;
-  Maybe<bool> mPreviousVisibility;
+  MapDocument* mDocument{};
+  UUID         mLayerId{};
+  UUID         mObjectId{};
+  bool         mVisible;
+  Maybe<bool>  mPrevious;
 };
 
 }  // namespace tactile

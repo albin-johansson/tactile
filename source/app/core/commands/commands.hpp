@@ -51,7 +51,7 @@
 #include "core/commands/objects/move_object_cmd.hpp"
 #include "core/commands/objects/set_object_name_cmd.hpp"
 #include "core/commands/objects/set_object_tag_cmd.hpp"
-#include "core/commands/objects/set_object_visibility_cmd.hpp"
+#include "core/commands/objects/set_object_visible_cmd.hpp"
 #include "core/commands/properties/add_property_cmd.hpp"
 #include "core/commands/properties/change_property_type_cmd.hpp"
 #include "core/commands/properties/remove_property_cmd.hpp"

@@ -280,7 +280,7 @@ void Application::subscribe_to_events()
 
   d.sink<SetObjectNameEvent>().connect<&Self::on_set_object_name>(this);
   d.sink<MoveObjectEvent>().connect<&Self::on_move_object>(this);
-  d.sink<SetObjectVisibilityEvent>().connect<&Self::on_set_object_visibility>(this);
+  d.sink<SetObjectVisibleEvent>().connect<&Self::on_set_object_visible>(this);
   d.sink<SetObjectTagEvent>().connect<&Self::on_set_object_tag>(this);
   d.sink<SpawnObjectContextMenuEvent>().connect<&Self::on_spawn_object_context_menu>(this);
 
@@ -854,9 +854,11 @@ void Application::on_move_object(const MoveObjectEvent& event)
   }
 }
 
-void Application::on_set_object_visibility(const SetObjectVisibilityEvent& event)
+void Application::on_set_object_visible(const SetObjectVisibleEvent& event)
 {
-  _execute<SetObjectVisibilityCmd>(mData->model, event.id, event.visible);
+  if (auto* document = active_map_document()) {
+    document->set_object_visible(event.layer_id, event.object_id, event.visible);
+  }
 }
 
 void Application::on_set_object_tag(const SetObjectTagEvent& event)

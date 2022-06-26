@@ -92,6 +92,8 @@ class MapDocument final : public ADocument
                    const Vector2f& previous,
                    const Vector2f& updated);
 
+  void set_object_visible(const UUID& layerId, const UUID& objectId, bool visible);
+
   void set_name(std::string name) override;
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
