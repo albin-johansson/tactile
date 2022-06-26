@@ -369,9 +369,8 @@ void GroupLayer::move_layer_up(const UUID& id)
 
     if (index != 0) {
       std::iter_swap(iter, iter - 1);
+      valid = true;
     }
-
-    valid = true;
   };
 
   LayerMutatorVisitor visitor{id, op};
@@ -391,9 +390,8 @@ void GroupLayer::move_layer_down(const UUID& id)
 
     if (static_cast<usize>(index) != storage.size() - 1) {
       std::iter_swap(iter, iter + 1);
+      valid = true;
     }
-
-    valid = true;
   };
 
   LayerMutatorVisitor visitor{id, op};
