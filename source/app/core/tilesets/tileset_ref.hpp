@@ -25,6 +25,7 @@
 #include "core/common/uuid.hpp"
 #include "core/region.hpp"
 #include "core/tilesets/tileset.hpp"
+#include "core/viewport.hpp"
 
 namespace tactile::core {
 
@@ -36,6 +37,7 @@ struct TilesetRef final
   TileID          first_tile{};     /// The first associated tile ID (inclusive).
   TileID          last_tile{};      /// The last associated tile ID (inclusive).
   Maybe<Region>   selection;        /// Selected region.
+  core::Viewport  viewport;         /// Viewport in tileset dock.
   bool            embedded : 1 {};  /// Whether the tileset is embedded in the map.
 
   [[nodiscard]] auto is_single_tile_selected() const -> bool
