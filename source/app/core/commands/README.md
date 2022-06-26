@@ -14,8 +14,6 @@ The process of adding a new command to the application always involves a set of 
 
 1. Add an enumerator for the new command to the `CommandId` enum.
 2. Implement the new command class, make sure the `id()` function returns the newly added enumerator value.
-3. Most commands are executed as a result of an event, so make sure that `Application` has a function that handles the
-   event.
-4. Make sure the dispatcher connects the event to the appropriate `Application` function,
-   see `application_events.cpp`.
+3. Most commands are executed as a result of an event, often handled by the `Application` class.
+4. Make sure the dispatcher connects the event to the appropriate `Application` function.
 5. Implement the creation of the command in one of the document classes.
