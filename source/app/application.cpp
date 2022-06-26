@@ -111,11 +111,11 @@ struct WidgetShowState final
 struct Application::Data final
 {
   AppConfiguration* config{}; /* Non-owning */
-  entt::dispatcher dispatcher;
-  DocumentModel model;
-  TextureManager textures;
-  WidgetShowState widget_show_state;
-  bool reload_fonts : 1 {};
+  entt::dispatcher  dispatcher;
+  DocumentModel     model;
+  TextureManager    textures;
+  WidgetShowState   widget_show_state;
+  bool              reload_fonts : 1 {};
 };
 
 Application::Application(AppConfiguration* configuration)
