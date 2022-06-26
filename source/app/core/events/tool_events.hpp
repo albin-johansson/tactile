@@ -29,28 +29,19 @@
 
 namespace tactile {
 
-/// \addtogroup events
-/// \{
-
-/**
- * \brief Event that is emitted when a mouse tool is pressed.
- */
+/// Emitted when a mouse tool is pressed.
 struct ToolPressedEvent final
 {
   MouseInfo info;
 };
 
-/**
- * \brief Event that is emitted when a mouse tool is dragged.
- */
+/// Emitted when a mouse tool is dragged.
 struct ToolDraggedEvent final
 {
   MouseInfo info;
 };
 
-/**
- * \brief Event that is emitted when a mouse tool is released.
- */
+/// Emitted when a mouse tool is released.
 struct ToolReleasedEvent final
 {
   MouseInfo info;
@@ -76,7 +67,7 @@ struct StampSequenceEvent final
 
 struct SetStampRandomizerEvent final
 {
-  bool enabled{};  ///< Whether the randomizer mode is enabled.
+  bool enabled{};  /// Whether the randomizer mode is enabled.
 };
 
 struct EraserSequenceEvent final
@@ -92,9 +83,7 @@ struct FloodEvent final
   TileID  replacement{};
 };
 
-/**
- * \brief Emitted when a rectangle should be added to the current object layer.
- */
+/// Emitted when a rectangle should be added to an object layer.
 struct AddRectangleEvent final
 {
   UUID     layer_id{};
@@ -110,14 +99,11 @@ struct AddEllipseEvent final
   Vector2f size{};
 };
 
-/**
- * \brief Emitted when a point should be added to the current object layer.
- */
+/// Emitted when a point should be added to an object layer.
 struct AddPointEvent final
 {
+  UUID     layer_id{};
   Vector2f pos{};
 };
-
-/// \} End of group events
 
 }  // namespace tactile

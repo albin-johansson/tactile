@@ -23,35 +23,35 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/components/tools.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/viewport_system.hpp"
 
 namespace tactile {
 
-void PointTool::on_pressed(DocumentModel& model,
+void PointTool::on_pressed(DocumentModel&    model,
                            entt::dispatcher& dispatcher,
-                           const MouseInfo& mouse)
+                           const MouseInfo&  mouse)
 {
-  auto& registry = model.get_active_registry();
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
-      sys::is_object_layer_active(registry)) {
-    const auto ratio = sys::get_viewport_scaling_ratio(registry);
+      is_available(model)) {
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+    const auto& viewport = document.get_viewport();
+
+    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
     const auto pos = mouse.pos / ratio;
-    dispatcher.enqueue<AddPointEvent>(pos);
+
+    const auto layerId = map.active_layer_id().value();
+    dispatcher.enqueue<AddPointEvent>(layerId, pos);
   }
 }
 
 auto PointTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& registry = model.get_active_registry();
-  return sys::is_object_layer_active(registry);
-}
-
-auto PointTool::get_type() const -> ToolType
-{
-  return ToolType::Point;
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
+  return map.is_active_layer(LayerType::ObjectLayer);
 }
 
 }  // namespace tactile

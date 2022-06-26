@@ -85,6 +85,8 @@ class MapDocument final : public ADocument
 
   void add_ellipse(const UUID& layerId, const Vector2f& pos, const Vector2f& size);
 
+  void add_point(const UUID& layerId, const Vector2f& pos);
+
   void move_object(const UUID&     layerId,
                    const UUID&     objectId,
                    const Vector2f& previous,

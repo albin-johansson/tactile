@@ -40,6 +40,7 @@
 #include "core/commands/tools/bucket_tool_cmd.hpp"
 #include "core/commands/tools/ellipse_tool_cmd.hpp"
 #include "core/commands/tools/eraser_tool_cmd.hpp"
+#include "core/commands/tools/point_tool_cmd.hpp"
 #include "core/commands/tools/rectangle_tool_cmd.hpp"
 #include "core/commands/tools/stamp_tool_cmd.hpp"
 
@@ -160,6 +161,11 @@ void MapDocument::add_ellipse(const UUID&     layerId,
                               const Vector2f& size)
 {
   get_history().push<EllipseToolCmd>(this, layerId, pos, size);
+}
+
+void MapDocument::add_point(const UUID& layerId, const Vector2f& pos)
+{
+  get_history().push<PointToolCmd>(this, layerId, pos);
 }
 
 void MapDocument::move_object(const UUID&     layerId,

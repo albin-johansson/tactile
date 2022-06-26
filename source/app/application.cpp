@@ -574,7 +574,9 @@ void Application::on_add_ellipse(const AddEllipseEvent& event)
 
 void Application::on_add_point(const AddPointEvent& event)
 {
-  _execute<PointToolCmd>(mData->model, event.pos);
+  if (auto* document = active_map_document()) {
+    document->add_point(event.layer_id, event.pos);
+  }
 }
 
 void Application::on_update_viewport_limits(const UpdateViewportLimitsEvent& event)

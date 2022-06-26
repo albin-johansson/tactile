@@ -19,32 +19,47 @@
 
 #include "point_tool_cmd.hpp"
 
-#include "core/systems/layers/layer_system.hpp"
+#include <utility>  // move
+
+#include "core/documents/map_document.hpp"
+#include "core/layers/object_layer.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-PointToolCmd::PointToolCmd(RegistryRef registry, const Vector2f& pos)
+PointToolCmd::PointToolCmd(MapDocument*    document,
+                           const UUID&     layerId,
+                           const Vector2f& pos)
     : ACommand{"Add Point"}
-    , mRegistry{registry}
-    , mLayerId{sys::get_active_layer_id(registry).value()}
+    , mDocument{document}
+    , mLayerId{layerId}
     , mPos{pos}
-{}
+{
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
+  }
+}
 
 void PointToolCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  mSnapshot = sys::remove_object(registry, mObjectId.value());
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+
+  layer.remove_object(mObjectId.value());
+  mObjectId.reset();
 }
 
 void PointToolCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  if (mObjectId) {
-    sys::restore_object(registry, mSnapshot.value());
-  }
-  else {
-    mObjectId = sys::new_point_object(registry, mLayerId, mPos);
-  }
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+
+  core::Object object;
+  object.set_type(ObjectType::Point);
+  object.set_pos(mPos);
+
+  mObjectId = object.get_uuid();
+  layer.add_object(std::move(object));
 }
 
 }  // namespace tactile
