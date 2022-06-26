@@ -26,13 +26,13 @@ namespace tactile {
 class BucketTool final : public ATool
 {
  public:
-  void on_pressed(DocumentModel& model,
+  void on_pressed(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override;
+  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Bucket; }
 };
 
 }  // namespace tactile
