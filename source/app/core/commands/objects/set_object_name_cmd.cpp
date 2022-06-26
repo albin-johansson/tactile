@@ -21,35 +21,52 @@
 
 #include <utility>  // move
 
-#include "core/components/attributes.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/layers/object_layer.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-SetObjectNameCmd::SetObjectNameCmd(RegistryRef registry,
-                                   const ObjectID id,
-                                   std::string name)
-    : AObjectCommand{"Set Object Name", registry, id}
+SetObjectNameCmd::SetObjectNameCmd(MapDocument* document,
+                                   const UUID&  layerId,
+                                   const UUID&  objectId,
+                                   std::string  name)
+    : ACommand{"Set Object Name"}
+    , mDocument{document}
+    , mLayerId{layerId}
+    , mObjectId{objectId}
     , mNewName{std::move(name)}
-{}
+{
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
+  }
+}
 
 void SetObjectNameCmd::undo()
 {
-  auto& context = target_object_context();
-  context.name = mOldName.value();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+  auto& object = layer.get_object(mObjectId);
+
+  object.set_name(mOldName.value());
+  mOldName.reset();
 }
 
 void SetObjectNameCmd::redo()
 {
-  auto& context = target_object_context();
-  mOldName = context.name;
-  context.name = mNewName;
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+  auto& object = layer.get_object(mObjectId);
+
+  mOldName = object.get_name();
+  object.set_name(mNewName);
 }
 
 auto SetObjectNameCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const SetObjectNameCmd&>(cmd);
-    if (target_object_id() == other.target_object_id()) {
+    if (mLayerId == other.mLayerId && mObjectId == other.mObjectId) {
       mNewName = other.mNewName;
       return true;
     }

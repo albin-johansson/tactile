@@ -37,6 +37,7 @@
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"
 #include "core/commands/objects/move_object_cmd.hpp"
+#include "core/commands/objects/set_object_name_cmd.hpp"
 #include "core/commands/objects/set_object_tag_cmd.hpp"
 #include "core/commands/objects/set_object_visible_cmd.hpp"
 #include "core/commands/tools/bucket_tool_cmd.hpp"
@@ -183,6 +184,13 @@ void MapDocument::set_object_visible(const UUID& layerId,
                                      const bool  visible)
 {
   get_history().push<SetObjectVisibleCmd>(this, layerId, objectId, visible);
+}
+
+void MapDocument::set_object_name(const UUID& layerId,
+                                  const UUID& objectId,
+                                  std::string name)
+{
+  get_history().push<SetObjectNameCmd>(this, layerId, objectId, std::move(name));
 }
 
 void MapDocument::set_object_tag(const UUID& layerId,

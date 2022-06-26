@@ -21,17 +21,21 @@
 
 #include <string>  // string
 
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
+#include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 #include "object_command.hpp"
 
 namespace tactile {
 
-class SetObjectNameCmd final : public AObjectCommand
+class SetObjectNameCmd final : public ACommand
 {
  public:
-  SetObjectNameCmd(RegistryRef registry, ObjectID id, std::string name);
+  SetObjectNameCmd(MapDocument* document,
+                   const UUID&  layerId,
+                   const UUID&  objectId,
+                   std::string  name);
 
   void undo() override;
 
@@ -45,7 +49,10 @@ class SetObjectNameCmd final : public AObjectCommand
   }
 
  private:
-  std::string mNewName;
+  MapDocument*       mDocument{};
+  UUID               mLayerId{};
+  UUID               mObjectId{};
+  std::string        mNewName;
   Maybe<std::string> mOldName;
 };
 

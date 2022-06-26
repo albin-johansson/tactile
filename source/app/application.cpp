@@ -844,7 +844,9 @@ void Application::on_rename_layer(const RenameLayerEvent& event)
 
 void Application::on_set_object_name(const SetObjectNameEvent& event)
 {
-  _execute<SetObjectNameCmd>(mData->model, event.id, event.name);
+  if (auto* map = active_map_document()) {
+    map->set_object_name(event.layer_id, event.object_id, event.name);
+  }
 }
 
 void Application::on_move_object(const MoveObjectEvent& event)
