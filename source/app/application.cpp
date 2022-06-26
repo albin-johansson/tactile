@@ -701,8 +701,14 @@ void Application::on_select_tileset(const SelectTilesetEvent& event)
 
 void Application::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
 {
-  auto& registry = mData->model.get_active_registry();
-  sys::update_tileset_selection(registry, event.selection);
+  if (auto* document = active_map_document()) {
+    auto& tilesets = document->get_map().get_tilesets();
+
+    const auto tilesetId = tilesets.active_tileset_id().value();
+    auto&      tilesetRef = tilesets.get_ref(tilesetId);
+
+    tilesetRef.selection = event.selection;
+  }
 }
 
 void Application::on_set_tileset_name(const SetTilesetNameEvent& event)
