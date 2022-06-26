@@ -289,8 +289,11 @@ void GroupLayer::each(const SimpleVisitor& visitor) const
   struct Visitor final : IConstLayerVisitor
   {
     const SimpleVisitor* func{};  // Pointer to avoid copying the function object
+
     void visit(const TileLayer& layer) override { (*func)(&layer); }
+
     void visit(const ObjectLayer& layer) override { (*func)(&layer); }
+
     void visit(const GroupLayer& layer) override { (*func)(&layer); }
   };
 
