@@ -561,7 +561,9 @@ void Application::on_add_rectangle(const AddRectangleEvent& event)
 
 void Application::on_add_ellipse(const AddEllipseEvent& event)
 {
-  _execute<EllipseToolCmd>(mData->model, event.pos, event.size);
+  if (auto* document = active_map_document()) {
+    document->add_ellipse(event.layer_id, event.pos, event.size);
+  }
 }
 
 void Application::on_add_point(const AddPointEvent& event)
