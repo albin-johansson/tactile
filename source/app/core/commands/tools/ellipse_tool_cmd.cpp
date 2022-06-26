@@ -19,35 +19,52 @@
 
 #include "ellipse_tool_cmd.hpp"
 
-#include "core/systems/layers/layer_system.hpp"
+#include <utility>  // move
+
+#include "core/documents/map_document.hpp"
+#include "core/layers/object.hpp"
+#include "core/layers/object_layer.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-EllipseToolCmd::EllipseToolCmd(RegistryRef registry,
+EllipseToolCmd::EllipseToolCmd(MapDocument*    document,
+                               const UUID&     layerId,
                                const Vector2f& pos,
                                const Vector2f& size)
     : ACommand{"Add Ellipse"}
-    , mRegistry{registry}
-    , mLayerId{sys::get_active_layer_id(registry).value()}
+    , mDocument{document}
+    , mLayerId{layerId}
     , mPos{pos}
     , mSize{size}
-{}
+{
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
+  }
+}
 
 void EllipseToolCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  mSnapshot = sys::remove_object(registry, mObjectId.value());
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+
+  layer.remove_object(mObjectId.value());
+  mObjectId.reset();
 }
 
 void EllipseToolCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  if (mObjectId) {
-    sys::restore_object(registry, mSnapshot.value());
-  }
-  else {
-    mObjectId = sys::new_ellipse_object(registry, mLayerId, mPos, mSize);
-  }
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+
+  core::Object object;
+  mObjectId = object.get_uuid();
+
+  object.set_type(ObjectType::Ellipse);
+  object.set_pos(mPos);
+  object.set_size(mSize);
+
+  layer.add_object(std::move(object));
 }
 
 }  // namespace tactile

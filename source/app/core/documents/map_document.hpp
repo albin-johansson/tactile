@@ -72,6 +72,8 @@ class MapDocument final : public ADocument
 
   void set_layer_visible(const UUID& layerId, bool visible);
 
+  void add_ellipse(const UUID& layerId, const Vector2f& pos, const Vector2f& size);
+
   void move_object(const UUID&     layerId,
                    const UUID&     objectId,
                    const Vector2f& previous,

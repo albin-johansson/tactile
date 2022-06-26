@@ -37,6 +37,7 @@
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"
 #include "core/commands/objects/move_object_cmd.hpp"
+#include "core/commands/tools/ellipse_tool_cmd.hpp"
 
 namespace tactile {
 
@@ -119,6 +120,13 @@ void MapDocument::set_layer_opacity(const UUID& layerId, const float opacity)
 void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
 {
   get_history().push<SetLayerVisibilityCmd>(this, layerId, visible);
+}
+
+void MapDocument::add_ellipse(const UUID&     layerId,
+                              const Vector2f& pos,
+                              const Vector2f& size)
+{
+  get_history().push<EllipseToolCmd>(this, layerId, pos, size);
 }
 
 void MapDocument::move_object(const UUID&     layerId,

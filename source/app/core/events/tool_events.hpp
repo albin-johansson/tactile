@@ -22,6 +22,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
 #include "core/common/tile_cache.hpp"
+#include "core/common/uuid.hpp"
 #include "core/mouse_info.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tools/tool_type.hpp"
@@ -97,11 +98,10 @@ struct AddRectangleEvent final
   Vector2f size{};
 };
 
-/**
- * \brief Emitted when an ellipse should be added to the current object layer.
- */
+/// Emitted when an ellipse should be added to an object layer.
 struct AddEllipseEvent final
 {
+  UUID     layer_id{};
   Vector2f pos{};
   Vector2f size{};
 };

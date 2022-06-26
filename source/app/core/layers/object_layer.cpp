@@ -67,6 +67,16 @@ void ObjectLayer::add_object(Object object)
   mObjects[id] = std::move(object);
 }
 
+void ObjectLayer::remove_object(const UUID& id)
+{
+  if (const auto iter = mObjects.find(id); iter != mObjects.end()) {
+    mObjects.erase(iter);
+  }
+  else {
+    throw TactileError{"Invalid object identifier!"};
+  }
+}
+
 void ObjectLayer::reserve_objects(const usize n)
 {
   mObjects.reserve(n);

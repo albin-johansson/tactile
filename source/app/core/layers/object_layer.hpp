@@ -49,6 +49,8 @@ class ObjectLayer final : public ILayer
 
   void add_object(Object object);
 
+  void remove_object(const UUID& id);
+
   void reserve_objects(usize n);
 
   void select_object(const Maybe<UUID>& id);

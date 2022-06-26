@@ -18,6 +18,9 @@
  */
 
 #pragma once
+
+#include "core/common/maybe.hpp"
+#include "core/components/tools.hpp"
 #include "core/tools/tool.hpp"
 
 namespace tactile {
@@ -26,30 +29,32 @@ class EllipseTool final : public ATool
 {
  public:
   void draw_gizmos(const DocumentModel& model,
-                   IRenderer& renderer,
-                   const MouseInfo& mouse) const override;
+                   IRenderer&           renderer,
+                   const MouseInfo&     mouse) const override;
 
   void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
   void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel& model,
+  void on_pressed(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_dragged(DocumentModel& model,
+  void on_dragged(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_released(DocumentModel& model,
+  void on_released(DocumentModel&    model,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
+                   const MouseInfo&  mouse) override;
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override;
+  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Ellipse; }
 
  private:
+  Maybe<comp::CurrentEllipseStroke> mStroke;
+
   void maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher);
 };
 

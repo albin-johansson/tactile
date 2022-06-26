@@ -19,30 +19,28 @@
 
 #include "ellipse_tool.hpp"
 
-#include <cmath>  // abs
-
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <glm/common.hpp>
 
 #include "core/common/math.hpp"
-#include "core/components/tools.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
 #include "core/renderer.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/viewport_system.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 
 void EllipseTool::draw_gizmos(const DocumentModel& model,
-                              IRenderer& renderer,
+                              IRenderer&           renderer,
                               const MouseInfo&) const
 {
-  const auto& registry = model.get_active_registry();
-  if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
-    const auto radius = stroke->current - stroke->start;
-    const auto center = stroke->start + radius;
+  if (mStroke) {
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+
+    const auto radius = mStroke->current - mStroke->start;
+    const auto center = mStroke->start + radius;
 
     renderer.draw_ellipse(center + Vector2f{1, 1}, radius, cen::colors::black);
     renderer.draw_ellipse(center, radius, cen::colors::yellow);
@@ -63,10 +61,9 @@ void EllipseTool::on_pressed(DocumentModel& model,
                              entt::dispatcher&,
                              const MouseInfo& mouse)
 {
-  auto& registry = model.get_active_registry();
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
-      sys::is_object_layer_active(registry)) {
-    auto& stroke = registry.ctx().emplace<comp::CurrentEllipseStroke>();
+      is_available(model)) {
+    auto& stroke = mStroke.emplace();
     stroke.start = mouse.pos;
     stroke.current = stroke.start;
   }
@@ -76,44 +73,33 @@ void EllipseTool::on_dragged(DocumentModel& model,
                              entt::dispatcher&,
                              const MouseInfo& mouse)
 {
-  auto& registry = model.get_active_registry();
-  if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
-    if (auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
-      stroke->current = mouse.pos;
-    }
+  if (mStroke && mouse.button == cen::mouse_button::left && is_available(model)) {
+    mStroke->current = mouse.pos;
   }
 }
 
-void EllipseTool::on_released(DocumentModel& model,
+void EllipseTool::on_released(DocumentModel&    model,
                               entt::dispatcher& dispatcher,
-                              const MouseInfo& mouse)
+                              const MouseInfo&  mouse)
 {
-  auto& registry = model.get_active_registry();
-  if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
+  if (mouse.button == cen::mouse_button::left && is_available(model)) {
     maybe_emit_event(model, dispatcher);
   }
 }
 
-auto EllipseTool::is_available(const DocumentModel& model) const -> bool
-{
-  const auto& registry = model.get_active_registry();
-  return sys::is_object_layer_active(registry);
-}
-
-auto EllipseTool::get_type() const -> ToolType
-{
-  return ToolType::Ellipse;
-}
-
 void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& registry = model.get_active_registry();
-  auto& ctx = registry.ctx();
-  if (const auto* stroke = ctx.find<comp::CurrentEllipseStroke>()) {
-    const auto ratio = sys::get_viewport_scaling_ratio(registry);
+  TACTILE_ASSERT(is_available(model));
 
-    const auto radius = (stroke->current - stroke->start) / ratio;
-    auto pos = stroke->start / ratio;
+  if (mStroke) {
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+    const auto& viewport = document.get_viewport();
+
+    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
+
+    const auto radius = (mStroke->current - mStroke->start) / ratio;
+    auto       pos = mStroke->start / ratio;
 
     if (radius.x < 0) {
       pos.x += radius.x * 2.0f;
@@ -124,12 +110,20 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
     }
 
     if (radius.x != 0 && radius.y != 0) {
+      const auto layerId = map.active_layer_id().value();
       const auto diameter = glm::abs(radius) * 2.0f;
-      dispatcher.enqueue<AddEllipseEvent>(pos, diameter);
+      dispatcher.enqueue<AddEllipseEvent>(layerId, pos, diameter);
     }
 
-    ctx.erase<comp::CurrentEllipseStroke>();
+    mStroke.reset();
   }
+}
+
+auto EllipseTool::is_available(const DocumentModel& model) const -> bool
+{
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
+  return map.is_active_layer(LayerType::ObjectLayer);
 }
 
 }  // namespace tactile
