@@ -24,7 +24,6 @@
 #include <vector>      // vector
 
 #include <boost/uuid/uuid_hash.hpp>
-#include <entt/fwd.hpp>
 
 #include "core/common/associative.hpp"
 #include "core/common/identifiers.hpp"
@@ -66,22 +65,11 @@ class DocumentModel final
    */
   auto add_map(const Vector2i& tileSize, usize rows, usize columns) -> UUID;
 
-  /**
-   * Creates a tileset document and adds it to the active map document.
-   *
-   * \param texture the tileset texture.
-   * \param tileSize the logical tileset tile size.
-   *
-   * \return the tileset document ID.
-   *
-   * \see AddTilesetCmd
-   */
-  auto add_tileset(const comp::Texture& texture, const Vector2i& tileSize) -> UUID;
+  /// Creates a tileset document and adds it to the active map document.
+  auto add_tileset(const core::TilesetInfo& info) -> UUID;
 
   /// Restores a tileset, intended to be used after parsing maps.
-  auto restore_tileset(const comp::Texture& texture,
-                       const Vector2i& tileSize,
-                       TileID firstTile) -> UUID;
+  auto restore_tileset(TileID firstTileId, const core::TilesetInfo& info) -> UUID;
 
   /// Makes a specific document active.
   void select_document(const UUID& id);
@@ -119,20 +107,18 @@ class DocumentModel final
   [[nodiscard]] auto active_document() const -> const ADocument*;
 
   [[nodiscard]] auto active_map() -> MapDocument*;
+  [[nodiscard]] auto active_map() const -> const MapDocument*;
 
-  /// Returns the active document.
-  [[nodiscard]] auto get_active_document() const -> const ADocument&;
+  [[nodiscard]] auto active_tileset() -> TilesetDocument*;
+  [[nodiscard]] auto active_tileset() const -> const TilesetDocument*;
 
-  /// Returns a pointer to the registry of the active document, if there is one.
-  [[nodiscard]] auto active_registry() -> entt::registry*;
-  [[nodiscard]] auto active_registry() const -> const entt::registry*;
+  [[nodiscard]] auto require_active_document() const -> const ADocument&;
 
-  /// Returns the registry of a specific document.
-  [[nodiscard]] auto get_registry(const UUID& id) const -> const entt::registry&;
+  [[nodiscard]] auto require_active_map() -> MapDocument&;
+  [[nodiscard]] auto require_active_map() const -> const MapDocument&;
 
-  /// Returns the registry of the active document.
-  [[nodiscard]] auto get_active_registry() -> entt::registry&;
-  [[nodiscard]] auto get_active_registry() const -> const entt::registry&;
+  [[nodiscard]] auto require_active_tileset() -> TilesetDocument&;
+  [[nodiscard]] auto require_active_tileset() const -> const TilesetDocument&;
 
   /// Indicates whether a document is open.
   [[nodiscard]] auto is_open(const UUID& id) const -> bool;
@@ -155,11 +141,11 @@ class DocumentModel final
   [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
  private:
-  HashMap<UUID, Shared<ADocument>> mDocuments;  // All _loaded_ documents
-  HashMap<UUID, Shared<MapDocument>> mMaps;
+  HashMap<UUID, Shared<ADocument>>       mDocuments;  /// All _loaded_ documents
+  HashMap<UUID, Shared<MapDocument>>     mMaps;
   HashMap<UUID, Shared<TilesetDocument>> mTilesets;
-  std::vector<UUID> mOpenDocuments;  // All _open_ documents in the editor
-  Maybe<UUID> mActiveDocument;       // ID of the active document.
+  std::vector<UUID> mOpenDocuments;   /// All _open_ documents in the editor
+  Maybe<UUID>       mActiveDocument;  /// ID of the active document.
 
   void register_map(Shared<MapDocument> document);
   void register_tileset(Shared<TilesetDocument> document);

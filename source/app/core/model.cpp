@@ -31,6 +31,7 @@
 #include "core/documents/tileset_document.hpp"
 #include "core/systems/animation_system.hpp"
 #include "core/systems/tilesets/tileset_system.hpp"
+#include "core/tilesets/tileset_info.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
@@ -60,23 +61,25 @@ auto DocumentModel::add_map(const Vector2i& tileSize,
   TACTILE_ASSERT(tileSize.x > 0);
   TACTILE_ASSERT(tileSize.y > 0);
 
-  auto map = std::make_shared<MapDocument>(tileSize, rows, columns);
+  auto  mapDocument = std::make_shared<MapDocument>(tileSize, rows, columns);
+  auto& map = mapDocument->get_map();
 
-  register_map(map);
-  mOpenDocuments.push_back(map->id());
+  register_map(mapDocument);
+  mOpenDocuments.push_back(map.get_uuid());
 
-  return map->id();
+  return map.get_uuid();
 }
 
-auto DocumentModel::add_tileset(const comp::Texture& texture, const Vector2i& tileSize)
-    -> UUID
+auto DocumentModel::add_tileset(const core::TilesetInfo& info) -> UUID
 {
   if (mActiveDocument) {
-    auto map = get_map(*mActiveDocument);
+    auto  mapDocument = get_map(*mActiveDocument);
+    auto& map = mapDocument->get_map();
+
     const auto tilesetId = make_uuid();
 
-    auto& commands = map->get_history();
-    commands.push<AddTilesetCmd>(this, map->id(), tilesetId, texture, tileSize);
+    auto& commands = mapDocument->get_history();
+    commands.push<AddTilesetCmd>(this, map.get_uuid(), tilesetId, info);
 
     return tilesetId;
   }
@@ -85,20 +88,20 @@ auto DocumentModel::add_tileset(const comp::Texture& texture, const Vector2i& ti
   }
 }
 
-auto DocumentModel::restore_tileset(const comp::Texture& texture,
-                                    const Vector2i& tileSize,
-                                    const TileID firstTile) -> UUID
+auto DocumentModel::restore_tileset(const TileID             firstTileId,
+                                    const core::TilesetInfo& info) -> UUID
 {
   if (mActiveDocument) {
-    auto map = get_map(*mActiveDocument);
+    auto  mapDocument = get_map(*mActiveDocument);
+    auto& map = mapDocument->get_map();
 
-    const auto tilesetId = make_uuid();
-    auto tileset = std::make_shared<TilesetDocument>(tilesetId, texture, tileSize);
+    auto tilesetDocument = std::make_shared<TilesetDocument>(info);
+    register_tileset(tilesetDocument);
 
-    register_tileset(tileset);
+    auto       tileset = tilesetDocument->get_tileset();
+    const auto tilesetId = tileset->get_uuid();
 
-    auto& mapRegistry = map->get_registry();
-    sys::attach_tileset(mapRegistry, tilesetId, tileset->info(), firstTile);
+    map.attach_tileset(std::move(tileset), firstTileId, false);  // TODO embedded option
 
     return tilesetId;
   }
@@ -263,58 +266,86 @@ auto DocumentModel::active_map() -> MapDocument*
   return nullptr;
 }
 
-auto DocumentModel::get_active_document() const -> const ADocument&
+auto DocumentModel::active_map() const -> const MapDocument*
+{
+  if (mActiveDocument) {
+    if (const auto iter = mMaps.find(*mActiveDocument); iter != mMaps.end()) {
+      return iter->second.get();
+    }
+  }
+
+  return nullptr;
+}
+
+auto DocumentModel::active_tileset() -> TilesetDocument*
+{
+  if (mActiveDocument) {
+    if (const auto iter = mTilesets.find(*mActiveDocument); iter != mTilesets.end()) {
+      return iter->second.get();
+    }
+  }
+
+  return nullptr;
+}
+
+auto DocumentModel::active_tileset() const -> const TilesetDocument*
+{
+  if (mActiveDocument) {
+    if (const auto iter = mTilesets.find(*mActiveDocument); iter != mTilesets.end()) {
+      return iter->second.get();
+    }
+  }
+
+  return nullptr;
+}
+
+auto DocumentModel::require_active_document() const -> const ADocument&
 {
   if (const auto* document = active_document()) {
     return *document;
   }
   else {
-    throw TactileError{"No active document!"};
+    throw TactileError{"No document was active!"};
   }
 }
 
-auto DocumentModel::active_registry() -> entt::registry*
+auto DocumentModel::require_active_map() -> MapDocument&
 {
-  if (auto* document = active_document()) {
-    return &document->get_registry();
+  if (auto* document = active_map()) {
+    return *document;
   }
   else {
-    return nullptr;
+    throw TactileError{"No map document was active!"};
   }
 }
 
-auto DocumentModel::active_registry() const -> const entt::registry*
+auto DocumentModel::require_active_map() const -> const MapDocument&
 {
-  if (const auto* document = active_document()) {
-    return &document->get_registry();
+  if (const auto* document = active_map()) {
+    return *document;
   }
   else {
-    return nullptr;
+    throw TactileError{"No map document was active!"};
   }
 }
 
-auto DocumentModel::get_registry(const UUID& id) const -> const entt::registry&
+auto DocumentModel::require_active_tileset() -> TilesetDocument&
 {
-  return view_document(id).get_registry();
-}
-
-auto DocumentModel::get_active_registry() -> entt::registry&
-{
-  if (auto* registry = active_registry()) {
-    return *registry;
+  if (auto* document = active_tileset()) {
+    return *document;
   }
   else {
-    throw TactileError{"No active registry!"};
+    throw TactileError{"No tileset document was active!"};
   }
 }
 
-auto DocumentModel::get_active_registry() const -> const entt::registry&
+auto DocumentModel::require_active_tileset() const -> const TilesetDocument&
 {
-  if (const auto* registry = active_registry()) {
-    return *registry;
+  if (const auto* document = active_tileset()) {
+    return *document;
   }
   else {
-    throw TactileError{"No active registry!"};
+    throw TactileError{"No tileset document was active!"};
   }
 }
 
@@ -369,14 +400,16 @@ auto DocumentModel::view_tileset(const UUID& id) const -> const TilesetDocument&
 
 void DocumentModel::register_map(Shared<MapDocument> document)
 {
-  mDocuments[document->id()] = document;
-  mMaps[document->id()] = std::move(document);
+  const auto id = document->get_map().get_uuid();
+  mDocuments[id] = document;
+  mMaps[id] = std::move(document);
 }
 
 void DocumentModel::register_tileset(Shared<TilesetDocument> document)
 {
-  mDocuments[document->id()] = document;
-  mTilesets[document->id()] = std::move(document);
+  const auto id = document->view_tileset().get_uuid();
+  mDocuments[id] = document;
+  mTilesets[id] = std::move(document);
 }
 
 auto DocumentModel::unregister_map(const UUID& id) -> Shared<MapDocument>
