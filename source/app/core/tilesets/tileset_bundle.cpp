@@ -100,6 +100,11 @@ auto TilesetBundle::is_valid_tile(const TileID id) const -> bool
   return mTileCache.contains(id);
 }
 
+auto TilesetBundle::get_ref(const UUID& id) -> TilesetRef&
+{
+  return lookup_in(mRefs, id);
+}
+
 auto TilesetBundle::get_ref(const UUID& id) const -> const TilesetRef&
 {
   return lookup_in(mRefs, id);

@@ -51,6 +51,7 @@ class TilesetBundle final
   /// Indicates whether there is a tileset with the specified tile identifier.
   [[nodiscard]] auto is_valid_tile(TileID id) const -> bool;
 
+  [[nodiscard]] auto get_ref(const UUID& id) -> TilesetRef&;
   [[nodiscard]] auto get_ref(const UUID& id) const -> const TilesetRef&;
 
   [[nodiscard]] auto size() const -> usize;
