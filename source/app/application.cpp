@@ -836,7 +836,7 @@ void Application::on_set_object_name(const SetObjectNameEvent& event)
 void Application::on_move_object(const MoveObjectEvent& event)
 {
   if (auto* map = active_map_document()) {
-    map->move_object(event.id, event.previous, event.updated);
+    map->move_object(event.layer_id, event.object_id, event.previous, event.updated);
   }
 }
 
