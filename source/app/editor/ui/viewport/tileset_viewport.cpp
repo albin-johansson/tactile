@@ -22,7 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
-#include "core/components/viewport.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "editor/ui/common/mouse_tracker.hpp"
 #include "editor/ui/rendering/graphics.hpp"
@@ -32,12 +31,12 @@
 
 namespace tactile::ui {
 
-void show_tileset_viewport(const TilesetDocument& tileset, entt::dispatcher& dispatcher)
+void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& dispatcher)
 {
-  const auto& viewport = tileset.viewport();
-  const auto& info = tileset.info();
+  const auto& tileset = document.view_tileset();
+  const auto& viewport = document.get_viewport();
 
-  const auto renderInfo = get_render_info(viewport, info);
+  const auto renderInfo = get_render_info(viewport, tileset);
   update_viewport_offset(renderInfo.canvas_br - renderInfo.canvas_tl, dispatcher);
 
   GraphicsCtx graphics{renderInfo};
@@ -46,7 +45,7 @@ void show_tileset_viewport(const TilesetDocument& tileset, entt::dispatcher& dis
   graphics.clear();
 
   graphics.push_clip();
-  render_tileset(graphics, tileset);
+  render_tileset(graphics, document);
   graphics.pop_clip();
 }
 

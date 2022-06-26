@@ -25,6 +25,6 @@
 
 namespace tactile::ui {
 
-void show_tileset_viewport(const TilesetDocument& tileset, entt::dispatcher& dispatcher);
+void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui
