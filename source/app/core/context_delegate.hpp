@@ -21,6 +21,7 @@
 
 #include <string>  // string
 
+#include "core/common/macros.hpp"
 #include "core/common/uuid.hpp"
 #include "core/components/component_bundle.hpp"
 #include "core/property_bundle.hpp"
@@ -31,6 +32,9 @@ class ContextDelegate final
 {
  public:
   explicit ContextDelegate(const UUID& id);
+
+  TACTILE_DEFAULT_COPY(ContextDelegate);
+  TACTILE_DEFAULT_MOVE(ContextDelegate);
 
   ContextDelegate() : ContextDelegate{make_uuid()} {}
 
