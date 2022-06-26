@@ -33,7 +33,7 @@ Tileset::Tileset(const UUID& id, const TilesetInfo& info)
     , mTileSize{info.tile_size}
     , mRowCount{mTextureSize.y / mTileSize.y}
     , mColumnCount{mTextureSize.x / mTileSize.x}
-    , mUvSize{Vector2f{mTileSize} / Vector2f{mTileSize}}
+    , mUvSize{Vector2f{mTileSize} / Vector2f{mTextureSize}}
     , mTexturePath{std::move(info.texture_path)}
 {}
 
