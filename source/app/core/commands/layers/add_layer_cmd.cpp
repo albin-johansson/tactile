@@ -48,7 +48,8 @@ void AddLayerCmd::redo()
     map.add_layer(mLayer, mLayer->get_parent());
   }
   else {
-    const auto  activeLayerId = map.active_layer_id();
+    const auto activeLayerId =
+        map.is_active_layer(LayerType::GroupLayer) ? map.active_layer_id() : nothing;
     Maybe<UUID> id;
 
     switch (mLayerType) {
