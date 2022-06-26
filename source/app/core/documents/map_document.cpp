@@ -39,6 +39,7 @@
 #include "core/commands/objects/move_object_cmd.hpp"
 #include "core/commands/tools/bucket_tool_cmd.hpp"
 #include "core/commands/tools/ellipse_tool_cmd.hpp"
+#include "core/commands/tools/eraser_tool_cmd.hpp"
 #include "core/commands/tools/stamp_tool_cmd.hpp"
 
 namespace tactile {
@@ -132,6 +133,11 @@ void MapDocument::register_stamp_sequence(const UUID& layerId,
                                                 layerId,
                                                 std::move(previous),
                                                 std::move(sequence));
+}
+
+void MapDocument::register_eraser_sequence(const UUID& layerId, TileCache previous)
+{
+  get_history().push_without_redo<EraserToolCmd>(this, layerId, std::move(previous));
 }
 
 void MapDocument::flood(const UUID&    layerId,

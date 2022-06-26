@@ -24,33 +24,30 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/common/ecs.hpp"
-#include "core/components/layers.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/events/tool_events.hpp"
+#include "core/layers/tile_layer.hpp"
 #include "core/model.hpp"
 #include "core/mouse_info.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
 
 namespace tactile {
 
-void EraserTool::on_disabled(DocumentModel&, entt::dispatcher& dispatcher)
+void EraserTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void EraserTool::on_exited(DocumentModel&, entt::dispatcher& dispatcher)
+void EraserTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
 void EraserTool::on_pressed(DocumentModel& model,
                             entt::dispatcher&,
                             const MouseInfo& mouse)
 {
-  auto& registry = model.get_active_registry();
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
-      sys::is_tile_layer_active(registry)) {
+      is_available(model)) {
     mPrevState.clear();
     update_sequence(model, mouse.position_in_viewport);
   }
@@ -60,9 +57,8 @@ void EraserTool::on_dragged(DocumentModel& model,
                             entt::dispatcher&,
                             const MouseInfo& mouse)
 {
-  auto& registry = model.get_active_registry();
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
-      sys::is_tile_layer_active(registry)) {
+      is_available(model)) {
     update_sequence(model, mouse.position_in_viewport);
   }
 }
@@ -71,41 +67,39 @@ void EraserTool::on_released(DocumentModel& model,
                              entt::dispatcher& dispatcher,
                              const MouseInfo& mouse)
 {
-  auto& registry = model.get_active_registry();
-  if (mouse.button == cen::mouse_button::left && sys::is_tile_layer_active(registry)) {
-    maybe_emit_event(dispatcher);
+  if (mouse.button == cen::mouse_button::left && is_available(model)) {
+    maybe_emit_event(model, dispatcher);
   }
 }
 
 auto EraserTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& registry = model.get_active_registry();
-  return sys::is_tile_layer_active(registry);
-}
-
-auto EraserTool::get_type() const -> ToolType
-{
-  return ToolType::Eraser;
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
+  return map.is_active_layer(LayerType::TileLayer);
 }
 
 void EraserTool::update_sequence(DocumentModel& model, const TilePos& cursor)
 {
-  auto& registry = model.get_active_registry();
+  auto& document = model.require_active_map();
+  auto& map = document.get_map();
 
-  const auto entity = sys::get_active_layer(registry);
-  auto& layer = checked_get<comp::TileLayer>(registry, entity);
+  const auto layerId = map.active_layer_id().value();
+  auto&      layer = map.view_tile_layer(layerId);
 
-  if (!mPrevState.contains(cursor)) {
-    mPrevState.emplace(cursor, sys::get_tile(layer, cursor));
-  }
-
-  sys::set_tile(layer, cursor, empty_tile);
+  mPrevState.try_emplace(cursor, layer.tile_at(cursor));
+  layer.set_tile(cursor, empty_tile);
 }
 
-void EraserTool::maybe_emit_event(entt::dispatcher& dispatcher)
+void EraserTool::maybe_emit_event(const DocumentModel& model,
+                                  entt::dispatcher&    dispatcher)
 {
   if (!mPrevState.empty()) {
-    dispatcher.enqueue<EraserSequenceEvent>(std::move(mPrevState));
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+    const auto  layerId = map.active_layer_id().value();
+
+    dispatcher.enqueue<EraserSequenceEvent>(layerId, std::move(mPrevState));
     mPrevState.clear();
   }
 }

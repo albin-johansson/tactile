@@ -77,6 +77,8 @@ class MapDocument final : public ADocument
                                TileCache   previous,
                                TileCache   sequence);
 
+  void register_eraser_sequence(const UUID& layerId, TileCache previous);
+
   void flood(const UUID& layerId, const TilePos& origin, TileID replacement);
 
   void add_ellipse(const UUID& layerId, const Vector2f& pos, const Vector2f& size);

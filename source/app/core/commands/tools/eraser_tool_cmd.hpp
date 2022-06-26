@@ -20,20 +20,16 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
-
-/// \addtogroup commands
-/// \{
 
 class EraserToolCmd final : public ACommand
 {
  public:
-  EraserToolCmd(RegistryRef registry, TileCache&& oldState);
+  EraserToolCmd(MapDocument* document, const UUID& layerId, TileCache oldState);
 
   void undo() override;
 
@@ -45,11 +41,9 @@ class EraserToolCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  UUID mLayerId{};
-  TileCache mOldState;
+  MapDocument* mDocument{};
+  UUID         mLayerId{};
+  TileCache    mOldState;
 };
-
-/// \} End of group commands
 
 }  // namespace tactile

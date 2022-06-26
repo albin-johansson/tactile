@@ -81,6 +81,7 @@ struct SetStampRandomizerEvent final
 
 struct EraserSequenceEvent final
 {
+  UUID      layer_id{};
   TileCache old_state;
 };
 

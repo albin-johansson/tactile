@@ -21,42 +21,39 @@
 
 #include <utility>  // move
 
-#include "core/common/ecs.hpp"
-#include "core/components/layers.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
-#include "misc/assert.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/layers/tile_layer.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-EraserToolCmd::EraserToolCmd(RegistryRef registry, TileCache&& oldState)
+EraserToolCmd::EraserToolCmd(MapDocument* document,
+                             const UUID&  layerId,
+                             TileCache    oldState)
     : ACommand{"Eraser Sequence"}
-    , mRegistry{registry}
-    , mLayerId{sys::get_active_layer_id(registry).value()}
+    , mDocument{document}
+    , mLayerId{layerId}
     , mOldState{std::move(oldState)}
-{}
+{
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
+  }
+}
 
 void EraserToolCmd::undo()
 {
-  auto& registry = mRegistry.get();
-
-  const auto layerEntity = sys::find_context(registry, mLayerId);
-  auto& layer = checked_get<comp::TileLayer>(registry, layerEntity);
-
-  sys::set_tiles(layer, mOldState);
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_tile_layer(mLayerId);
+  layer.set_tiles(mOldState);
 }
 
 void EraserToolCmd::redo()
 {
-  auto& registry = mRegistry.get();
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_tile_layer(mLayerId);
 
-  const auto entity = sys::find_context(registry, mLayerId);
-  auto& matrix = checked_get<comp::TileLayer>(registry, entity).matrix;
   for (const auto& [position, _] : mOldState) {
-    TACTILE_ASSERT(position.urow() < matrix.size());
-    TACTILE_ASSERT(position.ucol() < matrix.front().size());
-    matrix[position.urow()][position.ucol()] = empty_tile;
+    layer.set_tile(position, empty_tile);
   }
 }
 

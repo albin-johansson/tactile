@@ -36,24 +36,24 @@ class EraserTool final : public ATool
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_dragged(DocumentModel& model,
+  void on_dragged(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_released(DocumentModel& model,
+  void on_released(DocumentModel&    model,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
+                   const MouseInfo&  mouse) override;
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override;
+  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Eraser; }
 
  private:
   TileCache mPrevState;
 
   void update_sequence(DocumentModel& model, const TilePos& cursor);
 
-  void maybe_emit_event(entt::dispatcher& dispatcher);
+  void maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher);
 };
 
 }  // namespace tactile

@@ -546,7 +546,9 @@ void Application::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& e
 
 void Application::on_eraser_sequence(EraserSequenceEvent event)
 {
-  _register<EraserToolCmd>(mData->model, std::move(event.old_state));
+  if (auto* document = active_map_document()) {
+    document->register_eraser_sequence(event.layer_id, std::move(event.old_state));
+  }
 }
 
 void Application::on_flood(const FloodEvent& event)
