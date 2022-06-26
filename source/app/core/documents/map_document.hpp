@@ -72,7 +72,8 @@ class MapDocument final : public ADocument
 
   void set_layer_visible(const UUID& layerId, bool visible);
 
-  void move_object(const UUID&     objectId,
+  void move_object(const UUID&     layerId,
+                   const UUID&     objectId,
                    const Vector2f& previous,
                    const Vector2f& updated);
 

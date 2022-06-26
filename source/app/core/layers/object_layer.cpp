@@ -90,9 +90,19 @@ auto ObjectLayer::active_object_id() const -> Maybe<UUID>
   return mActiveObject;
 }
 
+auto ObjectLayer::get_object(const UUID& id) -> Object&
+{
+  return lookup_in(mObjects, id);
+}
+
 auto ObjectLayer::get_object(const UUID& id) const -> const Object&
 {
   return lookup_in(mObjects, id);
+}
+
+auto ObjectLayer::object_at(const Vector2f& pos) const -> Maybe<UUID>
+{
+  return nothing;
 }
 
 auto ObjectLayer::get_opacity() const -> float

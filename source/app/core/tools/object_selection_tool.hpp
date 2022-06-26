@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "core/common/maybe.hpp"
+#include "core/components/objects.hpp"
 #include "core/tools/tool.hpp"
 
 namespace tactile {
@@ -28,23 +30,28 @@ class ObjectSelectionTool final : public ATool
  public:
   void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel& model,
+  void on_pressed(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_dragged(DocumentModel& model,
+  void on_dragged(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_released(DocumentModel& model,
+  void on_released(DocumentModel&    model,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
+                   const MouseInfo&  mouse) override;
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override;
+  [[nodiscard]] auto get_type() const -> ToolType override
+  {
+    return ToolType::ObjectSelection;
+  }
 
  private:
+  Maybe<comp::ObjectDragInfo> mDragInfo;
+
   void maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher);
 };
 

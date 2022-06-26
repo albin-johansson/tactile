@@ -268,7 +268,17 @@ auto Map::view_tile_layer(const UUID& id) -> TileLayer&
   return mRootLayer.view_tile_layer(id);
 }
 
+auto Map::view_tile_layer(const UUID& id) const -> const TileLayer&
+{
+  return mRootLayer.view_tile_layer(id);
+}
+
 auto Map::view_object_layer(const UUID& id) -> ObjectLayer&
+{
+  return mRootLayer.view_object_layer(id);
+}
+
+auto Map::view_object_layer(const UUID& id) const -> const ObjectLayer&
 {
   return mRootLayer.view_object_layer(id);
 }

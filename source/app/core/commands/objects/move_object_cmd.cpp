@@ -19,45 +19,43 @@
 
 #include "move_object_cmd.hpp"
 
-#include "core/common/ecs.hpp"
-#include "core/components/objects.hpp"
 #include "core/documents/map_document.hpp"
-#include "core/systems/context_system.hpp"
+#include "core/layers/object_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-MoveObjectCmd::MoveObjectCmd(MapDocument* map,
-                             const UUID& objectId,
+MoveObjectCmd::MoveObjectCmd(MapDocument*    document,
+                             const UUID&     layerId,
+                             const UUID&     objectId,
                              const Vector2f& previous,
                              const Vector2f& updated)
     : ACommand{"Move Object"}
-    , mMap{map}
+    , mDocument{document}
+    , mLayerId{layerId}
     , mObjectId{objectId}
     , mPreviousPos{previous}
     , mUpdatedPos{updated}
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+  if (!mDocument) {
+    throw TactileError{"Invalid null map document!"};
   }
 }
 
 void MoveObjectCmd::undo()
 {
-  auto& registry = mMap->get_registry();
-
-  const auto objectEntity = sys::find_context(registry, mObjectId);
-  auto& object = checked_get<comp::Object>(registry, objectEntity);
-  object.pos = mPreviousPos;
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+  auto& object = layer.get_object(mObjectId);
+  object.set_pos(mPreviousPos);
 }
 
 void MoveObjectCmd::redo()
 {
-  auto& registry = mMap->get_registry();
-
-  const auto objectEntity = sys::find_context(registry, mObjectId);
-  auto& object = checked_get<comp::Object>(registry, objectEntity);
-  object.pos = mUpdatedPos;
+  auto& map = mDocument->get_map();
+  auto& layer = map.view_object_layer(mLayerId);
+  auto& object = layer.get_object(mObjectId);
+  object.set_pos(mUpdatedPos);
 }
 
 }  // namespace tactile

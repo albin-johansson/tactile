@@ -122,4 +122,9 @@ auto Viewport::can_zoom_out() const -> bool
   return mCellSize.y > _min_tile_height;
 }
 
+auto Viewport::get_scaling_ratio(const Vector2f& tileSize) const -> Vector2f
+{
+  return mCellSize / tileSize;
+}
+
 }  // namespace tactile::core

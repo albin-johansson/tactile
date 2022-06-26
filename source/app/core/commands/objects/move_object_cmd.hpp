@@ -20,7 +20,6 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
@@ -29,12 +28,12 @@
 namespace tactile {
 
 /// Command for moving an object in a map.
-/// \ingroup commands
 class MoveObjectCmd final : public ACommand
 {
  public:
-  MoveObjectCmd(MapDocument* map,
-                const UUID& objectId,
+  MoveObjectCmd(MapDocument*    document,
+                const UUID&     layerId,
+                const UUID&     objectId,
                 const Vector2f& previous,
                 const Vector2f& updated);
 
@@ -48,10 +47,11 @@ class MoveObjectCmd final : public ACommand
   }
 
  private:
-  MapDocument* mMap{};
-  UUID mObjectId{};
-  Vector2f mPreviousPos{};
-  Vector2f mUpdatedPos{};
+  MapDocument* mDocument{};
+  UUID         mLayerId{};
+  UUID         mObjectId{};
+  Vector2f     mPreviousPos{};
+  Vector2f     mUpdatedPos{};
 };
 
 }  // namespace tactile

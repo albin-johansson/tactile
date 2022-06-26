@@ -93,7 +93,10 @@ class Map final : public IContext
   [[nodiscard]] auto view_layer(const UUID& id) const -> const ILayer&;
 
   [[nodiscard]] auto view_tile_layer(const UUID& id) -> TileLayer&;
+  [[nodiscard]] auto view_tile_layer(const UUID& id) const -> const TileLayer&;
+
   [[nodiscard]] auto view_object_layer(const UUID& id) -> ObjectLayer&;
+  [[nodiscard]] auto view_object_layer(const UUID& id) const -> const ObjectLayer&;
 
   [[nodiscard]] auto find_tile_layer(const UUID& id) -> TileLayer*;
   [[nodiscard]] auto find_tile_layer(const UUID& id) const -> const TileLayer*;

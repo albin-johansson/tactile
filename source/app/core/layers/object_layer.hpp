@@ -57,7 +57,10 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto active_object_id() const -> Maybe<UUID>;
 
+  [[nodiscard]] auto get_object(const UUID& id) -> Object&;
   [[nodiscard]] auto get_object(const UUID& id) const -> const Object&;
+
+  [[nodiscard]] auto object_at(const Vector2f& pos) const -> Maybe<UUID>;
 
   [[nodiscard]] auto get_opacity() const -> float override;
 

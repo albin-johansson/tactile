@@ -121,11 +121,12 @@ void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
   get_history().push<SetLayerVisibilityCmd>(this, layerId, visible);
 }
 
-void MapDocument::move_object(const UUID&     objectId,
+void MapDocument::move_object(const UUID&     layerId,
+                              const UUID&     objectId,
                               const Vector2f& previous,
                               const Vector2f& updated)
 {
-  get_history().push<MoveObjectCmd>(this, objectId, previous, updated);
+  get_history().push<MoveObjectCmd>(this, layerId, objectId, previous, updated);
 }
 
 void MapDocument::set_name(std::string name)

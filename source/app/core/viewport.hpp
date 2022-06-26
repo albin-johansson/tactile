@@ -57,6 +57,8 @@ class Viewport final
 
   [[nodiscard]] auto can_zoom_out() const -> bool;
 
+  [[nodiscard]] auto get_scaling_ratio(const Vector2f& tileSize) const -> Vector2f;
+
   [[nodiscard]] auto get_offset() const noexcept -> const Vector2f& { return mOffset; }
 
   [[nodiscard]] auto get_cell_size() const noexcept -> const Vector2f&
