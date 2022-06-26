@@ -19,13 +19,10 @@
 
 #include "tileset_tabs.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/tiles.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/events/document_events.hpp"
 #include "core/events/property_events.hpp"
@@ -44,7 +41,6 @@ constexpr auto _tab_bar_flags =
 
 void _update_context_menu(const DocumentModel& model,
                           const UUID& documentId,
-                          const entt::entity tilesetEntity,
                           entt::dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_item("##TilesetTabContext"); popup.is_open()) {
@@ -55,7 +51,7 @@ void _update_context_menu(const DocumentModel& model,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
-      dispatcher.enqueue<InspectContextEvent>(tilesetEntity);
+      // TODO dispatcher.enqueue<InspectContextEvent>(tilesetEntity);
     }
 
     ImGui::Separator();
@@ -97,33 +93,32 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
-    const auto& mapRegistry = model.get_active_registry();
+    const auto& mapDocument = model.require_active_map();
+    const auto& map = mapDocument.get_map();
+    const auto& tilesets = map.get_tilesets();
 
-    const auto& active = ctx_get<comp::ActiveState>(mapRegistry);
-    for (auto&& [entity, ref] : mapRegistry.view<comp::TilesetRef>().each()) {
-      const Scope scope{static_cast<int>(hash(ref.source_tileset))};
+    for (const auto& [tilesetId, ref] : tilesets) {
+      const Scope scope{tilesetId};
 
-      const auto isActive = active.tileset == entity;
-
-      const auto& document = model.view_tileset(ref.source_tileset);
-      const auto& name = document.get_name();
+      const auto& name = ref.tileset->get_name();
+      const auto  isActive = tilesets.active_tileset_id() == tilesetId;
 
       bool opened = true;
       if (TabItem item{name.c_str(),
                        &opened,
                        isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
-        update_tileset_view(model, ref.source_tileset, dispatcher);
+        update_tileset_view(model, tilesetId, dispatcher);
       }
 
       if (!opened) {
-        dispatcher.enqueue<RemoveTilesetEvent>(ref.source_tileset);
+        dispatcher.enqueue<RemoveTilesetEvent>(tilesetId);
       }
       else if (ImGui::IsItemActivated()) {
-        dispatcher.enqueue<SelectTilesetEvent>(ref.source_tileset);
+        dispatcher.enqueue<SelectTilesetEvent>(tilesetId);
       }
       else {
-        _update_context_menu(model, ref.source_tileset, entity, dispatcher);
+        _update_context_menu(model, tilesetId, dispatcher);
       }
     }
   }

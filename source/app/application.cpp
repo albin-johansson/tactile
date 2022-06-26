@@ -240,6 +240,8 @@ void Application::subscribe_to_events()
 
   d.sink<CenterViewportEvent>().connect<&ui::center_map_viewport>();
   d.sink<UpdateViewportLimitsEvent>().connect<&Self::on_update_viewport_limits>(this);
+  d.sink<UpdateTilesetViewportLimitsEvent>().connect<&Self::on_update_tileset_viewport_limits>(this);
+  d.sink<OffsetTilesetViewportEvent>().connect<&Self::on_offset_tileset_viewport>(this);
   d.sink<OffsetViewportEvent>().connect<&Self::on_offset_viewport>(this);
   d.sink<PanLeftEvent>().connect<&Self::on_pan_left>(this);
   d.sink<PanRightEvent>().connect<&Self::on_pan_right>(this);
@@ -354,8 +356,16 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
     if (ui::is_mouse_within_viewport()) {
       ui::viewport_widget_mouse_wheel_event_handler(registry, mData->dispatcher, event);
     }
-    else if (ui::is_tileset_dock_hovered()) {
-      ui::tileset_dock_mouse_wheel_event_handler(registry, mData->dispatcher, event);
+    else if (document->is_map() && ui::is_tileset_dock_hovered()) {
+      const auto& mapDocument = mData->model.require_active_map();
+
+      const auto& map = mapDocument.get_map();
+      const auto& tilesets = map.get_tilesets();
+
+      if (const auto tilesetId = tilesets.active_tileset_id()) {
+        const auto& tilesetRef = tilesets.get_ref(*tilesetId);
+        ui::tileset_dock_mouse_wheel_event_handler(tilesetRef, event, mData->dispatcher);
+      }
     }
   }
 }
@@ -582,6 +592,22 @@ void Application::on_update_viewport_limits(const UpdateViewportLimitsEvent& eve
   auto& limits = checked_get<comp::ViewportLimits>(registry, event.viewport_entity);
   limits.min_offset = event.min_offset;
   limits.max_offset = event.max_offset;
+
+void Application::on_update_tileset_viewport_limits(
+    const UpdateTilesetViewportLimitsEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
+    tilesetRef.viewport.set_limits({event.min_offset, event.max_offset});
+  }
+}
+
+void Application::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
+    tilesetRef.viewport.offset(event.offset);
+  }
 }
 
 void Application::on_offset_viewport(const OffsetViewportEvent& event)

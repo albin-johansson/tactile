@@ -20,21 +20,15 @@
 #include "tileset_view.hpp"
 
 #include <centurion/color.hpp>
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/common/ecs.hpp"
-#include "core/components/texture.hpp"
-#include "core/components/tiles.hpp"
-#include "core/components/viewport.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/events/tileset_events.hpp"
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
 #include "editor/ui/common/rubber_band.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_info.hpp"
@@ -46,22 +40,22 @@ namespace {
 constexpr cen::color _rubber_band_color{0, 0x44, 0xCC, 100};
 constexpr cen::color _grid_color{200, 200, 200, 40};
 
-void _update_viewport_offset(const entt::registry& mapRegistry,
-                             const entt::entity tilesetEntity,
-                             const comp::Texture& tilesetTexture,
-                             entt::dispatcher& dispatcher,
-                             const ImVec2& viewportSize)
+void _update_viewport_offset(const core::TilesetRef& tilesetRef,
+                             const ImVec2&           viewportSize,
+                             entt::dispatcher&       dispatcher)
 {
-  const auto& limits = checked_get<comp::ViewportLimits>(mapRegistry, tilesetEntity);
+  const auto&    tileset = tilesetRef.tileset;
+  const Vector2f textureSize = tileset->texture_size();
 
-  const Vector2f textureSize{tilesetTexture.size};
-  const Vector2f maxOffset{viewportSize.x - textureSize.x,
+  const Vector2f minOffset{viewportSize.x - textureSize.x,
                            viewportSize.y - textureSize.y};
+  const Vector2f maxOffset{};
 
-  if (maxOffset != limits.max_offset) {
-    dispatcher.enqueue<UpdateViewportLimitsEvent>(tilesetEntity,
-                                                  limits.min_offset,
-                                                  maxOffset);
+  const auto& limits = tilesetRef.viewport.get_limits();
+  if (!limits.has_value() || minOffset != limits->min_offset) {
+    dispatcher.enqueue<UpdateTilesetViewportLimitsEvent>(tileset->get_uuid(),
+                                                         minOffset,
+                                                         maxOffset);
   }
 
   ImGui::InvisibleButton("##TilesetViewInvisibleButton",
@@ -69,13 +63,6 @@ void _update_viewport_offset(const entt::registry& mapRegistry,
                          ImGuiButtonFlags_MouseButtonLeft |
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
-
-  if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
-    const auto& io = ImGui::GetIO();
-    dispatcher.enqueue<OffsetViewportEvent>(tilesetEntity,
-                                            io.MouseDelta.x,
-                                            io.MouseDelta.y);
-  }
 }
 
 void _render_selection(GraphicsCtx& graphics,
@@ -95,13 +82,13 @@ void _render_selection(GraphicsCtx& graphics,
   graphics.fill_rect(min + origin, size);
 }
 
-void _render_tileset_image(GraphicsCtx& graphics,
-                           const comp::Texture& texture,
-                           const ImVec2& position)
+void _render_tileset_image(GraphicsCtx&         graphics,
+                           const core::Tileset& tileset,
+                           const ImVec2&        position)
 {
-  const ImVec2 size = {static_cast<float>(texture.size.x),
-                       static_cast<float>(texture.size.y)};
-  graphics.render_image(texture.id, position, size);
+  const ImVec2 size = {static_cast<float>(tileset.texture_size().x),
+                       static_cast<float>(tileset.texture_size().y)};
+  graphics.render_image(tileset.texture_id(), position, size);
 }
 
 }  // namespace
@@ -110,32 +97,23 @@ void update_tileset_view(const DocumentModel& model,
                          const UUID& tilesetId,
                          entt::dispatcher& dispatcher)
 {
-  const auto activeDocumentId = model.active_document_id().value();
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
 
-  const auto& mapDoc = model.view_map(activeDocumentId);
-  const auto& tilesetDoc = model.view_tileset(tilesetId);
+  const auto& tilesetRef = map.get_tilesets().get_ref(tilesetId);
+  const auto& tileset = tilesetRef.tileset;
+  const auto& viewport = tilesetRef.viewport;
 
-  const auto& mapRegistry = mapDoc.get_registry();
-  const auto& tilesetInfo = tilesetDoc.info();
-  const auto& texture = tilesetDoc.texture();
-
-  const auto tilesetEntity = sys::find_tileset(mapRegistry, tilesetId);
-  const auto& viewport = checked_get<comp::Viewport>(mapRegistry, tilesetEntity);
-
-  const auto info = get_render_info(viewport, tilesetInfo);
-  _update_viewport_offset(mapRegistry,
-                          tilesetEntity,
-                          texture,
-                          dispatcher,
-                          info.canvas_br - info.canvas_tl);
+  const auto info = get_render_info(viewport, *tileset);
+  _update_viewport_offset(tilesetRef, info.canvas_br - info.canvas_tl, dispatcher);
 
   GraphicsCtx graphics{info};
   graphics.set_draw_color(io::get_preferences().viewport_bg());
   graphics.clear();
 
-  const ImVec2 offset{viewport.offset.x, viewport.offset.y};
-  const ImVec2 tileSize = {static_cast<float>(tilesetInfo.tile_size.x),
-                           static_cast<float>(tilesetInfo.tile_size.y)};
+  const ImVec2 offset{viewport.get_offset().x, viewport.get_offset().y};
+  const ImVec2 tileSize = {static_cast<float>(tileset->tile_size().x),
+                           static_cast<float>(tileset->tile_size().y)};
 
   if (const auto selection = rubber_band(offset, tileSize)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
@@ -144,12 +122,11 @@ void update_tileset_view(const DocumentModel& model,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  _render_tileset_image(graphics, texture, position);
+  _render_tileset_image(graphics, *tileset, position);
 
-  if (const auto& selection =
-          checked_get<comp::TilesetSelection>(mapRegistry, tilesetEntity);
-      selection.region) {
-    _render_selection(graphics, *selection.region, position, tileSize);
+  const auto& selection = tilesetRef.selection;
+  if (selection.has_value()) {
+    _render_selection(graphics, *selection, position, tileSize);
   }
 
   graphics.set_line_thickness(1);

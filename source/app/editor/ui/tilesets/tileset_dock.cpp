@@ -20,18 +20,15 @@
 #include "tileset_dock.hpp"
 
 #include <centurion/mouse_events.hpp>
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
+#include <spdlog/spdlog.h>
 
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/tiles.hpp"
-#include "core/components/viewport.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/events/tileset_events.hpp"
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
+#include "core/viewport.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/button.hpp"
 #include "editor/ui/common/centered_text.hpp"
@@ -62,7 +59,7 @@ struct TilesetDockState final
 void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& prefs = io::get_preferences();
-  bool visible = prefs.is_tileset_dock_visible();
+  bool  visible = prefs.is_tileset_dock_visible();
 
   if (!visible) {
     return;
@@ -75,8 +72,10 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
   state.is_hovered = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    const auto& registry = model.get_active_registry();
-    if (registry.view<comp::TilesetRef>().empty()) {
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+
+    if (map.get_tilesets().empty()) {
       prepare_vertical_alignment_center(2);
       centered_text("Current map has no tilesets!");
 
@@ -94,19 +93,19 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
   prefs.set_tileset_dock_visible(visible);
 }
 
-void tileset_dock_mouse_wheel_event_handler(const entt::registry& registry,
-                                            entt::dispatcher& dispatcher,
-                                            const cen::mouse_wheel_event& event)
+void tileset_dock_mouse_wheel_event_handler(const core::TilesetRef&       tilesetRef,
+                                            const cen::mouse_wheel_event& event,
+                                            entt::dispatcher&             dispatcher)
 {
-  constexpr float scaling = 4.0f;
+  constexpr Vector2f scaling{4, 4};
 
-  const auto& active = ctx_get<comp::ActiveState>(registry);
-  const auto& viewport = checked_get<comp::Viewport>(registry, active.tileset);
+  const auto&    viewport = tilesetRef.viewport;
+  const Vector2f precise{event.precise_x(), event.precise_y()};
 
-  const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
-  const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
+  auto delta = precise * (viewport.get_cell_size() / scaling);
+  delta.x = -delta.x;
 
-  dispatcher.enqueue<OffsetViewportEvent>(active.tileset, -dx, dy);
+  dispatcher.enqueue<OffsetTilesetViewportEvent>(tilesetRef.tileset->get_uuid(), delta);
 }
 
 auto is_tileset_dock_focused() -> bool

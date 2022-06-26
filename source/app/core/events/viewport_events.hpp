@@ -22,11 +22,9 @@
 #include <entt/entity/entity.hpp>
 
 #include "core/common/math.hpp"
+#include "core/common/uuid.hpp"
 
 namespace tactile {
-
-/// \addtogroup events
-/// \{
 
 struct CenterViewportEvent final
 {};
@@ -40,18 +38,32 @@ struct DecreaseZoomEvent final
 struct IncreaseZoomEvent final
 {};
 
-struct UpdateViewportLimitsEvent final
+struct [[deprecated]] UpdateViewportLimitsEvent final
 {
   entt::entity viewport_entity{entt::null};
-  Vector2f min_offset{};
-  Vector2f max_offset{};
+  Vector2f     min_offset{};
+  Vector2f     max_offset{};
+};
+
+/// Event used to update the limits of tilesets in the tileset dock widget.
+struct UpdateTilesetViewportLimitsEvent final
+{
+  UUID     tileset_id{};  /// The target tileset.
+  Vector2f min_offset{};  /// The minimum offset.
+  Vector2f max_offset{};  /// The maximum offset.
+};
+
+struct OffsetTilesetViewportEvent final
+{
+  UUID     tileset_id{};  /// The target tileset.
+  Vector2f offset{};      /// The offset to apply.
 };
 
 struct OffsetViewportEvent final
 {
   entt::entity viewport_entity{entt::null};
-  float dx{};
-  float dy{};
+  float        dx{};
+  float        dy{};
 };
 
 struct PanUpEvent final
@@ -65,7 +77,5 @@ struct PanLeftEvent final
 
 struct PanRightEvent final
 {};
-
-/// \} End of group events
 
 }  // namespace tactile

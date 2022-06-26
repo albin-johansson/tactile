@@ -136,6 +136,10 @@ class Application final : AEventLoop
 
   void on_update_viewport_limits(const UpdateViewportLimitsEvent& event);
 
+  void on_update_tileset_viewport_limits(const UpdateTilesetViewportLimitsEvent& event);
+
+  void on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event);
+
   void on_offset_viewport(const OffsetViewportEvent& event);
 
   void on_pan_left();
