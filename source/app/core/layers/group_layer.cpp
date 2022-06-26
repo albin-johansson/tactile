@@ -70,6 +70,7 @@ class LayerMutatorVisitor : public ILayerVisitor
 };
 
 /// A generic visitor for queries that don't modify any layers.
+/// Note, this must be used with the accept-function!
 class LayerQueryVisitor : public IConstLayerVisitor
 {
  public:
@@ -497,7 +498,7 @@ auto GroupLayer::get_layer(const UUID& id) -> Shared<ILayer>
   };
 
   LayerQueryVisitor visitor{id, op};
-  each(visitor);
+  accept(visitor);
 
   if (layer) {
     return layer;
