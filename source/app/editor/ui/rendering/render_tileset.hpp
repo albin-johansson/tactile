@@ -26,6 +26,6 @@
 
 namespace tactile::ui {
 
-void render_tileset(GraphicsCtx& graphics, const TilesetDocument& tileset);
+void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document);
 
 }  // namespace tactile::ui

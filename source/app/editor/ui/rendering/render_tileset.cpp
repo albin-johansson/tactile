@@ -19,37 +19,33 @@
 
 #include "render_tileset.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <imgui.h>
 
-#include "core/common/ecs.hpp"
+#include "core/common/functional.hpp"
 #include "core/components/texture.hpp"
-#include "core/components/tiles.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile::ui {
 
-void render_tileset(GraphicsCtx& graphics, const TilesetDocument& tileset)
+void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document)
 {
-  const auto& info = tileset.info();
-  const auto& texture = tileset.texture();
+  const auto& tileset = document.view_tileset();
   const auto& uvTileSize = tileset.uv_size();
+  const auto  textureId = tileset.texture_id();
 
   const Vector2f tileSize = tileset.tile_size();
-  const ImVec2 uv{uvTileSize.x, uvTileSize.y};
+  const ImVec2   uv{uvTileSize.x, uvTileSize.y};
 
-  for (int32 row = 0; row < info.row_count; ++row) {
-    for (int32 col = 0; col < info.column_count; ++col) {
-      const ImVec4 source{static_cast<float>(col * info.tile_size.x),
-                          static_cast<float>(row * info.tile_size.y),
-                          tileSize.x,
-                          tileSize.y};
-      const auto position = graphics.from_matrix_to_absolute(row, col);
-      graphics.render_translated_image(texture.id, source, position, uv);
-    }
-  }
+  invoke_mn(tileset.row_count(), tileset.column_count(), [&](int32 row, int32 col) {
+    const ImVec4 source{static_cast<float>(col * tileset.tile_size().x),
+                        static_cast<float>(row * tileset.tile_size().y),
+                        tileSize.x,
+                        tileSize.y};
+    const auto   position = graphics.from_matrix_to_absolute(row, col);
+    graphics.render_translated_image(textureId, source, position, uv);
+  });
 
   if (io::get_preferences().is_grid_visible()) {
     graphics.set_line_thickness(1.0f);
