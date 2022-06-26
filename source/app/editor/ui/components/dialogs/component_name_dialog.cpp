@@ -19,16 +19,17 @@
 
 #include "component_name_dialog.hpp"
 
+#include "core/components/component_index.hpp"
 #include "core/model.hpp"
-#include "core/systems/component_system.hpp"
 
 namespace tactile::ui {
 
 auto ComponentNameDialog::validate(const DocumentModel& model,
                                    const std::string_view input) const -> bool
 {
-  const auto& registry = model.get_active_registry();
-  return !input.empty() && !sys::is_component_name_taken(registry, input);
+  const auto& document = model.require_active_document();
+  const auto  index = document.get_component_index();
+  return !input.empty() && index && !index->contains(input);
 }
 
 }  // namespace tactile::ui

@@ -23,9 +23,9 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/components/component_index.hpp"
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/component_system.hpp"
 
 namespace tactile::ui {
 
@@ -45,9 +45,9 @@ void CreateComponentAttributeDialog::show(const ComponentID& id)
 auto CreateComponentAttributeDialog::validate(const DocumentModel& model,
                                               const std::string_view input) const -> bool
 {
-  const auto& registry = model.get_active_registry();
-  return !input.empty() &&
-         !sys::is_component_attribute_name_taken(registry, mComponentId, input);
+  const auto& document = model.require_active_document();
+  const auto  index = document.get_component_index();
+  return !input.empty() && index && !index->at(mComponentId).has_attr(input);
 }
 
 void CreateComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
