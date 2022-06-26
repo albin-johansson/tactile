@@ -64,6 +64,8 @@ class ObjectLayer;
 class GroupLayer;
 class LayerDelegate;
 
+class Map;
+
 struct TilesetInfo;
 struct TilesetRef;
 class TilesetBundle;
