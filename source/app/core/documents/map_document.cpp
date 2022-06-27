@@ -57,7 +57,9 @@ MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize
 
 void MapDocument::update()
 {
-  // TODO sys::update_animations(mRegistry);
+  for (const auto& [id, tileset] : mMap.get_tilesets()) {
+    tileset.tileset->update();
+  }
 }
 
 void MapDocument::add_row()
