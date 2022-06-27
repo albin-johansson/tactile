@@ -25,7 +25,7 @@
 #include "core/events/misc_events.hpp"
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/viewport_system.hpp"
+#include "core/viewport.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
@@ -111,11 +111,10 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<IncreaseZoomEvent>();
     }
 
-    if (ImGui::MenuItem(
-            TAC_ICON_ZOOM_OUT " Decrease Zoom",
-            TACTILE_PRIMARY_MOD "+Minus",
-            false,
-            document && sys::can_decrease_viewport_zoom(document->get_registry()))) {
+    if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease Zoom",
+                        TACTILE_PRIMARY_MOD "+Minus",
+                        false,
+                        document && document->get_viewport().can_zoom_out())) {
       dispatcher.enqueue<DecreaseZoomEvent>();
     }
 
