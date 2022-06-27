@@ -56,9 +56,6 @@ class Tileset final : public IContext
   /// Returns the index of the tile that should be rendered for a specific tile.
   [[nodiscard]] auto appearance_of(TileIndex index) const -> TileIndex;
 
-  /// Returns the source rectangle of a specific tile.
-  [[nodiscard]] auto source_of(TileIndex index) const -> const Vector4i&;
-
   [[nodiscard]] auto get_props() -> PropertyBundle& override;
   [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
 

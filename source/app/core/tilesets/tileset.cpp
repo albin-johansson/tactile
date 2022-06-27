@@ -107,6 +107,7 @@ auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
   if (const auto iter = mIdentifiers.find(index); iter != mIdentifiers.end()) {
     const auto& id = iter->second;
     const auto& tile = lookup_in(mMetaTiles, id);
+
     if (tile.is_animated()) {
       const auto appearance = tile.get_animation().current_tile();
       mAppearanceCache[index] = appearance;
@@ -115,13 +116,6 @@ auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
   }
 
   return index;
-}
-
-auto Tileset::source_of(const TileIndex index) const -> const Vector4i&
-{
-  const auto& id = lookup_in(mIdentifiers, index);
-  const auto& tile = lookup_in(mMetaTiles, id);
-  return tile.source();
 }
 
 auto Tileset::get_props() -> PropertyBundle&

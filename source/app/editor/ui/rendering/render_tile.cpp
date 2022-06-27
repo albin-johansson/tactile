@@ -19,58 +19,41 @@
 
 #include "render_tile.hpp"
 
-#include <entt/entity/registry.hpp>
-#include <imgui.h>
-
-#include "core/common/ecs.hpp"
-#include "core/components/texture.hpp"
-#include "core/components/tiles.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/model.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/rendering/graphics.hpp"
-#include "editor/ui/textures.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {
 
-void render_tile(GraphicsCtx& graphics,
-                 const DocumentModel& model,
-                 const MapDocument& map,
-                 const TileID tile,
-                 const int32 row,
-                 const int32 column)
+void render_tile(GraphicsCtx&       graphics,
+                 const MapDocument& document,
+                 const TileID       tileId,
+                 const TilePos&     pos)
 {
-  TACTILE_ASSERT(tile != empty_tile);
+  TACTILE_ASSERT(tileId != empty_tile);
 
-  const auto& mapRegistry = map.get_registry();
-  const auto& context = ctx_get<comp::TilesetContext>(mapRegistry);
-  auto iter = context.tile_to_tileset.find(tile);
+  const auto& tilesets = document.get_map().get_tilesets();
+  const auto  tilesetId = tilesets.find_tileset(tileId);
 
-  if (iter == context.tile_to_tileset.end()) {
+  if (!tilesetId) {
     return;
   }
 
-  const auto tilesetEntity = iter->second;
-  if (tilesetEntity != entt::null) {
-    const auto& ref = checked_get<comp::TilesetRef>(mapRegistry, tilesetEntity);
+  const auto& tilesetRef = tilesets.get_ref(*tilesetId);
+  const auto& tileset = tilesetRef.tileset;
 
-    const auto& tileset = model.view_tileset(ref.source_tileset);
-    const auto& texture = tileset.texture();
-    const auto& uvSize = tileset.uv_size();
+  const auto textureId = tileset->texture_id();
+  const auto uv = from_vec(tileset->uv_size());
 
-    const auto tileIndex = tileset.get_displayed_tile(tile - ref.first_id);
-    const auto sourceRect = cen::cast<cen::frect>(tileset.tile_source(tileIndex));
+  const auto  tileIndex = tileset->appearance_of(tileId - tilesetRef.first_tile);
+  const auto& tile = (*tileset)[tileIndex];
+  const auto  source = from_vec(tile.source());
 
-    const ImVec4 source{sourceRect.x(),
-                        sourceRect.y(),
-                        sourceRect.width(),
-                        sourceRect.height()};
-    const ImVec2 uv{uvSize.x, uvSize.y};
-
-    const auto position = graphics.from_matrix_to_absolute(row, column);
-    graphics.render_translated_image(texture.id, source, position, uv);
-  }
+  const auto position = graphics.from_matrix_to_absolute(pos.row(), pos.col());
+  graphics.render_translated_image(textureId, source, position, uv);
 }
 
 }  // namespace tactile::ui

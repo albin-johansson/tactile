@@ -50,11 +50,11 @@ struct RenderInfo final
   float col_count{};  ///< Total amount of columns.
 };
 
-[[nodiscard]] auto get_render_info(const comp::Viewport& viewport,
-                                   const comp::MapInfo& map) -> RenderInfo;
+[[nodiscard]] auto get_render_info(const core::Viewport& viewport, const core::Map& map)
+    -> RenderInfo;
 
-[[nodiscard]] auto get_render_info(const comp::Viewport& viewport,
-                                   const comp::Tileset& tileset) -> RenderInfo;
+[[nodiscard]] auto get_render_info(const core::Viewport& viewport,
+                                   const core::Tileset& tileset) -> RenderInfo;
 
 /// \} End of group rendering
 

@@ -23,9 +23,10 @@
 
 #include <imgui_internal.h>
 
-#include "core/components/map_info.hpp"
-#include "core/components/tiles.hpp"
-#include "core/components/viewport.hpp"
+#include "core/map.hpp"
+#include "core/tilesets/tileset.hpp"
+#include "core/viewport.hpp"
+#include "editor/ui/conversions.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -34,8 +35,8 @@ namespace {
                                       const ImVec2& br,
                                       const ImVec2& origin,
                                       const ImVec2& gridSize,
-                                      const float rows,
-                                      const float cols) -> Region
+                                      const float   rows,
+                                      const float   cols) -> Region
 {
   const auto begin = (tl - origin) / gridSize;
   const auto end = (br - origin) / gridSize;
@@ -54,20 +55,20 @@ namespace {
   return bounds;
 }
 
-[[nodiscard]] auto _get_render_info(const comp::Viewport& viewport,
-                                    const ImVec2& logicalTileSize,
-                                    const int32 rows,
-                                    const int32 columns) -> RenderInfo
+[[nodiscard]] auto _get_render_info(const core::Viewport& viewport,
+                                    const ImVec2&         logicalTileSize,
+                                    const int32           rows,
+                                    const int32           columns) -> RenderInfo
 {
   RenderInfo info;
 
   info.canvas_tl = ImGui::GetCursorScreenPos();
   info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
 
-  info.origin = info.canvas_tl + ImVec2{viewport.offset.x, viewport.offset.y};
+  info.origin = info.canvas_tl + ImVec2{viewport.get_offset().x, viewport.get_offset().y};
 
   info.tile_size = logicalTileSize;
-  info.grid_size = {viewport.tile_size.x, viewport.tile_size.y};
+  info.grid_size = {viewport.get_cell_size().x, viewport.get_cell_size().y};
   info.ratio = info.grid_size / info.tile_size;
 
   info.row_count = static_cast<float>(rows);
@@ -85,23 +86,21 @@ namespace {
 
 }  // namespace
 
-auto get_render_info(const comp::Viewport& viewport, const comp::MapInfo& map)
-    -> RenderInfo
+auto get_render_info(const core::Viewport& viewport, const core::Map& map) -> RenderInfo
 {
-  const ImVec2 tileSize{static_cast<float>(map.tile_size.x),
-                        static_cast<float>(map.tile_size.y)};
   return _get_render_info(viewport,
-                          tileSize,
-                          static_cast<int32>(map.row_count),
-                          static_cast<int32>(map.column_count));
+                          from_vec(map.tile_size()),
+                          static_cast<int32>(map.row_count()),
+                          static_cast<int32>(map.column_count()));
 }
 
-auto get_render_info(const comp::Viewport& viewport, const comp::Tileset& tileset)
+auto get_render_info(const core::Viewport& viewport, const core::Tileset& tileset)
     -> RenderInfo
 {
-  const ImVec2 tileSize{static_cast<float>(tileset.tile_size.x),
-                        static_cast<float>(tileset.tile_size.y)};
-  return _get_render_info(viewport, tileSize, tileset.row_count, tileset.column_count);
+  return _get_render_info(viewport,
+                          from_vec(tileset.tile_size()),
+                          tileset.row_count(),
+                          tileset.column_count());
 }
 
 }  // namespace tactile::ui
