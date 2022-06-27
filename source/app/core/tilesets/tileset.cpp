@@ -61,6 +61,8 @@ void Tileset::load_tiles()
 
 void Tileset::update()
 {
+  mAppearanceCache.clear();
+
   for (auto& [id, tile] : mMetaTiles) {
     tile.update();
   }
@@ -98,13 +100,17 @@ auto Tileset::index_of(const TilePos& pos) const -> TileIndex
 
 auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
 {
-  // TODO reintroduce caching for this function
+  if (const auto iter = mAppearanceCache.find(index); iter != mAppearanceCache.end()) {
+    return iter->second;
+  }
 
   if (const auto iter = mIdentifiers.find(index); iter != mIdentifiers.end()) {
     const auto& id = iter->second;
     const auto& tile = lookup_in(mMetaTiles, id);
     if (tile.is_animated()) {
-      return tile.get_animation().current_tile();
+      const auto appearance = tile.get_animation().current_tile();
+      mAppearanceCache[index] = appearance;
+      return appearance;
     }
   }
 

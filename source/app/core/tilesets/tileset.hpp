@@ -108,6 +108,8 @@ class Tileset final : public IContext
   HashMap<UUID, Tile>      mMetaTiles;
   std::filesystem::path    mTexturePath;
 
+  mutable HashMap<TileIndex, TileIndex> mAppearanceCache;
+
   void load_tiles();
 
   [[nodiscard]] auto is_valid(TileIndex index) const -> bool;
