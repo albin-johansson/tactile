@@ -112,8 +112,7 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto& info = model.view_map(id).info();
-      return info.row_count > 1;
+      return model.view_map(id).get_map().row_count() > 1;
     }
   }
 
@@ -136,8 +135,7 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (model.has_active_document()) {
     const auto id = model.active_document_id().value();
     if (model.is_map(id)) {
-      const auto& info = model.view_map(id).info();
-      return info.column_count > 1;
+      return model.view_map(id).get_map().column_count() > 1;
     }
   }
 
