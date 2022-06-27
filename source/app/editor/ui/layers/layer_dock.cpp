@@ -23,16 +23,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/common/ecs.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/layers.hpp"
-#include "core/components/parent.hpp"
+#include "core/documents/map_document.hpp"
 #include "core/events/layer_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/layer_tree_system.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/button.hpp"
@@ -48,22 +42,18 @@
 namespace tactile::ui {
 namespace {
 
-inline RenameLayerDialog _rename_layer_dialog;
+inline RenameLayerDialog   _rename_layer_dialog;
 inline AddLayerContextMenu _add_layer_context_menu;
-inline Maybe<UUID> _rename_target_id;
-constinit bool _is_focused = false;
+inline Maybe<UUID>         _rename_target_id;
+constinit bool             _is_focused = false;
 
 void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  const auto& registry = model.get_active_registry();
-  const auto& active = ctx_get<comp::ActiveState>(registry);
-  const auto hasActiveLayer = active.layer != entt::null;
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
 
-  Maybe<UUID> activeLayerId;
-  if (hasActiveLayer) {
-    const auto& context = checked_get<comp::Context>(registry, active.layer);
-    activeLayerId = context.id;
-  }
+  const auto activeLayerId = map.active_layer_id();
+  const auto hasActiveLayer = activeLayerId.has_value();
 
   Group group;
 
@@ -83,13 +73,13 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
 
   if (icon_button(TAC_ICON_MOVE_UP,
                   "Move layer up",
-                  hasActiveLayer && sys::can_move_layer_up(registry, active.layer))) {
+                  hasActiveLayer && map.can_move_layer_up(*activeLayerId))) {
     dispatcher.enqueue<MoveLayerUpEvent>(activeLayerId.value());
   }
 
   if (icon_button(TAC_ICON_MOVE_DOWN,
                   "Move layer down",
-                  hasActiveLayer && sys::can_move_layer_down(registry, active.layer))) {
+                  hasActiveLayer && map.can_move_layer_down(*activeLayerId))) {
     dispatcher.enqueue<MoveLayerDownEvent>(activeLayerId.value());
   }
 }
@@ -99,13 +89,11 @@ void _update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatc
   if (_rename_target_id.has_value()) {
     const auto targetLayerId = *_rename_target_id;
 
-    const auto& registry = model.get_active_registry();
-    const auto entity = sys::find_context(registry, targetLayerId);
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+    const auto& layer = map.view_layer(targetLayerId);
 
-    TACTILE_ASSERT(entity != entt::null);
-    const auto& context = checked_get<comp::Context>(registry, entity);
-
-    _rename_layer_dialog.show(targetLayerId, context.name);
+    _rename_layer_dialog.show(targetLayerId, layer.get_name());
     _rename_target_id.reset();
   }
 
@@ -119,22 +107,21 @@ void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   ImGui::SameLine();
   Group group;
 
-  const auto& registry = model.get_active_registry();
-  if (registry.view<comp::Layer>().empty()) {
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
+
+  if (map.layer_count() == 0) {
     prepare_vertical_alignment_center(1);
     centered_text("This map has no layers!");
   }
   else {
     const ImVec2 size{-min_float, -min_float};
     if (ListBox list{"##LayerTreeNode", size}; list.is_open()) {
-      /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
-         other components in the view query directly. */
-      for (auto&& [entity, _] : registry.view<comp::LayerTreeNode>().each()) {
-        const auto& parent = checked_get<comp::Parent>(registry, entity);
-        if (parent.entity == entt::null) {
-          layer_item_view(registry, dispatcher, entity);
+      map.visit_layers([&](const core::ILayer* layer) {
+        if (!layer->get_parent().has_value()) {
+          layer_item_view(document, *layer, dispatcher);
         }
-      }
+      });
     }
   }
 
@@ -148,7 +135,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   TACTILE_ASSERT(model.has_active_document());
 
   auto& prefs = io::get_preferences();
-  bool visible = prefs.is_layer_dock_visible();
+  bool  visible = prefs.is_layer_dock_visible();
 
   if (!visible) {
     return;
