@@ -24,6 +24,7 @@
 #include "core/common/associative.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 #include "core/context.hpp"
@@ -39,6 +40,8 @@ class Tile final : public IContext
  public:
   explicit Tile(TileIndex index);
 
+  void update();
+
   void reserve_objects(usize n);
 
   void add_object(Object object);
@@ -48,6 +51,8 @@ class Tile final : public IContext
   void set_animation(TileAnimation animation);
 
   void set_name(std::string name) override;
+
+  void set_source(const Vector4i& source);
 
   [[nodiscard]] auto object_count() const -> usize;
 
@@ -71,10 +76,13 @@ class Tile final : public IContext
 
   [[nodiscard]] auto index() const noexcept -> TileIndex { return mIndex; }
 
+  [[nodiscard]] auto source() const noexcept -> const Vector4i& { return mSource; }
+
  private:
-  TileIndex mIndex;
-  ContextDelegate mDelegate;
-  Maybe<TileAnimation> mAnimation;
+  TileIndex             mIndex;
+  ContextDelegate       mDelegate;
+  Vector4i              mSource;
+  Maybe<TileAnimation>  mAnimation;
   HashMap<UUID, Object> mObjects;
 };
 

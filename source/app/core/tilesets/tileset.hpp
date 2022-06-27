@@ -44,11 +44,20 @@ class Tileset final : public IContext
 
   explicit Tileset(const TilesetInfo& info);
 
+  void update();
+
   void set_name(std::string name) override;
 
   [[nodiscard]] auto operator[](TileIndex index) -> Tile&;
+  [[nodiscard]] auto operator[](TileIndex index) const -> const Tile&;
 
   [[nodiscard]] auto index_of(const TilePos& pos) const -> TileIndex;
+
+  /// Returns the index of the tile that should be rendered for a specific tile.
+  [[nodiscard]] auto appearance_of(TileIndex index) const -> TileIndex;
+
+  /// Returns the source rectangle of a specific tile.
+  [[nodiscard]] auto source_of(TileIndex index) const -> const Vector4i&;
 
   [[nodiscard]] auto get_props() -> PropertyBundle& override;
   [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
@@ -60,22 +69,29 @@ class Tileset final : public IContext
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  [[nodiscard]] auto texture_id() const -> uint { return mTextureId; }
+  [[nodiscard]] auto texture_id() const noexcept -> uint { return mTextureId; }
 
   [[nodiscard]] auto texture_path() const -> const std::filesystem::path&
   {
     return mTexturePath;
   }
 
-  [[nodiscard]] auto texture_size() const -> const Vector2i& { return mTextureSize; }
+  [[nodiscard]] auto texture_size() const noexcept -> const Vector2i&
+  {
+    return mTextureSize;
+  }
 
-  [[nodiscard]] auto tile_size() const -> const Vector2i& { return mTileSize; }
+  [[nodiscard]] auto tile_size() const noexcept -> const Vector2i& { return mTileSize; }
 
-  [[nodiscard]] auto uv_size() const -> const Vector2f& { return mUvSize; }
+  [[nodiscard]] auto uv_size() const noexcept -> const Vector2f& { return mUvSize; }
 
-  [[nodiscard]] auto row_count() const -> int32 { return mRowCount; }
-  [[nodiscard]] auto column_count() const -> int32 { return mColumnCount; }
-  [[nodiscard]] auto tile_count() const -> int32 { return row_count() * column_count(); }
+  [[nodiscard]] auto row_count() const noexcept -> int32 { return mRowCount; }
+  [[nodiscard]] auto column_count() const noexcept -> int32 { return mColumnCount; }
+
+  [[nodiscard]] auto tile_count() const noexcept -> int32
+  {
+    return row_count() * column_count();
+  }
 
   [[nodiscard]] auto begin() const noexcept { return mMetaTiles.begin(); }
   [[nodiscard]] auto end() const noexcept { return mMetaTiles.end(); }
@@ -91,6 +107,8 @@ class Tileset final : public IContext
   HashMap<TileIndex, UUID> mIdentifiers;
   HashMap<UUID, Tile>      mMetaTiles;
   std::filesystem::path    mTexturePath;
+
+  void load_tiles();
 
   [[nodiscard]] auto is_valid(TileIndex index) const -> bool;
 };

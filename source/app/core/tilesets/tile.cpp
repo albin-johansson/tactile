@@ -21,11 +21,23 @@
 
 #include <utility>  // move
 
+#include <fmt/format.h>
+
 #include "misc/panic.hpp"
 
 namespace tactile::core {
 
-Tile::Tile(const TileIndex index) : mIndex{index} {}
+Tile::Tile(const TileIndex index) : mIndex{index}
+{
+  mDelegate.set_name(fmt::format("Tile {}", index));
+}
+
+void Tile::update()
+{
+  if (mAnimation) {
+    mAnimation->update();
+  }
+}
 
 void Tile::reserve_objects(usize n)
 {
@@ -51,6 +63,11 @@ void Tile::set_animation(TileAnimation animation)
 void Tile::set_name(std::string name)
 {
   mDelegate.set_name(std::move(name));
+}
+
+void Tile::set_source(const Vector4i& source)
+{
+  mSource = source;
 }
 
 auto Tile::object_count() const -> usize

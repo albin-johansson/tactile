@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include "core/tilesets/tileset_info.hpp"
+#include "core/utils/tiles.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::core {
@@ -35,9 +36,35 @@ Tileset::Tileset(const UUID& id, const TilesetInfo& info)
     , mColumnCount{mTextureSize.x / mTileSize.x}
     , mUvSize{Vector2f{mTileSize} / Vector2f{mTextureSize}}
     , mTexturePath{std::move(info.texture_path)}
-{}
+{
+  load_tiles();
+}
 
 Tileset::Tileset(const TilesetInfo& info) : Tileset{make_uuid(), info} {}
+
+void Tileset::load_tiles()
+{
+  const TileIndex count = tile_count();
+  for (TileIndex index = 0; index < count; ++index) {
+    const auto [row, col] = to_matrix_coords(index, mColumnCount);
+
+    Tile       tile{index};
+    const auto tileId = tile.get_uuid();
+
+    const Vector2i pos{col * mTileSize.x, row * mTileSize.y};
+    tile.set_source({pos, mTileSize});
+
+    mMetaTiles.try_emplace(tileId, std::move(tile));
+    mIdentifiers[index] = tileId;
+  }
+}
+
+void Tileset::update()
+{
+  for (auto& [id, tile] : mMetaTiles) {
+    tile.update();
+  }
+}
 
 void Tileset::set_name(std::string name)
 {
@@ -46,23 +73,14 @@ void Tileset::set_name(std::string name)
 
 auto Tileset::operator[](const TileIndex index) -> Tile&
 {
-  if (!is_valid(index)) {
-    throw TactileError{"Invalid tile index!"};
-  }
+  const auto id = lookup_in(mIdentifiers, index);
+  return lookup_in(mMetaTiles, id);
+}
 
-  if (const auto iter = mIdentifiers.find(index); iter != mIdentifiers.end()) {
-    const auto& id = iter->second;
-    return lookup_in(mMetaTiles, id);
-  }
-  else {
-    Tile       tile{index};
-    const auto id = tile.get_uuid();
-
-    mMetaTiles.try_emplace(id, std::move(tile));
-    mIdentifiers[index] = id;
-
-    return lookup_in(mMetaTiles, id);
-  }
+auto Tileset::operator[](const TileIndex index) const -> const Tile&
+{
+  const auto id = lookup_in(mIdentifiers, index);
+  return lookup_in(mMetaTiles, id);
 }
 
 auto Tileset::index_of(const TilePos& pos) const -> TileIndex
@@ -76,6 +94,28 @@ auto Tileset::index_of(const TilePos& pos) const -> TileIndex
   else {
     throw TactileError{"Invalid tile position!"};
   }
+}
+
+auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
+{
+  // TODO reintroduce caching for this function
+
+  if (const auto iter = mIdentifiers.find(index); iter != mIdentifiers.end()) {
+    const auto& id = iter->second;
+    const auto& tile = lookup_in(mMetaTiles, id);
+    if (tile.is_animated()) {
+      return tile.get_animation().current_tile();
+    }
+  }
+
+  return index;
+}
+
+auto Tileset::source_of(const TileIndex index) const -> const Vector4i&
+{
+  const auto& id = lookup_in(mIdentifiers, index);
+  const auto& tile = lookup_in(mMetaTiles, id);
+  return tile.source();
 }
 
 auto Tileset::get_props() -> PropertyBundle&
