@@ -41,4 +41,17 @@ namespace tactile::ui {
   return {static_cast<float>(vec.x), static_cast<float>(vec.y)};
 }
 
+[[nodiscard]] inline auto from_vec(const Vector4f& vec) noexcept -> ImVec4
+{
+  return {vec.x, vec.y, vec.z, vec.w};
+}
+
+[[nodiscard]] inline auto from_vec(const Vector4i& vec) noexcept -> ImVec4
+{
+  return {static_cast<float>(vec.x),
+          static_cast<float>(vec.y),
+          static_cast<float>(vec.z),
+          static_cast<float>(vec.w)};
+}
+
 }  // namespace tactile::ui
