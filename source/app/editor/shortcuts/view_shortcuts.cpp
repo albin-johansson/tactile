@@ -26,6 +26,7 @@
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "core/viewport.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/widgets.hpp"
@@ -61,7 +62,7 @@ void DecreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
 auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   const auto* document = model.active_document();
-  return document && sys::can_decrease_viewport_zoom(document->get_registry());
+  return document && document->get_viewport().can_zoom_out();
 }
 
 /* ------------------------------------------------------------------------------------ */
