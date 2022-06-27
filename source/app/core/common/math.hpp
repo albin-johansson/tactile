@@ -22,11 +22,14 @@
 #include <concepts>  // unsigned_integral
 
 #include <glm/vec2.hpp>
+#include <glm/vec4.hpp>
 
 namespace tactile {
 
 using Vector2f = glm::vec2;
 using Vector2i = glm::ivec2;
+using Vector4f = glm::vec4;
+using Vector4i = glm::ivec4;
 
 /// Returns the difference between two unsigned integers
 template <std::unsigned_integral T>
