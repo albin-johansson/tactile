@@ -19,29 +19,20 @@
 
 #include "render_tile_layer.hpp"
 
-#include <entt/entity/registry.hpp>
-
-#include "core/common/ecs.hpp"
-#include "core/components/layers.hpp"
 #include "core/documents/map_document.hpp"
+#include "core/layers/tile_layer.hpp"
 #include "core/region.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_tile.hpp"
 
 namespace tactile::ui {
 
-void render_tile_layer(GraphicsCtx& graphics,
-                       const DocumentModel& model,
-                       const MapDocument& map,
-                       const entt::entity layerEntity,
-                       const float parentOpacity)
+void render_tile_layer(GraphicsCtx&           graphics,
+                       const MapDocument&     document,
+                       const core::TileLayer& layer,
+                       const float            parentOpacity)
 {
-  const auto& registry = map.get_registry();
-  const auto& layer = checked_get<comp::Layer>(registry, layerEntity);
-  const auto& tileLayer = checked_get<comp::TileLayer>(registry, layerEntity);
-
-  graphics.set_opacity(parentOpacity * layer.opacity);
+  graphics.set_opacity(parentOpacity * layer.get_opacity());
 
   const auto bounds = graphics.bounds();
   const auto endRow = bounds.end.row();
@@ -49,9 +40,10 @@ void render_tile_layer(GraphicsCtx& graphics,
 
   for (auto row = bounds.begin.row(); row < endRow; ++row) {
     for (auto col = bounds.begin.col(); col < endCol; ++col) {
-      const auto tile = sys::get_tile(tileLayer, {row, col});
+      const TilePos pos{row, col};
+      const auto    tile = layer.tile_at(pos);
       if (tile != empty_tile) {
-        render_tile(graphics, model, map, tile, row, col);
+        render_tile(graphics, document, tile, pos);
       }
     }
   }

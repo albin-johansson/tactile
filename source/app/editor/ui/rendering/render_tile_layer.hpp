@@ -19,28 +19,14 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
 #include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile::ui {
 
-/**
- * Renders a tile layer.
- *
- * \ingroup rendering
- *
- * \param graphics the graphics context that will be used.
- * \param model the associated document model.
- * \param map the parent map.
- * \param layerEntity the entity that represents the tile layer.
- * \param parentOpacity the opacity of the parent layer.
- */
-void render_tile_layer(GraphicsCtx& graphics,
-                       const DocumentModel& model,
-                       const MapDocument& map,
-                       entt::entity layerEntity,
-                       float parentOpacity);
+void render_tile_layer(GraphicsCtx&           graphics,
+                       const MapDocument&     map,
+                       const core::TileLayer& layer,
+                       float                  parentOpacity);
 
 }  // namespace tactile::ui
