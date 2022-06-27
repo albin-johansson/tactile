@@ -40,8 +40,8 @@ namespace tactile {
 
 void DocumentModel::update()
 {
-  for (const auto& [id, document] : mDocuments) {
-    document->update();
+  if (mActiveDocument) {
+    lookup_in(mDocuments, *mActiveDocument)->update();
   }
 }
 
