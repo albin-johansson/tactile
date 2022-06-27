@@ -242,7 +242,7 @@ void Application::subscribe_to_events()
   d.sink<UpdateViewportLimitsEvent>().connect<&Self::on_update_viewport_limits>(this);
   d.sink<UpdateTilesetViewportLimitsEvent>().connect<&Self::on_update_tileset_viewport_limits>(this);
   d.sink<OffsetTilesetViewportEvent>().connect<&Self::on_offset_tileset_viewport>(this);
-  d.sink<OffsetViewportEvent>().connect<&Self::on_offset_viewport>(this);
+  d.sink<OffsetDocumentViewportEvent>().connect<&Self::on_offset_document_viewport>(this);
   d.sink<PanLeftEvent>().connect<&Self::on_pan_left>(this);
   d.sink<PanRightEvent>().connect<&Self::on_pan_right>(this);
   d.sink<PanUpEvent>().connect<&Self::on_pan_up>(this);
@@ -352,9 +352,10 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
   const auto* document = active_document();
   if (document && !ImGui::GetTopMostPopupModal()) {
-    const auto& registry = document->get_registry();
     if (ui::is_mouse_within_viewport()) {
-      ui::viewport_widget_mouse_wheel_event_handler(registry, mData->dispatcher, event);
+      ui::viewport_widget_mouse_wheel_event_handler(document->get_viewport(),
+                                                    mData->dispatcher,
+                                                    event);
     }
     else if (document->is_map() && ui::is_tileset_dock_hovered()) {
       const auto& mapDocument = mData->model.require_active_map();
@@ -588,10 +589,12 @@ void Application::on_add_point(const AddPointEvent& event)
 
 void Application::on_update_viewport_limits(const UpdateViewportLimitsEvent& event)
 {
-  auto& registry = mData->model.get_active_registry();
-  auto& limits = checked_get<comp::ViewportLimits>(registry, event.viewport_entity);
-  limits.min_offset = event.min_offset;
-  limits.max_offset = event.max_offset;
+  // TODO respect specified viewport
+  if (auto* document = active_document()) {
+    auto& viewport = document->get_viewport();
+    viewport.set_limits({event.min_offset, event.max_offset});
+  }
+}
 
 void Application::on_update_tileset_viewport_limits(
     const UpdateTilesetViewportLimitsEvent& event)
@@ -610,11 +613,12 @@ void Application::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& e
   }
 }
 
-void Application::on_offset_viewport(const OffsetViewportEvent& event)
+void Application::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
 {
-  // FIXME possible crash if tileset is removed when offsetting viewport
-  auto& registry = mData->model.get_active_registry();
-  sys::offset_viewport(registry, event.viewport_entity, {event.dx, event.dy});
+  if (auto* document = active_map_document()) {
+    auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
+    tilesetRef.viewport.offset(event.delta);
+  }
 }
 
 void Application::on_pan_left()

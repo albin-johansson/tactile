@@ -25,12 +25,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/components/viewport.hpp"
 #include "core/events/map_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/viewport_system.hpp"
+#include "core/viewport.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/button.hpp"
@@ -102,26 +101,28 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
   }
 }
 
-void viewport_widget_mouse_wheel_event_handler(const entt::registry& registry,
-                                               entt::dispatcher& dispatcher,
+void viewport_widget_mouse_wheel_event_handler(const core::Viewport&         viewport,
+                                               entt::dispatcher&             dispatcher,
                                                const cen::mouse_wheel_event& event)
 {
   constexpr float scaling = 4.0f;
 
-  const auto& viewport = ctx_get<comp::Viewport>(registry);
   if (cen::is_active(primary_modifier)) {
     const auto y = event.precise_y();
     if (y > 0) {
       dispatcher.enqueue<IncreaseZoomEvent>();
     }
-    else if (y < 0 && sys::can_decrease_viewport_zoom(registry)) {
+    else if (y < 0 && viewport.can_zoom_out()) {
       dispatcher.enqueue<DecreaseZoomEvent>();
     }
   }
   else {
-    const auto dx = event.precise_x() * (viewport.tile_size.x / scaling);
-    const auto dy = event.precise_y() * (viewport.tile_size.y / scaling);
-    dispatcher.enqueue<OffsetViewportEvent>(entt::null, -dx, dy);
+    const Vector2f precise{event.precise_x(), event.precise_y()};
+
+    auto delta = precise * (viewport.get_cell_size() / scaling);
+    delta.x = -delta.x;
+
+    dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
   }
 }
 

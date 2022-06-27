@@ -37,7 +37,8 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   const auto& viewport = document.get_viewport();
 
   const auto renderInfo = get_render_info(viewport, tileset);
-  update_viewport_offset(renderInfo.canvas_br - renderInfo.canvas_tl, dispatcher);
+  update_document_viewport_offset(renderInfo.canvas_br - renderInfo.canvas_tl,
+                                  dispatcher);
 
   GraphicsCtx graphics{renderInfo};
 

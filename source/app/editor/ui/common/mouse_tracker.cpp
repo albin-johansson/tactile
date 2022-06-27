@@ -33,12 +33,14 @@ constexpr auto _button_flags = ImGuiButtonFlags_MouseButtonLeft |
 
 }  // namespace
 
-void update_viewport_offset(const ImVec2& viewportSize, entt::dispatcher& dispatcher)
+void update_document_viewport_offset(const ImVec2&     viewportSize,
+                                     entt::dispatcher& dispatcher)
 {
-  ImGui::InvisibleButton("update_viewport_offset", viewportSize, _button_flags);
+  ImGui::InvisibleButton("update_document_viewport_offset", viewportSize, _button_flags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
-    const auto& io = ImGui::GetIO();
-    dispatcher.enqueue<OffsetViewportEvent>(entt::null, io.MouseDelta.x, io.MouseDelta.y);
+    const auto&    io = ImGui::GetIO();
+    const Vector2f delta{io.MouseDelta.x, io.MouseDelta.y};
+    dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
   }
 }
 

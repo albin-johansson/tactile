@@ -21,22 +21,18 @@
 
 #include <cmath>  // round
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/viewport.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/map_events.hpp"
 #include "core/events/object_events.hpp"
 #include "core/events/property_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/events/viewport_events.hpp"
+#include "core/layers/object_layer.hpp"
 #include "core/model.hpp"
-#include "core/systems/layers/layer_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "editor/ui/common/mouse_tracker.hpp"
 #include "editor/ui/icons.hpp"
@@ -93,19 +89,23 @@ void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, 
   }
 }
 
-void _center_viewport(entt::dispatcher& dispatcher,
-                      const comp::Viewport& viewport,
-                      const ImVec2& canvasSize,
-                      const float nRows,
-                      const float nCols)
+void _center_viewport(const core::Viewport& viewport,
+                      const ImVec2&         canvasSize,
+                      const float           nRows,
+                      const float           nCols,
+                      entt::dispatcher&     dispatcher)
 {
-  const auto width = nCols * viewport.tile_size.x;
-  const auto height = nRows * viewport.tile_size.y;
+  const auto& cell = viewport.get_cell_size();
+  const auto& offset = viewport.get_offset();
 
-  const auto dx = std::round(((canvasSize.x - width) / 2.0f) - viewport.offset.x);
-  const auto dy = std::round(((canvasSize.y - height) / 2.0f) - viewport.offset.y);
+  const auto width = nCols * cell.x;
+  const auto height = nRows * cell.y;
 
-  dispatcher.enqueue<OffsetViewportEvent>(entt::null, dx, dy);
+  const auto     dx = std::round(((canvasSize.x - width) / 2.0f) - offset.x);
+  const auto     dy = std::round(((canvasSize.y - height) / 2.0f) - offset.y);
+  const Vector2f delta{dx, dy};
+
+  dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 
 void _draw_cursor_gizmos(GraphicsCtx& graphics,
@@ -114,8 +114,9 @@ void _draw_cursor_gizmos(GraphicsCtx& graphics,
                          const ViewportCursorInfo& cursor,
                          const RenderInfo& info)
 {
-  const auto& registry = document.get_registry();
-  if (cursor.is_within_map && sys::is_tile_layer_active(registry)) {
+  const auto& map = document.get_map();
+
+  if (cursor.is_within_map && map.is_active_layer(LayerType::TileLayer)) {
     graphics.set_draw_color(cen::colors::lime.with_alpha(200));
     graphics.set_line_thickness(2);
     graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
@@ -175,14 +176,16 @@ void _update_context_menu(entt::dispatcher& dispatcher)
   }
 }
 
-void _update_map_view_object_context_menu(const entt::registry& registry,
-                                          entt::dispatcher& dispatcher)
+void _update_map_view_object_context_menu(const MapDocument& document,
+                                          entt::dispatcher&  dispatcher)
 {
   if (Popup popup{_object_context_menu_id}; popup.is_open()) {
-    const auto& active = ctx_get<comp::ActiveState>(registry);
+    const auto& map = document.get_map();
+    const auto* objectLayer = map.find_object_layer(map.active_layer_id().value());
+    TACTILE_ASSERT(objectLayer != nullptr);
 
-    TACTILE_ASSERT(active.object != entt::null);
-    const auto& object = checked_get<comp::Object>(registry, active.object);
+    const auto  objectId = objectLayer->active_object_id().value();
+    const auto& object = objectLayer->get_object(objectId);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
       dispatcher.enqueue<InspectContextEvent>(active.object);
@@ -221,14 +224,14 @@ void _update_map_view_object_context_menu(const entt::registry& registry,
 }  // namespace
 
 void show_map_viewport(const DocumentModel& model,
-                       const MapDocument& map,
-                       entt::dispatcher& dispatcher)
+                       const MapDocument&   document,
+                       entt::dispatcher&    dispatcher)
 {
-  const auto& registry = map.get_registry();
-  const auto& viewport = map.viewport();
+  const auto& map = document.get_map();
+  const auto& viewport = document.get_viewport();
 
-  const auto info = get_render_info(viewport, map.info());
-  update_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
+  const auto info = get_render_info(viewport, map);
+  update_document_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
 
   GraphicsCtx graphics{info};
 
@@ -239,21 +242,21 @@ void show_map_viewport(const DocumentModel& model,
 
   // TODO viewport should be centered by default
   if (_will_center_viewport) {
-    _center_viewport(dispatcher,
-                     viewport,
+    _center_viewport(viewport,
                      info.canvas_br - info.canvas_tl,
                      info.row_count,
-                     info.col_count);
+                     info.col_count,
+                     dispatcher);
     _will_center_viewport = false;
   }
 
-  render_map(graphics, model, map);
+  render_map(graphics, document);
 
   const auto cursor = get_viewport_cursor_info(info);
   _poll_mouse(dispatcher, cursor);
 
   if (Window::contains_mouse()) {
-    _draw_cursor_gizmos(graphics, model, map, cursor, info);
+    _draw_cursor_gizmos(graphics, model, document, cursor, info);
   }
 
   graphics.pop_clip();
