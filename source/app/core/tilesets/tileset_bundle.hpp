@@ -51,6 +51,9 @@ class TilesetBundle final
   /// Indicates whether there is a tileset with the specified tile identifier.
   [[nodiscard]] auto is_valid_tile(TileID id) const -> bool;
 
+  /// Finds the tileset that contains a specific global tile identifier.
+  [[nodiscard]] auto find_tileset(TileID tile) const -> Maybe<UUID>;
+
   [[nodiscard]] auto get_ref(const UUID& id) -> TilesetRef&;
   [[nodiscard]] auto get_ref(const UUID& id) const -> const TilesetRef&;
 

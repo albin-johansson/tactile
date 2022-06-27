@@ -100,6 +100,16 @@ auto TilesetBundle::is_valid_tile(const TileID id) const -> bool
   return mTileCache.contains(id);
 }
 
+auto TilesetBundle::find_tileset(const TileID tile) const -> Maybe<UUID>
+{
+  if (const auto iter = mTileCache.find(tile); iter != mTileCache.end()) [[likely]] {
+    return iter->second;
+  }
+  else {
+    return nothing;
+  }
+}
+
 auto TilesetBundle::get_ref(const UUID& id) -> TilesetRef&
 {
   return lookup_in(mRefs, id);
