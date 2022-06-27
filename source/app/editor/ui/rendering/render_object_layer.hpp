@@ -22,28 +22,17 @@
 #include <centurion/fwd.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile::ui {
 
-void render_object(GraphicsCtx& graphics,
-                   const entt::registry& registry,
-                   entt::entity objectEntity,
-                   const cen::color& color);
+void render_object(GraphicsCtx&        graphics,
+                   const core::Object& object,
+                   const cen::color&   color);
 
-/**
- * \brief Renders an object layer.
- *
- * \ingroup rendering
- *
- * \param graphics the graphics context that will be used.
- * \param registry the associated registry.
- * \param layerEntity the object layer entity.
- * \param parentOpacity the opacity of the parent layer.
- */
-void render_object_layer(GraphicsCtx& graphics,
-                         const entt::registry& registry,
-                         entt::entity layerEntity,
-                         float parentOpacity);
+void render_object_layer(GraphicsCtx&             graphics,
+                         const core::ObjectLayer& layer,
+                         float                    parentOpacity);
 
 }  // namespace tactile::ui

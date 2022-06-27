@@ -19,7 +19,6 @@
 
 #include "render_tile_layer.hpp"
 
-#include "core/documents/map_document.hpp"
 #include "core/layers/tile_layer.hpp"
 #include "core/region.hpp"
 #include "editor/ui/rendering/graphics.hpp"
@@ -28,7 +27,7 @@
 namespace tactile::ui {
 
 void render_tile_layer(GraphicsCtx&           graphics,
-                       const MapDocument&     document,
+                       const core::Map&       map,
                        const core::TileLayer& layer,
                        const float            parentOpacity)
 {
@@ -43,7 +42,7 @@ void render_tile_layer(GraphicsCtx&           graphics,
       const TilePos pos{row, col};
       const auto    tile = layer.tile_at(pos);
       if (tile != empty_tile) {
-        render_tile(graphics, document, tile, pos);
+        render_tile(graphics, map, tile, pos);
       }
     }
   }

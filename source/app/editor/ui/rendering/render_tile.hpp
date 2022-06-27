@@ -27,9 +27,9 @@ struct ImVec2;
 
 namespace tactile::ui {
 
-void render_tile(GraphicsCtx&       graphics,
-                 const MapDocument& document,
-                 TileID             tileId,
-                 const TilePos&     pos);
+void render_tile(GraphicsCtx&     graphics,
+                 const core::Map& map,
+                 TileID           tileId,
+                 const TilePos&   pos);
 
 }  // namespace tactile::ui

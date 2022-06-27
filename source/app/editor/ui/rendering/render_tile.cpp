@@ -28,14 +28,14 @@
 
 namespace tactile::ui {
 
-void render_tile(GraphicsCtx&       graphics,
-                 const MapDocument& document,
-                 const TileID       tileId,
-                 const TilePos&     pos)
+void render_tile(GraphicsCtx&     graphics,
+                 const core::Map& map,
+                 const TileID     tileId,
+                 const TilePos&   pos)
 {
   TACTILE_ASSERT(tileId != empty_tile);
 
-  const auto& tilesets = document.get_map().get_tilesets();
+  const auto& tilesets = map.get_tilesets();
   const auto  tilesetId = tilesets.find_tileset(tileId);
 
   if (!tilesetId) {

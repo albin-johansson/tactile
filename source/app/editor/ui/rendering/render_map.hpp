@@ -19,24 +19,11 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
 #include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile::ui {
 
-/**
- * Renders a map.
- *
- * \param graphics the graphics context that will be used.
- * \param model the associated document model.
- * \param map the map that will be rendered.
- *
- * \ingroup rendering
- */
-void render_map(GraphicsCtx& graphics,
-                const DocumentModel& model,
-                const MapDocument& map);
+void render_map(GraphicsCtx& graphics, const MapDocument& document);
 
 }  // namespace tactile::ui
