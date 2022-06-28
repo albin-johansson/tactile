@@ -54,4 +54,9 @@ void RenameComponentAttrCmd::redo()
   definition.rename_attr(mPreviousName, mUpdatedName);
 }
 
+auto RenameComponentAttrCmd::get_name() const -> const char*
+{
+  return "Rename Component Attribute";
+}
+
 }  // namespace tactile
