@@ -24,6 +24,7 @@
 #include <entt/entity/entity.hpp>
 
 #include "core/attribute.hpp"
+#include "core/common/uuid.hpp"
 
 namespace tactile {
 
@@ -46,8 +47,9 @@ struct ShowRenamePropertyDialogEvent final
 
 struct AddPropertyEvent final
 {
-  std::string name;      ///< The chosen name.
-  AttributeType type{};  ///< The chosen type.
+  UUID          context_id{};  /// Target context.
+  std::string   name;          /// The property name.
+  AttributeType type{};        /// The property type.
 };
 
 struct RemovePropertyEvent final
