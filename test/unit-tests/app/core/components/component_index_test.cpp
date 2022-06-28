@@ -21,6 +21,7 @@
 
 #include <gtest/gtest.h>
 
+#include "core/components/component_definition.hpp"
 #include "misc/panic.hpp"
 
 using namespace tactile;
