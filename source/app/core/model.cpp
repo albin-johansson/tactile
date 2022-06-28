@@ -26,11 +26,8 @@
 
 #include "core/commands/command_stack.hpp"
 #include "core/commands/commands.hpp"
-#include "core/components/map_info.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
-#include "core/systems/animation_system.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
 #include "core/tilesets/tileset_info.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "misc/assert.hpp"
