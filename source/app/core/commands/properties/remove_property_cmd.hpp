@@ -23,20 +23,23 @@
 
 #include "core/attribute.hpp"
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class RemovePropertyCmd final : public ACommand
 {
  public:
-  RemovePropertyCmd(RegistryRef registry, std::string name);
+  RemovePropertyCmd(Shared<core::IContext> context, std::string name);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -44,10 +47,9 @@ class RemovePropertyCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ContextID mContextId;
-  std::string mName;
-  Maybe<Attribute> mPreviousValue;
+  Shared<core::IContext> mContext;
+  std::string            mName;
+  Maybe<Attribute>       mPreviousValue;
 };
 
 }  // namespace tactile

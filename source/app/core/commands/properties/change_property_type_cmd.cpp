@@ -21,38 +21,48 @@
 
 #include <utility>  // move
 
-#include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/context.hpp"
+#include "core/property_bundle.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-ChangePropertyTypeCmd::ChangePropertyTypeCmd(RegistryRef registry,
-                                             std::string name,
-                                             const AttributeType type)
+ChangePropertyTypeCmd::ChangePropertyTypeCmd(Shared<core::IContext> context,
+                                             std::string            name,
+                                             const AttributeType    type)
     : ACommand{"Change Property Type"}
-    , mRegistry{registry}
-    , mContextId{sys::current_context(mRegistry).id}
+    , mContext{std::move(context)}
     , mName{std::move(name)}
     , mPropertyType{type}
-{}
+{
+  if (!mContext) {
+    throw TactileError{"Invalid null context!"};
+  }
+}
 
 void ChangePropertyTypeCmd::undo()
 {
-  const auto& value = mPreviousValue.value();
-  const auto type = value.type();
+  auto& props = mContext->get_props();
 
-  auto& context = sys::get_context(mRegistry, mContextId);
-  sys::change_property_type(mRegistry, context, mName, type);
-  sys::update_property(mRegistry, context, mName, value);
+  const auto& value = mPreviousValue.value();
+  const auto  type = value.type();
+
+  props.change_type(mName, type);
+  props.update(mName, value);
 
   mPreviousValue.reset();
 }
 
 void ChangePropertyTypeCmd::redo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  mPreviousValue = sys::get_property(mRegistry, context, mName).value;
-  sys::change_property_type(mRegistry, context, mName, mPropertyType);
+  auto& props = mContext->get_props();
+  mPreviousValue = props.at(mName);
+  props.change_type(mName, mPropertyType);
+}
+
+auto ChangePropertyTypeCmd::get_name() const -> const char*
+{
+  return "Change Property Type";
 }
 
 }  // namespace tactile

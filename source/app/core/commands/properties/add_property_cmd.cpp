@@ -21,31 +21,40 @@
 
 #include <utility>  // move
 
-#include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/context.hpp"
+#include "core/property_bundle.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-AddPropertyCmd::AddPropertyCmd(RegistryRef registry,
-                               std::string name,
-                               const AttributeType type)
+AddPropertyCmd::AddPropertyCmd(Shared<core::IContext> context,
+                               std::string            name,
+                               const AttributeType    type)
     : ACommand{"Add Property"}
-    , mRegistry{registry}
-    , mContextId{sys::current_context(mRegistry).id}
+    , mContext{std::move(context)}
     , mName{std::move(name)}
     , mType{type}
-{}
+{
+  if (!mContext) {
+    throw TactileError{"Invalid null context!"};
+  }
+}
 
 void AddPropertyCmd::undo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  sys::remove_property(mRegistry, context, mName);
+  auto& props = mContext->get_props();
+  props.remove(mName);
 }
 
 void AddPropertyCmd::redo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  sys::add_property(mRegistry, context, mName, mType);
+  auto& props = mContext->get_props();
+  props.add(mName, mType);
+}
+
+auto AddPropertyCmd::get_name() const -> const char*
+{
+  return "Add Property";
 }
 
 }  // namespace tactile

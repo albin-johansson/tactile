@@ -23,16 +23,18 @@
 
 #include "core/attribute.hpp"
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class ChangePropertyTypeCmd final : public ACommand
 {
  public:
-  ChangePropertyTypeCmd(RegistryRef registry, std::string name, AttributeType type);
+  ChangePropertyTypeCmd(Shared<core::IContext> context,
+                        std::string            name,
+                        AttributeType          type);
 
   void undo() override;
 
@@ -43,12 +45,13 @@ class ChangePropertyTypeCmd final : public ACommand
     return CommandId::ChangePropertyType;
   }
 
+  [[nodiscard]] auto get_name() const -> const char* override;
+
  private:
-  RegistryRef mRegistry;
-  ContextID mContextId;
-  std::string mName;
-  AttributeType mPropertyType;
-  Maybe<Attribute> mPreviousValue;
+  Shared<core::IContext> mContext;
+  std::string            mName;
+  AttributeType          mPropertyType;
+  Maybe<Attribute>       mPreviousValue;
 };
 
 }  // namespace tactile

@@ -21,46 +21,55 @@
 
 #include <utility>  // move
 
-#include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/context.hpp"
+#include "core/property_bundle.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-UpdatePropertyCmd::UpdatePropertyCmd(RegistryRef registry,
-                                     std::string name,
-                                     Attribute value)
-    : ACommand{"update Property"}
-    , mRegistry{registry}
-    , mContextId{sys::current_context(mRegistry).id}
+UpdatePropertyCmd::UpdatePropertyCmd(Shared<core::IContext> context,
+                                     std::string            name,
+                                     Attribute              value)
+    : ACommand{"Update Property"}
+    , mContext{std::move(context)}
     , mName{std::move(name)}
     , mNewValue{std::move(value)}
-{}
+{
+  if (!mContext) {
+    throw TactileError{"Invalid null context!"};
+  }
+}
 
 void UpdatePropertyCmd::undo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  sys::update_property(mRegistry, context, mName, mOldValue.value());
+  auto& props = mContext->get_props();
+  props.update(mName, mOldValue.value());
   mOldValue.reset();
 }
 
 void UpdatePropertyCmd::redo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  mOldValue = sys::get_property(mRegistry, context, mName).value;
-  sys::update_property(mRegistry, context, mName, mNewValue);
+  auto& props = mContext->get_props();
+  mOldValue = props.at(mName);
+  props.update(mName, mNewValue);
 }
 
 auto UpdatePropertyCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const UpdatePropertyCmd&>(cmd);
-    if (mContextId == other.mContextId && mName == other.mName) {
+    if (mContext->get_uuid() == other.mContext->get_uuid() && mName == other.mName) {
       mNewValue = other.mNewValue;
       return true;
     }
   }
 
   return false;
+}
+
+auto UpdatePropertyCmd::get_name() const -> const char*
+{
+  return "Update Property";
 }
 
 }  // namespace tactile

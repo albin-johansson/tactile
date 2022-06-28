@@ -21,31 +21,40 @@
 
 #include <utility>  // move
 
-#include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/context.hpp"
+#include "core/property_bundle.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-RenamePropertyCmd::RenamePropertyCmd(RegistryRef registry,
-                                     std::string oldName,
-                                     std::string newName)
+RenamePropertyCmd::RenamePropertyCmd(Shared<core::IContext> context,
+                                     std::string            oldName,
+                                     std::string            newName)
     : ACommand{"Rename Property"}
-    , mRegistry{registry}
-    , mContextId{sys::current_context(mRegistry).id}
+    , mContext{std::move(context)}
     , mOldName{std::move(oldName)}
     , mNewName{std::move(newName)}
-{}
+{
+  if (!mContext) {
+    throw TactileError{"Invalid null context!"};
+  }
+}
 
 void RenamePropertyCmd::undo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  sys::rename_property(mRegistry, context, mNewName, mOldName);
+  auto& props = mContext->get_props();
+  props.rename(mNewName, mOldName);
 }
 
 void RenamePropertyCmd::redo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  sys::rename_property(mRegistry, context, mOldName, mNewName);
+  auto& props = mContext->get_props();
+  props.rename(mOldName, mNewName);
+}
+
+auto RenamePropertyCmd::get_name() const -> const char*
+{
+  return "Rename Property";
 }
 
 }  // namespace tactile

@@ -22,19 +22,23 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
+#include "core/common/memory.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class RenamePropertyCmd final : public ACommand
 {
  public:
-  RenamePropertyCmd(RegistryRef registry, std::string oldName, std::string newName);
+  RenamePropertyCmd(Shared<core::IContext> context,
+                    std::string            oldName,
+                    std::string            newName);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -42,10 +46,9 @@ class RenamePropertyCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ContextID mContextId;
-  std::string mOldName;
-  std::string mNewName;
+  Shared<core::IContext> mContext;
+  std::string            mOldName;
+  std::string            mNewName;
 };
 
 }  // namespace tactile

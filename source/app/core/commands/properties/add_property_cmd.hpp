@@ -23,19 +23,22 @@
 
 #include "core/attribute.hpp"
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
 class AddPropertyCmd final : public ACommand
 {
  public:
-  AddPropertyCmd(RegistryRef registry, std::string name, AttributeType type);
+  AddPropertyCmd(Shared<core::IContext> context, std::string name, AttributeType type);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -43,10 +46,9 @@ class AddPropertyCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ContextID mContextId;
-  std::string mName;
-  AttributeType mType;
+  Shared<core::IContext> mContext;
+  std::string            mName;
+  AttributeType          mType;
 };
 
 }  // namespace tactile

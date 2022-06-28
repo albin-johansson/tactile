@@ -21,30 +21,39 @@
 
 #include <utility>  // move
 
-#include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/context.hpp"
+#include "core/property_bundle.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-RemovePropertyCmd::RemovePropertyCmd(RegistryRef registry, std::string name)
+RemovePropertyCmd::RemovePropertyCmd(Shared<core::IContext> context, std::string name)
     : ACommand{"Remove Property"}
-    , mRegistry{registry}
-    , mContextId{sys::current_context(mRegistry).id}
+    , mContext{std::move(context)}
     , mName{std::move(name)}
-{}
+{
+  if (!mContext) {
+    throw TactileError{"Invalid null context!"};
+  }
+}
 
 void RemovePropertyCmd::undo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  sys::add_property(mRegistry, context, mName, mPreviousValue.value());
+  auto& props = mContext->get_props();
+  props.add(mName, mPreviousValue.value());
   mPreviousValue.reset();
 }
 
 void RemovePropertyCmd::redo()
 {
-  auto& context = sys::get_context(mRegistry, mContextId);
-  mPreviousValue = sys::get_property(mRegistry, context, mName).value;
-  sys::remove_property(mRegistry, context, mName);
+  auto& props = mContext->get_props();
+  mPreviousValue = props.at(mName);
+  props.remove(mName);
+}
+
+auto RemovePropertyCmd::get_name() const -> const char*
+{
+  return "Remove Property";
 }
 
 }  // namespace tactile
