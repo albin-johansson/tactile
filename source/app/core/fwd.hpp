@@ -46,10 +46,10 @@ namespace core {
 class IElement;
 class IContext;
 
-class ComponentBundle;
-class PropertyBundle;
 class ContextDelegate;
-
+class PropertyBundle;
+class ComponentBundle;
+class Component;
 class ComponentDefinition;
 class ComponentIndex;
 
