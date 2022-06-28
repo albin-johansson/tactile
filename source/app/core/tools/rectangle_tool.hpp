@@ -19,11 +19,17 @@
 
 #pragma once
 
+#include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/tools.hpp"
 #include "core/tools/tool.hpp"
 
 namespace tactile {
+
+struct CurrentRectangleStroke final
+{
+  Vector2f start{};
+  Vector2f current{};
+};
 
 class RectangleTool final : public ATool
 {
@@ -53,7 +59,7 @@ class RectangleTool final : public ATool
   [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Rectangle; }
 
  private:
-  Maybe<comp::CurrentRectangleStroke> mStroke;
+  Maybe<CurrentRectangleStroke> mStroke;
 
   void maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher);
 };
