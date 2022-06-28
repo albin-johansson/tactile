@@ -20,11 +20,15 @@
 #pragma once
 
 #include <concepts>  // integral
+#include <vector>    // vector
 
+#include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
-#include "core/components/layers.hpp"
 
 namespace tactile {
+
+using TileRow = std::vector<TileID>;
+using TileMatrix = std::vector<TileRow>;
 
 template <typename T>
 struct MatrixCoords final
