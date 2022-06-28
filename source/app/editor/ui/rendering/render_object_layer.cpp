@@ -26,10 +26,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/common/ecs.hpp"
-
-#include "core/components/layers.hpp"
-#include "core/components/objects.hpp"
 #include "core/layers/object.hpp"
 #include "core/layers/object_layer.hpp"
 #include "editor/ui/rendering/graphics.hpp"
@@ -160,7 +156,7 @@ void render_object_layer(GraphicsCtx&             graphics,
   const auto objectColor = cen::color::from_norm(1, 0, 0, opacity);
 
   for (const auto& [id, object] : layer) {
-    render_object(graphics, object, objectColor);
+    render_object(graphics, *object, objectColor);
   }
 }
 

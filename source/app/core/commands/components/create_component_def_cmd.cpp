@@ -21,31 +21,41 @@
 
 #include <utility>  // move
 
-#include "core/systems/component_system.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-CreateComponentDefCmd::CreateComponentDefCmd(RegistryRef registry, std::string name)
+CreateComponentDefCmd::CreateComponentDefCmd(Shared<core::ComponentIndex> index,
+                                             std::string                  name)
     : ACommand{"Create Component Definition"}
-    , mRegistry{registry}
+    , mIndex{std::move(index)}
     , mName{std::move(name)}
-{}
+{
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+}
 
 void CreateComponentDefCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::remove_component_def(registry, mComponentId.value());
+  mIndex->remove_comp(mComponentId.value());
 }
 
 void CreateComponentDefCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  if (!mComponentId) {
-    mComponentId = sys::make_component_def(registry, mName);
+  if (mComponentId) {
+    mIndex->define_comp(*mComponentId, mName);
   }
   else {
-    sys::make_component_def(mRegistry, *mComponentId, mName);
+    mComponentId = mIndex->define_comp(mName);
   }
+}
+
+auto CreateComponentDefCmd::get_name() const -> const char*
+{
+  return "Create Component Definition";
 }
 
 }  // namespace tactile

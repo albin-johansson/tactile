@@ -19,25 +19,42 @@
 
 #include "remove_component_def_cmd.hpp"
 
+#include <utility>  // move
+
+#include "core/components/component_index.hpp"
+
 namespace tactile {
 
-RemoveComponentDefCmd::RemoveComponentDefCmd(RegistryRef registry, const ComponentID& id)
+RemoveComponentDefCmd::RemoveComponentDefCmd(Shared<core::ComponentIndex> index,
+                                             const UUID&                  componentId)
     : ACommand{"Remove Component Definition"}
-    , mRegistry{registry}
-    , mComponentId{id}
+    , mIndex{std::move(index)}
+    , mComponentId{componentId}
 {}
 
 void RemoveComponentDefCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::restore_component_def(registry, mSnapshot.value());
-  mSnapshot.reset();
+  const auto& previous = mPrevious.value();
+
+  mIndex->define_comp(mComponentId, previous.get_name());
+  auto& definition = mIndex->at(mComponentId);
+
+  for (const auto& [key, value] : previous) {
+    definition.add_attr(key, value);
+  }
+
+  mPrevious.reset();
 }
 
 void RemoveComponentDefCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  mSnapshot = sys::remove_component_def(registry, mComponentId);
+  mPrevious = mIndex->at(mComponentId);
+  mIndex->remove_comp(mComponentId);
+}
+
+auto RemoveComponentDefCmd::get_name() const -> const char*
+{
+  return "Remove Component Definition";
 }
 
 }  // namespace tactile

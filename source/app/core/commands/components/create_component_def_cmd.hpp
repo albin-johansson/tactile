@@ -22,21 +22,24 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for defining new components.
 class CreateComponentDefCmd final : public ACommand
 {
  public:
-  CreateComponentDefCmd(RegistryRef registry, std::string name);
+  CreateComponentDefCmd(Shared<core::ComponentIndex> index, std::string name);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -44,9 +47,9 @@ class CreateComponentDefCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  std::string mName;
-  Maybe<ComponentID> mComponentId;
+  Shared<core::ComponentIndex> mIndex;
+  std::string                  mName;
+  Maybe<UUID>                  mComponentId;
 };
 
 }  // namespace tactile

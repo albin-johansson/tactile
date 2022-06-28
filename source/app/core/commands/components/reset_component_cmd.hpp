@@ -20,23 +20,28 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
-#include "core/systems/component_system.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/components/component.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for resetting the attributes of an attached component.
 class ResetComponentCmd final : public ACommand
 {
  public:
-  ResetComponentCmd(RegistryRef registry,
-                    ContextID contextId,
-                    const ComponentID& componentId);
+  ResetComponentCmd(Shared<core::ComponentIndex> index,
+                    Shared<core::IContext>       context,
+                    const UUID&                  contextId,
+                    const UUID&                  componentId);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -44,10 +49,11 @@ class ResetComponentCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ContextID mContextId{};
-  ComponentID mComponentId{};
-  Maybe<sys::ResetComponentResult> mSnapshot;
+  Shared<core::ComponentIndex> mIndex;
+  Shared<core::IContext>       mContext;
+  UUID                         mContextId{};
+  UUID                         mComponentId{};
+  Maybe<core::Component>       mComponent;
 };
 
 }  // namespace tactile

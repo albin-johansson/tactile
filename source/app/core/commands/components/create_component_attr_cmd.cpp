@@ -21,29 +21,40 @@
 
 #include <utility>  // move
 
-#include "core/systems/component_system.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-CreateComponentAttrCmd::CreateComponentAttrCmd(RegistryRef registry,
-                                               const ComponentID& id,
-                                               std::string name)
+CreateComponentAttrCmd::CreateComponentAttrCmd(Shared<core::ComponentIndex> index,
+                                               const UUID&                  componentId,
+                                               std::string                  name)
     : ACommand{"Create Component Attribute"}
-    , mRegistry{registry}
-    , mComponentId{id}
+    , mIndex{std::move(index)}
+    , mComponentId{componentId}
     , mName{std::move(name)}
-{}
+{
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+}
 
 void CreateComponentAttrCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::remove_component_attribute(registry, mComponentId, mName);
+  auto& definition = mIndex->at(mComponentId);
+  definition.remove_attr(mName);
 }
 
 void CreateComponentAttrCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  sys::make_component_attribute(registry, mComponentId, mName);
+  auto& definition = mIndex->at(mComponentId);
+  definition.add_attr(mName);
+}
+
+auto CreateComponentAttrCmd::get_name() const -> const char*
+{
+  return "Create Component Attribute";
 }
 
 }  // namespace tactile

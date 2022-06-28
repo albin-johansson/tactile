@@ -21,31 +21,37 @@
 
 #include <utility>  // move
 
-#include "core/systems/component_system.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-RenameComponentAttrCmd::RenameComponentAttrCmd(RegistryRef registry,
-                                               const ComponentID& id,
-                                               std::string previousName,
-                                               std::string updatedName)
+RenameComponentAttrCmd::RenameComponentAttrCmd(Shared<core::ComponentIndex> index,
+                                               const UUID&                  componentId,
+                                               std::string                  previousName,
+                                               std::string                  updatedName)
     : ACommand{"Rename Component Attribute"}
-    , mRegistry{registry}
-    , mComponentId{id}
+    , mIndex{std::move(index)}
+    , mComponentId{componentId}
     , mPreviousName{std::move(previousName)}
     , mUpdatedName{std::move(updatedName)}
-{}
+{
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+}
 
 void RenameComponentAttrCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::rename_component_attribute(registry, mComponentId, mUpdatedName, mPreviousName);
+  auto& definition = mIndex->at(mComponentId);
+  definition.rename_attr(mUpdatedName, mPreviousName);
 }
 
 void RenameComponentAttrCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  sys::rename_component_attribute(registry, mComponentId, mPreviousName, mUpdatedName);
+  auto& definition = mIndex->at(mComponentId);
+  definition.rename_attr(mPreviousName, mUpdatedName);
 }
 
 }  // namespace tactile

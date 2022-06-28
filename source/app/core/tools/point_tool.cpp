@@ -22,7 +22,6 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/tools.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"

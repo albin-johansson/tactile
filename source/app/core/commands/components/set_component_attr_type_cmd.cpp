@@ -21,32 +21,50 @@
 
 #include <utility>  // move
 
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "misc/panic.hpp"
+
 namespace tactile {
 
-SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(RegistryRef registry,
-                                                 const ComponentID& id,
-                                                 std::string attribute,
-                                                 const AttributeType type)
-    : ACommand{"Set Component Attribute Type"}
-    , mRegistry{registry}
-    , mComponentId{id}
+SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(Shared<core::ComponentIndex> index,
+                                                 const UUID&                  componentId,
+                                                 std::string                  attribute,
+                                                 const AttributeType          type)
+    : ACommand{"Change Component Attribute Type"}
+    , mIndex{std::move(index)}
+    , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
     , mNewType{type}
-{}
+{
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+}
 
 void SetComponentAttrTypeCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::restore_component_attribute_type(registry, mSnapshot.value());
+  auto& definition = mIndex->at(mComponentId);
+
+  definition.remove_attr(mAttributeName);
+  definition.add_attr(mAttributeName, mSnapshot.value());
+
   mSnapshot.reset();
 }
 
 void SetComponentAttrTypeCmd::redo()
 {
-  auto& registry = mRegistry.get();
+  auto& definition = mIndex->at(mComponentId);
 
-  mSnapshot =
-      sys::set_component_attribute_type(registry, mComponentId, mAttributeName, mNewType);
+  mSnapshot = definition.get_attr(mAttributeName);
+
+  definition.remove_attr(mAttributeName);
+  definition.add_attr(mAttributeName, mNewType);
+}
+
+auto SetComponentAttrTypeCmd::get_name() const -> const char*
+{
+  return "Change Component Attribute Type";
 }
 
 }  // namespace tactile

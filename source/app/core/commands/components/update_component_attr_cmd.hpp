@@ -21,21 +21,24 @@
 
 #include <string>  // string
 
+#include "core/attribute.hpp"
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// Command for changing the default value of an attribute in a component.
+/// TODO: better name (confusing with UpdateComponentCmd)
 class UpdateComponentAttrCmd final : public ACommand
 {
  public:
-  UpdateComponentAttrCmd(RegistryRef registry,
-                         const ComponentID& id,
-                         std::string attribute,
-                         Attribute value);
+  UpdateComponentAttrCmd(Shared<core::ComponentIndex> index,
+                         const UUID&                  componentId,
+                         std::string                  attribute,
+                         Attribute                    value);
 
   void undo() override;
 
@@ -43,17 +46,19 @@ class UpdateComponentAttrCmd final : public ACommand
 
   [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
+  [[nodiscard]] auto get_name() const -> const char* override;
+
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
     return CommandId::UpdateComponentAttribute;
   }
 
  private:
-  RegistryRef mRegistry;
-  ComponentID mComponentId{};
-  std::string mAttributeName;
-  Attribute mUpdatedValue;
-  Maybe<Attribute> mPreviousValue;
+  Shared<core::ComponentIndex> mIndex;
+  UUID                         mComponentId{};
+  std::string                  mAttributeName;
+  Attribute                    mUpdatedValue;
+  Maybe<Attribute>             mPreviousValue;
 };
 
 }  // namespace tactile

@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-void RectangleTool::draw_gizmos(const DocumentModel& model,
+void RectangleTool::draw_gizmos(const DocumentModel&,
                                 IRenderer& renderer,
                                 const MouseInfo&) const
 {

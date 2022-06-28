@@ -21,35 +21,42 @@
 
 #include <utility>  // move
 
-#include "core/systems/component_system.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-RemoveComponentAttrCmd::RemoveComponentAttrCmd(RegistryRef registry,
-                                               const ComponentID& componentId,
-                                               std::string attribute)
+RemoveComponentAttrCmd::RemoveComponentAttrCmd(Shared<core::ComponentIndex> index,
+                                               const UUID&                  componentId,
+                                               std::string                  attribute)
     : ACommand{"Remove Component Attribute"}
-    , mRegistry{registry}
+    , mIndex{std::move(index)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
-{}
+{
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+}
 
 void RemoveComponentAttrCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::make_component_attribute(registry,
-                                mComponentId,
-                                mAttributeName,
-                                mPreviousDefault.value());
-  mPreviousDefault.reset();
+  auto& definition = mIndex->at(mComponentId);
+  definition.add_attr(mAttributeName, mPreviousValue.value());
+  mPreviousValue.reset();
 }
 
 void RemoveComponentAttrCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  mPreviousDefault =
-      sys::get_component_attribute_value(registry, mComponentId, mAttributeName);
-  sys::remove_component_attribute(registry, mComponentId, mAttributeName);
+  auto& definition = mIndex->at(mComponentId);
+  mPreviousValue = definition.get_attr(mAttributeName);
+  definition.remove_attr(mAttributeName);
+}
+
+auto RemoveComponentAttrCmd::get_name() const -> const char*
+{
+  return "Remove Component Attribute";
 }
 
 }  // namespace tactile

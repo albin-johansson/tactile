@@ -23,20 +23,21 @@
 
 #include "core/attribute.hpp"
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for updating the attribute of a component attached to a context.
 class UpdateComponentCmd final : public ACommand
 {
  public:
-  UpdateComponentCmd(RegistryRef registry,
-                     ContextID contextId,
-                     const ComponentID& componentId,
-                     std::string attribute,
-                     Attribute value);
+  UpdateComponentCmd(Shared<core::IContext> context,
+                     const UUID&            componentId,
+                     std::string            attribute,
+                     Attribute              value);
 
   void undo() override;
 
@@ -44,18 +45,19 @@ class UpdateComponentCmd final : public ACommand
 
   [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
 
+  [[nodiscard]] auto get_name() const -> const char* override;
+
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
     return CommandId::UpdateComponent;
   }
 
  private:
-  RegistryRef mRegistry;
-  ContextID mContextId{};
-  ComponentID mComponentId{};
-  std::string mAttributeName;
-  Attribute mUpdatedValue;
-  Maybe<Attribute> mPreviousValue;
+  Shared<core::IContext> mContext;
+  UUID                   mComponentId{};
+  std::string            mAttributeName;
+  Attribute              mUpdatedValue;
+  Maybe<Attribute>       mPreviousValue;
 };
 
 }  // namespace tactile

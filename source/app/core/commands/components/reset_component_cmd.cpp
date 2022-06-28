@@ -19,33 +19,53 @@
 
 #include "reset_component_cmd.hpp"
 
+#include <utility>  // move
+
+#include "core/components/component_bundle.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "core/context.hpp"
+#include "misc/panic.hpp"
+
 namespace tactile {
 
-ResetComponentCmd::ResetComponentCmd(RegistryRef registry,
-                                     const ContextID contextId,
-                                     const ComponentID& componentId)
+ResetComponentCmd::ResetComponentCmd(Shared<core::ComponentIndex> index,
+                                     Shared<core::IContext>       context,
+                                     const UUID&                  contextId,
+                                     const UUID&                  componentId)
     : ACommand{"Reset Component Values"}
-    , mRegistry{registry}
+    , mIndex{std::move(index)}
+    , mContext{std::move(context)}
     , mContextId{contextId}
     , mComponentId{componentId}
-{}
+{
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+  else if (!mContext) {
+    throw TactileError{"Invalid null context!"};
+  }
+}
 
 void ResetComponentCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  const auto& snapshot = mSnapshot.value();
+  auto& comps = mContext->get_comps();
 
-  for (const auto& [name, value] : snapshot.values) {
-    sys::update_component(registry, mContextId, mComponentId, name, value);
-  }
+  comps.erase(mComponentId);
+  comps.add(mComponent.value());
 
-  mSnapshot.reset();
+  mComponent.reset();
 }
 
 void ResetComponentCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  mSnapshot = sys::reset_component(registry, mContextId, mComponentId);
+  auto&       comps = mContext->get_comps();
+  const auto& definition = mIndex->at(mComponentId);
+
+  mComponent = comps.at(mComponentId);
+
+  comps.erase(mComponentId);
+  comps.add(definition.instantiate());
 }
 
 }  // namespace tactile

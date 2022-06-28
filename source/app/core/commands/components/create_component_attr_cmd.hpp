@@ -22,19 +22,25 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/components/attributes.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for adding an attribute to a component definition.
 class CreateComponentAttrCmd final : public ACommand
 {
  public:
-  CreateComponentAttrCmd(RegistryRef registry, const ComponentID& id, std::string name);
+  CreateComponentAttrCmd(Shared<core::ComponentIndex> index,
+                         const UUID&                  componentId,
+                         std::string                  name);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -42,9 +48,9 @@ class CreateComponentAttrCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ComponentID mComponentId{};
-  std::string mName;
+  Shared<core::ComponentIndex> mIndex;
+  UUID                         mComponentId{};
+  std::string                  mName;
 };
 
 }  // namespace tactile

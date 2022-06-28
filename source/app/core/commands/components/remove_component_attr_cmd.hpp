@@ -21,23 +21,28 @@
 
 #include <string>  // string
 
+#include "core/attribute.hpp"
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for removing an attribute from a component definition.
 class RemoveComponentAttrCmd final : public ACommand
 {
  public:
-  RemoveComponentAttrCmd(RegistryRef registry,
-                         const ComponentID& componentId,
-                         std::string attribute);
+  RemoveComponentAttrCmd(Shared<core::ComponentIndex> index,
+                         const UUID&                  componentId,
+                         std::string                  attribute);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -45,10 +50,10 @@ class RemoveComponentAttrCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ComponentID mComponentId{};
-  std::string mAttributeName;
-  Maybe<Attribute> mPreviousDefault;
+  Shared<core::ComponentIndex> mIndex;
+  UUID                         mComponentId{};
+  std::string                  mAttributeName;
+  Maybe<Attribute>             mPreviousValue;
 };
 
 }  // namespace tactile

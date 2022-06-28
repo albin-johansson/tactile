@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
@@ -30,7 +30,9 @@ namespace tactile {
 class AttachComponentCmd final : public ACommand
 {
  public:
-  AttachComponentCmd(ADocument* document, const UUID& contextId, const UUID& componentId);
+  AttachComponentCmd(Shared<core::ComponentIndex> index,
+                     Shared<core::IContext>       context,
+                     const UUID&                  componentId);
 
   void undo() override;
 
@@ -42,9 +44,9 @@ class AttachComponentCmd final : public ACommand
   }
 
  private:
-  ADocument* mDocument{};
-  UUID mContextId{};
-  UUID mComponentId{};
+  Shared<core::ComponentIndex> mIndex;
+  Shared<core::IContext>       mContext;
+  UUID                         mComponentId{};
 };
 
 }  // namespace tactile

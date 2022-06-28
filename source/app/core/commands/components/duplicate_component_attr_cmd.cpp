@@ -21,31 +21,41 @@
 
 #include <utility>  // move
 
-#include "core/systems/component_system.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-DuplicateComponentAttrCmd::DuplicateComponentAttrCmd(RegistryRef registry,
-                                                     const ComponentID& componentId,
+DuplicateComponentAttrCmd::DuplicateComponentAttrCmd(Shared<core::ComponentIndex> index,
+                                                     const UUID& componentId,
                                                      std::string attribute)
     : ACommand{"Duplicate Component Attribute"}
-    , mRegistry{registry}
+    , mIndex{std::move(index)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
-{}
+{
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+}
 
 void DuplicateComponentAttrCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::remove_component_attribute(registry, mComponentId, mDuplicatedName.value());
+  auto& definition = mIndex->at(mComponentId);
+  definition.remove_attr(mDuplicatedName.value());
   mDuplicatedName.reset();
 }
 
 void DuplicateComponentAttrCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  mDuplicatedName =
-      sys::duplicate_component_attribute(registry, mComponentId, mAttributeName);
+  auto& definition = mIndex->at(mComponentId);
+  mDuplicatedName = definition.duplicate_attr(mAttributeName);
+}
+
+auto DuplicateComponentAttrCmd::get_name() const -> const char*
+{
+  return "Duplicate Component Attribute";
 }
 
 }  // namespace tactile

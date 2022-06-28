@@ -21,40 +21,39 @@
 
 #include <utility>  // move
 
-#include "core/systems/component_system.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-UpdateComponentAttrCmd::UpdateComponentAttrCmd(RegistryRef registry,
-                                               const ComponentID& id,
-                                               std::string attribute,
-                                               Attribute value)
-    : ACommand{"update Component Attribute"}
-    , mRegistry{registry}
-    , mComponentId{id}
+UpdateComponentAttrCmd::UpdateComponentAttrCmd(Shared<core::ComponentIndex> index,
+                                               const UUID&                  componentId,
+                                               std::string                  attribute,
+                                               Attribute                    value)
+    : ACommand{"Update Component Attribute"}
+    , mIndex{index}
+    , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
     , mUpdatedValue{std::move(value)}
-{}
+{
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+}
 
 void UpdateComponentAttrCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::set_component_attribute_value(registry,
-                                     mComponentId,
-                                     mAttributeName,
-                                     mPreviousValue.value());
+  auto& component = mIndex->at(mComponentId);
+  component.update_attr(mAttributeName, mPreviousValue.value());
+  mPreviousValue.reset();
 }
 
 void UpdateComponentAttrCmd::redo()
 {
-  auto& registry = mRegistry.get();
-
-  mPreviousValue =
-      sys::get_component_attribute_value(registry, mComponentId, mAttributeName);
-  sys::set_component_attribute_value(registry,
-                                     mComponentId,
-                                     mAttributeName,
-                                     mUpdatedValue);
+  auto& component = mIndex->at(mComponentId);
+  mPreviousValue = component.get_attr(mAttributeName);
+  component.update_attr(mAttributeName, mUpdatedValue);
 }
 
 auto UpdateComponentAttrCmd::merge_with(const ACommand& cmd) -> bool
@@ -68,6 +67,11 @@ auto UpdateComponentAttrCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto UpdateComponentAttrCmd::get_name() const -> const char*
+{
+  return "Update Component Attribute";
 }
 
 }  // namespace tactile

@@ -22,21 +22,26 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for renaming a component definition.
 class RenameComponentCmd final : public ACommand
 {
  public:
-  RenameComponentCmd(RegistryRef registry, const ComponentID& id, std::string name);
+  RenameComponentCmd(Shared<core::ComponentIndex> index,
+                     const UUID&                  componentId,
+                     std::string                  name);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -44,10 +49,10 @@ class RenameComponentCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ComponentID mComponentId{};
-  std::string mUpdatedName;
-  Maybe<std::string> mPreviousName;
+  Shared<core::ComponentIndex> mIndex;
+  UUID                         mComponentId{};
+  std::string                  mUpdatedName;
+  Maybe<std::string>           mPreviousName;
 };
 
 }  // namespace tactile

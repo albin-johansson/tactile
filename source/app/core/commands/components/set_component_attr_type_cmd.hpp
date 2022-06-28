@@ -21,25 +21,29 @@
 
 #include <string>  // string
 
+#include "core/attribute.hpp"
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
-#include "core/systems/component_system.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for changing the type of an attribute in a component definition.
 class SetComponentAttrTypeCmd final : public ACommand
 {
  public:
-  SetComponentAttrTypeCmd(RegistryRef registry,
-                          const ComponentID& id,
-                          std::string attribute,
-                          AttributeType type);
+  SetComponentAttrTypeCmd(Shared<core::ComponentIndex> index,
+                          const UUID&                  componentId,
+                          std::string                  attribute,
+                          AttributeType                type);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -47,11 +51,11 @@ class SetComponentAttrTypeCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ComponentID mComponentId;
-  std::string mAttributeName;
-  AttributeType mNewType;
-  Maybe<sys::SetComponentAttrTypeResult> mSnapshot;
+  Shared<core::ComponentIndex> mIndex;
+  UUID                         mComponentId{};
+  std::string                  mAttributeName;
+  AttributeType                mNewType;
+  Maybe<Attribute>             mSnapshot;
 };
 
 }  // namespace tactile

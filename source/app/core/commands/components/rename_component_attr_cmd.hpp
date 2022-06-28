@@ -22,22 +22,26 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/components/attributes.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for renaming an attribute in a component definition.
 class RenameComponentAttrCmd final : public ACommand
 {
  public:
-  RenameComponentAttrCmd(RegistryRef registry,
-                         const ComponentID& id,
-                         std::string previousName,
-                         std::string updatedName);
+  RenameComponentAttrCmd(Shared<core::ComponentIndex> index,
+                         const UUID&                  componentId,
+                         std::string                  previousName,
+                         std::string                  updatedName);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -45,10 +49,10 @@ class RenameComponentAttrCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ComponentID mComponentId{};
-  std::string mPreviousName;
-  std::string mUpdatedName;
+  Shared<core::ComponentIndex> mIndex;
+  UUID                         mComponentId{};
+  std::string                  mPreviousName;
+  std::string                  mUpdatedName;
 };
 
 }  // namespace tactile

@@ -21,47 +21,44 @@
 
 #include <utility>  // move
 
-#include "core/systems/component_system.hpp"
+#include "core/components/component.hpp"
+#include "core/components/component_bundle.hpp"
+#include "core/context.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-UpdateComponentCmd::UpdateComponentCmd(RegistryRef registry,
-                                       const ContextID contextId,
-                                       const ComponentID& componentId,
-                                       std::string attribute,
-                                       Attribute value)
-    : ACommand{"update Component Value"}
-    , mRegistry{registry}
-    , mContextId{contextId}
+UpdateComponentCmd::UpdateComponentCmd(Shared<core::IContext> context,
+                                       const UUID&            componentId,
+                                       std::string            attribute,
+                                       Attribute              value)
+    : ACommand{"Update Component Attribute"}
+    , mContext{std::move(context)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
     , mUpdatedValue{std::move(value)}
-{}
+{
+  if (!mContext) {
+    throw TactileError{"Invalid null context!"};
+  }
+}
 
 void UpdateComponentCmd::undo()
 {
-  auto& registry = mRegistry.get();
+  auto& comps = mContext->get_comps();
+  auto& component = comps.at(mComponentId);
 
-  sys::update_component(registry,
-                        mContextId,
-                        mComponentId,
-                        mAttributeName,
-                        mPreviousValue.value());
-
+  component.update_attr(mAttributeName, mPreviousValue.value());
   mPreviousValue.reset();
 }
 
 void UpdateComponentCmd::redo()
 {
-  auto& registry = mRegistry.get();
+  auto& comps = mContext->get_comps();
+  auto& component = comps.at(mComponentId);
 
-  mPreviousValue =
-      sys::get_component_attribute(registry, mContextId, mComponentId, mAttributeName);
-  sys::update_component(registry,
-                        mContextId,
-                        mComponentId,
-                        mAttributeName,
-                        mUpdatedValue);
+  mPreviousValue = component.get_attr(mAttributeName);
+  component.update_attr(mAttributeName, mUpdatedValue);
 }
 
 auto UpdateComponentCmd::merge_with(const ACommand& cmd) -> bool
@@ -69,16 +66,21 @@ auto UpdateComponentCmd::merge_with(const ACommand& cmd) -> bool
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const UpdateComponentCmd&>(cmd);
 
-    const bool targetsSameAttribute = mContextId == other.mContextId &&
-                                      mComponentId == other.mComponentId &&
-                                      mAttributeName == other.mAttributeName;
-    if (targetsSameAttribute) {
+    const bool canMerge = mContext->get_uuid() == other.mContext->get_uuid() &&
+                          mComponentId == other.mComponentId &&
+                          mAttributeName == other.mAttributeName;
+    if (canMerge) {
       mUpdatedValue = other.mUpdatedValue;
       return true;
     }
   }
 
   return false;
+}
+
+auto UpdateComponentCmd::get_name() const -> const char*
+{
+  return "Update Component Attribute";
 }
 
 }  // namespace tactile

@@ -22,22 +22,26 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for duplicating an attribute in a component definition.
 class DuplicateComponentAttrCmd final : public ACommand
 {
  public:
-  DuplicateComponentAttrCmd(RegistryRef registry,
-                            const ComponentID& componentId,
-                            std::string attribute);
+  DuplicateComponentAttrCmd(Shared<core::ComponentIndex> index,
+                            const UUID&                  componentId,
+                            std::string                  attribute);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -45,10 +49,10 @@ class DuplicateComponentAttrCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ComponentID mComponentId{};
-  std::string mAttributeName;
-  Maybe<std::string> mDuplicatedName;
+  Shared<core::ComponentIndex> mIndex;
+  UUID                         mComponentId{};
+  std::string                  mAttributeName;
+  Maybe<std::string>           mDuplicatedName;
 };
 
 }  // namespace tactile

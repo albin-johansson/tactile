@@ -20,22 +20,25 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
-#include "core/systems/component_system.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for removing a component definition.
 class RemoveComponentDefCmd final : public ACommand
 {
  public:
-  RemoveComponentDefCmd(RegistryRef registry, const ComponentID& id);
+  RemoveComponentDefCmd(Shared<core::ComponentIndex> index, const UUID& componentId);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -43,9 +46,9 @@ class RemoveComponentDefCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ComponentID mComponentId{};
-  Maybe<sys::RemoveComponentDefResult> mSnapshot;
+  Shared<core::ComponentIndex>     mIndex;
+  UUID                             mComponentId{};
+  Maybe<core::ComponentDefinition> mPrevious;
 };
 
 }  // namespace tactile

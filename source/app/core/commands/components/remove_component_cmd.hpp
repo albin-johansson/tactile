@@ -20,23 +20,25 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
-#include "core/systems/component_system.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/components/component.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
+/// A command for detaching a component from a context.
 class RemoveComponentCmd final : public ACommand
 {
  public:
-  RemoveComponentCmd(RegistryRef registry,
-                     ContextID contextId,
-                     const ComponentID& componentId);
+  RemoveComponentCmd(Shared<core::IContext> context, const UUID& componentId);
 
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
@@ -44,10 +46,9 @@ class RemoveComponentCmd final : public ACommand
   }
 
  private:
-  RegistryRef mRegistry;
-  ContextID mContextId{};
-  ComponentID mComponentId{};
-  Maybe<sys::RemoveComponentResult> mSnapshot;
+  Shared<core::IContext> mContext;
+  UUID                   mComponentId{};
+  Maybe<core::Component> mComponent;
 };
 
 }  // namespace tactile

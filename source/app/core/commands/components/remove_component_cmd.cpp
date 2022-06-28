@@ -19,28 +19,42 @@
 
 #include "remove_component_cmd.hpp"
 
+#include <utility>  // move
+
+#include "core/components/component_bundle.hpp"
+#include "core/context.hpp"
+#include "misc/panic.hpp"
+
 namespace tactile {
 
-RemoveComponentCmd::RemoveComponentCmd(RegistryRef registry,
-                                       const ContextID contextId,
-                                       const ComponentID& componentId)
+// TODO rename to DetachComponentCmd
+RemoveComponentCmd::RemoveComponentCmd(Shared<core::IContext> context,
+                                       const UUID&            componentId)
     : ACommand{"Remove Component"}
-    , mRegistry{registry}
-    , mContextId{contextId}
+    , mContext{std::move(context)}
     , mComponentId{componentId}
-{}
+{
+  if (!mContext) {
+    throw TactileError{"Invalid null context!"};
+  }
+}
 
 void RemoveComponentCmd::undo()
 {
-  auto& registry = mRegistry.get();
-  sys::restore_component(registry, mSnapshot.value());
-  mSnapshot.reset();
+  auto& comps = mContext->get_comps();
+  comps.add(mComponent.value());
+  mComponent.reset();
 }
 
 void RemoveComponentCmd::redo()
 {
-  auto& registry = mRegistry.get();
-  mSnapshot = sys::remove_component(registry, mContextId, mComponentId);
+  auto& comps = mContext->get_comps();
+  mComponent = comps.erase(mComponentId);
+}
+
+auto RemoveComponentCmd::get_name() const -> const char*
+{
+  return "Remove Component";
 }
 
 }  // namespace tactile

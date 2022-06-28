@@ -19,35 +19,42 @@
 
 #include "attach_component_cmd.hpp"
 
-#include "core/documents/document.hpp"
-#include "core/systems/component_system.hpp"
+#include "core/components/component.hpp"
+#include "core/components/component_bundle.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "core/context.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-AttachComponentCmd::AttachComponentCmd(ADocument* document,
-                                       const UUID& contextId,
-                                       const UUID& componentId)
+AttachComponentCmd::AttachComponentCmd(Shared<core::ComponentIndex> index,
+                                       Shared<core::IContext>       context,
+                                       const UUID&                  componentId)
     : ACommand{"Attach Component"}
-    , mDocument{document}
-    , mContextId{contextId}
+    , mIndex{std::move(index)}
+    , mContext{std::move(context)}
     , mComponentId{componentId}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null document!"};
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
+  }
+  else if (!mContext) {
+    throw TactileError{"Invalid null context!"};
   }
 }
 
 void AttachComponentCmd::undo()
 {
-  auto& registry = mDocument->get_registry();
-  sys::remove_component(registry, mContextId, mComponentId);
+  auto& comps = mContext->get_comps();
+  comps.erase(mComponentId);
 }
 
 void AttachComponentCmd::redo()
 {
-  auto& registry = mDocument->get_registry();
-  sys::attach_component(registry, mContextId, mComponentId);
+  const auto& definition = mIndex->at(mComponentId);
+  auto&       comps = mContext->get_comps();
+  comps.add(definition.instantiate());
 }
 
 }  // namespace tactile
