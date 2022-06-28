@@ -68,4 +68,9 @@ void ResetComponentCmd::redo()
   comps.add(definition.instantiate());
 }
 
+auto ResetComponentCmd::get_name() const -> const char*
+{
+  return "Reset Component Values";
+}
+
 }  // namespace tactile
