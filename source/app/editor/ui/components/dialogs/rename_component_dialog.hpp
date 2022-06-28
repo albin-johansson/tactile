@@ -23,7 +23,7 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
+
 #include "editor/ui/components/dialogs/component_name_dialog.hpp"
 
 namespace tactile::ui {
