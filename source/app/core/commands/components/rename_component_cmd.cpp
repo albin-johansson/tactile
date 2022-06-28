@@ -53,4 +53,9 @@ void RenameComponentCmd::redo()
   mIndex->rename_comp(mComponentId, mUpdatedName);
 }
 
+auto RenameComponentCmd::get_name() const -> const char*
+{
+  return "Rename Component";
+}
+
 }  // namespace tactile
