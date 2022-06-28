@@ -54,30 +54,34 @@ struct AddPropertyEvent final
 
 struct RemovePropertyEvent final
 {
-  std::string name;  ///< Name of the property in the current context.
+  UUID        context_id{};  /// Target context.
+  std::string name;          ///< Name of the property in the current context.
 };
 
 struct RenamePropertyEvent final
 {
-  std::string old_name;  ///< Current property name.
-  std::string new_name;  ///< Requested new property name.
+  UUID        context_id{};  /// Target context.
+  std::string old_name;      ///< Current property name.
+  std::string new_name;      ///< Requested new property name.
 };
 
 struct UpdatePropertyEvent final
 {
-  std::string name;  ///< Name of property to modify.
-  Attribute value;   ///< Updated value of the property.
+  UUID        context_id{};  /// Target context.
+  std::string name;          ///< Name of property to modify.
+  Attribute   value;         ///< Updated value of the property.
 };
 
 struct ChangePropertyTypeEvent final
 {
-  std::string name;      ///< Name of property to modify.
-  AttributeType type{};  ///< Requested new property type.
+  UUID          context_id{};  /// Target context.
+  std::string   name;          ///< Name of property to modify.
+  AttributeType type{};        ///< Requested new property type.
 };
 
 struct InspectContextEvent final
 {
-  entt::entity entity{entt::null};  ///< Potentially null attribute context.
+  UUID context_id{};  /// Target context.
 };
 
 /// \} End of group events
