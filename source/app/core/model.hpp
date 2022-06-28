@@ -35,7 +35,6 @@
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
 #include "core/tools/tool_type.hpp"
-#include "core/utils/actor.hpp"
 
 namespace tactile {
 
