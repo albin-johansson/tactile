@@ -99,6 +99,9 @@ class ACommand
   /// Returns a short human-readable string that describes the command.
   [[nodiscard]] auto text() const -> const std::string& { return mText; }
 
+  /// Returns a short human-readable string that describes the command.
+  [[nodiscard]] virtual auto get_name() const -> const char* { return mText.c_str(); }
+
  private:
   std::string mText;
 };
