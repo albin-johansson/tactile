@@ -27,7 +27,7 @@
 #include "core/common/associative.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_definition.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile::core {
 
@@ -45,6 +45,8 @@ class ComponentIndex final
    * \throws TactileError if the name is already used.
    */
   auto define_comp(std::string name) -> UUID;
+
+  void define_comp(const UUID& id, std::string name);
 
   /**
    * Removes an existing component definition.

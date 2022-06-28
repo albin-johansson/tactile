@@ -43,4 +43,15 @@ void Component::remove_attr(std::string_view key)
   }
 }
 
+void Component::update_attr(std::string_view key, Attribute value)
+{
+  auto& attr = lookup_in(mAttributes, key);
+  attr = std::move(value);
+}
+
+auto Component::get_attr(std::string_view key) const -> const Attribute&
+{
+  return lookup_in(mAttributes, key);
+}
+
 }  // namespace tactile::core

@@ -36,7 +36,7 @@ class ComponentBundle final
 
   void add(Component component);
 
-  void erase(const UUID& componentId);
+  auto erase(const UUID& componentId) -> Component;
 
   [[nodiscard]] auto at(const UUID& componentId) -> Component&;
   [[nodiscard]] auto at(const UUID& componentId) const -> const Component&;

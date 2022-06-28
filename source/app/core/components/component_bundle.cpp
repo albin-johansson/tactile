@@ -35,10 +35,12 @@ void ComponentBundle::add(Component component)
   mComps.try_emplace(componentId, std::move(component));
 }
 
-void ComponentBundle::erase(const UUID& componentId)
+auto ComponentBundle::erase(const UUID& componentId) -> Component
 {
   if (const auto iter = mComps.find(componentId); iter != mComps.end()) {
+    auto component = iter->second;
     mComps.erase(iter);
+    return component;
   }
   else {
     throw TactileError{"Tried to remove non-existent component from bundle!"};

@@ -39,6 +39,10 @@ class Component final
 
   void remove_attr(std::string_view key);
 
+  void update_attr(std::string_view key, Attribute value);
+
+  [[nodiscard]] auto get_attr(std::string_view key) const -> const Attribute&;
+
   [[nodiscard]] auto definition_id() const -> const UUID& { return mDefinitionId; }
 
   [[nodiscard]] auto begin() const noexcept { return mAttributes.begin(); }

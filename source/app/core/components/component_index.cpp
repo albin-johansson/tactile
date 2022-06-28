@@ -22,11 +22,19 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
+#include "core/components/component_definition.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::core {
 
 auto ComponentIndex::define_comp(std::string name) -> UUID
+{
+  const auto id = make_uuid();
+  define_comp(id, std::move(name));
+  return id;
+}
+
+void ComponentIndex::define_comp(const UUID& id, std::string name)
 {
   if (contains(name)) {
     throw TactileError{"Component definition name is not unique!"};
@@ -35,10 +43,7 @@ auto ComponentIndex::define_comp(std::string name) -> UUID
   ComponentDefinition def;
   def.set_name(std::move(name));
 
-  const auto id = def.get_uuid();
   mDefs[id] = std::move(def);
-
-  return id;
 }
 
 void ComponentIndex::remove_comp(const UUID& id)
