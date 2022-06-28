@@ -19,11 +19,17 @@
 
 #pragma once
 
+#include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/tools.hpp"
 #include "core/tools/tool.hpp"
 
 namespace tactile {
+
+struct CurrentEllipseStroke final
+{
+  Vector2f start{};
+  Vector2f current{};
+};
 
 class EllipseTool final : public ATool
 {
@@ -53,7 +59,7 @@ class EllipseTool final : public ATool
   [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Ellipse; }
 
  private:
-  Maybe<comp::CurrentEllipseStroke> mStroke;
+  Maybe<CurrentEllipseStroke> mStroke;
 
   void maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher);
 };
