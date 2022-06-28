@@ -49,9 +49,9 @@ TextureManager::~TextureManager()
   mTextures.clear();
 }
 
-auto TextureManager::load(const std::filesystem::path& path) -> Maybe<comp::Texture>
+auto TextureManager::load(const std::filesystem::path& path) -> Maybe<TextureInfo>
 {
-  comp::Texture texture;
+  TextureInfo texture;
   texture.path = path;
 
   // Load from file

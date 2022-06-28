@@ -24,10 +24,17 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
+#include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/texture.hpp"
 
 namespace tactile {
+
+struct TextureInfo final
+{
+  uint                  id{};
+  Vector2i              size{};
+  std::filesystem::path path;
+};
 
 class TextureManager final
 {
@@ -39,7 +46,7 @@ class TextureManager final
 
   ~TextureManager();
 
-  [[nodiscard]] auto load(const std::filesystem::path& path) -> Maybe<comp::Texture>;
+  [[nodiscard]] auto load(const std::filesystem::path& path) -> Maybe<TextureInfo>;
 
  private:
   std::vector<uint> mTextures;
