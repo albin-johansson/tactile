@@ -24,6 +24,7 @@
 #include "core/common/associative.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/layers/layer.hpp"
 #include "core/layers/layer_delegate.hpp"
@@ -59,6 +60,8 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto active_object_id() const -> Maybe<UUID>;
 
+  [[nodiscard]] auto get_object_ptr( const UUID& id) -> const Shared<Object>&;
+
   [[nodiscard]] auto get_object(const UUID& id) -> Object&;
   [[nodiscard]] auto get_object(const UUID& id) const -> const Object&;
 
@@ -91,9 +94,9 @@ class ObjectLayer final : public ILayer
   [[nodiscard]] auto end() const noexcept { return mObjects.end(); }
 
  private:
-  LayerDelegate mDelegate;
-  HashMap<UUID, Object> mObjects;
-  Maybe<UUID> mActiveObject;
+  LayerDelegate                 mDelegate;
+  HashMap<UUID, Shared<Object>> mObjects;
+  Maybe<UUID>                   mActiveObject;
 };
 
 }  // namespace tactile::core

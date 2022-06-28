@@ -64,7 +64,7 @@ void ObjectLayer::set_name(std::string name)
 void ObjectLayer::add_object(Object object)
 {
   const auto id = object.get_uuid();
-  mObjects[id] = std::move(object);
+  mObjects[id] = std::make_shared<Object>(std::move(object));
 }
 
 void ObjectLayer::remove_object(const UUID& id)
@@ -100,14 +100,19 @@ auto ObjectLayer::active_object_id() const -> Maybe<UUID>
   return mActiveObject;
 }
 
-auto ObjectLayer::get_object(const UUID& id) -> Object&
+auto ObjectLayer::get_object_ptr(const UUID& id) -> const Shared<Object>&
 {
   return lookup_in(mObjects, id);
 }
 
+auto ObjectLayer::get_object(const UUID& id) -> Object&
+{
+  return *lookup_in(mObjects, id);
+}
+
 auto ObjectLayer::get_object(const UUID& id) const -> const Object&
 {
-  return lookup_in(mObjects, id);
+  return *lookup_in(mObjects, id);
 }
 
 auto ObjectLayer::object_at(const Vector2f& pos) const -> Maybe<UUID>
