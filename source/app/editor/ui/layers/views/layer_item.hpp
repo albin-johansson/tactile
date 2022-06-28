@@ -21,19 +21,13 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/fwd.hpp"
+
 namespace tactile::ui {
 
-/**
- * \brief Shows a widget for a single layer in a map.
- *
- * \ingroup gui
- *
- * \param registry the map registry.
- * \param dispatcher the event dispatcher that will be used.
- * \param layerEntity the entity of the layer that will be shown.
- */
-void layer_item_view(const entt::registry& registry,
-                     entt::dispatcher& dispatcher,
-                     entt::entity layerEntity);
+/// Shows a widget for a single layer in a map.
+void layer_item_view(const MapDocument&  document,
+                     const core::ILayer& layer,
+                     entt::dispatcher&   dispatcher);
 
 }  // namespace tactile::ui
