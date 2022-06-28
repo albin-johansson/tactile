@@ -27,7 +27,7 @@
 #include <imgui_internal.h>
 
 #include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
+
 #include "core/components/layers.hpp"
 #include "core/components/objects.hpp"
 #include "core/layers/object.hpp"
