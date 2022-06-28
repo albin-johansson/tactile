@@ -23,6 +23,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"
@@ -36,9 +37,9 @@ CreateComponentAttributeDialog::CreateComponentAttributeDialog()
   set_input_hint("Attribute name");
 }
 
-void CreateComponentAttributeDialog::show(const ComponentID& id)
+void CreateComponentAttributeDialog::show(const UUID& componentId)
 {
-  mComponentId = id;
+  mComponentId = componentId;
   AStringInputDialog::show("");
 }
 

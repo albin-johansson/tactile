@@ -19,7 +19,7 @@
 
 #pragma once
 
-
+#include "core/common/uuid.hpp"
 #include "editor/ui/dialogs/string_input_dialog.hpp"
 
 namespace tactile::ui {
@@ -29,7 +29,7 @@ class CreateComponentAttributeDialog final : public AStringInputDialog
  public:
   CreateComponentAttributeDialog();
 
-  void show(const ComponentID& id);
+  void show(const UUID& componentId);
 
  protected:
   [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
@@ -38,7 +38,7 @@ class CreateComponentAttributeDialog final : public AStringInputDialog
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  ComponentID mComponentId{};
+  UUID mComponentId{};
 };
 
 }  // namespace tactile::ui
