@@ -40,7 +40,7 @@ void ComponentIndex::define_comp(const UUID& id, std::string name)
     throw TactileError{"Component definition name is not unique!"};
   }
 
-  ComponentDefinition def;
+  ComponentDefinition def{id};
   def.set_name(std::move(name));
 
   mDefs[id] = std::move(def);

@@ -35,6 +35,10 @@ namespace tactile::core {
 class ComponentDefinition final : public IElement
 {
  public:
+  ComponentDefinition();
+
+  explicit ComponentDefinition(const UUID& id);
+
   [[nodiscard]] auto instantiate() const -> Component;
 
   /**

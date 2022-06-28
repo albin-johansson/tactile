@@ -27,6 +27,10 @@
 
 namespace tactile::core {
 
+ComponentDefinition::ComponentDefinition() = default;
+
+ComponentDefinition::ComponentDefinition(const UUID& id) : mId{id} {}
+
 auto ComponentDefinition::instantiate() const -> Component
 {
   return {mId, mAttributes};
