@@ -22,8 +22,14 @@
 #include <gtest/gtest.h>
 
 #include "core/documents/map_document.hpp"
+#include "misc/panic.hpp"
 
 using namespace tactile;
+
+TEST(AddColumnCmd, Constructor)
+{
+  ASSERT_THROW(AddColumnCmd{nullptr}, TactileError);
+}
 
 TEST(AddColumnCmd, RedoUndo)
 {
