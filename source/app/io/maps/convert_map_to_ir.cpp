@@ -19,6 +19,7 @@
 
 #include "convert_map_to_ir.hpp"
 
+#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
@@ -83,7 +84,7 @@ void _convert_object_layer(const core::ObjectLayer&    layer,
   data.objects.reserve(layer.object_count());
   for (const auto& [id, object] : layer) {
     auto& objectData = data.objects.emplace_back();
-    _convert_object(object, index, objectData);
+    _convert_object(*object, index, objectData);
   }
 }
 
