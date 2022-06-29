@@ -20,30 +20,28 @@
 #include "restore_map_from_ir.hpp"
 
 #include <filesystem>  // absolute
+#include <utility>     // move
 #include <variant>     // get
 
 #include <entt/entity/registry.hpp>
-#include <fmt/format.h>
-#include <spdlog/spdlog.h>
 
 #include "core/commands/command_stack.hpp"
+#include "core/common/functional.hpp"
 #include "core/common/math.hpp"
-#include "core/components/animation.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/layers.hpp"
-#include "core/components/map_info.hpp"
-#include "core/components/objects.hpp"
-#include "core/components/tiles.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
 #include "core/documents/document.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
+#include "core/layers/group_layer.hpp"
+#include "core/layers/object_layer.hpp"
+#include "core/layers/tile_layer.hpp"
 #include "core/model.hpp"
-#include "core/systems/component_system.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/layer_tree_system.hpp"
+#include "core/tile_pos.hpp"
+#include "core/tilesets/tileset_info.hpp"
 #include "core/utils/texture_manager.hpp"
-#include "core/utils/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_data.hpp"
 #include "misc/assert.hpp"
@@ -51,212 +49,176 @@
 namespace tactile::io {
 namespace {
 
-void _restore_properties(entt::registry& registry,
-                         const entt::entity entity,
-                         const ir::ContextData& source)
+void _restore_context(ADocument&             document,
+                      core::IContext&        context,
+                      const ir::ContextData& source)
 {
-  const auto count = source.properties.size();
-
-  auto& context = (entity != entt::null) ? registry.get<comp::Context>(entity)
-                                         : ctx_get<comp::Context>(registry);
-  context.properties.reserve(count);
+  auto& properties = context.get_props();
+  auto& components = context.get_comps();
 
   for (const auto& [propertyName, propertyValue] : source.properties) {
-    const auto propertyEntity = registry.create();
-
-    auto& property = registry.emplace<comp::Property>(propertyEntity);
-    property.name = propertyName;
-    property.value = propertyValue;
-
-    context.properties.push_back(propertyEntity);
+    properties.add(propertyName, propertyValue);
   }
-}
 
-void _restore_components(entt::registry& registry,
-                         const entt::entity entity,
-                         const ir::ContextData& source)
-{
-  auto& context = (entity != entt::null) ? registry.get<comp::Context>(entity)
-                                         : ctx_get<comp::Context>(registry);
-  context.components.reserve(source.components.size());
-
-  for (const auto& [type, attributes] : source.components) {
-    const auto defEntity = sys::find_component_def(registry, type);
-    TACTILE_ASSERT(defEntity != entt::null);
-
-    const auto componentEntity = registry.create();
-    context.components.push_back(componentEntity);
-
-    const auto& def = checked_get<comp::ComponentDef>(registry, defEntity);
-    auto& component = registry.emplace<comp::Component>(componentEntity);
-    component.type = def.id;
-
-    for (const auto& [attrName, attrValue] : attributes) {
-      component.values[attrName] = attrValue;
+  if (auto index = document.get_component_index()) {
+    for (const auto& [type, attributes] : source.components) {
+      const auto& definition = index->with_name(type);
+      auto        component = definition.instantiate();
+      for (const auto& [attrName, attrValue] : attributes) {
+        component.add_attr(attrName, attrValue);
+      }
     }
   }
 }
 
-auto _restore_object(entt::registry& registry, const ir::ObjectData& objectData)
-    -> entt::entity
+auto _restore_object(ADocument& document, const ir::ObjectData& objectData)
+    -> core::Object
 {
-  const auto objectEntity = registry.create();
+  core::Object object;
+  object.set_type(objectData.type);
 
-  auto& object = registry.emplace<comp::Object>(objectEntity);
-  object.id = objectData.id;
-  object.type = objectData.type;
+  object.set_pos(objectData.pos);
+  object.set_size(objectData.size);
 
-  object.pos = objectData.pos;
-  object.size = objectData.size;
+  object.set_tag(objectData.tag);
+  object.set_visible(objectData.visible);
 
-  object.tag = objectData.tag;
-  object.visible = objectData.visible;
+  // TODO name, id
 
-  auto& context = sys::register_context(registry, objectEntity);
-  context.name = objectData.name;
+  _restore_context(document, object, objectData.context);
 
-  _restore_properties(registry, objectEntity, objectData.context);
-  _restore_components(registry, objectEntity, objectData.context);
-
-  return objectEntity;
+  return object;
 }
 
-void _restore_object_layer(entt::registry& registry,
-                           const entt::entity entity,
+void _restore_object_layer(MapDocument&               document,
+                           const UUID&                layerId,
                            const ir::ObjectLayerData& objectLayerData)
 {
-  auto& objectLayer = registry.emplace<comp::ObjectLayer>(entity);
-  objectLayer.objects.reserve(objectLayerData.objects.size());
+  auto& map = document.get_map();
+
+  auto& layer = map.view_object_layer(layerId);
+  layer.reserve_objects(objectLayerData.objects.size());
 
   for (const auto& objectData : objectLayerData.objects) {
-    const auto objectEntity = _restore_object(registry, objectData);
-    objectLayer.objects.push_back(objectEntity);
+    layer.add_object(_restore_object(document, objectData));
   }
 }
 
-auto _restore_layer(entt::registry& registry,
+auto _restore_layer(MapDocument&         document,
                     const ir::LayerData& layerData,
-                    const entt::entity parent = entt::null) -> entt::entity
+                    const Maybe<UUID>&   parent = nothing) -> UUID
 {
-  const auto entity =
-      sys::new_layer_skeleton(registry, layerData.type, layerData.name, parent);
+  auto& map = document.get_map();
+  //  node.index = layerData.index;
 
-  auto& node = checked_get<comp::LayerTreeNode>(registry, entity);
-  node.index = layerData.index;
-
-  auto& layer = checked_get<comp::Layer>(registry, entity);
-  layer.opacity = layerData.opacity;
-  layer.visible = layerData.visible;
-
+  UUID layerId;
   switch (layerData.type) {
     case LayerType::TileLayer: {
-      const auto& tileLayerData = std::get<ir::TileLayerData>(layerData.data);
+      const auto& data = std::get<ir::TileLayerData>(layerData.data);
 
-      auto& tileLayer = registry.emplace<comp::TileLayer>(entity);
-      tileLayer.matrix = tileLayerData.tiles;
+      layerId = map.add_tile_layer(parent);
+
+      auto& layer = map.view_tile_layer(layerId);
+      invoke_mn(data.row_count, data.col_count, [&](const usize r, const usize c) {
+        layer.set_tile(TilePos::from(r, c), data.tiles[r][c]);
+      });
 
       break;
     }
     case LayerType::ObjectLayer: {
-      const auto& objectLayerData = std::get<ir::ObjectLayerData>(layerData.data);
-      _restore_object_layer(registry, entity, objectLayerData);
+      const auto& data = std::get<ir::ObjectLayerData>(layerData.data);
+
+      layerId = map.add_object_layer(parent);
+      _restore_object_layer(document, layerId, data);
       break;
     }
     case LayerType::GroupLayer: {
-      registry.emplace<comp::GroupLayer>(entity);
+      const auto& data = std::get<ir::GroupLayerData>(layerData.data);
 
-      const auto& groupData = std::get<ir::GroupLayerData>(layerData.data);
-      for (const auto& childLayerData : groupData.children) {
-        _restore_layer(registry, *childLayerData, entity);
+      layerId = map.add_group_layer(parent);
+      for (const auto& childLayerData : data.children) {
+        _restore_layer(document, *childLayerData, layerId);
       }
 
       break;
     }
+    default:
+      throw TactileError{"Invalid layer type!"};
   }
 
-  _restore_properties(registry, entity, layerData.context);
-  _restore_components(registry, entity, layerData.context);
+  auto& layer = map.view_layer(layerId);
+  layer.set_name(layerData.name);
+  layer.set_opacity(layerData.opacity);
+  layer.set_visible(layerData.visible);
 
-  return entity;
+  _restore_context(document, layer, layerData.context);
+
+  return layerId;
 }
 
 void _restore_layers(MapDocument& document, const ir::MapData& mapData)
 {
-  auto& registry = document.get_registry();
+  auto& map = document.get_map();
+
   for (const auto& layerData : mapData.layers) {
-    _restore_layer(registry, layerData);
+    _restore_layer(document, layerData);
   }
 
-  sys::sort_layers(registry);
+  // sys::sort_layers(registry);
 
-  if (!registry.storage<comp::LayerTreeNode>().empty()) {
+  /*if (!registry.storage<comp::LayerTreeNode>().empty()) {
     auto& active = ctx_get<comp::ActiveState>(registry);
     active.layer = registry.view<comp::LayerTreeNode>().front();
-  }
+  }*/
 }
 
-void _restore_tile_animation(entt::registry& registry,
-                             const entt::entity tileEntity,
-                             const ir::MetaTileData& tileData)
+void _restore_tile_animation(core::Tile& tile, const ir::MetaTileData& tileData)
 {
-  auto& animation = registry.emplace<comp::Animation>(tileEntity);
-  animation.frames.reserve(tileData.frames.size());
+  core::TileAnimation animation;
+  animation.reserve_frames(tileData.frames.size());
 
   for (const auto& frameData : tileData.frames) {
-    const auto frameEntity = registry.create();
-
-    auto& frame = registry.emplace<comp::AnimationFrame>(frameEntity);
-    frame.tile_index = frameData.local_id;
-    frame.duration = cen::u64ms{frameData.duration_ms};
-
-    animation.frames.push_back(frameEntity);
+    animation.add_frame(frameData.local_id,
+                        core::TileAnimation::Millis{frameData.duration_ms});
   }
+
+  tile.set_animation(std::move(animation));
 }
 
-void _restore_fancy_tile_objects(entt::registry& registry,
-                                 comp::MetaTile& tile,
+void _restore_fancy_tile_objects(TilesetDocument&        document,
+                                 core::Tile&             tile,
                                  const ir::MetaTileData& tileData)
 {
-  tile.objects.reserve(tileData.objects.size());
+  tile.reserve_objects(tileData.objects.size());
 
   for (const auto& objectData : tileData.objects) {
-    const auto objectEntity = _restore_object(registry, objectData);
-    tile.objects.push_back(objectEntity);
+    tile.add_object(_restore_object(document, objectData));
   }
 }
 
-void _restore_fancy_tiles(entt::registry& tilesetRegistry,
-                          comp::TilesetCache& cache,
-                          const ir::TilesetData& tilesetData)
+void _restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tilesetData)
 {
+  auto& tileset = document.view_tileset();
   for (const auto& [index, tileData] : tilesetData.fancy_tiles) {
-    const auto tileEntity = tilesetRegistry.create();
-    cache.tiles[index] = tileEntity;
-
-    auto& tile = tilesetRegistry.emplace<comp::MetaTile>(tileEntity);
-    tile.index = index;
+    auto& tile = tileset[index];
+    TACTILE_ASSERT(tile.index() == index);
 
     if (!tileData.frames.empty()) {
-      _restore_tile_animation(tilesetRegistry, tileEntity, tileData);
+      _restore_tile_animation(tile, tileData);
     }
 
     if (!tileData.objects.empty()) {
-      _restore_fancy_tile_objects(tilesetRegistry, tile, tileData);
+      _restore_fancy_tile_objects(document, tile, tileData);
     }
 
-    auto& context = sys::register_context(tilesetRegistry, tileEntity);
-    context.name = fmt::format("Tile #{}", tile.index);
-
-    // FIXME tilesets with components are broken (wrong registry, add component
-    // documents?)
-    _restore_properties(tilesetRegistry, tileEntity, tileData.context);
-    _restore_components(tilesetRegistry, tileEntity, tileData.context);
+    _restore_context(document, tile, tileData.context);
   }
 }
 
-void _restore_tileset(DocumentModel& model,
-                      TextureManager& textures,
-                      const ir::TilesetData& tilesetData)
+void _restore_tileset(DocumentModel&                      model,
+                      TextureManager&                     textures,
+                      const Shared<core::ComponentIndex>& index,
+                      const ir::TilesetData&              tilesetData)
 {
   TACTILE_ASSERT(model.active_document_id().has_value());
 
@@ -265,43 +227,49 @@ void _restore_tileset(DocumentModel& model,
 
   const auto texture = textures.load(tilesetData.image_path).value();
 
-  const auto tilesetId =
-      model.restore_tileset(texture, tilesetData.tile_size, tilesetData.first_tile);
+  core::TilesetInfo info;
+  info.texture_id = texture.id;
+  info.texture_size = texture.size;
+  info.texture_path = texture.path;
+  info.tile_size = tilesetData.tile_size;
 
-  auto tileset = model.get_tileset(tilesetId);
-  auto& tilesetRegistry = tileset->get_registry();
+  // This will automatically attach the tileset to the active map
+  const auto tilesetId = model.restore_tileset(tilesetData.first_tile, info);
 
-  ctx_get<comp::Context>(tilesetRegistry).name = tilesetData.name;
+  auto tilesetDocument = model.get_tileset(tilesetId);
+  tilesetDocument->set_name(tilesetData.name);
+  tilesetDocument->set_component_index(index);
 
-  auto& cache = ctx_get<comp::TilesetCache>(tilesetRegistry);
-  _restore_fancy_tiles(tilesetRegistry, cache, tilesetData);
+  _restore_fancy_tiles(*tilesetDocument, tilesetData);
 
-  _restore_properties(tilesetRegistry, entt::null, tilesetData.context);
-  _restore_components(tilesetRegistry, entt::null, tilesetData.context);
+  auto& tileset = tilesetDocument->view_tileset();
+  _restore_context(*tilesetDocument, tileset, tilesetData.context);
 }
 
-void _restore_tilesets(DocumentModel& model,
-                       MapDocument& map,
-                       TextureManager& textures,
-                       const ir::MapData& mapData)
+void _restore_tilesets(DocumentModel&                      model,
+                       TextureManager&                     textures,
+                       const Shared<core::ComponentIndex>& index,
+                       const ir::MapData&                  mapData)
 {
   for (const auto& tilesetData : mapData.tilesets) {
-    _restore_tileset(model, textures, tilesetData);
+    _restore_tileset(model, textures, index, tilesetData);
   }
 
-  auto& registry = map.get_registry();
+  /*auto& registry = map.get_registry();
   if (!registry.storage<comp::TilesetRef>().empty()) {
     auto& active = ctx_get<comp::ActiveState>(registry);
     active.tileset = registry.view<comp::TilesetRef>().front();
-  }
+  }*/
 }
 
-void _restore_component_definitions(entt::registry& registry, const ir::MapData& mapData)
+void _restore_component_definitions(MapDocument& document, const ir::MapData& mapData)
 {
+  auto index = document.get_component_index();
   for (const auto& [name, attributes] : mapData.component_definitions) {
-    const auto id = sys::make_component_def(registry, name);
+    const auto id = index->define_comp(name);
+    auto&      def = index->at(id);
     for (const auto& [attrName, attrValue] : attributes) {
-      sys::make_component_attribute(registry, id, attrName, attrValue);
+      def.add_attr(attrName, attrValue);
     }
   }
 }
@@ -318,30 +286,26 @@ void restore_map_from_ir(const ParseData& data,
       model.add_map(mapData.tile_size, mapData.row_count, mapData.col_count);
   model.select_document(mapId);
 
-  auto document = model.get_map(mapId);
+  auto components = std::make_shared<core::ComponentIndex>();
 
-  auto map = model.get_map(mapId);
-  auto& mapRegistry = map->get_registry();
+  auto document = model.get_map(mapId);
+  document->set_component_index(components);
+
+  auto& map = document->get_map();
 
   const auto path = std::filesystem::absolute(data.path());
-  mapRegistry.ctx().emplace<std::filesystem::path>(path);
+  document->set_path(path);
+  document->set_name(path.filename().string());
 
-  auto& context = ctx_get<comp::Context>(mapRegistry);
-  context.name = path.filename().string();
+  map.set_tile_size(mapData.tile_size);
+  map.resize(mapData.row_count, mapData.col_count);
 
-  auto& info = ctx_get<comp::MapInfo>(mapRegistry);
-  info.next_object_id = mapData.next_object_id;
-  info.tile_size = mapData.tile_size;
-  info.row_count = mapData.row_count;
-  info.column_count = mapData.col_count;
+  _restore_component_definitions(*document, mapData);
 
-  _restore_component_definitions(mapRegistry, mapData);
+  _restore_tilesets(model, textures, document->get_component_index(), mapData);
+  _restore_layers(*document, mapData);
 
-  _restore_tilesets(model, *map, textures, mapData);
-  _restore_layers(*map, mapData);
-
-  _restore_properties(mapRegistry, entt::null, mapData.context);
-  _restore_components(mapRegistry, entt::null, mapData.context);
+  _restore_context(*document, map, mapData.context);
 
   document->get_history().clear();
 }
