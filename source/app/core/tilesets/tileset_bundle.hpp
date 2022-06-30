@@ -57,6 +57,9 @@ class TilesetBundle final
   [[nodiscard]] auto get_ref(const UUID& id) -> TilesetRef&;
   [[nodiscard]] auto get_ref(const UUID& id) const -> const TilesetRef&;
 
+  [[nodiscard]] auto find_ref(const UUID& id) -> TilesetRef*;
+  [[nodiscard]] auto find_ref(const UUID& id) const -> const TilesetRef*;
+
   [[nodiscard]] auto to_tile_index(TileID id) const -> TileIndex;
 
   [[nodiscard]] auto size() const -> usize;

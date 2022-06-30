@@ -19,30 +19,27 @@
 
 #include "property_dock.hpp"
 
-#include <locale>   // locale, isalpha, isdigit, isspace
 #include <utility>  // move
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/common/ecs.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/layers.hpp"
-#include "core/components/map_info.hpp"
-#include "core/components/objects.hpp"
-#include "core/components/tiles.hpp"
+#include "core/contexts/context_visitor.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/events/document_events.hpp"
 #include "core/events/layer_events.hpp"
 #include "core/events/object_events.hpp"
 #include "core/events/property_events.hpp"
 #include "core/events/tileset_events.hpp"
+#include "core/layers/group_layer.hpp"
+#include "core/layers/object_layer.hpp"
+#include "core/layers/tile_layer.hpp"
+#include "core/map.hpp"
 #include "core/model.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/tilesets/tileset.hpp"
 #include "editor/ui/common/button.hpp"
+#include "editor/ui/common/filename_filter.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/properties/dialogs/add_property_dialog.hpp"
@@ -53,17 +50,18 @@
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 
+using namespace tactile::core;
+
 namespace tactile::ui {
 namespace {
 
+constinit bool                      _is_focused = false;
 inline PropertyItemContextMenuState _context_state;
-inline Maybe<std::string> _rename_target;
-inline Maybe<std::string> _change_type_target;
-constinit bool _is_focused = false;
-
-inline AddPropertyDialog _add_dialog;
-inline RenamePropertyDialog _rename_dialog;
-inline ChangePropertyTypeDialog _change_type_dialog;
+inline Maybe<std::string>           _rename_target;
+inline Maybe<std::string>           _change_type_target;
+inline AddPropertyDialog            _add_dialog;
+inline RenamePropertyDialog         _rename_dialog;
+inline ChangePropertyTypeDialog     _change_type_dialog;
 
 void _prepare_table_row(const char* label)
 {
@@ -75,7 +73,7 @@ void _prepare_table_row(const char* label)
 }
 
 [[nodiscard]] auto _native_name_row(const std::string& name,
-                                    const bool validateAsFileName = false)
+                                    const bool         validateAsFileName = false)
     -> Maybe<std::string>
 {
   _prepare_table_row("Name");
@@ -85,23 +83,7 @@ void _prepare_table_row(const char* label)
   auto flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
   if (validateAsFileName) {
     flags |= ImGuiInputTextFlags_CallbackCharFilter;
-
-    /* This is a basic filter for only allowing a basic subset of characters, in order to
-       guarantee that the user provides names that are usable as file names. */
-    const auto filter = [](ImGuiInputTextCallbackData* data) -> int {
-      const auto& locale = std::locale::classic();
-      const auto ch = static_cast<wchar_t>(data->EventChar);
-
-      if (std::isalpha(ch, locale) || std::isdigit(ch, locale) ||
-          std::isspace(ch, locale) || ch == '-' || ch == '_') {
-        return 0;  // Accept the character
-      }
-      else {
-        return 1;  // Reject the character
-      }
-    };
-
-    return input_string("##NativeNameRowInput", name, nullptr, flags, filter);
+    return input_string("##NativeNameRowInput", name, nullptr, flags, filename_filter);
   }
   else {
     return input_string("##NativeNameRowInput", name, nullptr, flags);
@@ -140,60 +122,57 @@ void _native_read_only_row(const char* label, const usize value)
   ImGui::Text("%llu", static_cast<ulonglong>(value)); /* Cast to avoid format warnings */
 }
 
-void _show_native_map_properties(const std::string& name, const comp::MapInfo& map)
+void _show_native_map_properties(const Map& map)
 {
   _native_read_only_row("Type", "Map");
-  _native_read_only_row("Name", name.c_str());
+  _native_read_only_row("Name", map.get_name().c_str());
 
-  _native_read_only_row("Tile width", map.tile_size.x);
-  _native_read_only_row("Tile height", map.tile_size.y);
+  _native_read_only_row("Tile width", map.tile_size().x);
+  _native_read_only_row("Tile height", map.tile_size().y);
 
-  _native_read_only_row("Row count", map.row_count);
-  _native_read_only_row("Column count", map.column_count);
+  _native_read_only_row("Row count", map.row_count());
+  _native_read_only_row("Column count", map.column_count());
 }
 
-void _show_native_tileset_properties(const std::string& name,
-                                     const comp::Tileset& tileset,
-                                     entt::dispatcher&)
+void _show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& dispatcher)
 {
   _native_read_only_row("Type", "Tileset");
 
-  if (const auto updatedName = _native_name_row(name, true);
+  if (const auto updatedName = _native_name_row(tileset.get_name().c_str(), true);
       updatedName && !updatedName->empty()) {
-    // TODO dispatcher.enqueue<SetTilesetNameEvent>(tileset.id, *updatedName);
+    dispatcher.enqueue<SetTilesetNameEvent>(tileset.get_uuid(), *updatedName);
   }
 
   _native_read_only_row("Tile count", tileset.tile_count());
-  _native_read_only_row("Column count", tileset.column_count);
+  _native_read_only_row("Column count", tileset.column_count());
 
-  _native_read_only_row("Tile width", tileset.tile_size.x);
-  _native_read_only_row("Tile height", tileset.tile_size.y);
+  _native_read_only_row("Tile width", tileset.tile_size().x);
+  _native_read_only_row("Tile height", tileset.tile_size().y);
 }
 
-void _show_native_tileset_ref_properties(const TilesetDocument& document,
-                                         const comp::TilesetRef& ref)
+// TODO think about how to show the ref info? Maybe as overlay in tileset view?
+void _show_native_tileset_ref_properties(const TilesetRef& ref)
 {
+  const auto& tileset = *ref.tileset;
+
   _native_read_only_row("Type", "Tileset");
-  _native_read_only_row("Name", document.get_name().c_str());
+  _native_read_only_row("Name", tileset.get_name().c_str());
 
-  const auto& info = document.info();
-  _native_read_only_row("Tile count", info.tile_count());
-  _native_read_only_row("Column count", info.column_count);
+  _native_read_only_row("Tile count", tileset.tile_count());
+  _native_read_only_row("Column count", tileset.column_count());
 
-  _native_read_only_row("Tile width", info.tile_size.x);
-  _native_read_only_row("Tile height", info.tile_size.y);
+  _native_read_only_row("Tile width", tileset.tile_size().x);
+  _native_read_only_row("Tile height", tileset.tile_size().y);
 
-  _native_read_only_row("First Tile ID", ref.first_id);
-  _native_read_only_row("Last Tile ID", ref.last_id);
+  _native_read_only_row("First Tile ID", ref.first_tile);
+  _native_read_only_row("Last Tile ID", ref.last_tile);
 
   _native_read_only_row("Embedded", ref.embedded);
 }
 
-void _show_native_layer_properties(const comp::Context& context,
-                                   const comp::Layer& layer,
-                                   entt::dispatcher& dispatcher)
+void _show_native_layer_properties(const ILayer& layer, entt::dispatcher& dispatcher)
 {
-  switch (layer.type) {
+  switch (layer.get_type()) {
     case LayerType::TileLayer:
       _native_read_only_row("Type", "Tile Layer");
       break;
@@ -210,22 +189,20 @@ void _show_native_layer_properties(const comp::Context& context,
   _prepare_table_row("Opacity");
   ImGui::TableNextColumn();
   if (const auto value =
-          input_float("##_native_opacity_row", layer.opacity, 0.0f, 1.0f)) {
-    dispatcher.enqueue<SetLayerOpacityEvent>(context.id, *value);
+          input_float("##_native_opacity_row", layer.get_opacity(), 0.0f, 1.0f)) {
+    dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), *value);
   }
 
   _prepare_table_row("Visible");
   ImGui::TableNextColumn();
-  if (const auto value = input_bool("##_native_visibility_row", layer.visible)) {
-    dispatcher.enqueue<SetLayerVisibleEvent>(context.id, *value);
+  if (const auto value = input_bool("##_native_visibility_row", layer.is_visible())) {
+    dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), *value);
   }
 }
 
-void _show_native_object_properties(const std::string& name,
-                                    const comp::Object& object,
-                                    entt::dispatcher& dispatcher)
+void _show_native_object_properties(const Object& object, entt::dispatcher& dispatcher)
 {
-  switch (object.type) {
+  switch (object.get_type()) {
     case ObjectType::Rect:
       _native_read_only_row("Type", "Rectangle");
       break;
@@ -239,49 +216,39 @@ void _show_native_object_properties(const std::string& name,
       break;
   }
 
-  if constexpr (is_debug_build) {
-    _native_read_only_row("ID", object.id);
+  if (const auto updatedName = _native_name_row(object.get_name())) {
+    // TODO dispatcher.enqueue<SetObjectNameEvent>(object.get_uuid(), *updatedName);
   }
 
-  if (const auto updatedName = _native_name_row(name)) {
-    dispatcher.enqueue<SetObjectNameEvent>(object.id, *updatedName);
-  }
+  _native_read_only_row("X", object.get_pos().x);
+  _native_read_only_row("Y", object.get_pos().y);
 
-  _native_read_only_row("X", object.pos.x);
-  _native_read_only_row("Y", object.pos.y);
-
-  if (object.type != ObjectType::Point) {
-    _native_read_only_row("Width", object.size.x);
-    _native_read_only_row("Height", object.size.y);
+  if (object.get_type() != ObjectType::Point) {
+    _native_read_only_row("Width", object.get_size().x);
+    _native_read_only_row("Height", object.get_size().y);
   }
 
   _prepare_table_row("Visible");
   ImGui::TableNextColumn();
-  if (const auto visible = input_bool("##ObjectVisible", object.visible)) {
-    dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, *visible);
+  if (const auto visible = input_bool("##ObjectVisible", object.is_visible())) {
+    // TODO dispatcher.enqueue<SetObjectVisibleEvent>(object.get_uuid(), *visible);
   }
 
   _prepare_table_row("Tag");
 
   ImGui::TableNextColumn();
-  if (const auto tag = input_string("##NativeObjectTagInput", object.tag)) {
-    dispatcher.enqueue<SetObjectTagEvent>(object.id, *tag);
+  if (const auto tag = input_string("##NativeObjectTagInput", object.get_tag())) {
+    // TODO dispatcher.enqueue<SetObjectTagEvent>(object.get_uuid(), *tag);
   }
 }
 
-void _show_custom_properties(const entt::registry& registry,
+void _show_custom_properties(const IContext&   context,
                              entt::dispatcher& dispatcher,
-                             const comp::Context& context,
-                             bool& isItemContextOpen)
+                             bool&             isItemContextOpen)
 {
   bool first = true;
 
-  for (const auto entity : context.properties) {
-    const auto& property = checked_get<comp::Property>(registry, entity);
-
-    const auto& name = property.name;
-    const auto& value = property.value;
-
+  for (const auto& [name, value] : context.get_props()) {
     const Scope scope{name.c_str()};
 
     ImGui::TableNextRow();
@@ -313,123 +280,78 @@ void _show_custom_properties(const entt::registry& registry,
     }
 
     if (auto updated = input_attribute("##CustomPropertyInput", value)) {
-      dispatcher.enqueue<UpdatePropertyEvent>(name, std::move(*updated));
+      // TODO dispatcher.enqueue<UpdatePropertyEvent>(name, std::move(*updated));
     }
 
     first = false;
   }
 }
 
-void _show_native_properties(const DocumentModel& model,
-                             const entt::registry& registry,
-                             const entt::entity entity,
-                             const std::string& name,
-                             entt::dispatcher& dispatcher)
-{
-  if (entity == entt::null) {
-    if (model.is_map_active()) {
-      const auto& info = ctx_get<comp::MapInfo>(registry);
-      _show_native_map_properties(name, info);
-    }
-    else if (model.is_tileset_active()) {
-      const auto& tileset = ctx_get<comp::Tileset>(registry);
-      _show_native_tileset_properties(name, tileset, dispatcher);
-    }
-  }
-  else {
-    if (const auto* tileset = registry.try_get<comp::Tileset>(entity)) {
-      _show_native_tileset_properties(name, *tileset, dispatcher);
-    }
-    if (const auto* tilesetRef = registry.try_get<comp::TilesetRef>(entity)) {
-      const auto& tileset = model.view_tileset(tilesetRef->source_tileset);
-      _show_native_tileset_ref_properties(tileset, *tilesetRef);
-    }
-    else if (const auto* layer = registry.try_get<comp::Layer>(entity)) {
-      const auto& context = checked_get<comp::Context>(registry, entity);
-      _show_native_layer_properties(context, *layer, dispatcher);
-    }
-    else if (const auto* object = registry.try_get<comp::Object>(entity)) {
-      _show_native_object_properties(name, *object, dispatcher);
-    }
-  }
-}
-
-void _update_conditional_tileset_button(const DocumentModel& model,
-                                        const entt::registry& registry,
-                                        const entt::entity entity,
+void _update_conditional_tileset_button(const ADocument&  document,
                                         entt::dispatcher& dispatcher)
 {
-  if (entity != entt::null && registry.all_of<comp::TilesetRef>(entity)) {
-    const auto& ref = checked_get<comp::TilesetRef>(registry, entity);
-    if (model.is_open(ref.source_tileset)) {
-      if (centered_button("View Tileset")) {
-        dispatcher.enqueue<SelectDocumentEvent>(ref.source_tileset);
-      }
-    }
-    else {
-      if (centered_button("Open Tileset")) {
-        dispatcher.enqueue<OpenDocumentEvent>(ref.source_tileset);
-        dispatcher.enqueue<SelectDocumentEvent>(ref.source_tileset);
-      }
-    }
+  if (document.get_type() == DocumentType::Map) {
+    // TODO if active context is tileset, show extra stuff
+
+    /*if (centered_button("Open Tileset")) {
+      dispatcher.enqueue<OpenDocumentEvent>(ref.source_tileset);
+      dispatcher.enqueue<SelectDocumentEvent>(ref.source_tileset);
+    }*/
   }
 }
 
-[[nodiscard]] auto _context_to_show(const DocumentModel& model,
-                                    const entt::registry& registry)
-    -> const comp::Context&
+struct ContextPropertyVisitor final : IContextVisitor
 {
-  const auto& active = ctx_get<comp::ActiveState>(registry);
-  if (active.context != entt::null && registry.all_of<comp::TilesetRef>(active.context)) {
-    const auto& ref = checked_get<comp::TilesetRef>(registry, active.context);
-    const auto& tileset = model.view_tileset(ref.source_tileset);
-    return ctx_get<comp::Context>(tileset.get_registry());
+  entt::dispatcher* dispatcher{};
+
+  void visit(const Map& map) override { _show_native_map_properties(map); }
+
+  void visit(const TileLayer& layer) override
+  {
+    _show_native_layer_properties(layer, *dispatcher);
   }
-  else {
-    return sys::current_context(registry);
+
+  void visit(const ObjectLayer& layer) override
+  {
+    _show_native_layer_properties(layer, *dispatcher);
   }
-}
+
+  void visit(const GroupLayer& layer) override
+  {
+    _show_native_layer_properties(layer, *dispatcher);
+  }
+
+  void visit(const Object& object) override
+  {
+    _show_native_object_properties(object, *dispatcher);
+  }
+
+  void visit(const Tileset& tileset) override
+  {
+    _show_native_tileset_properties(tileset, *dispatcher);
+  }
+
+  void visit(const Tile&) override
+  {
+    // TODO
+  }
+};
 
 void _update_property_table(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
-  const auto documentId = model.active_document_id().value();
-  const auto& registry = model.get_registry(documentId);
+  const auto& document = model.require_active_document();
+  const auto& contextId = document.active_context_id();
+  const auto& context = document.view_context(contextId);
 
-  const auto& active = ctx_get<comp::ActiveState>(registry);
-  const auto& context = _context_to_show(model, registry);
-
-  _update_conditional_tileset_button(model, registry, active.context, dispatcher);
+  _update_conditional_tileset_button(document, dispatcher);
 
   if (Table table{"##PropertyTable", 2, flags}; table.is_open()) {
-    _show_native_properties(model, registry, active.context, context.name, dispatcher);
-
-    if (active.context != entt::null and
-        registry.all_of<comp::TilesetRef>(active.context)) {
-      Disable disable;
-
-      const auto& ref = checked_get<comp::TilesetRef>(registry, active.context);
-      const auto& tileset = model.view_tileset(ref.source_tileset);
-
-      bool isItemContextOpen = false;
-      _show_custom_properties(tileset.get_registry(),
-                              dispatcher,
-                              context,
-                              isItemContextOpen);
-    }
-    else {
-      bool isItemContextOpen = false;
-      _show_custom_properties(registry, dispatcher, context, isItemContextOpen);
-
-      if (!isItemContextOpen) {
-        if (auto popup = Popup::for_window("##PropertyTableContext"); popup.is_open()) {
-          _context_state.show_add_dialog =
-              ImGui::MenuItem(TAC_ICON_ADD " Add Property...");
-        }
-      }
-    }
+    ContextPropertyVisitor visitor;
+    visitor.dispatcher = &dispatcher;
+    context.accept(visitor);
   }
 
   if (_context_state.show_add_dialog) {
@@ -445,7 +367,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
 
   if (_context_state.show_change_type_dialog) {
     const auto& targetName = _change_type_target.value();
-    const auto type = sys::get_property(registry, context, targetName).value.type();
+    const auto  type = context.get_props().at(targetName).type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(targetName, type);
     _change_type_target.reset();
     _context_state.show_change_type_dialog = false;

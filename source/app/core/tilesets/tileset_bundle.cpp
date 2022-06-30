@@ -120,6 +120,25 @@ auto TilesetBundle::get_ref(const UUID& id) const -> const TilesetRef&
   return lookup_in(mRefs, id);
 }
 
+auto TilesetBundle::find_ref(const UUID& id) -> TilesetRef*
+{
+  if (const auto iter = mRefs.find(id); iter != mRefs.end()) {
+    return &iter->second;
+  }
+  else {
+    return nullptr;
+  }
+}
+
+auto TilesetBundle::find_ref(const UUID& id) const -> const TilesetRef*
+{
+  if (const auto iter = mRefs.find(id); iter != mRefs.end()) {
+    return &iter->second;
+  }
+  else {
+    return nullptr;
+  }
+}
 
 auto TilesetBundle::to_tile_index(const TileID id) const -> TileIndex
 {
