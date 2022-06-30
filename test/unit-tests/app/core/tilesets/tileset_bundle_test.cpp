@@ -187,3 +187,32 @@ TEST(TilesetBundle, GetRef)
   ASSERT_FALSE(aa.embedded);
   ASSERT_TRUE(bb.embedded);
 }
+
+TEST(TilesetBundle, ToLocalIndex)
+{
+  TilesetBundle bundle;
+
+  const auto a = _make_tileset();
+  const auto b = _make_tileset();
+
+  bundle.attach_tileset(a, false);
+  bundle.attach_tileset(b, false);
+
+  auto& refA = bundle.get_ref(a->get_uuid());
+  auto& refB = bundle.get_ref(b->get_uuid());
+
+  ASSERT_EQ(1, refA.first_tile);
+  ASSERT_EQ(1 + a->tile_count(), refA.last_tile);
+
+  ASSERT_EQ(refA.last_tile + 1, refB.first_tile);
+  ASSERT_EQ(refB.first_tile + b->tile_count(), refB.last_tile);
+
+  ASSERT_EQ(0, bundle.to_tile_index(refA.first_tile));
+  ASSERT_EQ(a->tile_count(), bundle.to_tile_index(refA.last_tile));
+
+  ASSERT_EQ(0, bundle.to_tile_index(refB.first_tile));
+  ASSERT_EQ(b->tile_count(), bundle.to_tile_index(refB.last_tile));
+
+  ASSERT_THROW(bundle.to_tile_index(refA.first_tile - 1), TactileError);
+  ASSERT_THROW(bundle.to_tile_index(refB.last_tile + 1), TactileError);
+}

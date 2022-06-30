@@ -120,6 +120,18 @@ auto TilesetBundle::get_ref(const UUID& id) const -> const TilesetRef&
   return lookup_in(mRefs, id);
 }
 
+
+auto TilesetBundle::to_tile_index(const TileID id) const -> TileIndex
+{
+  if (const auto tilesetId = find_tileset(id)) {
+    const auto& ref = get_ref(*tilesetId);
+    return id - ref.first_tile;
+  }
+  else {
+    throw TactileError{"Invalid tile identifier!"};
+  }
+}
+
 auto TilesetBundle::size() const -> usize
 {
   return mRefs.size();
