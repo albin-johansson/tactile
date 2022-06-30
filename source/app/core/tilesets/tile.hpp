@@ -27,8 +27,8 @@
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/context.hpp"
-#include "core/context_delegate.hpp"
+#include "core/contexts/context.hpp"
+#include "core/contexts/context_delegate.hpp"
 #include "core/layers/object.hpp"
 #include "core/tilesets/tile_animation.hpp"
 

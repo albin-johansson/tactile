@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/context.hpp"
+#include "core/contexts/context.hpp"
 #include "core/property_bundle.hpp"
 #include "misc/panic.hpp"
 

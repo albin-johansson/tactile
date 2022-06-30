@@ -24,7 +24,7 @@
 #include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/context_delegate.hpp"
+#include "core/contexts/context_delegate.hpp"
 
 namespace tactile::core {
 
