@@ -19,30 +19,24 @@
 
 #include "application.hpp"
 
-#include <utility>  // move, forward
+#include <utility>  // move
 
 #include <boost/stacktrace.hpp>
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
 
 #include "cfg/configuration.hpp"
-#include "core/commands/command_stack.hpp"
 #include "core/commands/commands.hpp"
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/viewport.hpp"
 #include "core/documents/map_document.hpp"
+#include "core/documents/tileset_document.hpp"
 #include "core/events/map_events.hpp"
 #include "core/events/misc_events.hpp"
 #include "core/events/tileset_events.hpp"
 #include "core/events/viewport_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
-#include "core/systems/viewport_system.hpp"
+#include "core/tilesets/tileset_info.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "core/utils/texture_manager.hpp"
 #include "editor/shortcuts/mappings.hpp"
@@ -68,35 +62,6 @@
 #include "misc/assert.hpp"
 
 namespace tactile {
-namespace {
-
-template <typename Command, typename... Args>
-void _execute(DocumentModel& model, Args&&... args)
-{
-  if (auto* document = model.active_document()) {
-    auto& registry = document->get_registry();
-    auto& commands = document->get_history();
-    commands.push<Command>(registry, std::forward<Args>(args)...);
-  }
-  else {
-    spdlog::error("Could not execute a command due to no active document!");
-  }
-}
-
-template <typename Command, typename... Args>
-void _register(DocumentModel& model, Args&&... args)
-{
-  if (auto* document = model.active_document()) {
-    auto& registry = document->get_registry();
-    auto& commands = document->get_history();
-    commands.push_without_redo<Command>(registry, std::forward<Args>(args)...);
-  }
-  else {
-    spdlog::error("Could not register a command due to no active document!");
-  }
-}
-
-}  // namespace
 
 /// Tracks visibility of widgets for the "Toggle UI" feature.
 struct WidgetShowState final
@@ -200,10 +165,10 @@ auto Application::active_map_document() -> MapDocument*
 
 void Application::subscribe_to_events()
 {
+  // clang-format off
   using Self = Application;
   auto& d = get_dispatcher();
 
-  // clang-format off
   d.sink<UndoEvent>().connect<&Self::on_undo>(this);
   d.sink<RedoEvent>().connect<&Self::on_redo>(this);
   d.sink<SetCommandCapacityEvent>().connect<&Self::on_set_command_capacity>(this);
@@ -241,15 +206,19 @@ void Application::subscribe_to_events()
   d.sink<CenterViewportEvent>().connect<&ui::center_map_viewport>();
   d.sink<UpdateViewportLimitsEvent>().connect<&Self::on_update_viewport_limits>(this);
   d.sink<UpdateTilesetViewportLimitsEvent>().connect<&Self::on_update_tileset_viewport_limits>(this);
+
   d.sink<OffsetTilesetViewportEvent>().connect<&Self::on_offset_tileset_viewport>(this);
   d.sink<OffsetDocumentViewportEvent>().connect<&Self::on_offset_document_viewport>(this);
+
   d.sink<PanLeftEvent>().connect<&Self::on_pan_left>(this);
   d.sink<PanRightEvent>().connect<&Self::on_pan_right>(this);
   d.sink<PanUpEvent>().connect<&Self::on_pan_up>(this);
   d.sink<PanDownEvent>().connect<&Self::on_pan_down>(this);
+
   d.sink<IncreaseZoomEvent>().connect<&Self::on_increase_zoom>(this);
   d.sink<DecreaseZoomEvent>().connect<&Self::on_decrease_zoom>(this);
   d.sink<ResetZoomEvent>().connect<&Self::on_reset_zoom>(this);
+
   d.sink<ResetFontSizeEvent>().connect<&Self::on_reset_font_size>(this);
   d.sink<IncreaseFontSizeEvent>().connect<&Self::on_increase_font_size>(this);
   d.sink<DecreaseFontSizeEvent>().connect<&Self::on_decrease_font_size>(this);
@@ -307,8 +276,8 @@ void Application::subscribe_to_events()
   d.sink<SetComponentAttrTypeEvent>().connect<&Self::on_set_component_attr_type>(this);
   d.sink<UpdateComponentDefAttrEvent>().connect<&Self::on_update_component_def_attr>(this);
 
-  d.sink<AddComponentEvent>().connect<&Self::on_add_component>(this);
-  d.sink<RemoveComponentEvent>().connect<&Self::on_remove_component>(this);
+  d.sink<AttachComponentEvent>().connect<&Self::on_attach_component>(this);
+  d.sink<DetachComponentEvent>().connect<&Self::on_detach_component>(this);
   d.sink<UpdateComponentEvent>().connect<&Self::on_update_component>(this);
   d.sink<ResetComponentValuesEvent>().connect<&Self::on_reset_component_values>(this);
 
@@ -425,10 +394,8 @@ void Application::on_open_save_as_dialog()
 
 void Application::on_show_map_properties()
 {
-  if (auto* document = active_document()) {
-    auto& registry = document->get_registry();
-    auto& active = ctx_get<comp::ActiveState>(registry);
-    active.context = entt::null;
+  if (auto* document = active_map_document()) {
+    document->select_context(document->get_map().get_uuid());
   }
 }
 
@@ -605,11 +572,12 @@ void Application::on_update_tileset_viewport_limits(
   }
 }
 
-void Application::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
+void Application::on_offset_document_viewport(const OffsetDocumentViewportEvent& event)
 {
-  if (auto* document = active_map_document()) {
-    auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
-    tilesetRef.viewport.offset(event.offset);
+  // FIXME possible crash if tileset is removed when offsetting viewport
+  if (auto* document = active_document()) {
+    auto& viewport = document->get_viewport();
+    viewport.offset(event.delta);
   }
 }
 
@@ -745,7 +713,9 @@ void Application::on_set_tileset_selection(const SetTilesetSelectionEvent& event
 
 void Application::on_set_tileset_name(const SetTilesetNameEvent& event)
 {
-  _execute<RenameTilesetCmd>(mData->model, event.id, event.name);
+  if (auto* document = active_map_document()) {
+    // TODO _execute<RenameTilesetCmd>(mData->model, event.id, event.name);
+  }
 }
 
 void Application::on_add_row()
@@ -793,8 +763,8 @@ void Application::on_fix_tiles_in_map()
 void Application::on_open_resize_map_dialog()
 {
   if (auto* document = active_map_document()) {
-    const auto& info = document->info();
-    ui::show_resize_map_dialog(info.row_count, info.column_count);
+    const auto& map = document->get_map();
+    ui::show_resize_map_dialog(map.row_count(), map.column_count());
   }
 }
 
@@ -914,34 +884,44 @@ void Application::on_show_change_property_type_dialog(
 
 void Application::on_add_property(const AddPropertyEvent& event)
 {
-  _execute<AddPropertyCmd>(mData->model, event.name, event.type);
+  if (auto* document = active_document()) {
+    document->add_property(event.context_id, event.name, event.type);
+  }
 }
 
 void Application::on_remove_property(const RemovePropertyEvent& event)
 {
-  _execute<RemovePropertyCmd>(mData->model, event.name);
+  if (auto* document = active_document()) {
+    document->remove_property(event.context_id, event.name);
+  }
 }
 
 void Application::on_rename_property(const RenamePropertyEvent& event)
 {
-  _execute<RenamePropertyCmd>(mData->model, event.old_name, event.new_name);
+  if (auto* document = active_document()) {
+    document->rename_property(event.context_id, event.old_name, event.new_name);
+  }
 }
 
 void Application::on_update_property(const UpdatePropertyEvent& event)
 {
-  _execute<UpdatePropertyCmd>(mData->model, event.name, event.value);
+  if (auto* document = active_document()) {
+    document->update_property(event.context_id, event.name, event.value);
+  }
 }
 
 void Application::on_change_property_type(const ChangePropertyTypeEvent& event)
 {
-  _execute<ChangePropertyTypeCmd>(mData->model, event.name, event.type);
+  if (auto* document = active_document()) {
+    document->change_property_type(event.context_id, event.name, event.type);
+  }
 }
 
 void Application::on_inspect_context(const InspectContextEvent& event)
 {
-  auto& registry = mData->model.get_active_registry();
-  auto& active = ctx_get<comp::ActiveState>(registry);
-  active.context = event.entity;
+  if (auto* document = active_document()) {
+    document->select_context(event.context_id);
+  }
 }
 
 void Application::on_open_component_editor()
@@ -951,73 +931,76 @@ void Application::on_open_component_editor()
 
 void Application::on_create_component_def(const CreateComponentDefEvent& event)
 {
-  _execute<CreateComponentDefCmd>(mData->model, event.name);
+  // TODO _execute<CreateComponentDefCmd>(mData->model, event.name);
 }
 
 void Application::on_remove_component_def(const RemoveComponentDefEvent& event)
 {
-  _execute<RemoveComponentDefCmd>(mData->model, event.id);
+  // TODO _execute<RemoveComponentDefCmd>(mData->model, event.id);
 }
 
 void Application::on_rename_component_def(const RenameComponentDefEvent& event)
 {
-  _execute<RenameComponentCmd>(mData->model, event.id, event.name);
+  // TODO _execute<RenameComponentCmd>(mData->model, event.id, event.name);
 }
 
 void Application::on_create_component_attr(const CreateComponentAttrEvent& event)
 {
-  _execute<CreateComponentAttrCmd>(mData->model, event.id, event.name);
+  // TODO _execute<CreateComponentAttrCmd>(mData->model, event.id, event.name);
 }
 
 void Application::on_remove_component_attr(const RemoveComponentAttrEvent& event)
 {
-  _execute<RemoveComponentAttrCmd>(mData->model, event.id, event.name);
+  // TODO _execute<RemoveComponentAttrCmd>(mData->model, event.id, event.name);
 }
 
 void Application::on_rename_component_attr(const RenameComponentAttrEvent& event)
 {
-  _execute<RenameComponentAttrCmd>(mData->model, event.id, event.previous, event.updated);
+  // TODO _execute<RenameComponentAttrCmd>(mData->model, event.id, event.previous,
+  // event.updated);
 }
 
 void Application::on_duplicate_component_attr(const DuplicateComponentAttrEvent& event)
 {
-  _execute<DuplicateComponentAttrCmd>(mData->model, event.id, event.attribute);
+  // TODO  _execute<DuplicateComponentAttrCmd>(mData->model, event.id, event.attribute);
 }
 
 void Application::on_set_component_attr_type(const SetComponentAttrTypeEvent& event)
 {
-  _execute<SetComponentAttrTypeCmd>(mData->model, event.id, event.attribute, event.type);
+  // TODO _execute<SetComponentAttrTypeCmd>(mData->model, event.id, event.attribute,
+  // event.type);
 }
 
 void Application::on_update_component_def_attr(const UpdateComponentDefAttrEvent& event)
 {
-  _execute<UpdateComponentAttrCmd>(mData->model, event.id, event.attribute, event.value);
+  // TODO _execute<UpdateComponentAttrCmd>(mData->model, event.id, event.attribute,
+  // event.value);
 }
 
-void Application::on_add_component(const AddComponentEvent& event)
+void Application::on_attach_component(const AttachComponentEvent& event)
 {
   if (auto* document = active_document()) {
-    document->attach_component(event.context, event.component);
+    document->attach_component(event.context_id, event.component_id);
   }
 }
 
-void Application::on_remove_component(const RemoveComponentEvent& event)
+void Application::on_detach_component(const DetachComponentEvent& event)
 {
-  _execute<RemoveComponentCmd>(mData->model, event.context, event.component);
+  // TODO _execute<RemoveComponentCmd>(mData->model, event.context, event.component);
 }
 
 void Application::on_update_component(const UpdateComponentEvent& event)
 {
-  _execute<UpdateComponentCmd>(mData->model,
-                               event.context,
-                               event.component,
-                               event.attribute,
-                               event.value);
+  // TODO _execute<UpdateComponentCmd>(mData->model,
+  //                              event.context,
+  //                              event.component,
+  //                              event.attribute,
+  //                              event.value);
 }
 
 void Application::on_reset_component_values(const ResetComponentValuesEvent& event)
 {
-  _execute<ResetComponentCmd>(mData->model, event.context, event.component);
+  // TODO _execute<ResetComponentCmd>(mData->model, event.context, event.component);
 }
 
 void Application::on_toggle_ui()
