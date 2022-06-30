@@ -50,9 +50,10 @@ TEST(Tile, AddObject)
 {
   Tile tile{42};
 
-  Object object;
-
+  auto object = std::make_shared<Object>();
   tile.add_object(object);
+
+  ASSERT_EQ(1, tile.object_count());
 }
 
 TEST(Tile, ClearAnimation)
