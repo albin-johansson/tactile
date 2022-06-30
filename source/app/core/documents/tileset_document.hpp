@@ -52,8 +52,6 @@ class TilesetDocument final : public ADocument
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  /// Returns the local ID of a tile at a specific position.
-  [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileIndex;
 
   [[nodiscard]] auto tile_source(TileIndex index) const -> const cen::irect&;
 

@@ -28,10 +28,13 @@ namespace tactile {
 
 TilesetDocument::TilesetDocument(const UUID& id, const core::TilesetInfo& info)
     : mTileset{std::make_shared<core::Tileset>(id, info)}
-{}
+{
+  mContexts[mTileset->get_uuid()] = mTileset;
+  select_context(mTileset->get_uuid());
+}
 
 TilesetDocument::TilesetDocument(const core::TilesetInfo& info)
-    : mTileset{std::make_shared<core::Tileset>(info)}
+    : TilesetDocument{make_uuid(), info}
 {}
 
 void TilesetDocument::update()
@@ -51,19 +54,8 @@ auto TilesetDocument::get_name() const -> const std::string&
   return mTileset->get_name();
 }
 
-auto TilesetDocument::tile_at(const TilePos& pos) const -> TileIndex
 {
-  const auto& tileset = *mTileset;
 
-  const auto row = pos.row();
-  const auto col = pos.col();
-
-  if (row >= 0 && col >= 0 && row < tileset.row_count() && col < tileset.column_count()) {
-    return row * tileset.column_count() + col;
-  }
-  else {
-    return empty_tile;
-  }
 }
 
 auto TilesetDocument::tile_source(const TileIndex index) const -> const cen::irect&
