@@ -134,6 +134,8 @@ class Map final : public IContext
 
   [[nodiscard]] auto tile_size() const -> const Vector2i&;
 
+  [[nodiscard]] auto is_stamp_randomizer_possible() const -> bool;
+
   [[nodiscard]] auto get_props() -> PropertyBundle& override;
   [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
 

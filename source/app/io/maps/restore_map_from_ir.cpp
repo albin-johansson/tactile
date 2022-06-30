@@ -255,11 +255,13 @@ void _restore_tilesets(DocumentModel&                      model,
     _restore_tileset(model, textures, index, tilesetData);
   }
 
-  /*auto& registry = map.get_registry();
-  if (!registry.storage<comp::TilesetRef>().empty()) {
-    auto& active = ctx_get<comp::ActiveState>(registry);
-    active.tileset = registry.view<comp::TilesetRef>().front();
-  }*/
+  auto& document = model.require_active_map();
+  auto& map = document.get_map();
+  auto& tilesets = map.get_tilesets();
+
+  if (!tilesets.empty()) {
+    map.select_tileset(tilesets.begin()->first);
+  }
 }
 
 void _restore_component_definitions(MapDocument& document, const ir::MapData& mapData)

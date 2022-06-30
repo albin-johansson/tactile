@@ -30,7 +30,6 @@
 #include "core/events/tileset_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "editor/ui/common/button.hpp"
 #include "editor/ui/common/style.hpp"
@@ -46,16 +45,16 @@ constexpr auto _window_flags =
     ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
     ImGuiWindowFlags_NoMove;
 
-constinit bool _toolbar_visible = false;
-constinit bool _toolbar_hovered = false;
-constinit bool _toolbar_focused = false;
+constinit bool  _toolbar_visible = false;
+constinit bool  _toolbar_hovered = false;
+constinit bool  _toolbar_focused = false;
 constinit float _toolbar_width = 0;
 
 constexpr uint32 _highlight_color = IM_COL32(0, 180, 0, 255);
 
 void _prepare_window_position(const ImVec2& offset = {})
 {
-  const auto windowPos = ImGui::GetWindowPos();
+  const auto   windowPos = ImGui::GetWindowPos();
   const ImVec2 pos{windowPos.x + offset.x + 6.0f,
                    windowPos.y + offset.y + 6.0f + ImGui::GetFrameHeightWithSpacing()};
   const ImVec2 pivot{0.0f, 0.0f};
@@ -65,11 +64,11 @@ void _prepare_window_position(const ImVec2& offset = {})
 }
 
 void _tool_button(const DocumentModel& model,
-                  const ToolManager& tools,
-                  entt::dispatcher& dispatcher,
-                  const char* icon,
-                  const char* tooltip,
-                  const ToolType tool)
+                  const ToolManager&   tools,
+                  entt::dispatcher&    dispatcher,
+                  const char*          icon,
+                  const char*          tooltip,
+                  const ToolType       tool)
 {
   const auto selected = tools.is_enabled(tool);
 
@@ -112,8 +111,8 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
 
   StyleVar padding{ImGuiStyleVar_WindowPadding, {6, 6}};
 
-  const auto& map = model.view_map(model.active_document_id().value());
-  const auto& tools = map.get_tools();
+  const auto& document = model.view_map(model.active_document_id().value());
+  const auto& tools = document.get_tools();
 
   if (Window window{"##ToolbarWindow", _window_flags}; window.is_open()) {
     _toolbar_visible = true;
@@ -121,7 +120,7 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
     _toolbar_focused = window.has_focus();
     _toolbar_width = ImGui::GetWindowSize().x;
 
-    const auto& commands = map.get_history();
+    const auto& commands = document.get_history();
 
     if (icon_button(TAC_ICON_UNDO, "Undo", commands.can_undo())) {
       dispatcher.enqueue<UndoEvent>();
@@ -180,19 +179,17 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
 
   if (_toolbar_visible && tools.is_enabled(ToolType::Stamp)) {
     _show_extra_toolbar([&] {
-      const auto& registry = map.get_registry();
-      const auto& tools = map.get_tools();
-      const auto selected = tools.is_stamp_random();
+      const auto& tools = document.get_tools();
+      const auto  selected = tools.is_stamp_random();
 
       if (selected) {
         ImGui::PushStyleColor(ImGuiCol_Button, _highlight_color);
       }
 
-      // TODO add better way to check whether randomizer is available
+      const auto& map = document.get_map();
       if (icon_button(TAC_ICON_STAMP_RANDOMIZER,
                       "Stamp random tile",
-                      sys::is_tileset_selection_not_empty(registry) &&
-                          !sys::is_single_tile_selected_in_tileset(registry))) {
+                      map.is_stamp_randomizer_possible())) {
         dispatcher.enqueue<SetStampRandomizerEvent>(!selected);
       }
 
