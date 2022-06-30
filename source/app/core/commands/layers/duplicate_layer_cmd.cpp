@@ -36,8 +36,11 @@ DuplicateLayerCmd::DuplicateLayerCmd(MapDocument* document, const UUID& layerId)
 
 void DuplicateLayerCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  map.remove_layer(mLayerId);
+  auto&      map = mDocument->get_map();
+  const auto id = mNewLayer->get_uuid();
+
+  map.remove_layer(id);
+  mDocument->unregister_context(id);
 }
 
 void DuplicateLayerCmd::redo()
@@ -50,6 +53,8 @@ void DuplicateLayerCmd::redo()
   else {
     mNewLayer = map.duplicate_layer(mLayerId);
   }
+
+  mDocument->register_context(mNewLayer);
 }
 
 }  // namespace tactile

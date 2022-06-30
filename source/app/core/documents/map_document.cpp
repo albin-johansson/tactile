@@ -67,6 +67,10 @@ void MapDocument::unregister_context(const UUID& id)
 {
   if (const auto iter = mContexts.find(id); iter != mContexts.end()) {
     mContexts.erase(iter);
+
+    if (mActiveContext == id) {
+      mActiveContext = mMap->get_uuid();
+    }
   }
   else {
     throw TactileError{"Tried to remove non-existent context!"};

@@ -48,6 +48,10 @@ void TilesetDocument::unregister_context(const UUID& id)
 {
   if (const auto iter = mContexts.find(id); iter != mContexts.end()) {
     mContexts.erase(iter);
+
+    if (mActiveContext == id) {
+      mActiveContext = mTileset->get_uuid();
+    }
   }
   else {
     throw TactileError{"Tried to unregister non-existent context!"};
