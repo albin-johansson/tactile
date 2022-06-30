@@ -21,10 +21,10 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/contexts/context.hpp"
 #include "core/events/property_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/property_bundle.hpp"
 
 namespace tactile::ui {
 
@@ -35,15 +35,15 @@ RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog{"Rename Proper
 
 void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RenamePropertyEvent>(previous_input(), std::string{current_input()});
+  // TODO dispatcher.enqueue<RenamePropertyEvent>(previous_input(), std::string{current_input()});
 }
 
 auto RenamePropertyDialog::validate(const DocumentModel& model,
                                     std::string_view input) const -> bool
 {
-  const auto& registry = model.get_active_registry();
-  const auto& context = sys::current_context(registry);
-  return !input.empty() && !sys::has_property_with_name(registry, context, input);
+  const auto& document = model.require_active_document();
+  const auto& context = document.view_context(document.active_context_id());
+  return !input.empty() && !context.get_props().contains(input);
 }
 
 }  // namespace tactile::ui
