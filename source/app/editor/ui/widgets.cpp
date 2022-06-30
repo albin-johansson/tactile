@@ -35,7 +35,7 @@
 namespace tactile::ui {
 namespace {
 
-inline ResizeMapDialog _resize_map_dialog;
+inline ResizeMapDialog     _resize_map_dialog;
 inline MapParseErrorDialog _map_parse_error_dialog;
 
 }  // namespace
