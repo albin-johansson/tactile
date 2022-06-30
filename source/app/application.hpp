@@ -162,7 +162,7 @@ class Application final : AEventLoop
 
   void on_decrease_font_size();
 
-  void on_add_tileset(const AddTilesetEvent& event);
+  void on_load_tileset(const LoadTilesetEvent& event);
 
   void on_remove_tileset(const RemoveTilesetEvent& event);
 

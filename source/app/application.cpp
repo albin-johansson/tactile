@@ -255,7 +255,7 @@ void Application::subscribe_to_events()
   d.sink<DecreaseFontSizeEvent>().connect<&Self::on_decrease_font_size>(this);
 
   d.sink<ShowTilesetCreationDialogEvent>().connect<&ui::show_tileset_creation_dialog>();
-  d.sink<AddTilesetEvent>().connect<&Self::on_add_tileset>(this);
+  d.sink<LoadTilesetEvent>().connect<&Self::on_load_tileset>(this);
   d.sink<RemoveTilesetEvent>().connect<&Self::on_remove_tileset>(this);
   d.sink<SelectTilesetEvent>().connect<&Self::on_select_tileset>(this);
   d.sink<SetTilesetSelectionEvent>().connect<&Self::on_set_tileset_selection>(this);
@@ -705,15 +705,13 @@ void Application::on_decrease_font_size()
   mData->reload_fonts = true;
 }
 
-void Application::on_add_tileset(const AddTilesetEvent& event)
+void Application::on_load_tileset(const LoadTilesetEvent& event)
 {
   if (auto info = mData->textures.load(event.path)) {
-    const core::TilesetInfo tilesetInfo{
-        .texture_path = info->path,
-        .texture_id = info->id,
-        .texture_size = info->size,
-        .tile_size = {event.tile_width, event.tile_height}};
-    mData->model.add_tileset(tilesetInfo);
+    mData->model.add_tileset({.texture_path = info->path,
+                              .texture_id = info->id,
+                              .texture_size = info->size,
+                              .tile_size = event.tile_size});
   }
   else {
     spdlog::error("Failed to load tileset texture!");
