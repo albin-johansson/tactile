@@ -17,17 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "viewport_overlay.hpp"
+#include "map_viewport_overlay.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/layers.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
-#include "core/systems/tilesets/tileset_system.hpp"
+#include "core/layers/tile_layer.hpp"
+#include "core/map.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
@@ -70,30 +66,31 @@ void _prepare_position_and_pivot()
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _show_mouse_tile_labels(const entt::registry& registry,
-                             const ViewportCursorInfo& cursor)
+void _show_mouse_tile_labels(const core::Map& map, const ViewportCursorInfo& cursor)
 {
-  const auto& active = ctx_get<comp::ActiveState>(registry);
+  const auto layerId = map.active_layer_id();
+  if (!layerId) {
+    return;
+  }
 
-  if (active.layer != entt::null) {
-    if (const auto* layer = registry.try_get<comp::TileLayer>(active.layer)) {
-      const auto global = sys::get_tile(*layer, cursor.map_position);
+  if (const auto* layer = map.find_tile_layer(*layerId)) {
+    const auto tileId = layer->tile_at(cursor.map_position);
 
-      if (cursor.is_within_map && global != empty_tile) {
-        ImGui::Text("Global ID: %i", global);
+    if (cursor.is_within_map && tileId != empty_tile) {
+      ImGui::Text("Global ID: %i", tileId);
+    }
+    else {
+      ImGui::TextUnformatted("Global ID: [empty]");
+    }
+
+    if (tileId != empty_tile) {
+      if (cursor.is_within_map) {
+        const auto& tilesets = map.get_tilesets();
+        const auto  index = tilesets.to_tile_index(tileId);
+        ImGui::Text("Local ID: %i", index);
       }
       else {
-        ImGui::TextUnformatted("Global ID: [empty]");
-      }
-
-      if (global != empty_tile) {
-        const auto local = sys::convert_to_local(registry, global);
-        if (cursor.is_within_map && local) {
-          ImGui::Text("Local ID: %i", *local);
-        }
-        else {
-          ImGui::TextUnformatted("Local ID: N/A");
-        }
+        ImGui::TextUnformatted("Local ID: N/A");
       }
     }
   }
@@ -132,8 +129,7 @@ void _update_overlay_context_menu()
 
 }  // namespace
 
-void update_viewport_overlay(const entt::registry& registry,
-                             const ViewportCursorInfo& cursor)
+void update_map_viewport_overlay(const core::Map& map, const ViewportCursorInfo& cursor)
 {
   _prepare_position_and_pivot();
 
@@ -166,7 +162,7 @@ void update_viewport_overlay(const entt::registry& registry,
     }
 
     ImGui::Separator();
-    _show_mouse_tile_labels(registry, cursor);
+    _show_mouse_tile_labels(map, cursor);
 
     _update_overlay_context_menu();
   }

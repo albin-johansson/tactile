@@ -40,9 +40,9 @@
 #include "editor/ui/rendering/render_info.hpp"
 #include "editor/ui/rendering/render_map.hpp"
 #include "editor/ui/scoped.hpp"
+#include "editor/ui/viewport/map_viewport_overlay.hpp"
 #include "editor/ui/viewport/toolbar.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
-#include "editor/ui/viewport/viewport_overlay.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 
@@ -151,7 +151,7 @@ void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
   }
 }
 
-void _update_context_menu(entt::dispatcher& dispatcher)
+void _update_context_menu(const core::Map& map, entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
@@ -159,7 +159,7 @@ void _update_context_menu(entt::dispatcher& dispatcher)
   if (const auto popup = Popup::for_item("##MapViewContextMenu", flags);
       popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
-      dispatcher.enqueue<InspectMapEvent>();
+      dispatcher.enqueue<InspectContextEvent>(map.get_uuid());
     }
 
     ImGui::Separator();
@@ -188,14 +188,14 @@ void _update_map_view_object_context_menu(const MapDocument& document,
     const auto& object = objectLayer->get_object(objectId);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
-      dispatcher.enqueue<InspectContextEvent>(active.object);
+      dispatcher.enqueue<InspectContextEvent>(objectId);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Object Visibility",
                         nullptr,
-                        object.visible)) {
-      dispatcher.enqueue<SetObjectVisibilityEvent>(object.id, !object.visible);
+                        object.is_visible())) {
+      // dispatcher.enqueue<SetObjectVisibilityEvent>(objectId, !object.is_visible());
     }
 
     // TODO implement the object actions
@@ -204,13 +204,13 @@ void _update_map_view_object_context_menu(const MapDocument& document,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
-      dispatcher.enqueue<DuplicateObjectEvent>(object.id);
+      // dispatcher.enqueue<DuplicateObjectEvent>(objectId);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
-      dispatcher.enqueue<RemoveObjectEvent>(object.id);
+      // dispatcher.enqueue<RemoveObjectEvent>(objectId);
     }
   }
 
@@ -262,7 +262,7 @@ void show_map_viewport(const DocumentModel& model,
   graphics.pop_clip();
 
   update_viewport_toolbar(model, dispatcher);
-  update_viewport_overlay(registry, cursor);
+  update_map_viewport_overlay(map, cursor);
 
   _update_context_menu(dispatcher);
   _update_map_view_object_context_menu(registry, dispatcher);

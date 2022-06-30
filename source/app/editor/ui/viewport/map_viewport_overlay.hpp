@@ -19,13 +19,11 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
+#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile::ui {
 
-void update_viewport_overlay(const entt::registry& registry,
-                             const ViewportCursorInfo& cursor);
+void update_map_viewport_overlay(const core::Map& map, const ViewportCursorInfo& cursor);
 
 }  // namespace tactile::ui
