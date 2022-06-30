@@ -44,7 +44,8 @@
 #include "editor/ui/viewport/toolbar.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/assert.hpp"
+
+using namespace tactile::core;
 
 namespace tactile::ui {
 namespace {
@@ -89,11 +90,11 @@ void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, 
   }
 }
 
-void _center_viewport(const core::Viewport& viewport,
-                      const ImVec2&         canvasSize,
-                      const float           nRows,
-                      const float           nCols,
-                      entt::dispatcher&     dispatcher)
+void _center_viewport(const Viewport&   viewport,
+                      const ImVec2&     canvasSize,
+                      const float       nRows,
+                      const float       nCols,
+                      entt::dispatcher& dispatcher)
 {
   const auto& cell = viewport.get_cell_size();
   const auto& offset = viewport.get_offset();
@@ -108,11 +109,11 @@ void _center_viewport(const core::Viewport& viewport,
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 
-void _draw_cursor_gizmos(GraphicsCtx& graphics,
-                         const DocumentModel& model,
-                         const MapDocument& document,
+void _draw_cursor_gizmos(GraphicsCtx&              graphics,
+                         const DocumentModel&      model,
+                         const MapDocument&        document,
                          const ViewportCursorInfo& cursor,
-                         const RenderInfo& info)
+                         const RenderInfo&         info)
 {
   const auto& map = document.get_map();
 
@@ -151,7 +152,7 @@ void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
   }
 }
 
-void _update_context_menu(const core::Map& map, entt::dispatcher& dispatcher)
+void _update_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
@@ -176,16 +177,13 @@ void _update_context_menu(const core::Map& map, entt::dispatcher& dispatcher)
   }
 }
 
-void _update_map_view_object_context_menu(const MapDocument& document,
-                                          entt::dispatcher&  dispatcher)
+void _update_map_view_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
   if (Popup popup{_object_context_menu_id}; popup.is_open()) {
-    const auto& map = document.get_map();
-    const auto* objectLayer = map.find_object_layer(map.active_layer_id().value());
-    TACTILE_ASSERT(objectLayer != nullptr);
+    const auto& layer = map.view_object_layer(map.active_layer_id().value());
 
-    const auto  objectId = objectLayer->active_object_id().value();
-    const auto& object = objectLayer->get_object(objectId);
+    const auto  objectId = layer.active_object_id().value();
+    const auto& object = layer.get_object(objectId);
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
       dispatcher.enqueue<InspectContextEvent>(objectId);
@@ -264,8 +262,8 @@ void show_map_viewport(const DocumentModel& model,
   update_viewport_toolbar(model, dispatcher);
   update_map_viewport_overlay(map, cursor);
 
-  _update_context_menu(dispatcher);
-  _update_map_view_object_context_menu(registry, dispatcher);
+  _update_context_menu(map, dispatcher);
+  _update_map_view_object_context_menu(map, dispatcher);
 }
 
 void center_map_viewport()
