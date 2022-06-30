@@ -30,11 +30,7 @@
 
 namespace tactile::ui {
 
-/**
- * \brief Used to manage the available component definitions.
- *
- * \ingroup gui
- */
+/// Used to manage the available component definitions.
 class ComponentEditor final : public ADialog
 {
  public:
@@ -54,17 +50,16 @@ class ComponentEditor final : public ADialog
   struct Data;
   Unique<Data> mData;
 
-  void show_component_combo_popup(const entt::registry& registry,
+  void show_component_combo_popup(const ADocument&  document,
                                   entt::dispatcher& dispatcher);
 
-  void show_component_attributes(const entt::registry& registry,
-                                 entt::dispatcher& dispatcher,
-                                 const ComponentID& id);
+  void show_component_attributes(const core::ComponentDefinition& definition,
+                                 entt::dispatcher&                dispatcher);
 
-  void show_component_attribute(entt::dispatcher& dispatcher,
-                                const ComponentID& id,
+  void show_component_attribute(const UUID&        componentId,
                                 const std::string& name,
-                                const Attribute& value);
+                                const Attribute&   value,
+                                entt::dispatcher&  dispatcher);
 };
 
 }  // namespace tactile::ui

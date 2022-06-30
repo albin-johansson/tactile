@@ -28,10 +28,10 @@
 
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
-#include "core/components/attributes.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/component_system.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/common/button.hpp"
 #include "editor/ui/common/centered_text.hpp"
@@ -49,11 +49,11 @@ namespace tactile::ui {
 
 struct ComponentEditor::Data final
 {
-  CreateComponentDialog create_component;
+  CreateComponentDialog          create_component;
   CreateComponentAttributeDialog create_component_attr;
-  RenameComponentDialog rename_component;
+  RenameComponentDialog          rename_component;
   RenameComponentAttributeDialog rename_component_attr;
-  Maybe<ComponentID> active_component;
+  Maybe<ComponentID>             active_component;
 };
 
 ComponentEditor::ComponentEditor()
@@ -68,23 +68,30 @@ ComponentEditor::~ComponentEditor() noexcept = default;
 
 void ComponentEditor::show(const DocumentModel& model)
 {
-  const auto& registry = model.get_active_registry();
-  mData->active_component = sys::get_first_available_component_def(registry);
+  const auto& document = model.require_active_document();
+  const auto& index = document.get_component_index();
+  TACTILE_ASSERT(index != nullptr);
+
+  mData->active_component = !index->empty() ? Maybe<UUID>{index->begin()->first}  //
+                                            : nothing;
+
   make_visible();
 }
 
 void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  const auto& registry = model.get_active_registry();
+  const auto& document = model.require_active_document();
+  const auto& index = document.get_component_index();
+  TACTILE_ASSERT(index != nullptr);
+
   auto& data = *mData;
 
   /* Ensure that the active component ID hasn't been invalidated */
-  if (data.active_component &&
-      !sys::is_valid_component(registry, *data.active_component)) {
+  if (data.active_component && !index->contains(*data.active_component)) {
     data.active_component.reset();
   }
 
-  if (registry.storage<comp::ComponentDef>().empty()) {
+  if (index->empty()) {
     ImGui::TextUnformatted("There are no available components for the current map.");
 
     if (centered_button(TAC_ICON_ADD, "Create Component")) {
@@ -97,16 +104,16 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     ImGui::SameLine();
 
     if (!data.active_component) {
-      const auto entity = registry.view<comp::ComponentDef>().front();
-      data.active_component = registry.get<comp::ComponentDef>(entity).id;
+      const auto iter = index->begin();
+      data.active_component = iter->first;
     }
 
-    const auto& name =
-        sys::get_component_def_name(registry, data.active_component.value());
+    const auto& definition = index->at(data.active_component.value());
+    const auto& name = definition.get_name();
     if (Combo combo{"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
-      for (auto&& [entity, component] : registry.view<comp::ComponentDef>().each()) {
-        if (ImGui::Selectable(component.name.c_str())) {
-          data.active_component = component.id;
+      for (const auto& [componentId, component] : *index) {
+        if (ImGui::Selectable(component.get_name().c_str())) {
+          data.active_component = component.get_uuid();
         }
       }
     }
@@ -123,13 +130,14 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
       ImGui::OpenPopup("##ComponentEditorPopup");
     }
 
-    show_component_combo_popup(registry, dispatcher);
+    show_component_combo_popup(document, dispatcher);
 
     ImGui::Separator();
   }
 
   if (data.active_component) {
-    show_component_attributes(registry, dispatcher, *data.active_component);
+    const auto& definition = index->at(*data.active_component);
+    show_component_attributes(definition, dispatcher);
   }
 
   data.create_component.update(model, dispatcher);
@@ -141,14 +149,16 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   ImGui::Separator();
 }
 
-void ComponentEditor::show_component_combo_popup(const entt::registry& registry,
+void ComponentEditor::show_component_combo_popup(const ADocument&  document,
                                                  entt::dispatcher& dispatcher)
 {
   auto& data = *mData;
   if (Popup popup{"##ComponentEditorPopup"}; popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
-      const auto id = data.active_component.value();
-      data.rename_component.show(sys::get_component_def_name(registry, id), id);
+      const auto  id = data.active_component.value();
+      const auto  index = document.get_component_index();
+      const auto& name = index->at(id).get_name();
+      data.rename_component.show(name, id);
     }
 
     ImGui::Separator();
@@ -160,15 +170,14 @@ void ComponentEditor::show_component_combo_popup(const entt::registry& registry,
   }
 }
 
-void ComponentEditor::show_component_attributes(const entt::registry& registry,
-                                                entt::dispatcher& dispatcher,
-                                                const ComponentID& id)
+void ComponentEditor::show_component_attributes(
+    const core::ComponentDefinition& definition,
+    entt::dispatcher&                dispatcher)
 {
   auto& data = *mData;
-  const auto& [defEntity, def] = sys::get_component_def(registry, id);
 
-  if (def.attributes.empty()) {
-    centered_text("There are no attributes defined for the current component.");
+  if (definition.empty()) {
+    centered_text("This component has no attributes.");
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
@@ -178,8 +187,8 @@ void ComponentEditor::show_component_attributes(const entt::registry& registry,
       ImGui::TableSetupColumn("Default", ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableHeadersRow();
 
-      for (const auto& [name, attr] : def.attributes) {
-        show_component_attribute(dispatcher, id, name, attr);
+      for (const auto& [name, attr] : definition) {
+        show_component_attribute(definition.get_uuid(), name, attr, dispatcher);
       }
     }
   }
@@ -189,12 +198,12 @@ void ComponentEditor::show_component_attributes(const entt::registry& registry,
   }
 }
 
-void ComponentEditor::show_component_attribute(entt::dispatcher& dispatcher,
-                                               const ComponentID& id,
+void ComponentEditor::show_component_attribute(const UUID&        componentId,
                                                const std::string& name,
-                                               const Attribute& value)
+                                               const Attribute&   value,
+                                               entt::dispatcher&  dispatcher)
 {
-  auto& data = *mData;
+  auto&       data = *mData;
   const Scope scope{name.c_str()};
 
   ImGui::TableNextRow();
@@ -211,30 +220,32 @@ void ComponentEditor::show_component_attribute(entt::dispatcher& dispatcher,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Attribute")) {
-      dispatcher.enqueue<DuplicateComponentAttrEvent>(id, name);
+      dispatcher.enqueue<DuplicateComponentAttrEvent>(componentId, name);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Attribute")) {
-      dispatcher.enqueue<RemoveComponentAttrEvent>(id, name);
+      dispatcher.enqueue<RemoveComponentAttrEvent>(componentId, name);
     }
   }
 
   ImGui::TableNextColumn();
   ImGui::SetNextItemWidth(-min_float);
 
-  const auto type = value.type();
+  const auto    type = value.type();
   AttributeType newType = type;
   show_property_type_combo(type, newType);
   if (newType != type) {
-    dispatcher.enqueue<SetComponentAttrTypeEvent>(id, name, newType);
+    dispatcher.enqueue<SetComponentAttrTypeEvent>(componentId, name, newType);
   }
 
   ImGui::TableNextColumn();
 
   if (auto updated = input_attribute("##DefaultValue", value)) {
-    dispatcher.enqueue<UpdateComponentDefAttrEvent>(id, name, std::move(*updated));
+    dispatcher.enqueue<UpdateComponentDefAttrEvent>(componentId,
+                                                    name,
+                                                    std::move(*updated));
   }
 }
 
