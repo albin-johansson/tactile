@@ -253,9 +253,9 @@ class Application final : AEventLoop
 
   void on_update_component_def_attr(const UpdateComponentDefAttrEvent& event);
 
-  void on_add_component(const AddComponentEvent& event);
+  void on_attach_component(const AttachComponentEvent& event);
 
-  void on_remove_component(const RemoveComponentEvent& event);
+  void on_detach_component(const DetachComponentEvent& event);
 
   void on_update_component(const UpdateComponentEvent& event);
 

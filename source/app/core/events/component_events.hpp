@@ -23,7 +23,7 @@
 
 #include "core/attribute.hpp"
 #include "core/common/identifiers.hpp"
-
+#include "core/common/uuid.hpp"
 
 namespace tactile {
 
@@ -85,13 +85,13 @@ struct UpdateComponentDefAttrEvent final
   Attribute value;
 };
 
-struct AddComponentEvent final
+struct AttachComponentEvent final
 {
-  ContextID context{};
-  ComponentID component{};
+  UUID context_id{};    /// The target context.
+  UUID component_id{};  /// A component definition ID.
 };
 
-struct RemoveComponentEvent final
+struct DetachComponentEvent final
 {
   ContextID context{};
   ComponentID component{};

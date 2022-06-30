@@ -21,13 +21,10 @@
 
 #include <utility>  // move
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/common/ecs.hpp"
-#include "core/components/attributes.hpp"
+#include "core/components/component.hpp"
 #include "core/events/component_events.hpp"
-#include "core/systems/component_system.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/icons.hpp"
@@ -38,16 +35,40 @@ namespace {
 
 constexpr auto _header_flags =
     ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-
 constexpr auto _table_flags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
-void _update_trailing_button_popup_content(entt::dispatcher& dispatcher,
-                                           const ContextID contextId,
-                                           const ComponentID& componentId)
+void _update_attribute_table(const UUID&            contextId,
+                             const core::Component& component,
+                             entt::dispatcher&      dispatcher)
+{
+  if (Table table{"##AttributeTable", 2, _table_flags}; table.is_open()) {
+    for (const auto& [attrName, attrValue] : component) {
+      const Scope scope{attrName.c_str()};
+
+      ImGui::TableNextRow();
+      ImGui::TableNextColumn();
+
+      ImGui::AlignTextToFramePadding();
+      ImGui::TextUnformatted(attrName.c_str());
+
+      ImGui::TableNextColumn();
+      if (auto value = input_attribute("##ComponentAttributeTableValue", attrValue)) {
+        dispatcher.enqueue<UpdateComponentEvent>(contextId,
+                                                 component.definition_id(),
+                                                 attrName,
+                                                 std::move(*value));
+      }
+    }
+  }
+}
+
+void _update_trailing_button_popup_content(const UUID&            contextId,
+                                           const core::Component& component,
+                                           entt::dispatcher&      dispatcher)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
-    dispatcher.enqueue<ResetComponentValuesEvent>(contextId, componentId);
+    dispatcher.enqueue<ResetComponentValuesEvent>(contextId, component.definition_id());
   }
 
   ImGui::Separator();
@@ -62,7 +83,7 @@ void _update_trailing_button_popup_content(entt::dispatcher& dispatcher,
   ImGui::Separator();
 
   if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Component")) {
-    dispatcher.enqueue<RemoveComponentEvent>(contextId, componentId);
+    dispatcher.enqueue<DetachComponentEvent>(contextId, component.definition_id());
   }
 }
 
@@ -80,14 +101,11 @@ auto _update_trailing_button() -> bool
 
 }  // namespace
 
-void component_view(const entt::registry& registry,
-                    entt::dispatcher& dispatcher,
-                    const ContextID contextId,
-                    const entt::entity componentEntity)
+void component_view(const UUID&            contextId,
+                    const core::Component& component,
+                    const std::string&     name,
+                    entt::dispatcher&      dispatcher)
 {
-  const auto& component = checked_get<comp::Component>(registry, componentEntity);
-  const auto& name = sys::get_component_def_name(registry, component.type);
-
   const Scope scope{name.c_str()};
 
   if (ImGui::CollapsingHeader(name.c_str(), _header_flags)) {
@@ -97,31 +115,13 @@ void component_view(const entt::registry& registry,
     }
 
     if (auto popup = Popup::for_item("##ComponentPopup"); popup.is_open()) {
-      _update_trailing_button_popup_content(dispatcher, contextId, component.type);
+      _update_trailing_button_popup_content(contextId, component, dispatcher);
     }
 
-    if (Table table{"##AttributeTable", 2, _table_flags}; table.is_open()) {
-      for (const auto& [attributeName, attribute] : component.values) {
-        const Scope attrScope{attributeName.c_str()};
-
-        ImGui::TableNextRow();
-        ImGui::TableNextColumn();
-
-        ImGui::AlignTextToFramePadding();
-        ImGui::TextUnformatted(attributeName.c_str());
-
-        ImGui::TableNextColumn();
-        if (auto value = input_attribute("##ComponentAttributeTableValue", attribute)) {
-          dispatcher.enqueue<UpdateComponentEvent>(contextId,
-                                                   component.type,
-                                                   attributeName,
-                                                   std::move(*value));
-        }
-      }
-    }
+    _update_attribute_table(contextId, component, dispatcher);
   }
   else {
-    /* Show a disabled button when collapsed, to avoid having the button disappear */
+    // Show a disabled button when collapsed, to avoid having the button disappear
     Disable disable;
     ImGui::SameLine();
     _update_trailing_button();

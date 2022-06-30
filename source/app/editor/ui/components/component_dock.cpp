@@ -19,16 +19,16 @@
 
 #include "component_dock.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/common/identifiers.hpp"
-#include "core/components/attributes.hpp"
+#include "core/components/component_bundle.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
+#include "core/contexts/context.hpp"
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/component_system.hpp"
-#include "core/systems/context_system.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/button.hpp"
 #include "editor/ui/common/centered_text.hpp"
@@ -36,27 +36,31 @@
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 namespace {
 
 constexpr auto _add_component_popup_id = "##AddComponentButtonPopup";
 
-void _show_add_component_button_popup_content(const entt::registry& registry,
-                                              entt::dispatcher& dispatcher,
-                                              const ContextID contextId)
+void _show_add_component_button_popup_content(const ADocument&      document,
+                                              const core::IContext& context,
+                                              entt::dispatcher&     dispatcher)
 {
-  const auto view = registry.view<comp::ComponentDef>();
-  if (view.empty()) {
+  const auto index = document.get_component_index();
+  TACTILE_ASSERT(index != nullptr);
+
+  if (index->empty()) {
     Disable disable;
     ImGui::TextUnformatted("No available components");
   }
   else {
-    for (auto [defEntity, def] : view.each()) {
-      Disable disable{sys::has_component(registry, contextId, def.id)};
+    const auto& comps = context.get_comps();
+    for (const auto& [definitionId, definition] : *index) {
+      Disable disableIf{comps.contains(definitionId)};
 
-      if (ImGui::MenuItem(def.name.c_str())) {
-        dispatcher.enqueue<AddComponentEvent>(contextId, def.id);
+      if (ImGui::MenuItem(definition.get_name().c_str())) {
+        dispatcher.enqueue<AttachComponentEvent>(context.get_uuid(), definitionId);
       }
     }
   }
@@ -67,20 +71,27 @@ void _show_add_component_button_popup_content(const entt::registry& registry,
   }
 }
 
-void _show_contents(const entt::registry& registry, entt::dispatcher& dispatcher)
+void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
 {
-  const auto& context = sys::current_context(registry);
-  ImGui::Text("Context: %s", context.name.c_str());
+  const auto  contextId = document.active_context_id();
+  const auto& context = document.view_context(contextId);
+  ImGui::Text("Context: %s", context.get_name().c_str());
 
   if (Child pane{"##ComponentsChild"}; pane.is_open()) {
-    if (context.components.empty()) {
+    const auto& comps = context.get_comps();
+    if (comps.empty()) {
       prepare_vertical_alignment_center(2);
-      centered_text("There are no components associated with the current context.");
+      centered_text("This context has no components.");
     }
     else {
-      for (const auto componentEntity : context.components) {
+      const auto index = document.get_component_index();
+      TACTILE_ASSERT(index != nullptr);
+
+      for (const auto& [componentId, component] : comps) {
         ImGui::Separator();
-        component_view(registry, dispatcher, context.id, componentEntity);
+
+        const auto& componentName = index->at(componentId).get_name();
+        component_view(contextId, component, componentName, dispatcher);
       }
 
       ImGui::Separator();
@@ -91,7 +102,7 @@ void _show_contents(const entt::registry& registry, entt::dispatcher& dispatcher
     }
 
     if (Popup popup{_add_component_popup_id}; popup.is_open()) {
-      _show_add_component_button_popup_content(registry, dispatcher, context.id);
+      _show_add_component_button_popup_content(document, context, dispatcher);
     }
   }
 }
@@ -101,7 +112,7 @@ void _show_contents(const entt::registry& registry, entt::dispatcher& dispatcher
 void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& prefs = io::get_preferences();
-  bool visible = prefs.is_component_dock_visible();
+  bool  visible = prefs.is_component_dock_visible();
 
   if (!visible) {
     return;
@@ -110,8 +121,8 @@ void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatc
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
   if (Window dock{"Components", flags, &visible}; dock.is_open()) {
-    const auto& registry = model.get_active_registry();
-    _show_contents(registry, dispatcher);
+    const auto& document = model.require_active_document();
+    _show_contents(document, dispatcher);
   }
 
   prefs.set_component_dock_visible(visible);

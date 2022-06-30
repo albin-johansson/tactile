@@ -41,6 +41,8 @@ class ComponentBundle final
   [[nodiscard]] auto at(const UUID& componentId) -> Component&;
   [[nodiscard]] auto at(const UUID& componentId) const -> const Component&;
 
+  [[nodiscard]] auto contains(const UUID& componentId) const -> bool;
+
   [[nodiscard]] auto size() const -> usize;
 
   [[nodiscard]] auto empty() const -> bool;

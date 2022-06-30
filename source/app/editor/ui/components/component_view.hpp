@@ -19,23 +19,19 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include <entt/fwd.hpp>
 
-#include "core/common/identifiers.hpp"
+#include "core/common/uuid.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile::ui {
 
-/**
- * \brief Shows a view of a single component, attached to a context.
- *
- * \param registry the map registry.
- * \param dispatcher the event dispatcher.
- * \param contextId the identifier of the associated context.
- * \param componentEntity the entity of the component to show.
- */
-void component_view(const entt::registry& registry,
-                    entt::dispatcher& dispatcher,
-                    ContextID contextId,
-                    entt::entity componentEntity);
+/// Shows a view of a single component, attached to a context.
+void component_view(const UUID&            contextId,
+                    const core::Component& component,
+                    const std::string&     name,
+                    entt::dispatcher&      dispatcher);
 
 }  // namespace tactile::ui

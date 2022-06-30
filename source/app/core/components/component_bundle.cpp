@@ -57,6 +57,11 @@ auto ComponentBundle::at(const UUID& componentId) const -> const Component&
   return lookup_in(mComps, componentId);
 }
 
+auto ComponentBundle::contains(const UUID& componentId) const -> bool
+{
+  return mComps.contains(componentId);
+}
+
 auto ComponentBundle::size() const -> usize
 {
   return mComps.size();
