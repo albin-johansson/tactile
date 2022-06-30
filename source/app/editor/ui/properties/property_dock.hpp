@@ -28,9 +28,6 @@
 
 namespace tactile::ui {
 
-/// \name Property dock functions
-/// \{
-
 void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 void show_property_creation_dialog();
@@ -40,7 +37,5 @@ void show_rename_property_dialog(const std::string& name);
 void show_change_property_type_dialog(std::string name, AttributeType type);
 
 [[nodiscard]] auto is_property_dock_focused() -> bool;
-
-/// \} End of property dock functions
 
 }  // namespace tactile::ui
