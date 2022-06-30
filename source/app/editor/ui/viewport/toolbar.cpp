@@ -19,12 +19,10 @@
 
 #include "toolbar.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/commands/command_stack.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/command_events.hpp"
 #include "core/events/tileset_events.hpp"
