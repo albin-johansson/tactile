@@ -19,6 +19,7 @@
 
 #include "remove_layer_cmd.hpp"
 
+#include "core/common/functional.hpp"
 #include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
@@ -40,14 +41,18 @@ void RemoveLayerCmd::undo()
 {
   auto& map = mDocument->get_map();
   map.add_layer(mLayer, mLayer->get_parent());
+  map.set_layer_index(mLayer->get_uuid(), mIndex.value());
 
   mDocument->register_context(mLayer);
+  mIndex.reset();
 }
 
 void RemoveLayerCmd::redo()
 {
   auto&      map = mDocument->get_map();
   const auto id = mLayer->get_uuid();
+
+  mIndex = map.local_layer_index(id);
   map.remove_layer(id);
 
   mDocument->unregister_context(id);

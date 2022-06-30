@@ -39,6 +39,7 @@ class GroupLayer final : public ILayer
 
   [[nodiscard]] static auto make() -> Shared<GroupLayer>;
 
+  void accept(IContextVisitor& visitor) const override;
   void accept(ILayerVisitor& visitor) override;
   void accept(IConstLayerVisitor& visitor) const override;
 
@@ -64,9 +65,9 @@ class GroupLayer final : public ILayer
 
   void set_parent(const Maybe<UUID>& parentId) override;
 
-  void accept(IContextVisitor& visitor) const override;
-
   void set_name(std::string name) override;
+
+  void set_layer_index(const UUID& id, usize index);
 
   [[nodiscard]] auto layer_count() const -> usize;
 

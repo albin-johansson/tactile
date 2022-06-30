@@ -242,6 +242,16 @@ void Map::select_layer(const UUID& id)
   }
 }
 
+void Map::set_layer_index(const UUID& id, const usize index)
+{
+  mRootLayer.set_layer_index(id, index);
+}
+
+auto Map::local_layer_index(const UUID& id) const -> usize
+{
+  return mRootLayer.get_local_index(id);
+}
+
 auto Map::can_move_layer_up(const UUID& id) const -> bool
 {
   return mRootLayer.can_move_layer_up(id);

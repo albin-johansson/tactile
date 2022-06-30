@@ -49,9 +49,11 @@ void DuplicateLayerCmd::redo()
 
   if (mNewLayer) {
     map.add_layer(mNewLayer, mNewLayer->get_parent());
+    map.set_layer_index(mNewLayer->get_uuid(), mNewIndex.value());
   }
   else {
     mNewLayer = map.duplicate_layer(mLayerId);
+    mNewIndex = map.local_layer_index(mNewLayer->get_uuid());
   }
 
   mDocument->register_context(mNewLayer);

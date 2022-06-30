@@ -80,6 +80,10 @@ class Map final : public IContext
 
   void select_layer(const UUID& id);
 
+  void set_layer_index(const UUID& id, usize index);
+
+  [[nodiscard]] auto local_layer_index(const UUID& id) const -> usize;
+
   [[nodiscard]] auto can_move_layer_up(const UUID& id) const -> bool;
   [[nodiscard]] auto can_move_layer_down(const UUID& id) const -> bool;
 

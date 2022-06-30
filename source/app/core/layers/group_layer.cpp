@@ -259,6 +259,11 @@ auto GroupLayer::make() -> Shared<GroupLayer>
   return std::make_shared<GroupLayer>();
 }
 
+void GroupLayer::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void GroupLayer::accept(ILayerVisitor& visitor)
 {
   visitor.visit(*this);
@@ -427,9 +432,20 @@ void GroupLayer::set_name(std::string name)
   mDelegate.set_name(std::move(name));
 }
 
-void GroupLayer::accept(IContextVisitor& visitor) const
+void GroupLayer::set_layer_index(const UUID& id, const usize index)
 {
-  visitor.visit(*this);
+  const auto currentIndex = get_local_index(id);
+  const auto shouldMoveUp = currentIndex > index;
+  const auto nSteps = udiff(currentIndex, index);
+
+  invoke_n(nSteps, [&] {
+    if (shouldMoveUp) {
+      move_layer_up(id);
+    }
+    else {
+      move_layer_down(id);
+    }
+  });
 }
 
 auto GroupLayer::layer_count() const -> usize

@@ -21,6 +21,7 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
@@ -45,6 +46,7 @@ class RemoveLayerCmd final : public ACommand
  private:
   MapDocument*         mDocument{};
   Shared<core::ILayer> mLayer;
+  Maybe<usize>         mIndex;
 };
 
 }  // namespace tactile

@@ -58,14 +58,14 @@ void TilesetDocument::unregister_context(const UUID& id)
   }
 }
 
-auto TilesetDocument::get_context(const UUID&) -> Shared<core::IContext>
+auto TilesetDocument::get_context(const UUID& id) -> Shared<core::IContext>
 {
-  throw TactileError{"Not implemented!"};
+  return lookup_in(mContexts, id);
 }
 
 auto TilesetDocument::view_context(const UUID& id) const -> const core::IContext&
 {
-  throw TactileError{"Not implemented!"};
+  return *lookup_in(mContexts, id);
 }
 
 void TilesetDocument::update()

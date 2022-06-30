@@ -21,6 +21,8 @@
 
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
+#include "core/common/ints.hpp"
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
@@ -45,6 +47,7 @@ class DuplicateLayerCmd final : public ACommand
   MapDocument*         mDocument{};
   UUID                 mLayerId{};
   Shared<core::ILayer> mNewLayer;
+  Maybe<usize>         mNewIndex;
 };
 
 }  // namespace tactile
