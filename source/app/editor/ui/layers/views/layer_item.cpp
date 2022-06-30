@@ -61,7 +61,7 @@ void _update_layer_item_popup(const core::Map&    map,
 {
   if (auto popup = Popup::for_item("##LayerItemPopup"); popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
-      // TODO dispatcher.enqueue<InspectContextEvent>(layerEntity);
+      dispatcher.enqueue<InspectContextEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
