@@ -24,6 +24,7 @@
 #include <fmt/format.h>
 
 #include "core/common/functional.hpp"
+#include "core/contexts/context_visitor.hpp"
 #include "core/layers/layer_visitor.hpp"
 #include "core/layers/object_layer.hpp"
 #include "core/layers/tile_layer.hpp"
@@ -369,6 +370,11 @@ auto Map::get_tilesets() const -> const TilesetBundle&
 void Map::set_tile_size(const Vector2i& size)
 {
   mTileSize = size;
+}
+
+void Map::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 void Map::set_name(std::string name)

@@ -64,6 +64,8 @@ class GroupLayer final : public ILayer
 
   void set_parent(const Maybe<UUID>& parentId) override;
 
+  void accept(IContextVisitor& visitor) const override;
+
   void set_name(std::string name) override;
 
   [[nodiscard]] auto layer_count() const -> usize;

@@ -24,6 +24,7 @@
 
 #include "core/common/functional.hpp"
 #include "core/common/math.hpp"
+#include "core/contexts/context_visitor.hpp"
 #include "core/layers/layer_visitor.hpp"
 #include "core/tile_pos.hpp"
 #include "core/utils/tiles.hpp"
@@ -160,6 +161,11 @@ void TileLayer::set_visible(const bool visible)
 void TileLayer::set_parent(const Maybe<UUID>& parentId)
 {
   mDelegate.set_parent(parentId);
+}
+
+void TileLayer::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 void TileLayer::set_name(std::string name)

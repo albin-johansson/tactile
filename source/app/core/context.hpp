@@ -27,10 +27,13 @@
 namespace tactile::core {
 
 /// Interface for all objects that may feature properties and components.
+/// Remember to update IContextVisitor when adding a new context implementation.
 class IContext : public IElement
 {
  public:
   virtual ~IContext() noexcept = default;
+
+  virtual void accept(IContextVisitor& visitor) const = 0;
 
   virtual void set_name(std::string name) = 0;
 

@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "core/contexts/context_visitor.hpp"
+
 namespace tactile::core {
 
 void Object::set_pos(const Vector2f& pos)
@@ -51,6 +53,11 @@ void Object::set_visible(const bool visible)
 void Object::set_name(std::string name)
 {
   mDelegate.set_name(std::move(name));
+}
+
+void Object::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 auto Object::get_props() -> PropertyBundle&

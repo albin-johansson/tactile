@@ -39,23 +39,21 @@ class TextureManager;
 class IRenderer;
 class ToolManager;
 
-class Actor;
-
 namespace core {
 
 class IElement;
+
 class IContext;
-
+class IContextVisitor;
 class ContextDelegate;
+
 class PropertyBundle;
-class ComponentBundle;
-class Component;
-class ComponentDefinition;
+
 class ComponentIndex;
+class ComponentBundle;
+class ComponentDefinition;
+class Component;
 
-class Viewport;
-
-class Object;
 class ILayerVisitor;
 class IConstLayerVisitor;
 class ILayer;
@@ -65,46 +63,14 @@ class GroupLayer;
 class LayerDelegate;
 
 class Map;
+class Object;
+class Viewport;
 
 struct TilesetInfo;
 struct TilesetRef;
 class TilesetBundle;
 class Tileset;
+class Tile;
 
 }  // namespace core
-
-namespace comp {
-
-struct ActiveState;
-
-struct CurrentRectangleStroke;
-struct CurrentEllipseStroke;
-
-struct AnimationFrame;
-struct Animation;
-struct Viewport;
-struct Parent;
-
-struct Context;
-struct Property;
-struct ComponentDef;
-struct Component;
-
-struct MapInfo;
-struct Layer;
-struct TileLayer;
-struct ObjectLayer;
-struct GroupLayer;
-struct LayerTreeNode;
-struct Object;
-struct ObjectDragInfo;
-
-struct Texture;
-struct TilesetContext;
-struct Tileset;
-struct TilesetCache;
-struct UvTileSize;
-struct MetaTile;
-
-}  // namespace comp
 }  // namespace tactile

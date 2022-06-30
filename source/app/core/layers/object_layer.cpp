@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/contexts/context_visitor.hpp"
 #include "core/layers/layer_visitor.hpp"
 #include "misc/panic.hpp"
 
@@ -54,6 +55,11 @@ void ObjectLayer::set_visible(const bool visible)
 void ObjectLayer::set_parent(const Maybe<UUID>& parentId)
 {
   mDelegate.set_parent(parentId);
+}
+
+void ObjectLayer::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 void ObjectLayer::set_name(std::string name)

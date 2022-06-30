@@ -25,6 +25,7 @@
 
 #include "core/common/functional.hpp"
 #include "core/common/maybe.hpp"
+#include "core/contexts/context_visitor.hpp"
 #include "core/layers/layer_visitor.hpp"
 #include "core/layers/object_layer.hpp"
 #include "core/layers/tile_layer.hpp"
@@ -424,6 +425,11 @@ void GroupLayer::set_parent(const Maybe<UUID>& parentId)
 void GroupLayer::set_name(std::string name)
 {
   mDelegate.set_name(std::move(name));
+}
+
+void GroupLayer::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 auto GroupLayer::layer_count() const -> usize

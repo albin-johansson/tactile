@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/contexts/context_visitor.hpp"
 #include "core/tilesets/tileset_info.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/panic.hpp"
@@ -66,6 +67,11 @@ void Tileset::update()
   for (auto& [id, tile] : mMetaTiles) {
     tile.update();
   }
+}
+
+void Tileset::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 void Tileset::set_name(std::string name)

@@ -43,6 +43,8 @@ class Object final : public IContext
 
   void set_name(std::string name) override;
 
+  void accept(IContextVisitor& visitor) const override;
+
   [[nodiscard]] auto get_props() -> PropertyBundle& override;
   [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
 

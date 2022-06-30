@@ -46,6 +46,8 @@ class Tileset final : public IContext
 
   void update();
 
+  void accept(IContextVisitor& visitor) const override;
+
   void set_name(std::string name) override;
 
   [[nodiscard]] auto operator[](TileIndex index) -> Tile&;

@@ -23,6 +23,7 @@
 
 #include <fmt/format.h>
 
+#include "core/contexts/context_visitor.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::core {
@@ -58,6 +59,11 @@ void Tile::clear_animation()
 void Tile::set_animation(TileAnimation animation)
 {
   mAnimation = std::move(animation);
+}
+
+void Tile::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 void Tile::set_name(std::string name)

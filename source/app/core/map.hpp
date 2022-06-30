@@ -122,6 +122,8 @@ class Map final : public IContext
 
   void set_tile_size(const Vector2i& size);
 
+  void accept(IContextVisitor& visitor) const override;
+
   void set_name(std::string name) override;
 
   [[nodiscard]] auto is_valid_position(const TilePos& pos) const -> bool;

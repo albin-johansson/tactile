@@ -50,6 +50,8 @@ class Tile final : public IContext
 
   void set_animation(TileAnimation animation);
 
+  void accept(IContextVisitor& visitor) const override;
+
   void set_name(std::string name) override;
 
   void set_source(const Vector4i& source);

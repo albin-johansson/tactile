@@ -46,6 +46,8 @@ class ObjectLayer final : public ILayer
 
   void set_parent(const Maybe<UUID>& parentId) override;
 
+  void accept(IContextVisitor& visitor) const override;
+
   void set_name(std::string name) override;
 
   void add_object(Object object);
