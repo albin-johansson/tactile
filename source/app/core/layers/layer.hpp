@@ -34,6 +34,7 @@ class ILayer : public IContext
  public:
   virtual ~ILayer() noexcept override = default;
 
+  using IContext::accept;
   virtual void accept(ILayerVisitor& visitor) = 0;
   virtual void accept(IConstLayerVisitor& visitor) const = 0;
 
