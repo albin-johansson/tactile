@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/contexts/context.hpp"
 #include "core/events/property_events.hpp"
 #include "core/model.hpp"
-#include "core/systems/context_system.hpp"
-#include "core/systems/property_system.hpp"
+#include "core/property_bundle.hpp"
 #include "core/utils/buffers.hpp"
 #include "editor/ui/properties/dialogs/property_type_combo.hpp"
 
@@ -54,17 +54,15 @@ void AddPropertyDialog::on_update(const DocumentModel&, entt::dispatcher&)
 
 void AddPropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<AddPropertyEvent>(create_string_from_buffer(mNameBuffer),
-                                       mPropertyType);
+  // TODO dispatcher.enqueue<AddPropertyEvent>(create_string_from_buffer(mNameBuffer), mPropertyType);
 }
 
 auto AddPropertyDialog::is_current_input_valid(const DocumentModel& model) const -> bool
 {
-  const auto& registry = model.get_active_registry();
-  const auto& context = sys::current_context(registry);
-
-  const auto name = create_string_view_from_buffer(mNameBuffer);
-  return !name.empty() && !sys::has_property_with_name(registry, context, name);
+  const auto& document = model.require_active_document();
+  const auto& context = document.view_context(document.active_context_id());
+  const auto  name = create_string_view_from_buffer(mNameBuffer);
+  return !name.empty() && !context.get_props().contains(name);
 }
 
 }  // namespace tactile::ui
