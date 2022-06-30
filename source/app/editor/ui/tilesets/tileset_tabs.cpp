@@ -40,8 +40,8 @@ constexpr auto _tab_bar_flags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
 void _update_context_menu(const DocumentModel& model,
-                          const UUID& documentId,
-                          entt::dispatcher& dispatcher)
+                          const UUID&          tilesetId,
+                          entt::dispatcher&    dispatcher)
 {
   if (auto popup = Popup::for_item("##TilesetTabContext"); popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
@@ -51,7 +51,7 @@ void _update_context_menu(const DocumentModel& model,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
-      // TODO dispatcher.enqueue<InspectContextEvent>(tilesetEntity);
+      dispatcher.enqueue<InspectContextEvent>(tilesetId);
     }
 
     ImGui::Separator();
@@ -66,17 +66,17 @@ void _update_context_menu(const DocumentModel& model,
     ImGui::Separator();
 
     {
-      Disable disable{model.is_open(documentId)};
+      Disable disable{model.is_open(tilesetId)};
       if (ImGui::MenuItem(TAC_ICON_OPEN " Open Tileset")) {
-        dispatcher.enqueue<OpenDocumentEvent>(documentId);
-        dispatcher.enqueue<SelectDocumentEvent>(documentId);
+        dispatcher.enqueue<OpenDocumentEvent>(tilesetId);
+        dispatcher.enqueue<SelectDocumentEvent>(tilesetId);
       }
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Tileset")) {
-      dispatcher.enqueue<RemoveTilesetEvent>(documentId);
+      dispatcher.enqueue<RemoveTilesetEvent>(tilesetId);
     }
   }
 }
