@@ -22,8 +22,12 @@
 #include <string>  // string
 #include <vector>  // vector
 
+#include <boost/uuid/uuid_hash.hpp>
+
+#include "core/common/associative.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
@@ -42,6 +46,14 @@ class MapDocument final : public ADocument
 {
  public:
   MapDocument(const Vector2i& tileSize, usize rows, usize columns);
+
+  void register_context(Shared<core::IContext> context) override;
+
+  void unregister_context(const UUID& id) override;
+
+  [[nodiscard]] auto get_context(const UUID& id) -> Shared<core::IContext> override;
+
+  [[nodiscard]] auto view_context(const UUID& id) const -> const core::IContext& override;
 
   void update() override;
 
@@ -117,14 +129,16 @@ class MapDocument final : public ADocument
     return DocumentType::Map;
   }
 
-  [[nodiscard]] auto get_map() -> core::Map& { return mMap; }
-  [[nodiscard]] auto get_map() const -> const core::Map& { return mMap; }
+  [[nodiscard]] auto get_map_ptr() -> const Shared<core::Map>& { return mMap; }
+
+  [[nodiscard]] auto get_map() -> core::Map& { return *mMap; }
+  [[nodiscard]] auto get_map() const -> const core::Map& { return *mMap; }
 
  private:
-  core::Map      mMap;
-  core::Viewport mViewport;
-  ToolManager    mTools;
-  // TODO active context
+  Shared<core::Map>                     mMap;
+  core::Viewport                        mViewport;
+  ToolManager                           mTools;
+  HashMap<UUID, Shared<core::IContext>> mContexts;
 };
 
 }  // namespace tactile

@@ -40,12 +40,17 @@ void RemoveLayerCmd::undo()
 {
   auto& map = mDocument->get_map();
   map.add_layer(mLayer, mLayer->get_parent());
+
+  mDocument->register_context(mLayer);
 }
 
 void RemoveLayerCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  map.remove_layer(mLayer->get_uuid());
+  auto&      map = mDocument->get_map();
+  const auto id = mLayer->get_uuid();
+  map.remove_layer(id);
+
+  mDocument->unregister_context(id);
 }
 
 }  // namespace tactile

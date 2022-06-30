@@ -54,9 +54,11 @@ void AddTilesetCmd::undo()
   TACTILE_ASSERT(!mModel->is_open(mTilesetId));
   TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
 
-  auto  mapDocument = mModel->get_map(mMapId);
-  auto& map = mapDocument->get_map();
+  auto  document = mModel->get_map(mMapId);
+  auto& map = document->get_map();
   map.detach_tileset(mTilesetId);
+
+  document->unregister_context(mTilesetId);
 }
 
 void AddTilesetCmd::redo()
@@ -70,10 +72,13 @@ void AddTilesetCmd::redo()
   TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
   TACTILE_ASSERT(mModel->is_map(mMapId));
 
-  auto  mapDocument = mModel->get_map(mMapId);
-  auto& map = mapDocument->get_map();
+  auto  document = mModel->get_map(mMapId);
+  auto& map = document->get_map();
 
-  map.attach_tileset(mTileset->get_tileset(), false);
+  auto tileset = mTileset->get_tileset();
+  map.attach_tileset(tileset, false);
+
+  document->register_context(tileset);
 }
 
 }  // namespace tactile

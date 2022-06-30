@@ -45,9 +45,9 @@ void Tile::reserve_objects(usize n)
   mObjects.reserve(n);
 }
 
-void Tile::add_object(Object object)
+void Tile::add_object(Shared<Object> object)
 {
-  const auto id = object.get_uuid();
+  const auto id = object->get_uuid();
   mObjects[id] = std::move(object);
 }
 
@@ -86,7 +86,7 @@ auto Tile::object_capacity() const -> usize
   return mObjects.bucket_count();
 }
 
-auto Tile::get_objects() const -> const HashMap<UUID, Object>&
+auto Tile::get_objects() const -> const HashMap<UUID, Shared<Object>>&
 {
   return mObjects;
 }

@@ -153,8 +153,6 @@ auto Map::fix_tiles() -> FixTilesResult
   return visitor.result;
 }
 
-#pragma region Layer management
-
 auto Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parentId)
 
     -> UUID
@@ -329,10 +327,6 @@ auto Map::get_layer(const UUID& id) -> Shared<ILayer>
   return mRootLayer.get_layer(id);
 }
 
-#pragma endregion
-
-#pragma region Tileset management
-
 void Map::attach_tileset(Shared<Tileset> tileset,
                          const TileID    firstTileId,
                          const bool      embedded)
@@ -364,8 +358,6 @@ auto Map::get_tilesets() const -> const TilesetBundle&
 {
   return mTilesets;
 }
-
-#pragma endregion
 
 void Map::set_tile_size(const Vector2i& size)
 {

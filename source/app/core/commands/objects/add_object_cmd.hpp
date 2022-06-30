@@ -24,27 +24,36 @@
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
+#include "core/object_type.hpp"
 
 namespace tactile {
 
-class PointToolCmd final : public ACommand
+class AddObjectCmd final : public ACommand
 {
  public:
-  PointToolCmd(MapDocument* document, const UUID& layerId, const Vector2f& pos);
+  AddObjectCmd(MapDocument*    document,
+               const UUID&     layerId,
+               ObjectType      type,
+               const Vector2f& pos,
+               const Vector2f& size = {});
 
   void undo() override;
 
   void redo() override;
 
+  [[nodiscard]] auto get_name() const -> const char* override;
+
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::AddPoint;
+    return CommandId::AddObject;
   }
 
  private:
   MapDocument* mDocument{};
   UUID         mLayerId{};
+  ObjectType   mObjectType{};
   Vector2f     mPos{};
+  Vector2f     mSize{};
   Maybe<UUID>  mObjectId;
 };
 

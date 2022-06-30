@@ -198,28 +198,28 @@ void _convert_fancy_tiles(const core::TilesetRef&     tilesetRef,
                           ir::TilesetData&            data)
 {
   for (const auto& [id, tile] : tileset) {
-    const auto tileId = tilesetRef.first_tile + tile.index();
+    const auto tileId = tilesetRef.first_tile + tile->index();
 
-    const auto isAnimated = tile.is_animated();
-    const auto hasObjects = tile.object_count() != 0;
-    const auto hasProps = !tile.get_props().empty();
-    const auto hasComps = !tile.get_comps().empty();
+    const auto isAnimated = tile->is_animated();
+    const auto hasObjects = tile->object_count() != 0;
+    const auto hasProps = !tile->get_props().empty();
+    const auto hasComps = !tile->get_comps().empty();
 
     if (isAnimated || hasObjects || hasProps || hasComps) {
-      auto& tileData = data.fancy_tiles[tile.index()];
+      auto& tileData = data.fancy_tiles[tile->index()];
 
       if (isAnimated) {
-        _convert_fancy_tile_animation(tile.get_animation(), tileData);
+        _convert_fancy_tile_animation(tile->get_animation(), tileData);
       }
 
       if (hasProps || hasComps) {
-        _convert_context(tile, components, tileData.context);
+        _convert_context(*tile, components, tileData.context);
       }
 
       if (hasObjects) {
-        for (const auto& [objectId, object] : tile.get_objects()) {
+        for (const auto& [objectId, object] : tile->get_objects()) {
           auto& objectData = tileData.objects.emplace_back();
-          _convert_object(object, components, objectData);
+          _convert_object(*object, components, objectData);
         }
       }
     }

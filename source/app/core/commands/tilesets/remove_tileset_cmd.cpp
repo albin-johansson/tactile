@@ -53,8 +53,10 @@ void RemoveTilesetCmd::undo()
   auto       tileset = mTilesetDocument->get_tileset();
   const auto tilesetId = tileset->get_uuid();
 
-  map.attach_tileset(std::move(tileset), mFirstTile.value(), false);  // TODO
+  map.attach_tileset(tileset, mFirstTile.value(), false);  // TODO
   map.select_tileset(tilesetId);
+
+  mapDocument->register_context(std::move(tileset));
 }
 
 void RemoveTilesetCmd::redo()
@@ -74,6 +76,7 @@ void RemoveTilesetCmd::redo()
   }
 
   map.detach_tileset(mTilesetId);
+  mapDocument->unregister_context(mTilesetId);
 }
 
 }  // namespace tactile

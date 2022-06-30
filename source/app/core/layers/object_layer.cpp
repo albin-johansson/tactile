@@ -67,10 +67,10 @@ void ObjectLayer::set_name(std::string name)
   mDelegate.set_name(std::move(name));
 }
 
-void ObjectLayer::add_object(Object object)
+void ObjectLayer::add_object(Shared<Object> object)
 {
-  const auto id = object.get_uuid();
-  mObjects[id] = std::make_shared<Object>(std::move(object));
+  const auto id = object->get_uuid();
+  mObjects[id] = std::move(object);
 }
 
 void ObjectLayer::remove_object(const UUID& id)

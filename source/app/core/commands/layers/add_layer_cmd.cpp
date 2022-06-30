@@ -36,8 +36,10 @@ AddLayerCmd::AddLayerCmd(MapDocument* document, const LayerType type)
 
 void AddLayerCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  map.remove_layer(mLayer->get_uuid());
+  auto&      map = mDocument->get_map();
+  const auto id = mLayer->get_uuid();
+  map.remove_layer(id);
+  mDocument->unregister_context(id);
 }
 
 void AddLayerCmd::redo()
@@ -71,6 +73,8 @@ void AddLayerCmd::redo()
 
     mLayer = map.get_layer(id.value());
   }
+
+  mDocument->register_context(mLayer);
 }
 
 }  // namespace tactile

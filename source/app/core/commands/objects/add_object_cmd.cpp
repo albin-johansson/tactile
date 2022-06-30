@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "point_tool_cmd.hpp"
+#include "add_object_cmd.hpp"
 
 #include <utility>  // move
 
@@ -27,39 +27,65 @@
 
 namespace tactile {
 
-PointToolCmd::PointToolCmd(MapDocument*    document,
+AddObjectCmd::AddObjectCmd(MapDocument*    document,
                            const UUID&     layerId,
-                           const Vector2f& pos)
-    : ACommand{"Add Point"}
+                           ObjectType      type,
+                           const Vector2f& pos,
+                           const Vector2f& size)
+    : ACommand{"Add Object"}
     , mDocument{document}
     , mLayerId{layerId}
+    , mObjectType{type}
     , mPos{pos}
+    , mSize{size}
 {
   if (!mDocument) {
     throw TactileError{"Invalid null map document!"};
   }
 }
 
-void PointToolCmd::undo()
+void AddObjectCmd::undo()
 {
   auto& map = mDocument->get_map();
   auto& layer = map.view_object_layer(mLayerId);
 
-  layer.remove_object(mObjectId.value());
-  mObjectId.reset();
+  const auto objectId = mObjectId.value();
+  layer.remove_object(objectId);
+
+  mDocument->unregister_context(objectId);
 }
 
-void PointToolCmd::redo()
+void AddObjectCmd::redo()
 {
   auto& map = mDocument->get_map();
   auto& layer = map.view_object_layer(mLayerId);
 
-  core::Object object;
-  object.set_type(ObjectType::Point);
-  object.set_pos(mPos);
+  auto object = std::make_shared<core::Object>();
+  object->set_type(mObjectType);
+  object->set_pos(mPos);
+  object->set_size(mSize);
 
-  mObjectId = object.get_uuid();
-  layer.add_object(std::move(object));
+  mObjectId = object->get_uuid();
+  layer.add_object(object);
+
+  mDocument->register_context(std::move(object));
+}
+
+auto AddObjectCmd::get_name() const -> const char*
+{
+  switch (mObjectType) {
+    case ObjectType::Point:
+      return "Add Point Object";
+
+    case ObjectType::Rect:
+      return "Add Rectangle Object";
+
+    case ObjectType::Ellipse:
+      return "Add Ellipse Object";
+
+    default:
+      throw TactileError{"Invalid object type!"};
+  }
 }
 
 }  // namespace tactile

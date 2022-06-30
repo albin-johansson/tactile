@@ -50,7 +50,7 @@ class ObjectLayer final : public ILayer
 
   void set_name(std::string name) override;
 
-  void add_object(Object object);
+  void add_object(Shared<Object> object);
 
   void remove_object(const UUID& id);
 

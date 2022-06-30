@@ -46,15 +46,17 @@
 #include "io/maps/parser/parse_data.hpp"
 #include "misc/assert.hpp"
 
+using namespace tactile::core;
+
 namespace tactile::io {
 namespace {
 
-void _restore_context(ADocument&             document,
-                      core::IContext&        context,
-                      const ir::ContextData& source)
+void _restore_context_no_register(ADocument&              document,
+                                  const Shared<IContext>& context,
+                                  const ir::ContextData&  source)
 {
-  auto& properties = context.get_props();
-  auto& components = context.get_comps();
+  auto& properties = context->get_props();
+  auto& components = context->get_comps();
 
   for (const auto& [propertyName, propertyValue] : source.properties) {
     properties.add(propertyName, propertyValue);
@@ -71,19 +73,28 @@ void _restore_context(ADocument&             document,
   }
 }
 
-auto _restore_object(ADocument& document, const ir::ObjectData& objectData)
-    -> core::Object
+void _restore_context(ADocument&              document,
+                      const Shared<IContext>& context,
+                      const ir::ContextData&  source)
 {
-  core::Object object;
-  object.set_type(objectData.type);
+  _restore_context_no_register(document, context, source);
+  document.register_context(context);
+}
 
-  object.set_pos(objectData.pos);
-  object.set_size(objectData.size);
+auto _restore_object(ADocument& document, const ir::ObjectData& objectData)
+    -> Shared<Object>
+{
+  auto object = std::make_shared<Object>();
+  object->set_type(objectData.type);
 
-  object.set_tag(objectData.tag);
-  object.set_visible(objectData.visible);
+  object->set_pos(objectData.pos);
+  object->set_size(objectData.size);
 
-  // TODO name, id
+  object->set_tag(objectData.tag);
+  object->set_visible(objectData.visible);
+
+  object->set_name(objectData.name);
+  // TODO id
 
   _restore_context(document, object, objectData.context);
 
@@ -151,7 +162,7 @@ auto _restore_layer(MapDocument&         document,
   layer.set_opacity(layerData.opacity);
   layer.set_visible(layerData.visible);
 
-  _restore_context(document, layer, layerData.context);
+  _restore_context(document, map.get_layer(layerId), layerData.context);
 
   return layerId;
 }
@@ -164,29 +175,26 @@ void _restore_layers(MapDocument& document, const ir::MapData& mapData)
     _restore_layer(document, layerData);
   }
 
-  // sys::sort_layers(registry);
-
   /*if (!registry.storage<comp::LayerTreeNode>().empty()) {
     auto& active = ctx_get<comp::ActiveState>(registry);
     active.layer = registry.view<comp::LayerTreeNode>().front();
   }*/
 }
 
-void _restore_tile_animation(core::Tile& tile, const ir::MetaTileData& tileData)
+void _restore_tile_animation(Tile& tile, const ir::MetaTileData& tileData)
 {
-  core::TileAnimation animation;
+  TileAnimation animation;
   animation.reserve_frames(tileData.frames.size());
 
   for (const auto& frameData : tileData.frames) {
-    animation.add_frame(frameData.local_id,
-                        core::TileAnimation::Millis{frameData.duration_ms});
+    animation.add_frame(frameData.local_id, TileAnimation::Millis{frameData.duration_ms});
   }
 
   tile.set_animation(std::move(animation));
 }
 
 void _restore_fancy_tile_objects(TilesetDocument&        document,
-                                 core::Tile&             tile,
+                                 Tile&                   tile,
                                  const ir::MetaTileData& tileData)
 {
   tile.reserve_objects(tileData.objects.size());
@@ -200,25 +208,25 @@ void _restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tile
 {
   auto& tileset = document.view_tileset();
   for (const auto& [index, tileData] : tilesetData.fancy_tiles) {
-    auto& tile = tileset[index];
-    TACTILE_ASSERT(tile.index() == index);
+    auto& tile = tileset.get_tile(index);
+    TACTILE_ASSERT(tile->index() == index);
 
     if (!tileData.frames.empty()) {
-      _restore_tile_animation(tile, tileData);
+      _restore_tile_animation(*tile, tileData);
     }
 
     if (!tileData.objects.empty()) {
-      _restore_fancy_tile_objects(document, tile, tileData);
+      _restore_fancy_tile_objects(document, *tile, tileData);
     }
 
     _restore_context(document, tile, tileData.context);
   }
 }
 
-void _restore_tileset(DocumentModel&                      model,
-                      TextureManager&                     textures,
-                      const Shared<core::ComponentIndex>& index,
-                      const ir::TilesetData&              tilesetData)
+void _restore_tileset(DocumentModel&                model,
+                      TextureManager&               textures,
+                      const Shared<ComponentIndex>& index,
+                      const ir::TilesetData&        tilesetData)
 {
   TACTILE_ASSERT(model.active_document_id().has_value());
 
@@ -227,7 +235,7 @@ void _restore_tileset(DocumentModel&                      model,
 
   const auto texture = textures.load(tilesetData.image_path).value();
 
-  core::TilesetInfo info;
+  TilesetInfo info;
   info.texture_id = texture.id;
   info.texture_size = texture.size;
   info.texture_path = texture.path;
@@ -241,15 +249,15 @@ void _restore_tileset(DocumentModel&                      model,
   tilesetDocument->set_component_index(index);
 
   _restore_fancy_tiles(*tilesetDocument, tilesetData);
-
-  auto& tileset = tilesetDocument->view_tileset();
-  _restore_context(*tilesetDocument, tileset, tilesetData.context);
+  _restore_context_no_register(*tilesetDocument,
+                               tilesetDocument->get_tileset(),
+                               tilesetData.context);
 }
 
-void _restore_tilesets(DocumentModel&                      model,
-                       TextureManager&                     textures,
-                       const Shared<core::ComponentIndex>& index,
-                       const ir::MapData&                  mapData)
+void _restore_tilesets(DocumentModel&                model,
+                       TextureManager&               textures,
+                       const Shared<ComponentIndex>& index,
+                       const ir::MapData&            mapData)
 {
   for (const auto& tilesetData : mapData.tilesets) {
     _restore_tileset(model, textures, index, tilesetData);
@@ -288,7 +296,7 @@ void restore_map_from_ir(const ParseData& data,
       model.add_map(mapData.tile_size, mapData.row_count, mapData.col_count);
   model.select_document(mapId);
 
-  auto components = std::make_shared<core::ComponentIndex>();
+  auto components = std::make_shared<ComponentIndex>();
 
   auto document = model.get_map(mapId);
   document->set_component_index(components);
@@ -307,7 +315,7 @@ void restore_map_from_ir(const ParseData& data,
   _restore_tilesets(model, textures, document->get_component_index(), mapData);
   _restore_layers(*document, mapData);
 
-  _restore_context(*document, map, mapData.context);
+  _restore_context_no_register(*document, document->get_map_ptr(), mapData.context);
 
   document->get_history().clear();
 }

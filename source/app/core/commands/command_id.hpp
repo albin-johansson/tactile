@@ -48,14 +48,12 @@ enum class CommandId
   StampSequence,
   EraserSequence,
   Bucket,
-  AddRectangle,
-  AddEllipse,
-  AddPoint,
 
   AddTileset,
   RemoveTileset,
   SetTilesetName,
 
+  AddObject,
   SetObjectName,
   MoveObject,
   SetObjectTag,

@@ -23,19 +23,46 @@
 
 #include "core/tilesets/tileset_info.hpp"
 #include "core/utils/tiles.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
 TilesetDocument::TilesetDocument(const UUID& id, const core::TilesetInfo& info)
     : mTileset{std::make_shared<core::Tileset>(id, info)}
 {
-  mContexts[mTileset->get_uuid()] = mTileset;
+  register_context(mTileset);
   select_context(mTileset->get_uuid());
 }
 
 TilesetDocument::TilesetDocument(const core::TilesetInfo& info)
     : TilesetDocument{make_uuid(), info}
 {}
+
+void TilesetDocument::register_context(Shared<core::IContext> context)
+{
+  const auto id = context->get_uuid();
+  mContexts[id] = std::move(context);
+}
+
+void TilesetDocument::unregister_context(const UUID& id)
+{
+  if (const auto iter = mContexts.find(id); iter != mContexts.end()) {
+    mContexts.erase(iter);
+  }
+  else {
+    throw TactileError{"Tried to unregister non-existent context!"};
+  }
+}
+
+auto TilesetDocument::get_context(const UUID&) -> Shared<core::IContext>
+{
+  throw TactileError{"Not implemented!"};
+}
+
+auto TilesetDocument::view_context(const UUID& id) const -> const core::IContext&
+{
+  throw TactileError{"Not implemented!"};
+}
 
 void TilesetDocument::update()
 {
@@ -52,10 +79,6 @@ void TilesetDocument::set_name(std::string name)
 auto TilesetDocument::get_name() const -> const std::string&
 {
   return mTileset->get_name();
-}
-
-{
-
 }
 
 auto TilesetDocument::tile_source(const TileIndex index) const -> const cen::irect&

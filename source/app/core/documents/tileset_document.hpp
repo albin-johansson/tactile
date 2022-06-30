@@ -19,10 +19,13 @@
 
 #pragma once
 
+#include <boost/uuid/uuid_hash.hpp>
 #include <centurion/math.hpp>
 
+#include "core/common/associative.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/documents/document.hpp"
@@ -46,12 +49,19 @@ class TilesetDocument final : public ADocument
 
   explicit TilesetDocument(const core::TilesetInfo& info);
 
+  void register_context(Shared<core::IContext> context) override;
+
+  void unregister_context(const UUID& id) override;
+
+  [[nodiscard]] auto get_context(const UUID& id) -> Shared<core::IContext> override;
+
+  [[nodiscard]] auto view_context(const UUID& id) const -> const core::IContext& override;
+
   void update() override;
 
   void set_name(std::string name) override;
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
-
 
   [[nodiscard]] auto tile_source(TileIndex index) const -> const cen::irect&;
 
@@ -75,8 +85,9 @@ class TilesetDocument final : public ADocument
   [[nodiscard]] auto view_tileset() const -> const core::Tileset& { return *mTileset; }
 
  private:
-  Shared<core::Tileset> mTileset;
-  core::Viewport        mViewport;
+  Shared<core::Tileset>                 mTileset;
+  core::Viewport                        mViewport;
+  HashMap<UUID, Shared<core::IContext>> mContexts;
 };
 
 }  // namespace tactile

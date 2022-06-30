@@ -26,6 +26,7 @@
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/contexts/context.hpp"
 #include "core/contexts/context_delegate.hpp"
@@ -44,7 +45,7 @@ class Tile final : public IContext
 
   void reserve_objects(usize n);
 
-  void add_object(Object object);
+  void add_object(Shared<Object> object);
 
   void clear_animation();
 
@@ -60,7 +61,7 @@ class Tile final : public IContext
 
   [[nodiscard]] auto object_capacity() const -> usize;
 
-  [[nodiscard]] auto get_objects() const -> const HashMap<UUID, Object>&;
+  [[nodiscard]] auto get_objects() const -> const HashMap<UUID, Shared<Object>>&;
 
   [[nodiscard]] auto is_animated() const -> bool;
 
@@ -81,11 +82,11 @@ class Tile final : public IContext
   [[nodiscard]] auto source() const noexcept -> const Vector4i& { return mSource; }
 
  private:
-  TileIndex             mIndex;
-  ContextDelegate       mDelegate;
-  Vector4i              mSource;
-  Maybe<TileAnimation>  mAnimation;
-  HashMap<UUID, Object> mObjects;
+  TileIndex                     mIndex;
+  ContextDelegate               mDelegate;
+  Vector4i                      mSource;
+  Maybe<TileAnimation>          mAnimation;
+  HashMap<UUID, Shared<Object>> mObjects;
 };
 
 }  // namespace tactile::core

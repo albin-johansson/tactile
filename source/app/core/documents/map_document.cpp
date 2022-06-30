@@ -36,28 +36,56 @@
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/maps/resize_map_cmd.hpp"
+#include "core/commands/objects/add_object_cmd.hpp"
 #include "core/commands/objects/move_object_cmd.hpp"
 #include "core/commands/objects/set_object_name_cmd.hpp"
 #include "core/commands/objects/set_object_tag_cmd.hpp"
 #include "core/commands/objects/set_object_visible_cmd.hpp"
 #include "core/commands/tools/bucket_tool_cmd.hpp"
-#include "core/commands/tools/ellipse_tool_cmd.hpp"
 #include "core/commands/tools/eraser_tool_cmd.hpp"
-#include "core/commands/tools/point_tool_cmd.hpp"
-#include "core/commands/tools/rectangle_tool_cmd.hpp"
 #include "core/commands/tools/stamp_tool_cmd.hpp"
 
 namespace tactile {
 
 MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize columns)
+    : mMap{std::make_shared<core::Map>()}
 {
-  mMap.resize(rows, columns);
-  mMap.set_tile_size(tileSize);
+  mMap->resize(rows, columns);
+  mMap->set_tile_size(tileSize);
+
+  register_context(mMap);
+  select_context(mMap->get_uuid());
+}
+
+void MapDocument::register_context(Shared<core::IContext> context)
+{
+  const auto id = context->get_uuid();
+  mContexts[id] = std::move(context);
+}
+
+void MapDocument::unregister_context(const UUID& id)
+{
+  if (const auto iter = mContexts.find(id); iter != mContexts.end()) {
+    mContexts.erase(iter);
+  }
+  else {
+    throw TactileError{"Tried to remove non-existent context!"};
+  }
+}
+
+auto MapDocument::get_context(const UUID& id) -> Shared<core::IContext>
+{
+  return lookup_in(mContexts, id);
+}
+
+auto MapDocument::view_context(const UUID& id) const -> const core::IContext&
+{
+  return *lookup_in(mContexts, id);
 }
 
 void MapDocument::update()
 {
-  for (const auto& [id, tileset] : mMap.get_tilesets()) {
+  for (const auto& [id, tileset] : mMap->get_tilesets()) {
     tileset.tileset->update();
   }
 }
@@ -158,19 +186,19 @@ void MapDocument::add_rectangle(const UUID&     layerId,
                                 const Vector2f& pos,
                                 const Vector2f& size)
 {
-  get_history().push<RectangleToolCmd>(this, layerId, pos, size);
+  get_history().push<AddObjectCmd>(this, layerId, ObjectType::Rect, pos, size);
 }
 
 void MapDocument::add_ellipse(const UUID&     layerId,
                               const Vector2f& pos,
                               const Vector2f& size)
 {
-  get_history().push<EllipseToolCmd>(this, layerId, pos, size);
+  get_history().push<AddObjectCmd>(this, layerId, ObjectType::Ellipse, pos, size);
 }
 
 void MapDocument::add_point(const UUID& layerId, const Vector2f& pos)
 {
-  get_history().push<PointToolCmd>(this, layerId, pos);
+  get_history().push<AddObjectCmd>(this, layerId, ObjectType::Point, pos);
 }
 
 void MapDocument::move_object(const UUID&     layerId,
@@ -204,12 +232,12 @@ void MapDocument::set_object_tag(const UUID& layerId,
 
 void MapDocument::set_name(std::string name)
 {
-  mMap.set_name(name);
+  mMap->set_name(name);
 }
 
 auto MapDocument::get_name() const -> const std::string&
 {
-  return mMap.get_name();
+  return mMap->get_name();
 }
 
 auto MapDocument::get_tools() -> ToolManager&

@@ -28,6 +28,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/contexts/context.hpp"
 #include "core/contexts/context_delegate.hpp"
@@ -52,6 +53,8 @@ class Tileset final : public IContext
 
   [[nodiscard]] auto operator[](TileIndex index) -> Tile&;
   [[nodiscard]] auto operator[](TileIndex index) const -> const Tile&;
+
+  [[nodiscard]] auto get_tile(TileIndex index) -> const Shared<Tile>&;
 
   [[nodiscard]] auto index_of(const TilePos& pos) const -> TileIndex;
 
@@ -96,16 +99,16 @@ class Tileset final : public IContext
   [[nodiscard]] auto end() const noexcept { return mMetaTiles.end(); }
 
  private:
-  ContextDelegate          mContext;
-  uint                     mTextureId{};
-  Vector2i                 mTextureSize{};
-  Vector2i                 mTileSize{};
-  int32                    mRowCount{};
-  int32                    mColumnCount{};
-  Vector2f                 mUvSize{};
-  HashMap<TileIndex, UUID> mIdentifiers;
-  HashMap<UUID, Tile>      mMetaTiles;
-  std::filesystem::path    mTexturePath;
+  ContextDelegate             mContext;
+  uint                        mTextureId{};
+  Vector2i                    mTextureSize{};
+  Vector2i                    mTileSize{};
+  int32                       mRowCount{};
+  int32                       mColumnCount{};
+  Vector2f                    mUvSize{};
+  HashMap<TileIndex, UUID>    mIdentifiers;
+  HashMap<UUID, Shared<Tile>> mMetaTiles;
+  std::filesystem::path       mTexturePath;
 
   mutable HashMap<TileIndex, TileIndex> mAppearanceCache;
 

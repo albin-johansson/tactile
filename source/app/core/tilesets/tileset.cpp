@@ -49,11 +49,11 @@ void Tileset::load_tiles()
   for (TileIndex index = 0; index < count; ++index) {
     const auto [row, col] = to_matrix_coords(index, mColumnCount);
 
-    Tile       tile{index};
-    const auto tileId = tile.get_uuid();
+    auto       tile = std::make_shared<Tile>(index);
+    const auto tileId = tile->get_uuid();
 
     const Vector2i pos{col * mTileSize.x, row * mTileSize.y};
-    tile.set_source({pos, mTileSize});
+    tile->set_source({pos, mTileSize});
 
     mMetaTiles.try_emplace(tileId, std::move(tile));
     mIdentifiers[index] = tileId;
@@ -64,8 +64,9 @@ void Tileset::update()
 {
   mAppearanceCache.clear();
 
+  // TODO usually a lot of tiles to visit here, store which tiles that need updating?
   for (auto& [id, tile] : mMetaTiles) {
-    tile.update();
+    tile->update();
   }
 }
 
@@ -81,11 +82,16 @@ void Tileset::set_name(std::string name)
 
 auto Tileset::operator[](const TileIndex index) -> Tile&
 {
-  const auto id = lookup_in(mIdentifiers, index);
-  return lookup_in(mMetaTiles, id);
+  return *get_tile(index);
 }
 
 auto Tileset::operator[](const TileIndex index) const -> const Tile&
+{
+  const auto id = lookup_in(mIdentifiers, index);
+  return *lookup_in(mMetaTiles, id);
+}
+
+auto Tileset::get_tile(TileIndex index) -> const Shared<Tile>&
 {
   const auto id = lookup_in(mIdentifiers, index);
   return lookup_in(mMetaTiles, id);
@@ -114,8 +120,8 @@ auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
     const auto& id = iter->second;
     const auto& tile = lookup_in(mMetaTiles, id);
 
-    if (tile.is_animated()) {
-      const auto appearance = tile.get_animation().current_tile();
+    if (tile->is_animated()) {
+      const auto appearance = tile->get_animation().current_tile();
       mAppearanceCache[index] = appearance;
       return appearance;
     }

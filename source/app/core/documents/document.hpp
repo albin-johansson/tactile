@@ -22,6 +22,7 @@
 #include <filesystem>  // path
 #include <string>      // string
 
+#include "core/attribute.hpp"
 #include "core/commands/command_stack.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
@@ -46,12 +47,44 @@ class ADocument
   /// Sets the file path associated with the document.
   void set_path(std::filesystem::path path);
 
+#pragma region Components
+
   void attach_component(const UUID& contextId, const UUID& componentId);
 
   void set_component_index(Shared<core::ComponentIndex> index);
 
   [[nodiscard]] auto get_component_index() -> Shared<core::ComponentIndex>;
   [[nodiscard]] auto get_component_index() const -> Shared<const core::ComponentIndex>;
+
+#pragma endregion
+
+#pragma region Properties
+
+  void add_property(const UUID& contextId, std::string name, AttributeType type);
+
+  void remove_property(const UUID& contextId, std::string name);
+
+  void rename_property(const UUID& contextId, std::string current, std::string updated);
+
+  void update_property(const UUID& contextId, std::string name, Attribute value);
+
+  void change_property_type(const UUID& contextId, std::string name, AttributeType type);
+
+#pragma endregion
+
+  void select_context(const UUID& contextId);
+
+  [[nodiscard]] auto active_context_id() const -> const UUID&;
+
+  virtual void register_context(Shared<core::IContext> context) = 0;
+  virtual void unregister_context(const UUID& id) = 0;
+
+  /// Looks up an existing context in the document.
+  /// Note, this is quite an expensive operation!
+  [[nodiscard]] virtual auto get_context(const UUID& id) -> Shared<core::IContext> = 0;
+
+  [[nodiscard]] virtual auto view_context(const UUID& id) const
+      -> const core::IContext& = 0;
 
   /// Indicates whether the document represents a map.
   [[nodiscard]] auto is_map() const -> bool;
@@ -82,6 +115,7 @@ class ADocument
   CommandStack                 mCommands;
   Shared<core::ComponentIndex> mComponentIndex;
   Maybe<std::filesystem::path> mPath;
+  UUID                         mActiveContext;
 };
 
 }  // namespace tactile
