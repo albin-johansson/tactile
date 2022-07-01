@@ -46,6 +46,8 @@ namespace {
 
 }  // namespace
 
+// FIXME multiple selection doesn't work
+
 void StampTool::draw_gizmos(const DocumentModel& model,
                             IRenderer&           renderer,
                             const MouseInfo&     mouse) const
