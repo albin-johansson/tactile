@@ -40,7 +40,7 @@ namespace {
 struct FileMenuState final
 {
   CreateMapDialog map_creation_dialog;
-  bool show_map_selector{};
+  bool            show_map_selector{};
 };
 
 [[nodiscard]] auto _get_state() -> FileMenuState&
@@ -102,7 +102,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
   auto& state = _get_state();
 
   if (Menu menu{"File"}; menu.is_open()) {
-    const auto hasActiveDocument = model.has_active_document();
+    const auto  hasActiveDocument = model.has_active_document();
     const auto* document = model.active_document();
 
     if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {

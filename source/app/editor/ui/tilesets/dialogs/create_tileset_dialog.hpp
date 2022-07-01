@@ -44,8 +44,8 @@ class CreateTilesetDialog final : public ADialog
  private:
   std::filesystem::path mFullImagePath;
   std::array<char, 100> mPathPreviewBuffer{};
-  int mTileWidth{32};
-  int mTileHeight{32};
+  int                   mTileWidth{32};
+  int                   mTileHeight{32};
 
   void ShowImageFileDialog();
 };

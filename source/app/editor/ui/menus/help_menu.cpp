@@ -34,9 +34,9 @@ namespace {
 
 struct HelpMenuState final
 {
-  AboutDialog about_dialog;
+  AboutDialog   about_dialog;
   CreditsDialog credits_dialog;
-  bool show_about_imgui{};
+  bool          show_about_imgui{};
 };
 
 [[nodiscard]] auto _get_state() -> HelpMenuState&

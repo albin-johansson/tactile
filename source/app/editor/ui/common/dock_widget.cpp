@@ -27,12 +27,12 @@ namespace tactile::ui {
 
 struct ADockWidget::Data final
 {
-  const char* title{};
-  ImGuiWindowFlags window_flags{};
+  const char*       title{};
+  ImGuiWindowFlags  window_flags{};
   ImGuiFocusedFlags focus_flags{};
-  bool has_close_button{};
-  bool has_focus{};
-  bool contains_mouse{};
+  bool              has_close_button{};
+  bool              has_focus{};
+  bool              contains_mouse{};
 };
 
 ADockWidget::ADockWidget(const char* title, const ImGuiWindowFlags flags)

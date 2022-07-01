@@ -41,16 +41,16 @@ class AShortcut
 {
  public:
   explicit AShortcut(const cen::scan_code key,
-                     const cen::key_mod modifiers = cen::key_mod::none)
+                     const cen::key_mod   modifiers = cen::key_mod::none)
       : mKey{key}
       , mModifiers{modifiers}
   {}
 
   virtual ~AShortcut() noexcept = default;
 
-  void poll(const DocumentModel& model,
+  void poll(const DocumentModel&       model,
             const cen::keyboard_event& event,
-            entt::dispatcher& dispatcher);
+            entt::dispatcher&          dispatcher);
 
   virtual void activate(entt::dispatcher& dispatcher) = 0;
 
@@ -62,7 +62,7 @@ class AShortcut
 
  private:
   cen::scan_code mKey;
-  cen::key_mod mModifiers{cen::key_mod::none};
+  cen::key_mod   mModifiers{cen::key_mod::none};
 };
 
 }  // namespace tactile

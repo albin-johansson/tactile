@@ -29,10 +29,10 @@ namespace tactile::ui {
 struct ViewportCursorInfo final
 {
   TilePos map_position;
-  ImVec2 clamped_position{};
-  ImVec2 raw_position{};
-  ImVec2 scaled_position{};
-  bool is_within_map{};
+  ImVec2  clamped_position{};
+  ImVec2  raw_position{};
+  ImVec2  scaled_position{};
+  bool    is_within_map{};
 };
 
 [[nodiscard]] auto get_viewport_cursor_info(const RenderInfo& info) -> ViewportCursorInfo;

@@ -142,9 +142,9 @@ class Child final
   TACTILE_DEFAULT_COPY(Child);
   TACTILE_DEFAULT_MOVE(Child);
 
-  explicit Child(const char* id,
-                 const ImVec2& size = {0, 0},
-                 const bool border = false,
+  explicit Child(const char*            id,
+                 const ImVec2&          size = {0, 0},
+                 const bool             border = false,
                  const ImGuiWindowFlags flags = 0)
       : mOpen{ImGui::BeginChild(id, size, border, flags)}
   {}
@@ -208,8 +208,8 @@ class TabItem final
   TACTILE_DEFAULT_COPY(TabItem);
   TACTILE_DEFAULT_MOVE(TabItem);
 
-  explicit TabItem(const char* name,
-                   bool* open = nullptr,
+  explicit TabItem(const char*             name,
+                   bool*                   open = nullptr,
                    const ImGuiTabItemFlags flags = 0)
       : mOpen{ImGui::BeginTabItem(name, open, flags)}
   {}
@@ -370,9 +370,9 @@ class Window final
   TACTILE_DEFAULT_COPY(Window);
   TACTILE_DEFAULT_MOVE(Window);
 
-  explicit Window(const char* label,
+  explicit Window(const char*            label,
                   const ImGuiWindowFlags flags = 0,
-                  bool* open = nullptr)
+                  bool*                  open = nullptr)
       : mLabel{label}
       , mOpen{ImGui::Begin(label, open, flags)}
   {
@@ -414,7 +414,7 @@ class Window final
 
  private:
   const char* mLabel{};
-  bool mOpen{};
+  bool        mOpen{};
 };
 
 class TreeNode final
@@ -428,9 +428,9 @@ class TreeNode final
   {}
 
   template <typename... Args>
-  explicit TreeNode(const char* id,
+  explicit TreeNode(const char*              id,
                     const ImGuiTreeNodeFlags flags,
-                    const char* fmt,
+                    const char*              fmt,
                     Args&&... args)
       : mOpen{ImGui::TreeNodeEx(id, flags, fmt, std::forward<Args>(args)...)}
   {}

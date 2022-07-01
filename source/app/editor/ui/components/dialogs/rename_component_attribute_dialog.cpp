@@ -50,7 +50,7 @@ void RenameComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
                                                std::string{current_input()});
 }
 
-auto RenameComponentAttributeDialog::validate(const DocumentModel& model,
+auto RenameComponentAttributeDialog::validate(const DocumentModel&   model,
                                               const std::string_view input) const -> bool
 {
   const auto& document = model.require_active_document();

@@ -57,7 +57,7 @@ auto ViewportArea::get_size() const -> ImVec2
 }
 
 void ViewportArea::check_mouse_events(const entt::registry& registry,
-                                      entt::dispatcher& dispatcher)
+                                      entt::dispatcher&     dispatcher)
 {
   mContainsMouse = false;
 
@@ -82,7 +82,7 @@ auto ViewportArea::contains_mouse() const -> bool
 }
 
 void ViewportArea::check_clicked(const entt::registry& registry,
-                                 entt::dispatcher& dispatcher)
+                                 entt::dispatcher&     dispatcher)
 {
   const auto button = check_for(
       [](const ImGuiMouseButton button) { return ImGui::IsMouseClicked(button); });
@@ -93,7 +93,7 @@ void ViewportArea::check_clicked(const entt::registry& registry,
 }
 
 void ViewportArea::check_dragged(const entt::registry& registry,
-                                 entt::dispatcher& dispatcher)
+                                 entt::dispatcher&     dispatcher)
 {
   const auto button = check_for(
       [](const ImGuiMouseButton button) { return ImGui::IsMouseDragging(button); });
@@ -104,7 +104,7 @@ void ViewportArea::check_dragged(const entt::registry& registry,
 }
 
 void ViewportArea::check_released(const entt::registry& registry,
-                                  entt::dispatcher& dispatcher)
+                                  entt::dispatcher&     dispatcher)
 {
   const auto button = check_for(
       [](const ImGuiMouseButton button) { return ImGui::IsMouseReleased(button); });

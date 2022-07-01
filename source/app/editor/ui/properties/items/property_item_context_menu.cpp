@@ -28,8 +28,8 @@
 
 namespace tactile::ui {
 
-auto property_item_context_menu(entt::dispatcher& dispatcher,
-                                const std::string& name,
+auto property_item_context_menu(entt::dispatcher&             dispatcher,
+                                const std::string&            name,
                                 PropertyItemContextMenuState& state) -> bool
 {
   if (auto popup = Popup::for_item("##PropertyItemContext"); popup.is_open()) {

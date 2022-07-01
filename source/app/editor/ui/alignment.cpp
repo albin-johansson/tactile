@@ -28,8 +28,8 @@ namespace tactile::ui {
 void center_next_window_on_appearance()
 {
   const auto* viewport = ImGui::GetMainViewport();
-  const auto pos = viewport->WorkPos;
-  const auto size = viewport->WorkSize;
+  const auto  pos = viewport->WorkPos;
+  const auto  size = viewport->WorkSize;
 
   const ImVec2 next_pos = pos + (size / ImVec2{2, 2});
   const ImVec2 next_pivot{0.5f, 0.5f};

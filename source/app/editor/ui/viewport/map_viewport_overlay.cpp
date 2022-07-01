@@ -99,7 +99,7 @@ void _show_mouse_tile_labels(const core::Map& map, const ViewportCursorInfo& cur
 void _update_overlay_context_menu()
 {
   if (auto popup = Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
-    auto& prefs = io::get_preferences();
+    auto&      prefs = io::get_preferences();
     const auto corner = prefs.viewport_overlay_pos();
 
     if (ImGui::MenuItem("Top-left", nullptr, corner == io::OverlayPos::TopLeft)) {

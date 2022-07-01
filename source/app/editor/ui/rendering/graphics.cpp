@@ -41,15 +41,15 @@ namespace {
   return {pos.x, pos.y, size.x, size.y};
 }
 
-void _path_elliptical_arc_to(ImDrawList* self,
+void _path_elliptical_arc_to(ImDrawList*   self,
                              const ImVec2& center,
                              const ImVec2& radius,
-                             const float arcMin,
-                             const float arcMax,
-                             const int nSegments = 10)
+                             const float   arcMin,
+                             const float   arcMax,
+                             const int     nSegments = 10)
 {
   for (int i = 0; i <= nSegments; ++i) {
-    const auto diff = arcMax - arcMin;
+    const auto  diff = arcMax - arcMin;
     const float a =
         arcMin + (static_cast<float>(i) / static_cast<float>(nSegments)) * diff;
 
@@ -59,12 +59,12 @@ void _path_elliptical_arc_to(ImDrawList* self,
   }
 }
 
-void _add_ellipse(ImDrawList* self,
+void _add_ellipse(ImDrawList*   self,
                   const ImVec2& center,
                   const ImVec2& radius,
-                  const ImU32 color,
-                  const int nSegments = 12,
-                  const float thickness = 1.0f)
+                  const ImU32   color,
+                  const int     nSegments = 12,
+                  const float   thickness = 1.0f)
 {
   if ((color & IM_COL32_A_MASK) == 0 || nSegments <= 2) {
     return;
@@ -134,10 +134,10 @@ void GraphicsCtx::draw_rect(const ImVec2& position, const ImVec2& size)
   list->AddRect(position, position + size, get_draw_color(), 0, 0, mLineThickness);
 }
 
-void GraphicsCtx::draw_rect(const Vector2f& pos,
-                            const Vector2f& size,
+void GraphicsCtx::draw_rect(const Vector2f&   pos,
+                            const Vector2f&   size,
                             const cen::color& color,
-                            const float thickness)
+                            const float       thickness)
 {
   auto* list = ImGui::GetWindowDrawList();
 
@@ -153,10 +153,10 @@ void GraphicsCtx::fill_rect(const ImVec2& position, const ImVec2& size)
   list->AddRectFilled(position, position + size, get_draw_color());
 }
 
-void GraphicsCtx::draw_ellipse(const Vector2f& center,
-                               const Vector2f& radius,
+void GraphicsCtx::draw_ellipse(const Vector2f&   center,
+                               const Vector2f&   radius,
                                const cen::color& color,
-                               const float thickness)
+                               const float       thickness)
 {
   const ImVec2 imCenter{center.x, center.y};
   const ImVec2 imRadius{radius.x, radius.y};
@@ -208,7 +208,7 @@ void GraphicsCtx::draw_circle_with_shadow(const ImVec2& center, const float radi
 }
 
 void GraphicsCtx::draw_translated_circle_with_shadow(const ImVec2& center,
-                                                     const float radius)
+                                                     const float   radius)
 {
   draw_circle_with_shadow(translate(center), radius);
 }
@@ -238,7 +238,7 @@ void GraphicsCtx::draw_translated_ellipse_with_shadow(const ImVec2& center,
   draw_ellipse_with_shadow(translate(center), radius);
 }
 
-void GraphicsCtx::render_image(const uint texture,
+void GraphicsCtx::render_image(const uint    texture,
                                const ImVec2& position,
                                const ImVec2& size)
 {
@@ -246,12 +246,12 @@ void GraphicsCtx::render_image(const uint texture,
   list->AddImage(to_texture_id(texture), position, position + size);
 }
 
-void GraphicsCtx::render_image(const uint texture,
+void GraphicsCtx::render_image(const uint      texture,
                                const Vector2f& pos,
                                const Vector2f& size,
                                const Vector2f& uvMin,
                                const Vector2f& uvMax,
-                               const uint8 opacity)
+                               const uint8     opacity)
 {
   auto* list = ImGui::GetWindowDrawList();
 
@@ -266,7 +266,7 @@ void GraphicsCtx::render_image(const uint texture,
                  IM_COL32(0xFF, 0xFF, 0xFF, opacity));
 }
 
-void GraphicsCtx::render_image(const uint texture,
+void GraphicsCtx::render_image(const uint    texture,
                                const ImVec4& source,
                                const ImVec2& position,
                                const ImVec2& uv)
@@ -285,7 +285,7 @@ void GraphicsCtx::render_image(const uint texture,
                  color_to_u32(cen::colors::white.with_alpha(mOpacity)));
 }
 
-void GraphicsCtx::render_translated_image(const uint texture,
+void GraphicsCtx::render_translated_image(const uint    texture,
                                           const ImVec4& source,
                                           const ImVec2& position,
                                           const ImVec2& uv)
@@ -352,7 +352,7 @@ auto GraphicsCtx::from_matrix_to_absolute(const int32 row, const int32 column) c
 auto GraphicsCtx::is_intersecting_bounds(const ImVec2& position, const ImVec2& size) const
     -> bool
 {
-  const auto translated = translate(position);
+  const auto       translated = translate(position);
   const cen::frect rect{translated.x, translated.y, size.x, size.y};
   return cen::intersects(mBoundsRect, rect);
 }

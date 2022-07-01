@@ -38,18 +38,18 @@ namespace tactile::ui {
 [[nodiscard]] auto input_float(const char* id, float value, float min = 0, float max = 0)
     -> Maybe<float>;
 
-[[nodiscard]] auto input_string_with_hint(const char* id,
-                                          const char* hint,
-                                          const std::string& value,
-                                          const char* label = nullptr,
-                                          ImGuiInputTextFlags flags = 0,
+[[nodiscard]] auto input_string_with_hint(const char*            id,
+                                          const char*            hint,
+                                          const std::string&     value,
+                                          const char*            label = nullptr,
+                                          ImGuiInputTextFlags    flags = 0,
                                           ImGuiInputTextCallback filter = nullptr)
     -> Maybe<std::string>;
 
-[[nodiscard]] auto input_string(const char* id,
-                                const std::string& value,
-                                const char* label = nullptr,
-                                ImGuiInputTextFlags flags = 0,
+[[nodiscard]] auto input_string(const char*            id,
+                                const std::string&     value,
+                                const char*            label = nullptr,
+                                ImGuiInputTextFlags    flags = 0,
                                 ImGuiInputTextCallback filter = nullptr)
     -> Maybe<std::string>;
 

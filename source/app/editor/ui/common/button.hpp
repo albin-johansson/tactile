@@ -36,9 +36,9 @@ namespace tactile::ui {
  */
 auto button(const char* text,
             const char* tooltip = nullptr,
-            bool enabled = true,
-            float width = 0,
-            float height = 0) -> bool;
+            bool        enabled = true,
+            float       width = 0,
+            float       height = 0) -> bool;
 
 auto icon_button(const char* icon, const char* tooltip = nullptr, bool enabled = true)
     -> bool;

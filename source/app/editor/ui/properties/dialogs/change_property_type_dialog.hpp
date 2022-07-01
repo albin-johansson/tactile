@@ -49,8 +49,8 @@ class ChangePropertyTypeDialog final : public ADialog
       -> bool override;
 
  private:
-  AttributeType mCurrentType{AttributeType::String};
-  Maybe<std::string> mPropertyName;
+  AttributeType        mCurrentType{AttributeType::String};
+  Maybe<std::string>   mPropertyName;
   Maybe<AttributeType> mPreviousType;
 };
 

@@ -43,7 +43,7 @@ class RenameLayerDialog final : public AStringInputDialog
       -> bool override;
 
  private:
-  Maybe<UUID> mTargetId;
+  Maybe<UUID>        mTargetId;
   Maybe<std::string> mOldName;
 };
 

@@ -29,7 +29,7 @@ namespace tactile::ui {
 
 auto button(const char* text,
             const char* tooltip,
-            const bool enabled,
+            const bool  enabled,
             const float width,
             const float height) -> bool
 {

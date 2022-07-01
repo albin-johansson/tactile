@@ -54,7 +54,7 @@ struct RenderInfo final
     -> RenderInfo;
 
 [[nodiscard]] auto get_render_info(const core::Viewport& viewport,
-                                   const core::Tileset& tileset) -> RenderInfo;
+                                   const core::Tileset&  tileset) -> RenderInfo;
 
 /// \} End of group rendering
 

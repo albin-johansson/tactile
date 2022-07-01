@@ -66,7 +66,7 @@ void _update_viewport_offset(const core::TilesetRef& tilesetRef,
                              ImGuiButtonFlags_MouseButtonRight);
 }
 
-void _render_selection(GraphicsCtx& graphics,
+void _render_selection(GraphicsCtx&  graphics,
                        const Region& selection,
                        const ImVec2& min,
                        const ImVec2& tileSize)
@@ -83,8 +83,8 @@ void _render_selection(GraphicsCtx& graphics,
 }  // namespace
 
 void update_tileset_view(const DocumentModel& model,
-                         const UUID& tilesetId,
-                         entt::dispatcher& dispatcher)
+                         const UUID&          tilesetId,
+                         entt::dispatcher&    dispatcher)
 {
   const auto& document = model.require_active_map();
   const auto& map = document.get_map();

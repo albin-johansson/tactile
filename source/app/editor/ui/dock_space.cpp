@@ -57,7 +57,7 @@ void load_default_layout(ImGuiID id, const bool resetVisibility)
 
   const auto root = id;
 
-  auto right = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.20f, nullptr, &id);
+  auto       right = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.20f, nullptr, &id);
   const auto rightBottom =
       ImGui::DockBuilderSplitNode(right, ImGuiDir_Down, 0.25f, nullptr, &right);
 

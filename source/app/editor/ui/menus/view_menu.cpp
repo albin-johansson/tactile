@@ -78,7 +78,7 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (Menu menu{"View"}; menu.is_open()) {
     const auto* document = model.active_document();
-    const auto hasActiveDocument = model.has_active_document();
+    const auto  hasActiveDocument = model.has_active_document();
 
     _update_widgets_menu(model);
 

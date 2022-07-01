@@ -27,7 +27,7 @@
 namespace tactile::ui {
 
 void update_tileset_view(const DocumentModel& model,
-                         const UUID& tilesetId,
-                         entt::dispatcher& dispatcher);
+                         const UUID&          tilesetId,
+                         entt::dispatcher&    dispatcher);
 
 }  // namespace tactile::ui

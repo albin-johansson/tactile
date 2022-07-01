@@ -30,8 +30,8 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto _roboto_path = "assets/fonts/roboto/Roboto-Regular.ttf";
-constexpr auto _fa_path = "assets/fonts/fa/fa-solid-900.otf";
+constexpr auto    _roboto_path = "assets/fonts/roboto/Roboto-Regular.ttf";
+constexpr auto    _fa_path = "assets/fonts/fa/fa-solid-900.otf";
 constexpr ImWchar _icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 }  // namespace
@@ -43,14 +43,14 @@ void reload_fonts()
 
   spdlog::debug("Reloading fonts...");
 
-  auto& io = ImGui::GetIO();
+  auto&      io = ImGui::GetIO();
   const auto scale = io.DisplayFramebufferScale;
 
   io.Fonts->Clear();
 
   const auto& prefs = io::get_preferences();
-  const auto useDefaultFont = prefs.use_default_font();
-  const auto size = useDefaultFont ? 13.0f : static_cast<float>(prefs.font_size());
+  const auto  useDefaultFont = prefs.use_default_font();
+  const auto  size = useDefaultFont ? 13.0f : static_cast<float>(prefs.font_size());
 
   if (useDefaultFont) {
     ImFontConfig config{};

@@ -123,11 +123,11 @@ auto input_float(const char* id, float value, const float min, const float max)
   return nothing;
 }
 
-auto input_string_with_hint(const char* id,
-                            const char* hint,
-                            const std::string& value,
-                            const char* label,
-                            const ImGuiInputTextFlags flags,
+auto input_string_with_hint(const char*                  id,
+                            const char*                  hint,
+                            const std::string&           value,
+                            const char*                  label,
+                            const ImGuiInputTextFlags    flags,
                             const ImGuiInputTextCallback filter) -> Maybe<std::string>
 {
   const Scope scope{id};
@@ -161,10 +161,10 @@ auto input_string_with_hint(const char* id,
   return nothing;
 }
 
-auto input_string(const char* id,
-                  const std::string& value,
-                  const char* label,
-                  const ImGuiInputTextFlags flags,
+auto input_string(const char*                  id,
+                  const std::string&           value,
+                  const char*                  label,
+                  const ImGuiInputTextFlags    flags,
                   const ImGuiInputTextCallback filter) -> Maybe<std::string>
 {
   return input_string_with_hint(id, nullptr, value, label, flags, filter);

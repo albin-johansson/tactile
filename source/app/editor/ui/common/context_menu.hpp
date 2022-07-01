@@ -42,12 +42,12 @@ class ContextMenu
 
  protected:
   virtual void on_update([[maybe_unused]] const DocumentModel& model,
-                         [[maybe_unused]] entt::dispatcher& dispatcher)
+                         [[maybe_unused]] entt::dispatcher&    dispatcher)
   {}
 
  private:
   const char* mName{};
-  bool mShow{};
+  bool        mShow{};
 };
 
 }  // namespace tactile::ui
