@@ -19,12 +19,14 @@
 
 #pragma once
 
-/* Convenience header that includes all other command headers */
-
-#include "core/commands/components/all.hpp"
-#include "core/commands/layers/all.hpp"
-#include "core/commands/maps/all.hpp"
-#include "core/commands/objects/all.hpp"
-#include "core/commands/properties/all.hpp"
-#include "core/commands/tilesets/all.hpp"
-#include "core/commands/tools/all.hpp"
+#include "core/events/command_events.hpp"
+#include "core/events/component_events.hpp"
+#include "core/events/document_events.hpp"
+#include "core/events/layer_events.hpp"
+#include "core/events/map_events.hpp"
+#include "core/events/misc_events.hpp"
+#include "core/events/object_events.hpp"
+#include "core/events/property_events.hpp"
+#include "core/events/tileset_events.hpp"
+#include "core/events/tool_events.hpp"
+#include "core/events/viewport_events.hpp"

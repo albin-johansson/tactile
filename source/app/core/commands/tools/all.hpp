@@ -19,12 +19,6 @@
 
 #pragma once
 
-/* Convenience header that includes all other command headers */
-
-#include "core/commands/components/all.hpp"
-#include "core/commands/layers/all.hpp"
-#include "core/commands/maps/all.hpp"
-#include "core/commands/objects/all.hpp"
-#include "core/commands/properties/all.hpp"
-#include "core/commands/tilesets/all.hpp"
-#include "core/commands/tools/all.hpp"
+#include "core/commands/tools/bucket_tool_cmd.hpp"
+#include "core/commands/tools/eraser_tool_cmd.hpp"
+#include "core/commands/tools/stamp_tool_cmd.hpp"

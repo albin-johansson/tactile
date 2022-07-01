@@ -19,12 +19,8 @@
 
 #pragma once
 
-/* Convenience header that includes all other command headers */
-
-#include "core/commands/components/all.hpp"
-#include "core/commands/layers/all.hpp"
-#include "core/commands/maps/all.hpp"
-#include "core/commands/objects/all.hpp"
-#include "core/commands/properties/all.hpp"
-#include "core/commands/tilesets/all.hpp"
-#include "core/commands/tools/all.hpp"
+#include "core/commands/objects/add_object_cmd.hpp"
+#include "core/commands/objects/move_object_cmd.hpp"
+#include "core/commands/objects/set_object_name_cmd.hpp"
+#include "core/commands/objects/set_object_tag_cmd.hpp"
+#include "core/commands/objects/set_object_visible_cmd.hpp"
