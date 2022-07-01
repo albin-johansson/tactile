@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "create_component_def_cmd.hpp"
+#include "define_component_cmd.hpp"
 
 #include <utility>  // move
 
@@ -27,8 +27,8 @@
 
 namespace tactile {
 
-CreateComponentDefCmd::CreateComponentDefCmd(Shared<core::ComponentIndex> index,
-                                             std::string                  name)
+DefineComponentCmd::DefineComponentCmd(Shared<core::ComponentIndex> index,
+                                       std::string                  name)
     : ACommand{"Create Component Definition"}
     , mIndex{std::move(index)}
     , mName{std::move(name)}
@@ -38,12 +38,12 @@ CreateComponentDefCmd::CreateComponentDefCmd(Shared<core::ComponentIndex> index,
   }
 }
 
-void CreateComponentDefCmd::undo()
+void DefineComponentCmd::undo()
 {
   mIndex->remove_comp(mComponentId.value());
 }
 
-void CreateComponentDefCmd::redo()
+void DefineComponentCmd::redo()
 {
   if (mComponentId) {
     mIndex->define_comp(*mComponentId, mName);
@@ -53,7 +53,7 @@ void CreateComponentDefCmd::redo()
   }
 }
 
-auto CreateComponentDefCmd::get_name() const -> const char*
+auto DefineComponentCmd::get_name() const -> const char*
 {
   return "Create Component Definition";
 }

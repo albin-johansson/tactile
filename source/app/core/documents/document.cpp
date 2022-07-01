@@ -23,6 +23,8 @@
 
 #include "core/commands/command_stack.hpp"
 #include "core/commands/components/attach_component_cmd.hpp"
+#include "core/commands/components/define_component_cmd.hpp"
+#include "core/commands/components/undef_component_cmd.hpp"
 #include "core/commands/properties/add_property_cmd.hpp"
 #include "core/commands/properties/change_property_type_cmd.hpp"
 #include "core/commands/properties/remove_property_cmd.hpp"
@@ -31,12 +33,14 @@
 
 namespace tactile {
 
-void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
+void ADocument::select_context(const UUID& contextId)
 {
-  auto context = get_context(contextId);
-  get_history().push<AttachComponentCmd>(mComponentIndex,
-                                         std::move(context),
-                                         componentId);
+  mActiveContext = contextId;
+}
+
+auto ADocument::active_context_id() const -> const UUID&
+{
+  return mActiveContext;
 }
 
 void ADocument::set_component_index(Shared<core::ComponentIndex> index)
@@ -52,6 +56,24 @@ auto ADocument::get_component_index() -> Shared<core::ComponentIndex>
 auto ADocument::get_component_index() const -> Shared<const core::ComponentIndex>
 {
   return mComponentIndex;
+}
+
+void ADocument::define_component(std::string name)
+{
+  get_history().push<DefineComponentCmd>(mComponentIndex, std::move(name));
+}
+
+void ADocument::undef_component(const UUID& componentId)
+{
+  get_history().push<UndefComponentCmd>(mComponentIndex, componentId);
+}
+
+void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
+{
+  auto context = get_context(contextId);
+  get_history().push<AttachComponentCmd>(mComponentIndex,
+                                         std::move(context),
+                                         componentId);
 }
 
 void ADocument::add_property(const UUID&         contextId,
@@ -117,16 +139,6 @@ auto ADocument::get_history() -> CommandStack&
 auto ADocument::get_history() const -> const CommandStack&
 {
   return mCommands;
-}
-
-void ADocument::select_context(const UUID& contextId)
-{
-  mActiveContext = contextId;
-}
-
-auto ADocument::active_context_id() const -> const UUID&
-{
-  return mActiveContext;
 }
 
 auto ADocument::is_map() const -> bool

@@ -47,12 +47,20 @@ class ADocument
   /// Sets the file path associated with the document.
   void set_path(std::filesystem::path path);
 
-  void attach_component(const UUID& contextId, const UUID& componentId);
+  void select_context(const UUID& contextId);
+
+  [[nodiscard]] auto active_context_id() const -> const UUID&;
 
   void set_component_index(Shared<core::ComponentIndex> index);
 
   [[nodiscard]] auto get_component_index() -> Shared<core::ComponentIndex>;
   [[nodiscard]] auto get_component_index() const -> Shared<const core::ComponentIndex>;
+
+  void define_component(std::string name);
+
+  void undef_component(const UUID& componentId);
+
+  void attach_component(const UUID& contextId, const UUID& componentId);
 
   void add_property(const UUID& contextId, std::string name, AttributeType type);
 
@@ -63,10 +71,6 @@ class ADocument
   void update_property(const UUID& contextId, std::string name, Attribute value);
 
   void change_property_type(const UUID& contextId, std::string name, AttributeType type);
-
-  void select_context(const UUID& contextId);
-
-  [[nodiscard]] auto active_context_id() const -> const UUID&;
 
   virtual void register_context(Shared<core::IContext> context) = 0;
   virtual void unregister_context(const UUID& id) = 0;

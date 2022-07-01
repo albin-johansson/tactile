@@ -19,21 +19,20 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
+#include "core/components/component_definition.hpp"
 #include "core/fwd.hpp"
 
 namespace tactile {
 
-/// A command for defining new components.
-class CreateComponentDefCmd final : public ACommand
+/// A command for removing a component definition.
+class UndefComponentCmd final : public ACommand
 {
  public:
-  CreateComponentDefCmd(Shared<core::ComponentIndex> index, std::string name);
+  UndefComponentCmd(Shared<core::ComponentIndex> index, const UUID& componentId);
 
   void undo() override;
 
@@ -43,13 +42,13 @@ class CreateComponentDefCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::CreateComponent;
+    return CommandId::UndefComponent;
   }
 
  private:
-  Shared<core::ComponentIndex> mIndex;
-  std::string                  mName;
-  Maybe<UUID>                  mComponentId;
+  Shared<core::ComponentIndex>     mIndex;
+  UUID                             mComponentId{};
+  Maybe<core::ComponentDefinition> mPrevious;
 };
 
 }  // namespace tactile

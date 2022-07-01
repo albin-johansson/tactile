@@ -66,8 +66,8 @@ enum class CommandId
   SetObjectVisible,
 
   /* Component definitions */
-  CreateComponent,
-  RemoveComponent,
+  DefineComponent,
+  UndefComponent,
   RenameComponent,
   CreateComponentAttribute,
   RemoveComponentAttribute,

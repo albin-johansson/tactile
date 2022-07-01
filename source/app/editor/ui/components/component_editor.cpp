@@ -164,7 +164,7 @@ void ComponentEditor::show_component_combo_popup(const ADocument&  document,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Component")) {
-      dispatcher.enqueue<RemoveComponentDefEvent>(data.active_component.value());
+      dispatcher.enqueue<UndefComponentEvent>(data.active_component.value());
       data.active_component.reset();
     }
   }

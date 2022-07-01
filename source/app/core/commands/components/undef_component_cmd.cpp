@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "remove_component_def_cmd.hpp"
+#include "undef_component_cmd.hpp"
 
 #include <utility>  // move
 
@@ -25,14 +25,14 @@
 
 namespace tactile {
 
-RemoveComponentDefCmd::RemoveComponentDefCmd(Shared<core::ComponentIndex> index,
-                                             const UUID&                  componentId)
+UndefComponentCmd::UndefComponentCmd(Shared<core::ComponentIndex> index,
+                                     const UUID&                  componentId)
     : ACommand{"Remove Component Definition"}
     , mIndex{std::move(index)}
     , mComponentId{componentId}
 {}
 
-void RemoveComponentDefCmd::undo()
+void UndefComponentCmd::undo()
 {
   const auto& previous = mPrevious.value();
 
@@ -46,13 +46,13 @@ void RemoveComponentDefCmd::undo()
   mPrevious.reset();
 }
 
-void RemoveComponentDefCmd::redo()
+void UndefComponentCmd::redo()
 {
   mPrevious = mIndex->at(mComponentId);
   mIndex->remove_comp(mComponentId);
 }
 
-auto RemoveComponentDefCmd::get_name() const -> const char*
+auto UndefComponentCmd::get_name() const -> const char*
 {
   return "Remove Component Definition";
 }

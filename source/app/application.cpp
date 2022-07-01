@@ -266,8 +266,8 @@ void Application::subscribe_to_events()
   d.sink<InspectContextEvent>().connect<&Self::on_inspect_context>(this);
 
   d.sink<OpenComponentEditorEvent>().connect<&Self::on_open_component_editor>(this);
-  d.sink<CreateComponentDefEvent>().connect<&Self::on_create_component_def>(this);
-  d.sink<RemoveComponentDefEvent>().connect<&Self::on_remove_component_def>(this);
+  d.sink<DefineComponentEvent>().connect<&Self::on_define_component>(this);
+  d.sink<UndefComponentEvent>().connect<&Self::on_undef_component>(this);
   d.sink<RenameComponentDefEvent>().connect<&Self::on_rename_component_def>(this);
   d.sink<CreateComponentAttrEvent>().connect<&Self::on_create_component_attr>(this);
   d.sink<RemoveComponentAttrEvent>().connect<&Self::on_remove_component_attr>(this);
@@ -929,14 +929,18 @@ void Application::on_open_component_editor()
   ui::show_component_editor(mData->model);
 }
 
-void Application::on_create_component_def(const CreateComponentDefEvent& event)
+void Application::on_define_component(const DefineComponentEvent& event)
 {
-  // TODO _execute<CreateComponentDefCmd>(mData->model, event.name);
+  if (auto* document = active_document()) {
+    document->define_component(event.name);
+  }
 }
 
-void Application::on_remove_component_def(const RemoveComponentDefEvent& event)
+void Application::on_undef_component(const UndefComponentEvent& event)
 {
-  // TODO _execute<RemoveComponentDefCmd>(mData->model, event.id);
+  if (auto* document = active_document()) {
+    document->undef_component(event.component_id);
+  }
 }
 
 void Application::on_rename_component_def(const RenameComponentDefEvent& event)

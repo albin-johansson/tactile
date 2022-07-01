@@ -41,12 +41,7 @@ namespace tactile {
 
 class AppConfiguration;
 
-/**
- * \brief Represents the heart of the Tactile application.
- *
- * \details This class handles the main poll/update/render application loop, along with
- * the basic initialization and configuration of all aspects of the Tactile application.
- */
+/// The heart of the Tactile map editor.
 class Application final : AEventLoop
 {
  public:
@@ -235,9 +230,9 @@ class Application final : AEventLoop
 
   void on_open_component_editor();
 
-  void on_create_component_def(const CreateComponentDefEvent& event);
+  void on_define_component(const DefineComponentEvent& event);
 
-  void on_remove_component_def(const RemoveComponentDefEvent& event);
+  void on_undef_component(const UndefComponentEvent& event);
 
   void on_rename_component_def(const RenameComponentDefEvent& event);
 

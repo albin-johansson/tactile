@@ -30,57 +30,60 @@ namespace tactile {
 struct OpenComponentEditorEvent final
 {};
 
-struct CreateComponentDefEvent final
+/// Event for defining a new component.
+struct DefineComponentEvent final
 {
-  std::string name;
+  std::string name;  /// Unique new component name.
 };
 
+/// Event for removing an existing component definition.
+struct UndefComponentEvent final
+{
+  UUID component_id{};  /// Target component to remove.
+};
+
+/// Event for renaming an existing component.
 struct RenameComponentDefEvent final
 {
-  ComponentID id{};
-  std::string name;
-};
-
-struct RemoveComponentDefEvent final
-{
-  ComponentID id{};
+  UUID        component_id{};  /// Target component to rename.
+  std::string name;            /// The new component name.
 };
 
 struct CreateComponentAttrEvent final
 {
-  ComponentID id{};
+  UUID        component_id{};
   std::string name;
 };
 
 struct RemoveComponentAttrEvent final
 {
-  ComponentID id{};
+  UUID        component_id{};
   std::string name;
 };
 
 struct RenameComponentAttrEvent final
 {
-  ComponentID id{};
+  UUID        component_id{};
   std::string previous;
   std::string updated;
 };
 
 struct DuplicateComponentAttrEvent final
 {
-  ComponentID id{};
+  UUID        component_id{};
   std::string attribute;
 };
 
 struct SetComponentAttrTypeEvent final
 {
-  ComponentID id{};
-  std::string attribute;
+  UUID          component_id{};
+  std::string   attribute;
   AttributeType type{};
 };
 
 struct UpdateComponentDefAttrEvent final
 {
-  ComponentID id{};
+  UUID        component_id{};
   std::string attribute;
   Attribute value;
 };
