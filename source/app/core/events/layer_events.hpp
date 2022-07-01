@@ -27,9 +27,6 @@
 
 namespace tactile {
 
-/// \addtogroup events
-/// \{
-
 struct AddLayerEvent final
 {
   LayerType type{};
@@ -82,7 +79,5 @@ struct RenameLayerEvent final
   UUID        id{};
   std::string name;
 };
-
-/// \} End of group events
 
 }  // namespace tactile

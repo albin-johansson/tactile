@@ -27,7 +27,7 @@
 namespace tactile {
 
 /**
- * \brief Manages the tools associated with a map document.
+ * Manages the tools associated with a map document.
  */
 class ToolManager final : ATool
 {

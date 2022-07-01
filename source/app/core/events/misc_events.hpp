@@ -23,9 +23,6 @@
 
 namespace tactile {
 
-/// \addtogroup events
-/// \{
-
 struct QuitEvent final
 {};
 
@@ -57,7 +54,5 @@ struct IncreaseFontSizeEvent final
 
 struct DecreaseFontSizeEvent final
 {};
-
-/// \} End of group events
 
 }  // namespace tactile

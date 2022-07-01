@@ -28,9 +28,6 @@
 
 namespace tactile {
 
-/// \addtogroup events
-/// \{
-
 struct ShowAddPropertyDialogEvent final
 {};
 
@@ -83,7 +80,5 @@ struct InspectContextEvent final
 {
   UUID context_id{};  /// Target context.
 };
-
-/// \} End of group events
 
 }  // namespace tactile

@@ -21,14 +21,10 @@
 
 namespace tactile {
 
-/**
- * \brief Represents the various available mouse tool types.
- *
- * \ingroup core
- */
+/// Represents the various available mouse tool types.
 enum class ToolType
 {
-  None,  ///< Used when no tool is enabled.
+  None,  /// Used when no tool is enabled.
   Stamp,
   Eraser,
   Bucket,

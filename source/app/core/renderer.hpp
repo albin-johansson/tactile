@@ -27,7 +27,7 @@
 namespace tactile {
 
 /**
- * \brief An interface for renderers used by some core aspects, such as the tools.
+ * An interface for renderers used by some core aspects, such as the tools.
  */
 class IRenderer
 {

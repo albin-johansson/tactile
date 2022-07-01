@@ -24,7 +24,7 @@
 namespace tactile {
 
 /**
- * \brief Represents the different available map object types.
+ * Represents the different available map object types.
  *
  * \see Object
  * \see ObjectLayer
@@ -37,7 +37,7 @@ enum class ObjectType
 };
 
 /**
- * \brief Outputs an object type as the enumerator name.
+ * Outputs an object type as the enumerator name.
  *
  * \param stream the output stream.
  * \param type the object type to output.

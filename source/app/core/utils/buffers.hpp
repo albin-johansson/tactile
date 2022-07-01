@@ -25,11 +25,8 @@
 
 namespace tactile {
 
-/// \addtogroup utils
-/// \{
-
 /**
- * \brief Zeroes the values of a buffer.
+ * Zeroes the values of a buffer.
  *
  * \tparam Size the size of the buffer.
  *
@@ -38,13 +35,12 @@ namespace tactile {
 void zero_buffer(std::span<char> buffer);
 
 /**
- * \brief Copies a string into a character buffer.
+ * Copies a string into a character buffer.
  *
- * \details This function will zero the entire buffer before writing the string
- * into it.
+ * This function will zero the entire buffer before writing the string into it.
  *
- * \note The string can safely be longer than what the buffer can hold, the
- * buffer will be filled with as many characters as possible.
+ * Note, the string can safely be longer than what the buffer can hold, the buffer will be
+ * filled with as many characters as possible.
  *
  * \tparam Size the size of the buffer.
  *
@@ -54,10 +50,10 @@ void zero_buffer(std::span<char> buffer);
 void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
 
 /**
- * \brief Creates a string from a character buffer.
+ * Creates a string from a character buffer.
  *
- * \details The function assumes that the "valid" part of the buffer is terminated with a
- * null character ('\0').
+ * The function assumes that the "valid" part of the buffer is terminated with a null
+ * character ('\0').
  *
  * \tparam Size the size of the buffer.
  *
@@ -69,7 +65,5 @@ void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
 
 [[nodiscard]] auto create_string_view_from_buffer(std::span<const char> buffer)
     -> std::string_view;
-
-/// \} End of group utils
 
 }  // namespace tactile

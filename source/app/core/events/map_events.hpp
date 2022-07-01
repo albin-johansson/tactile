@@ -26,9 +26,6 @@
 
 namespace tactile {
 
-/// \addtogroup events
-/// \{
-
 struct ShowNewMapDialogEvent final
 {};
 
@@ -74,7 +71,5 @@ struct ResizeMapEvent final
 
 struct FixTilesInMapEvent final
 {};
-
-/// \} End of group events
 
 }  // namespace tactile

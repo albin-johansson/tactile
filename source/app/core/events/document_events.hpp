@@ -23,9 +23,6 @@
 
 namespace tactile {
 
-/// \addtogroup events
-/// \{
-
 /// Event emitted when a loaded document should be opened in its own tab.
 struct OpenDocumentEvent final
 {
@@ -41,7 +38,5 @@ struct SelectDocumentEvent final
 {
   UUID id{};
 };
-
-/// \} End of group events
 
 }  // namespace tactile
