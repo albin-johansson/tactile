@@ -24,7 +24,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Opens the blocking "Save As..." file dialog.
+ * Opens the blocking "Save As..." file dialog.
  *
  * \param dispatcher the event dispatcher that will be used.
  */

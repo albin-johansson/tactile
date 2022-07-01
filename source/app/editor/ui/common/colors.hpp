@@ -29,9 +29,9 @@
 namespace tactile::ui {
 
 /**
- * \brief Converts a color into an array of normalized color components.
+ * Converts a color into an array of normalized color components.
  *
- * \details The array values are stored in the order red/green/blue/alpha.
+ * The array values are stored in the order red/green/blue/alpha.
  *
  * \ingroup utils
  *

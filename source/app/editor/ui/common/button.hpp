@@ -22,7 +22,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Shows a button.
+ * Shows a button.
  *
  * \ingroup gui
  *
@@ -44,7 +44,7 @@ auto icon_button(const char* icon, const char* tooltip = nullptr, bool enabled =
     -> bool;
 
 /**
- * \brief Shows a horizontally centered button.
+ * Shows a horizontally centered button.
  *
  * \ingroup gui
  *

@@ -30,7 +30,7 @@ namespace tactile::ui {
 /// \{
 
 /**
- * \brief Updates the layer dock widget.
+ * Updates the layer dock widget.
  *
  * \pre There must be an active map document when this function is called.
  *
@@ -42,7 +42,7 @@ namespace tactile::ui {
 void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 /**
- * \brief Makes the dialog for renaming layers visible.
+ * Makes the dialog for renaming layers visible.
  *
  * \param layerId the ID of the layer that will be renamed.
  *
@@ -51,7 +51,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 void show_rename_layer_dialog(const UUID& layerId);
 
 /**
- * \brief Indicates whether the layer dock widget has input focus.
+ * Indicates whether the layer dock widget has input focus.
  *
  * \return `true` if the layer dock is focused; `false` otherwise.
  *

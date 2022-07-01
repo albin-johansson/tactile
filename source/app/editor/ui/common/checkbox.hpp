@@ -22,7 +22,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Shows a checkbox.
+ * Shows a checkbox.
  *
  * \ingroup gui
  *

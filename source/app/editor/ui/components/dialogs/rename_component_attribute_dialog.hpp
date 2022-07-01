@@ -29,7 +29,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Used to rename an attribute in a component definition.
+ * Used to rename an attribute in a component definition.
  *
  * \ingroup gui
  */

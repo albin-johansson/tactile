@@ -27,7 +27,7 @@ struct ImVec2;
 namespace tactile::ui {
 
 /**
- * \brief Updates a "rubber band" (rectangular selection) in the current canvas.
+ * Updates a "rubber band" (rectangular selection) in the current canvas.
  *
  * \ingroup gui
  *

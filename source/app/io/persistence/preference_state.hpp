@@ -32,7 +32,7 @@
 namespace tactile::io {
 
 /**
- * \brief Encodes different viewport overlay positions.
+ * Encodes different viewport overlay positions.
  *
  * \warning Do not change the enumerator values!
  *

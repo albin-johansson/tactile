@@ -30,7 +30,7 @@ namespace tactile::ui {
 /// \{
 
 /**
- * \brief Provides useful information about a rendering context.
+ * Provides useful information about a rendering context.
  *
  * \see get_render_info()
  */

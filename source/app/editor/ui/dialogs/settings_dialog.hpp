@@ -26,7 +26,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Provides the interface for all available persistent settings.
+ * Provides the interface for all available persistent settings.
  *
  * \ingroup gui
  */

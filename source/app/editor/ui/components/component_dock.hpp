@@ -31,7 +31,7 @@ namespace tactile::ui {
 /**
  * \briefs Updates the component dock widget.
  *
- * \details The component dock is used to manage the components associated with attribute
+ * The component dock is used to manage the components associated with attribute
  * contexts.
  *
  * \ingroup gui

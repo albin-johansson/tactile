@@ -24,14 +24,14 @@
 namespace tactile::ui {
 
 /**
- * \brief Updates the root dock space, call this function once each frame.
+ * Updates the root dock space, call this function once each frame.
  *
  * \ingroup gui
  */
 void update_dock_space();
 
 /**
- * \brief Loads the default layout for a dock space.
+ * Loads the default layout for a dock space.
  *
  * \param id the ID of the dock space.
  * \param resetVisibility `true` if the docks should have their visibility reset;
@@ -42,7 +42,7 @@ void update_dock_space();
 void load_default_layout(ImGuiID id, bool resetVisibility);
 
 /**
- * \brief Resets all dock space widgets to the default layout.
+ * Resets all dock space widgets to the default layout.
  *
  * \ingroup gui
  */

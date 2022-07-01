@@ -32,7 +32,7 @@ namespace tactile::ui {
 /// \{
 
 /**
- * \brief Represents the different available themes.
+ * Represents the different available themes.
  *
  * \warning Do not change the enumerator values!
  *
@@ -70,16 +70,16 @@ constexpr std::array themes = {EditorTheme::DearDark,
 [[nodiscard]] auto human_readable_name(EditorTheme theme) -> std::string_view;
 
 /**
- * \brief Applies the styling used by Tactile to a style instance.
+ * Applies the styling used by Tactile to a style instance.
  *
- * \note This function does not affect the colors of the style.
+ * Note, this function does not affect the colors of the style.
  *
  * \param style the style that will be updated.
  */
 void apply_style(ImGuiStyle& style);
 
 /**
- * \brief Applies a theme to a style.
+ * Applies a theme to a style.
  *
  * \param style the style that will be affected.
  * \param theme the theme that will be applied to the style.

@@ -22,7 +22,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Shows a centered label.
+ * Shows a centered label.
  *
  * \ingroup gui
  *

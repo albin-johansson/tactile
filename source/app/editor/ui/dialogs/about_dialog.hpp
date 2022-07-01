@@ -24,7 +24,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Provides information about the application.
+ * Provides information about the application.
  *
  * \ingroup gui
  */

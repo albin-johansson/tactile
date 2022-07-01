@@ -26,7 +26,7 @@
 namespace tactile::io {
 
 /**
- * \brief Restores a map document from an intermediate map representation.
+ * Restores a map document from an intermediate map representation.
  *
  * \param data the intermediate representation of the map data.
  * \param model the target document model.

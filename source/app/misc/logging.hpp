@@ -31,17 +31,17 @@ namespace tactile {
 using LogLevel = spdlog::level::level_enum;
 
 /**
- * \brief Initializes the logger, this must be called before any logging takes place.
+ * Initializes the logger, this must be called before any logging takes place.
  */
 void init_logger();
 
 /**
- * \brief Clears the entire log history.
+ * Clears the entire log history.
  */
 void clear_log_history();
 
 /**
- * \brief Returns the log entry at a specific index amongst entries that satisfy a filter.
+ * Returns the log entry at a specific index amongst entries that satisfy a filter.
  *
  * \param filter the log level filter to apply before querying log entries.
  * \param index the index of the desired log entry among those that satisfy the filter.
@@ -54,7 +54,7 @@ void clear_log_history();
     -> std::pair<LogLevel, const std::string&>;
 
 /**
- * \brief Returns the amount of log entries that satisfy a filter.
+ * Returns the amount of log entries that satisfy a filter.
  *
  * \param filter the filter that will be used.
  *

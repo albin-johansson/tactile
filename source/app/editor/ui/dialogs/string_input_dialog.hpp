@@ -30,7 +30,7 @@
 namespace tactile::ui {
 
 /**
- * \brief An abstract class representing dialogs which provide a string input field.
+ * An abstract class representing dialogs which provide a string input field.
  */
 class AStringInputDialog : public ADialog
 {
@@ -41,7 +41,7 @@ class AStringInputDialog : public ADialog
 
  protected:
   /**
-   * \brief Sets the input hint used by the string field.
+   * Sets the input hint used by the string field.
    *
    * \param hint optional hint label; a null pointer disables the input hint.
    */
@@ -53,7 +53,7 @@ class AStringInputDialog : public ADialog
       -> bool final;
 
   /**
-   * \brief Validates an input string.
+   * Validates an input string.
    *
    * \param model the associated model instance.
    * \param input the current input string.
@@ -64,14 +64,14 @@ class AStringInputDialog : public ADialog
                                       std::string_view input) const -> bool = 0;
 
   /**
-   * \brief Returns the current string input.
+   * Returns the current string input.
    *
    * \return a view into the current input.
    */
   [[nodiscard]] auto current_input() const -> std::string_view;
 
   /**
-   * \brief Returns the initial input string.
+   * Returns the initial input string.
    *
    * \return the initial input.
    */

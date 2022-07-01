@@ -106,12 +106,12 @@
 namespace tactile::ui {
 
 /**
- * \brief Loads some icons to be used in the GUI.
+ * Loads some icons to be used in the GUI.
  */
 void load_icons(TextureManager& textures);
 
 /**
- * \brief Returns the texture identifier for the Tactile icon.
+ * Returns the texture identifier for the Tactile icon.
  *
  * \pre `load_icons()` must have been called before.
  *

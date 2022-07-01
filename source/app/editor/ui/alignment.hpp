@@ -29,26 +29,26 @@ namespace tactile::ui {
 /// \{
 
 /**
- * \brief Makes the next window centered when it is first shown.
+ * Makes the next window centered when it is first shown.
  */
 void center_next_window_on_appearance();
 
 /**
- * \brief Centers the next item horizontally, given its width.
+ * Centers the next item horizontally, given its width.
  *
  * \param width the width of the component.
  */
 void center_next_item_horizontally(float width);
 
 /**
- * \brief Ensures that a certain amount of components will be centered vertically.
+ * Ensures that a certain amount of components will be centered vertically.
  *
  * \param count the amount of items to be centered.
  */
 void prepare_vertical_alignment_center(float count = 1);
 
 /**
- * \brief Prepares the cursor for a right-aligned component.
+ * Prepares the cursor for a right-aligned component.
  *
  * \param width the width of the component.
  *
@@ -57,7 +57,7 @@ void prepare_vertical_alignment_center(float count = 1);
 auto right_align_next_item(float width) -> float;
 
 /**
- * \brief Prepares the cursor for a right-aligned standard component with a label.
+ * Prepares the cursor for a right-aligned standard component with a label.
  *
  * \param text the component label text.
  *
@@ -68,7 +68,7 @@ auto right_align_next_item(float width) -> float;
 auto right_align_next_item(const char* text) -> float;
 
 /**
- * \brief Returns the width of a "standard" component with a label, e.g. a button.
+ * Returns the width of a "standard" component with a label, e.g. a button.
  *
  * \param text the component label text.
  *
@@ -77,7 +77,7 @@ auto right_align_next_item(const char* text) -> float;
 [[nodiscard]] auto standard_component_width(const char* text) -> float;
 
 /**
- * \brief Determines the minimum offset to align a collection of strings.
+ * Determines the minimum offset to align a collection of strings.
  *
  * \param strings a pack of strings.
  *

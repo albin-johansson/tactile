@@ -26,7 +26,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Used to change the dimensions of a tilemap.
+ * Used to change the dimensions of a tilemap.
  */
 class ResizeMapDialog final : public ADialog
 {

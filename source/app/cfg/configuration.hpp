@@ -29,7 +29,7 @@
 
 /**
  * \defgroup cfg Configuration
- * \brief Contains utilities related to the configuration of the application.
+ * Contains utilities related to the configuration of the application.
  */
 
 namespace tactile {

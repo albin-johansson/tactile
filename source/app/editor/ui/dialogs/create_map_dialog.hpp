@@ -24,7 +24,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Represents the dialog used to create new tilemaps.
+ * Represents the dialog used to create new tilemaps.
  *
  * \ingroup gui
  */
