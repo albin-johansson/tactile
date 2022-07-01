@@ -73,7 +73,7 @@ enum class CommandId
   AttachComponent,
   DetachComponent,
   UpdateComponent,
-  reset_component
+  ResetComponent
 };
 
 }  // namespace tactile

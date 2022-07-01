@@ -45,7 +45,7 @@ class ResetComponentCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::reset_component;
+    return CommandId::ResetComponent;
   }
 
  private:
