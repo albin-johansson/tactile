@@ -781,7 +781,7 @@ void App::on_add_layer(const AddLayerEvent& event)
 void App::on_remove_layer(const RemoveLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
-    map->remove_layer(event.id);
+    map->remove_layer(event.layer_id);
   }
 }
 
@@ -789,7 +789,7 @@ void App::on_select_layer(const SelectLayerEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& map = document->get_map();
-    map.select_layer(event.id);
+    map.select_layer(event.layer_id);
   }
 }
 
@@ -803,40 +803,40 @@ void App::on_move_layer_up(const MoveLayerUpEvent& event)
 void App::on_move_layer_down(const MoveLayerDownEvent& event)
 {
   if (auto* map = active_map_document()) {
-    map->move_layer_down(event.id);
+    map->move_layer_down(event.layer_id);
   }
 }
 
 void App::on_duplicate_layer(const DuplicateLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
-    map->duplicate_layer(event.id);
+    map->duplicate_layer(event.layer_id);
   }
 }
 
 void App::on_set_layer_opacity(const SetLayerOpacityEvent& event)
 {
   if (auto* map = active_map_document()) {
-    map->set_layer_opacity(event.id, event.opacity);
+    map->set_layer_opacity(event.layer_id, event.opacity);
   }
 }
 
 void App::on_set_layer_visible(const SetLayerVisibleEvent& event)
 {
   if (auto* map = active_map_document()) {
-    map->set_layer_visible(event.id, event.visible);
+    map->set_layer_visible(event.layer_id, event.visible);
   }
 }
 
 void App::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
 {
-  ui::show_rename_layer_dialog(event.id);
+  ui::show_rename_layer_dialog(event.layer_id);
 }
 
 void App::on_rename_layer(const RenameLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
-    map->rename_layer(event.id, event.name);
+    map->rename_layer(event.layer_id, event.name);
   }
 }
 
