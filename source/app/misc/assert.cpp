@@ -29,7 +29,7 @@ void assertion_failed_msg(const char* expr,
                           const char* msg,
                           const char* /* function */,
                           const char* file,
-                          const long line)
+                          const long  line)
 
 {
   spdlog::critical("{}:{} expression '{}' evaluated to false: {}",

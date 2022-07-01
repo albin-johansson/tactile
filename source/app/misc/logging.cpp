@@ -40,7 +40,7 @@ namespace {
 struct LogEntry final
 {
   spdlog::level::level_enum level{};
-  std::string msg;
+  std::string               msg;
 };
 
 /**
@@ -52,7 +52,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   void sink_it_(const spdlog::details::log_msg& msg) override
   {
     const auto time = fmt::localtime(msg.time);
-    auto processed = fmt::format("{:%H:%M:%S} > {}", time, msg.payload);
+    auto       processed = fmt::format("{:%H:%M:%S} > {}", time, msg.payload);
     mHistory.push_back({msg.level, std::move(processed)});
   }
 

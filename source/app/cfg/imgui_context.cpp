@@ -48,7 +48,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   ImGui::StyleColorsDark();
 
   const auto& prefs = io::get_preferences();
-  auto& style = ImGui::GetStyle();
+  auto&       style = ImGui::GetStyle();
 
   ui::apply_style(style);
   apply_theme(style, prefs.get_theme());
