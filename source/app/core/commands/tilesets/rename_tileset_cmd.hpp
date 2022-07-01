@@ -22,8 +22,8 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/fwd.hpp"
 
 namespace tactile {
@@ -31,7 +31,7 @@ namespace tactile {
 class RenameTilesetCmd final : public ACommand
 {
  public:
-  RenameTilesetCmd(TilesetDocument* document, std::string name);
+  RenameTilesetCmd(Shared<core::Tileset> tileset, std::string name);
 
   void undo() override;
 
@@ -41,12 +41,12 @@ class RenameTilesetCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::SetTilesetName;
+    return CommandId::RenameTileset;
   }
 
  private:
-  TilesetDocument*   mDocument{};
-  std::string        mNewName;
+  Shared<core::Tileset> mTileset;
+  std::string           mNewName;
   Maybe<std::string> mOldName;
 };
 

@@ -21,35 +21,31 @@
 
 #include <utility>  // move
 
-#include "core/documents/tileset_document.hpp"
+#include "core/tilesets/tileset.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-RenameTilesetCmd::RenameTilesetCmd(TilesetDocument* document, std::string name)
+RenameTilesetCmd::RenameTilesetCmd(Shared<core::Tileset> tileset, std::string name)
     : ACommand{"Rename Tileset"}
-    , mDocument{document}
+    , mTileset{std::move(tileset)}
     , mNewName{std::move(name)}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid tileset null document!"};
+  if (!mTileset) {
+    throw TactileError{"Invalid null tileset!"};
   }
 }
 
 void RenameTilesetCmd::undo()
 {
-  auto& tileset = mDocument->view_tileset();
-
-  tileset.set_name(mOldName.value());
+  mTileset->set_name(mOldName.value());
   mOldName.reset();
 }
 
 void RenameTilesetCmd::redo()
 {
-  auto& tileset = mDocument->view_tileset();
-
-  mOldName = tileset.get_name();
-  tileset.set_name(mNewName);
+  mOldName = mTileset->get_name();
+  mTileset->set_name(mNewName);
 }
 
 auto RenameTilesetCmd::merge_with(const ACommand& cmd) -> bool
@@ -57,10 +53,7 @@ auto RenameTilesetCmd::merge_with(const ACommand& cmd) -> bool
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const RenameTilesetCmd&>(cmd);
 
-    const auto& tileset = mDocument->view_tileset();
-    const auto& otherTileset = other.mDocument->view_tileset();
-
-    if (tileset.get_uuid() == otherTileset.get_uuid()) {
+    if (mTileset->get_uuid() == other.mTileset->get_uuid()) {
       mNewName = other.mNewName;
       return true;
     }

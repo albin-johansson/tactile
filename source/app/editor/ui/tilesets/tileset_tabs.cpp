@@ -56,21 +56,10 @@ void _update_context_menu(const DocumentModel& model,
 
     ImGui::Separator();
 
-    {
-      Disable disable;
-      if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Tileset")) {
-        // TODO
-      }
-    }
-
-    ImGui::Separator();
-
-    {
-      Disable disable{model.is_open(tilesetId)};
-      if (ImGui::MenuItem(TAC_ICON_OPEN " Open Tileset")) {
-        dispatcher.enqueue<OpenDocumentEvent>(tilesetId);
-        dispatcher.enqueue<SelectDocumentEvent>(tilesetId);
-      }
+    if (Disable disableIf{model.is_open(tilesetId)};
+        ImGui::MenuItem(TAC_ICON_OPEN " Open Tileset")) {
+      dispatcher.enqueue<OpenDocumentEvent>(tilesetId);
+      dispatcher.enqueue<SelectDocumentEvent>(tilesetId);
     }
 
     ImGui::Separator();

@@ -140,7 +140,7 @@ void _show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& d
 
   if (const auto updatedName = _native_name_row(tileset.get_name().c_str(), true);
       updatedName && !updatedName->empty()) {
-    dispatcher.enqueue<SetTilesetNameEvent>(tileset.get_uuid(), *updatedName);
+    dispatcher.enqueue<RenameTilesetEvent>(tileset.get_uuid(), *updatedName);
   }
 
   _native_read_only_row("Tile count", tileset.tile_count());

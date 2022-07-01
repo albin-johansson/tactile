@@ -59,13 +59,11 @@ class TilesetDocument final : public ADocument
 
   void update() override;
 
-  void set_name(std::string name) override;
+  [[deprecated]] void set_name(std::string name) override;
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  [[nodiscard]] auto tile_source(TileIndex index) const -> const cen::irect&;
-
-  [[nodiscard]] auto get_displayed_tile(TileIndex index) const -> TileIndex;
+  void rename_tileset(std::string name);
 
   [[nodiscard]] auto get_viewport() -> core::Viewport& override { return mViewport; }
 

@@ -58,6 +58,7 @@ class App final : AEventLoop
 
   [[nodiscard]] auto active_document() -> ADocument*;
   [[nodiscard]] auto active_map_document() -> MapDocument*;
+  [[nodiscard]] auto active_tileset_document() -> TilesetDocument*;
 
   void subscribe_to_events();
 
@@ -135,7 +136,7 @@ class App final : AEventLoop
 
   void on_set_tileset_selection(const SetTilesetSelectionEvent& event);
 
-  void on_set_tileset_name(const SetTilesetNameEvent& event);
+  void on_rename_tileset(const RenameTilesetEvent& event);
 
   void on_add_row();
   void on_add_column();

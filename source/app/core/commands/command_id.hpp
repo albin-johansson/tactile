@@ -56,7 +56,7 @@ enum class CommandId
   /* Tilesets */
   AddTileset,
   RemoveTileset,
-  SetTilesetName,
+  RenameTileset,
 
   /* Objects */
   AddObject,

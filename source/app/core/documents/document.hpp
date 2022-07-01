@@ -42,7 +42,7 @@ class ADocument
   virtual void update() = 0;
 
   /// Sets the name of the root document context.
-  virtual void set_name(std::string name) = 0;
+  [[deprecated]] virtual void set_name(std::string name) = 0;
 
   /// Sets the file path associated with the document.
   void set_path(std::filesystem::path path);

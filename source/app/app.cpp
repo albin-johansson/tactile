@@ -163,6 +163,11 @@ auto App::active_map_document() -> MapDocument*
   return mData->model.active_map();
 }
 
+auto App::active_tileset_document() -> TilesetDocument*
+{
+  return mData->model.active_tileset();
+}
+
 void App::subscribe_to_events()
 {
   // clang-format off
@@ -228,7 +233,7 @@ void App::subscribe_to_events()
   d.sink<RemoveTilesetEvent>().connect<&Self::on_remove_tileset>(this);
   d.sink<SelectTilesetEvent>().connect<&Self::on_select_tileset>(this);
   d.sink<SetTilesetSelectionEvent>().connect<&Self::on_set_tileset_selection>(this);
-  d.sink<SetTilesetNameEvent>().connect<&Self::on_set_tileset_name>(this);
+  d.sink<RenameTilesetEvent>().connect<&Self::on_rename_tileset>(this);
 
   d.sink<AddRowEvent>().connect<&Self::on_add_row>(this);
   d.sink<AddColumnEvent>().connect<&Self::on_add_column>(this);
@@ -710,11 +715,10 @@ void App::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
   }
 }
 
-void App::on_set_tileset_name(const SetTilesetNameEvent& event)
+void App::on_rename_tileset(const RenameTilesetEvent& event)
 {
-  if (auto* document = active_map_document()) {
-    // TODO _execute<RenameTilesetCmd>(mData->model, event.id, event.name);
-  }
+  auto document = mData->model.get_tileset(event.tileset_id);
+  document->rename_tileset(event.name);
 }
 
 void App::on_add_row()

@@ -53,8 +53,8 @@ struct SetTilesetSelectionEvent final
   Region selection;
 };
 
-/// Emitted when the name of a tileset should be changed.
-struct SetTilesetNameEvent final
+/// Event for changing the name a tileset.
+struct RenameTilesetEvent final
 {
   UUID        tileset_id{};  /// Target tileset.
   std::string name;          /// New tileset name.

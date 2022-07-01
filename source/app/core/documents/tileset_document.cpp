@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/commands/tilesets/all.hpp"
 #include "core/tilesets/tileset_info.hpp"
 #include "core/utils/tiles.hpp"
 #include "misc/panic.hpp"
@@ -85,40 +86,9 @@ auto TilesetDocument::get_name() const -> const std::string&
   return mTileset->get_name();
 }
 
-auto TilesetDocument::tile_source(const TileIndex index) const -> const cen::irect&
+void TilesetDocument::rename_tileset(std::string name)
 {
-  throw TactileError{"Not implemented"};
-  //  const auto& cache = get_cache();
-  //  return lookup_in(cache.source_rects, index);
-}
-
-auto TilesetDocument::get_displayed_tile(const TileIndex index) const -> TileIndex
-{
-  /*const auto& cache = get_cache();
-
-  */
-  /* Check for already cached tile to render */ /*
- if (const auto iter = cache.display_tiles.find(index);
-     iter != cache.display_tiles.end()) {
-   return iter->second;
- }
-
- if (const auto iter = cache.tiles.find(index); iter != cache.tiles.end()) {
-   const auto entity = iter->second;
-
-   if (const auto* animation = mRegistry.try_get<comp::Animation>(entity)) {
-     const auto frameEntity = animation->current_frame();
-     const auto& frame = checked_get<comp::AnimationFrame>(mRegistry, frameEntity);
-
-     */
-  /* This cache is cleared before each frame */ /*
- cache.display_tiles[index] = frame.tile_index;
-
- return frame.tile_index;
-}
-}
-*/
-  return index;
+  get_history().push<RenameTilesetCmd>(mTileset, std::move(name));
 }
 
 }  // namespace tactile
