@@ -40,8 +40,6 @@ using VisitorFunc = std::function<void(LayerStorage&, LayerStorage::iterator)>;
 using ConstVisitorFunc =
     std::function<void(const LayerStorage&, LayerStorage::const_iterator)>;
 
-#pragma region Layer visitor implementations
-
 /// A generic visitor for operations that may modify layers and their associated storage.
 class LayerMutatorVisitor : public ILayerVisitor
 {
@@ -249,8 +247,6 @@ class CountingVisitor final : public IConstLayerVisitor
  private:
   usize mCount{};
 };
-
-#pragma endregion
 
 }  // namespace
 

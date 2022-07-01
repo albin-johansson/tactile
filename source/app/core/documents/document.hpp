@@ -47,18 +47,12 @@ class ADocument
   /// Sets the file path associated with the document.
   void set_path(std::filesystem::path path);
 
-#pragma region Components
-
   void attach_component(const UUID& contextId, const UUID& componentId);
 
   void set_component_index(Shared<core::ComponentIndex> index);
 
   [[nodiscard]] auto get_component_index() -> Shared<core::ComponentIndex>;
   [[nodiscard]] auto get_component_index() const -> Shared<const core::ComponentIndex>;
-
-#pragma endregion
-
-#pragma region Properties
 
   void add_property(const UUID& contextId, std::string name, AttributeType type);
 
@@ -69,8 +63,6 @@ class ADocument
   void update_property(const UUID& contextId, std::string name, Attribute value);
 
   void change_property_type(const UUID& contextId, std::string name, AttributeType type);
-
-#pragma endregion
 
   void select_context(const UUID& contextId);
 

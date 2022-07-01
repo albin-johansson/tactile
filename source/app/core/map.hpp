@@ -60,8 +60,6 @@ class Map final : public IContext
   /// Fixes invalid tile identifiers in all tile layers.
   auto fix_tiles() -> FixTilesResult;
 
-#pragma region Layer management
-
   auto add_layer(Shared<ILayer> layer, const Maybe<UUID>& parentId = nothing) -> UUID;
 
   auto add_tile_layer(const Maybe<UUID>& parentId = nothing) -> UUID;
@@ -110,10 +108,6 @@ class Map final : public IContext
 
   [[nodiscard]] auto get_layer(const UUID& id) -> Shared<ILayer>;
 
-#pragma endregion
-
-#pragma region Tileset management
-
   void attach_tileset(Shared<Tileset> tileset, TileID firstTileId, bool embedded);
   void attach_tileset(Shared<Tileset> tileset, bool embedded);
   void detach_tileset(const UUID& id);
@@ -121,8 +115,6 @@ class Map final : public IContext
 
   [[nodiscard]] auto get_tilesets() -> TilesetBundle&;
   [[nodiscard]] auto get_tilesets() const -> const TilesetBundle&;
-
-#pragma endregion
 
   void set_tile_size(const Vector2i& size);
 
