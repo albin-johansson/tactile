@@ -47,7 +47,7 @@ class RenameTilesetCmd final : public ACommand
  private:
   Shared<core::Tileset> mTileset;
   std::string           mNewName;
-  Maybe<std::string> mOldName;
+  Maybe<std::string>    mOldName;
 };
 
 }  // namespace tactile
