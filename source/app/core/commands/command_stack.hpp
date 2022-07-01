@@ -24,7 +24,7 @@
 #include <string>    // string
 #include <utility>   // move
 
-#include "command.hpp"
+#include "core/commands/command.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
@@ -32,11 +32,7 @@
 
 namespace tactile {
 
-/**
- * \brief Manages a history of commands.
- *
- * \ingroup commands
- */
+/// Manages a history of commands.
 class CommandStack final
 {
  public:
@@ -45,34 +41,29 @@ class CommandStack final
   TACTILE_DELETE_COPY(CommandStack);
   TACTILE_DEFAULT_MOVE(CommandStack);
 
-  /**
-   * \brief Clears the command stack of all commands.
-   */
+  /// Clears the command stack of all commands.
   void clear();
 
   /**
-   * \brief Marks the current command stack state as "clean".
+   * Marks the current command stack state as "clean".
    *
-   * \details The notion of a clean command stack is used to prevent unnecessary
-   * saving of files, etc. For example, when a document is saved, it should be
-   * marked as clean.
+   * The notion of a clean command stack is used to prevent unnecessary saving of files,
+   * etc. For example, when a document is saved, it should be marked as clean.
    */
   void mark_as_clean();
 
-  /**
-   * \brief Resets any current clean state.
-   */
+  /// Resets any current clean state.
   void reset_clean();
 
   /**
-   * \brief Undoes the current command.
+   * Undoes the current command.
    *
    * \pre There must be an undoable command.
    */
   void undo();
 
   /**
-   * \brief Redoes the current command.
+   * Redoes the current command.
    *
    * \pre There must be a redoable command.
    */
@@ -92,17 +83,11 @@ class CommandStack final
   }
 
   /**
-   * \brief Pushes a command to the command stack and executes it.
+   * Pushes a command to the command stack and executes it.
    *
-   * \details Any redoable commands will be removed when this function is
-   * called.
+   * Any redoable commands will be removed when this function is called.
    *
-   * \tparam T the command type.
-   *
-   * \tparam Args the types of the arguments that will be forwarded.
-   *
-   * \param args the arguments that will be forwarded to the command
-   * constructor.
+   * \param args the arguments that will be forwarded to a command constructor.
    */
   template <std::derived_from<ACommand> T, typename... Args>
   void push(Args&&... args)
@@ -130,89 +115,47 @@ class CommandStack final
   }
 
   /**
-   * \brief Sets the maximum amount of commands that the stack can hold.
+   * Sets the maximum amount of commands that the stack can hold.
    *
-   * \details If the supplied capacity is smaller than the current capacity, then
-   * commands are removed so that the size doesn't exceed the new capacity.
+   * If the supplied capacity is smaller than the current capacity, then commands are
+   * removed so that the size doesn't exceed the new capacity.
    *
    * \param capacity the maximum amount of commands.
    */
   void set_capacity(usize capacity);
 
-  /**
-   * \brief Indicates whether or not the current command stack state is clean.
-   *
-   * \return `true` if the current state is clean; `false` otherwise.
-   */
+  /// Indicates whether or not the current command stack state is clean.
   [[nodiscard]] auto is_clean() const -> bool;
 
-  /**
-   * \brief Indicates whether or not the current command is undoable.
-   *
-   * \return `true` if undo is available; `false` otherwise.
-   */
+  /// Indicates whether or not the current command is undoable.
   [[nodiscard]] auto can_undo() const -> bool;
 
-  /**
-   * \brief Indicates whether or not the current command is redoable.
-   *
-   * \return `true` if redo is available; `false` otherwise.
-   */
+  /// Indicates whether or not the current command is redoable.
   [[nodiscard]] auto can_redo() const -> bool;
 
-  /**
-   * \brief Returns the text associated with the current undoable command.
-   *
-   * \pre There must be a undoable command.
-   *
-   * \return the undoable command text.
-   */
+  /// Returns the text associated with the current undoable command.
   [[nodiscard]] auto get_undo_text() const -> const std::string&;
 
-  /**
-   * \brief Returns the text associated with the current redoable command.
-   *
-   * \pre There must be a redoable command.
-   *
-   * \return the redoable command text.
-   */
+  /// Returns the text associated with the current redoable command.
   [[nodiscard]] auto get_redo_text() const -> const std::string&;
 
-  /**
-   * \brief Returns the number of commands on the stack.
-   *
-   * \return the amount of stack commands.
-   */
+  /// Returns the number of commands on the stack.
   [[nodiscard]] auto size() const noexcept -> usize { return mStack.size(); }
 
-  /**
-   * \brief Returns the current command index.
-   *
-   * \return the index of the current command;
-   *         an empty optional is returned is there is no such command.
-   */
+  /// Returns the current command index, if there is one.
   [[nodiscard]] auto index() const noexcept -> Maybe<usize> { return mIndex; }
 
-  /**
-   * \brief Returns the clean index, if there is one.
-   *
-   * \return the index of the command considered to represent the clean state;
-   *         an empty optional is returned is there is no clean index.
-   */
+  /// Returns the clean index, if there is one.
   [[nodiscard]] auto clean_index() const noexcept -> Maybe<usize> { return mCleanIndex; }
 
-  /**
-   * \brief Returns the maximum amount of commands that the stack can hold.
-   *
-   * \return the stack capacity.
-   */
+  /// Returns the maximum amount of commands that the stack can hold.
   [[nodiscard]] auto capacity() const noexcept -> usize { return mCapacity; }
 
  private:
   std::deque<Unique<ACommand>> mStack;
-  Maybe<usize> mIndex;
-  Maybe<usize> mCleanIndex;
-  usize mCapacity;
+  Maybe<usize>                 mIndex;
+  Maybe<usize>                 mCleanIndex;
+  usize                        mCapacity;
 
   void remove_oldest_command();
 
