@@ -70,7 +70,7 @@ enum class CommandId
   UndefComponent,
   RenameComponent,
   AddComponentAttr,
-  RemoveComponentAttribute,
+  RemoveComponentAttr,
   RenameComponentAttribute,
   SetComponentAttributeType,
   UpdateComponentAttribute,

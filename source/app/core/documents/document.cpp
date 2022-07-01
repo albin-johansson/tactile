@@ -72,6 +72,13 @@ void ADocument::add_component_attribute(const UUID& componentId, std::string nam
   get_history().push<AddComponentAttrCmd>(mComponentIndex, componentId, std::move(name));
 }
 
+void ADocument::remove_component_attribute(const UUID& componentId, std::string name)
+{
+  get_history().push<RemoveComponentAttrCmd>(mComponentIndex,
+                                             componentId,
+                                             std::move(name));
+}
+
 void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
 {
   auto context = get_context(contextId);

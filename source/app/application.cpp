@@ -959,7 +959,9 @@ void Application::on_add_component_attr(const AddComponentAttrEvent& event)
 
 void Application::on_remove_component_attr(const RemoveComponentAttrEvent& event)
 {
-  // TODO _execute<RemoveComponentAttrCmd>(mData->model, event.id, event.name);
+  if (auto* document = active_document()) {
+    document->remove_component_attribute(event.component_id, event.attr_name);
+  }
 }
 
 void Application::on_rename_component_attr(const RenameComponentAttrEvent& event)

@@ -57,23 +57,17 @@ class ADocument
   [[nodiscard]] auto get_component_index() const -> Shared<const core::ComponentIndex>;
 
   void define_component(std::string name);
-
   void undef_component(const UUID& componentId);
-
   void rename_component(const UUID& componentId, std::string name);
-
   void add_component_attribute(const UUID& componentId, std::string name);
+  void remove_component_attribute(const UUID& componentId, std::string name);
 
   void attach_component(const UUID& contextId, const UUID& componentId);
 
   void add_property(const UUID& contextId, std::string name, AttributeType type);
-
   void remove_property(const UUID& contextId, std::string name);
-
   void rename_property(const UUID& contextId, std::string current, std::string updated);
-
   void update_property(const UUID& contextId, std::string name, Attribute value);
-
   void change_property_type(const UUID& contextId, std::string name, AttributeType type);
 
   virtual void register_context(Shared<core::IContext> context) = 0;
