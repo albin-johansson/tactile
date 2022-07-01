@@ -25,7 +25,7 @@
 #include "core/common/memory.hpp"
 #include "core/events/all.hpp"
 #include "core/fwd.hpp"
-#include "loop.hpp"
+#include "editor/loop.hpp"
 
 namespace tactile {
 
