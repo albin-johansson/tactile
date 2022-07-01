@@ -22,7 +22,7 @@
 #include <algorithm>  // replace
 #include <string>     // string
 
-#include "core/utils/strings.hpp"
+#include "core/common/string.hpp"
 #include "core/utils/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"

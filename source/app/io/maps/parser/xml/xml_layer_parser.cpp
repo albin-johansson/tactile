@@ -25,7 +25,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/utils/strings.hpp"
+#include "core/common/string.hpp"
 #include "core/utils/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
@@ -70,7 +70,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_nodes(pugi::xml_node dataNode,
+[[nodiscard]] auto _parse_tile_nodes(pugi::xml_node     dataNode,
                                      ir::TileLayerData& layerData) -> ParseError
 {
   usize index = 0;
@@ -84,7 +84,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_data(pugi::xml_node layerNode,
+[[nodiscard]] auto _parse_tile_data(pugi::xml_node     layerNode,
                                     ir::TileLayerData& layerData) -> ParseError
 {
   const auto data = layerNode.child("data");
@@ -120,8 +120,8 @@ namespace {
 
 [[nodiscard]] auto _parse_tile_layer(pugi::xml_node layerNode,
                                      ir::LayerData& layerData,
-                                     const usize rows,
-                                     const usize columns) -> ParseError
+                                     const usize    rows,
+                                     const usize    columns) -> ParseError
 {
   auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
 
@@ -181,9 +181,9 @@ namespace {
 
 [[nodiscard]] auto _parse_layer(pugi::xml_node layerNode,
                                 ir::LayerData& layerData,
-                                const usize index,
-                                const usize rows,
-                                const usize columns) -> ParseError
+                                const usize    index,
+                                const usize    rows,
+                                const usize    columns) -> ParseError
 {
   layerData.index = index;
 
