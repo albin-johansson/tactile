@@ -21,42 +21,37 @@
 
 #include <utility>  // move
 
-#include "core/components/component.hpp"
-#include "core/components/component_bundle.hpp"
-#include "core/contexts/context.hpp"
+#include "core/components/component_definition.hpp"
+#include "core/components/component_index.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-UpdateComponentCmd::UpdateComponentCmd(Shared<core::IContext> context,
-                                       const UUID&            componentId,
-                                       std::string            attribute,
-                                       Attribute              value)
+UpdateComponentCmd::UpdateComponentCmd(Shared<core::ComponentIndex> index,
+                                       const UUID&                  componentId,
+                                       std::string                  attribute,
+                                       Attribute                    value)
     : ACommand{"Update Component Attribute"}
-    , mContext{std::move(context)}
+    , mIndex{index}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
     , mUpdatedValue{std::move(value)}
 {
-  if (!mContext) {
-    throw TactileError{"Invalid null context!"};
+  if (!mIndex) {
+    throw TactileError{"Invalid null component index!"};
   }
 }
 
 void UpdateComponentCmd::undo()
 {
-  auto& comps = mContext->get_comps();
-  auto& component = comps.at(mComponentId);
-
+  auto& component = mIndex->at(mComponentId);
   component.update_attr(mAttributeName, mPreviousValue.value());
   mPreviousValue.reset();
 }
 
 void UpdateComponentCmd::redo()
 {
-  auto& comps = mContext->get_comps();
-  auto& component = comps.at(mComponentId);
-
+  auto& component = mIndex->at(mComponentId);
   mPreviousValue = component.get_attr(mAttributeName);
   component.update_attr(mAttributeName, mUpdatedValue);
 }
@@ -65,11 +60,7 @@ auto UpdateComponentCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const UpdateComponentCmd&>(cmd);
-
-    const bool canMerge = mContext->get_uuid() == other.mContext->get_uuid() &&
-                          mComponentId == other.mComponentId &&
-                          mAttributeName == other.mAttributeName;
-    if (canMerge) {
+    if (mComponentId == other.mComponentId && mAttributeName == other.mAttributeName) {
       mUpdatedValue = other.mUpdatedValue;
       return true;
     }

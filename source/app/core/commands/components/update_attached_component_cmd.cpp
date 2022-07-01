@@ -17,50 +17,59 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "update_component_attr_cmd.hpp"
+#include "update_attached_component_cmd.hpp"
 
 #include <utility>  // move
 
-#include "core/components/component_definition.hpp"
-#include "core/components/component_index.hpp"
+#include "core/components/component.hpp"
+#include "core/components/component_bundle.hpp"
+#include "core/contexts/context.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-UpdateComponentAttrCmd::UpdateComponentAttrCmd(Shared<core::ComponentIndex> index,
-                                               const UUID&                  componentId,
-                                               std::string                  attribute,
-                                               Attribute                    value)
+UpdateAttachedComponentCmd::UpdateAttachedComponentCmd(Shared<core::IContext> context,
+                                                       const UUID&            componentId,
+                                                       std::string            attribute,
+                                                       Attribute              value)
     : ACommand{"Update Component Attribute"}
-    , mIndex{index}
+    , mContext{std::move(context)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
     , mUpdatedValue{std::move(value)}
 {
-  if (!mIndex) {
-    throw TactileError{"Invalid null component index!"};
+  if (!mContext) {
+    throw TactileError{"Invalid null context!"};
   }
 }
 
-void UpdateComponentAttrCmd::undo()
+void UpdateAttachedComponentCmd::undo()
 {
-  auto& component = mIndex->at(mComponentId);
+  auto& comps = mContext->get_comps();
+  auto& component = comps.at(mComponentId);
+
   component.update_attr(mAttributeName, mPreviousValue.value());
   mPreviousValue.reset();
 }
 
-void UpdateComponentAttrCmd::redo()
+void UpdateAttachedComponentCmd::redo()
 {
-  auto& component = mIndex->at(mComponentId);
+  auto& comps = mContext->get_comps();
+  auto& component = comps.at(mComponentId);
+
   mPreviousValue = component.get_attr(mAttributeName);
   component.update_attr(mAttributeName, mUpdatedValue);
 }
 
-auto UpdateComponentAttrCmd::merge_with(const ACommand& cmd) -> bool
+auto UpdateAttachedComponentCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const UpdateComponentAttrCmd&>(cmd);
-    if (mComponentId == other.mComponentId && mAttributeName == other.mAttributeName) {
+    const auto& other = dynamic_cast<const UpdateAttachedComponentCmd&>(cmd);
+
+    const bool canMerge = mContext->get_uuid() == other.mContext->get_uuid() &&
+                          mComponentId == other.mComponentId &&
+                          mAttributeName == other.mAttributeName;
+    if (canMerge) {
       mUpdatedValue = other.mUpdatedValue;
       return true;
     }
@@ -69,7 +78,7 @@ auto UpdateComponentAttrCmd::merge_with(const ACommand& cmd) -> bool
   return false;
 }
 
-auto UpdateComponentAttrCmd::get_name() const -> const char*
+auto UpdateAttachedComponentCmd::get_name() const -> const char*
 {
   return "Update Component Attribute";
 }

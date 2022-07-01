@@ -243,9 +243,7 @@ void ComponentEditor::show_component_attribute(const UUID&        componentId,
   ImGui::TableNextColumn();
 
   if (auto updated = input_attribute("##DefaultValue", value)) {
-    dispatcher.enqueue<UpdateComponentDefAttrEvent>(componentId,
-                                                    name,
-                                                    std::move(*updated));
+    dispatcher.enqueue<UpdateComponentEvent>(componentId, name, std::move(*updated));
   }
 }
 

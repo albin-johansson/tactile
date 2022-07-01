@@ -71,16 +71,16 @@ enum class CommandId
   RenameComponent,
   AddComponentAttr,
   RemoveComponentAttr,
-  RenameComponentAttribute,
+  RenameComponentAttr,
   SetComponentAttributeType,
-  UpdateComponentAttribute,
+  UpdateComponent,
   DuplicateComponentAttribute,
 
   /* Components */
   AttachComponent,
   DetachComponent,
-  UpdateComponent,
-  ResetComponent
+  UpdateAttachedComponent,
+  ResetAttachedComponent
 };
 
 }  // namespace tactile

@@ -190,11 +190,11 @@ class Application final : AEventLoop
   void on_rename_component_attr(const RenameComponentAttrEvent& event);
   void on_duplicate_component_attr(const DuplicateComponentAttrEvent& event);
   void on_set_component_attr_type(const SetComponentAttrTypeEvent& event);
-  void on_update_component_def_attr(const UpdateComponentDefAttrEvent& event);
+  void on_update_component(const UpdateComponentEvent& event);
   void on_attach_component(const AttachComponentEvent& event);
   void on_detach_component(const DetachComponentEvent& event);
-  void on_update_component(const UpdateComponentEvent& event);
-  void on_reset_component_values(const ResetComponentValuesEvent& event);
+  void on_update_attached_component(const UpdateAttachedComponentEvent& event);
+  void on_reset_attached_component(const ResetAttachedComponentEvent& event);
 
   void on_toggle_ui();
 

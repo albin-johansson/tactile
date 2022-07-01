@@ -86,7 +86,7 @@ struct SetComponentAttrTypeEvent final
 };
 
 /// Event for updating the default value of an attribute in a component definition.
-struct UpdateComponentDefAttrEvent final
+struct UpdateComponentEvent final
 {
   UUID        component_id{};  /// Target component definition.
   std::string attr_name;       /// Name of target attribute.
@@ -108,14 +108,14 @@ struct DetachComponentEvent final
 };
 
 /// Event for restoring the default attribute values in an attached component.
-struct ResetComponentValuesEvent final
+struct ResetAttachedComponentEvent final
 {
   UUID context_id{};    /// Target context.
   UUID component_id{};  /// Type of the component to reset.
 };
 
 /// Event for updating the value of an attribute in an attached component.
-struct UpdateComponentEvent final
+struct UpdateAttachedComponentEvent final
 {
   UUID        context_id{};    /// Target context.
   UUID        component_id{};  /// Type of the component to modify.

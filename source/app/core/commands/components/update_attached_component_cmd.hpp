@@ -19,41 +19,45 @@
 
 #pragma once
 
+#include <string>  // string
+
+#include "core/attribute.hpp"
 #include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component.hpp"
 #include "core/fwd.hpp"
 
 namespace tactile {
 
-/// A command for resetting the attributes of an attached component.
-class ResetComponentCmd final : public ACommand
+/// A command for updating the attribute of a component attached to a context.
+class UpdateAttachedComponentCmd final : public ACommand
 {
  public:
-  ResetComponentCmd(Shared<core::ComponentIndex> index,
-                    Shared<core::IContext>       context,
-                    const UUID&                  contextId,
-                    const UUID&                  componentId);
+  UpdateAttachedComponentCmd(Shared<core::IContext> context,
+                             const UUID&            componentId,
+                             std::string            attribute,
+                             Attribute              value);
 
   void undo() override;
 
   void redo() override;
 
+  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
+
   [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::ResetComponent;
+    return CommandId::UpdateAttachedComponent;
   }
 
  private:
-  Shared<core::ComponentIndex> mIndex;
-  Shared<core::IContext>       mContext;
-  UUID                         mContextId{};
-  UUID                         mComponentId{};
-  Maybe<core::Component>       mComponent;
+  Shared<core::IContext> mContext;
+  UUID                   mComponentId{};
+  std::string            mAttributeName;
+  Attribute              mUpdatedValue;
+  Maybe<Attribute>       mPreviousValue;
 };
 
 }  // namespace tactile

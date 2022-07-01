@@ -274,12 +274,12 @@ void Application::subscribe_to_events()
   d.sink<RenameComponentAttrEvent>().connect<&Self::on_rename_component_attr>(this);
   d.sink<DuplicateComponentAttrEvent>().connect<&Self::on_duplicate_component_attr>(this);
   d.sink<SetComponentAttrTypeEvent>().connect<&Self::on_set_component_attr_type>(this);
-  d.sink<UpdateComponentDefAttrEvent>().connect<&Self::on_update_component_def_attr>(this);
+  d.sink<UpdateComponentEvent>().connect<&Self::on_update_component>(this);
 
   d.sink<AttachComponentEvent>().connect<&Self::on_attach_component>(this);
   d.sink<DetachComponentEvent>().connect<&Self::on_detach_component>(this);
-  d.sink<UpdateComponentEvent>().connect<&Self::on_update_component>(this);
-  d.sink<ResetComponentValuesEvent>().connect<&Self::on_reset_component_values>(this);
+  d.sink<UpdateAttachedComponentEvent>().connect<&Self::on_update_attached_component>(this);
+  d.sink<ResetAttachedComponentEvent>().connect<&Self::on_reset_attached_component>(this);
 
   d.sink<ToggleUiEvent>().connect<&Self::on_toggle_ui>(this);
   d.sink<ReloadFontsEvent>().connect<&Self::on_reload_fonts>(this);
@@ -966,25 +966,34 @@ void Application::on_remove_component_attr(const RemoveComponentAttrEvent& event
 
 void Application::on_rename_component_attr(const RenameComponentAttrEvent& event)
 {
-  // TODO _execute<RenameComponentAttrCmd>(mData->model, event.id, event.previous,
-  // event.updated);
+  if (auto* document = active_document()) {
+    document->rename_component_attribute(event.component_id,
+                                         event.current_name,
+                                         event.updated_name);
+  }
 }
 
 void Application::on_duplicate_component_attr(const DuplicateComponentAttrEvent& event)
 {
-  // TODO  _execute<DuplicateComponentAttrCmd>(mData->model, event.id, event.attribute);
+  if (auto* document = active_document()) {
+    document->duplicate_component_attribute(event.component_id, event.attr_name);
+  }
 }
 
 void Application::on_set_component_attr_type(const SetComponentAttrTypeEvent& event)
 {
-  // TODO _execute<SetComponentAttrTypeCmd>(mData->model, event.id, event.attribute,
-  // event.type);
+  if (auto* document = active_document()) {
+    document->set_component_attribute_type(event.component_id,
+                                           event.attr_name,
+                                           event.type);
+  }
 }
 
-void Application::on_update_component_def_attr(const UpdateComponentDefAttrEvent& event)
+void Application::on_update_component(const UpdateComponentEvent& event)
 {
-  // TODO _execute<UpdateComponentAttrCmd>(mData->model, event.id, event.attribute,
-  // event.value);
+  if (auto* document = active_document()) {
+    document->update_component(event.component_id, event.attr_name, event.value);
+  }
 }
 
 void Application::on_attach_component(const AttachComponentEvent& event)
@@ -996,21 +1005,26 @@ void Application::on_attach_component(const AttachComponentEvent& event)
 
 void Application::on_detach_component(const DetachComponentEvent& event)
 {
-  // TODO _execute<RemoveComponentCmd>(mData->model, event.context, event.component);
+  if (auto* document = active_document()) {
+    document->detach_component(event.context_id, event.component_id);
+  }
 }
 
-void Application::on_update_component(const UpdateComponentEvent& event)
+void Application::on_update_attached_component(const UpdateAttachedComponentEvent& event)
 {
-  // TODO _execute<UpdateComponentCmd>(mData->model,
-  //                              event.context,
-  //                              event.component,
-  //                              event.attribute,
-  //                              event.value);
+  if (auto* document = active_document()) {
+    document->update_attached_component(event.context_id,
+                                        event.component_id,
+                                        event.attr_name,
+                                        event.value);
+  }
 }
 
-void Application::on_reset_component_values(const ResetComponentValuesEvent& event)
+void Application::on_reset_attached_component(const ResetAttachedComponentEvent& event)
 {
-  // TODO _execute<ResetComponentCmd>(mData->model, event.context, event.component);
+  if (auto* document = active_document()) {
+    document->reset_attached_component(event.context_id, event.component_id);
+  }
 }
 
 void Application::on_toggle_ui()

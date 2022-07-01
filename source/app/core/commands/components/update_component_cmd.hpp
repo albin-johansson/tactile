@@ -30,14 +30,14 @@
 
 namespace tactile {
 
-/// A command for updating the attribute of a component attached to a context.
+/// Command for changing the default value of an attribute in a component.
 class UpdateComponentCmd final : public ACommand
 {
  public:
-  UpdateComponentCmd(Shared<core::IContext> context,
-                     const UUID&            componentId,
-                     std::string            attribute,
-                     Attribute              value);
+  UpdateComponentCmd(Shared<core::ComponentIndex> index,
+                     const UUID&                  componentId,
+                     std::string                  attribute,
+                     Attribute                    value);
 
   void undo() override;
 
@@ -53,11 +53,11 @@ class UpdateComponentCmd final : public ACommand
   }
 
  private:
-  Shared<core::IContext> mContext;
-  UUID                   mComponentId{};
-  std::string            mAttributeName;
-  Attribute              mUpdatedValue;
-  Maybe<Attribute>       mPreviousValue;
+  Shared<core::ComponentIndex> mIndex;
+  UUID                         mComponentId{};
+  std::string                  mAttributeName;
+  Attribute                    mUpdatedValue;
+  Maybe<Attribute>             mPreviousValue;
 };
 
 }  // namespace tactile

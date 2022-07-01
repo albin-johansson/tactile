@@ -54,10 +54,10 @@ void _update_attribute_table(const UUID&            contextId,
 
       ImGui::TableNextColumn();
       if (auto value = input_attribute("##ComponentAttributeTableValue", attrValue)) {
-        dispatcher.enqueue<UpdateComponentEvent>(contextId,
-                                                 component.definition_id(),
-                                                 attrName,
-                                                 std::move(*value));
+        dispatcher.enqueue<UpdateAttachedComponentEvent>(contextId,
+                                                         component.definition_id(),
+                                                         attrName,
+                                                         std::move(*value));
       }
     }
   }
@@ -68,7 +68,7 @@ void _update_trailing_button_popup_content(const UUID&            contextId,
                                            entt::dispatcher&      dispatcher)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
-    dispatcher.enqueue<ResetComponentValuesEvent>(contextId, component.definition_id());
+    dispatcher.enqueue<ResetAttachedComponentEvent>(contextId, component.definition_id());
   }
 
   ImGui::Separator();

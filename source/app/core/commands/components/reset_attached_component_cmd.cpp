@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "reset_component_cmd.hpp"
+#include "reset_attached_component_cmd.hpp"
 
 #include <utility>  // move
 
@@ -29,14 +29,12 @@
 
 namespace tactile {
 
-ResetComponentCmd::ResetComponentCmd(Shared<core::ComponentIndex> index,
-                                     Shared<core::IContext>       context,
-                                     const UUID&                  contextId,
-                                     const UUID&                  componentId)
+ResetAttachedComponentCmd::ResetAttachedComponentCmd(Shared<core::ComponentIndex> index,
+                                                     Shared<core::IContext>       context,
+                                                     const UUID& componentId)
     : ACommand{"Reset Component Values"}
     , mIndex{std::move(index)}
     , mContext{std::move(context)}
-    , mContextId{contextId}
     , mComponentId{componentId}
 {
   if (!mIndex) {
@@ -47,7 +45,7 @@ ResetComponentCmd::ResetComponentCmd(Shared<core::ComponentIndex> index,
   }
 }
 
-void ResetComponentCmd::undo()
+void ResetAttachedComponentCmd::undo()
 {
   auto& comps = mContext->get_comps();
 
@@ -57,7 +55,7 @@ void ResetComponentCmd::undo()
   mComponent.reset();
 }
 
-void ResetComponentCmd::redo()
+void ResetAttachedComponentCmd::redo()
 {
   auto&       comps = mContext->get_comps();
   const auto& definition = mIndex->at(mComponentId);
@@ -68,7 +66,7 @@ void ResetComponentCmd::redo()
   comps.add(definition.instantiate());
 }
 
-auto ResetComponentCmd::get_name() const -> const char*
+auto ResetAttachedComponentCmd::get_name() const -> const char*
 {
   return "Reset Component Values";
 }

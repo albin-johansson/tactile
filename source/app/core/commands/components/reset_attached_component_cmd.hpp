@@ -19,46 +19,39 @@
 
 #pragma once
 
-#include <string>  // string
-
-#include "core/attribute.hpp"
 #include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
+#include "core/components/component.hpp"
 #include "core/fwd.hpp"
 
 namespace tactile {
 
-/// Command for changing the default value of an attribute in a component.
-/// TODO: better name (confusing with UpdateComponentCmd)
-class UpdateComponentAttrCmd final : public ACommand
+/// A command for resetting the attributes of an attached component.
+class ResetAttachedComponentCmd final : public ACommand
 {
  public:
-  UpdateComponentAttrCmd(Shared<core::ComponentIndex> index,
-                         const UUID&                  componentId,
-                         std::string                  attribute,
-                         Attribute                    value);
+  ResetAttachedComponentCmd(Shared<core::ComponentIndex> index,
+                            Shared<core::IContext>       context,
+                            const UUID&                  componentId);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
-
   [[nodiscard]] auto get_name() const -> const char* override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::UpdateComponentAttribute;
+    return CommandId::ResetAttachedComponent;
   }
 
  private:
   Shared<core::ComponentIndex> mIndex;
+  Shared<core::IContext>       mContext;
   UUID                         mComponentId{};
-  std::string                  mAttributeName;
-  Attribute                    mUpdatedValue;
-  Maybe<Attribute>             mPreviousValue;
+  Maybe<core::Component>       mComponent;
 };
 
 }  // namespace tactile
