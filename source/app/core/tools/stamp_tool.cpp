@@ -47,8 +47,8 @@ namespace {
 }  // namespace
 
 void StampTool::draw_gizmos(const DocumentModel& model,
-                            IRenderer& renderer,
-                            const MouseInfo& mouse) const
+                            IRenderer&           renderer,
+                            const MouseInfo&     mouse) const
 {
   const auto& document = model.require_active_map();
 

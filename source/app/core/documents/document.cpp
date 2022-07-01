@@ -145,7 +145,9 @@ void ADocument::update_attached_component(const UUID& contextId,
 void ADocument::reset_attached_component(const UUID& contextId, const UUID& componentId)
 {
   auto context = get_context(contextId);
-  get_history().push<ResetAttachedComponentCmd>(mComponentIndex, std::move(context), componentId);
+  get_history().push<ResetAttachedComponentCmd>(mComponentIndex,
+                                                std::move(context),
+                                                componentId);
 }
 
 void ADocument::add_property(const UUID&         contextId,

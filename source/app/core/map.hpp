@@ -142,10 +142,7 @@ class Map final : public IContext
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  [[nodiscard]] auto next_tile_layer_suffix() const -> int32
-  {
-    return mTileLayerSuffix;
-  }
+  [[nodiscard]] auto next_tile_layer_suffix() const -> int32 { return mTileLayerSuffix; }
 
   [[nodiscard]] auto next_object_layer_suffix() const -> int32
   {

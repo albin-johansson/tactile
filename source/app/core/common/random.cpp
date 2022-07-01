@@ -32,7 +32,7 @@ auto make_random_engine() -> RandomEngine
 
   constexpr auto n = RandomEngine::state_size;
 
-  std::random_device device;
+  std::random_device                                         device;
   std::array<result_type, (n - 1) / sizeof(result_type) + 1> data{};
 
   std::generate(data.begin(), data.end(), std::ref(device));

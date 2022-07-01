@@ -34,22 +34,22 @@ class IRenderer
  public:
   virtual ~IRenderer() noexcept = default;
 
-  virtual void render_image(uint texture,
+  virtual void render_image(uint            texture,
                             const Vector2f& pos,
                             const Vector2f& size,
                             const Vector2f& uvMin,
                             const Vector2f& uvMax,
-                            uint8 opacity = 0xFF) = 0;
+                            uint8           opacity = 0xFF) = 0;
 
-  virtual void draw_ellipse(const Vector2f& center,
-                            const Vector2f& radius,
+  virtual void draw_ellipse(const Vector2f&   center,
+                            const Vector2f&   radius,
                             const cen::color& color,
-                            float thickness = 1.0f) = 0;
+                            float             thickness = 1.0f) = 0;
 
-  virtual void draw_rect(const Vector2f& pos,
-                         const Vector2f& size,
+  virtual void draw_rect(const Vector2f&   pos,
+                         const Vector2f&   size,
                          const cen::color& color,
-                         float thickness = 1.0f) = 0;
+                         float             thickness = 1.0f) = 0;
 
   [[nodiscard]] virtual auto get_origin() const -> Vector2f = 0;
 

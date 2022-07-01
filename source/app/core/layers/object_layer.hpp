@@ -62,7 +62,7 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto active_object_id() const -> Maybe<UUID>;
 
-  [[nodiscard]] auto get_object_ptr( const UUID& id) -> const Shared<Object>&;
+  [[nodiscard]] auto get_object_ptr(const UUID& id) -> const Shared<Object>&;
 
   [[nodiscard]] auto get_object(const UUID& id) -> Object&;
   [[nodiscard]] auto get_object(const UUID& id) const -> const Object&;

@@ -135,7 +135,7 @@ class GroupLayer final : public ILayer
 
  private:
   LayerDelegate mDelegate;
-  LayerStorage mLayers;
+  LayerStorage  mLayers;
 };
 
 }  // namespace tactile::core

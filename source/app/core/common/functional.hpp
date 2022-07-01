@@ -60,7 +60,7 @@ constexpr void invoke_n(const T n, U&& callable) noexcept(noexcept(callable()))
 template <std::integral T, std::invocable<T, T> U>
 constexpr void invoke_mn(const T m,
                          const T n,
-                         U&& callable) noexcept(noexcept(callable(m, n)))
+                         U&&     callable) noexcept(noexcept(callable(m, n)))
 {
   for (T i = 0; i < m; ++i) {
     for (T j = 0; j < n; ++j) {

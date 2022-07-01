@@ -34,9 +34,9 @@ void ObjectSelectionTool::on_exited(DocumentModel& model, entt::dispatcher& disp
   maybe_emit_event(model, dispatcher);
 }
 
-void ObjectSelectionTool::on_pressed(DocumentModel& model,
+void ObjectSelectionTool::on_pressed(DocumentModel&    model,
                                      entt::dispatcher& dispatcher,
-                                     const MouseInfo& mouse)
+                                     const MouseInfo&  mouse)
 {
   if ((mouse.button == cen::mouse_button::left ||
        mouse.button == cen::mouse_button::right) &&
@@ -78,9 +78,9 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
   }
 }
 
-void ObjectSelectionTool::on_dragged(DocumentModel& model,
+void ObjectSelectionTool::on_dragged(DocumentModel&    model,
                                      entt::dispatcher& dispatcher,
-                                     const MouseInfo& mouse)
+                                     const MouseInfo&  mouse)
 {
   if (mDragInfo && mouse.button == cen::mouse_button::left && is_available(model)) {
     auto& document = model.require_active_map();
@@ -109,9 +109,9 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
   }
 }
 
-void ObjectSelectionTool::on_released(DocumentModel& model,
+void ObjectSelectionTool::on_released(DocumentModel&    model,
                                       entt::dispatcher& dispatcher,
-                                      const MouseInfo& mouse)
+                                      const MouseInfo&  mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_available(model)) {
     maybe_emit_event(model, dispatcher);
@@ -124,7 +124,7 @@ auto ObjectSelectionTool::is_available(const DocumentModel& model) const -> bool
   return document.get_map().is_active_layer(LayerType::ObjectLayer);
 }
 
-void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
+void ObjectSelectionTool::maybe_emit_event(DocumentModel&    model,
                                            entt::dispatcher& dispatcher)
 {
   const auto& document = model.require_active_map();

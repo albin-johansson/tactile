@@ -37,7 +37,7 @@ class TileAnimation final
   struct Frame final
   {
     TileIndex tile{};
-    Millis duration{};
+    Millis    duration{};
   };
 
   void update();
@@ -59,8 +59,8 @@ class TileAnimation final
 
  private:
   std::vector<Frame> mFrames;
-  usize mIndex{};
-  TimePoint mLastUpdate{};
+  usize              mIndex{};
+  TimePoint          mLastUpdate{};
 };
 
 }  // namespace tactile::core

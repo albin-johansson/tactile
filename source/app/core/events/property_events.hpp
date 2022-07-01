@@ -36,7 +36,7 @@ struct ShowAddPropertyDialogEvent final
 
 struct ShowChangePropertyTypeDialogEvent final
 {
-  std::string name;
+  std::string   name;
   AttributeType current_type{};
 };
 

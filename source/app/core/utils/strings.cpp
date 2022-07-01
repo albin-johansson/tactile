@@ -26,7 +26,7 @@ namespace tactile {
 
 auto split(const char* str, const char sep) -> std::vector<std::string>
 {
-  std::stringstream stream{str};
+  std::stringstream        stream{str};
   std::vector<std::string> tokens;
 
   std::string token;

@@ -51,8 +51,8 @@ class ToolManager final : ATool
       -> bool;
 
   void draw_gizmos(const DocumentModel& model,
-                   IRenderer& renderer,
-                   const MouseInfo& mouse) const override;
+                   IRenderer&           renderer,
+                   const MouseInfo&     mouse) const override;
 
   void on_enabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
@@ -62,17 +62,17 @@ class ToolManager final : ATool
 
   void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel& model,
+  void on_pressed(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_dragged(DocumentModel& model,
+  void on_dragged(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_released(DocumentModel& model,
+  void on_released(DocumentModel&    model,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
+                   const MouseInfo&  mouse) override;
 
  private:
   struct Data;

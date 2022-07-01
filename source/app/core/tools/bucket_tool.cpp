@@ -29,9 +29,9 @@
 
 namespace tactile {
 
-void BucketTool::on_pressed(DocumentModel& model,
+void BucketTool::on_pressed(DocumentModel&    model,
                             entt::dispatcher& dispatcher,
-                            const MouseInfo& mouse)
+                            const MouseInfo&  mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       is_available(model)) {

@@ -72,8 +72,8 @@ class Viewport final
   }
 
  private:
-  Vector2f mOffset{};
-  Vector2f mCellSize{32, 32};
+  Vector2f              mOffset{};
+  Vector2f              mCellSize{32, 32};
   Maybe<ViewportLimits> mLimits;
 };
 

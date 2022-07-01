@@ -63,9 +63,9 @@ void EraserTool::on_dragged(DocumentModel& model,
   }
 }
 
-void EraserTool::on_released(DocumentModel& model,
+void EraserTool::on_released(DocumentModel&    model,
                              entt::dispatcher& dispatcher,
-                             const MouseInfo& mouse)
+                             const MouseInfo&  mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_available(model)) {
     maybe_emit_event(model, dispatcher);

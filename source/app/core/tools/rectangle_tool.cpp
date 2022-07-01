@@ -74,9 +74,9 @@ void RectangleTool::on_dragged(DocumentModel& model,
   }
 }
 
-void RectangleTool::on_released(DocumentModel& model,
+void RectangleTool::on_released(DocumentModel&    model,
                                 entt::dispatcher& dispatcher,
-                                const MouseInfo& mouse)
+                                const MouseInfo&  mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_available(model)) {
     maybe_emit_event(model, dispatcher);

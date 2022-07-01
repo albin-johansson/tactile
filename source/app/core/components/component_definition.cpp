@@ -92,7 +92,7 @@ auto ComponentDefinition::duplicate_attr(std::string_view key) -> std::string
 {
   auto value = lookup_in(mAttributes, key);
 
-  int suffix = 1;
+  int         suffix = 1;
   std::string newKey;
   do {
     newKey = fmt::format("{} ({})", key, suffix);

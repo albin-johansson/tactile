@@ -64,7 +64,7 @@ class LayerMutatorVisitor : public ILayerVisitor
   }
 
  private:
-  UUID mTarget;
+  UUID        mTarget;
   VisitorFunc mFunc;
 };
 
@@ -93,7 +93,7 @@ class LayerQueryVisitor : public IConstLayerVisitor
   }
 
  private:
-  UUID mTarget;
+  UUID             mTarget;
   ConstVisitorFunc mFunc;
 };
 
@@ -118,9 +118,9 @@ class GlobalIndexCalculator final : public IConstLayerVisitor
   }
 
  private:
-  UUID mTarget;
+  UUID  mTarget;
   usize mIndex{};
-  bool mFound{};
+  bool  mFound{};
 
   void check(const ILayer& layer)
   {
@@ -149,7 +149,7 @@ class FindLayerVisitor final : public ILayerVisitor
   [[nodiscard]] auto found_layer() -> ILayer* { return mLayer; }
 
  private:
-  UUID mTarget;
+  UUID    mTarget;
   ILayer* mLayer{};
 
   void check(ILayer& layer)
@@ -172,7 +172,7 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
   [[nodiscard]] auto found_layer() -> const ILayer* { return mLayer; }
 
  private:
-  UUID mTarget;
+  UUID          mTarget;
   const ILayer* mLayer{};
 
   void check(const ILayer& layer)
@@ -203,7 +203,7 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
     }                                                              \
                                                                    \
    private:                                                        \
-    UUID mTarget;                                                  \
+    UUID  mTarget;                                                 \
     Type* mLayer{};                                                \
   };                                                               \
                                                                    \
@@ -226,7 +226,7 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
     }                                                              \
                                                                    \
    private:                                                        \
-    UUID mTarget;                                                  \
+    UUID        mTarget;                                           \
     const Type* mLayer{};                                          \
   }
 
@@ -454,7 +454,7 @@ auto GroupLayer::layer_count() const -> usize
 auto GroupLayer::sibling_count(const UUID& id) const -> usize
 {
   Maybe<usize> count;
-  auto op = [&](const LayerStorage& storage, LayerStorage::const_iterator) {
+  auto         op = [&](const LayerStorage& storage, LayerStorage::const_iterator) {
     TACTILE_ASSERT(storage.size() >= 1);
     count = storage.size() - 1;
   };
@@ -473,7 +473,7 @@ auto GroupLayer::sibling_count(const UUID& id) const -> usize
 auto GroupLayer::get_local_index(const UUID& id) const -> usize
 {
   Maybe<usize> index;
-  auto op = [&](const LayerStorage& storage, LayerStorage::const_iterator iter) {
+  auto         op = [&](const LayerStorage& storage, LayerStorage::const_iterator iter) {
     index = static_cast<usize>(std::distance(storage.begin(), iter));
   };
 
@@ -514,7 +514,7 @@ auto GroupLayer::can_move_layer_down(const UUID& id) const -> bool
 auto GroupLayer::get_layer(const UUID& id) -> Shared<ILayer>
 {
   Shared<ILayer> layer;
-  auto op = [&](const LayerStorage&, LayerStorage::const_iterator iter) {
+  auto           op = [&](const LayerStorage&, LayerStorage::const_iterator iter) {
     layer = *iter;
   };
 

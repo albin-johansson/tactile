@@ -32,12 +32,12 @@ namespace tactile {
 
 struct ToolManager::Data final
 {
-  StampTool stamp;
-  EraserTool eraser;
-  BucketTool bucket;
-  RectangleTool rectangle;
-  EllipseTool ellipse;
-  PointTool point;
+  StampTool           stamp;
+  EraserTool          eraser;
+  BucketTool          bucket;
+  RectangleTool       rectangle;
+  EllipseTool         ellipse;
+  PointTool           point;
   ObjectSelectionTool object_selection;
 
   ATool* active_tool{};
@@ -49,8 +49,8 @@ ToolManager::ToolManager() : mData{std::make_unique<Data>()} {}
 
 ToolManager::~ToolManager() noexcept = default;
 
-void ToolManager::select_tool(const ToolType type,
-                              DocumentModel& model,
+void ToolManager::select_tool(const ToolType    type,
+                              DocumentModel&    model,
                               entt::dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
@@ -156,8 +156,8 @@ auto ToolManager::is_available(const DocumentModel& model, const ToolType type) 
 }
 
 void ToolManager::draw_gizmos(const DocumentModel& model,
-                              IRenderer& renderer,
-                              const MouseInfo& mouse) const
+                              IRenderer&           renderer,
+                              const MouseInfo&     mouse) const
 {
   if (auto* tool = mData->active_tool) {
     tool->draw_gizmos(model, renderer, mouse);
@@ -192,27 +192,27 @@ void ToolManager::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
   }
 }
 
-void ToolManager::on_pressed(DocumentModel& model,
+void ToolManager::on_pressed(DocumentModel&    model,
                              entt::dispatcher& dispatcher,
-                             const MouseInfo& mouse)
+                             const MouseInfo&  mouse)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_pressed(model, dispatcher, mouse);
   }
 }
 
-void ToolManager::on_dragged(DocumentModel& model,
+void ToolManager::on_dragged(DocumentModel&    model,
                              entt::dispatcher& dispatcher,
-                             const MouseInfo& mouse)
+                             const MouseInfo&  mouse)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_dragged(model, dispatcher, mouse);
   }
 }
 
-void ToolManager::on_released(DocumentModel& model,
+void ToolManager::on_released(DocumentModel&    model,
                               entt::dispatcher& dispatcher,
-                              const MouseInfo& mouse)
+                              const MouseInfo&  mouse)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_released(model, dispatcher, mouse);
