@@ -35,7 +35,7 @@ namespace tactile::io {
 namespace {
 
 constexpr ui::EditorTheme _def_theme = ui::EditorTheme::Nocturnal;
-constexpr cen::color _def_viewport_bg{60, 60, 60};
+constexpr cen::color      _def_viewport_bg{60, 60, 60};
 
 constexpr auto _def_preferred_format = "YAML";
 
@@ -81,7 +81,7 @@ struct PreferenceState::Data
   std::string preferred_format{_def_preferred_format};
 
   ui::EditorTheme theme{_def_theme};
-  cen::color viewport_background{_def_viewport_bg};
+  cen::color      viewport_background{_def_viewport_bg};
 
   usize command_capacity{_def_command_capacity};
 
@@ -264,7 +264,7 @@ void PreferenceState::save(const std::filesystem::path& path)
 
   {
     const auto& bg = viewport_bg();
-    auto* background = cfg.mutable_viewport_background();
+    auto*       background = cfg.mutable_viewport_background();
     background->set_red(bg.red());
     background->set_green(bg.green());
     background->set_blue(bg.blue());

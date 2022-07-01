@@ -36,7 +36,7 @@ namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_fancy_tile(const nlohmann::json& json,
-                                     ir::TilesetData& tilesetData) -> ParseError
+                                     ir::TilesetData&      tilesetData) -> ParseError
 {
   TileID tileId{};
 
@@ -94,7 +94,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_fancy_tiles(const nlohmann::json& json,
-                                      ir::TilesetData& tilesetData) -> ParseError
+                                      ir::TilesetData&      tilesetData) -> ParseError
 {
   if (json.contains("tiles")) {
     for (const auto& [_, value] : json.at("tiles").items()) {
@@ -108,8 +108,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_image_path(const nlohmann::json& json,
-                                     ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_image_path(const nlohmann::json&        json,
+                                     ir::TilesetData&             tilesetData,
                                      const std::filesystem::path& dir) -> ParseError
 {
   const auto relative = json.find("image");
@@ -130,7 +130,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_common_tileset_attributes(const nlohmann::json& json,
-                                                    ir::TilesetData& tilesetData,
+                                                    ir::TilesetData&      tilesetData,
                                                     const std::filesystem::path& dir)
     -> ParseError
 {
@@ -200,8 +200,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_external_tileset(const nlohmann::json& json,
-                                           ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_external_tileset(const nlohmann::json&        json,
+                                           ir::TilesetData&             tilesetData,
                                            const std::filesystem::path& dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
@@ -221,8 +221,8 @@ namespace {
   }
 }
 
-[[nodiscard]] auto _parse_tileset(const nlohmann::json& json,
-                                  ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_tileset(const nlohmann::json&        json,
+                                  ir::TilesetData&             tilesetData,
                                   const std::filesystem::path& dir) -> ParseError
 {
   if (const auto firstTile = as_int(json, "firstgid")) {
@@ -242,8 +242,8 @@ namespace {
 
 }  // namespace
 
-auto parse_tilesets(const nlohmann::json& json,
-                    ir::MapData& mapData,
+auto parse_tilesets(const nlohmann::json&        json,
+                    ir::MapData&                 mapData,
                     const std::filesystem::path& dir) -> ParseError
 {
   const auto iter = json.find("tilesets");

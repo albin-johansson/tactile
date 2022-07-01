@@ -31,9 +31,9 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_value(const nlohmann::json& json,
+[[nodiscard]] auto _parse_value(const nlohmann::json&  json,
                                 const std::string_view type,
-                                Attribute& value) -> ParseError
+                                Attribute&             value) -> ParseError
 {
   if (type == "string") {
     value = as_string(json, "value").value();
@@ -79,7 +79,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_property(const nlohmann::json& json,
-                                   ir::ContextData& contextData) -> ParseError
+                                   ir::ContextData&      contextData) -> ParseError
 {
   std::string propertyName;
 

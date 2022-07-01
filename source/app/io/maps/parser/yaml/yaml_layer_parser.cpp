@@ -33,13 +33,13 @@ using namespace std::string_literals;
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_layer(const YAML::Node& node,
+[[nodiscard]] auto _parse_layer(const YAML::Node&  node,
                                 const ir::MapData& map,
-                                ir::LayerData& layer,
-                                usize index) -> ParseError;
+                                ir::LayerData&     layer,
+                                usize              index) -> ParseError;
 
 [[nodiscard]] auto _parse_tile_layer_data(ir::TileLayerData& layer,
-                                          const usize columns,
+                                          const usize        columns,
                                           const std::string& tileData) -> ParseError
 {
   usize index = 0;
@@ -58,9 +58,9 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer(const YAML::Node& node,
-                                     ir::LayerData& layerData,
-                                     const usize rows,
-                                     const usize columns) -> ParseError
+                                     ir::LayerData&    layerData,
+                                     const usize       rows,
+                                     const usize       columns) -> ParseError
 {
   layerData.type = LayerType::TileLayer;
 
@@ -84,9 +84,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_object_layer(const YAML::Node& node,
+[[nodiscard]] auto _parse_object_layer(const YAML::Node&  node,
                                        const ir::MapData& map,
-                                       ir::LayerData& data) -> ParseError
+                                       ir::LayerData&     data) -> ParseError
 {
   data.type = LayerType::ObjectLayer;
   auto& objectLayer = data.data.emplace<ir::ObjectLayerData>();
@@ -106,9 +106,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_group_layer(const YAML::Node& node,
+[[nodiscard]] auto _parse_group_layer(const YAML::Node&  node,
                                       const ir::MapData& map,
-                                      ir::LayerData& data) -> ParseError
+                                      ir::LayerData&     data) -> ParseError
 {
   data.type = LayerType::GroupLayer;
   auto& group = data.data.emplace<ir::GroupLayerData>();
@@ -132,10 +132,10 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_layer(const YAML::Node& node,
+[[nodiscard]] auto _parse_layer(const YAML::Node&  node,
                                 const ir::MapData& map,
-                                ir::LayerData& layer,
-                                const usize index) -> ParseError
+                                ir::LayerData&     layer,
+                                const usize        index) -> ParseError
 {
   layer.index = index;
 

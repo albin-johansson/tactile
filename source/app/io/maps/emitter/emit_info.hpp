@@ -39,7 +39,7 @@ class EmitInfo final
  private:
   std::filesystem::path mDestinationFile;
   std::filesystem::path mDestinationDir;
-  ir::MapData mData;
+  ir::MapData           mData;
 };
 
 }  // namespace tactile::io

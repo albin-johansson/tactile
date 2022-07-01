@@ -40,13 +40,13 @@ using ComponentMap = TreeMap<std::string, Attribute>;
 
 struct ContextData final
 {
-  TreeMap<std::string, Attribute> properties;
+  TreeMap<std::string, Attribute>    properties;
   TreeMap<std::string, ComponentMap> components;
 };
 
 struct ObjectData final
 {
-  ObjectID id{};
+  ObjectID   id{};
   ObjectType type{};
 
   Vector2f pos{};
@@ -63,8 +63,8 @@ struct ObjectData final
 struct TileLayerData final
 {
   /* The sizes are provided for convenience, they should mirror the MapData values */
-  usize row_count{};
-  usize col_count{};
+  usize                            row_count{};
+  usize                            col_count{};
   std::vector<std::vector<TileID>> tiles;
 };
 
@@ -90,18 +90,18 @@ struct LayerData final
 {
   using data_type = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
-  LayerID id{};
+  LayerID   id{};
   LayerType type{};
 
   usize index{};  /// Local index.
 
   std::string name;
-  data_type data;
+  data_type   data;
 
   ContextData context;
 
   float opacity{};
-  bool visible{};
+  bool  visible{};
 };
 
 struct MetaAnimationFrameData final
@@ -112,15 +112,15 @@ struct MetaAnimationFrameData final
 
 struct MetaTileData final
 {
-  std::vector<ObjectData> objects;
+  std::vector<ObjectData>             objects;
   std::vector<MetaAnimationFrameData> frames;
-  ContextData context;
+  ContextData                         context;
 };
 
 struct TilesetData final
 {
   std::string name;
-  TileID first_tile{};
+  TileID      first_tile{};
 
   Vector2i tile_size{};
 
@@ -128,7 +128,7 @@ struct TilesetData final
   int32 column_count{};
 
   std::filesystem::path image_path;
-  Vector2i image_size{};
+  Vector2i              image_size{};
 
   HashMap<TileIndex, MetaTileData> fancy_tiles;
 
@@ -148,7 +148,7 @@ struct MapData
   TreeMap<std::string, ComponentMap> component_definitions;
 
   std::vector<TilesetData> tilesets;
-  std::vector<LayerData> layers;
+  std::vector<LayerData>   layers;
 
   ContextData context;
 };

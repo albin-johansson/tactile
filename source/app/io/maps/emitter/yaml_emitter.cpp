@@ -152,10 +152,10 @@ void _emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& 
   emitter << YAML::EndSeq;
 }
 
-void _emit_tile_layer_data(YAML::Emitter& emitter,
+void _emit_tile_layer_data(YAML::Emitter&           emitter,
                            const ir::TileLayerData& data,
-                           const usize rows,
-                           const usize columns)
+                           const usize              rows,
+                           const usize              columns)
 {
   const bool fold = get_preferences().fold_tile_data();
 
@@ -184,10 +184,10 @@ void _emit_tile_layer_data(YAML::Emitter& emitter,
   }
 }
 
-void _emit_layer(YAML::Emitter& emitter,
+void _emit_layer(YAML::Emitter&       emitter,
                  const ir::LayerData& data,
-                 const usize rows,
-                 const usize columns)
+                 const usize          rows,
+                 const usize          columns)
 {
   emitter << YAML::BeginMap;
 
@@ -295,8 +295,8 @@ void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_file(const EmitInfo& info,
-                        const std::string& filename,
+void _emit_tileset_file(const EmitInfo&        info,
+                        const std::string&     filename,
                         const ir::TilesetData& tileset)
 {
   YAML::Emitter emitter;
@@ -358,9 +358,9 @@ void _emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
   emitter << YAML::EndSeq;
 }
 
-void _emit_component_definition_attribute(YAML::Emitter& emitter,
+void _emit_component_definition_attribute(YAML::Emitter&     emitter,
                                           const std::string& name,
-                                          const Attribute& value)
+                                          const Attribute&   value)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;

@@ -32,8 +32,8 @@ namespace tactile::io {
 [[nodiscard]] auto parse_properties(const YAML::Node& node, ir::ContextData& context)
     -> ParseError;
 
-[[nodiscard]] auto parse_components(const YAML::Node& node,
+[[nodiscard]] auto parse_components(const YAML::Node&  node,
                                     const ir::MapData& map,
-                                    ir::ContextData& context) -> ParseError;
+                                    ir::ContextData&   context) -> ParseError;
 
 }  // namespace tactile::io

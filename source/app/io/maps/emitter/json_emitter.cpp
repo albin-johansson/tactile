@@ -89,8 +89,8 @@ namespace {
 }
 
 [[nodiscard]] auto _emit_layer(const ir::LayerData& data,
-                               const usize rows,
-                               const usize columns) -> nlohmann::json
+                               const usize          rows,
+                               const usize          columns) -> nlohmann::json
 {
   auto json = nlohmann::json::object();
 
@@ -233,8 +233,8 @@ namespace {
   return json;
 }
 
-void _add_common_tileset_attributes(nlohmann::json& json,
-                                    const EmitInfo& info,
+void _add_common_tileset_attributes(nlohmann::json&        json,
+                                    const EmitInfo&        info,
                                     const ir::TilesetData& data)
 {
   json["name"] = data.name;
@@ -263,7 +263,7 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   }
 }
 
-[[nodiscard]] auto _emit_embedded_tileset(const EmitInfo& info,
+[[nodiscard]] auto _emit_embedded_tileset(const EmitInfo&        info,
                                           const ir::TilesetData& data) -> nlohmann::json
 {
   auto json = nlohmann::json::object();

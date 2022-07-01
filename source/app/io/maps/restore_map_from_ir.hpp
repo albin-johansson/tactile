@@ -33,7 +33,7 @@ namespace tactile::io {
  * \param textures the texture manager that will be used.
  */
 void restore_map_from_ir(const ParseData& data,
-                         DocumentModel& model,
-                         TextureManager& textures);
+                         DocumentModel&   model,
+                         TextureManager&  textures);
 
 }  // namespace tactile::io

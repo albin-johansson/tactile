@@ -28,8 +28,8 @@
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
-                                  ir::MapData& data,
+[[nodiscard]] auto parse_tilesets(const YAML::Node&            sequence,
+                                  ir::MapData&                 data,
                                   const std::filesystem::path& dir) -> ParseError;
 
 }  // namespace tactile::io

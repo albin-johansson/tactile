@@ -31,7 +31,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_fancy_tiles(pugi::xml_node tilesetNode,
+[[nodiscard]] auto _parse_fancy_tiles(pugi::xml_node   tilesetNode,
                                       ir::TilesetData& tilesetData) -> ParseError
 {
   for (auto tileNode : tilesetNode.children("tile")) {
@@ -81,8 +81,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_image_info(pugi::xml_node tilesetNode,
-                                     ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_image_info(pugi::xml_node               tilesetNode,
+                                     ir::TilesetData&             tilesetData,
                                      const std::filesystem::path& dir) -> ParseError
 {
   auto imageNode = tilesetNode.child("image");
@@ -117,8 +117,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_common_attributes(pugi::xml_node node,
-                                            ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_common_attributes(pugi::xml_node               node,
+                                            ir::TilesetData&             tilesetData,
                                             const std::filesystem::path& dir)
     -> ParseError
 {
@@ -174,8 +174,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_external_tileset(pugi::xml_node node,
-                                           ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_external_tileset(pugi::xml_node               node,
+                                           ir::TilesetData&             tilesetData,
                                            const std::filesystem::path& dir) -> ParseError
 {
   TACTILE_ASSERT(has_attribute(node, "source"));
@@ -197,8 +197,8 @@ namespace {
 
 }  // namespace
 
-auto parse_tileset(pugi::xml_node node,
-                   ir::TilesetData& tilesetData,
+auto parse_tileset(pugi::xml_node               node,
+                   ir::TilesetData&             tilesetData,
                    const std::filesystem::path& dir) -> ParseError
 {
   if (const auto firstTile = int_attribute(node, "firstgid")) {

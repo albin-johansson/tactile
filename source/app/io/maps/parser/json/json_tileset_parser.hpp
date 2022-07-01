@@ -28,8 +28,8 @@
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_tilesets(const nlohmann::json& json,
-                                  ir::MapData& mapData,
+[[nodiscard]] auto parse_tilesets(const nlohmann::json&        json,
+                                  ir::MapData&                 mapData,
                                   const std::filesystem::path& dir) -> ParseError;
 
 }  // namespace tactile::io

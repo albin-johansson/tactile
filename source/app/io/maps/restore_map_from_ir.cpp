@@ -287,8 +287,8 @@ void _restore_component_definitions(MapDocument& document, const ir::MapData& ma
 }  // namespace
 
 void restore_map_from_ir(const ParseData& data,
-                         DocumentModel& model,
-                         TextureManager& textures)
+                         DocumentModel&   model,
+                         TextureManager&  textures)
 {
   const auto& mapData = data.data();
 

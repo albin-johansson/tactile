@@ -30,7 +30,7 @@ namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_object_layer(const nlohmann::json& json,
-                                       ir::LayerData& layerData) -> ParseError
+                                       ir::LayerData&        layerData) -> ParseError
 {
   auto& objectLayerData = layerData.data.emplace<ir::ObjectLayerData>();
 
@@ -49,8 +49,8 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer_data(const nlohmann::json& json,
-                                          TileMatrix& tiles,
-                                          const usize columns) -> ParseError
+                                          TileMatrix&           tiles,
+                                          const usize           columns) -> ParseError
 {
   /* We only support the CSV tile encoding, which is the implicit default */
   if (auto encoding = as_string(json, "encoding")) {
@@ -84,9 +84,9 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer(const nlohmann::json& json,
-                                     ir::LayerData& layerData,
-                                     const usize rows,
-                                     const usize columns) -> ParseError
+                                     ir::LayerData&        layerData,
+                                     const usize           rows,
+                                     const usize           columns) -> ParseError
 {
   auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
 
@@ -131,10 +131,10 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_layer(const nlohmann::json& json,
-                                ir::LayerData& layerData,
-                                const usize index,
-                                const usize rows,
-                                const usize columns) -> ParseError
+                                ir::LayerData&        layerData,
+                                const usize           index,
+                                const usize           rows,
+                                const usize           columns) -> ParseError
 {
   layerData.index = index;
 
