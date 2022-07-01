@@ -29,10 +29,10 @@
 namespace tactile {
 
 /// A command for detaching a component from a context.
-class RemoveComponentCmd final : public ACommand
+class DetachComponentCmd final : public ACommand
 {
  public:
-  RemoveComponentCmd(Shared<core::IContext> context, const UUID& componentId);
+  DetachComponentCmd(Shared<core::IContext> context, const UUID& componentId);
 
   void undo() override;
 

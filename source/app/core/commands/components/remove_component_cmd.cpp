@@ -28,7 +28,7 @@
 namespace tactile {
 
 // TODO rename to DetachComponentCmd
-RemoveComponentCmd::RemoveComponentCmd(Shared<core::IContext> context,
+DetachComponentCmd::DetachComponentCmd(Shared<core::IContext> context,
                                        const UUID&            componentId)
     : ACommand{"Remove Component"}
     , mContext{std::move(context)}
@@ -39,20 +39,20 @@ RemoveComponentCmd::RemoveComponentCmd(Shared<core::IContext> context,
   }
 }
 
-void RemoveComponentCmd::undo()
+void DetachComponentCmd::undo()
 {
   auto& comps = mContext->get_comps();
   comps.add(mComponent.value());
   mComponent.reset();
 }
 
-void RemoveComponentCmd::redo()
+void DetachComponentCmd::redo()
 {
   auto& comps = mContext->get_comps();
   mComponent = comps.erase(mComponentId);
 }
 
-auto RemoveComponentCmd::get_name() const -> const char*
+auto DetachComponentCmd::get_name() const -> const char*
 {
   return "Remove Component";
 }
