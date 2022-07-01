@@ -24,7 +24,7 @@
 #include "core/common/uuid.hpp"
 #include "core/contexts/context.hpp"
 #include "core/fwd.hpp"
-#include "core/layer_type.hpp"
+#include "core/layers/layer_type.hpp"
 
 namespace tactile::core {
 

@@ -33,7 +33,7 @@
 #include "core/common/uuid.hpp"
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
-#include "core/layer_type.hpp"
+#include "core/layers/layer_type.hpp"
 #include "core/map.hpp"
 #include "core/tools/tool_manager.hpp"
 #include "core/tools/tool_type.hpp"

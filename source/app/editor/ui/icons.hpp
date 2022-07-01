@@ -22,7 +22,7 @@
 #include <IconsFontAwesome6.h>
 
 #include "core/common/ints.hpp"
-#include "core/layer_type.hpp"
+#include "core/layers/layer_type.hpp"
 #include "core/utils/texture_manager.hpp"
 
 /// \addtogroup gui
