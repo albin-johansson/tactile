@@ -44,7 +44,7 @@ void AEventLoop::start()
   on_startup();
 
   const auto& io = ImGui::GetIO();
-  auto& window = mCfg->window();
+  auto&       window = mCfg->window();
 
   ImVec2 prevScale{};
   while (mRunning) {

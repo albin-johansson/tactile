@@ -28,9 +28,7 @@ namespace tactile {
 
 class AppConfiguration;
 
-/**
- * \brief Handles the core event loop logic.
- */
+/// Handles the core event loop logic.
 class AEventLoop
 {
  public:
@@ -41,44 +39,34 @@ class AEventLoop
 
   virtual ~AEventLoop() noexcept = default;
 
-  /**
-   * \brief Starts running the event loop.
-   */
+  /// Starts running the event loop.
   void start();
 
-  /**
-   * \brief Stops the event loop.
-   */
+  /// Stops the event loop.
   void stop();
 
  protected:
-  /**
-   * \brief Called just before the event loop begins running.
-   */
+  /// Called just before the event loop begins running.
   virtual void on_startup() {}
 
-  /**
-   * \brief Called immediately after the event loop stops running.
-   */
+  /// Called immediately after the event loop stops running.
   virtual void on_shutdown() {}
 
   /**
-   * \brief Called once for each frame before `on_update()`.
+   * Called once for each frame before `on_update()`.
    *
-   * \details This function is useful to do tasks that cannot be done between calls to the
+   * This function is useful to do tasks that cannot be done between calls to the
    * NewFrame/EndFrame functions of Dear ImGui.
    */
   virtual void on_pre_update() {}
 
-  /**
-   * \brief Called once for each frame.
-   */
+  /// Called once for each frame.
   virtual void on_update() = 0;
 
   /**
-   * \brief Called for every pending event.
+   * Called for every pending event.
    *
-   * \note Quit events are handled automatically, so don't check for them in the
+   * Note, quit events are handled automatically, so don't check for them in the
    * overridden version.
    *
    * \param handler the event handler for the pending event.
@@ -87,8 +75,8 @@ class AEventLoop
 
  private:
   AppConfiguration* mCfg{}; /* Non-owning */
-  cen::keyboard mKeyboard;
-  bool mRunning{};
+  cen::keyboard     mKeyboard;
+  bool              mRunning{};
 
   void poll_events();
 };
