@@ -17,30 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "create_component_dialog.hpp"
+#pragma once
 
-#include <string>  // string
-
-#include <entt/signal/dispatcher.hpp>
-
-#include "core/events/component_events.hpp"
+#include "editor/ui/components/dialogs/component_name_dialog.hpp"
 
 namespace tactile::ui {
 
-CreateComponentDialog::CreateComponentDialog() : ComponentNameDialog{"Create Component"}
+/// Used to create new component definitions.
+class DefineComponentDialog final : public ComponentNameDialog
 {
-  set_accept_button_label("Create");
-  set_input_hint("Component name");
-}
+ public:
+  DefineComponentDialog();
 
-void CreateComponentDialog::show()
-{
-  ComponentNameDialog::show("");
-}
+  void show();
 
-void CreateComponentDialog::on_accept(entt::dispatcher& dispatcher)
-{
-  dispatcher.enqueue<DefineComponentEvent>(std::string{current_input()});
-}
+ protected:
+  void on_accept(entt::dispatcher& dispatcher) override;
+};
 
 }  // namespace tactile::ui

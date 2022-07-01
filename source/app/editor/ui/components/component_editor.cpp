@@ -37,7 +37,7 @@
 #include "editor/ui/common/centered_text.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/components/dialogs/create_component_attribute_dialog.hpp"
-#include "editor/ui/components/dialogs/create_component_dialog.hpp"
+#include "editor/ui/components/dialogs/define_component_dialog.hpp"
 #include "editor/ui/components/dialogs/rename_component_attribute_dialog.hpp"
 #include "editor/ui/components/dialogs/rename_component_dialog.hpp"
 #include "editor/ui/icons.hpp"
@@ -49,7 +49,7 @@ namespace tactile::ui {
 
 struct ComponentEditor::Data final
 {
-  CreateComponentDialog          create_component;
+  DefineComponentDialog          create_component;
   CreateComponentAttributeDialog create_component_attr;
   RenameComponentDialog          rename_component;
   RenameComponentAttributeDialog rename_component_attr;
