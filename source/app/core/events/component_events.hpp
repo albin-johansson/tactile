@@ -49,7 +49,7 @@ struct RenameComponentEvent final
 };
 
 /// Event for adding an attribute to a component definition.
-struct CreateComponentAttrEvent final
+struct AddComponentAttrEvent final
 {
   UUID        component_id{};  /// Target component definition.
   std::string attr_name;       /// Name of the new attribute.

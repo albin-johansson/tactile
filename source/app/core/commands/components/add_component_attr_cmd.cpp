@@ -17,19 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "create_component_attr_cmd.hpp"
+#include "add_component_attr_cmd.hpp"
 
 #include <utility>  // move
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-CreateComponentAttrCmd::CreateComponentAttrCmd(Shared<core::ComponentIndex> index,
-                                               const UUID&                  componentId,
-                                               std::string                  name)
+AddComponentAttrCmd::AddComponentAttrCmd(Shared<core::ComponentIndex> index,
+                                         const UUID&                  componentId,
+                                         std::string                  name)
     : ACommand{"Create Component Attribute"}
     , mIndex{std::move(index)}
     , mComponentId{componentId}
@@ -40,19 +39,19 @@ CreateComponentAttrCmd::CreateComponentAttrCmd(Shared<core::ComponentIndex> inde
   }
 }
 
-void CreateComponentAttrCmd::undo()
+void AddComponentAttrCmd::undo()
 {
   auto& definition = mIndex->at(mComponentId);
   definition.remove_attr(mName);
 }
 
-void CreateComponentAttrCmd::redo()
+void AddComponentAttrCmd::redo()
 {
   auto& definition = mIndex->at(mComponentId);
   definition.add_attr(mName);
 }
 
-auto CreateComponentAttrCmd::get_name() const -> const char*
+auto AddComponentAttrCmd::get_name() const -> const char*
 {
   return "Create Component Attribute";
 }

@@ -17,44 +17,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "create_component_attribute_dialog.hpp"
+#include "add_component_attr_dialog.hpp"
 
 #include <string>  // string
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"
 
 namespace tactile::ui {
 
-CreateComponentAttributeDialog::CreateComponentAttributeDialog()
-    : AStringInputDialog{"Create Attribute"}
+AddComponentAttrDialog::AddComponentAttrDialog() : AStringInputDialog{"Create Attribute"}
 {
   set_accept_button_label("Create");
   set_input_hint("Attribute name");
 }
 
-void CreateComponentAttributeDialog::show(const UUID& componentId)
+void AddComponentAttrDialog::show(const UUID& componentId)
 {
   mComponentId = componentId;
   AStringInputDialog::show("");
 }
 
-auto CreateComponentAttributeDialog::validate(const DocumentModel& model,
-                                              const std::string_view input) const -> bool
+auto AddComponentAttrDialog::validate(const DocumentModel&   model,
+                                      const std::string_view input) const -> bool
 {
   const auto& document = model.require_active_document();
   const auto  index = document.get_component_index();
   return !input.empty() && index && !index->at(mComponentId).has_attr(input);
 }
 
-void CreateComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
+void AddComponentAttrDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<CreateComponentAttrEvent>(mComponentId,
-                                               std::string{current_input()});
+  dispatcher.enqueue<AddComponentAttrEvent>(mComponentId, std::string{current_input()});
 }
 
 }  // namespace tactile::ui

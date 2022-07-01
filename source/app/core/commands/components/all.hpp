@@ -19,8 +19,8 @@
 
 #pragma once
 
+#include "core/commands/components/add_component_attr_cmd.hpp"
 #include "core/commands/components/attach_component_cmd.hpp"
-#include "core/commands/components/create_component_attr_cmd.hpp"
 #include "core/commands/components/define_component_cmd.hpp"
 #include "core/commands/components/duplicate_component_attr_cmd.hpp"
 #include "core/commands/components/remove_component_attr_cmd.hpp"

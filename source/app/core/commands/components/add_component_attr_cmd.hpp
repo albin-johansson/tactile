@@ -29,12 +29,12 @@
 namespace tactile {
 
 /// A command for adding an attribute to a component definition.
-class CreateComponentAttrCmd final : public ACommand
+class AddComponentAttrCmd final : public ACommand
 {
  public:
-  CreateComponentAttrCmd(Shared<core::ComponentIndex> index,
-                         const UUID&                  componentId,
-                         std::string                  name);
+  AddComponentAttrCmd(Shared<core::ComponentIndex> index,
+                      const UUID&                  componentId,
+                      std::string                  name);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class CreateComponentAttrCmd final : public ACommand
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
-    return CommandId::CreateComponentAttribute;
+    return CommandId::AddComponentAttr;
   }
 
  private:

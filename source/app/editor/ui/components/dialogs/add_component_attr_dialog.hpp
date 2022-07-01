@@ -24,10 +24,10 @@
 
 namespace tactile::ui {
 
-class CreateComponentAttributeDialog final : public AStringInputDialog
+class AddComponentAttrDialog final : public AStringInputDialog
 {
  public:
-  CreateComponentAttributeDialog();
+  AddComponentAttrDialog();
 
   void show(const UUID& componentId);
 

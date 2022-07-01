@@ -70,13 +70,11 @@ class Application final : AEventLoop
   void on_mouse_wheel_event(const cen::mouse_wheel_event& event);
 
   void on_undo();
-
   void on_redo();
 
   void on_set_command_capacity(const SetCommandCapacityEvent& event);
 
   void on_save();
-
   void on_save_as(const SaveAsEvent& event);
 
   void on_open_save_as_dialog();
@@ -86,7 +84,6 @@ class Application final : AEventLoop
   void on_create_map(const CreateMapEvent& event);
 
   void on_close_document(const CloseDocumentEvent& event);
-
   void on_open_document(const OpenDocumentEvent& event);
 
   void on_open_map(const OpenMapEvent& event);
@@ -96,27 +93,18 @@ class Application final : AEventLoop
   void on_select_tool(const SelectToolEvent& event);
 
   void on_tool_pressed(const ToolPressedEvent& event);
-
   void on_tool_dragged(const ToolDraggedEvent& event);
-
   void on_tool_released(const ToolReleasedEvent& event);
-
   void on_tool_entered();
-
   void on_tool_exited();
 
   void on_stamp_sequence(StampSequenceEvent event);
-
   void on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event);
-
   void on_eraser_sequence(EraserSequenceEvent event);
-
   void on_flood(const FloodEvent& event);
 
   void on_add_rectangle(const AddRectangleEvent& event);
-
   void on_add_ellipse(const AddEllipseEvent& event);
-
   void on_add_point(const AddPointEvent& event);
 
   void on_update_viewport_limits(const UpdateViewportLimitsEvent& event);
@@ -128,27 +116,19 @@ class Application final : AEventLoop
   void on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event);
 
   void on_pan_left();
-
   void on_pan_right();
-
   void on_pan_up();
-
   void on_pan_down();
 
   void on_increase_zoom();
-
   void on_decrease_zoom();
-
   void on_reset_zoom();
 
   void on_reset_font_size();
-
   void on_increase_font_size();
-
   void on_decrease_font_size();
 
   void on_load_tileset(const LoadTilesetEvent& event);
-
   void on_remove_tileset(const RemoveTilesetEvent& event);
 
   void on_select_tileset(const SelectTilesetEvent& event);
@@ -158,11 +138,8 @@ class Application final : AEventLoop
   void on_set_tileset_name(const SetTilesetNameEvent& event);
 
   void on_add_row();
-
   void on_add_column();
-
   void on_remove_row();
-
   void on_remove_column();
 
   void on_resize_map(const ResizeMapEvent& event);
@@ -172,31 +149,20 @@ class Application final : AEventLoop
   void on_open_resize_map_dialog();
 
   void on_add_layer(const AddLayerEvent& event);
-
   void on_remove_layer(const RemoveLayerEvent& event);
-
   void on_select_layer(const SelectLayerEvent& event);
-
   void on_move_layer_up(const MoveLayerUpEvent& event);
-
   void on_move_layer_down(const MoveLayerDownEvent& event);
-
   void on_duplicate_layer(const DuplicateLayerEvent& event);
-
   void on_set_layer_opacity(const SetLayerOpacityEvent& event);
-
   void on_set_layer_visible(const SetLayerVisibleEvent& event);
+  void on_rename_layer(const RenameLayerEvent& event);
 
   void on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event);
 
-  void on_rename_layer(const RenameLayerEvent& event);
-
   void on_set_object_name(const SetObjectNameEvent& event);
-
   void on_move_object(const MoveObjectEvent& event);
-
   void on_set_object_visible(const SetObjectVisibleEvent& event);
-
   void on_set_object_tag(const SetObjectTagEvent& event);
 
   void on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event);
@@ -207,13 +173,9 @@ class Application final : AEventLoop
       const ShowChangePropertyTypeDialogEvent& event);
 
   void on_add_property(const AddPropertyEvent& event);
-
   void on_remove_property(const RemovePropertyEvent& event);
-
   void on_rename_property(const RenamePropertyEvent& event);
-
   void on_update_property(const UpdatePropertyEvent& event);
-
   void on_change_property_type(const ChangePropertyTypeEvent& event);
 
   void on_inspect_context(const InspectContextEvent& event);
@@ -221,29 +183,17 @@ class Application final : AEventLoop
   void on_open_component_editor();
 
   void on_define_component(const DefineComponentEvent& event);
-
   void on_undef_component(const UndefComponentEvent& event);
-
   void on_rename_component(const RenameComponentEvent& event);
-
-  void on_create_component_attr(const CreateComponentAttrEvent& event);
-
+  void on_add_component_attr(const AddComponentAttrEvent& event);
   void on_remove_component_attr(const RemoveComponentAttrEvent& event);
-
   void on_rename_component_attr(const RenameComponentAttrEvent& event);
-
   void on_duplicate_component_attr(const DuplicateComponentAttrEvent& event);
-
   void on_set_component_attr_type(const SetComponentAttrTypeEvent& event);
-
   void on_update_component_def_attr(const UpdateComponentDefAttrEvent& event);
-
   void on_attach_component(const AttachComponentEvent& event);
-
   void on_detach_component(const DetachComponentEvent& event);
-
   void on_update_component(const UpdateComponentEvent& event);
-
   void on_reset_component_values(const ResetComponentValuesEvent& event);
 
   void on_toggle_ui();

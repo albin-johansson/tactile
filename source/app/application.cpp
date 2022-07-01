@@ -269,7 +269,7 @@ void Application::subscribe_to_events()
   d.sink<DefineComponentEvent>().connect<&Self::on_define_component>(this);
   d.sink<UndefComponentEvent>().connect<&Self::on_undef_component>(this);
   d.sink<RenameComponentEvent>().connect<&Self::on_rename_component>(this);
-  d.sink<CreateComponentAttrEvent>().connect<&Self::on_create_component_attr>(this);
+  d.sink<AddComponentAttrEvent>().connect<&Self::on_add_component_attr>(this);
   d.sink<RemoveComponentAttrEvent>().connect<&Self::on_remove_component_attr>(this);
   d.sink<RenameComponentAttrEvent>().connect<&Self::on_rename_component_attr>(this);
   d.sink<DuplicateComponentAttrEvent>().connect<&Self::on_duplicate_component_attr>(this);
@@ -950,9 +950,11 @@ void Application::on_rename_component(const RenameComponentEvent& event)
   }
 }
 
-void Application::on_create_component_attr(const CreateComponentAttrEvent& event)
+void Application::on_add_component_attr(const AddComponentAttrEvent& event)
 {
-  // TODO _execute<CreateComponentAttrCmd>(mData->model, event.id, event.name);
+  if (auto* document = active_document()) {
+    document->add_component_attribute(event.component_id, event.attr_name);
+  }
 }
 
 void Application::on_remove_component_attr(const RemoveComponentAttrEvent& event)
