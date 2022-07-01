@@ -22,7 +22,6 @@
 #include <string>  // string
 
 #include "core/attribute.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/uuid.hpp"
 
 namespace tactile {
@@ -42,76 +41,86 @@ struct UndefComponentEvent final
   UUID component_id{};  /// Target component to remove.
 };
 
-/// Event for renaming an existing component.
-struct RenameComponentDefEvent final
+/// Event for renaming an existing component definition.
+struct RenameComponentEvent final
 {
   UUID        component_id{};  /// Target component to rename.
   std::string name;            /// The new component name.
 };
 
+/// Event for adding an attribute to a component definition.
 struct CreateComponentAttrEvent final
 {
-  UUID        component_id{};
-  std::string name;
+  UUID        component_id{};  /// Target component definition.
+  std::string attr_name;       /// Name of the new attribute.
 };
 
+/// Event for removing an attribute from a component definition.
 struct RemoveComponentAttrEvent final
 {
-  UUID        component_id{};
-  std::string name;
+  UUID        component_id{};  /// Target component definition.
+  std::string attr_name;       /// Name of the attribute to remove.
 };
 
+/// Event for changing the name of an attribute in a component definition.
 struct RenameComponentAttrEvent final
 {
-  UUID        component_id{};
-  std::string previous;
-  std::string updated;
+  UUID        component_id{};  /// Target component definition.
+  std::string current_name;    /// Current attribute name.
+  std::string updated_name;    /// Requested new attribute name.
 };
 
+/// Event for duplicating an existing attribute in a component definition.
 struct DuplicateComponentAttrEvent final
 {
-  UUID        component_id{};
-  std::string attribute;
+  UUID        component_id{};  /// Target component definition.
+  std::string attr_name;       /// Name of attribute to duplicate.
 };
 
+/// Event for changing the type of an attribute in a component definition.
 struct SetComponentAttrTypeEvent final
 {
-  UUID          component_id{};
-  std::string   attribute;
-  AttributeType type{};
+  UUID          component_id{};  /// Target component definition.
+  std::string   attr_name;       /// Name of target attribute.
+  AttributeType type{};          /// New attribute type.
 };
 
+/// Event for updating the default value of an attribute in a component definition.
 struct UpdateComponentDefAttrEvent final
 {
-  UUID        component_id{};
-  std::string attribute;
-  Attribute value;
+  UUID        component_id{};  /// Target component definition.
+  std::string attr_name;       /// Name of target attribute.
+  Attribute   value;           /// New default attribute value.
 };
 
+/// Event for adding a component to a context.
 struct AttachComponentEvent final
 {
-  UUID context_id{};    /// The target context.
-  UUID component_id{};  /// A component definition ID.
+  UUID context_id{};    /// Target context.
+  UUID component_id{};  /// Definition of the component to attach.
 };
 
+/// Event for removing a component from a context.
 struct DetachComponentEvent final
 {
-  ContextID context{};
-  ComponentID component{};
+  UUID context_id{};    /// Target context.
+  UUID component_id{};  /// Type of the component to detach.
 };
 
+/// Event for restoring the default attribute values in an attached component.
 struct ResetComponentValuesEvent final
 {
-  ContextID context{};
-  ComponentID component{};
+  UUID context_id{};    /// Target context.
+  UUID component_id{};  /// Type of the component to reset.
 };
 
+/// Event for updating the value of an attribute in an attached component.
 struct UpdateComponentEvent final
 {
-  ContextID context{};
-  ComponentID component{};
-  std::string attribute;
-  Attribute value;
+  UUID        context_id{};    /// Target context.
+  UUID        component_id{};  /// Type of the component to modify.
+  std::string attr_name;       /// Name of target attribute.
+  Attribute   value;           /// New attribute value.
 };
 
 }  // namespace tactile
