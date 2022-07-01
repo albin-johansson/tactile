@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "application.hpp"
+#include "app.hpp"
 
 #include <utility>  // move
 
@@ -73,7 +73,7 @@ struct WidgetShowState final
   bool prev_show_component_dock : 1 {};
 };
 
-struct Application::Data final
+struct App::Data final
 {
   AppConfiguration* config{}; /* Non-owning */
   entt::dispatcher  dispatcher;
@@ -83,7 +83,7 @@ struct Application::Data final
   bool              reload_fonts : 1 {};
 };
 
-Application::Application(AppConfiguration* configuration)
+App::App(AppConfiguration* configuration)
     : AEventLoop{configuration}
     , mData{std::make_unique<Data>()}
 {
@@ -94,9 +94,9 @@ Application::Application(AppConfiguration* configuration)
   ui::load_icons(mData->textures);
 }
 
-Application::~Application() noexcept = default;
+App::~App() noexcept = default;
 
-void Application::on_startup()
+void App::on_startup()
 {
   io::load_file_history();
 
@@ -108,7 +108,7 @@ void Application::on_startup()
   window.show();
 }
 
-void Application::on_shutdown()
+void App::on_shutdown()
 {
   save_current_files_to_history();
   io::save_preferences();
@@ -119,7 +119,7 @@ void Application::on_shutdown()
   window.hide();
 }
 
-void Application::on_pre_update()
+void App::on_pre_update()
 {
   if (mData->reload_fonts) {
     ui::reload_fonts();
@@ -127,7 +127,7 @@ void Application::on_pre_update()
   }
 }
 
-void Application::on_update()
+void App::on_update()
 {
   auto& data = *mData;
   data.dispatcher.update();
@@ -135,7 +135,7 @@ void Application::on_update()
   ui::update_widgets(data.model, data.dispatcher);
 }
 
-void Application::on_event(const cen::event_handler& handler)
+void App::on_event(const cen::event_handler& handler)
 {
   switch (handler.type().value()) {
     case cen::event_type::key_up:
@@ -153,20 +153,20 @@ void Application::on_event(const cen::event_handler& handler)
   }
 }
 
-auto Application::active_document() -> ADocument*
+auto App::active_document() -> ADocument*
 {
   return mData->model.active_document();
 }
 
-auto Application::active_map_document() -> MapDocument*
+auto App::active_map_document() -> MapDocument*
 {
   return mData->model.active_map();
 }
 
-void Application::subscribe_to_events()
+void App::subscribe_to_events()
 {
   // clang-format off
-  using Self = Application;
+  using Self = App;
   auto& d = get_dispatcher();
 
   d.sink<UndoEvent>().connect<&Self::on_undo>(this);
@@ -287,12 +287,12 @@ void Application::subscribe_to_events()
   // clang-format on
 }
 
-auto Application::get_dispatcher() -> entt::dispatcher&
+auto App::get_dispatcher() -> entt::dispatcher&
 {
   return mData->dispatcher;
 }
 
-void Application::save_current_files_to_history()
+void App::save_current_files_to_history()
 {
   mData->model.each([this](const UUID& id) {
     const auto document = mData->model.get_document(id);
@@ -302,7 +302,7 @@ void Application::save_current_files_to_history()
   });
 }
 
-void Application::on_keyboard_event(cen::keyboard_event event)
+void App::on_keyboard_event(cen::keyboard_event event)
 {
   /* We don't care about these modifiers, they are just noise */
   event.set_modifier(cen::key_mod::caps, false);
@@ -313,7 +313,7 @@ void Application::on_keyboard_event(cen::keyboard_event event)
   update_shortcuts(data.model, event, data.dispatcher);
 }
 
-void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
+void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
   /* There doesn't seem to be a good way to handle mouse "wheel" events using the public
      ImGui APIs. Otherwise, it would be nicer to keep this code closer to the actual
@@ -340,7 +340,7 @@ void Application::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
   }
 }
 
-void Application::on_undo()
+void App::on_undo()
 {
   if (auto* document = active_document()) {
     auto& commands = document->get_history();
@@ -348,7 +348,7 @@ void Application::on_undo()
   }
 }
 
-void Application::on_redo()
+void App::on_redo()
 {
   if (auto* document = active_document()) {
     auto& commands = document->get_history();
@@ -356,12 +356,12 @@ void Application::on_redo()
   }
 }
 
-void Application::on_set_command_capacity(const SetCommandCapacityEvent& event)
+void App::on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
   mData->model.set_command_capacity(event.capacity);
 }
 
-void Application::on_save()
+void App::on_save()
 {
   // TODO ability to save tileset documents
   if (auto* document = active_map_document()) {
@@ -377,7 +377,7 @@ void Application::on_save()
   }
 }
 
-void Application::on_save_as(const SaveAsEvent& event)
+void App::on_save_as(const SaveAsEvent& event)
 {
   if (auto* document = active_document()) {
     document->set_path(event.path);
@@ -385,21 +385,21 @@ void Application::on_save_as(const SaveAsEvent& event)
   }
 }
 
-void Application::on_open_save_as_dialog()
+void App::on_open_save_as_dialog()
 {
   if (active_document() != nullptr) {
     ui::show_save_as_dialog(mData->dispatcher);
   }
 }
 
-void Application::on_show_map_properties()
+void App::on_show_map_properties()
 {
   if (auto* document = active_map_document()) {
     document->select_context(document->get_map().get_uuid());
   }
 }
 
-void Application::on_create_map(const CreateMapEvent& event)
+void App::on_create_map(const CreateMapEvent& event)
 {
   const auto id = mData->model.add_map({event.tile_width, event.tile_height},
                                        event.row_count,
@@ -407,7 +407,7 @@ void Application::on_create_map(const CreateMapEvent& event)
   mData->model.select_document(id);
 }
 
-void Application::on_close_document(const CloseDocumentEvent& event)
+void App::on_close_document(const CloseDocumentEvent& event)
 {
   const auto document = mData->model.get_document(event.id);
 
@@ -418,13 +418,13 @@ void Application::on_close_document(const CloseDocumentEvent& event)
   mData->model.close_document(event.id);
 }
 
-void Application::on_open_document(const OpenDocumentEvent& event)
+void App::on_open_document(const OpenDocumentEvent& event)
 {
   mData->model.open_document(event.document_id);
 }
 
 // TODO consider renaming event
-void Application::on_open_map(const OpenMapEvent& event)
+void App::on_open_map(const OpenMapEvent& event)
 {
   if (mData->model.has_document_with_path(event.path)) {
     const auto id = mData->model.get_id_for_path(event.path);
@@ -449,12 +449,12 @@ void Application::on_open_map(const OpenMapEvent& event)
   }
 }
 
-void Application::on_select_document(const SelectDocumentEvent& event)
+void App::on_select_document(const SelectDocumentEvent& event)
 {
   mData->model.select_document(event.id);
 }
 
-void Application::on_select_tool(const SelectToolEvent& event)
+void App::on_select_tool(const SelectToolEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
@@ -462,7 +462,7 @@ void Application::on_select_tool(const SelectToolEvent& event)
   }
 }
 
-void Application::on_tool_pressed(const ToolPressedEvent& event)
+void App::on_tool_pressed(const ToolPressedEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
@@ -470,7 +470,7 @@ void Application::on_tool_pressed(const ToolPressedEvent& event)
   }
 }
 
-void Application::on_tool_dragged(const ToolDraggedEvent& event)
+void App::on_tool_dragged(const ToolDraggedEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
@@ -478,7 +478,7 @@ void Application::on_tool_dragged(const ToolDraggedEvent& event)
   }
 }
 
-void Application::on_tool_released(const ToolReleasedEvent& event)
+void App::on_tool_released(const ToolReleasedEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
@@ -486,7 +486,7 @@ void Application::on_tool_released(const ToolReleasedEvent& event)
   }
 }
 
-void Application::on_tool_entered()
+void App::on_tool_entered()
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
@@ -494,7 +494,7 @@ void Application::on_tool_entered()
   }
 }
 
-void Application::on_tool_exited()
+void App::on_tool_exited()
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
@@ -502,7 +502,7 @@ void Application::on_tool_exited()
   }
 }
 
-void Application::on_stamp_sequence(StampSequenceEvent event)
+void App::on_stamp_sequence(StampSequenceEvent event)
 {
   if (auto* document = active_map_document()) {
     document->register_stamp_sequence(event.layer_id,
@@ -511,7 +511,7 @@ void Application::on_stamp_sequence(StampSequenceEvent event)
   }
 }
 
-void Application::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event)
+void App::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
@@ -519,42 +519,42 @@ void Application::on_set_stamp_randomizer_event(const SetStampRandomizerEvent& e
   }
 }
 
-void Application::on_eraser_sequence(EraserSequenceEvent event)
+void App::on_eraser_sequence(EraserSequenceEvent event)
 {
   if (auto* document = active_map_document()) {
     document->register_eraser_sequence(event.layer_id, std::move(event.old_state));
   }
 }
 
-void Application::on_flood(const FloodEvent& event)
+void App::on_flood(const FloodEvent& event)
 {
   if (auto* document = active_map_document()) {
     document->flood(event.layer_id, event.origin, event.replacement);
   }
 }
 
-void Application::on_add_rectangle(const AddRectangleEvent& event)
+void App::on_add_rectangle(const AddRectangleEvent& event)
 {
   if (auto* document = active_map_document()) {
     document->add_rectangle(event.layer_id, event.pos, event.size);
   }
 }
 
-void Application::on_add_ellipse(const AddEllipseEvent& event)
+void App::on_add_ellipse(const AddEllipseEvent& event)
 {
   if (auto* document = active_map_document()) {
     document->add_ellipse(event.layer_id, event.pos, event.size);
   }
 }
 
-void Application::on_add_point(const AddPointEvent& event)
+void App::on_add_point(const AddPointEvent& event)
 {
   if (auto* document = active_map_document()) {
     document->add_point(event.layer_id, event.pos);
   }
 }
 
-void Application::on_update_viewport_limits(const UpdateViewportLimitsEvent& event)
+void App::on_update_viewport_limits(const UpdateViewportLimitsEvent& event)
 {
   // TODO respect specified viewport
   if (auto* document = active_document()) {
@@ -563,8 +563,7 @@ void Application::on_update_viewport_limits(const UpdateViewportLimitsEvent& eve
   }
 }
 
-void Application::on_update_tileset_viewport_limits(
-    const UpdateTilesetViewportLimitsEvent& event)
+void App::on_update_tileset_viewport_limits(const UpdateTilesetViewportLimitsEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
@@ -572,7 +571,7 @@ void Application::on_update_tileset_viewport_limits(
   }
 }
 
-void Application::on_offset_document_viewport(const OffsetDocumentViewportEvent& event)
+void App::on_offset_document_viewport(const OffsetDocumentViewportEvent& event)
 {
   // FIXME possible crash if tileset is removed when offsetting viewport
   if (auto* document = active_document()) {
@@ -581,7 +580,7 @@ void Application::on_offset_document_viewport(const OffsetDocumentViewportEvent&
   }
 }
 
-void Application::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
+void App::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
@@ -589,7 +588,7 @@ void Application::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& e
   }
 }
 
-void Application::on_pan_left()
+void App::on_pan_left()
 {
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
@@ -597,7 +596,7 @@ void Application::on_pan_left()
   }
 }
 
-void Application::on_pan_right()
+void App::on_pan_right()
 {
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
@@ -605,7 +604,7 @@ void Application::on_pan_right()
   }
 }
 
-void Application::on_pan_up()
+void App::on_pan_up()
 {
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
@@ -613,7 +612,7 @@ void Application::on_pan_up()
   }
 }
 
-void Application::on_pan_down()
+void App::on_pan_down()
 {
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
@@ -621,7 +620,7 @@ void Application::on_pan_down()
   }
 }
 
-void Application::on_increase_zoom()
+void App::on_increase_zoom()
 {
   if (auto* document = active_document()) {
     auto&      viewport = document->get_viewport();
@@ -630,7 +629,7 @@ void Application::on_increase_zoom()
   }
 }
 
-void Application::on_decrease_zoom()
+void App::on_decrease_zoom()
 {
   if (auto* document = active_document()) {
     auto&      viewport = document->get_viewport();
@@ -639,7 +638,7 @@ void Application::on_decrease_zoom()
   }
 }
 
-void Application::on_reset_zoom()
+void App::on_reset_zoom()
 {
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
@@ -647,13 +646,13 @@ void Application::on_reset_zoom()
   }
 }
 
-void Application::on_reset_font_size()
+void App::on_reset_font_size()
 {
   io::get_preferences().set_font_size(ui::get_default_font_size());
   mData->reload_fonts = true;
 }
 
-void Application::on_increase_font_size()
+void App::on_increase_font_size()
 {
   auto& prefs = io::get_preferences();
 
@@ -663,7 +662,7 @@ void Application::on_increase_font_size()
   mData->reload_fonts = true;
 }
 
-void Application::on_decrease_font_size()
+void App::on_decrease_font_size()
 {
   auto& prefs = io::get_preferences();
 
@@ -673,7 +672,7 @@ void Application::on_decrease_font_size()
   mData->reload_fonts = true;
 }
 
-void Application::on_load_tileset(const LoadTilesetEvent& event)
+void App::on_load_tileset(const LoadTilesetEvent& event)
 {
   if (auto info = mData->textures.load(event.path)) {
     mData->model.add_tileset({.texture_path = info->path,
@@ -686,12 +685,12 @@ void Application::on_load_tileset(const LoadTilesetEvent& event)
   }
 }
 
-void Application::on_remove_tileset(const RemoveTilesetEvent& event)
+void App::on_remove_tileset(const RemoveTilesetEvent& event)
 {
   mData->model.remove_tileset(event.tileset_id);
 }
 
-void Application::on_select_tileset(const SelectTilesetEvent& event)
+void App::on_select_tileset(const SelectTilesetEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tilesets = document->get_map().get_tilesets();
@@ -699,7 +698,7 @@ void Application::on_select_tileset(const SelectTilesetEvent& event)
   }
 }
 
-void Application::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
+void App::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tilesets = document->get_map().get_tilesets();
@@ -711,56 +710,56 @@ void Application::on_set_tileset_selection(const SetTilesetSelectionEvent& event
   }
 }
 
-void Application::on_set_tileset_name(const SetTilesetNameEvent& event)
+void App::on_set_tileset_name(const SetTilesetNameEvent& event)
 {
   if (auto* document = active_map_document()) {
     // TODO _execute<RenameTilesetCmd>(mData->model, event.id, event.name);
   }
 }
 
-void Application::on_add_row()
+void App::on_add_row()
 {
   if (auto* map = active_map_document()) {
     map->add_row();
   }
 }
 
-void Application::on_add_column()
+void App::on_add_column()
 {
   if (auto* map = active_map_document()) {
     map->add_column();
   }
 }
 
-void Application::on_remove_row()
+void App::on_remove_row()
 {
   if (auto* map = active_map_document()) {
     map->remove_row();
   }
 }
 
-void Application::on_remove_column()
+void App::on_remove_column()
 {
   if (auto* map = active_map_document()) {
     map->remove_column();
   }
 }
 
-void Application::on_resize_map(const ResizeMapEvent& event)
+void App::on_resize_map(const ResizeMapEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->resize(event.row_count, event.col_count);
   }
 }
 
-void Application::on_fix_tiles_in_map()
+void App::on_fix_tiles_in_map()
 {
   if (auto* map = active_map_document()) {
     map->fix_tiles();
   }
 }
 
-void Application::on_open_resize_map_dialog()
+void App::on_open_resize_map_dialog()
 {
   if (auto* document = active_map_document()) {
     const auto& map = document->get_map();
@@ -768,21 +767,21 @@ void Application::on_open_resize_map_dialog()
   }
 }
 
-void Application::on_add_layer(const AddLayerEvent& event)
+void App::on_add_layer(const AddLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->add_layer(event.type);
   }
 }
 
-void Application::on_remove_layer(const RemoveLayerEvent& event)
+void App::on_remove_layer(const RemoveLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->remove_layer(event.id);
   }
 }
 
-void Application::on_select_layer(const SelectLayerEvent& event)
+void App::on_select_layer(const SelectLayerEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& map = document->get_map();
@@ -790,181 +789,180 @@ void Application::on_select_layer(const SelectLayerEvent& event)
   }
 }
 
-void Application::on_move_layer_up(const MoveLayerUpEvent& event)
+void App::on_move_layer_up(const MoveLayerUpEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->move_layer_up(event.id);
   }
 }
 
-void Application::on_move_layer_down(const MoveLayerDownEvent& event)
+void App::on_move_layer_down(const MoveLayerDownEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->move_layer_down(event.id);
   }
 }
 
-void Application::on_duplicate_layer(const DuplicateLayerEvent& event)
+void App::on_duplicate_layer(const DuplicateLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->duplicate_layer(event.id);
   }
 }
 
-void Application::on_set_layer_opacity(const SetLayerOpacityEvent& event)
+void App::on_set_layer_opacity(const SetLayerOpacityEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->set_layer_opacity(event.id, event.opacity);
   }
 }
 
-void Application::on_set_layer_visible(const SetLayerVisibleEvent& event)
+void App::on_set_layer_visible(const SetLayerVisibleEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->set_layer_visible(event.id, event.visible);
   }
 }
 
-void Application::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
+void App::on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
 {
   ui::show_rename_layer_dialog(event.id);
 }
 
-void Application::on_rename_layer(const RenameLayerEvent& event)
+void App::on_rename_layer(const RenameLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->rename_layer(event.id, event.name);
   }
 }
 
-void Application::on_set_object_name(const SetObjectNameEvent& event)
+void App::on_set_object_name(const SetObjectNameEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->set_object_name(event.layer_id, event.object_id, event.name);
   }
 }
 
-void Application::on_move_object(const MoveObjectEvent& event)
+void App::on_move_object(const MoveObjectEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->move_object(event.layer_id, event.object_id, event.previous, event.updated);
   }
 }
 
-void Application::on_set_object_visible(const SetObjectVisibleEvent& event)
+void App::on_set_object_visible(const SetObjectVisibleEvent& event)
 {
   if (auto* document = active_map_document()) {
     document->set_object_visible(event.layer_id, event.object_id, event.visible);
   }
 }
 
-void Application::on_set_object_tag(const SetObjectTagEvent& event)
+void App::on_set_object_tag(const SetObjectTagEvent& event)
 {
   if (auto* document = active_map_document()) {
     document->set_object_tag(event.layer_id, event.object_id, event.tag);
   }
 }
 
-void Application::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
+void App::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
 {
   ui::open_object_context_menu();
 }
 
-void Application::on_show_rename_property_dialog(
-    const ShowRenamePropertyDialogEvent& event)
+void App::on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)
 {
   ui::show_rename_property_dialog(event.name);
 }
 
-void Application::on_show_change_property_type_dialog(
+void App::on_show_change_property_type_dialog(
     const ShowChangePropertyTypeDialogEvent& event)
 {
   ui::show_change_property_type_dialog(event.name, event.current_type);
 }
 
-void Application::on_add_property(const AddPropertyEvent& event)
+void App::on_add_property(const AddPropertyEvent& event)
 {
   if (auto* document = active_document()) {
     document->add_property(event.context_id, event.name, event.type);
   }
 }
 
-void Application::on_remove_property(const RemovePropertyEvent& event)
+void App::on_remove_property(const RemovePropertyEvent& event)
 {
   if (auto* document = active_document()) {
     document->remove_property(event.context_id, event.name);
   }
 }
 
-void Application::on_rename_property(const RenamePropertyEvent& event)
+void App::on_rename_property(const RenamePropertyEvent& event)
 {
   if (auto* document = active_document()) {
     document->rename_property(event.context_id, event.old_name, event.new_name);
   }
 }
 
-void Application::on_update_property(const UpdatePropertyEvent& event)
+void App::on_update_property(const UpdatePropertyEvent& event)
 {
   if (auto* document = active_document()) {
     document->update_property(event.context_id, event.name, event.value);
   }
 }
 
-void Application::on_change_property_type(const ChangePropertyTypeEvent& event)
+void App::on_change_property_type(const ChangePropertyTypeEvent& event)
 {
   if (auto* document = active_document()) {
     document->change_property_type(event.context_id, event.name, event.type);
   }
 }
 
-void Application::on_inspect_context(const InspectContextEvent& event)
+void App::on_inspect_context(const InspectContextEvent& event)
 {
   if (auto* document = active_document()) {
     document->select_context(event.context_id);
   }
 }
 
-void Application::on_open_component_editor()
+void App::on_open_component_editor()
 {
   ui::show_component_editor(mData->model);
 }
 
-void Application::on_define_component(const DefineComponentEvent& event)
+void App::on_define_component(const DefineComponentEvent& event)
 {
   if (auto* document = active_document()) {
     document->define_component(event.name);
   }
 }
 
-void Application::on_undef_component(const UndefComponentEvent& event)
+void App::on_undef_component(const UndefComponentEvent& event)
 {
   if (auto* document = active_document()) {
     document->undef_component(event.component_id);
   }
 }
 
-void Application::on_rename_component(const RenameComponentEvent& event)
+void App::on_rename_component(const RenameComponentEvent& event)
 {
   if (auto* document = active_document()) {
     document->rename_component(event.component_id, event.name);
   }
 }
 
-void Application::on_add_component_attr(const AddComponentAttrEvent& event)
+void App::on_add_component_attr(const AddComponentAttrEvent& event)
 {
   if (auto* document = active_document()) {
     document->add_component_attribute(event.component_id, event.attr_name);
   }
 }
 
-void Application::on_remove_component_attr(const RemoveComponentAttrEvent& event)
+void App::on_remove_component_attr(const RemoveComponentAttrEvent& event)
 {
   if (auto* document = active_document()) {
     document->remove_component_attribute(event.component_id, event.attr_name);
   }
 }
 
-void Application::on_rename_component_attr(const RenameComponentAttrEvent& event)
+void App::on_rename_component_attr(const RenameComponentAttrEvent& event)
 {
   if (auto* document = active_document()) {
     document->rename_component_attribute(event.component_id,
@@ -973,14 +971,14 @@ void Application::on_rename_component_attr(const RenameComponentAttrEvent& event
   }
 }
 
-void Application::on_duplicate_component_attr(const DuplicateComponentAttrEvent& event)
+void App::on_duplicate_component_attr(const DuplicateComponentAttrEvent& event)
 {
   if (auto* document = active_document()) {
     document->duplicate_component_attribute(event.component_id, event.attr_name);
   }
 }
 
-void Application::on_set_component_attr_type(const SetComponentAttrTypeEvent& event)
+void App::on_set_component_attr_type(const SetComponentAttrTypeEvent& event)
 {
   if (auto* document = active_document()) {
     document->set_component_attribute_type(event.component_id,
@@ -989,28 +987,28 @@ void Application::on_set_component_attr_type(const SetComponentAttrTypeEvent& ev
   }
 }
 
-void Application::on_update_component(const UpdateComponentEvent& event)
+void App::on_update_component(const UpdateComponentEvent& event)
 {
   if (auto* document = active_document()) {
     document->update_component(event.component_id, event.attr_name, event.value);
   }
 }
 
-void Application::on_attach_component(const AttachComponentEvent& event)
+void App::on_attach_component(const AttachComponentEvent& event)
 {
   if (auto* document = active_document()) {
     document->attach_component(event.context_id, event.component_id);
   }
 }
 
-void Application::on_detach_component(const DetachComponentEvent& event)
+void App::on_detach_component(const DetachComponentEvent& event)
 {
   if (auto* document = active_document()) {
     document->detach_component(event.context_id, event.component_id);
   }
 }
 
-void Application::on_update_attached_component(const UpdateAttachedComponentEvent& event)
+void App::on_update_attached_component(const UpdateAttachedComponentEvent& event)
 {
   if (auto* document = active_document()) {
     document->update_attached_component(event.context_id,
@@ -1020,14 +1018,14 @@ void Application::on_update_attached_component(const UpdateAttachedComponentEven
   }
 }
 
-void Application::on_reset_attached_component(const ResetAttachedComponentEvent& event)
+void App::on_reset_attached_component(const ResetAttachedComponentEvent& event)
 {
   if (auto* document = active_document()) {
     document->reset_attached_component(event.context_id, event.component_id);
   }
 }
 
-void Application::on_toggle_ui()
+void App::on_toggle_ui()
 {
   if (ImGui::GetTopMostPopupModal() != nullptr) {
     return;
@@ -1063,12 +1061,12 @@ void Application::on_toggle_ui()
   show = !show;
 }
 
-void Application::on_reload_fonts()
+void App::on_reload_fonts()
 {
   mData->reload_fonts = true;
 }
 
-void Application::on_quit()
+void App::on_quit()
 {
   stop();
 }

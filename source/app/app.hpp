@@ -32,12 +32,12 @@ namespace tactile {
 class AppConfiguration;
 
 /// The heart of the Tactile map editor.
-class Application final : AEventLoop
+class App final : AEventLoop
 {
  public:
-  explicit Application(AppConfiguration* configuration);
+  explicit App(AppConfiguration* configuration);
 
-  ~Application() noexcept override;
+  ~App() noexcept override;
 
   using AEventLoop::start;
 

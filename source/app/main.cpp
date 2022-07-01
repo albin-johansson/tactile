@@ -23,7 +23,7 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "application.hpp"
+#include "app.hpp"
 #include "cfg/configuration.hpp"
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
@@ -38,7 +38,7 @@ auto main(int, char**) -> int
                  tactile::io::persistent_file_dir());
 
     tactile::AppConfiguration configuration;
-    tactile::Application app{&configuration};
+    tactile::App              app{&configuration};
     app.start();
 
     return EXIT_SUCCESS;
