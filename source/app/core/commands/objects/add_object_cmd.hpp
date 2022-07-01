@@ -24,7 +24,7 @@
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
-#include "core/object_type.hpp"
+#include "core/layers/object_type.hpp"
 
 namespace tactile {
 

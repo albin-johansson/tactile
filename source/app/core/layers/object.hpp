@@ -24,7 +24,7 @@
 #include "core/common/math.hpp"
 #include "core/contexts/context.hpp"
 #include "core/contexts/context_delegate.hpp"
-#include "core/object_type.hpp"
+#include "core/layers/object_type.hpp"
 
 namespace tactile::core {
 

@@ -32,7 +32,7 @@
 #include "core/common/math.hpp"
 #include "core/common/memory.hpp"
 #include "core/layers/layer_type.hpp"
-#include "core/object_type.hpp"
+#include "core/layers/object_type.hpp"
 
 namespace tactile::ir {
 
