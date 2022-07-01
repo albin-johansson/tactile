@@ -23,6 +23,7 @@ namespace tactile {
 
 enum class CommandId
 {
+  /* Maps */
   MapAddRow,
   MapAddColumn,
   MapRemoveRow,
@@ -30,6 +31,7 @@ enum class CommandId
   ResizeMap,
   FixTilesInMap,
 
+  /* Layers */
   AddLayer,
   RemoveLayer,
   DuplicateLayer,
@@ -39,30 +41,34 @@ enum class CommandId
   SetLayerVisible,
   RenameLayer,
 
+  /* Properties */
   AddProperty,
   RemoveProperty,
   RenameProperty,
   UpdateProperty,
   ChangePropertyType,
 
+  /* Tools */
   StampSequence,
   EraserSequence,
   Bucket,
 
+  /* Tilesets */
   AddTileset,
   RemoveTileset,
   SetTilesetName,
 
+  /* Objects */
   AddObject,
   SetObjectName,
   MoveObject,
   SetObjectTag,
   SetObjectVisible,
 
+  /* Component definitions */
   CreateComponent,
   RemoveComponent,
   RenameComponent,
-
   CreateComponentAttribute,
   RemoveComponentAttribute,
   RenameComponentAttribute,
@@ -70,6 +76,7 @@ enum class CommandId
   UpdateComponentAttribute,
   DuplicateComponentAttribute,
 
+  /* Components */
   AttachComponent,
   DetachComponent,
   UpdateComponent,
