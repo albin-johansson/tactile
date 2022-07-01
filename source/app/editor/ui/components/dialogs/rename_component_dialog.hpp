@@ -28,11 +28,7 @@
 
 namespace tactile::ui {
 
-/**
- * \brief Used to change the name of a component definition.
- *
- * \ingroup gui
- */
+/// Used to change the name of a component definition.
 class RenameComponentDialog final : public ComponentNameDialog
 {
  public:

@@ -224,7 +224,7 @@ class Application final : AEventLoop
 
   void on_undef_component(const UndefComponentEvent& event);
 
-  void on_rename_component_def(const RenameComponentDefEvent& event);
+  void on_rename_component(const RenameComponentEvent& event);
 
   void on_create_component_attr(const CreateComponentAttrEvent& event);
 

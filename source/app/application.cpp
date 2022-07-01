@@ -268,7 +268,7 @@ void Application::subscribe_to_events()
   d.sink<OpenComponentEditorEvent>().connect<&Self::on_open_component_editor>(this);
   d.sink<DefineComponentEvent>().connect<&Self::on_define_component>(this);
   d.sink<UndefComponentEvent>().connect<&Self::on_undef_component>(this);
-  d.sink<RenameComponentDefEvent>().connect<&Self::on_rename_component_def>(this);
+  d.sink<RenameComponentEvent>().connect<&Self::on_rename_component>(this);
   d.sink<CreateComponentAttrEvent>().connect<&Self::on_create_component_attr>(this);
   d.sink<RemoveComponentAttrEvent>().connect<&Self::on_remove_component_attr>(this);
   d.sink<RenameComponentAttrEvent>().connect<&Self::on_rename_component_attr>(this);
@@ -943,9 +943,11 @@ void Application::on_undef_component(const UndefComponentEvent& event)
   }
 }
 
-void Application::on_rename_component_def(const RenameComponentDefEvent& event)
+void Application::on_rename_component(const RenameComponentEvent& event)
 {
-  // TODO _execute<RenameComponentCmd>(mData->model, event.id, event.name);
+  if (auto* document = active_document()) {
+    document->rename_component(event.component_id, event.name);
+  }
 }
 
 void Application::on_create_component_attr(const CreateComponentAttrEvent& event)

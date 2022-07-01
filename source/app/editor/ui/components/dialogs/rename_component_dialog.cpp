@@ -40,8 +40,8 @@ void RenameComponentDialog::show(std::string previousName, const ComponentID& id
 
 void RenameComponentDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RenameComponentDefEvent>(mComponentId.value(),
-                                              std::string{current_input()});
+  dispatcher.enqueue<RenameComponentEvent>(mComponentId.value(),
+                                           std::string{current_input()});
 }
 
 }  // namespace tactile::ui

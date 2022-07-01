@@ -22,14 +22,8 @@
 #include <utility>  // move
 
 #include "core/commands/command_stack.hpp"
-#include "core/commands/components/attach_component_cmd.hpp"
-#include "core/commands/components/define_component_cmd.hpp"
-#include "core/commands/components/undef_component_cmd.hpp"
-#include "core/commands/properties/add_property_cmd.hpp"
-#include "core/commands/properties/change_property_type_cmd.hpp"
-#include "core/commands/properties/remove_property_cmd.hpp"
-#include "core/commands/properties/rename_property_cmd.hpp"
-#include "core/commands/properties/update_property_cmd.hpp"
+#include "core/commands/components/all.hpp"
+#include "core/commands/properties/all.hpp"
 
 namespace tactile {
 
@@ -66,6 +60,11 @@ void ADocument::define_component(std::string name)
 void ADocument::undef_component(const UUID& componentId)
 {
   get_history().push<UndefComponentCmd>(mComponentIndex, componentId);
+}
+
+void ADocument::rename_component(const UUID& componentId, std::string name)
+{
+  get_history().push<RenameComponentCmd>(mComponentIndex, componentId, std::move(name));
 }
 
 void ADocument::attach_component(const UUID& contextId, const UUID& componentId)

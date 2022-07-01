@@ -60,6 +60,8 @@ class ADocument
 
   void undef_component(const UUID& componentId);
 
+  void rename_component(const UUID& componentId, std::string name);
+
   void attach_component(const UUID& contextId, const UUID& componentId);
 
   void add_property(const UUID& contextId, std::string name, AttributeType type);
