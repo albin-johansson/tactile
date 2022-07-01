@@ -141,8 +141,8 @@ class ADialog
   const char* mTitle{};
   const char* mAcceptButtonLabel{"OK"};
   const char* mCloseButtonLabel{"Cancel"};
-  bool        mUseApplyButton{};
-  bool        mShow{};
+  bool        mUseApplyButton : 1 {};
+  bool        mShow : 1 {};
 };
 
 }  // namespace tactile::ui
