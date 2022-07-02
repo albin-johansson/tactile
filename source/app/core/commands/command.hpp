@@ -29,8 +29,6 @@
 
 namespace tactile {
 
-using RegistryRef [[deprecated]] = Ref<entt::registry>;
-
 /// The abstract base class of all command implementations.
 class ACommand
 {
