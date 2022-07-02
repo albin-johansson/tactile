@@ -7,7 +7,6 @@ env:
   VCPKG_TARGET_TRIPLET: x64-windows-static-md
   VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg\bincache
-  VCPKG_COMMIT_ID: c168ce4e765409509c9c482faa0468c4e1ab386b
   VCPKG_CACHE_EDITION: 1
 
 jobs:
@@ -29,7 +28,7 @@ jobs:
             !${{env.VCPKG_ROOT}}\packages
             !${{env.VCPKG_ROOT}}\downloads
             !${{env.VCPKG_ROOT}}\installed
-          key: tactile-windows-vcpkg-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
+          key: tactile-windows-vcpkg-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
