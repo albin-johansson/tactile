@@ -80,7 +80,8 @@ class App final : AEventLoop
 
   void on_open_save_as_dialog();
 
-  void on_show_map_properties();
+  void on_inspect_map();
+  void on_inspect_tileset();
 
   void on_create_map(const CreateMapEvent& event);
 

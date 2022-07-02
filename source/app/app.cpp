@@ -175,124 +175,125 @@ auto App::active_tileset_document() -> TilesetDocument*
 void App::subscribe_to_events()
 {
   // clang-format off
-  using Self = App;
   auto& d = get_dispatcher();
 
-  d.sink<UndoEvent>().connect<&Self::on_undo>(this);
-  d.sink<RedoEvent>().connect<&Self::on_redo>(this);
-  d.sink<SetCommandCapacityEvent>().connect<&Self::on_set_command_capacity>(this);
+  d.sink<UndoEvent>().connect<&App::on_undo>(this);
+  d.sink<RedoEvent>().connect<&App::on_redo>(this);
+  d.sink<SetCommandCapacityEvent>().connect<&App::on_set_command_capacity>(this);
 
-  d.sink<SaveEvent>().connect<&Self::on_save>(this);
-  d.sink<SaveAsEvent>().connect<&Self::on_save_as>(this);
-  d.sink<OpenSaveAsDialogEvent>().connect<&Self::on_open_save_as_dialog>(this);
+  d.sink<SaveEvent>().connect<&App::on_save>(this);
+  d.sink<SaveAsEvent>().connect<&App::on_save_as>(this);
+  d.sink<OpenSaveAsDialogEvent>().connect<&App::on_open_save_as_dialog>(this);
   d.sink<ShowSettingsEvent>().connect<&ui::show_settings_dialog>();
+
+  d.sink<InspectMapEvent>().connect<&App::on_inspect_map>(this);
+  d.sink<InspectTilesetEvent>().connect<&App::on_inspect_tileset>(this);
 
   d.sink<ShowNewMapDialogEvent>().connect<&ui::show_map_creation_dialog>();
   d.sink<ShowOpenMapDialogEvent>().connect<&ui::show_map_selector_dialog>();
-  d.sink<InspectMapEvent>().connect<&Self::on_show_map_properties>(this);
-  d.sink<CreateMapEvent>().connect<&Self::on_create_map>(this);
-  d.sink<OpenMapEvent>().connect<&Self::on_open_map>(this);
+  d.sink<CreateMapEvent>().connect<&App::on_create_map>(this);
+  d.sink<OpenMapEvent>().connect<&App::on_open_map>(this);
 
-  d.sink<OpenDocumentEvent>().connect<&Self::on_open_document>(this);
-  d.sink<CloseDocumentEvent>().connect<&Self::on_close_document>(this);
-  d.sink<SelectDocumentEvent>().connect<&Self::on_select_document>(this);
+  d.sink<OpenDocumentEvent>().connect<&App::on_open_document>(this);
+  d.sink<CloseDocumentEvent>().connect<&App::on_close_document>(this);
+  d.sink<SelectDocumentEvent>().connect<&App::on_select_document>(this);
 
-  d.sink<SelectToolEvent>().connect<&Self::on_select_tool>(this);
-  d.sink<ToolPressedEvent>().connect<&Self::on_tool_pressed>(this);
-  d.sink<ToolDraggedEvent>().connect<&Self::on_tool_dragged>(this);
-  d.sink<ToolReleasedEvent>().connect<&Self::on_tool_released>(this);
-  d.sink<ToolEnteredEvent>().connect<&Self::on_tool_entered>(this);
-  d.sink<ToolExitedEvent>().connect<&Self::on_tool_exited>(this);
+  d.sink<SelectToolEvent>().connect<&App::on_select_tool>(this);
+  d.sink<ToolPressedEvent>().connect<&App::on_tool_pressed>(this);
+  d.sink<ToolDraggedEvent>().connect<&App::on_tool_dragged>(this);
+  d.sink<ToolReleasedEvent>().connect<&App::on_tool_released>(this);
+  d.sink<ToolEnteredEvent>().connect<&App::on_tool_entered>(this);
+  d.sink<ToolExitedEvent>().connect<&App::on_tool_exited>(this);
 
-  d.sink<StampSequenceEvent>().connect<&Self::on_stamp_sequence>(this);
-  d.sink<SetStampRandomizerEvent>().connect<&Self::on_set_stamp_randomizer_event>(this);
-  d.sink<EraserSequenceEvent>().connect<&Self::on_eraser_sequence>(this);
-  d.sink<FloodEvent>().connect<&Self::on_flood>(this);
-  d.sink<AddRectangleEvent>().connect<&Self::on_add_rectangle>(this);
-  d.sink<AddEllipseEvent>().connect<&Self::on_add_ellipse>(this);
-  d.sink<AddPointEvent>().connect<&Self::on_add_point>(this);
+  d.sink<StampSequenceEvent>().connect<&App::on_stamp_sequence>(this);
+  d.sink<SetStampRandomizerEvent>().connect<&App::on_set_stamp_randomizer_event>(this);
+  d.sink<EraserSequenceEvent>().connect<&App::on_eraser_sequence>(this);
+  d.sink<FloodEvent>().connect<&App::on_flood>(this);
+  d.sink<AddRectangleEvent>().connect<&App::on_add_rectangle>(this);
+  d.sink<AddEllipseEvent>().connect<&App::on_add_ellipse>(this);
+  d.sink<AddPointEvent>().connect<&App::on_add_point>(this);
 
   d.sink<CenterViewportEvent>().connect<&ui::center_map_viewport>();
-  d.sink<UpdateViewportLimitsEvent>().connect<&Self::on_update_viewport_limits>(this);
-  d.sink<UpdateTilesetViewportLimitsEvent>().connect<&Self::on_update_tileset_viewport_limits>(this);
+  d.sink<UpdateViewportLimitsEvent>().connect<&App::on_update_viewport_limits>(this);
+  d.sink<UpdateTilesetViewportLimitsEvent>().connect<&App::on_update_tileset_viewport_limits>(this);
 
-  d.sink<OffsetTilesetViewportEvent>().connect<&Self::on_offset_tileset_viewport>(this);
-  d.sink<OffsetDocumentViewportEvent>().connect<&Self::on_offset_document_viewport>(this);
+  d.sink<OffsetTilesetViewportEvent>().connect<&App::on_offset_tileset_viewport>(this);
+  d.sink<OffsetDocumentViewportEvent>().connect<&App::on_offset_document_viewport>(this);
 
-  d.sink<PanLeftEvent>().connect<&Self::on_pan_left>(this);
-  d.sink<PanRightEvent>().connect<&Self::on_pan_right>(this);
-  d.sink<PanUpEvent>().connect<&Self::on_pan_up>(this);
-  d.sink<PanDownEvent>().connect<&Self::on_pan_down>(this);
+  d.sink<PanLeftEvent>().connect<&App::on_pan_left>(this);
+  d.sink<PanRightEvent>().connect<&App::on_pan_right>(this);
+  d.sink<PanUpEvent>().connect<&App::on_pan_up>(this);
+  d.sink<PanDownEvent>().connect<&App::on_pan_down>(this);
 
-  d.sink<IncreaseZoomEvent>().connect<&Self::on_increase_zoom>(this);
-  d.sink<DecreaseZoomEvent>().connect<&Self::on_decrease_zoom>(this);
-  d.sink<ResetZoomEvent>().connect<&Self::on_reset_zoom>(this);
+  d.sink<IncreaseZoomEvent>().connect<&App::on_increase_zoom>(this);
+  d.sink<DecreaseZoomEvent>().connect<&App::on_decrease_zoom>(this);
+  d.sink<ResetZoomEvent>().connect<&App::on_reset_zoom>(this);
 
-  d.sink<ResetFontSizeEvent>().connect<&Self::on_reset_font_size>(this);
-  d.sink<IncreaseFontSizeEvent>().connect<&Self::on_increase_font_size>(this);
-  d.sink<DecreaseFontSizeEvent>().connect<&Self::on_decrease_font_size>(this);
+  d.sink<ResetFontSizeEvent>().connect<&App::on_reset_font_size>(this);
+  d.sink<IncreaseFontSizeEvent>().connect<&App::on_increase_font_size>(this);
+  d.sink<DecreaseFontSizeEvent>().connect<&App::on_decrease_font_size>(this);
 
   d.sink<ShowTilesetCreationDialogEvent>().connect<&ui::show_tileset_creation_dialog>();
-  d.sink<LoadTilesetEvent>().connect<&Self::on_load_tileset>(this);
-  d.sink<RemoveTilesetEvent>().connect<&Self::on_remove_tileset>(this);
-  d.sink<SelectTilesetEvent>().connect<&Self::on_select_tileset>(this);
-  d.sink<SetTilesetSelectionEvent>().connect<&Self::on_set_tileset_selection>(this);
-  d.sink<RenameTilesetEvent>().connect<&Self::on_rename_tileset>(this);
+  d.sink<LoadTilesetEvent>().connect<&App::on_load_tileset>(this);
+  d.sink<RemoveTilesetEvent>().connect<&App::on_remove_tileset>(this);
+  d.sink<SelectTilesetEvent>().connect<&App::on_select_tileset>(this);
+  d.sink<SetTilesetSelectionEvent>().connect<&App::on_set_tileset_selection>(this);
+  d.sink<RenameTilesetEvent>().connect<&App::on_rename_tileset>(this);
 
-  d.sink<AddRowEvent>().connect<&Self::on_add_row>(this);
-  d.sink<AddColumnEvent>().connect<&Self::on_add_column>(this);
-  d.sink<RemoveRowEvent>().connect<&Self::on_remove_row>(this);
-  d.sink<RemoveColumnEvent>().connect<&Self::on_remove_column>(this);
-  d.sink<ResizeMapEvent>().connect<&Self::on_resize_map>(this);
-  d.sink<FixTilesInMapEvent>().connect<&Self::on_fix_tiles_in_map>(this);
-  d.sink<OpenResizeMapDialogEvent>().connect<&Self::on_open_resize_map_dialog>(this);
+  d.sink<AddRowEvent>().connect<&App::on_add_row>(this);
+  d.sink<AddColumnEvent>().connect<&App::on_add_column>(this);
+  d.sink<RemoveRowEvent>().connect<&App::on_remove_row>(this);
+  d.sink<RemoveColumnEvent>().connect<&App::on_remove_column>(this);
+  d.sink<ResizeMapEvent>().connect<&App::on_resize_map>(this);
+  d.sink<FixTilesInMapEvent>().connect<&App::on_fix_tiles_in_map>(this);
+  d.sink<OpenResizeMapDialogEvent>().connect<&App::on_open_resize_map_dialog>(this);
 
-  d.sink<AddLayerEvent>().connect<&Self::on_add_layer>(this);
-  d.sink<RemoveLayerEvent>().connect<&Self::on_remove_layer>(this);
-  d.sink<SelectLayerEvent>().connect<&Self::on_select_layer>(this);
-  d.sink<MoveLayerUpEvent>().connect<&Self::on_move_layer_up>(this);
-  d.sink<MoveLayerDownEvent>().connect<&Self::on_move_layer_down>(this);
-  d.sink<DuplicateLayerEvent>().connect<&Self::on_duplicate_layer>(this);
-  d.sink<SetLayerOpacityEvent>().connect<&Self::on_set_layer_opacity>(this);
-  d.sink<SetLayerVisibleEvent>().connect<&Self::on_set_layer_visible>(this);
-  d.sink<OpenRenameLayerDialogEvent>().connect<&Self::on_open_rename_layer_dialog>(this);
-  d.sink<RenameLayerEvent>().connect<&Self::on_rename_layer>(this);
+  d.sink<AddLayerEvent>().connect<&App::on_add_layer>(this);
+  d.sink<RemoveLayerEvent>().connect<&App::on_remove_layer>(this);
+  d.sink<SelectLayerEvent>().connect<&App::on_select_layer>(this);
+  d.sink<MoveLayerUpEvent>().connect<&App::on_move_layer_up>(this);
+  d.sink<MoveLayerDownEvent>().connect<&App::on_move_layer_down>(this);
+  d.sink<DuplicateLayerEvent>().connect<&App::on_duplicate_layer>(this);
+  d.sink<SetLayerOpacityEvent>().connect<&App::on_set_layer_opacity>(this);
+  d.sink<SetLayerVisibleEvent>().connect<&App::on_set_layer_visible>(this);
+  d.sink<OpenRenameLayerDialogEvent>().connect<&App::on_open_rename_layer_dialog>(this);
+  d.sink<RenameLayerEvent>().connect<&App::on_rename_layer>(this);
 
-  d.sink<SetObjectNameEvent>().connect<&Self::on_set_object_name>(this);
-  d.sink<MoveObjectEvent>().connect<&Self::on_move_object>(this);
-  d.sink<SetObjectVisibleEvent>().connect<&Self::on_set_object_visible>(this);
-  d.sink<SetObjectTagEvent>().connect<&Self::on_set_object_tag>(this);
-  d.sink<SpawnObjectContextMenuEvent>().connect<&Self::on_spawn_object_context_menu>(this);
+  d.sink<SetObjectNameEvent>().connect<&App::on_set_object_name>(this);
+  d.sink<MoveObjectEvent>().connect<&App::on_move_object>(this);
+  d.sink<SetObjectVisibleEvent>().connect<&App::on_set_object_visible>(this);
+  d.sink<SetObjectTagEvent>().connect<&App::on_set_object_tag>(this);
+  d.sink<SpawnObjectContextMenuEvent>().connect<&App::on_spawn_object_context_menu>(this);
 
   d.sink<ShowAddPropertyDialogEvent>().connect<&ui::show_property_creation_dialog>();
-  d.sink<ShowRenamePropertyDialogEvent>().connect<&Self::on_show_rename_property_dialog>(this);
-  d.sink<ShowChangePropertyTypeDialogEvent>().connect<&Self::on_show_change_property_type_dialog>(this);
-  d.sink<AddPropertyEvent>().connect<&Self::on_add_property>(this);
-  d.sink<RemovePropertyEvent>().connect<&Self::on_remove_property>(this);
-  d.sink<RenamePropertyEvent>().connect<&Self::on_rename_property>(this);
-  d.sink<UpdatePropertyEvent>().connect<&Self::on_update_property>(this);
-  d.sink<ChangePropertyTypeEvent>().connect<&Self::on_change_property_type>(this);
-  d.sink<InspectContextEvent>().connect<&Self::on_inspect_context>(this);
+  d.sink<ShowRenamePropertyDialogEvent>().connect<&App::on_show_rename_property_dialog>(this);
+  d.sink<ShowChangePropertyTypeDialogEvent>().connect<&App::on_show_change_property_type_dialog>(this);
+  d.sink<AddPropertyEvent>().connect<&App::on_add_property>(this);
+  d.sink<RemovePropertyEvent>().connect<&App::on_remove_property>(this);
+  d.sink<RenamePropertyEvent>().connect<&App::on_rename_property>(this);
+  d.sink<UpdatePropertyEvent>().connect<&App::on_update_property>(this);
+  d.sink<ChangePropertyTypeEvent>().connect<&App::on_change_property_type>(this);
+  d.sink<InspectContextEvent>().connect<&App::on_inspect_context>(this);
 
-  d.sink<OpenComponentEditorEvent>().connect<&Self::on_open_component_editor>(this);
-  d.sink<DefineComponentEvent>().connect<&Self::on_define_component>(this);
-  d.sink<UndefComponentEvent>().connect<&Self::on_undef_component>(this);
-  d.sink<RenameComponentEvent>().connect<&Self::on_rename_component>(this);
-  d.sink<AddComponentAttrEvent>().connect<&Self::on_add_component_attr>(this);
-  d.sink<RemoveComponentAttrEvent>().connect<&Self::on_remove_component_attr>(this);
-  d.sink<RenameComponentAttrEvent>().connect<&Self::on_rename_component_attr>(this);
-  d.sink<DuplicateComponentAttrEvent>().connect<&Self::on_duplicate_component_attr>(this);
-  d.sink<SetComponentAttrTypeEvent>().connect<&Self::on_set_component_attr_type>(this);
-  d.sink<UpdateComponentEvent>().connect<&Self::on_update_component>(this);
+  d.sink<OpenComponentEditorEvent>().connect<&App::on_open_component_editor>(this);
+  d.sink<DefineComponentEvent>().connect<&App::on_define_component>(this);
+  d.sink<UndefComponentEvent>().connect<&App::on_undef_component>(this);
+  d.sink<RenameComponentEvent>().connect<&App::on_rename_component>(this);
+  d.sink<AddComponentAttrEvent>().connect<&App::on_add_component_attr>(this);
+  d.sink<RemoveComponentAttrEvent>().connect<&App::on_remove_component_attr>(this);
+  d.sink<RenameComponentAttrEvent>().connect<&App::on_rename_component_attr>(this);
+  d.sink<DuplicateComponentAttrEvent>().connect<&App::on_duplicate_component_attr>(this);
+  d.sink<SetComponentAttrTypeEvent>().connect<&App::on_set_component_attr_type>(this);
+  d.sink<UpdateComponentEvent>().connect<&App::on_update_component>(this);
 
-  d.sink<AttachComponentEvent>().connect<&Self::on_attach_component>(this);
-  d.sink<DetachComponentEvent>().connect<&Self::on_detach_component>(this);
-  d.sink<UpdateAttachedComponentEvent>().connect<&Self::on_update_attached_component>(this);
-  d.sink<ResetAttachedComponentEvent>().connect<&Self::on_reset_attached_component>(this);
+  d.sink<AttachComponentEvent>().connect<&App::on_attach_component>(this);
+  d.sink<DetachComponentEvent>().connect<&App::on_detach_component>(this);
+  d.sink<UpdateAttachedComponentEvent>().connect<&App::on_update_attached_component>(this);
+  d.sink<ResetAttachedComponentEvent>().connect<&App::on_reset_attached_component>(this);
 
-  d.sink<ToggleUiEvent>().connect<&Self::on_toggle_ui>(this);
-  d.sink<ReloadFontsEvent>().connect<&Self::on_reload_fonts>(this);
-  d.sink<QuitEvent>().connect<&Self::on_quit>(this);
+  d.sink<ToggleUiEvent>().connect<&App::on_toggle_ui>(this);
+  d.sink<ReloadFontsEvent>().connect<&App::on_reload_fonts>(this);
+  d.sink<QuitEvent>().connect<&App::on_quit>(this);
   // clang-format on
 }
 
@@ -401,10 +402,17 @@ void App::on_open_save_as_dialog()
   }
 }
 
-void App::on_show_map_properties()
+void App::on_inspect_map()
 {
   if (auto* document = active_map_document()) {
     document->select_context(document->get_map().get_uuid());
+  }
+}
+
+void App::on_inspect_tileset()
+{
+  if (auto* document = active_tileset_document()) {
+    document->select_context(document->view_tileset().get_uuid());
   }
 }
 

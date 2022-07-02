@@ -32,6 +32,9 @@ namespace tactile {
 struct ShowTilesetCreationDialogEvent final
 {};
 
+struct InspectTilesetEvent final
+{};
+
 struct LoadTilesetEvent final
 {
   std::filesystem::path path;

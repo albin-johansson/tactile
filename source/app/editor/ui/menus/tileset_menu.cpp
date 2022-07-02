@@ -19,8 +19,10 @@
 
 #include "tileset_menu.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/events/tileset_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
@@ -33,7 +35,7 @@ void update_tileset_menu(const DocumentModel& model, entt::dispatcher& dispatche
 
   if (Menu menu{"Tileset"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
-      // TODO dispatcher.enqueue<InspectTilesetEvent>();
+      dispatcher.enqueue<InspectTilesetEvent>();
     }
   }
 }
