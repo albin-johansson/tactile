@@ -36,24 +36,18 @@
 #include "editor/ui/common/button.hpp"
 #include "editor/ui/common/centered_text.hpp"
 #include "editor/ui/common/input_widgets.hpp"
-#include "editor/ui/components/dialogs/add_component_attr_dialog.hpp"
-#include "editor/ui/components/dialogs/define_component_dialog.hpp"
-#include "editor/ui/components/dialogs/rename_component_attribute_dialog.hpp"
-#include "editor/ui/components/dialogs/rename_component_dialog.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/properties/dialogs/property_type_combo.hpp"
 #include "editor/ui/scoped.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "editor/ui/shared/dialogs.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {
 
 struct ComponentEditor::Data final
 {
-  DefineComponentDialog          create_component;
-  AddComponentAttrDialog         create_component_attr;
-  RenameComponentDialog          rename_component;
-  RenameComponentAttributeDialog rename_component_attr;
-  Maybe<ComponentID>             active_component;
+  Maybe<ComponentID> active_component;
 };
 
 ComponentEditor::ComponentEditor()
@@ -95,7 +89,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     ImGui::TextUnformatted("There are no available components for the current map.");
 
     if (centered_button(TAC_ICON_ADD, "Create Component")) {
-      data.create_component.show();
+      get_dialogs().define_component.show();
     }
   }
   else {
@@ -121,7 +115,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     ImGui::SameLine();
 
     if (button(TAC_ICON_ADD, "Create Component")) {
-      data.create_component.show();
+      get_dialogs().define_component.show();
     }
 
     ImGui::SameLine();
@@ -140,10 +134,11 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     show_component_attributes(definition, dispatcher);
   }
 
-  data.create_component.update(model, dispatcher);
-  data.create_component_attr.update(model, dispatcher);
-  data.rename_component.update(model, dispatcher);
-  data.rename_component_attr.update(model, dispatcher);
+  auto& dialogs = get_dialogs();
+  dialogs.define_component.update(model, dispatcher);
+  dialogs.add_component_attr.update(model, dispatcher);
+  dialogs.rename_component.update(model, dispatcher);
+  dialogs.rename_component_attr.update(model, dispatcher);
 
   ImGui::Spacing();
   ImGui::Separator();
@@ -158,7 +153,7 @@ void ComponentEditor::show_component_combo_popup(const ADocument&  document,
       const auto  id = data.active_component.value();
       const auto  index = document.get_component_index();
       const auto& name = index->at(id).get_name();
-      data.rename_component.show(name, id);
+      get_dialogs().rename_component.show(name, id);
     }
 
     ImGui::Separator();
@@ -194,7 +189,7 @@ void ComponentEditor::show_component_attributes(
   }
 
   if (centered_button("Create Attribute")) {
-    data.create_component_attr.show(*data.active_component);
+    get_dialogs().add_component_attr.show(*data.active_component);
   }
 }
 
@@ -214,7 +209,7 @@ void ComponentEditor::show_component_attribute(const UUID&        componentId,
 
   if (auto popup = Popup::for_item("##ComponentAttributeNameContext"); popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Attribute")) {
-      data.rename_component_attr.show(name, data.active_component.value());
+      get_dialogs().rename_component_attr.show(name, data.active_component.value());
     }
 
     ImGui::Separator();

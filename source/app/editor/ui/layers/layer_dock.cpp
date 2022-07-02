@@ -19,7 +19,6 @@
 
 #include "layer_dock.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
@@ -33,16 +32,16 @@
 #include "editor/ui/common/centered_text.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/layers/add_layer_context_menu.hpp"
-#include "editor/ui/layers/dialogs/rename_layer_dialog.hpp"
 #include "editor/ui/layers/views/layer_item.hpp"
 #include "editor/ui/scoped.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "editor/ui/shared/dialogs.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {
 namespace {
 
-inline RenameLayerDialog   _rename_layer_dialog;
 inline AddLayerContextMenu _add_layer_context_menu;
 inline Maybe<UUID>         _rename_target_id;
 constinit bool             _is_focused = false;
@@ -86,6 +85,8 @@ void _update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatch
 
 void _update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
+  auto& dialogs = get_dialogs();
+
   if (_rename_target_id.has_value()) {
     const auto targetLayerId = *_rename_target_id;
 
@@ -93,11 +94,11 @@ void _update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatc
     const auto& map = document.get_map();
     const auto& layer = map.view_layer(targetLayerId);
 
-    _rename_layer_dialog.show(targetLayerId, layer.get_name());
+    dialogs.rename_layer.show(targetLayerId, layer.get_name());
     _rename_target_id.reset();
   }
 
-  _rename_layer_dialog.update(model, dispatcher);
+  dialogs.rename_layer.update(model, dispatcher);
 }
 
 void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)

@@ -49,10 +49,12 @@
 #include "editor/ui/menus/file_menu.hpp"
 #include "editor/ui/menus/map_menu.hpp"
 #include "editor/ui/properties/property_dock.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "editor/ui/shared/dialogs.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
+#include "editor/ui/ui.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
-#include "editor/ui/widgets.hpp"
 #include "io/maps/parser/parse_map.hpp"
 #include "io/maps/restore_map_from_ir.hpp"
 #include "io/maps/save_document.hpp"
@@ -91,6 +93,8 @@ App::App(AppConfiguration* configuration)
 
   subscribe_to_events();
   load_default_shortcuts();
+
+  ui::init_dialogs();
   ui::load_icons(mData->textures);
 }
 
@@ -450,7 +454,7 @@ void App::on_open_map(const OpenMapEvent& event)
     io::add_file_to_history(event.path);
   }
   else {
-    ui::show_map_import_error_dialog(ir.error());
+    ui::get_dialogs().map_parse_error.show(ir.error());
   }
 }
 
@@ -767,7 +771,7 @@ void App::on_open_resize_map_dialog()
 {
   if (auto* document = active_map_document()) {
     const auto& map = document->get_map();
-    ui::show_resize_map_dialog(map.row_count(), map.column_count());
+    ui::get_dialogs().resize_map.show(map.row_count(), map.column_count());
   }
 }
 

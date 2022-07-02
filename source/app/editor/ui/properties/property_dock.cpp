@@ -47,6 +47,8 @@
 #include "editor/ui/properties/dialogs/rename_property_dialog.hpp"
 #include "editor/ui/properties/items/property_item_context_menu.hpp"
 #include "editor/ui/scoped.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "editor/ui/shared/dialogs.hpp"
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 
@@ -55,13 +57,10 @@ using namespace tactile::core;
 namespace tactile::ui {
 namespace {
 
-constinit bool                      _is_focused = false;
 inline PropertyItemContextMenuState _context_state;
 inline Maybe<std::string>           _rename_target;
 inline Maybe<std::string>           _change_type_target;
-inline AddPropertyDialog            _add_dialog;
-inline RenamePropertyDialog         _rename_dialog;
-inline ChangePropertyTypeDialog     _change_type_dialog;
+constinit bool                      _is_focused = false;
 
 void _prepare_table_row(const char* label)
 {
@@ -393,9 +392,10 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
   if (window.is_open()) {
     _update_property_table(model, dispatcher);
 
-    _add_dialog.update(model, dispatcher);
-    _rename_dialog.update(model, dispatcher);
-    _change_type_dialog.update(model, dispatcher);
+    auto& dialogs = get_dialogs();
+    dialogs.add_property.update(model, dispatcher);
+    dialogs.rename_property.update(model, dispatcher);
+    dialogs.change_property_type.update(model, dispatcher);
   }
 
   prefs.set_property_dock_visible(visible);
@@ -403,17 +403,17 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
 
 void show_property_creation_dialog()
 {
-  _add_dialog.open();
+  get_dialogs().add_property.open();
 }
 
 void show_rename_property_dialog(const std::string& name)
 {
-  _rename_dialog.show(name);
+  get_dialogs().rename_property.show(name);
 }
 
 void show_change_property_type_dialog(std::string name, const AttributeType type)
 {
-  _change_type_dialog.show(std::move(name), type);
+  get_dialogs().change_property_type.show(std::move(name), type);
 }
 
 auto is_property_dock_focused() -> bool

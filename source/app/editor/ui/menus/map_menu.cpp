@@ -27,23 +27,10 @@
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
-#include "editor/ui/tilesets/dialogs/create_tileset_dialog.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "editor/ui/shared/dialogs.hpp"
 
 namespace tactile::ui {
-namespace {
-
-struct MapMenuState final
-{
-  CreateTilesetDialog tileset_creation_dialog;
-};
-
-[[nodiscard]] auto _get_state() -> MapMenuState&
-{
-  static MapMenuState state;
-  return state;
-}
-
-}  // namespace
 
 void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -90,12 +77,12 @@ void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     }
   }
 
-  _get_state().tileset_creation_dialog.update(model, dispatcher);
+  get_dialogs().create_tileset.update(model, dispatcher);
 }
 
 void show_tileset_creation_dialog()
 {
-  _get_state().tileset_creation_dialog.open();
+  get_dialogs().create_tileset.open();
 }
 
 }  // namespace tactile::ui

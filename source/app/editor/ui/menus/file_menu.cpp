@@ -22,15 +22,15 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/commands/command_stack.hpp"
 #include "core/events/document_events.hpp"
 #include "core/events/map_events.hpp"
 #include "core/events/misc_events.hpp"
 #include "core/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
-#include "editor/ui/dialogs/create_map_dialog.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "editor/ui/shared/dialogs.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/history.hpp"
 
@@ -39,8 +39,7 @@ namespace {
 
 struct FileMenuState final
 {
-  CreateMapDialog map_creation_dialog;
-  bool            show_map_selector{};
+  bool show_map_selector{};
 };
 
 [[nodiscard]] auto _get_state() -> FileMenuState&
@@ -106,7 +105,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     const auto* document = model.active_document();
 
     if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
-      state.map_creation_dialog.show();
+      get_dialogs().create_map.show();
     }
 
     state.show_map_selector = ImGui::MenuItem(TAC_ICON_OPEN " Open Map...",  //
@@ -146,7 +145,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     }
   }
 
-  state.map_creation_dialog.update(model, dispatcher);
+  get_dialogs().create_map.update(model, dispatcher);
 
   if (state.show_map_selector) {
     _update_map_file_dialog(dispatcher);
@@ -155,7 +154,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
 void show_map_creation_dialog()
 {
-  _get_state().map_creation_dialog.show();
+  get_dialogs().create_map.show();
 }
 
 void show_map_selector_dialog()

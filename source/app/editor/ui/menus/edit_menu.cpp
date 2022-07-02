@@ -19,40 +19,23 @@
 
 #include "edit_menu.hpp"
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/commands/command_stack.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/events/command_events.hpp"
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/tools/tool_manager.hpp"
 #include "core/tools/tool_type.hpp"
 #include "core/utils/formatted_string.hpp"
 #include "editor/shortcuts/mappings.hpp"
-#include "editor/ui/components/component_editor.hpp"
-#include "editor/ui/dialogs/settings_dialog.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "editor/ui/shared/dialogs.hpp"
 
 namespace tactile::ui {
-namespace {
-
-[[nodiscard]] auto _get_settings_dialog() -> SettingsDialog&
-{
-  static SettingsDialog dialog;
-  return dialog;
-}
-
-[[nodiscard]] auto _get_component_editor() -> ComponentEditor&
-{
-  static ComponentEditor editor;
-  return editor;
-}
-
-}  // namespace
+namespace {}  // namespace
 
 void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -145,28 +128,29 @@ void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
                         TACTILE_PRIMARY_MOD "+Shift+C",
                         false,
                         map != nullptr)) {
-      _get_component_editor().show(model);
+      get_dialogs().component_editor.show(model);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,")) {
-      _get_settings_dialog().show();
+      get_dialogs().settings.show();
     }
   }
 
-  _get_settings_dialog().update(model, dispatcher);
-  _get_component_editor().update(model, dispatcher);
+  auto& dialogs = get_dialogs();
+  dialogs.settings.update(model, dispatcher);
+  dialogs.component_editor.update(model, dispatcher);
 }
 
 void show_settings_dialog()
 {
-  _get_settings_dialog().show();
+  get_dialogs().settings.show();
 }
 
 void show_component_editor(const DocumentModel& model)
 {
-  _get_component_editor().show(model);
+  get_dialogs().component_editor.show(model);
 }
 
 }  // namespace tactile::ui

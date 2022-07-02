@@ -17,35 +17,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "dialogs.hpp"
 
-#include <entt/fwd.hpp>
+#include <utility>  // move
 
-#include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile::ui {
+namespace {
 
-/**
- * Updates the layer dock widget.
- *
- * There must be an active map document when this function is called.
- *
- * \param model the current document model.
- * \param dispatcher the event dispatcher used.
- */
-void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
+inline Unique<DialogState> _dialogs;
 
-/// Makes the dialog for renaming layers visible.
-void show_rename_layer_dialog(const UUID& layerId);
+}  // namespace
 
-/**
- * Indicates whether the layer dock widget has input focus.
- *
- * \return `true` if the layer dock is focused; `false` otherwise.
- *
- * \ingroup gui
- */
-[[nodiscard]] auto is_layer_dock_focused() -> bool;
+void init_dialogs()
+{
+  _dialogs = std::make_unique<DialogState>();
+}
+
+void set_dialog_state(Unique<DialogState> state)
+{
+  _dialogs = std::move(state);
+}
+
+auto get_dialogs() -> DialogState&
+{
+  if (_dialogs) [[likely]] {
+    return *_dialogs;
+  }
+  else {
+    throw TactileError{"No available dialog state!"};
+  }
+}
 
 }  // namespace tactile::ui
