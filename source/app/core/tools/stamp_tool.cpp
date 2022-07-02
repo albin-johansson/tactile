@@ -36,15 +36,6 @@
 #include "misc/assert.hpp"
 
 namespace tactile {
-namespace {
-
-// TODO move
-[[nodiscard]] constexpr auto _to_vec2(const TilePos& pos) noexcept -> Vector2f
-{
-  return {static_cast<float>(pos.col()), static_cast<float>(pos.row())};
-}
-
-}  // namespace
 
 // FIXME multiple selection doesn't work
 
@@ -88,9 +79,9 @@ void StampTool::draw_gizmos(const DocumentModel& model,
     const auto    previewPos = mouse.position_in_viewport + index - offset;
 
     if (layer.is_valid(previewPos)) {
-      const auto realPos = origin + _to_vec2(previewPos) * gridSize;
+      const auto realPos = origin + previewPos.as_vec2f() * gridSize;
 
-      const auto uvMin = _to_vec2(selection.begin + index) * uv;
+      const auto uvMin = (selection.begin + index).as_vec2f() * uv;
       const auto uvMax = uvMin + uv;
 
       constexpr uint8 opacity = 150;

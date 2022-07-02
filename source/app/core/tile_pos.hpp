@@ -24,6 +24,7 @@
 #include <boost/container_hash/hash.hpp>
 
 #include "core/common/ints.hpp"
+#include "core/common/math.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -137,6 +138,16 @@ class TilePos final
   [[nodiscard]] constexpr auto col_to_x(const int32 tileWidth) const noexcept -> int32
   {
     return mCol * tileWidth;
+  }
+
+  [[nodiscard]] constexpr auto as_vec2() const noexcept -> Vector2i
+  {
+    return {mCol, mRow};
+  }
+
+  [[nodiscard]] constexpr auto as_vec2f() const noexcept -> Vector2f
+  {
+    return {static_cast<float>(mCol), static_cast<float>(mRow)};
   }
 
   [[nodiscard]] constexpr auto operator<=>(const TilePos&) const noexcept = default;
