@@ -73,28 +73,21 @@ void render_map(GraphicsCtx& graphics, const MapDocument& document)
     }
 
     const auto parentId = layer->get_parent();
+    const auto* parentLayer = parentId ? map.find_group_layer(*parentId) : nullptr;
 
-    if (parentId) {
-      const auto* parentLayer = map.find_group_layer(*parentId);
-      TACTILE_ASSERT(parentLayer != nullptr);
+    if (parentLayer && !parentLayer->is_visible()) {
+      return;
+    }
 
-      if (!parentLayer->is_visible()) {
-        return;
-      }
-
-      const auto parentOpacity = parentLayer ? parentLayer->get_opacity() : 1.0f;
-      if (highlightActiveLayer) {
-        _render_layer(graphics,
-                      map,
-                      layer,
-                      activeLayerId == layer->get_uuid() ? 1.0f : 0.5f);
-      }
-      else {
-        _render_layer(graphics, map, layer, parentOpacity * layer->get_opacity());
-      }
+    const auto parentOpacity = parentLayer ? parentLayer->get_opacity() : 1.0f;
+    if (highlightActiveLayer) {
+      _render_layer(graphics,
+                    map,
+                    layer,
+                    activeLayerId == layer->get_uuid() ? 1.0f : 0.5f);
     }
     else {
-      _render_layer(graphics, map, layer, layer->get_opacity());
+      _render_layer(graphics, map, layer, parentOpacity * layer->get_opacity());
     }
   });
 
