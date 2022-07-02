@@ -123,7 +123,6 @@ void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    // TODO make sure shortcut rule matches this
     if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...",
                         TACTILE_PRIMARY_MOD "+Shift+C",
                         false,

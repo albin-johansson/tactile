@@ -334,4 +334,9 @@ void OpenComponentEditorShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<OpenComponentEditorEvent>();
 }
 
+auto OpenComponentEditorShortcut::is_enabled(const DocumentModel& model) const -> bool
+{
+  return model.is_map_active();
+}
+
 }  // namespace tactile

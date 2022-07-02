@@ -161,6 +161,8 @@ struct OpenComponentEditorShortcut final : AShortcut
   OpenComponentEditorShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 }  // namespace tactile
