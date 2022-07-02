@@ -32,9 +32,9 @@ RenameComponentDialog::RenameComponentDialog() : ComponentNameDialog{"Rename Com
   set_accept_button_label("Rename");
 }
 
-void RenameComponentDialog::show(std::string previousName, const ComponentID& id)
+void RenameComponentDialog::show(std::string previousName, const UUID& componentId)
 {
-  mComponentId = id;
+  mComponentId = componentId;
   ComponentNameDialog::show(std::move(previousName));
 }
 

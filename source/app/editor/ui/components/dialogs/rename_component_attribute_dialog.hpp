@@ -21,8 +21,8 @@
 
 #include <string>  // string
 
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "editor/ui/dialogs/string_input_dialog.hpp"
 
 namespace tactile::ui {
@@ -37,7 +37,7 @@ class RenameComponentAttributeDialog final : public AStringInputDialog
  public:
   RenameComponentAttributeDialog();
 
-  void show(std::string previousName, const ComponentID& id);
+  void show(std::string previousName, const UUID& componentId);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
@@ -46,7 +46,7 @@ class RenameComponentAttributeDialog final : public AStringInputDialog
       -> bool override;
 
  private:
-  Maybe<ComponentID> mComponentId;
+  Maybe<UUID> mComponentId;
 };
 
 }  // namespace tactile::ui

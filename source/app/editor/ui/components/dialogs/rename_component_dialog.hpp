@@ -21,8 +21,8 @@
 
 #include <string>  // string
 
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "editor/ui/components/dialogs/component_name_dialog.hpp"
 
 namespace tactile::ui {
@@ -33,13 +33,13 @@ class RenameComponentDialog final : public ComponentNameDialog
  public:
   RenameComponentDialog();
 
-  void show(std::string previousName, const ComponentID& id);
+  void show(std::string previousName, const UUID& componentId);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  Maybe<ComponentID> mComponentId;
+  Maybe<UUID> mComponentId;
 };
 
 }  // namespace tactile::ui

@@ -20,21 +20,14 @@
 #pragma once
 
 #include "core/common/ints.hpp"
-#include "core/common/uuid.hpp"
 
 namespace tactile {
 
-// TODO remove most of these identifiers
-
-using ContextID = UUID;
-using ComponentID = UUID;
-
 using LayerID = int32;
 using ObjectID = int32;
-using TilesetID = int32;
-using TileID = int32;
 
-using TileIndex = int32;
+using TileIndex = int32;  /// For local tile identifiers.
+using TileID = int32;     /// For global tile identifiers.
 
 inline constexpr TileID empty_tile = 0;
 
