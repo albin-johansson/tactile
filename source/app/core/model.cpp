@@ -26,6 +26,7 @@
 
 #include "core/commands/command_stack.hpp"
 #include "core/commands/commands.hpp"
+#include "core/components/component_index.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
 #include "core/tilesets/tileset_info.hpp"
@@ -58,7 +59,9 @@ auto DocumentModel::add_map(const Vector2i& tileSize,
   TACTILE_ASSERT(tileSize.x > 0);
   TACTILE_ASSERT(tileSize.y > 0);
 
-  auto  mapDocument = std::make_shared<MapDocument>(tileSize, rows, columns);
+  auto mapDocument = std::make_shared<MapDocument>(tileSize, rows, columns);
+  mapDocument->set_component_index(std::make_shared<core::ComponentIndex>());
+
   auto& map = mapDocument->get_map();
 
   register_map(mapDocument);
