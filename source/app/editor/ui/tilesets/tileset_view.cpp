@@ -64,6 +64,13 @@ void _update_viewport_offset(const core::TilesetRef& tilesetRef,
                          ImGuiButtonFlags_MouseButtonLeft |
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
+
+  /* This has no effect when users use touchpads, but that is handled separately */
+  if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
+    const auto&    io = ImGui::GetIO();
+    const Vector2f delta{io.MouseDelta.x, io.MouseDelta.y};
+    dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset->get_uuid(), delta);
+  }
 }
 
 void _render_selection(GraphicsCtx&  graphics,
