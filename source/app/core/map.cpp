@@ -166,6 +166,11 @@ auto Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parentId)
     mRootLayer.add_layer(std::move(layer));
   }
 
+  /* Select the layer if it's the first one to be added */
+  if (layer_count() == 1) {
+    mActiveLayer = id;
+  }
+
   return id;
 }
 

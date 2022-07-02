@@ -174,11 +174,6 @@ void _restore_layers(MapDocument& document, const ir::MapData& mapData)
   for (const auto& layerData : mapData.layers) {
     _restore_layer(document, layerData);
   }
-
-  /*if (!registry.storage<comp::LayerTreeNode>().empty()) {
-    auto& active = ctx_get<comp::ActiveState>(registry);
-    active.layer = registry.view<comp::LayerTreeNode>().front();
-  }*/
 }
 
 void _restore_tile_animation(Tile& tile, const ir::MetaTileData& tileData)
