@@ -76,7 +76,7 @@ auto DocumentModel::add_tileset(const core::TilesetInfo& info) -> UUID
     const auto tilesetId = make_uuid();
 
     auto& commands = mapDocument->get_history();
-    commands.push<AddTilesetCmd>(this, map.get_uuid(), tilesetId, info);
+    commands.exec<AddTilesetCmd>(this, map.get_uuid(), tilesetId, info);
 
     return tilesetId;
   }
@@ -169,7 +169,7 @@ void DocumentModel::remove_tileset(const UUID& id)
 
   if (mActiveDocument && is_map(*mActiveDocument)) {
     auto map = get_map(*mActiveDocument);
-    map->get_history().push<RemoveTilesetCmd>(this, id);
+    map->get_history().exec<RemoveTilesetCmd>(this, id);
   }
   else {
     throw TactileError{"No active map!"};

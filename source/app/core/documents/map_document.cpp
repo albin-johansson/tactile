@@ -96,113 +96,113 @@ void MapDocument::update()
 
 void MapDocument::add_row()
 {
-  get_history().push<AddRowCmd>(this);
+  get_history().exec<AddRowCmd>(this);
 }
 
 void MapDocument::add_column()
 {
-  get_history().push<AddColumnCmd>(this);
+  get_history().exec<AddColumnCmd>(this);
 }
 
 void MapDocument::remove_row()
 {
-  get_history().push<RemoveRowCmd>(this);
+  get_history().exec<RemoveRowCmd>(this);
 }
 
 void MapDocument::remove_column()
 {
-  get_history().push<RemoveColumnCmd>(this);
+  get_history().exec<RemoveColumnCmd>(this);
 }
 
 void MapDocument::resize(const usize rows, const usize cols)
 {
-  get_history().push<ResizeMapCmd>(this, rows, cols);
+  get_history().exec<ResizeMapCmd>(this, rows, cols);
 }
 
 void MapDocument::fix_tiles()
 {
-  get_history().push<FixTilesInMapCmd>(this);
+  get_history().exec<FixTilesInMapCmd>(this);
 }
 
 void MapDocument::add_layer(const LayerType type)
 {
-  get_history().push<AddLayerCmd>(this, type);
+  get_history().exec<AddLayerCmd>(this, type);
 }
 
 void MapDocument::remove_layer(const UUID& layerId)
 {
-  get_history().push<RemoveLayerCmd>(this, layerId);
+  get_history().exec<RemoveLayerCmd>(this, layerId);
 }
 
 void MapDocument::duplicate_layer(const UUID& layerId)
 {
-  get_history().push<DuplicateLayerCmd>(this, layerId);
+  get_history().exec<DuplicateLayerCmd>(this, layerId);
 }
 
 void MapDocument::rename_layer(const UUID& layerId, std::string name)
 {
-  get_history().push<RenameLayerCmd>(this, layerId, std::move(name));
+  get_history().exec<RenameLayerCmd>(this, layerId, std::move(name));
 }
 
 void MapDocument::move_layer_up(const UUID& layerId)
 {
-  get_history().push<MoveLayerUpCmd>(this, layerId);
+  get_history().exec<MoveLayerUpCmd>(this, layerId);
 }
 
 void MapDocument::move_layer_down(const UUID& layerId)
 {
-  get_history().push<MoveLayerDownCmd>(this, layerId);
+  get_history().exec<MoveLayerDownCmd>(this, layerId);
 }
 
 void MapDocument::set_layer_opacity(const UUID& layerId, const float opacity)
 {
-  get_history().push<SetLayerOpacityCmd>(this, layerId, opacity);
+  get_history().exec<SetLayerOpacityCmd>(this, layerId, opacity);
 }
 
 void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
 {
-  get_history().push<SetLayerVisibilityCmd>(this, layerId, visible);
+  get_history().exec<SetLayerVisibilityCmd>(this, layerId, visible);
 }
 
 void MapDocument::register_stamp_sequence(const UUID& layerId,
                                           TileCache   previous,
                                           TileCache   sequence)
 {
-  get_history().push_without_redo<StampToolCmd>(this,
-                                                layerId,
-                                                std::move(previous),
-                                                std::move(sequence));
+  get_history().store<StampToolCmd>(this,
+                                    layerId,
+                                    std::move(previous),
+                                    std::move(sequence));
 }
 
 void MapDocument::register_eraser_sequence(const UUID& layerId, TileCache previous)
 {
-  get_history().push_without_redo<EraserToolCmd>(this, layerId, std::move(previous));
+  get_history().store<EraserToolCmd>(this, layerId, std::move(previous));
 }
 
 void MapDocument::flood(const UUID&    layerId,
                         const TilePos& origin,
                         const TileID   replacement)
 {
-  get_history().push<BucketToolCmd>(this, layerId, origin, replacement);
+  get_history().exec<BucketToolCmd>(this, layerId, origin, replacement);
 }
 
 void MapDocument::add_rectangle(const UUID&     layerId,
                                 const Vector2f& pos,
                                 const Vector2f& size)
 {
-  get_history().push<AddObjectCmd>(this, layerId, ObjectType::Rect, pos, size);
+  get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Rect, pos, size);
 }
 
 void MapDocument::add_ellipse(const UUID&     layerId,
                               const Vector2f& pos,
                               const Vector2f& size)
 {
-  get_history().push<AddObjectCmd>(this, layerId, ObjectType::Ellipse, pos, size);
+  get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Ellipse, pos, size);
 }
 
 void MapDocument::add_point(const UUID& layerId, const Vector2f& pos)
 {
-  get_history().push<AddObjectCmd>(this, layerId, ObjectType::Point, pos);
+  get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Point, pos);
 }
 
 void MapDocument::move_object(const UUID&     layerId,
@@ -210,28 +210,28 @@ void MapDocument::move_object(const UUID&     layerId,
                               const Vector2f& previous,
                               const Vector2f& updated)
 {
-  get_history().push<MoveObjectCmd>(this, layerId, objectId, previous, updated);
+  get_history().exec<MoveObjectCmd>(this, layerId, objectId, previous, updated);
 }
 
 void MapDocument::set_object_visible(const UUID& layerId,
                                      const UUID& objectId,
                                      const bool  visible)
 {
-  get_history().push<SetObjectVisibleCmd>(this, layerId, objectId, visible);
+  get_history().exec<SetObjectVisibleCmd>(this, layerId, objectId, visible);
 }
 
 void MapDocument::set_object_name(const UUID& layerId,
                                   const UUID& objectId,
                                   std::string name)
 {
-  get_history().push<SetObjectNameCmd>(this, layerId, objectId, std::move(name));
+  get_history().exec<SetObjectNameCmd>(this, layerId, objectId, std::move(name));
 }
 
 void MapDocument::set_object_tag(const UUID& layerId,
                                  const UUID& objectId,
                                  std::string tag)
 {
-  get_history().push<SetObjectTagCmd>(this, layerId, objectId, std::move(tag));
+  get_history().exec<SetObjectTagCmd>(this, layerId, objectId, std::move(tag));
 }
 
 void MapDocument::set_name(std::string name)

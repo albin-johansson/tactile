@@ -70,7 +70,7 @@ class CommandStack final
   void redo();
 
   template <std::derived_from<ACommand> T, typename... Args>
-  void push_without_redo(Args&&... args)
+  void store(Args&&... args)
   {
     if (size() == capacity()) {
       remove_oldest_command();
@@ -90,7 +90,7 @@ class CommandStack final
    * \param args the arguments that will be forwarded to a command constructor.
    */
   template <std::derived_from<ACommand> T, typename... Args>
-  void push(Args&&... args)
+  void exec(Args&&... args)
   {
     if (size() == capacity()) {
       remove_oldest_command();

@@ -88,7 +88,7 @@ auto TilesetDocument::get_name() const -> const std::string&
 
 void TilesetDocument::rename_tileset(std::string name)
 {
-  get_history().push<RenameTilesetCmd>(mTileset, std::move(name));
+  get_history().exec<RenameTilesetCmd>(mTileset, std::move(name));
 }
 
 }  // namespace tactile
