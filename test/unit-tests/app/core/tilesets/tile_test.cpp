@@ -40,9 +40,9 @@ TEST(Tile, ReserveObjects)
 {
   Tile tile{42};
 
-  tile.reserve_objects(7);
+  tile.reserve_objects(10);
   ASSERT_EQ(0, tile.object_count());
-  ASSERT_EQ(7, tile.object_capacity());
+  ASSERT_EQ(10, tile.object_capacity());
 }
 
 TEST(Tile, AddObject)
