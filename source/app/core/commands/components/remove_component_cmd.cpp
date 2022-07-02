@@ -27,7 +27,6 @@
 
 namespace tactile {
 
-// TODO rename to DetachComponentCmd
 DetachComponentCmd::DetachComponentCmd(Shared<core::IContext> context,
                                        const UUID&            componentId)
     : ACommand{"Remove Component"}
