@@ -26,7 +26,7 @@
 #include "core/events/misc_events.hpp"
 #include "core/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
-#include "editor/ui/widgets.hpp"
+#include "editor/ui/ui.hpp"
 
 namespace tactile {
 

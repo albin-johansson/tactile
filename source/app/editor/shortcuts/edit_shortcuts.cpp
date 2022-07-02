@@ -33,7 +33,7 @@
 #include "core/tools/tool_manager.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/menus/map_menu.hpp"
-#include "editor/ui/widgets.hpp"
+#include "editor/ui/ui.hpp"
 
 namespace tactile {
 

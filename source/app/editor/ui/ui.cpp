@@ -17,28 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "widgets.hpp"
+#include "ui.hpp"
 
 #include "core/model.hpp"
 #include "editor/ui/components/component_dock.hpp"
-#include "editor/ui/dialogs/map_parse_error_dialog.hpp"
-#include "editor/ui/dialogs/resize_map_dialog.hpp"
 #include "editor/ui/dock_space.hpp"
 #include "editor/ui/layers/layer_dock.hpp"
 #include "editor/ui/log/log_dock.hpp"
 #include "editor/ui/menus/menu_bar.hpp"
 #include "editor/ui/properties/property_dock.hpp"
+#include "editor/ui/shared/dialog_state.hpp"
+#include "editor/ui/shared/dialogs.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
 #include "editor/ui/viewport/toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 
 namespace tactile::ui {
-namespace {
-
-inline ResizeMapDialog     _resize_map_dialog;
-inline MapParseErrorDialog _map_parse_error_dialog;
-
-}  // namespace
 
 void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -60,18 +54,9 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   update_viewport_widget(model, dispatcher);
 
-  _resize_map_dialog.update(model, dispatcher);
-  _map_parse_error_dialog.update(model, dispatcher);
-}
-
-void show_resize_map_dialog(const usize currentRows, const usize currentColumns)
-{
-  _resize_map_dialog.show(currentRows, currentColumns);
-}
-
-void show_map_import_error_dialog(const io::ParseError error)
-{
-  _map_parse_error_dialog.show(error);
+  auto& dialogs = get_dialogs();
+  dialogs.resize_map.update(model, dispatcher);
+  dialogs.map_parse_error.update(model, dispatcher);
 }
 
 auto is_editor_focused() -> bool

@@ -30,10 +30,6 @@ namespace tactile::ui {
 /// Updates the state of the GUI.
 void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-void show_resize_map_dialog(usize currentRows, usize currentColumns);
-
-void show_map_import_error_dialog(io::ParseError error);
-
 [[nodiscard]] auto is_editor_focused() -> bool;
 
 }  // namespace tactile::ui
