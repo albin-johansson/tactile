@@ -41,7 +41,7 @@
 #include "editor/ui/rendering/render_map.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/map_viewport_overlay.hpp"
-#include "editor/ui/viewport/toolbar.hpp"
+#include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
 #include "io/persistence/preferences.hpp"
 
@@ -133,7 +133,7 @@ void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
     return;
   }
 
-  if (is_toolbar_hovered()) {
+  if (is_map_toolbar_hovered()) {
     return;
   }
 
@@ -259,7 +259,7 @@ void show_map_viewport(const DocumentModel& model,
 
   graphics.pop_clip();
 
-  update_viewport_toolbar(model, dispatcher);
+  update_map_viewport_toolbar(model, dispatcher);
   update_map_viewport_overlay(map, cursor);
 
   _update_context_menu(map, dispatcher);

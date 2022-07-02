@@ -25,17 +25,12 @@
 
 namespace tactile::ui {
 
-/// \name Toolbar functions
-/// \{
+void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher);
+[[nodiscard]] auto is_map_toolbar_visible() -> bool;
 
-[[nodiscard]] auto is_toolbar_visible() -> bool;
+[[nodiscard]] auto is_map_toolbar_hovered() -> bool;
 
-[[nodiscard]] auto is_toolbar_hovered() -> bool;
-
-[[nodiscard]] auto is_toolbar_focused() -> bool;
-
-/// \} End of toolbar functions
+[[nodiscard]] auto is_map_toolbar_focused() -> bool;
 
 }  // namespace tactile::ui

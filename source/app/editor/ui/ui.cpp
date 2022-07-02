@@ -29,7 +29,7 @@
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
-#include "editor/ui/viewport/toolbar.hpp"
+#include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 
 namespace tactile::ui {
@@ -61,7 +61,7 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 
 auto is_editor_focused() -> bool
 {
-  return is_toolbar_focused() || is_viewport_focused() || is_layer_dock_focused() ||
+  return is_map_toolbar_focused() || is_viewport_focused() || is_layer_dock_focused() ||
          is_tileset_dock_focused() || is_property_dock_focused() || is_log_dock_focused();
 }
 

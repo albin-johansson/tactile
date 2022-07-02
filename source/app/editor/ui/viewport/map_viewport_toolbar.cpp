@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "toolbar.hpp"
+#include "map_viewport_toolbar.hpp"
 
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
@@ -99,8 +99,7 @@ void _show_extra_toolbar(auto callable)
 
 }  // namespace
 
-// TODO rename to reflect that this is the map view toolbar
-void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   remove_tab_bar_from_next_window();
 
@@ -198,17 +197,17 @@ void update_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispa
   }
 }
 
-auto is_toolbar_visible() -> bool
+auto is_map_toolbar_visible() -> bool
 {
   return _toolbar_visible;
 }
 
-auto is_toolbar_hovered() -> bool
+auto is_map_toolbar_hovered() -> bool
 {
   return _toolbar_hovered;
 }
 
-auto is_toolbar_focused() -> bool
+auto is_map_toolbar_focused() -> bool
 {
   return _toolbar_focused;
 }
