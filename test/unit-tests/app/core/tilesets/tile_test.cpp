@@ -33,7 +33,6 @@ TEST(Tile, Defaults)
   const Tile tile{7};
   ASSERT_EQ(7, tile.index());
   ASSERT_EQ(0, tile.object_count());
-  ASSERT_EQ(0, tile.object_capacity());
   ASSERT_FALSE(tile.is_animated());
 }
 
