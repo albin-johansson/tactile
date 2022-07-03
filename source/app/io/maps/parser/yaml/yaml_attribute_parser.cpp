@@ -288,7 +288,8 @@ auto parse_properties(const YAML::Node& node, ir::ContextData& data) -> ParseErr
         }
       }
       else {
-        return ParseError::CorruptPropertyValue;  // TODO no_property_value
+        // TODO make it so that values can be omitted if using default value?
+        return ParseError::CorruptPropertyValue;
       }
     }
   }
