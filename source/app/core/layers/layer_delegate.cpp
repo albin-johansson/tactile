@@ -41,6 +41,11 @@ void LayerDelegate::set_parent(const Maybe<UUID>& id)
   mParentId = id;
 }
 
+void LayerDelegate::set_meta_id(const int32 id)
+{
+  mMetaId = id;
+}
+
 void LayerDelegate::set_name(std::string name)
 {
   mContext.set_name(std::move(name));
@@ -64,6 +69,11 @@ auto LayerDelegate::get_uuid() const -> const UUID&
 auto LayerDelegate::get_parent() const -> const Maybe<UUID>&
 {
   return mParentId;
+}
+
+auto LayerDelegate::get_meta_id() const -> const Maybe<int32>&
+{
+  return mMetaId;
 }
 
 auto LayerDelegate::get_name() const -> const std::string&
@@ -100,6 +110,7 @@ auto LayerDelegate::clone() const -> LayerDelegate
   result.mContext = mContext.clone();
   result.mOpacity = mOpacity;
   result.mVisible = mVisible;
+  result.mMetaId = nothing;  // This has to be set separately
 
   return result;
 }

@@ -46,6 +46,8 @@ class ObjectLayer final : public ILayer
 
   void set_parent(const Maybe<UUID>& parentId) override;
 
+  void set_meta_id(int32 id) override;
+
   void accept(IContextVisitor& visitor) const override;
 
   void set_name(std::string name) override;
@@ -84,6 +86,8 @@ class ObjectLayer final : public ILayer
   [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
 
   [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
+
+  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 

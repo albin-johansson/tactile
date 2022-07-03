@@ -423,6 +423,11 @@ void GroupLayer::set_parent(const Maybe<UUID>& parentId)
   mDelegate.set_parent(parentId);
 }
 
+void GroupLayer::set_meta_id(const int32 id)
+{
+  mDelegate.set_meta_id(id);
+}
+
 void GroupLayer::set_name(std::string name)
 {
   mDelegate.set_name(std::move(name));
@@ -720,6 +725,11 @@ auto GroupLayer::get_comps() const -> const ComponentBundle&
 auto GroupLayer::get_parent() const -> Maybe<UUID>
 {
   return mDelegate.get_parent();
+}
+
+auto GroupLayer::get_meta_id() const -> Maybe<int32>
+{
+  return mDelegate.get_meta_id();
 }
 
 }  // namespace tactile::core

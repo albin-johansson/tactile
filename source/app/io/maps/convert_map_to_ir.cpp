@@ -29,6 +29,7 @@
 #include "core/layers/tile_layer.hpp"
 #include "core/model.hpp"
 #include "meta/profile.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::io {
 namespace {
@@ -58,8 +59,9 @@ void _convert_object(const core::Object&         object,
                      const core::ComponentIndex* components,
                      ir::ObjectData&             data)
 {
-  // TODO more readable sequential id?
-  data.id = static_cast<ObjectID>(hash(object.get_uuid()));
+  TACTILE_ASSERT(object.get_meta_id().has_value());
+
+  data.id = object.get_meta_id().value();
   data.type = object.get_type();
 
   data.pos = object.get_pos();
@@ -125,10 +127,10 @@ void _convert_layer(const core::ILayer&         layer,
                     const core::ComponentIndex* components,
                     ir::LayerData&              data)
 {
+  TACTILE_ASSERT(layer.get_meta_id().has_value());
   data.index = index;
 
-  /* We don't use plain integer IDs for layers, but this approximation should work */
-  data.id = static_cast<int32>(index) + 1;
+  data.id = layer.get_meta_id().value();
   data.type = layer.get_type();
   data.opacity = layer.get_opacity();
   data.visible = layer.is_visible();
@@ -270,7 +272,8 @@ auto convert_map_to_ir(const MapDocument& document) -> ir::MapData
   data.row_count = map.row_count();
   data.col_count = map.column_count();
   data.tile_size = map.tile_size();
-  // TODO data.next_object_id = mapInfo.next_object_id;
+  data.next_object_id = map.next_object_id();
+  data.next_layer_id = map.next_layer_id();
 
   const auto* components = document.get_component_index().get();
 

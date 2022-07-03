@@ -21,7 +21,9 @@
 
 #include <string>  // string
 
+#include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/common/maybe.hpp"
 #include "core/contexts/context.hpp"
 #include "core/contexts/context_delegate.hpp"
 #include "core/layers/object_type.hpp"
@@ -38,6 +40,8 @@ class Object final : public IContext
   void set_type(ObjectType type);
 
   void set_tag(std::string tag);
+
+  void set_meta_id(int32 id);
 
   void set_visible(bool visible);
 
@@ -63,6 +67,8 @@ class Object final : public IContext
 
   [[nodiscard]] auto get_tag() const -> const std::string& { return mTag; }
 
+  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> { return mMetaId; }
+
   [[nodiscard]] auto is_visible() const noexcept -> bool { return mVisible; }
 
  private:
@@ -71,6 +77,7 @@ class Object final : public IContext
   Vector2f        mSize{};                  /// Object size (might be zero).
   ObjectType      mType{ObjectType::Rect};  /// Specific object type.
   std::string     mTag;                     /// Optional user-provided tag.
+  Maybe<int32>    mMetaId;
   bool            mVisible : 1 {true};
 };
 

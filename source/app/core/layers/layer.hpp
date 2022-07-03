@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
@@ -47,6 +48,9 @@ class ILayer : public IContext
   /// Sets the parent layer ID.
   virtual void set_parent(const Maybe<UUID>& parentId) = 0;
 
+  /// Sets the human-readable identifier associated with the layer (used in save files).
+  virtual void set_meta_id(int32 id) = 0;
+
   /// Returns the layer opacity, in the range [0, 1].
   [[nodiscard]] virtual auto get_opacity() const -> float = 0;
 
@@ -61,6 +65,9 @@ class ILayer : public IContext
 
   /// Returns the parent group layer ID, if there is one.
   [[nodiscard]] virtual auto get_parent() const -> Maybe<UUID> = 0;
+
+  /// Returns a human-readable identifier, if there is one.
+  [[nodiscard]] virtual auto get_meta_id() const -> Maybe<int32> = 0;
 };
 
 }  // namespace tactile::core

@@ -465,7 +465,7 @@ TEST(Map, MoveLayerDown)
 TEST(Map, SelectLayer)
 {
   MapLayerPreset preset;
-  ASSERT_FALSE(preset.map.active_layer_id().has_value());
+  ASSERT_TRUE(preset.map.active_layer_id().has_value());
   ASSERT_THROW(preset.map.select_layer(make_uuid()), TactileError);
 
   preset.map.select_layer(preset.e);

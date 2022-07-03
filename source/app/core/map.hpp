@@ -142,17 +142,18 @@ class Map final : public IContext
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  [[nodiscard]] auto next_tile_layer_suffix() const -> int32 { return mTileLayerSuffix; }
+  auto fetch_and_increment_next_object_id() -> int32;
+  auto fetch_and_increment_next_layer_id() -> int32;
 
-  [[nodiscard]] auto next_object_layer_suffix() const -> int32
-  {
-    return mObjectLayerSuffix;
-  }
+  void set_next_object_id(int32 id);
+  void set_next_layer_id(int32 id);
 
-  [[nodiscard]] auto next_group_layer_suffix() const -> int32
-  {
-    return mGroupLayerSuffix;
-  }
+  [[nodiscard]] auto next_object_id() const -> int32;
+  [[nodiscard]] auto next_layer_id() const -> int32;
+
+  [[nodiscard]] auto next_tile_layer_suffix() const -> int32;
+  [[nodiscard]] auto next_object_layer_suffix() const -> int32;
+  [[nodiscard]] auto next_group_layer_suffix() const -> int32;
 
  private:
   UUID            mId{make_uuid()};
@@ -163,6 +164,8 @@ class Map final : public IContext
   Maybe<UUID>     mActiveLayer;
   TilesetBundle   mTilesets;
   ContextDelegate mContext;
+  int32           mNextObjectId{1};
+  int32           mNextLayerId{1};
   int32           mTileLayerSuffix{1};
   int32           mObjectLayerSuffix{1};
   int32           mGroupLayerSuffix{1};

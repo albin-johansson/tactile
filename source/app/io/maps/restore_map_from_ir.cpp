@@ -30,7 +30,6 @@
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/documents/document.hpp"
 #include "core/documents/map_document.hpp"
@@ -94,7 +93,7 @@ auto _restore_object(ADocument& document, const ir::ObjectData& objectData)
   object->set_visible(objectData.visible);
 
   object->set_name(objectData.name);
-  // TODO id
+  object->set_meta_id(objectData.id);
 
   _restore_context(document, object, objectData.context);
 
@@ -120,7 +119,7 @@ auto _restore_layer(MapDocument&         document,
                     const Maybe<UUID>&   parent = nothing) -> UUID
 {
   auto& map = document.get_map();
-  //  node.index = layerData.index;
+  // TODO respect layerData.index?
 
   UUID layerId;
   switch (layerData.type) {
@@ -161,6 +160,7 @@ auto _restore_layer(MapDocument&         document,
   layer.set_name(layerData.name);
   layer.set_opacity(layerData.opacity);
   layer.set_visible(layerData.visible);
+  layer.set_meta_id(layerData.id);
 
   _restore_context(document, map.get_layer(layerId), layerData.context);
 
@@ -303,6 +303,8 @@ void restore_map_from_ir(const ParseData& data,
   document->set_name(path.filename().string());
 
   map.set_tile_size(mapData.tile_size);
+  map.set_next_layer_id(mapData.next_layer_id);
+  map.set_next_object_id(mapData.next_object_id);
   map.resize(mapData.row_count, mapData.col_count);
 
   _restore_component_definitions(*document, mapData);

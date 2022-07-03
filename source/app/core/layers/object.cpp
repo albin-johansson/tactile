@@ -45,6 +45,11 @@ void Object::set_tag(std::string tag)
   mTag = std::move(tag);
 }
 
+void Object::set_meta_id(const int32 id)
+{
+  mMetaId = id;
+}
+
 void Object::set_visible(const bool visible)
 {
   mVisible = visible;

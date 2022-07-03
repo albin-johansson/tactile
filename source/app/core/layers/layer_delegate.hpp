@@ -21,6 +21,7 @@
 
 #include <string>  // string
 
+#include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
@@ -42,6 +43,8 @@ class LayerDelegate final
 
   void set_parent(const Maybe<UUID>& id);
 
+  void set_meta_id(int32 id);
+
   void set_name(std::string name);
 
   [[nodiscard]] auto get_opacity() const -> float;
@@ -51,6 +54,8 @@ class LayerDelegate final
   [[nodiscard]] auto get_uuid() const -> const UUID&;
 
   [[nodiscard]] auto get_parent() const -> const Maybe<UUID>&;
+
+  [[nodiscard]] auto get_meta_id() const -> const Maybe<int32>&;
 
   [[nodiscard]] auto get_name() const -> const std::string&;
 
@@ -65,6 +70,7 @@ class LayerDelegate final
  private:
   UUID            mId{};
   Maybe<UUID>     mParentId{};
+  Maybe<int32>    mMetaId;
   ContextDelegate mContext;
   float           mOpacity{1.0f};
   bool            mVisible : 1 {true};

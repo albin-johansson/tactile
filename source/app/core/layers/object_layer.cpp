@@ -57,6 +57,11 @@ void ObjectLayer::set_parent(const Maybe<UUID>& parentId)
   mDelegate.set_parent(parentId);
 }
 
+void ObjectLayer::set_meta_id(const int32 id)
+{
+  mDelegate.set_meta_id(id);
+}
+
 void ObjectLayer::accept(IContextVisitor& visitor) const
 {
   visitor.visit(*this);
@@ -176,6 +181,11 @@ auto ObjectLayer::get_uuid() const -> const UUID&
 auto ObjectLayer::get_parent() const -> Maybe<UUID>
 {
   return mDelegate.get_parent();
+}
+
+auto ObjectLayer::get_meta_id() const -> Maybe<int32>
+{
+  return mDelegate.get_meta_id();
 }
 
 }  // namespace tactile::core

@@ -65,6 +65,8 @@ class GroupLayer final : public ILayer
 
   void set_parent(const Maybe<UUID>& parentId) override;
 
+  void set_meta_id(int32 id) override;
+
   void set_name(std::string name) override;
 
   void set_layer_index(const UUID& id, usize index);
@@ -124,6 +126,8 @@ class GroupLayer final : public ILayer
   [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
 
   [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
+
+  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
 
   [[nodiscard]] auto storage() -> LayerStorage& { return mLayers; }
   [[nodiscard]] auto storage() const -> const LayerStorage& { return mLayers; }

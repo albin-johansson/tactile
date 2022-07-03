@@ -163,6 +163,11 @@ void TileLayer::set_parent(const Maybe<UUID>& parentId)
   mDelegate.set_parent(parentId);
 }
 
+void TileLayer::set_meta_id(const int32 id)
+{
+  mDelegate.set_meta_id(id);
+}
+
 void TileLayer::accept(IContextVisitor& visitor) const
 {
   visitor.visit(*this);
@@ -275,6 +280,11 @@ auto TileLayer::get_comps() const -> const ComponentBundle&
 auto TileLayer::get_parent() const -> Maybe<UUID>
 {
   return mDelegate.get_parent();
+}
+
+auto TileLayer::get_meta_id() const -> Maybe<int32>
+{
+  return mDelegate.get_meta_id();
 }
 
 }  // namespace tactile::core

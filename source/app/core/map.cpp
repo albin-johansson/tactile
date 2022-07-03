@@ -178,6 +178,7 @@ auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
 {
   auto layer = TileLayer::make(mRowCount, mColCount);
 
+  layer->set_meta_id(fetch_and_increment_next_layer_id());
   layer->set_name(fmt::format("Tile Layer {}", mTileLayerSuffix));
   ++mTileLayerSuffix;
 
@@ -188,6 +189,7 @@ auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
 {
   auto layer = ObjectLayer::make();
 
+  layer->set_meta_id(fetch_and_increment_next_layer_id());
   layer->set_name(fmt::format("Object Layer {}", mObjectLayerSuffix));
   ++mObjectLayerSuffix;
 
@@ -198,6 +200,7 @@ auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
 {
   auto layer = GroupLayer::make();
 
+  layer->set_meta_id(fetch_and_increment_next_layer_id());
   layer->set_name(fmt::format("Group Layer {}", mGroupLayerSuffix));
   ++mGroupLayerSuffix;
 
@@ -224,7 +227,9 @@ auto Map::remove_layer(const UUID& id) -> Shared<ILayer>
 
 auto Map::duplicate_layer(const UUID& id) -> Shared<ILayer>
 {
-  return mRootLayer.duplicate_layer(id);
+  auto layer = mRootLayer.duplicate_layer(id);
+  layer->set_meta_id(fetch_and_increment_next_layer_id());
+  return layer;
 }
 
 void Map::move_layer_up(const UUID& id)
@@ -451,6 +456,51 @@ auto Map::get_uuid() const -> const UUID&
 auto Map::get_name() const -> const std::string&
 {
   return mContext.get_name();
+}
+
+auto Map::fetch_and_increment_next_object_id() -> int32
+{
+  return mNextObjectId++;
+}
+
+auto Map::fetch_and_increment_next_layer_id() -> int32
+{
+  return mNextLayerId++;
+}
+
+void Map::set_next_object_id(const int32 id)
+{
+  mNextObjectId = id;
+}
+
+void Map::set_next_layer_id(const int32 id)
+{
+  mNextLayerId = id;
+}
+
+auto Map::next_object_id() const -> int32
+{
+  return mNextObjectId;
+}
+
+auto Map::next_layer_id() const -> int32
+{
+  return mNextLayerId;
+}
+
+auto Map::next_tile_layer_suffix() const -> int32
+{
+  return mTileLayerSuffix;
+}
+
+auto Map::next_object_layer_suffix() const -> int32
+{
+  return mObjectLayerSuffix;
+}
+
+auto Map::next_group_layer_suffix() const -> int32
+{
+  return mGroupLayerSuffix;
 }
 
 }  // namespace tactile::core
