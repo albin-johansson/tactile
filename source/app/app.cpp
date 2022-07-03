@@ -855,7 +855,7 @@ void App::on_rename_layer(const RenameLayerEvent& event)
 void App::on_set_object_name(const SetObjectNameEvent& event)
 {
   if (auto* map = active_map_document()) {
-    map->set_object_name(event.layer_id, event.object_id, event.name);
+    map->set_object_name(event.object_id, event.name);
   }
 }
 

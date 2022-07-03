@@ -31,10 +31,7 @@ namespace tactile {
 class SetObjectNameCmd final : public ACommand
 {
  public:
-  SetObjectNameCmd(MapDocument* document,
-                   const UUID&  layerId,
-                   const UUID&  objectId,
-                   std::string  name);
+  SetObjectNameCmd(MapDocument* document, const UUID& objectId, std::string name);
 
   void undo() override;
 
@@ -49,7 +46,6 @@ class SetObjectNameCmd final : public ACommand
 
  private:
   MapDocument*       mDocument{};
-  UUID               mLayerId{};
   UUID               mObjectId{};
   std::string        mNewName;
   Maybe<std::string> mOldName;

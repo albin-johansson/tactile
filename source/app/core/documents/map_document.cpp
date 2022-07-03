@@ -22,28 +22,11 @@
 #include <algorithm>  // find_if
 #include <utility>    // move
 
-#include "core/commands/layers/add_layer_cmd.hpp"
-#include "core/commands/layers/duplicate_layer_cmd.hpp"
-#include "core/commands/layers/move_layer_down_cmd.hpp"
-#include "core/commands/layers/move_layer_up_cmd.hpp"
-#include "core/commands/layers/remove_layer_cmd.hpp"
-#include "core/commands/layers/rename_layer_cmd.hpp"
-#include "core/commands/layers/set_layer_opacity_cmd.hpp"
-#include "core/commands/layers/set_layer_visibility_cmd.hpp"
-#include "core/commands/maps/add_column_cmd.hpp"
-#include "core/commands/maps/add_row_cmd.hpp"
-#include "core/commands/maps/fix_tiles_in_map_cmd.hpp"
-#include "core/commands/maps/remove_column_cmd.hpp"
-#include "core/commands/maps/remove_row_cmd.hpp"
-#include "core/commands/maps/resize_map_cmd.hpp"
-#include "core/commands/objects/add_object_cmd.hpp"
-#include "core/commands/objects/move_object_cmd.hpp"
-#include "core/commands/objects/set_object_name_cmd.hpp"
-#include "core/commands/objects/set_object_tag_cmd.hpp"
-#include "core/commands/objects/set_object_visible_cmd.hpp"
-#include "core/commands/tools/bucket_tool_cmd.hpp"
-#include "core/commands/tools/eraser_tool_cmd.hpp"
-#include "core/commands/tools/stamp_tool_cmd.hpp"
+#include "core/commands/layers/all.hpp"
+#include "core/commands/maps/all.hpp"
+#include "core/commands/objects/all.hpp"
+#include "core/commands/tools/all.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
@@ -220,11 +203,9 @@ void MapDocument::set_object_visible(const UUID& layerId,
   get_history().exec<SetObjectVisibleCmd>(this, layerId, objectId, visible);
 }
 
-void MapDocument::set_object_name(const UUID& layerId,
-                                  const UUID& objectId,
-                                  std::string name)
+void MapDocument::set_object_name(const UUID& objectId, std::string name)
 {
-  get_history().exec<SetObjectNameCmd>(this, layerId, objectId, std::move(name));
+  get_history().exec<SetObjectNameCmd>(this, objectId, std::move(name));
 }
 
 void MapDocument::set_object_tag(const UUID& layerId,
@@ -232,6 +213,16 @@ void MapDocument::set_object_tag(const UUID& layerId,
                                  std::string tag)
 {
   get_history().exec<SetObjectTagCmd>(this, layerId, objectId, std::move(tag));
+}
+
+auto MapDocument::get_object(const UUID& objectId) -> Shared<core::Object>
+{
+  if (auto ptr = std::dynamic_pointer_cast<core::Object>(get_context(objectId))) {
+    return ptr;
+  }
+  else {
+    throw TactileError{"Did not find object!"};
+  }
 }
 
 void MapDocument::set_name(std::string name)

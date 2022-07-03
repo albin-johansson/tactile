@@ -57,7 +57,6 @@ struct SetObjectTagEvent final
 /// Emitted when the name of an object should be changed.
 struct SetObjectNameEvent final
 {
-  UUID        layer_id{};   /// Object layer ID.
   UUID        object_id{};  /// ID of target object.
   std::string name;         /// The new object name.
 };

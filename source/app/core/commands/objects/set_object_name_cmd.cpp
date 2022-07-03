@@ -28,12 +28,10 @@
 namespace tactile {
 
 SetObjectNameCmd::SetObjectNameCmd(MapDocument* document,
-                                   const UUID&  layerId,
                                    const UUID&  objectId,
                                    std::string  name)
     : ACommand{"Set Object Name"}
     , mDocument{document}
-    , mLayerId{layerId}
     , mObjectId{objectId}
     , mNewName{std::move(name)}
 {
@@ -44,29 +42,23 @@ SetObjectNameCmd::SetObjectNameCmd(MapDocument* document,
 
 void SetObjectNameCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
-  auto& object = layer.get_object(mObjectId);
-
-  object.set_name(mOldName.value());
+  auto object = mDocument->get_object(mObjectId);
+  object->set_name(mOldName.value());
   mOldName.reset();
 }
 
 void SetObjectNameCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
-  auto& object = layer.get_object(mObjectId);
-
-  mOldName = object.get_name();
-  object.set_name(mNewName);
+  auto object = mDocument->get_object(mObjectId);
+  mOldName = object->get_name();
+  object->set_name(mNewName);
 }
 
 auto SetObjectNameCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const SetObjectNameCmd&>(cmd);
-    if (mLayerId == other.mLayerId && mObjectId == other.mObjectId) {
+    if (mObjectId == other.mObjectId) {
       mNewName = other.mNewName;
       return true;
     }

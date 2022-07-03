@@ -216,7 +216,7 @@ void _show_native_object_properties(const Object& object, entt::dispatcher& disp
   }
 
   if (const auto updatedName = _native_name_row(object.get_name())) {
-    // TODO dispatcher.enqueue<SetObjectNameEvent>(object.get_uuid(), *updatedName);
+    dispatcher.enqueue<SetObjectNameEvent>(object.get_uuid(), *updatedName);
   }
 
   _native_read_only_row("X", object.get_pos().x);
