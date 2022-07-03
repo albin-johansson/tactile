@@ -31,10 +31,7 @@ namespace tactile {
 class SetObjectTagCmd final : public ACommand
 {
  public:
-  SetObjectTagCmd(MapDocument* document,
-                  const UUID&  layerId,
-                  const UUID&  objectId,
-                  std::string  tag);
+  SetObjectTagCmd(MapDocument* document, const UUID& objectId, std::string tag);
 
   void undo() override;
 
@@ -49,7 +46,6 @@ class SetObjectTagCmd final : public ACommand
 
  private:
   MapDocument*       mDocument{};
-  UUID               mLayerId{};
   UUID               mObjectId{};
   std::string        mNewTag;
   Maybe<std::string> mOldTag;

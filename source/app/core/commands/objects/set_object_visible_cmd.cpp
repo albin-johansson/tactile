@@ -26,12 +26,10 @@
 namespace tactile {
 
 SetObjectVisibleCmd::SetObjectVisibleCmd(MapDocument* document,
-                                         const UUID&  layerId,
                                          const UUID&  objectId,
                                          const bool   visible)
     : ACommand{"Set Object Visibility"}
     , mDocument{document}
-    , mLayerId{layerId}
     , mObjectId{objectId}
     , mVisible{visible}
 {
@@ -42,22 +40,16 @@ SetObjectVisibleCmd::SetObjectVisibleCmd(MapDocument* document,
 
 void SetObjectVisibleCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
-  auto& object = layer.get_object(mObjectId);
-
-  object.set_visible(mPrevious.value());
+  auto object = mDocument->get_object(mObjectId);
+  object->set_visible(mPrevious.value());
   mPrevious.value();
 }
 
 void SetObjectVisibleCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
-  auto& object = layer.get_object(mObjectId);
-
-  mPrevious = object.is_visible();
-  object.set_visible(mVisible);
+  auto object = mDocument->get_object(mObjectId);
+  mPrevious = object->is_visible();
+  object->set_visible(mVisible);
 }
 
 }  // namespace tactile

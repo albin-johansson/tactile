@@ -29,10 +29,7 @@ namespace tactile {
 class SetObjectVisibleCmd final : public ACommand
 {
  public:
-  SetObjectVisibleCmd(MapDocument* document,
-                      const UUID&  layerId,
-                      const UUID&  objectId,
-                      bool         visible);
+  SetObjectVisibleCmd(MapDocument* document, const UUID& objectId, bool visible);
 
   void undo() override;
 
@@ -45,7 +42,6 @@ class SetObjectVisibleCmd final : public ACommand
 
  private:
   MapDocument* mDocument{};
-  UUID         mLayerId{};
   UUID         mObjectId{};
   bool         mVisible;
   Maybe<bool>  mPrevious;

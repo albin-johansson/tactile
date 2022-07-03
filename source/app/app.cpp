@@ -869,14 +869,14 @@ void App::on_move_object(const MoveObjectEvent& event)
 void App::on_set_object_visible(const SetObjectVisibleEvent& event)
 {
   if (auto* document = active_map_document()) {
-    document->set_object_visible(event.layer_id, event.object_id, event.visible);
+    document->set_object_visible(event.object_id, event.visible);
   }
 }
 
 void App::on_set_object_tag(const SetObjectTagEvent& event)
 {
   if (auto* document = active_map_document()) {
-    document->set_object_tag(event.layer_id, event.object_id, event.tag);
+    document->set_object_tag(event.object_id, event.tag);
   }
 }
 

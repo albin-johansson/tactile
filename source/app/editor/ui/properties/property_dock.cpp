@@ -219,25 +219,27 @@ void _show_native_object_properties(const Object& object, entt::dispatcher& disp
     dispatcher.enqueue<SetObjectNameEvent>(object.get_uuid(), *updatedName);
   }
 
-  _native_read_only_row("X", object.get_pos().x);
-  _native_read_only_row("Y", object.get_pos().y);
+  const auto& pos = object.get_pos();
+  _native_read_only_row("X", pos.x);
+  _native_read_only_row("Y", pos.y);
 
   if (object.get_type() != ObjectType::Point) {
-    _native_read_only_row("Width", object.get_size().x);
-    _native_read_only_row("Height", object.get_size().y);
+    const auto& size = object.get_size();
+    _native_read_only_row("Width", size.x);
+    _native_read_only_row("Height", size.y);
   }
 
   _prepare_table_row("Visible");
   ImGui::TableNextColumn();
   if (const auto visible = input_bool("##ObjectVisible", object.is_visible())) {
-    // TODO dispatcher.enqueue<SetObjectVisibleEvent>(object.get_uuid(), *visible);
+    dispatcher.enqueue<SetObjectVisibleEvent>(object.get_uuid(), *visible);
   }
 
   _prepare_table_row("Tag");
 
   ImGui::TableNextColumn();
   if (const auto tag = input_string("##NativeObjectTagInput", object.get_tag())) {
-    // TODO dispatcher.enqueue<SetObjectTagEvent>(object.get_uuid(), *tag);
+    dispatcher.enqueue<SetObjectTagEvent>(object.get_uuid(), *tag);
   }
 }
 

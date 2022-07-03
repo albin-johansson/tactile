@@ -104,11 +104,11 @@ class MapDocument final : public ADocument
                    const Vector2f& previous,
                    const Vector2f& updated);
 
-  void set_object_visible(const UUID& layerId, const UUID& objectId, bool visible);
+  void set_object_visible(const UUID& objectId, bool visible);
 
   void set_object_name(const UUID& objectId, std::string name);
 
-  void set_object_tag(const UUID& layerId, const UUID& objectId, std::string tag);
+  void set_object_tag(const UUID& objectId, std::string tag);
 
   [[nodiscard]] auto get_object(const UUID& objectId) -> Shared<core::Object>;
 

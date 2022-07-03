@@ -41,7 +41,6 @@ struct MoveObjectEvent final
 /// Emitted when the visibility of an object should be changed.
 struct SetObjectVisibleEvent final
 {
-  UUID layer_id{};   /// Object layer ID.
   UUID object_id{};  /// ID of the target object.
   bool visible{};    /// New visibility state.
 };
@@ -49,7 +48,6 @@ struct SetObjectVisibleEvent final
 /// Emitted when the tag of an object should be changed.
 struct SetObjectTagEvent final
 {
-  UUID        layer_id{};   /// Object layer ID.
   UUID        object_id{};  /// ID of target object.
   std::string tag;          /// The new object tag.
 };

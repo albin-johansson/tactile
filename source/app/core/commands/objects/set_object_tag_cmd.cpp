@@ -28,12 +28,10 @@
 namespace tactile {
 
 SetObjectTagCmd::SetObjectTagCmd(MapDocument* document,
-                                 const UUID&  layerId,
                                  const UUID&  objectId,
                                  std::string  tag)
     : ACommand{"Set Object Tag"}
     , mDocument{document}
-    , mLayerId{layerId}
     , mObjectId{objectId}
     , mNewTag{std::move(tag)}
 {
@@ -44,29 +42,23 @@ SetObjectTagCmd::SetObjectTagCmd(MapDocument* document,
 
 void SetObjectTagCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
-  auto& object = layer.get_object(mObjectId);
-
-  object.set_tag(mOldTag.value());
+  auto object = mDocument->get_object(mObjectId);
+  object->set_tag(mOldTag.value());
   mOldTag.reset();
 }
 
 void SetObjectTagCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
-  auto& object = layer.get_object(mObjectId);
-
-  mOldTag = object.get_tag();
-  object.set_tag(mNewTag);
+  auto object = mDocument->get_object(mObjectId);
+  mOldTag = object->get_tag();
+  object->set_tag(mNewTag);
 }
 
 auto SetObjectTagCmd::merge_with(const ACommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const SetObjectTagCmd&>(cmd);
-    if (mLayerId == other.mLayerId && mObjectId == other.mObjectId) {
+    if (mObjectId == other.mObjectId) {
       mNewTag = other.mNewTag;
       return true;
     }

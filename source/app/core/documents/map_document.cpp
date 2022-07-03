@@ -196,11 +196,9 @@ void MapDocument::move_object(const UUID&     layerId,
   get_history().exec<MoveObjectCmd>(this, layerId, objectId, previous, updated);
 }
 
-void MapDocument::set_object_visible(const UUID& layerId,
-                                     const UUID& objectId,
-                                     const bool  visible)
+void MapDocument::set_object_visible(const UUID& objectId, const bool visible)
 {
-  get_history().exec<SetObjectVisibleCmd>(this, layerId, objectId, visible);
+  get_history().exec<SetObjectVisibleCmd>(this, objectId, visible);
 }
 
 void MapDocument::set_object_name(const UUID& objectId, std::string name)
@@ -208,11 +206,9 @@ void MapDocument::set_object_name(const UUID& objectId, std::string name)
   get_history().exec<SetObjectNameCmd>(this, objectId, std::move(name));
 }
 
-void MapDocument::set_object_tag(const UUID& layerId,
-                                 const UUID& objectId,
-                                 std::string tag)
+void MapDocument::set_object_tag(const UUID& objectId, std::string tag)
 {
-  get_history().exec<SetObjectTagCmd>(this, layerId, objectId, std::move(tag));
+  get_history().exec<SetObjectTagCmd>(this, objectId, std::move(tag));
 }
 
 auto MapDocument::get_object(const UUID& objectId) -> Shared<core::Object>
