@@ -41,13 +41,15 @@ void ObjectSelectionTool::on_pressed(DocumentModel&    model,
   if ((mouse.button == cen::mouse_button::left ||
        mouse.button == cen::mouse_button::right) &&
       is_available(model)) {
-    auto& document = model.require_active_map();
-    auto& map = document.get_map();
+    auto&       document = model.require_active_map();
+    auto&       map = document.get_map();
+    const auto& viewport = document.get_viewport();
 
     const auto layerId = map.active_layer_id().value();
     auto&      layer = map.view_object_layer(layerId);
 
-    const auto objectId = layer.object_at(mouse.pos);
+    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
+    const auto objectId = layer.object_at(mouse.pos / ratio, map.tile_size());
 
     switch (mouse.button) {
       case cen::mouse_button::left: {

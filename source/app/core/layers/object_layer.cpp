@@ -26,6 +26,19 @@
 #include "misc/panic.hpp"
 
 namespace tactile::core {
+namespace {
+
+[[nodiscard]] auto _get_bounds(const Object& object, const Vector2f& tileSize) -> Vector4f
+{
+  if (object.get_type() == ObjectType::Point) {
+    return {object.get_pos() - (tileSize * 0.25f), tileSize * 0.5f};
+  }
+  else {
+    return {object.get_pos(), object.get_size()};
+  }
+}
+
+}  // namespace
 
 auto ObjectLayer::make() -> Shared<ObjectLayer>
 {
@@ -126,8 +139,20 @@ auto ObjectLayer::get_object(const UUID& id) const -> const Object&
   return *lookup_in(mObjects, id);
 }
 
-auto ObjectLayer::object_at(const Vector2f& pos) const -> Maybe<UUID>
+auto ObjectLayer::object_at(const Vector2f& pos, const Vector2f& tileSize) const
+    -> Maybe<UUID>
 {
+  for (const auto& [id, object] : mObjects) {
+    const auto bounds = _get_bounds(*object, tileSize);
+
+    const auto maxX = bounds.x + bounds.z;
+    const auto maxY = bounds.y + bounds.w;
+
+    if (pos.x >= bounds.x && pos.y >= bounds.y && pos.x <= maxX && pos.y <= maxY) {
+      return id;
+    }
+  }
+
   return nothing;
 }
 
