@@ -263,7 +263,7 @@ void _convert_component_definitions(const core::ComponentIndex& manager,
 
 auto convert_map_to_ir(const MapDocument& document) -> ir::MapData
 {
-  TACTILE_PROFILE_START
+  TACTILE_DEBUG_PROFILE_START
   const auto& map = document.get_map();
 
   ir::MapData data;
@@ -282,7 +282,7 @@ auto convert_map_to_ir(const MapDocument& document) -> ir::MapData
   _convert_layers(document, components, data);
   _convert_context(map, components, data.context);
 
-  TACTILE_PROFILE_END("Converted document to IR")
+  TACTILE_DEBUG_PROFILE_END("Converted document to IR")
   return data;
 }
 

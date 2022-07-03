@@ -116,7 +116,7 @@ void init_logger()
   logger->flush_on(LogLevel::critical);
 
   spdlog::set_default_logger(logger);
-  spdlog::set_level(is_debug_build ? spdlog::level::trace : spdlog::level::info);
+  spdlog::set_level(is_debug_build ? spdlog::level::trace : spdlog::level::debug);
 
   spdlog::info("Tactile version " TACTILE_VERSION_STRING);
 

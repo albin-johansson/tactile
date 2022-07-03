@@ -37,7 +37,7 @@ namespace tactile::io {
 
 void save_document(const MapDocument& document)
 {
-  TACTILE_PROFILE_START
+  TACTILE_DEBUG_PROFILE_START
   TACTILE_ASSERT(document.has_path());
 
   const auto path = std::filesystem::absolute(document.get_path());
@@ -59,7 +59,7 @@ void save_document(const MapDocument& document)
     spdlog::error("Unsupported file extension {}", ext);
   }
 
-  TACTILE_PROFILE_END("Emitted document")
+  TACTILE_DEBUG_PROFILE_END("Emitted document")
 }
 
 }  // namespace tactile::io
