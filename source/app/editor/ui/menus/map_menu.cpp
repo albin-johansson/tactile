@@ -25,6 +25,7 @@
 #include "core/events/map_events.hpp"
 #include "core/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
+#include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
@@ -69,6 +70,10 @@ void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_REPAIR " Fix Invalid Tiles")) {
       dispatcher.enqueue<FixTilesInMapEvent>();
     }
+
+    lazy_tooltip(
+        "##FixInvalidTilesTooltip",
+        "Repair invalid tile identifiers in all tile layers by setting them to be empty");
 
     ImGui::Separator();
 
