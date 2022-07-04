@@ -56,7 +56,7 @@ void SetLayerVisibilityCmd::redo()
 
 auto SetLayerVisibilityCmd::get_name() const -> const char*
 {
-  return "Set Layer Visibility";
+  return mVisible ? "Show Layer" : "Hide Layer";
 }
 
 }  // namespace tactile
