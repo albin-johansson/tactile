@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class FixTilesInMapCmd final : public ACommand
+class FixTilesInMapCmd final : public ICommand
 {
  public:
   explicit FixTilesInMapCmd(MapDocument* document);
@@ -40,6 +40,8 @@ class FixTilesInMapCmd final : public ACommand
   {
     return CommandId::FixTilesInMap;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument*              mDocument{};

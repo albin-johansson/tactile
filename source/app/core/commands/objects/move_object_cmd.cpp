@@ -29,8 +29,7 @@ MoveObjectCmd::MoveObjectCmd(MapDocument*    document,
                              const UUID&     objectId,
                              const Vector2f& previous,
                              const Vector2f& updated)
-    : ACommand{"Move Object"}
-    , mDocument{document}
+    : mDocument{document}
     , mObjectId{objectId}
     , mPreviousPos{previous}
     , mUpdatedPos{updated}
@@ -50,6 +49,11 @@ void MoveObjectCmd::redo()
 {
   auto object = mDocument->get_object(mObjectId);
   object->set_pos(mUpdatedPos);
+}
+
+auto MoveObjectCmd::get_name() const -> const char*
+{
+  return "Move Object";
 }
 
 }  // namespace tactile

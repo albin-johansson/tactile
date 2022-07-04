@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "misc/panic.hpp"
 
@@ -30,8 +29,7 @@ namespace tactile {
 RenameComponentCmd::RenameComponentCmd(Shared<core::ComponentIndex> index,
                                        const UUID&                  componentId,
                                        std::string                  name)
-    : ACommand{"Rename Component"}
-    , mIndex{std::move(index)}
+    : mIndex{std::move(index)}
     , mComponentId{componentId}
     , mUpdatedName{std::move(name)}
 {

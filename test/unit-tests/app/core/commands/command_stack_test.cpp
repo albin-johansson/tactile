@@ -8,24 +8,24 @@ using namespace tactile;
 
 namespace {
 
-struct FooCmd : ACommand
+struct FooCmd : ICommand
 {
-  FooCmd() : ACommand{"FooCmd"} {}
-
   void undo() override {}
 
   void redo() override {}
+
+  [[nodiscard]] auto get_name() const -> const char* override { return "FooCmd"; }
 
   [[nodiscard]] auto id() const -> CommandId override { return CommandId{0}; }
 };
 
-struct BarCmd : ACommand
+struct BarCmd : ICommand
 {
-  BarCmd() : ACommand{"BarCmd"} {}
-
   void undo() override {}
 
   void redo() override {}
+
+  [[nodiscard]] auto get_name() const -> const char* override { return "BarCmd"; }
 
   [[nodiscard]] auto id() const -> CommandId override { return CommandId{1}; }
 };

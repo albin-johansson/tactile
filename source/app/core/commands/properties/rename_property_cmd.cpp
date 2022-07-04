@@ -30,8 +30,7 @@ namespace tactile {
 RenamePropertyCmd::RenamePropertyCmd(Shared<core::IContext> context,
                                      std::string            oldName,
                                      std::string            newName)
-    : ACommand{"Rename Property"}
-    , mContext{std::move(context)}
+    : mContext{std::move(context)}
     , mOldName{std::move(oldName)}
     , mNewName{std::move(newName)}
 {

@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "misc/panic.hpp"
 
@@ -31,8 +30,7 @@ UpdateComponentCmd::UpdateComponentCmd(Shared<core::ComponentIndex> index,
                                        const UUID&                  componentId,
                                        std::string                  attribute,
                                        Attribute                    value)
-    : ACommand{"Update Component Attribute"}
-    , mIndex{index}
+    : mIndex{index}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
     , mUpdatedValue{std::move(value)}
@@ -56,7 +54,7 @@ void UpdateComponentCmd::redo()
   component.update_attr(mAttributeName, mUpdatedValue);
 }
 
-auto UpdateComponentCmd::merge_with(const ACommand& cmd) -> bool
+auto UpdateComponentCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const UpdateComponentCmd&>(cmd);

@@ -25,8 +25,7 @@
 namespace tactile {
 
 MoveLayerDownCmd::MoveLayerDownCmd(MapDocument* document, const UUID& layerId)
-    : ACommand{"Move Layer Down"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
 {
   if (!mDocument) {
@@ -44,6 +43,11 @@ void MoveLayerDownCmd::redo()
 {
   auto& map = mDocument->get_map();
   map.move_layer_down(mLayerId);
+}
+
+auto MoveLayerDownCmd::get_name() const -> const char*
+{
+  return "Move Layer Down";
 }
 
 }  // namespace tactile

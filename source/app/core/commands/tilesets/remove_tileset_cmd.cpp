@@ -30,8 +30,7 @@
 namespace tactile {
 
 RemoveTilesetCmd::RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId)
-    : ACommand{"Remove Tileset"}
-    , mModel{model}
+    : mModel{model}
     , mTilesetId{tilesetId}
 {
   if (!mModel) {
@@ -77,6 +76,11 @@ void RemoveTilesetCmd::redo()
 
   map.detach_tileset(mTilesetId);
   mapDocument->unregister_context(mTilesetId);
+}
+
+auto RemoveTilesetCmd::get_name() const -> const char*
+{
+  return "Remove Tileset";
 }
 
 }  // namespace tactile

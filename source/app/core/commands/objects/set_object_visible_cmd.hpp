@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class SetObjectVisibleCmd final : public ACommand
+class SetObjectVisibleCmd final : public ICommand
 {
  public:
   SetObjectVisibleCmd(MapDocument* document, const UUID& objectId, bool visible);
@@ -39,6 +39,8 @@ class SetObjectVisibleCmd final : public ACommand
   {
     return CommandId::SetObjectVisible;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument* mDocument{};

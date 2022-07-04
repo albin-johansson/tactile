@@ -31,7 +31,7 @@
 namespace tactile {
 
 /// Command for changing the default value of an attribute in a component.
-class UpdateComponentCmd final : public ACommand
+class UpdateComponentCmd final : public ICommand
 {
  public:
   UpdateComponentCmd(Shared<core::ComponentIndex> index,
@@ -43,7 +43,7 @@ class UpdateComponentCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ICommand& cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> const char* override;
 

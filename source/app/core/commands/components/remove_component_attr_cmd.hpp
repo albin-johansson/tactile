@@ -31,7 +31,7 @@
 namespace tactile {
 
 /// A command for removing an attribute from a component definition.
-class RemoveComponentAttrCmd final : public ACommand
+class RemoveComponentAttrCmd final : public ICommand
 {
  public:
   RemoveComponentAttrCmd(Shared<core::ComponentIndex> index,

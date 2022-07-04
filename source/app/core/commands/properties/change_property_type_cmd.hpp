@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class ChangePropertyTypeCmd final : public ACommand
+class ChangePropertyTypeCmd final : public ICommand
 {
  public:
   ChangePropertyTypeCmd(Shared<core::IContext> context,

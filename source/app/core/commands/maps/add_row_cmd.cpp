@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-AddRowCmd::AddRowCmd(MapDocument* document) : ACommand{"Add Row(s)"}, mDocument{document}
+AddRowCmd::AddRowCmd(MapDocument* document) : mDocument{document}
 {
   if (!mDocument) {
     throw TactileError{"Invalid null map document!"};
@@ -44,7 +44,7 @@ void AddRowCmd::redo()
   invoke_n(mRows, [&] { map.add_row(); });
 }
 
-auto AddRowCmd::merge_with(const ACommand& cmd) -> bool
+auto AddRowCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const AddRowCmd&>(cmd);
@@ -53,6 +53,11 @@ auto AddRowCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto AddRowCmd::get_name() const -> const char*
+{
+  return mRows == 1 ? "Add Row" : "Add Rows";
 }
 
 }  // namespace tactile

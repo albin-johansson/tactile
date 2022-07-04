@@ -29,8 +29,7 @@ BucketToolCmd::BucketToolCmd(MapDocument*   document,
                              const UUID&    layerId,
                              const TilePos& origin,
                              const TileID   replacement)
-    : ACommand{"Bucket Fill"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
     , mOrigin{origin}
     , mReplacement{replacement}
@@ -61,6 +60,11 @@ void BucketToolCmd::redo()
 
   mTarget = layer.tile_at(mOrigin);
   layer.flood(mOrigin, mReplacement, &mPositions);
+}
+
+auto BucketToolCmd::get_name() const -> const char*
+{
+  return "Bucket Fill";
 }
 
 }  // namespace tactile

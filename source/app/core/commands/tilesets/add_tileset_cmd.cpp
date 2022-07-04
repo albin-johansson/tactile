@@ -34,8 +34,7 @@ AddTilesetCmd::AddTilesetCmd(DocumentModel*           model,
                              const UUID&              mapId,
                              const UUID&              tilesetId,
                              const core::TilesetInfo& info)
-    : ACommand{"Add Tileset"}
-    , mModel{model}
+    : mModel{model}
     , mMapId{mapId}
     , mTilesetId{tilesetId}
     , mTilesetInfo{info}
@@ -79,6 +78,11 @@ void AddTilesetCmd::redo()
   map.attach_tileset(tileset, false);
 
   document->register_context(tileset);
+}
+
+auto AddTilesetCmd::get_name() const -> const char*
+{
+  return "Add Tileset";
 }
 
 }  // namespace tactile

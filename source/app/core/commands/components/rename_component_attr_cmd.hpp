@@ -29,7 +29,7 @@
 namespace tactile {
 
 /// A command for renaming an attribute in a component definition.
-class RenameComponentAttrCmd final : public ACommand
+class RenameComponentAttrCmd final : public ICommand
 {
  public:
   RenameComponentAttrCmd(Shared<core::ComponentIndex> index,

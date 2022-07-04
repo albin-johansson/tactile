@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class AddLayerCmd final : public ACommand
+class AddLayerCmd final : public ICommand
 {
  public:
   AddLayerCmd(MapDocument* document, LayerType type);
@@ -42,6 +42,8 @@ class AddLayerCmd final : public ACommand
   {
     return CommandId::AddLayer;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument*         mDocument{};

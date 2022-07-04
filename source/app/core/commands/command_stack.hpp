@@ -69,7 +69,7 @@ class CommandStack final
    */
   void redo();
 
-  template <std::derived_from<ACommand> T, typename... Args>
+  template <std::derived_from<ICommand> T, typename... Args>
   void store(Args&&... args)
   {
     if (size() == capacity()) {
@@ -89,7 +89,7 @@ class CommandStack final
    *
    * \param args the arguments that will be forwarded to a command constructor.
    */
-  template <std::derived_from<ACommand> T, typename... Args>
+  template <std::derived_from<ICommand> T, typename... Args>
   void exec(Args&&... args)
   {
     if (size() == capacity()) {
@@ -134,10 +134,10 @@ class CommandStack final
   [[nodiscard]] auto can_redo() const -> bool;
 
   /// Returns the text associated with the current undoable command.
-  [[nodiscard]] auto get_undo_text() const -> const std::string&;
+  [[nodiscard]] auto get_undo_text() const -> const char*;
 
   /// Returns the text associated with the current redoable command.
-  [[nodiscard]] auto get_redo_text() const -> const std::string&;
+  [[nodiscard]] auto get_redo_text() const -> const char*;
 
   /// Returns the number of commands on the stack.
   [[nodiscard]] auto size() const noexcept -> usize { return mStack.size(); }
@@ -152,7 +152,7 @@ class CommandStack final
   [[nodiscard]] auto capacity() const noexcept -> usize { return mCapacity; }
 
  private:
-  std::deque<Unique<ACommand>> mStack;
+  std::deque<Unique<ICommand>> mStack;
   Maybe<usize>                 mIndex;
   Maybe<usize>                 mCleanIndex;
   usize                        mCapacity;

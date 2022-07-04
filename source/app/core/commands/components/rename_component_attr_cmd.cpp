@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "misc/panic.hpp"
 
@@ -31,8 +30,7 @@ RenameComponentAttrCmd::RenameComponentAttrCmd(Shared<core::ComponentIndex> inde
                                                const UUID&                  componentId,
                                                std::string                  previousName,
                                                std::string                  updatedName)
-    : ACommand{"Rename Component Attribute"}
-    , mIndex{std::move(index)}
+    : mIndex{std::move(index)}
     , mComponentId{componentId}
     , mPreviousName{std::move(previousName)}
     , mUpdatedName{std::move(updatedName)}

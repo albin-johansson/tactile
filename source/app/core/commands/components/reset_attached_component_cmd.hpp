@@ -29,7 +29,7 @@
 namespace tactile {
 
 /// A command for resetting the attributes of an attached component.
-class ResetAttachedComponentCmd final : public ACommand
+class ResetAttachedComponentCmd final : public ICommand
 {
  public:
   ResetAttachedComponentCmd(Shared<core::ComponentIndex> index,

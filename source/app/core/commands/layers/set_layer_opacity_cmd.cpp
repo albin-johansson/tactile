@@ -27,8 +27,7 @@ namespace tactile {
 SetLayerOpacityCmd::SetLayerOpacityCmd(MapDocument* document,
                                        const UUID&  layerId,
                                        const float  opacity)
-    : ACommand{"Set Layer Opacity"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
     , mOpacity{opacity}
 {
@@ -55,7 +54,7 @@ void SetLayerOpacityCmd::redo()
   layer.set_opacity(mOpacity);
 }
 
-auto SetLayerOpacityCmd::merge_with(const ACommand& cmd) -> bool
+auto SetLayerOpacityCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const SetLayerOpacityCmd&>(cmd);
@@ -66,6 +65,11 @@ auto SetLayerOpacityCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto SetLayerOpacityCmd::get_name() const -> const char*
+{
+  return "Set Layer Opacity";
 }
 
 }  // namespace tactile

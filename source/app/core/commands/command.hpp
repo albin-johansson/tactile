@@ -19,31 +19,14 @@
 
 #pragma once
 
-#include <string>  // string
-
-#include <entt/entity/registry.hpp>
-
 #include "core/commands/command_id.hpp"
-#include "core/common/functional.hpp"
-#include "core/common/macros.hpp"
 
 namespace tactile {
 
-/// The abstract base class of all command implementations.
-class ACommand
+class ICommand
 {
  public:
-  TACTILE_DELETE_COPY(ACommand);
-  TACTILE_DEFAULT_MOVE(ACommand);
-
-  /**
-   * Creates a command.
-   *
-   * \param text a short human-readable command name.
-   */
-  explicit ACommand(std::string text);
-
-  virtual ~ACommand() = default;
+  virtual ~ICommand() = default;
 
   /**
    * Reverts the effect of the command.
@@ -68,7 +51,10 @@ class ACommand
    *
    * \return an identifier unique for the command class.
    */
-  [[nodiscard]] virtual auto id() const -> CommandId = 0;
+  [[nodiscard, deprecated]] virtual auto id() const -> CommandId = 0;
+
+  /// Returns a short human-readable string that describes the command.
+  [[nodiscard]] virtual auto get_name() const -> const char* = 0;
 
   /**
    * Attempts to merge the supplied command into this command.
@@ -89,19 +75,10 @@ class ACommand
    * \return `true` if the supplied command was merged into *this* command;
    *         `false` otherwise.
    */
-  [[nodiscard]] virtual auto merge_with([[maybe_unused]] const ACommand& cmd) -> bool
+  [[nodiscard]] virtual auto merge_with([[maybe_unused]] const ICommand& cmd) -> bool
   {
     return false;
   }
-
-  /// Returns a short human-readable string that describes the command.
-  [[nodiscard]] auto text() const -> const std::string& { return mText; }
-
-  /// Returns a short human-readable string that describes the command.
-  [[nodiscard]] virtual auto get_name() const -> const char* { return mText.c_str(); }
-
- private:
-  std::string mText;
 };
 
 }  // namespace tactile

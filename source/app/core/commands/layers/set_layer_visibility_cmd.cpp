@@ -27,8 +27,7 @@ namespace tactile {
 SetLayerVisibilityCmd::SetLayerVisibilityCmd(MapDocument* document,
                                              const UUID&  layerId,
                                              const bool   visible)
-    : ACommand{"Set Layer Visibility"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
     , mVisible{visible}
 {
@@ -53,6 +52,11 @@ void SetLayerVisibilityCmd::redo()
 
   mPreviousVisibility = layer.is_visible();
   layer.set_visible(mVisible);
+}
+
+auto SetLayerVisibilityCmd::get_name() const -> const char*
+{
+  return "Set Layer Visibility";
 }
 
 }  // namespace tactile

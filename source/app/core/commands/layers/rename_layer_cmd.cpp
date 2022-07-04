@@ -29,8 +29,7 @@ namespace tactile {
 RenameLayerCmd::RenameLayerCmd(MapDocument* document,
                                const UUID&  layerId,
                                std::string  name)
-    : ACommand{"Rename Layer"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
     , mName{std::move(name)}
 {
@@ -55,6 +54,11 @@ void RenameLayerCmd::redo()
 
   mPreviousName = layer.get_name();
   layer.set_name(mName);
+}
+
+auto RenameLayerCmd::get_name() const -> const char*
+{
+  return "Rename Layer";
 }
 
 }  // namespace tactile

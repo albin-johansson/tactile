@@ -27,8 +27,7 @@
 namespace tactile {
 
 RenameTilesetCmd::RenameTilesetCmd(Shared<core::Tileset> tileset, std::string name)
-    : ACommand{"Rename Tileset"}
-    , mTileset{std::move(tileset)}
+    : mTileset{std::move(tileset)}
     , mNewName{std::move(name)}
 {
   if (!mTileset) {
@@ -48,7 +47,7 @@ void RenameTilesetCmd::redo()
   mTileset->set_name(mNewName);
 }
 
-auto RenameTilesetCmd::merge_with(const ACommand& cmd) -> bool
+auto RenameTilesetCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const RenameTilesetCmd&>(cmd);
@@ -60,6 +59,11 @@ auto RenameTilesetCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto RenameTilesetCmd::get_name() const -> const char*
+{
+  return "Rename Tileset";
 }
 
 }  // namespace tactile

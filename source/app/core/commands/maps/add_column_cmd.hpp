@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class AddColumnCmd final : public ACommand
+class AddColumnCmd final : public ICommand
 {
  public:
   explicit AddColumnCmd(MapDocument* document);
@@ -35,12 +35,14 @@ class AddColumnCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ICommand& cmd) -> bool override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
     return CommandId::MapAddColumn;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument* mDocument{};

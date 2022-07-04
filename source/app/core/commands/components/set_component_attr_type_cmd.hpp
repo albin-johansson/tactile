@@ -31,7 +31,7 @@
 namespace tactile {
 
 /// A command for changing the type of an attribute in a component definition.
-class SetComponentAttrTypeCmd final : public ACommand
+class SetComponentAttrTypeCmd final : public ICommand
 {
  public:
   SetComponentAttrTypeCmd(Shared<core::ComponentIndex> index,

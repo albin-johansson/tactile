@@ -30,7 +30,7 @@
 namespace tactile {
 
 /// A command for duplicating an attribute in a component definition.
-class DuplicateComponentAttrCmd final : public ACommand
+class DuplicateComponentAttrCmd final : public ICommand
 {
  public:
   DuplicateComponentAttrCmd(Shared<core::ComponentIndex> index,

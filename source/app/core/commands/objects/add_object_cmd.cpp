@@ -32,8 +32,7 @@ AddObjectCmd::AddObjectCmd(MapDocument*    document,
                            ObjectType      type,
                            const Vector2f& pos,
                            const Vector2f& size)
-    : ACommand{"Add Object"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
     , mObjectType{type}
     , mPos{pos}

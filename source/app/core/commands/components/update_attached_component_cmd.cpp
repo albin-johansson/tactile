@@ -32,8 +32,7 @@ UpdateAttachedComponentCmd::UpdateAttachedComponentCmd(Shared<core::IContext> co
                                                        const UUID&            componentId,
                                                        std::string            attribute,
                                                        Attribute              value)
-    : ACommand{"Update Component Attribute"}
-    , mContext{std::move(context)}
+    : mContext{std::move(context)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
     , mUpdatedValue{std::move(value)}
@@ -61,7 +60,7 @@ void UpdateAttachedComponentCmd::redo()
   component.update_attr(mAttributeName, mUpdatedValue);
 }
 
-auto UpdateAttachedComponentCmd::merge_with(const ACommand& cmd) -> bool
+auto UpdateAttachedComponentCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const UpdateAttachedComponentCmd&>(cmd);

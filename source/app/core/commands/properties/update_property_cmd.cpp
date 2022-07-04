@@ -30,8 +30,7 @@ namespace tactile {
 UpdatePropertyCmd::UpdatePropertyCmd(Shared<core::IContext> context,
                                      std::string            name,
                                      Attribute              value)
-    : ACommand{"Update Property"}
-    , mContext{std::move(context)}
+    : mContext{std::move(context)}
     , mName{std::move(name)}
     , mNewValue{std::move(value)}
 {
@@ -54,7 +53,7 @@ void UpdatePropertyCmd::redo()
   props.update(mName, mNewValue);
 }
 
-auto UpdatePropertyCmd::merge_with(const ACommand& cmd) -> bool
+auto UpdatePropertyCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const UpdatePropertyCmd&>(cmd);

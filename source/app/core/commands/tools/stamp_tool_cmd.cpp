@@ -31,8 +31,7 @@ StampToolCmd::StampToolCmd(MapDocument* document,
                            const UUID&  layerId,
                            TileCache    oldState,
                            TileCache    newState)
-    : ACommand{"Stamp Sequence"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
     , mOldState{std::move(oldState)}
     , mNewState{std::move(newState)}
@@ -50,6 +49,11 @@ void StampToolCmd::undo()
 void StampToolCmd::redo()
 {
   apply_sequence(mNewState);
+}
+
+auto StampToolCmd::get_name() const -> const char*
+{
+  return "Stamp Sequence";
 }
 
 void StampToolCmd::apply_sequence(const TileCache& cache)

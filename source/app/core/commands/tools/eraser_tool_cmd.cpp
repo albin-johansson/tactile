@@ -30,8 +30,7 @@ namespace tactile {
 EraserToolCmd::EraserToolCmd(MapDocument* document,
                              const UUID&  layerId,
                              TileCache    oldState)
-    : ACommand{"Eraser Sequence"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
     , mOldState{std::move(oldState)}
 {
@@ -55,6 +54,11 @@ void EraserToolCmd::redo()
   for (const auto& [position, _] : mOldState) {
     layer.set_tile(position, empty_tile);
   }
+}
+
+auto EraserToolCmd::get_name() const -> const char*
+{
+  return "Eraser Sequence";
 }
 
 }  // namespace tactile

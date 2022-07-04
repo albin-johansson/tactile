@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class AddPropertyCmd final : public ACommand
+class AddPropertyCmd final : public ICommand
 {
  public:
   AddPropertyCmd(Shared<core::IContext> context, std::string name, AttributeType type);

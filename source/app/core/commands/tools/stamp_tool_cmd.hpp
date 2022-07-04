@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class StampToolCmd final : public ACommand
+class StampToolCmd final : public ICommand
 {
  public:
   StampToolCmd(MapDocument* document,
@@ -43,6 +43,8 @@ class StampToolCmd final : public ACommand
   {
     return CommandId::StampSequence;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument* mDocument{};

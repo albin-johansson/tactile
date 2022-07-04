@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class RemoveLayerCmd final : public ACommand
+class RemoveLayerCmd final : public ICommand
 {
  public:
   RemoveLayerCmd(MapDocument* document, const UUID& layerId);
@@ -42,6 +42,8 @@ class RemoveLayerCmd final : public ACommand
   {
     return CommandId::RemoveLayer;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument*         mDocument{};

@@ -29,7 +29,7 @@
 namespace tactile {
 
 /// A command for removing a component definition.
-class UndefComponentCmd final : public ACommand
+class UndefComponentCmd final : public ICommand
 {
  public:
   UndefComponentCmd(Shared<core::ComponentIndex> index, const UUID& componentId);

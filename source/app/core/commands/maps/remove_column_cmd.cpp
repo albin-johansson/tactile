@@ -25,9 +25,7 @@
 
 namespace tactile {
 
-RemoveColumnCmd::RemoveColumnCmd(MapDocument* document)
-    : ACommand{"Remove Column(s)"}
-    , mDocument{document}
+RemoveColumnCmd::RemoveColumnCmd(MapDocument* document) : mDocument{document}
 {
   if (!mDocument) {
     throw TactileError{"Invalid null map document!"};
@@ -54,7 +52,7 @@ void RemoveColumnCmd::redo()
   invoke_n(mColumns, [&] { map.remove_column(); });
 }
 
-auto RemoveColumnCmd::merge_with(const ACommand& cmd) -> bool
+auto RemoveColumnCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const RemoveColumnCmd&>(cmd);
@@ -66,6 +64,11 @@ auto RemoveColumnCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto RemoveColumnCmd::get_name() const -> const char*
+{
+  return mColumns == 1 ? "Remove Column" : "Remove Columns";
 }
 
 }  // namespace tactile

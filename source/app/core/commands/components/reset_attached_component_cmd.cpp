@@ -22,7 +22,6 @@
 #include <utility>  // move
 
 #include "core/components/component_bundle.hpp"
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/contexts/context.hpp"
 #include "misc/panic.hpp"
@@ -32,8 +31,7 @@ namespace tactile {
 ResetAttachedComponentCmd::ResetAttachedComponentCmd(Shared<core::ComponentIndex> index,
                                                      Shared<core::IContext>       context,
                                                      const UUID& componentId)
-    : ACommand{"Reset Component Values"}
-    , mIndex{std::move(index)}
+    : mIndex{std::move(index)}
     , mContext{std::move(context)}
     , mComponentId{componentId}
 {

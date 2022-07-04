@@ -30,8 +30,7 @@ namespace tactile {
 SetObjectTagCmd::SetObjectTagCmd(MapDocument* document,
                                  const UUID&  objectId,
                                  std::string  tag)
-    : ACommand{"Set Object Tag"}
-    , mDocument{document}
+    : mDocument{document}
     , mObjectId{objectId}
     , mNewTag{std::move(tag)}
 {
@@ -54,7 +53,7 @@ void SetObjectTagCmd::redo()
   object->set_tag(mNewTag);
 }
 
-auto SetObjectTagCmd::merge_with(const ACommand& cmd) -> bool
+auto SetObjectTagCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const SetObjectTagCmd&>(cmd);
@@ -65,6 +64,11 @@ auto SetObjectTagCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto SetObjectTagCmd::get_name() const -> const char*
+{
+  return "Set Object Tag";
 }
 
 }  // namespace tactile

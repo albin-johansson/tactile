@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-class SetObjectTagCmd final : public ACommand
+class SetObjectTagCmd final : public ICommand
 {
  public:
   SetObjectTagCmd(MapDocument* document, const UUID& objectId, std::string tag);
@@ -37,12 +37,14 @@ class SetObjectTagCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ICommand& cmd) -> bool override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
     return CommandId::SetObjectTag;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument*       mDocument{};

@@ -28,8 +28,7 @@ namespace tactile {
 SetObjectVisibleCmd::SetObjectVisibleCmd(MapDocument* document,
                                          const UUID&  objectId,
                                          const bool   visible)
-    : ACommand{"Set Object Visibility"}
-    , mDocument{document}
+    : mDocument{document}
     , mObjectId{objectId}
     , mVisible{visible}
 {
@@ -50,6 +49,11 @@ void SetObjectVisibleCmd::redo()
   auto object = mDocument->get_object(mObjectId);
   mPrevious = object->is_visible();
   object->set_visible(mVisible);
+}
+
+auto SetObjectVisibleCmd::get_name() const -> const char*
+{
+  return "Set Object Visibility";
 }
 
 }  // namespace tactile

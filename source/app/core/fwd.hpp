@@ -32,7 +32,7 @@ class ADocument;
 class MapDocument;
 class TilesetDocument;
 
-class ACommand;
+class ICommand;
 class CommandStack;
 
 class TextureManager;

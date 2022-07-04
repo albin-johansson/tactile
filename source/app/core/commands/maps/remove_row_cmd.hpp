@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class RemoveRowCmd final : public ACommand
+class RemoveRowCmd final : public ICommand
 {
  public:
   explicit RemoveRowCmd(MapDocument* document);
@@ -36,12 +36,14 @@ class RemoveRowCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ICommand& cmd) -> bool override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
     return CommandId::MapRemoveRow;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument*    mDocument{};

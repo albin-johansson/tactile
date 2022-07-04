@@ -25,8 +25,7 @@
 namespace tactile {
 
 AddLayerCmd::AddLayerCmd(MapDocument* document, const LayerType type)
-    : ACommand{"Add Layer"}
-    , mDocument{document}
+    : mDocument{document}
     , mLayerType{type}
 {
   if (!mDocument) {
@@ -75,6 +74,11 @@ void AddLayerCmd::redo()
   }
 
   mDocument->register_context(mLayer);
+}
+
+auto AddLayerCmd::get_name() const -> const char*
+{
+  return "Add Layer";
 }
 
 }  // namespace tactile

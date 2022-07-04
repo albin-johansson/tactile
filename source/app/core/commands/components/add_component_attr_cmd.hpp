@@ -29,7 +29,7 @@
 namespace tactile {
 
 /// A command for adding an attribute to a component definition.
-class AddComponentAttrCmd final : public ACommand
+class AddComponentAttrCmd final : public ICommand
 {
  public:
   AddComponentAttrCmd(Shared<core::ComponentIndex> index,

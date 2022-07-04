@@ -27,8 +27,7 @@ namespace tactile {
 
 UndefComponentCmd::UndefComponentCmd(Shared<core::ComponentIndex> index,
                                      const UUID&                  componentId)
-    : ACommand{"Remove Component Definition"}
-    , mIndex{std::move(index)}
+    : mIndex{std::move(index)}
     , mComponentId{componentId}
 {}
 

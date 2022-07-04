@@ -30,8 +30,7 @@ namespace tactile {
 AddPropertyCmd::AddPropertyCmd(Shared<core::IContext> context,
                                std::string            name,
                                const AttributeType    type)
-    : ACommand{"Add Property"}
-    , mContext{std::move(context)}
+    : mContext{std::move(context)}
     , mName{std::move(name)}
     , mType{type}
 {

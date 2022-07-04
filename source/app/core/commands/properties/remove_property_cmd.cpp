@@ -28,8 +28,7 @@
 namespace tactile {
 
 RemovePropertyCmd::RemovePropertyCmd(Shared<core::IContext> context, std::string name)
-    : ACommand{"Remove Property"}
-    , mContext{std::move(context)}
+    : mContext{std::move(context)}
     , mName{std::move(name)}
 {
   if (!mContext) {

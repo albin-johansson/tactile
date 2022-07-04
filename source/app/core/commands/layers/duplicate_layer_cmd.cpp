@@ -25,8 +25,7 @@
 namespace tactile {
 
 DuplicateLayerCmd::DuplicateLayerCmd(MapDocument* document, const UUID& layerId)
-    : ACommand{"Duplicate Layer"}
-    , mDocument{document}
+    :  mDocument{document}
     , mLayerId{layerId}
 {
   if (!mDocument) {
@@ -57,6 +56,11 @@ void DuplicateLayerCmd::redo()
   }
 
   mDocument->register_context(mNewLayer);
+}
+
+auto DuplicateLayerCmd::get_name() const -> const char*
+{
+  return "Duplicate Layer";
 }
 
 }  // namespace tactile

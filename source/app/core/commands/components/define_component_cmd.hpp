@@ -30,7 +30,7 @@
 namespace tactile {
 
 /// A command for defining new components.
-class DefineComponentCmd final : public ACommand
+class DefineComponentCmd final : public ICommand
 {
  public:
   DefineComponentCmd(Shared<core::ComponentIndex> index, std::string name);
@@ -39,12 +39,12 @@ class DefineComponentCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> const char* override;
-
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {
     return CommandId::DefineComponent;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   Shared<core::ComponentIndex> mIndex;

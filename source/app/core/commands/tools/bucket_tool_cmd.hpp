@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-class BucketToolCmd final : public ACommand
+class BucketToolCmd final : public ICommand
 {
  public:
   BucketToolCmd(MapDocument*   document,
@@ -46,6 +46,8 @@ class BucketToolCmd final : public ACommand
   {
     return CommandId::Bucket;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument*         mDocument{};

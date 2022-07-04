@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "misc/panic.hpp"
 
@@ -31,8 +30,7 @@ SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(Shared<core::ComponentIndex> in
                                                  const UUID&                  componentId,
                                                  std::string                  attribute,
                                                  const AttributeType          type)
-    : ACommand{"Change Component Attribute Type"}
-    , mIndex{std::move(index)}
+    : mIndex{std::move(index)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}
     , mNewType{type}

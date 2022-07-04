@@ -96,20 +96,20 @@ auto CommandStack::can_redo() const -> bool
   return (!mStack.empty() && !mIndex) || (!mStack.empty() && mIndex < mStack.size() - 1);
 }
 
-auto CommandStack::get_undo_text() const -> const std::string&
+auto CommandStack::get_undo_text() const -> const char*
 {
   TACTILE_ASSERT(can_undo());
 
   const auto& cmd = mStack.at(mIndex.value());
-  return cmd->text();
+  return cmd->get_name();
 }
 
-auto CommandStack::get_redo_text() const -> const std::string&
+auto CommandStack::get_redo_text() const -> const char*
 {
   TACTILE_ASSERT(can_redo());
 
   const auto& cmd = mStack.at(mIndex ? *mIndex + 1 : 0);
-  return cmd->text();
+  return cmd->get_name();
 }
 
 void CommandStack::remove_oldest_command()

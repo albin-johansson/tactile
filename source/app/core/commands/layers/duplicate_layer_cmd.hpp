@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class DuplicateLayerCmd final : public ACommand
+class DuplicateLayerCmd final : public ICommand
 {
  public:
   DuplicateLayerCmd(MapDocument* document, const UUID& layerId);
@@ -42,6 +42,8 @@ class DuplicateLayerCmd final : public ACommand
   {
     return CommandId::DuplicateLayer;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument*         mDocument{};

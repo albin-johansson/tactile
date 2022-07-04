@@ -27,7 +27,7 @@
 namespace tactile {
 
 /// Command for moving an object in a map.
-class MoveObjectCmd final : public ACommand
+class MoveObjectCmd final : public ICommand
 {
  public:
   MoveObjectCmd(MapDocument*    document,
@@ -43,6 +43,8 @@ class MoveObjectCmd final : public ACommand
   {
     return CommandId::MoveObject;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument* mDocument{};

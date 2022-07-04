@@ -21,7 +21,6 @@
 
 #include "core/components/component.hpp"
 #include "core/components/component_bundle.hpp"
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/contexts/context.hpp"
 #include "misc/panic.hpp"
@@ -31,8 +30,7 @@ namespace tactile {
 AttachComponentCmd::AttachComponentCmd(Shared<core::ComponentIndex> index,
                                        Shared<core::IContext>       context,
                                        const UUID&                  componentId)
-    : ACommand{"Attach Component"}
-    , mIndex{std::move(index)}
+    : mIndex{std::move(index)}
     , mContext{std::move(context)}
     , mComponentId{componentId}
 {
@@ -55,6 +53,11 @@ void AttachComponentCmd::redo()
   const auto& definition = mIndex->at(mComponentId);
   auto&       comps = mContext->get_comps();
   comps.add(definition.instantiate());
+}
+
+auto AttachComponentCmd::get_name() const -> const char*
+{
+  return "Attach Component";
 }
 
 }  // namespace tactile

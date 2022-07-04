@@ -27,7 +27,7 @@
 namespace tactile {
 
 /// Command for attaching a component to a context.
-class AttachComponentCmd final : public ACommand
+class AttachComponentCmd final : public ICommand
 {
  public:
   AttachComponentCmd(Shared<core::ComponentIndex> index,
@@ -42,6 +42,8 @@ class AttachComponentCmd final : public ACommand
   {
     return CommandId::AttachComponent;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   Shared<core::ComponentIndex> mIndex;

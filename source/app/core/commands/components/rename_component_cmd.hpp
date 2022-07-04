@@ -30,7 +30,7 @@
 namespace tactile {
 
 /// A command for renaming a component definition.
-class RenameComponentCmd final : public ACommand
+class RenameComponentCmd final : public ICommand
 {
  public:
   RenameComponentCmd(Shared<core::ComponentIndex> index,

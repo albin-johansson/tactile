@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class UpdatePropertyCmd final : public ACommand
+class UpdatePropertyCmd final : public ICommand
 {
  public:
   UpdatePropertyCmd(Shared<core::IContext> context, std::string name, Attribute value);
@@ -38,7 +38,7 @@ class UpdatePropertyCmd final : public ACommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ACommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ICommand& cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> const char* override;
 

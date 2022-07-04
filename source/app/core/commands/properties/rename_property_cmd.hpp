@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-class RenamePropertyCmd final : public ACommand
+class RenamePropertyCmd final : public ICommand
 {
  public:
   RenamePropertyCmd(Shared<core::IContext> context,

@@ -30,8 +30,7 @@ namespace tactile {
 SetObjectNameCmd::SetObjectNameCmd(MapDocument* document,
                                    const UUID&  objectId,
                                    std::string  name)
-    : ACommand{"Set Object Name"}
-    , mDocument{document}
+    : mDocument{document}
     , mObjectId{objectId}
     , mNewName{std::move(name)}
 {
@@ -54,7 +53,7 @@ void SetObjectNameCmd::redo()
   object->set_name(mNewName);
 }
 
-auto SetObjectNameCmd::merge_with(const ACommand& cmd) -> bool
+auto SetObjectNameCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const SetObjectNameCmd&>(cmd);
@@ -65,6 +64,11 @@ auto SetObjectNameCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto SetObjectNameCmd::get_name() const -> const char*
+{
+  return "Set Object Name";
 }
 
 }  // namespace tactile

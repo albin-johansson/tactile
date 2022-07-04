@@ -25,9 +25,7 @@
 
 namespace tactile {
 
-AddColumnCmd::AddColumnCmd(MapDocument* document)
-    : ACommand{"Add Column(s)"}
-    , mDocument{document}
+AddColumnCmd::AddColumnCmd(MapDocument* document) : mDocument{document}
 {
   if (!mDocument) {
     throw TactileError{"Invalid null map!"};
@@ -46,7 +44,7 @@ void AddColumnCmd::redo()
   invoke_n(mColumns, [&] { map.add_column(); });
 }
 
-auto AddColumnCmd::merge_with(const ACommand& cmd) -> bool
+auto AddColumnCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const AddColumnCmd&>(cmd);
@@ -55,6 +53,11 @@ auto AddColumnCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto AddColumnCmd::get_name() const -> const char*
+{
+  return mColumns == 1 ? "Add Column" : "Add Columns";
 }
 
 }  // namespace tactile

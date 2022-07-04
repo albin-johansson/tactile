@@ -25,9 +25,7 @@
 
 namespace tactile {
 
-RemoveRowCmd::RemoveRowCmd(MapDocument* document)
-    : ACommand{"Remove Row(s)"}
-    , mDocument{document}
+RemoveRowCmd::RemoveRowCmd(MapDocument* document) : mDocument{document}
 {
   if (!mDocument) {
     throw TactileError{"Invalid null map document!"};
@@ -54,7 +52,7 @@ void RemoveRowCmd::redo()
   invoke_n(mRows, [&] { map.remove_row(); });
 }
 
-auto RemoveRowCmd::merge_with(const ACommand& cmd) -> bool
+auto RemoveRowCmd::merge_with(const ICommand& cmd) -> bool
 {
   if (id() == cmd.id()) {
     const auto& other = dynamic_cast<const RemoveRowCmd&>(cmd);
@@ -66,6 +64,11 @@ auto RemoveRowCmd::merge_with(const ACommand& cmd) -> bool
   }
 
   return false;
+}
+
+auto RemoveRowCmd::get_name() const -> const char*
+{
+  return mRows == 1 ? "Remove Row" : "Remove Rows";
 }
 
 }  // namespace tactile

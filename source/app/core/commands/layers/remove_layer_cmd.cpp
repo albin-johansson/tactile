@@ -19,15 +19,13 @@
 
 #include "remove_layer_cmd.hpp"
 
-#include "core/common/functional.hpp"
 #include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
 RemoveLayerCmd::RemoveLayerCmd(MapDocument* document, const UUID& layerId)
-    : ACommand{"Remove Layer"}
-    , mDocument{document}
+    : mDocument{document}
 {
   if (!mDocument) {
     throw TactileError{"Invalid null map document!"};
@@ -56,6 +54,11 @@ void RemoveLayerCmd::redo()
   map.remove_layer(id);
 
   mDocument->unregister_context(id);
+}
+
+auto RemoveLayerCmd::get_name() const -> const char*
+{
+  return "Remove Layer";
 }
 
 }  // namespace tactile

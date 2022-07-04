@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class EraserToolCmd final : public ACommand
+class EraserToolCmd final : public ICommand
 {
  public:
   EraserToolCmd(MapDocument* document, const UUID& layerId, TileCache oldState);
@@ -39,6 +39,8 @@ class EraserToolCmd final : public ACommand
   {
     return CommandId::EraserSequence;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument* mDocument{};

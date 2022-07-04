@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "misc/panic.hpp"
 
@@ -29,8 +28,7 @@ namespace tactile {
 
 DefineComponentCmd::DefineComponentCmd(Shared<core::ComponentIndex> index,
                                        std::string                  name)
-    : ACommand{"Create Component Definition"}
-    , mIndex{std::move(index)}
+    : mIndex{std::move(index)}
     , mName{std::move(name)}
 {
   if (!mIndex) {

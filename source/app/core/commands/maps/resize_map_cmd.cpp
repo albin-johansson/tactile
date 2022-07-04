@@ -25,8 +25,7 @@
 namespace tactile {
 
 ResizeMapCmd::ResizeMapCmd(MapDocument* document, const usize nRows, const usize nCols)
-    : ACommand{"Resize Map"}
-    , mDocument{document}
+    : mDocument{document}
     , mRows{nRows}
     , mCols{nCols}
 {
@@ -66,6 +65,11 @@ void ResizeMapCmd::redo()
   }
 
   map.resize(mRows, mCols);
+}
+
+auto ResizeMapCmd::get_name() const -> const char*
+{
+  return "Resize Map";
 }
 
 auto ResizeMapCmd::is_lossy_resize() const -> bool

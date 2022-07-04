@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-class ResizeMapCmd final : public ACommand
+class ResizeMapCmd final : public ICommand
 {
  public:
   ResizeMapCmd(MapDocument* document, usize nRows, usize nCols);
@@ -41,6 +41,8 @@ class ResizeMapCmd final : public ACommand
   {
     return CommandId::ResizeMap;
   }
+
+  [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
   MapDocument*    mDocument{};

@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-class AddObjectCmd final : public ACommand
+class AddObjectCmd final : public ICommand
 {
  public:
   AddObjectCmd(MapDocument*    document,

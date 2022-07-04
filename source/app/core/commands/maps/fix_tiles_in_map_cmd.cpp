@@ -25,9 +25,7 @@
 
 namespace tactile {
 
-FixTilesInMapCmd::FixTilesInMapCmd(MapDocument* document)
-    : ACommand{"Fix Tiles In Map"}
-    , mDocument{document}
+FixTilesInMapCmd::FixTilesInMapCmd(MapDocument* document) : mDocument{document}
 {
   if (!mDocument) {
     throw TactileError{"Invalid null map document!"};
@@ -53,6 +51,11 @@ void FixTilesInMapCmd::redo()
 {
   auto& map = mDocument->get_map();
   mResult = map.fix_tiles();
+}
+
+auto FixTilesInMapCmd::get_name() const -> const char*
+{
+  return "Fix Tiles In Map";
 }
 
 }  // namespace tactile
