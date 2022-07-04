@@ -39,11 +39,6 @@ class DefineComponentCmd final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::DefineComponent;
-  }
-
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:

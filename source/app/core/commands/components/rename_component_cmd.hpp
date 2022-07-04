@@ -43,11 +43,6 @@ class RenameComponentCmd final : public ICommand
 
   [[nodiscard]] auto get_name() const -> const char* override;
 
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::RenameComponent;
-  }
-
  private:
   Shared<core::ComponentIndex> mIndex;
   UUID                         mComponentId{};

@@ -35,11 +35,6 @@ class SetObjectVisibleCmd final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::SetObjectVisible;
-  }
-
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:

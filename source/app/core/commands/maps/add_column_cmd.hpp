@@ -20,7 +20,6 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/ints.hpp"
 #include "core/fwd.hpp"
 
@@ -36,11 +35,6 @@ class AddColumnCmd final : public ICommand
   void redo() override;
 
   [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
-
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::MapAddColumn;
-  }
 
   [[nodiscard]] auto get_name() const -> const char* override;
 

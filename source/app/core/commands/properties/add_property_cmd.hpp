@@ -40,11 +40,6 @@ class AddPropertyCmd final : public ICommand
 
   [[nodiscard]] auto get_name() const -> const char* override;
 
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::AddProperty;
-  }
-
  private:
   Shared<core::IContext> mContext;
   std::string            mName;

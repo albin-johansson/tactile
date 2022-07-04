@@ -22,7 +22,6 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
@@ -37,11 +36,6 @@ class RenameLayerCmd final : public ICommand
   void undo() override;
 
   void redo() override;
-
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::RenameLayer;
-  }
 
   [[nodiscard]] auto get_name() const -> const char* override;
 

@@ -39,11 +39,6 @@ class SetObjectTagCmd final : public ICommand
 
   [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
 
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::SetObjectTag;
-  }
-
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:

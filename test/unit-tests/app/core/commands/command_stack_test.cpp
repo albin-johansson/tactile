@@ -15,8 +15,6 @@ struct FooCmd : ICommand
   void redo() override {}
 
   [[nodiscard]] auto get_name() const -> const char* override { return "FooCmd"; }
-
-  [[nodiscard]] auto id() const -> CommandId override { return CommandId{0}; }
 };
 
 struct BarCmd : ICommand
@@ -26,8 +24,6 @@ struct BarCmd : ICommand
   void redo() override {}
 
   [[nodiscard]] auto get_name() const -> const char* override { return "BarCmd"; }
-
-  [[nodiscard]] auto id() const -> CommandId override { return CommandId{1}; }
 };
 
 }  // namespace

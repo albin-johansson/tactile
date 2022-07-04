@@ -20,7 +20,6 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/math.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
@@ -41,11 +40,6 @@ class AddTilesetCmd final : public ICommand
   void undo() override;
 
   void redo() override;
-
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::AddTileset;
-  }
 
   [[nodiscard]] auto get_name() const -> const char* override;
 

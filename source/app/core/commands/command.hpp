@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include "core/commands/command_id.hpp"
-
 namespace tactile {
 
 class ICommand
@@ -41,8 +39,6 @@ class ICommand
    * This function is called whenever a command is pushed onto the command stack.
    */
   virtual void redo() = 0;
-
-  [[nodiscard, deprecated]] virtual auto id() const -> CommandId = 0;
 
   /// Returns a short human-readable string that describes the command.
   [[nodiscard]] virtual auto get_name() const -> const char* = 0;

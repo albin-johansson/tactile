@@ -20,7 +20,6 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/commands/command_id.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
@@ -37,11 +36,6 @@ class SetLayerOpacityCmd final : public ICommand
   void redo() override;
 
   [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
-
-  [[nodiscard]] auto id() const noexcept -> CommandId override
-  {
-    return CommandId::SetLayerOpacity;
-  }
 
   [[nodiscard]] auto get_name() const -> const char* override;
 
