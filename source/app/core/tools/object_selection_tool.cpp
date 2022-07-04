@@ -69,7 +69,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel&    model,
         layer.select_object(objectId);
 
         if (objectId) {
-          dispatcher.enqueue<SpawnObjectContextMenuEvent>(layerId, *objectId);
+          dispatcher.enqueue<SpawnObjectContextMenuEvent>(*objectId);
         }
 
         break;
@@ -141,8 +141,7 @@ void ObjectSelectionTool::maybe_emit_event(DocumentModel&    model,
 
         // Only emit an event if the object has been moved along any axis
         if (mDragInfo->origin_object_pos != object.get_pos()) {
-          dispatcher.enqueue<MoveObjectEvent>(layer.get_uuid(),
-                                              object.get_uuid(),
+          dispatcher.enqueue<MoveObjectEvent>(object.get_uuid(),
                                               mDragInfo->origin_object_pos,
                                               object.get_pos());
         }

@@ -99,8 +99,7 @@ class MapDocument final : public ADocument
 
   void add_point(const UUID& layerId, const Vector2f& pos);
 
-  void move_object(const UUID&     layerId,
-                   const UUID&     objectId,
+  void move_object(const UUID&     objectId,
                    const Vector2f& previous,
                    const Vector2f& updated);
 

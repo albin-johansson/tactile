@@ -26,13 +26,11 @@
 namespace tactile {
 
 MoveObjectCmd::MoveObjectCmd(MapDocument*    document,
-                             const UUID&     layerId,
                              const UUID&     objectId,
                              const Vector2f& previous,
                              const Vector2f& updated)
     : ACommand{"Move Object"}
     , mDocument{document}
-    , mLayerId{layerId}
     , mObjectId{objectId}
     , mPreviousPos{previous}
     , mUpdatedPos{updated}
@@ -44,18 +42,14 @@ MoveObjectCmd::MoveObjectCmd(MapDocument*    document,
 
 void MoveObjectCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
-  auto& object = layer.get_object(mObjectId);
-  object.set_pos(mPreviousPos);
+  auto object = mDocument->get_object(mObjectId);
+  object->set_pos(mPreviousPos);
 }
 
 void MoveObjectCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
-  auto& object = layer.get_object(mObjectId);
-  object.set_pos(mUpdatedPos);
+  auto object = mDocument->get_object(mObjectId);
+  object->set_pos(mUpdatedPos);
 }
 
 }  // namespace tactile

@@ -20,7 +20,6 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
@@ -32,7 +31,6 @@ class MoveObjectCmd final : public ACommand
 {
  public:
   MoveObjectCmd(MapDocument*    document,
-                const UUID&     layerId,
                 const UUID&     objectId,
                 const Vector2f& previous,
                 const Vector2f& updated);
@@ -48,7 +46,6 @@ class MoveObjectCmd final : public ACommand
 
  private:
   MapDocument* mDocument{};
-  UUID         mLayerId{};
   UUID         mObjectId{};
   Vector2f     mPreviousPos{};
   Vector2f     mUpdatedPos{};

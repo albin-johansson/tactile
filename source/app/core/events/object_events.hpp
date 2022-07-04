@@ -32,7 +32,6 @@ namespace tactile {
 /// Emitted after an object has been moved.
 struct MoveObjectEvent final
 {
-  UUID     layer_id{};   /// ID of the layer that contains the object.
   UUID     object_id{};  /// ID of the object to move.
   Vector2f previous;     /// Previous position of the object.
   Vector2f updated;      /// Updated position of the object.
@@ -61,17 +60,16 @@ struct SetObjectNameEvent final
 
 struct DuplicateObjectEvent final
 {
-  ObjectID id{};  /// ID of the target object.
+  UUID object_id{};  /// ID of the target object.
 };
 
 struct RemoveObjectEvent final
 {
-  ObjectID id{};  /// ID of the target object.
+  UUID object_id{};  /// ID of the target object.
 };
 
 struct SpawnObjectContextMenuEvent final
 {
-  UUID layer_id{};
   UUID object_id{};
 };
 

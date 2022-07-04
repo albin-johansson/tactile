@@ -188,12 +188,11 @@ void MapDocument::add_point(const UUID& layerId, const Vector2f& pos)
   get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Point, pos);
 }
 
-void MapDocument::move_object(const UUID&     layerId,
-                              const UUID&     objectId,
+void MapDocument::move_object(const UUID&     objectId,
                               const Vector2f& previous,
                               const Vector2f& updated)
 {
-  get_history().exec<MoveObjectCmd>(this, layerId, objectId, previous, updated);
+  get_history().exec<MoveObjectCmd>(this, objectId, previous, updated);
 }
 
 void MapDocument::set_object_visible(const UUID& objectId, const bool visible)
