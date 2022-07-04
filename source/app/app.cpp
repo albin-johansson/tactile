@@ -214,7 +214,6 @@ void App::subscribe_to_events()
   d.sink<AddPointEvent>().connect<&App::on_add_point>(this);
 
   d.sink<CenterViewportEvent>().connect<&ui::center_map_viewport>();
-  d.sink<UpdateViewportLimitsEvent>().connect<&App::on_update_viewport_limits>(this);
   d.sink<UpdateTilesetViewportLimitsEvent>().connect<&App::on_update_tileset_viewport_limits>(this);
 
   d.sink<OffsetTilesetViewportEvent>().connect<&App::on_offset_tileset_viewport>(this);
@@ -568,15 +567,6 @@ void App::on_add_point(const AddPointEvent& event)
 {
   if (auto* document = active_map_document()) {
     document->add_point(event.layer_id, event.pos);
-  }
-}
-
-void App::on_update_viewport_limits(const UpdateViewportLimitsEvent& event)
-{
-  // TODO respect specified viewport
-  if (auto* document = active_document()) {
-    auto& viewport = document->get_viewport();
-    viewport.set_limits({event.min_offset, event.max_offset});
   }
 }
 

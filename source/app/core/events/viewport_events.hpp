@@ -38,13 +38,6 @@ struct DecreaseZoomEvent final
 struct IncreaseZoomEvent final
 {};
 
-struct [[deprecated]] UpdateViewportLimitsEvent final
-{
-  entt::entity viewport_entity{entt::null};
-  Vector2f     min_offset{};
-  Vector2f     max_offset{};
-};
-
 struct OffsetDocumentViewportEvent final
 {
   Vector2f delta{};  /// The offset to apply.

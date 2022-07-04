@@ -109,8 +109,6 @@ class App final : AEventLoop
   void on_add_ellipse(const AddEllipseEvent& event);
   void on_add_point(const AddPointEvent& event);
 
-  void on_update_viewport_limits(const UpdateViewportLimitsEvent& event);
-
   void on_update_tileset_viewport_limits(const UpdateTilesetViewportLimitsEvent& event);
 
   void on_offset_document_viewport(const OffsetDocumentViewportEvent& event);
