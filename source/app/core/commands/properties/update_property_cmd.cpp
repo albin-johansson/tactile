@@ -53,12 +53,11 @@ void UpdatePropertyCmd::redo()
   props.update(mName, mNewValue);
 }
 
-auto UpdatePropertyCmd::merge_with(const ICommand& cmd) -> bool
+auto UpdatePropertyCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const UpdatePropertyCmd&>(cmd);
-    if (mContext->get_uuid() == other.mContext->get_uuid() && mName == other.mName) {
-      mNewValue = other.mNewValue;
+  if (const auto* other = dynamic_cast<const UpdatePropertyCmd*>(cmd)) {
+    if (mContext->get_uuid() == other->mContext->get_uuid() && mName == other->mName) {
+      mNewValue = other->mNewValue;
       return true;
     }
   }

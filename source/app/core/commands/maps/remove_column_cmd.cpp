@@ -52,14 +52,11 @@ void RemoveColumnCmd::redo()
   invoke_n(mColumns, [&] { map.remove_column(); });
 }
 
-auto RemoveColumnCmd::merge_with(const ICommand& cmd) -> bool
+auto RemoveColumnCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const RemoveColumnCmd&>(cmd);
-
-    mColumns += other.mColumns;
-    mCache.merge_with(other.mCache);
-
+  if (const auto* other = dynamic_cast<const RemoveColumnCmd*>(cmd)) {
+    mColumns += other->mColumns;
+    mCache.merge_with(other->mCache);
     return true;
   }
 

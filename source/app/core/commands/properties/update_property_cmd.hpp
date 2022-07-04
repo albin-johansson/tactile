@@ -38,7 +38,7 @@ class UpdatePropertyCmd final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> const char* override;
 

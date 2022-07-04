@@ -54,12 +54,11 @@ void UpdateComponentCmd::redo()
   component.update_attr(mAttributeName, mUpdatedValue);
 }
 
-auto UpdateComponentCmd::merge_with(const ICommand& cmd) -> bool
+auto UpdateComponentCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const UpdateComponentCmd&>(cmd);
-    if (mComponentId == other.mComponentId && mAttributeName == other.mAttributeName) {
-      mUpdatedValue = other.mUpdatedValue;
+  if (const auto* other = dynamic_cast<const UpdateComponentCmd*>(cmd)) {
+    if (mComponentId == other->mComponentId && mAttributeName == other->mAttributeName) {
+      mUpdatedValue = other->mUpdatedValue;
       return true;
     }
   }

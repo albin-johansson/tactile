@@ -36,7 +36,7 @@ class RemoveRowCmd final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand& cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
 
   [[nodiscard]] auto id() const noexcept -> CommandId override
   {

@@ -72,7 +72,7 @@ TEST(RemoveRowCmd, MergeSupport)
   RemoveRowCmd a{&document};
   RemoveRowCmd b{&document};
 
-  ASSERT_TRUE(a.merge_with(b));
+  ASSERT_TRUE(a.merge_with(&b));
 
   a.redo();
 

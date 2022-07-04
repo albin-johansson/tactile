@@ -44,11 +44,10 @@ void AddRowCmd::redo()
   invoke_n(mRows, [&] { map.add_row(); });
 }
 
-auto AddRowCmd::merge_with(const ICommand& cmd) -> bool
+auto AddRowCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const AddRowCmd&>(cmd);
-    mRows += other.mRows;
+  if (const auto* other = dynamic_cast<const AddRowCmd*>(cmd)) {
+    mRows += other->mRows;
     return true;
   }
 

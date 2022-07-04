@@ -64,8 +64,8 @@ TEST(AddColumnCmd, MergeSupport)
   AddColumnCmd b{&document};
   AddColumnCmd c{&document};
 
-  ASSERT_TRUE(a.merge_with(b));
-  ASSERT_TRUE(a.merge_with(c));
+  ASSERT_TRUE(a.merge_with(&b));
+  ASSERT_TRUE(a.merge_with(&c));
 
   a.redo();
 

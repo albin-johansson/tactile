@@ -42,15 +42,6 @@ class ICommand
    */
   virtual void redo() = 0;
 
-  /**
-   * Returns a identifier unique for the command type.
-   *
-   * This function is mainly designed to be used when overriding the
-   * `merge_with()` function, where it can be used to efficiently test if two
-   * commands are of the same type, since the parameter type is `ACommand`.
-   *
-   * \return an identifier unique for the command class.
-   */
   [[nodiscard, deprecated]] virtual auto id() const -> CommandId = 0;
 
   /// Returns a short human-readable string that describes the command.
@@ -62,20 +53,17 @@ class ICommand
    * Override this function in order to enable reducing the amount of
    * commands on the command stack when it makes sense to chain a group of
    * commands of the same type together. For example, this is used to combine
-   * consecutive "Add Row" commands.
+   * consecutive 'Add row' commands. By default, this function just returns false.
    *
-   * Use the `id()` function to efficiently filter out commands of
-   * differing types.
+   * Note, this function is only called on the command on top of the command stack.
    *
-   * Note, this function is only called on the command on top of the command
-   * stack.
-   *
-   * \param cmd the command that will potentially be merged into *this* command.
+   * \param cmd the command that will potentially be merged into *this* command, never
+   * null.
    *
    * \return `true` if the supplied command was merged into *this* command;
    *         `false` otherwise.
    */
-  [[nodiscard]] virtual auto merge_with([[maybe_unused]] const ICommand& cmd) -> bool
+  [[nodiscard]] virtual auto merge_with([[maybe_unused]] const ICommand* cmd) -> bool
   {
     return false;
   }

@@ -53,12 +53,11 @@ void SetObjectNameCmd::redo()
   object->set_name(mNewName);
 }
 
-auto SetObjectNameCmd::merge_with(const ICommand& cmd) -> bool
+auto SetObjectNameCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const SetObjectNameCmd&>(cmd);
-    if (mObjectId == other.mObjectId) {
-      mNewName = other.mNewName;
+  if (const auto* other = dynamic_cast<const SetObjectNameCmd*>(cmd)) {
+    if (mObjectId == other->mObjectId) {
+      mNewName = other->mNewName;
       return true;
     }
   }

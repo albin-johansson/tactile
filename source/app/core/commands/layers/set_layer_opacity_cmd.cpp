@@ -54,12 +54,11 @@ void SetLayerOpacityCmd::redo()
   layer.set_opacity(mOpacity);
 }
 
-auto SetLayerOpacityCmd::merge_with(const ICommand& cmd) -> bool
+auto SetLayerOpacityCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const SetLayerOpacityCmd&>(cmd);
-    if (mLayerId == other.mLayerId) {
-      mOpacity = other.mOpacity;
+  if (const auto* other = dynamic_cast<const SetLayerOpacityCmd*>(cmd)) {
+    if (mLayerId == other->mLayerId) {
+      mOpacity = other->mOpacity;
       return true;
     }
   }

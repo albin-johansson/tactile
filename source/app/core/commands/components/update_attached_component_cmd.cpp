@@ -60,16 +60,14 @@ void UpdateAttachedComponentCmd::redo()
   component.update_attr(mAttributeName, mUpdatedValue);
 }
 
-auto UpdateAttachedComponentCmd::merge_with(const ICommand& cmd) -> bool
+auto UpdateAttachedComponentCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const UpdateAttachedComponentCmd&>(cmd);
-
-    const bool canMerge = mContext->get_uuid() == other.mContext->get_uuid() &&
-                          mComponentId == other.mComponentId &&
-                          mAttributeName == other.mAttributeName;
+  if (const auto* other = dynamic_cast<const UpdateAttachedComponentCmd*>(cmd)) {
+    const bool canMerge = mContext->get_uuid() == other->mContext->get_uuid() &&
+                          mComponentId == other->mComponentId &&
+                          mAttributeName == other->mAttributeName;
     if (canMerge) {
-      mUpdatedValue = other.mUpdatedValue;
+      mUpdatedValue = other->mUpdatedValue;
       return true;
     }
   }

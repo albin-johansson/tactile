@@ -53,12 +53,11 @@ void SetObjectTagCmd::redo()
   object->set_tag(mNewTag);
 }
 
-auto SetObjectTagCmd::merge_with(const ICommand& cmd) -> bool
+auto SetObjectTagCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const SetObjectTagCmd&>(cmd);
-    if (mObjectId == other.mObjectId) {
-      mNewTag = other.mNewTag;
+  if (const auto* other = dynamic_cast<const SetObjectTagCmd*>(cmd)) {
+    if (mObjectId == other->mObjectId) {
+      mNewTag = other->mNewTag;
       return true;
     }
   }

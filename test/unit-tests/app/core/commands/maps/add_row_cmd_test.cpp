@@ -63,7 +63,7 @@ TEST(AddRowCmd, MergeSupport)
   AddRowCmd a{&document};
   AddRowCmd b{&document};
 
-  ASSERT_TRUE(a.merge_with(b));
+  ASSERT_TRUE(a.merge_with(&b));
 
   a.redo();
 

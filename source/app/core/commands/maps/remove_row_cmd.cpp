@@ -52,14 +52,11 @@ void RemoveRowCmd::redo()
   invoke_n(mRows, [&] { map.remove_row(); });
 }
 
-auto RemoveRowCmd::merge_with(const ICommand& cmd) -> bool
+auto RemoveRowCmd::merge_with(const ICommand* cmd) -> bool
 {
-  if (id() == cmd.id()) {
-    const auto& other = dynamic_cast<const RemoveRowCmd&>(cmd);
-
-    mRows += other.mRows;
-    mCache.merge_with(other.mCache);
-
+  if (const auto* other = dynamic_cast<const RemoveRowCmd*>(cmd)) {
+    mRows += other->mRows;
+    mCache.merge_with(other->mCache);
     return true;
   }
 
