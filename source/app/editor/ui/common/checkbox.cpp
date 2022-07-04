@@ -21,6 +21,7 @@
 
 #include <imgui.h>
 
+#include "editor/ui/common/tooltips.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {
@@ -31,8 +32,8 @@ auto checkbox(const char* label, bool* value, const char* tooltip) -> bool
   TACTILE_ASSERT(value);
   const auto changed = ImGui::Checkbox(label, value);
 
-  if (tooltip && ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("%s", tooltip);
+  if (tooltip) {
+    lazy_tooltip(label, tooltip);
   }
 
   return changed;

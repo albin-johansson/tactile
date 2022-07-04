@@ -22,6 +22,7 @@
 #include <imgui.h>
 
 #include "editor/ui/alignment.hpp"
+#include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/scoped.hpp"
 #include "misc/assert.hpp"
 
@@ -39,11 +40,11 @@ auto button(const char* text,
 
   const auto result = ImGui::Button(text, {width, height});
 
-  if (ImGui::IsItemActive() || ImGui::IsItemHovered()) {
-    if (tooltip) {
-      ImGui::SetTooltip("%s", tooltip);
-    }
+  if (tooltip) {
+    lazy_tooltip(text, tooltip);
+  }
 
+  if (ImGui::IsItemActive() || ImGui::IsItemHovered()) {
     ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
   }
 
