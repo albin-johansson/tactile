@@ -53,7 +53,7 @@ void SetObjectVisibleCmd::redo()
 
 auto SetObjectVisibleCmd::get_name() const -> const char*
 {
-  return "Set Object Visibility";
+  return mVisible ? "Show Object" : "Hide Object";
 }
 
 }  // namespace tactile
