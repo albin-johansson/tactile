@@ -29,7 +29,6 @@
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"

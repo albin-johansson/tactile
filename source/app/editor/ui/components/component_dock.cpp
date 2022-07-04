@@ -24,7 +24,6 @@
 
 #include "core/common/identifiers.hpp"
 #include "core/components/component_bundle.hpp"
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/contexts/context.hpp"
 #include "core/events/component_events.hpp"

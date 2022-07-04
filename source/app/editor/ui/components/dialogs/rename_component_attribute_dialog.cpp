@@ -23,7 +23,6 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"

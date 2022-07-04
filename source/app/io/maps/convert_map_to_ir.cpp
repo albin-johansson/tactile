@@ -19,7 +19,6 @@
 
 #include "convert_map_to_ir.hpp"
 
-#include "core/components/component_definition.hpp"
 #include "core/components/component_index.hpp"
 #include "core/documents/map_document.hpp"
 #include "core/documents/tileset_document.hpp"
