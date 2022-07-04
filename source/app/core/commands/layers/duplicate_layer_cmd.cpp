@@ -25,7 +25,7 @@
 namespace tactile {
 
 DuplicateLayerCmd::DuplicateLayerCmd(MapDocument* document, const UUID& layerId)
-    :  mDocument{document}
+    : mDocument{document}
     , mLayerId{layerId}
 {
   if (!mDocument) {
