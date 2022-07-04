@@ -17,26 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "centered_text.hpp"
-
-#include <imgui.h>
-#include <imgui_internal.h>
-
-#include "misc/assert.hpp"
+#pragma once
 
 namespace tactile::ui {
 
-void centered_text(const char* text)
-{
-  TACTILE_ASSERT(text);
-  const auto textSize = ImGui::CalcTextSize(text);
-
-  const auto region = ImGui::GetContentRegionAvail();
-  const auto halfRegion = region / ImVec2{2.0f, 2.0f};
-
-  const auto cursorPos = ImGui::GetCursorPos();
-  ImGui::SetCursorPos(cursorPos + ImVec2{halfRegion.x - (textSize.x / 2.0f), 0});
-  ImGui::TextUnformatted(text);
-}
+/// Shows a label that is horizontally centered in the parent item.
+void centered_label(const char* text);
 
 }  // namespace tactile::ui

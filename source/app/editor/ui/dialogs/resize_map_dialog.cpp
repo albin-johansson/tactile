@@ -23,7 +23,7 @@
 #include <imgui.h>
 
 #include "core/events/map_events.hpp"
-#include "editor/ui/common/button.hpp"
+#include "editor/ui/common/buttons.hpp"
 
 namespace tactile::ui {
 

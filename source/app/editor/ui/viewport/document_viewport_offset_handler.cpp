@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "mouse_tracker.hpp"
+#include "document_viewport_offset_handler.hpp"
 
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>

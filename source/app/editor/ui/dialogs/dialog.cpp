@@ -20,7 +20,7 @@
 #include "editor/ui/dialogs/dialog.hpp"
 
 #include "editor/ui/alignment.hpp"
-#include "editor/ui/common/button.hpp"
+#include "editor/ui/common/buttons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
 

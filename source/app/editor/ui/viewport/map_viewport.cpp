@@ -34,7 +34,7 @@
 #include "core/layers/object_layer.hpp"
 #include "core/model.hpp"
 #include "core/tools/tool_manager.hpp"
-#include "editor/ui/common/mouse_tracker.hpp"
+#include "document_viewport_offset_handler.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_info.hpp"

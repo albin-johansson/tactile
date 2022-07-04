@@ -30,8 +30,8 @@
 #include "core/model.hpp"
 #include "core/viewport.hpp"
 #include "editor/ui/alignment.hpp"
-#include "editor/ui/common/button.hpp"
-#include "editor/ui/common/centered_text.hpp"
+#include "editor/ui/common/buttons.hpp"
+#include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tilesets/tileset_tabs.hpp"
@@ -77,7 +77,7 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
 
     if (map.get_tilesets().empty()) {
       prepare_vertical_alignment_center(2);
-      centered_text("Current map has no tilesets!");
+      centered_label("Current map has no tilesets!");
 
       ImGui::Spacing();
 

@@ -17,21 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "labels.hpp"
+
+#include <imgui.h>
+#include <imgui_internal.h>
+
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 
-/**
- * Shows a checkbox.
- *
- * \ingroup gui
- *
- * \param label the checkbox label.
- * \param[out] value a pointer to which the value of the checkbox will be written.
- * \param tooltip optional tooltip text.
- *
- * \return `true` if the value changed; `false` otherwise.
- */
-auto checkbox(const char* label, bool* value, const char* tooltip = nullptr) -> bool;
+void centered_label(const char* text)
+{
+  TACTILE_ASSERT(text);
+  const auto textSize = ImGui::CalcTextSize(text);
+
+  const auto region = ImGui::GetContentRegionAvail();
+  const auto halfRegion = region / ImVec2{2.0f, 2.0f};
+
+  const auto cursorPos = ImGui::GetCursorPos();
+  ImGui::SetCursorPos(cursorPos + ImVec2{halfRegion.x - (textSize.x / 2.0f), 0});
+  ImGui::TextUnformatted(text);
+}
 
 }  // namespace tactile::ui

@@ -29,8 +29,8 @@
 #include "core/events/tool_events.hpp"
 #include "core/model.hpp"
 #include "core/tools/tool_manager.hpp"
-#include "editor/ui/common/button.hpp"
-#include "editor/ui/common/style.hpp"
+#include "editor/ui/common/buttons.hpp"
+#include "editor/ui/common/windows.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 

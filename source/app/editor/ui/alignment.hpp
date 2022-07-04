@@ -25,9 +25,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup gui
-/// \{
-
 /**
  * Makes the next window centered when it is first shown.
  */
@@ -88,7 +85,5 @@ auto right_align_next_item(const char* text) -> float;
   const auto spacing = ImGui::GetStyle().ItemSpacing.x * 2.0f;
   return spacing + (std::max)({ImGui::CalcTextSize(strings).x...});
 }
-
-/// \} End of group gui
 
 }  // namespace tactile::ui

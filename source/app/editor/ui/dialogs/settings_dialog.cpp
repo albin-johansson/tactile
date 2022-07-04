@@ -25,8 +25,8 @@
 
 #include "core/events/command_events.hpp"
 #include "core/events/misc_events.hpp"
-#include "editor/ui/common/button.hpp"
-#include "editor/ui/common/checkbox.hpp"
+#include "editor/ui/common/buttons.hpp"
+#include "editor/ui/common/checkboxes.hpp"
 #include "editor/ui/common/colors.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"

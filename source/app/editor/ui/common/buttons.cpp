@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "button.hpp"
+#include "buttons.hpp"
 
 #include <imgui.h>
 

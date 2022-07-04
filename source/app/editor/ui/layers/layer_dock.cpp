@@ -28,8 +28,8 @@
 #include "core/model.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/alignment.hpp"
-#include "editor/ui/common/button.hpp"
-#include "editor/ui/common/centered_text.hpp"
+#include "editor/ui/common/buttons.hpp"
+#include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/layers/add_layer_context_menu.hpp"
 #include "editor/ui/layers/views/layer_item.hpp"
@@ -113,7 +113,7 @@ void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   if (map.layer_count() == 0) {
     prepare_vertical_alignment_center(1);
-    centered_text("This map has no layers!");
+    centered_label("This map has no layers!");
   }
   else {
     const ImVec2 size{-min_float, -min_float};

@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "core/common/maybe.hpp"
-#include "editor/ui/common/centered_text.hpp"
+#include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
@@ -212,7 +212,7 @@ void update_log_dock()
       _update_log_contents(_log_filter);
     }
     else {
-      centered_text("No logged messages match the current filter.");
+      centered_label("No logged messages match the current filter.");
     }
 
     if (auto popup = Popup::for_window("##LogDockContext"); popup.is_open()) {

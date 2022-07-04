@@ -23,7 +23,7 @@
 #include <imgui_internal.h>
 
 #include "core/documents/tileset_document.hpp"
-#include "editor/ui/common/mouse_tracker.hpp"
+#include "document_viewport_offset_handler.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_info.hpp"
 #include "editor/ui/rendering/render_tileset.hpp"

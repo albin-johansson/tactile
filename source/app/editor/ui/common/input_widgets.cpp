@@ -25,7 +25,7 @@
 #include "colors.hpp"
 #include "core/utils/buffers.hpp"
 #include "editor/constants.hpp"
-#include "editor/ui/common/button.hpp"
+#include "editor/ui/common/buttons.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/file_dialog.hpp"

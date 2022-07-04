@@ -29,8 +29,8 @@
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/alignment.hpp"
-#include "editor/ui/common/button.hpp"
-#include "editor/ui/common/centered_text.hpp"
+#include "editor/ui/common/buttons.hpp"
+#include "editor/ui/common/labels.hpp"
 #include "editor/ui/components/component_view.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
@@ -80,7 +80,7 @@ void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
     const auto& comps = context.get_comps();
     if (comps.empty()) {
       prepare_vertical_alignment_center(2);
-      centered_text("This context has no components.");
+      centered_label("This context has no components.");
     }
     else {
       const auto index = document.get_component_index();

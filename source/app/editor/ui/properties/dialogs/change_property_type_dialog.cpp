@@ -25,7 +25,7 @@
 #include <imgui.h>
 
 #include "core/events/property_events.hpp"
-#include "editor/ui/common/button.hpp"
+#include "editor/ui/common/buttons.hpp"
 #include "property_type_combo.hpp"
 
 namespace tactile::ui {

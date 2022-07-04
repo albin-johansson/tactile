@@ -38,7 +38,7 @@
 #include "core/map.hpp"
 #include "core/model.hpp"
 #include "core/tilesets/tileset.hpp"
-#include "editor/ui/common/button.hpp"
+#include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/filename_filter.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/icons.hpp"

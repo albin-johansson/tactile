@@ -22,7 +22,7 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "editor/ui/common/button.hpp"
+#include "editor/ui/common/buttons.hpp"
 #include "editor/ui/icons.hpp"
 #include "meta/build.hpp"
 

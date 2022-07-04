@@ -29,8 +29,6 @@ namespace tactile::ui {
 /**
  * Updates a "rubber band" (rectangular selection) in the current canvas.
  *
- * \ingroup gui
- *
  * \param offset the current viewport scroll offset.
  * \param tileSize the logical tile size.
  *

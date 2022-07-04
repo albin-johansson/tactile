@@ -17,18 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "style.hpp"
+#include "checkboxes.hpp"
 
 #include <imgui.h>
-#include <imgui_internal.h>
+
+#include "editor/ui/common/tooltips.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 
-void remove_tab_bar_from_next_window()
+auto checkbox(const char* label, bool* value, const char* tooltip) -> bool
 {
-  ImGuiWindowClass wc{};
-  wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
-  ImGui::SetNextWindowClass(&wc);
+  TACTILE_ASSERT(label);
+  TACTILE_ASSERT(value);
+  const auto changed = ImGui::Checkbox(label, value);
+
+  if (tooltip) {
+    lazy_tooltip(label, tooltip);
+  }
+
+  return changed;
 }
 
 }  // namespace tactile::ui

@@ -17,17 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "windows.hpp"
+
+#include <imgui.h>
+#include <imgui_internal.h>
 
 namespace tactile::ui {
 
-/**
- * Shows a centered label.
- *
- * \ingroup gui
- *
- * \param text the label text.
- */
-void centered_text(const char* text);
+void remove_tab_bar_from_next_window()
+{
+  ImGuiWindowClass wc{};
+  wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
+  ImGui::SetNextWindowClass(&wc);
+}
 
 }  // namespace tactile::ui

@@ -33,9 +33,9 @@
 #include "core/events/component_events.hpp"
 #include "core/model.hpp"
 #include "editor/constants.hpp"
-#include "editor/ui/common/button.hpp"
-#include "editor/ui/common/centered_text.hpp"
+#include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/input_widgets.hpp"
+#include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/properties/dialogs/property_type_combo.hpp"
 #include "editor/ui/scoped.hpp"
@@ -172,7 +172,7 @@ void ComponentEditor::show_component_attributes(
   auto& data = *mData;
 
   if (definition.empty()) {
-    centered_text("This component has no attributes.");
+    centered_label("This component has no attributes.");
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
