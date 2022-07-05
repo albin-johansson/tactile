@@ -353,6 +353,18 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
     ContextPropertyVisitor visitor;
     visitor.dispatcher = &dispatcher;
     context.accept(visitor);
+
+    ImGui::Separator();
+
+    bool isItemContextOpen = false;
+    _show_custom_properties(context, dispatcher, isItemContextOpen);
+
+    if (!isItemContextOpen) {
+      if (auto popup = Popup::for_window("##PropertyTableContext"); popup.is_open()) {
+        _context_state.show_add_dialog =
+            ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
+      }
+    }
   }
 
   if (_context_state.show_add_dialog) {
