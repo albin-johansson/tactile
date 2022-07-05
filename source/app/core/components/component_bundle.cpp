@@ -23,7 +23,7 @@
 
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 void ComponentBundle::add(Component component)
 {
@@ -72,4 +72,4 @@ auto ComponentBundle::empty() const -> bool
   return mComps.empty();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

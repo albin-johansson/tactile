@@ -26,9 +26,9 @@
 
 namespace tactile {
 
-RenameComponentCmd::RenameComponentCmd(Shared<core::ComponentIndex> index,
-                                       const UUID&                  componentId,
-                                       std::string                  name)
+RenameComponentCmd::RenameComponentCmd(Shared<ComponentIndex> index,
+                                       const UUID&            componentId,
+                                       std::string            name)
     : mIndex{std::move(index)}
     , mComponentId{componentId}
     , mUpdatedName{std::move(name)}

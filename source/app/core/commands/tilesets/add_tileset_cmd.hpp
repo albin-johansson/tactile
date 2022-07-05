@@ -32,10 +32,10 @@ namespace tactile {
 class AddTilesetCmd final : public ICommand
 {
  public:
-  AddTilesetCmd(DocumentModel*           model,
-                const UUID&              mapId,
-                const UUID&              tilesetId,
-                const core::TilesetInfo& info);
+  AddTilesetCmd(DocumentModel*     model,
+                const UUID&        mapId,
+                const UUID&        tilesetId,
+                const TilesetInfo& info);
 
   void undo() override;
 
@@ -47,7 +47,7 @@ class AddTilesetCmd final : public ICommand
   DocumentModel*          mModel{};
   UUID                    mMapId{};
   UUID                    mTilesetId{};
-  core::TilesetInfo       mTilesetInfo;
+  TilesetInfo             mTilesetInfo;
   Shared<TilesetDocument> mTileset;  /// The created tileset
 };
 

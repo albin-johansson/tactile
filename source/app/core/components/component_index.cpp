@@ -25,7 +25,7 @@
 #include "core/components/component_definition.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 auto ComponentIndex::define_comp(std::string name) -> UUID
 {
@@ -109,4 +109,4 @@ auto ComponentIndex::empty() const -> bool
   return mDefs.empty();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

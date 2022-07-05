@@ -29,9 +29,9 @@
 namespace tactile::ui {
 
 /// Shows a view of a single component, attached to a context.
-void component_view(const UUID&            contextId,
-                    const core::Component& component,
-                    const std::string&     name,
-                    entt::dispatcher&      dispatcher);
+void component_view(const UUID&        contextId,
+                    const Component&   component,
+                    const std::string& name,
+                    entt::dispatcher&  dispatcher);
 
 }  // namespace tactile::ui

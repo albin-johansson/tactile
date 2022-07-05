@@ -25,8 +25,8 @@
 
 namespace tactile {
 
-UndefComponentCmd::UndefComponentCmd(Shared<core::ComponentIndex> index,
-                                     const UUID&                  componentId)
+UndefComponentCmd::UndefComponentCmd(Shared<ComponentIndex> index,
+                                     const UUID&            componentId)
     : mIndex{std::move(index)}
     , mComponentId{componentId}
 {}

@@ -22,7 +22,7 @@
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 struct ViewportLimits final
 {
@@ -77,4 +77,4 @@ class Viewport final
   Maybe<ViewportLimits> mLimits;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

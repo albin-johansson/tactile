@@ -53,8 +53,8 @@ class ComponentEditor final : public ADialog
   void show_component_combo_popup(const ADocument&  document,
                                   entt::dispatcher& dispatcher);
 
-  void show_component_attributes(const core::ComponentDefinition& definition,
-                                 entt::dispatcher&                dispatcher);
+  void show_component_attributes(const ComponentDefinition& definition,
+                                 entt::dispatcher&          dispatcher);
 
   void show_component_attribute(const UUID&        componentId,
                                 const std::string& name,

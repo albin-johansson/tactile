@@ -24,9 +24,9 @@
 
 namespace tactile::ui {
 
-void render_tile_layer(GraphicsCtx&           graphics,
-                       const core::Map&       map,
-                       const core::TileLayer& layer,
-                       float                  parentOpacity);
+void render_tile_layer(GraphicsCtx&     graphics,
+                       const Map&       map,
+                       const TileLayer& layer,
+                       float            parentOpacity);
 
 }  // namespace tactile::ui

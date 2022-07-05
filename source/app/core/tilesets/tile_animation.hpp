@@ -25,7 +25,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class TileAnimation final
 {
@@ -63,4 +63,4 @@ class TileAnimation final
   TimePoint          mLastUpdate{};
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

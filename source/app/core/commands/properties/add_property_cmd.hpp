@@ -32,7 +32,7 @@ namespace tactile {
 class AddPropertyCmd final : public ICommand
 {
  public:
-  AddPropertyCmd(Shared<core::IContext> context, std::string name, AttributeType type);
+  AddPropertyCmd(Shared<IContext> context, std::string name, AttributeType type);
 
   void undo() override;
 
@@ -41,9 +41,9 @@ class AddPropertyCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::IContext> mContext;
-  std::string            mName;
-  AttributeType          mType;
+  Shared<IContext> mContext;
+  std::string      mName;
+  AttributeType    mType;
 };
 
 }  // namespace tactile

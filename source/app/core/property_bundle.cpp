@@ -23,7 +23,7 @@
 
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 void PropertyBundle::add(std::string name, AttributeType type)
 {
@@ -143,4 +143,4 @@ auto PropertyBundle::empty() const -> bool
   return mProps.empty();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

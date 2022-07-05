@@ -24,6 +24,6 @@
 
 namespace tactile::ui {
 
-void update_map_viewport_overlay(const core::Map& map, const ViewportCursorInfo& cursor);
+void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& cursor);
 
 }  // namespace tactile::ui

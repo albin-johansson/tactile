@@ -42,9 +42,9 @@ namespace {
 
 constexpr auto _add_component_popup_id = "##AddComponentButtonPopup";
 
-void _show_add_component_button_popup_content(const ADocument&      document,
-                                              const core::IContext& context,
-                                              entt::dispatcher&     dispatcher)
+void _show_add_component_button_popup_content(const ADocument&  document,
+                                              const IContext&   context,
+                                              entt::dispatcher& dispatcher)
 {
   const auto index = document.get_component_index();
   TACTILE_ASSERT(index != nullptr);

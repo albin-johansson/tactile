@@ -24,7 +24,6 @@
 #include <gtest/gtest.h>
 
 using namespace tactile;
-using namespace core;
 
 using Millis = TileAnimation::Millis;
 

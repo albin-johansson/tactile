@@ -65,10 +65,10 @@ class DocumentModel final
   auto add_map(const Vector2i& tileSize, usize rows, usize columns) -> UUID;
 
   /// Creates a tileset document and adds it to the active map document.
-  auto add_tileset(const core::TilesetInfo& info) -> UUID;
+  auto add_tileset(const TilesetInfo& info) -> UUID;
 
   /// Restores a tileset, intended to be used after parsing maps.
-  auto restore_tileset(TileID firstTileId, const core::TilesetInfo& info) -> UUID;
+  auto restore_tileset(TileID firstTileId, const TilesetInfo& info) -> UUID;
 
   /// Makes a specific document active.
   void select_document(const UUID& id);

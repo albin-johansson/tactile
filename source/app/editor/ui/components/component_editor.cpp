@@ -165,9 +165,8 @@ void ComponentEditor::show_component_combo_popup(const ADocument&  document,
   }
 }
 
-void ComponentEditor::show_component_attributes(
-    const core::ComponentDefinition& definition,
-    entt::dispatcher&                dispatcher)
+void ComponentEditor::show_component_attributes(const ComponentDefinition& definition,
+                                                entt::dispatcher&          dispatcher)
 {
   auto& data = *mData;
 

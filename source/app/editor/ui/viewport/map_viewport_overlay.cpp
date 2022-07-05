@@ -66,7 +66,7 @@ void _prepare_position_and_pivot()
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _show_mouse_tile_labels(const core::Map& map, const ViewportCursorInfo& cursor)
+void _show_mouse_tile_labels(const Map& map, const ViewportCursorInfo& cursor)
 {
   const auto layerId = map.active_layer_id();
   if (!layerId) {
@@ -129,7 +129,7 @@ void _update_overlay_context_menu()
 
 }  // namespace
 
-void update_map_viewport_overlay(const core::Map& map, const ViewportCursorInfo& cursor)
+void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& cursor)
 {
   _prepare_position_and_pivot();
 

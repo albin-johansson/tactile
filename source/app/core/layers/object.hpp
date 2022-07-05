@@ -28,7 +28,7 @@
 #include "core/contexts/context_delegate.hpp"
 #include "core/layers/object_type.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class Object final : public IContext
 {
@@ -81,4 +81,4 @@ class Object final : public IContext
   bool            mVisible : 1 {true};
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

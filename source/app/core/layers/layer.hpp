@@ -27,7 +27,7 @@
 #include "core/fwd.hpp"
 #include "core/layers/layer_type.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Interface for all layer classes.
 class ILayer : public IContext
@@ -70,4 +70,4 @@ class ILayer : public IContext
   [[nodiscard]] virtual auto get_meta_id() const -> Maybe<int32> = 0;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

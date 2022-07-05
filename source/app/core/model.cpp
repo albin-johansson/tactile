@@ -60,7 +60,7 @@ auto DocumentModel::add_map(const Vector2i& tileSize,
   TACTILE_ASSERT(tileSize.y > 0);
 
   auto mapDocument = std::make_shared<MapDocument>(tileSize, rows, columns);
-  mapDocument->set_component_index(std::make_shared<core::ComponentIndex>());
+  mapDocument->set_component_index(std::make_shared<ComponentIndex>());
 
   auto& map = mapDocument->get_map();
 
@@ -70,7 +70,7 @@ auto DocumentModel::add_map(const Vector2i& tileSize,
   return map.get_uuid();
 }
 
-auto DocumentModel::add_tileset(const core::TilesetInfo& info) -> UUID
+auto DocumentModel::add_tileset(const TilesetInfo& info) -> UUID
 {
   if (mActiveDocument) {
     auto  mapDocument = get_map(*mActiveDocument);
@@ -88,8 +88,8 @@ auto DocumentModel::add_tileset(const core::TilesetInfo& info) -> UUID
   }
 }
 
-auto DocumentModel::restore_tileset(const TileID             firstTileId,
-                                    const core::TilesetInfo& info) -> UUID
+auto DocumentModel::restore_tileset(const TileID firstTileId, const TilesetInfo& info)
+    -> UUID
 {
   if (mActiveDocument) {
     auto  mapDocument = get_map(*mActiveDocument);

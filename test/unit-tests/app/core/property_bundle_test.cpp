@@ -25,7 +25,6 @@
 
 using namespace std::string_literals;
 using namespace tactile;
-using namespace core;
 
 TEST(PropertyBundle, Defaults)
 {

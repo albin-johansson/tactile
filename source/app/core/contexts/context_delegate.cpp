@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-namespace tactile::core {
+namespace tactile {
 
 ContextDelegate::ContextDelegate(const UUID& id) : mId{id} {}
 
@@ -69,4 +69,4 @@ auto ContextDelegate::clone() const -> ContextDelegate
   return other;
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

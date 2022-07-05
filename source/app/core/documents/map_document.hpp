@@ -47,13 +47,13 @@ class MapDocument final : public ADocument
  public:
   MapDocument(const Vector2i& tileSize, usize rows, usize columns);
 
-  void register_context(Shared<core::IContext> context) override;
+  void register_context(Shared<IContext> context) override;
 
   void unregister_context(const UUID& id) override;
 
-  [[nodiscard]] auto get_context(const UUID& id) -> Shared<core::IContext> override;
+  [[nodiscard]] auto get_context(const UUID& id) -> Shared<IContext> override;
 
-  [[nodiscard]] auto view_context(const UUID& id) const -> const core::IContext& override;
+  [[nodiscard]] auto view_context(const UUID& id) const -> const IContext& override;
 
   void update() override;
 
@@ -109,7 +109,7 @@ class MapDocument final : public ADocument
 
   void set_object_tag(const UUID& objectId, std::string tag);
 
-  [[nodiscard]] auto get_object(const UUID& objectId) -> Shared<core::Object>;
+  [[nodiscard]] auto get_object(const UUID& objectId) -> Shared<Object>;
 
   void set_name(std::string name) override;
 
@@ -118,9 +118,9 @@ class MapDocument final : public ADocument
   [[nodiscard]] auto get_tools() -> ToolManager&;
   [[nodiscard]] auto get_tools() const -> const ToolManager&;
 
-  [[nodiscard]] auto get_viewport() -> core::Viewport& override { return mViewport; }
+  [[nodiscard]] auto get_viewport() -> Viewport& override { return mViewport; }
 
-  [[nodiscard]] auto get_viewport() const -> const core::Viewport& override
+  [[nodiscard]] auto get_viewport() const -> const Viewport& override
   {
     return mViewport;
   }
@@ -130,16 +130,16 @@ class MapDocument final : public ADocument
     return DocumentType::Map;
   }
 
-  [[nodiscard]] auto get_map_ptr() -> const Shared<core::Map>& { return mMap; }
+  [[nodiscard]] auto get_map_ptr() -> const Shared<Map>& { return mMap; }
 
-  [[nodiscard]] auto get_map() -> core::Map& { return *mMap; }
-  [[nodiscard]] auto get_map() const -> const core::Map& { return *mMap; }
+  [[nodiscard]] auto get_map() -> Map& { return *mMap; }
+  [[nodiscard]] auto get_map() const -> const Map& { return *mMap; }
 
  private:
-  Shared<core::Map>                     mMap;
-  core::Viewport                        mViewport;
-  ToolManager                           mTools;
-  HashMap<UUID, Shared<core::IContext>> mContexts;
+  Shared<Map>                     mMap;
+  Viewport                        mViewport;
+  ToolManager                     mTools;
+  HashMap<UUID, Shared<IContext>> mContexts;
 };
 
 }  // namespace tactile

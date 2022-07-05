@@ -28,7 +28,7 @@ namespace tactile::ui {
 
 void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-void tileset_dock_mouse_wheel_event_handler(const core::TilesetRef&       tilesetRef,
+void tileset_dock_mouse_wheel_event_handler(const TilesetRef&             tilesetRef,
                                             const cen::mouse_wheel_event& event,
                                             entt::dispatcher&             dispatcher);
 

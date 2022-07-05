@@ -26,10 +26,10 @@
 
 namespace tactile::ui {
 
-void render_tile_layer(GraphicsCtx&           graphics,
-                       const core::Map&       map,
-                       const core::TileLayer& layer,
-                       const float            parentOpacity)
+void render_tile_layer(GraphicsCtx&     graphics,
+                       const Map&       map,
+                       const TileLayer& layer,
+                       const float      parentOpacity)
 {
   graphics.set_opacity(parentOpacity * layer.get_opacity());
 

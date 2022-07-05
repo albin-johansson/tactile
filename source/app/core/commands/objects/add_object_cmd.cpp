@@ -59,7 +59,7 @@ void AddObjectCmd::redo()
   auto& map = mDocument->get_map();
   auto& layer = map.view_object_layer(mLayerId);
 
-  auto object = std::make_shared<core::Object>();
+  auto object = std::make_shared<Object>();
   object->set_type(mObjectType);
   object->set_pos(mPos);
   object->set_size(mSize);

@@ -26,7 +26,7 @@
 #include "core/common/associative.hpp"
 #include "core/common/uuid.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class Component final
 {
@@ -53,4 +53,4 @@ class Component final
   AttributeMap mAttributes;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

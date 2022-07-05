@@ -55,10 +55,10 @@ namespace {
   return bounds;
 }
 
-[[nodiscard]] auto _get_render_info(const core::Viewport& viewport,
-                                    const ImVec2&         logicalTileSize,
-                                    const int32           rows,
-                                    const int32           columns) -> RenderInfo
+[[nodiscard]] auto _get_render_info(const Viewport& viewport,
+                                    const ImVec2&   logicalTileSize,
+                                    const int32     rows,
+                                    const int32     columns) -> RenderInfo
 {
   RenderInfo info;
 
@@ -86,7 +86,7 @@ namespace {
 
 }  // namespace
 
-auto get_render_info(const core::Viewport& viewport, const core::Map& map) -> RenderInfo
+auto get_render_info(const Viewport& viewport, const Map& map) -> RenderInfo
 {
   return _get_render_info(viewport,
                           from_vec(map.tile_size()),
@@ -94,8 +94,7 @@ auto get_render_info(const core::Viewport& viewport, const core::Map& map) -> Re
                           static_cast<int32>(map.column_count()));
 }
 
-auto get_render_info(const core::Viewport& viewport, const core::Tileset& tileset)
-    -> RenderInfo
+auto get_render_info(const Viewport& viewport, const Tileset& tileset) -> RenderInfo
 {
   return _get_render_info(viewport,
                           from_vec(tileset.tile_size()),

@@ -119,10 +119,10 @@ auto StampTool::is_available(const DocumentModel& model) const -> bool
   return document.get_map().is_active_layer(LayerType::TileLayer);
 }
 
-void StampTool::draw_gizmos_normal(const core::Map&        map,
-                                   const core::TilesetRef& tilesetRef,
-                                   IRenderer&              renderer,
-                                   const MouseInfo&        mouse) const
+void StampTool::draw_gizmos_normal(const Map&        map,
+                                   const TilesetRef& tilesetRef,
+                                   IRenderer&        renderer,
+                                   const MouseInfo&  mouse) const
 {
   const auto  layerId = map.active_layer_id().value();
   const auto& layer = map.view_tile_layer(layerId);
@@ -176,9 +176,9 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   }
 }
 
-void StampTool::update_sequence_normal(core::TileLayer&        layer,
-                                       const core::TilesetRef& tilesetRef,
-                                       const TilePos&          cursor)
+void StampTool::update_sequence_normal(TileLayer&        layer,
+                                       const TilesetRef& tilesetRef,
+                                       const TilePos&    cursor)
 {
   const auto& selection = tilesetRef.selection.value();
   const auto  selectionSize = selection.end - selection.begin;
@@ -205,9 +205,9 @@ void StampTool::update_sequence_normal(core::TileLayer&        layer,
   });
 }
 
-void StampTool::update_sequence_random(core::TileLayer&        layer,
-                                       const core::TilesetRef& tilesetRef,
-                                       const TilePos&          cursor)
+void StampTool::update_sequence_random(TileLayer&        layer,
+                                       const TilesetRef& tilesetRef,
+                                       const TilePos&    cursor)
 {
   const auto& selection = tilesetRef.selection.value();
   const auto  selectionSize = selection.end - selection.begin;
@@ -247,7 +247,7 @@ void StampTool::maybe_emit_event(const DocumentModel& model, entt::dispatcher& d
   }
 }
 
-auto StampTool::should_be_random(const core::Map& map) const -> bool
+auto StampTool::should_be_random(const Map& map) const -> bool
 {
   return mRandomMode && map.is_stamp_randomizer_possible();
 }

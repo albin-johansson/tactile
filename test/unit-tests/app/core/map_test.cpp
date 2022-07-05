@@ -30,7 +30,6 @@
 #include "misc/panic.hpp"
 
 using namespace tactile;
-using namespace core;
 
 namespace {
 

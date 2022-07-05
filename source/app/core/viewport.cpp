@@ -25,7 +25,7 @@
 
 #include "misc/assert.hpp"
 
-namespace tactile::core {
+namespace tactile {
 namespace {
 
 constexpr float _min_tile_height = 4;
@@ -127,4 +127,4 @@ auto Viewport::get_scaling_ratio(const Vector2f& tileSize) const -> Vector2f
   return mCellSize / tileSize;
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

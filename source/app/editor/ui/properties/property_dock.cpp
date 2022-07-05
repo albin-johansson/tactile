@@ -52,7 +52,7 @@
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 
-using namespace tactile::core;
+using namespace tactile;
 
 namespace tactile::ui {
 namespace {

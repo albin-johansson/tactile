@@ -23,7 +23,7 @@
 
 #include "core/contexts/context_visitor.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 void Object::set_pos(const Vector2f& pos)
 {
@@ -95,4 +95,4 @@ auto Object::get_name() const -> const std::string&
   return mDelegate.get_name();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

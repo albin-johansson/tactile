@@ -31,7 +31,7 @@
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 TileLayer::TileLayer() : TileLayer{5, 5} {}
 
@@ -287,4 +287,4 @@ auto TileLayer::get_meta_id() const -> Maybe<int32>
   return mDelegate.get_meta_id();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

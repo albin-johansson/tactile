@@ -27,9 +27,9 @@
 
 namespace tactile {
 
-ChangePropertyTypeCmd::ChangePropertyTypeCmd(Shared<core::IContext> context,
-                                             std::string            name,
-                                             const AttributeType    type)
+ChangePropertyTypeCmd::ChangePropertyTypeCmd(Shared<IContext>    context,
+                                             std::string         name,
+                                             const AttributeType type)
     : mContext{std::move(context)}
     , mName{std::move(name)}
     , mPropertyType{type}

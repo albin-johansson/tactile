@@ -28,18 +28,18 @@
 
 namespace tactile {
 
-TilesetDocument::TilesetDocument(const UUID& id, const core::TilesetInfo& info)
-    : mTileset{std::make_shared<core::Tileset>(id, info)}
+TilesetDocument::TilesetDocument(const UUID& id, const TilesetInfo& info)
+    : mTileset{std::make_shared<Tileset>(id, info)}
 {
   register_context(mTileset);
   select_context(mTileset->get_uuid());
 }
 
-TilesetDocument::TilesetDocument(const core::TilesetInfo& info)
+TilesetDocument::TilesetDocument(const TilesetInfo& info)
     : TilesetDocument{make_uuid(), info}
 {}
 
-void TilesetDocument::register_context(Shared<core::IContext> context)
+void TilesetDocument::register_context(Shared<IContext> context)
 {
   const auto id = context->get_uuid();
   mContexts[id] = std::move(context);
@@ -59,12 +59,12 @@ void TilesetDocument::unregister_context(const UUID& id)
   }
 }
 
-auto TilesetDocument::get_context(const UUID& id) -> Shared<core::IContext>
+auto TilesetDocument::get_context(const UUID& id) -> Shared<IContext>
 {
   return lookup_in(mContexts, id);
 }
 
-auto TilesetDocument::view_context(const UUID& id) const -> const core::IContext&
+auto TilesetDocument::view_context(const UUID& id) const -> const IContext&
 {
   return *lookup_in(mContexts, id);
 }

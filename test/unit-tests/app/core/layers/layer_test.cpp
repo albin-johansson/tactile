@@ -24,7 +24,6 @@
 #include "core/layers/tile_layer.hpp"
 
 using namespace tactile;
-using namespace core;
 
 using LayerTypes = testing::Types<TileLayer, ObjectLayer, GroupLayer>;
 

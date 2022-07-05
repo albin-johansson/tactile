@@ -32,7 +32,7 @@ namespace tactile {
 class UndefComponentCmd final : public ICommand
 {
  public:
-  UndefComponentCmd(Shared<core::ComponentIndex> index, const UUID& componentId);
+  UndefComponentCmd(Shared<ComponentIndex> index, const UUID& componentId);
 
   void undo() override;
 
@@ -41,9 +41,9 @@ class UndefComponentCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::ComponentIndex>     mIndex;
-  UUID                             mComponentId{};
-  Maybe<core::ComponentDefinition> mPrevious;
+  Shared<ComponentIndex>     mIndex;
+  UUID                       mComponentId{};
+  Maybe<ComponentDefinition> mPrevious;
 };
 
 }  // namespace tactile

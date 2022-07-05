@@ -36,7 +36,7 @@
 #include "core/tile_pos.hpp"
 #include "core/tilesets/tile.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class Tileset final : public IContext
 {
@@ -117,4 +117,4 @@ class Tileset final : public IContext
   [[nodiscard]] auto is_valid(TileIndex index) const -> bool;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

@@ -26,9 +26,9 @@
 
 namespace tactile {
 
-RemoveComponentAttrCmd::RemoveComponentAttrCmd(Shared<core::ComponentIndex> index,
-                                               const UUID&                  componentId,
-                                               std::string                  attribute)
+RemoveComponentAttrCmd::RemoveComponentAttrCmd(Shared<ComponentIndex> index,
+                                               const UUID&            componentId,
+                                               std::string            attribute)
     : mIndex{std::move(index)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}

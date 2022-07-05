@@ -30,9 +30,7 @@ namespace tactile {
 class RenamePropertyCmd final : public ICommand
 {
  public:
-  RenamePropertyCmd(Shared<core::IContext> context,
-                    std::string            oldName,
-                    std::string            newName);
+  RenamePropertyCmd(Shared<IContext> context, std::string oldName, std::string newName);
 
   void undo() override;
 
@@ -41,9 +39,9 @@ class RenamePropertyCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::IContext> mContext;
-  std::string            mOldName;
-  std::string            mNewName;
+  Shared<IContext> mContext;
+  std::string      mOldName;
+  std::string      mNewName;
 };
 
 }  // namespace tactile

@@ -26,7 +26,7 @@
 #include "core/utils/tiles.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 Tileset::Tileset(const UUID& id, const TilesetInfo& info)
     : mContext{id}
@@ -165,4 +165,4 @@ auto Tileset::is_valid(const TileIndex index) const -> bool
   return index >= 0 && index < tile_count();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

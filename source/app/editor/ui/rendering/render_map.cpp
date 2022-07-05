@@ -33,21 +33,21 @@
 namespace tactile::ui {
 namespace {
 
-void _render_layer(GraphicsCtx&        graphics,
-                   const core::Map&    map,
-                   const core::ILayer* layer,
-                   const float         parentOpacity)
+void _render_layer(GraphicsCtx&  graphics,
+                   const Map&    map,
+                   const ILayer* layer,
+                   const float   parentOpacity)
 {
   TACTILE_ASSERT(layer);
 
   switch (layer->get_type()) {
     case LayerType::TileLayer:
-      if (const auto* tileLayer = dynamic_cast<const core::TileLayer*>(layer)) {
+      if (const auto* tileLayer = dynamic_cast<const TileLayer*>(layer)) {
         render_tile_layer(graphics, map, *tileLayer, parentOpacity);
       }
       break;
     case LayerType::ObjectLayer:
-      if (const auto* objectLayer = dynamic_cast<const core::ObjectLayer*>(layer)) {
+      if (const auto* objectLayer = dynamic_cast<const ObjectLayer*>(layer)) {
         render_object_layer(graphics, *objectLayer, parentOpacity);
       }
       break;
@@ -67,12 +67,12 @@ void render_map(GraphicsCtx& graphics, const MapDocument& document)
   const auto& map = document.get_map();
   const auto  activeLayerId = map.active_layer_id();
 
-  map.visit_layers([&](const core::ILayer* layer) {
+  map.visit_layers([&](const ILayer* layer) {
     if (!layer->is_visible()) {
       return;
     }
 
-    const auto parentId = layer->get_parent();
+    const auto  parentId = layer->get_parent();
     const auto* parentLayer = parentId ? map.find_group_layer(*parentId) : nullptr;
 
     if (parentLayer && !parentLayer->is_visible()) {

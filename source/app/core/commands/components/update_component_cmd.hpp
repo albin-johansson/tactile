@@ -34,10 +34,10 @@ namespace tactile {
 class UpdateComponentCmd final : public ICommand
 {
  public:
-  UpdateComponentCmd(Shared<core::ComponentIndex> index,
-                     const UUID&                  componentId,
-                     std::string                  attribute,
-                     Attribute                    value);
+  UpdateComponentCmd(Shared<ComponentIndex> index,
+                     const UUID&            componentId,
+                     std::string            attribute,
+                     Attribute              value);
 
   void undo() override;
 
@@ -48,11 +48,11 @@ class UpdateComponentCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::ComponentIndex> mIndex;
-  UUID                         mComponentId{};
-  std::string                  mAttributeName;
-  Attribute                    mUpdatedValue;
-  Maybe<Attribute>             mPreviousValue;
+  Shared<ComponentIndex> mIndex;
+  UUID                   mComponentId{};
+  std::string            mAttributeName;
+  Attribute              mUpdatedValue;
+  Maybe<Attribute>       mPreviousValue;
 };
 
 }  // namespace tactile

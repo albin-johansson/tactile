@@ -40,9 +40,9 @@ class RemoveLayerCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*         mDocument{};
-  Shared<core::ILayer> mLayer;
-  Maybe<usize>         mIndex;
+  MapDocument*   mDocument{};
+  Shared<ILayer> mLayer;
+  Maybe<usize>   mIndex;
 };
 
 }  // namespace tactile

@@ -38,8 +38,8 @@ class FixTilesInMapCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*              mDocument{};
-  core::Map::FixTilesResult mResult;
+  MapDocument*        mDocument{};
+  Map::FixTilesResult mResult;
 };
 
 }  // namespace tactile

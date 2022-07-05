@@ -118,7 +118,7 @@ void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   else {
     const ImVec2 size{-min_float, -min_float};
     if (ListBox list{"##LayerTreeNode", size}; list.is_open()) {
-      map.visit_layers([&](const core::ILayer* layer) {
+      map.visit_layers([&](const ILayer* layer) {
         if (!layer->get_parent().has_value()) {
           layer_item_view(document, *layer, dispatcher);
         }

@@ -28,10 +28,10 @@
 
 namespace tactile::ui {
 
-void render_tile(GraphicsCtx&     graphics,
-                 const core::Map& map,
-                 const TileID     tileId,
-                 const TilePos&   pos)
+void render_tile(GraphicsCtx&   graphics,
+                 const Map&     map,
+                 const TileID   tileId,
+                 const TilePos& pos)
 {
   TACTILE_ASSERT(tileId != empty_tile);
 

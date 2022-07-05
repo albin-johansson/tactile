@@ -21,7 +21,7 @@
 
 #include "core/common/uuid.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Interface for all identifiable objects in the core model.
 class IElement
@@ -33,4 +33,4 @@ class IElement
   [[nodiscard]] virtual auto get_uuid() const -> const UUID& = 0;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

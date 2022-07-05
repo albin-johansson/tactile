@@ -30,9 +30,9 @@ namespace tactile {
 class AttachComponentCmd final : public ICommand
 {
  public:
-  AttachComponentCmd(Shared<core::ComponentIndex> index,
-                     Shared<core::IContext>       context,
-                     const UUID&                  componentId);
+  AttachComponentCmd(Shared<ComponentIndex> index,
+                     Shared<IContext>       context,
+                     const UUID&            componentId);
 
   void undo() override;
 
@@ -41,9 +41,9 @@ class AttachComponentCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::ComponentIndex> mIndex;
-  Shared<core::IContext>       mContext;
-  UUID                         mComponentId{};
+  Shared<ComponentIndex> mIndex;
+  Shared<IContext>       mContext;
+  UUID                   mComponentId{};
 };
 
 }  // namespace tactile

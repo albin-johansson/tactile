@@ -37,7 +37,7 @@
 #include "core/tile_pos.hpp"
 #include "core/tilesets/tileset_bundle.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class Map final : public IContext
 {
@@ -171,4 +171,4 @@ class Map final : public IContext
   int32           mGroupLayerSuffix{1};
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

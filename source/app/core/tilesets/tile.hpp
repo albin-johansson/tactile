@@ -33,7 +33,7 @@
 #include "core/layers/object.hpp"
 #include "core/tilesets/tile_animation.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Provides metadata for tiles in a tileset.
 class Tile final : public IContext
@@ -89,4 +89,4 @@ class Tile final : public IContext
   HashMap<UUID, Shared<Object>> mObjects;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

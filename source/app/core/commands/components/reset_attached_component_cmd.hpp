@@ -32,9 +32,9 @@ namespace tactile {
 class ResetAttachedComponentCmd final : public ICommand
 {
  public:
-  ResetAttachedComponentCmd(Shared<core::ComponentIndex> index,
-                            Shared<core::IContext>       context,
-                            const UUID&                  componentId);
+  ResetAttachedComponentCmd(Shared<ComponentIndex> index,
+                            Shared<IContext>       context,
+                            const UUID&            componentId);
 
   void undo() override;
 
@@ -43,10 +43,10 @@ class ResetAttachedComponentCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::ComponentIndex> mIndex;
-  Shared<core::IContext>       mContext;
-  UUID                         mComponentId{};
-  Maybe<core::Component>       mComponent;
+  Shared<ComponentIndex> mIndex;
+  Shared<IContext>       mContext;
+  UUID                   mComponentId{};
+  Maybe<Component>       mComponent;
 };
 
 }  // namespace tactile

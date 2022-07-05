@@ -25,7 +25,7 @@
 #include "core/layers/layer_visitor.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto _get_bounds(const Object& object, const Vector2f& tileSize) -> Vector4f
@@ -213,4 +213,4 @@ auto ObjectLayer::get_meta_id() const -> Maybe<int32>
   return mDelegate.get_meta_id();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

@@ -22,7 +22,6 @@
 #include <gtest/gtest.h>
 
 using namespace tactile;
-using namespace core;
 
 // TODO zoom_in, zoom_out
 

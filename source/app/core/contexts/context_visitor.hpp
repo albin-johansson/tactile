@@ -21,7 +21,7 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// An interface for visiting specific context implementations.
 class IContextVisitor
@@ -38,4 +38,4 @@ class IContextVisitor
   virtual void visit([[maybe_unused]] const Tile& tile) {}
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

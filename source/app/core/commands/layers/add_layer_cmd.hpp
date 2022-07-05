@@ -40,9 +40,9 @@ class AddLayerCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*         mDocument{};
-  LayerType            mLayerType;
-  Shared<core::ILayer> mLayer;
+  MapDocument*   mDocument{};
+  LayerType      mLayerType;
+  Shared<ILayer> mLayer;
 };
 
 }  // namespace tactile

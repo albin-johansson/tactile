@@ -28,10 +28,10 @@
 
 namespace tactile {
 
-UpdateAttachedComponentCmd::UpdateAttachedComponentCmd(Shared<core::IContext> context,
-                                                       const UUID&            componentId,
-                                                       std::string            attribute,
-                                                       Attribute              value)
+UpdateAttachedComponentCmd::UpdateAttachedComponentCmd(Shared<IContext> context,
+                                                       const UUID&      componentId,
+                                                       std::string      attribute,
+                                                       Attribute        value)
     : mContext{std::move(context)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}

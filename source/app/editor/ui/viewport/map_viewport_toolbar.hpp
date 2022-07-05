@@ -25,7 +25,8 @@
 
 namespace tactile::ui {
 
-void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& dispatcher);
+void update_map_viewport_toolbar(const DocumentModel& model,
+                                 entt::dispatcher&    dispatcher);
 
 [[nodiscard]] auto is_map_toolbar_visible() -> bool;
 

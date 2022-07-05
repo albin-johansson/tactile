@@ -26,7 +26,7 @@
 #include "core/common/associative.hpp"
 #include "core/common/ints.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class PropertyBundle final
 {
@@ -61,4 +61,4 @@ class PropertyBundle final
   TreeMap<std::string, Attribute> mProps;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

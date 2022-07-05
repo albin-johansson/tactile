@@ -31,7 +31,7 @@
 #include "core/tile_pos.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 Map::Map()
 {
@@ -503,4 +503,4 @@ auto Map::next_group_layer_suffix() const -> int32
   return mGroupLayerSuffix;
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

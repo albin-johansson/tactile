@@ -30,10 +30,10 @@
 
 namespace tactile {
 
-AddTilesetCmd::AddTilesetCmd(DocumentModel*           model,
-                             const UUID&              mapId,
-                             const UUID&              tilesetId,
-                             const core::TilesetInfo& info)
+AddTilesetCmd::AddTilesetCmd(DocumentModel*     model,
+                             const UUID&        mapId,
+                             const UUID&        tilesetId,
+                             const TilesetInfo& info)
     : mModel{model}
     , mMapId{mapId}
     , mTilesetId{tilesetId}

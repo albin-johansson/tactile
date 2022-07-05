@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-namespace tactile::core {
+namespace tactile {
 
 Component::Component(const UUID& definitionId, AttributeMap attributes)
     : mDefinitionId{definitionId}
@@ -54,4 +54,4 @@ auto Component::get_attr(std::string_view key) const -> const Attribute&
   return lookup_in(mAttributes, key);
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

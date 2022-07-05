@@ -30,7 +30,7 @@
 #include "core/tilesets/tileset.hpp"
 #include "core/tilesets/tileset_ref.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Manager class used by maps to track attached tilesets.
 class TilesetBundle final
@@ -80,4 +80,4 @@ class TilesetBundle final
   TileID                    mNextTileId{1};
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

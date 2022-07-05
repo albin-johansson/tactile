@@ -29,7 +29,7 @@
 #include "core/layers/layer.hpp"
 #include "core/layers/layer_delegate.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class GroupLayer final : public ILayer
 {
@@ -142,4 +142,4 @@ class GroupLayer final : public ILayer
   LayerStorage  mLayers;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

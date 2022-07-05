@@ -26,8 +26,8 @@
 namespace tactile::ui {
 
 /// Shows a widget for a single layer in a map.
-void layer_item_view(const MapDocument&  document,
-                     const core::ILayer& layer,
-                     entt::dispatcher&   dispatcher);
+void layer_item_view(const MapDocument& document,
+                     const ILayer&      layer,
+                     entt::dispatcher&  dispatcher);
 
 }  // namespace tactile::ui

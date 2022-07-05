@@ -26,10 +26,10 @@
 
 namespace tactile {
 
-SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(Shared<core::ComponentIndex> index,
-                                                 const UUID&                  componentId,
-                                                 std::string                  attribute,
-                                                 const AttributeType          type)
+SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(Shared<ComponentIndex> index,
+                                                 const UUID&            componentId,
+                                                 std::string            attribute,
+                                                 const AttributeType    type)
     : mIndex{std::move(index)}
     , mComponentId{componentId}
     , mAttributeName{std::move(attribute)}

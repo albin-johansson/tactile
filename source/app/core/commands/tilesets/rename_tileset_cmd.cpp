@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-RenameTilesetCmd::RenameTilesetCmd(Shared<core::Tileset> tileset, std::string name)
+RenameTilesetCmd::RenameTilesetCmd(Shared<Tileset> tileset, std::string name)
     : mTileset{std::move(tileset)}
     , mNewName{std::move(name)}
 {

@@ -33,7 +33,7 @@ namespace tactile {
 class RemovePropertyCmd final : public ICommand
 {
  public:
-  RemovePropertyCmd(Shared<core::IContext> context, std::string name);
+  RemovePropertyCmd(Shared<IContext> context, std::string name);
 
   void undo() override;
 
@@ -42,9 +42,9 @@ class RemovePropertyCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::IContext> mContext;
-  std::string            mName;
-  Maybe<Attribute>       mPreviousValue;
+  Shared<IContext> mContext;
+  std::string      mName;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile

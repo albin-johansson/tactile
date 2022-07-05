@@ -21,7 +21,7 @@
 
 #include "core/fwd.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class ILayerVisitor
 {
@@ -43,4 +43,4 @@ class IConstLayerVisitor
   virtual void visit([[maybe_unused]] const GroupLayer& layer) {};
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

@@ -24,7 +24,6 @@
 #include "misc/panic.hpp"
 
 using namespace tactile;
-using namespace core;
 
 using Millis = TileAnimation::Millis;
 

@@ -40,10 +40,10 @@ class DuplicateLayerCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*         mDocument{};
-  UUID                 mLayerId{};
-  Shared<core::ILayer> mNewLayer;
-  Maybe<usize>         mNewIndex;
+  MapDocument*   mDocument{};
+  UUID           mLayerId{};
+  Shared<ILayer> mNewLayer;
+  Maybe<usize>   mNewIndex;
 };
 
 }  // namespace tactile

@@ -27,12 +27,10 @@
 
 namespace tactile::ui {
 
-void render_object(GraphicsCtx&        graphics,
-                   const core::Object& object,
-                   const cen::color&   color);
+void render_object(GraphicsCtx& graphics, const Object& object, const cen::color& color);
 
-void render_object_layer(GraphicsCtx&             graphics,
-                         const core::ObjectLayer& layer,
-                         float                    parentOpacity);
+void render_object_layer(GraphicsCtx&       graphics,
+                         const ObjectLayer& layer,
+                         float              parentOpacity);
 
 }  // namespace tactile::ui

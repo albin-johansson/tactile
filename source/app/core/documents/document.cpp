@@ -37,17 +37,17 @@ auto ADocument::active_context_id() const -> const UUID&
   return mActiveContext;
 }
 
-void ADocument::set_component_index(Shared<core::ComponentIndex> index)
+void ADocument::set_component_index(Shared<ComponentIndex> index)
 {
   mComponentIndex = std::move(index);
 }
 
-auto ADocument::get_component_index() -> Shared<core::ComponentIndex>
+auto ADocument::get_component_index() -> Shared<ComponentIndex>
 {
   return mComponentIndex;
 }
 
-auto ADocument::get_component_index() const -> Shared<const core::ComponentIndex>
+auto ADocument::get_component_index() const -> Shared<const ComponentIndex>
 {
   return mComponentIndex;
 }

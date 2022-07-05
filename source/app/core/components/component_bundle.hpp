@@ -26,7 +26,7 @@
 #include "core/common/uuid.hpp"
 #include "core/components/component.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Manages a set of components attached to a context.
 class ComponentBundle final
@@ -54,4 +54,4 @@ class ComponentBundle final
   HashMap<UUID, Component> mComps;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

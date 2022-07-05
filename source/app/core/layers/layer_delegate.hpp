@@ -27,7 +27,7 @@
 #include "core/common/uuid.hpp"
 #include "core/contexts/context_delegate.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class LayerDelegate final
 {
@@ -76,4 +76,4 @@ class LayerDelegate final
   bool            mVisible : 1 {true};
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

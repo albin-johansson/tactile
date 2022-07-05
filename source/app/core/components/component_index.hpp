@@ -30,7 +30,7 @@
 #include "core/components/component_definition.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Manages a set of component definitions.
 class ComponentIndex final
@@ -91,4 +91,4 @@ class ComponentIndex final
   HashMap<UUID, ComponentDefinition> mDefs;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

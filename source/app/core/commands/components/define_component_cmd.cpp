@@ -26,8 +26,7 @@
 
 namespace tactile {
 
-DefineComponentCmd::DefineComponentCmd(Shared<core::ComponentIndex> index,
-                                       std::string                  name)
+DefineComponentCmd::DefineComponentCmd(Shared<ComponentIndex> index, std::string name)
     : mIndex{std::move(index)}
     , mName{std::move(name)}
 {

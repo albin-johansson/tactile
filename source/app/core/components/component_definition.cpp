@@ -25,7 +25,7 @@
 
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 ComponentDefinition::ComponentDefinition() = default;
 
@@ -138,4 +138,4 @@ auto ComponentDefinition::get_uuid() const -> const UUID&
   return mId;
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

@@ -101,7 +101,7 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
   }
 }
 
-void viewport_widget_mouse_wheel_event_handler(const core::Viewport&         viewport,
+void viewport_widget_mouse_wheel_event_handler(const Viewport&               viewport,
                                                entt::dispatcher&             dispatcher,
                                                const cen::mouse_wheel_event& event)
 {

@@ -45,8 +45,6 @@
 #include "io/maps/parser/parse_data.hpp"
 #include "misc/assert.hpp"
 
-using namespace tactile::core;
-
 namespace tactile::io {
 namespace {
 

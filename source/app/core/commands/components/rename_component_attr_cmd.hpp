@@ -32,10 +32,10 @@ namespace tactile {
 class RenameComponentAttrCmd final : public ICommand
 {
  public:
-  RenameComponentAttrCmd(Shared<core::ComponentIndex> index,
-                         const UUID&                  componentId,
-                         std::string                  previousName,
-                         std::string                  updatedName);
+  RenameComponentAttrCmd(Shared<ComponentIndex> index,
+                         const UUID&            componentId,
+                         std::string            previousName,
+                         std::string            updatedName);
 
   void undo() override;
 
@@ -44,10 +44,10 @@ class RenameComponentAttrCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::ComponentIndex> mIndex;
-  UUID                         mComponentId{};
-  std::string                  mPreviousName;
-  std::string                  mUpdatedName;
+  Shared<ComponentIndex> mIndex;
+  UUID                   mComponentId{};
+  std::string            mPreviousName;
+  std::string            mUpdatedName;
 };
 
 }  // namespace tactile

@@ -39,8 +39,6 @@ class TextureManager;
 class IRenderer;
 class ToolManager;
 
-namespace core {
-
 class IElement;
 
 class IContext;
@@ -72,5 +70,4 @@ class TilesetBundle;
 class Tileset;
 class Tile;
 
-}  // namespace core
 }  // namespace tactile

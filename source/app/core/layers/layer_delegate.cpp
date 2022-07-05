@@ -22,7 +22,7 @@
 #include <algorithm>  // clamp
 #include <utility>    // move
 
-namespace tactile::core {
+namespace tactile {
 
 LayerDelegate::LayerDelegate() : mId{make_uuid()} {}
 
@@ -115,4 +115,4 @@ auto LayerDelegate::clone() const -> LayerDelegate
   return result;
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

@@ -30,14 +30,13 @@
 #include "misc/panic.hpp"
 
 using namespace tactile;
-using namespace core;
 
 TEST(GroupLayer, Defaults)
 {
   GroupLayer root;
   ASSERT_EQ(0u, root.layer_count());
 
-  struct Counter final : core::IConstLayerVisitor
+  struct Counter final : IConstLayerVisitor
   {
     usize count{};
 

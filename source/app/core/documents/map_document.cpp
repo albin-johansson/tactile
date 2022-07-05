@@ -31,7 +31,7 @@
 namespace tactile {
 
 MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize columns)
-    : mMap{std::make_shared<core::Map>()}
+    : mMap{std::make_shared<Map>()}
 {
   mMap->resize(rows, columns);
   mMap->set_tile_size(tileSize);
@@ -40,7 +40,7 @@ MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize
   select_context(mMap->get_uuid());
 }
 
-void MapDocument::register_context(Shared<core::IContext> context)
+void MapDocument::register_context(Shared<IContext> context)
 {
   const auto id = context->get_uuid();
   mContexts[id] = std::move(context);
@@ -60,12 +60,12 @@ void MapDocument::unregister_context(const UUID& id)
   }
 }
 
-auto MapDocument::get_context(const UUID& id) -> Shared<core::IContext>
+auto MapDocument::get_context(const UUID& id) -> Shared<IContext>
 {
   return lookup_in(mContexts, id);
 }
 
-auto MapDocument::view_context(const UUID& id) const -> const core::IContext&
+auto MapDocument::view_context(const UUID& id) const -> const IContext&
 {
   return *lookup_in(mContexts, id);
 }
@@ -210,9 +210,9 @@ void MapDocument::set_object_tag(const UUID& objectId, std::string tag)
   get_history().exec<SetObjectTagCmd>(this, objectId, std::move(tag));
 }
 
-auto MapDocument::get_object(const UUID& objectId) -> Shared<core::Object>
+auto MapDocument::get_object(const UUID& objectId) -> Shared<Object>
 {
-  if (auto ptr = std::dynamic_pointer_cast<core::Object>(get_context(objectId))) {
+  if (auto ptr = std::dynamic_pointer_cast<Object>(get_context(objectId))) {
     return ptr;
   }
   else {

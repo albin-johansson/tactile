@@ -32,7 +32,7 @@ namespace tactile {
 class DetachComponentCmd final : public ICommand
 {
  public:
-  DetachComponentCmd(Shared<core::IContext> context, const UUID& componentId);
+  DetachComponentCmd(Shared<IContext> context, const UUID& componentId);
 
   void undo() override;
 
@@ -41,9 +41,9 @@ class DetachComponentCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::IContext> mContext;
-  UUID                   mComponentId{};
-  Maybe<core::Component> mComponent;
+  Shared<IContext> mContext;
+  UUID             mComponentId{};
+  Maybe<Component> mComponent;
 };
 
 }  // namespace tactile

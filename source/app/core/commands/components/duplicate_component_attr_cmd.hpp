@@ -33,9 +33,9 @@ namespace tactile {
 class DuplicateComponentAttrCmd final : public ICommand
 {
  public:
-  DuplicateComponentAttrCmd(Shared<core::ComponentIndex> index,
-                            const UUID&                  componentId,
-                            std::string                  attribute);
+  DuplicateComponentAttrCmd(Shared<ComponentIndex> index,
+                            const UUID&            componentId,
+                            std::string            attribute);
 
   void undo() override;
 
@@ -44,10 +44,10 @@ class DuplicateComponentAttrCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<core::ComponentIndex> mIndex;
-  UUID                         mComponentId{};
-  std::string                  mAttributeName;
-  Maybe<std::string>           mDuplicatedName;
+  Shared<ComponentIndex> mIndex;
+  UUID                   mComponentId{};
+  std::string            mAttributeName;
+  Maybe<std::string>     mDuplicatedName;
 };
 
 }  // namespace tactile

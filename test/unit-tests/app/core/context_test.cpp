@@ -31,7 +31,6 @@
 #include "core/tilesets/tileset_info.hpp"
 
 using namespace tactile;
-using namespace core;
 
 using Contexts = testing::Types<Map,  //
                                 TileLayer,

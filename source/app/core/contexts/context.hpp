@@ -24,7 +24,7 @@
 #include "core/element.hpp"
 #include "core/fwd.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Interface for all objects that may feature properties and components.
 /// Remember to update IContextVisitor when adding a new context implementation.
@@ -46,4 +46,4 @@ class IContext : public IElement
   [[nodiscard]] virtual auto get_name() const -> const std::string& = 0;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

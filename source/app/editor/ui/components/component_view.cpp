@@ -38,9 +38,9 @@ constexpr auto _header_flags =
 constexpr auto _table_flags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
-void _update_attribute_table(const UUID&            contextId,
-                             const core::Component& component,
-                             entt::dispatcher&      dispatcher)
+void _update_attribute_table(const UUID&       contextId,
+                             const Component&  component,
+                             entt::dispatcher& dispatcher)
 {
   if (Table table{"##AttributeTable", 2, _table_flags}; table.is_open()) {
     for (const auto& [attrName, attrValue] : component) {
@@ -63,9 +63,9 @@ void _update_attribute_table(const UUID&            contextId,
   }
 }
 
-void _update_trailing_button_popup_content(const UUID&            contextId,
-                                           const core::Component& component,
-                                           entt::dispatcher&      dispatcher)
+void _update_trailing_button_popup_content(const UUID&       contextId,
+                                           const Component&  component,
+                                           entt::dispatcher& dispatcher)
 {
   if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
     dispatcher.enqueue<ResetAttachedComponentEvent>(contextId, component.definition_id());
@@ -101,10 +101,10 @@ auto _update_trailing_button() -> bool
 
 }  // namespace
 
-void component_view(const UUID&            contextId,
-                    const core::Component& component,
-                    const std::string&     name,
-                    entt::dispatcher&      dispatcher)
+void component_view(const UUID&        contextId,
+                    const Component&   component,
+                    const std::string& name,
+                    entt::dispatcher&  dispatcher)
 {
   const Scope scope{name.c_str()};
 

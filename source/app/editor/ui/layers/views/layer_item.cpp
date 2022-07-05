@@ -55,9 +55,9 @@ constexpr int _base_node_flags =
   }
 }
 
-void _update_layer_item_popup(const core::Map&    map,
-                              const core::ILayer& layer,
-                              entt::dispatcher&   dispatcher)
+void _update_layer_item_popup(const Map&        map,
+                              const ILayer&     layer,
+                              entt::dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_item("##LayerItemPopup"); popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
@@ -109,7 +109,7 @@ void _update_layer_item_popup(const core::Map&    map,
 }
 
 void _show_group_layer_item(const MapDocument&       document,
-                            const core::ILayer&      layer,
+                            const ILayer&            layer,
                             const ImGuiTreeNodeFlags flags,
                             entt::dispatcher&        dispatcher)
 {
@@ -127,7 +127,7 @@ void _show_group_layer_item(const MapDocument&       document,
 
     _update_layer_item_popup(map, layer, dispatcher);
 
-    const auto& group = dynamic_cast<const core::GroupLayer&>(layer);
+    const auto& group = dynamic_cast<const GroupLayer&>(layer);
     for (const auto& child : group.storage()) {
       layer_item_view(document, *child.get(), dispatcher);
     }
@@ -146,9 +146,9 @@ void _show_group_layer_item(const MapDocument&       document,
 
 }  // namespace
 
-void layer_item_view(const MapDocument&  document,
-                     const core::ILayer& layer,
-                     entt::dispatcher&   dispatcher)
+void layer_item_view(const MapDocument& document,
+                     const ILayer&      layer,
+                     entt::dispatcher&  dispatcher)
 {
   const auto& map = document.get_map();
 

@@ -41,9 +41,9 @@ namespace {
 constexpr cen::color _rubber_band_color{0, 0x44, 0xCC, 100};
 constexpr cen::color _grid_color{200, 200, 200, 40};
 
-void _update_viewport_offset(const core::TilesetRef& tilesetRef,
-                             const ImVec2&           viewportSize,
-                             entt::dispatcher&       dispatcher)
+void _update_viewport_offset(const TilesetRef& tilesetRef,
+                             const ImVec2&     viewportSize,
+                             entt::dispatcher& dispatcher)
 {
   const auto&    tileset = tilesetRef.tileset;
   const Vector2f textureSize = tileset->texture_size();

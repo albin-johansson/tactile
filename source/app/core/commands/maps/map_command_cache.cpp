@@ -25,13 +25,13 @@
 
 namespace tactile {
 
-struct SaveTilesVisitor final : core::IConstLayerVisitor
+struct SaveTilesVisitor final : IConstLayerVisitor
 {
   MapCommandCache* self{};
   TilePos          begin;
   TilePos          end;
 
-  void visit(const core::TileLayer& layer) override
+  void visit(const TileLayer& layer) override
   {
     auto& tileCache = self->mCache[layer.get_uuid()];
 
@@ -52,7 +52,7 @@ void MapCommandCache::clear() noexcept
   mCache.clear();
 }
 
-void MapCommandCache::restore_tiles(core::Map& map)
+void MapCommandCache::restore_tiles(Map& map)
 {
   for (const auto& [layerId, tileCache] : mCache) {
     auto& layer = map.view_tile_layer(layerId);
@@ -63,9 +63,7 @@ void MapCommandCache::restore_tiles(core::Map& map)
   }
 }
 
-void MapCommandCache::save_tiles(const core::Map& map,
-                                 const TilePos&   begin,
-                                 const TilePos&   end)
+void MapCommandCache::save_tiles(const Map& map, const TilePos& begin, const TilePos& end)
 {
   SaveTilesVisitor visitor;
   visitor.self = this;

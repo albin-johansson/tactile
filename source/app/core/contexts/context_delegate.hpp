@@ -26,7 +26,7 @@
 #include "core/components/component_bundle.hpp"
 #include "core/property_bundle.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 class ContextDelegate final
 {
@@ -59,4 +59,4 @@ class ContextDelegate final
   std::string     mName;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

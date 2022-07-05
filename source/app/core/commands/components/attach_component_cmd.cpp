@@ -27,9 +27,9 @@
 
 namespace tactile {
 
-AttachComponentCmd::AttachComponentCmd(Shared<core::ComponentIndex> index,
-                                       Shared<core::IContext>       context,
-                                       const UUID&                  componentId)
+AttachComponentCmd::AttachComponentCmd(Shared<ComponentIndex> index,
+                                       Shared<IContext>       context,
+                                       const UUID&            componentId)
     : mIndex{std::move(index)}
     , mContext{std::move(context)}
     , mComponentId{componentId}

@@ -22,7 +22,7 @@
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 void TileAnimation::update()
 {
@@ -73,4 +73,4 @@ auto TileAnimation::size() const -> usize
   return mFrames.size();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

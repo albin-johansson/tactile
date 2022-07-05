@@ -37,9 +37,9 @@ class MapCommandCache final
  public:
   void clear() noexcept;
 
-  void restore_tiles(core::Map& map);
+  void restore_tiles(Map& map);
 
-  void save_tiles(const core::Map& map, const TilePos& begin, const TilePos& end);
+  void save_tiles(const Map& map, const TilePos& begin, const TilePos& end);
 
   void merge_with(const MapCommandCache& other);
 

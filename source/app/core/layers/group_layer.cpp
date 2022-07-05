@@ -32,7 +32,7 @@
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 namespace {
 
 using LayerStorage = GroupLayer::LayerStorage;
@@ -732,4 +732,4 @@ auto GroupLayer::get_meta_id() const -> Maybe<int32>
   return mDelegate.get_meta_id();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

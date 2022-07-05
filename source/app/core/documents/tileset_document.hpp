@@ -45,17 +45,17 @@ namespace tactile {
 class TilesetDocument final : public ADocument
 {
  public:
-  TilesetDocument(const UUID& id, const core::TilesetInfo& info);
+  TilesetDocument(const UUID& id, const TilesetInfo& info);
 
-  explicit TilesetDocument(const core::TilesetInfo& info);
+  explicit TilesetDocument(const TilesetInfo& info);
 
-  void register_context(Shared<core::IContext> context) override;
+  void register_context(Shared<IContext> context) override;
 
   void unregister_context(const UUID& id) override;
 
-  [[nodiscard]] auto get_context(const UUID& id) -> Shared<core::IContext> override;
+  [[nodiscard]] auto get_context(const UUID& id) -> Shared<IContext> override;
 
-  [[nodiscard]] auto view_context(const UUID& id) const -> const core::IContext& override;
+  [[nodiscard]] auto view_context(const UUID& id) const -> const IContext& override;
 
   void update() override;
 
@@ -65,9 +65,9 @@ class TilesetDocument final : public ADocument
 
   void rename_tileset(std::string name);
 
-  [[nodiscard]] auto get_viewport() -> core::Viewport& override { return mViewport; }
+  [[nodiscard]] auto get_viewport() -> Viewport& override { return mViewport; }
 
-  [[nodiscard]] auto get_viewport() const -> const core::Viewport& override
+  [[nodiscard]] auto get_viewport() const -> const Viewport& override
   {
     return mViewport;
   }
@@ -77,15 +77,15 @@ class TilesetDocument final : public ADocument
     return DocumentType::Tileset;
   }
 
-  [[nodiscard]] auto get_tileset() -> Shared<core::Tileset> { return mTileset; }
+  [[nodiscard]] auto get_tileset() -> Shared<Tileset> { return mTileset; }
 
-  [[nodiscard]] auto view_tileset() -> core::Tileset& { return *mTileset; }
-  [[nodiscard]] auto view_tileset() const -> const core::Tileset& { return *mTileset; }
+  [[nodiscard]] auto view_tileset() -> Tileset& { return *mTileset; }
+  [[nodiscard]] auto view_tileset() const -> const Tileset& { return *mTileset; }
 
  private:
-  Shared<core::Tileset>                 mTileset;
-  core::Viewport                        mViewport;
-  HashMap<UUID, Shared<core::IContext>> mContexts;
+  Shared<Tileset>                 mTileset;
+  Viewport                        mViewport;
+  HashMap<UUID, Shared<IContext>> mContexts;
 };
 
 }  // namespace tactile

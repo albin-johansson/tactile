@@ -26,7 +26,7 @@
 #include "core/contexts/context_visitor.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 Tile::Tile(const TileIndex index) : mIndex{index}
 {
@@ -136,4 +136,4 @@ auto Tile::get_name() const -> const std::string&
   return mDelegate.get_name();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

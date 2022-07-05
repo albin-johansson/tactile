@@ -24,7 +24,7 @@
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 void TilesetBundle::attach_tileset(Shared<Tileset> tileset,
                                    const TileID    firstTileId,
@@ -166,4 +166,4 @@ auto TilesetBundle::active_tileset_id() const -> const Maybe<UUID>&
   return mActiveTileset;
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

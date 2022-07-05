@@ -29,7 +29,7 @@
 #include "core/components/component.hpp"
 #include "core/element.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Represents the structure of a component.
 class ComponentDefinition final : public IElement
@@ -129,4 +129,4 @@ class ComponentDefinition final : public IElement
   TreeMap<std::string, Attribute> mAttributes;
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

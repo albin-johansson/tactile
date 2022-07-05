@@ -45,8 +45,6 @@
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
 #include "io/persistence/preferences.hpp"
 
-using namespace tactile::core;
-
 namespace tactile::ui {
 namespace {
 

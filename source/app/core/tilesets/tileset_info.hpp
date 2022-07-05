@@ -24,7 +24,7 @@
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
 
-namespace tactile::core {
+namespace tactile {
 
 /// Provides information necessary to construct tilesets.
 struct TilesetInfo final
@@ -35,4 +35,4 @@ struct TilesetInfo final
   Vector2i              tile_size{};     /// Logical tile size.
 };
 
-}  // namespace tactile::core
+}  // namespace tactile

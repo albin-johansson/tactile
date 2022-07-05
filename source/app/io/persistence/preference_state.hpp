@@ -75,73 +75,73 @@ class PreferenceState final
 
   void reset_dock_visibilities();
 
-  void set_theme(ui::EditorTheme theme);
+  void               set_theme(ui::EditorTheme theme);
   [[nodiscard]] auto get_theme() const -> ui::EditorTheme;
 
-  void set_viewport_bg(const cen::color& bg);
+  void               set_viewport_bg(const cen::color& bg);
   [[nodiscard]] auto viewport_bg() const -> const cen::color&;
 
-  void set_window_border(bool enable);
+  void               set_window_border(bool enable);
   [[nodiscard]] auto has_window_border() const -> bool;
 
-  void set_layer_dock_visible(bool visible);
+  void               set_layer_dock_visible(bool visible);
   [[nodiscard]] auto is_layer_dock_visible() const -> bool;
 
-  void set_tileset_dock_visible(bool visible);
+  void               set_tileset_dock_visible(bool visible);
   [[nodiscard]] auto is_tileset_dock_visible() const -> bool;
 
-  void set_property_dock_visible(bool visible);
+  void               set_property_dock_visible(bool visible);
   [[nodiscard]] auto is_property_dock_visible() const -> bool;
 
-  void set_component_dock_visible(bool visible);
+  void               set_component_dock_visible(bool visible);
   [[nodiscard]] auto is_component_dock_visible() const -> bool;
 
-  void set_log_dock_visible(bool visible);
+  void               set_log_dock_visible(bool visible);
   [[nodiscard]] auto is_log_dock_visible() const -> bool;
 
-  void set_grid_visible(bool visible);
+  void               set_grid_visible(bool visible);
   [[nodiscard]] auto is_grid_visible() const -> bool;
 
-  void set_highlight_active_layer(bool highlight);
+  void               set_highlight_active_layer(bool highlight);
   [[nodiscard]] auto highlight_active_layer() const -> bool;
 
-  void set_embed_tilesets(bool embed);
+  void               set_embed_tilesets(bool embed);
   [[nodiscard]] auto embed_tilesets() const -> bool;
 
-  void set_fold_tile_data(bool fold);
+  void               set_fold_tile_data(bool fold);
   [[nodiscard]] auto fold_tile_data() const -> bool;
 
-  void set_indent_output(bool indent);
+  void               set_indent_output(bool indent);
   [[nodiscard]] auto indent_output() const -> bool;
 
-  void set_will_restore_layout(bool restore);
+  void               set_will_restore_layout(bool restore);
   [[nodiscard]] auto will_restore_layout() const -> bool;
 
-  void set_will_restore_last_session(bool restore);
+  void               set_will_restore_last_session(bool restore);
   [[nodiscard]] auto will_restore_last_session() const -> bool;
 
-  void set_viewport_overlay_pos(OverlayPos pos);
+  void               set_viewport_overlay_pos(OverlayPos pos);
   [[nodiscard]] auto viewport_overlay_pos() const -> OverlayPos;
 
-  void set_viewport_overlay_show_fps(bool show);
+  void               set_viewport_overlay_show_fps(bool show);
   [[nodiscard]] auto viewport_overlay_show_fps() const -> bool;
 
-  void set_command_capacity(usize capacity);
+  void               set_command_capacity(usize capacity);
   [[nodiscard]] auto command_capacity() const -> usize;
 
-  void set_preferred_format(std::string format);
+  void               set_preferred_format(std::string format);
   [[nodiscard]] auto preferred_format() const -> const std::string&;
 
-  void set_preferred_tile_width(int32 width);
+  void               set_preferred_tile_width(int32 width);
   [[nodiscard]] auto preferred_tile_width() const -> int32;
 
-  void set_preferred_tile_height(int32 height);
+  void               set_preferred_tile_height(int32 height);
   [[nodiscard]] auto preferred_tile_height() const -> int32;
 
-  void set_font_size(int32 size);
+  void               set_font_size(int32 size);
   [[nodiscard]] auto font_size() const -> int32;
 
-  void set_use_default_font(bool use);
+  void               set_use_default_font(bool use);
   [[nodiscard]] auto use_default_font() const -> bool;
 
  private:
