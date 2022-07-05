@@ -26,6 +26,7 @@
 #include "core/utils/buffers.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/common/buttons.hpp"
+#include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/file_dialog.hpp"
@@ -91,9 +92,7 @@ auto input_int(const char* id, int value) -> Maybe<int>
     return value;
   }
 
-  if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[int]");
-  }
+  lazy_tooltip("##input_int_tooltip", "[int]");
 
   return nothing;
 }
@@ -116,9 +115,7 @@ auto input_float(const char* id, float value, const float min, const float max)
     }
   }
 
-  if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[float]");
-  }
+  lazy_tooltip("##input_float_tooltip", "[float]");
 
   return nothing;
 }
@@ -154,9 +151,7 @@ auto input_string_with_hint(const char*                  id,
     return create_string_from_buffer(buffer);
   }
 
-  if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[string]");
-  }
+  lazy_tooltip("##input_string_tooltip", "[string]");
 
   return nothing;
 }
@@ -178,9 +173,7 @@ auto input_bool(const char* id, bool value) -> Maybe<bool>
     return value;
   }
 
-  if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[bool]");
-  }
+  lazy_tooltip("##input_bool_tooltip", "[bool]");
 
   return nothing;
 }
@@ -192,9 +185,7 @@ auto input_object(const char* id, object_t value) -> Maybe<object_t>
   // TODO
   ImGui::Text("%i", value);
 
-  if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[object]");
-  }
+  lazy_tooltip("##input_object_tooltip", "[object]");
 
   return nothing;
 }
@@ -211,9 +202,7 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
     return cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
   }
 
-  if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[color]");
-  }
+  lazy_tooltip("##input_color_tooltip", "[color]");
 
   return nothing;
 }
@@ -241,9 +230,7 @@ auto input_path(const char* id, const std::filesystem::path& value)
                            str.capacity(),
                            ImGuiInputTextFlags_ReadOnly);
 
-  if (ImGui::IsItemHovered()) {
-    ImGui::SetTooltip("[path]");
-  }
+  lazy_tooltip("##input_path_tooltip", "[path]");
 
   return nothing;
 }
