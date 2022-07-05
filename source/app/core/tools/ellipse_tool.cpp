@@ -31,14 +31,11 @@
 
 namespace tactile {
 
-void EllipseTool::draw_gizmos(const DocumentModel& model,
-                              IRenderer&           renderer,
+void EllipseTool::draw_gizmos(const DocumentModel&,
+                              IRenderer& renderer,
                               const MouseInfo&) const
 {
   if (mStroke) {
-    const auto& document = model.require_active_map();
-    const auto& map = document.get_map();
-
     const auto radius = mStroke->current - mStroke->start;
     const auto center = mStroke->start + radius;
 
