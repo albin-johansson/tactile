@@ -281,7 +281,9 @@ void _show_custom_properties(const IContext&   context,
     }
 
     if (auto updated = input_attribute("##CustomPropertyInput", value)) {
-      // TODO dispatcher.enqueue<UpdatePropertyEvent>(name, std::move(*updated));
+      dispatcher.enqueue<UpdatePropertyEvent>(context.get_uuid(),
+                                              name,
+                                              std::move(*updated));
     }
 
     first = false;
