@@ -74,6 +74,11 @@ class StampTool final : public ATool
   Maybe<TilePos> mLastChangedPos;
   bool           mRandomMode{};
 
+  void draw_gizmos_normal(const core::Map&        map,
+                          const core::TilesetRef& tilesetRef,
+                          IRenderer&              renderer,
+                          const MouseInfo&        mouse) const;
+
   void update_sequence(DocumentModel& model, const TilePos& cursor);
 
   void update_sequence_normal(core::TileLayer&        layer,
@@ -85,6 +90,8 @@ class StampTool final : public ATool
                               const TilePos&          cursor);
 
   void maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher);
+
+  [[nodiscard]] auto should_be_random(const core::Map& map) const -> bool;
 
   [[nodiscard]] auto is_usable(const DocumentModel& model) const -> bool;
 };

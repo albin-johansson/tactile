@@ -421,7 +421,7 @@ auto Map::is_stamp_randomizer_possible() const -> bool
 {
   if (const auto tilesetId = mTilesets.active_tileset_id()) {
     const auto& ref = mTilesets.get_ref(*tilesetId);
-    return ref.is_single_tile_selected();
+    return !ref.is_single_tile_selected();
   }
   else {
     return false;

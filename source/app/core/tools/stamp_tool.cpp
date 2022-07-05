@@ -37,8 +37,6 @@
 
 namespace tactile {
 
-// FIXME multiple selection doesn't work
-
 void StampTool::draw_gizmos(const DocumentModel& model,
                             IRenderer&           renderer,
                             const MouseInfo&     mouse) const
@@ -56,38 +54,9 @@ void StampTool::draw_gizmos(const DocumentModel& model,
   }
 
   // TODO implement preview when randomizer is enabled
-  if (mRandomMode) {
-    return;
+  if (!should_be_random(map)) {
+    draw_gizmos_normal(map, tilesetRef, renderer, mouse);
   }
-
-  const auto  layerId = map.active_layer_id().value();
-  const auto& layer = map.view_tile_layer(layerId);
-
-  const auto& selection = tilesetRef.selection.value();
-  const auto  selectionSize = selection.end - selection.begin;
-  const auto  offset = selectionSize / TilePos{2, 2};
-
-  const auto& tileset = tilesetRef.tileset;
-  const auto  textureId = tileset->texture_id();
-  const auto& uv = tileset->uv_size();
-
-  const auto origin = renderer.get_origin();
-  const auto gridSize = renderer.get_grid_size();
-
-  invoke_mn(selectionSize.row(), selectionSize.col(), [&](int32 row, int32 col) {
-    const TilePos index{row, col};
-    const auto    previewPos = mouse.position_in_viewport + index - offset;
-
-    if (layer.is_valid(previewPos)) {
-      const auto realPos = origin + previewPos.as_vec2f() * gridSize;
-
-      const auto uvMin = (selection.begin + index).as_vec2f() * uv;
-      const auto uvMax = uvMin + uv;
-
-      constexpr uint8 opacity = 150;
-      renderer.render_image(textureId, realPos, gridSize, uvMin, uvMax, opacity);
-    }
-  });
 }
 
 void StampTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
@@ -150,6 +119,41 @@ auto StampTool::is_available(const DocumentModel& model) const -> bool
   return document.get_map().is_active_layer(LayerType::TileLayer);
 }
 
+void StampTool::draw_gizmos_normal(const core::Map&        map,
+                                   const core::TilesetRef& tilesetRef,
+                                   IRenderer&              renderer,
+                                   const MouseInfo&        mouse) const
+{
+  const auto  layerId = map.active_layer_id().value();
+  const auto& layer = map.view_tile_layer(layerId);
+
+  const auto& selection = tilesetRef.selection.value();
+  const auto  selectionSize = selection.end - selection.begin;
+  const auto  offset = selectionSize / TilePos{2, 2};
+
+  const auto& tileset = tilesetRef.tileset;
+  const auto  textureId = tileset->texture_id();
+  const auto& uv = tileset->uv_size();
+
+  const auto origin = renderer.get_origin();
+  const auto gridSize = renderer.get_grid_size();
+
+  invoke_mn(selectionSize.row(), selectionSize.col(), [&](int32 row, int32 col) {
+    const TilePos index{row, col};
+    const auto    previewPos = mouse.position_in_viewport + index - offset;
+
+    if (layer.is_valid(previewPos)) {
+      const auto realPos = origin + previewPos.as_vec2f() * gridSize;
+
+      const auto uvMin = (selection.begin + index).as_vec2f() * uv;
+      const auto uvMax = uvMin + uv;
+
+      constexpr uint8 opacity = 150;
+      renderer.render_image(textureId, realPos, gridSize, uvMin, uvMax, opacity);
+    }
+  });
+}
+
 void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
 {
   TACTILE_ASSERT(is_usable(model));
@@ -164,7 +168,7 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   const auto  tilesetId = tilesets.active_tileset_id().value();
   const auto& tilesetRef = tilesets.get_ref(tilesetId);
 
-  if (mRandomMode) {
+  if (should_be_random(map)) {
     update_sequence_random(layer, tilesetRef, cursor);
   }
   else {
@@ -243,6 +247,11 @@ void StampTool::maybe_emit_event(const DocumentModel& model, entt::dispatcher& d
   }
 }
 
+auto StampTool::should_be_random(const core::Map& map) const -> bool
+{
+  return mRandomMode && map.is_stamp_randomizer_possible();
+}
+
 auto StampTool::is_usable(const DocumentModel& model) const -> bool
 {
   const auto& document = model.require_active_map();
@@ -251,7 +260,7 @@ auto StampTool::is_usable(const DocumentModel& model) const -> bool
 
   if (const auto tilesetId = tilesets.active_tileset_id()) {
     return map.is_active_layer(LayerType::TileLayer) &&
-           tilesets.get_ref(*tilesetId).is_single_tile_selected();
+           tilesets.get_ref(*tilesetId).selection.has_value();
   }
   else {
     return false;
