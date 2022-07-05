@@ -167,10 +167,9 @@ class App final : AEventLoop
 
   void on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event);
 
+  void on_show_add_property_dialog();
   void on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event);
-
-  void on_show_change_property_type_dialog(
-      const ShowChangePropertyTypeDialogEvent& event);
+  void on_show_change_property_type_dialog(const ShowChangePropertyTypeDialogEvent& event);
 
   void on_add_property(const AddPropertyEvent& event);
   void on_remove_property(const RemovePropertyEvent& event);

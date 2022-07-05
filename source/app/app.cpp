@@ -264,7 +264,7 @@ void App::subscribe_to_events()
   d.sink<SetObjectTagEvent>().connect<&App::on_set_object_tag>(this);
   d.sink<SpawnObjectContextMenuEvent>().connect<&App::on_spawn_object_context_menu>(this);
 
-  d.sink<ShowAddPropertyDialogEvent>().connect<&ui::show_property_creation_dialog>();
+  d.sink<ShowAddPropertyDialogEvent>().connect<&App::on_show_add_property_dialog>(this);
   d.sink<ShowRenamePropertyDialogEvent>().connect<&App::on_show_rename_property_dialog>(this);
   d.sink<ShowChangePropertyTypeDialogEvent>().connect<&App::on_show_change_property_type_dialog>(this);
   d.sink<AddPropertyEvent>().connect<&App::on_add_property>(this);
@@ -873,6 +873,14 @@ void App::on_set_object_tag(const SetObjectTagEvent& event)
 void App::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
 {
   ui::open_object_context_menu();
+}
+
+void App::on_show_add_property_dialog()
+{
+  if (auto* document = active_document()) {
+    const auto& contextId = document->active_context_id();
+    ui::show_property_creation_dialog(contextId);
+  }
 }
 
 void App::on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)

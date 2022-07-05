@@ -415,9 +415,9 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
   prefs.set_property_dock_visible(visible);
 }
 
-void show_property_creation_dialog()
+void show_property_creation_dialog(const UUID& contextId)
 {
-  get_dialogs().add_property.open();
+  get_dialogs().add_property.open(contextId);
 }
 
 void show_rename_property_dialog(const std::string& name)

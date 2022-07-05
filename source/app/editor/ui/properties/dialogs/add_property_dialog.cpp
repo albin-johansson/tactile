@@ -36,8 +36,9 @@ AddPropertyDialog::AddPropertyDialog() : ADialog{"Add Property"}
   set_accept_button_label("Add");
 }
 
-void AddPropertyDialog::open()
+void AddPropertyDialog::open(const UUID& contextId)
 {
+  mContextId = contextId;
   zero_buffer(mNameBuffer);
   mPropertyType = AttributeType::String;
   make_visible();
@@ -54,7 +55,10 @@ void AddPropertyDialog::on_update(const DocumentModel&, entt::dispatcher&)
 
 void AddPropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  // TODO dispatcher.enqueue<AddPropertyEvent>(create_string_from_buffer(mNameBuffer), mPropertyType);
+  dispatcher.enqueue<AddPropertyEvent>(mContextId.value(),
+                                       create_string_from_buffer(mNameBuffer),
+                                       mPropertyType);
+  mContextId.reset();
 }
 
 auto AddPropertyDialog::is_current_input_valid(const DocumentModel& model) const -> bool
