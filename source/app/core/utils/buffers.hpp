@@ -25,13 +25,7 @@
 
 namespace tactile {
 
-/**
- * Zeroes the values of a buffer.
- *
- * \tparam Size the size of the buffer.
- *
- * \param buffer the buffer that will be zeroed.
- */
+/// Zeroes the values of a buffer.
 void zero_buffer(std::span<char> buffer);
 
 /**
@@ -41,8 +35,6 @@ void zero_buffer(std::span<char> buffer);
  *
  * Note, the string can safely be longer than what the buffer can hold, the buffer will be
  * filled with as many characters as possible.
- *
- * \tparam Size the size of the buffer.
  *
  * \param buffer the buffer that will be modified.
  * \param str the string that will be copied into the buffer.
@@ -55,14 +47,27 @@ void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
  * The function assumes that the "valid" part of the buffer is terminated with a null
  * character ('\0').
  *
- * \tparam Size the size of the buffer.
- *
  * \param buffer the character buffer that contains the string data.
  *
  * \return a string created from the buffer.
  */
 [[nodiscard]] auto create_string_from_buffer(std::span<const char> buffer) -> std::string;
 
+/**
+ * Creates a string view from a character buffer.
+ *
+ * The function assumes that the "valid" part of the buffer is terminated with a null
+ * character ('\0').
+ *
+ * Beware of the lifetime of the pointed-to buffer! The buffer must not be destroyed
+ * before the returned string view. This function is useful to obtain a temporary
+ * string-like object to perform queries on, use the string overload if you need to store
+ * the returned string.
+ *
+ * \param buffer the character buffer that contains the string data.
+ *
+ * \return a string created from the buffer.
+ */
 [[nodiscard]] auto create_string_view_from_buffer(std::span<const char> buffer)
     -> std::string_view;
 
