@@ -439,7 +439,7 @@ void App::on_open_document(const OpenDocumentEvent& event)
   mData->model.open_document(event.document_id);
 }
 
-// TODO consider renaming event
+// TODO consider renaming event (when standalone tileset documents can be parsed)
 void App::on_open_map(const OpenMapEvent& event)
 {
   if (mData->model.has_document_with_path(event.path)) {
