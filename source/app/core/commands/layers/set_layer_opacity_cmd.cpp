@@ -19,46 +19,36 @@
 
 #include "set_layer_opacity_cmd.hpp"
 
-#include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-SetLayerOpacityCmd::SetLayerOpacityCmd(MapDocument* document,
-                                       const UUID&  layerId,
-                                       const float  opacity)
-    : mDocument{document}
-    , mLayerId{layerId}
-    , mOpacity{opacity}
+SetLayerOpacityCmd::SetLayerOpacityCmd(Shared<ILayer> layer, const float opacity)
+    : mLayer{std::move(layer)}
+    , mNewOpacity{opacity}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mLayer) {
+    throw TactileError{"Invalid null layer!"};
   }
 }
 
 void SetLayerOpacityCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_layer(mLayerId);
-
-  layer.set_opacity(mPreviousOpacity.value());
-  mPreviousOpacity.reset();
+  mLayer->set_opacity(mOldOpacity.value());
+  mOldOpacity.reset();
 }
 
 void SetLayerOpacityCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_layer(mLayerId);
-
-  mPreviousOpacity = layer.get_opacity();
-  layer.set_opacity(mOpacity);
+  mOldOpacity = mLayer->get_opacity();
+  mLayer->set_opacity(mNewOpacity);
 }
 
 auto SetLayerOpacityCmd::merge_with(const ICommand* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const SetLayerOpacityCmd*>(cmd)) {
-    if (mLayerId == other->mLayerId) {
-      mOpacity = other->mOpacity;
+    if (mLayer->get_uuid() == other->mLayer->get_uuid()) {
+      mNewOpacity = other->mNewOpacity;
       return true;
     }
   }

@@ -21,15 +21,15 @@
 
 #include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/common/memory.hpp"
+#include "core/layers/layer.hpp"
 
 namespace tactile {
 
 class SetLayerOpacityCmd final : public ICommand
 {
  public:
-  SetLayerOpacityCmd(MapDocument* document, const UUID& layerId, float opacity);
+  SetLayerOpacityCmd(Shared<ILayer> layer, float opacity);
 
   void undo() override;
 
@@ -40,10 +40,9 @@ class SetLayerOpacityCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  UUID         mLayerId{};
-  float        mOpacity{};
-  Maybe<float> mPreviousOpacity;
+  Shared<ILayer> mLayer;
+  float          mNewOpacity{};
+  Maybe<float>   mOldOpacity;
 };
 
 }  // namespace tactile

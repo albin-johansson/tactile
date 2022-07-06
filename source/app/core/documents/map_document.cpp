@@ -139,7 +139,8 @@ void MapDocument::move_layer_down(const UUID& layerId)
 
 void MapDocument::set_layer_opacity(const UUID& layerId, const float opacity)
 {
-  get_history().exec<SetLayerOpacityCmd>(this, layerId, opacity);
+  auto layer = mMap->get_layer(layerId);
+  get_history().exec<SetLayerOpacityCmd>(std::move(layer), opacity);
 }
 
 void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
