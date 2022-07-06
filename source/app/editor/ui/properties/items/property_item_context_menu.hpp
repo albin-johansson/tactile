@@ -23,6 +23,8 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/uuid.hpp"
+
 namespace tactile::ui {
 
 struct PropertyItemContextMenuState final
@@ -32,7 +34,8 @@ struct PropertyItemContextMenuState final
   bool show_change_type_dialog{};
 };
 
-auto property_item_context_menu(entt::dispatcher&             dispatcher,
+auto property_item_context_menu(const UUID&                   contextId,
+                                entt::dispatcher&             dispatcher,
                                 const std::string&            name,
                                 PropertyItemContextMenuState& state) -> bool;
 

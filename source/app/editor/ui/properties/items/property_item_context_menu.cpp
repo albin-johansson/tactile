@@ -28,7 +28,8 @@
 
 namespace tactile::ui {
 
-auto property_item_context_menu(entt::dispatcher&             dispatcher,
+auto property_item_context_menu(const UUID&                   contextId,
+                                entt::dispatcher&             dispatcher,
                                 const std::string&            name,
                                 PropertyItemContextMenuState& state) -> bool
 {
@@ -39,7 +40,7 @@ auto property_item_context_menu(entt::dispatcher&             dispatcher,
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Property")) {
-      // TODO dispatcher.enqueue<RemovePropertyEvent>(name);
+      dispatcher.enqueue<RemovePropertyEvent>(contextId, name);
     }
 
     return true;

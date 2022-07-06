@@ -258,7 +258,10 @@ void _show_custom_properties(const IContext&   context,
     ImGui::Selectable(name.c_str());
 
     if (!isItemContextOpen) {
-      isItemContextOpen = property_item_context_menu(dispatcher, name, _context_state);
+      isItemContextOpen = property_item_context_menu(context.get_uuid(),
+                                                     dispatcher,
+                                                     name,
+                                                     _context_state);
     }
 
     if (_context_state.show_rename_dialog && !_rename_target) {
