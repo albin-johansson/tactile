@@ -147,7 +147,7 @@ void _show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& d
 // TODO think about how to show the ref info? Maybe as overlay in tileset view?
 void _show_native_tileset_ref_properties(const TilesetRef& ref)
 {
-  const auto& tileset = *ref.tileset;
+  const auto& tileset = ref.view_tileset();
 
   _native_read_only_row("Type", "Tileset");
   _native_read_only_row("Name", tileset.get_name().c_str());
@@ -158,10 +158,10 @@ void _show_native_tileset_ref_properties(const TilesetRef& ref)
   _native_read_only_row("Tile width", tileset.tile_size().x);
   _native_read_only_row("Tile height", tileset.tile_size().y);
 
-  _native_read_only_row("First Tile ID", ref.first_tile);
-  _native_read_only_row("Last Tile ID", ref.last_tile);
+  _native_read_only_row("First Tile ID", ref.first_tile());
+  _native_read_only_row("Last Tile ID", ref.last_tile());
 
-  _native_read_only_row("Embedded", ref.embedded);
+  _native_read_only_row("Embedded", ref.is_embedded());
 }
 
 void _show_native_layer_properties(const ILayer& layer, entt::dispatcher& dispatcher)

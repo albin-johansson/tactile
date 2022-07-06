@@ -45,16 +45,16 @@ void _update_viewport_offset(const TilesetRef& tilesetRef,
                              const ImVec2&     viewportSize,
                              entt::dispatcher& dispatcher)
 {
-  const auto&    tileset = tilesetRef.tileset;
-  const Vector2f textureSize = tileset->texture_size();
+  const auto&    tileset = tilesetRef.view_tileset();
+  const Vector2f textureSize = tileset.texture_size();
 
   const Vector2f minOffset{viewportSize.x - textureSize.x,
                            viewportSize.y - textureSize.y};
   const Vector2f maxOffset{};
 
-  const auto& limits = tilesetRef.viewport.get_limits();
+  const auto& limits = tilesetRef.get_viewport().get_limits();
   if (!limits.has_value() || minOffset != limits->min_offset) {
-    dispatcher.enqueue<UpdateTilesetViewportLimitsEvent>(tileset->get_uuid(),
+    dispatcher.enqueue<UpdateTilesetViewportLimitsEvent>(tileset.get_uuid(),
                                                          minOffset,
                                                          maxOffset);
   }
@@ -69,7 +69,7 @@ void _update_viewport_offset(const TilesetRef& tilesetRef,
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto&    io = ImGui::GetIO();
     const Vector2f delta{io.MouseDelta.x, io.MouseDelta.y};
-    dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset->get_uuid(), delta);
+    dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset.get_uuid(), delta);
   }
 }
 
@@ -97,10 +97,10 @@ void update_tileset_view(const DocumentModel& model,
   const auto& map = document.get_map();
 
   const auto& tilesetRef = map.get_tilesets().get_ref(tilesetId);
-  const auto& tileset = tilesetRef.tileset;
-  const auto& viewport = tilesetRef.viewport;
+  const auto& tileset = tilesetRef.view_tileset();
+  const auto& viewport = tilesetRef.get_viewport();
 
-  const auto info = get_render_info(viewport, *tileset);
+  const auto info = get_render_info(viewport, tileset);
   _update_viewport_offset(tilesetRef, info.canvas_br - info.canvas_tl, dispatcher);
 
   GraphicsCtx graphics{info};
@@ -108,7 +108,7 @@ void update_tileset_view(const DocumentModel& model,
   graphics.clear();
 
   const auto offset = from_vec(viewport.get_offset());
-  const auto tileSize = from_vec(tileset->tile_size());
+  const auto tileSize = from_vec(tileset.tile_size());
 
   if (const auto selection = rubber_band(offset, tileSize)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
@@ -117,11 +117,9 @@ void update_tileset_view(const DocumentModel& model,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  graphics.render_image(tileset->texture_id(),
-                        position,
-                        from_vec(tileset->texture_size()));
+  graphics.render_image(tileset.texture_id(), position, from_vec(tileset.texture_size()));
 
-  const auto& selection = tilesetRef.selection;
+  const auto& selection = tilesetRef.get_selection();
   if (selection.has_value()) {
     _render_selection(graphics, *selection, position, tileSize);
   }

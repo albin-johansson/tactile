@@ -574,7 +574,8 @@ void App::on_update_tileset_viewport_limits(const UpdateTilesetViewportLimitsEve
 {
   if (auto* document = active_map_document()) {
     auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
-    tilesetRef.viewport.set_limits({event.min_offset, event.max_offset});
+    auto& viewport = tilesetRef.get_viewport();
+    viewport.set_limits({event.min_offset, event.max_offset});
   }
 }
 
@@ -591,7 +592,8 @@ void App::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
-    tilesetRef.viewport.offset(event.delta);
+    auto& viewport = tilesetRef.get_viewport();
+    viewport.offset(event.delta);
   }
 }
 
@@ -713,7 +715,7 @@ void App::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
     const auto tilesetId = tilesets.active_tileset_id().value();
     auto&      tilesetRef = tilesets.get_ref(tilesetId);
 
-    tilesetRef.selection = event.selection;
+    tilesetRef.set_selection(event.selection);
   }
 }
 

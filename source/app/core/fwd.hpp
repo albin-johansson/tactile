@@ -65,9 +65,9 @@ class Object;
 class Viewport;
 
 struct TilesetInfo;
-struct TilesetRef;
 class TilesetBundle;
 class Tileset;
+class TilesetRef;
 class Tile;
 
 }  // namespace tactile

@@ -41,10 +41,10 @@ void BucketTool::on_pressed(DocumentModel&    model,
 
     const auto  tilesetId = tilesets.active_tileset_id().value();
     const auto& tilesetRef = tilesets.get_ref(tilesetId);
-    const auto& tileset = tilesetRef.tileset;
+    const auto& tileset = tilesetRef.view_tileset();
 
-    const auto selectedPos = tilesetRef.selection->begin;
-    const auto replacement = tilesetRef.first_tile + tileset->index_of(selectedPos);
+    const auto selectedPos = tilesetRef.get_selection()->begin;
+    const auto replacement = tilesetRef.first_tile() + tileset.index_of(selectedPos);
 
     const auto layerId = map.active_layer_id().value();
     dispatcher.enqueue<FloodEvent>(layerId, mouse.position_in_viewport, replacement);

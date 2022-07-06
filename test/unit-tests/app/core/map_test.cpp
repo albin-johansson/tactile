@@ -195,28 +195,28 @@ TEST(Map, FixTiles)
   auto&      layer = map.view_tile_layer(layerId);
 
   // Valid
-  layer.set_tile({0, 1}, tilesetRef.first_tile);
+  layer.set_tile({0, 1}, tilesetRef.first_tile());
   layer.set_tile({4, 2}, 42);
-  layer.set_tile({1, 3}, tilesetRef.last_tile);
+  layer.set_tile({1, 3}, tilesetRef.last_tile());
 
   // Invalid
   layer.set_tile({0, 0}, -1);
-  layer.set_tile({2, 1}, tilesetRef.last_tile + 1);
-  layer.set_tile({3, 2}, tilesetRef.last_tile + 934);
-  layer.set_tile({4, 4}, tilesetRef.first_tile - 32);
+  layer.set_tile({2, 1}, tilesetRef.last_tile() + 1);
+  layer.set_tile({3, 2}, tilesetRef.last_tile() + 934);
+  layer.set_tile({4, 4}, tilesetRef.first_tile() - 32);
 
   const auto  result = map.fix_tiles();
   const auto& previous = lookup_in(result, layerId);
 
   ASSERT_EQ(4, previous.size());
   ASSERT_EQ(lookup_in(previous, TilePos{0, 0}), -1);
-  ASSERT_EQ(lookup_in(previous, TilePos{2, 1}), tilesetRef.last_tile + 1);
-  ASSERT_EQ(lookup_in(previous, TilePos{3, 2}), tilesetRef.last_tile + 934);
-  ASSERT_EQ(lookup_in(previous, TilePos{4, 4}), tilesetRef.first_tile - 32);
+  ASSERT_EQ(lookup_in(previous, TilePos{2, 1}), tilesetRef.last_tile() + 1);
+  ASSERT_EQ(lookup_in(previous, TilePos{3, 2}), tilesetRef.last_tile() + 934);
+  ASSERT_EQ(lookup_in(previous, TilePos{4, 4}), tilesetRef.first_tile() - 32);
 
-  ASSERT_EQ(tilesetRef.first_tile, layer.tile_at({0, 1}));
+  ASSERT_EQ(tilesetRef.first_tile(), layer.tile_at({0, 1}));
   ASSERT_EQ(42, layer.tile_at({4, 2}));
-  ASSERT_EQ(tilesetRef.last_tile, layer.tile_at({1, 3}));
+  ASSERT_EQ(tilesetRef.last_tile(), layer.tile_at({1, 3}));
 
   ASSERT_EQ(empty_tile, layer.tile_at({0, 0}));
   ASSERT_EQ(empty_tile, layer.tile_at({2, 1}));

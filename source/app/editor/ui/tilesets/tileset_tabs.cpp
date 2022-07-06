@@ -89,7 +89,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
     for (const auto& [tilesetId, ref] : tilesets) {
       const Scope scope{tilesetId};
 
-      const auto& name = ref.tileset->get_name();
+      const auto& name = ref.view_tileset().get_name();
       const auto  isActive = tilesets.active_tileset_id() == tilesetId;
 
       bool opened = true;

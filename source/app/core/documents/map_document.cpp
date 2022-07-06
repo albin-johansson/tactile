@@ -72,8 +72,8 @@ auto MapDocument::view_context(const UUID& id) const -> const IContext&
 
 void MapDocument::update()
 {
-  for (const auto& [id, tileset] : mMap->get_tilesets()) {
-    tileset.tileset->update();
+  for (auto& [id, ref] : mMap->get_tilesets()) {
+    ref.update();
   }
 }
 

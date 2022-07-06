@@ -31,24 +31,45 @@ namespace tactile {
 
 // TODO improve selection
 
-struct TilesetRef final
+class TilesetRef final
 {
-  Shared<Tileset> tileset;          /// The referenced tileset.
-  TileID          first_tile{};     /// The first associated tile ID (inclusive).
-  TileID          last_tile{};      /// The last associated tile ID (inclusive).
-  Maybe<Region>   selection;        /// Selected region.
-  Viewport        viewport;         /// Viewport in tileset dock.
-  bool            embedded : 1 {};  /// Whether the tileset is embedded in the map.
+ public:
+  TilesetRef(Shared<Tileset> tileset, TileID first, TileID last);
 
-  [[nodiscard]] auto is_single_tile_selected() const -> bool
-  {
-    if (selection) {
-      return selection->end - selection->begin == TilePos{1, 1};
-    }
-    else {
-      return false;
-    }
-  }
+  void update();
+
+  void set_selection(const Maybe<Region>& selection);
+
+  void set_embedded(bool embedded);
+
+  /// Converts a tile identifier to the corresponding tile index.
+  [[nodiscard]] auto to_index(TileID id) const -> TileIndex;
+
+  [[nodiscard]] auto is_valid_tile(TileID id) const -> bool;
+
+  [[nodiscard]] auto is_single_tile_selected() const -> bool;
+
+  [[nodiscard]] auto get_selection() const -> const Maybe<Region>&;
+
+  [[nodiscard]] auto get_tileset() -> const Shared<Tileset>&;
+
+  [[nodiscard]] auto view_tileset() const -> const Tileset&;
+
+  [[nodiscard]] auto first_tile() const noexcept -> TileID { return mFirstTile; }
+  [[nodiscard]] auto last_tile() const noexcept -> TileID { return mLastTile; }
+
+  [[nodiscard]] auto get_viewport() -> Viewport& { return mViewport; }
+  [[nodiscard]] auto get_viewport() const -> const Viewport& { return mViewport; }
+
+  [[nodiscard]] auto is_embedded() const noexcept -> bool { return mEmbedded; }
+
+ private:
+  Shared<Tileset> mTileset;          /// The referenced tileset.
+  TileID          mFirstTile{};      /// The first associated tile ID (inclusive).
+  TileID          mLastTile{};       /// The last associated tile ID (inclusive).
+  Maybe<Region>   mSelection;        /// Selected region.
+  Viewport        mViewport;         /// Viewport in tileset dock.
+  bool            mEmbedded : 1 {};  /// Whether the tileset is embedded in the map.
 };
 
 }  // namespace tactile

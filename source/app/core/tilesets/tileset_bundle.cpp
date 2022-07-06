@@ -31,16 +31,12 @@ void TilesetBundle::attach_tileset(Shared<Tileset> tileset,
                                    const bool      embedded)
 {
   const auto id = tileset->get_uuid();
-  const auto nTiles = tileset->tile_count();
+  mRefs.try_emplace(id, tileset, firstTileId, firstTileId + tileset->tile_count());
 
-  auto& ref = mRefs[id];
-  ref.tileset = std::move(tileset);
-  ref.first_tile = firstTileId;
-  ref.last_tile = ref.first_tile + nTiles;
+  auto& ref = lookup_in(mRefs, id);
+  ref.set_embedded(embedded);
 
-  ref.embedded = embedded;
-
-  for (TileID tileId = ref.first_tile; tileId <= ref.last_tile; ++tileId) {
+  for (auto tileId = ref.first_tile(); tileId <= ref.last_tile(); ++tileId) {
     mTileCache[tileId] = id;
   }
 }
@@ -62,10 +58,8 @@ void TilesetBundle::detach_tileset(const UUID& id)
   const auto& ref = lookup_in(mRefs, id);
 
   // Removes all cached tile entries for the tileset that will be removed
-  std::erase_if(mTileCache, [&](const auto& pair) {
-    const auto tileId = pair.first;
-    return tileId >= ref.first_tile && tileId <= ref.last_tile;
-  });
+  std::erase_if(mTileCache,
+                [&](const auto& pair) { return ref.is_valid_tile(pair.first); });
 
   mRefs.erase(id);
 
@@ -144,7 +138,7 @@ auto TilesetBundle::to_tile_index(const TileID id) const -> TileIndex
 {
   if (const auto tilesetId = find_tileset(id)) {
     const auto& ref = get_ref(*tilesetId);
-    return id - ref.first_tile;
+    return ref.to_index(id);
   }
   else {
     throw TactileError{"Invalid tile identifier!"};

@@ -192,14 +192,11 @@ void _convert_fancy_tile_animation(const TileAnimation& animation, ir::MetaTileD
   }
 }
 
-void _convert_fancy_tiles(const TilesetRef&     tilesetRef,
-                          const Tileset&        tileset,
+void _convert_fancy_tiles(const Tileset&        tileset,
                           const ComponentIndex* components,
                           ir::TilesetData&      data)
 {
   for (const auto& [id, tile] : tileset) {
-    const auto tileId = tilesetRef.first_tile + tile->index();
-
     const auto isAnimated = tile->is_animated();
     const auto hasObjects = tile->object_count() != 0;
     const auto hasProps = !tile->get_props().empty();
@@ -232,19 +229,19 @@ void _convert_tilesets(const MapDocument&    document,
 {
   const auto& map = document.get_map();
   for (const auto& [tilesetId, tilesetRef] : map.get_tilesets()) {
-    const auto& tileset = tilesetRef.tileset;
+    const auto& tileset = tilesetRef.view_tileset();
 
     auto& tilesetData = data.tilesets.emplace_back();
-    tilesetData.name = tileset->get_name();
+    tilesetData.name = tileset.get_name();
 
-    tilesetData.first_tile = tilesetRef.first_tile;
-    tilesetData.tile_size = tileset->tile_size();
-    tilesetData.column_count = tileset->column_count();
+    tilesetData.first_tile = tilesetRef.first_tile();
+    tilesetData.tile_size = tileset.tile_size();
+    tilesetData.column_count = tileset.column_count();
 
-    tilesetData.image_path = tileset->texture_path();
-    tilesetData.image_size = tileset->texture_size();
+    tilesetData.image_path = tileset.texture_path();
+    tilesetData.image_size = tileset.texture_size();
 
-    _convert_fancy_tiles(tilesetRef, *tileset, components, tilesetData);
+    _convert_fancy_tiles(tileset, components, tilesetData);
   }
 }
 
