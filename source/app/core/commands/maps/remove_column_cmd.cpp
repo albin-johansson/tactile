@@ -19,37 +19,35 @@
 
 #include "remove_column_cmd.hpp"
 
+#include <utility>  // move
+
 #include "core/common/functional.hpp"
-#include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-RemoveColumnCmd::RemoveColumnCmd(MapDocument* document) : mDocument{document}
+RemoveColumnCmd::RemoveColumnCmd(Shared<Map> map) : mMap{std::move(map)}
 {
-  if (!mDocument) {
+  if (!mMap) {
     throw TactileError{"Invalid null map document!"};
   }
 }
 
 void RemoveColumnCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  invoke_n(mColumns, [&] { map.add_column(); });
-  mCache.restore_tiles(map);
+  invoke_n(mColumns, [&] { mMap->add_column(); });
+  mCache.restore_tiles(*mMap);
 }
 
 void RemoveColumnCmd::redo()
 {
-  auto& map = mDocument->get_map();
-
-  const auto begin = TilePos::from(0u, map.column_count() - mColumns - 1u);
-  const auto end = TilePos::from(map.row_count(), map.column_count());
+  const auto begin = TilePos::from(0u, mMap->column_count() - mColumns - 1u);
+  const auto end = TilePos::from(mMap->row_count(), mMap->column_count());
 
   mCache.clear();
-  mCache.save_tiles(map, begin, end);
+  mCache.save_tiles(*mMap, begin, end);
 
-  invoke_n(mColumns, [&] { map.remove_column(); });
+  invoke_n(mColumns, [&] { mMap->remove_column(); });
 }
 
 auto RemoveColumnCmd::merge_with(const ICommand* cmd) -> bool

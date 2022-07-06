@@ -22,14 +22,15 @@
 #include "core/commands/command.hpp"
 #include "core/commands/maps/map_command_cache.hpp"
 #include "core/common/ints.hpp"
-#include "core/fwd.hpp"
+#include "core/common/memory.hpp"
+#include "core/map.hpp"
 
 namespace tactile {
 
 class RemoveColumnCmd final : public ICommand
 {
  public:
-  explicit RemoveColumnCmd(MapDocument* document);
+  explicit RemoveColumnCmd(Shared<Map> map);
 
   void undo() override;
 
@@ -40,7 +41,7 @@ class RemoveColumnCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*    mDocument{};
+  Shared<Map>     mMap;
   MapCommandCache mCache;
   usize           mColumns{1};
 };
