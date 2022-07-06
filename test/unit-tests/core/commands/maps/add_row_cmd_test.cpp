@@ -21,8 +21,8 @@
 
 #include <gtest/gtest.h>
 
-#include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
 
 using namespace tactile;
 
@@ -36,20 +36,20 @@ TEST(AddRowCmd, RedoUndo)
   const usize initialRows = 10;
   const usize initialCols = 7;
 
-  MapDocument document{{32, 32}, initialRows, initialCols};
-  auto&       map = document.get_map();
+  auto map = test::MapBuilder::build()  //
+                 .with_size(initialRows, initialCols)
+                 .result();
 
-  AddRowCmd cmd{&document};
-
+  AddRowCmd cmd{map};
   cmd.redo();
 
-  ASSERT_EQ(initialRows + 1, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows + 1, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 
   cmd.undo();
 
-  ASSERT_EQ(initialRows, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 }
 
 TEST(AddRowCmd, MergeSupport)
@@ -57,21 +57,22 @@ TEST(AddRowCmd, MergeSupport)
   const usize initialRows = 6;
   const usize initialCols = 7;
 
-  MapDocument document{{32, 32}, initialRows, initialCols};
-  auto&       map = document.get_map();
+  auto map = test::MapBuilder::build()  //
+                 .with_size(initialRows, initialCols)
+                 .result();
 
-  AddRowCmd a{&document};
-  AddRowCmd b{&document};
+  AddRowCmd a{map};
+  AddRowCmd b{map};
 
   ASSERT_TRUE(a.merge_with(&b));
 
   a.redo();
 
-  ASSERT_EQ(initialRows + 2, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows + 2, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 
   a.undo();
 
-  ASSERT_EQ(initialRows, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 }

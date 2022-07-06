@@ -19,29 +19,28 @@
 
 #include "add_column_cmd.hpp"
 
+#include <utility>  // move
+
 #include "core/common/functional.hpp"
-#include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-AddColumnCmd::AddColumnCmd(MapDocument* document) : mDocument{document}
+AddColumnCmd::AddColumnCmd(Shared<Map> map) : mMap{std::move(map)}
 {
-  if (!mDocument) {
+  if (!mMap) {
     throw TactileError{"Invalid null map!"};
   }
 }
 
 void AddColumnCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  invoke_n(mColumns, [&] { map.remove_column(); });
+  invoke_n(mColumns, [this] { mMap->remove_column(); });
 }
 
 void AddColumnCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  invoke_n(mColumns, [&] { map.add_column(); });
+  invoke_n(mColumns, [this] { mMap->add_column(); });
 }
 
 auto AddColumnCmd::merge_with(const ICommand* cmd) -> bool

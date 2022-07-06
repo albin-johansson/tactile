@@ -21,9 +21,9 @@
 
 #include <gtest/gtest.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
+#include "unit-tests/core/helpers/map_test_helpers.hpp"
 
 using namespace tactile;
 
@@ -37,20 +37,20 @@ TEST(RemoveRowCmd, RedoUndo)
   const usize initialRows = 3;
   const usize initialCols = 5;
 
-  MapDocument document{{32, 32}, initialRows, initialCols};
-  auto&       map = document.get_map();
+  auto map = test::MapBuilder::build()  //
+                 .with_size(initialRows, initialCols)
+                 .result();
 
-  RemoveRowCmd cmd{&document};
-
+  RemoveRowCmd cmd{map};
   cmd.redo();
 
-  ASSERT_EQ(initialRows - 1, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows - 1, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 
   cmd.undo();
 
-  ASSERT_EQ(initialRows, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 }
 
 TEST(RemoveRowCmd, MergeSupport)
@@ -58,37 +58,27 @@ TEST(RemoveRowCmd, MergeSupport)
   const usize initialRows = 3;
   const usize initialCols = 6;
 
-  MapDocument document{{32, 32}, initialRows, initialCols};
-  auto&       map = document.get_map();
+  UUID layerId;
 
-  const auto layerId = map.add_tile_layer();
+  auto map = test::MapBuilder::build()  //
+                 .with_size(initialRows, initialCols)
+                 .with_tile_layer(&layerId, 42)
+                 .result();
 
-  {
-    auto& layer = map.view_tile_layer(layerId);
-    layer.set_tile({0, 0}, 42);
-    layer.set_tile({2, 4}, 23);
-  }
-
-  RemoveRowCmd a{&document};
-  RemoveRowCmd b{&document};
+  RemoveRowCmd a{map};
+  RemoveRowCmd b{map};
 
   ASSERT_TRUE(a.merge_with(&b));
 
   a.redo();
 
-  ASSERT_EQ(initialRows - 2, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows - 2, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 
   a.undo();
 
-  ASSERT_EQ(initialRows, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 
-  {
-    auto& layer = map.view_tile_layer(layerId);
-    layer.set_tile({0, 0}, 42);
-    layer.set_tile({2, 4}, 23);
-    ASSERT_EQ(42, layer.tile_at({0, 0}));
-    ASSERT_EQ(23, layer.tile_at({2, 4}));
-  }
+  test::verify_all_tiles_matches(map->view_tile_layer(layerId), 42);
 }

@@ -21,14 +21,15 @@
 
 #include "core/commands/command.hpp"
 #include "core/common/ints.hpp"
-#include "core/fwd.hpp"
+#include "core/common/memory.hpp"
+#include "core/map.hpp"
 
 namespace tactile {
 
 class AddRowCmd final : public ICommand
 {
  public:
-  explicit AddRowCmd(MapDocument* document);
+  explicit AddRowCmd(Shared<Map> map);
 
   void undo() override;
 
@@ -39,8 +40,8 @@ class AddRowCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  usize        mRows{1};
+  Shared<Map> mMap;
+  usize       mRows{1};
 };
 
 }  // namespace tactile

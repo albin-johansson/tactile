@@ -17,31 +17,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "core/commands/maps/resize_map_cmd.hpp"
 
-#include "core/commands/command.hpp"
-#include "core/common/ints.hpp"
-#include "core/common/memory.hpp"
-#include "core/map.hpp"
+#include <gtest/gtest.h>
 
-namespace tactile {
+#include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
 
-class AddColumnCmd final : public ICommand
+using namespace tactile;
+
+TEST(ResizeMapCmd, Constructor)
 {
- public:
-  explicit AddColumnCmd(Shared<Map> map);
+  ASSERT_THROW(ResizeMapCmd(nullptr, 1, 1), TactileError);
+}
 
-  void undo() override;
+TEST(ResizeMapCmd, RedoUndo)
+{
+  auto map = test::MapBuilder::build()  //
+                 .with_size(5, 7)
+                 .result();
 
-  void redo() override;
+  ResizeMapCmd cmd{map, 3, 9};
+  cmd.redo();
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+  ASSERT_EQ(3, map->row_count());
+  ASSERT_EQ(9, map->column_count());
 
-  [[nodiscard]] auto get_name() const -> const char* override;
+  cmd.undo();
 
- private:
-  Shared<Map> mMap;
-  usize       mColumns{1};
-};
-
-}  // namespace tactile
+  ASSERT_EQ(5, map->row_count());
+  ASSERT_EQ(7, map->column_count());
+}

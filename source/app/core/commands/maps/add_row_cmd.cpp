@@ -19,29 +19,28 @@
 
 #include "add_row_cmd.hpp"
 
+#include <utility>  // move
+
 #include "core/common/functional.hpp"
-#include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-AddRowCmd::AddRowCmd(MapDocument* document) : mDocument{document}
+AddRowCmd::AddRowCmd(Shared<Map> map) : mMap{std::move(map)}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
   }
 }
 
 void AddRowCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  invoke_n(mRows, [&] { map.remove_row(); });
+  invoke_n(mRows, [this] { mMap->remove_row(); });
 }
 
 void AddRowCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  invoke_n(mRows, [&] { map.add_row(); });
+  invoke_n(mRows, [this] { mMap->add_row(); });
 }
 
 auto AddRowCmd::merge_with(const ICommand* cmd) -> bool

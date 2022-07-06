@@ -21,8 +21,8 @@
 
 #include <gtest/gtest.h>
 
-#include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
 
 using namespace tactile;
 
@@ -36,20 +36,20 @@ TEST(AddColumnCmd, RedoUndo)
   const usize initialRows = 5;
   const usize initialCols = 7;
 
-  MapDocument document{{32, 32}, initialRows, initialCols};
-  auto&       map = document.get_map();
+  auto map = test::MapBuilder::build()  //
+                 .with_size(initialRows, initialCols)
+                 .result();
 
-  AddColumnCmd cmd{&document};
-
+  AddColumnCmd cmd{map};
   cmd.redo();
 
-  ASSERT_EQ(initialRows, map.row_count());
-  ASSERT_EQ(initialCols + 1, map.column_count());
+  ASSERT_EQ(initialRows, map->row_count());
+  ASSERT_EQ(initialCols + 1, map->column_count());
 
   cmd.undo();
 
-  ASSERT_EQ(initialRows, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 }
 
 TEST(AddColumnCmd, MergeSupport)
@@ -57,23 +57,24 @@ TEST(AddColumnCmd, MergeSupport)
   const usize initialRows = 13;
   const usize initialCols = 5;
 
-  MapDocument document{{32, 32}, initialRows, initialCols};
-  auto&       map = document.get_map();
+  auto map = test::MapBuilder::build()  //
+                 .with_size(initialRows, initialCols)
+                 .result();
 
-  AddColumnCmd a{&document};
-  AddColumnCmd b{&document};
-  AddColumnCmd c{&document};
+  AddColumnCmd a{map};
+  AddColumnCmd b{map};
+  AddColumnCmd c{map};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));
 
   a.redo();
 
-  ASSERT_EQ(initialRows, map.row_count());
-  ASSERT_EQ(initialCols + 3, map.column_count());
+  ASSERT_EQ(initialRows, map->row_count());
+  ASSERT_EQ(initialCols + 3, map->column_count());
 
   a.undo();
 
-  ASSERT_EQ(initialRows, map.row_count());
-  ASSERT_EQ(initialCols, map.column_count());
+  ASSERT_EQ(initialRows, map->row_count());
+  ASSERT_EQ(initialCols, map->column_count());
 }

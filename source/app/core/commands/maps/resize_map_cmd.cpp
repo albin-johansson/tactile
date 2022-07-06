@@ -19,52 +19,51 @@
 
 #include "resize_map_cmd.hpp"
 
+#include <utility>  // move
+
 #include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-ResizeMapCmd::ResizeMapCmd(MapDocument* document, const usize nRows, const usize nCols)
-    : mDocument{document}
+ResizeMapCmd::ResizeMapCmd(Shared<Map> map, const usize nRows, const usize nCols)
+    : mMap{std::move(map)}
     , mRows{nRows}
     , mCols{nCols}
 {
-  if (!mDocument) {
+  if (!mMap) {
     throw TactileError{"Invalid null map!"};
   }
 }
 
 void ResizeMapCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  map.resize(mPrevRows.value(), mPrevCols.value());
+  mMap->resize(mPrevRows.value(), mPrevCols.value());
 
   if (is_lossy_resize()) {
-    mCache.restore_tiles(map);
+    mCache.restore_tiles(*mMap);
   }
 }
 
 void ResizeMapCmd::redo()
 {
-  auto& map = mDocument->get_map();
-
-  mPrevRows = map.row_count();
-  mPrevCols = map.column_count();
+  mPrevRows = mMap->row_count();
+  mPrevCols = mMap->column_count();
 
   if (is_lossy_resize()) {
-    const auto rows = map.row_count();
-    const auto cols = map.column_count();
+    const auto rows = mMap->row_count();
+    const auto cols = mMap->column_count();
 
     mCache.clear();
-    mCache.save_tiles(map,
+    mCache.save_tiles(*mMap,
                       TilePos::from(rows - (mPrevRows.value() - mRows), 0u),
                       TilePos::from(rows, cols));
-    mCache.save_tiles(map,
+    mCache.save_tiles(*mMap,
                       TilePos::from(0u, cols - (mPrevCols.value() - mCols)),
                       TilePos::from(rows, cols));
   }
 
-  map.resize(mRows, mCols);
+  mMap->resize(mRows, mCols);
 }
 
 auto ResizeMapCmd::get_name() const -> const char*

@@ -79,17 +79,17 @@ void MapDocument::update()
 
 void MapDocument::add_row()
 {
-  get_history().exec<AddRowCmd>(this);
+  get_history().exec<AddRowCmd>(mMap);
 }
 
 void MapDocument::add_column()
 {
-  get_history().exec<AddColumnCmd>(this);
+  get_history().exec<AddColumnCmd>(mMap);
 }
 
 void MapDocument::remove_row()
 {
-  get_history().exec<RemoveRowCmd>(this);
+  get_history().exec<RemoveRowCmd>(mMap);
 }
 
 void MapDocument::remove_column()
@@ -99,7 +99,7 @@ void MapDocument::remove_column()
 
 void MapDocument::resize(const usize rows, const usize cols)
 {
-  get_history().exec<ResizeMapCmd>(this, rows, cols);
+  get_history().exec<ResizeMapCmd>(mMap, rows, cols);
 }
 
 void MapDocument::fix_tiles()

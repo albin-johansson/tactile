@@ -19,37 +19,35 @@
 
 #include "remove_row_cmd.hpp"
 
+#include <utility>  // move
+
 #include "core/common/functional.hpp"
-#include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-RemoveRowCmd::RemoveRowCmd(MapDocument* document) : mDocument{document}
+RemoveRowCmd::RemoveRowCmd(Shared<Map> map) : mMap{std::move(map)}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
   }
 }
 
 void RemoveRowCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  invoke_n(mRows, [&] { map.add_row(); });
-  mCache.restore_tiles(map);
+  invoke_n(mRows, [this] { mMap->add_row(); });
+  mCache.restore_tiles(*mMap);
 }
 
 void RemoveRowCmd::redo()
 {
-  auto& map = mDocument->get_map();
-
-  const auto begin = TilePos::from(map.row_count() - mRows - 1u, 0u);
-  const auto end = TilePos::from(map.row_count(), map.column_count());
+  const auto begin = TilePos::from(mMap->row_count() - mRows - 1u, 0u);
+  const auto end = TilePos::from(mMap->row_count(), mMap->column_count());
 
   mCache.clear();
-  mCache.save_tiles(map, begin, end);
+  mCache.save_tiles(*mMap, begin, end);
 
-  invoke_n(mRows, [&] { map.remove_row(); });
+  invoke_n(mRows, [this] { mMap->remove_row(); });
 }
 
 auto RemoveRowCmd::merge_with(const ICommand* cmd) -> bool
