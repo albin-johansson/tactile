@@ -20,16 +20,29 @@
 #pragma once
 
 #include <centurion/event.hpp>
-#include <entt/fwd.hpp>
+#include <entt/signal/dispatcher.hpp>
 
-#include "core/common/memory.hpp"
 #include "core/events/all.hpp"
-#include "core/fwd.hpp"
+#include "core/model.hpp"
+#include "core/utils/texture_manager.hpp"
 #include "editor/loop.hpp"
 
 namespace tactile {
 
+class ADocument;
+class MapDocument;
+class TilesetDocument;
 class AppConfiguration;
+
+/// Tracks visibility of widgets for the "Toggle UI" feature.
+struct WidgetShowState final
+{
+  bool prev_show_layer_dock : 1 {};
+  bool prev_show_tileset_dock : 1 {};
+  bool prev_show_property_dock : 1 {};
+  bool prev_show_log_dock : 1 {};
+  bool prev_show_component_dock : 1 {};
+};
 
 /// The heart of the Tactile map editor.
 class App final : AEventLoop
@@ -53,16 +66,18 @@ class App final : AEventLoop
   void on_event(const cen::event_handler& handler) override;
 
  private:
-  struct Data;
-  Unique<Data> mData;
+  AppConfiguration* mConfig{}; /* Non-owning */
+  entt::dispatcher  mDispatcher;
+  DocumentModel     mModel;
+  TextureManager    mTextures;
+  WidgetShowState   mWidgetShowState;
+  bool              mReloadFonts : 1 {};
 
   [[nodiscard]] auto active_document() -> ADocument*;
   [[nodiscard]] auto active_map_document() -> MapDocument*;
   [[nodiscard]] auto active_tileset_document() -> TilesetDocument*;
 
   void subscribe_to_events();
-
-  [[nodiscard]] auto get_dispatcher() -> entt::dispatcher&;
 
   void save_current_files_to_history();
 

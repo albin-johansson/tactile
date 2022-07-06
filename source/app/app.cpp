@@ -35,10 +35,8 @@
 #include "core/events/misc_events.hpp"
 #include "core/events/tileset_events.hpp"
 #include "core/events/viewport_events.hpp"
-#include "core/model.hpp"
 #include "core/tilesets/tileset_info.hpp"
 #include "core/tools/tool_manager.hpp"
-#include "core/utils/texture_manager.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "editor/ui/dialogs/save_as_dialog.hpp"
@@ -65,37 +63,15 @@
 
 namespace tactile {
 
-/// Tracks visibility of widgets for the "Toggle UI" feature.
-struct WidgetShowState final
+App::App(AppConfiguration* configuration) : AEventLoop{configuration}
 {
-  bool prev_show_layer_dock : 1 {};
-  bool prev_show_tileset_dock : 1 {};
-  bool prev_show_property_dock : 1 {};
-  bool prev_show_log_dock : 1 {};
-  bool prev_show_component_dock : 1 {};
-};
-
-struct App::Data final
-{
-  AppConfiguration* config{}; /* Non-owning */
-  entt::dispatcher  dispatcher;
-  DocumentModel     model;
-  TextureManager    textures;
-  WidgetShowState   widget_show_state;
-  bool              reload_fonts : 1 {};
-};
-
-App::App(AppConfiguration* configuration)
-    : AEventLoop{configuration}
-    , mData{std::make_unique<Data>()}
-{
-  mData->config = configuration;
+  mConfig = configuration;
 
   subscribe_to_events();
   load_default_shortcuts();
 
   ui::init_dialogs();
-  ui::load_icons(mData->textures);
+  ui::load_icons(mTextures);
 }
 
 App::~App() noexcept = default;
@@ -105,10 +81,10 @@ void App::on_startup()
   io::load_file_history();
 
   if (io::get_preferences().will_restore_last_session()) {
-    io::restore_last_session(mData->model, mData->textures);
+    io::restore_last_session(mModel, mTextures);
   }
 
-  auto& window = mData->config->window();
+  auto& window = mConfig->window();
   window.show();
 }
 
@@ -116,27 +92,26 @@ void App::on_shutdown()
 {
   save_current_files_to_history();
   io::save_preferences();
-  io::save_session(mData->model);
+  io::save_session(mModel);
   io::save_file_history();
 
-  auto& window = mData->config->window();
+  auto& window = mConfig->window();
   window.hide();
 }
 
 void App::on_pre_update()
 {
-  if (mData->reload_fonts) {
+  if (mReloadFonts) {
     ui::reload_fonts();
-    mData->reload_fonts = false;
+    mReloadFonts = false;
   }
 }
 
 void App::on_update()
 {
-  auto& data = *mData;
-  data.dispatcher.update();
-  data.model.update();
-  ui::update_widgets(data.model, data.dispatcher);
+  mDispatcher.update();
+  mModel.update();
+  ui::update_widgets(mModel, mDispatcher);
 }
 
 void App::on_event(const cen::event_handler& handler)
@@ -159,23 +134,23 @@ void App::on_event(const cen::event_handler& handler)
 
 auto App::active_document() -> ADocument*
 {
-  return mData->model.active_document();
+  return mModel.active_document();
 }
 
 auto App::active_map_document() -> MapDocument*
 {
-  return mData->model.active_map();
+  return mModel.active_map();
 }
 
 auto App::active_tileset_document() -> TilesetDocument*
 {
-  return mData->model.active_tileset();
+  return mModel.active_tileset();
 }
 
 void App::subscribe_to_events()
 {
   // clang-format off
-  auto& d = get_dispatcher();
+  auto& d = mDispatcher;
 
   d.sink<UndoEvent>().connect<&App::on_undo>(this);
   d.sink<RedoEvent>().connect<&App::on_redo>(this);
@@ -296,15 +271,10 @@ void App::subscribe_to_events()
   // clang-format on
 }
 
-auto App::get_dispatcher() -> entt::dispatcher&
-{
-  return mData->dispatcher;
-}
-
 void App::save_current_files_to_history()
 {
-  mData->model.each([this](const UUID& id) {
-    const auto document = mData->model.get_document(id);
+  mModel.each([this](const UUID& id) {
+    const auto document = mModel.get_document(id);
     if (document->is_map() && document->has_path()) {
       io::add_file_to_history(document->get_path());
     }
@@ -318,8 +288,7 @@ void App::on_keyboard_event(cen::keyboard_event event)
   event.set_modifier(cen::key_mod::num, false);
   event.set_modifier(cen::key_mod::mode, false);
 
-  auto& data = *mData;
-  update_shortcuts(data.model, event, data.dispatcher);
+  update_shortcuts(mModel, event, mDispatcher);
 }
 
 void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
@@ -332,18 +301,18 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
   if (document && !ImGui::GetTopMostPopupModal()) {
     if (ui::is_mouse_within_viewport()) {
       ui::viewport_widget_mouse_wheel_event_handler(document->get_viewport(),
-                                                    mData->dispatcher,
+                                                    mDispatcher,
                                                     event);
     }
     else if (document->is_map() && ui::is_tileset_dock_hovered()) {
-      const auto& mapDocument = mData->model.require_active_map();
+      const auto& mapDocument = mModel.require_active_map();
 
       const auto& map = mapDocument.get_map();
       const auto& tilesets = map.get_tilesets();
 
       if (const auto tilesetId = tilesets.active_tileset_id()) {
         const auto& tilesetRef = tilesets.get_ref(*tilesetId);
-        ui::tileset_dock_mouse_wheel_event_handler(tilesetRef, event, mData->dispatcher);
+        ui::tileset_dock_mouse_wheel_event_handler(tilesetRef, event, mDispatcher);
       }
     }
   }
@@ -367,7 +336,7 @@ void App::on_redo()
 
 void App::on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
-  mData->model.set_command_capacity(event.capacity);
+  mModel.set_command_capacity(event.capacity);
 }
 
 void App::on_save()
@@ -397,7 +366,7 @@ void App::on_save_as(const SaveAsEvent& event)
 void App::on_open_save_as_dialog()
 {
   if (active_document() != nullptr) {
-    ui::show_save_as_dialog(mData->dispatcher);
+    ui::show_save_as_dialog(mDispatcher);
   }
 }
 
@@ -417,39 +386,39 @@ void App::on_inspect_tileset()
 
 void App::on_create_map(const CreateMapEvent& event)
 {
-  const auto id = mData->model.add_map({event.tile_width, event.tile_height},
-                                       event.row_count,
-                                       event.column_count);
-  mData->model.select_document(id);
+  const auto id = mModel.add_map({event.tile_width, event.tile_height},
+                                 event.row_count,
+                                 event.column_count);
+  mModel.select_document(id);
 }
 
 void App::on_close_document(const CloseDocumentEvent& event)
 {
-  const auto document = mData->model.get_document(event.id);
+  const auto document = mModel.get_document(event.id);
 
   if (document->is_map() && document->has_path()) {
     io::set_last_closed_file(document->get_path());
   }
 
-  mData->model.close_document(event.id);
+  mModel.close_document(event.id);
 }
 
 void App::on_open_document(const OpenDocumentEvent& event)
 {
-  mData->model.open_document(event.document_id);
+  mModel.open_document(event.document_id);
 }
 
 // TODO consider renaming event (when standalone tileset documents can be parsed)
 void App::on_open_map(const OpenMapEvent& event)
 {
-  if (mData->model.has_document_with_path(event.path)) {
-    const auto id = mData->model.get_id_for_path(event.path);
+  if (mModel.has_document_with_path(event.path)) {
+    const auto id = mModel.get_id_for_path(event.path);
 
-    if (mData->model.is_open(id)) {
+    if (mModel.is_open(id)) {
       spdlog::warn("Tried to open map that was already open!");
     }
     else {
-      mData->model.open_document(id);
+      mModel.open_document(id);
     }
 
     return;
@@ -457,7 +426,7 @@ void App::on_open_map(const OpenMapEvent& event)
 
   const auto ir = io::parse_map(event.path);
   if (ir.error() == io::ParseError::None) {
-    restore_map_from_ir(ir, mData->model, mData->textures);
+    restore_map_from_ir(ir, mModel, mTextures);
     io::add_file_to_history(event.path);
   }
   else {
@@ -467,14 +436,14 @@ void App::on_open_map(const OpenMapEvent& event)
 
 void App::on_select_document(const SelectDocumentEvent& event)
 {
-  mData->model.select_document(event.id);
+  mModel.select_document(event.id);
 }
 
 void App::on_select_tool(const SelectToolEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
-    tools.select_tool(event.type, mData->model, mData->dispatcher);
+    tools.select_tool(event.type, mModel, mDispatcher);
   }
 }
 
@@ -482,7 +451,7 @@ void App::on_tool_pressed(const ToolPressedEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
-    tools.on_pressed(mData->model, mData->dispatcher, event.info);
+    tools.on_pressed(mModel, mDispatcher, event.info);
   }
 }
 
@@ -490,7 +459,7 @@ void App::on_tool_dragged(const ToolDraggedEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
-    tools.on_dragged(mData->model, mData->dispatcher, event.info);
+    tools.on_dragged(mModel, mDispatcher, event.info);
   }
 }
 
@@ -498,7 +467,7 @@ void App::on_tool_released(const ToolReleasedEvent& event)
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
-    tools.on_released(mData->model, mData->dispatcher, event.info);
+    tools.on_released(mModel, mDispatcher, event.info);
   }
 }
 
@@ -506,7 +475,7 @@ void App::on_tool_entered()
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
-    tools.on_entered(mData->model, mData->dispatcher);
+    tools.on_entered(mModel, mDispatcher);
   }
 }
 
@@ -514,7 +483,7 @@ void App::on_tool_exited()
 {
   if (auto* document = active_map_document()) {
     auto& tools = document->get_tools();
-    tools.on_exited(mData->model, mData->dispatcher);
+    tools.on_exited(mModel, mDispatcher);
   }
 }
 
@@ -658,7 +627,7 @@ void App::on_reset_zoom()
 void App::on_reset_font_size()
 {
   io::get_preferences().set_font_size(ui::get_default_font_size());
-  mData->reload_fonts = true;
+  mReloadFonts = true;
 }
 
 void App::on_increase_font_size()
@@ -668,7 +637,7 @@ void App::on_increase_font_size()
   TACTILE_ASSERT(prefs.font_size() + 2 <= ui::get_max_font_size());
   prefs.set_font_size(prefs.font_size() + 2);
 
-  mData->reload_fonts = true;
+  mReloadFonts = true;
 }
 
 void App::on_decrease_font_size()
@@ -678,16 +647,16 @@ void App::on_decrease_font_size()
   TACTILE_ASSERT(prefs.font_size() - 2 >= ui::get_min_font_size());
   prefs.set_font_size(prefs.font_size() - 2);
 
-  mData->reload_fonts = true;
+  mReloadFonts = true;
 }
 
 void App::on_load_tileset(const LoadTilesetEvent& event)
 {
-  if (auto info = mData->textures.load(event.path)) {
-    mData->model.add_tileset({.texture_path = info->path,
-                              .texture_id = info->id,
-                              .texture_size = info->size,
-                              .tile_size = event.tile_size});
+  if (auto info = mTextures.load(event.path)) {
+    mModel.add_tileset({.texture_path = info->path,
+                        .texture_id = info->id,
+                        .texture_size = info->size,
+                        .tile_size = event.tile_size});
   }
   else {
     spdlog::error("Failed to load tileset texture!");
@@ -696,7 +665,7 @@ void App::on_load_tileset(const LoadTilesetEvent& event)
 
 void App::on_remove_tileset(const RemoveTilesetEvent& event)
 {
-  mData->model.remove_tileset(event.tileset_id);
+  mModel.remove_tileset(event.tileset_id);
 }
 
 void App::on_select_tileset(const SelectTilesetEvent& event)
@@ -721,7 +690,7 @@ void App::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
 
 void App::on_rename_tileset(const RenameTilesetEvent& event)
 {
-  auto document = mData->model.get_tileset(event.tileset_id);
+  auto document = mModel.get_tileset(event.tileset_id);
   document->rename_tileset(event.name);
 }
 
@@ -948,7 +917,7 @@ void App::on_inspect_context(const InspectContextEvent& event)
 
 void App::on_open_component_editor()
 {
-  ui::show_component_editor(mData->model);
+  ui::show_component_editor(mModel);
 }
 
 void App::on_define_component(const DefineComponentEvent& event)
@@ -1058,14 +1027,13 @@ void App::on_toggle_ui()
   static bool show = false;
 
   auto& prefs = io::get_preferences();
-  auto& state = mData->widget_show_state;
 
   if (!show) {
-    state.prev_show_layer_dock = prefs.is_layer_dock_visible();
-    state.prev_show_tileset_dock = prefs.is_tileset_dock_visible();
-    state.prev_show_property_dock = prefs.is_property_dock_visible();
-    state.prev_show_log_dock = prefs.is_log_dock_visible();
-    state.prev_show_component_dock = prefs.is_component_dock_visible();
+    mWidgetShowState.prev_show_layer_dock = prefs.is_layer_dock_visible();
+    mWidgetShowState.prev_show_tileset_dock = prefs.is_tileset_dock_visible();
+    mWidgetShowState.prev_show_property_dock = prefs.is_property_dock_visible();
+    mWidgetShowState.prev_show_log_dock = prefs.is_log_dock_visible();
+    mWidgetShowState.prev_show_component_dock = prefs.is_component_dock_visible();
   }
 
   prefs.set_layer_dock_visible(show);
@@ -1075,11 +1043,11 @@ void App::on_toggle_ui()
   prefs.set_log_dock_visible(show);
 
   if (show) {
-    prefs.set_layer_dock_visible(state.prev_show_layer_dock);
-    prefs.set_tileset_dock_visible(state.prev_show_tileset_dock);
-    prefs.set_property_dock_visible(state.prev_show_property_dock);
-    prefs.set_log_dock_visible(state.prev_show_log_dock);
-    prefs.set_component_dock_visible(state.prev_show_component_dock);
+    prefs.set_layer_dock_visible(mWidgetShowState.prev_show_layer_dock);
+    prefs.set_tileset_dock_visible(mWidgetShowState.prev_show_tileset_dock);
+    prefs.set_property_dock_visible(mWidgetShowState.prev_show_property_dock);
+    prefs.set_log_dock_visible(mWidgetShowState.prev_show_log_dock);
+    prefs.set_component_dock_visible(mWidgetShowState.prev_show_component_dock);
   }
 
   show = !show;
@@ -1087,7 +1055,7 @@ void App::on_toggle_ui()
 
 void App::on_reload_fonts()
 {
-  mData->reload_fonts = true;
+  mReloadFonts = true;
 }
 
 void App::on_quit()
