@@ -21,6 +21,8 @@
 
 #include <gtest/gtest.h>
 
+#include "core/common/functional.hpp"
+
 using namespace tactile;
 
 // TODO zoom_in, zoom_out
@@ -33,8 +35,8 @@ TEST(Viewport, Defaults)
   ASSERT_EQ(0, viewport.get_offset().x);
   ASSERT_EQ(0, viewport.get_offset().y);
 
-  ASSERT_EQ(32, viewport.get_cell_size().x);
-  ASSERT_EQ(32, viewport.get_cell_size().y);
+  ASSERT_EQ(32, viewport.get_tile_size().x);
+  ASSERT_EQ(32, viewport.get_tile_size().y);
 }
 
 TEST(Viewport, ResetLimits)
@@ -62,7 +64,7 @@ TEST(Viewport, PanLeft)
   Viewport viewport;
 
   viewport.pan_left();
-  ASSERT_EQ(viewport.get_cell_size().x, viewport.get_offset().x);
+  ASSERT_EQ(viewport.get_tile_size().x, viewport.get_offset().x);
   ASSERT_EQ(0, viewport.get_offset().y);
 }
 
@@ -71,7 +73,7 @@ TEST(Viewport, PanRight)
   Viewport viewport;
 
   viewport.pan_right();
-  ASSERT_EQ(-viewport.get_cell_size().x, viewport.get_offset().x);
+  ASSERT_EQ(-viewport.get_tile_size().x, viewport.get_offset().x);
   ASSERT_EQ(0, viewport.get_offset().y);
 }
 
@@ -81,7 +83,7 @@ TEST(Viewport, PanUp)
 
   viewport.pan_up();
   ASSERT_EQ(0, viewport.get_offset().x);
-  ASSERT_EQ(viewport.get_cell_size().y, viewport.get_offset().y);
+  ASSERT_EQ(viewport.get_tile_size().y, viewport.get_offset().y);
 }
 
 TEST(Viewport, PanDown)
@@ -90,7 +92,7 @@ TEST(Viewport, PanDown)
 
   viewport.pan_down();
   ASSERT_EQ(0, viewport.get_offset().x);
-  ASSERT_EQ(-viewport.get_cell_size().y, viewport.get_offset().y);
+  ASSERT_EQ(-viewport.get_tile_size().y, viewport.get_offset().y);
 }
 
 TEST(Viewport, PanningInOppositeDirectionsShouldCancel)
@@ -108,13 +110,13 @@ TEST(Viewport, PanningInOppositeDirectionsShouldCancel)
   ASSERT_EQ(0, viewport.get_offset().y);
 }
 
-TEST(Viewport, SetCellSize)
+TEST(Viewport, SetTileSize)
 {
   Viewport viewport;
 
-  viewport.set_cell_size({93, 24});
-  ASSERT_EQ(93, viewport.get_cell_size().x);
-  ASSERT_EQ(24, viewport.get_cell_size().y);
+  viewport.set_tile_size({93, 24});
+  ASSERT_EQ(93, viewport.get_tile_size().x);
+  ASSERT_EQ(24, viewport.get_tile_size().y);
 }
 
 TEST(Viewport, SetLimits)

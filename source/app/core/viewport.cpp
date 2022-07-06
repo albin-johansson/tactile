@@ -45,11 +45,6 @@ void Viewport::reset_limits()
   mLimits.reset();
 }
 
-void Viewport::reset_zoom()
-{
-  mCellSize = {64, 64};  // TODO
-}
-
 void Viewport::offset(const Vector2f& delta)
 {
   mOffset += delta;
@@ -62,54 +57,54 @@ void Viewport::offset(const Vector2f& delta)
 
 void Viewport::pan_left()
 {
-  mOffset.x += mCellSize.x;
+  mOffset.x += mTileSize.x;
 }
 
 void Viewport::pan_right()
 {
-  mOffset.x -= mCellSize.x;
+  mOffset.x -= mTileSize.x;
 }
 
 void Viewport::pan_up()
 {
-  mOffset.y += mCellSize.y;
+  mOffset.y += mTileSize.y;
 }
 
 void Viewport::pan_down()
 {
-  mOffset.y -= mCellSize.y;
+  mOffset.y -= mTileSize.y;
 }
 
 void Viewport::zoom_in(const Vector2f& anchor)
 {
-  // Percentages of map to the left of and above the cursor
-  const auto percentage = (anchor - mOffset) / mCellSize;
+  // Percentages of area to the left of and above the cursor
+  const auto percentage = (anchor - mOffset) / mTileSize;
 
-  mCellSize += _viewport_offset_delta(mCellSize.x, mCellSize.x / mCellSize.y);
-  mOffset = anchor - (percentage * mCellSize);
+  mTileSize += _viewport_offset_delta(mTileSize.x, mTileSize.x / mTileSize.y);
+  mOffset = anchor - (percentage * mTileSize);
 }
 
 void Viewport::zoom_out(const Vector2f& anchor)
 {
-  // Percentages of map to the left of and above the cursor
-  const auto percentage = (anchor - mOffset) / mCellSize;
+  // Percentages of area to the left of and above the cursor
+  const auto percentage = (anchor - mOffset) / mTileSize;
 
   {
-    const auto ratio = mCellSize.x / mCellSize.y;
-    mCellSize -= _viewport_offset_delta(mCellSize.x, ratio);
+    const auto ratio = mTileSize.x / mTileSize.y;
+    mTileSize -= _viewport_offset_delta(mTileSize.x, ratio);
 
     const Vector2f minimum{_min_tile_height * ratio, _min_tile_height};
-    mCellSize = (glm::max)(minimum, mCellSize);
+    mTileSize = (glm::max)(minimum, mTileSize);
   }
 
-  mOffset = anchor - (percentage * mCellSize);
+  mOffset = anchor - (percentage * mTileSize);
 }
 
-void Viewport::set_cell_size(const Vector2f& size)
+void Viewport::set_tile_size(const Vector2f& size)
 {
   TACTILE_ASSERT(size.x > 0);
   TACTILE_ASSERT(size.y > 0);
-  mCellSize = size;
+  mTileSize = size;
 }
 
 void Viewport::set_limits(const ViewportLimits& limits)
@@ -119,12 +114,12 @@ void Viewport::set_limits(const ViewportLimits& limits)
 
 auto Viewport::can_zoom_out() const -> bool
 {
-  return mCellSize.y > _min_tile_height;
+  return mTileSize.y > _min_tile_height;
 }
 
 auto Viewport::get_scaling_ratio(const Vector2f& tileSize) const -> Vector2f
 {
-  return mCellSize / tileSize;
+  return mTileSize / tileSize;
 }
 
 }  // namespace tactile

@@ -68,7 +68,7 @@ namespace {
   info.origin = info.canvas_tl + ImVec2{viewport.get_offset().x, viewport.get_offset().y};
 
   info.tile_size = logicalTileSize;
-  info.grid_size = {viewport.get_cell_size().x, viewport.get_cell_size().y};
+  info.grid_size = {viewport.get_tile_size().x, viewport.get_tile_size().y};
   info.ratio = info.grid_size / info.tile_size;
 
   info.row_count = static_cast<float>(rows);

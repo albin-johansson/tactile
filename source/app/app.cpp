@@ -649,7 +649,7 @@ void App::on_reset_zoom()
 {
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
-    viewport.reset_zoom();
+    viewport.set_tile_size({64, 64});
   }
 }
 
