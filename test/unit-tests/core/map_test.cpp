@@ -28,7 +28,7 @@
 #include "core/tilesets/tileset.hpp"
 #include "core/tilesets/tileset_info.hpp"
 #include "misc/panic.hpp"
-#include "unit-tests/app/core/helpers/map_builder.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
 
 using namespace tactile;
 

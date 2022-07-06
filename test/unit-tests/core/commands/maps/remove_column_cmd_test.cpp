@@ -22,8 +22,8 @@
 #include <gtest/gtest.h>
 
 #include "misc/panic.hpp"
-#include "unit-tests/app/core/helpers/map_builder.hpp"
-#include "unit-tests/app/core/helpers/map_test_helpers.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
+#include "unit-tests/core/helpers/map_test_helpers.hpp"
 
 using namespace tactile;
 
