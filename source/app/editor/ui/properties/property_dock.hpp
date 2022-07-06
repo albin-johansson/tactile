@@ -19,23 +19,13 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <entt/fwd.hpp>
 
-#include "core/attribute.hpp"
-#include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
 namespace tactile::ui {
 
 void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-void show_property_creation_dialog(const UUID& contextId);
-
-void show_rename_property_dialog(const std::string& name);
-
-void show_change_property_type_dialog(std::string name, AttributeType type);
 
 [[nodiscard]] auto is_property_dock_focused() -> bool;
 

@@ -19,6 +19,8 @@
 
 #include "rename_property_dialog.hpp"
 
+#include <utility>  // move
+
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/contexts/context.hpp"
@@ -33,9 +35,18 @@ RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog{"Rename Proper
   set_accept_button_label("Rename");
 }
 
+void RenamePropertyDialog::open(const UUID& contextId, std::string previousName)
+{
+  mContextId = contextId;
+  show(std::move(previousName));
+}
+
 void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  // TODO dispatcher.enqueue<RenamePropertyEvent>(previous_input(), std::string{current_input()});
+  dispatcher.enqueue<RenamePropertyEvent>(mContextId.value(),
+                                          previous_input(),
+                                          std::string{current_input()});
+  mContextId.reset();
 }
 
 auto RenamePropertyDialog::validate(const DocumentModel& model,

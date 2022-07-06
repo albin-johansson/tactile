@@ -39,7 +39,7 @@ struct ShowChangePropertyTypeDialogEvent final
 
 struct ShowRenamePropertyDialogEvent final
 {
-  std::string name;
+  std::string current_name;
 };
 
 struct AddPropertyEvent final

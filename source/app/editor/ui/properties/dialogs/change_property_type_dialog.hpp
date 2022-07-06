@@ -24,6 +24,7 @@
 #include "core/attribute.hpp"
 #include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
 namespace tactile::ui {
@@ -38,7 +39,7 @@ class ChangePropertyTypeDialog final : public ADialog
 
   ~ChangePropertyTypeDialog() override = default;
 
-  void show(std::string name, AttributeType type);
+  void show(const UUID& contextId, std::string name, AttributeType type);
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
@@ -49,6 +50,7 @@ class ChangePropertyTypeDialog final : public ADialog
       -> bool override;
 
  private:
+  Maybe<UUID>          mContextId;
   AttributeType        mCurrentType{AttributeType::String};
   Maybe<std::string>   mPropertyName;
   Maybe<AttributeType> mPreviousType;

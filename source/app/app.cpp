@@ -879,19 +879,27 @@ void App::on_show_add_property_dialog()
 {
   if (auto* document = active_document()) {
     const auto& contextId = document->active_context_id();
-    ui::show_property_creation_dialog(contextId);
+    ui::get_dialogs().add_property.open(contextId);
   }
 }
 
 void App::on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)
 {
-  ui::show_rename_property_dialog(event.name);
+  if (const auto* document = active_document()) {
+    const auto& contextId = document->active_context_id();
+    ui::get_dialogs().rename_property.open(contextId, event.current_name);
+  }
 }
 
 void App::on_show_change_property_type_dialog(
     const ShowChangePropertyTypeDialogEvent& event)
 {
-  ui::show_change_property_type_dialog(event.name, event.current_type);
+  if (const auto* document = active_document()) {
+    const auto& contextId = document->active_context_id();
+    ui::get_dialogs().change_property_type.show(contextId,
+                                                event.name,
+                                                event.current_type);
+  }
 }
 
 void App::on_add_property(const AddPropertyEvent& event)

@@ -25,8 +25,7 @@
 #include <imgui.h>
 
 #include "core/events/property_events.hpp"
-#include "editor/ui/common/buttons.hpp"
-#include "property_type_combo.hpp"
+#include "editor/ui/properties/dialogs/property_type_combo.hpp"
 
 namespace tactile::ui {
 
@@ -35,8 +34,11 @@ ChangePropertyTypeDialog::ChangePropertyTypeDialog() : ADialog{"Change Property 
   set_accept_button_label("Change");
 }
 
-void ChangePropertyTypeDialog::show(std::string name, const AttributeType type)
+void ChangePropertyTypeDialog::show(const UUID&         contextId,
+                                    std::string         name,
+                                    const AttributeType type)
 {
+  mContextId = contextId;
   mPropertyName = std::move(name);
   mCurrentType = type;
   mPreviousType = type;
@@ -54,7 +56,10 @@ void ChangePropertyTypeDialog::on_update(const DocumentModel&, entt::dispatcher&
 
 void ChangePropertyTypeDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  // TODO dispatcher.enqueue<ChangePropertyTypeEvent>(mPropertyName.value(), mCurrentType);
+  dispatcher.enqueue<ChangePropertyTypeEvent>(mContextId.value(),
+                                              mPropertyName.value(),
+                                              mCurrentType);
+  mContextId.reset();
 }
 
 auto ChangePropertyTypeDialog::is_current_input_valid(const DocumentModel&) const -> bool

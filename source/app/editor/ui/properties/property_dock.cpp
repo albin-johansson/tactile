@@ -38,19 +38,14 @@
 #include "core/map.hpp"
 #include "core/model.hpp"
 #include "core/tilesets/tileset.hpp"
-#include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/filename_filter.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/icons.hpp"
-#include "editor/ui/properties/dialogs/add_property_dialog.hpp"
-#include "editor/ui/properties/dialogs/change_property_type_dialog.hpp"
-#include "editor/ui/properties/dialogs/rename_property_dialog.hpp"
 #include "editor/ui/properties/items/property_item_context_menu.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "io/persistence/preferences.hpp"
-#include "meta/build.hpp"
 
 using namespace tactile;
 
@@ -415,21 +410,6 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
   }
 
   prefs.set_property_dock_visible(visible);
-}
-
-void show_property_creation_dialog(const UUID& contextId)
-{
-  get_dialogs().add_property.open(contextId);
-}
-
-void show_rename_property_dialog(const std::string& name)
-{
-  get_dialogs().rename_property.show(name);
-}
-
-void show_change_property_type_dialog(std::string name, const AttributeType type)
-{
-  get_dialogs().change_property_type.show(std::move(name), type);
 }
 
 auto is_property_dock_focused() -> bool

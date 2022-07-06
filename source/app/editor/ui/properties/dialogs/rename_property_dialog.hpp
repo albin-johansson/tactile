@@ -19,7 +19,11 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include "core/common/macros.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "editor/ui/dialogs/string_input_dialog.hpp"
 
 namespace tactile::ui {
@@ -34,11 +38,18 @@ class RenamePropertyDialog final : public AStringInputDialog
 
   ~RenamePropertyDialog() override = default;
 
+  void open(const UUID& contextId, std::string previousName);
+
  protected:
+  using AStringInputDialog::show;
+
   void on_accept(entt::dispatcher& dispatcher) override;
 
   [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
       -> bool override;
+
+ private:
+  Maybe<UUID> mContextId;
 };
 
 }  // namespace tactile::ui
