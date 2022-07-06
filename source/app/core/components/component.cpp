@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "misc/panic.hpp"
+
 namespace tactile {
 
 Component::Component(const UUID& definitionId, AttributeMap attributes)
@@ -30,7 +32,12 @@ Component::Component(const UUID& definitionId, AttributeMap attributes)
 
 void Component::add_attr(std::string key, Attribute value)
 {
-  mAttributes[std::move(key)] = std::move(value);
+  if (!mAttributes.contains(key)) {
+    mAttributes[std::move(key)] = std::move(value);
+  }
+  else {
+    throw TactileError{"Attribute already exists!"};
+  }
 }
 
 void Component::remove_attr(std::string_view key)
@@ -39,7 +46,7 @@ void Component::remove_attr(std::string_view key)
     mAttributes.erase(iter);
   }
   else {
-    // TODO
+    throw TactileError{"Invalid attribute name!"};
   }
 }
 
