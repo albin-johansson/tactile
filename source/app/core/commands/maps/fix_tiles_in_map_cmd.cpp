@@ -19,25 +19,24 @@
 
 #include "fix_tiles_in_map_cmd.hpp"
 
-#include "core/documents/map_document.hpp"
+#include <utility>  // move
+
 #include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-FixTilesInMapCmd::FixTilesInMapCmd(MapDocument* document) : mDocument{document}
+FixTilesInMapCmd::FixTilesInMapCmd(Shared<Map> map) : mMap{std::move(map)}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
   }
 }
 
 void FixTilesInMapCmd::undo()
 {
-  auto& map = mDocument->get_map();
-
   for (const auto& [layerId, previous] : mResult) {
-    auto& layer = map.view_tile_layer(layerId);
+    auto& layer = mMap->view_tile_layer(layerId);
 
     for (const auto& [pos, tile] : previous) {
       layer.set_tile(pos, tile);
@@ -49,8 +48,7 @@ void FixTilesInMapCmd::undo()
 
 void FixTilesInMapCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  mResult = map.fix_tiles();
+  mResult = mMap->fix_tiles();
 }
 
 auto FixTilesInMapCmd::get_name() const -> const char*

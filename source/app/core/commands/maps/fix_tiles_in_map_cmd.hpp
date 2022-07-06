@@ -20,8 +20,7 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/common/memory.hpp"
 #include "core/map.hpp"
 
 namespace tactile {
@@ -29,7 +28,7 @@ namespace tactile {
 class FixTilesInMapCmd final : public ICommand
 {
  public:
-  explicit FixTilesInMapCmd(MapDocument* document);
+  explicit FixTilesInMapCmd(Shared<Map> map);
 
   void undo() override;
 
@@ -38,7 +37,7 @@ class FixTilesInMapCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*        mDocument{};
+  Shared<Map>         mMap;
   Map::FixTilesResult mResult;
 };
 
