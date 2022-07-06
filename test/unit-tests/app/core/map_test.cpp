@@ -28,6 +28,7 @@
 #include "core/tilesets/tileset.hpp"
 #include "core/tilesets/tileset_info.hpp"
 #include "misc/panic.hpp"
+#include "unit-tests/app/core/helpers/map_builder.hpp"
 
 using namespace tactile;
 
@@ -160,18 +161,17 @@ TEST(Map, Resize)
   ASSERT_EQ(8, preset.map.row_count());
   ASSERT_EQ(3, preset.map.column_count());
 
-  auto* layer = preset.map.find_tile_layer(preset.f);
-  ASSERT_NE(nullptr, layer);
-  ASSERT_EQ(8, layer->row_count());
-  ASSERT_EQ(3, layer->column_count());
+  auto& layer = preset.map.view_tile_layer(preset.f);
+  ASSERT_EQ(8, layer.row_count());
+  ASSERT_EQ(3, layer.column_count());
 
   preset.map.resize(1, 1);
 
   ASSERT_EQ(1, preset.map.row_count());
   ASSERT_EQ(1, preset.map.column_count());
 
-  ASSERT_EQ(1, layer->row_count());
-  ASSERT_EQ(1, layer->column_count());
+  ASSERT_EQ(1, layer.row_count());
+  ASSERT_EQ(1, layer.column_count());
 
   ASSERT_THROW(preset.map.resize(0, 1), TactileError);
   ASSERT_THROW(preset.map.resize(1, 0), TactileError);
@@ -179,20 +179,16 @@ TEST(Map, Resize)
 
 TEST(Map, FixTiles)
 {
-  Map map;
+  UUID layerId;
+  UUID tilesetId;
 
-  auto tileset = std::make_shared<Tileset>(TilesetInfo{
-      .texture_path = "foo.png",
-      .texture_id = 9,
-      .texture_size = {1024, 1024},
-      .tile_size = {32, 32},
-  });
+  auto map = test::MapBuilder::build()  //
+                 .with_tile_layer(&layerId)
+                 .with_tileset(&tilesetId)
+                 .result();
 
-  map.attach_tileset(tileset, false);
-  const auto& tilesetRef = map.get_tilesets().get_ref(tileset->get_uuid());
-
-  const auto layerId = map.add_tile_layer();
-  auto&      layer = map.view_tile_layer(layerId);
+  const auto& tilesetRef = map->get_tilesets().get_ref(tilesetId);
+  auto&       layer = map->view_tile_layer(layerId);
 
   // Valid
   layer.set_tile({0, 1}, tilesetRef.first_tile());
@@ -205,7 +201,7 @@ TEST(Map, FixTiles)
   layer.set_tile({3, 2}, tilesetRef.last_tile() + 934);
   layer.set_tile({4, 4}, tilesetRef.first_tile() - 32);
 
-  const auto  result = map.fix_tiles();
+  const auto  result = map->fix_tiles();
   const auto& previous = lookup_in(result, layerId);
 
   ASSERT_EQ(4, previous.size());
@@ -300,14 +296,13 @@ TEST(Map, AddObjectLayer)
   const auto parent = map.add_group_layer();
 
   const auto  id = map.add_object_layer(parent);
-  const auto* layer = map.find_object_layer(id);
+  const auto& layer = map.view_object_layer(id);
 
-  ASSERT_NE(nullptr, layer);
   ASSERT_EQ(nullptr, map.find_tile_layer(id));
   ASSERT_EQ(nullptr, map.find_group_layer(id));
   ASSERT_EQ(2, map.layer_count());
 
-  ASSERT_EQ(parent, layer->get_parent());
+  ASSERT_EQ(parent, layer.get_parent());
 }
 
 TEST(Map, AddGroupLayer)
@@ -315,14 +310,13 @@ TEST(Map, AddGroupLayer)
   Map map;
 
   const auto  id = map.add_group_layer();
-  const auto* layer = map.find_group_layer(id);
+  const auto& layer = map.view_group_layer(id);
 
-  ASSERT_NE(nullptr, layer);
   ASSERT_EQ(nullptr, map.find_tile_layer(id));
   ASSERT_EQ(nullptr, map.find_object_layer(id));
   ASSERT_EQ(1, map.layer_count());
 
-  ASSERT_EQ(0, layer->layer_count());
+  ASSERT_EQ(0, layer.layer_count());
 }
 
 TEST(Map, RemoveLayer)

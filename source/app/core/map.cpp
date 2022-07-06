@@ -322,6 +322,11 @@ auto Map::view_object_layer(const UUID& id) const -> const ObjectLayer&
   return mRootLayer.view_object_layer(id);
 }
 
+auto Map::view_group_layer(const UUID& id) -> GroupLayer&
+{
+  return mRootLayer.view_group_layer(id);
+}
+
 auto Map::find_tile_layer(const UUID& id) -> TileLayer*
 {
   return mRootLayer.find_tile_layer(id);

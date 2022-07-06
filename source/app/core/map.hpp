@@ -31,7 +31,6 @@
 #include "core/components/component_bundle.hpp"
 #include "core/contexts/context.hpp"
 #include "core/contexts/context_delegate.hpp"
-#include "core/fwd.hpp"
 #include "core/layers/group_layer.hpp"
 #include "core/property_bundle.hpp"
 #include "core/tile_pos.hpp"
@@ -99,6 +98,8 @@ class Map final : public IContext
 
   [[nodiscard]] auto view_object_layer(const UUID& id) -> ObjectLayer&;
   [[nodiscard]] auto view_object_layer(const UUID& id) const -> const ObjectLayer&;
+
+  [[nodiscard]] auto view_group_layer(const UUID& id) -> GroupLayer&;
 
   [[nodiscard]] auto find_tile_layer(const UUID& id) -> TileLayer*;
   [[nodiscard]] auto find_tile_layer(const UUID& id) const -> const TileLayer*;
