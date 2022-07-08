@@ -20,17 +20,17 @@
 #pragma once
 
 #include "core/commands/command.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/map.hpp"
 
 namespace tactile {
 
 class SetLayerVisibilityCmd final : public ICommand
 {
  public:
-  SetLayerVisibilityCmd(MapDocument* document, const UUID& layerId, bool visible);
+  SetLayerVisibilityCmd(Shared<Map> map, const UUID& layerId, bool visible);
 
   void undo() override;
 
@@ -39,10 +39,10 @@ class SetLayerVisibilityCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  UUID         mLayerId{};
-  bool         mVisible{};
-  Maybe<bool>  mPreviousVisibility;
+  Shared<Map> mMap;
+  UUID        mLayerId{};
+  bool        mNewVisibility{};
+  Maybe<bool> mOldVisibility;
 };
 
 }  // namespace tactile

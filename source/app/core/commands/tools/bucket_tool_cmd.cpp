@@ -19,30 +19,30 @@
 
 #include "bucket_tool_cmd.hpp"
 
-#include "core/documents/map_document.hpp"
+#include <utility>  // move
+
 #include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-BucketToolCmd::BucketToolCmd(MapDocument*   document,
+BucketToolCmd::BucketToolCmd(Shared<Map>    map,
                              const UUID&    layerId,
                              const TilePos& origin,
                              const TileID   replacement)
-    : mDocument{document}
+    : mMap{std::move(map)}
     , mLayerId{layerId}
     , mOrigin{origin}
     , mReplacement{replacement}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
   }
 }
 
 void BucketToolCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_tile_layer(mLayerId);
+  auto& layer = mMap->view_tile_layer(mLayerId);
 
   const auto target = mTarget.value();
   for (const auto& position : mPositions) {
@@ -55,8 +55,7 @@ void BucketToolCmd::undo()
 
 void BucketToolCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_tile_layer(mLayerId);
+  auto& layer = mMap->view_tile_layer(mLayerId);
 
   mTarget = layer.tile_at(mOrigin);
   layer.flood(mOrigin, mReplacement, &mPositions);

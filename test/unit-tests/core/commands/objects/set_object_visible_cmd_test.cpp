@@ -17,43 +17,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "eraser_tool_cmd.hpp"
+#include "core/commands/objects/set_object_visible_cmd.hpp"
 
-#include <utility>  // move
+#include <gtest/gtest.h>
 
-#include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
 
-namespace tactile {
+using namespace tactile;
 
-EraserToolCmd::EraserToolCmd(Shared<Map> map, const UUID& layerId, TileCache oldState)
-    : mMap{std::move(map)}
-    , mLayerId{layerId}
-    , mOldState{std::move(oldState)}
+TEST(SetObjectVisibleCmd, Constructor)
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
-  }
+  ASSERT_THROW(SetObjectVisibleCmd(nullptr, false), TactileError);
 }
 
-void EraserToolCmd::undo()
+TEST(SetObjectVisibleCmd, RedoUndo)
 {
-  auto& layer = mMap->view_tile_layer(mLayerId);
-  layer.set_tiles(mOldState);
+  Shared<Object> object;
+
+  auto document = test::MapBuilder::build()  //
+                      .with_object(ObjectType::Rect, &object)
+                      .result();
+
+  SetObjectVisibleCmd cmd{object, false};
+
+  cmd.redo();
+  ASSERT_FALSE(object->is_visible());
+
+  cmd.undo();
+  ASSERT_TRUE(object->is_visible());
 }
-
-void EraserToolCmd::redo()
-{
-  auto& layer = mMap->view_tile_layer(mLayerId);
-
-  for (const auto& [position, _] : mOldState) {
-    layer.set_tile(position, empty_tile);
-  }
-}
-
-auto EraserToolCmd::get_name() const -> const char*
-{
-  return "Eraser Sequence";
-}
-
-}  // namespace tactile

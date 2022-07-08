@@ -21,15 +21,15 @@
 
 #include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/common/memory.hpp"
+#include "core/layers/object.hpp"
 
 namespace tactile {
 
 class SetObjectVisibleCmd final : public ICommand
 {
  public:
-  SetObjectVisibleCmd(MapDocument* document, const UUID& objectId, bool visible);
+  SetObjectVisibleCmd(Shared<Object> object, bool visible);
 
   void undo() override;
 
@@ -38,10 +38,9 @@ class SetObjectVisibleCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  UUID         mObjectId{};
-  bool         mVisible;
-  Maybe<bool>  mPrevious;
+  Shared<Object> mObject;
+  bool           mNewVisibility;
+  Maybe<bool>    mOldVisibility;
 };
 
 }  // namespace tactile

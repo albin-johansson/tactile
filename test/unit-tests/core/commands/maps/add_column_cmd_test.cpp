@@ -36,9 +36,8 @@ TEST(AddColumnCmd, RedoUndo)
   const usize initialRows = 5;
   const usize initialCols = 7;
 
-  auto map = test::MapBuilder::build()  //
-                 .with_size(initialRows, initialCols)
-                 .result();
+  auto document = test::MapBuilder::build().with_size(initialRows, initialCols).result();
+  auto map = document->get_map_ptr();
 
   AddColumnCmd cmd{map};
   cmd.redo();
@@ -57,13 +56,12 @@ TEST(AddColumnCmd, MergeSupport)
   const usize initialRows = 13;
   const usize initialCols = 5;
 
-  auto map = test::MapBuilder::build()  //
-                 .with_size(initialRows, initialCols)
-                 .result();
+  auto document = test::MapBuilder::build().with_size(initialRows, initialCols).result();
+  auto map = document->get_map_ptr();
 
-  AddColumnCmd a{map};
-  AddColumnCmd b{map};
-  AddColumnCmd c{map};
+  AddColumnCmd       a{map};
+  const AddColumnCmd b{map};
+  const AddColumnCmd c{map};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));

@@ -19,44 +19,43 @@
 
 #include "set_layer_visibility_cmd.hpp"
 
-#include "core/documents/map_document.hpp"
+#include <utility>  // move
+
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-SetLayerVisibilityCmd::SetLayerVisibilityCmd(MapDocument* document,
-                                             const UUID&  layerId,
-                                             const bool   visible)
-    : mDocument{document}
+SetLayerVisibilityCmd::SetLayerVisibilityCmd(Shared<Map> map,
+                                             const UUID& layerId,
+                                             const bool  visible)
+    : mMap{std::move(map)}
     , mLayerId{layerId}
-    , mVisible{visible}
+    , mNewVisibility{visible}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
   }
 }
 
 void SetLayerVisibilityCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_layer(mLayerId);
+  auto& layer = mMap->view_layer(mLayerId);
 
-  layer.set_visible(mPreviousVisibility.value());
-  mPreviousVisibility.reset();
+  layer.set_visible(mOldVisibility.value());
+  mOldVisibility.reset();
 }
 
 void SetLayerVisibilityCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_layer(mLayerId);
+  auto& layer = mMap->view_layer(mLayerId);
 
-  mPreviousVisibility = layer.is_visible();
-  layer.set_visible(mVisible);
+  mOldVisibility = layer.is_visible();
+  layer.set_visible(mNewVisibility);
 }
 
 auto SetLayerVisibilityCmd::get_name() const -> const char*
 {
-  return mVisible ? "Show Layer" : "Hide Layer";
+  return mNewVisibility ? "Show Layer" : "Hide Layer";
 }
 
 }  // namespace tactile

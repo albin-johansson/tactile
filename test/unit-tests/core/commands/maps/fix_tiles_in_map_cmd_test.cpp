@@ -37,11 +37,12 @@ TEST(FixTilesInMapCmd, RedoUndo)
   UUID layerId;
   UUID tilesetId;
 
-  auto map = test::MapBuilder::build()  //
-                 .with_size(10, 10)
-                 .with_tile_layer(&layerId)
-                 .with_tileset(&tilesetId)
-                 .result();
+  auto document = test::MapBuilder::build()  //
+                      .with_size(10, 10)
+                      .with_tile_layer(&layerId)
+                      .with_tileset(&tilesetId)
+                      .result();
+  auto map = document->get_map_ptr();
 
   const auto& tilesetRef = map->get_tilesets().get_ref(tilesetId);
 

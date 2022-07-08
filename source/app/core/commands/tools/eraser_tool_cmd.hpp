@@ -20,16 +20,17 @@
 #pragma once
 
 #include "core/commands/command.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/map.hpp"
 
 namespace tactile {
 
 class EraserToolCmd final : public ICommand
 {
  public:
-  EraserToolCmd(MapDocument* document, const UUID& layerId, TileCache oldState);
+  EraserToolCmd(Shared<Map> map, const UUID& layerId, TileCache oldState);
 
   void undo() override;
 
@@ -38,9 +39,9 @@ class EraserToolCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  UUID         mLayerId{};
-  TileCache    mOldState;
+  Shared<Map> mMap;
+  UUID        mLayerId{};
+  TileCache   mOldState;
 };
 
 }  // namespace tactile

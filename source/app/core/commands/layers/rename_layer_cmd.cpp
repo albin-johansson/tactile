@@ -21,39 +21,34 @@
 
 #include <utility>  // move
 
-#include "core/documents/map_document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-RenameLayerCmd::RenameLayerCmd(MapDocument* document,
-                               const UUID&  layerId,
-                               std::string  name)
-    : mDocument{document}
+RenameLayerCmd::RenameLayerCmd(Shared<Map> map, const UUID& layerId, std::string name)
+    : mMap{std::move(map)}
     , mLayerId{layerId}
-    , mName{std::move(name)}
+    , mNewName{std::move(name)}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
   }
 }
 
 void RenameLayerCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_layer(mLayerId);
+  auto& layer = mMap->view_layer(mLayerId);
 
-  layer.set_name(mPreviousName.value());
-  mPreviousName.reset();
+  layer.set_name(mOldName.value());
+  mOldName.reset();
 }
 
 void RenameLayerCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_layer(mLayerId);
+  auto& layer = mMap->view_layer(mLayerId);
 
-  mPreviousName = layer.get_name();
-  layer.set_name(mName);
+  mOldName = layer.get_name();
+  layer.set_name(mNewName);
 }
 
 auto RenameLayerCmd::get_name() const -> const char*

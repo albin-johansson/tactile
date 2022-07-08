@@ -21,23 +21,22 @@
 
 #include <utility>  // move
 
-#include "core/documents/map_document.hpp"
 #include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-StampToolCmd::StampToolCmd(MapDocument* document,
-                           const UUID&  layerId,
-                           TileCache    oldState,
-                           TileCache    newState)
-    : mDocument{document}
+StampToolCmd::StampToolCmd(Shared<Map> map,
+                           const UUID& layerId,
+                           TileCache   oldState,
+                           TileCache   newState)
+    : mMap{std::move(map)}
     , mLayerId{layerId}
     , mOldState{std::move(oldState)}
     , mNewState{std::move(newState)}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
   }
 }
 
@@ -58,8 +57,7 @@ auto StampToolCmd::get_name() const -> const char*
 
 void StampToolCmd::apply_sequence(const TileCache& cache)
 {
-  auto& map = mDocument->get_map();
-  auto& layer = map.view_tile_layer(mLayerId);
+  auto& layer = mMap->view_tile_layer(mLayerId);
   layer.set_tiles(cache);
 }
 

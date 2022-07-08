@@ -103,10 +103,11 @@ class ADocument
   virtual void unregister_context(const UUID& id) = 0;
 
   /// Looks up an existing context in the document.
-  /// Note, this is quite an expensive operation!
   [[nodiscard]] virtual auto get_context(const UUID& id) -> Shared<IContext> = 0;
 
   [[nodiscard]] virtual auto view_context(const UUID& id) const -> const IContext& = 0;
+
+  [[nodiscard]] virtual auto has_context(const UUID& id) const -> bool = 0;
 
   /// Indicates whether the document represents a map.
   [[nodiscard]] auto is_map() const -> bool;

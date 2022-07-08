@@ -17,48 +17,57 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/layers/set_layer_opacity_cmd.hpp"
+#include "core/commands/objects/set_object_tag_cmd.hpp"
 
 #include <gtest/gtest.h>
 
-#include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
 
 using namespace tactile;
 
-TEST(SetLayerOpacityCmd, Constructor)
+TEST(SetObjectTagCmd, Constructor)
 {
-  ASSERT_THROW(SetLayerOpacityCmd(nullptr, 1.0f), TactileError);
+  ASSERT_THROW(SetObjectTagCmd(nullptr, ""), TactileError);
 }
 
-TEST(SetLayerOpacityCmd, RedoUndo)
+TEST(SetObjectTagCmd, RedoUndo)
 {
-  auto layer = std::make_shared<TileLayer>();
-  ASSERT_EQ(1.0f, layer->get_opacity());
+  Shared<Object> object;
 
-  SetLayerOpacityCmd cmd{layer, 0.8f};
+  auto map = test::MapBuilder::build()  //
+                 .with_object(ObjectType::Rect, &object)
+                 .result();
+
+  object->set_tag("old-tag");
+
+  SetObjectTagCmd cmd{object, "new-tag"};
 
   cmd.redo();
-  ASSERT_EQ(0.8f, layer->get_opacity());
+  ASSERT_EQ("new-tag", object->get_tag());
 
   cmd.undo();
-  ASSERT_EQ(1.0f, layer->get_opacity());
+  ASSERT_EQ("old-tag", object->get_tag());
 }
 
-TEST(SetLayerOpacityCmd, MergeSupport)
+TEST(SetObjectTagCmd, MergeSupport)
 {
-  auto layer = std::make_shared<TileLayer>();
+  Shared<Object> object;
 
-  SetLayerOpacityCmd       a{layer, 0.8f};
-  const SetLayerOpacityCmd b{layer, 0.6f};
-  const SetLayerOpacityCmd c{layer, 0.4f};
+  auto document = test::MapBuilder::build()  //
+                      .with_object(ObjectType::Rect, &object)
+                      .result();
+
+  object->set_tag("x");
+
+  SetObjectTagCmd       a{object, "a"};
+  const SetObjectTagCmd b{object, "b"};
 
   ASSERT_TRUE(a.merge_with(&b));
-  ASSERT_TRUE(a.merge_with(&c));
 
   a.redo();
-  ASSERT_EQ(0.4f, layer->get_opacity());
+  ASSERT_EQ("b", object->get_tag());
 
   a.undo();
-  ASSERT_EQ(1.0f, layer->get_opacity());
+  ASSERT_EQ("x", object->get_tag());
 }

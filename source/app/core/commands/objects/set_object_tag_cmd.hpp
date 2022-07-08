@@ -23,15 +23,15 @@
 
 #include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/common/memory.hpp"
+#include "core/layers/object.hpp"
 
 namespace tactile {
 
 class SetObjectTagCmd final : public ICommand
 {
  public:
-  SetObjectTagCmd(MapDocument* document, const UUID& objectId, std::string tag);
+  SetObjectTagCmd(Shared<Object> object, std::string tag);
 
   void undo() override;
 
@@ -42,8 +42,7 @@ class SetObjectTagCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*       mDocument{};
-  UUID               mObjectId{};
+  Shared<Object>     mObject;
   std::string        mNewTag;
   Maybe<std::string> mOldTag;
 };

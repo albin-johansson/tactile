@@ -55,6 +55,8 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto view_context(const UUID& id) const -> const IContext& override;
 
+  [[nodiscard]] auto has_context(const UUID& id) const -> bool override;
+
   void update() override;
 
   void add_row();

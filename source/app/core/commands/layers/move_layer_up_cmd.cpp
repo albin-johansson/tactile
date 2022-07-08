@@ -19,30 +19,29 @@
 
 #include "move_layer_up_cmd.hpp"
 
-#include "core/documents/map_document.hpp"
+#include <utility>  // move
+
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-MoveLayerUpCmd::MoveLayerUpCmd(MapDocument* document, const UUID& layerId)
-    : mDocument{document}
+MoveLayerUpCmd::MoveLayerUpCmd(Shared<Map> map, const UUID& layerId)
+    : mMap{std::move(map)}
     , mLayerId{layerId}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mMap) {
+    throw TactileError{"Invalid null map!"};
   }
 }
 
 void MoveLayerUpCmd::undo()
 {
-  auto& map = mDocument->get_map();
-  map.move_layer_down(mLayerId);
+  mMap->move_layer_down(mLayerId);
 }
 
 void MoveLayerUpCmd::redo()
 {
-  auto& map = mDocument->get_map();
-  map.move_layer_up(mLayerId);
+  mMap->move_layer_up(mLayerId);
 }
 
 auto MoveLayerUpCmd::get_name() const -> const char*

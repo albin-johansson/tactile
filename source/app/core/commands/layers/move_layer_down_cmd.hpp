@@ -20,15 +20,16 @@
 #pragma once
 
 #include "core/commands/command.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/map.hpp"
 
 namespace tactile {
 
 class MoveLayerDownCmd final : public ICommand
 {
  public:
-  MoveLayerDownCmd(MapDocument* document, const UUID& layerId);
+  MoveLayerDownCmd(Shared<Map> map, const UUID& layerId);
 
   void undo() override;
 
@@ -37,8 +38,8 @@ class MoveLayerDownCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  UUID         mLayerId{};
+  Shared<Map> mMap;
+  UUID        mLayerId{};
 };
 
 }  // namespace tactile

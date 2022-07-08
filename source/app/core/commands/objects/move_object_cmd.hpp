@@ -21,8 +21,8 @@
 
 #include "core/commands/command.hpp"
 #include "core/common/math.hpp"
-#include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/common/memory.hpp"
+#include "core/layers/object.hpp"
 
 namespace tactile {
 
@@ -30,10 +30,7 @@ namespace tactile {
 class MoveObjectCmd final : public ICommand
 {
  public:
-  MoveObjectCmd(MapDocument*    document,
-                const UUID&     objectId,
-                const Vector2f& previous,
-                const Vector2f& updated);
+  MoveObjectCmd(Shared<Object> object, const Vector2f& previous, const Vector2f& updated);
 
   void undo() override;
 
@@ -42,10 +39,9 @@ class MoveObjectCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  UUID         mObjectId{};
-  Vector2f     mPreviousPos{};
-  Vector2f     mUpdatedPos{};
+  Shared<Object> mObject;
+  Vector2f       mPreviousPos{};
+  Vector2f       mUpdatedPos{};
 };
 
 }  // namespace tactile

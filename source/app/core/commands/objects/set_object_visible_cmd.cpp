@@ -19,41 +19,36 @@
 
 #include "set_object_visible_cmd.hpp"
 
-#include "core/documents/map_document.hpp"
-#include "core/layers/object_layer.hpp"
+#include <utility>  // move
+
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-SetObjectVisibleCmd::SetObjectVisibleCmd(MapDocument* document,
-                                         const UUID&  objectId,
-                                         const bool   visible)
-    : mDocument{document}
-    , mObjectId{objectId}
-    , mVisible{visible}
+SetObjectVisibleCmd::SetObjectVisibleCmd(Shared<Object> object, const bool visible)
+    : mObject{std::move(object)}
+    , mNewVisibility{visible}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mObject) {
+    throw TactileError{"Invalid null object!"};
   }
 }
 
 void SetObjectVisibleCmd::undo()
 {
-  auto object = mDocument->get_object(mObjectId);
-  object->set_visible(mPrevious.value());
-  mPrevious.value();
+  mObject->set_visible(mOldVisibility.value());
+  mOldVisibility.reset();
 }
 
 void SetObjectVisibleCmd::redo()
 {
-  auto object = mDocument->get_object(mObjectId);
-  mPrevious = object->is_visible();
-  object->set_visible(mVisible);
+  mOldVisibility = mObject->is_visible();
+  mObject->set_visible(mNewVisibility);
 }
 
 auto SetObjectVisibleCmd::get_name() const -> const char*
 {
-  return mVisible ? "Show Object" : "Hide Object";
+  return mNewVisibility ? "Show Object" : "Hide Object";
 }
 
 }  // namespace tactile

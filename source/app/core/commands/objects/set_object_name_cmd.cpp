@@ -21,42 +21,35 @@
 
 #include <utility>  // move
 
-#include "core/documents/map_document.hpp"
-#include "core/layers/object_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-SetObjectNameCmd::SetObjectNameCmd(MapDocument* document,
-                                   const UUID&  objectId,
-                                   std::string  name)
-    : mDocument{document}
-    , mObjectId{objectId}
+SetObjectNameCmd::SetObjectNameCmd(Shared<Object> object, std::string name)
+    : mObject{std::move(object)}
     , mNewName{std::move(name)}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mObject) {
+    throw TactileError{"Invalid null object!"};
   }
 }
 
 void SetObjectNameCmd::undo()
 {
-  auto object = mDocument->get_object(mObjectId);
-  object->set_name(mOldName.value());
+  mObject->set_name(mOldName.value());
   mOldName.reset();
 }
 
 void SetObjectNameCmd::redo()
 {
-  auto object = mDocument->get_object(mObjectId);
-  mOldName = object->get_name();
-  object->set_name(mNewName);
+  mOldName = mObject->get_name();
+  mObject->set_name(mNewName);
 }
 
 auto SetObjectNameCmd::merge_with(const ICommand* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const SetObjectNameCmd*>(cmd)) {
-    if (mObjectId == other->mObjectId) {
+    if (mObject->get_uuid() == other->mObject->get_uuid()) {
       mNewName = other->mNewName;
       return true;
     }
@@ -67,7 +60,7 @@ auto SetObjectNameCmd::merge_with(const ICommand* cmd) -> bool
 
 auto SetObjectNameCmd::get_name() const -> const char*
 {
-  return "Set Object Name";
+  return "Update Object Name";
 }
 
 }  // namespace tactile

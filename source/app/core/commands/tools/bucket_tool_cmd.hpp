@@ -24,8 +24,9 @@
 #include "core/commands/command.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/map.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {
@@ -33,7 +34,7 @@ namespace tactile {
 class BucketToolCmd final : public ICommand
 {
  public:
-  BucketToolCmd(MapDocument*   document,
+  BucketToolCmd(Shared<Map>    map,
                 const UUID&    layerId,
                 const TilePos& origin,
                 TileID         replacement);
@@ -45,7 +46,7 @@ class BucketToolCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*         mDocument{};
+  Shared<Map>          mMap;
   UUID                 mLayerId{};
   TilePos              mOrigin;
   TileID               mReplacement{};

@@ -17,43 +17,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "eraser_tool_cmd.hpp"
+#include "core/commands/objects/move_object_cmd.hpp"
 
-#include <utility>  // move
+#include <gtest/gtest.h>
 
-#include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
 
-namespace tactile {
+using namespace tactile;
 
-EraserToolCmd::EraserToolCmd(Shared<Map> map, const UUID& layerId, TileCache oldState)
-    : mMap{std::move(map)}
-    , mLayerId{layerId}
-    , mOldState{std::move(oldState)}
+TEST(MoveObjectCmd, Constructor)
 {
-  if (!mMap) {
-    throw TactileError{"Invalid null map!"};
-  }
+  ASSERT_THROW(MoveObjectCmd(nullptr, {}, {}), TactileError);
 }
 
-void EraserToolCmd::undo()
+TEST(MoveObjectCmd, RedoUndo)
 {
-  auto& layer = mMap->view_tile_layer(mLayerId);
-  layer.set_tiles(mOldState);
+  Shared<Object> object;
+
+  auto document = test::MapBuilder::build()  //
+                      .with_object(ObjectType::Rect, &object)
+                      .result();
+
+  const Vector2f initialPos{843, 317};
+  object->set_pos(initialPos);
+
+  const Vector2f newPos{-835, 94};
+  MoveObjectCmd  cmd{object, initialPos, newPos};
+
+  cmd.redo();
+  ASSERT_EQ(newPos, object->get_pos());
+
+  cmd.undo();
+  ASSERT_EQ(initialPos, object->get_pos());
 }
-
-void EraserToolCmd::redo()
-{
-  auto& layer = mMap->view_tile_layer(mLayerId);
-
-  for (const auto& [position, _] : mOldState) {
-    layer.set_tile(position, empty_tile);
-  }
-}
-
-auto EraserToolCmd::get_name() const -> const char*
-{
-  return "Eraser Sequence";
-}
-
-}  // namespace tactile

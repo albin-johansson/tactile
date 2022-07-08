@@ -25,6 +25,8 @@
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/layers/object.hpp"
 #include "core/map.hpp"
 
 namespace tactile::test {
@@ -44,12 +46,17 @@ class MapBuilder final
   auto with_tile_layer(UUID* id = nullptr, Maybe<TileID> initialValue = nothing)
       -> MapBuilder&;
 
+  auto with_object_layer(UUID* id = nullptr) -> MapBuilder&;
+
+  auto with_object(ObjectType type, Shared<Object>* outObject = nullptr) -> MapBuilder&;
+
   auto with_tileset(UUID* id = nullptr) -> MapBuilder&;
 
-  [[nodiscard]] auto result() -> const Shared<Map>&;
+  [[nodiscard]] auto result() -> Unique<MapDocument>;
 
  private:
-  Shared<Map> mMap;
+  Unique<MapDocument> mDocument;
+  Maybe<UUID>         mDedicatedObjectLayer;
 
   MapBuilder();
 };

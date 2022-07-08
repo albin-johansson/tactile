@@ -21,19 +21,20 @@
 
 #include "core/commands/command.hpp"
 #include "core/common/identifiers.hpp"
+#include "core/common/memory.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/map.hpp"
 
 namespace tactile {
 
 class StampToolCmd final : public ICommand
 {
  public:
-  StampToolCmd(MapDocument* document,
-               const UUID&  layerId,
-               TileCache    oldState,
-               TileCache    newState);
+  StampToolCmd(Shared<Map> map,
+               const UUID& layerId,
+               TileCache   oldState,
+               TileCache   newState);
 
   void undo() override;
 
@@ -42,10 +43,10 @@ class StampToolCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  UUID         mLayerId{};
-  TileCache    mOldState;
-  TileCache    mNewState;
+  Shared<Map> mMap;
+  UUID        mLayerId{};
+  TileCache   mOldState;
+  TileCache   mNewState;
 
   void apply_sequence(const TileCache& cache);
 };

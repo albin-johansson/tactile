@@ -22,13 +22,16 @@
 #include <utility>  // move
 
 #include "core/common/functional.hpp"
+#include "core/layers/object_layer.hpp"
 #include "core/layers/tile_layer.hpp"
 #include "core/tilesets/tileset.hpp"
 #include "core/tilesets/tileset_info.hpp"
 
 namespace tactile::test {
 
-MapBuilder::MapBuilder() : mMap{std::make_shared<Map>()} {}
+MapBuilder::MapBuilder()
+    : mDocument{std::make_unique<MapDocument>(Vector2f{32, 32}, 5, 5)}
+{}
 
 auto MapBuilder::build() -> MapBuilder
 {
@@ -37,30 +40,64 @@ auto MapBuilder::build() -> MapBuilder
 
 auto MapBuilder::with_tile_size(const Vector2i& size) -> MapBuilder&
 {
-  mMap->set_tile_size(size);
+  mDocument->get_map().set_tile_size(size);
   return *this;
 }
 
 auto MapBuilder::with_size(const usize rows, const usize columns) -> MapBuilder&
 {
-  mMap->resize(rows, columns);
+  mDocument->get_map().resize(rows, columns);
   return *this;
 }
 
 auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initialValue) -> MapBuilder&
 {
-  const auto layerId = mMap->add_tile_layer();
+  auto&      map = mDocument->get_map();
+  const auto layerId = map.add_tile_layer();
 
   if (id) {
     *id = layerId;
   }
 
   if (initialValue) {
-    auto& layer = mMap->view_tile_layer(layerId);
-    invoke_mn(mMap->row_count(), mMap->column_count(), [&](usize r, usize c) {
+    auto& layer = map.view_tile_layer(layerId);
+    invoke_mn(map.row_count(), map.column_count(), [&](usize r, usize c) {
       layer.set_tile(TilePos::from(r, c), *initialValue);
     });
   }
+
+  return *this;
+}
+
+auto MapBuilder::with_object_layer(UUID* id) -> MapBuilder&
+{
+  const auto layerId = mDocument->get_map().add_object_layer();
+
+  if (id) {
+    *id = layerId;
+  }
+
+  return *this;
+}
+
+auto MapBuilder::with_object(const ObjectType type, Shared<Object>* outObject)
+    -> MapBuilder&
+{
+  auto& map = mDocument->get_map();
+
+  if (!mDedicatedObjectLayer) {
+    mDedicatedObjectLayer = map.add_object_layer();
+  }
+
+  auto object = std::make_shared<Object>();
+  object->set_type(type);
+
+  if (outObject) {
+    *outObject = object;
+  }
+
+  auto& layer = map.view_object_layer(*mDedicatedObjectLayer);
+  layer.add_object(std::move(object));
 
   return *this;
 }
@@ -78,14 +115,14 @@ auto MapBuilder::with_tileset(UUID* id) -> MapBuilder&
     *id = tileset->get_uuid();
   }
 
-  mMap->attach_tileset(std::move(tileset), false);
+  mDocument->get_map().attach_tileset(std::move(tileset), false);
 
   return *this;
 }
 
-auto MapBuilder::result() -> const Shared<Map>&
+auto MapBuilder::result() -> Unique<MapDocument>
 {
-  return mMap;
+  return std::move(mDocument);
 }
 
 }  // namespace tactile::test

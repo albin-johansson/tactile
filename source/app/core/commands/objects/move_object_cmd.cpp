@@ -19,36 +19,32 @@
 
 #include "move_object_cmd.hpp"
 
-#include "core/documents/map_document.hpp"
-#include "core/layers/object_layer.hpp"
+#include <utility>  // move
+
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-MoveObjectCmd::MoveObjectCmd(MapDocument*    document,
-                             const UUID&     objectId,
+MoveObjectCmd::MoveObjectCmd(Shared<Object>  object,
                              const Vector2f& previous,
                              const Vector2f& updated)
-    : mDocument{document}
-    , mObjectId{objectId}
+    : mObject{std::move(object)}
     , mPreviousPos{previous}
     , mUpdatedPos{updated}
 {
-  if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+  if (!mObject) {
+    throw TactileError{"Invalid null object!"};
   }
 }
 
 void MoveObjectCmd::undo()
 {
-  auto object = mDocument->get_object(mObjectId);
-  object->set_pos(mPreviousPos);
+  mObject->set_pos(mPreviousPos);
 }
 
 void MoveObjectCmd::redo()
 {
-  auto object = mDocument->get_object(mObjectId);
-  object->set_pos(mUpdatedPos);
+  mObject->set_pos(mUpdatedPos);
 }
 
 auto MoveObjectCmd::get_name() const -> const char*

@@ -69,6 +69,11 @@ auto TilesetDocument::view_context(const UUID& id) const -> const IContext&
   return *lookup_in(mContexts, id);
 }
 
+auto TilesetDocument::has_context(const UUID& id) const -> bool
+{
+  return mContexts.contains(id);
+}
+
 void TilesetDocument::update()
 {
   //  get_cache().display_tiles.clear();

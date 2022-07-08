@@ -182,10 +182,11 @@ TEST(Map, FixTiles)
   UUID layerId;
   UUID tilesetId;
 
-  auto map = test::MapBuilder::build()  //
-                 .with_tile_layer(&layerId)
-                 .with_tileset(&tilesetId)
-                 .result();
+  auto document = test::MapBuilder::build()  //
+                      .with_tile_layer(&layerId)
+                      .with_tileset(&tilesetId)
+                      .result();
+  auto map = document->get_map_ptr();
 
   const auto& tilesetRef = map->get_tilesets().get_ref(tilesetId);
   auto&       layer = map->view_tile_layer(layerId);

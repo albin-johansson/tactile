@@ -57,6 +57,8 @@ class TilesetDocument final : public ADocument
 
   [[nodiscard]] auto view_context(const UUID& id) const -> const IContext& override;
 
+  [[nodiscard]] auto has_context(const UUID& id) const -> bool override;
+
   void update() override;
 
   [[deprecated]] void set_name(std::string name) override;

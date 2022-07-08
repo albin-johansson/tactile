@@ -37,9 +37,8 @@ TEST(RemoveRowCmd, RedoUndo)
   const usize initialRows = 3;
   const usize initialCols = 5;
 
-  auto map = test::MapBuilder::build()  //
-                 .with_size(initialRows, initialCols)
-                 .result();
+  auto document = test::MapBuilder::build().with_size(initialRows, initialCols).result();
+  auto map = document->get_map_ptr();
 
   RemoveRowCmd cmd{map};
   cmd.redo();
@@ -60,13 +59,14 @@ TEST(RemoveRowCmd, MergeSupport)
 
   UUID layerId;
 
-  auto map = test::MapBuilder::build()  //
-                 .with_size(initialRows, initialCols)
-                 .with_tile_layer(&layerId, 42)
-                 .result();
+  auto document = test::MapBuilder::build()  //
+                      .with_size(initialRows, initialCols)
+                      .with_tile_layer(&layerId, 42)
+                      .result();
+  auto map = document->get_map_ptr();
 
-  RemoveRowCmd a{map};
-  RemoveRowCmd b{map};
+  RemoveRowCmd       a{map};
+  const RemoveRowCmd b{map};
 
   ASSERT_TRUE(a.merge_with(&b));
 
