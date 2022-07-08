@@ -28,6 +28,7 @@
 
 namespace tactile {
 
+/// Represents instances of component definitions.
 class Component final
 {
  public:
