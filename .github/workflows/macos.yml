@@ -3,10 +3,12 @@ name: "CI: macOS"
 on: [ push, pull_request ]
 
 env:
+  CC: /usr/local/opt/llvm/bin/clang
+  CXX: /usr/local/opt/llvm/bin/clang++
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_TARGET_TRIPLET: x64-osx
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
-  VCPKG_CACHE_EDITION: 1
+  VCPKG_CACHE_EDITION: 2
 
 jobs:
   macos-latest-test:
@@ -22,6 +24,10 @@ jobs:
       - name: Install Ninja
         shell: bash
         run: brew install ninja
+
+      - name: Install LLVM
+        shell: bash
+        run: brew install llvm
 
       - name: Install GLFW
         shell: bash
