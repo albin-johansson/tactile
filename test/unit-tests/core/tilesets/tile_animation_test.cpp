@@ -23,7 +23,7 @@
 
 #include "misc/panic.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 using Millis = TileAnimation::Millis;
 
@@ -47,12 +47,14 @@ TEST(TileAnimation, AddFrame)
 {
   TileAnimation animation;
 
-  animation.add_frame(42, Millis{14});
+  animation.add_frame(42, Millis {14});
   ASSERT_EQ(1, animation.size());
 
   const auto& frame = animation.nth(0);
   ASSERT_EQ(42, frame.tile);
-  ASSERT_EQ(Millis{14}, frame.duration);
+  ASSERT_EQ(Millis {14}, frame.duration);
 
   ASSERT_THROW(animation.nth(1), TactileError);
 }
+
+}  // namespace tactile::test

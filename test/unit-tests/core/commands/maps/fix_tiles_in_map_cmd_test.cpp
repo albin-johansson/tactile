@@ -25,11 +25,11 @@
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(FixTilesInMapCmd, Constructor)
 {
-  ASSERT_THROW(FixTilesInMapCmd{nullptr}, TactileError);
+  ASSERT_THROW(FixTilesInMapCmd {nullptr}, TactileError);
 }
 
 TEST(FixTilesInMapCmd, RedoUndo)
@@ -52,7 +52,7 @@ TEST(FixTilesInMapCmd, RedoUndo)
   layer.set_tile({0, 1}, tilesetRef.last_tile());
   layer.set_tile({5, 7}, tilesetRef.first_tile());
 
-  FixTilesInMapCmd cmd{map};
+  FixTilesInMapCmd cmd {map};
   cmd.redo();
 
   ASSERT_EQ(empty_tile, layer.tile_at({2, 4}));
@@ -67,3 +67,5 @@ TEST(FixTilesInMapCmd, RedoUndo)
   ASSERT_EQ(tilesetRef.last_tile(), layer.tile_at({0, 1}));
   ASSERT_EQ(tilesetRef.first_tile(), layer.tile_at({5, 7}));
 }
+
+}  // namespace tactile::test

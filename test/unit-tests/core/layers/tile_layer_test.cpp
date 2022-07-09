@@ -27,7 +27,7 @@
 #include "core/tile_pos.hpp"
 #include "misc/panic.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(TileLayer, Defaults)
 {
@@ -48,7 +48,7 @@ TEST(TileLayer, Flood)
      0  0  0  0  0
      0  0  0  0  0
      0  0  0  0  0 */
-  TileLayer layer{5, 5};
+  TileLayer layer {5, 5};
 
   /* 0  0  0  0  0
      0  0  0  1  1
@@ -169,7 +169,7 @@ TEST(TileLayer, TileAtWithInvalidPositions)
 
 TEST(TileLayer, AddRow)
 {
-  TileLayer layer{3, 4};
+  TileLayer layer {3, 4};
 
   ASSERT_EQ(3, layer.row_count());
   ASSERT_EQ(4, layer.column_count());
@@ -187,7 +187,7 @@ TEST(TileLayer, AddRow)
 
 TEST(TileLayer, AddColumn)
 {
-  TileLayer layer{3, 4};
+  TileLayer layer {3, 4};
 
   ASSERT_EQ(3, layer.row_count());
   ASSERT_EQ(4, layer.column_count());
@@ -200,7 +200,7 @@ TEST(TileLayer, AddColumn)
 
 TEST(TileLayer, RemoveRow)
 {
-  TileLayer layer{3, 4};
+  TileLayer layer {3, 4};
 
   ASSERT_EQ(3, layer.row_count());
   ASSERT_EQ(4, layer.column_count());
@@ -213,7 +213,7 @@ TEST(TileLayer, RemoveRow)
 
 TEST(TileLayer, RemoveColumn)
 {
-  TileLayer layer{6, 8};
+  TileLayer layer {6, 8};
 
   ASSERT_EQ(6, layer.row_count());
   ASSERT_EQ(8, layer.column_count());
@@ -226,7 +226,7 @@ TEST(TileLayer, RemoveColumn)
 
 TEST(TileLayer, Resize)
 {
-  TileLayer layer{6, 5};
+  TileLayer layer {6, 5};
 
   ASSERT_EQ(6, layer.row_count());
   ASSERT_EQ(5, layer.column_count());
@@ -241,7 +241,7 @@ TEST(TileLayer, Resize)
 
 TEST(TileLayer, Clone)
 {
-  TileLayer source{4, 3};
+  TileLayer source {4, 3};
 
   source.set_tile({0, 0}, 7);
   source.set_tile({1, 2}, 8314);
@@ -258,3 +258,5 @@ TEST(TileLayer, Clone)
     ASSERT_EQ(source.tile_at(pos), copy->tile_at(pos));
   });
 }
+
+}  // namespace tactile::test

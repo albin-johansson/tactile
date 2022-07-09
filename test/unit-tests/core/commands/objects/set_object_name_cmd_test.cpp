@@ -24,7 +24,7 @@
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(SetObjectNameCmd, Constructor)
 {
@@ -41,7 +41,7 @@ TEST(SetObjectNameCmd, RedoUndo)
 
   object->set_name("foo");
 
-  SetObjectNameCmd cmd{object, "bar"};
+  SetObjectNameCmd cmd {object, "bar"};
 
   cmd.redo();
   ASSERT_EQ("bar", object->get_name());
@@ -60,9 +60,9 @@ TEST(SetObjectNameCmd, MergeSupport)
 
   object->set_name("start");
 
-  SetObjectNameCmd       a{object, "a"};
-  const SetObjectNameCmd b{object, "b"};
-  const SetObjectNameCmd c{object, "c"};
+  SetObjectNameCmd       a {object, "a"};
+  const SetObjectNameCmd b {object, "b"};
+  const SetObjectNameCmd c {object, "c"};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));
@@ -73,3 +73,5 @@ TEST(SetObjectNameCmd, MergeSupport)
   a.undo();
   ASSERT_EQ("start", object->get_name());
 }
+
+}  // namespace tactile::test

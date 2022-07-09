@@ -25,7 +25,7 @@
 
 using namespace std::string_literals;
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(ComponentDefinition, Defaults)
 {
@@ -126,3 +126,5 @@ TEST(ComponentDefinition, DuplicateAttr)
   ASSERT_NE("hello", key);
   ASSERT_EQ(def.get_attr("hello"), def.get_attr(key));
 }
+
+}  // namespace tactile::test

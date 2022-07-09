@@ -23,13 +23,13 @@
 
 #include <gtest/gtest.h>
 
-using namespace tactile;
+namespace tactile::test {
 
 using Millis = TileAnimation::Millis;
 
 TEST(Tile, Defaults)
 {
-  const Tile tile{7};
+  const Tile tile {7};
   ASSERT_EQ(7, tile.index());
   ASSERT_EQ(0, tile.object_count());
   ASSERT_FALSE(tile.is_animated());
@@ -37,7 +37,7 @@ TEST(Tile, Defaults)
 
 TEST(Tile, AddObject)
 {
-  Tile tile{42};
+  Tile tile {42};
 
   auto object = std::make_shared<Object>();
   tile.add_object(object);
@@ -47,9 +47,9 @@ TEST(Tile, AddObject)
 
 TEST(Tile, ClearAnimation)
 {
-  Tile tile{42};
+  Tile tile {42};
 
-  tile.set_animation(TileAnimation{});
+  tile.set_animation(TileAnimation {});
   ASSERT_TRUE(tile.is_animated());
 
   tile.clear_animation();
@@ -58,12 +58,12 @@ TEST(Tile, ClearAnimation)
 
 TEST(Tile, SetAnimation)
 {
-  Tile tile{42};
+  Tile tile {42};
 
   {
     TileAnimation animation;
-    animation.add_frame(7, Millis{42});
-    animation.add_frame(8, Millis{37});
+    animation.add_frame(7, Millis {42});
+    animation.add_frame(8, Millis {37});
     tile.set_animation(std::move(animation));
   }
 
@@ -73,8 +73,10 @@ TEST(Tile, SetAnimation)
   ASSERT_EQ(2, animation.size());
 
   ASSERT_EQ(7, animation.nth(0).tile);
-  ASSERT_EQ(Millis{42}, animation.nth(0).duration);
+  ASSERT_EQ(Millis {42}, animation.nth(0).duration);
 
   ASSERT_EQ(8, animation.nth(1).tile);
-  ASSERT_EQ(Millis{37}, animation.nth(1).duration);
+  ASSERT_EQ(Millis {37}, animation.nth(1).duration);
 }
+
+}  // namespace tactile::test

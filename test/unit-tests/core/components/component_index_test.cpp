@@ -24,7 +24,7 @@
 #include "core/components/component_definition.hpp"
 #include "misc/panic.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(ComponentIndex, Defaults)
 {
@@ -81,3 +81,5 @@ TEST(ComponentIndex, RenameComp)
   index.define_comp("woo");
   ASSERT_THROW(index.rename_comp(id, "woo"), TactileError);
 }
+
+}  // namespace tactile::test

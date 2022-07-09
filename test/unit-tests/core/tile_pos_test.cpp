@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(TilePosition, Defaults)
 {
@@ -14,14 +14,14 @@ TEST(TilePosition, Defaults)
 
 TEST(TilePosition, RowColConstructor)
 {
-  const TilePos a{123, 557};
+  const TilePos a {123, 557};
   ASSERT_EQ(123, a.row());
   ASSERT_EQ(557, a.col());
 
-  const TilePos b{-1, 0};
+  const TilePos b {-1, 0};
   ASSERT_EQ(-1, b.row());
 
-  const TilePos c{0, -1};
+  const TilePos c {0, -1};
   ASSERT_EQ(-1, c.col());
 }
 
@@ -54,7 +54,7 @@ TEST(TilePosition, SetCol)
 
 TEST(TilePosition, OffsetBy)
 {
-  const TilePos position{3, 4};
+  const TilePos position {3, 4};
   const auto    result = position.offset_by(4, 6);
   ASSERT_EQ(7, result.row());
   ASSERT_EQ(10, result.col());
@@ -62,45 +62,45 @@ TEST(TilePosition, OffsetBy)
 
 TEST(TilePosition, Row)
 {
-  const TilePos position{8'324, 0};
+  const TilePos position {8'324, 0};
   ASSERT_EQ(8'324, position.row());
 }
 
 TEST(TilePosition, Col)
 {
-  const TilePos position{0, 493};
+  const TilePos position {0, 493};
   ASSERT_EQ(493, position.col());
 }
 
 TEST(TilePosition, URow)
 {
-  const TilePos position{6'532, 0};
+  const TilePos position {6'532, 0};
   ASSERT_EQ(6'532u, position.urow());
 }
 
 TEST(TilePosition, UCol)
 {
-  const TilePos position{0, 18'343};
+  const TilePos position {0, 18'343};
   ASSERT_EQ(18'343u, position.ucol());
 }
 
 TEST(TilePosition, RowToY)
 {
   const auto    tileSize = 134;
-  const TilePos position{12, 34};
+  const TilePos position {12, 34};
   ASSERT_EQ(12 * tileSize, position.row_to_y(tileSize));
 }
 
 TEST(TilePosition, ColToX)
 {
   const auto    tileSize = 68;
-  const TilePos position{12, 34};
+  const TilePos position {12, 34};
   ASSERT_EQ(34 * tileSize, position.col_to_x(tileSize));
 }
 
 TEST(TilePosition, North)
 {
-  const TilePos source{7, 15};
+  const TilePos source {7, 15};
   const TilePos moved = source.north();
 
   ASSERT_EQ(source.row() - 1, moved.row());
@@ -109,7 +109,7 @@ TEST(TilePosition, North)
 
 TEST(TilePosition, East)
 {
-  const TilePos source{52, 77};
+  const TilePos source {52, 77};
   const TilePos moved = source.east();
 
   ASSERT_EQ(source.row(), moved.row());
@@ -118,7 +118,7 @@ TEST(TilePosition, East)
 
 TEST(TilePosition, South)
 {
-  const TilePos source{33, 6};
+  const TilePos source {33, 6};
   const TilePos moved = source.south();
 
   ASSERT_EQ(source.row() + 1, moved.row());
@@ -127,7 +127,7 @@ TEST(TilePosition, South)
 
 TEST(TilePosition, West)
 {
-  const TilePos source{62, 39};
+  const TilePos source {62, 39};
   const TilePos moved = source.west();
 
   ASSERT_EQ(source.row(), moved.row());
@@ -136,8 +136,8 @@ TEST(TilePosition, West)
 
 TEST(TilePosition, Addition)
 {
-  const TilePos a{2, 3};
-  const TilePos b{6, 4};
+  const TilePos a {2, 3};
+  const TilePos b {6, 4};
 
   const auto sum = a + b;
   ASSERT_EQ(a.row() + b.row(), sum.row());
@@ -146,8 +146,8 @@ TEST(TilePosition, Addition)
 
 TEST(TilePosition, Subtraction)
 {
-  const TilePos a{13, 7};
-  const TilePos b{4, 2};
+  const TilePos a {13, 7};
+  const TilePos b {4, 2};
 
   const auto diff = a - b;
   ASSERT_EQ(a.row() - b.row(), diff.row());
@@ -156,7 +156,7 @@ TEST(TilePosition, Subtraction)
 
 TEST(TilePosition, AsVec2)
 {
-  const TilePos pos{832, 234};
+  const TilePos pos {832, 234};
   const auto    vec = pos.as_vec2();
 
   ASSERT_EQ(pos.row(), vec.y);
@@ -165,7 +165,7 @@ TEST(TilePosition, AsVec2)
 
 TEST(TilePosition, AsVec2f)
 {
-  const TilePos pos{-325, 834};
+  const TilePos pos {-325, 834};
   const auto    vec = pos.as_vec2f();
 
   ASSERT_EQ(static_cast<float>(pos.row()), vec.y);
@@ -174,28 +174,30 @@ TEST(TilePosition, AsVec2f)
 
 TEST(TilePosition, EqualityOperator)
 {
-  const TilePos pos{45, 23};
+  const TilePos pos {45, 23};
   ASSERT_EQ(pos, pos);
 
-  const TilePos copy{pos};
+  const TilePos copy {pos};
   ASSERT_EQ(pos, copy);
   ASSERT_EQ(copy, pos);
 
-  const TilePos diff{32, 93};
+  const TilePos diff {32, 93};
   ASSERT_FALSE(pos == diff);
   ASSERT_FALSE(diff == pos);
 }
 
 TEST(TilePosition, InequalityOperator)
 {
-  const TilePos pos{45, 23};
+  const TilePos pos {45, 23};
   ASSERT_FALSE(pos != pos);
 
-  const TilePos copy{pos};
+  const TilePos copy {pos};
   ASSERT_FALSE(pos != copy);
   ASSERT_FALSE(copy != pos);
 
-  const TilePos other{839, 54};
+  const TilePos other {839, 54};
   ASSERT_NE(pos, other);
   ASSERT_NE(other, pos);
 }
+
+}  // namespace tactile::test

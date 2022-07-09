@@ -4,8 +4,7 @@
 
 #include "io/persistence/preferences.hpp"
 
-using namespace tactile;
-
+namespace tactile::test {
 namespace {
 
 struct FooCmd : ICommand
@@ -247,7 +246,8 @@ TEST(CommandStack, SetCapacity)
   ASSERT_EQ(5, stack.size());
   ASSERT_STREQ("FooCmd", stack.get_undo_text());
 
-  // [ FooCmd, FooCmd, FooCmd, FooCmd, ^FooCmd ] -> [ FooCmd, FooCmd, FooCmd, FooCmd, ^BarCmd ]
+  // [ FooCmd, FooCmd, FooCmd, FooCmd, ^FooCmd ] -> [ FooCmd, FooCmd, FooCmd, FooCmd,
+  // ^BarCmd ]
   stack.exec<BarCmd>();
   ASSERT_EQ(5, stack.size());
   ASSERT_EQ(4, stack.index());
@@ -266,3 +266,5 @@ TEST(CommandStack, SetCapacity)
   ASSERT_EQ(2, stack.index());
   ASSERT_STREQ("BarCmd", stack.get_undo_text());
 }
+
+}  // namespace tactile::test

@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(TileUtils, ToMatrixCoords)
 {
@@ -40,3 +40,5 @@ TEST(TileUtils, MakeTileMatrix)
   ASSERT_EQ(7, matrix.at(0).capacity());
   ASSERT_EQ(7, matrix.at(0).size());
 }
+
+}  // namespace tactile::test

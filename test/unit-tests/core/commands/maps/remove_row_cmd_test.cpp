@@ -25,11 +25,11 @@
 #include "unit-tests/core/helpers/map_builder.hpp"
 #include "unit-tests/core/helpers/map_test_helpers.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(RemoveRowCmd, Constructor)
 {
-  ASSERT_THROW(RemoveRowCmd{nullptr}, TactileError);
+  ASSERT_THROW(RemoveRowCmd {nullptr}, TactileError);
 }
 
 TEST(RemoveRowCmd, RedoUndo)
@@ -40,7 +40,7 @@ TEST(RemoveRowCmd, RedoUndo)
   auto document = test::MapBuilder::build().with_size(initialRows, initialCols).result();
   auto map = document->get_map_ptr();
 
-  RemoveRowCmd cmd{map};
+  RemoveRowCmd cmd {map};
   cmd.redo();
 
   ASSERT_EQ(initialRows - 1, map->row_count());
@@ -65,8 +65,8 @@ TEST(RemoveRowCmd, MergeSupport)
                       .result();
   auto map = document->get_map_ptr();
 
-  RemoveRowCmd       a{map};
-  const RemoveRowCmd b{map};
+  RemoveRowCmd       a {map};
+  const RemoveRowCmd b {map};
 
   ASSERT_TRUE(a.merge_with(&b));
 
@@ -82,3 +82,5 @@ TEST(RemoveRowCmd, MergeSupport)
 
   test::verify_all_tiles_matches(map->view_tile_layer(layerId), 42);
 }
+
+}  // namespace tactile::test

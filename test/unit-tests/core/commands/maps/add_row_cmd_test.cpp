@@ -24,11 +24,11 @@
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(AddRowCmd, Constructor)
 {
-  ASSERT_THROW(AddRowCmd{nullptr}, TactileError);
+  ASSERT_THROW(AddRowCmd {nullptr}, TactileError);
 }
 
 TEST(AddRowCmd, RedoUndo)
@@ -39,7 +39,7 @@ TEST(AddRowCmd, RedoUndo)
   auto document = test::MapBuilder::build().with_size(initialRows, initialCols).result();
   auto map = document->get_map_ptr();
 
-  AddRowCmd cmd{map};
+  AddRowCmd cmd {map};
   cmd.redo();
 
   ASSERT_EQ(initialRows + 1, map->row_count());
@@ -59,8 +59,8 @@ TEST(AddRowCmd, MergeSupport)
   auto document = test::MapBuilder::build().with_size(initialRows, initialCols).result();
   auto map = document->get_map_ptr();
 
-  AddRowCmd       a{map};
-  const AddRowCmd b{map};
+  AddRowCmd       a {map};
+  const AddRowCmd b {map};
 
   ASSERT_TRUE(a.merge_with(&b));
 
@@ -74,3 +74,5 @@ TEST(AddRowCmd, MergeSupport)
   ASSERT_EQ(initialRows, map->row_count());
   ASSERT_EQ(initialCols, map->column_count());
 }
+
+}  // namespace tactile::test

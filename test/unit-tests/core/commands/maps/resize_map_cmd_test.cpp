@@ -24,7 +24,7 @@
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(ResizeMapCmd, Constructor)
 {
@@ -36,7 +36,7 @@ TEST(ResizeMapCmd, RedoUndo)
   auto document = test::MapBuilder::build().with_size(5, 7).result();
   auto map = document->get_map_ptr();
 
-  ResizeMapCmd cmd{map, 3, 9};
+  ResizeMapCmd cmd {map, 3, 9};
   cmd.redo();
 
   ASSERT_EQ(3, map->row_count());
@@ -47,3 +47,5 @@ TEST(ResizeMapCmd, RedoUndo)
   ASSERT_EQ(5, map->row_count());
   ASSERT_EQ(7, map->column_count());
 }
+
+}  // namespace tactile::test

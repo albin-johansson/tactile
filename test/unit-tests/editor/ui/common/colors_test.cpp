@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(ColorUtils, ColorToArray)
 {
@@ -13,3 +13,5 @@ TEST(ColorUtils, ColorToArray)
   ASSERT_EQ(color.norm_blue(), array.at(2));
   ASSERT_EQ(color.norm_alpha(), array.at(3));
 }
+
+}  // namespace tactile::test

@@ -24,7 +24,7 @@
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(SetObjectTagCmd, Constructor)
 {
@@ -41,7 +41,7 @@ TEST(SetObjectTagCmd, RedoUndo)
 
   object->set_tag("old-tag");
 
-  SetObjectTagCmd cmd{object, "new-tag"};
+  SetObjectTagCmd cmd {object, "new-tag"};
 
   cmd.redo();
   ASSERT_EQ("new-tag", object->get_tag());
@@ -60,8 +60,8 @@ TEST(SetObjectTagCmd, MergeSupport)
 
   object->set_tag("x");
 
-  SetObjectTagCmd       a{object, "a"};
-  const SetObjectTagCmd b{object, "b"};
+  SetObjectTagCmd       a {object, "a"};
+  const SetObjectTagCmd b {object, "b"};
 
   ASSERT_TRUE(a.merge_with(&b));
 
@@ -71,3 +71,5 @@ TEST(SetObjectTagCmd, MergeSupport)
   a.undo();
   ASSERT_EQ("x", object->get_tag());
 }
+
+}  // namespace tactile::test

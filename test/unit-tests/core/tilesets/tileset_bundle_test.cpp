@@ -24,16 +24,15 @@
 #include "core/tilesets/tileset_info.hpp"
 #include "misc/panic.hpp"
 
-using namespace tactile;
-
+namespace tactile::test {
 namespace {
 
 [[nodiscard]] auto _make_tileset() -> Shared<Tileset>
 {
-  return std::make_shared<Tileset>(TilesetInfo{.texture_path = "foo.png",
-                                               .texture_id = 42,
-                                               .texture_size = {1024, 1024},
-                                               .tile_size = {32, 32}});
+  return std::make_shared<Tileset>(TilesetInfo {.texture_path = "foo.png",
+                                                .texture_id = 42,
+                                                .texture_size = {1024, 1024},
+                                                .tile_size = {32, 32}});
 }
 
 }  // namespace
@@ -215,3 +214,5 @@ TEST(TilesetBundle, ToLocalIndex)
   ASSERT_THROW(bundle.to_tile_index(refA.first_tile() - 1), TactileError);
   ASSERT_THROW(bundle.to_tile_index(refB.last_tile() + 1), TactileError);
 }
+
+}  // namespace tactile::test

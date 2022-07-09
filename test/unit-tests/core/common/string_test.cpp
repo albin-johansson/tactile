@@ -4,7 +4,7 @@
 
 #include "core/common/filesystem.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(StringUtils, IntegerFromString)
 {
@@ -43,3 +43,5 @@ TEST(StringUtils, ConvertToForwardSlashes)
   const std::filesystem::path source = R"(C:\foo\bar\abc.yaml)";
   ASSERT_EQ("C:/foo/bar/abc.yaml", convert_to_forward_slashes(source));
 }
+
+}  // namespace tactile::test

@@ -17,9 +17,9 @@
 #include "io/maps/emitter/yaml_emitter.hpp"
 #include "io/maps/parser/parse_map.hpp"
 
-using namespace tactile;
 using namespace std::string_literals;
 
+namespace tactile::test {
 namespace {
 
 void _validate_contexts(const ir::ContextData& source, const ir::ContextData& restored)
@@ -248,7 +248,7 @@ constexpr usize _col_count = 13;
     tileData.tiles = make_tile_matrix(_row_count, _col_count);
 
     child->context.properties["path"] =
-        std::filesystem::path{"test-resources/exterior.png"};
+        std::filesystem::path {"test-resources/exterior.png"};
   }
 
   {
@@ -406,9 +406,9 @@ constexpr usize _col_count = 13;
     data.component_definitions["long-component"]["str"] = ""s;
     data.component_definitions["long-component"]["str-v"] = "hello"s;
 
-    data.component_definitions["long-component"]["path"] = std::filesystem::path{};
+    data.component_definitions["long-component"]["path"] = std::filesystem::path {};
     data.component_definitions["long-component"]["path-v"] =
-        std::filesystem::path{"../foo.txt"};
+        std::filesystem::path {"../foo.txt"};
 
     data.component_definitions["long-component"]["col"] = cen::colors::black;
     data.component_definitions["long-component"]["col-v"] = cen::colors::indigo;
@@ -424,9 +424,9 @@ constexpr usize _col_count = 13;
   data.context.properties["map-float"] = 56.3f;
   data.context.properties["map-bool"] = false;
   data.context.properties["map-string"] = "foobar"s;
-  data.context.properties["map-file"] = std::filesystem::path{"foo/bar.txt"};
+  data.context.properties["map-file"] = std::filesystem::path {"foo/bar.txt"};
   data.context.properties["map-color"] = cen::colors::sea_green;
-  data.context.properties["map-object"] = object_t{42};
+  data.context.properties["map-object"] = object_t {42};
 
   if (useComponents) {
     data.context.components["empty-component"];
@@ -441,8 +441,8 @@ constexpr usize _col_count = 13;
 
 TEST(RoundTrip, YAML)
 {
-  const io::EmitInfo emitter{std::filesystem::absolute("test_map.yaml"),
-                             _create_source_data(true)};
+  const io::EmitInfo emitter {std::filesystem::absolute("test_map.yaml"),
+                              _create_source_data(true)};
   io::emit_yaml_map(emitter);
 
   const auto result = io::parse_map("test_map.yaml");
@@ -459,8 +459,8 @@ TEST(RoundTrip, YAML)
 
 TEST(RoundTrip, JSON)
 {
-  const io::EmitInfo emitter{std::filesystem::absolute("test_map.json"),
-                             _create_source_data(false)};
+  const io::EmitInfo emitter {std::filesystem::absolute("test_map.json"),
+                              _create_source_data(false)};
   io::emit_json_map(emitter);
 
   const auto result = io::parse_map("test_map.json");
@@ -478,8 +478,8 @@ TEST(RoundTrip, JSON)
 
 TEST(RoundTrip, XML)
 {
-  const io::EmitInfo emitter{std::filesystem::absolute("test_map.tmx"),
-                             _create_source_data(false)};
+  const io::EmitInfo emitter {std::filesystem::absolute("test_map.tmx"),
+                              _create_source_data(false)};
   io::emit_xml_map(emitter);
 
   const auto result = io::parse_map("test_map.tmx");
@@ -492,3 +492,5 @@ TEST(RoundTrip, XML)
   _validate_tilesets(source, restored);
   _validate_layers(source, restored);
 }
+
+}  // namespace tactile::test

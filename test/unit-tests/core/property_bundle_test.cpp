@@ -24,7 +24,8 @@
 #include "misc/panic.hpp"
 
 using namespace std::string_literals;
-using namespace tactile;
+
+namespace tactile::test {
 
 TEST(PropertyBundle, Defaults)
 {
@@ -87,7 +88,7 @@ TEST(PropertyBundle, ChangeType)
 TEST(PropertyBundle, Find)
 {
   PropertyBundle bundle;
-  const auto& ref = bundle;
+  const auto&    ref = bundle;
 
   ASSERT_FALSE(bundle.find("foo"));
   ASSERT_FALSE(ref.find("foo"));
@@ -101,7 +102,7 @@ TEST(PropertyBundle, Find)
 TEST(PropertyBundle, At)
 {
   PropertyBundle bundle;
-  const auto& ref = bundle;
+  const auto&    ref = bundle;
 
   ASSERT_THROW(bundle.at("foo"), TactileError);
   ASSERT_THROW(ref.at("foo"), TactileError);
@@ -121,3 +122,5 @@ TEST(PropertyBundle, Contains)
   ASSERT_TRUE(bundle.contains("xyz"));
   ASSERT_FALSE(bundle.contains("XYZ"));
 }
+
+}  // namespace tactile::test

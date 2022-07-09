@@ -30,7 +30,7 @@
 #include "core/tilesets/tileset.hpp"
 #include "core/tilesets/tileset_info.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 using Contexts = testing::Types<Map,  //
                                 TileLayer,
@@ -49,22 +49,22 @@ namespace {
 template <typename T>
 auto _make_context() -> T
 {
-  return T{};
+  return T {};
 }
 
 template <>
 auto _make_context<Tileset>() -> Tileset
 {
-  return Tileset{{.texture_path = "foo.png",
-                  .texture_id = 8,
-                  .texture_size = {1024, 768},
-                  .tile_size = {16, 32}}};
+  return Tileset {{.texture_path = "foo.png",
+                   .texture_id = 8,
+                   .texture_size = {1024, 768},
+                   .tile_size = {16, 32}}};
 }
 
 template <>
 auto _make_context<Tile>() -> Tile
 {
-  return Tile{42};
+  return Tile {42};
 }
 
 }  // namespace
@@ -87,3 +87,5 @@ TYPED_TEST(ContextTest, SetName)
   context.set_name("foobar");
   ASSERT_EQ("foobar", context.get_name());
 }
+
+}  // namespace tactile::test

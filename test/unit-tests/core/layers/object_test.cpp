@@ -21,14 +21,14 @@
 
 #include <gtest/gtest.h>
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(Object, Defaults)
 {
   const Object object;
 
-  ASSERT_EQ(Vector2f{}, object.get_pos());
-  ASSERT_EQ(Vector2f{}, object.get_size());
+  ASSERT_EQ(Vector2f {}, object.get_pos());
+  ASSERT_EQ(Vector2f {}, object.get_size());
   ASSERT_EQ(ObjectType::Rect, object.get_type());
   ASSERT_EQ("", object.get_tag());
   ASSERT_TRUE(object.is_visible());
@@ -90,3 +90,5 @@ TEST(Object, SetVisible)
   object.set_visible(true);
   ASSERT_TRUE(object.is_visible());
 }
+
+}  // namespace tactile::test

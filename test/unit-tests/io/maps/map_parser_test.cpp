@@ -20,7 +20,7 @@
 #define XML_DIR "test-resources/xml/"
 #define XML_ERR "test-resources/xml/errors/"
 
-using namespace tactile;
+namespace tactile::test {
 
 using io::ParseError;
 
@@ -28,8 +28,8 @@ namespace {
 
 using test_data = std::pair<std::string_view, ParseError>;
 
-[[nodiscard]] constexpr auto _with(const std::string_view path,
-                                   const ParseError expected) -> test_data
+[[nodiscard]] constexpr auto _with(const std::string_view path, const ParseError expected)
+    -> test_data
 {
   return {path, expected};
 }
@@ -208,3 +208,5 @@ TEST_P(MapParserTest, Parsing)
 }
 
 INSTANTIATE_TEST_SUITE_P(MapParserTests, MapParserTest, cases);
+
+}  // namespace tactile::test

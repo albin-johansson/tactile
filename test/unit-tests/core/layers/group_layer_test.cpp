@@ -29,7 +29,7 @@
 #include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(GroupLayer, Defaults)
 {
@@ -38,7 +38,7 @@ TEST(GroupLayer, Defaults)
 
   struct Counter final : IConstLayerVisitor
   {
-    usize count{};
+    usize count {};
 
     void visit(const TileLayer&) override { ++count; }
     void visit(const ObjectLayer&) override { ++count; }
@@ -478,3 +478,5 @@ TEST(GroupLayer, CanMoveLayerDown)
   ASSERT_FALSE(root.can_move_layer_down(o1->get_uuid()));
   ASSERT_FALSE(root.can_move_layer_down(t2->get_uuid()));
 }
+
+}  // namespace tactile::test

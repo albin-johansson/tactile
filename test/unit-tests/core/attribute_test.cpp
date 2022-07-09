@@ -4,8 +4,9 @@
 
 #include "misc/panic.hpp"
 
-using namespace tactile;
 using namespace std::string_literals;
+
+namespace tactile::test {
 
 TEST(Attribute, Defaults)
 {
@@ -31,7 +32,7 @@ TEST(Attribute, Defaults)
 
 TEST(Attribute, IntAttribute)
 {
-  const Attribute value{123};
+  const Attribute value {123};
   ASSERT_EQ(123, value.as_int());
 
   ASSERT_TRUE(value.is_int());
@@ -47,7 +48,7 @@ TEST(Attribute, IntAttribute)
 
 TEST(Attribute, FloatAttribute)
 {
-  const Attribute value{12.3f};
+  const Attribute value {12.3f};
   ASSERT_EQ(12.3f, value.as_float());
 
   ASSERT_TRUE(value.is_float());
@@ -63,7 +64,7 @@ TEST(Attribute, FloatAttribute)
 
 TEST(Attribute, StringAttribute)
 {
-  const Attribute value{"foo"s};
+  const Attribute value {"foo"s};
   ASSERT_EQ("foo", value.as_string());
 
   ASSERT_TRUE(value.is_string());
@@ -79,7 +80,7 @@ TEST(Attribute, StringAttribute)
 
 TEST(Attribute, BoolAttribute)
 {
-  const Attribute value{false};
+  const Attribute value {false};
   ASSERT_FALSE(value.as_bool());
 
   ASSERT_TRUE(value.is_bool());
@@ -95,8 +96,8 @@ TEST(Attribute, BoolAttribute)
 
 TEST(Attribute, FileAttribute)
 {
-  const std::filesystem::path file{"test-resources/foo.txt"};
-  const Attribute value{file};
+  const std::filesystem::path file {"test-resources/foo.txt"};
+  const Attribute             value {file};
 
   ASSERT_TRUE(value.is_path());
   ASSERT_TRUE(value.try_as_path());
@@ -111,7 +112,7 @@ TEST(Attribute, FileAttribute)
 
 TEST(Attribute, ObjectAttribute)
 {
-  const Attribute value{object_t{7}};
+  const Attribute value {object_t {7}};
 
   ASSERT_TRUE(value.is_object());
   ASSERT_TRUE(value.try_as_object());
@@ -126,7 +127,7 @@ TEST(Attribute, ObjectAttribute)
 
 TEST(Attribute, ColorAttribute)
 {
-  const Attribute value{cen::colors::red};
+  const Attribute value {cen::colors::red};
 
   ASSERT_TRUE(value.is_color());
   ASSERT_TRUE(value.try_as_color());
@@ -159,3 +160,5 @@ TEST(Attribute, SetValue)
   ASSERT_TRUE(value.is_string());
   ASSERT_EQ("foo", value.as_string());
 }
+
+}  // namespace tactile::test

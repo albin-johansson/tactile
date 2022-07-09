@@ -24,8 +24,7 @@
 #include "core/tilesets/tileset_info.hpp"
 #include "misc/panic.hpp"
 
-using namespace tactile;
-
+namespace tactile::test {
 namespace {
 
 constexpr const char* _default_texture_path = "foo/bar.png";
@@ -35,7 +34,7 @@ constexpr Vector2i    _default_tile_size = {28, 42};
 
 [[nodiscard]] auto _make_tileset() -> Tileset
 {
-  return Tileset{{
+  return Tileset {{
       .texture_path = _default_texture_path,
       .texture_id = _default_texture_id,
       .texture_size = _default_texture_size,
@@ -83,3 +82,5 @@ TEST(Tileset, TileCount)
   const auto tileset = _make_tileset();
   ASSERT_EQ(tileset.row_count() * tileset.column_count(), tileset.tile_count());
 }
+
+}  // namespace tactile::test

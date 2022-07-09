@@ -23,7 +23,7 @@
 
 #include "core/common/functional.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 // TODO zoom_in, zoom_out
 
@@ -145,3 +145,5 @@ TEST(Viewport, SetLimits)
   ASSERT_EQ(maxX, viewport.get_offset().x);
   ASSERT_EQ(maxY, viewport.get_offset().y);
 }
+
+}  // namespace tactile::test

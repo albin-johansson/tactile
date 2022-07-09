@@ -30,8 +30,7 @@
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
-using namespace tactile;
-
+namespace tactile::test {
 namespace {
 
 // - a      (object layer)
@@ -53,13 +52,13 @@ struct MapLayerPreset final
   UUID g;
 
   MapLayerPreset()
-      : a{map.add_object_layer()}
-      , b{map.add_group_layer()}
-      , c{map.add_tile_layer(b)}
-      , d{map.add_group_layer(b)}
-      , e{map.add_object_layer(d)}
-      , f{map.add_tile_layer(d)}
-      , g{map.add_tile_layer(b)}
+      : a {map.add_object_layer()}
+      , b {map.add_group_layer()}
+      , c {map.add_tile_layer(b)}
+      , d {map.add_group_layer(b)}
+      , e {map.add_object_layer(d)}
+      , f {map.add_tile_layer(d)}
+      , g {map.add_tile_layer(b)}
   {}
 };
 
@@ -206,10 +205,10 @@ TEST(Map, FixTiles)
   const auto& previous = lookup_in(result, layerId);
 
   ASSERT_EQ(4, previous.size());
-  ASSERT_EQ(lookup_in(previous, TilePos{0, 0}), -1);
-  ASSERT_EQ(lookup_in(previous, TilePos{2, 1}), tilesetRef.last_tile() + 1);
-  ASSERT_EQ(lookup_in(previous, TilePos{3, 2}), tilesetRef.last_tile() + 934);
-  ASSERT_EQ(lookup_in(previous, TilePos{4, 4}), tilesetRef.first_tile() - 32);
+  ASSERT_EQ(lookup_in(previous, TilePos {0, 0}), -1);
+  ASSERT_EQ(lookup_in(previous, TilePos {2, 1}), tilesetRef.last_tile() + 1);
+  ASSERT_EQ(lookup_in(previous, TilePos {3, 2}), tilesetRef.last_tile() + 934);
+  ASSERT_EQ(lookup_in(previous, TilePos {4, 4}), tilesetRef.first_tile() - 32);
 
   ASSERT_EQ(tilesetRef.first_tile(), layer.tile_at({0, 1}));
   ASSERT_EQ(42, layer.tile_at({4, 2}));
@@ -238,11 +237,9 @@ TEST(Map, IsValidPosition)
   ASSERT_FALSE(map.is_valid_position({0, -1}));
   ASSERT_TRUE(map.is_valid_position({0, 0}));
   ASSERT_TRUE(map.is_valid_position({2, 3}));
-  ASSERT_TRUE(map.is_valid_position(end - TilePos{1, 1}));
+  ASSERT_TRUE(map.is_valid_position(end - TilePos {1, 1}));
   ASSERT_FALSE(map.is_valid_position(end));
 }
-
-#pragma region Layer management
 
 TEST(Map, AddLayer)
 {
@@ -389,9 +386,9 @@ TEST(Map, AdvancedVisitLayers)
 
   struct TestVisitor final : IConstLayerVisitor
   {
-    usize tile_layer_count{};
-    usize object_layer_count{};
-    usize group_layer_count{};
+    usize tile_layer_count {};
+    usize object_layer_count {};
+    usize group_layer_count {};
 
     void visit(const TileLayer&) override { ++tile_layer_count; }
     void visit(const ObjectLayer&) override { ++object_layer_count; }
@@ -481,4 +478,4 @@ TEST(Map, SelectLayer)
   ASSERT_FALSE(preset.map.is_active_layer(LayerType::GroupLayer));
 }
 
-#pragma endregion
+}  // namespace tactile::test

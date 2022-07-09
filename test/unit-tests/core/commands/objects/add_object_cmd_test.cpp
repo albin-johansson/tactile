@@ -25,7 +25,7 @@
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(AddObjectCmd, Constructor)
 {
@@ -38,7 +38,7 @@ TEST(AddObjectCmd, RedoUndo)
   auto  document = test::MapBuilder::build().with_object_layer(&layerId).result();
   auto& layer = document->get_map().view_object_layer(layerId);
 
-  AddObjectCmd cmd{document.get(), layerId, ObjectType::Point, {0, 0}};
+  AddObjectCmd cmd {document.get(), layerId, ObjectType::Point, {0, 0}};
 
   cmd.redo();
   ASSERT_EQ(1, layer.object_count());
@@ -51,3 +51,5 @@ TEST(AddObjectCmd, RedoUndo)
   ASSERT_EQ(0, layer.object_count());
   ASSERT_FALSE(document->has_context(objectId));
 }
+
+}  // namespace tactile::test

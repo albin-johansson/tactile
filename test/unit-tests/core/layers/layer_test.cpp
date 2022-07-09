@@ -23,7 +23,7 @@
 #include "core/layers/object_layer.hpp"
 #include "core/layers/tile_layer.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 using LayerTypes = testing::Types<TileLayer, ObjectLayer, GroupLayer>;
 
@@ -78,3 +78,5 @@ TYPED_TEST(LayerTest, Clone)
   ASSERT_EQ(source.get_opacity(), clone->get_opacity());
   ASSERT_EQ(source.is_visible(), clone->is_visible());
 }
+
+}  // namespace tactile::test

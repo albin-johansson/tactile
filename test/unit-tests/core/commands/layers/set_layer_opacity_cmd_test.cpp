@@ -24,7 +24,7 @@
 #include "core/layers/tile_layer.hpp"
 #include "misc/panic.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(SetLayerOpacityCmd, Constructor)
 {
@@ -36,7 +36,7 @@ TEST(SetLayerOpacityCmd, RedoUndo)
   auto layer = std::make_shared<TileLayer>();
   ASSERT_EQ(1.0f, layer->get_opacity());
 
-  SetLayerOpacityCmd cmd{layer, 0.8f};
+  SetLayerOpacityCmd cmd {layer, 0.8f};
 
   cmd.redo();
   ASSERT_EQ(0.8f, layer->get_opacity());
@@ -49,9 +49,9 @@ TEST(SetLayerOpacityCmd, MergeSupport)
 {
   auto layer = std::make_shared<TileLayer>();
 
-  SetLayerOpacityCmd       a{layer, 0.8f};
-  const SetLayerOpacityCmd b{layer, 0.6f};
-  const SetLayerOpacityCmd c{layer, 0.4f};
+  SetLayerOpacityCmd       a {layer, 0.8f};
+  const SetLayerOpacityCmd b {layer, 0.6f};
+  const SetLayerOpacityCmd c {layer, 0.4f};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));
@@ -62,3 +62,5 @@ TEST(SetLayerOpacityCmd, MergeSupport)
   a.undo();
   ASSERT_EQ(1.0f, layer->get_opacity());
 }
+
+}  // namespace tactile::test

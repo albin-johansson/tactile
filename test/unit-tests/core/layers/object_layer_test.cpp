@@ -21,10 +21,12 @@
 
 #include <gtest/gtest.h>
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(ObjectLayer, Defaults)
 {
   const ObjectLayer layer;
   ASSERT_EQ(0, layer.object_count());
 }
+
+}  // namespace tactile::test

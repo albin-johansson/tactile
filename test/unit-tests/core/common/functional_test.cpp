@@ -1,8 +1,8 @@
-#include <gtest/gtest.h>
-
 #include "core/common/functional.hpp"
 
-using namespace tactile;
+#include <gtest/gtest.h>
+
+namespace tactile::test {
 
 TEST(InvokeN, ZeroInvocations)
 {
@@ -24,3 +24,5 @@ TEST(InvokeN, SeveralInvocations)
   invoke_n(42, [&] { ++calls; });
   ASSERT_EQ(42, calls);
 }
+
+}  // namespace tactile::test

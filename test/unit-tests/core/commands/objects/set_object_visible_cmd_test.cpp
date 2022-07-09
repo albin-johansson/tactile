@@ -24,7 +24,7 @@
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 TEST(SetObjectVisibleCmd, Constructor)
 {
@@ -39,7 +39,7 @@ TEST(SetObjectVisibleCmd, RedoUndo)
                       .with_object(ObjectType::Rect, &object)
                       .result();
 
-  SetObjectVisibleCmd cmd{object, false};
+  SetObjectVisibleCmd cmd {object, false};
 
   cmd.redo();
   ASSERT_FALSE(object->is_visible());
@@ -47,3 +47,5 @@ TEST(SetObjectVisibleCmd, RedoUndo)
   cmd.undo();
   ASSERT_TRUE(object->is_visible());
 }
+
+}  // namespace tactile::test

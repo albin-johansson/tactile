@@ -4,7 +4,7 @@
 
 #include "io/maps/parser/parse_map.hpp"
 
-using namespace tactile;
+namespace tactile::test {
 
 using io::ParseError;
 
@@ -37,3 +37,5 @@ TEST_P(PropertySpecialCaseTest, Parsing)
 }
 
 INSTANTIATE_TEST_SUITE_P(PropertySpecialCaseTests, PropertySpecialCaseTest, cases);
+
+}  // namespace tactile::test
