@@ -25,14 +25,14 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/utils/strings.hpp"
+#include "core/common/string.hpp"
 #include "core/utils/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
 #include "io/maps/xml_utils.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _collect_layer_nodes(pugi::xml_node mapNode)
@@ -70,7 +70,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_nodes(pugi::xml_node dataNode,
+[[nodiscard]] auto _parse_tile_nodes(pugi::xml_node     dataNode,
                                      ir::TileLayerData& layerData) -> ParseError
 {
   usize index = 0;
@@ -84,7 +84,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_data(pugi::xml_node layerNode,
+[[nodiscard]] auto _parse_tile_data(pugi::xml_node     layerNode,
                                     ir::TileLayerData& layerData) -> ParseError
 {
   const auto data = layerNode.child("data");
@@ -120,8 +120,8 @@ namespace {
 
 [[nodiscard]] auto _parse_tile_layer(pugi::xml_node layerNode,
                                      ir::LayerData& layerData,
-                                     const usize rows,
-                                     const usize columns) -> ParseError
+                                     const usize    rows,
+                                     const usize    columns) -> ParseError
 {
   auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
 
@@ -181,9 +181,9 @@ namespace {
 
 [[nodiscard]] auto _parse_layer(pugi::xml_node layerNode,
                                 ir::LayerData& layerData,
-                                const usize index,
-                                const usize rows,
-                                const usize columns) -> ParseError
+                                const usize    index,
+                                const usize    rows,
+                                const usize    columns) -> ParseError
 {
   layerData.index = index;
 
@@ -232,7 +232,7 @@ namespace {
   }
   else {
     /* If we enter this branch, then the layer collection is broken */
-    panic("Collected invalid layer node!");
+    throw TactileError("Collected invalid layer node!");
   }
 
   if (const auto err = parse_properties(layerNode, layerData.context);
@@ -257,10 +257,10 @@ auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData) -> Pars
   objectData.name = objectNode.attribute("name").as_string("");
   objectData.tag = objectNode.attribute("type").as_string("");
 
-  objectData.x = objectNode.attribute("x").as_float(0);
-  objectData.y = objectNode.attribute("y").as_float(0);
-  objectData.width = objectNode.attribute("width").as_float(0);
-  objectData.height = objectNode.attribute("height").as_float(0);
+  objectData.pos.x = objectNode.attribute("x").as_float(0);
+  objectData.pos.y = objectNode.attribute("y").as_float(0);
+  objectData.size.x = objectNode.attribute("width").as_float(0);
+  objectData.size.y = objectNode.attribute("height").as_float(0);
 
   objectData.visible = objectNode.attribute("visible").as_bool(true);
 
@@ -303,4 +303,4 @@ auto parse_layers(pugi::xml_node mapNode, ir::MapData& mapData) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

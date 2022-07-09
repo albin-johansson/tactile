@@ -26,11 +26,11 @@
 #include "io/maps/json_utils.hpp"
 #include "io/maps/parser/json/json_attribute_parser.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_object_layer(const nlohmann::json& json,
-                                       ir::LayerData& layerData) -> ParseError
+                                       ir::LayerData&        layerData) -> ParseError
 {
   auto& objectLayerData = layerData.data.emplace<ir::ObjectLayerData>();
 
@@ -49,8 +49,8 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer_data(const nlohmann::json& json,
-                                          TileMatrix& tiles,
-                                          const usize columns) -> ParseError
+                                          TileMatrix&           tiles,
+                                          const usize           columns) -> ParseError
 {
   /* We only support the CSV tile encoding, which is the implicit default */
   if (auto encoding = as_string(json, "encoding")) {
@@ -84,9 +84,9 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer(const nlohmann::json& json,
-                                     ir::LayerData& layerData,
-                                     const usize rows,
-                                     const usize columns) -> ParseError
+                                     ir::LayerData&        layerData,
+                                     const usize           rows,
+                                     const usize           columns) -> ParseError
 {
   auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
 
@@ -131,10 +131,10 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_layer(const nlohmann::json& json,
-                                ir::LayerData& layerData,
-                                const usize index,
-                                const usize rows,
-                                const usize columns) -> ParseError
+                                ir::LayerData&        layerData,
+                                const usize           index,
+                                const usize           rows,
+                                const usize           columns) -> ParseError
 {
   layerData.index = index;
 
@@ -212,10 +212,10 @@ auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> Par
   objectData.name = as_string(json, "name").value_or("");
   objectData.tag = as_string(json, "type").value_or("");
 
-  objectData.x = as_float(json, "x").value_or(0.0f);
-  objectData.y = as_float(json, "y").value_or(0.0f);
-  objectData.width = as_float(json, "width").value_or(0.0f);
-  objectData.height = as_float(json, "height").value_or(0.0f);
+  objectData.pos.x = as_float(json, "x").value_or(0.0f);
+  objectData.pos.y = as_float(json, "y").value_or(0.0f);
+  objectData.size.x = as_float(json, "width").value_or(0.0f);
+  objectData.size.y = as_float(json, "height").value_or(0.0f);
 
   objectData.visible = as_bool(json, "visible").value_or(true);
 
@@ -264,4 +264,4 @@ auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseErro
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

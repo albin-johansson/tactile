@@ -27,13 +27,15 @@
 #include "cfg/protobuf_context.hpp"
 #include "core/common/maybe.hpp"
 
+/**
+ * \defgroup cfg Configuration
+ * Contains utilities related to the configuration of the application.
+ */
+
 namespace tactile {
 
-/**
- * \brief Handles the configuration of the application window, OpenGL context, etc.
- *
- * \ingroup cfg
- */
+/// Handles the configuration of the application window, OpenGL context, etc.
+/// \ingroup cfg
 class AppConfiguration final
 {
  public:
@@ -44,13 +46,13 @@ class AppConfiguration final
 
  private:
   ProtobufContext mProtobuf;
-  cen::sdl mSDL;
-  cen::img mIMG;
+  cen::sdl        mSDL;
+  cen::img        mIMG;
 
   /* Initialization of these members needs to be deferred */
-  Maybe<cen::window> mWindow;
+  Maybe<cen::window>     mWindow;
   Maybe<cen::gl_context> mOpenGL;
-  Maybe<ImGuiContext> mImGui;
+  Maybe<ImGuiContext>    mImGui;
 };
 
 }  // namespace tactile

@@ -23,7 +23,7 @@
 #include <iomanip>  // setw
 #include <ios>      // ios
 
-#include "core/utils/strings.hpp"
+#include "core/common/filesystem.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/panic.hpp"
 
@@ -77,7 +77,7 @@ void to_json(nlohmann::json& json, const Attribute& value)
       break;
 
     default:
-      panic("Invalid attribute type!");
+      throw TactileError("Invalid attribute type!");
   }
 }
 
@@ -85,7 +85,7 @@ void write_json(const nlohmann::json& json, const std::filesystem::path& path)
 {
   std::ofstream stream{path, std::ios::out | std::ios::trunc};
 
-  if (get_preferences().indent_output()) {
+  if (io::get_preferences().indent_output()) {
     stream << std::setw(2);
   }
 
@@ -106,6 +106,8 @@ auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>
     return nothing;
   }
 }
+
+namespace io {
 
 auto as_string(const nlohmann::json& json, const std::string_view name)
     -> Maybe<std::string>
@@ -133,4 +135,5 @@ auto as_bool(const nlohmann::json& json, const std::string_view name) -> Maybe<b
   return _as<bool>(json, name);
 }
 
+}  // namespace io
 }  // namespace tactile

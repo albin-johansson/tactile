@@ -19,118 +19,108 @@
 
 #include "ellipse_tool.hpp"
 
-#include <cmath>  // abs
-
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
-#include <glm/vec2.hpp>
+#include <glm/common.hpp>
 
-#include "core/components/tools.hpp"
+#include "core/common/math.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/events/tool_events.hpp"
+#include "core/model.hpp"
 #include "core/renderer.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/viewport_system.hpp"
-#include "editor/events/tool_events.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 
-void EllipseTool::draw_gizmos(const entt::registry& registry,
+void EllipseTool::draw_gizmos(const DocumentModel&,
                               IRenderer& renderer,
                               const MouseInfo&) const
 {
-  if (const auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
-    const glm::vec2 radius{stroke->current_x - stroke->start_x,
-                           stroke->current_y - stroke->start_y};
-    const glm::vec2 center{stroke->start_x + radius.x, stroke->start_y + radius.y};
+  if (mStroke) {
+    const auto radius = mStroke->current - mStroke->start;
+    const auto center = mStroke->start + radius;
 
-    renderer.draw_ellipse(center + glm::vec2{1, 1}, radius, cen::colors::black);
+    renderer.draw_ellipse(center + Vector2f{1, 1}, radius, cen::colors::black);
     renderer.draw_ellipse(center, radius, cen::colors::yellow);
   }
 }
 
-void EllipseTool::on_disabled(entt::registry& registry, entt::dispatcher& dispatcher)
+void EllipseTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(registry, dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void EllipseTool::on_exited(entt::registry& registry, entt::dispatcher& dispatcher)
+void EllipseTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(registry, dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void EllipseTool::on_pressed(entt::registry& registry,
+void EllipseTool::on_pressed(DocumentModel& model,
                              entt::dispatcher&,
                              const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
-      sys::is_object_layer_active(registry)) {
-    auto& stroke = registry.ctx().emplace<comp::CurrentEllipseStroke>();
-    stroke.start_x = mouse.x;
-    stroke.start_y = mouse.y;
-    stroke.current_x = stroke.start_x;
-    stroke.current_y = stroke.start_y;
+      is_available(model)) {
+    auto& stroke = mStroke.emplace();
+    stroke.start = mouse.pos;
+    stroke.current = stroke.start;
   }
 }
 
-void EllipseTool::on_dragged(entt::registry& registry,
+void EllipseTool::on_dragged(DocumentModel& model,
                              entt::dispatcher&,
                              const MouseInfo& mouse)
 {
-  if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
-    if (auto* stroke = registry.ctx().find<comp::CurrentEllipseStroke>()) {
-      stroke->current_x = mouse.x;
-      stroke->current_y = mouse.y;
-    }
+  if (mStroke && mouse.button == cen::mouse_button::left && is_available(model)) {
+    mStroke->current = mouse.pos;
   }
 }
 
-void EllipseTool::on_released(entt::registry& registry,
+void EllipseTool::on_released(DocumentModel&    model,
                               entt::dispatcher& dispatcher,
-                              const MouseInfo& mouse)
+                              const MouseInfo&  mouse)
 {
-  if (mouse.button == cen::mouse_button::left && sys::is_object_layer_active(registry)) {
-    maybe_emit_event(registry, dispatcher);
+  if (mouse.button == cen::mouse_button::left && is_available(model)) {
+    maybe_emit_event(model, dispatcher);
   }
 }
 
-auto EllipseTool::is_available(const entt::registry& registry) const -> bool
+void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  return sys::is_object_layer_active(registry);
-}
+  TACTILE_ASSERT(is_available(model));
 
-auto EllipseTool::get_type() const -> ToolType
-{
-  return ToolType::Ellipse;
-}
+  if (mStroke) {
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+    const auto& viewport = document.get_viewport();
 
-void EllipseTool::maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher)
-{
-  auto& ctx = registry.ctx();
-  if (const auto* stroke = ctx.find<comp::CurrentEllipseStroke>()) {
-    const auto [xRatio, yRatio] = sys::get_viewport_scaling_ratio(registry);
+    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
 
-    const auto xRadius = (stroke->current_x - stroke->start_x) / xRatio;
-    const auto yRadius = (stroke->current_y - stroke->start_y) / yRatio;
+    const auto radius = (mStroke->current - mStroke->start) / ratio;
+    auto       pos = mStroke->start / ratio;
 
-    auto x = (stroke->start_x / xRatio);
-    auto y = (stroke->start_y / yRatio);
-
-    if (xRadius < 0) {
-      x += xRadius * 2.0f;
+    if (radius.x < 0) {
+      pos.x += radius.x * 2.0f;
     }
 
-    if (yRadius < 0) {
-      y += yRadius * 2.0f;
+    if (radius.y < 0) {
+      pos.y += radius.y * 2.0f;
     }
 
-    if (xRadius != 0 && yRadius != 0) {
-      dispatcher.enqueue<AddEllipseEvent>(x,
-                                          y,
-                                          std::abs(xRadius) * 2.0f,
-                                          std::abs(yRadius) * 2.0f);
+    if (radius.x != 0 && radius.y != 0) {
+      const auto layerId = map.active_layer_id().value();
+      const auto diameter = glm::abs(radius) * 2.0f;
+      dispatcher.enqueue<AddEllipseEvent>(layerId, pos, diameter);
     }
 
-    ctx.erase<comp::CurrentEllipseStroke>();
+    mStroke.reset();
   }
+}
+
+auto EllipseTool::is_available(const DocumentModel& model) const -> bool
+{
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
+  return map.is_active_layer(LayerType::ObjectLayer);
 }
 
 }  // namespace tactile

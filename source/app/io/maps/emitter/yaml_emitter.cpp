@@ -29,18 +29,18 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
-#include "core/utils/strings.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/yaml_utils.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile::emitter {
+namespace tactile::io {
 namespace {
 
 constexpr int tileset_node_version = 1;
 
-void _emit_properties(YAML::Emitter& emitter, const ir::AttributeContextData& context)
+void _emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
 {
   if (!context.properties.empty()) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
@@ -57,7 +57,7 @@ void _emit_properties(YAML::Emitter& emitter, const ir::AttributeContextData& co
   }
 }
 
-void _emit_components(YAML::Emitter& emitter, const ir::AttributeContextData& context)
+void _emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
 {
   if (!context.components.empty()) {
     emitter << YAML::Key << "components" << YAML::BeginSeq;
@@ -115,20 +115,20 @@ void _emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
     emitter << YAML::Key << "visible" << YAML::Value << data.visible;
   }
 
-  if (data.x != 0.0f) {
-    emitter << YAML::Key << "x" << YAML::Value << data.x;
+  if (data.pos.x != 0.0f) {
+    emitter << YAML::Key << "x" << YAML::Value << data.pos.x;
   }
 
-  if (data.y != 0.0f) {
-    emitter << YAML::Key << "y" << YAML::Value << data.y;
+  if (data.pos.y != 0.0f) {
+    emitter << YAML::Key << "y" << YAML::Value << data.pos.y;
   }
 
-  if (data.width != 0.0f) {
-    emitter << YAML::Key << "width" << YAML::Value << data.width;
+  if (data.size.x != 0.0f) {
+    emitter << YAML::Key << "width" << YAML::Value << data.size.x;
   }
 
-  if (data.height != 0.0f) {
-    emitter << YAML::Key << "height" << YAML::Value << data.height;
+  if (data.size.y != 0.0f) {
+    emitter << YAML::Key << "height" << YAML::Value << data.size.y;
   }
 
   _emit_properties(emitter, data.context);
@@ -152,10 +152,10 @@ void _emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& 
   emitter << YAML::EndSeq;
 }
 
-void _emit_tile_layer_data(YAML::Emitter& emitter,
+void _emit_tile_layer_data(YAML::Emitter&           emitter,
                            const ir::TileLayerData& data,
-                           const usize rows,
-                           const usize columns)
+                           const usize              rows,
+                           const usize              columns)
 {
   const bool fold = get_preferences().fold_tile_data();
 
@@ -184,10 +184,10 @@ void _emit_tile_layer_data(YAML::Emitter& emitter,
   }
 }
 
-void _emit_layer(YAML::Emitter& emitter,
+void _emit_layer(YAML::Emitter&       emitter,
                  const ir::LayerData& data,
-                 const usize rows,
-                 const usize columns)
+                 const usize          rows,
+                 const usize          columns)
 {
   emitter << YAML::BeginMap;
 
@@ -295,8 +295,8 @@ void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_file(const EmitInfo& info,
-                        const std::string& filename,
+void _emit_tileset_file(const EmitInfo&        info,
+                        const std::string&     filename,
                         const ir::TilesetData& tileset)
 {
   YAML::Emitter emitter;
@@ -306,8 +306,8 @@ void _emit_tileset_file(const EmitInfo& info,
   emitter << YAML::Key << "version" << YAML::Value << tileset_node_version;
   emitter << YAML::Key << "name" << YAML::Value << tileset.name;
 
-  emitter << YAML::Key << "tile-width" << YAML::Value << tileset.tile_width;
-  emitter << YAML::Key << "tile-height" << YAML::Value << tileset.tile_height;
+  emitter << YAML::Key << "tile-width" << YAML::Value << tileset.tile_size.x;
+  emitter << YAML::Key << "tile-height" << YAML::Value << tileset.tile_size.y;
 
   emitter << YAML::Key << "tile-count" << YAML::Value << tileset.tile_count;
   emitter << YAML::Key << "column-count" << YAML::Value << tileset.column_count;
@@ -316,8 +316,8 @@ void _emit_tileset_file(const EmitInfo& info,
       std::filesystem::relative(tileset.image_path, info.destination_dir());
   emitter << YAML::Key << "image-path" << YAML::Value
           << convert_to_forward_slashes(imagePath);
-  emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_width;
-  emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_height;
+  emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_size.x;
+  emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_size.y;
 
   if (!tileset.fancy_tiles.empty()) {
     _emit_tileset_tiles(emitter, tileset);
@@ -358,9 +358,9 @@ void _emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
   emitter << YAML::EndSeq;
 }
 
-void _emit_component_definition_attribute(YAML::Emitter& emitter,
+void _emit_component_definition_attribute(YAML::Emitter&     emitter,
                                           const std::string& name,
-                                          const Attribute& value)
+                                          const Attribute&   value)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;
@@ -418,8 +418,8 @@ void emit_yaml_map(const EmitInfo& info)
   emitter << YAML::Key << "row-count" << YAML::Value << data.row_count;
   emitter << YAML::Key << "column-count" << YAML::Value << data.col_count;
 
-  emitter << YAML::Key << "tile-width" << YAML::Value << data.tile_width;
-  emitter << YAML::Key << "tile-height" << YAML::Value << data.tile_height;
+  emitter << YAML::Key << "tile-width" << YAML::Value << data.tile_size.x;
+  emitter << YAML::Key << "tile-height" << YAML::Value << data.tile_size.y;
 
   emitter << YAML::Key << "next-layer-id" << YAML::Value << data.next_layer_id;
   emitter << YAML::Key << "next-object-id" << YAML::Value << data.next_object_id;
@@ -437,4 +437,4 @@ void emit_yaml_map(const EmitInfo& info)
   stream << emitter.c_str();
 }
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

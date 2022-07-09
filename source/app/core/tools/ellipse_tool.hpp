@@ -18,39 +18,50 @@
  */
 
 #pragma once
+
+#include "core/common/math.hpp"
+#include "core/common/maybe.hpp"
 #include "core/tools/tool.hpp"
 
 namespace tactile {
 
+struct CurrentEllipseStroke final
+{
+  Vector2f start{};
+  Vector2f current{};
+};
+
 class EllipseTool final : public ATool
 {
  public:
-  void draw_gizmos(const entt::registry& registry,
-                   IRenderer& renderer,
-                   const MouseInfo& mouse) const override;
+  void draw_gizmos(const DocumentModel& model,
+                   IRenderer&           renderer,
+                   const MouseInfo&     mouse) const override;
 
-  void on_disabled(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_exited(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(entt::registry& registry,
+  void on_pressed(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_dragged(entt::registry& registry,
+  void on_dragged(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_released(entt::registry& registry,
+  void on_released(DocumentModel&    model,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
+                   const MouseInfo&  mouse) override;
 
-  [[nodiscard]] auto is_available(const entt::registry& registry) const -> bool override;
+  [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override;
+  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Ellipse; }
 
  private:
-  void maybe_emit_event(entt::registry& registry, entt::dispatcher& dispatcher);
+  Maybe<CurrentEllipseStroke> mStroke;
+
+  void maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher);
 };
 
 }  // namespace tactile

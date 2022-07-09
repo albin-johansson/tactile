@@ -24,7 +24,7 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "editor/document.hpp"
+#include "core/documents/map_document.hpp"
 #include "io/maps/convert_map_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/emitter/json_emitter.hpp"
@@ -33,17 +33,17 @@
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
-void save_document(const Document& document)
+void save_document(const MapDocument& document)
 {
-  TACTILE_ASSERT(!document.path.empty());
-  TACTILE_PROFILE_START
+  TACTILE_DEBUG_PROFILE_START
+  TACTILE_ASSERT(document.has_path());
 
-  const auto path = std::filesystem::absolute(document.path);
+  const auto path = std::filesystem::absolute(document.get_path());
   spdlog::info("Trying to save map to {}", path);
 
-  emitter::EmitInfo info{path, convert_map_to_ir(document)};
+  EmitInfo info{path, convert_map_to_ir(document)};
 
   const auto ext = path.extension();
   if (ext == ".yaml" || ext == ".yml") {
@@ -59,7 +59,7 @@ void save_document(const Document& document)
     spdlog::error("Unsupported file extension {}", ext);
   }
 
-  TACTILE_PROFILE_END("Emitted document")
+  TACTILE_DEBUG_PROFILE_END("Emitted document")
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

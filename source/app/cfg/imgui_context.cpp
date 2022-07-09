@@ -24,7 +24,7 @@
 #include <imgui_impl_sdl.h>
 #include <spdlog/spdlog.h>
 
-#include "editor/gui/themes.hpp"
+#include "editor/ui/themes.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 
@@ -39,7 +39,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= static_cast<ImGuiConfigFlags>(ImGuiConfigFlags_DockingEnable);
   io.WantCaptureKeyboard = true;
 
-  static const auto ini = widget_ini_path().string();
+  static const auto ini = io::widget_ini_path().string();
   io.IniFilename = ini.c_str();
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
@@ -47,10 +47,10 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 
   ImGui::StyleColorsDark();
 
-  const auto& prefs = get_preferences();
-  auto& style = ImGui::GetStyle();
+  const auto& prefs = io::get_preferences();
+  auto&       style = ImGui::GetStyle();
 
-  apply_style(style);
+  ui::apply_style(style);
   apply_theme(style, prefs.get_theme());
 
   style.WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;

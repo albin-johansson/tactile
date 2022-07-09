@@ -28,10 +28,10 @@
 #include "io/maps/xml_utils.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_fancy_tiles(pugi::xml_node tilesetNode,
+[[nodiscard]] auto _parse_fancy_tiles(pugi::xml_node   tilesetNode,
                                       ir::TilesetData& tilesetData) -> ParseError
 {
   for (auto tileNode : tilesetNode.children("tile")) {
@@ -81,21 +81,21 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_image_info(pugi::xml_node tilesetNode,
-                                     ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_image_info(pugi::xml_node               tilesetNode,
+                                     ir::TilesetData&             tilesetData,
                                      const std::filesystem::path& dir) -> ParseError
 {
   auto imageNode = tilesetNode.child("image");
 
   if (const auto width = int_attribute(imageNode, "width")) {
-    tilesetData.image_width = *width;
+    tilesetData.image_size.x = *width;
   }
   else {
     return ParseError::NoTilesetImageWidth;
   }
 
   if (const auto height = int_attribute(imageNode, "height")) {
-    tilesetData.image_height = *height;
+    tilesetData.image_size.y = *height;
   }
   else {
     return ParseError::NoTilesetImageHeight;
@@ -117,8 +117,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_common_attributes(pugi::xml_node node,
-                                            ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_common_attributes(pugi::xml_node               node,
+                                            ir::TilesetData&             tilesetData,
                                             const std::filesystem::path& dir)
     -> ParseError
 {
@@ -130,14 +130,14 @@ namespace {
   }
 
   if (const auto tw = int_attribute(node, "tilewidth")) {
-    tilesetData.tile_width = *tw;
+    tilesetData.tile_size.x = *tw;
   }
   else {
     return ParseError::NoTilesetTileWidth;
   }
 
   if (const auto th = int_attribute(node, "tileheight")) {
-    tilesetData.tile_height = *th;
+    tilesetData.tile_size.y = *th;
   }
   else {
     return ParseError::NoTilesetTileHeight;
@@ -174,8 +174,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_external_tileset(pugi::xml_node node,
-                                           ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_external_tileset(pugi::xml_node               node,
+                                           ir::TilesetData&             tilesetData,
                                            const std::filesystem::path& dir) -> ParseError
 {
   TACTILE_ASSERT(has_attribute(node, "source"));
@@ -197,8 +197,8 @@ namespace {
 
 }  // namespace
 
-auto parse_tileset(pugi::xml_node node,
-                   ir::TilesetData& tilesetData,
+auto parse_tileset(pugi::xml_node               node,
+                   ir::TilesetData&             tilesetData,
                    const std::filesystem::path& dir) -> ParseError
 {
   if (const auto firstTile = int_attribute(node, "firstgid")) {
@@ -216,4 +216,4 @@ auto parse_tileset(pugi::xml_node node,
   }
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

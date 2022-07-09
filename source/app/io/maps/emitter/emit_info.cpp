@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-namespace tactile::emitter {
+namespace tactile::io {
 
 EmitInfo::EmitInfo(std::filesystem::path destination, ir::MapData data)
     : mDestinationFile{std::move(destination)}
@@ -44,4 +44,4 @@ auto EmitInfo::data() const -> const ir::MapData&
   return mData;
 }
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

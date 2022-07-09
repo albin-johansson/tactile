@@ -22,40 +22,45 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/tiles.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/registry_system.hpp"
-#include "core/systems/tileset_system.hpp"
-#include "editor/events/tool_events.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/documents/tileset_document.hpp"
+#include "core/events/tool_events.hpp"
+#include "core/model.hpp"
 
 namespace tactile {
 
-void BucketTool::on_pressed(entt::registry& registry,
+void BucketTool::on_pressed(DocumentModel&    model,
                             entt::dispatcher& dispatcher,
-                            const MouseInfo& mouse)
+                            const MouseInfo&  mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
-      sys::is_tile_layer_active(registry) &&
-      sys::is_single_tile_selected_in_tileset(registry)) {
-    const auto entity = sys::find_active_tileset(registry);
-    const auto& selection = sys::checked_get<comp::TilesetSelection>(registry, entity);
+      is_available(model)) {
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+    const auto& tilesets = map.get_tilesets();
 
-    const auto position = selection.region->begin;
-    const auto replacement = sys::get_tile_from_tileset(registry, entity, position);
+    const auto  tilesetId = tilesets.active_tileset_id().value();
+    const auto& tilesetRef = tilesets.get_ref(tilesetId);
+    const auto& tileset = tilesetRef.view_tileset();
 
-    dispatcher.enqueue<FloodEvent>(mouse.position_in_viewport, replacement);
+    const auto selectedPos = tilesetRef.get_selection()->begin;
+    const auto replacement = tilesetRef.first_tile() + tileset.index_of(selectedPos);
+
+    const auto layerId = map.active_layer_id().value();
+    dispatcher.enqueue<FloodEvent>(layerId, mouse.position_in_viewport, replacement);
   }
 }
 
-auto BucketTool::is_available(const entt::registry& registry) const -> bool
+auto BucketTool::is_available(const DocumentModel& model) const -> bool
 {
-  return sys::is_tile_layer_active(registry) &&
-         sys::is_single_tile_selected_in_tileset(registry);
-}
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
 
-auto BucketTool::get_type() const -> ToolType
-{
-  return ToolType::Bucket;
+  const auto& tilesets = map.get_tilesets();
+  const auto  tilesetId = tilesets.active_tileset_id();
+
+  return map.is_active_layer(LayerType::TileLayer) &&  //
+         tilesetId && tilesets.get_ref(*tilesetId).is_single_tile_selected();
 }
 
 }  // namespace tactile

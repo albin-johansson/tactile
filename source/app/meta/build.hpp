@@ -19,6 +19,8 @@
 
 #pragma once
 
+#define TACTILE_VERSION_STRING "0.4.0 [dev]"
+
 #ifdef NDEBUG
 #define TACTILE_DEBUG 0
 #else
@@ -88,5 +90,11 @@ inline constexpr bool on_osx = true;
 #else
 inline constexpr bool on_osx = false;
 #endif  // TACTILE_PLATFORM_OSX
+
+#if TACTILE_PLATFORM_LINUX
+inline constexpr bool on_linux = true;
+#else
+inline constexpr bool on_linux = false;
+#endif  // TACTILE_PLATFORM_LINUX
 
 }  // namespace tactile

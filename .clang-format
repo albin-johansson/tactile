@@ -3,6 +3,8 @@ BasedOnStyle: Google
 Language: Cpp
 Standard: c++20
 
+AlignConsecutiveDeclarations: Consecutive
+
 ColumnLimit: 90
 IndentWidth: 2
 

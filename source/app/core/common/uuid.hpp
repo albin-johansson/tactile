@@ -21,17 +21,26 @@
 
 #include <boost/uuid/uuid.hpp>
 
+#include "core/common/ints.hpp"
+
 namespace tactile {
 
 using UUID = boost::uuids::uuid;
 
 /**
- * \brief Creates a universally unique identifier (UUID).
+ * Creates a universally unique identifier (UUID).
  *
  * \return a valid UUID.
- *
- * \ingroup core
  */
 [[nodiscard]] auto make_uuid() -> UUID;
+
+/**
+ * Hashes a UUID.
+ *
+ * \param uuid the identifier that will be hashed.
+ *
+ * \return a hash code.
+ */
+[[nodiscard]] auto hash(const UUID& uuid) -> usize;
 
 }  // namespace tactile

@@ -24,81 +24,82 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/layers.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/events/tool_events.hpp"
+#include "core/layers/tile_layer.hpp"
+#include "core/model.hpp"
 #include "core/mouse_info.hpp"
-#include "core/systems/layers/layer_system.hpp"
-#include "core/systems/layers/tile_layer_system.hpp"
-#include "core/systems/registry_system.hpp"
-#include "editor/events/tool_events.hpp"
 
 namespace tactile {
 
-void EraserTool::on_disabled(entt::registry&, entt::dispatcher& dispatcher)
+void EraserTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void EraserTool::on_exited(entt::registry&, entt::dispatcher& dispatcher)
+void EraserTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  maybe_emit_event(dispatcher);
+  maybe_emit_event(model, dispatcher);
 }
 
-void EraserTool::on_pressed(entt::registry& registry,
+void EraserTool::on_pressed(DocumentModel& model,
                             entt::dispatcher&,
                             const MouseInfo& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
-      sys::is_tile_layer_active(registry)) {
+      is_available(model)) {
     mPrevState.clear();
-    update_sequence(registry, mouse.position_in_viewport);
+    update_sequence(model, mouse.position_in_viewport);
   }
 }
 
-void EraserTool::on_dragged(entt::registry& registry,
+void EraserTool::on_dragged(DocumentModel& model,
                             entt::dispatcher&,
                             const MouseInfo& mouse)
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
-      sys::is_tile_layer_active(registry)) {
-    update_sequence(registry, mouse.position_in_viewport);
+      is_available(model)) {
+    update_sequence(model, mouse.position_in_viewport);
   }
 }
 
-void EraserTool::on_released(entt::registry& registry,
+void EraserTool::on_released(DocumentModel&    model,
                              entt::dispatcher& dispatcher,
-                             const MouseInfo& mouse)
+                             const MouseInfo&  mouse)
 {
-  if (mouse.button == cen::mouse_button::left && sys::is_tile_layer_active(registry)) {
-    maybe_emit_event(dispatcher);
+  if (mouse.button == cen::mouse_button::left && is_available(model)) {
+    maybe_emit_event(model, dispatcher);
   }
 }
 
-auto EraserTool::is_available(const entt::registry& registry) const -> bool
+auto EraserTool::is_available(const DocumentModel& model) const -> bool
 {
-  return sys::is_tile_layer_active(registry);
+  const auto& document = model.require_active_map();
+  const auto& map = document.get_map();
+  return map.is_active_layer(LayerType::TileLayer);
 }
 
-auto EraserTool::get_type() const -> ToolType
+void EraserTool::update_sequence(DocumentModel& model, const TilePos& cursor)
 {
-  return ToolType::Eraser;
+  auto& document = model.require_active_map();
+  auto& map = document.get_map();
+
+  const auto layerId = map.active_layer_id().value();
+  auto&      layer = map.view_tile_layer(layerId);
+
+  mPrevState.try_emplace(cursor, layer.tile_at(cursor));
+  layer.set_tile(cursor, empty_tile);
 }
 
-void EraserTool::update_sequence(entt::registry& registry, const TilePos& cursor)
-{
-  const auto entity = sys::get_active_layer(registry);
-  auto& layer = sys::checked_get<comp::TileLayer>(registry, entity);
-
-  if (!mPrevState.contains(cursor)) {
-    mPrevState.emplace(cursor, sys::get_tile(layer, cursor));
-  }
-
-  sys::set_tile(layer, cursor, empty_tile);
-}
-
-void EraserTool::maybe_emit_event(entt::dispatcher& dispatcher)
+void EraserTool::maybe_emit_event(const DocumentModel& model,
+                                  entt::dispatcher&    dispatcher)
 {
   if (!mPrevState.empty()) {
-    dispatcher.enqueue<EraserSequenceEvent>(std::move(mPrevState));
+    const auto& document = model.require_active_map();
+    const auto& map = document.get_map();
+    const auto  layerId = map.active_layer_id().value();
+
+    dispatcher.enqueue<EraserSequenceEvent>(layerId, std::move(mPrevState));
     mPrevState.clear();
   }
 }

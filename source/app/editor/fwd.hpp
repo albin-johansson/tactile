@@ -19,13 +19,53 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::ui {
 
-struct Document;
+struct DialogState;
 struct RenderInfo;
+struct ViewportCursorInfo;
 
-class DocumentModel;
+class ADockWidget;
+class ViewportArea;
+
 class GraphicsCtx;
-class WidgetManager;
 
-}  // namespace tactile
+class StyleVar;
+class StyleColor;
+class Child;
+class Combo;
+class TabBar;
+class TabItem;
+class Table;
+class Popup;
+class ListBox;
+class Menu;
+class Modal;
+class Window;
+class TreeNode;
+
+class ComponentEditor;
+
+class ADialog;
+class AStringInputDialog;
+class AddComponentAttrDialog;
+class ComponentNameDialog;
+class DefineComponentDialog;
+class RenameComponentAttributeDialog;
+class RenameComponentDialog;
+class AboutDialog;
+class CreateMapDialog;
+class CreditsDialog;
+class MapParseErrorDialog;
+class ResizeMapDialog;
+class SettingsDialog;
+class RenameLayerDialog;
+class AddPropertyDialog;
+class ChangePropertyTypeDialog;
+class RenamePropertyDialog;
+class CreateTilesetDialog;
+
+class ContextMenu;
+class AddLayerContextMenu;
+
+}  // namespace tactile::ui

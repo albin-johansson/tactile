@@ -21,8 +21,8 @@
 
 #include "io/fwd.hpp"
 
-namespace tactile::emitter {
+namespace tactile::io {
 
 void emit_xml_map(const EmitInfo& info);
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

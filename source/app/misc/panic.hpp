@@ -20,35 +20,23 @@
 #pragma once
 
 #include <exception>  // exception
+#include <string>     // string
 
 namespace tactile {
 
-/**
- * \brief The exception type used for all exceptions thrown in the codebase.
- *
- * \see panic(const char*)
- */
+/// The exception type used for all exceptions thrown in the codebase.
 class TactileError : public std::exception
 {
  public:
-  TactileError() noexcept = default;
-
-  explicit TactileError(const char* what) : mWhat{what ? what : "N/A"} {}
+  explicit TactileError(const char* what);
 
   [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat; }
 
+  [[nodiscard]] auto trace() const -> const std::string& { return mTrace; }
+
  private:
   const char* mWhat{"N/A"};
+  std::string mTrace;
 };
-
-/**
- * \brief Throws an exception (of type TactileError) with embedded call stack information.
- *
- * \details This function should be used to raise all exceptions thrown in the codebase,
- * since the embedded stack trace information makes debugging code a lot easier.
- *
- * \param msg the exception message.
- */
-[[noreturn]] void panic(const char* msg);
 
 }  // namespace tactile

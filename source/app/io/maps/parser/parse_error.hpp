@@ -22,10 +22,10 @@
 #include <ostream>      // ostream
 #include <string_view>  // string_view
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 /**
- * \brief Represents various possible errors related to map parsing.
+ * Represents various possible errors related to map parsing.
  *
  * \see to_cause(ParseError)
  */
@@ -96,7 +96,7 @@ enum class ParseError
 };
 
 /**
- * \brief Returns a short human-readable message that provides a cause for an error.
+ * Returns a short human-readable message that provides a cause for an error.
  *
  * \param error the parse error to retrieve the cause for.
  *
@@ -106,4 +106,4 @@ enum class ParseError
 
 auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

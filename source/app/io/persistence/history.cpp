@@ -27,14 +27,14 @@
 
 #include <spdlog/spdlog.h>
 
+#include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
-#include "core/utils/strings.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/proto.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 // constexpr int _format_version = 1;
@@ -42,10 +42,10 @@ constexpr usize _max_size = 10;
 
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
-inline Maybe<std::string> _last_closed_file;
+inline Maybe<std::string>      _last_closed_file;
 inline std::deque<std::string> _history;
 
-[[nodiscard]] auto get_file_path() -> const std::filesystem::path&
+[[nodiscard]] auto _get_file_path() -> const std::filesystem::path&
 {
   static const auto path = persistent_file_dir() / "history.bin";
   return path;
@@ -56,7 +56,7 @@ inline std::deque<std::string> _history;
 void load_file_history()
 {
   spdlog::debug("Loading file history...");
-  std::ifstream stream{get_file_path(), std::ios::in | std::ios::binary};
+  std::ifstream stream{_get_file_path(), std::ios::in | std::ios::binary};
 
   proto::History h;
   if (h.ParseFromIstream(&stream)) {
@@ -65,8 +65,10 @@ void load_file_history()
     }
 
     for (auto file : h.files()) {
-      spdlog::debug("Loaded '{}' from file history", file);
-      _history.push_back(std::move(file));
+      if (std::filesystem::exists(file)) {
+        spdlog::debug("Loaded '{}' from file history", file);
+        _history.push_back(std::move(file));
+      }
     }
   }
   else {
@@ -87,12 +89,10 @@ void save_file_history()
     h.add_files(path);
   }
 
-  {
-    std::ofstream stream{get_file_path(),
-                         std::ios::out | std::ios::trunc | std::ios::binary};
-    if (!h.SerializeToOstream(&stream)) {
-      spdlog::error("Failed to save file history!");
-    }
+  std::ofstream stream{_get_file_path(),
+                       std::ios::out | std::ios::trunc | std::ios::binary};
+  if (!h.SerializeToOstream(&stream)) {
+    spdlog::error("Failed to save file history!");
   }
 }
 
@@ -142,8 +142,8 @@ auto last_closed_file() -> const std::string&
     return _last_closed_file.value();
   }
   else {
-    panic("Invalid last closed file!");
+    throw TactileError{"Invalid last closed file!"};
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

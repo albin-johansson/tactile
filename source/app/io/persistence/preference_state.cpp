@@ -27,15 +27,15 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "cfg/fonts.hpp"
 #include "core/common/enum.hpp"
+#include "editor/ui/fonts.hpp"
 #include "proto.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
-constexpr EditorTheme _def_theme = EditorTheme::Nocturnal;
-constexpr cen::color _def_viewport_bg{60, 60, 60};
+constexpr ui::EditorTheme _def_theme = ui::EditorTheme::Nocturnal;
+constexpr cen::color      _def_viewport_bg{60, 60, 60};
 
 constexpr auto _def_preferred_format = "YAML";
 
@@ -80,15 +80,15 @@ struct PreferenceState::Data
 {
   std::string preferred_format{_def_preferred_format};
 
-  EditorTheme theme{_def_theme};
-  cen::color viewport_background{_def_viewport_bg};
+  ui::EditorTheme theme{_def_theme};
+  cen::color      viewport_background{_def_viewport_bg};
 
   usize command_capacity{_def_command_capacity};
 
   int32 preferred_tile_width{_def_preferred_tile_width};
   int32 preferred_tile_height{_def_preferred_tile_height};
   int32 viewport_overlay_pos{_def_viewport_overlay_pos};
-  int32 font_size{get_default_font_size()};
+  int32 font_size{ui::get_default_font_size()};
 
   uint64 flags{_def_flags};
 };
@@ -156,7 +156,7 @@ void PreferenceState::parse(const std::filesystem::path& path)
   proto::Settings cfg;
   if (cfg.ParseFromIstream(&stream)) {
     if (cfg.has_theme()) {
-      mData->theme = static_cast<EditorTheme>(cfg.theme());
+      mData->theme = static_cast<ui::EditorTheme>(cfg.theme());
     }
 
     if (cfg.has_viewport_background()) {
@@ -264,7 +264,7 @@ void PreferenceState::save(const std::filesystem::path& path)
 
   {
     const auto& bg = viewport_bg();
-    auto* background = cfg.mutable_viewport_background();
+    auto*       background = cfg.mutable_viewport_background();
     background->set_red(bg.red());
     background->set_green(bg.green());
     background->set_blue(bg.blue());
@@ -311,7 +311,7 @@ void PreferenceState::reset_appearance_preferences()
   reset_flag(_bit_restore_layout);
 
   reset_flag(_bit_use_default_font);
-  mData->font_size = get_default_font_size();
+  mData->font_size = ui::get_default_font_size();
 }
 
 void PreferenceState::reset_behavior_preferences()
@@ -339,12 +339,12 @@ void PreferenceState::reset_dock_visibilities()
   reset_flag(_bit_show_log_dock);
 }
 
-void PreferenceState::set_theme(const EditorTheme theme)
+void PreferenceState::set_theme(const ui::EditorTheme theme)
 {
   mData->theme = theme;
 }
 
-auto PreferenceState::get_theme() const -> EditorTheme
+auto PreferenceState::get_theme() const -> ui::EditorTheme
 {
   return mData->theme;
 }
@@ -589,4 +589,4 @@ auto PreferenceState::test_flag(const uint64 flag) const noexcept -> bool
   return mData->flags & flag;
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

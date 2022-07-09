@@ -26,7 +26,7 @@
 
 #include "io/directories.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto get_file_path() -> const std::filesystem::path&
@@ -71,4 +71,4 @@ auto get_preferences() -> PreferenceState&
   return _settings;
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

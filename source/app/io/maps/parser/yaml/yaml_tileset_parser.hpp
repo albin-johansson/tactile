@@ -26,10 +26,10 @@
 #include "io/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
-[[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
-                                  ir::MapData& data,
+[[nodiscard]] auto parse_tilesets(const YAML::Node&            sequence,
+                                  ir::MapData&                 data,
                                   const std::filesystem::path& dir) -> ParseError;
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

@@ -40,11 +40,11 @@ namespace {
 struct LogEntry final
 {
   spdlog::level::level_enum level{};
-  std::string msg;
+  std::string               msg;
 };
 
 /**
- * \brief Records logged messages, intended to be displayed in the log dock.
+ * Records logged messages, intended to be displayed in the log dock.
  */
 class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_mutex>
 {
@@ -52,7 +52,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   void sink_it_(const spdlog::details::log_msg& msg) override
   {
     const auto time = fmt::localtime(msg.time);
-    auto processed = fmt::format("{:%H:%M:%S} > {}", time, msg.payload);
+    auto       processed = fmt::format("{:%H:%M:%S} > {}", time, msg.payload);
     mHistory.push_back({msg.level, std::move(processed)});
   }
 
@@ -78,7 +78,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
       }
     }
 
-    panic("Invalid index for filtered log entry!");
+    throw TactileError("Invalid index for filtered log entry!");
   }
 
   [[nodiscard]] auto count(const LogLevel filter) const -> usize
@@ -104,7 +104,7 @@ inline Shared<HistorySink> _history_sink;
 
 void init_logger()
 {
-  const auto path = persistent_file_dir() / "logs" / "tactile_log.txt";
+  const auto path = io::persistent_file_dir() / "logs" / "tactile_log.txt";
 
   auto cs = std::make_shared<spdlog::sinks::stdout_color_sink_st>();
   auto fs = std::make_shared<spdlog::sinks::basic_file_sink_st>(path.string(), true);
@@ -113,9 +113,12 @@ void init_logger()
 
   auto logger = std::make_shared<spdlog::logger>("tactile", sinks);
   logger->set_pattern("[%T.%f] %^{%l}%$ > %v");
+  logger->flush_on(LogLevel::critical);
 
   spdlog::set_default_logger(logger);
-  spdlog::set_level(is_debug_build ? spdlog::level::trace : spdlog::level::info);
+  spdlog::set_level(is_debug_build ? spdlog::level::trace : spdlog::level::debug);
+
+  spdlog::info("Tactile version " TACTILE_VERSION_STRING);
 
   const auto time = fmt::localtime(std::time(nullptr));
   spdlog::info("Today is {:%A %Y-%m-%d}", time);

@@ -115,17 +115,24 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <cstdint>
                           <cstring>
                           <cstdlib>
+                          <ctime>
                           <cmath>
                           <deque>
+                          <exception>
                           <filesystem>
                           <fstream>
                           <functional>
+                          <iterator>
                           <limits>
+                          <locale>
                           <map>
                           <memory>
                           <optional>
+                          <ostream>
+                          <queue>
                           <random>
                           <span>
+                          <sstream>
                           <string>
                           <string_view>
                           <system_error>
@@ -134,8 +141,6 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <utility>
                           <variant>
                           <vector>
-
-                          <imgui.h>
                           )
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})

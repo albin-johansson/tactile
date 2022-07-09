@@ -19,275 +19,268 @@
 
 #include "convert_map_to_ir.hpp"
 
-#include "core/components/animation.hpp"
-#include "core/components/attributes.hpp"
-#include "core/components/parent.hpp"
-#include "core/components/texture.hpp"
-#include "core/components/tiles.hpp"
-#include "core/map_info.hpp"
-#include "core/systems/component_system.hpp"
-#include "core/systems/registry_system.hpp"
-#include "core/systems/tileset_system.hpp"
-#include "editor/document.hpp"
+#include "core/components/component_index.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/documents/tileset_document.hpp"
+#include "core/layers/layer_visitor.hpp"
+#include "core/layers/object.hpp"
+#include "core/layers/object_layer.hpp"
+#include "core/layers/tile_layer.hpp"
+#include "core/model.hpp"
 #include "meta/profile.hpp"
+#include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
-void _convert_attribute_context(ir::AttributeContextData& data,
-                                const comp::AttributeContext& context,
-                                const entt::registry& registry)
+void _convert_context(const IContext&       context,
+                      const ComponentIndex* components,
+                      ir::ContextData&      data)
 {
-  for (const auto propertyEntity : context.properties) {
-    const auto& property = sys::checked_get<comp::Property>(registry, propertyEntity);
-    data.properties[property.name] = property.value;
+  for (const auto& [name, property] : context.get_props()) {
+    data.properties[name] = property;
   }
 
-  for (const auto componentEntity : context.components) {
-    const auto& component = sys::checked_get<comp::Component>(registry, componentEntity);
-    const auto type = sys::get_component_def_name(registry, component.type);
+  if (components) {
+    for (const auto& [componentId, component] : context.get_comps()) {
+      const auto& definition = components->at(component.definition_id());
+      const auto& name = definition.get_name();
 
-    auto& attributes = data.components[type];
-    for (const auto& [attrName, attrValue] : component.values) {
-      attributes[attrName] = attrValue;
+      auto& attributes = data.components[name];
+      for (const auto& [attrName, attrValue] : component) {
+        attributes[attrName] = attrValue;
+      }
     }
   }
 }
 
-void _convert_object(ir::ObjectData& data,
-                     const comp::Object& object,
-                     const comp::AttributeContext& context,
-                     const entt::registry& registry)
+void _convert_object(const Object&         object,
+                     const ComponentIndex* components,
+                     ir::ObjectData&       data)
 {
-  data.id = object.id;
-  data.type = object.type;
+  TACTILE_ASSERT(object.get_meta_id().has_value());
 
-  data.x = object.x;
-  data.y = object.y;
-  data.width = object.width;
-  data.height = object.height;
+  data.id = object.get_meta_id().value();
+  data.type = object.get_type();
 
-  data.tag = object.tag;
-  data.visible = object.visible;
+  data.pos = object.get_pos();
+  data.size = object.get_size();
 
-  data.name = context.name;
-  _convert_attribute_context(data.context, context, registry);
+  data.tag = object.get_tag();
+  data.visible = object.is_visible();
+
+  data.name = object.get_name();
+  _convert_context(object, components, data.context);
 }
 
-void _convert_layer(ir::LayerData& data,
-                    usize index,
-                    const entt::registry& registry,
-                    entt::entity entity);
+void _convert_layer(const ILayer&         layer,
+                    const usize           index,
+                    const ComponentIndex* components,
+                    ir::LayerData&        data);
 
-void _convert_object_layer(ir::ObjectLayerData& data,
-                           const entt::registry& registry,
-                           const entt::entity entity)
+void _convert_object_layer(const ObjectLayer&    layer,
+                           const ComponentIndex* index,
+                           ir::ObjectLayerData&  data)
 {
-  const auto& objectLayer = sys::checked_get<comp::ObjectLayer>(registry, entity);
-  data.objects.reserve(objectLayer.objects.size());
-
-  for (const auto objectEntity : objectLayer.objects) {
-    const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
-    const auto& context =
-        sys::checked_get<comp::AttributeContext>(registry, objectEntity);
-
+  data.objects.reserve(layer.object_count());
+  for (const auto& [id, object] : layer) {
     auto& objectData = data.objects.emplace_back();
-    _convert_object(objectData, object, context, registry);
+    _convert_object(*object, index, objectData);
   }
 }
 
-void _convert_group_layer(ir::GroupLayerData& data,
-                          const entt::registry& registry,
-                          const entt::entity entity)
+void _convert_group_layer(const GroupLayer&     layer,
+                          const ComponentIndex* components,
+                          ir::GroupLayerData&   data)
 {
-  const auto& node = sys::checked_get<comp::LayerTreeNode>(registry, entity);
-  data.children.reserve(node.children.size());
+  struct Visitor final : IConstLayerVisitor
+  {
+    usize                 index{0};
+    const ComponentIndex* comps{};
+    ir::GroupLayerData*   parent{};
 
-  usize index = 0;
-  for (const auto childEntity : node.children) {
-    auto& childLayerData = data.children.emplace_back(std::make_unique<ir::LayerData>());
-    _convert_layer(*childLayerData, index, registry, childEntity);
-    ++index;
-  }
+    void visit(const TileLayer& layer) override { handle(layer); }
+    void visit(const ObjectLayer& layer) override { handle(layer); }
+    void visit(const GroupLayer& layer) override { handle(layer); }
+
+    void handle(const ILayer& layer)
+    {
+      auto& layerData = parent->children.emplace_back(std::make_unique<ir::LayerData>());
+      _convert_layer(layer, index, comps, *layerData);
+      ++index;
+    }
+  };
+
+  data.children.reserve(layer.layer_count());
+
+  Visitor visitor;
+  visitor.index = 0;
+  visitor.comps = components;
+  visitor.parent = &data;
+
+  layer.each(visitor);
 }
 
-void _convert_layer(ir::LayerData& data,
-                    const usize index,
-                    const entt::registry& registry,
-                    const entt::entity entity)
+void _convert_layer(const ILayer&         layer,
+                    const usize           index,
+                    const ComponentIndex* components,
+                    ir::LayerData&        data)
 {
-  const auto& layer = sys::checked_get<comp::Layer>(registry, entity);
-
+  TACTILE_ASSERT(layer.get_meta_id().has_value());
   data.index = index;
 
-  data.id = layer.id;
-  data.type = layer.type;
-  data.opacity = layer.opacity;
-  data.visible = layer.visible;
+  data.id = layer.get_meta_id().value();
+  data.type = layer.get_type();
+  data.opacity = layer.get_opacity();
+  data.visible = layer.is_visible();
 
-  switch (layer.type) {
+  data.name = layer.get_name();
+
+  switch (layer.get_type()) {
     case LayerType::TileLayer: {
-      const auto& tileLayer = sys::checked_get<comp::TileLayer>(registry, entity);
+      const auto& tileLayer = dynamic_cast<const TileLayer&>(layer);
 
       auto& tileLayerData = data.data.emplace<ir::TileLayerData>();
-      tileLayerData.tiles = tileLayer.matrix;
-
-      const auto& mapInfo = registry.ctx().at<MapInfo>();
-      tileLayerData.row_count = mapInfo.row_count;
-      tileLayerData.col_count = mapInfo.column_count;
+      tileLayerData.tiles = tileLayer.get_tiles();
+      tileLayerData.row_count = tileLayer.row_count();
+      tileLayerData.col_count = tileLayer.column_count();
 
       break;
     }
     case LayerType::ObjectLayer: {
-      auto& objectLayerData = data.data.emplace<ir::ObjectLayerData>();
-      _convert_object_layer(objectLayerData, registry, entity);
+      const auto& objectLayer = dynamic_cast<const ObjectLayer&>(layer);
+      auto&       objectLayerData = data.data.emplace<ir::ObjectLayerData>();
+      _convert_object_layer(objectLayer, components, objectLayerData);
       break;
     }
     case LayerType::GroupLayer: {
-      auto& groupLayerData = data.data.emplace<ir::GroupLayerData>();
-      _convert_group_layer(groupLayerData, registry, entity);
+      const auto& groupLayer = dynamic_cast<const GroupLayer&>(layer);
+      auto&       groupLayerData = data.data.emplace<ir::GroupLayerData>();
+      _convert_group_layer(groupLayer, components, groupLayerData);
       break;
     }
   }
 
-  const auto& context = sys::checked_get<comp::AttributeContext>(registry, entity);
-  data.name = context.name;
-  _convert_attribute_context(data.context, context, registry);
+  _convert_context(layer, components, data.context);
 }
 
-void _convert_layers(ir::MapData& data, const entt::registry& registry)
+void _convert_layers(const MapDocument&    document,
+                     const ComponentIndex* components,
+                     ir::MapData&          data)
 {
   usize index = 0;
 
-  /* Only iterate top-level layers */
-  for (auto&& [entity, node] : registry.view<comp::LayerTreeNode>().each()) {
-    const auto& parent = sys::checked_get<comp::Parent>(registry, entity);
-    if (parent.entity == entt::null) {
+  const auto& map = document.get_map();
+  map.visit_layers([&](const ILayer* layer) {
+    /* Only iterate top-level layers */
+    if (!layer->get_parent()) {
       auto& layerData = data.layers.emplace_back();
-      _convert_layer(layerData, index, registry, entity);
+      _convert_layer(*layer, index, components, layerData);
       ++index;
     }
-  }
+  });
 }
 
-void _convert_fancy_tile_animation(ir::MetaTileData& data,
-                                   const comp::Animation& animation,
-                                   const entt::registry& registry)
+void _convert_fancy_tile_animation(const TileAnimation& animation, ir::MetaTileData& data)
 {
-  data.frames.reserve(animation.frames.size());
+  data.frames.reserve(animation.size());
 
-  for (const auto frameEntity : animation.frames) {
-    const auto& frame = sys::checked_get<comp::AnimationFrame>(registry, frameEntity);
-
+  for (const auto& frame : animation) {
     auto& frameData = data.frames.emplace_back();
-    frameData.local_id = sys::convert_to_local(registry, frame.tile).value();
-    frameData.duration_ms = frame.duration.count();
+    frameData.local_id = frame.tile;
+    frameData.duration_ms = static_cast<uint64>(frame.duration.count());
   }
 }
 
-void _convert_fancy_tiles(ir::TilesetData& data,
-                          const comp::Tileset& tileset,
-                          const entt::registry& registry)
+void _convert_fancy_tiles(const Tileset&        tileset,
+                          const ComponentIndex* components,
+                          ir::TilesetData&      data)
 {
-  for (auto&& [entity, tile, context] :
-       registry.view<comp::MetaTile, comp::AttributeContext>().each()) {
-    if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
-      const bool interesting = registry.all_of<comp::Animation>(entity) ||
-                               !context.properties.empty() ||
-                               !context.properties.empty() || !tile.objects.empty();
+  for (const auto& [id, tile] : tileset) {
+    const auto isAnimated = tile->is_animated();
+    const auto hasObjects = tile->object_count() != 0;
+    const auto hasProps = !tile->get_props().empty();
+    const auto hasComps = !tile->get_comps().empty();
 
-      if (interesting) {
-        const auto local = sys::convert_to_local(registry, tile.id).value();
-        auto& tileData = data.fancy_tiles[local];
+    if (isAnimated || hasObjects || hasProps || hasComps) {
+      auto& tileData = data.fancy_tiles[tile->index()];
 
-        if (const auto* animation = registry.try_get<comp::Animation>(entity)) {
-          _convert_fancy_tile_animation(tileData, *animation, registry);
-        }
+      if (isAnimated) {
+        _convert_fancy_tile_animation(tile->get_animation(), tileData);
+      }
 
-        if (!context.properties.empty() || !context.components.empty()) {
-          _convert_attribute_context(tileData.context, context, registry);
-        }
+      if (hasProps || hasComps) {
+        _convert_context(*tile, components, tileData.context);
+      }
 
-        if (!tile.objects.empty()) {
-          for (const auto objectEntity : tile.objects) {
-            const auto& object = sys::checked_get<comp::Object>(registry, objectEntity);
-            const auto& objectContext =
-                sys::checked_get<comp::AttributeContext>(registry, objectEntity);
-
-            auto& objectData = tileData.objects.emplace_back();
-            _convert_object(objectData, object, objectContext, registry);
-          }
+      if (hasObjects) {
+        for (const auto& [objectId, object] : tile->get_objects()) {
+          auto& objectData = tileData.objects.emplace_back();
+          _convert_object(*object, components, objectData);
         }
       }
     }
   }
 }
 
-void _convert_tilesets(ir::MapData& data, const entt::registry& registry)
+void _convert_tilesets(const MapDocument&    document,
+                       const ComponentIndex* components,
+                       ir::MapData&          data)
 {
-  for (auto&& [entity, tileset, texture, context] :
-       registry.view<comp::Tileset, comp::Texture, comp::AttributeContext>().each()) {
+  const auto& map = document.get_map();
+  for (const auto& [tilesetId, tilesetRef] : map.get_tilesets()) {
+    const auto& tileset = tilesetRef.view_tileset();
+
     auto& tilesetData = data.tilesets.emplace_back();
-    tilesetData.name = context.name;
+    tilesetData.name = tileset.get_name();
 
-    tilesetData.first_tile = tileset.first_id;
-    tilesetData.tile_width = tileset.tile_width;
-    tilesetData.tile_height = tileset.tile_height;
-    tilesetData.tile_count = tileset.tile_count;
-    tilesetData.column_count = tileset.column_count;
+    tilesetData.first_tile = tilesetRef.first_tile();
+    tilesetData.tile_size = tileset.tile_size();
+    tilesetData.column_count = tileset.column_count();
 
-    tilesetData.image_path = texture.path;
-    tilesetData.image_width = texture.width;
-    tilesetData.image_height = texture.height;
+    tilesetData.image_path = tileset.texture_path();
+    tilesetData.image_size = tileset.texture_size();
 
-    _convert_fancy_tiles(tilesetData, tileset, registry);
+    _convert_fancy_tiles(tileset, components, tilesetData);
   }
 }
 
-void _convert_component_definitions(ir::MapData& data, const entt::registry& registry)
+void _convert_component_definitions(const ComponentIndex& manager, ir::MapData& data)
 {
-  for (auto&& [entity, def] : registry.view<comp::ComponentDef>().each()) {
-    auto& attributes = data.component_definitions[def.name];
-    for (const auto& [attrName, attrValue] : def.attributes) {
+  for (const auto& [id, definition] : manager) {
+    auto& attributes = data.component_definitions[definition.get_name()];
+    for (const auto& [attrName, attrValue] : definition) {
       attributes[attrName] = attrValue;
     }
   }
 }
 
-void _convert_basic_map_info(ir::MapData& data, const MapInfo& mapInfo)
-{
-  data.row_count = mapInfo.row_count;
-  data.col_count = mapInfo.column_count;
-
-  data.tile_width = mapInfo.tile_width;
-  data.tile_height = mapInfo.tile_height;
-
-  data.next_layer_id = mapInfo.next_layer_id;
-  data.next_object_id = mapInfo.next_object_id;
-}
-
 }  // namespace
 
-auto convert_map_to_ir(const Document& document) -> ir::MapData
+auto convert_map_to_ir(const MapDocument& document) -> ir::MapData
 {
-  TACTILE_PROFILE_START
-
-  const auto& registry = document.registry;
-  const auto& ctx = registry.ctx();
+  TACTILE_DEBUG_PROFILE_START
+  const auto& map = document.get_map();
 
   ir::MapData data;
-  _convert_basic_map_info(data, ctx.at<MapInfo>());
+  data.row_count = map.row_count();
+  data.col_count = map.column_count();
+  data.tile_size = map.tile_size();
+  data.next_object_id = map.next_object_id();
+  data.next_layer_id = map.next_layer_id();
 
-  _convert_component_definitions(data, registry);
-  _convert_tilesets(data, registry);
+  const auto* components = document.get_component_index().get();
 
-  data.layers.reserve(registry.storage<comp::Layer>().size());
-  _convert_layers(data, registry);
+  if (components) {
+    _convert_component_definitions(*components, data);
+  }
 
-  _convert_attribute_context(data.context, ctx.at<comp::AttributeContext>(), registry);
+  _convert_tilesets(document, components, data);
+  _convert_layers(document, components, data);
+  _convert_context(map, components, data.context);
 
-  TACTILE_PROFILE_END("Converted document to IR")
+  TACTILE_DEBUG_PROFILE_END("Converted document to IR")
   return data;
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

@@ -21,20 +21,16 @@
 
 #include <exception>  // exception
 
-#include <fmt/color.h>
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
 #include "io/maps/parser/json/json_parser.hpp"
 #include "io/maps/parser/xml/xml_parser.hpp"
 #include "io/maps/parser/yaml/yaml_parser.hpp"
-#include "meta/build.hpp"
 #include "meta/profile.hpp"
-#include "misc/logging.hpp"
 #include "misc/panic.hpp"
-#include "misc/stacktrace.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 auto parse_map(const std::filesystem::path& path) -> ParseData
 {
@@ -67,15 +63,15 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
 
     TACTILE_PROFILE_END("Parsed map")
   }
-  catch (const std::exception& e) {
-    spdlog::error("Parser threw unhandled exception with message: '{}'\n", e.what());
+  catch (const TactileError& e) {
     result.set_error(ParseError::Unknown);
-
-    if constexpr (is_debug_build) {
-      if (const auto* stacktrace = boost::get_error_info<TraceInfo>(e)) {
-        print(fmt::color::orange, "{}\n", *stacktrace);
-      }
-    }
+    spdlog::error("Parser threw unhandled exception with message: '{}'\n{}",
+                  e.what(),
+                  e.trace());
+  }
+  catch (const std::exception& e) {
+    result.set_error(ParseError::Unknown);
+    spdlog::error("Parser threw unhandled exception with message: '{}'\n", e.what());
   }
   catch (...) {
     spdlog::error("Parser threw non-exception value!");
@@ -85,4 +81,4 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
   return result;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

@@ -28,12 +28,12 @@
 #include "io/maps/ir.hpp"
 #include "io/maps/json_utils.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_value(const nlohmann::json& json,
+[[nodiscard]] auto _parse_value(const nlohmann::json&  json,
                                 const std::string_view type,
-                                Attribute& value) -> ParseError
+                                Attribute&             value) -> ParseError
 {
   if (type == "string") {
     value = as_string(json, "value").value();
@@ -79,7 +79,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_property(const nlohmann::json& json,
-                                   ir::AttributeContextData& contextData) -> ParseError
+                                   ir::ContextData&      contextData) -> ParseError
 {
   std::string propertyName;
 
@@ -106,7 +106,7 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(const nlohmann::json& json, ir::AttributeContextData& contextData)
+auto parse_properties(const nlohmann::json& json, ir::ContextData& contextData)
     -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
@@ -120,4 +120,4 @@ auto parse_properties(const nlohmann::json& json, ir::AttributeContextData& cont
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

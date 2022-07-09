@@ -19,17 +19,21 @@
 
 #include "edit_shortcuts.hpp"
 
-#include "core/map_info.hpp"
-#include "editor/events/command_events.hpp"
-#include "editor/events/component_events.hpp"
-#include "editor/events/map_events.hpp"
-#include "editor/events/misc_events.hpp"
-#include "editor/events/tileset_events.hpp"
-#include "editor/events/tool_events.hpp"
-#include "editor/gui/menus/map_menu.hpp"
-#include "editor/gui/widget_manager.hpp"
-#include "editor/model.hpp"
-#include "mappings.hpp"
+#include <entt/signal/dispatcher.hpp>
+
+#include "core/commands/command_stack.hpp"
+#include "core/documents/map_document.hpp"
+#include "core/events/command_events.hpp"
+#include "core/events/component_events.hpp"
+#include "core/events/map_events.hpp"
+#include "core/events/misc_events.hpp"
+#include "core/events/tileset_events.hpp"
+#include "core/events/tool_events.hpp"
+#include "core/model.hpp"
+#include "core/tools/tool_manager.hpp"
+#include "editor/shortcuts/mappings.hpp"
+#include "editor/ui/menus/map_menu.hpp"
+#include "editor/ui/ui.hpp"
 
 namespace tactile {
 
@@ -40,10 +44,10 @@ void UndoShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<UndoEvent>();
 }
 
-auto UndoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto UndoShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.can_undo();
+  const auto* document = model.active_document();
+  return document && document->get_history().can_undo();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -55,10 +59,10 @@ void RedoShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RedoEvent>();
 }
 
-auto RedoShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto RedoShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.can_redo();
+  const auto* document = model.active_document();
+  return document && document->get_history().can_redo();
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -70,8 +74,7 @@ void AddRowShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<AddRowEvent>();
 }
 
-auto AddRowShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto AddRowShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -86,8 +89,7 @@ void AddColumnShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<AddColumnEvent>();
 }
 
-auto AddColumnShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto AddColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -103,16 +105,16 @@ void RemoveRowShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RemoveRowEvent>();
 }
 
-auto RemoveRowShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto RemoveRowShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (const auto* registry = model.active_registry()) {
-    const auto& map = registry->ctx().at<MapInfo>();
-    return map.row_count > 1;
+  if (model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      return model.view_map(id).get_map().row_count() > 1;
+    }
   }
-  else {
-    return false;
-  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -126,16 +128,16 @@ void RemoveColumnShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<RemoveColumnEvent>();
 }
 
-auto RemoveColumnShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager&) const -> bool
+auto RemoveColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  if (const auto* registry = model.active_registry()) {
-    const auto& map = registry->ctx().at<MapInfo>();
-    return map.column_count > 1;
+  if (model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      return model.view_map(id).get_map().column_count() > 1;
+    }
   }
-  else {
-    return false;
-  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -148,8 +150,7 @@ void AddTilesetShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
 }
 
-auto AddTilesetShortcut::is_enabled(const DocumentModel& model,
-                                    const WidgetManager&) const -> bool
+auto AddTilesetShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -163,10 +164,17 @@ void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
 }
 
-auto EnableBucketShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager&) const -> bool
+auto EnableBucketShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.is_tool_possible(ToolType::Bucket) && is_editor_focused();
+  if (ui::is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& map = model.view_map(id);
+      return map.get_tools().is_available(model, ToolType::Bucket);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -178,10 +186,17 @@ void EnableEraserShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
 }
 
-auto EnableEraserShortcut::is_enabled(const DocumentModel& model,
-                                      const WidgetManager&) const -> bool
+auto EnableEraserShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.is_tool_possible(ToolType::Eraser) && is_editor_focused();
+  if (ui::is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& map = model.view_map(id);
+      return map.get_tools().is_available(model, ToolType::Eraser);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -193,10 +208,17 @@ void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
 }
 
-auto EnableStampShortcut::is_enabled(const DocumentModel& model,
-                                     const WidgetManager&) const -> bool
+auto EnableStampShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.is_tool_possible(ToolType::Stamp) && is_editor_focused();
+  if (ui::is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& map = model.view_map(id);
+      return map.get_tools().is_available(model, ToolType::Stamp);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -210,10 +232,17 @@ void EnableObjectSelectionShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
 }
 
-auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model,
-                                               const WidgetManager&) const -> bool
+auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.is_tool_possible(ToolType::ObjectSelection) && is_editor_focused();
+  if (ui::is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& map = model.view_map(id);
+      return map.get_tools().is_available(model, ToolType::ObjectSelection);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -226,10 +255,17 @@ void EnableRectangleToolShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Rectangle);
 }
 
-auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model,
-                                             const WidgetManager&) const -> bool
+auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.is_tool_possible(ToolType::Rectangle) && is_editor_focused();
+  if (ui::is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& map = model.view_map(id);
+      return map.get_tools().is_available(model, ToolType::Rectangle);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -241,10 +277,17 @@ void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Ellipse);
 }
 
-auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model,
-                                           const WidgetManager&) const -> bool
+auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.is_tool_possible(ToolType::Ellipse) && is_editor_focused();
+  if (ui::is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& map = model.view_map(id);
+      return map.get_tools().is_available(model, ToolType::Ellipse);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -256,10 +299,17 @@ void EnablePointToolShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<SelectToolEvent>(ToolType::Point);
 }
 
-auto EnablePointToolShortcut::is_enabled(const DocumentModel& model,
-                                         const WidgetManager&) const -> bool
+auto EnablePointToolShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.is_tool_possible(ToolType::Point) && is_editor_focused();
+  if (ui::is_editor_focused() && model.has_active_document()) {
+    const auto id = model.active_document_id().value();
+    if (model.is_map(id)) {
+      const auto& map = model.view_map(id);
+      return map.get_tools().is_available(model, ToolType::Point);
+    }
+  }
+
+  return false;
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -282,6 +332,11 @@ OpenComponentEditorShortcut::OpenComponentEditorShortcut()
 void OpenComponentEditorShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<OpenComponentEditorEvent>();
+}
+
+auto OpenComponentEditorShortcut::is_enabled(const DocumentModel& model) const -> bool
+{
+  return model.is_map_active();
 }
 
 }  // namespace tactile

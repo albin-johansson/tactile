@@ -26,13 +26,13 @@
 namespace tactile {
 
 /**
- * \brief A tool used to draw (or "stamp") selected tileset tiles to tile layers.
+ * A tool used to draw (or "stamp") selected tileset tiles to tile layers.
  *
- * \details The stamp tool, in its default mode, will simply stamp the selected tiles in
- * the active tileset to tile layers. It also has a "random" mode, where a single tile is
- * randomly picked from the tile selection, and subsequently stamped to the tile layer.
+ * The stamp tool, in its default mode, will simply stamp the selected tiles in the active
+ * tileset to tile layers. It also has a "random" mode, where a single tile is randomly
+ * picked from the tile selection, and subsequently stamped to the tile layer.
  *
- * \note Changes are applied to the target tile layer immediately, and later submitted
+ * Changes are applied to the target tile layer immediately, and later submitted
  * as a command when the user ends the sequence.
  *
  * \todo Right-click should erase tiles.
@@ -40,45 +40,60 @@ namespace tactile {
 class StampTool final : public ATool
 {
  public:
-  void draw_gizmos(const entt::registry& registry,
-                   IRenderer& renderer,
-                   const MouseInfo& mouse) const override;
+  void draw_gizmos(const DocumentModel& model,
+                   IRenderer&           renderer,
+                   const MouseInfo&     mouse) const override;
 
-  void on_disabled(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_exited(entt::registry& registry, entt::dispatcher& dispatcher) override;
+  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(entt::registry& registry,
+  void on_pressed(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_dragged(entt::registry& registry,
+  void on_dragged(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+                  const MouseInfo&  mouse) override;
 
-  void on_released(entt::registry& registry,
+  void on_released(DocumentModel&    model,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
-
-  [[nodiscard]] auto is_available(const entt::registry& registry) const -> bool override;
-
-  [[nodiscard]] auto get_type() const -> ToolType override;
+                   const MouseInfo&  mouse) override;
 
   void set_random(bool random);
 
   [[nodiscard]] auto is_random() const -> bool;
 
+  [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
+
+  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Stamp; }
+
  private:
-  TileCache mPrevious;  ///< Previous tile state.
-  TileCache mCurrent;   ///< The current stamp sequence.
+  TileCache      mPrevious;  ///< Previous tile state.
+  TileCache      mCurrent;   ///< The current stamp sequence.
   Maybe<TilePos> mLastChangedPos;
-  bool mRandomMode{};
+  bool           mRandomMode{};
 
-  void update_sequence(entt::registry& registry, const TilePos& cursor);
+  void draw_gizmos_normal(const Map&        map,
+                          const TilesetRef& tilesetRef,
+                          IRenderer&        renderer,
+                          const MouseInfo&  mouse) const;
 
-  void maybe_emit_event(entt::dispatcher& dispatcher);
+  void update_sequence(DocumentModel& model, const TilePos& cursor);
 
-  [[nodiscard]] auto is_usable(const entt::registry& registry) const -> bool;
+  void update_sequence_normal(TileLayer&        layer,
+                              const TilesetRef& tilesetRef,
+                              const TilePos&    cursor);
+
+  void update_sequence_random(TileLayer&        layer,
+                              const TilesetRef& tilesetRef,
+                              const TilePos&    cursor);
+
+  void maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher);
+
+  [[nodiscard]] auto should_be_random(const Map& map) const -> bool;
+
+  [[nodiscard]] auto is_usable(const DocumentModel& model) const -> bool;
 };
 
 }  // namespace tactile

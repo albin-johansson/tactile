@@ -21,40 +21,23 @@
 
 #include "preference_state.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 /// \addtogroup io
 /// \{
 
-/// \name Preference API
-/// \{
-
-/**
- * \brief Loads existing persistent preferences or loads the default preferences.
- */
+/// Loads any existing persistent preferences, or assumes the default ones.
 void load_preferences();
 
-/**
- * \brief Saves the current preferences in the persistent file directory.
- */
+/// Saves the current preferences in the persistent file directory.
 void save_preferences();
 
-/**
- * \brief Overrides the current preferences.
- *
- * \param prefs the new preferences.
- */
+/// Overrides the current in-memory preferences.
 void set_preferences(PreferenceState prefs);
 
-/**
- * \brief Returns the current preferences.
- *
- * \return the preferences.
- */
+/// Returns the current in-memory preferences.
 [[nodiscard]] auto get_preferences() -> PreferenceState&;
-
-/// \} End of preference API
 
 /// \} End of group io
 
-}  // namespace tactile
+}  // namespace tactile::io

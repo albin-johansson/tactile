@@ -24,8 +24,9 @@
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
 #include "io/maps/parser/yaml/yaml_layer_parser.hpp"
 #include "io/maps/parser/yaml/yaml_tileset_parser.hpp"
+#include "io/maps/yaml_utils.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& data)
@@ -36,45 +37,27 @@ namespace {
     return ParseError::CouldNotReadFile;
   }
 
-  if (auto rows = node["row-count"]) {
-    data.row_count = rows.as<usize>();
-  }
-  else {
+  if (!read_attribute(node, "row-count", data.row_count)) {
     return ParseError::NoMapHeight;
   }
 
-  if (auto cols = node["column-count"]) {
-    data.col_count = cols.as<usize>();
-  }
-  else {
+  if (!read_attribute(node, "column-count", data.col_count)) {
     return ParseError::NoMapWidth;
   }
 
-  if (auto tw = node["tile-width"]) {
-    data.tile_width = tw.as<int32>();
-  }
-  else {
+  if (!read_attribute(node, "tile-width", data.tile_size.x)) {
     return ParseError::NoMapTileWidth;
   }
 
-  if (auto th = node["tile-height"]) {
-    data.tile_height = th.as<int32>();
-  }
-  else {
+  if (!read_attribute(node, "tile-height", data.tile_size.y)) {
     return ParseError::NoMapTileHeight;
   }
 
-  if (auto id = node["next-layer-id"]) {
-    data.next_layer_id = id.as<LayerID>();
-  }
-  else {
+  if (!read_attribute(node, "next-layer-id", data.next_layer_id)) {
     return ParseError::NoMapNextLayerId;
   }
 
-  if (auto id = node["next-object-id"]) {
-    data.next_object_id = id.as<ObjectID>();
-  }
-  else {
+  if (!read_attribute(node, "next-object-id", data.next_object_id)) {
     return ParseError::NoMapNextObjectId;
   }
 
@@ -121,4 +104,4 @@ auto parse_yaml_map(const std::filesystem::path& path) -> ParseData
   return result;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

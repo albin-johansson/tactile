@@ -49,7 +49,7 @@ auto stringify(const AttributeType type) -> const char*
       return "object";
 
     default:
-      panic("Invalid attribute type!");
+      throw TactileError{"Invalid attribute type!"};
   }
 }
 
@@ -90,7 +90,7 @@ void Attribute::reset_to_default(const AttributeType type)
       break;
 
     default:
-      panic("Invalid attribute type!");
+      throw TactileError{"Invalid attribute type!"};
   }
 }
 
@@ -118,7 +118,7 @@ auto Attribute::has_default_value() const -> bool
     return *color == cen::colors::black;
   }
   else {
-    panic("Invalid property type!");
+    throw TactileError{"Invalid property type!"};
   }
 }
 
@@ -189,7 +189,7 @@ auto Attribute::as_string() const -> const string_type&
     return *str;
   }
   else {
-    panic("Attribute was not a string!");
+    throw TactileError{"Attribute was not a string!"};
   }
 }
 
@@ -199,7 +199,7 @@ auto Attribute::as_int() const -> integer_type
     return *i;
   }
   else {
-    panic("Attribute was not an integer!");
+    throw TactileError{"Attribute was not an integer!"};
   }
 }
 
@@ -209,7 +209,7 @@ auto Attribute::as_float() const -> float_type
     return *f;
   }
   else {
-    panic("Attribute was not a float!");
+    throw TactileError{"Attribute was not a float!"};
   }
 }
 
@@ -219,7 +219,7 @@ auto Attribute::as_bool() const -> bool
     return *b;
   }
   else {
-    panic("Attribute was not a boolean!");
+    throw TactileError{"Attribute was not a boolean!"};
   }
 }
 
@@ -229,7 +229,7 @@ auto Attribute::as_path() const -> const path_type&
     return *file;
   }
   else {
-    panic("Attribute was not a file!");
+    throw TactileError{"Attribute was not a file!"};
   }
 }
 
@@ -239,7 +239,7 @@ auto Attribute::as_object() const -> object_t
     return *obj;
   }
   else {
-    panic("Attribute was not an object reference!");
+    throw TactileError{"Attribute was not an object reference!"};
   }
 }
 
@@ -249,7 +249,7 @@ auto Attribute::as_color() const -> const color_type&
     return *color;
   }
   else {
-    panic("Attribute was not a color!");
+    throw TactileError{"Attribute was not a color!"};
   }
 }
 
@@ -278,7 +278,7 @@ auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
       return stream << "object '" << value.as_object() << "'";
 
     default:
-      panic("Invalid attribute type!");
+      throw TactileError{"Invalid attribute type!"};
   }
 }
 

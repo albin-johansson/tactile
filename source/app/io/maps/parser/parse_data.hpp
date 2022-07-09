@@ -24,7 +24,7 @@
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 class ParseData final
 {
@@ -43,8 +43,8 @@ class ParseData final
 
  private:
   std::filesystem::path mPath;
-  ir::MapData mData;
-  ParseError mError{ParseError::None};
+  ir::MapData           mData;
+  ParseError            mError{ParseError::None};
 };
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

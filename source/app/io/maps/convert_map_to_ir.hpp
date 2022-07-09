@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 #include "io/maps/ir.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
-[[nodiscard]] auto convert_map_to_ir(const Document& document) -> ir::MapData;
+[[nodiscard]] auto convert_map_to_ir(const MapDocument& document) -> ir::MapData;
 
-}  // namespace tactile
+}  // namespace tactile::io

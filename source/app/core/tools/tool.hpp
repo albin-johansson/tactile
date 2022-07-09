@@ -31,32 +31,31 @@ class ATool
  public:
   virtual ~ATool() noexcept = default;
 
-  virtual void draw_gizmos(const entt::registry& registry,
-                           IRenderer& renderer,
-                           const MouseInfo& mouse) const;
+  virtual void draw_gizmos(const DocumentModel& model,
+                           IRenderer&           renderer,
+                           const MouseInfo&     mouse) const;
 
-  virtual void on_enabled(entt::registry& registry, entt::dispatcher& dispatcher);
+  virtual void on_enabled(DocumentModel& model, entt::dispatcher& dispatcher);
 
-  virtual void on_disabled(entt::registry& registry, entt::dispatcher& dispatcher);
+  virtual void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher);
 
-  virtual void on_entered(entt::registry& registry, entt::dispatcher& dispatcher);
+  virtual void on_entered(DocumentModel& model, entt::dispatcher& dispatcher);
 
-  virtual void on_exited(entt::registry& registry, entt::dispatcher& dispatcher);
+  virtual void on_exited(DocumentModel& model, entt::dispatcher& dispatcher);
 
-  virtual void on_pressed(entt::registry& registry,
+  virtual void on_pressed(DocumentModel&    model,
                           entt::dispatcher& dispatcher,
-                          const MouseInfo& mouse);
+                          const MouseInfo&  mouse);
 
-  virtual void on_dragged(entt::registry& registry,
+  virtual void on_dragged(DocumentModel&    model,
                           entt::dispatcher& dispatcher,
-                          const MouseInfo& mouse);
+                          const MouseInfo&  mouse);
 
-  virtual void on_released(entt::registry& registry,
+  virtual void on_released(DocumentModel&    model,
                            entt::dispatcher& dispatcher,
-                           const MouseInfo& mouse);
+                           const MouseInfo&  mouse);
 
-  [[nodiscard]] virtual auto is_available(const entt::registry& registry) const
-      -> bool = 0;
+  [[nodiscard]] virtual auto is_available(const DocumentModel& model) const -> bool = 0;
 
   [[nodiscard]] virtual auto get_type() const -> ToolType = 0;
 };

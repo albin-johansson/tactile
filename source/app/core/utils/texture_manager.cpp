@@ -49,14 +49,14 @@ TextureManager::~TextureManager()
   mTextures.clear();
 }
 
-auto TextureManager::load(const std::filesystem::path& path) -> Maybe<comp::Texture>
+auto TextureManager::load(const std::filesystem::path& path) -> Maybe<TextureInfo>
 {
-  comp::Texture texture;
+  TextureInfo texture;
   texture.path = path;
 
   // Load from file
   TextureDataPtr data{
-      stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4)};
+      stbi_load(path.string().c_str(), &texture.size.x, &texture.size.y, nullptr, 4)};
   if (!data) {
     return nothing;
   }
@@ -81,8 +81,8 @@ auto TextureManager::load(const std::filesystem::path& path) -> Maybe<comp::Text
   glTexImage2D(GL_TEXTURE_2D,
                0,
                GL_RGBA,
-               texture.width,
-               texture.height,
+               texture.size.x,
+               texture.size.y,
                0,
                GL_RGBA,
                GL_UNSIGNED_BYTE,

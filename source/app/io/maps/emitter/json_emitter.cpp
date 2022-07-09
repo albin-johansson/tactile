@@ -26,17 +26,16 @@
 #include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
 
-#include "core/utils/strings.hpp"
+#include "core/common/filesystem.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/json_utils.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
 
-namespace tactile::emitter {
+namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _emit_properties(const ir::AttributeContextData& data)
-    -> nlohmann::json
+[[nodiscard]] auto _emit_properties(const ir::ContextData& data) -> nlohmann::json
 {
   auto array = nlohmann::json::array();
 
@@ -59,10 +58,10 @@ namespace {
 
   json["id"] = data.id;
   json["name"] = data.name;
-  json["x"] = data.x;
-  json["y"] = data.y;
-  json["width"] = data.width;
-  json["height"] = data.height;
+  json["x"] = data.pos.x;
+  json["y"] = data.pos.y;
+  json["width"] = data.size.x;
+  json["height"] = data.size.y;
   json["visible"] = data.visible;
   json["type"] = data.tag;
   json["rotation"] = 0;
@@ -90,8 +89,8 @@ namespace {
 }
 
 [[nodiscard]] auto _emit_layer(const ir::LayerData& data,
-                               const usize rows,
-                               const usize columns) -> nlohmann::json
+                               const usize          rows,
+                               const usize          columns) -> nlohmann::json
 {
   auto json = nlohmann::json::object();
 
@@ -234,23 +233,23 @@ namespace {
   return json;
 }
 
-void _add_common_tileset_attributes(nlohmann::json& json,
-                                    const EmitInfo& info,
+void _add_common_tileset_attributes(nlohmann::json&        json,
+                                    const EmitInfo&        info,
                                     const ir::TilesetData& data)
 {
   json["name"] = data.name;
   json["columns"] = data.column_count;
 
-  json["tilewidth"] = data.tile_width;
-  json["tileheight"] = data.tile_height;
+  json["tilewidth"] = data.tile_size.x;
+  json["tileheight"] = data.tile_size.y;
   json["tilecount"] = data.tile_count;
 
   const auto imagePath =
       std::filesystem::relative(data.image_path, info.destination_dir());
   json["image"] = convert_to_forward_slashes(imagePath);
 
-  json["imagewidth"] = data.image_width;
-  json["imageheight"] = data.image_height;
+  json["imagewidth"] = data.image_size.x;
+  json["imageheight"] = data.image_size.y;
 
   json["margin"] = 0;
   json["spacing"] = 0;
@@ -264,7 +263,7 @@ void _add_common_tileset_attributes(nlohmann::json& json,
   }
 }
 
-[[nodiscard]] auto _emit_embedded_tileset(const EmitInfo& info,
+[[nodiscard]] auto _emit_embedded_tileset(const EmitInfo&        info,
                                           const ir::TilesetData& data) -> nlohmann::json
 {
   auto json = nlohmann::json::object();
@@ -340,8 +339,8 @@ void emit_json_map(const EmitInfo& info)
   json["width"] = data.col_count;
   json["height"] = data.row_count;
 
-  json["tilewidth"] = data.tile_width;
-  json["tileheight"] = data.tile_height;
+  json["tilewidth"] = data.tile_size.x;
+  json["tileheight"] = data.tile_size.y;
 
   json["nextlayerid"] = data.next_layer_id;
   json["nextobjectid"] = data.next_object_id;
@@ -363,4 +362,4 @@ void emit_json_map(const EmitInfo& info)
   write_json(json, info.destination_file());
 }
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

@@ -23,7 +23,7 @@
 
 #include "misc/panic.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 auto to_cause(const ParseError error) -> std::string_view
 {
@@ -188,7 +188,7 @@ auto to_cause(const ParseError error) -> std::string_view
       return "A tileset tile definition has an animation frame with no duration!";
 
     default:
-      panic("Invalid parse error!");
+      throw TactileError("Invalid parse error!");
   }
 }
 
@@ -197,4 +197,4 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
   return stream << magic_enum::enum_name<ParseError>(error);
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

@@ -32,11 +32,11 @@
 #include "io/maps/parser/json/json_layer_parser.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_fancy_tile(const nlohmann::json& json,
-                                     ir::TilesetData& tilesetData) -> ParseError
+                                     ir::TilesetData&      tilesetData) -> ParseError
 {
   TileID tileId{};
 
@@ -94,7 +94,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_fancy_tiles(const nlohmann::json& json,
-                                      ir::TilesetData& tilesetData) -> ParseError
+                                      ir::TilesetData&      tilesetData) -> ParseError
 {
   if (json.contains("tiles")) {
     for (const auto& [_, value] : json.at("tiles").items()) {
@@ -108,8 +108,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_image_path(const nlohmann::json& json,
-                                     ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_image_path(const nlohmann::json&        json,
+                                     ir::TilesetData&             tilesetData,
                                      const std::filesystem::path& dir) -> ParseError
 {
   const auto relative = json.find("image");
@@ -130,7 +130,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_common_tileset_attributes(const nlohmann::json& json,
-                                                    ir::TilesetData& tilesetData,
+                                                    ir::TilesetData&      tilesetData,
                                                     const std::filesystem::path& dir)
     -> ParseError
 {
@@ -142,14 +142,14 @@ namespace {
   }
 
   if (const auto tw = as_int(json, "tilewidth")) {
-    tilesetData.tile_width = *tw;
+    tilesetData.tile_size.x = *tw;
   }
   else {
     return ParseError::NoTilesetTileWidth;
   }
 
   if (const auto th = as_int(json, "tileheight")) {
-    tilesetData.tile_height = *th;
+    tilesetData.tile_size.y = *th;
   }
   else {
     return ParseError::NoTilesetTileHeight;
@@ -170,14 +170,14 @@ namespace {
   }
 
   if (const auto width = as_int(json, "imagewidth")) {
-    tilesetData.image_width = *width;
+    tilesetData.image_size.x = *width;
   }
   else {
     return ParseError::NoTilesetImageWidth;
   }
 
   if (const auto height = as_int(json, "imageheight")) {
-    tilesetData.image_height = *height;
+    tilesetData.image_size.y = *height;
   }
   else {
     return ParseError::NoTilesetImageHeight;
@@ -200,8 +200,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_external_tileset(const nlohmann::json& json,
-                                           ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_external_tileset(const nlohmann::json&        json,
+                                           ir::TilesetData&             tilesetData,
                                            const std::filesystem::path& dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
@@ -221,8 +221,8 @@ namespace {
   }
 }
 
-[[nodiscard]] auto _parse_tileset(const nlohmann::json& json,
-                                  ir::TilesetData& tilesetData,
+[[nodiscard]] auto _parse_tileset(const nlohmann::json&        json,
+                                  ir::TilesetData&             tilesetData,
                                   const std::filesystem::path& dir) -> ParseError
 {
   if (const auto firstTile = as_int(json, "firstgid")) {
@@ -242,8 +242,8 @@ namespace {
 
 }  // namespace
 
-auto parse_tilesets(const nlohmann::json& json,
-                    ir::MapData& mapData,
+auto parse_tilesets(const nlohmann::json&        json,
+                    ir::MapData&                 mapData,
                     const std::filesystem::path& dir) -> ParseError
 {
   const auto iter = json.find("tilesets");
@@ -266,4 +266,4 @@ auto parse_tilesets(const nlohmann::json& json,
   return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

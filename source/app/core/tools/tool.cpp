@@ -21,23 +21,23 @@
 
 namespace tactile {
 
-void ATool::draw_gizmos(const entt::registry&, IRenderer&, const MouseInfo&) const {}
+void ATool::draw_gizmos(const DocumentModel&, IRenderer&, const MouseInfo&) const {}
 
-void ATool::on_enabled(entt::registry&, entt::dispatcher&) {}
+void ATool::on_enabled(DocumentModel&, entt::dispatcher&) {}
 
-void ATool::on_disabled(entt::registry&, entt::dispatcher&) {}
+void ATool::on_disabled(DocumentModel&, entt::dispatcher&) {}
 
-void ATool::on_entered(entt::registry&, entt::dispatcher&) {}
+void ATool::on_entered(DocumentModel&, entt::dispatcher&) {}
 
-void ATool::on_exited(entt::registry&, entt::dispatcher&) {}
+void ATool::on_exited(DocumentModel&, entt::dispatcher&) {}
 
-void ATool::on_pressed(entt::registry&, entt::dispatcher&, const MouseInfo&) {}
+void ATool::on_pressed(DocumentModel&, entt::dispatcher&, const MouseInfo&) {}
 
-void ATool::on_dragged(entt::registry&, entt::dispatcher&, const MouseInfo&) {}
+void ATool::on_dragged(DocumentModel&, entt::dispatcher&, const MouseInfo&) {}
 
-void ATool::on_released(entt::registry&, entt::dispatcher&, const MouseInfo&) {}
+void ATool::on_released(DocumentModel&, entt::dispatcher&, const MouseInfo&) {}
 
-auto ATool::is_available(const entt::registry&) const -> bool
+auto ATool::is_available(const DocumentModel&) const -> bool
 {
   return true;
 }

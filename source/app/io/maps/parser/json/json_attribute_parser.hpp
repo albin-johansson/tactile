@@ -24,9 +24,9 @@
 #include "io/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 [[nodiscard]] auto parse_properties(const nlohmann::json& json,
-                                    ir::AttributeContextData& contextData) -> ParseError;
+                                    ir::ContextData&      contextData) -> ParseError;
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

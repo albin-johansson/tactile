@@ -23,7 +23,7 @@
 
 #include "io/maps/ir.hpp"
 
-namespace tactile::emitter {
+namespace tactile::io {
 
 class EmitInfo final
 {
@@ -39,7 +39,7 @@ class EmitInfo final
  private:
   std::filesystem::path mDestinationFile;
   std::filesystem::path mDestinationDir;
-  ir::MapData mData;
+  ir::MapData           mData;
 };
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

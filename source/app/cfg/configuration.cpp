@@ -23,25 +23,43 @@
 #include <exception>  // set_terminate
 
 #include <GL/glew.h>
-#include <centurion/system.hpp>
+#include <SDL.h>
+#include <boost/stacktrace/stacktrace.hpp>
+#include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "cfg/sdl_attributes.hpp"
+#include "cfg/platform_specific.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-#if TACTILE_PLATFORM_WINDOWS
-
-#include <SDL_syswm.h>
-#include <dwmapi.h>
-
-#endif  // TACTILE_PLATFORM_WINDOWS
-
 namespace tactile {
 namespace {
+
+void _init_sdl_attributes()
+{
+  /* Ensure nearest pixel sampling */
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+
+  /* Enable multi-gesture events from touchpads */
+  SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "1");
+
+  /* Make sure that we use OpenGL */
+  SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
+
+  if constexpr (on_osx) {
+    cen::gl::set(cen::gl_attribute::context_flags,
+                 SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+  }
+
+  cen::gl::set(cen::gl_attribute::context_profile_mask, SDL_GL_CONTEXT_PROFILE_CORE);
+  cen::gl::set(cen::gl_attribute::context_major_version, 3);
+  cen::gl::set(cen::gl_attribute::context_minor_version, 2);
+
+  cen::gl::set(cen::gl_attribute::double_buffer, 1);
+}
 
 [[nodiscard]] consteval auto _get_window_flags() noexcept -> uint32
 {
@@ -54,48 +72,39 @@ namespace {
   return flags;
 }
 
-void _win32_use_immersive_dark_mode([[maybe_unused]] cen::window& window)
-{
-#if TACTILE_PLATFORM_WINDOWS
-  SDL_SysWMinfo wm{};
-  SDL_VERSION(&wm.version);
-  if (SDL_GetWindowWMInfo(window.get(), &wm)) {
-    HWND hwnd = wm.info.win.window;
-
-    cen::shared_object dwmapi{"dwmapi.dll"};
-
-    auto* setAttribute = dwmapi.load_function<HRESULT(HWND, DWORD, LPCVOID, DWORD)>(
-        "DwmSetWindowAttribute");
-
-    if (!setAttribute) {
-      return;
-    }
-
-    BOOL mode = 1;
-    setAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &mode, sizeof mode);
-  }
-#endif  // TACTILE_PLATFORM_WINDOWS
-}
-
 }  // namespace
+
+/* Keep the handler out of the anonymous namespace */
+inline void terminate_handler()
+{
+  try {
+    spdlog::critical("Into exile I must go. Failed I have.\n{}",
+                     boost::stacktrace::stacktrace{});
+  }
+  catch (...) {
+    /* Not much we can do */
+  }
+
+  std::abort();
+}
 
 AppConfiguration::AppConfiguration()
 {
-  /* Use terminate handler that doesn't do anything fancy, e.g. no logging */
-  std::set_terminate([] { std::abort(); });
+  std::set_terminate(&terminate_handler);
 
-  init_sdl_attributes();
+  _init_sdl_attributes();
 
   mWindow.emplace("Tactile", cen::window::default_size(), _get_window_flags());
   TACTILE_ASSERT(mWindow.has_value());
 
-  _win32_use_immersive_dark_mode(*mWindow);
+  use_immersive_dark_mode(*mWindow);
 
   /* This is ugly, but it's necessary to allow macOS builds in different flavours */
 #ifdef TACTILE_BUILD_APP_BUNDLE
   const auto iconPath = find_resource("Tactile.icns");
 #else
-  const auto iconPath = find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
+  const auto iconPath =
+      io::find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
 #endif
 
   mWindow->set_icon(cen::surface{iconPath.string()});
@@ -107,13 +116,13 @@ AppConfiguration::AppConfiguration()
 
   if (glewInit() != GLEW_OK) {
     spdlog::error("Failed to initialize GLEW!");
-    panic("Failed to initialize GLEW!");
+    throw TactileError{"Failed to initialize GLEW!"};
   }
 
   spdlog::debug("OpenGL version... {}", glGetString(GL_VERSION));
   spdlog::debug("OpenGL renderer... {}", glGetString(GL_RENDERER));
 
-  load_preferences();
+  io::load_preferences();
 
   TACTILE_ASSERT(mOpenGL.has_value());
   mImGui.emplace(*mWindow, *mOpenGL);

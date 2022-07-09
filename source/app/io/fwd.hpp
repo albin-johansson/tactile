@@ -21,24 +21,16 @@
 
 namespace tactile {
 
-class FileDialog;
 class PreferenceState;
 
-namespace emitter {
-
+namespace io {
+class FileDialog;
 class EmitInfo;
-
-}  // namespace emitter
-
-namespace parsing {
-
 class ParseData;
-
-}  // namespace parsing
+}  // namespace io
 
 namespace ir {
-
-struct AttributeContextData;
+struct ContextData;
 struct ObjectData;
 struct LayerData;
 struct TileLayerData;
@@ -48,6 +40,6 @@ struct MetaAnimationFrameData;
 struct MetaTileData;
 struct TilesetData;
 struct MapData;
-
 }  // namespace ir
+
 }  // namespace tactile

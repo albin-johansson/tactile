@@ -28,7 +28,7 @@
 #include "io/maps/parser/xml/xml_tileset_parser.hpp"
 #include "io/maps/xml_utils.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _validate_map(pugi::xml_node mapNode) -> ParseError
@@ -73,14 +73,14 @@ namespace {
   }
 
   if (const auto tw = int_attribute(mapNode, "tilewidth")) {
-    data.tile_width = *tw;
+    data.tile_size.x = *tw;
   }
   else {
     return ParseError::NoMapTileWidth;
   }
 
   if (const auto th = int_attribute(mapNode, "tileheight")) {
-    data.tile_height = *th;
+    data.tile_size.y = *th;
   }
   else {
     return ParseError::NoMapTileHeight;
@@ -134,4 +134,4 @@ auto parse_xml_map(const std::filesystem::path& path) -> ParseData
   return result;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io
