@@ -24,11 +24,7 @@
 
 namespace tactile::ui {
 
-/**
- * Represents the dialog used to create new tilemaps.
- *
- * \ingroup gui
- */
+/// Used to create new tilemaps.
 class CreateMapDialog final : public ADialog
 {
  public:

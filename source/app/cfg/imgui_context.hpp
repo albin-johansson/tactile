@@ -27,7 +27,6 @@
 namespace tactile {
 
 /// Handles the configuration of the Dear ImGui context.
-/// \ingroup cfg
 class ImGuiContext final
 {
  public:

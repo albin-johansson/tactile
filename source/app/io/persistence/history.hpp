@@ -26,9 +26,6 @@
 
 namespace tactile::io {
 
-/// \addtogroup io
-/// \{
-
 /// Loads the recent file history from the persistent file directory.
 void load_file_history();
 
@@ -38,21 +35,10 @@ void save_file_history();
 /// Clears the current in-memory recent file history.
 void clear_file_history();
 
-/**
- * Adds a file path to the recent file history.
- *
- * This function has no effect if the file path is already stored in the recent file
- * history.
- *
- * \param path the file path that will be stored.
- */
+/// Adds a file path to the recent file history, if it doesn't already exist.
 void add_file_to_history(const fs::path& path);
 
-/**
- * Sets the most recently closed file, and stores it in the file history.
- *
- * \param path the file path that will be stored.
- */
+/// Sets the most recently closed file, and stores it in the file history.
 void set_last_closed_file(const fs::path& path);
 
 /// Returns the current in-memory recent file history.
@@ -67,15 +53,7 @@ void set_last_closed_file(const fs::path& path);
  */
 [[nodiscard]] auto is_last_closed_file_valid() -> bool;
 
-/**
- * Returns the file path to the most recently closed file.
- *
- * \return the path of the most recently closed file.
- *
- * \throws TactileError if there is no valid last closed file.
- */
+/// Returns the file path to the most recently closed file.
 [[nodiscard]] auto last_closed_file() -> const std::string&;
-
-/// \} End of group io
 
 }  // namespace tactile::io

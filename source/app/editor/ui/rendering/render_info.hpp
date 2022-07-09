@@ -26,9 +26,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup rendering
-/// \{
-
 /**
  * Provides useful information about a rendering context.
  *
@@ -55,7 +52,5 @@ struct RenderInfo final
 
 [[nodiscard]] auto get_render_info(const Viewport& viewport, const Tileset& tileset)
     -> RenderInfo;
-
-/// \} End of group rendering
 
 }  // namespace tactile::ui

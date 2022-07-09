@@ -35,7 +35,6 @@
 namespace tactile {
 
 /// Handles the configuration of the application window, OpenGL context, etc.
-/// \ingroup cfg
 class AppConfiguration final
 {
  public:

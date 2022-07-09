@@ -27,11 +27,7 @@
 
 namespace tactile::ui {
 
-/**
- * Used to rename an attribute in a component definition.
- *
- * \ingroup gui
- */
+/// Used to rename an attribute in a component definition.
 class RenameComponentAttributeDialog final : public AStringInputDialog
 {
  public:

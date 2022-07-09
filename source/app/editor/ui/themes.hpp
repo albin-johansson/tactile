@@ -25,19 +25,8 @@ struct ImGuiStyle;
 
 namespace tactile::ui {
 
-/// \addtogroup gui
-/// \{
-
-/// \name Theme API
-/// \{
-
-/**
- * Represents the different available themes.
- *
- * \warning Do not change the enumerator values!
- *
- * \see proto::Theme
- */
+/// Represents the different available themes.
+/// The enumerator values cannot change, and should mirror those of proto::Theme.
 enum class EditorTheme
 {
   DearDark = 0,   ///< The standard Dear ImGui dark theme.
@@ -85,9 +74,5 @@ void apply_style(ImGuiStyle& style);
  * \param theme the theme that will be applied to the style.
  */
 void apply_theme(ImGuiStyle& style, EditorTheme theme);
-
-/// \} End of theme API
-
-/// \} End of group gui
 
 }  // namespace tactile::ui

@@ -25,10 +25,7 @@
 
 namespace tactile::ui {
 
-/**
- * Used to change the name of an existing layer.
- * \ingroup gui
- */
+/// Used to change the name of an existing layer.
 class RenameLayerDialog final : public AStringInputDialog
 {
  public:

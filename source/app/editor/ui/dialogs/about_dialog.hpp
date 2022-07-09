@@ -23,11 +23,7 @@
 
 namespace tactile::ui {
 
-/**
- * Provides information about the application.
- *
- * \ingroup gui
- */
+/// Provides information about the application.
 class AboutDialog final : public ADialog
 {
  public:

@@ -25,12 +25,6 @@
 #include "core/layers/layer_type.hpp"
 #include "core/utils/texture_manager.hpp"
 
-/// \addtogroup gui
-/// \{
-
-/// \name Icon literals
-/// \{
-
 #define TAC_ICON_UNDO ICON_FA_ROTATE_LEFT
 #define TAC_ICON_REDO ICON_FA_ROTATE_RIGHT
 
@@ -99,24 +93,13 @@
 
 #define TAC_ICON_COMPONENT ICON_FA_CUBES
 
-/// \} End of icon literals
-
-/// \} End of group gui
-
 namespace tactile::ui {
 
-/**
- * Loads some icons to be used in the GUI.
- */
+/// Loads icons to be used in the UI.
 void load_icons(TextureManager& textures);
 
-/**
- * Returns the texture identifier for the Tactile icon.
- *
- * \pre `load_icons()` must have been called before.
- *
- * \return a texture identifier.
- */
+/// Returns the texture identifier for the Tactile icon.
+/// Note, load_icons() must have been called before.
 [[nodiscard]] auto get_tactile_icon() -> uint;
 
 }  // namespace tactile::ui

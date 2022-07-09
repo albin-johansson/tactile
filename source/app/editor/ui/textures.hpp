@@ -28,8 +28,6 @@ namespace tactile::ui {
 /**
  * Converts an OpenGL texture identifier to a Dear ImGui texture identifier.
  *
- * \ingroup gui
- *
  * \param texture the source OpenGL texture identifier.
  *
  * \return a Dear ImGui texture identifier.

@@ -25,19 +25,6 @@
 
 namespace tactile::ui {
 
-/// \name Component dock functions
-/// \{
-
-/**
- * \briefs Updates the component dock widget.
- *
- * The component dock is used to manage the components associated with attribute
- * contexts.
- *
- * \ingroup gui
- */
 void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-/// \} End of component dock functions
 
 }  // namespace tactile::ui

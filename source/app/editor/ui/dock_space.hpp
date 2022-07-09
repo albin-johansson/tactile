@@ -23,29 +23,13 @@
 
 namespace tactile::ui {
 
-/**
- * Updates the root dock space, call this function once each frame.
- *
- * \ingroup gui
- */
+/// Updates the root dock space, call this function once each frame.
 void update_dock_space();
 
-/**
- * Loads the default layout for a dock space.
- *
- * \param id the ID of the dock space.
- * \param resetVisibility `true` if the docks should have their visibility reset;
- *                        `false` otherwise.
- *
- * \ingroup gui
- */
+/// Loads the default layout for a dock space.
 void load_default_layout(ImGuiID id, bool resetVisibility);
 
-/**
- * Resets all dock space widgets to the default layout.
- *
- * \ingroup gui
- */
+/// Resets all dock space widgets to the default layout.
 void reset_layout();
 
 }  // namespace tactile::ui

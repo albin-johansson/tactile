@@ -26,9 +26,6 @@
 
 namespace tactile::ui {
 
-/// \name Viewport widget functions
-/// \{
-
 /// Updates the state of the primary viewport widget.
 void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispatcher);
 
@@ -39,7 +36,5 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport&               vie
 [[nodiscard]] auto is_viewport_focused() noexcept -> bool;
 
 [[nodiscard]] auto is_mouse_within_viewport() noexcept -> bool;
-
-/// \} End of viewport widget functions
 
 }  // namespace tactile::ui

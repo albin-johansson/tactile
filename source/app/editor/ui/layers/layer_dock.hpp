@@ -43,8 +43,6 @@ void show_rename_layer_dialog(const UUID& layerId);
  * Indicates whether the layer dock widget has input focus.
  *
  * \return `true` if the layer dock is focused; `false` otherwise.
- *
- * \ingroup gui
  */
 [[nodiscard]] auto is_layer_dock_focused() -> bool;
 

@@ -33,8 +33,6 @@ namespace tactile::ui {
  *
  * The array values are stored in the order red/green/blue/alpha.
  *
- * \ingroup utils
- *
  * \param color the color that will be converted.
  *
  * \return an array of normalized color components.

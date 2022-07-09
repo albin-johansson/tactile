@@ -23,20 +23,10 @@
 
 namespace tactile::io {
 
-/// \addtogroup io
-/// \{
-
-/**
- * Restores the open documents from the last session.
- *
- * \param model the model that the previous session will be restored to.
- * \param textures the texture manager that will be used.
- */
+/// Restores the open documents from the last session.
 void restore_last_session(DocumentModel& model, TextureManager& textures);
 
 /// Saves the current session, i.e. the paths of the currently open documents.
 void save_session(const DocumentModel& model);
-
-/// \} End of group io
 
 }  // namespace tactile::io
