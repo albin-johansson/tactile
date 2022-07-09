@@ -56,7 +56,7 @@ void _show_add_component_button_popup_content(const ADocument&  document,
   else {
     const auto& comps = context.get_comps();
     for (const auto& [definitionId, definition] : *index) {
-      Disable disableIf{comps.contains(definitionId)};
+      Disable disableIf {comps.contains(definitionId)};
 
       if (ImGui::MenuItem(definition.get_name().c_str())) {
         dispatcher.enqueue<AttachComponentEvent>(context.get_uuid(), definitionId);
@@ -76,7 +76,7 @@ void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
   const auto& context = document.view_context(contextId);
   ImGui::Text("Context: %s", context.get_name().c_str());
 
-  if (Child pane{"##ComponentsChild"}; pane.is_open()) {
+  if (Child pane {"##ComponentsChild"}; pane.is_open()) {
     const auto& comps = context.get_comps();
     if (comps.empty()) {
       prepare_vertical_alignment_center(2);
@@ -100,7 +100,7 @@ void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
       ImGui::OpenPopup(_add_component_popup_id);
     }
 
-    if (Popup popup{_add_component_popup_id}; popup.is_open()) {
+    if (Popup popup {_add_component_popup_id}; popup.is_open()) {
       _show_add_component_button_popup_content(document, context, dispatcher);
     }
   }
@@ -111,20 +111,17 @@ void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
 void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& prefs = io::get_preferences();
-  bool  visible = prefs.is_component_dock_visible();
 
-  if (!visible) {
+  if (!prefs.show_component_dock) {
     return;
   }
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
-  if (Window dock{"Components", flags, &visible}; dock.is_open()) {
+  if (Window dock {"Components", flags, &prefs.show_component_dock}; dock.is_open()) {
     const auto& document = model.require_active_document();
     _show_contents(document, dispatcher);
   }
-
-  prefs.set_component_dock_visible(visible);
 }
 
 }  // namespace tactile::ui

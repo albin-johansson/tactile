@@ -116,8 +116,8 @@ void _update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
     centered_label("This map has no layers!");
   }
   else {
-    const ImVec2 size{-min_float, -min_float};
-    if (ListBox list{"##LayerTreeNode", size}; list.is_open()) {
+    const ImVec2 size {-min_float, -min_float};
+    if (ListBox list {"##LayerTreeNode", size}; list.is_open()) {
       map.visit_layers([&](const ILayer* layer) {
         if (!layer->get_parent().has_value()) {
           layer_item_view(document, *layer, dispatcher);
@@ -136,23 +136,20 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   TACTILE_ASSERT(model.has_active_document());
 
   auto& prefs = io::get_preferences();
-  bool  visible = prefs.is_layer_dock_visible();
 
-  if (!visible) {
+  if (!prefs.show_layer_dock) {
     return;
   }
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse;
 
-  Window dock{"Layers", flags, &visible};
+  Window dock {"Layers", flags, &prefs.show_layer_dock};
   _is_focused = dock.is_open() &&  //
                 ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
     _update_contents(model, dispatcher);
   }
-
-  prefs.set_layer_dock_visible(visible);
 }
 
 void show_rename_layer_dialog(const UUID& layerId)

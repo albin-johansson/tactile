@@ -41,9 +41,8 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
     const auto hasValidExtension = ext == ".yaml" || ext == ".yml" || ext == ".json" ||
                                    ext == ".tmj" || ext == ".tmx" || ext == ".xml";
 
-    // TODO is this logic still required with new file dialogs?
     if (!hasValidExtension) {
-      const auto& format = io::get_preferences().preferred_format();
+      const auto& format = io::get_preferences().preferred_format;
       spdlog::warn("Invalid file extension '{}', assuming '{}'", ext, format);
 
       if (format == "YAML") {

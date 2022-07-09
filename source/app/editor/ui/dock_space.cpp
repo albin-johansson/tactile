@@ -30,6 +30,16 @@ namespace {
 
 constinit Maybe<ImGuiID> _root_id;
 
+void _reset_dock_visibilities()
+{
+  auto& prefs = io::get_preferences();
+  prefs.show_layer_dock = io::def_show_layer_dock;
+  prefs.show_tileset_dock = io::def_show_tileset_dock;
+  prefs.show_property_dock = io::def_show_property_dock;
+  prefs.show_component_dock = io::def_show_component_dock;
+  prefs.show_log_dock = io::def_show_log_dock;
+}
+
 }  // namespace
 
 void update_dock_space()
@@ -42,7 +52,7 @@ void update_dock_space()
     if (size.x > 0 && size.y > 0) {
       const auto& prefs = io::get_preferences();
 
-      if (!prefs.will_restore_layout() || !exists(io::widget_ini_path())) {
+      if (!prefs.restore_layout || !exists(io::widget_ini_path())) {
         load_default_layout(_root_id.value(), false);
       }
 
@@ -73,7 +83,7 @@ void load_default_layout(ImGuiID id, const bool resetVisibility)
   ImGui::DockBuilderFinish(id);
 
   if (resetVisibility) {
-    io::get_preferences().reset_dock_visibilities();
+    _reset_dock_visibilities();
   }
 }
 

@@ -32,7 +32,7 @@ TEST(CommandStack, Defaults)
 {
   const CommandStack stack;
   ASSERT_EQ(0, stack.size());
-  ASSERT_EQ(io::get_preferences().command_capacity(), stack.capacity());
+  ASSERT_EQ(io::get_preferences().command_capacity, stack.capacity());
   ASSERT_FALSE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
   ASSERT_TRUE(stack.is_clean());

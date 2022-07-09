@@ -19,9 +19,10 @@
 
 #pragma once
 
-#include <array>       // array
-#include <filesystem>  // path
+#include <array>  // array
 
+#include "core/common/filesystem.hpp"
+#include "core/common/math.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
 namespace tactile::ui {
@@ -42,12 +43,11 @@ class CreateTilesetDialog final : public ADialog
       -> bool override;
 
  private:
-  std::filesystem::path mFullImagePath;
-  std::array<char, 100> mPathPreviewBuffer{};
-  int                   mTileWidth{32};
-  int                   mTileHeight{32};
+  fs::path              mFullImagePath;
+  std::array<char, 100> mPathPreviewBuffer {};
+  Vector2i              mTileSize {32, 32};
 
-  void ShowImageFileDialog();
+  void show_image_file_dialog();
 };
 
 }  // namespace tactile::ui

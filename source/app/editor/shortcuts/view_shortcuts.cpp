@@ -34,7 +34,7 @@
 namespace tactile {
 
 CenterViewportShortcut::CenterViewportShortcut()
-    : AShortcut{cen::scancodes::space, cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::space, cen::key_mod::lshift}
 {}
 
 void CenterViewportShortcut::activate(entt::dispatcher& dispatcher)
@@ -50,7 +50,7 @@ auto CenterViewportShortcut::is_enabled(const DocumentModel& model) const -> boo
 /* ------------------------------------------------------------------------------------ */
 
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier}
+    : AShortcut {cen::scan_code {SDLK_MINUS}, primary_modifier}
 {}
 
 void DecreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
@@ -67,7 +67,7 @@ auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const 
 /* ------------------------------------------------------------------------------------ */
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier}
+    : AShortcut {cen::scan_code {SDLK_PLUS}, primary_modifier}
 {}
 
 void IncreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
@@ -83,7 +83,7 @@ auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const 
 /* ------------------------------------------------------------------------------------ */
 
 IncreaseFontSizeShortcut::IncreaseFontSizeShortcut()
-    : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scan_code {SDLK_PLUS}, primary_modifier | cen::key_mod::lshift}
 {}
 
 void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
@@ -100,7 +100,7 @@ auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 DecreaseFontSizeShortcut::DecreaseFontSizeShortcut()
-    : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scan_code {SDLK_MINUS}, primary_modifier | cen::key_mod::lshift}
 {}
 
 void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
@@ -117,7 +117,7 @@ auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 PanUpShortcut::PanUpShortcut()
-    : AShortcut{cen::scancodes::up, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::up, primary_modifier | cen::key_mod::lshift}
 {}
 
 void PanUpShortcut::activate(entt::dispatcher& dispatcher)
@@ -133,7 +133,7 @@ auto PanUpShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 PanDownShortcut::PanDownShortcut()
-    : AShortcut{cen::scancodes::down, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::down, primary_modifier | cen::key_mod::lshift}
 {}
 
 void PanDownShortcut::activate(entt::dispatcher& dispatcher)
@@ -149,7 +149,7 @@ auto PanDownShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 PanLeftShortcut::PanLeftShortcut()
-    : AShortcut{cen::scancodes::left, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::left, primary_modifier | cen::key_mod::lshift}
 {}
 
 void PanLeftShortcut::activate(entt::dispatcher& dispatcher)
@@ -165,7 +165,7 @@ auto PanLeftShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 PanRightShortcut::PanRightShortcut()
-    : AShortcut{cen::scancodes::right, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::right, primary_modifier | cen::key_mod::lshift}
 {}
 
 void PanRightShortcut::activate(entt::dispatcher& dispatcher)
@@ -180,25 +180,25 @@ auto PanRightShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 /* ------------------------------------------------------------------------------------ */
 
-ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, primary_modifier}
+ToggleGridShortcut::ToggleGridShortcut() : AShortcut {cen::scancodes::g, primary_modifier}
 {}
 
 void ToggleGridShortcut::activate(entt::dispatcher&)
 {
   auto& prefs = io::get_preferences();
-  prefs.set_grid_visible(!prefs.is_grid_visible());
+  prefs.show_grid = !prefs.show_grid;
 }
 
 /* ------------------------------------------------------------------------------------ */
 
 ToggleLayerHighlightShortcut::ToggleLayerHighlightShortcut()
-    : AShortcut{cen::scancodes::h}
+    : AShortcut {cen::scancodes::h}
 {}
 
 void ToggleLayerHighlightShortcut::activate(entt::dispatcher&)
 {
   auto& prefs = io::get_preferences();
-  prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
+  prefs.highlight_active_layer = !prefs.highlight_active_layer;
 }
 
 auto ToggleLayerHighlightShortcut::is_enabled(const DocumentModel& model) const -> bool
@@ -208,7 +208,7 @@ auto ToggleLayerHighlightShortcut::is_enabled(const DocumentModel& model) const 
 
 /* ------------------------------------------------------------------------------------ */
 
-ToggleUiShortcut::ToggleUiShortcut() : AShortcut{cen::scancodes::tab} {}
+ToggleUiShortcut::ToggleUiShortcut() : AShortcut {cen::scancodes::tab} {}
 
 void ToggleUiShortcut::activate(entt::dispatcher& dispatcher)
 {

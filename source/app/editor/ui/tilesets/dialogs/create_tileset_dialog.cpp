@@ -30,7 +30,7 @@
 
 namespace tactile::ui {
 
-CreateTilesetDialog::CreateTilesetDialog() : ADialog{"Create tileset"}
+CreateTilesetDialog::CreateTilesetDialog() : ADialog {"Create tileset"}
 {
   set_accept_button_label("Create");
 }
@@ -41,8 +41,7 @@ void CreateTilesetDialog::open()
   mFullImagePath.clear();
 
   const auto& prefs = io::get_preferences();
-  mTileWidth = prefs.preferred_tile_width();
-  mTileHeight = prefs.preferred_tile_height();
+  mTileSize = prefs.preferred_tile_size;
 
   make_visible();
 }
@@ -53,7 +52,7 @@ void CreateTilesetDialog::on_update(const DocumentModel&, entt::dispatcher&)
   ImGui::Spacing();
 
   if (button("Select image...")) {
-    ShowImageFileDialog();
+    show_image_file_dialog();
   }
 
   ImGui::SameLine();
@@ -63,21 +62,21 @@ void CreateTilesetDialog::on_update(const DocumentModel&, entt::dispatcher&)
                            mPathPreviewBuffer.size(),
                            ImGuiInputTextFlags_ReadOnly);
 
-  ImGui::DragInt("Tile width", &mTileWidth, 1.0f, 1, 10'000);
-  ImGui::DragInt("Tile height", &mTileHeight, 1.0f, 1, 10'000);
+  ImGui::DragInt("Tile width", &mTileSize.x, 1.0f, 1, 10'000);
+  ImGui::DragInt("Tile height", &mTileSize.y, 1.0f, 1, 10'000);
 }
 
 void CreateTilesetDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<LoadTilesetEvent>(mFullImagePath, Vector2i{mTileWidth, mTileHeight});
+  dispatcher.enqueue<LoadTilesetEvent>(mFullImagePath, mTileSize);
 }
 
 auto CreateTilesetDialog::is_current_input_valid(const DocumentModel&) const -> bool
 {
-  return mPathPreviewBuffer.front() != '\0' && mTileWidth > 0 && mTileHeight > 0;
+  return mPathPreviewBuffer.front() != '\0' && mTileSize.x > 0 && mTileSize.y > 0;
 }
 
-void CreateTilesetDialog::ShowImageFileDialog()
+void CreateTilesetDialog::show_image_file_dialog()
 {
   auto dialog = io::FileDialog::open_image();
   if (!dialog.is_okay()) {

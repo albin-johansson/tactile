@@ -49,11 +49,10 @@ void reload_fonts()
   io.Fonts->Clear();
 
   const auto& prefs = io::get_preferences();
-  const auto  useDefaultFont = prefs.use_default_font();
-  const auto  size = useDefaultFont ? 13.0f : static_cast<float>(prefs.font_size());
+  const auto  size = prefs.use_default_font ? 13.0f : static_cast<float>(prefs.font_size);
 
-  if (useDefaultFont) {
-    ImFontConfig config{};
+  if (prefs.use_default_font) {
+    ImFontConfig config {};
     config.SizePixels = size * scale.x;
     io.Fonts->AddFontDefault(&config);
   }
@@ -64,7 +63,7 @@ void reload_fonts()
   /* The global scale is 1 on most platforms, and 0.5 on macOS */
   io.FontGlobalScale = 1.0f / scale.x;
 
-  ImFontConfig config{};
+  ImFontConfig config {};
   config.MergeMode = true;
   config.GlyphMinAdvanceX = size * scale.x;
   config.GlyphMaxAdvanceX = config.GlyphMinAdvanceX;
@@ -82,28 +81,13 @@ void reload_fonts()
 auto can_increase_font_size() -> bool
 {
   const auto& prefs = io::get_preferences();
-  return !prefs.use_default_font() && prefs.font_size() < get_max_font_size();
+  return !prefs.use_default_font && prefs.font_size < max_font_size;
 }
 
 auto can_decrease_font_size() -> bool
 {
   const auto& prefs = io::get_preferences();
-  return !prefs.use_default_font() && prefs.font_size() > get_min_font_size();
-}
-
-auto get_default_font_size() -> int32
-{
-  return 14;
-}
-
-auto get_min_font_size() -> int32
-{
-  return 8;
-}
-
-auto get_max_font_size() -> int32
-{
-  return 32;
+  return !prefs.use_default_font && prefs.font_size > min_font_size;
 }
 
 }  // namespace tactile::ui

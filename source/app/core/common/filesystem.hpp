@@ -24,6 +24,8 @@
 
 namespace tactile {
 
+namespace fs = std::filesystem;
+
 /**
  * Converts a path to a string that is guaranteed to use forward slashes.
  *
@@ -35,7 +37,6 @@ namespace tactile {
  *
  * \return a version of the path with forward slashes instead of backslashes.
  */
-[[nodiscard]] auto convert_to_forward_slashes(const std::filesystem::path& path)
-    -> std::string;
+[[nodiscard]] auto convert_to_forward_slashes(const fs::path& path) -> std::string;
 
 }  // namespace tactile

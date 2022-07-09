@@ -88,7 +88,7 @@ constinit bool     _is_dock_focused = false;
   }
 
   ImGui::SetNextItemWidth(comboWidth);
-  if (Combo filterCombo{"##LogFilterCombo", filter}; filterCombo.is_open()) {
+  if (Combo filterCombo {"##LogFilterCombo", filter}; filterCombo.is_open()) {
     if (ImGui::MenuItem(traceFilter)) {
       return LogLevel::trace;
     }
@@ -148,7 +148,7 @@ void _update_color_legend_hint()
   ImGui::TextDisabled("(?)");
 
   if (ImGui::IsItemHovered()) {
-    StyleColor bg{ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+    StyleColor bg {ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
     Tooltip    tooltip;
 
     static const auto verboseColor = _color_for_level(LogLevel::trace);
@@ -169,9 +169,9 @@ void _update_color_legend_hint()
 
 void _update_log_contents(const LogLevel filter)
 {
-  StyleColor childBg{ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+  StyleColor childBg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
-  if (Child pane{"##LogPane", {}, true, _child_flags}; pane.is_open()) {
+  if (Child pane {"##LogPane", {}, true, _child_flags}; pane.is_open()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(log_size(filter)));
 
@@ -190,13 +190,12 @@ void _update_log_contents(const LogLevel filter)
 void update_log_dock()
 {
   auto& prefs = io::get_preferences();
-  bool  visible = prefs.is_log_dock_visible();
 
-  if (!visible) {
+  if (!prefs.show_log_dock) {
     return;
   }
 
-  Window dock{"Log", _window_flags, &visible};
+  Window dock {"Log", _window_flags, &prefs.show_log_dock};
 
   _is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
@@ -221,8 +220,6 @@ void update_log_dock()
       }
     }
   }
-
-  prefs.set_log_dock_visible(visible);
 }
 
 auto is_log_dock_focused() -> bool

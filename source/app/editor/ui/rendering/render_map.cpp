@@ -62,8 +62,6 @@ void _render_layer(GraphicsCtx&  graphics,
 void render_map(GraphicsCtx& graphics, const MapDocument& document)
 {
   const auto& prefs = io::get_preferences();
-  const bool  highlightActiveLayer = prefs.highlight_active_layer();
-
   const auto& map = document.get_map();
   const auto  activeLayerId = map.active_layer_id();
 
@@ -80,7 +78,7 @@ void render_map(GraphicsCtx& graphics, const MapDocument& document)
     }
 
     const auto parentOpacity = parentLayer ? parentLayer->get_opacity() : 1.0f;
-    if (highlightActiveLayer) {
+    if (prefs.highlight_active_layer) {
       _render_layer(graphics,
                     map,
                     layer,
@@ -102,7 +100,7 @@ void render_map(GraphicsCtx& graphics, const MapDocument& document)
 
   graphics.set_line_thickness(1.0f);
 
-  if (prefs.is_grid_visible()) {
+  if (prefs.show_grid) {
     graphics.set_draw_color(cen::colors::white.with_alpha(20));
     graphics.render_translated_grid();
   }

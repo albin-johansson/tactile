@@ -38,7 +38,7 @@ namespace {
 
 void _update_widgets_menu(const DocumentModel& model)
 {
-  if (Menu menu{"Widgets", model.has_active_document()}; menu.is_open()) {
+  if (Menu menu {"Widgets", model.has_active_document()}; menu.is_open()) {
     if (ImGui::MenuItem("Reset Layout")) {
       reset_layout();
     }
@@ -47,27 +47,27 @@ void _update_widgets_menu(const DocumentModel& model)
 
     auto& prefs = io::get_preferences();
 
-    if (ImGui::MenuItem("Properties", nullptr, prefs.is_property_dock_visible())) {
-      prefs.set_property_dock_visible(!prefs.is_property_dock_visible());
+    if (ImGui::MenuItem("Properties", nullptr, prefs.show_property_dock)) {
+      prefs.show_property_dock = !prefs.show_property_dock;
     }
 
     {
-      Disable disableIf{!model.is_map_active()};
-      if (ImGui::MenuItem("Layers", nullptr, prefs.is_layer_dock_visible())) {
-        prefs.set_layer_dock_visible(!prefs.is_layer_dock_visible());
+      Disable disableIf {!model.is_map_active()};
+      if (ImGui::MenuItem("Layers", nullptr, prefs.show_layer_dock)) {
+        prefs.show_layer_dock = !prefs.show_layer_dock;
       }
 
-      if (ImGui::MenuItem("Tilesets", nullptr, prefs.is_tileset_dock_visible())) {
-        prefs.set_tileset_dock_visible(!prefs.is_tileset_dock_visible());
+      if (ImGui::MenuItem("Tilesets", nullptr, prefs.show_tileset_dock)) {
+        prefs.show_tileset_dock = !prefs.show_tileset_dock;
       }
     }
 
-    if (ImGui::MenuItem("Log", nullptr, prefs.is_log_dock_visible())) {
-      prefs.set_log_dock_visible(!prefs.is_log_dock_visible());
+    if (ImGui::MenuItem("Log", nullptr, prefs.show_log_dock)) {
+      prefs.show_log_dock = !prefs.show_log_dock;
     }
 
-    if (ImGui::MenuItem("Components", nullptr, prefs.is_component_dock_visible())) {
-      prefs.set_component_dock_visible(!prefs.is_component_dock_visible());
+    if (ImGui::MenuItem("Components", nullptr, prefs.show_component_dock)) {
+      prefs.show_component_dock = !prefs.show_component_dock;
     }
   }
 }
@@ -76,7 +76,8 @@ void _update_widgets_menu(const DocumentModel& model)
 
 void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (Menu menu{"View"}; menu.is_open()) {
+  if (Menu menu {"View"}; menu.is_open()) {
+    auto&       prefs = io::get_preferences();
     const auto* document = model.active_document();
     const auto  hasActiveDocument = model.has_active_document();
 
@@ -93,14 +94,9 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    auto& prefs = io::get_preferences();
-
-    if (bool visible = prefs.is_grid_visible();
-        ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid",
-                        TACTILE_PRIMARY_MOD "+G",
-                        &visible)) {
-      prefs.set_grid_visible(visible);
-    }
+    ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid",
+                    TACTILE_PRIMARY_MOD "+G",
+                    &prefs.show_grid);
 
     ImGui::Separator();
 
@@ -141,7 +137,7 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<DecreaseFontSizeEvent>();
     }
 
-    if (ImGui::MenuItem("Reset Font Size", nullptr, false, !prefs.use_default_font())) {
+    if (ImGui::MenuItem("Reset Font Size", nullptr, false, !prefs.use_default_font)) {
       dispatcher.enqueue<ResetFontSizeEvent>();
     }
 
@@ -177,12 +173,10 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Highlight Active Layer",
-                        "H",
-                        prefs.highlight_active_layer(),
-                        model.is_map_active())) {
-      prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
-    }
+    ImGui::MenuItem("Highlight Active Layer",
+                    "H",
+                    &prefs.highlight_active_layer,
+                    model.is_map_active());
 
     ImGui::Separator();
 

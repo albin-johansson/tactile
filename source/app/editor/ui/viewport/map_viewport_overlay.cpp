@@ -45,7 +45,7 @@ void _prepare_position_and_pivot()
   const auto pos = ImGui::GetWindowPos();
   const auto size = ImGui::GetWindowSize();
 
-  const auto corner = io::get_preferences().viewport_overlay_pos();
+  const auto corner = io::get_preferences().viewport_overlay_pos;
   const bool isRight =
       corner == io::OverlayPos::TopRight || corner == io::OverlayPos::BottomRight;
   const bool isBottom =
@@ -53,12 +53,12 @@ void _prepare_position_and_pivot()
 
   const float padding = 10.0f;
 
-  ImVec2 next_pos{};
+  ImVec2 next_pos {};
   next_pos.x = isRight ? (pos.x + size.x - padding) : (pos.x + padding);
   next_pos.y = isBottom ? (pos.y + size.y - padding)
                         : (pos.y + padding + ImGui::GetFrameHeightWithSpacing());
 
-  ImVec2 next_pivot{};
+  ImVec2 next_pivot {};
   next_pivot.x = isRight ? 1.0f : 0.0f;
   next_pivot.y = isBottom ? 1.0f : 0.0f;
 
@@ -100,30 +100,29 @@ void _update_overlay_context_menu()
 {
   if (auto popup = Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     auto&      prefs = io::get_preferences();
-    const auto corner = prefs.viewport_overlay_pos();
+    const auto corner = prefs.viewport_overlay_pos;
 
     if (ImGui::MenuItem("Top-left", nullptr, corner == io::OverlayPos::TopLeft)) {
-      prefs.set_viewport_overlay_pos(io::OverlayPos::TopLeft);
+      prefs.viewport_overlay_pos = io::OverlayPos::TopLeft;
     }
 
     if (ImGui::MenuItem("Top-right", nullptr, corner == io::OverlayPos::TopRight)) {
-      prefs.set_viewport_overlay_pos(io::OverlayPos::TopRight);
+      prefs.viewport_overlay_pos = io::OverlayPos::TopRight;
     }
 
     if (ImGui::MenuItem("Bottom-left", nullptr, corner == io::OverlayPos::BottomLeft)) {
-      prefs.set_viewport_overlay_pos(io::OverlayPos::BottomLeft);
+      prefs.viewport_overlay_pos = io::OverlayPos::BottomLeft;
     }
 
     if (ImGui::MenuItem("Bottom-right", nullptr, corner == io::OverlayPos::BottomRight)) {
-      prefs.set_viewport_overlay_pos(io::OverlayPos::BottomRight);
+      prefs.viewport_overlay_pos = io::OverlayPos::BottomRight;
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_METRICS " Show Framerate",
-                        nullptr,
-                        prefs.viewport_overlay_show_fps())) {
-      prefs.set_viewport_overlay_show_fps(!prefs.viewport_overlay_show_fps());
-    }
+
+    ImGui::MenuItem(TAC_ICON_METRICS " Show Framerate",
+                    nullptr,
+                    &prefs.show_viewport_overlay_fps);
   }
 }
 
@@ -134,10 +133,10 @@ void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& curso
   _prepare_position_and_pivot();
 
   ImGui::SetNextWindowBgAlpha(_opacity);
-  Window window{"##ViewportOverlay", _window_flags};
+  Window window {"##ViewportOverlay", _window_flags};
 
   if (window.is_open()) {
-    if (io::get_preferences().viewport_overlay_show_fps()) {
+    if (io::get_preferences().show_viewport_overlay_fps) {
       const auto& io = ImGui::GetIO();
       ImGui::Text("%.2f ms (%.1f FPS)", 1'000.0f * io.DeltaTime, io.Framerate);
       ImGui::Separator();

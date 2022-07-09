@@ -102,7 +102,7 @@ void _center_viewport(const Viewport&   viewport,
 
   const auto     dx = std::round(((canvasSize.x - width) / 2.0f) - offset.x);
   const auto     dy = std::round(((canvasSize.y - height) / 2.0f) - offset.y);
-  const Vector2f delta{dx, dy};
+  const Vector2f delta {dx, dy};
 
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
@@ -177,7 +177,7 @@ void _update_context_menu(const Map& map, entt::dispatcher& dispatcher)
 
 void _update_map_view_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
-  if (Popup popup{_object_context_menu_id}; popup.is_open()) {
+  if (Popup popup {_object_context_menu_id}; popup.is_open()) {
     const auto& layer = map.view_object_layer(map.active_layer_id().value());
 
     const auto  objectId = layer.active_object_id().value();
@@ -229,9 +229,9 @@ void show_map_viewport(const DocumentModel& model,
   const auto info = get_render_info(viewport, map);
   update_document_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
 
-  GraphicsCtx graphics{info};
+  GraphicsCtx graphics {info};
 
-  graphics.set_draw_color(io::get_preferences().viewport_bg());
+  graphics.set_draw_color(io::get_preferences().viewport_background);
   graphics.clear();
 
   graphics.push_clip();

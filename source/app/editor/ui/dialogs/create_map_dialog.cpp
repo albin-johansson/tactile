@@ -29,7 +29,7 @@
 
 namespace tactile::ui {
 
-CreateMapDialog::CreateMapDialog() : ADialog{"Create New Map"}
+CreateMapDialog::CreateMapDialog() : ADialog {"Create New Map"}
 {
   set_accept_button_label("Create");
 }
@@ -37,8 +37,8 @@ CreateMapDialog::CreateMapDialog() : ADialog{"Create New Map"}
 void CreateMapDialog::show()
 {
   const auto& prefs = io::get_preferences();
-  mTileWidth = prefs.preferred_tile_width();
-  mTileHeight = prefs.preferred_tile_height();
+  mTileWidth = prefs.preferred_tile_size.x;
+  mTileHeight = prefs.preferred_tile_size.y;
 
   mRows = 5;
   mColumns = 5;

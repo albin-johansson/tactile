@@ -28,6 +28,7 @@
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/checkboxes.hpp"
 #include "editor/ui/common/colors.hpp"
+#include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/themes.hpp"
@@ -38,13 +39,41 @@ namespace {
 
 void _update_preview_settings(const io::PreferenceState& prefs)
 {
-  apply_theme(ImGui::GetStyle(), prefs.get_theme());
-  ImGui::GetStyle().WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;
+  apply_theme(ImGui::GetStyle(), prefs.theme);
+  ImGui::GetStyle().WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
+}
+
+void _reset_appearance_preferences(io::PreferenceState& prefs)
+{
+  prefs.theme = io::def_theme;
+  prefs.viewport_background = io::def_viewport_bg;
+
+  prefs.window_border = io::def_window_border;
+  prefs.show_grid = io::def_show_grid;
+
+  prefs.restore_layout = io::def_restore_layout;
+  prefs.use_default_font = io::def_use_default_font;
+  prefs.font_size = ui::def_font_size;
+}
+
+void _reset_behavior_preferences(io::PreferenceState& prefs)
+{
+  prefs.command_capacity = io::def_command_capacity;
+  prefs.preferred_tile_size = io::def_preferred_tile_size;
+  prefs.restore_last_session = io::def_restore_last_session;
+}
+
+void _reset_export_preferences(io::PreferenceState& prefs)
+{
+  prefs.preferred_format = io::def_preferred_format;
+  prefs.embed_tilesets = io::def_embed_tilesets;
+  prefs.indent_output = io::def_indent_output;
+  prefs.fold_tile_data = io::def_fold_tile_data;
 }
 
 }  // namespace
 
-SettingsDialog::SettingsDialog() : ADialog{"Settings"}
+SettingsDialog::SettingsDialog() : ADialog {"Settings"}
 {
   use_apply_button();
 }
@@ -52,13 +81,13 @@ SettingsDialog::SettingsDialog() : ADialog{"Settings"}
 void SettingsDialog::show()
 {
   mSnapshot = io::get_preferences();
-  mGuiSettings = mSnapshot;
+  mUiSettings = mSnapshot;
   make_visible();
 }
 
 void SettingsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  if (TabBar bar{"##SettingsTabBar"}; bar.is_open()) {
+  if (TabBar bar {"##SettingsTabBar"}; bar.is_open()) {
     update_behavior_tab();
     update_appearance_tab();
     update_export_tab();
@@ -85,137 +114,121 @@ void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
 
 void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 {
-  io::set_preferences(mGuiSettings);
+  io::set_preferences(mUiSettings);
 
-  if (mGuiSettings.command_capacity() != mSnapshot.command_capacity()) {
-    dispatcher.enqueue<SetCommandCapacityEvent>(mGuiSettings.command_capacity());
+  if (mUiSettings.command_capacity != mSnapshot.command_capacity) {
+    dispatcher.enqueue<SetCommandCapacityEvent>(mUiSettings.command_capacity);
   }
 
-  if (mGuiSettings.use_default_font() != mSnapshot.use_default_font() ||
-      mGuiSettings.font_size() != mSnapshot.font_size()) {
+  if (mUiSettings.use_default_font != mSnapshot.use_default_font ||
+      mUiSettings.font_size != mSnapshot.font_size) {
     dispatcher.enqueue<ReloadFontsEvent>();
   }
 
-  mSnapshot = mGuiSettings;
+  mSnapshot = mUiSettings;
 }
 
 void SettingsDialog::update_behavior_tab()
 {
-  if (TabItem item{"Behavior"}; item.is_open()) {
+  if (TabItem item {"Behavior"}; item.is_open()) {
     ImGui::Spacing();
     if (button("Restore Defaults")) {
-      mGuiSettings.reset_behavior_preferences();
-      _update_preview_settings(mGuiSettings);
+      _reset_behavior_preferences(mUiSettings);
+      _update_preview_settings(mUiSettings);
     }
     ImGui::Spacing();
 
-    if (bool restore = mGuiSettings.will_restore_last_session();
-        checkbox("Restore last session on startup", &restore)) {
-      mGuiSettings.set_will_restore_last_session(restore);
-    }
+    checkbox("Restore last session on startup", &mUiSettings.restore_last_session);
 
-    if (auto width = mGuiSettings.preferred_tile_width();
-        ImGui::DragInt("Preferred tile width", &width, 1.0f, 1, 10'000)) {
-      mGuiSettings.set_preferred_tile_width(width);
-    }
+    ImGui::DragInt("Preferred tile width",
+                   &mUiSettings.preferred_tile_size.x,
+                   1.0f,
+                   1,
+                   10'000);
+    lazy_tooltip("##PreferredTileWidthToolTip",
+                 "The suggested tile width when creating maps");
 
-    if (ImGui::IsItemHovered()) {
-      ImGui::SetTooltip("The suggested tile width when creating maps");
-    }
-
-    if (auto height = mGuiSettings.preferred_tile_height();
-        ImGui::DragInt("Preferred tile height", &height, 1.0f, 1, 10'000)) {
-      mGuiSettings.set_preferred_tile_height(height);
-    }
-
-    if (ImGui::IsItemHovered()) {
-      ImGui::SetTooltip("The suggested tile height when creating maps");
-    }
+    ImGui::DragInt("Preferred tile height",
+                   &mUiSettings.preferred_tile_size.y,
+                   1.0f,
+                   1,
+                   10'000);
+    lazy_tooltip("##PreferredTileHeightToolTip",
+                 "The suggested tile height when creating maps");
 
     // TODO "RMB with stamp tool works as eraser"
 
-    if (auto capacity = static_cast<int>(mGuiSettings.command_capacity());
+    if (auto capacity = static_cast<int>(mUiSettings.command_capacity);
         ImGui::DragInt("Command capacity", &capacity, 1.0f, 10, 1'000)) {
-      mGuiSettings.set_command_capacity(static_cast<usize>(capacity));
+      mUiSettings.command_capacity = static_cast<usize>(capacity);
     }
 
-    if (ImGui::IsItemHovered()) {
-      ImGui::SetTooltip(
-          "The maximum amount of commands that will be stored on the undo stack");
-    }
+    lazy_tooltip("##CommandCapacityTooltip",
+                 "The maximum amount of commands that will be stored on the undo stack");
   }
 }
 
 void SettingsDialog::update_appearance_tab()
 {
-  if (TabItem item{"Appearance"}; item.is_open()) {
+  if (TabItem item {"Appearance"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
-      mGuiSettings.reset_appearance_preferences();
-      _update_preview_settings(mGuiSettings);
+      _reset_appearance_preferences(mUiSettings);
+      _update_preview_settings(mUiSettings);
     }
 
     ImGui::Spacing();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (Combo combo{"Theme", human_readable_name(mGuiSettings.get_theme()).data()};
+    if (Combo combo {"Theme", human_readable_name(mUiSettings.theme).data()};
         combo.is_open()) {
       for (const auto theme : themes) {
         if (ImGui::Selectable(human_readable_name(theme).data())) {
-          mGuiSettings.set_theme(theme);
+          mUiSettings.theme = theme;
           apply_theme(ImGui::GetStyle(), theme);
         }
       }
     }
 
-    if (auto arr = color_to_array(mGuiSettings.viewport_bg());
+    if (auto arr = color_to_array(mUiSettings.viewport_background);
         ImGui::ColorEdit3("Viewport background color",
                           arr.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
-      mGuiSettings.set_viewport_bg(
-          cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2)));
+      const auto color = cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2));
+      mUiSettings.viewport_background = color;
     }
 
-    if (bool enabled = mGuiSettings.has_window_border();
-        ImGui::Checkbox("Window border", &enabled)) {
-      mGuiSettings.set_window_border(enabled);
-      ImGui::GetStyle().WindowBorderSize = enabled ? 1.0f : 0.0f;
+    if (ImGui::Checkbox("Window border", &mUiSettings.window_border)) {
+      ImGui::GetStyle().WindowBorderSize = mUiSettings.window_border ? 1.0f : 0.0f;
     }
 
-    if (bool restore = mGuiSettings.will_restore_layout();
-        checkbox("Restore layout",
-                 &restore,
-                 "Restore the previous layout of widgets at startup")) {
-      mGuiSettings.set_will_restore_layout(restore);
-    }
+    checkbox("Restore layout",
+             &mUiSettings.restore_layout,
+             "Restore the previous layout of widgets at startup");
 
     ImGui::Spacing();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (bool use = mGuiSettings.use_default_font();
-        checkbox("Use default font",
-                 &use,
-                 "Use the built-in bitmap font (only supports one size)")) {
-      mGuiSettings.set_use_default_font(use);
-    }
+    checkbox("Use default font",
+             &mUiSettings.use_default_font,
+             "Use the built-in bitmap font (only supports one size)");
 
     {
-      Disable disableIf{mGuiSettings.use_default_font()};
+      Disable disableIf {mUiSettings.use_default_font};
 
       ImGui::AlignTextToFramePadding();
       ImGui::TextUnformatted("Font size:");
 
       ImGui::SameLine();
-      if (int size = mGuiSettings.font_size();  //
-          ImGui::DragInt("##FontSize",
-                         &size,
+      if (ImGui::DragInt("##FontSize",
+                         &mUiSettings.font_size,
                          1.0f,
-                         get_min_font_size(),
-                         get_max_font_size())) {
+                         min_font_size,
+                         max_font_size)) {
         // TODO fix issue when set to non power of two, and then increased/decrease with
         // shortcuts (which causes crash due to assertions)
-        mGuiSettings.set_font_size(size - size % 2);
+        mUiSettings.font_size = mUiSettings.font_size - mUiSettings.font_size % 2;
       }
     }
   }
@@ -223,55 +236,46 @@ void SettingsDialog::update_appearance_tab()
 
 void SettingsDialog::update_export_tab()
 {
-  if (TabItem item{"Export"}; item.is_open()) {
+  if (TabItem item {"Export"}; item.is_open()) {
     ImGui::Spacing();
 
     if (button("Restore Defaults")) {
-      mGuiSettings.reset_export_preferences();
-      _update_preview_settings(mGuiSettings);
+      _reset_export_preferences(mUiSettings);
+      _update_preview_settings(mUiSettings);
     }
 
     ImGui::Spacing();
 
-    if (Combo format("Preferred Format", mGuiSettings.preferred_format().c_str());
+    if (Combo format("Preferred Format", mUiSettings.preferred_format.c_str());
         format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
-        mGuiSettings.set_preferred_format("YAML");
+        mUiSettings.preferred_format = "YAML";
       }
 
       if (ImGui::MenuItem("JSON")) {
-        mGuiSettings.set_preferred_format("JSON");
+        mUiSettings.preferred_format = "JSON";
       }
 
       if (ImGui::MenuItem("XML (TMX)")) {
-        mGuiSettings.set_preferred_format("XML");
+        mUiSettings.preferred_format = "XML";
       }
     }
 
-    if (ImGui::IsItemHovered()) {
-      ImGui::SetTooltip(
-          "The save file format used if no file extension is specified when saving maps");
-    }
+    lazy_tooltip(
+        "##PreferredFormatTooltip",
+        "The save file format used if no file extension is specified when saving maps");
 
-    if (bool embed = mGuiSettings.embed_tilesets();
-        checkbox("Embed tilesets", &embed, "Embed tileset data in map files")) {
-      mGuiSettings.set_embed_tilesets(embed);
-    }
+    checkbox("Embed tilesets",
+             &mUiSettings.embed_tilesets,
+             "Embed tileset data in map files");
 
-    if (bool indent = mGuiSettings.indent_output();
-        checkbox("Indent output",
-                 &indent,
-                 "Controls whether or not save files are indented")) {
-      mGuiSettings.set_indent_output(indent);
-    }
+    checkbox("Indent output",
+             &mUiSettings.indent_output,
+             "Controls whether or not save files are indented");
 
-    if (bool fold = mGuiSettings.fold_tile_data();  //
-        checkbox(
-            "Fold tile data",
-            &fold,
-            "Make tile layer data easier for humans to edit, at the expense of space")) {
-      mGuiSettings.set_fold_tile_data(fold);
-    }
+    checkbox("Fold tile data",
+             &mUiSettings.fold_tile_data,
+             "Make tile layer data easier for humans to edit, at the expense of space");
   }
 }
 

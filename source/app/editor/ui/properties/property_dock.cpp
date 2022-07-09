@@ -245,7 +245,7 @@ void _show_custom_properties(const IContext&   context,
   bool first = true;
 
   for (const auto& [name, value] : context.get_props()) {
-    const Scope scope{name.c_str()};
+    const Scope scope {name.c_str()};
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();
@@ -303,7 +303,7 @@ void _update_conditional_tileset_button(const ADocument&  document,
 
 struct ContextPropertyVisitor final : IContextVisitor
 {
-  entt::dispatcher* dispatcher{};
+  entt::dispatcher* dispatcher {};
 
   void visit(const Map& map) override { _show_native_map_properties(map); }
 
@@ -349,7 +349,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
 
   _update_conditional_tileset_button(document, dispatcher);
 
-  if (Table table{"##PropertyTable", 2, flags}; table.is_open()) {
+  if (Table table {"##PropertyTable", 2, flags}; table.is_open()) {
     ContextPropertyVisitor visitor;
     visitor.dispatcher = &dispatcher;
     context.accept(visitor);
@@ -393,14 +393,13 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
 {
   auto& prefs = io::get_preferences();
 
-  bool visible = prefs.is_property_dock_visible();
-  if (!visible) {
+  if (!prefs.show_property_dock) {
     return;
   }
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
-  Window window{"Properties", flags, &visible};
+  Window window {"Properties", flags, &prefs.show_property_dock};
   _is_focused = window.has_focus();
 
   if (window.is_open()) {
@@ -411,8 +410,6 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
     dialogs.rename_property.update(model, dispatcher);
     dialogs.change_property_type.update(model, dispatcher);
   }
-
-  prefs.set_property_dock_visible(visible);
 }
 
 auto is_property_dock_focused() -> bool

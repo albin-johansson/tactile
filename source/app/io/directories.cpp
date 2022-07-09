@@ -31,9 +31,9 @@
 
 namespace tactile::io {
 
-void open_directory(const std::filesystem::path& dir)
+void open_directory(const fs::path& dir)
 {
-  if (std::filesystem::is_directory(dir)) {
+  if (fs::is_directory(dir)) {
     static const auto path = persistent_file_dir().string();
     if constexpr (on_osx) {
       static const auto cmd = fmt::format("open \"{}\"", path);
@@ -52,27 +52,26 @@ void open_directory(const std::filesystem::path& dir)
     }
   }
   else {
-    throw TactileError{"Not a directory!"};
+    throw TactileError {"Not a directory!"};
   }
 }
 
-auto find_resource(const char* resource) -> std::filesystem::path
+auto find_resource(const char* resource) -> fs::path
 {
   TACTILE_ASSERT(resource);
-  static const std::filesystem::path dir{cen::base_path().copy()};
+  static const fs::path dir {cen::base_path().copy()};
   return dir / resource;
 }
 
-auto widget_ini_path() -> const std::filesystem::path&
+auto widget_ini_path() -> const fs::path&
 {
   static const auto ini = absolute(find_resource("imgui.ini"));
   return ini;
 }
 
-auto persistent_file_dir() -> const std::filesystem::path&
+auto persistent_file_dir() -> const fs::path&
 {
-  static const std::filesystem::path path{
-      cen::preferred_path("albin-johansson", "tactile").copy()};
+  static const fs::path path {cen::preferred_path("albin-johansson", "tactile").copy()};
   return path;
 }
 

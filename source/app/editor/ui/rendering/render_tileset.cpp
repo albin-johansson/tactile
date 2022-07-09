@@ -35,18 +35,18 @@ void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document)
   const auto  textureId = tileset.texture_id();
 
   const Vector2f tileSize = tileset.tile_size();
-  const ImVec2   uv{uvTileSize.x, uvTileSize.y};
+  const ImVec2   uv {uvTileSize.x, uvTileSize.y};
 
   invoke_mn(tileset.row_count(), tileset.column_count(), [&](int32 row, int32 col) {
-    const ImVec4 source{static_cast<float>(col * tileset.tile_size().x),
-                        static_cast<float>(row * tileset.tile_size().y),
-                        tileSize.x,
-                        tileSize.y};
+    const ImVec4 source {static_cast<float>(col * tileset.tile_size().x),
+                         static_cast<float>(row * tileset.tile_size().y),
+                         tileSize.x,
+                         tileSize.y};
     const auto   position = graphics.from_matrix_to_absolute(row, col);
     graphics.render_translated_image(textureId, source, position, uv);
   });
 
-  if (io::get_preferences().is_grid_visible()) {
+  if (io::get_preferences().show_grid) {
     graphics.set_line_thickness(1.0f);
     graphics.set_draw_color(cen::colors::white.with_alpha(20));
     graphics.render_translated_grid();

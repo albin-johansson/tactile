@@ -157,26 +157,27 @@ void _emit_tile_layer_data(YAML::Emitter&           emitter,
                            const usize              rows,
                            const usize              columns)
 {
-  const bool fold = get_preferences().fold_tile_data();
+  const auto& prefs = get_preferences();
 
   emitter << YAML::Key << "data";
 
   std::stringstream stream;
   for (usize row = 0; row < rows; ++row) {
     for (usize col = 0; col < columns; ++col) {
-      if ((fold && col != 0) || (!fold && (row != 0 || col != 0))) {
+      if ((prefs.fold_tile_data && col != 0) ||
+          (!prefs.fold_tile_data && (row != 0 || col != 0))) {
         stream << ' ';
       }
 
       stream << data.tiles[row][col];
     }
 
-    if (fold && row < (rows - 1)) {
+    if (prefs.fold_tile_data && row < (rows - 1)) {
       stream << '\n';
     }
   }
 
-  if (fold) {
+  if (prefs.fold_tile_data) {
     emitter << YAML::Literal << stream.str();
   }
   else {
@@ -331,7 +332,7 @@ void _emit_tileset_file(const EmitInfo&        info,
   const auto path = info.destination_dir() / filename;
   spdlog::debug("Saving external tileset to {}", path);
 
-  std::ofstream stream{path, std::ios::out};
+  std::ofstream stream {path, std::ios::out};
   stream << emitter.c_str();
 }
 
@@ -433,7 +434,7 @@ void emit_yaml_map(const EmitInfo& info)
 
   emitter << YAML::EndMap;
 
-  std::ofstream stream{info.destination_file(), std::ios::out};
+  std::ofstream stream {info.destination_file(), std::ios::out};
   stream << emitter.c_str();
 }
 

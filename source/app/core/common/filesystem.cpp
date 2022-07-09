@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-auto convert_to_forward_slashes(const std::filesystem::path& path) -> std::string
+auto convert_to_forward_slashes(const fs::path& path) -> std::string
 {
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');

@@ -23,8 +23,9 @@
 
 namespace tactile::ui {
 
-/// \name Font functions
-/// \{
+inline constexpr int32 min_font_size = 8;   ///< The smallest available font size.
+inline constexpr int32 max_font_size = 32;  ///< The largest available font size.
+inline constexpr int32 def_font_size = 14;  ///< The default font size.
 
 /**
  * Reloads the main and icon fonts.
@@ -41,16 +42,5 @@ void reload_fonts();
 
 /// Indicates whether it's possible to decrease the font size.
 [[nodiscard]] auto can_decrease_font_size() -> bool;
-
-/// Returns the default font size.
-[[nodiscard]] auto get_default_font_size() -> int32;
-
-/// Returns the smallest acceptable font size.
-[[nodiscard]] auto get_min_font_size() -> int32;
-
-/// Returns the largest acceptable font size.
-[[nodiscard]] auto get_max_font_size() -> int32;
-
-/// \} End of font functions
 
 }  // namespace tactile::ui

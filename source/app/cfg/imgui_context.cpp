@@ -51,9 +51,9 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   auto&       style = ImGui::GetStyle();
 
   ui::apply_style(style);
-  apply_theme(style, prefs.get_theme());
+  apply_theme(style, prefs.theme);
 
-  style.WindowBorderSize = prefs.has_window_border() ? 1.0f : 0.0f;
+  style.WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
 
   spdlog::debug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
 }

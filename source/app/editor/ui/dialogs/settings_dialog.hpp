@@ -25,11 +25,7 @@
 
 namespace tactile::ui {
 
-/**
- * Provides the interface for all available persistent settings.
- *
- * \ingroup gui
- */
+/// Provides the interface for all available persistent settings.
 class SettingsDialog final : public ADialog
 {
  public:
@@ -52,8 +48,8 @@ class SettingsDialog final : public ADialog
   void on_apply(entt::dispatcher& dispatcher) override;
 
  private:
-  io::PreferenceState mSnapshot;  ///< The original settings when the dialog was opened.
-  io::PreferenceState mGuiSettings;  ///< The value of the settings in the GUI.
+  io::PreferenceState mSnapshot;     /// Initial settings when the dialog was opened.
+  io::PreferenceState mUiSettings;  /// State of settings in the UI.
 
   void apply_settings(entt::dispatcher& dispatcher);
 

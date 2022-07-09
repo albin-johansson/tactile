@@ -63,7 +63,7 @@
 
 namespace tactile {
 
-App::App(AppConfiguration* configuration) : AEventLoop{configuration}
+App::App(AppConfiguration* configuration) : AEventLoop {configuration}
 {
   mConfig = configuration;
 
@@ -80,7 +80,7 @@ void App::on_startup()
 {
   io::load_file_history();
 
-  if (io::get_preferences().will_restore_last_session()) {
+  if (io::get_preferences().restore_last_session) {
     io::restore_last_session(mModel, mTextures);
   }
 
@@ -603,7 +603,7 @@ void App::on_increase_zoom()
   if (auto* document = active_document()) {
     auto&      viewport = document->get_viewport();
     const auto mousePos = ImGui::GetIO().MousePos;
-    viewport.zoom_in(Vector2f{mousePos.x, mousePos.y});
+    viewport.zoom_in(Vector2f {mousePos.x, mousePos.y});
   }
 }
 
@@ -612,7 +612,7 @@ void App::on_decrease_zoom()
   if (auto* document = active_document()) {
     auto&      viewport = document->get_viewport();
     const auto mousePos = ImGui::GetIO().MousePos;
-    viewport.zoom_out(Vector2f{mousePos.x, mousePos.y});
+    viewport.zoom_out(Vector2f {mousePos.x, mousePos.y});
   }
 }
 
@@ -626,7 +626,7 @@ void App::on_reset_zoom()
 
 void App::on_reset_font_size()
 {
-  io::get_preferences().set_font_size(ui::get_default_font_size());
+  io::get_preferences().font_size = ui::def_font_size;
   mReloadFonts = true;
 }
 
@@ -634,8 +634,8 @@ void App::on_increase_font_size()
 {
   auto& prefs = io::get_preferences();
 
-  TACTILE_ASSERT(prefs.font_size() + 2 <= ui::get_max_font_size());
-  prefs.set_font_size(prefs.font_size() + 2);
+  TACTILE_ASSERT(prefs.font_size + 2 <= ui::max_font_size);
+  prefs.font_size += 2;
 
   mReloadFonts = true;
 }
@@ -644,8 +644,8 @@ void App::on_decrease_font_size()
 {
   auto& prefs = io::get_preferences();
 
-  TACTILE_ASSERT(prefs.font_size() - 2 >= ui::get_min_font_size());
-  prefs.set_font_size(prefs.font_size() - 2);
+  TACTILE_ASSERT(prefs.font_size - 2 >= ui::min_font_size);
+  prefs.font_size -= 2;
 
   mReloadFonts = true;
 }
@@ -1029,25 +1029,25 @@ void App::on_toggle_ui()
   auto& prefs = io::get_preferences();
 
   if (!show) {
-    mWidgetShowState.prev_show_layer_dock = prefs.is_layer_dock_visible();
-    mWidgetShowState.prev_show_tileset_dock = prefs.is_tileset_dock_visible();
-    mWidgetShowState.prev_show_property_dock = prefs.is_property_dock_visible();
-    mWidgetShowState.prev_show_log_dock = prefs.is_log_dock_visible();
-    mWidgetShowState.prev_show_component_dock = prefs.is_component_dock_visible();
+    mWidgetShowState.prev_show_layer_dock = prefs.show_layer_dock;
+    mWidgetShowState.prev_show_tileset_dock = prefs.show_tileset_dock;
+    mWidgetShowState.prev_show_property_dock = prefs.show_property_dock;
+    mWidgetShowState.prev_show_log_dock = prefs.show_log_dock;
+    mWidgetShowState.prev_show_component_dock = prefs.show_component_dock;
   }
 
-  prefs.set_layer_dock_visible(show);
-  prefs.set_tileset_dock_visible(show);
-  prefs.set_property_dock_visible(show);
-  prefs.set_component_dock_visible(show);
-  prefs.set_log_dock_visible(show);
+  prefs.show_layer_dock = show;
+  prefs.show_tileset_dock = show;
+  prefs.show_property_dock = show;
+  prefs.show_component_dock = show;
+  prefs.show_log_dock = show;
 
   if (show) {
-    prefs.set_layer_dock_visible(mWidgetShowState.prev_show_layer_dock);
-    prefs.set_tileset_dock_visible(mWidgetShowState.prev_show_tileset_dock);
-    prefs.set_property_dock_visible(mWidgetShowState.prev_show_property_dock);
-    prefs.set_log_dock_visible(mWidgetShowState.prev_show_log_dock);
-    prefs.set_component_dock_visible(mWidgetShowState.prev_show_component_dock);
+    prefs.show_layer_dock = mWidgetShowState.prev_show_layer_dock;
+    prefs.show_tileset_dock = mWidgetShowState.prev_show_tileset_dock;
+    prefs.show_property_dock = mWidgetShowState.prev_show_property_dock;
+    prefs.show_log_dock = mWidgetShowState.prev_show_log_dock;
+    prefs.show_component_dock = mWidgetShowState.prev_show_component_dock;
   }
 
   show = !show;

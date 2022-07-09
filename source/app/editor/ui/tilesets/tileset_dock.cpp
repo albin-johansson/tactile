@@ -44,8 +44,8 @@ constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_No
 
 struct TilesetDockState final
 {
-  bool has_focus{};
-  bool is_hovered{};
+  bool has_focus {};
+  bool is_hovered {};
 };
 
 [[nodiscard]] auto _get_state() -> TilesetDockState&
@@ -59,13 +59,12 @@ struct TilesetDockState final
 void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& prefs = io::get_preferences();
-  bool  visible = prefs.is_tileset_dock_visible();
 
-  if (!visible) {
+  if (!prefs.show_tileset_dock) {
     return;
   }
 
-  Window dock{"Tilesets", _window_flags, &visible};
+  Window dock {"Tilesets", _window_flags, &prefs.show_tileset_dock};
 
   auto& state = _get_state();
   state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
@@ -89,18 +88,16 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
       update_tileset_tabs(model, dispatcher);
     }
   }
-
-  prefs.set_tileset_dock_visible(visible);
 }
 
 void tileset_dock_mouse_wheel_event_handler(const TilesetRef&             tilesetRef,
                                             const cen::mouse_wheel_event& event,
                                             entt::dispatcher&             dispatcher)
 {
-  constexpr Vector2f scaling{4, 4};
+  constexpr Vector2f scaling {4, 4};
 
   const auto&    viewport = tilesetRef.get_viewport();
-  const Vector2f precise{event.precise_x(), event.precise_y()};
+  const Vector2f precise {event.precise_x(), event.precise_y()};
 
   auto delta = precise * (viewport.get_tile_size() / scaling);
   delta.x = -delta.x;

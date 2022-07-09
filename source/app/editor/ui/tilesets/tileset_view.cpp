@@ -104,7 +104,7 @@ void update_tileset_view(const DocumentModel& model,
   _update_viewport_offset(tilesetRef, info.canvas_br - info.canvas_tl, dispatcher);
 
   GraphicsCtx graphics{info};
-  graphics.set_draw_color(io::get_preferences().viewport_bg());
+  graphics.set_draw_color(io::get_preferences().viewport_background);
   graphics.clear();
 
   const auto offset = from_vec(viewport.get_offset());

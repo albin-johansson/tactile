@@ -170,11 +170,11 @@ void _append_tile_layer(pugi::xml_node root, const ir::LayerData& layerData)
   std::stringstream stream;
   usize             index = 0;
 
-  const bool foldTileData = get_preferences().fold_tile_data();
+  const auto& prefs = get_preferences();
 
   for (usize row = 0; row < tileLayerData.row_count; ++row) {
     for (usize col = 0; col < tileLayerData.col_count; ++col) {
-      if (foldTileData && index == 0) {
+      if (prefs.fold_tile_data && index == 0) {
         stream << '\n';
       }
 
@@ -183,7 +183,7 @@ void _append_tile_layer(pugi::xml_node root, const ir::LayerData& layerData)
         stream << ',';
       }
 
-      if (foldTileData && (index + 1) % tileLayerData.col_count == 0) {
+      if (prefs.fold_tile_data && (index + 1) % tileLayerData.col_count == 0) {
         stream << '\n';
       }
 
@@ -324,7 +324,7 @@ void _emit_external_tileset_file(const std::filesystem::path& path,
 
   _append_common_tileset_attributes(root, tilesetData, dir);
 
-  std::ofstream stream{path, std::ios::out};
+  std::ofstream stream {path, std::ios::out};
   document.save(stream);
 }
 
@@ -333,7 +333,7 @@ void _append_tileset(pugi::xml_node               root,
                      const std::filesystem::path& dir)
 {
   const auto& prefs = get_preferences();
-  if (prefs.embed_tilesets()) {
+  if (prefs.embed_tilesets) {
     _append_embedded_tileset(root, tilesetData, dir);
   }
   else {
@@ -387,7 +387,7 @@ void emit_xml_map(const EmitInfo& info)
   pugi::xml_document document;
   _append_root(document, info);
 
-  std::ofstream stream{info.destination_file(), std::ios::out};
+  std::ofstream stream {info.destination_file(), std::ios::out};
   document.save(stream, " ");
 }
 
