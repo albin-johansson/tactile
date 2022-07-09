@@ -26,9 +26,8 @@
 
 namespace tactile {
 
-/**
- * An interface for renderers used by some core aspects, such as the tools.
- */
+/// An interface for renderers used by some core aspects, such as the tools.
+/// TODO: Rename to IPreviewRenderer, move to core/tools
 class IRenderer
 {
  public:
