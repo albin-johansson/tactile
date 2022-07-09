@@ -19,10 +19,9 @@
 
 #include "xml_parser.hpp"
 
-#include <filesystem>  // path
-
 #include <pugixml.hpp>
 
+#include "core/common/filesystem.hpp"
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
 #include "io/maps/parser/xml/xml_layer_parser.hpp"
 #include "io/maps/parser/xml/xml_tileset_parser.hpp"
@@ -44,8 +43,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& data)
-    -> ParseError
+[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& data) -> ParseError
 {
   pugi::xml_document document;
   if (!document.load_file(path.c_str())) {
@@ -123,7 +121,7 @@ namespace {
 
 }  // namespace
 
-auto parse_xml_map(const std::filesystem::path& path) -> ParseData
+auto parse_xml_map(const fs::path& path) -> ParseData
 {
   ParseData result;
   result.set_path(path);

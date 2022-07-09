@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <vector>      // vector
+#include <vector>  // vector
 
+#include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
 #include "core/common/math.hpp"
@@ -31,9 +31,9 @@ namespace tactile {
 
 struct TextureInfo final
 {
-  uint                  id {};
-  Vector2i              size {};
-  std::filesystem::path path;
+  uint     id {};
+  Vector2i size {};
+  fs::path path;
 };
 
 class TextureManager final
@@ -46,7 +46,7 @@ class TextureManager final
 
   ~TextureManager();
 
-  [[nodiscard]] auto load(const std::filesystem::path& path) -> Maybe<TextureInfo>;
+  [[nodiscard]] auto load(const fs::path& path) -> Maybe<TextureInfo>;
 
  private:
   std::vector<uint> mTextures;

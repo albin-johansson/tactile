@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <filesystem>  // path
-
+#include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
 
@@ -29,10 +28,10 @@ namespace tactile {
 /// Provides information necessary to construct tilesets.
 struct TilesetInfo final
 {
-  std::filesystem::path texture_path;     /// Path to associated texture.
-  uint                  texture_id {};    /// The associated OpenGL texture identifier.
-  Vector2i              texture_size {};  /// The size of the texture.
-  Vector2i              tile_size {};     /// Logical tile size.
+  fs::path texture_path;     /// Path to associated texture.
+  uint     texture_id {};    /// The associated OpenGL texture identifier.
+  Vector2i texture_size {};  /// The size of the texture.
+  Vector2i tile_size {};     /// Logical tile size.
 };
 
 }  // namespace tactile

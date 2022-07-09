@@ -32,7 +32,7 @@
 
 namespace tactile::io {
 
-auto parse_map(const std::filesystem::path& path) -> ParseData
+auto parse_map(const fs::path& path) -> ParseData
 {
   spdlog::info("Parsing map {}", path);
   ParseData result;
@@ -40,7 +40,7 @@ auto parse_map(const std::filesystem::path& path) -> ParseData
   try {
     TACTILE_PROFILE_START
 
-    if (!std::filesystem::exists(path)) {
+    if (!fs::exists(path)) {
       result.set_error(ParseError::MapDoesNotExist);
       return result;
     }

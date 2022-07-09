@@ -45,8 +45,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& mapData)
-    -> ParseError
+[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& mapData) -> ParseError
 {
   const auto json = read_json(path);
   if (!json) {
@@ -119,7 +118,7 @@ namespace {
 
 }  // namespace
 
-auto parse_json_map(const std::filesystem::path& path) -> ParseData
+auto parse_json_map(const fs::path& path) -> ParseData
 {
   ParseData result;
   result.set_path(path);

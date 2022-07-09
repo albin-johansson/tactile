@@ -48,7 +48,7 @@ namespace {
     value = as_bool(json, "value").value();
   }
   else if (type == "file") {
-    std::filesystem::path path = as_string(json, "value").value();
+    fs::path path = as_string(json, "value").value();
     value = std::move(path);
   }
   else if (type == "object") {

@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <string>      // string
+#include <string>  // string
 
 #include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "core/attribute.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/common/maybe.hpp"
 
 namespace tactile::ui {
@@ -59,7 +59,6 @@ namespace tactile::ui {
 
 [[nodiscard]] auto input_color(const char* id, cen::color value) -> Maybe<cen::color>;
 
-[[nodiscard]] auto input_path(const char* id, const std::filesystem::path& value)
-    -> Maybe<std::filesystem::path>;
+[[nodiscard]] auto input_path(const char* id, const fs::path& value) -> Maybe<fs::path>;
 
 }  // namespace tactile::ui

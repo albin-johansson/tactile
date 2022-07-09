@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <filesystem>  // path
-
+#include "core/common/filesystem.hpp"
 #include "io/maps/parser/parse_data.hpp"
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_map(const std::filesystem::path& path) -> ParseData;
+[[nodiscard]] auto parse_map(const fs::path& path) -> ParseData;
 
 }  // namespace tactile::io

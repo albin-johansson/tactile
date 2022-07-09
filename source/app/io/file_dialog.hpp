@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <filesystem>  // path
+#include "core/common/filesystem.hpp"
 
 namespace tactile::io {
 
@@ -44,7 +44,7 @@ class FileDialog final
 
   [[nodiscard]] auto is_okay() const noexcept -> bool;
 
-  [[nodiscard]] auto path() const -> std::filesystem::path;
+  [[nodiscard]] auto path() const -> fs::path;
 
  private:
   const char* mPath {};

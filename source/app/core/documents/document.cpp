@@ -190,7 +190,7 @@ void ADocument::change_property_type(const UUID&         contextId,
   get_history().exec<ChangePropertyTypeCmd>(std::move(context), std::move(name), type);
 }
 
-void ADocument::set_path(std::filesystem::path path)
+void ADocument::set_path(fs::path path)
 {
   mPath = std::move(path);
 }
@@ -200,7 +200,7 @@ auto ADocument::has_path() const -> bool
   return mPath.has_value();
 }
 
-auto ADocument::get_path() const -> const std::filesystem::path&
+auto ADocument::get_path() const -> const fs::path&
 {
   return mPath.value();
 }

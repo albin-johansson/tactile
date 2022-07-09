@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <string>      // string
+#include <string>  // string
 
 #include "core/attribute.hpp"
 #include "core/commands/command_stack.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
@@ -46,7 +46,7 @@ class ADocument
   [[deprecated]] virtual void set_name(std::string name) = 0;
 
   /// Sets the file path associated with the document.
-  void set_path(std::filesystem::path path);
+  void set_path(fs::path path);
 
   void select_context(const UUID& contextId);
 
@@ -120,7 +120,7 @@ class ADocument
   [[nodiscard]] auto has_path() const -> bool;
 
   /// Returns the previously set document path, throwing if there is none.
-  [[nodiscard]] auto get_path() const -> const std::filesystem::path&;
+  [[nodiscard]] auto get_path() const -> const fs::path&;
 
   /// Returns the document command history.
   [[nodiscard]] auto get_history() -> CommandStack&;
@@ -136,10 +136,10 @@ class ADocument
   [[nodiscard]] virtual auto get_type() const -> DocumentType = 0;
 
  protected:
-  CommandStack                 mCommands;
-  Shared<ComponentIndex>       mComponentIndex;
-  Maybe<std::filesystem::path> mPath;
-  UUID                         mActiveContext;
+  CommandStack           mCommands;
+  Shared<ComponentIndex> mComponentIndex;
+  Maybe<fs::path>        mPath;
+  UUID                   mActiveContext;
 };
 
 }  // namespace tactile

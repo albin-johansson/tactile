@@ -19,10 +19,10 @@
 
 #include "yaml_tileset_parser.hpp"
 
-#include <filesystem>  // exists, weakly_canonical
-#include <string>      // string
-#include <utility>     // move
+#include <string>   // string
+#include <utility>  // move
 
+#include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
@@ -114,9 +114,9 @@ constexpr int32 _tileset_file_version = 1;
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tileset(const std::filesystem::path& source,
-                                  ir::MapData&                 map,
-                                  const TileID                 firstTileId) -> ParseError
+[[nodiscard]] auto _parse_tileset(const fs::path& source,
+                                  ir::MapData&    map,
+                                  const TileID    firstTileId) -> ParseError
 {
   try {
     const auto node = YAML::LoadFile(source.string());
@@ -163,8 +163,8 @@ constexpr int32 _tileset_file_version = 1;
       return ParseError::NoTilesetImagePath;
     }
 
-    auto absolute = std::filesystem::weakly_canonical(dir / relative);
-    if (std::filesystem::exists(absolute)) {
+    auto absolute = fs::weakly_canonical(dir / relative);
+    if (fs::exists(absolute)) {
       tileset.image_path = std::move(absolute);
     }
     else {
@@ -205,9 +205,8 @@ constexpr int32 _tileset_file_version = 1;
 
 }  // namespace
 
-auto parse_tilesets(const YAML::Node&            sequence,
-                    ir::MapData&                 map,
-                    const std::filesystem::path& dir) -> ParseError
+auto parse_tilesets(const YAML::Node& sequence, ir::MapData& map, const fs::path& dir)
+    -> ParseError
 {
   map.tilesets.reserve(sequence.size());
 
@@ -222,9 +221,9 @@ auto parse_tilesets(const YAML::Node&            sequence,
       return ParseError::NoExternalTilesetPath;
     }
 
-    const auto source = std::filesystem::weakly_canonical(dir / path);
+    const auto source = fs::weakly_canonical(dir / path);
 
-    if (std::filesystem::exists(source)) {
+    if (fs::exists(source)) {
       if (const auto err = _parse_tileset(source, map, first); err != ParseError::None) {
         return err;
       }

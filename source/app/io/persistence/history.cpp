@@ -19,11 +19,10 @@
 
 #include "history.hpp"
 
-#include <algorithm>   // find, find_if
-#include <filesystem>  // path, exists
-#include <fstream>     // ifstream, ofstream
-#include <ios>         // ios
-#include <utility>     // move
+#include <algorithm>  // find, find_if
+#include <fstream>    // ifstream, ofstream
+#include <ios>        // ios
+#include <utility>    // move
 
 #include <spdlog/spdlog.h>
 
@@ -45,7 +44,7 @@ constexpr usize _max_size = 10;
 inline Maybe<std::string>      _last_closed_file;
 inline std::deque<std::string> _history;
 
-[[nodiscard]] auto _get_file_path() -> const std::filesystem::path&
+[[nodiscard]] auto _get_file_path() -> const fs::path&
 {
   static const auto path = persistent_file_dir() / "history.bin";
   return path;
@@ -65,7 +64,7 @@ void load_file_history()
     }
 
     for (auto file : h.files()) {
-      if (std::filesystem::exists(file)) {
+      if (fs::exists(file)) {
         spdlog::debug("Loaded '{}' from file history", file);
         _history.push_back(std::move(file));
       }
@@ -102,7 +101,7 @@ void clear_file_history()
   _history.clear();
 }
 
-void add_file_to_history(const std::filesystem::path& path)
+void add_file_to_history(const fs::path& path)
 {
   auto converted = convert_to_forward_slashes(path);
   if (std::find(_history.begin(), _history.end(), converted) == _history.end()) {
@@ -118,7 +117,7 @@ void add_file_to_history(const std::filesystem::path& path)
   }
 }
 
-void set_last_closed_file(const std::filesystem::path& path)
+void set_last_closed_file(const fs::path& path)
 {
   _last_closed_file = convert_to_forward_slashes(path);
   spdlog::trace("Last closed file is now '{}'", *_last_closed_file);
@@ -133,7 +132,7 @@ auto file_history() -> const std::deque<std::string>&
 
 auto is_last_closed_file_valid() -> bool
 {
-  return _last_closed_file && std::filesystem::exists(*_last_closed_file);
+  return _last_closed_file && fs::exists(*_last_closed_file);
 }
 
 auto last_closed_file() -> const std::string&

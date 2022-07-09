@@ -29,8 +29,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& data)
-    -> ParseError
+[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& data) -> ParseError
 {
   const auto node = YAML::LoadFile(path.string());
   if (!node) {
@@ -93,7 +92,7 @@ namespace {
 
 }  // namespace
 
-auto parse_yaml_map(const std::filesystem::path& path) -> ParseData
+auto parse_yaml_map(const fs::path& path) -> ParseData
 {
   ParseData result;
   result.set_path(path);

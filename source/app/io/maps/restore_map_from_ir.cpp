@@ -19,13 +19,13 @@
 
 #include "restore_map_from_ir.hpp"
 
-#include <filesystem>  // absolute
-#include <utility>     // move
-#include <variant>     // get
+#include <utility>  // move
+#include <variant>  // get
 
 #include <entt/entity/registry.hpp>
 
 #include "core/commands/command_stack.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/common/functional.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
@@ -297,7 +297,7 @@ void restore_map_from_ir(const ParseData& data,
 
   auto& map = document->get_map();
 
-  const auto path = std::filesystem::absolute(data.path());
+  const auto path = fs::absolute(data.path());
   document->set_path(path);
   document->set_name(path.filename().string());
 

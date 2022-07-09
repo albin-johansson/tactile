@@ -19,17 +19,16 @@
 
 #pragma once
 
-#include <filesystem>  // path
-
 #include <pugixml.hpp>
 
+#include "core/common/filesystem.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_tileset(pugi::xml_node               node,
-                                 ir::TilesetData&             tilesetData,
-                                 const std::filesystem::path& dir) -> ParseError;
+[[nodiscard]] auto parse_tileset(pugi::xml_node   node,
+                                 ir::TilesetData& tilesetData,
+                                 const fs::path&  dir) -> ParseError;
 
 }  // namespace tactile::io

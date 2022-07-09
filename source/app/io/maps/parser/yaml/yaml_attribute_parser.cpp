@@ -19,13 +19,13 @@
 
 #include "yaml_attribute_parser.hpp"
 
-#include <filesystem>   // path
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // move
 
 #include <centurion/color.hpp>
 
+#include "core/common/filesystem.hpp"
 #include "core/common/maybe.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/yaml_utils.hpp"
@@ -79,7 +79,7 @@ namespace {
       return value.as<bool>();
 
     case AttributeType::Path: {
-      const std::filesystem::path file = value.as<std::string>();
+      const fs::path file = value.as<std::string>();
       return file;
     }
     case AttributeType::Color: {
@@ -143,7 +143,7 @@ namespace {
         break;
 
       case AttributeType::Path: {
-        std::filesystem::path path = defaultValue.as<std::string>();
+        fs::path path = defaultValue.as<std::string>();
         value = std::move(path);
         break;
       }

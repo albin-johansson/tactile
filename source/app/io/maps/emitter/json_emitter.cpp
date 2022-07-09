@@ -244,8 +244,7 @@ void _add_common_tileset_attributes(nlohmann::json&        json,
   json["tileheight"] = data.tile_size.y;
   json["tilecount"] = data.tile_count;
 
-  const auto imagePath =
-      std::filesystem::relative(data.image_path, info.destination_dir());
+  const auto imagePath = fs::relative(data.image_path, info.destination_dir());
   json["image"] = convert_to_forward_slashes(imagePath);
 
   json["imagewidth"] = data.image_size.x;

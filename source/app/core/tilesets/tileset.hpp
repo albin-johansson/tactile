@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <vector>      // vector
+#include <vector>  // vector
 
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/common/associative.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
@@ -73,10 +73,7 @@ class Tileset final : public IContext
 
   [[nodiscard]] auto texture_id() const noexcept -> uint { return mTextureId; }
 
-  [[nodiscard]] auto texture_path() const -> const std::filesystem::path&
-  {
-    return mTexturePath;
-  }
+  [[nodiscard]] auto texture_path() const -> const fs::path& { return mTexturePath; }
 
   [[nodiscard]] auto texture_size() const noexcept -> const Vector2i&
   {
@@ -108,7 +105,7 @@ class Tileset final : public IContext
   Vector2f                    mUvSize {};
   HashMap<TileIndex, UUID>    mIdentifiers;
   HashMap<UUID, Shared<Tile>> mMetaTiles;
-  std::filesystem::path       mTexturePath;
+  fs::path                    mTexturePath;
 
   mutable HashMap<TileIndex, TileIndex> mAppearanceCache;
 

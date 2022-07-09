@@ -19,9 +19,9 @@
 
 #include "xml_tileset_parser.hpp"
 
-#include <filesystem>  // weakly_canonical, exists
-#include <utility>     // move
+#include <utility>  // move
 
+#include "core/common/filesystem.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
 #include "io/maps/parser/xml/xml_layer_parser.hpp"
@@ -81,9 +81,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_image_info(pugi::xml_node               tilesetNode,
-                                     ir::TilesetData&             tilesetData,
-                                     const std::filesystem::path& dir) -> ParseError
+[[nodiscard]] auto _parse_image_info(pugi::xml_node   tilesetNode,
+                                     ir::TilesetData& tilesetData,
+                                     const fs::path&  dir) -> ParseError
 {
   auto imageNode = tilesetNode.child("image");
 
@@ -106,8 +106,8 @@ namespace {
     return ParseError::NoTilesetImagePath;
   }
 
-  auto absolutePath = std::filesystem::weakly_canonical(dir / *relativePath);
-  if (std::filesystem::exists(absolutePath)) {
+  auto absolutePath = fs::weakly_canonical(dir / *relativePath);
+  if (fs::exists(absolutePath)) {
     tilesetData.image_path = std::move(absolutePath);
   }
   else {
@@ -117,10 +117,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_common_attributes(pugi::xml_node               node,
-                                            ir::TilesetData&             tilesetData,
-                                            const std::filesystem::path& dir)
-    -> ParseError
+[[nodiscard]] auto _parse_common_attributes(pugi::xml_node   node,
+                                            ir::TilesetData& tilesetData,
+                                            const fs::path&  dir) -> ParseError
 {
   if (auto name = string_attribute(node, "name")) {
     tilesetData.name = std::move(*name);
@@ -174,16 +173,16 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_external_tileset(pugi::xml_node               node,
-                                           ir::TilesetData&             tilesetData,
-                                           const std::filesystem::path& dir) -> ParseError
+[[nodiscard]] auto _parse_external_tileset(pugi::xml_node   node,
+                                           ir::TilesetData& tilesetData,
+                                           const fs::path&  dir) -> ParseError
 {
   TACTILE_ASSERT(has_attribute(node, "source"));
 
   const auto relativePath = string_attribute(node, "source").value();
-  const auto sourcePath = std::filesystem::weakly_canonical(dir / relativePath);
+  const auto sourcePath = fs::weakly_canonical(dir / relativePath);
 
-  if (!std::filesystem::exists(sourcePath)) {
+  if (!fs::exists(sourcePath)) {
     return ParseError::ExternalTilesetDoesNotExist;
   }
 
@@ -197,9 +196,8 @@ namespace {
 
 }  // namespace
 
-auto parse_tileset(pugi::xml_node               node,
-                   ir::TilesetData&             tilesetData,
-                   const std::filesystem::path& dir) -> ParseError
+auto parse_tileset(pugi::xml_node node, ir::TilesetData& tilesetData, const fs::path& dir)
+    -> ParseError
 {
   if (const auto firstTile = int_attribute(node, "firstgid")) {
     tilesetData.first_tile = *firstTile;

@@ -49,7 +49,7 @@ TextureManager::~TextureManager()
   mTextures.clear();
 }
 
-auto TextureManager::load(const std::filesystem::path& path) -> Maybe<TextureInfo>
+auto TextureManager::load(const fs::path& path) -> Maybe<TextureInfo>
 {
   TextureInfo texture;
   texture.path = path;

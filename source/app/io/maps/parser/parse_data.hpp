@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <filesystem>  // path
-
+#include "core/common/filesystem.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
@@ -29,11 +28,11 @@ namespace tactile::io {
 class ParseData final
 {
  public:
-  void set_path(const std::filesystem::path& path);
+  void set_path(const fs::path& path);
 
   void set_error(ParseError error);
 
-  [[nodiscard]] auto path() const -> const std::filesystem::path&;
+  [[nodiscard]] auto path() const -> const fs::path&;
 
   [[nodiscard]] auto error() const -> ParseError;
 
@@ -42,9 +41,9 @@ class ParseData final
   [[nodiscard]] auto data() const -> const ir::MapData&;
 
  private:
-  std::filesystem::path mPath;
-  ir::MapData           mData;
-  ParseError            mError {ParseError::None};
+  fs::path    mPath;
+  ir::MapData mData;
+  ParseError  mError {ParseError::None};
 };
 
 }  // namespace tactile::io

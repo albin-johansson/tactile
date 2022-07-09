@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include <filesystem>  // path
 #include <functional>  // function
 #include <vector>      // vector
 
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/common/associative.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
@@ -78,11 +78,10 @@ class DocumentModel final
   void set_command_capacity(usize capacity);
 
   /// Indicates whether any of the loaded documents are located at the specific path.
-  [[nodiscard]] auto has_document_with_path(const std::filesystem::path& path) const
-      -> bool;
+  [[nodiscard]] auto has_document_with_path(const fs::path& path) const -> bool;
 
   /// Returns the document ID of the loaded document with the specified path.
-  [[nodiscard]] auto get_id_for_path(const std::filesystem::path& path) const -> UUID;
+  [[nodiscard]] auto get_id_for_path(const fs::path& path) const -> UUID;
 
   /// Indicates whether there is an active document, of any type.
   [[nodiscard]] auto has_active_document() const -> bool;

@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include <filesystem>   // path
 #include <string>       // string
 #include <string_view>  // string_view
 
 #include <nlohmann/json.hpp>
 
 #include "core/attribute.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 
@@ -44,9 +44,9 @@ NLOHMANN_JSON_SERIALIZE_ENUM(AttributeType,
 
 void to_json(nlohmann::json& json, const Attribute& value);
 
-void write_json(const nlohmann::json& json, const std::filesystem::path& path);
+void write_json(const nlohmann::json& json, const fs::path& path);
 
-[[nodiscard]] auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>;
+[[nodiscard]] auto read_json(const fs::path& path) -> Maybe<nlohmann::json>;
 
 namespace io {
 

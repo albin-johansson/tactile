@@ -207,8 +207,7 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
   return nothing;
 }
 
-auto input_path(const char* id, const std::filesystem::path& value)
-    -> Maybe<std::filesystem::path>
+auto input_path(const char* id, const fs::path& value) -> Maybe<fs::path>
 {
   const Scope scope {id};
 

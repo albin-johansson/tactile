@@ -19,17 +19,16 @@
 
 #pragma once
 
-#include <filesystem>  // path
-
 #include <yaml-cpp/yaml.h>
 
+#include "core/common/filesystem.hpp"
 #include "io/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_tilesets(const YAML::Node&            sequence,
-                                  ir::MapData&                 data,
-                                  const std::filesystem::path& dir) -> ParseError;
+[[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
+                                  ir::MapData&      data,
+                                  const fs::path&   dir) -> ParseError;
 
 }  // namespace tactile::io

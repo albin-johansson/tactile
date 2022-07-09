@@ -19,11 +19,10 @@
 
 #include "save_document.hpp"
 
-#include <filesystem>  // absolute
-
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
+#include "core/common/filesystem.hpp"
 #include "core/documents/map_document.hpp"
 #include "io/maps/convert_map_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"
@@ -40,7 +39,7 @@ void save_document(const MapDocument& document)
   TACTILE_DEBUG_PROFILE_START
   TACTILE_ASSERT(document.has_path());
 
-  const auto path = std::filesystem::absolute(document.get_path());
+  const auto path = fs::absolute(document.get_path());
   spdlog::info("Trying to save map to {}", path);
 
   EmitInfo info {path, convert_map_to_ir(document)};

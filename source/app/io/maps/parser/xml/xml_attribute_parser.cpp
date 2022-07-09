@@ -19,13 +19,13 @@
 
 #include "xml_attribute_parser.hpp"
 
-#include <cstring>     // strcmp
-#include <filesystem>  // path
-#include <string>      // string
-#include <utility>     // move
+#include <cstring>  // strcmp
+#include <string>   // string
+#include <utility>  // move
 
 #include <centurion/color.hpp>
 
+#include "core/common/filesystem.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/xml_utils.hpp"
 #include "misc/assert.hpp"
@@ -51,7 +51,7 @@ namespace {
     value = bool_attribute(node, "value").value();
   }
   else if (std::strcmp(type, "file") == 0) {
-    std::filesystem::path path = string_attribute(node, "value").value();
+    fs::path path = string_attribute(node, "value").value();
     value = std::move(path);
   }
   else if (std::strcmp(type, "object") == 0) {

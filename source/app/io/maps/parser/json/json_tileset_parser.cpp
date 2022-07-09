@@ -19,13 +19,13 @@
 
 #include "json_tileset_parser.hpp"
 
-#include <filesystem>  // weakly_canonical, exists
-#include <string>      // string
-#include <utility>     // move
+#include <string>   // string
+#include <utility>  // move
 
 #include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
 
+#include "core/common/filesystem.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/json_utils.hpp"
 #include "io/maps/parser/json/json_attribute_parser.hpp"
@@ -108,9 +108,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_image_path(const nlohmann::json&        json,
-                                     ir::TilesetData&             tilesetData,
-                                     const std::filesystem::path& dir) -> ParseError
+[[nodiscard]] auto _parse_image_path(const nlohmann::json& json,
+                                     ir::TilesetData&      tilesetData,
+                                     const fs::path&       dir) -> ParseError
 {
   const auto relative = json.find("image");
 
@@ -118,8 +118,8 @@ namespace {
     return ParseError::NoTilesetImagePath;
   }
 
-  auto absolute = std::filesystem::weakly_canonical(dir / relative->get<std::string>());
-  if (std::filesystem::exists(absolute)) {
+  auto absolute = fs::weakly_canonical(dir / relative->get<std::string>());
+  if (fs::exists(absolute)) {
     tilesetData.image_path = std::move(absolute);
   }
   else {
@@ -131,8 +131,7 @@ namespace {
 
 [[nodiscard]] auto _parse_common_tileset_attributes(const nlohmann::json& json,
                                                     ir::TilesetData&      tilesetData,
-                                                    const std::filesystem::path& dir)
-    -> ParseError
+                                                    const fs::path& dir) -> ParseError
 {
   if (auto name = as_string(json, "name")) {
     tilesetData.name = std::move(*name);
@@ -200,16 +199,16 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_external_tileset(const nlohmann::json&        json,
-                                           ir::TilesetData&             tilesetData,
-                                           const std::filesystem::path& dir) -> ParseError
+[[nodiscard]] auto _parse_external_tileset(const nlohmann::json& json,
+                                           ir::TilesetData&      tilesetData,
+                                           const fs::path&       dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
 
   const auto relative = json.at("source").get<std::string>();
-  const auto source = std::filesystem::weakly_canonical(dir / relative);
+  const auto source = fs::weakly_canonical(dir / relative);
 
-  if (!std::filesystem::exists(source)) {
+  if (!fs::exists(source)) {
     return ParseError::ExternalTilesetDoesNotExist;
   }
 
@@ -221,9 +220,9 @@ namespace {
   }
 }
 
-[[nodiscard]] auto _parse_tileset(const nlohmann::json&        json,
-                                  ir::TilesetData&             tilesetData,
-                                  const std::filesystem::path& dir) -> ParseError
+[[nodiscard]] auto _parse_tileset(const nlohmann::json& json,
+                                  ir::TilesetData&      tilesetData,
+                                  const fs::path&       dir) -> ParseError
 {
   if (const auto firstTile = as_int(json, "firstgid")) {
     tilesetData.first_tile = *firstTile;
@@ -242,9 +241,8 @@ namespace {
 
 }  // namespace
 
-auto parse_tilesets(const nlohmann::json&        json,
-                    ir::MapData&                 mapData,
-                    const std::filesystem::path& dir) -> ParseError
+auto parse_tilesets(const nlohmann::json& json, ir::MapData& mapData, const fs::path& dir)
+    -> ParseError
 {
   const auto iter = json.find("tilesets");
 

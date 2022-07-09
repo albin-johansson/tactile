@@ -19,11 +19,10 @@
 
 #include "xml_emitter.hpp"
 
-#include <filesystem>  // path, relative
-#include <fstream>     // ofstream
-#include <ios>         // ios
-#include <sstream>     // stringstream
-#include <variant>     // get
+#include <fstream>  // ofstream
+#include <ios>      // ios
+#include <sstream>  // stringstream
+#include <variant>  // get
 
 #include <fmt/format.h>
 #include <pugixml.hpp>
@@ -266,9 +265,9 @@ void _append_fancy_tiles(pugi::xml_node node, const ir::TilesetData& tilesetData
   }
 }
 
-void _append_common_tileset_attributes(pugi::xml_node               node,
-                                       const ir::TilesetData&       tilesetData,
-                                       const std::filesystem::path& dir)
+void _append_common_tileset_attributes(pugi::xml_node         node,
+                                       const ir::TilesetData& tilesetData,
+                                       const fs::path&        dir)
 {
   node.append_attribute("name").set_value(tilesetData.name.c_str());
 
@@ -281,8 +280,8 @@ void _append_common_tileset_attributes(pugi::xml_node               node,
   {
     auto imageNode = node.append_child("image");
 
-    const auto source = convert_to_forward_slashes(
-        std::filesystem::relative(tilesetData.image_path, dir));
+    const auto source =
+        convert_to_forward_slashes(fs::relative(tilesetData.image_path, dir));
     imageNode.append_attribute("source").set_value(source.c_str());
 
     imageNode.append_attribute("width").set_value(tilesetData.image_size.x);
@@ -293,9 +292,9 @@ void _append_common_tileset_attributes(pugi::xml_node               node,
   _append_properties(node, tilesetData.context);
 }
 
-void _append_embedded_tileset(pugi::xml_node               root,
-                              const ir::TilesetData&       tilesetData,
-                              const std::filesystem::path& dir)
+void _append_embedded_tileset(pugi::xml_node         root,
+                              const ir::TilesetData& tilesetData,
+                              const fs::path&        dir)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tilesetData.first_tile);
@@ -312,9 +311,9 @@ void _append_external_tileset(pugi::xml_node         root,
   node.append_attribute("source").set_value(filename.c_str());
 }
 
-void _emit_external_tileset_file(const std::filesystem::path& path,
-                                 const ir::TilesetData&       tilesetData,
-                                 const std::filesystem::path& dir)
+void _emit_external_tileset_file(const fs::path&        path,
+                                 const ir::TilesetData& tilesetData,
+                                 const fs::path&        dir)
 {
   pugi::xml_document document;
 
@@ -328,9 +327,9 @@ void _emit_external_tileset_file(const std::filesystem::path& path,
   document.save(stream);
 }
 
-void _append_tileset(pugi::xml_node               root,
-                     const ir::TilesetData&       tilesetData,
-                     const std::filesystem::path& dir)
+void _append_tileset(pugi::xml_node         root,
+                     const ir::TilesetData& tilesetData,
+                     const fs::path&        dir)
 {
   const auto& prefs = get_preferences();
   if (prefs.embed_tilesets) {

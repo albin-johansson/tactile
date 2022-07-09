@@ -19,9 +19,10 @@
 
 #pragma once
 
-#include <deque>       // deque
-#include <filesystem>  // path
-#include <string>      // string
+#include <deque>   // deque
+#include <string>  // string
+
+#include "core/common/filesystem.hpp"
 
 namespace tactile::io {
 
@@ -45,14 +46,14 @@ void clear_file_history();
  *
  * \param path the file path that will be stored.
  */
-void add_file_to_history(const std::filesystem::path& path);
+void add_file_to_history(const fs::path& path);
 
 /**
  * Sets the most recently closed file, and stores it in the file history.
  *
  * \param path the file path that will be stored.
  */
-void set_last_closed_file(const std::filesystem::path& path);
+void set_last_closed_file(const fs::path& path);
 
 /// Returns the current in-memory recent file history.
 [[nodiscard]] auto file_history() -> const std::deque<std::string>&;

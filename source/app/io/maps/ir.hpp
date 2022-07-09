@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <string>      // string
-#include <variant>     // variant
-#include <vector>      // vector
+#include <string>   // string
+#include <variant>  // variant
+#include <vector>   // vector
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
@@ -127,8 +127,8 @@ struct TilesetData final
   int32 tile_count {};
   int32 column_count {};
 
-  std::filesystem::path image_path;
-  Vector2i              image_size {};
+  fs::path image_path;
+  Vector2i image_size {};
 
   HashMap<TileIndex, MetaTileData> fancy_tiles;
 

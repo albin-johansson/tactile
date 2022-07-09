@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <filesystem>  // path
-
+#include "core/common/filesystem.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 
@@ -54,7 +53,7 @@ struct CreateMapEvent final
 
 struct OpenMapEvent final
 {
-  std::filesystem::path path;
+  fs::path path;
 };
 
 struct InspectMapEvent final

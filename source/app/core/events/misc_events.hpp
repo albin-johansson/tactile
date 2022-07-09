@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <filesystem>  // path
+#include "core/common/filesystem.hpp"
 
 namespace tactile {
 
@@ -37,7 +37,7 @@ struct SaveEvent final
 
 struct SaveAsEvent final
 {
-  std::filesystem::path path;
+  fs::path path;
 };
 
 struct OpenSaveAsDialogEvent final

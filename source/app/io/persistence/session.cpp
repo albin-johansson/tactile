@@ -19,9 +19,8 @@
 
 #include "session.hpp"
 
-#include <filesystem>  // path, absolute
-#include <fstream>     // ifstream, ofstream
-#include <ios>         // ios
+#include <fstream>  // ifstream, ofstream
+#include <ios>      // ios
 
 #include <spdlog/spdlog.h>
 
@@ -38,7 +37,7 @@ namespace {
 
 constexpr int _format_version [[maybe_unused]] = 1;
 
-[[nodiscard]] auto _get_file_path() -> const std::filesystem::path&
+[[nodiscard]] auto _get_file_path() -> const fs::path&
 {
   static const auto path = persistent_file_dir() / "session.bin";
   return path;
@@ -74,7 +73,7 @@ void save_session(const DocumentModel& model)
     if (model.is_map(id)) {
       const auto& map = model.view_map(id);
       if (map.has_path()) {
-        const auto documentPath = std::filesystem::absolute(map.get_path());
+        const auto documentPath = fs::absolute(map.get_path());
         session.add_files(convert_to_forward_slashes(documentPath));
       }
     }

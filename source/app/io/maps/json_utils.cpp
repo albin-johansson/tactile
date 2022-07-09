@@ -81,7 +81,7 @@ void to_json(nlohmann::json& json, const Attribute& value)
   }
 }
 
-void write_json(const nlohmann::json& json, const std::filesystem::path& path)
+void write_json(const nlohmann::json& json, const fs::path& path)
 {
   std::ofstream stream {path, std::ios::out | std::ios::trunc};
 
@@ -92,7 +92,7 @@ void write_json(const nlohmann::json& json, const std::filesystem::path& path)
   stream << json;
 }
 
-auto read_json(const std::filesystem::path& path) -> Maybe<nlohmann::json>
+auto read_json(const fs::path& path) -> Maybe<nlohmann::json>
 {
   try {
     std::ifstream stream {path, std::ios::in};

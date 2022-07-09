@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <string>      // string
+#include <string>  // string
 
+#include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
@@ -37,8 +37,8 @@ struct InspectTilesetEvent final
 
 struct LoadTilesetEvent final
 {
-  std::filesystem::path path;
-  Vector2i              tile_size {};
+  fs::path path;
+  Vector2i tile_size {};
 };
 
 struct RemoveTilesetEvent final

@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include <concepts>    // same_as
-#include <filesystem>  // path
-#include <ostream>     // ostream
-#include <string>      // string
-#include <utility>     // move
-#include <variant>     // variant, get, get_if, holds_alternative
+#include <concepts>  // same_as
+#include <ostream>   // ostream
+#include <string>    // string
+#include <utility>   // move
+#include <variant>   // variant, get, get_if, holds_alternative
 
 #include <centurion/color.hpp>
 
+#include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 
 namespace tactile {
@@ -73,12 +73,12 @@ enum object_t : int32
 {};
 
 template <typename T>
-concept CAttributeType = std::same_as<T, std::string> ||            //
-                         std::same_as<T, int32> ||                  //
-                         std::same_as<T, float> ||                  //
-                         std::same_as<T, bool> ||                   //
-                         std::same_as<T, cen::color> ||             //
-                         std::same_as<T, std::filesystem::path> ||  //
+concept CAttributeType = std::same_as<T, std::string> ||  //
+                         std::same_as<T, int32> ||        //
+                         std::same_as<T, float> ||        //
+                         std::same_as<T, bool> ||         //
+                         std::same_as<T, cen::color> ||   //
+                         std::same_as<T, fs::path> ||     //
                          std::same_as<T, object_t>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
@@ -89,7 +89,7 @@ class Attribute final
   using integer_type = int32;
   using float_type = float;
   using color_type = cen::color;
-  using path_type = std::filesystem::path;
+  using path_type = fs::path;
 
   using value_type = std::variant<string_type,
                                   integer_type,
