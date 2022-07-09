@@ -33,6 +33,7 @@
 namespace tactile {
 
 /// Abstract base class for document representations.
+/// TODO: convert to interface, add DocumentDelegate class
 class ADocument
 {
  public:
