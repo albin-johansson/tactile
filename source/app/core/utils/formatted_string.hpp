@@ -47,7 +47,7 @@ class FormattedString final
 
   [[nodiscard]] auto view() const noexcept -> std::string_view
   {
-    return std::string_view{mBuffer.data(), mSize};
+    return std::string_view {mBuffer.data(), mSize};
   }
 
   [[nodiscard]] auto size() const noexcept -> usize { return view().size(); }
@@ -56,7 +56,7 @@ class FormattedString final
 
  private:
   std::array<char, Capacity + 1> mBuffer;  // NOLINT
-  usize                          mSize{};
+  usize                          mSize {};
 };
 
 }  // namespace tactile

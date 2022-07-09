@@ -51,7 +51,7 @@ void TilesetBundle::attach_tileset(Shared<Tileset> tileset, const bool embedded)
 void TilesetBundle::detach_tileset(const UUID& id)
 {
   if (!mRefs.contains(id)) {
-    throw TactileError{"Invalid tileset identifier!"};
+    throw TactileError {"Invalid tileset identifier!"};
   }
 
   TACTILE_ASSERT(mRefs.contains(id));
@@ -80,7 +80,7 @@ void TilesetBundle::select_tileset(const UUID& id)
     mActiveTileset = id;
   }
   else {
-    throw TactileError{"Invalid tileset identifier!"};
+    throw TactileError {"Invalid tileset identifier!"};
   }
 }
 
@@ -141,7 +141,7 @@ auto TilesetBundle::to_tile_index(const TileID id) const -> TileIndex
     return ref.to_index(id);
   }
   else {
-    throw TactileError{"Invalid tile identifier!"};
+    throw TactileError {"Invalid tile identifier!"};
   }
 }
 

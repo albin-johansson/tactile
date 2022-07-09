@@ -45,8 +45,8 @@ class LayerMutatorVisitor : public ILayerVisitor
 {
  public:
   explicit LayerMutatorVisitor(const UUID& target, VisitorFunc func)
-      : mTarget{target}
-      , mFunc{std::move(func)}
+      : mTarget {target}
+      , mFunc {std::move(func)}
   {}
 
   void visit(GroupLayer& layer) override
@@ -74,8 +74,8 @@ class LayerQueryVisitor : public IConstLayerVisitor
 {
  public:
   explicit LayerQueryVisitor(const UUID& target, ConstVisitorFunc func)
-      : mTarget{target}
-      , mFunc{std::move(func)}
+      : mTarget {target}
+      , mFunc {std::move(func)}
   {}
 
   void visit(const GroupLayer& layer) override
@@ -101,7 +101,7 @@ class LayerQueryVisitor : public IConstLayerVisitor
 class GlobalIndexCalculator final : public IConstLayerVisitor
 {
  public:
-  explicit GlobalIndexCalculator(const UUID& target) : mTarget{target} {}
+  explicit GlobalIndexCalculator(const UUID& target) : mTarget {target} {}
 
   void visit(const TileLayer& layer) override { check(layer); }
   void visit(const ObjectLayer& layer) override { check(layer); }
@@ -119,8 +119,8 @@ class GlobalIndexCalculator final : public IConstLayerVisitor
 
  private:
   UUID  mTarget;
-  usize mIndex{};
-  bool  mFound{};
+  usize mIndex {};
+  bool  mFound {};
 
   void check(const ILayer& layer)
   {
@@ -140,7 +140,7 @@ class GlobalIndexCalculator final : public IConstLayerVisitor
 class FindLayerVisitor final : public ILayerVisitor
 {
  public:
-  explicit FindLayerVisitor(const UUID& target) : mTarget{target} {}
+  explicit FindLayerVisitor(const UUID& target) : mTarget {target} {}
 
   void visit(TileLayer& layer) override { check(layer); }
   void visit(ObjectLayer& layer) override { check(layer); }
@@ -150,7 +150,7 @@ class FindLayerVisitor final : public ILayerVisitor
 
  private:
   UUID    mTarget;
-  ILayer* mLayer{};
+  ILayer* mLayer {};
 
   void check(ILayer& layer)
   {
@@ -163,7 +163,7 @@ class FindLayerVisitor final : public ILayerVisitor
 class FindConstLayerVisitor final : public IConstLayerVisitor
 {
  public:
-  explicit FindConstLayerVisitor(const UUID& target) : mTarget{target} {}
+  explicit FindConstLayerVisitor(const UUID& target) : mTarget {target} {}
 
   void visit(const TileLayer& layer) override { check(layer); }
   void visit(const ObjectLayer& layer) override { check(layer); }
@@ -173,7 +173,7 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
 
  private:
   UUID          mTarget;
-  const ILayer* mLayer{};
+  const ILayer* mLayer {};
 
   void check(const ILayer& layer)
   {
@@ -187,7 +187,7 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
   class Name final : public ILayerVisitor                          \
   {                                                                \
    public:                                                         \
-    explicit Name(const UUID& target) : mTarget{target}            \
+    explicit Name(const UUID& target) : mTarget {target}           \
     {}                                                             \
                                                                    \
     void visit(Type& layer) override                               \
@@ -204,13 +204,13 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
                                                                    \
    private:                                                        \
     UUID  mTarget;                                                 \
-    Type* mLayer{};                                                \
+    Type* mLayer {};                                               \
   };                                                               \
                                                                    \
   class Const##Name final : public IConstLayerVisitor              \
   {                                                                \
    public:                                                         \
-    explicit Const##Name(const UUID& target) : mTarget{target}     \
+    explicit Const##Name(const UUID& target) : mTarget {target}    \
     {}                                                             \
                                                                    \
     void visit(const Type& layer) override                         \
@@ -227,7 +227,7 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
                                                                    \
    private:                                                        \
     UUID        mTarget;                                           \
-    const Type* mLayer{};                                          \
+    const Type* mLayer {};                                         \
   }
 
 TACTILE_FIND_LAYER_VISITOR(FindTileLayerVisitor, TileLayer);
@@ -245,7 +245,7 @@ class CountingVisitor final : public IConstLayerVisitor
   [[nodiscard]] auto count() const -> usize { return mCount; }
 
  private:
-  usize mCount{};
+  usize mCount {};
 };
 
 }  // namespace
@@ -290,7 +290,7 @@ void GroupLayer::each(const SimpleVisitor& visitor) const
 {
   struct Visitor final : IConstLayerVisitor
   {
-    const SimpleVisitor* func{};  // Pointer to avoid copying the function object
+    const SimpleVisitor* func {};  // Pointer to avoid copying the function object
 
     void visit(const TileLayer& layer) override { (*func)(&layer); }
 
@@ -311,7 +311,7 @@ void GroupLayer::add_layer(const UUID& parent, Shared<ILayer> layer)
     layer->set_parent(parent);
   }
   else {
-    throw TactileError{"Invalid parent layer!"};
+    throw TactileError {"Invalid parent layer!"};
   }
 }
 
@@ -322,7 +322,7 @@ void GroupLayer::add_layer(Shared<ILayer> layer)
     mLayers.push_back(std::move(layer));
   }
   else {
-    throw TactileError{"Invalid null layer!"};
+    throw TactileError {"Invalid null layer!"};
   }
 }
 
@@ -335,14 +335,14 @@ auto GroupLayer::remove_layer(const UUID& id) -> Shared<ILayer>
     storage.erase(iter);
   };
 
-  LayerMutatorVisitor visitor{id, op};
+  LayerMutatorVisitor visitor {id, op};
   accept(visitor);
 
   if (removed) {
     return removed;
   }
   else {
-    throw TactileError{"Invalid layer identifier"};
+    throw TactileError {"Invalid layer identifier"};
   }
 }
 
@@ -355,14 +355,14 @@ auto GroupLayer::duplicate_layer(const UUID& id) -> Shared<ILayer>
     storage.insert(iter + 1, layer);
   };
 
-  LayerMutatorVisitor visitor{id, op};
+  LayerMutatorVisitor visitor {id, op};
   accept(visitor);
 
   if (layer) {
     return layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -379,11 +379,11 @@ void GroupLayer::move_layer_up(const UUID& id)
     }
   };
 
-  LayerMutatorVisitor visitor{id, op};
+  LayerMutatorVisitor visitor {id, op};
   accept(visitor);
 
   if (!valid) {
-    throw TactileError{"Invalid layer identifier"};
+    throw TactileError {"Invalid layer identifier"};
   }
 }
 
@@ -400,11 +400,11 @@ void GroupLayer::move_layer_down(const UUID& id)
     }
   };
 
-  LayerMutatorVisitor visitor{id, op};
+  LayerMutatorVisitor visitor {id, op};
   accept(visitor);
 
   if (!valid) {
-    throw TactileError{"Invalid layer identifier"};
+    throw TactileError {"Invalid layer identifier"};
   }
 }
 
@@ -464,14 +464,14 @@ auto GroupLayer::sibling_count(const UUID& id) const -> usize
     count = storage.size() - 1;
   };
 
-  LayerQueryVisitor visitor{id, op};
+  LayerQueryVisitor visitor {id, op};
   accept(visitor);
 
   if (count) {
     return *count;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -482,27 +482,27 @@ auto GroupLayer::get_local_index(const UUID& id) const -> usize
     index = static_cast<usize>(std::distance(storage.begin(), iter));
   };
 
-  LayerQueryVisitor query{id, op};
+  LayerQueryVisitor query {id, op};
   accept(query);
 
   if (index) {
     return *index;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
 auto GroupLayer::get_global_index(const UUID& id) const -> usize
 {
-  GlobalIndexCalculator visitor{id};
+  GlobalIndexCalculator visitor {id};
   each(visitor);
 
   if (const auto index = visitor.get_index()) {
     return *index;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -523,14 +523,14 @@ auto GroupLayer::get_layer(const UUID& id) -> Shared<ILayer>
     layer = *iter;
   };
 
-  LayerQueryVisitor visitor{id, op};
+  LayerQueryVisitor visitor {id, op};
   accept(visitor);
 
   if (layer) {
     return layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -540,7 +540,7 @@ auto GroupLayer::view_layer(const UUID& id) -> ILayer&
     return *layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -550,7 +550,7 @@ auto GroupLayer::view_layer(const UUID& id) const -> const ILayer&
     return *layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -560,7 +560,7 @@ auto GroupLayer::view_tile_layer(const UUID& id) -> TileLayer&
     return *layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -570,7 +570,7 @@ auto GroupLayer::view_tile_layer(const UUID& id) const -> const TileLayer&
     return *layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -580,7 +580,7 @@ auto GroupLayer::view_object_layer(const UUID& id) -> ObjectLayer&
     return *layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -590,7 +590,7 @@ auto GroupLayer::view_object_layer(const UUID& id) const -> const ObjectLayer&
     return *layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -600,7 +600,7 @@ auto GroupLayer::view_group_layer(const UUID& id) -> GroupLayer&
     return *layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
@@ -610,62 +610,62 @@ auto GroupLayer::view_group_layer(const UUID& id) const -> const GroupLayer&
     return *layer;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 
 auto GroupLayer::find_layer(const UUID& id) -> ILayer*
 {
-  FindLayerVisitor visitor{id};
+  FindLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
 auto GroupLayer::find_layer(const UUID& id) const -> const ILayer*
 {
-  FindConstLayerVisitor visitor{id};
+  FindConstLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
 auto GroupLayer::find_tile_layer(const UUID& id) -> TileLayer*
 {
-  FindTileLayerVisitor visitor{id};
+  FindTileLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
 auto GroupLayer::find_tile_layer(const UUID& id) const -> const TileLayer*
 {
-  ConstFindTileLayerVisitor visitor{id};
+  ConstFindTileLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
 auto GroupLayer::find_object_layer(const UUID& id) -> ObjectLayer*
 {
-  FindObjectLayerVisitor visitor{id};
+  FindObjectLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
 auto GroupLayer::find_object_layer(const UUID& id) const -> const ObjectLayer*
 {
-  ConstFindObjectLayerVisitor visitor{id};
+  ConstFindObjectLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
 auto GroupLayer::find_group_layer(const UUID& id) -> GroupLayer*
 {
-  FindGroupLayerVisitor visitor{id};
+  FindGroupLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
 auto GroupLayer::find_group_layer(const UUID& id) const -> const GroupLayer*
 {
-  ConstFindGroupLayerVisitor visitor{id};
+  ConstFindGroupLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }

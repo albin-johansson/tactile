@@ -26,10 +26,10 @@
 
 namespace tactile {
 
-RemoveRowCmd::RemoveRowCmd(Shared<Map> map) : mMap{std::move(map)}
+RemoveRowCmd::RemoveRowCmd(Shared<Map> map) : mMap {std::move(map)}
 {
   if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+    throw TactileError {"Invalid null map!"};
   }
 }
 

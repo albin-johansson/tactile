@@ -47,7 +47,7 @@ auto get_dialogs() -> DialogState&
     return *_dialogs;
   }
   else {
-    throw TactileError{"No available dialog state!"};
+    throw TactileError {"No available dialog state!"};
   }
 }
 

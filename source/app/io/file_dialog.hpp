@@ -47,7 +47,7 @@ class FileDialog final
   [[nodiscard]] auto path() const -> std::filesystem::path;
 
  private:
-  const char* mPath{};
+  const char* mPath {};
 
   FileDialog(const char* path);
 };

@@ -50,7 +50,7 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
 {
   proto::Session session;
 
-  std::ifstream stream{_get_file_path(), std::ios::in | std::ios::binary};
+  std::ifstream stream {_get_file_path(), std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
       const auto ir = parse_map(file);
@@ -80,8 +80,8 @@ void save_session(const DocumentModel& model)
     }
   });
 
-  std::ofstream stream{_get_file_path(),
-                       std::ios::out | std::ios::trunc | std::ios::binary};
+  std::ofstream stream {_get_file_path(),
+                        std::ios::out | std::ios::trunc | std::ios::binary};
   if (!session.SerializeToOstream(&stream)) {
     spdlog::error("Failed to save session file!");
   }

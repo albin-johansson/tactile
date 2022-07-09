@@ -25,11 +25,11 @@
 namespace tactile {
 
 DuplicateLayerCmd::DuplicateLayerCmd(MapDocument* document, const UUID& layerId)
-    : mDocument{document}
-    , mLayerId{layerId}
+    : mDocument {document}
+    , mLayerId {layerId}
 {
   if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+    throw TactileError {"Invalid null map document!"};
   }
 }
 

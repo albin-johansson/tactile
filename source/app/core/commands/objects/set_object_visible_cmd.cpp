@@ -26,11 +26,11 @@
 namespace tactile {
 
 SetObjectVisibleCmd::SetObjectVisibleCmd(Shared<Object> object, const bool visible)
-    : mObject{std::move(object)}
-    , mNewVisibility{visible}
+    : mObject {std::move(object)}
+    , mNewVisibility {visible}
 {
   if (!mObject) {
-    throw TactileError{"Invalid null object!"};
+    throw TactileError {"Invalid null object!"};
   }
 }
 

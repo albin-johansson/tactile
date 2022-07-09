@@ -45,7 +45,7 @@ class RenameComponentAttrCmd final : public ICommand
 
  private:
   Shared<ComponentIndex> mIndex;
-  UUID                   mComponentId{};
+  UUID                   mComponentId {};
   std::string            mPreviousName;
   std::string            mUpdatedName;
 };

@@ -35,8 +35,8 @@ namespace tactile::ui {
 
 void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  Disable disable{!model.is_map_active()};
-  if (Menu menu{"Map"}; menu.is_open()) {
+  Disable disable {!model.is_map_active()};
+  if (Menu menu {"Map"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
       dispatcher.enqueue<InspectMapEvent>();
     }

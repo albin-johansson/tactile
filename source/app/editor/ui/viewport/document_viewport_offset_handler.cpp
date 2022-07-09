@@ -39,7 +39,7 @@ void update_document_viewport_offset(const ImVec2&     viewportSize,
   ImGui::InvisibleButton("update_document_viewport_offset", viewportSize, _button_flags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto&    io = ImGui::GetIO();
-    const Vector2f delta{io.MouseDelta.x, io.MouseDelta.y};
+    const Vector2f delta {io.MouseDelta.x, io.MouseDelta.y};
     dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
   }
 }

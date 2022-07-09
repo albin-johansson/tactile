@@ -32,14 +32,14 @@ AddObjectCmd::AddObjectCmd(MapDocument*    document,
                            ObjectType      type,
                            const Vector2f& pos,
                            const Vector2f& size)
-    : mDocument{document}
-    , mLayerId{layerId}
-    , mObjectType{type}
-    , mPos{pos}
-    , mSize{size}
+    : mDocument {document}
+    , mLayerId {layerId}
+    , mObjectType {type}
+    , mPos {pos}
+    , mSize {size}
 {
   if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+    throw TactileError {"Invalid null map document!"};
   }
 }
 
@@ -84,7 +84,7 @@ auto AddObjectCmd::get_name() const -> const char*
       return "Add Ellipse Object";
 
     default:
-      throw TactileError{"Invalid object type!"};
+      throw TactileError {"Invalid object type!"};
   }
 }
 

@@ -74,9 +74,9 @@ class AEventLoop
   virtual void on_event(const cen::event_handler& handler) = 0;
 
  private:
-  AppConfiguration* mCfg{}; /* Non-owning */
+  AppConfiguration* mCfg {}; /* Non-owning */
   cen::keyboard     mKeyboard;
-  bool              mRunning{};
+  bool              mRunning {};
 
   void poll_events();
 };

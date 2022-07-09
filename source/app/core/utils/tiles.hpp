@@ -33,8 +33,8 @@ using TileMatrix = std::vector<TileRow>;
 template <typename T>
 struct MatrixCoords final
 {
-  T row{};
-  T col{};
+  T row {};
+  T col {};
 };
 
 /**

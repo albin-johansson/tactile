@@ -30,13 +30,13 @@ BucketToolCmd::BucketToolCmd(Shared<Map>    map,
                              const UUID&    layerId,
                              const TilePos& origin,
                              const TileID   replacement)
-    : mMap{std::move(map)}
-    , mLayerId{layerId}
-    , mOrigin{origin}
-    , mReplacement{replacement}
+    : mMap {std::move(map)}
+    , mLayerId {layerId}
+    , mOrigin {origin}
+    , mReplacement {replacement}
 {
   if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+    throw TactileError {"Invalid null map!"};
   }
 }
 

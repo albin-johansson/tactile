@@ -49,7 +49,7 @@ class UpdateAttachedComponentCmd final : public ICommand
 
  private:
   Shared<IContext> mContext;
-  UUID             mComponentId{};
+  UUID             mComponentId {};
   std::string      mAttributeName;
   Attribute        mUpdatedValue;
   Maybe<Attribute> mPreviousValue;

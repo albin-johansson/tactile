@@ -116,7 +116,7 @@ void _show_group_layer_item(const MapDocument&       document,
   const auto& map = document.get_map();
 
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-  if (TreeNode treeNode{"##GroupLayerTreeNode", flags, "%s", layer.get_name().c_str()};
+  if (TreeNode treeNode {"##GroupLayerTreeNode", flags, "%s", layer.get_name().c_str()};
       treeNode.is_open()) {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
@@ -152,13 +152,13 @@ void layer_item_view(const MapDocument& document,
 {
   const auto& map = document.get_map();
 
-  const Scope scope{layer.get_uuid()};
+  const Scope scope {layer.get_uuid()};
 
   const auto isActiveLayer = map.active_layer_id() == layer.get_uuid();
   const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
                                    : _base_node_flags;
 
-  const FormattedString name{"{} {}", _get_icon(layer.get_type()), layer.get_name()};
+  const FormattedString name {"{} {}", _get_icon(layer.get_type()), layer.get_name()};
 
   if (layer.get_type() != LayerType::GroupLayer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {

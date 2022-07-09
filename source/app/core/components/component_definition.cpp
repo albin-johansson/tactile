@@ -29,7 +29,7 @@ namespace tactile {
 
 ComponentDefinition::ComponentDefinition() = default;
 
-ComponentDefinition::ComponentDefinition(const UUID& id) : mId{id} {}
+ComponentDefinition::ComponentDefinition(const UUID& id) : mId {id} {}
 
 auto ComponentDefinition::instantiate() const -> Component
 {
@@ -42,7 +42,7 @@ void ComponentDefinition::add_attr(std::string key, const AttributeType type)
     mAttributes[std::move(key)].reset_to_default(type);
   }
   else {
-    throw TactileError{"Attribute key must be unique!"};
+    throw TactileError {"Attribute key must be unique!"};
   }
 }
 
@@ -52,7 +52,7 @@ void ComponentDefinition::add_attr(std::string key, Attribute value)
     mAttributes[std::move(key)] = std::move(value);
   }
   else {
-    throw TactileError{"Attribute key must be unique!"};
+    throw TactileError {"Attribute key must be unique!"};
   }
 }
 
@@ -68,14 +68,14 @@ void ComponentDefinition::remove_attr(std::string_view key)
     mAttributes.erase(iter);
   }
   else {
-    throw TactileError{"Tried to remove non-existent attribute!"};
+    throw TactileError {"Tried to remove non-existent attribute!"};
   }
 }
 
 void ComponentDefinition::rename_attr(std::string_view current, std::string updated)
 {
   if (mAttributes.contains(updated)) {
-    throw TactileError{"Attribute name must be unique!"};
+    throw TactileError {"Attribute name must be unique!"};
   }
 
   if (const auto iter = mAttributes.find(current); iter != mAttributes.end()) {
@@ -84,7 +84,7 @@ void ComponentDefinition::rename_attr(std::string_view current, std::string upda
     mAttributes[std::move(updated)] = std::move(value);
   }
   else {
-    throw TactileError{"Tried to rename non-existent attribute!"};
+    throw TactileError {"Tried to rename non-existent attribute!"};
   }
 }
 

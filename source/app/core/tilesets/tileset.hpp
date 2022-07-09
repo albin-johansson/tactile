@@ -100,12 +100,12 @@ class Tileset final : public IContext
 
  private:
   ContextDelegate             mContext;
-  uint                        mTextureId{};
-  Vector2i                    mTextureSize{};
-  Vector2i                    mTileSize{};
-  int32                       mRowCount{};
-  int32                       mColumnCount{};
-  Vector2f                    mUvSize{};
+  uint                        mTextureId {};
+  Vector2i                    mTextureSize {};
+  Vector2i                    mTileSize {};
+  int32                       mRowCount {};
+  int32                       mColumnCount {};
+  Vector2f                    mUvSize {};
   HashMap<TileIndex, UUID>    mIdentifiers;
   HashMap<UUID, Shared<Tile>> mMetaTiles;
   std::filesystem::path       mTexturePath;

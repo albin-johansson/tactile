@@ -43,7 +43,7 @@ class RemoveRowCmd final : public ICommand
  private:
   Shared<Map>     mMap;
   MapCommandCache mCache;
-  usize           mRows{1};
+  usize           mRows {1};
 };
 
 }  // namespace tactile

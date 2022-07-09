@@ -42,7 +42,7 @@ class UndefComponentCmd final : public ICommand
 
  private:
   Shared<ComponentIndex>     mIndex;
-  UUID                       mComponentId{};
+  UUID                       mComponentId {};
   Maybe<ComponentDefinition> mPrevious;
 };
 

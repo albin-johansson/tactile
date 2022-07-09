@@ -79,7 +79,7 @@ inline void terminate_handler()
 {
   try {
     spdlog::critical("Into exile I must go. Failed I have.\n{}",
-                     boost::stacktrace::stacktrace{});
+                     boost::stacktrace::stacktrace {});
   }
   catch (...) {
     /* Not much we can do */
@@ -107,7 +107,7 @@ AppConfiguration::AppConfiguration()
       io::find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
 #endif
 
-  mWindow->set_icon(cen::surface{iconPath.string()});
+  mWindow->set_icon(cen::surface {iconPath.string()});
 
   mOpenGL.emplace(*mWindow);
   mOpenGL->make_current(*mWindow);
@@ -116,7 +116,7 @@ AppConfiguration::AppConfiguration()
 
   if (glewInit() != GLEW_OK) {
     spdlog::error("Failed to initialize GLEW!");
-    throw TactileError{"Failed to initialize GLEW!"};
+    throw TactileError {"Failed to initialize GLEW!"};
   }
 
   spdlog::debug("OpenGL version... {}", glGetString(GL_VERSION));

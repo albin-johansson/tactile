@@ -51,8 +51,8 @@ struct ComponentEditor::Data final
 };
 
 ComponentEditor::ComponentEditor()
-    : ADialog{"Component Editor"}
-    , mData{std::make_unique<Data>()}
+    : ADialog {"Component Editor"}
+    , mData {std::make_unique<Data>()}
 {
   set_accept_button_label(nullptr);
   set_close_button_label("Close");
@@ -66,7 +66,7 @@ void ComponentEditor::show(const DocumentModel& model)
   const auto& index = document.get_component_index();
   TACTILE_ASSERT(index != nullptr);
 
-  mData->active_component = !index->empty() ? Maybe<UUID>{index->begin()->first}  //
+  mData->active_component = !index->empty() ? Maybe<UUID> {index->begin()->first}  //
                                             : nothing;
 
   make_visible();
@@ -104,7 +104,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
 
     const auto& definition = index->at(data.active_component.value());
     const auto& name = definition.get_name();
-    if (Combo combo{"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
+    if (Combo combo {"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
       for (const auto& [componentId, component] : *index) {
         if (ImGui::Selectable(component.get_name().c_str())) {
           data.active_component = component.get_uuid();
@@ -148,7 +148,7 @@ void ComponentEditor::show_component_combo_popup(const ADocument&  document,
                                                  entt::dispatcher& dispatcher)
 {
   auto& data = *mData;
-  if (Popup popup{"##ComponentEditorPopup"}; popup.is_open()) {
+  if (Popup popup {"##ComponentEditorPopup"}; popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
       const auto  id = data.active_component.value();
       const auto  index = document.get_component_index();
@@ -175,7 +175,7 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
-    if (Table table{"##ComponentAttributeTable", 3, table_flags}; table.is_open()) {
+    if (Table table {"##ComponentAttributeTable", 3, table_flags}; table.is_open()) {
       ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn("Default", ImGuiTableColumnFlags_WidthStretch);
@@ -198,7 +198,7 @@ void ComponentEditor::show_component_attribute(const UUID&        componentId,
                                                entt::dispatcher&  dispatcher)
 {
   auto&       data = *mData;
-  const Scope scope{name.c_str()};
+  const Scope scope {name.c_str()};
 
   ImGui::TableNextRow();
   ImGui::TableNextColumn();

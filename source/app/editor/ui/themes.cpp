@@ -32,11 +32,11 @@ constexpr float _area_opacity = 0.40f;
 
 struct ThemeCfg final
 {
-  ImVec4 accent{};
-  ImVec4 selection{};
-  ImVec4 bg{};
-  ImVec4 area{};
-  ImVec4 text{};
+  ImVec4 accent {};
+  ImVec4 selection {};
+  ImVec4 bg {};
+  ImVec4 area {};
+  ImVec4 text {};
 };
 
 [[nodiscard]] auto _theme_from_hue(const float hue) -> ThemeCfg
@@ -66,7 +66,7 @@ void _apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
     style.Colors[index] = color;
   };
 
-  const ImVec4 transparent{0, 0, 0, 0};
+  const ImVec4 transparent {0, 0, 0, 0};
   //  const ImVec4 magenta{1.0f, 0.2f, 1.0f, 1.0f};
   //  const ImVec4 cyan{0.2f, 0.8f, 0.8f, 1.0f};
   //  const ImVec4 red{1.0f, 0.0f, 0.0f, 1.0f};
@@ -200,12 +200,12 @@ void apply_style(ImGuiStyle& style)
     style.WindowTitleAlign.x = 0.5f;
   }
 
-  style.WindowPadding = ImVec2{10, 10};
-  style.FramePadding = ImVec2{5, 5};
-  style.CellPadding = ImVec2{4, 4};
+  style.WindowPadding = ImVec2 {10, 10};
+  style.FramePadding = ImVec2 {5, 5};
+  style.CellPadding = ImVec2 {4, 4};
 
-  style.ItemSpacing = ImVec2{12, 8};
-  style.ItemInnerSpacing = ImVec2{4, 6};
+  style.ItemSpacing = ImVec2 {12, 8};
+  style.ItemInnerSpacing = ImVec2 {4, 6};
   style.IndentSpacing = 15;
 
   style.GrabMinSize = 6;

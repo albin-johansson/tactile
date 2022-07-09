@@ -41,9 +41,9 @@ class RemoveTilesetCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  DocumentModel*          mModel{};
-  UUID                    mTilesetId{};
-  UUID                    mMapId{};
+  DocumentModel*          mModel {};
+  UUID                    mTilesetId {};
+  UUID                    mMapId {};
   Shared<TilesetDocument> mTilesetDocument;
   Maybe<TileID>           mFirstTile;
 };

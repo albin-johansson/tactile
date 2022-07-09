@@ -46,25 +46,25 @@ struct ContextData final
 
 struct ObjectData final
 {
-  ObjectID   id{};
-  ObjectType type{};
+  ObjectID   id {};
+  ObjectType type {};
 
-  Vector2f pos{};
-  Vector2f size{};
+  Vector2f pos {};
+  Vector2f size {};
 
   std::string name;
   std::string tag;
 
   ContextData context;
 
-  bool visible{};
+  bool visible {};
 };
 
 struct TileLayerData final
 {
   /* The sizes are provided for convenience, they should mirror the MapData values */
-  usize                            row_count{};
-  usize                            col_count{};
+  usize                            row_count {};
+  usize                            col_count {};
   std::vector<std::vector<TileID>> tiles;
 };
 
@@ -90,24 +90,24 @@ struct LayerData final
 {
   using data_type = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
-  LayerID   id{};
-  LayerType type{};
+  LayerID   id {};
+  LayerType type {};
 
-  usize index{};  /// Local index.
+  usize index {};  /// Local index.
 
   std::string name;
   data_type   data;
 
   ContextData context;
 
-  float opacity{};
-  bool  visible{};
+  float opacity {};
+  bool  visible {};
 };
 
 struct MetaAnimationFrameData final
 {
-  TileID local_id{};
-  uint64 duration_ms{};
+  TileID local_id {};
+  uint64 duration_ms {};
 };
 
 struct MetaTileData final
@@ -120,15 +120,15 @@ struct MetaTileData final
 struct TilesetData final
 {
   std::string name;
-  TileID      first_tile{};
+  TileID      first_tile {};
 
-  Vector2i tile_size{};
+  Vector2i tile_size {};
 
-  int32 tile_count{};
-  int32 column_count{};
+  int32 tile_count {};
+  int32 column_count {};
 
   std::filesystem::path image_path;
-  Vector2i              image_size{};
+  Vector2i              image_size {};
 
   HashMap<TileIndex, MetaTileData> fancy_tiles;
 
@@ -137,13 +137,13 @@ struct TilesetData final
 
 struct MapData
 {
-  usize row_count{};
-  usize col_count{};
+  usize row_count {};
+  usize col_count {};
 
-  Vector2i tile_size{};
+  Vector2i tile_size {};
 
-  int32 next_layer_id{};
-  int32 next_object_id{};
+  int32 next_layer_id {};
+  int32 next_object_id {};
 
   TreeMap<std::string, ComponentMap> component_definitions;
 

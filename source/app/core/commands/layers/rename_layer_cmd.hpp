@@ -42,7 +42,7 @@ class RenameLayerCmd final : public ICommand
 
  private:
   Shared<Map>        mMap;
-  UUID               mLayerId{};
+  UUID               mLayerId {};
   std::string        mNewName;
   Maybe<std::string> mOldName;
 };

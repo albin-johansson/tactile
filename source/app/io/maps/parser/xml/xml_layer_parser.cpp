@@ -54,7 +54,7 @@ namespace {
 [[nodiscard]] auto _parse_csv_tiles(const char* csv, ir::TileLayerData& layerData)
     -> ParseError
 {
-  usize index{};
+  usize index {};
   for (const auto& token : split(csv, ',')) {
     if (const auto id = from_string<int32>(token.c_str())) {
       const auto [row, col] = to_matrix_coords(index, layerData.col_count);

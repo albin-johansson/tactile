@@ -56,7 +56,7 @@ void _update_context_menu(const DocumentModel& model,
 
     ImGui::Separator();
 
-    if (Disable disableIf{model.is_open(tilesetId)};
+    if (Disable disableIf {model.is_open(tilesetId)};
         ImGui::MenuItem(TAC_ICON_OPEN " Open Tileset")) {
       dispatcher.enqueue<OpenDocumentEvent>(tilesetId);
       dispatcher.enqueue<SelectDocumentEvent>(tilesetId);
@@ -76,7 +76,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
 {
   TACTILE_ASSERT(model.is_map_active());
 
-  if (TabBar bar{"##TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
+  if (TabBar bar {"##TilesetTabBar", _tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
@@ -87,15 +87,15 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
     const auto& tilesets = map.get_tilesets();
 
     for (const auto& [tilesetId, ref] : tilesets) {
-      const Scope scope{tilesetId};
+      const Scope scope {tilesetId};
 
       const auto& name = ref.view_tileset().get_name();
       const auto  isActive = tilesets.active_tileset_id() == tilesetId;
 
       bool opened = true;
-      if (TabItem item{name.c_str(),
-                       &opened,
-                       isActive ? ImGuiTabItemFlags_SetSelected : 0};
+      if (TabItem item {name.c_str(),
+                        &opened,
+                        isActive ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
         update_tileset_view(model, tilesetId, dispatcher);
       }

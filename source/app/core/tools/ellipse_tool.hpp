@@ -27,8 +27,8 @@ namespace tactile {
 
 struct CurrentEllipseStroke final
 {
-  Vector2f start{};
-  Vector2f current{};
+  Vector2f start {};
+  Vector2f current {};
 };
 
 class EllipseTool final : public ATool

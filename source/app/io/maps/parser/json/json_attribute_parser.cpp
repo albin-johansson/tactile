@@ -52,7 +52,7 @@ namespace {
     value = std::move(path);
   }
   else if (type == "object") {
-    value = object_t{as_int(json, "value").value()};
+    value = object_t {as_int(json, "value").value()};
   }
   else if (type == "color") {
     const auto hex = as_string(json, "value").value();

@@ -153,15 +153,15 @@ class GraphicsCtx final : public IRenderer
  private:
   ImVec2     mCanvasTL;
   ImVec2     mCanvasBR;
-  ImVec2     mOrigin{0, 0};
-  ImVec2     mViewportTileSize{32, 32};
-  ImVec2     mLogicalTileSize{32, 32};
-  ImVec2     mTileSizeRatio{1, 1};
+  ImVec2     mOrigin {0, 0};
+  ImVec2     mViewportTileSize {32, 32};
+  ImVec2     mLogicalTileSize {32, 32};
+  ImVec2     mTileSizeRatio {1, 1};
   Region     mBounds;
   cen::frect mBoundsRect;
-  cen::color mDrawColor{cen::colors::black};
-  float      mLineThickness{1};
-  uint8      mOpacity{0xFF};
+  cen::color mDrawColor {cen::colors::black};
+  float      mLineThickness {1};
+  uint8      mOpacity {0xFF};
 
   [[nodiscard]] auto get_draw_color() const -> uint32;
 

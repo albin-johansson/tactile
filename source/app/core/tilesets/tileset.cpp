@@ -29,19 +29,19 @@
 namespace tactile {
 
 Tileset::Tileset(const UUID& id, const TilesetInfo& info)
-    : mContext{id}
-    , mTextureId{info.texture_id}
-    , mTextureSize{info.texture_size}
-    , mTileSize{info.tile_size}
-    , mRowCount{mTextureSize.y / mTileSize.y}
-    , mColumnCount{mTextureSize.x / mTileSize.x}
-    , mUvSize{Vector2f{mTileSize} / Vector2f{mTextureSize}}
-    , mTexturePath{std::move(info.texture_path)}
+    : mContext {id}
+    , mTextureId {info.texture_id}
+    , mTextureSize {info.texture_size}
+    , mTileSize {info.tile_size}
+    , mRowCount {mTextureSize.y / mTileSize.y}
+    , mColumnCount {mTextureSize.x / mTileSize.x}
+    , mUvSize {Vector2f {mTileSize} / Vector2f {mTextureSize}}
+    , mTexturePath {std::move(info.texture_path)}
 {
   load_tiles();
 }
 
-Tileset::Tileset(const TilesetInfo& info) : Tileset{make_uuid(), info} {}
+Tileset::Tileset(const TilesetInfo& info) : Tileset {make_uuid(), info} {}
 
 void Tileset::load_tiles()
 {
@@ -52,7 +52,7 @@ void Tileset::load_tiles()
     auto       tile = std::make_shared<Tile>(index);
     const auto tileId = tile->get_uuid();
 
-    const Vector2i pos{col * mTileSize.x, row * mTileSize.y};
+    const Vector2i pos {col * mTileSize.x, row * mTileSize.y};
     tile->set_source({pos, mTileSize});
 
     mMetaTiles.try_emplace(tileId, std::move(tile));
@@ -106,7 +106,7 @@ auto Tileset::index_of(const TilePos& pos) const -> TileIndex
     return row * mColumnCount + col;
   }
   else {
-    throw TactileError{"Invalid tile position!"};
+    throw TactileError {"Invalid tile position!"};
   }
 }
 

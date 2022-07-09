@@ -26,8 +26,8 @@ namespace tactile {
 
 struct ViewportLimits final
 {
-  Vector2f min_offset{};
-  Vector2f max_offset{};
+  Vector2f min_offset {};
+  Vector2f max_offset {};
 };
 
 class Viewport final
@@ -70,8 +70,8 @@ class Viewport final
   }
 
  private:
-  Vector2f              mOffset{};
-  Vector2f              mTileSize{32, 32};
+  Vector2f              mOffset {};
+  Vector2f              mTileSize {32, 32};
   Maybe<ViewportLimits> mLimits;
 };
 

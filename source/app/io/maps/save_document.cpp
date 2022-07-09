@@ -43,7 +43,7 @@ void save_document(const MapDocument& document)
   const auto path = std::filesystem::absolute(document.get_path());
   spdlog::info("Trying to save map to {}", path);
 
-  EmitInfo info{path, convert_map_to_ir(document)};
+  EmitInfo info {path, convert_map_to_ir(document)};
 
   const auto ext = path.extension();
   if (ext == ".yaml" || ext == ".yml") {

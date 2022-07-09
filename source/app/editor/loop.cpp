@@ -30,10 +30,10 @@
 
 namespace tactile {
 
-AEventLoop::AEventLoop(AppConfiguration* cfg) : mCfg{cfg}
+AEventLoop::AEventLoop(AppConfiguration* cfg) : mCfg {cfg}
 {
   if (!mCfg) {
-    throw TactileError{"Invalid null application configuration!"};
+    throw TactileError {"Invalid null application configuration!"};
   }
 }
 
@@ -46,7 +46,7 @@ void AEventLoop::start()
   const auto& io = ImGui::GetIO();
   auto&       window = mCfg->window();
 
-  ImVec2 prevScale{};
+  ImVec2 prevScale {};
   while (mRunning) {
     poll_events();
 

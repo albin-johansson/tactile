@@ -39,7 +39,7 @@ void render_tile_layer(GraphicsCtx&     graphics,
 
   for (auto row = bounds.begin.row(); row < endRow; ++row) {
     for (auto col = bounds.begin.col(); col < endCol; ++col) {
-      const TilePos pos{row, col};
+      const TilePos pos {row, col};
       const auto    tile = layer.tile_at(pos);
       if (tile != empty_tile) {
         render_tile(graphics, map, tile, pos);

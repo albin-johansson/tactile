@@ -30,11 +30,11 @@
 namespace tactile {
 
 RemoveTilesetCmd::RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId)
-    : mModel{model}
-    , mTilesetId{tilesetId}
+    : mModel {model}
+    , mTilesetId {tilesetId}
 {
   if (!mModel) {
-    throw TactileError{"Invalid null model!"};
+    throw TactileError {"Invalid null model!"};
   }
 
   TACTILE_ASSERT(mModel->active_document_id().has_value());

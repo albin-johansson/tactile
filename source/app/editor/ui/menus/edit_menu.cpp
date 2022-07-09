@@ -39,18 +39,18 @@ namespace {}  // namespace
 
 void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (Menu menu{"Edit"}; menu.is_open()) {
+  if (Menu menu {"Edit"}; menu.is_open()) {
     const auto* document = model.active_document();
 
     const auto canUndo = document && document->get_history().can_undo();
     const auto canRedo = document && document->get_history().can_redo();
 
     const auto undoText =
-        FormattedString{TAC_ICON_UNDO " Undo {}",
-                        canUndo ? document->get_history().get_undo_text() : ""};
+        FormattedString {TAC_ICON_UNDO " Undo {}",
+                         canUndo ? document->get_history().get_undo_text() : ""};
     const auto redoText =
-        FormattedString{TAC_ICON_REDO " Redo {}",
-                        canRedo ? document->get_history().get_redo_text() : ""};
+        FormattedString {TAC_ICON_REDO " Redo {}",
+                         canRedo ? document->get_history().get_redo_text() : ""};
 
     if (ImGui::MenuItem(undoText.data(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
       dispatcher.enqueue<UndoEvent>();

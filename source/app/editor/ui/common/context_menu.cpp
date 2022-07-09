@@ -26,7 +26,7 @@
 
 namespace tactile::ui {
 
-ContextMenu::ContextMenu(const char* name) : mName{name}
+ContextMenu::ContextMenu(const char* name) : mName {name}
 {
   if (!mName) {
     throw TactileError("Invalid null context menu name!");
@@ -35,7 +35,7 @@ ContextMenu::ContextMenu(const char* name) : mName{name}
 
 void ContextMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (Popup popup{mName}; popup.is_open()) {
+  if (Popup popup {mName}; popup.is_open()) {
     on_update(model, dispatcher);
   }
 

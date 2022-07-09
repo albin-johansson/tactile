@@ -31,9 +31,9 @@ namespace tactile::ui {
 
 void update_tileset_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  Disable disable{!model.is_tileset_active()};
+  Disable disable {!model.is_tileset_active()};
 
-  if (Menu menu{"Tileset"}; menu.is_open()) {
+  if (Menu menu {"Tileset"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
       dispatcher.enqueue<InspectTilesetEvent>();
     }

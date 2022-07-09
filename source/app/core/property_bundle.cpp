@@ -31,7 +31,7 @@ void PropertyBundle::add(std::string name, AttributeType type)
     mProps[std::move(name)].reset_to_default(type);
   }
   else {
-    throw TactileError{"Invalid property name!"};
+    throw TactileError {"Invalid property name!"};
   }
 }
 
@@ -41,7 +41,7 @@ void PropertyBundle::add(std::string name, Attribute value)
     mProps[std::move(name)] = std::move(value);
   }
   else {
-    throw TactileError{"Invalid property name!"};
+    throw TactileError {"Invalid property name!"};
   }
 }
 
@@ -57,14 +57,14 @@ void PropertyBundle::remove(std::string_view name)
     mProps.erase(iter);
   }
   else {
-    throw TactileError{"Invalid property name!"};
+    throw TactileError {"Invalid property name!"};
   }
 }
 
 void PropertyBundle::rename(std::string_view current, std::string updated)
 {
   if (contains(updated)) {
-    throw TactileError{"Duplicated property name!"};
+    throw TactileError {"Duplicated property name!"};
   }
 
   if (const auto iter = mProps.find(current); iter != mProps.end()) {
@@ -73,7 +73,7 @@ void PropertyBundle::rename(std::string_view current, std::string updated)
     mProps[std::move(updated)] = value;
   }
   else {
-    throw TactileError{"Invalid property name!"};
+    throw TactileError {"Invalid property name!"};
   }
 }
 
@@ -114,7 +114,7 @@ auto PropertyBundle::at(std::string_view name) -> Attribute&
     return *property;
   }
   else {
-    throw TactileError{"Invalid property name!"};
+    throw TactileError {"Invalid property name!"};
   }
 }
 
@@ -124,7 +124,7 @@ auto PropertyBundle::at(std::string_view name) const -> const Attribute&
     return *property;
   }
   else {
-    throw TactileError{"Invalid property name!"};
+    throw TactileError {"Invalid property name!"};
   }
 }
 

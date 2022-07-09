@@ -41,11 +41,11 @@ class ResizeMapCmd final : public ICommand
 
  private:
   Shared<Map>     mMap;
-  usize           mRows{};
-  usize           mCols{};
+  usize           mRows {};
+  usize           mCols {};
   MapCommandCache mCache;
-  Maybe<usize>    mPrevRows{};
-  Maybe<usize>    mPrevCols{};
+  Maybe<usize>    mPrevRows {};
+  Maybe<usize>    mPrevCols {};
 
   [[nodiscard]] auto is_lossy_resize() const -> bool;
 };

@@ -27,12 +27,12 @@
 namespace tactile {
 
 EraserToolCmd::EraserToolCmd(Shared<Map> map, const UUID& layerId, TileCache oldState)
-    : mMap{std::move(map)}
-    , mLayerId{layerId}
-    , mOldState{std::move(oldState)}
+    : mMap {std::move(map)}
+    , mLayerId {layerId}
+    , mOldState {std::move(oldState)}
 {
   if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+    throw TactileError {"Invalid null map!"};
   }
 }
 

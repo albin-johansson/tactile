@@ -27,7 +27,7 @@ namespace tactile {
 
 struct SaveTilesVisitor final : IConstLayerVisitor
 {
-  MapCommandCache* self{};
+  MapCommandCache* self {};
   TilePos          begin;
   TilePos          end;
 
@@ -39,7 +39,7 @@ struct SaveTilesVisitor final : IConstLayerVisitor
     const auto endCol = end.col();
     for (auto row = begin.row(); row < endRow; ++row) {
       for (auto col = begin.col(); col < endCol; ++col) {
-        const TilePos position{row, col};
+        const TilePos position {row, col};
         const auto    tile = layer.tile_at(position);
         tileCache.try_emplace(position, tile);
       }

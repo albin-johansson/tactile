@@ -78,10 +78,10 @@ class AStringInputDialog : public ADialog
   [[nodiscard]] auto previous_input() const -> const std::string&;
 
  private:
-  const char*           mHint{};
+  const char*           mHint {};
   std::string           mPrevious;
-  std::array<char, 128> mBuffer{};
-  bool                  mShouldAcquireFocus{};
+  std::array<char, 128> mBuffer {};
+  bool                  mShouldAcquireFocus {};
 };
 
 }  // namespace tactile::ui

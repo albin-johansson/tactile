@@ -46,7 +46,7 @@ class RemoveComponentAttrCmd final : public ICommand
 
  private:
   Shared<ComponentIndex> mIndex;
-  UUID                   mComponentId{};
+  UUID                   mComponentId {};
   std::string            mAttributeName;
   Maybe<Attribute>       mPreviousValue;
 };

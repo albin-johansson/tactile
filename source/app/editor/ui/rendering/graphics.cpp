@@ -53,8 +53,8 @@ void _path_elliptical_arc_to(ImDrawList*   self,
     const float a =
         arcMin + (static_cast<float>(i) / static_cast<float>(nSegments)) * diff;
 
-    const ImVec2 pos{center.x + std::cos(a) * radius.x,
-                     center.y + std::sin(a) * radius.y};
+    const ImVec2 pos {center.x + std::cos(a) * radius.x,
+                      center.y + std::sin(a) * radius.y};
     self->PathLineTo(pos);
   }
 }
@@ -101,14 +101,14 @@ void AddFilledEllipse(ImDrawList* self,
 }  // namespace
 
 GraphicsCtx::GraphicsCtx(const RenderInfo& info)
-    : mCanvasTL{info.canvas_tl}
-    , mCanvasBR{info.canvas_br}
-    , mOrigin{info.origin}
-    , mViewportTileSize{info.grid_size}
-    , mLogicalTileSize{info.tile_size}
-    , mTileSizeRatio{info.ratio}
-    , mBounds{info.bounds}
-    , mBoundsRect{_convert_bounds_to_rect(info)}
+    : mCanvasTL {info.canvas_tl}
+    , mCanvasBR {info.canvas_br}
+    , mOrigin {info.origin}
+    , mViewportTileSize {info.grid_size}
+    , mLogicalTileSize {info.tile_size}
+    , mTileSizeRatio {info.ratio}
+    , mBounds {info.bounds}
+    , mBoundsRect {_convert_bounds_to_rect(info)}
 {}
 
 void GraphicsCtx::push_clip()
@@ -158,8 +158,8 @@ void GraphicsCtx::draw_ellipse(const Vector2f&   center,
                                const cen::color& color,
                                const float       thickness)
 {
-  const ImVec2 imCenter{center.x, center.y};
-  const ImVec2 imRadius{radius.x, radius.y};
+  const ImVec2 imCenter {center.x, center.y};
+  const ImVec2 imRadius {radius.x, radius.y};
 
   set_draw_color(color);          // TODO remove
   set_line_thickness(thickness);  // TODO remove
@@ -180,7 +180,7 @@ void GraphicsCtx::draw_rect_with_shadow(const ImVec2& position, const ImVec2& si
 {
   auto* list = ImGui::GetWindowDrawList();
 
-  const auto offsetPosition = position + ImVec2{mLineThickness, mLineThickness};
+  const auto offsetPosition = position + ImVec2 {mLineThickness, mLineThickness};
   list->AddRect(offsetPosition,
                 offsetPosition + size,
                 get_shadow_draw_color(),
@@ -199,7 +199,7 @@ void GraphicsCtx::draw_translated_rect_with_shadow(const ImVec2& position,
 void GraphicsCtx::draw_circle_with_shadow(const ImVec2& center, const float radius)
 {
   auto* list = ImGui::GetWindowDrawList();
-  list->AddCircle(center + ImVec2{0, mLineThickness},
+  list->AddCircle(center + ImVec2 {0, mLineThickness},
                   radius,
                   get_shadow_draw_color(),
                   0,
@@ -223,7 +223,7 @@ void GraphicsCtx::draw_ellipse_with_shadow(const ImVec2& center, const ImVec2& r
   else {
     auto* list = ImGui::GetWindowDrawList();
     _add_ellipse(list,
-                 center + ImVec2{0, mLineThickness},
+                 center + ImVec2 {0, mLineThickness},
                  radius,
                  get_shadow_draw_color(),
                  nSegments,
@@ -271,7 +271,7 @@ void GraphicsCtx::render_image(const uint    texture,
                                const ImVec2& position,
                                const ImVec2& uv)
 {
-  const ImVec2 index{source.x / source.z, source.y / source.w};
+  const ImVec2 index {source.x / source.z, source.y / source.w};
 
   const auto uvMin = index * uv;
   const auto uvMax = uvMin + uv;
@@ -346,14 +346,14 @@ void GraphicsCtx::set_line_thickness(const float thickness)
 auto GraphicsCtx::from_matrix_to_absolute(const int32 row, const int32 column) const
     -> ImVec2
 {
-  return mViewportTileSize * ImVec2{static_cast<float>(column), static_cast<float>(row)};
+  return mViewportTileSize * ImVec2 {static_cast<float>(column), static_cast<float>(row)};
 }
 
 auto GraphicsCtx::is_intersecting_bounds(const ImVec2& position, const ImVec2& size) const
     -> bool
 {
   const auto       translated = translate(position);
-  const cen::frect rect{translated.x, translated.y, size.x, size.y};
+  const cen::frect rect {translated.x, translated.y, size.x, size.y};
   return cen::intersects(mBoundsRect, rect);
 }
 

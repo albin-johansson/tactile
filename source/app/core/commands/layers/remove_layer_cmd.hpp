@@ -40,7 +40,7 @@ class RemoveLayerCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*   mDocument{};
+  MapDocument*   mDocument {};
   Shared<ILayer> mLayer;
   Maybe<usize>   mIndex;
 };

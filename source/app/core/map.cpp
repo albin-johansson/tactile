@@ -78,7 +78,7 @@ void Map::remove_row()
     mRootLayer.each(visitor);
   }
   else {
-    throw TactileError{"Invalid row amount!"};
+    throw TactileError {"Invalid row amount!"};
   }
 }
 
@@ -96,7 +96,7 @@ void Map::remove_column()
     mRootLayer.each(visitor);
   }
   else {
-    throw TactileError{"Invalid column amount!"};
+    throw TactileError {"Invalid column amount!"};
   }
 }
 
@@ -104,8 +104,8 @@ void Map::resize(const usize rows, const usize columns)
 {
   struct ResizeLayerVisitor final : ILayerVisitor
   {
-    usize new_rows{};
-    usize new_cols{};
+    usize new_rows {};
+    usize new_cols {};
 
     void visit(TileLayer& layer) override { layer.resize(new_rows, new_cols); }
   };
@@ -124,7 +124,7 @@ auto Map::fix_tiles() -> FixTilesResult
 {
   struct FixTilesVisitor final : ILayerVisitor
   {
-    Map*           self{};
+    Map*           self {};
     FixTilesResult result;
 
     void visit(TileLayer& layer) override
@@ -248,7 +248,7 @@ void Map::select_layer(const UUID& id)
     mActiveLayer = id;
   }
   else {
-    throw TactileError{"Invalid layer identifier!"};
+    throw TactileError {"Invalid layer identifier!"};
   }
 }
 

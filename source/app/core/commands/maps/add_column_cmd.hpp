@@ -41,7 +41,7 @@ class AddColumnCmd final : public ICommand
 
  private:
   Shared<Map> mMap;
-  usize       mColumns{1};
+  usize       mColumns {1};
 };
 
 }  // namespace tactile

@@ -44,10 +44,10 @@ class CreateMapDialog final : public ADialog
       -> bool override;
 
  private:
-  int mTileWidth{};
-  int mTileHeight{};
-  int mRows{};
-  int mColumns{};
+  int mTileWidth {};
+  int mTileHeight {};
+  int mRows {};
+  int mColumns {};
 };
 
 }  // namespace tactile::ui

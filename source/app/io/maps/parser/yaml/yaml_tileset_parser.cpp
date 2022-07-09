@@ -37,12 +37,12 @@ constexpr int32 _tileset_file_version = 1;
 [[nodiscard]] auto _parse_animation_frame(const YAML::Node& node, ir::MetaTileData& tile)
     -> ParseError
 {
-  TileIndex tileIndex{};
+  TileIndex tileIndex {};
   if (!read_attribute(node, "tile", tileIndex)) {
     return ParseError::NoAnimationFrameTile;
   }
 
-  uint64 duration{};
+  uint64 duration {};
   if (!read_attribute(node, "duration", duration)) {
     return ParseError::NoAnimationFrameDuration;
   }
@@ -58,7 +58,7 @@ constexpr int32 _tileset_file_version = 1;
                                      const ir::MapData& map,
                                      ir::TilesetData&   tileset) -> ParseError
 {
-  TileID id{};
+  TileID id {};
   if (!read_attribute(node, "id", id)) {
     return ParseError::NoFancyTileId;
   }
@@ -129,7 +129,7 @@ constexpr int32 _tileset_file_version = 1;
     auto& tileset = map.tilesets.emplace_back();
     tileset.first_tile = firstTileId;
 
-    int32 version{};
+    int32 version {};
     if (!read_attribute(node, "version", version)) {
       return ParseError::NoTilesetVersion;
     }
@@ -212,7 +212,7 @@ auto parse_tilesets(const YAML::Node&            sequence,
   map.tilesets.reserve(sequence.size());
 
   for (const auto& node : sequence) {
-    TileID first{};
+    TileID first {};
     if (!read_attribute(node, "first-global-id", first)) {
       return ParseError::NoTilesetFirstTileId;
     }

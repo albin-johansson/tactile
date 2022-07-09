@@ -34,13 +34,13 @@
 namespace tactile::ui {
 namespace {
 
-constexpr std::array _items{std::make_pair("string", AttributeType::String),
-                            std::make_pair("int", AttributeType::Int),
-                            std::make_pair("float", AttributeType::Float),
-                            std::make_pair("bool", AttributeType::Bool),
-                            std::make_pair("color", AttributeType::Color),
-                            std::make_pair("object", AttributeType::Object),
-                            std::make_pair("path", AttributeType::Path)};
+constexpr std::array _items {std::make_pair("string", AttributeType::String),
+                             std::make_pair("int", AttributeType::Int),
+                             std::make_pair("float", AttributeType::Float),
+                             std::make_pair("bool", AttributeType::Bool),
+                             std::make_pair("color", AttributeType::Color),
+                             std::make_pair("object", AttributeType::Object),
+                             std::make_pair("path", AttributeType::Path)};
 
 [[nodiscard]] auto _index_from_type(const AttributeType type) -> usize
 {
@@ -61,9 +61,9 @@ void _property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous
   const auto currentIndex = _index_from_type(out);
   auto&& [currentName, currentType] = _items.at(currentIndex);
 
-  if (Combo combo{"##_property_type_combo_impl", currentName}; combo.is_open()) {
+  if (Combo combo {"##_property_type_combo_impl", currentName}; combo.is_open()) {
     for (auto&& [name, type] : _items) {
-      Disable disable{previousType == type};
+      Disable disable {previousType == type};
 
       const auto selected = std::strcmp(currentName, name) == 0;
       if (ImGui::Selectable(name, selected)) {

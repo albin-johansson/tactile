@@ -27,7 +27,7 @@
 
 namespace tactile::ui {
 
-AStringInputDialog::AStringInputDialog(const char* title) : ADialog{title} {}
+AStringInputDialog::AStringInputDialog(const char* title) : ADialog {title} {}
 
 void AStringInputDialog::show(std::string previous)
 {

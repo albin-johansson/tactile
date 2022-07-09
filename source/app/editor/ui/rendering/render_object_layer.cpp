@@ -71,7 +71,7 @@ void _render_ellipse_object(GraphicsCtx&      graphics,
 
   const ImVec2 size = {object.get_size().x, object.get_size().y};
 
-  const auto radius = ImVec2{0.5f, 0.5f} * size * graphics.tile_size_ratio();
+  const auto radius = ImVec2 {0.5f, 0.5f} * size * graphics.tile_size_ratio();
   const auto center = position + radius;
 
   graphics.set_draw_color(color);
@@ -99,7 +99,7 @@ void _render_rectangle_object(GraphicsCtx&      graphics,
   TACTILE_ASSERT(object.get_type() == ObjectType::Rect);
 
   const auto size =
-      ImVec2{object.get_size().x, object.get_size().y} * graphics.tile_size_ratio();
+      ImVec2 {object.get_size().x, object.get_size().y} * graphics.tile_size_ratio();
 
   if (graphics.is_intersecting_bounds(position, size)) {
     graphics.set_draw_color(color);
@@ -114,7 +114,7 @@ void _render_rectangle_object(GraphicsCtx&      graphics,
 
         graphics.set_draw_color(cen::colors::white.with_alpha(color.alpha()));
         graphics.render_translated_text(name.c_str(),
-                                        position + ImVec2{textX, size.y + 4.0f});
+                                        position + ImVec2 {textX, size.y + 4.0f});
       }
     }
   }
@@ -129,7 +129,7 @@ void render_object(GraphicsCtx& graphics, const Object& object, const cen::color
   }
 
   const auto position =
-      ImVec2{object.get_pos().x, object.get_pos().y} * graphics.tile_size_ratio();
+      ImVec2 {object.get_pos().x, object.get_pos().y} * graphics.tile_size_ratio();
 
   switch (object.get_type()) {
     case ObjectType::Point:

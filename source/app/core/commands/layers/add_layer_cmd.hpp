@@ -40,7 +40,7 @@ class AddLayerCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*   mDocument{};
+  MapDocument*   mDocument {};
   LayerType      mLayerType;
   Shared<ILayer> mLayer;
 };

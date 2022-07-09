@@ -44,9 +44,9 @@ class AddTilesetCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  DocumentModel*          mModel{};
-  UUID                    mMapId{};
-  UUID                    mTilesetId{};
+  DocumentModel*          mModel {};
+  UUID                    mMapId {};
+  UUID                    mTilesetId {};
   TilesetInfo             mTilesetInfo;
   Shared<TilesetDocument> mTileset;  /// The created tileset
 };

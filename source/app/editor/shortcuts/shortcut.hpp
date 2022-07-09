@@ -33,8 +33,8 @@ class AShortcut
  public:
   explicit AShortcut(const cen::scan_code key,
                      const cen::key_mod   modifiers = cen::key_mod::none)
-      : mKey{key}
-      , mModifiers{modifiers}
+      : mKey {key}
+      , mModifiers {modifiers}
   {}
 
   virtual ~AShortcut() noexcept = default;
@@ -53,7 +53,7 @@ class AShortcut
 
  private:
   cen::scan_code mKey;
-  cen::key_mod   mModifiers{cen::key_mod::none};
+  cen::key_mod   mModifiers {cen::key_mod::none};
 };
 
 }  // namespace tactile

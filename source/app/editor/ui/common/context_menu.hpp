@@ -46,8 +46,8 @@ class ContextMenu
   {}
 
  private:
-  const char* mName{};
-  bool        mShow{};
+  const char* mName {};
+  bool        mShow {};
 };
 
 }  // namespace tactile::ui

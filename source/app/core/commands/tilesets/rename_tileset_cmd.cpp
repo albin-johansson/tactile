@@ -27,11 +27,11 @@
 namespace tactile {
 
 RenameTilesetCmd::RenameTilesetCmd(Shared<Tileset> tileset, std::string name)
-    : mTileset{std::move(tileset)}
-    , mNewName{std::move(name)}
+    : mTileset {std::move(tileset)}
+    , mNewName {std::move(name)}
 {
   if (!mTileset) {
-    throw TactileError{"Invalid null tileset!"};
+    throw TactileError {"Invalid null tileset!"};
   }
 }
 

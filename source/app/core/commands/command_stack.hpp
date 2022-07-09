@@ -98,7 +98,7 @@ class CommandStack final
 
     remove_commands_after_current_index();
 
-    T cmd{std::forward<Args>(args)...};
+    T cmd {std::forward<Args>(args)...};
     cmd.redo();
 
     /* If the stack is empty, we simply push the command to the stack. However,

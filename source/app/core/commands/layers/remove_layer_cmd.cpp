@@ -25,10 +25,10 @@
 namespace tactile {
 
 RemoveLayerCmd::RemoveLayerCmd(MapDocument* document, const UUID& layerId)
-    : mDocument{document}
+    : mDocument {document}
 {
   if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+    throw TactileError {"Invalid null map document!"};
   }
 
   auto& map = mDocument->get_map();

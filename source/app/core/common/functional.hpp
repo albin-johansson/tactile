@@ -74,7 +74,7 @@ template <typename T, std::predicate<const T&> U>
 constexpr auto require_that(T value, U&& predicate) -> T
 {
   return predicate(value) ? value
-                          : throw TactileError{"Value did not match requirements!"};
+                          : throw TactileError {"Value did not match requirements!"};
 }
 
 }  // namespace tactile

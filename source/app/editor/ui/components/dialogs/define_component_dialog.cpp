@@ -27,7 +27,7 @@
 
 namespace tactile::ui {
 
-DefineComponentDialog::DefineComponentDialog() : ComponentNameDialog{"Create Component"}
+DefineComponentDialog::DefineComponentDialog() : ComponentNameDialog {"Create Component"}
 {
   set_accept_button_label("Create");
   set_input_hint("Component name");
@@ -40,7 +40,7 @@ void DefineComponentDialog::show()
 
 void DefineComponentDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<DefineComponentEvent>(std::string{current_input()});
+  dispatcher.enqueue<DefineComponentEvent>(std::string {current_input()});
 }
 
 }  // namespace tactile::ui

@@ -42,9 +42,9 @@ void _update_attribute_table(const UUID&       contextId,
                              const Component&  component,
                              entt::dispatcher& dispatcher)
 {
-  if (Table table{"##AttributeTable", 2, _table_flags}; table.is_open()) {
+  if (Table table {"##AttributeTable", 2, _table_flags}; table.is_open()) {
     for (const auto& [attrName, attrValue] : component) {
-      const Scope scope{attrName.c_str()};
+      const Scope scope {attrName.c_str()};
 
       ImGui::TableNextRow();
       ImGui::TableNextColumn();
@@ -89,9 +89,9 @@ void _update_trailing_button_popup_content(const UUID&       contextId,
 
 auto _update_trailing_button() -> bool
 {
-  StyleColor button{ImGuiCol_Button, IM_COL32_BLACK_TRANS};
-  StyleColor buttonHovered{ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS};
-  StyleColor buttonActive{ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS};
+  StyleColor button {ImGuiCol_Button, IM_COL32_BLACK_TRANS};
+  StyleColor buttonHovered {ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS};
+  StyleColor buttonActive {ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS};
 
   right_align_next_item(TAC_ICON_THREE_DOTS);
   const auto pressed = ImGui::SmallButton(TAC_ICON_THREE_DOTS);
@@ -106,7 +106,7 @@ void component_view(const UUID&        contextId,
                     const std::string& name,
                     entt::dispatcher&  dispatcher)
 {
-  const Scope scope{name.c_str()};
+  const Scope scope {name.c_str()};
 
   if (ImGui::CollapsingHeader(name.c_str(), _header_flags)) {
     ImGui::SameLine();

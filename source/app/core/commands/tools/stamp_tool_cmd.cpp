@@ -30,13 +30,13 @@ StampToolCmd::StampToolCmd(Shared<Map> map,
                            const UUID& layerId,
                            TileCache   oldState,
                            TileCache   newState)
-    : mMap{std::move(map)}
-    , mLayerId{layerId}
-    , mOldState{std::move(oldState)}
-    , mNewState{std::move(newState)}
+    : mMap {std::move(map)}
+    , mLayerId {layerId}
+    , mOldState {std::move(oldState)}
+    , mNewState {std::move(newState)}
 {
   if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+    throw TactileError {"Invalid null map!"};
   }
 }
 

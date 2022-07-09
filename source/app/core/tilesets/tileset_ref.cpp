@@ -27,12 +27,12 @@
 namespace tactile {
 
 TilesetRef::TilesetRef(Shared<Tileset> tileset, TileID first, TileID last)
-    : mTileset{std::move(tileset)}
-    , mFirstTile{first}
-    , mLastTile{last}
+    : mTileset {std::move(tileset)}
+    , mFirstTile {first}
+    , mLastTile {last}
 {
   if (!mTileset) {
-    throw TactileError{"Invalid null tileset!"};
+    throw TactileError {"Invalid null tileset!"};
   }
 }
 
@@ -81,7 +81,7 @@ auto TilesetRef::is_valid_tile(const TileID id) const -> bool
 auto TilesetRef::is_single_tile_selected() const -> bool
 {
   if (mSelection) {
-    return mSelection->end - mSelection->begin == TilePos{1, 1};
+    return mSelection->end - mSelection->begin == TilePos {1, 1};
   }
   else {
     return false;

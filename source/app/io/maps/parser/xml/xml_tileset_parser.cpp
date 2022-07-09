@@ -35,7 +35,7 @@ namespace {
                                       ir::TilesetData& tilesetData) -> ParseError
 {
   for (auto tileNode : tilesetNode.children("tile")) {
-    TileID tileId{};
+    TileID tileId {};
 
     if (const auto id = int_attribute(tileNode, "id")) {
       tileId = *id;

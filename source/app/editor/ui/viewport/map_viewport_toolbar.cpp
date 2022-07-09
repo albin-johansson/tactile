@@ -53,9 +53,9 @@ constexpr uint32 _highlight_color = IM_COL32(0, 180, 0, 255);
 void _prepare_window_position(const ImVec2& offset = {})
 {
   const auto   windowPos = ImGui::GetWindowPos();
-  const ImVec2 pos{windowPos.x + offset.x + 6.0f,
-                   windowPos.y + offset.y + 6.0f + ImGui::GetFrameHeightWithSpacing()};
-  const ImVec2 pivot{0.0f, 0.0f};
+  const ImVec2 pos {windowPos.x + offset.x + 6.0f,
+                    windowPos.y + offset.y + 6.0f + ImGui::GetFrameHeightWithSpacing()};
+  const ImVec2 pivot {0.0f, 0.0f};
 
   ImGui::SetNextWindowPos(pos, ImGuiCond_Always, pivot);
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
@@ -88,7 +88,7 @@ void _show_extra_toolbar(auto callable)
   const auto& style = ImGui::GetStyle();
   _prepare_window_position({_toolbar_width + style.ItemInnerSpacing.x, 0});
 
-  if (Window extra{"##ToolbarWindowExtra", _window_flags}; extra.is_open()) {
+  if (Window extra {"##ToolbarWindowExtra", _window_flags}; extra.is_open()) {
     /* Prevent other mouse events in the viewport by treating both toolbars as one */
     if (!_toolbar_hovered) {
       _toolbar_hovered = ImGui::IsWindowHovered();
@@ -106,12 +106,12 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
   _prepare_window_position();
   ImGui::SetNextWindowBgAlpha(0.75f);
 
-  StyleVar padding{ImGuiStyleVar_WindowPadding, {6, 6}};
+  StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
 
   const auto& document = model.view_map(model.active_document_id().value());
   const auto& tools = document.get_tools();
 
-  if (Window window{"##ToolbarWindow", _window_flags}; window.is_open()) {
+  if (Window window {"##ToolbarWindow", _window_flags}; window.is_open()) {
     _toolbar_visible = true;
     _toolbar_hovered = ImGui::IsWindowHovered();
     _toolbar_focused = window.has_focus();

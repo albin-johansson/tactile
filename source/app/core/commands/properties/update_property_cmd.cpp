@@ -30,12 +30,12 @@ namespace tactile {
 UpdatePropertyCmd::UpdatePropertyCmd(Shared<IContext> context,
                                      std::string      name,
                                      Attribute        value)
-    : mContext{std::move(context)}
-    , mName{std::move(name)}
-    , mNewValue{std::move(value)}
+    : mContext {std::move(context)}
+    , mName {std::move(name)}
+    , mNewValue {std::move(value)}
 {
   if (!mContext) {
-    throw TactileError{"Invalid null context!"};
+    throw TactileError {"Invalid null context!"};
   }
 }
 

@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-Tile::Tile(const TileIndex index) : mIndex{index}
+Tile::Tile(const TileIndex index) : mIndex {index}
 {
   mDelegate.set_name(fmt::format("Tile {}", index));
 }
@@ -102,7 +102,7 @@ auto Tile::get_animation() const -> const TileAnimation&
     return *mAnimation;
   }
   else {
-    throw TactileError{"Tile is not animated!"};
+    throw TactileError {"Tile is not animated!"};
   }
 }
 

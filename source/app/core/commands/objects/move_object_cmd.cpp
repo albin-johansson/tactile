@@ -28,12 +28,12 @@ namespace tactile {
 MoveObjectCmd::MoveObjectCmd(Shared<Object>  object,
                              const Vector2f& previous,
                              const Vector2f& updated)
-    : mObject{std::move(object)}
-    , mPreviousPos{previous}
-    , mUpdatedPos{updated}
+    : mObject {std::move(object)}
+    , mPreviousPos {previous}
+    , mUpdatedPos {updated}
 {
   if (!mObject) {
-    throw TactileError{"Invalid null object!"};
+    throw TactileError {"Invalid null object!"};
   }
 }
 

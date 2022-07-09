@@ -31,7 +31,7 @@ struct RedoEvent final
 
 struct SetCommandCapacityEvent final
 {
-  usize capacity{};
+  usize capacity {};
 };
 
 }  // namespace tactile

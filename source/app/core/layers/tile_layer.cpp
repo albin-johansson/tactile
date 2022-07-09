@@ -33,10 +33,10 @@
 
 namespace tactile {
 
-TileLayer::TileLayer() : TileLayer{5, 5} {}
+TileLayer::TileLayer() : TileLayer {5, 5} {}
 
 TileLayer::TileLayer(const usize rows, const usize columns)
-    : mTiles{make_tile_matrix(rows, columns)}
+    : mTiles {make_tile_matrix(rows, columns)}
 {}
 
 auto TileLayer::make() -> Shared<TileLayer>
@@ -184,7 +184,7 @@ void TileLayer::set_tile(const TilePos& pos, const TileID id)
     mTiles[pos.urow()][pos.ucol()] = id;
   }
   else {
-    throw TactileError{"Invalid position!"};
+    throw TactileError {"Invalid position!"};
   }
 }
 
@@ -201,7 +201,7 @@ auto TileLayer::tile_at(const TilePos& pos) const -> TileID
     return mTiles[pos.urow()][pos.ucol()];
   }
   else {
-    throw TactileError{"Invalid position!"};
+    throw TactileError {"Invalid position!"};
   }
 }
 

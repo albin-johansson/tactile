@@ -65,8 +65,8 @@ class TilesetRef final
 
  private:
   Shared<Tileset> mTileset;          /// The referenced tileset.
-  TileID          mFirstTile{};      /// The first associated tile ID (inclusive).
-  TileID          mLastTile{};       /// The last associated tile ID (inclusive).
+  TileID          mFirstTile {};     /// The first associated tile ID (inclusive).
+  TileID          mLastTile {};      /// The last associated tile ID (inclusive).
   Maybe<Region>   mSelection;        /// Selected region.
   Viewport        mViewport;         /// Viewport in tileset dock.
   bool            mEmbedded : 1 {};  /// Whether the tileset is embedded in the map.

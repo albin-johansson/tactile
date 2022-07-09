@@ -29,12 +29,12 @@ namespace tactile {
 AddComponentAttrCmd::AddComponentAttrCmd(Shared<ComponentIndex> index,
                                          const UUID&            componentId,
                                          std::string            name)
-    : mIndex{std::move(index)}
-    , mComponentId{componentId}
-    , mName{std::move(name)}
+    : mIndex {std::move(index)}
+    , mComponentId {componentId}
+    , mName {std::move(name)}
 {
   if (!mIndex) {
-    throw TactileError{"Invalid null component index!"};
+    throw TactileError {"Invalid null component index!"};
   }
 }
 

@@ -35,7 +35,7 @@ class TactileError : public std::exception
   [[nodiscard]] auto trace() const -> const std::string& { return mTrace; }
 
  private:
-  const char* mWhat{"N/A"};
+  const char* mWhat {"N/A"};
   std::string mTrace;
 };
 

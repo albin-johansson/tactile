@@ -151,7 +151,7 @@ auto _restore_layer(MapDocument&         document,
       break;
     }
     default:
-      throw TactileError{"Invalid layer type!"};
+      throw TactileError {"Invalid layer type!"};
   }
 
   auto& layer = map.view_layer(layerId);
@@ -180,7 +180,8 @@ void _restore_tile_animation(Tile& tile, const ir::MetaTileData& tileData)
   animation.reserve_frames(tileData.frames.size());
 
   for (const auto& frameData : tileData.frames) {
-    animation.add_frame(frameData.local_id, TileAnimation::Millis{frameData.duration_ms});
+    animation.add_frame(frameData.local_id,
+                        TileAnimation::Millis {frameData.duration_ms});
   }
 
   tile.set_animation(std::move(animation));

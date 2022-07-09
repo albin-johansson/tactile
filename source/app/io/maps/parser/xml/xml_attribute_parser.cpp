@@ -55,7 +55,7 @@ namespace {
     value = std::move(path);
   }
   else if (std::strcmp(type, "object") == 0) {
-    value = object_t{int_attribute(node, "value").value()};
+    value = object_t {int_attribute(node, "value").value()};
   }
   else if (std::strcmp(type, "color") == 0) {
     const auto hex = string_attribute(node, "value").value();

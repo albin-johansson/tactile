@@ -95,9 +95,9 @@ void _convert_group_layer(const GroupLayer&     layer,
 {
   struct Visitor final : IConstLayerVisitor
   {
-    usize                 index{0};
-    const ComponentIndex* comps{};
-    ir::GroupLayerData*   parent{};
+    usize                 index {0};
+    const ComponentIndex* comps {};
+    ir::GroupLayerData*   parent {};
 
     void visit(const TileLayer& layer) override { handle(layer); }
     void visit(const ObjectLayer& layer) override { handle(layer); }

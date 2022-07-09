@@ -40,7 +40,7 @@ template <typename K, typename V>
     return iter->second;
   }
   else {
-    throw TactileError{"Invalid key!"};
+    throw TactileError {"Invalid key!"};
   }
 }
 
@@ -51,7 +51,7 @@ template <typename K, typename V>
     return iter->second;
   }
   else {
-    throw TactileError{"Invalid key!"};
+    throw TactileError {"Invalid key!"};
   }
 }
 
@@ -62,7 +62,7 @@ template <typename K, typename V>
     return iter->second;
   }
   else {
-    throw TactileError{"Invalid key!"};
+    throw TactileError {"Invalid key!"};
   }
 }
 
@@ -73,7 +73,7 @@ template <typename K, typename V>
     return iter->second;
   }
   else {
-    throw TactileError{"Invalid key!"};
+    throw TactileError {"Invalid key!"};
   }
 }
 

@@ -38,7 +38,7 @@ void RectangleTool::draw_gizmos(const DocumentModel&,
     const auto pos = renderer.get_origin() + mStroke->start;
     const auto size = mStroke->current - mStroke->start;
 
-    renderer.draw_rect(pos + Vector2f{1, 1}, size, cen::colors::black);
+    renderer.draw_rect(pos + Vector2f {1, 1}, size, cen::colors::black);
     renderer.draw_rect(pos, size, cen::colors::yellow);
   }
 }

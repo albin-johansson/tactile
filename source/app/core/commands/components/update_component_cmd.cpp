@@ -30,13 +30,13 @@ UpdateComponentCmd::UpdateComponentCmd(Shared<ComponentIndex> index,
                                        const UUID&            componentId,
                                        std::string            attribute,
                                        Attribute              value)
-    : mIndex{index}
-    , mComponentId{componentId}
-    , mAttributeName{std::move(attribute)}
-    , mUpdatedValue{std::move(value)}
+    : mIndex {index}
+    , mComponentId {componentId}
+    , mAttributeName {std::move(attribute)}
+    , mUpdatedValue {std::move(value)}
 {
   if (!mIndex) {
-    throw TactileError{"Invalid null component index!"};
+    throw TactileError {"Invalid null component index!"};
   }
 }
 

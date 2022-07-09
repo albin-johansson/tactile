@@ -39,7 +39,7 @@ namespace {
 
 struct FileMenuState final
 {
-  bool show_map_selector{};
+  bool show_map_selector {};
 };
 
 [[nodiscard]] auto _get_state() -> FileMenuState&
@@ -61,7 +61,7 @@ void _update_map_file_dialog(entt::dispatcher& dispatcher)
 
 void _update_recent_files_menu(entt::dispatcher& dispatcher)
 {
-  if (Menu menu{TAC_ICON_HISTORY " Recent Files"}; menu.is_open()) {
+  if (Menu menu {TAC_ICON_HISTORY " Recent Files"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
                         nullptr,
                         false,
@@ -100,7 +100,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& state = _get_state();
 
-  if (Menu menu{"File"}; menu.is_open()) {
+  if (Menu menu {"File"}; menu.is_open()) {
     const auto  hasActiveDocument = model.has_active_document();
     const auto* document = model.active_document();
 

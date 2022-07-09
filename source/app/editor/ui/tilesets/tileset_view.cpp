@@ -38,8 +38,8 @@
 namespace tactile::ui {
 namespace {
 
-constexpr cen::color _rubber_band_color{0, 0x44, 0xCC, 100};
-constexpr cen::color _grid_color{200, 200, 200, 40};
+constexpr cen::color _rubber_band_color {0, 0x44, 0xCC, 100};
+constexpr cen::color _grid_color {200, 200, 200, 40};
 
 void _update_viewport_offset(const TilesetRef& tilesetRef,
                              const ImVec2&     viewportSize,
@@ -48,9 +48,9 @@ void _update_viewport_offset(const TilesetRef& tilesetRef,
   const auto&    tileset = tilesetRef.view_tileset();
   const Vector2f textureSize = tileset.texture_size();
 
-  const Vector2f minOffset{viewportSize.x - textureSize.x,
-                           viewportSize.y - textureSize.y};
-  const Vector2f maxOffset{};
+  const Vector2f minOffset {viewportSize.x - textureSize.x,
+                            viewportSize.y - textureSize.y};
+  const Vector2f maxOffset {};
 
   const auto& limits = tilesetRef.get_viewport().get_limits();
   if (!limits.has_value() || minOffset != limits->min_offset) {
@@ -68,7 +68,7 @@ void _update_viewport_offset(const TilesetRef& tilesetRef,
   /* This has no effect when users use touchpads, but that is handled separately */
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto&    io = ImGui::GetIO();
-    const Vector2f delta{io.MouseDelta.x, io.MouseDelta.y};
+    const Vector2f delta {io.MouseDelta.x, io.MouseDelta.y};
     dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset.get_uuid(), delta);
   }
 }
@@ -103,7 +103,7 @@ void update_tileset_view(const DocumentModel& model,
   const auto info = get_render_info(viewport, tileset);
   _update_viewport_offset(tilesetRef, info.canvas_br - info.canvas_tl, dispatcher);
 
-  GraphicsCtx graphics{info};
+  GraphicsCtx graphics {info};
   graphics.set_draw_color(io::get_preferences().viewport_background);
   graphics.clear();
 

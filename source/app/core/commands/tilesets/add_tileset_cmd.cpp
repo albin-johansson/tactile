@@ -34,13 +34,13 @@ AddTilesetCmd::AddTilesetCmd(DocumentModel*     model,
                              const UUID&        mapId,
                              const UUID&        tilesetId,
                              const TilesetInfo& info)
-    : mModel{model}
-    , mMapId{mapId}
-    , mTilesetId{tilesetId}
-    , mTilesetInfo{info}
+    : mModel {model}
+    , mMapId {mapId}
+    , mTilesetId {tilesetId}
+    , mTilesetInfo {info}
 {
   if (!mModel) {
-    throw TactileError{"Invalid null model!"};
+    throw TactileError {"Invalid null model!"};
   }
 }
 

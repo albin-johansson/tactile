@@ -26,17 +26,17 @@ namespace tactile {
 /// Event emitted when a loaded document should be opened in its own tab.
 struct OpenDocumentEvent final
 {
-  UUID document_id{};
+  UUID document_id {};
 };
 
 struct CloseDocumentEvent final
 {
-  UUID id{};
+  UUID id {};
 };
 
 struct SelectDocumentEvent final
 {
-  UUID id{};
+  UUID id {};
 };
 
 }  // namespace tactile

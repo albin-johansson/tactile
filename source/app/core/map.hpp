@@ -157,19 +157,19 @@ class Map final : public IContext
   [[nodiscard]] auto next_group_layer_suffix() const -> int32;
 
  private:
-  UUID            mId{make_uuid()};
-  usize           mRowCount{5};
-  usize           mColCount{5};
-  Vector2i        mTileSize{32, 32};
+  UUID            mId {make_uuid()};
+  usize           mRowCount {5};
+  usize           mColCount {5};
+  Vector2i        mTileSize {32, 32};
   GroupLayer      mRootLayer;
   Maybe<UUID>     mActiveLayer;
   TilesetBundle   mTilesets;
   ContextDelegate mContext;
-  int32           mNextObjectId{1};
-  int32           mNextLayerId{1};
-  int32           mTileLayerSuffix{1};
-  int32           mObjectLayerSuffix{1};
-  int32           mGroupLayerSuffix{1};
+  int32           mNextObjectId {1};
+  int32           mNextLayerId {1};
+  int32           mTileLayerSuffix {1};
+  int32           mObjectLayerSuffix {1};
+  int32           mGroupLayerSuffix {1};
 };
 
 }  // namespace tactile

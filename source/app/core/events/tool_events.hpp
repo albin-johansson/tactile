@@ -55,55 +55,55 @@ struct ToolExitedEvent final
 
 struct SelectToolEvent final
 {
-  ToolType type{};
+  ToolType type {};
 };
 
 struct StampSequenceEvent final
 {
-  UUID      layer_id{};
+  UUID      layer_id {};
   TileCache old_state;
   TileCache sequence;
 };
 
 struct SetStampRandomizerEvent final
 {
-  bool enabled{};  /// Whether the randomizer mode is enabled.
+  bool enabled {};  /// Whether the randomizer mode is enabled.
 };
 
 struct EraserSequenceEvent final
 {
-  UUID      layer_id{};
+  UUID      layer_id {};
   TileCache old_state;
 };
 
 struct FloodEvent final
 {
-  UUID    layer_id{};
+  UUID    layer_id {};
   TilePos origin;
-  TileID  replacement{};
+  TileID  replacement {};
 };
 
 /// Emitted when a rectangle should be added to an object layer.
 struct AddRectangleEvent final
 {
-  UUID     layer_id{};
-  Vector2f pos{};
-  Vector2f size{};
+  UUID     layer_id {};
+  Vector2f pos {};
+  Vector2f size {};
 };
 
 /// Emitted when an ellipse should be added to an object layer.
 struct AddEllipseEvent final
 {
-  UUID     layer_id{};
-  Vector2f pos{};
-  Vector2f size{};
+  UUID     layer_id {};
+  Vector2f pos {};
+  Vector2f size {};
 };
 
 /// Emitted when a point should be added to an object layer.
 struct AddPointEvent final
 {
-  UUID     layer_id{};
-  Vector2f pos{};
+  UUID     layer_id {};
+  Vector2f pos {};
 };
 
 }  // namespace tactile

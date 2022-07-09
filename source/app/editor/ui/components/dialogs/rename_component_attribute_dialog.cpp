@@ -30,7 +30,7 @@
 namespace tactile::ui {
 
 RenameComponentAttributeDialog::RenameComponentAttributeDialog()
-    : AStringInputDialog{"Rename Component Attribute"}
+    : AStringInputDialog {"Rename Component Attribute"}
 {
   set_accept_button_label("Rename");
   set_input_hint("Attribute name");
@@ -47,7 +47,7 @@ void RenameComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<RenameComponentAttrEvent>(mComponentId.value(),
                                                previous_input(),
-                                               std::string{current_input()});
+                                               std::string {current_input()});
 }
 
 auto RenameComponentAttributeDialog::validate(const DocumentModel&   model,

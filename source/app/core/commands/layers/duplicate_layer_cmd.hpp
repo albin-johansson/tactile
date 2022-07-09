@@ -40,8 +40,8 @@ class DuplicateLayerCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument*   mDocument{};
-  UUID           mLayerId{};
+  MapDocument*   mDocument {};
+  UUID           mLayerId {};
   Shared<ILayer> mNewLayer;
   Maybe<usize>   mNewIndex;
 };

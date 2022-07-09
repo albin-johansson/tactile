@@ -46,10 +46,10 @@ struct RemoveColumnEvent final
 
 struct CreateMapEvent final
 {
-  int32 tile_width{};
-  int32 tile_height{};
-  usize row_count{};
-  usize column_count{};
+  int32 tile_width {};
+  int32 tile_height {};
+  usize row_count {};
+  usize column_count {};
 };
 
 struct OpenMapEvent final
@@ -65,8 +65,8 @@ struct OpenResizeMapDialogEvent final
 
 struct ResizeMapEvent final
 {
-  usize row_count{};
-  usize col_count{};
+  usize row_count {};
+  usize col_count {};
 };
 
 struct FixTilesInMapEvent final

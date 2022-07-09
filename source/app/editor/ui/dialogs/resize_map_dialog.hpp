@@ -46,8 +46,8 @@ class ResizeMapDialog final : public ADialog
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  usize mRows{};
-  usize mColumns{};
+  usize mRows {};
+  usize mColumns {};
 };
 
 }  // namespace tactile::ui

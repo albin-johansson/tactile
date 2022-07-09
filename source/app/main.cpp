@@ -38,7 +38,7 @@ auto main(int, char**) -> int
                  tactile::io::persistent_file_dir());
 
     tactile::AppConfiguration configuration;
-    tactile::App              app{&configuration};
+    tactile::App              app {&configuration};
     app.start();
 
     return EXIT_SUCCESS;

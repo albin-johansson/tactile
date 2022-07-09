@@ -39,7 +39,7 @@ namespace {
 
 struct LogEntry final
 {
-  spdlog::level::level_enum level{};
+  spdlog::level::level_enum level {};
   std::string               msg;
 };
 
@@ -109,7 +109,7 @@ void init_logger()
   auto cs = std::make_shared<spdlog::sinks::stdout_color_sink_st>();
   auto fs = std::make_shared<spdlog::sinks::basic_file_sink_st>(path.string(), true);
   _history_sink = std::make_shared<HistorySink>();
-  spdlog::sinks_init_list sinks{cs, fs, _history_sink};
+  spdlog::sinks_init_list sinks {cs, fs, _history_sink};
 
   auto logger = std::make_shared<spdlog::logger>("tactile", sinks);
   logger->set_pattern("[%T.%f] %^{%l}%$ > %v");

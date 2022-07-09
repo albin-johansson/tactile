@@ -47,10 +47,10 @@ template <typename T>
   static auto engine = make_random_engine();
 
   if constexpr (std::is_floating_point_v<T>) {
-    return std::uniform_real_distribution<T>{min, max}(engine);
+    return std::uniform_real_distribution<T> {min, max}(engine);
   }
   else {
-    return std::uniform_int_distribution<T>{min, max}(engine);
+    return std::uniform_int_distribution<T> {min, max}(engine);
   }
 }
 

@@ -73,10 +73,10 @@ class Object final : public IContext
 
  private:
   ContextDelegate mDelegate;
-  Vector2f        mPos{};                   /// Object position.
-  Vector2f        mSize{};                  /// Object size (might be zero).
-  ObjectType      mType{ObjectType::Rect};  /// Specific object type.
-  std::string     mTag;                     /// Optional user-provided tag.
+  Vector2f        mPos {};                   /// Object position.
+  Vector2f        mSize {};                  /// Object size (might be zero).
+  ObjectType      mType {ObjectType::Rect};  /// Specific object type.
+  std::string     mTag;                      /// Optional user-provided tag.
   Maybe<int32>    mMetaId;
   bool            mVisible : 1 {true};
 };

@@ -29,14 +29,14 @@
 namespace tactile {
 
 TilesetDocument::TilesetDocument(const UUID& id, const TilesetInfo& info)
-    : mTileset{std::make_shared<Tileset>(id, info)}
+    : mTileset {std::make_shared<Tileset>(id, info)}
 {
   register_context(mTileset);
   select_context(mTileset->get_uuid());
 }
 
 TilesetDocument::TilesetDocument(const TilesetInfo& info)
-    : TilesetDocument{make_uuid(), info}
+    : TilesetDocument {make_uuid(), info}
 {}
 
 void TilesetDocument::register_context(Shared<IContext> context)
@@ -55,7 +55,7 @@ void TilesetDocument::unregister_context(const UUID& id)
     }
   }
   else {
-    throw TactileError{"Tried to unregister non-existent context!"};
+    throw TactileError {"Tried to unregister non-existent context!"};
   }
 }
 

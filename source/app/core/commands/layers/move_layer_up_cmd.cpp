@@ -26,11 +26,11 @@
 namespace tactile {
 
 MoveLayerUpCmd::MoveLayerUpCmd(Shared<Map> map, const UUID& layerId)
-    : mMap{std::move(map)}
-    , mLayerId{layerId}
+    : mMap {std::move(map)}
+    , mLayerId {layerId}
 {
   if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+    throw TactileError {"Invalid null map!"};
   }
 }
 

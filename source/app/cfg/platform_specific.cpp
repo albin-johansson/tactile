@@ -34,10 +34,10 @@ namespace tactile {
 void use_immersive_dark_mode([[maybe_unused]] cen::window& window)
 {
 #if TACTILE_PLATFORM_WINDOWS
-  SDL_SysWMinfo wm{};
+  SDL_SysWMinfo wm {};
   SDL_VERSION(&wm.version);
   if (SDL_GetWindowWMInfo(window.get(), &wm)) {
-    cen::shared_object dwmapi{"dwmapi.dll"};
+    cen::shared_object dwmapi {"dwmapi.dll"};
 
     using Signature = HRESULT(HWND, DWORD, LPCVOID, DWORD);
     if (auto* setAttribute = dwmapi.load_function<Signature>("DwmSetWindowAttribute")) {

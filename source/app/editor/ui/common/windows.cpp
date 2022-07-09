@@ -26,7 +26,7 @@ namespace tactile::ui {
 
 void remove_tab_bar_from_next_window()
 {
-  ImGuiWindowClass wc{};
+  ImGuiWindowClass wc {};
   wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
   ImGui::SetNextWindowClass(&wc);
 }

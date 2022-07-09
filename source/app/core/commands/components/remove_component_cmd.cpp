@@ -28,11 +28,11 @@
 namespace tactile {
 
 DetachComponentCmd::DetachComponentCmd(Shared<IContext> context, const UUID& componentId)
-    : mContext{std::move(context)}
-    , mComponentId{componentId}
+    : mContext {std::move(context)}
+    , mComponentId {componentId}
 {
   if (!mContext) {
-    throw TactileError{"Invalid null context!"};
+    throw TactileError {"Invalid null context!"};
   }
 }
 

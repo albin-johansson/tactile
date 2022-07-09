@@ -40,7 +40,7 @@ class EraserToolCmd final : public ICommand
 
  private:
   Shared<Map> mMap;
-  UUID        mLayerId{};
+  UUID        mLayerId {};
   TileCache   mOldState;
 };
 

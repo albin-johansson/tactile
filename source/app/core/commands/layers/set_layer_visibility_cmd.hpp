@@ -40,8 +40,8 @@ class SetLayerVisibilityCmd final : public ICommand
 
  private:
   Shared<Map> mMap;
-  UUID        mLayerId{};
-  bool        mNewVisibility{};
+  UUID        mLayerId {};
+  bool        mNewVisibility {};
   Maybe<bool> mOldVisibility;
 };
 

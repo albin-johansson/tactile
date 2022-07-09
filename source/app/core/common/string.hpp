@@ -54,13 +54,13 @@ template <std::integral T>
     return nothing;
   }
 
-  T value{};
+  T value {};
 
   const auto* begin = str;
   const auto* end = str + (std::min)(length, std::strlen(str));
   const auto [ptr, err] = std::from_chars(begin, end, value, base);
 
-  if (err == std::errc{}) {
+  if (err == std::errc {}) {
     return value;
   }
   else {
@@ -106,10 +106,10 @@ template <std::floating_point T>
   /* We only do this check in the floating-point overload, because it's the only version
      that isn't widely supported (at the time of writing, only MSVC provides it) */
 #if __cpp_lib_to_chars >= 201611L
-  T value{};
+  T value {};
 
   const auto [ptr, err] = std::from_chars(str, str + std::strlen(str), value);
-  if (err == std::errc{}) {
+  if (err == std::errc {}) {
     return value;
   }
   else {

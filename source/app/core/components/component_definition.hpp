@@ -124,7 +124,7 @@ class ComponentDefinition final : public IElement
   [[nodiscard]] auto end() const noexcept { return mAttributes.end(); }
 
  private:
-  UUID                            mId{make_uuid()};
+  UUID                            mId {make_uuid()};
   std::string                     mName;
   TreeMap<std::string, Attribute> mAttributes;
 };

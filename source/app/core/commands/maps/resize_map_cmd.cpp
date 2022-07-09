@@ -27,12 +27,12 @@
 namespace tactile {
 
 ResizeMapCmd::ResizeMapCmd(Shared<Map> map, const usize nRows, const usize nCols)
-    : mMap{std::move(map)}
-    , mRows{nRows}
-    , mCols{nCols}
+    : mMap {std::move(map)}
+    , mRows {nRows}
+    , mCols {nCols}
 {
   if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+    throw TactileError {"Invalid null map!"};
   }
 }
 

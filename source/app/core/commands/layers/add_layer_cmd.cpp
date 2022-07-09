@@ -25,11 +25,11 @@
 namespace tactile {
 
 AddLayerCmd::AddLayerCmd(MapDocument* document, const LayerType type)
-    : mDocument{document}
-    , mLayerType{type}
+    : mDocument {document}
+    , mLayerType {type}
 {
   if (!mDocument) {
-    throw TactileError{"Invalid null map document!"};
+    throw TactileError {"Invalid null map document!"};
   }
 }
 
@@ -67,7 +67,7 @@ void AddLayerCmd::redo()
         break;
       }
       default:
-        throw TactileError{"Invalid layer type!"};
+        throw TactileError {"Invalid layer type!"};
     }
 
     mLayer = map.get_layer(id.value());

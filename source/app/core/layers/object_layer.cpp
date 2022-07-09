@@ -97,7 +97,7 @@ void ObjectLayer::remove_object(const UUID& id)
     mObjects.erase(iter);
   }
   else {
-    throw TactileError{"Invalid object identifier!"};
+    throw TactileError {"Invalid object identifier!"};
   }
 }
 
@@ -110,7 +110,7 @@ void ObjectLayer::select_object(const Maybe<UUID>& id)
 {
   mActiveObject = id;
   if (mActiveObject && !mObjects.contains(*mActiveObject)) {
-    throw TactileError{"Invalid object identifier!"};
+    throw TactileError {"Invalid object identifier!"};
   }
 }
 

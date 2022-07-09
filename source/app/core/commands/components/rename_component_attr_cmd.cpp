@@ -30,13 +30,13 @@ RenameComponentAttrCmd::RenameComponentAttrCmd(Shared<ComponentIndex> index,
                                                const UUID&            componentId,
                                                std::string            previousName,
                                                std::string            updatedName)
-    : mIndex{std::move(index)}
-    , mComponentId{componentId}
-    , mPreviousName{std::move(previousName)}
-    , mUpdatedName{std::move(updatedName)}
+    : mIndex {std::move(index)}
+    , mComponentId {componentId}
+    , mPreviousName {std::move(previousName)}
+    , mUpdatedName {std::move(updatedName)}
 {
   if (!mIndex) {
-    throw TactileError{"Invalid null component index!"};
+    throw TactileError {"Invalid null component index!"};
   }
 }
 

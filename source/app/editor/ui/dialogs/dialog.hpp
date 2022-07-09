@@ -138,11 +138,11 @@ class ADialog
   void set_close_button_label(const char* label);
 
  private:
-  const char* mTitle{};
-  const char* mAcceptButtonLabel{"OK"};
-  const char* mCloseButtonLabel{"Cancel"};
+  const char* mTitle {};
+  const char* mAcceptButtonLabel {"OK"};
+  const char* mCloseButtonLabel {"Cancel"};
   bool        mUseApplyButton : 1 {};
-  bool        mShow : 1 {};
+  bool        mShow           : 1 {};
 };
 
 }  // namespace tactile::ui

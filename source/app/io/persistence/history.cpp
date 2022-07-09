@@ -56,7 +56,7 @@ inline std::deque<std::string> _history;
 void load_file_history()
 {
   spdlog::debug("Loading file history...");
-  std::ifstream stream{_get_file_path(), std::ios::in | std::ios::binary};
+  std::ifstream stream {_get_file_path(), std::ios::in | std::ios::binary};
 
   proto::History h;
   if (h.ParseFromIstream(&stream)) {
@@ -89,8 +89,8 @@ void save_file_history()
     h.add_files(path);
   }
 
-  std::ofstream stream{_get_file_path(),
-                       std::ios::out | std::ios::trunc | std::ios::binary};
+  std::ofstream stream {_get_file_path(),
+                        std::ios::out | std::ios::trunc | std::ios::binary};
   if (!h.SerializeToOstream(&stream)) {
     spdlog::error("Failed to save file history!");
   }
@@ -142,7 +142,7 @@ auto last_closed_file() -> const std::string&
     return _last_closed_file.value();
   }
   else {
-    throw TactileError{"Invalid last closed file!"};
+    throw TactileError {"Invalid last closed file!"};
   }
 }
 

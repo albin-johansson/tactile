@@ -80,7 +80,7 @@ class TilesetBundle final
   HashMap<UUID, TilesetRef> mRefs;
   HashMap<TileID, UUID>     mTileCache;
   Maybe<UUID>               mActiveTileset;
-  TileID                    mNextTileId{1};
+  TileID                    mNextTileId {1};
 };
 
 }  // namespace tactile

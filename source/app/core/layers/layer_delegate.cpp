@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-LayerDelegate::LayerDelegate() : mId{make_uuid()} {}
+LayerDelegate::LayerDelegate() : mId {make_uuid()} {}
 
 void LayerDelegate::set_opacity(const float opacity)
 {

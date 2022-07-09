@@ -26,11 +26,11 @@
 namespace tactile {
 
 SetObjectTagCmd::SetObjectTagCmd(Shared<Object> object, std::string tag)
-    : mObject{std::move(object)}
-    , mNewTag{std::move(tag)}
+    : mObject {std::move(object)}
+    , mNewTag {std::move(tag)}
 {
   if (!mObject) {
-    throw TactileError{"Invalid null object!"};
+    throw TactileError {"Invalid null object!"};
   }
 }
 

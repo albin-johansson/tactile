@@ -44,7 +44,7 @@ class AddComponentAttrCmd final : public ICommand
 
  private:
   Shared<ComponentIndex> mIndex;
-  UUID                   mComponentId{};
+  UUID                   mComponentId {};
   std::string            mName;
 };
 

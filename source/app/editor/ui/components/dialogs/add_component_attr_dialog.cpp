@@ -29,7 +29,7 @@
 
 namespace tactile::ui {
 
-AddComponentAttrDialog::AddComponentAttrDialog() : AStringInputDialog{"Create Attribute"}
+AddComponentAttrDialog::AddComponentAttrDialog() : AStringInputDialog {"Create Attribute"}
 {
   set_accept_button_label("Create");
   set_input_hint("Attribute name");
@@ -51,7 +51,7 @@ auto AddComponentAttrDialog::validate(const DocumentModel&   model,
 
 void AddComponentAttrDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<AddComponentAttrEvent>(mComponentId, std::string{current_input()});
+  dispatcher.enqueue<AddComponentAttrEvent>(mComponentId, std::string {current_input()});
 }
 
 }  // namespace tactile::ui

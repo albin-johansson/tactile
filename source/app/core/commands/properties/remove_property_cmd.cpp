@@ -28,11 +28,11 @@
 namespace tactile {
 
 RemovePropertyCmd::RemovePropertyCmd(Shared<IContext> context, std::string name)
-    : mContext{std::move(context)}
-    , mName{std::move(name)}
+    : mContext {std::move(context)}
+    , mName {std::move(name)}
 {
   if (!mContext) {
-    throw TactileError{"Invalid null context!"};
+    throw TactileError {"Invalid null context!"};
   }
 }
 

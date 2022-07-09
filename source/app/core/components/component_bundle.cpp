@@ -28,7 +28,7 @@ namespace tactile {
 void ComponentBundle::add(Component component)
 {
   if (mComps.contains(component.definition_id())) {
-    throw TactileError{"Bundle cannot hold multiple components of same type!"};
+    throw TactileError {"Bundle cannot hold multiple components of same type!"};
   }
 
   const auto componentId = component.definition_id();
@@ -43,7 +43,7 @@ auto ComponentBundle::erase(const UUID& componentId) -> Component
     return component;
   }
   else {
-    throw TactileError{"Tried to remove non-existent component from bundle!"};
+    throw TactileError {"Tried to remove non-existent component from bundle!"};
   }
 }
 

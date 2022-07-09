@@ -40,7 +40,7 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   update_document_viewport_offset(renderInfo.canvas_br - renderInfo.canvas_tl,
                                   dispatcher);
 
-  GraphicsCtx graphics{renderInfo};
+  GraphicsCtx graphics {renderInfo};
 
   graphics.set_draw_color(io::get_preferences().viewport_background);
   graphics.clear();

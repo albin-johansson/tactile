@@ -40,12 +40,12 @@ struct ToolManager::Data final
   PointTool           point;
   ObjectSelectionTool object_selection;
 
-  ATool* active_tool{};
+  ATool* active_tool {};
 };
 
 TACTILE_DEFINE_MOVE(ToolManager);
 
-ToolManager::ToolManager() : mData{std::make_unique<Data>()} {}
+ToolManager::ToolManager() : mData {std::make_unique<Data>()} {}
 
 ToolManager::~ToolManager() noexcept = default;
 
@@ -151,7 +151,7 @@ auto ToolManager::is_available(const DocumentModel& model, const ToolType type) 
       return mData->point.is_available(model);
 
     default:
-      throw TactileError{"Invalid tool type!"};
+      throw TactileError {"Invalid tool type!"};
   }
 }
 
@@ -221,12 +221,12 @@ void ToolManager::on_released(DocumentModel&    model,
 
 auto ToolManager::get_type() const -> ToolType
 {
-  throw TactileError{"Invalid call!"};
+  throw TactileError {"Invalid call!"};
 }
 
 auto ToolManager::is_available(const DocumentModel&) const -> bool
 {
-  throw TactileError{"Invalid call!"};
+  throw TactileError {"Invalid call!"};
 }
 
 }  // namespace tactile

@@ -41,8 +41,8 @@ class TilePos final
   constexpr TilePos() noexcept = default;
 
   constexpr TilePos(const int32 row, const int32 column) noexcept
-      : mRow{row}
-      , mCol{column}
+      : mRow {row}
+      , mCol {column}
   {}
 
   /// Creates a position from unsigned row and column indices.
@@ -56,7 +56,7 @@ class TilePos final
   [[nodiscard]] constexpr static auto from_index(const int32 index,
                                                  const int32 nCols) noexcept -> TilePos
   {
-    return TilePos{index / nCols, index % nCols};
+    return TilePos {index / nCols, index % nCols};
   }
 
   /// Sets the row index associated with the position.
@@ -153,8 +153,8 @@ class TilePos final
   [[nodiscard]] constexpr auto operator<=>(const TilePos&) const noexcept = default;
 
  private:
-  int32 mRow{};
-  int32 mCol{};
+  int32 mRow {};
+  int32 mCol {};
 };
 
 [[nodiscard]] constexpr auto operator+(const TilePos& lhs, const TilePos& rhs) noexcept

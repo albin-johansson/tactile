@@ -47,9 +47,9 @@ class BucketToolCmd final : public ICommand
 
  private:
   Shared<Map>          mMap;
-  UUID                 mLayerId{};
+  UUID                 mLayerId {};
   TilePos              mOrigin;
-  TileID               mReplacement{};
+  TileID               mReplacement {};
   Maybe<TileID>        mTarget;
   std::vector<TilePos> mPositions;
 };

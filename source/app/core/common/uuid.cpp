@@ -34,7 +34,7 @@ auto make_uuid() -> boost::uuids::uuid
 
 auto hash(const UUID& uuid) -> usize
 {
-  return std::hash<UUID>{}(uuid);
+  return std::hash<UUID> {}(uuid);
 }
 
 }  // namespace tactile

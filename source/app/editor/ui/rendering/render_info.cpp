@@ -65,7 +65,8 @@ namespace {
   info.canvas_tl = ImGui::GetCursorScreenPos();
   info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
 
-  info.origin = info.canvas_tl + ImVec2{viewport.get_offset().x, viewport.get_offset().y};
+  info.origin =
+      info.canvas_tl + ImVec2 {viewport.get_offset().x, viewport.get_offset().y};
 
   info.tile_size = logicalTileSize;
   info.grid_size = {viewport.get_tile_size().x, viewport.get_tile_size().y};

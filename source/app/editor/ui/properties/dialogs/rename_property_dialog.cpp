@@ -30,7 +30,7 @@
 
 namespace tactile::ui {
 
-RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog{"Rename Property"}
+RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog {"Rename Property"}
 {
   set_accept_button_label("Rename");
 }
@@ -45,7 +45,7 @@ void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<RenamePropertyEvent>(mContextId.value(),
                                           previous_input(),
-                                          std::string{current_input()});
+                                          std::string {current_input()});
   mContextId.reset();
 }
 

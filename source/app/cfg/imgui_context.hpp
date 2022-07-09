@@ -40,7 +40,7 @@ class ImGuiContext final
 
  private:
   /* This is used as a workaround to annoying unit test issues for Windows CI builds */
-  bool mInitializedBackend{};
+  bool mInitializedBackend {};
 };
 
 }  // namespace tactile

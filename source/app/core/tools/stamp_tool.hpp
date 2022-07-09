@@ -72,7 +72,7 @@ class StampTool final : public ATool
   TileCache      mPrevious;  ///< Previous tile state.
   TileCache      mCurrent;   ///< The current stamp sequence.
   Maybe<TilePos> mLastChangedPos;
-  bool           mRandomMode{};
+  bool           mRandomMode {};
 
   void draw_gizmos_normal(const Map&        map,
                           const TilesetRef& tilesetRef,

@@ -37,10 +37,10 @@ auto ComponentIndex::define_comp(std::string name) -> UUID
 void ComponentIndex::define_comp(const UUID& id, std::string name)
 {
   if (contains(name)) {
-    throw TactileError{"Component definition name is not unique!"};
+    throw TactileError {"Component definition name is not unique!"};
   }
 
-  ComponentDefinition def{id};
+  ComponentDefinition def {id};
   def.set_name(std::move(name));
 
   mDefs[id] = std::move(def);
@@ -52,14 +52,14 @@ void ComponentIndex::remove_comp(const UUID& id)
     mDefs.erase(iter);
   }
   else {
-    throw TactileError{"Tried to remove non-existent component definition!"};
+    throw TactileError {"Tried to remove non-existent component definition!"};
   }
 }
 
 void ComponentIndex::rename_comp(const UUID& id, std::string name)
 {
   if (contains(name)) {
-    throw TactileError{"New component name was not unique!"};
+    throw TactileError {"New component name was not unique!"};
   }
 
   auto& def = lookup_in(mDefs, id);
@@ -84,7 +84,7 @@ auto ComponentIndex::with_name(std::string_view name) -> ComponentDefinition&
     }
   }
 
-  throw TactileError{"Invalid component name!"};
+  throw TactileError {"Invalid component name!"};
 }
 
 auto ComponentIndex::contains(const UUID& id) const -> bool

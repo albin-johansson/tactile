@@ -55,7 +55,7 @@ auto TextureManager::load(const std::filesystem::path& path) -> Maybe<TextureInf
   texture.path = path;
 
   // Load from file
-  TextureDataPtr data{
+  TextureDataPtr data {
       stbi_load(path.string().c_str(), &texture.size.x, &texture.size.y, nullptr, 4)};
   if (!data) {
     return nothing;

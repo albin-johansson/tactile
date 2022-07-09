@@ -129,7 +129,7 @@ void StampTool::draw_gizmos_normal(const Map&        map,
 
   const auto& selection = tilesetRef.get_selection().value();
   const auto  selectionSize = selection.end - selection.begin;
-  const auto  offset = selectionSize / TilePos{2, 2};
+  const auto  offset = selectionSize / TilePos {2, 2};
 
   const auto& tileset = tilesetRef.view_tileset();
   const auto  textureId = tileset.texture_id();
@@ -139,7 +139,7 @@ void StampTool::draw_gizmos_normal(const Map&        map,
   const auto gridSize = renderer.get_grid_size();
 
   invoke_mn(selectionSize.row(), selectionSize.col(), [&](int32 row, int32 col) {
-    const TilePos index{row, col};
+    const TilePos index {row, col};
     const auto    previewPos = mouse.position_in_viewport + index - offset;
 
     if (layer.is_valid(previewPos)) {
@@ -183,10 +183,10 @@ void StampTool::update_sequence_normal(TileLayer&        layer,
   const auto& tileset = tilesetRef.view_tileset();
   const auto& selection = tilesetRef.get_selection().value();
   const auto  selectionSize = selection.end - selection.begin;
-  const auto  previewOffset = selectionSize / TilePos{2, 2};
+  const auto  previewOffset = selectionSize / TilePos {2, 2};
 
   invoke_mn(selectionSize.row(), selectionSize.col(), [&](int32 row, int32 col) {
-    const TilePos index{row, col};
+    const TilePos index {row, col};
     const auto    selectionPosition = selection.begin + index;
 
     const auto tile = tilesetRef.first_tile() + tileset.index_of(selectionPosition);

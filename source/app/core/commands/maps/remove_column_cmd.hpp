@@ -43,7 +43,7 @@ class RemoveColumnCmd final : public ICommand
  private:
   Shared<Map>     mMap;
   MapCommandCache mCache;
-  usize           mColumns{1};
+  usize           mColumns {1};
 };
 
 }  // namespace tactile

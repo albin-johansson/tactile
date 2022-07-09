@@ -26,8 +26,8 @@
 namespace tactile {
 
 Component::Component(const UUID& definitionId, AttributeMap attributes)
-    : mDefinitionId{definitionId}
-    , mAttributes{std::move(attributes)}
+    : mDefinitionId {definitionId}
+    , mAttributes {std::move(attributes)}
 {}
 
 void Component::add_attr(std::string key, Attribute value)
@@ -36,7 +36,7 @@ void Component::add_attr(std::string key, Attribute value)
     mAttributes[std::move(key)] = std::move(value);
   }
   else {
-    throw TactileError{"Attribute already exists!"};
+    throw TactileError {"Attribute already exists!"};
   }
 }
 
@@ -46,7 +46,7 @@ void Component::remove_attr(std::string_view key)
     mAttributes.erase(iter);
   }
   else {
-    throw TactileError{"Invalid attribute name!"};
+    throw TactileError {"Invalid attribute name!"};
   }
 }
 

@@ -31,7 +31,7 @@
 
 namespace tactile::ui {
 
-AboutDialog::AboutDialog() : ADialog{"About Tactile"}
+AboutDialog::AboutDialog() : ADialog {"About Tactile"}
 {
   set_accept_button_label(nullptr);
   set_close_button_label("Close");

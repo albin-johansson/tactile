@@ -41,7 +41,7 @@ class SetLayerOpacityCmd final : public ICommand
 
  private:
   Shared<ILayer> mLayer;
-  float          mNewOpacity{};
+  float          mNewOpacity {};
   Maybe<float>   mOldOpacity;
 };
 

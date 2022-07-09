@@ -37,10 +37,10 @@ class AppConfiguration;
 /// Tracks visibility of widgets for the "Toggle UI" feature.
 struct WidgetShowState final
 {
-  bool prev_show_layer_dock : 1 {};
-  bool prev_show_tileset_dock : 1 {};
-  bool prev_show_property_dock : 1 {};
-  bool prev_show_log_dock : 1 {};
+  bool prev_show_layer_dock     : 1 {};
+  bool prev_show_tileset_dock   : 1 {};
+  bool prev_show_property_dock  : 1 {};
+  bool prev_show_log_dock       : 1 {};
   bool prev_show_component_dock : 1 {};
 };
 
@@ -66,7 +66,7 @@ class App final : AEventLoop
   void on_event(const cen::event_handler& handler) override;
 
  private:
-  AppConfiguration* mConfig{}; /* Non-owning */
+  AppConfiguration* mConfig {}; /* Non-owning */
   entt::dispatcher  mDispatcher;
   DocumentModel     mModel;
   TextureManager    mTextures;
@@ -184,7 +184,8 @@ class App final : AEventLoop
 
   void on_show_add_property_dialog();
   void on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event);
-  void on_show_change_property_type_dialog(const ShowChangePropertyTypeDialogEvent& event);
+  void on_show_change_property_type_dialog(
+      const ShowChangePropertyTypeDialogEvent& event);
 
   void on_add_property(const AddPropertyEvent& event);
   void on_remove_property(const RemovePropertyEvent& event);

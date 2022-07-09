@@ -50,7 +50,7 @@ void _update_start_page(entt::dispatcher& dispatcher)
 {
   prepare_vertical_alignment_center(4);
 
-  ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2{0, 64});
+  ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2 {0, 64});
 
   center_next_item_horizontally(128);
   ImGui::Image(to_texture_id(get_tactile_icon()), {128, 128});
@@ -72,10 +72,10 @@ void _update_start_page(entt::dispatcher& dispatcher)
 
 void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  StyleVar padding{ImGuiStyleVar_WindowPadding, {4, 4}};
+  StyleVar padding {ImGuiStyleVar_WindowPadding, {4, 4}};
   remove_tab_bar_from_next_window();
 
-  Window window{"Viewport", _window_flags};
+  Window window {"Viewport", _window_flags};
   _has_focus = window.has_focus();
   _mouse_within_window = window.is_hovered();
 
@@ -117,7 +117,7 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport&               vie
     }
   }
   else {
-    const Vector2f precise{event.precise_x(), event.precise_y()};
+    const Vector2f precise {event.precise_x(), event.precise_y()};
 
     auto delta = precise * (viewport.get_tile_size() / scaling);
     delta.x = -delta.x;

@@ -84,7 +84,7 @@ auto DocumentModel::add_tileset(const TilesetInfo& info) -> UUID
     return tilesetId;
   }
   else {
-    throw TactileError{"No active map to add tileset to!"};
+    throw TactileError {"No active map to add tileset to!"};
   }
 }
 
@@ -107,7 +107,7 @@ auto DocumentModel::restore_tileset(const TileID firstTileId, const TilesetInfo&
     return tilesetId;
   }
   else {
-    throw TactileError{"No active map to restore tileset to!"};
+    throw TactileError {"No active map to restore tileset to!"};
   }
 }
 
@@ -117,14 +117,14 @@ void DocumentModel::select_document(const UUID& id)
     mActiveDocument = id;
   }
   else {
-    throw TactileError{"Invalid document identifier!"};
+    throw TactileError {"Invalid document identifier!"};
   }
 }
 
 void DocumentModel::open_document(const UUID& id)
 {
   if (!mDocuments.contains(id)) {
-    throw TactileError{"Cannot open document that does not exist!"};
+    throw TactileError {"Cannot open document that does not exist!"};
   }
 
   if (!is_open(id)) {
@@ -135,14 +135,14 @@ void DocumentModel::open_document(const UUID& id)
     }
   }
   else {
-    throw TactileError{"Cannot open document that was already open!"};
+    throw TactileError {"Cannot open document that was already open!"};
   }
 }
 
 void DocumentModel::close_document(const UUID& id)
 {
   if (!mDocuments.contains(id)) {
-    throw TactileError{"Cannot close document that does not exist!"};
+    throw TactileError {"Cannot close document that does not exist!"};
   }
 
   const auto iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
@@ -160,14 +160,14 @@ void DocumentModel::close_document(const UUID& id)
     TACTILE_ASSERT(!is_open(id));
   }
   else {
-    throw TactileError{"Cannot close document that was not open!"};
+    throw TactileError {"Cannot close document that was not open!"};
   }
 }
 
 void DocumentModel::remove_tileset(const UUID& id)
 {
   if (!is_tileset(id)) {
-    throw TactileError{"Document is not a tileset!"};
+    throw TactileError {"Document is not a tileset!"};
   }
 
   if (mActiveDocument && is_map(*mActiveDocument)) {
@@ -175,7 +175,7 @@ void DocumentModel::remove_tileset(const UUID& id)
     map->get_history().exec<RemoveTilesetCmd>(this, id);
   }
   else {
-    throw TactileError{"No active map!"};
+    throw TactileError {"No active map!"};
   }
 }
 
@@ -196,7 +196,7 @@ auto DocumentModel::get_id_for_path(const std::filesystem::path& path) const -> 
     }
   }
 
-  throw TactileError{"No document with the specified path!"};
+  throw TactileError {"No document with the specified path!"};
 }
 
 auto DocumentModel::get_document(const UUID& id) -> Shared<ADocument>
@@ -306,7 +306,7 @@ auto DocumentModel::require_active_document() const -> const ADocument&
     return *document;
   }
   else {
-    throw TactileError{"No document was active!"};
+    throw TactileError {"No document was active!"};
   }
 }
 
@@ -316,7 +316,7 @@ auto DocumentModel::require_active_map() -> MapDocument&
     return *document;
   }
   else {
-    throw TactileError{"No map document was active!"};
+    throw TactileError {"No map document was active!"};
   }
 }
 
@@ -326,7 +326,7 @@ auto DocumentModel::require_active_map() const -> const MapDocument&
     return *document;
   }
   else {
-    throw TactileError{"No map document was active!"};
+    throw TactileError {"No map document was active!"};
   }
 }
 
@@ -336,7 +336,7 @@ auto DocumentModel::require_active_tileset() -> TilesetDocument&
     return *document;
   }
   else {
-    throw TactileError{"No tileset document was active!"};
+    throw TactileError {"No tileset document was active!"};
   }
 }
 
@@ -346,7 +346,7 @@ auto DocumentModel::require_active_tileset() const -> const TilesetDocument&
     return *document;
   }
   else {
-    throw TactileError{"No tileset document was active!"};
+    throw TactileError {"No tileset document was active!"};
   }
 }
 

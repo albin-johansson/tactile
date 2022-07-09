@@ -53,7 +53,7 @@ auto TileAnimation::nth(const usize index) const -> const Frame&
     return mFrames[index];
   }
   else {
-    throw TactileError{"Invalid frame index!"};
+    throw TactileError {"Invalid frame index!"};
   }
 }
 

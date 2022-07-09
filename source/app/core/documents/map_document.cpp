@@ -31,7 +31,7 @@
 namespace tactile {
 
 MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize columns)
-    : mMap{std::make_shared<Map>()}
+    : mMap {std::make_shared<Map>()}
 {
   mMap->resize(rows, columns);
   mMap->set_tile_size(tileSize);
@@ -56,7 +56,7 @@ void MapDocument::unregister_context(const UUID& id)
     }
   }
   else {
-    throw TactileError{"Tried to remove non-existent context!"};
+    throw TactileError {"Tried to remove non-existent context!"};
   }
 }
 
@@ -226,7 +226,7 @@ auto MapDocument::get_object(const UUID& objectId) -> Shared<Object>
     return ptr;
   }
   else {
-    throw TactileError{"Did not find object!"};
+    throw TactileError {"Did not find object!"};
   }
 }
 

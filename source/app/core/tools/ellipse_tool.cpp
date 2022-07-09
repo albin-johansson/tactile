@@ -39,7 +39,7 @@ void EllipseTool::draw_gizmos(const DocumentModel&,
     const auto radius = mStroke->current - mStroke->start;
     const auto center = mStroke->start + radius;
 
-    renderer.draw_ellipse(center + Vector2f{1, 1}, radius, cen::colors::black);
+    renderer.draw_ellipse(center + Vector2f {1, 1}, radius, cen::colors::black);
     renderer.draw_ellipse(center, radius, cen::colors::yellow);
   }
 }

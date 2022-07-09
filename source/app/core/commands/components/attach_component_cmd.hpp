@@ -43,7 +43,7 @@ class AttachComponentCmd final : public ICommand
  private:
   Shared<ComponentIndex> mIndex;
   Shared<IContext>       mContext;
-  UUID                   mComponentId{};
+  UUID                   mComponentId {};
 };
 
 }  // namespace tactile

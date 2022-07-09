@@ -40,8 +40,8 @@ class MoveObjectCmd final : public ICommand
 
  private:
   Shared<Object> mObject;
-  Vector2f       mPreviousPos{};
-  Vector2f       mUpdatedPos{};
+  Vector2f       mPreviousPos {};
+  Vector2f       mUpdatedPos {};
 };
 
 }  // namespace tactile

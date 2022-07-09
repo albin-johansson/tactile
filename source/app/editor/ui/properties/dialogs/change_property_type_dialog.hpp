@@ -51,7 +51,7 @@ class ChangePropertyTypeDialog final : public ADialog
 
  private:
   Maybe<UUID>          mContextId;
-  AttributeType        mCurrentType{AttributeType::String};
+  AttributeType        mCurrentType {AttributeType::String};
   Maybe<std::string>   mPropertyName;
   Maybe<AttributeType> mPreviousType;
 };

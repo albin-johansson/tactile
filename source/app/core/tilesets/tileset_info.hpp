@@ -29,10 +29,10 @@ namespace tactile {
 /// Provides information necessary to construct tilesets.
 struct TilesetInfo final
 {
-  std::filesystem::path texture_path;    /// Path to associated texture.
-  uint                  texture_id{};    /// The associated OpenGL texture identifier.
-  Vector2i              texture_size{};  /// The size of the texture.
-  Vector2i              tile_size{};     /// Logical tile size.
+  std::filesystem::path texture_path;     /// Path to associated texture.
+  uint                  texture_id {};    /// The associated OpenGL texture identifier.
+  Vector2i              texture_size {};  /// The size of the texture.
+  Vector2i              tile_size {};     /// Logical tile size.
 };
 
 }  // namespace tactile

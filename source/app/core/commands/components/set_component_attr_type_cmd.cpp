@@ -30,13 +30,13 @@ SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(Shared<ComponentIndex> index,
                                                  const UUID&            componentId,
                                                  std::string            attribute,
                                                  const AttributeType    type)
-    : mIndex{std::move(index)}
-    , mComponentId{componentId}
-    , mAttributeName{std::move(attribute)}
-    , mNewType{type}
+    : mIndex {std::move(index)}
+    , mComponentId {componentId}
+    , mAttributeName {std::move(attribute)}
+    , mNewType {type}
 {
   if (!mIndex) {
-    throw TactileError{"Invalid null component index!"};
+    throw TactileError {"Invalid null component index!"};
   }
 }
 

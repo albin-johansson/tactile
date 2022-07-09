@@ -93,7 +93,7 @@ void Viewport::zoom_out(const Vector2f& anchor)
     const auto ratio = mTileSize.x / mTileSize.y;
     mTileSize -= _viewport_offset_delta(mTileSize.x, ratio);
 
-    const Vector2f minimum{_min_tile_height * ratio, _min_tile_height};
+    const Vector2f minimum {_min_tile_height * ratio, _min_tile_height};
     mTileSize = (glm::max)(minimum, mTileSize);
   }
 

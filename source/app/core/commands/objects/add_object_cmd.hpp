@@ -44,11 +44,11 @@ class AddObjectCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  MapDocument* mDocument{};
-  UUID         mLayerId{};
-  ObjectType   mObjectType{};
-  Vector2f     mPos{};
-  Vector2f     mSize{};
+  MapDocument* mDocument {};
+  UUID         mLayerId {};
+  ObjectType   mObjectType {};
+  Vector2f     mPos {};
+  Vector2f     mSize {};
   Maybe<UUID>  mObjectId;
 };
 

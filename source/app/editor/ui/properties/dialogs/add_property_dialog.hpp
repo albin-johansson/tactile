@@ -51,8 +51,8 @@ class AddPropertyDialog final : public ADialog
 
  private:
   Maybe<UUID>           mContextId;
-  std::array<char, 128> mNameBuffer{};
-  AttributeType         mPropertyType{AttributeType::String};
+  std::array<char, 128> mNameBuffer {};
+  AttributeType         mPropertyType {AttributeType::String};
 };
 
 }  // namespace tactile::ui

@@ -38,17 +38,17 @@ struct InspectTilesetEvent final
 struct LoadTilesetEvent final
 {
   std::filesystem::path path;
-  Vector2i              tile_size{};
+  Vector2i              tile_size {};
 };
 
 struct RemoveTilesetEvent final
 {
-  UUID tileset_id{};
+  UUID tileset_id {};
 };
 
 struct SelectTilesetEvent final
 {
-  UUID tileset_id{};
+  UUID tileset_id {};
 };
 
 struct SetTilesetSelectionEvent final
@@ -59,8 +59,8 @@ struct SetTilesetSelectionEvent final
 /// Event for changing the name a tileset.
 struct RenameTilesetEvent final
 {
-  UUID        tileset_id{};  /// Target tileset.
-  std::string name;          /// New tileset name.
+  UUID        tileset_id {};  /// Target tileset.
+  std::string name;           /// New tileset name.
 };
 
 }  // namespace tactile

@@ -26,10 +26,10 @@
 
 namespace tactile {
 
-FixTilesInMapCmd::FixTilesInMapCmd(Shared<Map> map) : mMap{std::move(map)}
+FixTilesInMapCmd::FixTilesInMapCmd(Shared<Map> map) : mMap {std::move(map)}
 {
   if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+    throw TactileError {"Invalid null map!"};
   }
 }
 

@@ -28,12 +28,12 @@ namespace tactile {
 SetLayerVisibilityCmd::SetLayerVisibilityCmd(Shared<Map> map,
                                              const UUID& layerId,
                                              const bool  visible)
-    : mMap{std::move(map)}
-    , mLayerId{layerId}
-    , mNewVisibility{visible}
+    : mMap {std::move(map)}
+    , mLayerId {layerId}
+    , mNewVisibility {visible}
 {
   if (!mMap) {
-    throw TactileError{"Invalid null map!"};
+    throw TactileError {"Invalid null map!"};
   }
 }
 

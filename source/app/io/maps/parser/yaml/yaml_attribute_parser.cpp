@@ -92,7 +92,7 @@ namespace {
       }
     }
     case AttributeType::Object:
-      return object_t{value.as<int32>()};
+      return object_t {value.as<int32>()};
 
     default:
       return nothing;
@@ -113,7 +113,7 @@ namespace {
     return ParseError::NoComponentDefAttributeType;
   }
 
-  AttributeType type{};
+  AttributeType type {};
   if (const auto parsedType = _parse_attribute_type(typeName)) {
     type = *parsedType;
   }
@@ -157,7 +157,7 @@ namespace {
         break;
       }
       case AttributeType::Object:
-        value = object_t{defaultValue.as<int32>()};
+        value = object_t {defaultValue.as<int32>()};
         break;
     }
   }
@@ -271,7 +271,7 @@ auto parse_properties(const YAML::Node& node, ir::ContextData& data) -> ParseErr
         return ParseError::NoPropertyType;
       }
 
-      AttributeType propertyType{};
+      AttributeType propertyType {};
       if (auto parsedType = _parse_attribute_type(type)) {
         propertyType = *parsedType;
       }

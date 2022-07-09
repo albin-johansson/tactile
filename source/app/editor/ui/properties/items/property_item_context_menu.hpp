@@ -29,9 +29,9 @@ namespace tactile::ui {
 
 struct PropertyItemContextMenuState final
 {
-  bool show_add_dialog{};
-  bool show_rename_dialog{};
-  bool show_change_type_dialog{};
+  bool show_add_dialog {};
+  bool show_rename_dialog {};
+  bool show_change_type_dialog {};
 };
 
 auto property_item_context_menu(const UUID&                   contextId,

@@ -35,7 +35,7 @@ void update_debug_menu()
   static bool show_demo = false;
   static bool show_style_editor = false;
 
-  if (Menu menu{"Debug"}; menu.is_open()) {
+  if (Menu menu {"Debug"}; menu.is_open()) {
     show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
     if constexpr (is_debug_build) {
@@ -61,7 +61,7 @@ void update_debug_menu()
   }
 
   if (show_style_editor) {
-    Window editor{"Style Editor"};
+    Window editor {"Style Editor"};
     ImGui::ShowStyleEditor();
   }
 }

@@ -38,7 +38,7 @@ class AddComponentAttrDialog final : public AStringInputDialog
   void on_accept(entt::dispatcher& dispatcher) override;
 
  private:
-  UUID mComponentId{};
+  UUID mComponentId {};
 };
 
 }  // namespace tactile::ui

@@ -33,7 +33,7 @@ namespace {
 
 struct HelpMenuState final
 {
-  bool show_about_imgui{};
+  bool show_about_imgui {};
 };
 
 [[nodiscard]] auto _get_state() -> HelpMenuState&
@@ -48,7 +48,7 @@ void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   auto& state = _get_state();
 
-  if (Menu menu{"Help"}; menu.is_open()) {
+  if (Menu menu {"Help"}; menu.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
       get_dialogs().about.show();
     }

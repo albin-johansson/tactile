@@ -30,15 +30,15 @@ namespace tactile {
 AttachComponentCmd::AttachComponentCmd(Shared<ComponentIndex> index,
                                        Shared<IContext>       context,
                                        const UUID&            componentId)
-    : mIndex{std::move(index)}
-    , mContext{std::move(context)}
-    , mComponentId{componentId}
+    : mIndex {std::move(index)}
+    , mContext {std::move(context)}
+    , mComponentId {componentId}
 {
   if (!mIndex) {
-    throw TactileError{"Invalid null component index!"};
+    throw TactileError {"Invalid null component index!"};
   }
   else if (!mContext) {
-    throw TactileError{"Invalid null context!"};
+    throw TactileError {"Invalid null context!"};
   }
 }
 
