@@ -222,7 +222,7 @@ TEST(CommandStack, Overflow)
   ASSERT_STREQ("FooCmd", stack.get_undo_text());
 
   // The stack should be full after this
-  for (auto index = 0u; index < (stack.capacity() - 1); ++index) {
+  for (usize index = 0u, capacity = stack.capacity(); index < (capacity - 1); ++index) {
     stack.exec<BarCmd>();
   }
 
