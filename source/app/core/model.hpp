@@ -53,15 +53,7 @@ class DocumentModel final
   /// Visits each open document.
   void each(const VisitorFunc& func) const;
 
-  /**
-   * Creates an empty map document with the specified attributes.
-   *
-   * \param tileSize the global tile size in the map.
-   * \param rows the initial amount of rows in the map.
-   * \param columns the initial amount of columns in the map.
-   *
-   * \return the map document ID.
-   */
+  /// Creates an empty map document with the specified attributes.
   auto add_map(const Vector2i& tileSize, usize rows, usize columns) -> UUID;
 
   /// Creates a tileset document and adds it to the active map document.
