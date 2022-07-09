@@ -1,6 +1,6 @@
 name: "CI: Ubuntu"
 
-on: [ push, pull_request ]
+on: [ push ]
 
 env:
   DISPLAY: :99.0

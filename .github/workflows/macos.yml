@@ -1,6 +1,6 @@
 name: "CI: macOS"
 
-on: [ push, pull_request ]
+on: [ push ]
 
 env:
   CC: /usr/local/opt/llvm/bin/clang

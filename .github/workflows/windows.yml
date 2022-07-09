@@ -1,6 +1,6 @@
 name: "CI: Windows"
 
-on: [ push, pull_request ]
+on: [ push ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}\vcpkg
