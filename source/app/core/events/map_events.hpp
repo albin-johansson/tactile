@@ -22,6 +22,7 @@
 #include "core/common/filesystem.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/math.hpp"
 
 namespace tactile {
 
@@ -45,10 +46,9 @@ struct RemoveColumnEvent final
 
 struct CreateMapEvent final
 {
-  int32 tile_width {};
-  int32 tile_height {};
-  usize row_count {};
-  usize column_count {};
+  Vector2i tile_size {};
+  usize    row_count {};
+  usize    column_count {};
 };
 
 struct OpenMapEvent final

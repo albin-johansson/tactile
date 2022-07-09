@@ -37,9 +37,8 @@ CreateMapDialog::CreateMapDialog() : ADialog {"Create New Map"}
 void CreateMapDialog::show()
 {
   const auto& prefs = io::get_preferences();
-  mTileWidth = prefs.preferred_tile_size.x;
-  mTileHeight = prefs.preferred_tile_size.y;
 
+  mTileSize = prefs.preferred_tile_size;
   mRows = 5;
   mColumns = 5;
 
@@ -74,30 +73,29 @@ void CreateMapDialog::on_update(const DocumentModel&, entt::dispatcher&)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tileWidthLabel);
     ImGui::SameLine(offset);
-    ImGui::InputInt("##TileWidth", &mTileWidth);
+    ImGui::InputInt("##TileWidth", &mTileSize.x);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tileHeightLabel);
     ImGui::SameLine(offset);
-    ImGui::InputInt("##TileHeight", &mTileHeight);
+    ImGui::InputInt("##TileHeight", &mTileSize.y);
   }
 }
 
 void CreateMapDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(mTileWidth > 0);
-  TACTILE_ASSERT(mTileHeight > 0);
+  TACTILE_ASSERT(mTileSize.x > 0);
+  TACTILE_ASSERT(mTileSize.y > 0);
   TACTILE_ASSERT(mRows > 0);
   TACTILE_ASSERT(mColumns > 0);
-  dispatcher.enqueue<CreateMapEvent>(mTileWidth,
-                                     mTileHeight,
+  dispatcher.enqueue<CreateMapEvent>(mTileSize,
                                      static_cast<usize>(mRows),
                                      static_cast<usize>(mColumns));
 }
 
 auto CreateMapDialog::is_current_input_valid(const DocumentModel&) const -> bool
 {
-  return (mTileWidth > 0) && (mTileHeight > 0) && (mRows > 0) && (mColumns > 0);
+  return (mTileSize.x > 0) && (mTileSize.y > 0) && (mRows > 0) && (mColumns > 0);
 }
 
 }  // namespace tactile::ui

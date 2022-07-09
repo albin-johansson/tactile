@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "core/common/math.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
 namespace tactile::ui {
@@ -44,10 +45,9 @@ class CreateMapDialog final : public ADialog
       -> bool override;
 
  private:
-  int mTileWidth {};
-  int mTileHeight {};
-  int mRows {};
-  int mColumns {};
+  Vector2i mTileSize {};
+  int      mRows {};
+  int      mColumns {};
 };
 
 }  // namespace tactile::ui

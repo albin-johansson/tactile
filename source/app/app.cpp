@@ -386,9 +386,7 @@ void App::on_inspect_tileset()
 
 void App::on_create_map(const CreateMapEvent& event)
 {
-  const auto id = mModel.add_map({event.tile_width, event.tile_height},
-                                 event.row_count,
-                                 event.column_count);
+  const auto id = mModel.add_map(event.tile_size, event.row_count, event.column_count);
   mModel.select_document(id);
 }
 
