@@ -22,7 +22,6 @@
 #include <string>  // string
 
 #include "core/commands/command.hpp"
-#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
@@ -32,10 +31,10 @@ namespace tactile {
 class RenameComponentAttrCmd final : public ICommand
 {
  public:
-  RenameComponentAttrCmd(Shared<ComponentIndex> index,
-                         const UUID&            componentId,
-                         std::string            previousName,
-                         std::string            updatedName);
+  RenameComponentAttrCmd(ADocument*  document,
+                         const UUID& componentId,
+                         std::string previousName,
+                         std::string updatedName);
 
   void undo() override;
 
@@ -44,10 +43,10 @@ class RenameComponentAttrCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<ComponentIndex> mIndex;
-  UUID                   mComponentId {};
-  std::string            mPreviousName;
-  std::string            mUpdatedName;
+  ADocument*  mDocument {};
+  UUID        mComponentId {};
+  std::string mPreviousName;
+  std::string mUpdatedName;
 };
 
 }  // namespace tactile

@@ -22,34 +22,46 @@
 #include <utility>  // move
 
 #include "core/components/component_index.hpp"
+#include "core/contexts/context_manager.hpp"
+#include "core/documents/document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-RenameComponentAttrCmd::RenameComponentAttrCmd(Shared<ComponentIndex> index,
-                                               const UUID&            componentId,
-                                               std::string            previousName,
-                                               std::string            updatedName)
-    : mIndex {std::move(index)}
+RenameComponentAttrCmd::RenameComponentAttrCmd(ADocument*  document,
+                                               const UUID& componentId,
+                                               std::string previousName,
+                                               std::string updatedName)
+    : mDocument {document}
     , mComponentId {componentId}
     , mPreviousName {std::move(previousName)}
     , mUpdatedName {std::move(updatedName)}
 {
-  if (!mIndex) {
-    throw TactileError {"Invalid null component index!"};
+  if (!mDocument) {
+    throw TactileError {"Invalid null document!"};
   }
 }
 
 void RenameComponentAttrCmd::undo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto index = mDocument->get_component_index();
+
+  auto& definition = index->at(mComponentId);
   definition.rename_attr(mUpdatedName, mPreviousName);
+
+  auto& contexts = mDocument->get_contexts();
+  contexts.on_renamed_component_attr(definition.get_uuid(), mUpdatedName, mPreviousName);
 }
 
 void RenameComponentAttrCmd::redo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto index = mDocument->get_component_index();
+
+  auto& definition = index->at(mComponentId);
   definition.rename_attr(mPreviousName, mUpdatedName);
+
+  auto& contexts = mDocument->get_contexts();
+  contexts.on_renamed_component_attr(definition.get_uuid(), mPreviousName, mUpdatedName);
 }
 
 auto RenameComponentAttrCmd::get_name() const -> const char*

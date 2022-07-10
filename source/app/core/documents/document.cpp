@@ -81,7 +81,7 @@ void ADocument::rename_component_attribute(const UUID& componentId,
                                            std::string current,
                                            std::string updated)
 {
-  get_history().exec<RenameComponentAttrCmd>(mComponentIndex,
+  get_history().exec<RenameComponentAttrCmd>(this,
                                              componentId,
                                              std::move(current),
                                              std::move(updated));
