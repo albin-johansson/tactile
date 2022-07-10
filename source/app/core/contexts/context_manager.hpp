@@ -64,6 +64,10 @@ class ContextManager final
                                  std::string_view   oldName,
                                  const std::string& newName);
 
+  auto on_changed_component_attr_type(const UUID&      componentId,
+                                      std::string_view name,
+                                      AttributeType    type) -> HashMap<UUID, Attribute>;
+
  private:
   HashMap<UUID, Shared<IContext>> mContexts;
 

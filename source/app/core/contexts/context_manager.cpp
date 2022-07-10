@@ -100,6 +100,27 @@ void ContextManager::on_renamed_component_attr(const UUID&        componentId,
   });
 }
 
+auto ContextManager::on_changed_component_attr_type(const UUID&         componentId,
+                                                    std::string_view    name,
+                                                    const AttributeType type)
+    -> HashMap<UUID, Attribute>
+{
+  HashMap<UUID, Attribute> attributes;
+
+  for (auto& [contextId, context] : mContexts) {
+    auto& comps = context->get_comps();
+    if (comps.contains(componentId)) {
+      auto& comp = comps.at(componentId);
+      attributes[contextId] = comp.get_attr(name);
+
+      comp.remove_attr(name);
+      comp.add_attr(std::string {name}, Attribute {type});
+    }
+  }
+
+  return attributes;
+}
+
 void ContextManager::on_component_update(const UUID&          componentId,
                                          const ComponentFunc& func)
 {

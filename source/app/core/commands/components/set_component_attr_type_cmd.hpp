@@ -21,10 +21,12 @@
 
 #include <string>  // string
 
+#include <boost/uuid/uuid_hash.hpp>
+
 #include "core/attribute.hpp"
 #include "core/commands/command.hpp"
+#include "core/common/associative.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/fwd.hpp"
 
@@ -34,10 +36,10 @@ namespace tactile {
 class SetComponentAttrTypeCmd final : public ICommand
 {
  public:
-  SetComponentAttrTypeCmd(Shared<ComponentIndex> index,
-                          const UUID&            componentId,
-                          std::string            attribute,
-                          AttributeType          type);
+  SetComponentAttrTypeCmd(ADocument*    document,
+                          const UUID&   componentId,
+                          std::string   attribute,
+                          AttributeType type);
 
   void undo() override;
 
@@ -46,11 +48,12 @@ class SetComponentAttrTypeCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<ComponentIndex> mIndex;
-  UUID                   mComponentId {};
-  std::string            mAttributeName;
-  AttributeType          mNewType;
-  Maybe<Attribute>       mSnapshot;
+  ADocument*               mDocument {};
+  UUID                     mComponentId {};
+  std::string              mAttributeName;
+  AttributeType            mNewType;
+  Maybe<Attribute>         mSnapshot;
+  HashMap<UUID, Attribute> mPrevAttributes;
 };
 
 }  // namespace tactile

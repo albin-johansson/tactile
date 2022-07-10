@@ -102,6 +102,8 @@ class Attribute final
   /// Creates an empty string attribute.
   Attribute() = default;
 
+  explicit Attribute(const AttributeType type) { reset_to_default(type); }
+
   /**
    * Creates a property.
    *

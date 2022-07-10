@@ -96,10 +96,7 @@ void ADocument::set_component_attribute_type(const UUID&         componentId,
                                              std::string         name,
                                              const AttributeType type)
 {
-  get_history().exec<SetComponentAttrTypeCmd>(mComponentIndex,
-                                              componentId,
-                                              std::move(name),
-                                              type);
+  get_history().exec<SetComponentAttrTypeCmd>(this, componentId, std::move(name), type);
 }
 
 void ADocument::update_component(const UUID& componentId,

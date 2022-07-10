@@ -21,43 +21,62 @@
 
 #include <utility>  // move
 
+#include "core/components/component_bundle.hpp"
 #include "core/components/component_index.hpp"
+#include "core/contexts/context_manager.hpp"
+#include "core/documents/document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(Shared<ComponentIndex> index,
-                                                 const UUID&            componentId,
-                                                 std::string            attribute,
-                                                 const AttributeType    type)
-    : mIndex {std::move(index)}
+SetComponentAttrTypeCmd::SetComponentAttrTypeCmd(ADocument*          document,
+                                                 const UUID&         componentId,
+                                                 std::string         attribute,
+                                                 const AttributeType type)
+    : mDocument {document}
     , mComponentId {componentId}
     , mAttributeName {std::move(attribute)}
     , mNewType {type}
 {
-  if (!mIndex) {
-    throw TactileError {"Invalid null component index!"};
+  if (!mDocument) {
+    throw TactileError {"Invalid null document!"};
   }
 }
 
 void SetComponentAttrTypeCmd::undo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto  index = mDocument->get_component_index();
+  auto& definition = index->at(mComponentId);
 
   definition.remove_attr(mAttributeName);
   definition.add_attr(mAttributeName, mSnapshot.value());
+
+  auto& contexts = mDocument->get_contexts();
+  for (const auto& [contextId, attribute] : mPrevAttributes) {
+    auto  context = mDocument->get_context(contextId);
+    auto& comp = context->get_comps().at(definition.get_uuid());
+
+    comp.remove_attr(mAttributeName);
+    comp.add_attr(mAttributeName, attribute);
+  }
 
   mSnapshot.reset();
 }
 
 void SetComponentAttrTypeCmd::redo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto  index = mDocument->get_component_index();
+  auto& definition = index->at(mComponentId);
 
   mSnapshot = definition.get_attr(mAttributeName);
 
   definition.remove_attr(mAttributeName);
   definition.add_attr(mAttributeName, mNewType);
+
+  auto& contexts = mDocument->get_contexts();
+  mPrevAttributes = contexts.on_changed_component_attr_type(definition.get_uuid(),
+                                                            mAttributeName,
+                                                            mNewType);
 }
 
 auto SetComponentAttrTypeCmd::get_name() const -> const char*
