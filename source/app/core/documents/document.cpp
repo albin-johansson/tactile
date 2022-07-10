@@ -89,9 +89,7 @@ void ADocument::rename_component_attribute(const UUID& componentId,
 
 void ADocument::duplicate_component_attribute(const UUID& componentId, std::string name)
 {
-  get_history().exec<DuplicateComponentAttrCmd>(mComponentIndex,
-                                                componentId,
-                                                std::move(name));
+  get_history().exec<DuplicateComponentAttrCmd>(this, componentId, std::move(name));
 }
 
 void ADocument::set_component_attribute_type(const UUID&         componentId,

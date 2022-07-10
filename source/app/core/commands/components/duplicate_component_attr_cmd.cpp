@@ -22,33 +22,48 @@
 #include <utility>  // move
 
 #include "core/components/component_index.hpp"
+#include "core/contexts/context_manager.hpp"
+#include "core/documents/document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-DuplicateComponentAttrCmd::DuplicateComponentAttrCmd(Shared<ComponentIndex> index,
-                                                     const UUID&            componentId,
-                                                     std::string            attribute)
-    : mIndex {std::move(index)}
+DuplicateComponentAttrCmd::DuplicateComponentAttrCmd(ADocument*  document,
+                                                     const UUID& componentId,
+                                                     std::string attribute)
+    : mDocument {document}
     , mComponentId {componentId}
     , mAttributeName {std::move(attribute)}
 {
-  if (!mIndex) {
-    throw TactileError {"Invalid null component index!"};
+  if (!mDocument) {
+    throw TactileError {"Invalid null document!"};
   }
 }
 
 void DuplicateComponentAttrCmd::undo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto index = mDocument->get_component_index();
+
+  auto& definition = index->at(mComponentId);
   definition.remove_attr(mDuplicatedName.value());
+
+  auto& contexts = mDocument->get_contexts();
+  contexts.on_removed_component_attr(definition.get_uuid(), mDuplicatedName.value());
+
   mDuplicatedName.reset();
 }
 
 void DuplicateComponentAttrCmd::redo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto index = mDocument->get_component_index();
+
+  auto& definition = index->at(mComponentId);
   mDuplicatedName = definition.duplicate_attr(mAttributeName);
+
+  auto& contexts = mDocument->get_contexts();
+  contexts.on_new_component_attr(definition.get_uuid(),
+                                 *mDuplicatedName,
+                                 definition.get_attr(*mDuplicatedName));
 }
 
 auto DuplicateComponentAttrCmd::get_name() const -> const char*
