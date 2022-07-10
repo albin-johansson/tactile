@@ -47,7 +47,7 @@ class ComponentIndex final
    */
   auto define_comp(std::string name) -> UUID;
 
-  void define_comp(const UUID& id, std::string name);
+  void restore_comp(ComponentDefinition def);
 
   /**
    * Removes an existing component definition.

@@ -59,7 +59,7 @@ void ADocument::define_component(std::string name)
 
 void ADocument::undef_component(const UUID& componentId)
 {
-  get_history().exec<UndefComponentCmd>(mComponentIndex, componentId);
+  get_history().exec<UndefComponentCmd>(this, componentId);
 }
 
 void ADocument::rename_component(const UUID& componentId, std::string name)

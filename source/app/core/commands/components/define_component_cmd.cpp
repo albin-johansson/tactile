@@ -37,16 +37,18 @@ DefineComponentCmd::DefineComponentCmd(Shared<ComponentIndex> index, std::string
 
 void DefineComponentCmd::undo()
 {
-  mIndex->remove_comp(mComponentId.value());
+  const auto& def = mDef.value();
+  mIndex->remove_comp(def.get_uuid());
 }
 
 void DefineComponentCmd::redo()
 {
-  if (mComponentId) {
-    mIndex->define_comp(*mComponentId, mName);
+  if (mDef.has_value()) {
+    mIndex->restore_comp(*mDef);
   }
   else {
-    mComponentId = mIndex->define_comp(mName);
+    const auto id = mIndex->define_comp(mName);
+    mDef = mIndex->at(id);
   }
 }
 

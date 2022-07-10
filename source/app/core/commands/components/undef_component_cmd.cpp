@@ -21,34 +21,48 @@
 
 #include <utility>  // move
 
+#include "core/components/component_bundle.hpp"
 #include "core/components/component_index.hpp"
+#include "core/contexts/context_manager.hpp"
+#include "core/documents/document.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
-UndefComponentCmd::UndefComponentCmd(Shared<ComponentIndex> index,
-                                     const UUID&            componentId)
-    : mIndex {std::move(index)}
+UndefComponentCmd::UndefComponentCmd(ADocument* document, const UUID& componentId)
+    : mDocument {document}
     , mComponentId {componentId}
-{}
+{
+  if (!mDocument) {
+    throw TactileError {"Invalid null document!"};
+  }
+}
 
 void UndefComponentCmd::undo()
 {
-  const auto& previous = mPrevious.value();
+  auto index = mDocument->get_component_index();
 
-  mIndex->define_comp(mComponentId, previous.get_name());
-  auto& definition = mIndex->at(mComponentId);
+  index->restore_comp(std::move(mPreviousDef.value()));
+  mPreviousDef.reset();
 
-  for (const auto& [key, value] : previous) {
-    definition.add_attr(key, value);
+  /* Restores previously removed components */
+  for (auto [contextId, component] : mRemovedComponents) {
+    auto context = mDocument->get_context(contextId);
+    context->get_comps().add(std::move(component));
   }
 
-  mPrevious.reset();
+  mRemovedComponents.clear();
 }
 
 void UndefComponentCmd::redo()
 {
-  mPrevious = mIndex->at(mComponentId);
-  mIndex->remove_comp(mComponentId);
+  auto index = mDocument->get_component_index();
+
+  mPreviousDef = index->at(mComponentId);
+  index->remove_comp(mComponentId);
+
+  auto& contexts = mDocument->get_contexts();
+  mRemovedComponents = contexts.on_undef_comp(mComponentId);
 }
 
 auto UndefComponentCmd::get_name() const -> const char*

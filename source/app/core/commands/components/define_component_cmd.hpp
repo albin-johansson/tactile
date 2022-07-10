@@ -24,7 +24,7 @@
 #include "core/commands/command.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "core/common/uuid.hpp"
+#include "core/components/component_definition.hpp"
 #include "core/fwd.hpp"
 
 namespace tactile {
@@ -42,9 +42,9 @@ class DefineComponentCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<ComponentIndex> mIndex;
-  std::string            mName;
-  Maybe<UUID>            mComponentId;
+  Shared<ComponentIndex>     mIndex;
+  std::string                mName;
+  Maybe<ComponentDefinition> mDef;
 };
 
 }  // namespace tactile

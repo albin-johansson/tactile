@@ -19,10 +19,14 @@
 
 #pragma once
 
+#include <boost/uuid/uuid_hash.hpp>
+
 #include "core/commands/command.hpp"
+#include "core/common/associative.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
+#include "core/components/component.hpp"
 #include "core/components/component_definition.hpp"
 #include "core/fwd.hpp"
 
@@ -32,7 +36,7 @@ namespace tactile {
 class UndefComponentCmd final : public ICommand
 {
  public:
-  UndefComponentCmd(Shared<ComponentIndex> index, const UUID& componentId);
+  UndefComponentCmd(ADocument* document, const UUID& componentId);
 
   void undo() override;
 
@@ -41,9 +45,10 @@ class UndefComponentCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> const char* override;
 
  private:
-  Shared<ComponentIndex>     mIndex;
+  ADocument*                 mDocument {};
   UUID                       mComponentId {};
-  Maybe<ComponentDefinition> mPrevious;
+  Maybe<ComponentDefinition> mPreviousDef;
+  HashMap<UUID, Component>   mRemovedComponents;
 };
 
 }  // namespace tactile

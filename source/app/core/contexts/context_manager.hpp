@@ -30,6 +30,7 @@
 #include "core/common/ints.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
+#include "core/components/component.hpp"
 #include "core/contexts/context.hpp"
 
 namespace tactile {
@@ -50,6 +51,8 @@ class ContextManager final
   [[nodiscard]] auto has_context(const UUID& id) const -> bool;
 
   [[nodiscard]] auto context_count() const -> usize;
+
+  auto on_undef_comp(const UUID& componentId) -> HashMap<UUID, Component>;
 
   void on_new_component_attr(const UUID&        componentId,
                              const std::string& name,

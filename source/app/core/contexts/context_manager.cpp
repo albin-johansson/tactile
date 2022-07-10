@@ -62,6 +62,20 @@ auto ContextManager::context_count() const -> usize
   return mContexts.size();
 }
 
+auto ContextManager::on_undef_comp(const UUID& componentId) -> HashMap<UUID, Component>
+{
+  HashMap<UUID, Component> removed;
+
+  for (auto& [contextId, context] : mContexts) {
+    auto& comps = context->get_comps();
+    if (comps.contains(componentId)) {
+      removed.try_emplace(contextId, comps.erase(componentId));
+    }
+  }
+
+  return removed;
+}
+
 void ContextManager::on_new_component_attr(const UUID&        componentId,
                                            const std::string& name,
                                            const Attribute&   value)
