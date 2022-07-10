@@ -57,6 +57,16 @@ auto ComponentBundle::at(const UUID& componentId) const -> const Component&
   return lookup_in(mComps, componentId);
 }
 
+auto ComponentBundle::try_get(const UUID& componentId) -> Component*
+{
+  if (const auto iter = mComps.find(componentId); iter != mComps.end()) {
+    return &iter->second;
+  }
+  else {
+    return nullptr;
+  }
+}
+
 auto ComponentBundle::contains(const UUID& componentId) const -> bool
 {
   return mComps.contains(componentId);

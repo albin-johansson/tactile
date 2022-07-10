@@ -102,6 +102,7 @@ class ADocument
 
   virtual void register_context(Shared<IContext> context) = 0;
   virtual void unregister_context(const UUID& id) = 0;
+  [[nodiscard]] virtual auto get_contexts() -> ContextManager& = 0;
 
   /// Looks up an existing context in the document.
   [[nodiscard]] virtual auto get_context(const UUID& id) -> Shared<IContext> = 0;

@@ -44,6 +44,7 @@ class IElement;
 class IContext;
 class IContextVisitor;
 class ContextDelegate;
+class ContextManager;
 
 class PropertyBundle;
 

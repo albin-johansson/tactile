@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include "core/common/functional.hpp"
+#include "core/components/component_index.hpp"
 #include "core/layers/object_layer.hpp"
 #include "core/layers/tile_layer.hpp"
 #include "core/tilesets/tileset.hpp"
@@ -31,7 +32,9 @@ namespace tactile::test {
 
 MapBuilder::MapBuilder()
     : mDocument {std::make_unique<MapDocument>(Vector2f {32, 32}, 5, 5)}
-{}
+{
+  mDocument->set_component_index(std::make_shared<ComponentIndex>());
+}
 
 auto MapBuilder::build() -> MapBuilder
 {

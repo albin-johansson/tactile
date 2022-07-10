@@ -22,32 +22,44 @@
 #include <utility>  // move
 
 #include "core/components/component_index.hpp"
+#include "core/contexts/context_manager.hpp"
+#include "core/documents/document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-AddComponentAttrCmd::AddComponentAttrCmd(Shared<ComponentIndex> index,
-                                         const UUID&            componentId,
-                                         std::string            name)
-    : mIndex {std::move(index)}
+AddComponentAttrCmd::AddComponentAttrCmd(ADocument*  document,
+                                         const UUID& componentId,
+                                         std::string name)
+    : mDocument {document}
     , mComponentId {componentId}
     , mName {std::move(name)}
 {
-  if (!mIndex) {
-    throw TactileError {"Invalid null component index!"};
+  if (!mDocument) {
+    throw TactileError {"Invalid null document!"};
   }
 }
 
 void AddComponentAttrCmd::undo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto  index = mDocument->get_component_index();
+  auto& definition = index->at(mComponentId);
   definition.remove_attr(mName);
+
+  auto& contexts = mDocument->get_contexts();
+  contexts.on_removed_component_attr(definition.get_uuid(), mName);
 }
 
 void AddComponentAttrCmd::redo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto  index = mDocument->get_component_index();
+  auto& definition = index->at(mComponentId);
+
   definition.add_attr(mName);
+  const auto& value = definition.get_attr(mName);
+
+  auto& contexts = mDocument->get_contexts();
+  contexts.on_new_component_attr(definition.get_uuid(), mName, value);
 }
 
 auto AddComponentAttrCmd::get_name() const -> const char*

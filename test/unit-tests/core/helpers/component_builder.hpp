@@ -21,29 +21,25 @@
 
 #include <string>  // string
 
-#include "core/commands/command.hpp"
+#include "core/attribute.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+#include "core/components/component_index.hpp"
 
-namespace tactile {
+namespace tactile::test {
 
-/// A command for adding an attribute to a component definition.
-class AddComponentAttrCmd final : public ICommand
+class ComponentBuilder
 {
  public:
-  AddComponentAttrCmd(ADocument* document, const UUID& componentId, std::string name);
+  ComponentBuilder(Shared<ComponentIndex> index, std::string name);
 
-  void undo() override;
+  auto with_attr(std::string name, Attribute value = std::string {}) -> ComponentBuilder&;
 
-  void redo() override;
-
-  [[nodiscard]] auto get_name() const -> const char* override;
+  [[nodiscard]] auto result() -> UUID { return mComponentId; }
 
  private:
-  ADocument*  mDocument {};
-  UUID        mComponentId {};
-  std::string mName;
+  Shared<ComponentIndex> mIndex;
+  UUID                   mComponentId;
 };
 
-}  // namespace tactile
+}  // namespace tactile::test

@@ -17,33 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "component_builder.hpp"
 
-#include <string>  // string
+#include <utility>  // move
 
-#include "core/commands/command.hpp"
-#include "core/common/memory.hpp"
-#include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+namespace tactile::test {
 
-namespace tactile {
+ComponentBuilder::ComponentBuilder(Shared<ComponentIndex> index, std::string name)
+    : mIndex {std::move(index)}
+    , mComponentId {mIndex->define_comp(std::move(name))}
+{}
 
-/// A command for adding an attribute to a component definition.
-class AddComponentAttrCmd final : public ICommand
+auto ComponentBuilder::with_attr(std::string name, Attribute value) -> ComponentBuilder&
 {
- public:
-  AddComponentAttrCmd(ADocument* document, const UUID& componentId, std::string name);
+  auto& comp = mIndex->at(mComponentId);
+  comp.add_attr(std::move(name), std::move(value));
+  return *this;
+}
 
-  void undo() override;
-
-  void redo() override;
-
-  [[nodiscard]] auto get_name() const -> const char* override;
-
- private:
-  ADocument*  mDocument {};
-  UUID        mComponentId {};
-  std::string mName;
-};
-
-}  // namespace tactile
+}  // namespace tactile::test

@@ -28,6 +28,7 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
+#include "core/contexts/context_manager.hpp"
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
 #include "core/tilesets/tileset.hpp"
@@ -52,6 +53,8 @@ class TilesetDocument final : public ADocument
   void register_context(Shared<IContext> context) override;
 
   void unregister_context(const UUID& id) override;
+
+  [[nodiscard]] auto get_contexts() -> ContextManager& override;
 
   [[nodiscard]] auto get_context(const UUID& id) -> Shared<IContext> override;
 
@@ -85,9 +88,9 @@ class TilesetDocument final : public ADocument
   [[nodiscard]] auto view_tileset() const -> const Tileset& { return *mTileset; }
 
  private:
-  Shared<Tileset>                 mTileset;
-  Viewport                        mViewport;
-  HashMap<UUID, Shared<IContext>> mContexts;
+  Shared<Tileset> mTileset;
+  Viewport        mViewport;
+  ContextManager  mContexts;
 };
 
 }  // namespace tactile

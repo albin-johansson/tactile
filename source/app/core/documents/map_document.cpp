@@ -42,37 +42,35 @@ MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize
 
 void MapDocument::register_context(Shared<IContext> context)
 {
-  const auto id = context->get_uuid();
-  mContexts[id] = std::move(context);
+  mContexts.add_context(std::move(context));
 }
 
 void MapDocument::unregister_context(const UUID& id)
 {
-  if (const auto iter = mContexts.find(id); iter != mContexts.end()) {
-    mContexts.erase(iter);
+  mContexts.remove_context(id);
+  if (mActiveContext == id) {
+    mActiveContext = mMap->get_uuid();
+  }
+}
 
-    if (mActiveContext == id) {
-      mActiveContext = mMap->get_uuid();
-    }
-  }
-  else {
-    throw TactileError {"Tried to remove non-existent context!"};
-  }
+auto MapDocument::get_contexts() -> ContextManager&
+{
+  return mContexts;
 }
 
 auto MapDocument::get_context(const UUID& id) -> Shared<IContext>
 {
-  return lookup_in(mContexts, id);
+  return mContexts.get_context(id);
 }
 
 auto MapDocument::view_context(const UUID& id) const -> const IContext&
 {
-  return *lookup_in(mContexts, id);
+  return mContexts.view_context(id);
 }
 
 auto MapDocument::has_context(const UUID& id) const -> bool
 {
-  return mContexts.contains(id);
+  return mContexts.has_context(id);
 }
 
 void MapDocument::update()

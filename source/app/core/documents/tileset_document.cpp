@@ -41,37 +41,35 @@ TilesetDocument::TilesetDocument(const TilesetInfo& info)
 
 void TilesetDocument::register_context(Shared<IContext> context)
 {
-  const auto id = context->get_uuid();
-  mContexts[id] = std::move(context);
+  mContexts.add_context(std::move(context));
 }
 
 void TilesetDocument::unregister_context(const UUID& id)
 {
-  if (const auto iter = mContexts.find(id); iter != mContexts.end()) {
-    mContexts.erase(iter);
+  mContexts.remove_context(id);
+  if (mActiveContext == id) {
+    mActiveContext = mTileset->get_uuid();
+  }
+}
 
-    if (mActiveContext == id) {
-      mActiveContext = mTileset->get_uuid();
-    }
-  }
-  else {
-    throw TactileError {"Tried to unregister non-existent context!"};
-  }
+auto TilesetDocument::get_contexts() -> ContextManager&
+{
+  return mContexts;
 }
 
 auto TilesetDocument::get_context(const UUID& id) -> Shared<IContext>
 {
-  return lookup_in(mContexts, id);
+  return mContexts.get_context(id);
 }
 
 auto TilesetDocument::view_context(const UUID& id) const -> const IContext&
 {
-  return *lookup_in(mContexts, id);
+  return mContexts.view_context(id);
 }
 
 auto TilesetDocument::has_context(const UUID& id) const -> bool
 {
-  return mContexts.contains(id);
+  return mContexts.has_context(id);
 }
 
 void TilesetDocument::update()

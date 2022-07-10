@@ -24,6 +24,7 @@
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
+#include "core/common/ints.hpp"
 #include "core/common/uuid.hpp"
 
 namespace tactile {
@@ -42,7 +43,15 @@ class Component final
 
   void update_attr(std::string_view key, Attribute value);
 
+  void rename_attr(std::string_view oldKey, std::string newKey);
+
   [[nodiscard]] auto get_attr(std::string_view key) const -> const Attribute&;
+
+  [[nodiscard]] auto has_attr(std::string_view key) const -> bool;
+
+  [[nodiscard]] auto size() const -> usize;
+
+  [[nodiscard]] auto empty() const -> bool;
 
   [[nodiscard]] auto definition_id() const -> const UUID& { return mDefinitionId; }
 

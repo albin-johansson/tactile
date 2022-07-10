@@ -69,14 +69,12 @@ void ADocument::rename_component(const UUID& componentId, std::string name)
 
 void ADocument::add_component_attribute(const UUID& componentId, std::string name)
 {
-  get_history().exec<AddComponentAttrCmd>(mComponentIndex, componentId, std::move(name));
+  get_history().exec<AddComponentAttrCmd>(this, componentId, std::move(name));
 }
 
 void ADocument::remove_component_attribute(const UUID& componentId, std::string name)
 {
-  get_history().exec<RemoveComponentAttrCmd>(mComponentIndex,
-                                             componentId,
-                                             std::move(name));
+  get_history().exec<RemoveComponentAttrCmd>(this, componentId, std::move(name));
 }
 
 void ADocument::rename_component_attribute(const UUID& componentId,

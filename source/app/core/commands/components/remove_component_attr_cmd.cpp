@@ -22,34 +22,51 @@
 #include <utility>  // move
 
 #include "core/components/component_index.hpp"
+#include "core/contexts/context_manager.hpp"
+#include "core/documents/document.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-RemoveComponentAttrCmd::RemoveComponentAttrCmd(Shared<ComponentIndex> index,
-                                               const UUID&            componentId,
-                                               std::string            attribute)
-    : mIndex {std::move(index)}
+RemoveComponentAttrCmd::RemoveComponentAttrCmd(ADocument*  document,
+                                               const UUID& componentId,
+                                               std::string attribute)
+    : mDocument {document}
     , mComponentId {componentId}
     , mAttributeName {std::move(attribute)}
 {
-  if (!mIndex) {
+  if (!mDocument) {
+    throw TactileError {"Invalid null document!"};
+  }
+  else if (!mDocument->get_component_index()) {
     throw TactileError {"Invalid null component index!"};
   }
 }
 
 void RemoveComponentAttrCmd::undo()
 {
-  auto& definition = mIndex->at(mComponentId);
-  definition.add_attr(mAttributeName, mPreviousValue.value());
+  auto  index = mDocument->get_component_index();
+  auto& definition = index->at(mComponentId);
+
+  auto value = mPreviousValue.value();
+  definition.add_attr(mAttributeName, value);
+
+  auto& contexts = mDocument->get_contexts();
+  contexts.on_new_component_attr(definition.get_uuid(), mAttributeName, value);
+
   mPreviousValue.reset();
 }
 
 void RemoveComponentAttrCmd::redo()
 {
-  auto& definition = mIndex->at(mComponentId);
+  auto  index = mDocument->get_component_index();
+  auto& definition = index->at(mComponentId);
+
   mPreviousValue = definition.get_attr(mAttributeName);
   definition.remove_attr(mAttributeName);
+
+  auto& contexts = mDocument->get_contexts();
+  contexts.on_removed_component_attr(definition.get_uuid(), mAttributeName);
 }
 
 auto RemoveComponentAttrCmd::get_name() const -> const char*

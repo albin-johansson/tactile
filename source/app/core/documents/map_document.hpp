@@ -31,6 +31,7 @@
 #include "core/common/memory.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
+#include "core/contexts/context_manager.hpp"
 #include "core/documents/document.hpp"
 #include "core/fwd.hpp"
 #include "core/layers/layer_type.hpp"
@@ -50,6 +51,8 @@ class MapDocument final : public ADocument
   void register_context(Shared<IContext> context) override;
 
   void unregister_context(const UUID& id) override;
+
+  [[nodiscard]] auto get_contexts() -> ContextManager& override;
 
   [[nodiscard]] auto get_context(const UUID& id) -> Shared<IContext> override;
 
@@ -138,10 +141,10 @@ class MapDocument final : public ADocument
   [[nodiscard]] auto get_map() const -> const Map& { return *mMap; }
 
  private:
-  Shared<Map>                     mMap;
-  Viewport                        mViewport;
-  ToolManager                     mTools;
-  HashMap<UUID, Shared<IContext>> mContexts;
+  Shared<Map>    mMap;
+  Viewport       mViewport;
+  ToolManager    mTools;
+  ContextManager mContexts;
 };
 
 }  // namespace tactile

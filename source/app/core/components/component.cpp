@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -56,9 +57,36 @@ void Component::update_attr(std::string_view key, Attribute value)
   attr = std::move(value);
 }
 
+void Component::rename_attr(std::string_view oldKey, std::string newKey)
+{
+  TACTILE_ASSERT(!mAttributes.contains(newKey));
+  auto value = lookup_in(mAttributes, oldKey);
+
+  if (const auto iter = mAttributes.find(oldKey); iter != mAttributes.end()) {
+    mAttributes.erase(iter);
+  }
+
+  mAttributes[std::move(newKey)] = std::move(value);
+}
+
 auto Component::get_attr(std::string_view key) const -> const Attribute&
 {
   return lookup_in(mAttributes, key);
+}
+
+auto Component::has_attr(std::string_view key) const -> bool
+{
+  return mAttributes.contains(key);
+}
+
+auto Component::size() const -> usize
+{
+  return mAttributes.size();
+}
+
+auto Component::empty() const -> bool
+{
+  return mAttributes.empty();
 }
 
 }  // namespace tactile
