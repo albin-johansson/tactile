@@ -40,21 +40,25 @@ enum class EditorTheme
   Ash = 8,
   Diamond = 9,
   Joker = 10,
-  Raspberry = 11
+  Raspberry = 11,
+  Stealth = 12,
+  Vanilla = 13
 };
 
-constexpr std::array themes = {EditorTheme::DearDark,
-                               EditorTheme::DearLight,
-                               EditorTheme::Ruby,
-                               EditorTheme::Sapphire,
-                               EditorTheme::Emerald,
-                               EditorTheme::Amethyst,
-                               EditorTheme::Amber,
-                               EditorTheme::Diamond,
-                               EditorTheme::Joker,
-                               EditorTheme::Raspberry,
-                               EditorTheme::Nocturnal,
-                               EditorTheme::Ash};
+constexpr std::array light_themes {EditorTheme::DearLight, EditorTheme::Vanilla};
+
+constexpr std::array dark_themes {EditorTheme::DearDark,
+                                  EditorTheme::Ruby,
+                                  EditorTheme::Sapphire,
+                                  EditorTheme::Emerald,
+                                  EditorTheme::Amethyst,
+                                  EditorTheme::Amber,
+                                  EditorTheme::Diamond,
+                                  EditorTheme::Joker,
+                                  EditorTheme::Raspberry,
+                                  EditorTheme::Nocturnal,
+                                  EditorTheme::Ash,
+                                  EditorTheme::Stealth};
 
 [[nodiscard]] auto human_readable_name(EditorTheme theme) -> std::string_view;
 

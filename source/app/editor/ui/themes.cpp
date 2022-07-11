@@ -27,15 +27,12 @@
 namespace tactile::ui {
 namespace {
 
-constexpr float _accent_opacity = 0.65f;
-constexpr float _area_opacity = 0.40f;
-
 struct ThemeCfg final
 {
   ImVec4 accent {};
-  ImVec4 selection {};
-  ImVec4 bg {};
-  ImVec4 area {};
+  ImVec4 accent_active {};
+  ImVec4 window {};
+  ImVec4 child {};
   ImVec4 text {};
 };
 
@@ -44,11 +41,11 @@ struct ThemeCfg final
   ThemeCfg cfg;
 
   const auto h = hue / 255.0f;
-  cfg.bg = ImColor::HSV(h, 0.20f, 0.08f, 1.00f);
-  cfg.area = ImColor::HSV(h, 0.60f, 0.40f, _area_opacity);
+  cfg.window = ImColor::HSV(h, 0.20f, 0.08f, 1.00f);
+  cfg.child = ImColor::HSV(h, 0.60f, 0.40f, 1.00f);
 
-  cfg.accent = ImColor::HSV(h, 0.70f, 0.60f, _accent_opacity);
-  cfg.selection = ImColor::HSV(h, 0.70f, 0.80f, _accent_opacity);
+  cfg.accent = ImColor::HSV(h, 0.70f, 0.60f, 1.00f);
+  cfg.accent_active = ImColor::HSV(h, 0.70f, 0.80f, 1.00f);
 
   cfg.text = ImColor::HSV(h, 0.10f, 1.00f, 1.00f);
 
@@ -67,80 +64,77 @@ void _apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
   };
 
   const ImVec4 transparent {0, 0, 0, 0};
-  //  const ImVec4 magenta{1.0f, 0.2f, 1.0f, 1.0f};
-  //  const ImVec4 cyan{0.2f, 0.8f, 0.8f, 1.0f};
-  //  const ImVec4 red{1.0f, 0.0f, 0.0f, 1.0f};
-  //  const ImVec4 green{0.0f, 1.0f, 0.0f, 1.0f};
-  //  const ImVec4 blue{0.0f, 0.0f, 1.0f, 1.0f};
 
   const auto component = _with_alpha(cfg.accent, 0.60f);
-  const auto componentActive = _with_alpha(component, 1.00f);
-  const auto componentHover = _with_alpha(cfg.selection, 0.80f);
+  const auto componentActive = cfg.accent_active;
+  const auto componentHovered = _with_alpha(componentActive, 0.70f);
 
   set(ImGuiCol_Text, cfg.text);
   set(ImGuiCol_TextDisabled, _with_alpha(cfg.text, 0.60f));
   set(ImGuiCol_TextSelectedBg, _with_alpha(cfg.accent, 0.40f));
 
-  set(ImGuiCol_Border, _with_alpha(cfg.accent, 0.50f));
+  set(ImGuiCol_Border, _with_alpha(cfg.accent, 0.80f));
   set(ImGuiCol_BorderShadow, transparent);
 
-  set(ImGuiCol_Separator, _with_alpha(cfg.accent, 0.15f));
-  set(ImGuiCol_SeparatorHovered, _with_alpha(cfg.accent, 0.15f));
-  set(ImGuiCol_SeparatorActive, _with_alpha(cfg.accent, 0.15f));
+  set(ImGuiCol_Separator, _with_alpha(component, 0.20f));
+  set(ImGuiCol_SeparatorHovered, component);
+  set(ImGuiCol_SeparatorActive, component);
 
-  set(ImGuiCol_WindowBg, cfg.bg);
-  set(ImGuiCol_PopupBg, _with_alpha(cfg.bg, 0.95f));
-  set(ImGuiCol_ChildBg, _with_alpha(cfg.area, 0.10f));
+  set(ImGuiCol_WindowBg, cfg.window);
+  set(ImGuiCol_PopupBg, cfg.window);
+  set(ImGuiCol_ChildBg, _with_alpha(cfg.child, 0.10f));
 
-  set(ImGuiCol_FrameBg, _with_alpha(cfg.area, 0.70f));
+  set(ImGuiCol_FrameBg, _with_alpha(cfg.child, 0.70f));
   set(ImGuiCol_FrameBgHovered, _with_alpha(cfg.accent, 0.70f));
   set(ImGuiCol_FrameBgActive, _with_alpha(cfg.accent, 0.70f));
 
-  set(ImGuiCol_TitleBg, _with_alpha(cfg.area, 1.00f));
-  set(ImGuiCol_TitleBgActive, _with_alpha(cfg.area, 1.00f));
-  set(ImGuiCol_TitleBgCollapsed, _with_alpha(cfg.area, 1.00f));
+  set(ImGuiCol_TitleBg, cfg.child);
+  set(ImGuiCol_TitleBgActive, cfg.child);
+  set(ImGuiCol_TitleBgCollapsed, cfg.child);
 
   set(ImGuiCol_Button, component);
-  set(ImGuiCol_ButtonHovered, componentHover);
+  set(ImGuiCol_ButtonHovered, componentHovered);
   set(ImGuiCol_ButtonActive, componentActive);
 
-  set(ImGuiCol_MenuBarBg, _with_alpha(cfg.area, 0.57f));
-  set(ImGuiCol_ScrollbarBg, _with_alpha(cfg.area, 1.00f));
-  set(ImGuiCol_ScrollbarGrab, _with_alpha(cfg.accent, 0.31f));
-  set(ImGuiCol_ScrollbarGrabHovered, _with_alpha(cfg.accent, 0.78f));
-  set(ImGuiCol_ScrollbarGrabActive, _with_alpha(cfg.accent, 1.00f));
+  set(ImGuiCol_MenuBarBg, _with_alpha(cfg.child, 0.57f));
 
-  set(ImGuiCol_CheckMark, _with_alpha(cfg.accent, 1.00f));
-  set(ImGuiCol_SliderGrab, _with_alpha(cfg.accent, 0.24f));
-  set(ImGuiCol_SliderGrabActive, _with_alpha(cfg.accent, 1.00f));
+  set(ImGuiCol_ScrollbarBg, cfg.child);
+  set(ImGuiCol_ScrollbarGrab, component);
+  set(ImGuiCol_ScrollbarGrabHovered, componentHovered);
+  set(ImGuiCol_ScrollbarGrabActive, componentActive);
 
-  set(ImGuiCol_Header, _with_alpha(cfg.accent, 0.70f));
-  set(ImGuiCol_HeaderHovered, _with_alpha(cfg.accent, 0.80f));
-  set(ImGuiCol_HeaderActive, cfg.selection);
+  set(ImGuiCol_CheckMark, cfg.accent);
 
-  set(ImGuiCol_TabActive, cfg.selection);  // TODO make more distinctive
-  set(ImGuiCol_TabUnfocusedActive, _with_alpha(cfg.selection, 0.80f));
+  set(ImGuiCol_SliderGrab, component);
+  set(ImGuiCol_SliderGrabActive, componentActive);
+
+  set(ImGuiCol_Header, componentActive);
+  set(ImGuiCol_HeaderHovered, componentHovered);
+  set(ImGuiCol_HeaderActive, componentActive);
+
+  set(ImGuiCol_TabActive, componentActive);
+  set(ImGuiCol_TabUnfocusedActive, _with_alpha(componentActive, 0.80f));
   set(ImGuiCol_Tab, _with_alpha(component, 0.25f));
   set(ImGuiCol_TabUnfocused, _with_alpha(component, 0.25f));
-  set(ImGuiCol_TabHovered, componentHover);
+  set(ImGuiCol_TabHovered, componentHovered);
 
-  set(ImGuiCol_TableHeaderBg, _with_alpha(cfg.area, 1.00f));
-  set(ImGuiCol_TableRowBg, cfg.bg);
-  set(ImGuiCol_TableRowBgAlt, _with_alpha(cfg.area, 0.15f));
-  set(ImGuiCol_TableBorderStrong, _with_alpha(cfg.text, 0.10f));
+  set(ImGuiCol_TableHeaderBg, cfg.child);
+  set(ImGuiCol_TableRowBg, cfg.window);
+  set(ImGuiCol_TableRowBgAlt, _with_alpha(cfg.child, 0.15f));
+  set(ImGuiCol_TableBorderStrong, _with_alpha(cfg.text, 0.20f));
   set(ImGuiCol_TableBorderLight, _with_alpha(cfg.text, 0.10f));
 
   set(ImGuiCol_DockingPreview, _with_alpha(cfg.accent, 0.80f));
   set(ImGuiCol_DockingEmptyBg, _with_alpha(cfg.accent, 0.80f));
 
-  set(ImGuiCol_ResizeGrip, _with_alpha(cfg.selection, 0.20f));
-  set(ImGuiCol_ResizeGripHovered, _with_alpha(cfg.selection, 0.78f));
-  set(ImGuiCol_ResizeGripActive, _with_alpha(cfg.selection, 1.00f));
+  set(ImGuiCol_ResizeGrip, _with_alpha(cfg.text, 0.20f));
+  set(ImGuiCol_ResizeGripHovered, _with_alpha(cfg.text, 0.80f));
+  set(ImGuiCol_ResizeGripActive, _with_alpha(cfg.text, 1.00f));
 
   set(ImGuiCol_PlotLines, _with_alpha(cfg.text, 0.63f));
   set(ImGuiCol_PlotHistogram, _with_alpha(cfg.text, 0.63f));
-  set(ImGuiCol_PlotLinesHovered, _with_alpha(cfg.accent, 1.00f));
-  set(ImGuiCol_PlotHistogramHovered, _with_alpha(cfg.accent, 1.00f));
+  set(ImGuiCol_PlotLinesHovered, cfg.accent);
+  set(ImGuiCol_PlotHistogramHovered, cfg.accent);
 
   set(ImGuiCol_ModalWindowDimBg, {0.50f, 0.50f, 0.50f, 0.3f});
 }
@@ -185,6 +179,12 @@ auto human_readable_name(const EditorTheme theme) -> std::string_view
 
     case EditorTheme::Raspberry:
       return "Raspberry";
+
+    case EditorTheme::Stealth:
+      return "Stealth";
+
+    case EditorTheme::Vanilla:
+      return "Vanilla";
 
     default:
       throw TactileError("Invalid theme enumerator!");
@@ -267,20 +267,42 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
 
     case EditorTheme::Nocturnal:
       _apply_theme_from_config(style,
-                               {.accent = {0.0f, 0.5f, 0.5f, _accent_opacity},
-                                .selection = {0.0f, 0.6f, 0.6f, 0.9f},
-                                .bg = {0.04f, 0.04f, 0.04f, 1.00f},
-                                .area = {0.15f, 0.15f, 0.15f, _area_opacity},
+                               {.accent = {0.0f, 0.5f, 0.5f, 1.0f},
+                                .accent_active = {0.0f, 0.6f, 0.6f, 1.0f},
+                                .window = {0.04f, 0.04f, 0.04f, 1.0f},
+                                .child = {0.1f, 0.1f, 0.1f, 1.0f},
                                 .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
     case EditorTheme::Ash:
       _apply_theme_from_config(style,
-                               {.accent = {0.4f, 0.4f, 0.4f, _accent_opacity},
-                                .selection = {0.5f, 0.5f, 0.5f, 0.9f},
-                                .bg = {0.04f, 0.04f, 0.04f, 1.00f},
-                                .area = {0.15f, 0.15f, 0.15f, _area_opacity},
+                               {.accent = {0.4f, 0.4f, 0.4f, 1.0f},
+                                .accent_active = {0.5f, 0.5f, 0.5f, 1.0f},
+                                .window = {0.0f, 0.0f, 0.0f, 1.0f},
+                                .child = {0.1f, 0.1f, 0.1f, 1.0f},
                                 .text = {1.0f, 1.0f, 1.0f, 1.0f}});
+      break;
+
+    case EditorTheme::Stealth:
+      _apply_theme_from_config(style,
+                               ThemeCfg {
+                                   .accent = {0.20f, 0.20f, 0.20f, 1.0f},
+                                   .accent_active = {0.25f, 0.25f, 0.25f, 1},
+                                   .window = {0.00f, 0.00f, 0.00f, 1},
+                                   .child = {0.08f, 0.08f, 0.08f, 1},
+                                   .text = {1.0f, 1.0f, 1.0f, 1},
+                               });
+      break;
+
+    case EditorTheme::Vanilla:
+      _apply_theme_from_config(style,
+                               ThemeCfg {
+                                   .accent = {0.84f, 0.82f, 0.67f, 1},
+                                   .accent_active = {0.94f, 0.92f, 0.77f, 1},
+                                   .window = {0.90f, 0.88f, 0.73f, 1},
+                                   .child = {0.80f, 0.78f, 0.64f, 1},
+                                   .text = {0.10f, 0.10f, 0.10f, 1},
+                               });
       break;
   }
 }

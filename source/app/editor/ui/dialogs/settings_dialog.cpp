@@ -181,14 +181,23 @@ void SettingsDialog::update_appearance_tab()
     ImGui::Spacing();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (Combo combo {"Theme", human_readable_name(mUiSettings.theme).data()};
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Theme:");
+    ImGui::SameLine();
+    if (Combo combo {"##Theme", human_readable_name(mUiSettings.theme).data()};
         combo.is_open()) {
-      for (const auto theme : themes) {
-        if (ImGui::Selectable(human_readable_name(theme).data())) {
-          mUiSettings.theme = theme;
-          apply_theme(ImGui::GetStyle(), theme);
+      const auto showThemes = [this](auto& themes) {
+        for (const auto theme : themes) {
+          if (ImGui::Selectable(human_readable_name(theme).data())) {
+            mUiSettings.theme = theme;
+            apply_theme(ImGui::GetStyle(), theme);
+          }
         }
-      }
+      };
+
+      showThemes(light_themes);
+      ImGui::Separator();
+      showThemes(dark_themes);
     }
 
     if (auto arr = color_to_array(mUiSettings.viewport_background);
@@ -246,7 +255,10 @@ void SettingsDialog::update_export_tab()
 
     ImGui::Spacing();
 
-    if (Combo format("Preferred Format", mUiSettings.preferred_format.c_str());
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Preferred Format:");
+    ImGui::SameLine();
+    if (Combo format("##PreferredFormat", mUiSettings.preferred_format.c_str());
         format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
         mUiSettings.preferred_format = "YAML";
