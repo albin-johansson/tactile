@@ -22,15 +22,11 @@
 #include <centurion/opengl.hpp>
 #include <centurion/window.hpp>
 
-#include "tactile.hpp"
+#include "core/common/macros.hpp"
 
 namespace tactile {
 
-/**
- * \brief Handles the configuration of the Dear ImGui context.
- *
- * \ingroup cfg
- */
+/// Handles the configuration of the Dear ImGui context.
 class ImGuiContext final
 {
  public:
@@ -38,12 +34,12 @@ class ImGuiContext final
 
   ~ImGuiContext();
 
-  TACTILE_DEFAULT_COPY(ImGuiContext)
-  TACTILE_DEFAULT_MOVE(ImGuiContext)
+  TACTILE_DEFAULT_COPY(ImGuiContext);
+  TACTILE_DEFAULT_MOVE(ImGuiContext);
 
  private:
   /* This is used as a workaround to annoying unit test issues for Windows CI builds */
-  bool mInitializedBackend{};
+  bool mInitializedBackend {};
 };
 
 }  // namespace tactile

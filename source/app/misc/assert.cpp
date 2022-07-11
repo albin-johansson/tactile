@@ -19,11 +19,9 @@
 
 #include "assert.hpp"
 
-#include <cstdlib>  // abort
+#include <exception>  // terminate
 
-#include "crash.hpp"
-#include "logging.hpp"
-#include "stacktrace.hpp"
+#include <spdlog/spdlog.h>
 
 namespace boost {
 
@@ -31,21 +29,15 @@ void assertion_failed_msg(const char* expr,
                           const char* msg,
                           const char* /* function */,
                           const char* file,
-                          const long line)
+                          const long  line)
 
 {
-  const stacktrace::stacktrace trace{};
-
-  tactile::print(fmt::color::orange_red,
-                 "{}:{} expression '{}' evaluated to false: {}\n{}",
-                 file,
-                 line,
-                 expr,
-                 msg ? msg : "N/A",
-                 trace);
-  tactile::dump_crash_info(trace);
-
-  std::abort();
+  spdlog::critical("{}:{} expression '{}' evaluated to false: {}",
+                   file,
+                   line,
+                   expr,
+                   msg ? msg : "N/A");
+  std::terminate();
 }
 
 }  // namespace boost

@@ -21,22 +21,18 @@
 
 #include <centurion/mouse.hpp>
 
-#include "tile_pos.hpp"
+#include "core/common/math.hpp"
+#include "core/tile_pos.hpp"
 
 namespace tactile {
 
-/**
- * \brief Provides general information about the mouse, used in response to mouse events.
- *
- * \ingroup core
- */
+/// Provides general information about the mouse, used in response to mouse events.
 struct MouseInfo final
 {
-  float x{};                     ///< The mouse x-coordinate.
-  float y{};                     ///< The mouse y-coordinate.
-  TilePos position_in_viewport;  ///< The hovered tile position.
-  cen::mouse_button button{};    ///< The activated mouse button.
-  bool is_within_contents{};     ///< Is the mouse within the tile contents?
+  Vector2f          pos {};                     /// The raw mouse position.
+  TilePos           position_in_viewport;       /// The hovered tile position.
+  cen::mouse_button button {};                  /// The activated mouse button.
+  bool              is_within_contents : 1 {};  /// Is the mouse within the tile contents?
 };
 
 }  // namespace tactile

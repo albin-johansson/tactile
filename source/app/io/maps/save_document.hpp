@@ -19,17 +19,11 @@
 
 #pragma once
 
-#include "editor/document.hpp"
+#include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
-/**
- * \brief Saves a map document.
- *
- * \param document the map document that will be saved.
- *
- * \ingroup io
- */
-void save_document(const Document& document);
+/// Saves a map document.
+void save_document(const MapDocument& document);
 
-}  // namespace tactile
+}  // namespace tactile::io

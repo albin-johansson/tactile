@@ -26,7 +26,7 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "tactile.hpp"
+#include "core/common/ints.hpp"
 
 namespace tactile {
 
@@ -40,14 +40,14 @@ class FormattedString final
     const auto result =
         fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
     *result.out = '\0'; /* Ensure null-terminator */
-    mSize = ((std::min))(result.size, Capacity);
+    mSize = (std::min)(result.size, Capacity);
   }
 
   [[nodiscard]] auto data() const noexcept -> const char* { return mBuffer.data(); }
 
   [[nodiscard]] auto view() const noexcept -> std::string_view
   {
-    return std::string_view{mBuffer.data(), mSize};
+    return std::string_view {mBuffer.data(), mSize};
   }
 
   [[nodiscard]] auto size() const noexcept -> usize { return view().size(); }
@@ -56,7 +56,7 @@ class FormattedString final
 
  private:
   std::array<char, Capacity + 1> mBuffer;  // NOLINT
-  usize mSize{};
+  usize                          mSize {};
 };
 
 }  // namespace tactile

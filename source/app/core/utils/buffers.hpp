@@ -23,32 +23,18 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include "tactile.hpp"
-
 namespace tactile {
 
-/// \addtogroup utils
-/// \{
-
-/**
- * \brief Zeroes the values of a buffer.
- *
- * \tparam Size the size of the buffer.
- *
- * \param buffer the buffer that will be zeroed.
- */
+/// Zeroes the values of a buffer.
 void zero_buffer(std::span<char> buffer);
 
 /**
- * \brief Copies a string into a character buffer.
+ * Copies a string into a character buffer.
  *
- * \details This function will zero the entire buffer before writing the string
- * into it.
+ * This function will zero the entire buffer before writing the string into it.
  *
- * \note The string can safely be longer than what the buffer can hold, the
- * buffer will be filled with as many characters as possible.
- *
- * \tparam Size the size of the buffer.
+ * Note, the string can safely be longer than what the buffer can hold, the buffer will be
+ * filled with as many characters as possible.
  *
  * \param buffer the buffer that will be modified.
  * \param str the string that will be copied into the buffer.
@@ -56,12 +42,10 @@ void zero_buffer(std::span<char> buffer);
 void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
 
 /**
- * \brief Creates a string from a character buffer.
+ * Creates a string from a character buffer.
  *
- * \details The function assumes that the "valid" part of the buffer is terminated with a
- * null character ('\0').
- *
- * \tparam Size the size of the buffer.
+ * The function assumes that the "valid" part of the buffer is terminated with a null
+ * character ('\0').
  *
  * \param buffer the character buffer that contains the string data.
  *
@@ -69,9 +53,22 @@ void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
  */
 [[nodiscard]] auto create_string_from_buffer(std::span<const char> buffer) -> std::string;
 
+/**
+ * Creates a string view from a character buffer.
+ *
+ * The function assumes that the "valid" part of the buffer is terminated with a null
+ * character ('\0').
+ *
+ * Beware of the lifetime of the pointed-to buffer! The buffer must not be destroyed
+ * before the returned string view. This function is useful to obtain a temporary
+ * string-like object to perform queries on, use the string overload if you need to store
+ * the returned string.
+ *
+ * \param buffer the character buffer that contains the string data.
+ *
+ * \return a string created from the buffer.
+ */
 [[nodiscard]] auto create_string_view_from_buffer(std::span<const char> buffer)
     -> std::string_view;
-
-/// \} End of group utils
 
 }  // namespace tactile

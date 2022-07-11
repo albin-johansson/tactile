@@ -21,8 +21,10 @@
 
 #include <algorithm>  // find
 #include <cstring>    // memset
+#include <iterator>   // distance
 
-#include "misc/assert.hpp"
+#include "core/common/ints.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 
@@ -51,20 +53,19 @@ void copy_string_into_buffer(std::span<char> buffer, std::string_view str)
 
 auto create_string_from_buffer(std::span<const char> buffer) -> std::string
 {
-  return std::string{create_string_view_from_buffer(buffer)};
+  return std::string {create_string_view_from_buffer(buffer)};
 }
 
 auto create_string_view_from_buffer(std::span<const char> buffer) -> std::string_view
 {
-  TACTILE_ASSERT(std::find(buffer.begin(), buffer.end(), '\0') != buffer.end());
-  usize index = 0;
-
-  // TODO use algorithm and throw if there is no '\0'?
-  while (index < buffer.size() && buffer[index] != '\0') {
-    ++index;
+  const auto iter = std::find(buffer.begin(), buffer.end(), '\0');
+  if (iter != buffer.end()) {
+    const auto index = static_cast<usize>(std::distance(buffer.begin(), iter));
+    return std::string_view {buffer.data(), index};
   }
-
-  return std::string_view{buffer.data(), index};
+  else {
+    throw TactileError {"Invalid string buffer!"};
+  }
 }
 
 }  // namespace tactile

@@ -19,25 +19,27 @@
 
 #pragma once
 
-#include <centurion/system.hpp>
+#include <chrono>  // steady_clock, duration_cast, milliseconds
 
-#include "build.hpp"
-#include "misc/logging.hpp"
+#include <fmt/chrono.h>
+#include <spdlog/spdlog.h>
 
-#if TACTILE_RELEASE
-#define TACTILE_PROFILE_START
+#include "meta/build.hpp"
+
+#define TACTILE_PROFILE_START \
+  const auto tactile_profile_start = std::chrono::steady_clock::now();
+
+#define TACTILE_PROFILE_END(Msg)                                                   \
+  const auto tactile_profile_end = std::chrono::steady_clock::now();               \
+  const auto tactile_profile_diff = tactile_profile_end - tactile_profile_start;   \
+  const auto tactile_profile_ms =                                                  \
+      std::chrono::duration_cast<std::chrono::milliseconds>(tactile_profile_diff); \
+  spdlog::debug(Msg " in {}", tactile_profile_ms);
+
+#if TACTILE_DEBUG
+#define TACTILE_DEBUG_PROFILE_START TACTILE_PROFILE_START
+#define TACTILE_DEBUG_PROFILE_END(Msg) TACTILE_PROFILE_END(Msg)
 #else
-#define TACTILE_PROFILE_START const auto tactile_profile_start = cen::now();
-#endif  // TACTILE_RELEASE
-
-#if TACTILE_RELEASE
-#define TACTILE_PROFILE_END(Msg)
-#else
-#define TACTILE_PROFILE_END(Msg)                                           \
-  const auto tactile_profile_end = cen::now();                             \
-  const auto tactile_profile_diff =                                        \
-      static_cast<double>(tactile_profile_end - tactile_profile_start);    \
-  const auto tactile_profile_freq = static_cast<double>(cen::frequency()); \
-  tactile::log_debug(Msg " in {0:.6f} seconds",                            \
-                     tactile_profile_diff / tactile_profile_freq);
-#endif  // TACTILE_RELEASE
+#define TACTILE_DEBUG_PROFILE_START
+#define TACTILE_DEBUG_PROFILE_END(Msg)
+#endif  // TACTILE_DEBUG

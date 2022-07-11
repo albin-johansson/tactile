@@ -3,6 +3,11 @@ BasedOnStyle: Google
 Language: Cpp
 Standard: c++20
 
+AlignTrailingComments: true
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveBitFields: Consecutive
+QualifierAlignment: Left
+
 ColumnLimit: 90
 IndentWidth: 2
 
@@ -38,6 +43,8 @@ AllowShortLoopsOnASingleLine: false
 BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
 BreakBeforeConceptDeclarations: true
+
+SpaceBeforeCpp11BracedList: true
 
 BreakBeforeBraces: Custom
 BraceWrapping:

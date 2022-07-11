@@ -19,10 +19,10 @@
 
 #include "yaml_utils.hpp"
 
-#include "core/utils/strings.hpp"
-#include "misc/throw.hpp"
+#include "core/common/filesystem.hpp"
+#include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&
 {
@@ -56,7 +56,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
       break;
 
     default:
-      panic("Invalid attribute type!");
+      throw TactileError("Invalid attribute type!");
   }
 
   return emitter;
@@ -67,4 +67,4 @@ auto operator<<(YAML::Emitter& emitter, const AttributeType type) -> YAML::Emitt
   return emitter << stringify(type);
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

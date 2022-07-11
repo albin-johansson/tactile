@@ -22,17 +22,14 @@
 #include <centurion/fwd.hpp>
 #include <entt/fwd.hpp>
 
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 
 namespace tactile {
 
-class WidgetManager;
-
 void load_default_shortcuts();
 
-void update_shortcuts(const DocumentModel& model,
-                      const WidgetManager& widgets,
+void update_shortcuts(const DocumentModel&       model,
                       const cen::keyboard_event& event,
-                      entt::dispatcher& dispatcher);
+                      entt::dispatcher&          dispatcher);
 
 }  // namespace tactile

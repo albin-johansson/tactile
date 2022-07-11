@@ -21,19 +21,19 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "io/maps/parser/parse_data.hpp"
-#include "tactile.hpp"
+#include "io/fwd.hpp"
+#include "io/maps/parser/parse_error.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 [[nodiscard]] auto parse_component_definitions(const YAML::Node& node, ir::MapData& data)
     -> ParseError;
 
-[[nodiscard]] auto parse_properties(const YAML::Node& node,
-                                    ir::AttributeContextData& context) -> ParseError;
+[[nodiscard]] auto parse_properties(const YAML::Node& node, ir::ContextData& context)
+    -> ParseError;
 
-[[nodiscard]] auto parse_components(const YAML::Node& node,
+[[nodiscard]] auto parse_components(const YAML::Node&  node,
                                     const ir::MapData& map,
-                                    ir::AttributeContextData& context) -> ParseError;
+                                    ir::ContextData&   context) -> ParseError;
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

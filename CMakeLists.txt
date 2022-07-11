@@ -12,6 +12,7 @@ project(tactile
         VERSION 0.4.0
         LANGUAGES CXX)
 
+message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
 message("[Tactile]: Current version is ${CMAKE_PROJECT_VERSION}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
@@ -22,8 +23,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
   message("[Tactile]: Enabling IPO...")
   set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 endif ()
-
-message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARY_DIR ${ROOT_DIR}/lib)
@@ -45,6 +44,7 @@ find_package(Boost REQUIRED COMPONENTS container exception)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
@@ -53,10 +53,11 @@ find_package(Protobuf CONFIG REQUIRED)
 find_package(pugixml CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2-image CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 find_package(tinyfiledialogs CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 
-find_path(STB_INCLUDE_DIRS "stb.h")
+find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 

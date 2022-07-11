@@ -19,11 +19,11 @@
 
 #include "parse_data.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
-void ParseData::set_path(const std::filesystem::path& path)
+void ParseData::set_path(const fs::path& path)
 {
-  mPath = std::filesystem::absolute(path);
+  mPath = fs::absolute(path);
 }
 
 void ParseData::set_error(const ParseError error)
@@ -31,7 +31,7 @@ void ParseData::set_error(const ParseError error)
   mError = error;
 }
 
-auto ParseData::path() const -> const std::filesystem::path&
+auto ParseData::path() const -> const fs::path&
 {
   return mPath;
 }
@@ -51,4 +51,4 @@ auto ParseData::data() const -> const ir::MapData&
   return mData;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

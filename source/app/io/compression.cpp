@@ -1,10 +1,10 @@
 #include "compression.hpp"
 
+#include <spdlog/spdlog.h>
 #include <zlib.h>
 
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {
@@ -14,16 +14,16 @@ constexpr usize _buffer_size = 32'768;
 using ProcessFunction = int (*)(z_stream*, int);
 using EndFunction = int (*)(z_stream*);
 
-[[nodiscard]] auto _process_data(z_stream& stream,
+[[nodiscard]] auto _process_data(z_stream&       stream,
                                  ProcessFunction process,
-                                 EndFunction end,
-                                 const int flush) -> std::optional<ZlibData>
+                                 EndFunction     end,
+                                 const int       flush) -> std::optional<ZlibData>
 {
   ZlibData out;
   out.reserve(128);
 
   Bytef buffer[_buffer_size];
-  int status{};
+  int   status {};
 
   do {
     stream.next_out = buffer;
@@ -61,21 +61,21 @@ using EndFunction = int (*)(z_stream*);
       return Z_BEST_SPEED;
 
     default:
-      panic("Invalid Zlib compression level!");
+      throw TactileError {"Invalid Zlib compression level!"};
   }
 }
 
 }  // namespace
 
-auto compress_with_zlib(const void* data,
-                        const usize bytes,
+auto compress_with_zlib(const void*                data,
+                        const usize                bytes,
                         const ZlibCompressionLevel level) -> std::optional<ZlibData>
 {
   TACTILE_ASSERT(data);
-  z_stream stream{};
+  z_stream stream {};
 
   if (deflateInit(&stream, _convert(level)) != Z_OK) {
-    log_error("Could not initialize z_stream for data compression!");
+    spdlog::error("Could not initialize z_stream for data compression!");
     return std::nullopt;
   }
 
@@ -88,10 +88,10 @@ auto compress_with_zlib(const void* data,
 auto decompress_with_zlib(const void* data, const usize bytes) -> std::optional<ZlibData>
 {
   TACTILE_ASSERT(data);
-  z_stream stream{};
+  z_stream stream {};
 
   if (inflateInit(&stream) != Z_OK) {
-    log_error("Could not initialize z_stream for data decompression!");
+    spdlog::error("Could not initialize z_stream for data decompression!");
     return std::nullopt;
   }
 

@@ -25,44 +25,50 @@ struct MouseInfo;
 struct Region;
 
 class Attribute;
-class TextureManager;
 class TilePos;
 
-namespace comp {
+class DocumentModel;
+class ADocument;
+class MapDocument;
+class TilesetDocument;
 
-struct ActiveAttributeContext;
-struct ActiveLayer;
-struct ActiveObject;
-struct ActiveTileset;
-struct ActiveTool;
+class ICommand;
+class CommandStack;
 
-struct CurrentRectangleStroke;
-struct CurrentEllipseStroke;
+class TextureManager;
+class IRenderer;
+class ToolManager;
 
-struct AnimationFrame;
-struct Animation;
-struct Viewport;
-struct Parent;
+class IElement;
 
-struct AttributeContext;
-struct Property;
-struct ComponentDef;
-struct Component;
+class IContext;
+class IContextVisitor;
+class ContextDelegate;
+class ContextManager;
 
-struct Layer;
-struct TileLayer;
-struct ObjectLayer;
-struct GroupLayer;
-struct LayerTreeNode;
-struct Object;
-struct ObjectDragInfo;
+class PropertyBundle;
 
-struct Texture;
-struct TilesetContext;
-struct Tileset;
-struct TilesetCache;
-struct UvTileSize;
-struct MetaTile;
+class ComponentIndex;
+class ComponentBundle;
+class ComponentDefinition;
+class Component;
 
-}  // namespace comp
+class ILayerVisitor;
+class IConstLayerVisitor;
+class ILayer;
+class TileLayer;
+class ObjectLayer;
+class GroupLayer;
+class LayerDelegate;
+
+class Map;
+class Object;
+class Viewport;
+
+struct TilesetInfo;
+class TilesetBundle;
+class Tileset;
+class TilesetRef;
+class Tile;
+
 }  // namespace tactile

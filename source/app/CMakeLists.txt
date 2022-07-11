@@ -17,7 +17,6 @@ add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 target_include_directories(${TACTILE_LIB}
                            PUBLIC
                            ${PROJECT_SOURCE_DIR}
-                           ${ROOT_DIR}/modules/tactile-base
 
                            SYSTEM PUBLIC
                            ${LIBRARY_DIR}/centurion
@@ -36,6 +35,7 @@ target_link_libraries(${TACTILE_LIB}
                       EnTT::EnTT
                       magic_enum::magic_enum
                       fmt::fmt
+                      glm::glm
                       protobuf::libprotobuf
                       yaml-cpp
                       nlohmann_json::nlohmann_json
@@ -47,6 +47,7 @@ target_link_libraries(${TACTILE_LIB}
                       Boost::boost
                       Boost::container
                       Boost::exception
+                      spdlog::spdlog
                       )
 
 target_compile_definitions(${TACTILE_LIB}
@@ -58,6 +59,9 @@ target_compile_definitions(${TACTILE_LIB}
                            GLEW_NO_GLU
                            BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
+                           BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
+                           ENTT_STANDARD_CPP
+                           SPDLOG_FMT_EXTERNAL
                            )
 
 if (MSVC)
@@ -107,21 +111,30 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <algorithm>
                           <array>
                           <charconv>
+                          <chrono>
                           <concepts>
                           <cstddef>
                           <cstdint>
                           <cstring>
                           <cstdlib>
+                          <ctime>
                           <cmath>
+                          <deque>
+                          <exception>
                           <filesystem>
                           <fstream>
                           <functional>
+                          <iterator>
                           <limits>
+                          <locale>
                           <map>
                           <memory>
                           <optional>
+                          <ostream>
+                          <queue>
                           <random>
                           <span>
+                          <sstream>
                           <string>
                           <string_view>
                           <system_error>
@@ -130,8 +143,6 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <utility>
                           <variant>
                           <vector>
-
-                          <imgui.h>
                           )
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})

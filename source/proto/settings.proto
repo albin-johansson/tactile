@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package tactile.proto;
 
-/* Remember to keep these values synced with tactile::OverlayPos! */
+/* Remember to keep these values synced with tactile::io::OverlayPos! */
 enum OverlayPos {
   OVERLAY_POS_TOP_LEFT = 0;
   OVERLAY_POS_TOP_RIGHT = 1;
@@ -10,7 +10,7 @@ enum OverlayPos {
   OVERLAY_POS_BOTTOM_RIGHT = 3;
 }
 
-/* Remember to keep these values synced with tactile::EditorTheme! */
+/* Remember to keep these values synced with tactile::io::EditorTheme! */
 enum Theme {
   THEME_DEAR_DARK = 0;
   THEME_DEAR_LIGHT = 1;
@@ -24,6 +24,8 @@ enum Theme {
   THEME_DIAMOND = 9;
   THEME_JOKER = 10;
   THEME_RASPBERRY = 11;
+  THEME_STEALTH = 12;
+  THEME_VANILLA = 13;
 }
 
 message Color {

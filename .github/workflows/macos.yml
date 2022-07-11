@@ -1,6 +1,6 @@
 name: "CI: macOS"
 
-on: [ push, pull_request ]
+on: [ push ]
 
 env:
   CC: /usr/local/opt/llvm/bin/clang
@@ -8,7 +8,6 @@ env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_TARGET_TRIPLET: x64-osx
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
-  VCPKG_COMMIT_ID: e0c3408c778c54788393c4a739f6f3507aff77cb
   VCPKG_CACHE_EDITION: 1
 
 jobs:
@@ -44,7 +43,7 @@ jobs:
             !${{env.VCPKG_ROOT}}\packages
             !${{env.VCPKG_ROOT}}\downloads
             !${{env.VCPKG_ROOT}}\installed
-          key: tactile-macos-vcpkg-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
+          key: tactile-macos-vcpkg-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'

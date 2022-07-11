@@ -21,11 +21,12 @@
 
 #include <pugixml.hpp>
 
-#include "io/maps/parser/parse_data.hpp"
+#include "io/fwd.hpp"
+#include "io/maps/parser/parse_error.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
-[[nodiscard]] auto parse_properties(pugi::xml_node node,
-                                    ir::AttributeContextData& context) -> ParseError;
+[[nodiscard]] auto parse_properties(pugi::xml_node node, ir::ContextData& context)
+    -> ParseError;
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

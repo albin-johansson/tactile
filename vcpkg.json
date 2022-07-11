@@ -6,16 +6,18 @@
   "maintainers": [
     "albin-johansson"
   ],
-  "builtin-baseline": "e0c3408c778c54788393c4a739f6f3507aff77cb",
+  "builtin-baseline": "98f8d00e89fb6a8019c2045cfa1edbe9d92d3405",
   "dependencies": [
     "boost-assert",
     "boost-container",
     "boost-exception",
     "boost-stacktrace",
+    "boost-uuid",
     "cppcodec",
     "entt",
     "fmt",
     "glew",
+    "glm",
     "gtest",
     {
       "name": "imgui",
@@ -31,6 +33,7 @@
     "pugixml",
     "sdl2",
     "sdl2-image",
+    "spdlog",
     "stb",
     "tinyfiledialogs",
     "yaml-cpp",

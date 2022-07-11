@@ -21,46 +21,44 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 
-#include <memory>  // unique_ptr
-
 #include <GL/glew.h>
+#include <spdlog/spdlog.h>
 #include <stb_image.h>
 
-#include "misc/logging.hpp"
+#include "core/common/memory.hpp"
 
 namespace tactile {
 namespace {
 
-struct texture_data_deleter final
+struct TextureDataDeleter final
 {
   void operator()(uchar* data) noexcept { stbi_image_free(data); }
 };
 
-using texture_data_ptr = std::unique_ptr<uchar, texture_data_deleter>;
+using TextureDataPtr = Unique<uchar, TextureDataDeleter>;
 
 }  // namespace
 
 TextureManager::~TextureManager()
 {
   for (const auto texture : mTextures) {
-    log_debug("Deleting texture {}", texture);
+    spdlog::debug("Deleting texture {}", texture);
     glDeleteTextures(1, &texture);
   }
 
   mTextures.clear();
 }
 
-auto TextureManager::load(const std::filesystem::path& path)
-    -> std::optional<comp::Texture>
+auto TextureManager::load(const fs::path& path) -> Maybe<TextureInfo>
 {
-  comp::Texture texture;
+  TextureInfo texture;
   texture.path = path;
 
   // Load from file
-  texture_data_ptr data{
-      stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4)};
+  TextureDataPtr data {
+      stbi_load(path.string().c_str(), &texture.size.x, &texture.size.y, nullptr, 4)};
   if (!data) {
-    return std::nullopt;
+    return nothing;
   }
 
   // Create a OpenGL texture identifier
@@ -83,14 +81,14 @@ auto TextureManager::load(const std::filesystem::path& path)
   glTexImage2D(GL_TEXTURE_2D,
                0,
                GL_RGBA,
-               texture.width,
-               texture.height,
+               texture.size.x,
+               texture.size.y,
                0,
                GL_RGBA,
                GL_UNSIGNED_BYTE,
                data.get());
 
-  log_debug("Loaded texture with ID {}", texture.id);
+  spdlog::debug("Loaded texture with ID {}", texture.id);
   mTextures.push_back(texture.id);
 
   return texture;

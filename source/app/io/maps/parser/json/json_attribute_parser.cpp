@@ -25,14 +25,15 @@
 
 #include <nlohmann/json.hpp>
 
+#include "io/maps/ir.hpp"
 #include "io/maps/json_utils.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_value(const nlohmann::json& json,
+[[nodiscard]] auto _parse_value(const nlohmann::json&  json,
                                 const std::string_view type,
-                                Attribute& value) -> ParseError
+                                Attribute&             value) -> ParseError
 {
   if (type == "string") {
     value = as_string(json, "value").value();
@@ -47,11 +48,11 @@ namespace {
     value = as_bool(json, "value").value();
   }
   else if (type == "file") {
-    std::filesystem::path path = as_string(json, "value").value();
+    fs::path path = as_string(json, "value").value();
     value = std::move(path);
   }
   else if (type == "object") {
-    value = object_t{as_int(json, "value").value()};
+    value = object_t {as_int(json, "value").value()};
   }
   else if (type == "color") {
     const auto hex = as_string(json, "value").value();
@@ -66,19 +67,19 @@ namespace {
         value = *color;
       }
       else {
-        return ParseError::corrupt_property_value;
+        return ParseError::CorruptPropertyValue;
       }
     }
   }
   else {
-    return ParseError::unsupported_property_type;
+    return ParseError::UnsupportedPropertyType;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto _parse_property(const nlohmann::json& json,
-                                   ir::AttributeContextData& contextData) -> ParseError
+                                   ir::ContextData&      contextData) -> ParseError
 {
   std::string propertyName;
 
@@ -86,37 +87,37 @@ namespace {
     propertyName = std::move(*name);
   }
   else {
-    return ParseError::no_property_name;
+    return ParseError::NoPropertyName;
   }
 
   auto& value = contextData.properties[std::move(propertyName)];
 
   if (auto type = as_string(json, "type")) {
-    if (const auto err = _parse_value(json, *type, value); err != ParseError::none) {
+    if (const auto err = _parse_value(json, *type, value); err != ParseError::None) {
       return err;
     }
   }
   else {
-    return ParseError::no_property_type;
+    return ParseError::NoPropertyType;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto parse_properties(const nlohmann::json& json, ir::AttributeContextData& contextData)
+auto parse_properties(const nlohmann::json& json, ir::ContextData& contextData)
     -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [_, value] : it->items()) {
-      if (const auto err = _parse_property(value, contextData); err != ParseError::none) {
+      if (const auto err = _parse_property(value, contextData); err != ParseError::None) {
         return err;
       }
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

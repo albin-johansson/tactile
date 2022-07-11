@@ -29,8 +29,7 @@ struct CenterViewportShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct DecreaseViewportZoomShortcut final : AShortcut
@@ -39,8 +38,7 @@ struct DecreaseViewportZoomShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct IncreaseViewportZoomShortcut final : AShortcut
@@ -49,8 +47,7 @@ struct IncreaseViewportZoomShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct IncreaseFontSizeShortcut final : AShortcut
@@ -59,8 +56,7 @@ struct IncreaseFontSizeShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct DecreaseFontSizeShortcut final : AShortcut
@@ -69,8 +65,7 @@ struct DecreaseFontSizeShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct PanUpShortcut final : AShortcut
@@ -79,8 +74,7 @@ struct PanUpShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct PanDownShortcut final : AShortcut
@@ -89,8 +83,7 @@ struct PanDownShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct PanLeftShortcut final : AShortcut
@@ -99,8 +92,7 @@ struct PanLeftShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct PanRightShortcut final : AShortcut
@@ -109,8 +101,7 @@ struct PanRightShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct ToggleGridShortcut final : AShortcut
@@ -125,6 +116,8 @@ struct ToggleLayerHighlightShortcut final : AShortcut
   ToggleLayerHighlightShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 struct ToggleUiShortcut final : AShortcut
@@ -133,8 +126,7 @@ struct ToggleUiShortcut final : AShortcut
 
   void activate(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto is_enabled(const DocumentModel& model,
-                                const WidgetManager& widgets) const -> bool override;
+  [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
 }  // namespace tactile

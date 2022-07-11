@@ -19,17 +19,16 @@
 
 #pragma once
 
-#include <filesystem>  // path
-
 #include <nlohmann/json_fwd.hpp>
 
-#include "io/maps/ir.hpp"
+#include "core/common/filesystem.hpp"
+#include "io/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 [[nodiscard]] auto parse_tilesets(const nlohmann::json& json,
-                                  ir::MapData& mapData,
-                                  const std::filesystem::path& dir) -> ParseError;
+                                  ir::MapData&          mapData,
+                                  const fs::path&       dir) -> ParseError;
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

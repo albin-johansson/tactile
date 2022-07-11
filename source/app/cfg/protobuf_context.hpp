@@ -21,11 +21,7 @@
 
 namespace tactile {
 
-/**
- * \brief Handles the loading and unloading of the Protobuf library.
- *
- * \ingroup cfg
- */
+/// Handles the loading and unloading of the Protobuf library.
 class ProtobufContext final
 {
  public:

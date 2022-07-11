@@ -23,15 +23,11 @@
 
 namespace tactile {
 
-/**
- * \brief Represents a region of a grid.
- *
- * \ingroup core
- */
+/// Represents a region of a grid.
 struct Region final
 {
-  TilePos begin;  ///< The top-left position.
-  TilePos end;    ///< The bottom-right position.
+  TilePos begin;  /// The top-left position.
+  TilePos end;    /// The bottom-right position.
 
   [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
 };

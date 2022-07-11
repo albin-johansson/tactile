@@ -35,6 +35,8 @@ simply stored as a string of integers separated by spaces (potentially formatted
 
 ## `Layer`
 
+TODO v2: consider removing `id`
+
 |    Attribute |   Type   | Required | Default | Description                                          |
 |-------------:|:--------:|:--------:|:-------:|:-----------------------------------------------------|
 |       `name` | `string` |   Yes    |   N/A   | The name associated with the layer.                  |
@@ -111,6 +113,8 @@ y: 456
 The `TilesetRef` node provides information about an external tileset definition, and are always stored in the main
 tilemap file.
 
+TODO v2: change `first-global-id` to `first-tile`.
+
 |         Attribute |   Type   | Required | Description                                           |
 |------------------:|:--------:|:--------:|:------------------------------------------------------|
 | `first-global-id` |  `int`   |   Yes    | The first global tile ID associated with the tileset. |
@@ -163,6 +167,8 @@ image-height: 1024
 
 The `Tile` node provides additional information about tiles in a tileset.
 
+TODO v2: change `id` to `index`.
+
 |    Attribute |   Type   | Required | Description                      |
 |-------------:|:--------:|:--------:|:---------------------------------|
 |         `id` |  `int`   |   Yes    | Local ID of the associated tile. |
@@ -184,6 +190,8 @@ animation:
 ### `Frame`
 
 The `Frame` node represents a frame in an animation.
+
+TODO v2: change `tile` to `tile-index`.
 
 |  Attribute | Type  | Required | Description                                                    |
 |-----------:|:-----:|:--------:|:---------------------------------------------------------------|
