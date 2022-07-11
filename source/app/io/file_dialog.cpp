@@ -23,10 +23,10 @@
 
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
-constexpr int _num_map_patterns = 6;
+constexpr int         _num_map_patterns = 6;
 constexpr const char* _map_patterns[] = {"*.yaml",  //
                                          "*.yml",   //
                                          "*.json",  //
@@ -35,20 +35,20 @@ constexpr const char* _map_patterns[] = {"*.yaml",  //
                                          "*.xml"};
 constexpr const char* _map_pattern_descriptor = "Map files";
 
-constexpr int _num_image_patterns = 3;
+constexpr int         _num_image_patterns = 3;
 constexpr const char* _image_patterns[] = {"*.png", "*.jpg", "*.jpeg"};
 constexpr const char* _image_pattern_descriptor = "Image files";
 
 }  // namespace
 
-FileDialog::FileDialog(const char* path) : mPath{path} {}
+FileDialog::FileDialog(const char* path) : mPath {path} {}
 
 auto FileDialog::is_okay() const noexcept -> bool
 {
   return mPath != nullptr;
 }
 
-auto FileDialog::path() const -> std::filesystem::path
+auto FileDialog::path() const -> fs::path
 {
   TACTILE_ASSERT(is_okay());
   return {mPath};
@@ -97,4 +97,4 @@ auto FileDialog::save_image() -> FileDialog
                                 _image_pattern_descriptor)};
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

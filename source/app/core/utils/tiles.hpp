@@ -19,31 +19,36 @@
 
 #pragma once
 
-#include "core/components/layers.hpp"
-#include "core/utils/sfinae.hpp"
-#include "tactile.hpp"
+#include <concepts>  // integral
+#include <vector>    // vector
+
+#include "core/common/identifiers.hpp"
+#include "core/common/ints.hpp"
 
 namespace tactile {
+
+using TileRow = std::vector<TileID>;
+using TileMatrix = std::vector<TileRow>;
 
 template <typename T>
 struct MatrixCoords final
 {
-  T row{};
-  T col{};
+  T row {};
+  T col {};
 };
 
 /**
- * \brief Converts a matrix index to the corresponding row/column pair.
+ * Converts a matrix index to the corresponding row/column pair.
  *
- * \details This function is useful when parsing tile streams from save files, where you
- * are likely to want to convert the indices to more intuitive matrix coordinates.
+ * This function is useful when parsing tile streams from save files, where you are likely
+ * to want to convert the indices to more intuitive matrix coordinates.
  *
  * \param index the index of the cell to determine the coordinates of.
  * \param nColumns the total number of columns in the matrix.
  *
  * \return a pair encoding the matrix coordinates as (row, column).
  */
-template <typename T, is_integral<T> = 0>
+template <std::integral T>
 [[nodiscard]] constexpr auto to_matrix_coords(const T index, const T nColumns) noexcept
     -> MatrixCoords<T>
 {
@@ -53,7 +58,7 @@ template <typename T, is_integral<T> = 0>
 [[nodiscard]] auto make_tile_row(usize nCols) -> TileRow;
 
 /**
- * \brief Creates a tile matrix with the specified dimensions.
+ * Creates a tile matrix with the specified dimensions.
  *
  * \param nRows the number or rows.
  * \param nCols the number of columns.

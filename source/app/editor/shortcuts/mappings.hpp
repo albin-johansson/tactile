@@ -22,7 +22,6 @@
 #include <centurion/keyboard.hpp>
 
 #include "meta/build.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
 

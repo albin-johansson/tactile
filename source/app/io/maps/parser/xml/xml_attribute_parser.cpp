@@ -19,17 +19,18 @@
 
 #include "xml_attribute_parser.hpp"
 
-#include <cstring>     // strcmp
-#include <filesystem>  // path
-#include <string>      // string
-#include <utility>     // move
+#include <cstring>  // strcmp
+#include <string>   // string
+#include <utility>  // move
 
 #include <centurion/color.hpp>
 
+#include "core/common/filesystem.hpp"
+#include "io/maps/ir.hpp"
 #include "io/maps/xml_utils.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _parse_value(pugi::xml_node node, const char* type, Attribute& value)
@@ -50,11 +51,11 @@ namespace {
     value = bool_attribute(node, "value").value();
   }
   else if (std::strcmp(type, "file") == 0) {
-    std::filesystem::path path = string_attribute(node, "value").value();
+    fs::path path = string_attribute(node, "value").value();
     value = std::move(path);
   }
   else if (std::strcmp(type, "object") == 0) {
-    value = object_t{int_attribute(node, "value").value()};
+    value = object_t {int_attribute(node, "value").value()};
   }
   else if (std::strcmp(type, "color") == 0) {
     const auto hex = string_attribute(node, "value").value();
@@ -67,18 +68,18 @@ namespace {
         value = *color;
       }
       else {
-        return ParseError::corrupt_property_value;
+        return ParseError::CorruptPropertyValue;
       }
     }
   }
   else {
-    return ParseError::unsupported_property_type;
+    return ParseError::UnsupportedPropertyType;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_property(pugi::xml_node node, ir::AttributeContextData& context)
+[[nodiscard]] auto _parse_property(pugi::xml_node node, ir::ContextData& context)
     -> ParseError
 {
   std::string propertyName;
@@ -87,7 +88,7 @@ namespace {
     propertyName = std::move(*name);
   }
   else {
-    return ParseError::no_property_name;
+    return ParseError::NoPropertyName;
   }
 
   auto& value = context.properties[std::move(propertyName)];
@@ -95,26 +96,25 @@ namespace {
   /* String properties may exclude the type attribute */
   const char* type = node.attribute("type").as_string("string");
 
-  if (const auto err = _parse_value(node, type, value); err != ParseError::none) {
+  if (const auto err = _parse_value(node, type, value); err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto parse_properties(pugi::xml_node node, ir::AttributeContextData& context)
-    -> ParseError
+auto parse_properties(pugi::xml_node node, ir::ContextData& context) -> ParseError
 {
   for (const auto propertyNode : node.child("properties").children("property")) {
     if (const auto err = _parse_property(propertyNode, context);
-        err != ParseError::none) {
+        err != ParseError::None) {
       return err;
     }
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

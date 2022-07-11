@@ -19,20 +19,22 @@
 
 #include "view_shortcuts.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
-#include "cfg/fonts.hpp"
-#include "editor/events/misc_events.hpp"
-#include "editor/events/viewport_events.hpp"
-#include "editor/gui/widget_manager.hpp"
-#include "editor/model.hpp"
+#include "core/events/misc_events.hpp"
+#include "core/events/viewport_events.hpp"
+#include "core/model.hpp"
+#include "core/viewport.hpp"
+#include "editor/shortcuts/mappings.hpp"
+#include "editor/ui/fonts.hpp"
+#include "editor/ui/ui.hpp"
 #include "io/persistence/preferences.hpp"
-#include "mappings.hpp"
 
 namespace tactile {
 
 CenterViewportShortcut::CenterViewportShortcut()
-    : AShortcut{cen::scancodes::space, cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::space, cen::key_mod::lshift}
 {}
 
 void CenterViewportShortcut::activate(entt::dispatcher& dispatcher)
@@ -40,8 +42,7 @@ void CenterViewportShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<CenterViewportEvent>();
 }
 
-auto CenterViewportShortcut::is_enabled(const DocumentModel& model,
-                                        const WidgetManager&) const -> bool
+auto CenterViewportShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -49,7 +50,7 @@ auto CenterViewportShortcut::is_enabled(const DocumentModel& model,
 /* ------------------------------------------------------------------------------------ */
 
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier}
+    : AShortcut {cen::scan_code {SDLK_MINUS}, primary_modifier}
 {}
 
 void DecreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
@@ -57,16 +58,16 @@ void DecreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<DecreaseZoomEvent>();
 }
 
-auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
-                                              const WidgetManager&) const -> bool
+auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.can_decrease_viewport_tile_size();
+  const auto* document = model.active_document();
+  return document && document->get_viewport().can_zoom_out();
 }
 
 /* ------------------------------------------------------------------------------------ */
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
-    : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier}
+    : AShortcut {cen::scan_code {SDLK_PLUS}, primary_modifier}
 {}
 
 void IncreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
@@ -74,8 +75,7 @@ void IncreaseViewportZoomShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<IncreaseZoomEvent>();
 }
 
-auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
-                                              const WidgetManager&) const -> bool
+auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -83,7 +83,7 @@ auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model,
 /* ------------------------------------------------------------------------------------ */
 
 IncreaseFontSizeShortcut::IncreaseFontSizeShortcut()
-    : AShortcut{cen::scan_code{SDLK_PLUS}, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scan_code {SDLK_PLUS}, primary_modifier | cen::key_mod::lshift}
 {}
 
 void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
@@ -91,21 +91,16 @@ void IncreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<IncreaseFontSizeEvent>();
 }
 
-auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&,
-                                          const WidgetManager&) const -> bool
+auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 {
-  const auto& prefs = get_preferences();
-
   /* Check for modals to avoid case of changing font size when settings dialog is open */
-  return !ImGui::GetTopMostPopupModal() &&  //
-         !prefs.use_default_font() &&       //
-         prefs.font_size() < get_max_font_size();
+  return !ImGui::GetTopMostPopupModal() && ui::can_increase_font_size();
 }
 
 /* ------------------------------------------------------------------------------------ */
 
 DecreaseFontSizeShortcut::DecreaseFontSizeShortcut()
-    : AShortcut{cen::scan_code{SDLK_MINUS}, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scan_code {SDLK_MINUS}, primary_modifier | cen::key_mod::lshift}
 {}
 
 void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
@@ -113,21 +108,16 @@ void DecreaseFontSizeShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<DecreaseFontSizeEvent>();
 }
 
-auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&,
-                                          const WidgetManager&) const -> bool
+auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 {
-  const auto& prefs = get_preferences();
-
   /* Check for modals to avoid case of changing font size when settings dialog is open */
-  return !ImGui::GetTopMostPopupModal() &&  //
-         !prefs.use_default_font() &&       //
-         prefs.font_size() > get_min_font_size();
+  return !ImGui::GetTopMostPopupModal() && ui::can_decrease_font_size();
 }
 
 /* ------------------------------------------------------------------------------------ */
 
 PanUpShortcut::PanUpShortcut()
-    : AShortcut{cen::scancodes::up, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::up, primary_modifier | cen::key_mod::lshift}
 {}
 
 void PanUpShortcut::activate(entt::dispatcher& dispatcher)
@@ -135,8 +125,7 @@ void PanUpShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanUpEvent>();
 }
 
-auto PanUpShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto PanUpShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -144,7 +133,7 @@ auto PanUpShortcut::is_enabled(const DocumentModel& model, const WidgetManager&)
 /* ------------------------------------------------------------------------------------ */
 
 PanDownShortcut::PanDownShortcut()
-    : AShortcut{cen::scancodes::down, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::down, primary_modifier | cen::key_mod::lshift}
 {}
 
 void PanDownShortcut::activate(entt::dispatcher& dispatcher)
@@ -152,8 +141,7 @@ void PanDownShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanDownEvent>();
 }
 
-auto PanDownShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto PanDownShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -161,7 +149,7 @@ auto PanDownShortcut::is_enabled(const DocumentModel& model, const WidgetManager
 /* ------------------------------------------------------------------------------------ */
 
 PanLeftShortcut::PanLeftShortcut()
-    : AShortcut{cen::scancodes::left, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::left, primary_modifier | cen::key_mod::lshift}
 {}
 
 void PanLeftShortcut::activate(entt::dispatcher& dispatcher)
@@ -169,8 +157,7 @@ void PanLeftShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanLeftEvent>();
 }
 
-auto PanLeftShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto PanLeftShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
@@ -178,7 +165,7 @@ auto PanLeftShortcut::is_enabled(const DocumentModel& model, const WidgetManager
 /* ------------------------------------------------------------------------------------ */
 
 PanRightShortcut::PanRightShortcut()
-    : AShortcut{cen::scancodes::right, primary_modifier | cen::key_mod::lshift}
+    : AShortcut {cen::scancodes::right, primary_modifier | cen::key_mod::lshift}
 {}
 
 void PanRightShortcut::activate(entt::dispatcher& dispatcher)
@@ -186,48 +173,51 @@ void PanRightShortcut::activate(entt::dispatcher& dispatcher)
   dispatcher.enqueue<PanRightEvent>();
 }
 
-auto PanRightShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto PanRightShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
   return model.has_active_document();
 }
 
 /* ------------------------------------------------------------------------------------ */
 
-ToggleGridShortcut::ToggleGridShortcut() : AShortcut{cen::scancodes::g, primary_modifier}
+ToggleGridShortcut::ToggleGridShortcut() : AShortcut {cen::scancodes::g, primary_modifier}
 {}
 
 void ToggleGridShortcut::activate(entt::dispatcher&)
 {
-  auto& prefs = get_preferences();
-  prefs.set_grid_visible(!prefs.is_grid_visible());
+  auto& prefs = io::get_preferences();
+  prefs.show_grid = !prefs.show_grid;
 }
 
 /* ------------------------------------------------------------------------------------ */
 
 ToggleLayerHighlightShortcut::ToggleLayerHighlightShortcut()
-    : AShortcut{cen::scancodes::h}
+    : AShortcut {cen::scancodes::h}
 {}
 
 void ToggleLayerHighlightShortcut::activate(entt::dispatcher&)
 {
-  auto& prefs = get_preferences();
-  prefs.set_highlight_active_layer(!prefs.highlight_active_layer());
+  auto& prefs = io::get_preferences();
+  prefs.highlight_active_layer = !prefs.highlight_active_layer;
+}
+
+auto ToggleLayerHighlightShortcut::is_enabled(const DocumentModel& model) const -> bool
+{
+  return model.is_map_active();
 }
 
 /* ------------------------------------------------------------------------------------ */
 
-ToggleUiShortcut::ToggleUiShortcut() : AShortcut{cen::scancodes::tab} {}
+ToggleUiShortcut::ToggleUiShortcut() : AShortcut {cen::scancodes::tab} {}
 
 void ToggleUiShortcut::activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<ToggleUiEvent>();
 }
 
-auto ToggleUiShortcut::is_enabled(const DocumentModel& model, const WidgetManager&) const
-    -> bool
+auto ToggleUiShortcut::is_enabled(const DocumentModel& model) const -> bool
 {
-  return model.has_active_document() && is_editor_focused();
+  return model.has_active_document() && ui::is_editor_focused();
 }
 
 }  // namespace tactile

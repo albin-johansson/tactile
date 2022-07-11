@@ -25,7 +25,7 @@
 #include "editor/constants.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 auto collect_children(pugi::xml_node source, const char* name)
     -> std::vector<pugi::xml_node>
@@ -52,7 +52,7 @@ auto has_attribute(pugi::xml_node node, const char* attributeName) -> bool
 }
 
 auto string_attribute(pugi::xml_node node, const char* attributeName)
-    -> std::optional<std::string>
+    -> Maybe<std::string>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -60,11 +60,11 @@ auto string_attribute(pugi::xml_node node, const char* attributeName)
     return str;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 
-auto int_attribute(pugi::xml_node node, const char* attributeName) -> std::optional<int32>
+auto int_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<int32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -75,12 +75,11 @@ auto int_attribute(pugi::xml_node node, const char* attributeName) -> std::optio
     return value;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 
-auto uint_attribute(pugi::xml_node node, const char* attributeName)
-    -> std::optional<uint32>
+auto uint_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<uint32>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -91,12 +90,11 @@ auto uint_attribute(pugi::xml_node node, const char* attributeName)
     return value;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 
-auto float_attribute(pugi::xml_node node, const char* attributeName)
-    -> std::optional<float>
+auto float_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<float>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -107,11 +105,11 @@ auto float_attribute(pugi::xml_node node, const char* attributeName)
     return value;
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 
-auto bool_attribute(pugi::xml_node node, const char* attributeName) -> std::optional<bool>
+auto bool_attribute(pugi::xml_node node, const char* attributeName) -> Maybe<bool>
 {
   TACTILE_ASSERT(attributeName);
 
@@ -120,8 +118,8 @@ auto bool_attribute(pugi::xml_node node, const char* attributeName) -> std::opti
     return attribute.as_bool();
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

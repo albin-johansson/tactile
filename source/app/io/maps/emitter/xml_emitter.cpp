@@ -19,26 +19,25 @@
 
 #include "xml_emitter.hpp"
 
-#include <filesystem>  // path, relative
-#include <fstream>     // ofstream
-#include <ios>         // ios
-#include <sstream>     // stringstream
-#include <variant>     // get
+#include <fstream>  // ofstream
+#include <ios>      // ios
+#include <sstream>  // stringstream
+#include <variant>  // get
 
 #include <fmt/format.h>
 #include <pugixml.hpp>
+#include <spdlog/spdlog.h>
 
-#include "core/utils/strings.hpp"
-#include "emit_info.hpp"
+#include "core/common/filesystem.hpp"
+#include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/logging.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
-namespace tactile::emitter {
+namespace tactile::io {
 namespace {
 
-void _append_properties(pugi::xml_node node, const ir::AttributeContextData& contextData)
+void _append_properties(pugi::xml_node node, const ir::ContextData& contextData)
 {
   if (contextData.properties.empty()) {
     return;
@@ -105,20 +104,20 @@ void _append_object(pugi::xml_node node, const ir::ObjectData& objectData)
     objectNode.append_attribute("type").set_value(objectData.tag.c_str());
   }
 
-  if (objectData.x != 0.0f) {
-    objectNode.append_attribute("x").set_value(objectData.x);
+  if (objectData.pos.x != 0.0f) {
+    objectNode.append_attribute("x").set_value(objectData.pos.x);
   }
 
-  if (objectData.y != 0.0f) {
-    objectNode.append_attribute("y").set_value(objectData.y);
+  if (objectData.pos.y != 0.0f) {
+    objectNode.append_attribute("y").set_value(objectData.pos.y);
   }
 
-  if (objectData.width != 0.0f) {
-    objectNode.append_attribute("width").set_value(objectData.width);
+  if (objectData.size.x != 0.0f) {
+    objectNode.append_attribute("width").set_value(objectData.size.x);
   }
 
-  if (objectData.height != 0.0f) {
-    objectNode.append_attribute("height").set_value(objectData.height);
+  if (objectData.size.y != 0.0f) {
+    objectNode.append_attribute("height").set_value(objectData.size.y);
   }
 
   if (!objectData.visible) {
@@ -168,13 +167,13 @@ void _append_tile_layer(pugi::xml_node root, const ir::LayerData& layerData)
   const auto count = tileLayerData.row_count * tileLayerData.col_count;
 
   std::stringstream stream;
-  usize index = 0;
+  usize             index = 0;
 
-  const bool foldTileData = get_preferences().fold_tile_data();
+  const auto& prefs = get_preferences();
 
   for (usize row = 0; row < tileLayerData.row_count; ++row) {
     for (usize col = 0; col < tileLayerData.col_count; ++col) {
-      if (foldTileData && index == 0) {
+      if (prefs.fold_tile_data && index == 0) {
         stream << '\n';
       }
 
@@ -183,7 +182,7 @@ void _append_tile_layer(pugi::xml_node root, const ir::LayerData& layerData)
         stream << ',';
       }
 
-      if (foldTileData && (index + 1) % tileLayerData.col_count == 0) {
+      if (prefs.fold_tile_data && (index + 1) % tileLayerData.col_count == 0) {
         stream << '\n';
       }
 
@@ -233,7 +232,7 @@ void _append_layer(pugi::xml_node root, const ir::LayerData& layerData)
     }
 
     default:
-      panic("Invalid layer type!");
+      throw TactileError("Invalid layer type!");
   }
 }
 
@@ -266,14 +265,14 @@ void _append_fancy_tiles(pugi::xml_node node, const ir::TilesetData& tilesetData
   }
 }
 
-void _append_common_tileset_attributes(pugi::xml_node node,
+void _append_common_tileset_attributes(pugi::xml_node         node,
                                        const ir::TilesetData& tilesetData,
-                                       const std::filesystem::path& dir)
+                                       const fs::path&        dir)
 {
   node.append_attribute("name").set_value(tilesetData.name.c_str());
 
-  node.append_attribute("tilewidth").set_value(tilesetData.tile_width);
-  node.append_attribute("tileheight").set_value(tilesetData.tile_height);
+  node.append_attribute("tilewidth").set_value(tilesetData.tile_size.x);
+  node.append_attribute("tileheight").set_value(tilesetData.tile_size.y);
 
   node.append_attribute("tilecount").set_value(tilesetData.tile_count);
   node.append_attribute("columns").set_value(tilesetData.column_count);
@@ -281,21 +280,21 @@ void _append_common_tileset_attributes(pugi::xml_node node,
   {
     auto imageNode = node.append_child("image");
 
-    const auto source = convert_to_forward_slashes(
-        std::filesystem::relative(tilesetData.image_path, dir));
+    const auto source =
+        convert_to_forward_slashes(fs::relative(tilesetData.image_path, dir));
     imageNode.append_attribute("source").set_value(source.c_str());
 
-    imageNode.append_attribute("width").set_value(tilesetData.image_width);
-    imageNode.append_attribute("height").set_value(tilesetData.image_height);
+    imageNode.append_attribute("width").set_value(tilesetData.image_size.x);
+    imageNode.append_attribute("height").set_value(tilesetData.image_size.y);
   }
 
   _append_fancy_tiles(node, tilesetData);
   _append_properties(node, tilesetData.context);
 }
 
-void _append_embedded_tileset(pugi::xml_node root,
+void _append_embedded_tileset(pugi::xml_node         root,
                               const ir::TilesetData& tilesetData,
-                              const std::filesystem::path& dir)
+                              const fs::path&        dir)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tilesetData.first_tile);
@@ -303,18 +302,18 @@ void _append_embedded_tileset(pugi::xml_node root,
   _append_common_tileset_attributes(node, tilesetData, dir);
 }
 
-void _append_external_tileset(pugi::xml_node root,
+void _append_external_tileset(pugi::xml_node         root,
                               const ir::TilesetData& tilesetData,
-                              const std::string& filename)
+                              const std::string&     filename)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tilesetData.first_tile);
   node.append_attribute("source").set_value(filename.c_str());
 }
 
-void _emit_external_tileset_file(const std::filesystem::path& path,
+void _emit_external_tileset_file(const fs::path&        path,
                                  const ir::TilesetData& tilesetData,
-                                 const std::filesystem::path& dir)
+                                 const fs::path&        dir)
 {
   pugi::xml_document document;
 
@@ -324,16 +323,16 @@ void _emit_external_tileset_file(const std::filesystem::path& path,
 
   _append_common_tileset_attributes(root, tilesetData, dir);
 
-  std::ofstream stream{path, std::ios::out};
+  std::ofstream stream {path, std::ios::out};
   document.save(stream);
 }
 
-void _append_tileset(pugi::xml_node root,
+void _append_tileset(pugi::xml_node         root,
                      const ir::TilesetData& tilesetData,
-                     const std::filesystem::path& dir)
+                     const fs::path&        dir)
 {
   const auto& prefs = get_preferences();
-  if (prefs.embed_tilesets()) {
+  if (prefs.embed_tilesets) {
     _append_embedded_tileset(root, tilesetData, dir);
   }
   else {
@@ -347,7 +346,7 @@ void _append_tileset(pugi::xml_node root,
 void _append_root(pugi::xml_document& document, const EmitInfo& info)
 {
   const auto& mapData = info.data();
-  auto root = document.append_child("map");
+  auto        root = document.append_child("map");
 
   root.append_attribute("version").set_value(tiled_xml_format_version);
   root.append_attribute("tiledversion").set_value(tiled_version);
@@ -356,8 +355,8 @@ void _append_root(pugi::xml_document& document, const EmitInfo& info)
   root.append_attribute("renderorder").set_value("right-down");
   root.append_attribute("infinite").set_value(0);
 
-  root.append_attribute("tilewidth").set_value(mapData.tile_width);
-  root.append_attribute("tileheight").set_value(mapData.tile_height);
+  root.append_attribute("tilewidth").set_value(mapData.tile_size.x);
+  root.append_attribute("tileheight").set_value(mapData.tile_size.y);
 
   root.append_attribute("width").set_value(mapData.col_count);
   root.append_attribute("height").set_value(mapData.row_count);
@@ -381,14 +380,14 @@ void _append_root(pugi::xml_document& document, const EmitInfo& info)
 void emit_xml_map(const EmitInfo& info)
 {
   if (!info.data().component_definitions.empty()) {
-    log_warning("Component data will be ignored when saving the map as XML!");
+    spdlog::warn("Component data will be ignored when saving the map as XML!");
   }
 
   pugi::xml_document document;
   _append_root(document, info);
 
-  std::ofstream stream{info.destination_file(), std::ios::out};
+  std::ofstream stream {info.destination_file(), std::ios::out};
   document.save(stream, " ");
 }
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

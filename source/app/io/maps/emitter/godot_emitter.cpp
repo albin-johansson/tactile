@@ -28,39 +28,36 @@
 #include "io/maps/emitter/emit_info.hpp"
 #include "misc/logging.hpp"
 
-namespace tactile::emitter {
+namespace tactile::io {
 namespace {}
 
 void emit_godot_scene(const EmitInfo& info)
 {
-  log_debug("Saving Godot scene to {}...", absolute(info.destination_file()));
+  spdlog::debug("Saving Godot scene to {}...",
+                absolute(info.destination_file()).string());
 
   const auto& data = info.data();
   const usize nResources = data.tilesets.size() + 1;
 
-  std::ofstream stream{info.destination_file(), std::ios::out};
+  std::ofstream stream {info.destination_file(), std::ios::out};
   stream << fmt::format("[gd_scene load_steps={} format=2]\n", nResources);
 
-  for (int32 id = 1; const auto& tset : data.tilesets) {
-    stream << fmt::format(
-        "\n[ext_resource path=\"res://{}.tres\" type=\"TileSet\" id={}]\n",
-        tset.name,
-        id);
+  for (int32 id = 1; const auto& tileset : data.tilesets) {
+    stream << fmt::format(R"([ext_resource path="res://{}.tres" type="TileSet" id={}])",
+                          tileset.name,
+                          id);
   }
 
   stream << "\n[resource]\n";
 
   /* This is the root node */
-  stream << fmt::format("\n[node name=\"{}\" type=\"Node2D\"]\n",
-                        info.destination_file().filename());
+  stream << fmt::format(R"([node name="{}" type="Node2D"])",
+                        info.destination_file().filename().string());
 
   auto writeNode = [](const std::string_view name,
                       const std::string_view type,
                       const std::string_view parent) {
-    return fmt::format("\n[node name=\"{}\" type=\"{}\" parent=\"{}\"]",
-                       name,
-                       type,
-                       parent);
+    return fmt::format(R"([node name="{}" type="{}" parent="{}"])", name, type, parent);
   };
 
   for (const auto& layer : data.layers) {
@@ -78,4 +75,4 @@ void emit_godot_scene(const EmitInfo& info)
   }
 }
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

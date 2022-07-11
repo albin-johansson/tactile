@@ -24,36 +24,35 @@
 #include <nlohmann/json.hpp>
 
 #include "io/maps/json_utils.hpp"
-#include "json_attribute_parser.hpp"
-#include "json_layer_parser.hpp"
-#include "json_tileset_parser.hpp"
+#include "io/maps/parser/json/json_attribute_parser.hpp"
+#include "io/maps/parser/json/json_layer_parser.hpp"
+#include "io/maps/parser/json/json_tileset_parser.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 namespace {
 
 [[nodiscard]] auto _validate_map(const nlohmann::json& json) -> ParseError
 {
   if (const auto iter = json.find("orientation");
       iter == json.end() || iter->get<std::string>() != "orthogonal") {
-    return ParseError::unsupported_map_orientation;
+    return ParseError::UnsupportedMapOrientation;
   }
 
   if (const auto iter = json.find("infinite"); iter != json.end() && iter->get<bool>()) {
-    return ParseError::unsupported_infinite_map;
+    return ParseError::UnsupportedInfiniteMap;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_map(const std::filesystem::path& path, ir::MapData& mapData)
-    -> ParseError
+[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& mapData) -> ParseError
 {
   const auto json = read_json(path);
   if (!json) {
-    return ParseError::could_not_read_file;
+    return ParseError::CouldNotReadFile;
   }
 
-  if (const auto err = _validate_map(*json); err != ParseError::none) {
+  if (const auto err = _validate_map(*json); err != ParseError::None) {
     return err;
   }
 
@@ -61,65 +60,65 @@ namespace {
     mapData.col_count = *width;
   }
   else {
-    return ParseError::no_map_width;
+    return ParseError::NoMapWidth;
   }
 
   if (const auto height = as_uint(*json, "height")) {
     mapData.row_count = *height;
   }
   else {
-    return ParseError::no_map_height;
+    return ParseError::NoMapHeight;
   }
 
   if (const auto tw = as_int(*json, "tilewidth")) {
-    mapData.tile_width = *tw;
+    mapData.tile_size.x = *tw;
   }
   else {
-    return ParseError::no_map_tile_width;
+    return ParseError::NoMapTileWidth;
   }
 
   if (const auto th = as_int(*json, "tileheight")) {
-    mapData.tile_height = *th;
+    mapData.tile_size.y = *th;
   }
   else {
-    return ParseError::no_map_tile_height;
+    return ParseError::NoMapTileHeight;
   }
 
   if (const auto id = as_int(*json, "nextlayerid")) {
     mapData.next_layer_id = *id;
   }
   else {
-    return ParseError::no_map_next_layer_id;
+    return ParseError::NoMapNextLayerId;
   }
 
   if (const auto id = as_int(*json, "nextobjectid")) {
     mapData.next_object_id = *id;
   }
   else {
-    return ParseError::no_map_next_object_id;
+    return ParseError::NoMapNextObjectId;
   }
 
   const auto dir = path.parent_path();
 
-  if (const auto err = parse_tilesets(*json, mapData, dir); err != ParseError::none) {
+  if (const auto err = parse_tilesets(*json, mapData, dir); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = parse_layers(*json, mapData); err != ParseError::none) {
+  if (const auto err = parse_layers(*json, mapData); err != ParseError::None) {
     return err;
   }
 
   if (const auto err = parse_properties(*json, mapData.context);
-      err != ParseError::none) {
+      err != ParseError::None) {
     return err;
   }
 
-  return ParseError::none;
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto parse_json_map(const std::filesystem::path& path) -> ParseData
+auto parse_json_map(const fs::path& path) -> ParseData
 {
   ParseData result;
   result.set_path(path);
@@ -130,4 +129,4 @@ auto parse_json_map(const std::filesystem::path& path) -> ParseData
   return result;
 }
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io

@@ -19,34 +19,14 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
+#include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
-class TextureManager;
-
-/// \addtogroup io
-/// \{
-
-/**
- * \brief Restores the maps from the previous session.
- *
- * \param model the model that the previous session will be restored to.
- * \param textures the texture manager that will be used.
- *
- * \see `save_session()`
- */
+/// Restores the open documents from the last session.
 void restore_last_session(DocumentModel& model, TextureManager& textures);
 
-/**
- * \brief Saves the current session.
- *
- * \param model the model that represent the current session that will be saved.
- *
- * \see `restore_last_session()`
- */
+/// Saves the current session, i.e. the paths of the currently open documents.
 void save_session(const DocumentModel& model);
 
-/// \} End of group io
-
-}  // namespace tactile
+}  // namespace tactile::io

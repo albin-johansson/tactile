@@ -19,27 +19,34 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <optional>    // optional
-#include <vector>      // vector
+#include <vector>  // vector
 
-#include "core/components/texture.hpp"
-#include "tactile.hpp"
+#include "core/common/filesystem.hpp"
+#include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
+#include "core/common/math.hpp"
+#include "core/common/maybe.hpp"
 
 namespace tactile {
+
+struct TextureInfo final
+{
+  uint     id {};
+  Vector2i size {};
+  fs::path path;
+};
 
 class TextureManager final
 {
  public:
-  TACTILE_DEFAULT_COPY(TextureManager)
-  TACTILE_DEFAULT_MOVE(TextureManager)
+  TACTILE_DEFAULT_COPY(TextureManager);
+  TACTILE_DEFAULT_MOVE(TextureManager);
 
   TextureManager() = default;
 
   ~TextureManager();
 
-  [[nodiscard]] auto load(const std::filesystem::path& path)
-      -> std::optional<comp::Texture>;
+  [[nodiscard]] auto load(const fs::path& path) -> Maybe<TextureInfo>;
 
  private:
   std::vector<uint> mTextures;

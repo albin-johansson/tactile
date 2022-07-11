@@ -19,40 +19,29 @@
 
 #pragma once
 
-#include <filesystem>  // path
+#include "core/common/filesystem.hpp"
 
-namespace tactile {
+namespace tactile::io {
+
+/// Opens a directory in the OS file explorer
+void open_directory(const fs::path& dir);
 
 /**
- * \brief Returns the path to a resource.
+ * Returns the path to a resource.
  *
- * \details This function should be used to locate all resource files, such as images, to
- * ensure that resource paths are resolved in app bundles on macOS.
+ * This function should be used to locate all resource files, such as images, to ensure
+ * that resource paths are resolved in app bundles on macOS.
  *
  * \param resource the path to the resource, e.g "assets/foo.png".
  *
  * \return the resolved file path.
- *
- * \ingroup io
  */
-[[nodiscard]] auto find_resource(const char* resource) -> std::filesystem::path;
+[[nodiscard]] auto find_resource(const char* resource) -> fs::path;
 
-/**
- * \brief Returns the file path to the associated imgui.ini file.
- *
- * \return an absolute file path.
- *
- * \ingroup io
- */
-[[nodiscard]] auto widget_ini_path() -> const std::filesystem::path&;
+/// Returns the file path to the associated `imgui.ini` file.
+[[nodiscard]] auto widget_ini_path() -> const fs::path&;
 
-/**
- * \brief Returns the path to the persistent file directory.
- *
- * \return the persistent file directory path.
- *
- * \ingroup io
- */
-[[nodiscard]] auto persistent_file_dir() -> const std::filesystem::path&;
+/// Returns the path to the persistent file directory.
+[[nodiscard]] auto persistent_file_dir() -> const fs::path&;
 
-}  // namespace tactile
+}  // namespace tactile::io

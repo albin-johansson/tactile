@@ -23,23 +23,23 @@
 #include <iomanip>  // setw
 #include <ios>      // ios
 
-#include "core/utils/strings.hpp"
+#include "core/common/filesystem.hpp"
 #include "io/persistence/preferences.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {
 
 template <typename T>
 [[nodiscard]] auto _as(const nlohmann::json& json, const std::string_view name)
-    -> std::optional<T>
+    -> Maybe<T>
 {
   const auto iter = json.find(name);
   if (iter != json.end()) {
     return iter->get<T>();
   }
   else {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -77,25 +77,25 @@ void to_json(nlohmann::json& json, const Attribute& value)
       break;
 
     default:
-      panic("Invalid attribute type!");
+      throw TactileError("Invalid attribute type!");
   }
 }
 
-void write_json(const nlohmann::json& json, const std::filesystem::path& path)
+void write_json(const nlohmann::json& json, const fs::path& path)
 {
-  std::ofstream stream{path, std::ios::out | std::ios::trunc};
+  std::ofstream stream {path, std::ios::out | std::ios::trunc};
 
-  if (get_preferences().indent_output()) {
+  if (io::get_preferences().indent_output) {
     stream << std::setw(2);
   }
 
   stream << json;
 }
 
-auto read_json(const std::filesystem::path& path) -> std::optional<nlohmann::json>
+auto read_json(const fs::path& path) -> Maybe<nlohmann::json>
 {
   try {
-    std::ifstream stream{path, std::ios::in};
+    std::ifstream stream {path, std::ios::in};
 
     nlohmann::json json;
     stream >> json;
@@ -103,38 +103,37 @@ auto read_json(const std::filesystem::path& path) -> std::optional<nlohmann::jso
     return json;
   }
   catch (...) {
-    return std::nullopt;
+    return nothing;
   }
 }
 
+namespace io {
+
 auto as_string(const nlohmann::json& json, const std::string_view name)
-    -> std::optional<std::string>
+    -> Maybe<std::string>
 {
   return _as<std::string>(json, name);
 }
 
-auto as_int(const nlohmann::json& json, const std::string_view name)
-    -> std::optional<int32>
+auto as_int(const nlohmann::json& json, const std::string_view name) -> Maybe<int32>
 {
   return _as<int32>(json, name);
 }
 
-auto as_uint(const nlohmann::json& json, const std::string_view name)
-    -> std::optional<uint32>
+auto as_uint(const nlohmann::json& json, const std::string_view name) -> Maybe<uint32>
 {
   return _as<uint32>(json, name);
 }
 
-auto as_float(const nlohmann::json& json, const std::string_view name)
-    -> std::optional<float>
+auto as_float(const nlohmann::json& json, const std::string_view name) -> Maybe<float>
 {
   return _as<float>(json, name);
 }
 
-auto as_bool(const nlohmann::json& json, const std::string_view name)
-    -> std::optional<bool>
+auto as_bool(const nlohmann::json& json, const std::string_view name) -> Maybe<bool>
 {
   return _as<bool>(json, name);
 }
 
+}  // namespace io
 }  // namespace tactile

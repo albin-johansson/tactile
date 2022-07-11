@@ -1,13 +1,12 @@
 name: "CI: Ubuntu"
 
-on: [ push, pull_request ]
+on: [ push ]
 
 env:
   DISPLAY: :99.0
   SDL_VIDEODRIVER: x11
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
-  VCPKG_COMMIT_ID: e0c3408c778c54788393c4a739f6f3507aff77cb
   VCPKG_CACHE_EDITION: 1
 
 jobs:
@@ -56,7 +55,7 @@ jobs:
             !${{env.VCPKG_ROOT}}\packages
             !${{env.VCPKG_ROOT}}\downloads
             !${{env.VCPKG_ROOT}}\installed
-          key: tactile-linux-vcpkg-${{env.VCPKG_COMMIT_ID}}-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
+          key: tactile-linux-vcpkg-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'

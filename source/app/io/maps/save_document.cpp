@@ -19,9 +19,12 @@
 
 #include "save_document.hpp"
 
-#include <filesystem>  // absolute
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
 
-#include "io/maps/convert_document_to_ir.hpp"
+#include "core/common/filesystem.hpp"
+#include "core/documents/map_document.hpp"
+#include "io/maps/convert_map_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/emitter/godot_emitter.hpp"
 #include "io/maps/emitter/json_emitter.hpp"
@@ -29,19 +32,18 @@
 #include "io/maps/emitter/yaml_emitter.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
-#include "misc/logging.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
-void save_document(const Document& document)
+void save_document(const MapDocument& document)
 {
-  TACTILE_ASSERT(!document.path.empty());
-  TACTILE_PROFILE_START
+  TACTILE_DEBUG_PROFILE_START
+  TACTILE_ASSERT(document.has_path());
 
-  const auto path = std::filesystem::absolute(document.path);
-  log_info("Trying to save map to {}", path);
+  const auto path = fs::absolute(document.get_path());
+  spdlog::info("Trying to save map to {}", path);
 
-  emitter::EmitInfo info{path, convert_document_to_ir(document)};
+  EmitInfo info {path, convert_map_to_ir(document)};
 
   const auto ext = path.extension();
   if (ext == ".yaml" || ext == ".yml") {
@@ -54,28 +56,28 @@ void save_document(const Document& document)
     emit_xml_map(info);
   }
   else {
-    log_error("Unsupported file extension {}", ext);
+    spdlog::error("Unsupported file extension {}", ext);
   }
 
-  TACTILE_PROFILE_END("Emitted document")
+  TACTILE_DEBUG_PROFILE_END("Emitted document")
 }
 
-void export_document_as_godot_scene(const Document& document,
-                                    const std::string_view projectMapDir,
-                                    const std::string_view projectTilesetDir,
-                                    const std::string_view projectImageDir,
-                                    const bool embedTilesets)
+void export_document_as_godot_scene(const MapDocument& document,
+                                    std::string_view   projectMapDir,
+                                    std::string_view   projectTilesetDir,
+                                    std::string_view   projectImageDir,
+                                    const bool         embedTilesets)
 {
   // TODO validate directories
 
   TACTILE_PROFILE_START
-  log_info("Exporting map as Godot scene...");
+  spdlog::info("Exporting map as Godot scene...");
 
   // FIXME path
-  emitter::EmitInfo info{"test.escn", convert_document_to_ir(document)};
+  EmitInfo info {"test.escn", convert_map_to_ir(document)};
   emit_godot_scene(info);
 
   TACTILE_PROFILE_END("Exported document as Godot scene")
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

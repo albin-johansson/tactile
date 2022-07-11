@@ -21,37 +21,30 @@
 
 #include <string_view>  // string_view
 
-#include "editor/document.hpp"
+#include "core/fwd.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
-/**
- * \brief Saves a map document as XML, JSON, or YAML files.
- *
- * \param document the map document that will be saved.
- *
- * \ingroup io
- */
-void save_document(const Document& document);
+/// Saves a map document.
+void save_document(const MapDocument& document);
 
 /**
- * \brief Saves a map document as a Godot scene.
+ * Saves a map document as a Godot scene.
  *
- * \note All directory arguments will have "res://" prepended to them.
+ * Note, all directory arguments will have "res://" prepended to them.
  *
  * \param document the map document that will be exported.
  * \param projectMapDir absolute path in the Godot project to the map directory.
  * \param projectTilesetDir absolute path in the Godot project to the tileset directory.
  * \param projectImageDir absolute path in the Godot project to the image directory.
- * \param embedTilesets `true` if tilesets are embedded in the map scene; `false`
- * otherwise.
+ * \param embedTilesets `true` if tilesets should be embedded in the map scene; `false` otherwise.
  *
  * \see https://docs.godotengine.org/en/stable/development/file_formats/tscn.html
  */
-void export_document_as_godot_scene(const Document& document,
-                                    std::string_view projectMapDir,
-                                    std::string_view projectTilesetDir,
-                                    std::string_view projectImageDir,
-                                    bool embedTilesets);
+void export_document_as_godot_scene(const MapDocument& document,
+                                    std::string_view   projectMapDir,
+                                    std::string_view   projectTilesetDir,
+                                    std::string_view   projectImageDir,
+                                    bool               embedTilesets);
 
-}  // namespace tactile
+}  // namespace tactile::io

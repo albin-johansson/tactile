@@ -17,31 +17,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>    // abort
+#include <cstdlib>    // abort, EXIT_SUCCESS
 #include <exception>  // exception
 
-#include "application.hpp"
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
+
+#include "app.hpp"
 #include "cfg/configuration.hpp"
-#include "misc/crash.hpp"
+#include "io/directories.hpp"
 #include "misc/logging.hpp"
-#include "misc/throw.hpp"
+#include "misc/panic.hpp"
 
 auto main(int, char**) -> int
 {
+  tactile::init_logger();
+
   try {
+    spdlog::info("Using persistent file directory {}",
+                 tactile::io::persistent_file_dir());
+
     tactile::AppConfiguration configuration;
-    tactile::Application app{&configuration};
+    tactile::App              app {&configuration};
     app.start();
-    return 0;
+
+    return EXIT_SUCCESS;
+  }
+  catch (const tactile::TactileError& e) {
+    spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), e.trace());
+    std::abort();
   }
   catch (const std::exception& e) {
-    tactile::print(fmt::color::hot_pink, "Unhandled exception message: '{}'\n", e.what());
-
-    if (const auto* stacktrace = boost::get_error_info<tactile::TraceInfo>(e)) {
-      tactile::print(fmt::color::hot_pink, "{}\n", *stacktrace);
-      tactile::dump_crash_info(*stacktrace);
-    }
-
+    spdlog::critical("Unhandled exception message: '{}'", e.what());
     std::abort();
   }
 }

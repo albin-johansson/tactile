@@ -17,10 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace tactile::emitter {
+namespace tactile::io {
 
 class EmitInfo;
 
 void emit_godot_scene(const EmitInfo& info);
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

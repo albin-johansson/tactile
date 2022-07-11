@@ -19,10 +19,10 @@
 
 #pragma once
 
-namespace tactile::emitter {
+#include "io/fwd.hpp"
 
-class EmitInfo;
+namespace tactile::io {
 
 void emit_xml_map(const EmitInfo& info);
 
-}  // namespace tactile::emitter
+}  // namespace tactile::io

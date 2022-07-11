@@ -23,41 +23,37 @@
 #include <centurion/keyboard.hpp>
 #include <entt/fwd.hpp>
 
+#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
-#include "tactile.hpp"
 
 namespace tactile {
-
-class WidgetManager;
 
 class AShortcut
 {
  public:
   explicit AShortcut(const cen::scan_code key,
-                     const cen::key_mod modifiers = cen::key_mod::none)
-      : mKey{key}
-      , mModifiers{modifiers}
+                     const cen::key_mod   modifiers = cen::key_mod::none)
+      : mKey {key}
+      , mModifiers {modifiers}
   {}
 
   virtual ~AShortcut() noexcept = default;
 
-  void poll(const DocumentModel& model,
-            const WidgetManager& widgets,
+  void poll(const DocumentModel&       model,
             const cen::keyboard_event& event,
-            entt::dispatcher& dispatcher);
+            entt::dispatcher&          dispatcher);
 
   virtual void activate(entt::dispatcher& dispatcher) = 0;
 
-  [[nodiscard]] virtual auto is_enabled(
-      [[maybe_unused]] const DocumentModel& model,
-      [[maybe_unused]] const WidgetManager& widgets) const -> bool
+  [[nodiscard]] virtual auto is_enabled([[maybe_unused]] const DocumentModel& model) const
+      -> bool
   {
     return true;
   }
 
  private:
   cen::scan_code mKey;
-  cen::key_mod mModifiers{cen::key_mod::none};
+  cen::key_mod   mModifiers {cen::key_mod::none};
 };
 
 }  // namespace tactile

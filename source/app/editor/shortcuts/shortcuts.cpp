@@ -19,12 +19,12 @@
 
 #include "shortcuts.hpp"
 
-#include <memory>  // unique_ptr, make_unique
 #include <vector>  // vector
 
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/common/memory.hpp"
 #include "editor/shortcuts/edit_shortcuts.hpp"
 #include "editor/shortcuts/file_shortcuts.hpp"
 #include "editor/shortcuts/view_shortcuts.hpp"
@@ -32,7 +32,7 @@
 namespace tactile {
 namespace {
 
-std::vector<std::unique_ptr<AShortcut>> _shortcuts;
+inline std::vector<Unique<AShortcut>> _shortcuts;
 
 template <typename T>
 void _load_shortcut()
@@ -91,13 +91,12 @@ void load_default_shortcuts()
   _load_shortcut<RemoveColumnShortcut>();
 }
 
-void update_shortcuts(const DocumentModel& model,
-                      const WidgetManager& widgets,
+void update_shortcuts(const DocumentModel&       model,
                       const cen::keyboard_event& event,
-                      entt::dispatcher& dispatcher)
+                      entt::dispatcher&          dispatcher)
 {
   for (const auto& shortcut : _shortcuts) {
-    shortcut->poll(model, widgets, event, dispatcher);
+    shortcut->poll(model, event, dispatcher);
   }
 }
 

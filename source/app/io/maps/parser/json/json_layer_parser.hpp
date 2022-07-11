@@ -21,10 +21,10 @@
 
 #include <nlohmann/json_fwd.hpp>
 
-#include "io/maps/ir.hpp"
+#include "io/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
 
-namespace tactile::parsing {
+namespace tactile::io {
 
 [[nodiscard]] auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData)
     -> ParseError;
@@ -32,4 +32,4 @@ namespace tactile::parsing {
 [[nodiscard]] auto parse_layers(const nlohmann::json& json, ir::MapData& mapData)
     -> ParseError;
 
-}  // namespace tactile::parsing
+}  // namespace tactile::io
