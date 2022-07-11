@@ -354,8 +354,6 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
     visitor.dispatcher = &dispatcher;
     context.accept(visitor);
 
-    ImGui::Separator();
-
     bool isItemContextOpen = false;
     _show_custom_properties(context, dispatcher, isItemContextOpen);
 
