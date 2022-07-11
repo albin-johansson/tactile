@@ -140,7 +140,10 @@ void SettingsDialog::update_behavior_tab()
 
     checkbox("Restore last session on startup", &mUiSettings.restore_last_session);
 
-    ImGui::DragInt("Preferred tile width",
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Preferred tile width:");
+    ImGui::SameLine();
+    ImGui::DragInt("##PreferredTileWidth",
                    &mUiSettings.preferred_tile_size.x,
                    1.0f,
                    1,
@@ -148,7 +151,10 @@ void SettingsDialog::update_behavior_tab()
     lazy_tooltip("##PreferredTileWidthToolTip",
                  "The suggested tile width when creating maps");
 
-    ImGui::DragInt("Preferred tile height",
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Preferred tile height:");
+    ImGui::SameLine();
+    ImGui::DragInt("##PreferredTileHeight",
                    &mUiSettings.preferred_tile_size.y,
                    1.0f,
                    1,
@@ -158,8 +164,11 @@ void SettingsDialog::update_behavior_tab()
 
     // TODO "RMB with stamp tool works as eraser"
 
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Command capacity:");
+    ImGui::SameLine();
     if (auto capacity = static_cast<int>(mUiSettings.command_capacity);
-        ImGui::DragInt("Command capacity", &capacity, 1.0f, 10, 1'000)) {
+        ImGui::DragInt("##CommandCapacity", &capacity, 1.0f, 10, 1'000)) {
       mUiSettings.command_capacity = static_cast<usize>(capacity);
     }
 
