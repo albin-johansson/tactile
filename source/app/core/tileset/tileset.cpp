@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/context/context_visitor.hpp"
+#include "core/ctx/context_visitor.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/util/tiles.hpp"
 #include "misc/panic.hpp"

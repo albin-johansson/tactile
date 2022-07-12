@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/context/context_visitor.hpp"
+#include "core/ctx/context_visitor.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "misc/panic.hpp"
 

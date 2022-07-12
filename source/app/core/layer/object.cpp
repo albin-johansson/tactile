@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/context/context_visitor.hpp"
+#include "core/ctx/context_visitor.hpp"
 
 namespace tactile {
 

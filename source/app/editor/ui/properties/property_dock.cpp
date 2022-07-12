@@ -25,7 +25,7 @@
 #include <imgui.h>
 
 #include "core/common/maybe.hpp"
-#include "core/context/context_visitor.hpp"
+#include "core/ctx/context_visitor.hpp"
 #include "core/document/tileset_document.hpp"
 #include "core/event/document_events.hpp"
 #include "core/event/layer_events.hpp"

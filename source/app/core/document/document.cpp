@@ -24,7 +24,7 @@
 #include "core/cmd/command_stack.hpp"
 #include "core/cmd/comp/all.hpp"
 #include "core/cmd/property/all.hpp"
-#include "core/context/context_manager.hpp"
+#include "core/ctx/context_manager.hpp"
 
 namespace tactile {
 

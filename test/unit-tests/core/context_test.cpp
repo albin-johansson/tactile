@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/context/context.hpp"
+#include "core/ctx/context.hpp"
 
 #include <gtest/gtest.h>
 

@@ -23,7 +23,7 @@
 
 #include "core/comp/component.hpp"
 #include "core/comp/component_bundle.hpp"
-#include "core/context/context.hpp"
+#include "core/ctx/context.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

@@ -31,7 +31,7 @@
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component.hpp"
-#include "core/context/context.hpp"
+#include "core/ctx/context.hpp"
 
 namespace tactile {
 

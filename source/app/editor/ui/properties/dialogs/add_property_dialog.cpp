@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/context/context.hpp"
-#include "core/context/context_manager.hpp"
+#include "core/ctx/context.hpp"
+#include "core/ctx/context_manager.hpp"
 #include "core/event/property_events.hpp"
 #include "core/model.hpp"
 #include "core/property_bundle.hpp"

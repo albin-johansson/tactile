@@ -41,7 +41,7 @@ TEST(RenameLayerCmd, RedoUndo)
   auto layer = map->get_layer(layerId);
   layer->set_name("barfoo");
 
-  RenameLayerCmd cmd{map, layerId, "foobar"};
+  RenameLayerCmd cmd {map, layerId, "foobar"};
 
   cmd.redo();
   ASSERT_EQ("foobar", layer->get_name());

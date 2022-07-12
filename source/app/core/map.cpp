@@ -24,7 +24,7 @@
 #include <fmt/format.h>
 
 #include "core/common/functional.hpp"
-#include "core/context/context_visitor.hpp"
+#include "core/ctx/context_visitor.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"

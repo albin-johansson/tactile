@@ -23,7 +23,7 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/context/context.hpp"
+#include "core/ctx/context.hpp"
 #include "core/fwd.hpp"
 #include "core/layer/layer_type.hpp"
 

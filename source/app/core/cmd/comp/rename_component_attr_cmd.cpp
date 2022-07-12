@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "core/comp/component_index.hpp"
-#include "core/context/context_manager.hpp"
+#include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
 #include "misc/panic.hpp"
 

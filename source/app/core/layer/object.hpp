@@ -24,8 +24,8 @@
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/context/context.hpp"
-#include "core/context/context_delegate.hpp"
+#include "core/ctx/context.hpp"
+#include "core/ctx/context_delegate.hpp"
 #include "core/layer/object_type.hpp"
 
 namespace tactile {

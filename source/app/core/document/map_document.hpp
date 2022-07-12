@@ -31,7 +31,7 @@
 #include "core/common/memory.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
-#include "core/context/context_manager.hpp"
+#include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
 #include "core/document/document_delegate.hpp"
 #include "core/fwd.hpp"
