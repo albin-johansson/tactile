@@ -19,20 +19,12 @@
 
 #pragma once
 
-#include <boost/uuid/uuid_hash.hpp>
-#include <centurion/math.hpp>
-
-#include "core/common/associative.hpp"
-#include "core/common/identifiers.hpp"
-#include "core/common/math.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/context/context_manager.hpp"
 #include "core/document/document.hpp"
+#include "core/document/document_delegate.hpp"
 #include "core/fwd.hpp"
 #include "core/tileset/tileset.hpp"
-#include "core/viewport.hpp"
 
 namespace tactile {
 
@@ -50,28 +42,35 @@ class TilesetDocument final : public ADocument
 
   explicit TilesetDocument(const TilesetInfo& info);
 
-  [[nodiscard]] auto get_contexts() -> ContextManager& override;
-  [[nodiscard]] auto get_contexts() const -> const ContextManager& override;
-
   void update() override;
-
-  [[deprecated]] void set_name(std::string name) override;
-
-  [[nodiscard]] auto get_name() const -> const std::string& override;
 
   void rename_tileset(std::string name);
 
-  [[nodiscard]] auto get_viewport() -> Viewport& override { return mViewport; }
+  void set_component_index(Shared<ComponentIndex> index) override;
 
-  [[nodiscard]] auto get_viewport() const -> const Viewport& override
-  {
-    return mViewport;
-  }
+  void set_name(std::string name) override;
 
-  [[nodiscard]] auto get_type() const -> DocumentType override
-  {
-    return DocumentType::Tileset;
-  }
+  void set_path(fs::path path) override;
+
+  [[nodiscard]] auto has_path() const -> bool override;
+
+  [[nodiscard]] auto get_component_index() -> Shared<ComponentIndex> override;
+  [[nodiscard]] auto view_component_index() const -> const ComponentIndex* override;
+
+  [[nodiscard]] auto get_contexts() -> ContextManager& override;
+  [[nodiscard]] auto get_contexts() const -> const ContextManager& override;
+
+  [[nodiscard]] auto get_history() -> CommandStack& override;
+  [[nodiscard]] auto get_history() const -> const CommandStack& override;
+
+  [[nodiscard]] auto get_viewport() -> Viewport& override;
+  [[nodiscard]] auto get_viewport() const -> const Viewport& override;
+
+  [[nodiscard]] auto get_name() const -> const std::string& override;
+
+  [[nodiscard]] auto get_path() const -> const fs::path& override;
+
+  [[nodiscard]] auto get_type() const -> DocumentType override;
 
   [[nodiscard]] auto get_tileset() -> Shared<Tileset> { return mTileset; }
 
@@ -79,9 +78,8 @@ class TilesetDocument final : public ADocument
   [[nodiscard]] auto view_tileset() const -> const Tileset& { return *mTileset; }
 
  private:
-  Shared<Tileset> mTileset;
-  Viewport        mViewport;
-  ContextManager  mContexts;
+  Shared<Tileset>  mTileset;
+  DocumentDelegate mDelegate;
 };
 
 }  // namespace tactile

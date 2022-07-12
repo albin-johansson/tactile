@@ -269,7 +269,7 @@ auto convert_map_to_ir(const MapDocument& document) -> ir::MapData
   data.next_object_id = map.next_object_id();
   data.next_layer_id = map.next_layer_id();
 
-  const auto* components = document.get_component_index().get();
+  const auto* components = document.view_component_index();
 
   if (components) {
     _convert_component_definitions(*components, data);

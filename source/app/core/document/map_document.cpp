@@ -22,6 +22,7 @@
 #include <algorithm>  // find_if
 #include <utility>    // move
 
+#include "core/cmd/command_stack.hpp"
 #include "core/cmd/layer/all.hpp"
 #include "core/cmd/map/all.hpp"
 #include "core/cmd/object/all.hpp"
@@ -32,23 +33,14 @@ namespace tactile {
 
 MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize columns)
     : mMap {std::make_shared<Map>()}
-    , mContexts {mMap->get_uuid()}
+    , mDelegate {mMap->get_uuid()}
 {
   mMap->resize(rows, columns);
   mMap->set_tile_size(tileSize);
 
-  mContexts.add_context(mMap);
-  mContexts.select(mMap->get_uuid());
-}
-
-auto MapDocument::get_contexts() -> ContextManager&
-{
-  return mContexts;
-}
-
-auto MapDocument::get_contexts() const -> const ContextManager&
-{
-  return mContexts;
+  auto& contexts = get_contexts();
+  contexts.add_context(mMap);
+  contexts.select(mMap->get_uuid());
 }
 
 void MapDocument::update()
@@ -198,7 +190,8 @@ void MapDocument::set_object_tag(const UUID& objectId, std::string tag)
 
 auto MapDocument::get_object(const UUID& objectId) -> Shared<Object>
 {
-  if (auto ptr = std::dynamic_pointer_cast<Object>(mContexts.get_context(objectId))) {
+  auto& contexts = get_contexts();
+  if (auto ptr = std::dynamic_pointer_cast<Object>(contexts.get_context(objectId))) {
     return ptr;
   }
   else {
@@ -206,14 +199,34 @@ auto MapDocument::get_object(const UUID& objectId) -> Shared<Object>
   }
 }
 
+void MapDocument::set_component_index(Shared<ComponentIndex> index)
+{
+  mDelegate.set_component_index(std::move(index));
+}
+
 void MapDocument::set_name(std::string name)
 {
   mMap->set_name(name);
 }
 
-auto MapDocument::get_name() const -> const std::string&
+void MapDocument::set_path(fs::path path)
 {
-  return mMap->get_name();
+  mDelegate.set_path(std::move(path));
+}
+
+auto MapDocument::has_path() const -> bool
+{
+  return mDelegate.has_path();
+}
+
+auto MapDocument::get_component_index() -> Shared<ComponentIndex>
+{
+  return mDelegate.get_component_index();
+}
+
+auto MapDocument::view_component_index() const -> const ComponentIndex*
+{
+  return mDelegate.view_component_index();
 }
 
 auto MapDocument::get_tools() -> ToolManager&
@@ -224,6 +237,51 @@ auto MapDocument::get_tools() -> ToolManager&
 auto MapDocument::get_tools() const -> const ToolManager&
 {
   return mTools;
+}
+
+auto MapDocument::get_contexts() -> ContextManager&
+{
+  return mDelegate.get_contexts();
+}
+
+auto MapDocument::get_contexts() const -> const ContextManager&
+{
+  return mDelegate.get_contexts();
+}
+
+auto MapDocument::get_history() -> CommandStack&
+{
+  return mDelegate.get_history();
+}
+
+auto MapDocument::get_history() const -> const CommandStack&
+{
+  return mDelegate.get_history();
+}
+
+auto MapDocument::get_viewport() -> Viewport&
+{
+  return mDelegate.get_viewport();
+}
+
+auto MapDocument::get_viewport() const -> const Viewport&
+{
+  return mDelegate.get_viewport();
+}
+
+auto MapDocument::get_name() const -> const std::string&
+{
+  return mMap->get_name();
+}
+
+auto MapDocument::get_path() const -> const fs::path&
+{
+  return mDelegate.path();
+}
+
+auto MapDocument::get_type() const -> DocumentType
+{
+  return DocumentType::Map;
 }
 
 }  // namespace tactile

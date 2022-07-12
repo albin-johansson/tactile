@@ -24,37 +24,37 @@
 #include "core/cmd/tileset/all.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/util/tiles.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile {
 
 TilesetDocument::TilesetDocument(const UUID& id, const TilesetInfo& info)
     : mTileset {std::make_shared<Tileset>(id, info)}
-    , mContexts {mTileset->get_uuid()}
+    , mDelegate {mTileset->get_uuid()}
 {
-  mContexts.add_context(mTileset);
-  mContexts.select(mTileset->get_uuid());
+  auto& contexts = get_contexts();
+  contexts.add_context(mTileset);
+  contexts.select(mTileset->get_uuid());
 }
 
 TilesetDocument::TilesetDocument(const TilesetInfo& info)
     : TilesetDocument {make_uuid(), info}
 {}
 
-auto TilesetDocument::get_contexts() -> ContextManager&
-{
-  return mContexts;
-}
-
-auto TilesetDocument::get_contexts() const -> const ContextManager&
-{
-  return mContexts;
-}
-
 void TilesetDocument::update()
 {
+  // TODO ?
   //  get_cache().display_tiles.clear();
-  //
   //  sys::update_animations(mRegistry);
+}
+
+void TilesetDocument::rename_tileset(std::string name)
+{
+  get_history().exec<RenameTilesetCmd>(mTileset, std::move(name));
+}
+
+void TilesetDocument::set_component_index(Shared<ComponentIndex> index)
+{
+  mDelegate.set_component_index(std::move(index));
 }
 
 void TilesetDocument::set_name(std::string name)
@@ -62,14 +62,69 @@ void TilesetDocument::set_name(std::string name)
   mTileset->set_name(std::move(name));
 }
 
+void TilesetDocument::set_path(fs::path path)
+{
+  mDelegate.set_path(std::move(path));
+}
+
+auto TilesetDocument::has_path() const -> bool
+{
+  return mDelegate.has_path();
+}
+
+auto TilesetDocument::get_component_index() -> Shared<ComponentIndex>
+{
+  return mDelegate.get_component_index();
+}
+
+auto TilesetDocument::view_component_index() const -> const ComponentIndex*
+{
+  return mDelegate.view_component_index();
+}
+
+auto TilesetDocument::get_contexts() -> ContextManager&
+{
+  return mDelegate.get_contexts();
+}
+
+auto TilesetDocument::get_contexts() const -> const ContextManager&
+{
+  return mDelegate.get_contexts();
+}
+
+auto TilesetDocument::get_history() -> CommandStack&
+{
+  return mDelegate.get_history();
+}
+
+auto TilesetDocument::get_history() const -> const CommandStack&
+{
+  return mDelegate.get_history();
+}
+
+auto TilesetDocument::get_viewport() -> Viewport&
+{
+  return mDelegate.get_viewport();
+}
+
+auto TilesetDocument::get_viewport() const -> const Viewport&
+{
+  return mDelegate.get_viewport();
+}
+
 auto TilesetDocument::get_name() const -> const std::string&
 {
   return mTileset->get_name();
 }
 
-void TilesetDocument::rename_tileset(std::string name)
+auto TilesetDocument::get_path() const -> const fs::path&
 {
-  get_history().exec<RenameTilesetCmd>(mTileset, std::move(name));
+  return mDelegate.path();
+}
+
+auto TilesetDocument::get_type() const -> DocumentType
+{
+  return DocumentType::Tileset;
 }
 
 }  // namespace tactile

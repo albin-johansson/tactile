@@ -33,6 +33,7 @@
 #include "core/common/uuid.hpp"
 #include "core/context/context_manager.hpp"
 #include "core/document/document.hpp"
+#include "core/document/document_delegate.hpp"
 #include "core/fwd.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/map.hpp"
@@ -47,9 +48,6 @@ class MapDocument final : public ADocument
 {
  public:
   MapDocument(const Vector2i& tileSize, usize rows, usize columns);
-
-  [[nodiscard]] auto get_contexts() -> ContextManager& override;
-  [[nodiscard]] auto get_contexts() const -> const ContextManager& override;
 
   void update() override;
 
@@ -107,24 +105,34 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto get_object(const UUID& objectId) -> Shared<Object>;
 
+  void set_component_index(Shared<ComponentIndex> index) override;
+
   void set_name(std::string name) override;
 
-  [[nodiscard]] auto get_name() const -> const std::string& override;
+  void set_path(fs::path path) override;
+
+  [[nodiscard]] auto has_path() const -> bool override;
+
+  [[nodiscard]] auto get_component_index() -> Shared<ComponentIndex> override;
+  [[nodiscard]] auto view_component_index() const -> const ComponentIndex* override;
 
   [[nodiscard]] auto get_tools() -> ToolManager&;
   [[nodiscard]] auto get_tools() const -> const ToolManager&;
 
-  [[nodiscard]] auto get_viewport() -> Viewport& override { return mViewport; }
+  [[nodiscard]] auto get_contexts() -> ContextManager& override;
+  [[nodiscard]] auto get_contexts() const -> const ContextManager& override;
 
-  [[nodiscard]] auto get_viewport() const -> const Viewport& override
-  {
-    return mViewport;
-  }
+  [[nodiscard]] auto get_history() -> CommandStack& override;
+  [[nodiscard]] auto get_history() const -> const CommandStack& override;
 
-  [[nodiscard]] auto get_type() const -> DocumentType override
-  {
-    return DocumentType::Map;
-  }
+  [[nodiscard]] auto get_viewport() -> Viewport& override;
+  [[nodiscard]] auto get_viewport() const -> const Viewport& override;
+
+  [[nodiscard]] auto get_name() const -> const std::string& override;
+
+  [[nodiscard]] auto get_path() const -> const fs::path& override;
+
+  [[nodiscard]] auto get_type() const -> DocumentType override;
 
   [[nodiscard]] auto get_map_ptr() -> const Shared<Map>& { return mMap; }
 
@@ -132,10 +140,9 @@ class MapDocument final : public ADocument
   [[nodiscard]] auto get_map() const -> const Map& { return *mMap; }
 
  private:
-  Shared<Map>    mMap;
-  Viewport       mViewport;
-  ToolManager    mTools;
-  ContextManager mContexts;
+  Shared<Map>      mMap;
+  ToolManager      mTools;
+  DocumentDelegate mDelegate;
 };
 
 }  // namespace tactile

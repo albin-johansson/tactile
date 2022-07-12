@@ -47,7 +47,7 @@ void _show_add_component_button_popup_content(const ADocument&  document,
                                               const IContext&   context,
                                               entt::dispatcher& dispatcher)
 {
-  const auto index = document.get_component_index();
+  const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
   if (index->empty()) {
@@ -83,7 +83,7 @@ void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
       centered_label("This context has no components.");
     }
     else {
-      const auto index = document.get_component_index();
+      const auto* index = document.view_component_index();
       TACTILE_ASSERT(index != nullptr);
 
       for (const auto& [componentId, component] : comps) {

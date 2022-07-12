@@ -28,24 +28,9 @@
 
 namespace tactile {
 
-void ADocument::set_component_index(Shared<ComponentIndex> index)
-{
-  mComponentIndex = std::move(index);
-}
-
-auto ADocument::get_component_index() -> Shared<ComponentIndex>
-{
-  return mComponentIndex;
-}
-
-auto ADocument::get_component_index() const -> Shared<const ComponentIndex>
-{
-  return mComponentIndex;
-}
-
 void ADocument::define_component(std::string name)
 {
-  get_history().exec<DefineComponentCmd>(mComponentIndex, std::move(name));
+  get_history().exec<DefineComponentCmd>(get_component_index(), std::move(name));
 }
 
 void ADocument::undef_component(const UUID& componentId)
@@ -55,7 +40,9 @@ void ADocument::undef_component(const UUID& componentId)
 
 void ADocument::rename_component(const UUID& componentId, std::string name)
 {
-  get_history().exec<RenameComponentCmd>(mComponentIndex, componentId, std::move(name));
+  get_history().exec<RenameComponentCmd>(get_component_index(),
+                                         componentId,
+                                         std::move(name));
 }
 
 void ADocument::add_component_attribute(const UUID& componentId, std::string name)
@@ -94,7 +81,7 @@ void ADocument::update_component(const UUID& componentId,
                                  std::string name,
                                  Attribute   value)
 {
-  get_history().exec<UpdateComponentCmd>(mComponentIndex,
+  get_history().exec<UpdateComponentCmd>(get_component_index(),
                                          componentId,
                                          std::move(name),
                                          std::move(value));
@@ -103,7 +90,7 @@ void ADocument::update_component(const UUID& componentId,
 void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
 {
   auto context = get_contexts().get_context(contextId);
-  get_history().exec<AttachComponentCmd>(mComponentIndex,
+  get_history().exec<AttachComponentCmd>(get_component_index(),
                                          std::move(context),
                                          componentId);
 }
@@ -129,7 +116,7 @@ void ADocument::update_attached_component(const UUID& contextId,
 void ADocument::reset_attached_component(const UUID& contextId, const UUID& componentId)
 {
   auto context = get_contexts().get_context(contextId);
-  get_history().exec<ResetAttachedComponentCmd>(mComponentIndex,
+  get_history().exec<ResetAttachedComponentCmd>(get_component_index(),
                                                 std::move(context),
                                                 componentId);
 }
@@ -172,31 +159,6 @@ void ADocument::change_property_type(const UUID&         contextId,
 {
   auto context = get_contexts().get_context(contextId);
   get_history().exec<ChangePropertyTypeCmd>(std::move(context), std::move(name), type);
-}
-
-void ADocument::set_path(fs::path path)
-{
-  mPath = std::move(path);
-}
-
-auto ADocument::has_path() const -> bool
-{
-  return mPath.has_value();
-}
-
-auto ADocument::get_path() const -> const fs::path&
-{
-  return mPath.value();
-}
-
-auto ADocument::get_history() -> CommandStack&
-{
-  return mCommands;
-}
-
-auto ADocument::get_history() const -> const CommandStack&
-{
-  return mCommands;
 }
 
 auto ADocument::is_map() const -> bool

@@ -54,7 +54,7 @@ auto RenameComponentAttributeDialog::validate(const DocumentModel&   model,
                                               const std::string_view input) const -> bool
 {
   const auto& document = model.require_active_document();
-  const auto  index = document.get_component_index();
+  const auto* index = document.view_component_index();
   return !input.empty() && index && !index->at(mComponentId.value()).has_attr(input);
 }
 

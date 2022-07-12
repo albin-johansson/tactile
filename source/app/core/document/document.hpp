@@ -22,9 +22,7 @@
 #include <string>  // string
 
 #include "core/attribute.hpp"
-#include "core/cmd/command_stack.hpp"
 #include "core/common/filesystem.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/document/document_type.hpp"
@@ -33,28 +31,11 @@
 namespace tactile {
 
 /// Abstract base class for document representations.
-/// TODO: convert to interface, add DocumentDelegate class
+/// This is almost an interface, with some command functions implemented for convenience.
 class ADocument
 {
  public:
   virtual ~ADocument() noexcept = default;
-
-  /// Updates the state of the document.
-  virtual void update() = 0;
-
-  /// Sets the name of the root document context.
-  [[deprecated]] virtual void set_name(std::string name) = 0;
-
-  [[nodiscard]] virtual auto get_contexts() -> ContextManager& = 0;
-  [[nodiscard]] virtual auto get_contexts() const -> const ContextManager& = 0;
-
-  /// Sets the file path associated with the document.
-  void set_path(fs::path path);
-
-  void set_component_index(Shared<ComponentIndex> index);
-
-  [[nodiscard]] auto get_component_index() -> Shared<ComponentIndex>;
-  [[nodiscard]] auto get_component_index() const -> Shared<const ComponentIndex>;
 
   void define_component(std::string name);
 
@@ -105,30 +86,41 @@ class ADocument
   /// Indicates whether the document represents a tileset.
   [[nodiscard]] auto is_tileset() const -> bool;
 
+  /// Updates the state of the document.
+  virtual void update() = 0;
+
+  virtual void set_component_index(Shared<ComponentIndex> index) = 0;
+
+  /// Sets the name of the root document context.
+  [[deprecated]] virtual void set_name(std::string name) = 0;
+
+  /// Sets the file path associated with the document.
+  virtual void set_path(fs::path path) = 0;
+
   /// Indicates whether the document has a defined path.
-  [[nodiscard]] auto has_path() const -> bool;
+  [[nodiscard]] virtual auto has_path() const -> bool = 0;
 
   /// Returns the previously set document path, throwing if there is none.
-  [[nodiscard]] auto get_path() const -> const fs::path&;
-
-  /// Returns the document command history.
-  [[nodiscard]] auto get_history() -> CommandStack&;
-  [[nodiscard]] auto get_history() const -> const CommandStack&;
-
-  [[nodiscard]] virtual auto get_viewport() -> Viewport& = 0;
-  [[nodiscard]] virtual auto get_viewport() const -> const Viewport& = 0;
+  [[nodiscard]] virtual auto get_path() const -> const fs::path& = 0;
 
   /// Returns the name of the root document context.
   [[nodiscard]] virtual auto get_name() const -> const std::string& = 0;
 
+  [[nodiscard]] virtual auto get_component_index() -> Shared<ComponentIndex> = 0;
+  [[nodiscard]] virtual auto view_component_index() const -> const ComponentIndex* = 0;
+
+  [[nodiscard]] virtual auto get_contexts() -> ContextManager& = 0;
+  [[nodiscard]] virtual auto get_contexts() const -> const ContextManager& = 0;
+
+  /// Returns the document command history.
+  [[nodiscard]] virtual auto get_history() -> CommandStack& = 0;
+  [[nodiscard]] virtual auto get_history() const -> const CommandStack& = 0;
+
+  [[nodiscard]] virtual auto get_viewport() -> Viewport& = 0;
+  [[nodiscard]] virtual auto get_viewport() const -> const Viewport& = 0;
+
   /// Returns the type of the document.
   [[nodiscard]] virtual auto get_type() const -> DocumentType = 0;
-
- protected:
-  CommandStack           mCommands;
-  Shared<ComponentIndex> mComponentIndex;
-  Maybe<fs::path>        mPath;
-  UUID                   mActiveContext;
 };
 
 }  // namespace tactile
