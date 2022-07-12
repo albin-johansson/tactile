@@ -24,9 +24,9 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/viewport_events.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/tileset_events.hpp"
+#include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/viewport.hpp"
 #include "editor/ui/alignment.hpp"

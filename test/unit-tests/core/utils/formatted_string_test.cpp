@@ -1,4 +1,4 @@
-#include "core/utils/formatted_string.hpp"
+#include "core/util/formatted_string.hpp"
 
 #include <filesystem>  // path
 

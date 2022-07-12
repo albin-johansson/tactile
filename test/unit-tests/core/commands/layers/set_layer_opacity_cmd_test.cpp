@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/layers/set_layer_opacity_cmd.hpp"
+#include "core/cmd/layer/set_layer_opacity_cmd.hpp"
 
 #include <gtest/gtest.h>
 
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::test {

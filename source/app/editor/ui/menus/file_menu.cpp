@@ -22,9 +22,9 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/document_events.hpp"
-#include "core/events/map_events.hpp"
-#include "core/events/misc_events.hpp"
+#include "core/event/document_events.hpp"
+#include "core/event/map_events.hpp"
+#include "core/event/misc_events.hpp"
 #include "core/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/icons.hpp"

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/properties/change_property_type_cmd.hpp"
+#include "core/cmd/property/change_property_type_cmd.hpp"
 
 #include <gtest/gtest.h>
 

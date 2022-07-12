@@ -24,13 +24,13 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/commands/command_stack.hpp"
-#include "core/commands/commands.hpp"
-#include "core/components/component_index.hpp"
-#include "core/documents/map_document.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/tilesets/tileset_info.hpp"
-#include "core/tools/tool_manager.hpp"
+#include "core/cmd/command_stack.hpp"
+#include "core/cmd/commands.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/document/map_document.hpp"
+#include "core/document/tileset_document.hpp"
+#include "core/tileset/tileset_info.hpp"
+#include "core/tool/tool_manager.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

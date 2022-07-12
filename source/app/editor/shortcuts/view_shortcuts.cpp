@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
-#include "core/events/misc_events.hpp"
-#include "core/events/viewport_events.hpp"
+#include "core/event/misc_events.hpp"
+#include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/viewport.hpp"
 #include "editor/shortcuts/mappings.hpp"

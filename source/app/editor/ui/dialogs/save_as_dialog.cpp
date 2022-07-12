@@ -25,7 +25,7 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "core/events/misc_events.hpp"
+#include "core/event/misc_events.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"
 

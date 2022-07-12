@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/map_events.hpp"
+#include "core/event/map_events.hpp"
 #include "editor/ui/alignment.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"

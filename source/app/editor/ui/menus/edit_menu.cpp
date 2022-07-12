@@ -22,12 +22,12 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/events/command_events.hpp"
-#include "core/events/tool_events.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/command_events.hpp"
+#include "core/event/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/tools/tool_type.hpp"
-#include "core/utils/formatted_string.hpp"
+#include "core/tool/tool_type.hpp"
+#include "core/util/formatted_string.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"

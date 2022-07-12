@@ -22,11 +22,11 @@
 #include <utility>  // move
 
 #include "core/common/functional.hpp"
-#include "core/components/component_index.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
-#include "core/tilesets/tileset.hpp"
-#include "core/tilesets/tileset_info.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
+#include "core/tileset/tileset.hpp"
+#include "core/tileset/tileset_info.hpp"
 
 namespace tactile::test {
 

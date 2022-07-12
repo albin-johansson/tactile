@@ -22,7 +22,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "core/map.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"

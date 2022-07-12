@@ -22,11 +22,11 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/contexts/context.hpp"
-#include "core/events/property_events.hpp"
+#include "core/context/context.hpp"
+#include "core/event/property_events.hpp"
 #include "core/model.hpp"
 #include "core/property_bundle.hpp"
-#include "core/utils/buffers.hpp"
+#include "core/util/buffers.hpp"
 #include "editor/ui/properties/dialogs/property_type_combo.hpp"
 
 namespace tactile::ui {

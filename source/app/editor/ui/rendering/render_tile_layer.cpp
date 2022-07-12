@@ -19,7 +19,7 @@
 
 #include "render_tile_layer.hpp"
 
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "core/region.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_tile.hpp"

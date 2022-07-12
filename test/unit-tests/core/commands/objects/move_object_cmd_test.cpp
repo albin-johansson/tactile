@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/objects/move_object_cmd.hpp"
+#include "core/cmd/object/move_object_cmd.hpp"
 
 #include <gtest/gtest.h>
 

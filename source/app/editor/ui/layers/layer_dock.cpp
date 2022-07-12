@@ -23,8 +23,8 @@
 #include <imgui.h>
 
 #include "core/common/maybe.hpp"
-#include "core/documents/map_document.hpp"
-#include "core/events/layer_events.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/layer_events.hpp"
 #include "core/model.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/alignment.hpp"

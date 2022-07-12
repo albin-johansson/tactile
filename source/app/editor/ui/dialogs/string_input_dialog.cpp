@@ -23,7 +23,7 @@
 
 #include <imgui.h>
 
-#include "core/utils/buffers.hpp"
+#include "core/util/buffers.hpp"
 
 namespace tactile::ui {
 

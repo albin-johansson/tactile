@@ -23,7 +23,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/events/component_events.hpp"
+#include "core/event/component_events.hpp"
 
 namespace tactile::ui {
 

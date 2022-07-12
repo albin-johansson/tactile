@@ -23,7 +23,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/common/filesystem.hpp"
-#include "core/documents/map_document.hpp"
+#include "core/document/map_document.hpp"
 #include "io/maps/convert_map_to_ir.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/emitter/json_emitter.hpp"

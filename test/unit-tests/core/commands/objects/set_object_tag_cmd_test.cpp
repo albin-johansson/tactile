@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/objects/set_object_tag_cmd.hpp"
+#include "core/cmd/object/set_object_tag_cmd.hpp"
 
 #include <gtest/gtest.h>
 

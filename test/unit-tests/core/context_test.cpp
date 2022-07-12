@@ -17,18 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/contexts/context.hpp"
+#include "core/context/context.hpp"
 
 #include <gtest/gtest.h>
 
-#include "core/layers/group_layer.hpp"
-#include "core/layers/object.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/group_layer.hpp"
+#include "core/layer/object.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "core/map.hpp"
-#include "core/tilesets/tile.hpp"
-#include "core/tilesets/tileset.hpp"
-#include "core/tilesets/tileset_info.hpp"
+#include "core/tileset/tile.hpp"
+#include "core/tileset/tileset.hpp"
+#include "core/tileset/tileset_info.hpp"
 
 namespace tactile::test {
 

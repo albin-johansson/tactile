@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/components/set_component_attr_type_cmd.hpp"
+#include "core/cmd/comp/set_component_attr_type_cmd.hpp"
 
 #include <gtest/gtest.h>
 

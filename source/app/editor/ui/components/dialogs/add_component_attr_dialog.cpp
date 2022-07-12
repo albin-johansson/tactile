@@ -23,8 +23,8 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/component_index.hpp"
-#include "core/events/component_events.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/event/component_events.hpp"
 #include "core/model.hpp"
 
 namespace tactile::ui {

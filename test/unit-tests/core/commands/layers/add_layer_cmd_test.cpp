@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/layers/add_layer_cmd.hpp"
+#include "core/cmd/layer/add_layer_cmd.hpp"
 
 #include <gtest/gtest.h>
 

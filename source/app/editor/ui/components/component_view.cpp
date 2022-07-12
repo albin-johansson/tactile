@@ -23,8 +23,8 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/component.hpp"
-#include "core/events/component_events.hpp"
+#include "core/comp/component.hpp"
+#include "core/event/component_events.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/icons.hpp"

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/properties/rename_property_cmd.hpp"
+#include "core/cmd/property/rename_property_cmd.hpp"
 
 #include <gtest/gtest.h>
 

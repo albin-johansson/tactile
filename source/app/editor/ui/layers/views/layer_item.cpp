@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/events/layer_events.hpp"
-#include "core/events/property_events.hpp"
-#include "core/utils/formatted_string.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/layer_events.hpp"
+#include "core/event/property_events.hpp"
+#include "core/util/formatted_string.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"

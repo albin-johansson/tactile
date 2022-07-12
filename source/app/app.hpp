@@ -22,9 +22,9 @@
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/events/all.hpp"
+#include "core/event/all.hpp"
 #include "core/model.hpp"
-#include "core/utils/texture_manager.hpp"
+#include "core/util/texture_manager.hpp"
 #include "editor/loop.hpp"
 
 namespace tactile {

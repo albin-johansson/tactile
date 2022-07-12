@@ -23,10 +23,10 @@
 #include <imgui.h>
 
 #include "core/common/identifiers.hpp"
-#include "core/components/component_bundle.hpp"
-#include "core/components/component_index.hpp"
-#include "core/contexts/context.hpp"
-#include "core/events/component_events.hpp"
+#include "core/comp/component_bundle.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/context/context.hpp"
+#include "core/event/component_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"

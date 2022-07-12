@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/properties/update_property_cmd.hpp"
+#include "core/cmd/property/update_property_cmd.hpp"
 
 #include <gtest/gtest.h>
 

@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/maps/fix_tiles_in_map_cmd.hpp"
+#include "core/cmd/map/fix_tiles_in_map_cmd.hpp"
 
 #include <gtest/gtest.h>
 
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 

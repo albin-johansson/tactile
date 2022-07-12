@@ -9,8 +9,8 @@
 
 #include <gtest/gtest.h>
 
-#include "core/utils/texture_manager.hpp"
-#include "core/utils/tiles.hpp"
+#include "core/util/texture_manager.hpp"
+#include "core/util/tiles.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/emitter/json_emitter.hpp"
 #include "io/maps/emitter/xml_emitter.hpp"

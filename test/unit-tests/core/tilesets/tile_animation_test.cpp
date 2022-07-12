@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/tilesets/tile_animation.hpp"
+#include "core/tileset/tile_animation.hpp"
 
 #include <gtest/gtest.h>
 
