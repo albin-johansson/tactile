@@ -62,10 +62,13 @@ void _restore_context_no_register(ADocument&              document,
   if (auto index = document.get_component_index()) {
     for (const auto& [type, attributes] : source.components) {
       const auto& definition = index->with_name(type);
-      auto        component = definition.instantiate();
+
+      auto component = definition.instantiate();
       for (const auto& [attrName, attrValue] : attributes) {
-        component.add_attr(attrName, attrValue);
+        component.update_attr(attrName, attrValue);
       }
+
+      components.add(std::move(component));
     }
   }
 }
@@ -167,8 +170,6 @@ auto _restore_layer(MapDocument&         document,
 
 void _restore_layers(MapDocument& document, const ir::MapData& mapData)
 {
-  auto& map = document.get_map();
-
   for (const auto& layerData : mapData.layers) {
     _restore_layer(document, layerData);
   }
