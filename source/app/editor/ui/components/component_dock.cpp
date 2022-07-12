@@ -26,6 +26,7 @@
 #include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/context/context.hpp"
+#include "core/context/context_manager.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/alignment.hpp"
@@ -72,8 +73,7 @@ void _show_add_component_button_popup_content(const ADocument&  document,
 
 void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
 {
-  const auto  contextId = document.active_context_id();
-  const auto& context = document.view_context(contextId);
+  const auto& context = document.get_contexts().active_context();
   ImGui::Text("Context: %s", context.get_name().c_str());
 
   if (Child pane {"##ComponentsChild"}; pane.is_open()) {
@@ -90,7 +90,7 @@ void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
         ImGui::Separator();
 
         const auto& componentName = index->at(componentId).get_name();
-        component_view(contextId, component, componentName, dispatcher);
+        component_view(context.get_uuid(), component, componentName, dispatcher);
       }
 
       ImGui::Separator();

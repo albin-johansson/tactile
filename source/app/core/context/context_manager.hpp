@@ -35,22 +35,32 @@
 
 namespace tactile {
 
+/// Manages all of the contexts contained within a document.
 class ContextManager final
 {
+  using ContextMap = HashMap<UUID, Shared<IContext>>;
   using ComponentFunc = std::function<void(Component&)>;
 
  public:
+  explicit ContextManager(const UUID& rootContextId);
+
   void add_context(Shared<IContext> context);
 
-  void remove_context(const UUID& id);
+  void erase(const UUID& contextId);
 
-  [[nodiscard]] auto get_context(const UUID& id) -> const Shared<IContext>&;
+  void select(const UUID& contextId);
 
-  [[nodiscard]] auto view_context(const UUID& id) const -> const IContext&;
+  [[nodiscard, deprecated]] auto get_context(const UUID& id) -> const Shared<IContext>&;
 
-  [[nodiscard]] auto has_context(const UUID& id) const -> bool;
+  [[nodiscard]] auto at(const UUID& contextId) -> IContext&;
+  [[nodiscard]] auto at(const UUID& contextId) const -> const IContext&;
 
-  [[nodiscard]] auto context_count() const -> usize;
+  [[nodiscard]] auto contains(const UUID& contextId) const -> bool;
+
+  [[nodiscard]] auto size() const -> usize;
+
+  [[nodiscard]] auto active_context() -> IContext&;
+  [[nodiscard]] auto active_context() const -> const IContext&;
 
   auto on_undef_comp(const UUID& componentId) -> HashMap<UUID, Component>;
 
@@ -68,8 +78,12 @@ class ContextManager final
                                       std::string_view name,
                                       AttributeType    type) -> HashMap<UUID, Attribute>;
 
+  [[nodiscard]] auto active_context_id() const -> const UUID& { return mActiveContextId; }
+
  private:
-  HashMap<UUID, Shared<IContext>> mContexts;
+  ContextMap mContexts;
+  UUID       mRootContextId;
+  UUID       mActiveContextId;
 
   void on_component_update(const UUID& componentId, const ComponentFunc& func);
 };

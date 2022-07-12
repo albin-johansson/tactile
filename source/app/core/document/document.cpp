@@ -24,18 +24,9 @@
 #include "core/cmd/command_stack.hpp"
 #include "core/cmd/comp/all.hpp"
 #include "core/cmd/property/all.hpp"
+#include "core/context/context_manager.hpp"
 
 namespace tactile {
-
-void ADocument::select_context(const UUID& contextId)
-{
-  mActiveContext = contextId;
-}
-
-auto ADocument::active_context_id() const -> const UUID&
-{
-  return mActiveContext;
-}
 
 void ADocument::set_component_index(Shared<ComponentIndex> index)
 {
@@ -111,7 +102,7 @@ void ADocument::update_component(const UUID& componentId,
 
 void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<AttachComponentCmd>(mComponentIndex,
                                          std::move(context),
                                          componentId);
@@ -119,7 +110,7 @@ void ADocument::attach_component(const UUID& contextId, const UUID& componentId)
 
 void ADocument::detach_component(const UUID& contextId, const UUID& componentId)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<DetachComponentCmd>(std::move(context), componentId);
 }
 
@@ -128,7 +119,7 @@ void ADocument::update_attached_component(const UUID& contextId,
                                           std::string name,
                                           Attribute   value)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<UpdateAttachedComponentCmd>(std::move(context),
                                                  componentId,
                                                  std::move(name),
@@ -137,7 +128,7 @@ void ADocument::update_attached_component(const UUID& contextId,
 
 void ADocument::reset_attached_component(const UUID& contextId, const UUID& componentId)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<ResetAttachedComponentCmd>(mComponentIndex,
                                                 std::move(context),
                                                 componentId);
@@ -147,13 +138,13 @@ void ADocument::add_property(const UUID&         contextId,
                              std::string         name,
                              const AttributeType type)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<AddPropertyCmd>(std::move(context), std::move(name), type);
 }
 
 void ADocument::remove_property(const UUID& contextId, std::string name)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<RemovePropertyCmd>(std::move(context), std::move(name));
 }
 
@@ -161,7 +152,7 @@ void ADocument::rename_property(const UUID& contextId,
                                 std::string current,
                                 std::string updated)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<RenamePropertyCmd>(std::move(context),
                                         std::move(current),
                                         std::move(updated));
@@ -169,7 +160,7 @@ void ADocument::rename_property(const UUID& contextId,
 
 void ADocument::update_property(const UUID& contextId, std::string name, Attribute value)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<UpdatePropertyCmd>(std::move(context),
                                         std::move(name),
                                         std::move(value));
@@ -179,7 +170,7 @@ void ADocument::change_property_type(const UUID&         contextId,
                                      std::string         name,
                                      const AttributeType type)
 {
-  auto context = get_context(contextId);
+  auto context = get_contexts().get_context(contextId);
   get_history().exec<ChangePropertyTypeCmd>(std::move(context), std::move(name), type);
 }
 

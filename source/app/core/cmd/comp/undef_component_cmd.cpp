@@ -46,9 +46,10 @@ void UndefComponentCmd::undo()
   mPreviousDef.reset();
 
   /* Restores previously removed components */
+  auto& contexts = mDocument->get_contexts();
   for (auto [contextId, component] : mRemovedComponents) {
-    auto context = mDocument->get_context(contextId);
-    context->get_comps().add(std::move(component));
+    auto& context = contexts.at(contextId);
+    context.get_comps().add(std::move(component));
   }
 
   mRemovedComponents.clear();

@@ -42,17 +42,17 @@ TEST(RemoveLayerCmd, RedoUndo)
   auto& map = document->get_map();
   auto& contexts = document->get_contexts();
 
-  ASSERT_TRUE(contexts.has_context(layerId));
+  ASSERT_TRUE(contexts.contains(layerId));
 
   RemoveLayerCmd cmd {document.get(), layerId};
 
   cmd.redo();
   ASSERT_EQ(0, map.layer_count());
-  ASSERT_FALSE(contexts.has_context(layerId));
+  ASSERT_FALSE(contexts.contains(layerId));
 
   cmd.undo();
   ASSERT_EQ(1, map.layer_count());
-  ASSERT_TRUE(contexts.has_context(layerId));
+  ASSERT_TRUE(contexts.contains(layerId));
 }
 
 }  // namespace tactile::test

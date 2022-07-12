@@ -45,11 +45,11 @@ TEST(AddObjectCmd, RedoUndo)
 
   auto       object = layer.begin()->second;
   const auto objectId = object->get_uuid();
-  ASSERT_TRUE(document->has_context(objectId));
+  ASSERT_TRUE(document->get_contexts().contains(objectId));
 
   cmd.undo();
   ASSERT_EQ(0, layer.object_count());
-  ASSERT_FALSE(document->has_context(objectId));
+  ASSERT_FALSE(document->get_contexts().contains(objectId));
 }
 
 }  // namespace tactile::test

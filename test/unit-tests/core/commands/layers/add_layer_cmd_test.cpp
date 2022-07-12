@@ -37,24 +37,24 @@ TEST(AddLayerCmd, RedoUndo)
   auto& map = document->get_map();
   auto& contexts = document->get_contexts();
 
-  ASSERT_EQ(1, contexts.context_count());
-  ASSERT_TRUE(contexts.has_context(map.get_uuid()));
+  ASSERT_EQ(1, contexts.size());
+  ASSERT_TRUE(contexts.contains(map.get_uuid()));
 
   AddLayerCmd cmd {document.get(), LayerType::TileLayer};
 
   cmd.redo();
   ASSERT_EQ(1, map.layer_count());
-  ASSERT_EQ(2, contexts.context_count());
+  ASSERT_EQ(2, contexts.size());
   ASSERT_TRUE(map.active_layer_id().has_value());
 
   const auto layerId = map.active_layer_id().value();
-  ASSERT_TRUE(contexts.has_context(layerId));
+  ASSERT_TRUE(contexts.contains(layerId));
 
   cmd.undo();
   ASSERT_EQ(0, map.layer_count());
-  ASSERT_EQ(1, contexts.context_count());
+  ASSERT_EQ(1, contexts.size());
   ASSERT_FALSE(map.active_layer_id().has_value());
-  ASSERT_FALSE(contexts.has_context(layerId));
+  ASSERT_FALSE(contexts.contains(layerId));
 }
 
 }  // namespace tactile::test

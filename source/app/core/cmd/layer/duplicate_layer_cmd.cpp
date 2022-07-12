@@ -39,7 +39,7 @@ void DuplicateLayerCmd::undo()
   const auto id = mNewLayer->get_uuid();
 
   map.remove_layer(id);
-  mDocument->unregister_context(id);
+  mDocument->get_contexts().erase(id);
 }
 
 void DuplicateLayerCmd::redo()
@@ -55,7 +55,7 @@ void DuplicateLayerCmd::redo()
     mNewIndex = map.local_layer_index(mNewLayer->get_uuid());
   }
 
-  mDocument->register_context(mNewLayer);
+  mDocument->get_contexts().add_context(mNewLayer);
 }
 
 auto DuplicateLayerCmd::get_name() const -> const char*

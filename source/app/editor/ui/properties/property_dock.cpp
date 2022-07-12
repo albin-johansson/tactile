@@ -344,8 +344,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
   const auto& document = model.require_active_document();
-  const auto& contextId = document.active_context_id();
-  const auto& context = document.view_context(contextId);
+  const auto& context = document.get_contexts().active_context();
 
   _update_conditional_tileset_button(document, dispatcher);
 

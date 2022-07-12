@@ -58,7 +58,7 @@ auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initialValue) -> MapBui
   auto& map = mDocument->get_map();
 
   const auto layerId = map.add_tile_layer();
-  mDocument->register_context(map.get_layer(layerId));
+  mDocument->get_contexts().add_context(map.get_layer(layerId));
 
   if (id) {
     *id = layerId;
@@ -79,7 +79,7 @@ auto MapBuilder::with_object_layer(UUID* id) -> MapBuilder&
   auto& map = mDocument->get_map();
 
   const auto layerId = map.add_object_layer();
-  mDocument->register_context(map.get_layer(layerId));
+  mDocument->get_contexts().add_context(map.get_layer(layerId));
 
   if (id) {
     *id = layerId;
@@ -95,7 +95,7 @@ auto MapBuilder::with_object(const ObjectType type, Shared<Object>* outObject)
 
   if (!mDedicatedObjectLayer) {
     mDedicatedObjectLayer = map.add_object_layer();
-    mDocument->register_context(map.get_layer(*mDedicatedObjectLayer));
+    mDocument->get_contexts().add_context(map.get_layer(*mDedicatedObjectLayer));
   }
 
   auto object = std::make_shared<Object>();
@@ -105,7 +105,7 @@ auto MapBuilder::with_object(const ObjectType type, Shared<Object>* outObject)
     *outObject = object;
   }
 
-  mDocument->register_context(object);
+  mDocument->get_contexts().add_context(object);
 
   auto& layer = map.view_object_layer(*mDedicatedObjectLayer);
   layer.add_object(std::move(object));
@@ -126,7 +126,7 @@ auto MapBuilder::with_tileset(UUID* id) -> MapBuilder&
     *id = tileset->get_uuid();
   }
 
-  mDocument->register_context(tileset);
+  mDocument->get_contexts().add_context(tileset);
 
   auto& map = mDocument->get_map();
   map.attach_tileset(std::move(tileset), false);

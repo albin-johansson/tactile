@@ -23,6 +23,7 @@
 #include <imgui.h>
 
 #include "core/context/context.hpp"
+#include "core/context/context_manager.hpp"
 #include "core/event/property_events.hpp"
 #include "core/model.hpp"
 #include "core/property_bundle.hpp"
@@ -64,7 +65,7 @@ void AddPropertyDialog::on_accept(entt::dispatcher& dispatcher)
 auto AddPropertyDialog::is_current_input_valid(const DocumentModel& model) const -> bool
 {
   const auto& document = model.require_active_document();
-  const auto& context = document.view_context(document.active_context_id());
+  const auto& context = document.get_contexts().active_context();
   const auto  name = create_string_view_from_buffer(mNameBuffer);
   return !name.empty() && !context.get_props().contains(name);
 }

@@ -24,6 +24,7 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/context/context.hpp"
+#include "core/context/context_manager.hpp"
 #include "core/event/property_events.hpp"
 #include "core/model.hpp"
 #include "core/property_bundle.hpp"
@@ -53,7 +54,7 @@ auto RenamePropertyDialog::validate(const DocumentModel& model,
                                     std::string_view     input) const -> bool
 {
   const auto& document = model.require_active_document();
-  const auto& context = document.view_context(document.active_context_id());
+  const auto& context = document.get_contexts().active_context();
   return !input.empty() && !context.get_props().contains(input);
 }
 

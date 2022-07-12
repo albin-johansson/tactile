@@ -32,25 +32,13 @@ namespace tactile {
 
 MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize columns)
     : mMap {std::make_shared<Map>()}
+    , mContexts {mMap->get_uuid()}
 {
   mMap->resize(rows, columns);
   mMap->set_tile_size(tileSize);
 
-  register_context(mMap);
-  select_context(mMap->get_uuid());
-}
-
-void MapDocument::register_context(Shared<IContext> context)
-{
-  mContexts.add_context(std::move(context));
-}
-
-void MapDocument::unregister_context(const UUID& id)
-{
-  mContexts.remove_context(id);
-  if (mActiveContext == id) {
-    mActiveContext = mMap->get_uuid();
-  }
+  mContexts.add_context(mMap);
+  mContexts.select(mMap->get_uuid());
 }
 
 auto MapDocument::get_contexts() -> ContextManager&
@@ -58,19 +46,9 @@ auto MapDocument::get_contexts() -> ContextManager&
   return mContexts;
 }
 
-auto MapDocument::get_context(const UUID& id) -> Shared<IContext>
+auto MapDocument::get_contexts() const -> const ContextManager&
 {
-  return mContexts.get_context(id);
-}
-
-auto MapDocument::view_context(const UUID& id) const -> const IContext&
-{
-  return mContexts.view_context(id);
-}
-
-auto MapDocument::has_context(const UUID& id) const -> bool
-{
-  return mContexts.has_context(id);
+  return mContexts;
 }
 
 void MapDocument::update()
@@ -220,7 +198,7 @@ void MapDocument::set_object_tag(const UUID& objectId, std::string tag)
 
 auto MapDocument::get_object(const UUID& objectId) -> Shared<Object>
 {
-  if (auto ptr = std::dynamic_pointer_cast<Object>(get_context(objectId))) {
+  if (auto ptr = std::dynamic_pointer_cast<Object>(mContexts.get_context(objectId))) {
     return ptr;
   }
   else {

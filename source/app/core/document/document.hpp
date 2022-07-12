@@ -45,12 +45,11 @@ class ADocument
   /// Sets the name of the root document context.
   [[deprecated]] virtual void set_name(std::string name) = 0;
 
+  [[nodiscard]] virtual auto get_contexts() -> ContextManager& = 0;
+  [[nodiscard]] virtual auto get_contexts() const -> const ContextManager& = 0;
+
   /// Sets the file path associated with the document.
   void set_path(fs::path path);
-
-  void select_context(const UUID& contextId);
-
-  [[nodiscard]] auto active_context_id() const -> const UUID&;
 
   void set_component_index(Shared<ComponentIndex> index);
 
@@ -99,17 +98,6 @@ class ADocument
   void update_property(const UUID& contextId, std::string name, Attribute value);
 
   void change_property_type(const UUID& contextId, std::string name, AttributeType type);
-
-  virtual void               register_context(Shared<IContext> context) = 0;
-  virtual void               unregister_context(const UUID& id) = 0;
-  [[nodiscard]] virtual auto get_contexts() -> ContextManager& = 0;
-
-  /// Looks up an existing context in the document.
-  [[nodiscard]] virtual auto get_context(const UUID& id) -> Shared<IContext> = 0;
-
-  [[nodiscard]] virtual auto view_context(const UUID& id) const -> const IContext& = 0;
-
-  [[nodiscard]] virtual auto has_context(const UUID& id) const -> bool = 0;
 
   /// Indicates whether the document represents a map.
   [[nodiscard]] auto is_map() const -> bool;

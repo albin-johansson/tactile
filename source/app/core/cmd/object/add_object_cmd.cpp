@@ -51,7 +51,7 @@ void AddObjectCmd::undo()
   const auto objectId = mObjectId.value();
   layer.remove_object(objectId);
 
-  mDocument->unregister_context(objectId);
+  mDocument->get_contexts().erase(objectId);
 }
 
 void AddObjectCmd::redo()
@@ -68,7 +68,7 @@ void AddObjectCmd::redo()
   mObjectId = object->get_uuid();
   layer.add_object(object);
 
-  mDocument->register_context(std::move(object));
+  mDocument->get_contexts().add_context(std::move(object));
 }
 
 auto AddObjectCmd::get_name() const -> const char*

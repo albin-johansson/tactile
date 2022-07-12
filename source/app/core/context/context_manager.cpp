@@ -26,40 +26,71 @@
 
 namespace tactile {
 
+ContextManager::ContextManager(const UUID& rootContextId) : mRootContextId {rootContextId}
+{}
+
 void ContextManager::add_context(Shared<IContext> context)
 {
   const auto id = context->get_uuid();
   mContexts[id] = std::move(context);
 }
 
-void ContextManager::remove_context(const UUID& id)
+void ContextManager::erase(const UUID& contextId)
 {
-  if (const auto iter = mContexts.find(id); iter != mContexts.end()) {
+  if (const auto iter = mContexts.find(contextId); iter != mContexts.end()) [[likely]] {
     mContexts.erase(iter);
+    if (contextId == mActiveContextId) {
+      mActiveContextId = mRootContextId;
+    }
   }
   else {
     throw TactileError {"Tried to remove non-existent context!"};
   }
 }
 
-auto ContextManager::get_context(const UUID& id) -> const Shared<IContext>&
+void ContextManager::select(const UUID& contextId)
 {
-  return lookup_in(mContexts, id);
+  if (mContexts.contains(contextId)) [[likely]] {
+    mActiveContextId = contextId;
+  }
+  else {
+    throw TactileError {"Tried to select non-existent context!"};
+  }
 }
 
-auto ContextManager::view_context(const UUID& id) const -> const IContext&
+auto ContextManager::get_context(const UUID& contextId) -> const Shared<IContext>&
 {
-  return *lookup_in(mContexts, id);
+  return lookup_in(mContexts, contextId);
 }
 
-auto ContextManager::has_context(const UUID& id) const -> bool
+auto ContextManager::at(const UUID& contextId) -> IContext&
 {
-  return mContexts.contains(id);
+  return *lookup_in(mContexts, contextId);
 }
 
-auto ContextManager::context_count() const -> usize
+auto ContextManager::at(const UUID& contextId) const -> const IContext&
+{
+  return *lookup_in(mContexts, contextId);
+}
+
+auto ContextManager::contains(const UUID& contextId) const -> bool
+{
+  return mContexts.contains(contextId);
+}
+
+auto ContextManager::size() const -> usize
 {
   return mContexts.size();
+}
+
+auto ContextManager::active_context() -> IContext&
+{
+  return *lookup_in(mContexts, mActiveContextId);
+}
+
+auto ContextManager::active_context() const -> const IContext&
+{
+  return *lookup_in(mContexts, mActiveContextId);
 }
 
 auto ContextManager::on_undef_comp(const UUID& componentId) -> HashMap<UUID, Component>

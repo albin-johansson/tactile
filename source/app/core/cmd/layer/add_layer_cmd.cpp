@@ -38,7 +38,7 @@ void AddLayerCmd::undo()
   auto&      map = mDocument->get_map();
   const auto id = mLayer->get_uuid();
   map.remove_layer(id);
-  mDocument->unregister_context(id);
+  mDocument->get_contexts().erase(id);
 }
 
 void AddLayerCmd::redo()
@@ -49,10 +49,11 @@ void AddLayerCmd::redo()
     map.add_layer(mLayer, mLayer->get_parent());
   }
   else {
-    const auto activeLayerId =
-        map.is_active_layer(LayerType::GroupLayer) ? map.active_layer_id() : nothing;
-    Maybe<UUID> id;
+    const auto activeLayerId = map.is_active_layer(LayerType::GroupLayer)
+                                   ? map.active_layer_id()  //
+                                   : nothing;
 
+    Maybe<UUID> id;
     switch (mLayerType) {
       case LayerType::TileLayer: {
         id = map.add_tile_layer(activeLayerId);
@@ -73,7 +74,7 @@ void AddLayerCmd::redo()
     mLayer = map.get_layer(id.value());
   }
 
-  mDocument->register_context(mLayer);
+  mDocument->get_contexts().add_context(mLayer);
 }
 
 auto AddLayerCmd::get_name() const -> const char*

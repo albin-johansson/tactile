@@ -55,7 +55,7 @@ void RemoveTilesetCmd::undo()
   map.attach_tileset(tileset, mFirstTile.value(), false);  // TODO
   map.select_tileset(tilesetId);
 
-  mapDocument->register_context(std::move(tileset));
+  mapDocument->get_contexts().add_context(std::move(tileset));
 }
 
 void RemoveTilesetCmd::redo()
@@ -75,7 +75,7 @@ void RemoveTilesetCmd::redo()
   }
 
   map.detach_tileset(mTilesetId);
-  mapDocument->unregister_context(mTilesetId);
+  mapDocument->get_contexts().erase(mTilesetId);
 }
 
 auto RemoveTilesetCmd::get_name() const -> const char*

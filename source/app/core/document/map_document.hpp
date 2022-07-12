@@ -48,17 +48,8 @@ class MapDocument final : public ADocument
  public:
   MapDocument(const Vector2i& tileSize, usize rows, usize columns);
 
-  void register_context(Shared<IContext> context) override;
-
-  void unregister_context(const UUID& id) override;
-
   [[nodiscard]] auto get_contexts() -> ContextManager& override;
-
-  [[nodiscard]] auto get_context(const UUID& id) -> Shared<IContext> override;
-
-  [[nodiscard]] auto view_context(const UUID& id) const -> const IContext& override;
-
-  [[nodiscard]] auto has_context(const UUID& id) const -> bool override;
+  [[nodiscard]] auto get_contexts() const -> const ContextManager& override;
 
   void update() override;
 

@@ -75,7 +75,7 @@ void _restore_context(ADocument&              document,
                       const ir::ContextData&  source)
 {
   _restore_context_no_register(document, context, source);
-  document.register_context(context);
+  document.get_contexts().add_context(context);
 }
 
 auto _restore_object(ADocument& document, const ir::ObjectData& objectData)

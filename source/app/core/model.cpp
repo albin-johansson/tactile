@@ -102,7 +102,7 @@ auto DocumentModel::restore_tileset(const TileID firstTileId, const TilesetInfo&
     const auto tilesetId = tileset->get_uuid();
 
     map.attach_tileset(tileset, firstTileId, false);  // TODO embedded option
-    mapDocument->register_context(std::move(tileset));
+    mapDocument->get_contexts().add_context(std::move(tileset));
 
     return tilesetId;
   }

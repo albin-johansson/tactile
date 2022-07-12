@@ -41,7 +41,7 @@ void RemoveLayerCmd::undo()
   map.add_layer(mLayer, mLayer->get_parent());
   map.set_layer_index(mLayer->get_uuid(), mIndex.value());
 
-  mDocument->register_context(mLayer);
+  mDocument->get_contexts().add_context(mLayer);
   mIndex.reset();
 }
 
@@ -53,7 +53,7 @@ void RemoveLayerCmd::redo()
   mIndex = map.local_layer_index(id);
   map.remove_layer(id);
 
-  mDocument->unregister_context(id);
+  mDocument->get_contexts().erase(id);
 }
 
 auto RemoveLayerCmd::get_name() const -> const char*

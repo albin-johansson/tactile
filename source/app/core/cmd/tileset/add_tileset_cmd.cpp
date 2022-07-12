@@ -57,7 +57,7 @@ void AddTilesetCmd::undo()
   auto& map = document->get_map();
   map.detach_tileset(mTilesetId);
 
-  document->unregister_context(mTilesetId);
+  document->get_contexts().erase(mTilesetId);
 }
 
 void AddTilesetCmd::redo()
@@ -77,7 +77,7 @@ void AddTilesetCmd::redo()
   auto tileset = mTileset->get_tileset();
   map.attach_tileset(tileset, false);
 
-  document->register_context(tileset);
+  document->get_contexts().add_context(tileset);
 }
 
 auto AddTilesetCmd::get_name() const -> const char*

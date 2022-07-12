@@ -30,46 +30,24 @@ namespace tactile {
 
 TilesetDocument::TilesetDocument(const UUID& id, const TilesetInfo& info)
     : mTileset {std::make_shared<Tileset>(id, info)}
+    , mContexts {mTileset->get_uuid()}
 {
-  register_context(mTileset);
-  select_context(mTileset->get_uuid());
+  mContexts.add_context(mTileset);
+  mContexts.select(mTileset->get_uuid());
 }
 
 TilesetDocument::TilesetDocument(const TilesetInfo& info)
     : TilesetDocument {make_uuid(), info}
 {}
 
-void TilesetDocument::register_context(Shared<IContext> context)
-{
-  mContexts.add_context(std::move(context));
-}
-
-void TilesetDocument::unregister_context(const UUID& id)
-{
-  mContexts.remove_context(id);
-  if (mActiveContext == id) {
-    mActiveContext = mTileset->get_uuid();
-  }
-}
-
 auto TilesetDocument::get_contexts() -> ContextManager&
 {
   return mContexts;
 }
 
-auto TilesetDocument::get_context(const UUID& id) -> Shared<IContext>
+auto TilesetDocument::get_contexts() const -> const ContextManager&
 {
-  return mContexts.get_context(id);
-}
-
-auto TilesetDocument::view_context(const UUID& id) const -> const IContext&
-{
-  return mContexts.view_context(id);
-}
-
-auto TilesetDocument::has_context(const UUID& id) const -> bool
-{
-  return mContexts.has_context(id);
+  return mContexts;
 }
 
 void TilesetDocument::update()
