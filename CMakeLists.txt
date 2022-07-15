@@ -9,7 +9,7 @@ message("[Tactile]: Vcpkg target triplet is... ${VCPKG_TARGET_TRIPLET}")
 
 project(tactile
         HOMEPAGE_URL "https://github.com/albin-johansson/tactile"
-        VERSION 0.4.0
+        VERSION 0.5.0
         LANGUAGES CXX)
 
 message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
