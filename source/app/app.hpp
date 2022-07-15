@@ -50,8 +50,6 @@ class App final : AEventLoop
  public:
   explicit App(AppConfiguration* configuration);
 
-  ~App() noexcept override;
-
   using AEventLoop::start;
 
  protected:

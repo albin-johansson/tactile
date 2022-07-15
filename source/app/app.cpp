@@ -21,22 +21,19 @@
 
 #include <utility>  // move
 
-#include <boost/stacktrace.hpp>
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
 
 #include "cfg/configuration.hpp"
-#include "core/commands/commands.hpp"
-#include "core/documents/map_document.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/events/map_events.hpp"
-#include "core/events/misc_events.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/viewport_events.hpp"
-#include "core/tilesets/tileset_info.hpp"
-#include "core/tools/tool_manager.hpp"
+#include "core/cmd/commands.hpp"
+#include "core/document/map_document.hpp"
+#include "core/document/tileset_document.hpp"
+#include "core/event/map_events.hpp"
+#include "core/event/misc_events.hpp"
+#include "core/event/tileset_events.hpp"
+#include "core/event/viewport_events.hpp"
+#include "core/tileset/tileset_info.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "editor/ui/dialogs/save_as_dialog.hpp"
@@ -46,7 +43,6 @@
 #include "editor/ui/menus/edit_menu.hpp"
 #include "editor/ui/menus/file_menu.hpp"
 #include "editor/ui/menus/map_menu.hpp"
-#include "editor/ui/properties/property_dock.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
@@ -73,8 +69,6 @@ App::App(AppConfiguration* configuration) : AEventLoop {configuration}
   ui::init_dialogs();
   ui::load_icons(mTextures);
 }
-
-App::~App() noexcept = default;
 
 void App::on_startup()
 {
