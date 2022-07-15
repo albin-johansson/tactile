@@ -23,10 +23,11 @@
 #include <imgui.h>
 
 #include "core/common/identifiers.hpp"
-#include "core/components/component_bundle.hpp"
-#include "core/components/component_index.hpp"
-#include "core/contexts/context.hpp"
-#include "core/events/component_events.hpp"
+#include "core/comp/component_bundle.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/ctx/context.hpp"
+#include "core/ctx/context_manager.hpp"
+#include "core/event/component_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
@@ -46,7 +47,7 @@ void _show_add_component_button_popup_content(const ADocument&  document,
                                               const IContext&   context,
                                               entt::dispatcher& dispatcher)
 {
-  const auto index = document.get_component_index();
+  const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
   if (index->empty()) {
@@ -72,8 +73,7 @@ void _show_add_component_button_popup_content(const ADocument&  document,
 
 void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
 {
-  const auto  contextId = document.active_context_id();
-  const auto& context = document.view_context(contextId);
+  const auto& context = document.get_contexts().active_context();
   ImGui::Text("Context: %s", context.get_name().c_str());
 
   if (Child pane {"##ComponentsChild"}; pane.is_open()) {
@@ -83,14 +83,14 @@ void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
       centered_label("This context has no components.");
     }
     else {
-      const auto index = document.get_component_index();
+      const auto* index = document.view_component_index();
       TACTILE_ASSERT(index != nullptr);
 
       for (const auto& [componentId, component] : comps) {
         ImGui::Separator();
 
         const auto& componentName = index->at(componentId).get_name();
-        component_view(contextId, component, componentName, dispatcher);
+        component_view(context.get_uuid(), component, componentName, dispatcher);
       }
 
       ImGui::Separator();

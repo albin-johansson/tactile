@@ -17,16 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/layers/group_layer.hpp"
+#include "core/layer/group_layer.hpp"
 
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/ostream.h>
 #include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
 
-#include "core/layers/layer_visitor.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/layer_visitor.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::test {

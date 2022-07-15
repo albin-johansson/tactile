@@ -23,8 +23,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/events/command_events.hpp"
-#include "core/events/misc_events.hpp"
+#include "core/event/command_events.hpp"
+#include "core/event/misc_events.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/checkboxes.hpp"
 #include "editor/ui/common/colors.hpp"

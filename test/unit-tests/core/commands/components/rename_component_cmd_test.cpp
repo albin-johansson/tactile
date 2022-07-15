@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/components/rename_component_cmd.hpp"
+#include "core/cmd/comp/rename_component_cmd.hpp"
 
 #include <gtest/gtest.h>
 

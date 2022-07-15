@@ -25,19 +25,19 @@
 #include <imgui.h>
 
 #include "core/common/maybe.hpp"
-#include "core/contexts/context_visitor.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/events/document_events.hpp"
-#include "core/events/layer_events.hpp"
-#include "core/events/object_events.hpp"
-#include "core/events/property_events.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/layers/group_layer.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/ctx/context_visitor.hpp"
+#include "core/document/tileset_document.hpp"
+#include "core/event/document_events.hpp"
+#include "core/event/layer_events.hpp"
+#include "core/event/object_events.hpp"
+#include "core/event/property_events.hpp"
+#include "core/event/tileset_events.hpp"
+#include "core/layer/group_layer.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "core/map.hpp"
 #include "core/model.hpp"
-#include "core/tilesets/tileset.hpp"
+#include "core/tileset/tileset.hpp"
 #include "editor/ui/common/filename_filter.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/icons.hpp"
@@ -344,8 +344,7 @@ void _update_property_table(const DocumentModel& model, entt::dispatcher& dispat
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
   const auto& document = model.require_active_document();
-  const auto& contextId = document.active_context_id();
-  const auto& context = document.view_context(contextId);
+  const auto& context = document.get_contexts().active_context();
 
   _update_conditional_tileset_button(document, dispatcher);
 

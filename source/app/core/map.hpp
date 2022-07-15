@@ -28,13 +28,13 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_bundle.hpp"
-#include "core/contexts/context.hpp"
-#include "core/contexts/context_delegate.hpp"
-#include "core/layers/group_layer.hpp"
+#include "core/comp/component_bundle.hpp"
+#include "core/ctx/context.hpp"
+#include "core/ctx/context_delegate.hpp"
+#include "core/layer/group_layer.hpp"
 #include "core/property_bundle.hpp"
 #include "core/tile_pos.hpp"
-#include "core/tilesets/tileset_bundle.hpp"
+#include "core/tileset/tileset_bundle.hpp"
 
 namespace tactile {
 

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 
 #include <memory>  // dynamic_pointer_cast
 

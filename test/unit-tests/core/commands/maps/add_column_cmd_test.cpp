@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/maps/add_column_cmd.hpp"
+#include "core/cmd/map/add_column_cmd.hpp"
 
 #include <gtest/gtest.h>
 

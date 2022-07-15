@@ -25,15 +25,15 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/events/map_events.hpp"
-#include "core/events/object_events.hpp"
-#include "core/events/property_events.hpp"
-#include "core/events/tool_events.hpp"
-#include "core/events/viewport_events.hpp"
-#include "core/layers/object_layer.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/map_events.hpp"
+#include "core/event/object_events.hpp"
+#include "core/event/property_events.hpp"
+#include "core/event/tool_events.hpp"
+#include "core/event/viewport_events.hpp"
+#include "core/layer/object_layer.hpp"
 #include "core/model.hpp"
-#include "core/tools/tool_manager.hpp"
+#include "core/tool/tool_manager.hpp"
 #include "document_viewport_offset_handler.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/rendering/graphics.hpp"

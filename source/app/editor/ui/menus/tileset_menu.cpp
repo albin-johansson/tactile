@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/tileset_events.hpp"
+#include "core/event/tileset_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"

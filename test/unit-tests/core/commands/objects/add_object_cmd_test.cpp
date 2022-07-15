@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/objects/add_object_cmd.hpp"
+#include "core/cmd/object/add_object_cmd.hpp"
 
 #include <gtest/gtest.h>
 
-#include "core/layers/object_layer.hpp"
+#include "core/layer/object_layer.hpp"
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
@@ -45,11 +45,11 @@ TEST(AddObjectCmd, RedoUndo)
 
   auto       object = layer.begin()->second;
   const auto objectId = object->get_uuid();
-  ASSERT_TRUE(document->has_context(objectId));
+  ASSERT_TRUE(document->get_contexts().contains(objectId));
 
   cmd.undo();
   ASSERT_EQ(0, layer.object_count());
-  ASSERT_FALSE(document->has_context(objectId));
+  ASSERT_FALSE(document->get_contexts().contains(objectId));
 }
 
 }  // namespace tactile::test

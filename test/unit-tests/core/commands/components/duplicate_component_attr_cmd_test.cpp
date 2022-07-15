@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/components/duplicate_component_attr_cmd.hpp"
+#include "core/cmd/comp/duplicate_component_attr_cmd.hpp"
 
 #include <gtest/gtest.h>
 

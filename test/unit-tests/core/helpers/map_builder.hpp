@@ -25,8 +25,8 @@
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "core/documents/map_document.hpp"
-#include "core/layers/object.hpp"
+#include "core/document/map_document.hpp"
+#include "core/layer/object.hpp"
 #include "core/map.hpp"
 
 namespace tactile::test {

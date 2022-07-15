@@ -23,7 +23,7 @@
 #include <string>     // string
 
 #include "core/common/string.hpp"
-#include "core/utils/tiles.hpp"
+#include "core/util/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
 #include "io/maps/yaml_utils.hpp"

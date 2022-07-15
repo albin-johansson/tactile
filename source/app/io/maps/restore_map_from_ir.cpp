@@ -24,23 +24,23 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "core/commands/command_stack.hpp"
+#include "core/cmd/command_stack.hpp"
 #include "core/common/filesystem.hpp"
 #include "core/common/functional.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_index.hpp"
-#include "core/documents/document.hpp"
-#include "core/documents/map_document.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/layers/group_layer.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/document/document.hpp"
+#include "core/document/map_document.hpp"
+#include "core/document/tileset_document.hpp"
+#include "core/layer/group_layer.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "core/model.hpp"
 #include "core/tile_pos.hpp"
-#include "core/tilesets/tileset_info.hpp"
-#include "core/utils/texture_manager.hpp"
+#include "core/tileset/tileset_info.hpp"
+#include "core/util/texture_manager.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/parse_data.hpp"
 #include "misc/assert.hpp"
@@ -62,10 +62,13 @@ void _restore_context_no_register(ADocument&              document,
   if (auto index = document.get_component_index()) {
     for (const auto& [type, attributes] : source.components) {
       const auto& definition = index->with_name(type);
-      auto        component = definition.instantiate();
+
+      auto component = definition.instantiate();
       for (const auto& [attrName, attrValue] : attributes) {
-        component.add_attr(attrName, attrValue);
+        component.update_attr(attrName, attrValue);
       }
+
+      components.add(std::move(component));
     }
   }
 }
@@ -75,7 +78,7 @@ void _restore_context(ADocument&              document,
                       const ir::ContextData&  source)
 {
   _restore_context_no_register(document, context, source);
-  document.register_context(context);
+  document.get_contexts().add_context(context);
 }
 
 auto _restore_object(ADocument& document, const ir::ObjectData& objectData)
@@ -167,8 +170,6 @@ auto _restore_layer(MapDocument&         document,
 
 void _restore_layers(MapDocument& document, const ir::MapData& mapData)
 {
-  auto& map = document.get_map();
-
   for (const auto& layerData : mapData.layers) {
     _restore_layer(document, layerData);
   }

@@ -26,7 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/common/string.hpp"
-#include "core/utils/tiles.hpp"
+#include "core/util/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
 #include "io/maps/xml_utils.hpp"

@@ -19,13 +19,13 @@
 
 #include "convert_map_to_ir.hpp"
 
-#include "core/components/component_index.hpp"
-#include "core/documents/map_document.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/layers/layer_visitor.hpp"
-#include "core/layers/object.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/document/map_document.hpp"
+#include "core/document/tileset_document.hpp"
+#include "core/layer/layer_visitor.hpp"
+#include "core/layer/object.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "core/model.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
@@ -269,7 +269,7 @@ auto convert_map_to_ir(const MapDocument& document) -> ir::MapData
   data.next_object_id = map.next_object_id();
   data.next_layer_id = map.next_layer_id();
 
-  const auto* components = document.get_component_index().get();
+  const auto* components = document.view_component_index();
 
   if (components) {
     _convert_component_definitions(*components, data);

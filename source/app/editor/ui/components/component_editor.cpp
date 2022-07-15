@@ -29,8 +29,8 @@
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_index.hpp"
-#include "core/events/component_events.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/event/component_events.hpp"
 #include "core/model.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/common/buttons.hpp"
@@ -63,7 +63,7 @@ ComponentEditor::~ComponentEditor() noexcept = default;
 void ComponentEditor::show(const DocumentModel& model)
 {
   const auto& document = model.require_active_document();
-  const auto& index = document.get_component_index();
+  const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
   mData->active_component = !index->empty() ? Maybe<UUID> {index->begin()->first}  //
@@ -75,7 +75,7 @@ void ComponentEditor::show(const DocumentModel& model)
 void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& document = model.require_active_document();
-  const auto& index = document.get_component_index();
+  const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
   auto& data = *mData;
@@ -151,7 +151,7 @@ void ComponentEditor::show_component_combo_popup(const ADocument&  document,
   if (Popup popup {"##ComponentEditorPopup"}; popup.is_open()) {
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
       const auto  id = data.active_component.value();
-      const auto  index = document.get_component_index();
+      const auto* index = document.view_component_index();
       const auto& name = index->at(id).get_name();
       get_dialogs().rename_component.show(name, id);
     }

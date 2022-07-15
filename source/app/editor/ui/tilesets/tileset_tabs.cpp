@@ -22,11 +22,11 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/events/document_events.hpp"
-#include "core/events/property_events.hpp"
-#include "core/events/tileset_events.hpp"
+#include "core/document/map_document.hpp"
+#include "core/document/tileset_document.hpp"
+#include "core/event/document_events.hpp"
+#include "core/event/property_events.hpp"
+#include "core/event/tileset_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"

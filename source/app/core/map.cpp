@@ -24,10 +24,10 @@
 #include <fmt/format.h>
 
 #include "core/common/functional.hpp"
-#include "core/contexts/context_visitor.hpp"
-#include "core/layers/layer_visitor.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/ctx/context_visitor.hpp"
+#include "core/layer/layer_visitor.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "core/tile_pos.hpp"
 #include "misc/panic.hpp"
 

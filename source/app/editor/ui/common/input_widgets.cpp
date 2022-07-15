@@ -23,7 +23,7 @@
 #include <utility>  // move
 
 #include "colors.hpp"
-#include "core/utils/buffers.hpp"
+#include "core/util/buffers.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/tooltips.hpp"

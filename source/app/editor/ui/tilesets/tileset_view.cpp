@@ -24,10 +24,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/viewport_events.hpp"
+#include "core/document/map_document.hpp"
+#include "core/document/tileset_document.hpp"
+#include "core/event/tileset_events.hpp"
+#include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/common/rubber_band.hpp"
 #include "editor/ui/conversions.hpp"

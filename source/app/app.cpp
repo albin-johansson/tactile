@@ -367,14 +367,14 @@ void App::on_open_save_as_dialog()
 void App::on_inspect_map()
 {
   if (auto* document = active_map_document()) {
-    document->select_context(document->get_map().get_uuid());
+    document->get_contexts().select(document->get_map().get_uuid());
   }
 }
 
 void App::on_inspect_tileset()
 {
   if (auto* document = active_tileset_document()) {
-    document->select_context(document->view_tileset().get_uuid());
+    document->get_contexts().select(document->view_tileset().get_uuid());
   }
 }
 
@@ -841,7 +841,7 @@ void App::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
 void App::on_show_add_property_dialog()
 {
   if (auto* document = active_document()) {
-    const auto& contextId = document->active_context_id();
+    const auto& contextId = document->get_contexts().active_context_id();
     ui::get_dialogs().add_property.open(contextId);
   }
 }
@@ -849,7 +849,7 @@ void App::on_show_add_property_dialog()
 void App::on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)
 {
   if (const auto* document = active_document()) {
-    const auto& contextId = document->active_context_id();
+    const auto& contextId = document->get_contexts().active_context_id();
     ui::get_dialogs().rename_property.open(contextId, event.current_name);
   }
 }
@@ -858,7 +858,7 @@ void App::on_show_change_property_type_dialog(
     const ShowChangePropertyTypeDialogEvent& event)
 {
   if (const auto* document = active_document()) {
-    const auto& contextId = document->active_context_id();
+    const auto& contextId = document->get_contexts().active_context_id();
     ui::get_dialogs().change_property_type.show(contextId,
                                                 event.name,
                                                 event.current_type);
@@ -903,7 +903,7 @@ void App::on_change_property_type(const ChangePropertyTypeEvent& event)
 void App::on_inspect_context(const InspectContextEvent& event)
 {
   if (auto* document = active_document()) {
-    document->select_context(event.context_id);
+    document->get_contexts().select(event.context_id);
   }
 }
 

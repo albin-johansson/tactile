@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/commands/components/undef_component_cmd.hpp"
+#include "core/cmd/comp/undef_component_cmd.hpp"
 
 #include <gtest/gtest.h>
 

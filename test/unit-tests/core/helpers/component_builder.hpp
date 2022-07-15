@@ -24,7 +24,7 @@
 #include "core/attribute.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_index.hpp"
+#include "core/comp/component_index.hpp"
 
 namespace tactile::test {
 
