@@ -34,9 +34,7 @@ struct CurrentEllipseStroke final
 class EllipseTool final : public ATool
 {
  public:
-  void draw_gizmos(const DocumentModel& model,
-                   IRenderer&           renderer,
-                   const MouseInfo&     mouse) const override;
+  void accept(IToolVisitor& visitor) const override;
 
   void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
@@ -56,7 +54,12 @@ class EllipseTool final : public ATool
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Ellipse; }
+  [[nodiscard]] auto get_stroke() const -> const Maybe<CurrentEllipseStroke>&;
+
+  [[nodiscard]] auto get_type() const -> ToolType override
+  {
+    return ToolType::Ellipse;
+  }
 
  private:
   Maybe<CurrentEllipseStroke> mStroke;

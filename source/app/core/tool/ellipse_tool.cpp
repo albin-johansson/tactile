@@ -26,22 +26,13 @@
 #include "core/document/map_document.hpp"
 #include "core/event/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/renderer.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
 
-void EllipseTool::draw_gizmos(const DocumentModel&,
-                              IRenderer& renderer,
-                              const MouseInfo&) const
+void EllipseTool::accept(IToolVisitor& visitor) const
 {
-  if (mStroke) {
-    const auto radius = mStroke->current - mStroke->start;
-    const auto center = mStroke->start + radius;
-
-    renderer.draw_ellipse(center + Vector2f {1, 1}, radius, cen::colors::black);
-    renderer.draw_ellipse(center, radius, cen::colors::yellow);
-  }
+  visitor.visit(*this);
 }
 
 void EllipseTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
@@ -121,6 +112,11 @@ auto EllipseTool::is_available(const DocumentModel& model) const -> bool
   const auto& document = model.require_active_map();
   const auto& map = document.get_map();
   return map.is_active_layer(LayerType::ObjectLayer);
+}
+
+auto EllipseTool::get_stroke() const -> const Maybe<CurrentEllipseStroke>&
+{
+  return mStroke;
 }
 
 }  // namespace tactile

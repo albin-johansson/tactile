@@ -40,9 +40,7 @@ namespace tactile {
 class StampTool final : public ATool
 {
  public:
-  void draw_gizmos(const DocumentModel& model,
-                   IRenderer&           renderer,
-                   const MouseInfo&     mouse) const override;
+  void accept(IToolVisitor& visitor) const override;
 
   void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
@@ -64,9 +62,14 @@ class StampTool final : public ATool
 
   [[nodiscard]] auto is_random() const -> bool;
 
+  [[nodiscard]] auto behaves_as_if_random(const Map& map) const -> bool;
+
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Stamp; }
+  [[nodiscard]] auto get_type() const -> ToolType override
+  {
+    return ToolType::Stamp;
+  }
 
  private:
   TileCache      mPrevious;  ///< Previous tile state.
@@ -90,8 +93,6 @@ class StampTool final : public ATool
                               const TilePos&    cursor);
 
   void maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-  [[nodiscard]] auto should_be_random(const Map& map) const -> bool;
 
   [[nodiscard]] auto is_usable(const DocumentModel& model) const -> bool;
 };

@@ -45,9 +45,17 @@ struct ToolManager::Data final
 
 TACTILE_DEFINE_MOVE(ToolManager);
 
-ToolManager::ToolManager() : mData {std::make_unique<Data>()} {}
+ToolManager::ToolManager() : mData {std::make_unique<Data>()}
+{}
 
 ToolManager::~ToolManager() noexcept = default;
+
+void ToolManager::accept(IToolVisitor& visitor) const
+{
+  if (auto* tool = mData->active_tool) {
+    tool->accept(visitor);
+  }
+}
 
 void ToolManager::select_tool(const ToolType    type,
                               DocumentModel&    model,
@@ -152,15 +160,6 @@ auto ToolManager::is_available(const DocumentModel& model, const ToolType type) 
 
     default:
       throw TactileError {"Invalid tool type!"};
-  }
-}
-
-void ToolManager::draw_gizmos(const DocumentModel& model,
-                              IRenderer&           renderer,
-                              const MouseInfo&     mouse) const
-{
-  if (auto* tool = mData->active_tool) {
-    tool->draw_gizmos(model, renderer, mouse);
   }
 }
 

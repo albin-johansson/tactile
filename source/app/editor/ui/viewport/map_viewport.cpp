@@ -42,6 +42,7 @@
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/map_viewport_overlay.hpp"
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
+#include "editor/ui/viewport/preview/tool_preview_renderer.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
 #include "io/persistence/preferences.hpp"
 
@@ -121,8 +122,10 @@ void _draw_cursor_gizmos(GraphicsCtx&              graphics,
     graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
   }
 
+  ToolPreviewRenderer previewRenderer {model, graphics, _make_mouse_info(cursor)};
+
   const auto& tools = document.get_tools();
-  tools.draw_gizmos(model, graphics, _make_mouse_info(cursor));
+  tools.accept(previewRenderer);
 }
 
 void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)

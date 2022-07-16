@@ -28,6 +28,8 @@ namespace tactile {
 class EraserTool final : public ATool
 {
  public:
+  void accept(IToolVisitor& visitor) const override;
+
   void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
   void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;

@@ -29,6 +29,11 @@
 
 namespace tactile {
 
+void BucketTool::accept(IToolVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void BucketTool::on_pressed(DocumentModel&    model,
                             entt::dispatcher& dispatcher,
                             const MouseInfo&  mouse)

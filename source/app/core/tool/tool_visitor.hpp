@@ -21,53 +21,32 @@
 
 namespace tactile {
 
-struct MouseInfo;
-struct Region;
+class StampTool;
+class EraserTool;
+class BucketTool;
+class ObjectSelectionTool;
+class RectangleTool;
+class PointTool;
+class EllipseTool;
 
-class Attribute;
-class TilePos;
+class IToolVisitor
+{
+ public:
+  virtual ~IToolVisitor() noexcept = default;
 
-class DocumentModel;
-class ADocument;
-class MapDocument;
-class TilesetDocument;
+  virtual void visit([[maybe_unused]] const StampTool& tool) {}
 
-class ICommand;
-class CommandStack;
+  virtual void visit([[maybe_unused]] const EraserTool& tool) {}
 
-class TextureManager;
-class ToolManager;
+  virtual void visit([[maybe_unused]] const BucketTool& tool) {}
 
-class IElement;
+  virtual void visit([[maybe_unused]] const ObjectSelectionTool& tool) {}
 
-class IContext;
-class IContextVisitor;
-class ContextDelegate;
-class ContextManager;
+  virtual void visit([[maybe_unused]] const RectangleTool& tool) {}
 
-class PropertyBundle;
+  virtual void visit([[maybe_unused]] const PointTool& tool) {}
 
-class ComponentIndex;
-class ComponentBundle;
-class ComponentDefinition;
-class Component;
-
-class ILayerVisitor;
-class IConstLayerVisitor;
-class ILayer;
-class TileLayer;
-class ObjectLayer;
-class GroupLayer;
-class LayerDelegate;
-
-class Map;
-class Object;
-class Viewport;
-
-struct TilesetInfo;
-class TilesetBundle;
-class Tileset;
-class TilesetRef;
-class Tile;
+  virtual void visit([[maybe_unused]] const EllipseTool& tool) {}
+};
 
 }  // namespace tactile

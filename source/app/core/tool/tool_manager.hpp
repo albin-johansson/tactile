@@ -23,13 +23,14 @@
 #include "core/common/memory.hpp"
 #include "core/tool/tool.hpp"
 #include "core/tool/tool_type.hpp"
+#include "core/tool/tool_visitor.hpp"
 
 namespace tactile {
 
 /**
  * Manages the tools associated with a map document.
  */
-class ToolManager final : ATool
+class ToolManager final : private ATool
 {
  public:
   TACTILE_DELETE_COPY(ToolManager);
@@ -38,6 +39,8 @@ class ToolManager final : ATool
   ToolManager();
 
   ~ToolManager() noexcept override;
+
+  void accept(IToolVisitor& visitor) const override;
 
   void select_tool(ToolType type, DocumentModel& model, entt::dispatcher& dispatcher);
 
@@ -49,10 +52,6 @@ class ToolManager final : ATool
 
   [[nodiscard]] auto is_available(const DocumentModel& model, ToolType type) const
       -> bool;
-
-  void draw_gizmos(const DocumentModel& model,
-                   IRenderer&           renderer,
-                   const MouseInfo&     mouse) const override;
 
   void on_enabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 

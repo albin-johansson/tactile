@@ -29,6 +29,11 @@
 
 namespace tactile {
 
+void ObjectSelectionTool::accept(IToolVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void ObjectSelectionTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
 {
   maybe_emit_event(model, dispatcher);

@@ -28,6 +28,11 @@
 
 namespace tactile {
 
+void PointTool::accept(IToolVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void PointTool::on_pressed(DocumentModel&    model,
                            entt::dispatcher& dispatcher,
                            const MouseInfo&  mouse)

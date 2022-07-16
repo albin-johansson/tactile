@@ -25,7 +25,6 @@
 
 #include "core/common/ints.hpp"
 #include "core/region.hpp"
-#include "core/renderer.hpp"
 #include "editor/fwd.hpp"
 
 namespace tactile::ui {
@@ -33,33 +32,26 @@ namespace tactile::ui {
 /**
  * Provides a common simplified rendering API.
  */
-class GraphicsCtx final : public IRenderer
+class GraphicsCtx final
 {
  public:
   explicit GraphicsCtx(const RenderInfo& info);
-
-  void draw_rect(const Vector2f&   pos,
-                 const Vector2f&   size,
-                 const cen::color& color,
-                 float             thickness) override;
-
-  void draw_ellipse(const Vector2f&   center,
-                    const Vector2f&   radius,
-                    const cen::color& color,
-                    float             thickness) override;
-
-  void render_image(uint            texture,
-                    const Vector2f& pos,
-                    const Vector2f& size,
-                    const Vector2f& uvMin,
-                    const Vector2f& uvMax,
-                    uint8           opacity) override;
 
   void push_clip();
 
   void pop_clip();
 
   void clear();
+
+  void draw_rect(const Vector2f&   pos,
+                 const Vector2f&   size,
+                 const cen::color& color,
+                 float             thickness);
+
+  void draw_ellipse(const Vector2f&   center,
+                    const Vector2f&   radius,
+                    const cen::color& color,
+                    float             thickness);
 
   void draw_rect(const ImVec2& position, const ImVec2& size);
 
@@ -80,6 +72,13 @@ class GraphicsCtx final : public IRenderer
   void draw_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
 
   void draw_translated_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
+
+  void render_image(uint            texture,
+                    const Vector2f& pos,
+                    const Vector2f& size,
+                    const Vector2f& uvMin,
+                    const Vector2f& uvMax,
+                    uint8           opacity);
 
   void render_image(uint texture, const ImVec2& position, const ImVec2& size);
 
@@ -124,14 +123,17 @@ class GraphicsCtx final : public IRenderer
 
   [[nodiscard]] auto translate(const ImVec2& position) const -> ImVec2;
 
-  [[nodiscard]] auto origin() const -> const ImVec2& { return mOrigin; }
+  [[nodiscard]] auto origin() const -> const ImVec2&
+  {
+    return mOrigin;
+  }
 
-  [[nodiscard]] auto get_origin() const -> Vector2f override
+  [[nodiscard]] auto get_origin() const -> Vector2f
   {
     return {mOrigin.x, mOrigin.y};
   }
 
-  [[nodiscard]] auto get_grid_size() const -> Vector2f override
+  [[nodiscard]] auto get_grid_size() const -> Vector2f
   {
     return {mViewportTileSize.x, mViewportTileSize.y};
   }
@@ -146,9 +148,15 @@ class GraphicsCtx final : public IRenderer
     return mLogicalTileSize;
   }
 
-  [[nodiscard]] auto tile_size_ratio() const -> const ImVec2& { return mTileSizeRatio; }
+  [[nodiscard]] auto tile_size_ratio() const -> const ImVec2&
+  {
+    return mTileSizeRatio;
+  }
 
-  [[nodiscard]] auto bounds() const -> const Region& { return mBounds; }
+  [[nodiscard]] auto bounds() const -> const Region&
+  {
+    return mBounds;
+  }
 
  private:
   ImVec2     mCanvasTL;

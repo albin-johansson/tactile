@@ -32,6 +32,11 @@
 
 namespace tactile {
 
+void EraserTool::accept(IToolVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void EraserTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
 {
   maybe_emit_event(model, dispatcher);

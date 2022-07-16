@@ -26,6 +26,8 @@ namespace tactile {
 class BucketTool final : public ATool
 {
  public:
+  void accept(IToolVisitor& visitor) const override;
+
   void on_pressed(DocumentModel&    model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo&  mouse) override;

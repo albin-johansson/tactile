@@ -26,21 +26,12 @@
 #include "core/document/map_document.hpp"
 #include "core/event/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/renderer.hpp"
 
 namespace tactile {
 
-void RectangleTool::draw_gizmos(const DocumentModel&,
-                                IRenderer& renderer,
-                                const MouseInfo&) const
+void RectangleTool::accept(IToolVisitor& visitor) const
 {
-  if (mStroke) {
-    const auto pos = renderer.get_origin() + mStroke->start;
-    const auto size = mStroke->current - mStroke->start;
-
-    renderer.draw_rect(pos + Vector2f {1, 1}, size, cen::colors::black);
-    renderer.draw_rect(pos, size, cen::colors::yellow);
-  }
+  visitor.visit(*this);
 }
 
 void RectangleTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
@@ -88,6 +79,11 @@ auto RectangleTool::is_available(const DocumentModel& model) const -> bool
   const auto& document = model.require_active_map();
   const auto& map = document.get_map();
   return map.is_active_layer(LayerType::ObjectLayer);
+}
+
+auto RectangleTool::get_stroke() const -> const Maybe<CurrentRectangleStroke>&
+{
+  return mStroke;
 }
 
 void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
