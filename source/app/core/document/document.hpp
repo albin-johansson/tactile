@@ -26,9 +26,13 @@
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/document/document_type.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class CommandStack;
+class ContextManager;
+class ComponentIndex;
+class Viewport;
 
 /// Abstract base class for document representations.
 /// This is almost an interface, with some command functions implemented for convenience.

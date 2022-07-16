@@ -25,9 +25,10 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/comp/component_definition.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class ComponentIndex;
 
 /// A command for defining new components.
 class DefineComponentCmd final : public ICommand

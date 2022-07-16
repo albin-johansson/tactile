@@ -28,7 +28,6 @@
 #include "core/common/ints.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component_definition.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
 

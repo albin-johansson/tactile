@@ -23,9 +23,10 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/memory.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class IContext;
 
 class RenamePropertyCmd final : public ICommand
 {

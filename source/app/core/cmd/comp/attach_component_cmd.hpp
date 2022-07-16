@@ -22,9 +22,11 @@
 #include "core/cmd/command.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class IContext;
+class ComponentIndex;
 
 /// Command for attaching a component to a context.
 class AttachComponentCmd final : public ICommand

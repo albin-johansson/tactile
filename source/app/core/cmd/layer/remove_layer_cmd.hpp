@@ -24,9 +24,11 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class MapDocument;
+class ILayer;
 
 class RemoveLayerCmd final : public ICommand
 {

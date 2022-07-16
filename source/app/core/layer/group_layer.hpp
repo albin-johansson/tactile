@@ -25,7 +25,6 @@
 #include "core/common/ints.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
 

@@ -20,7 +20,6 @@
 #pragma once
 
 #include "core/common/tile_cache.hpp"
-#include "core/fwd.hpp"
 #include "core/tool/tool.hpp"
 
 namespace tactile {

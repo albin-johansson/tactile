@@ -26,9 +26,10 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class ComponentIndex;
 
 /// Command for changing the default value of an attribute in a component.
 class UpdateComponentCmd final : public ICommand

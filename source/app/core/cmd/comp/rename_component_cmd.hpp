@@ -25,9 +25,10 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class ComponentIndex;
 
 /// A command for renaming a component definition.
 class RenameComponentCmd final : public ICommand

@@ -32,11 +32,12 @@
 #include "core/common/uuid.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_delegate.hpp"
-#include "core/fwd.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tile.hpp"
 
 namespace tactile {
+
+struct TilesetInfo;
 
 class Tileset final : public IContext
 {

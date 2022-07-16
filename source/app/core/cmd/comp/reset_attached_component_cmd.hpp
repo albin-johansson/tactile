@@ -24,9 +24,11 @@
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class IContext;
+class ComponentIndex;
 
 /// A command for resetting the attributes of an attached component.
 class ResetAttachedComponentCmd final : public ICommand

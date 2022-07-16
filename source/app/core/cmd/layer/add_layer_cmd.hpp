@@ -23,10 +23,12 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 #include "core/layer/layer_type.hpp"
 
 namespace tactile {
+
+class MapDocument;
+class ILayer;
 
 class AddLayerCmd final : public ICommand
 {

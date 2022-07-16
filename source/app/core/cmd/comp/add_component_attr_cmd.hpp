@@ -24,9 +24,10 @@
 #include "core/cmd/command.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class ADocument;
 
 /// A command for adding an attribute to a component definition.
 class AddComponentAttrCmd final : public ICommand

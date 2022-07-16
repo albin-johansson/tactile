@@ -26,9 +26,10 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class IContext;
 
 /// A command for updating the attribute of a component attached to a context.
 class UpdateAttachedComponentCmd final : public ICommand

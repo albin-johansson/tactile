@@ -24,9 +24,10 @@
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class IContext;
 
 /// A command for detaching a component from a context.
 class DetachComponentCmd final : public ICommand

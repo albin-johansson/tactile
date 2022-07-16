@@ -26,9 +26,10 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class IContext;
 
 class RemovePropertyCmd final : public ICommand
 {

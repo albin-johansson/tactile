@@ -34,7 +34,6 @@
 #include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
 #include "core/document/document_delegate.hpp"
-#include "core/fwd.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/map.hpp"
 #include "core/tool/tool_manager.hpp"

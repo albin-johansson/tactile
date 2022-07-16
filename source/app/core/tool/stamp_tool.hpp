@@ -25,6 +25,10 @@
 
 namespace tactile {
 
+class Map;
+class TileLayer;
+class TilesetRef;
+
 /**
  * A tool used to draw (or "stamp") selected tileset tiles to tile layers.
  *

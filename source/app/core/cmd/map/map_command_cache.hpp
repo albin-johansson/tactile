@@ -22,10 +22,11 @@
 #include "core/common/associative.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {
+
+class Map;
 
 class MapCommandCache final
 {

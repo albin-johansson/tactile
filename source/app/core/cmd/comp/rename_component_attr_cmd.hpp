@@ -23,9 +23,10 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class ADocument;
 
 /// A command for renaming an attribute in a component definition.
 class RenameComponentAttrCmd final : public ICommand

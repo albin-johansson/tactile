@@ -24,9 +24,10 @@
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class ADocument;
 
 /// A command for duplicating an attribute in a component definition.
 class DuplicateComponentAttrCmd final : public ICommand

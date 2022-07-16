@@ -23,10 +23,12 @@
 #include "core/common/math.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 #include "core/tileset/tileset_info.hpp"
 
 namespace tactile {
+
+class DocumentModel;
+class TilesetDocument;
 
 /// Command for creating a tileset and attaching it to a map document.
 class AddTilesetCmd final : public ICommand

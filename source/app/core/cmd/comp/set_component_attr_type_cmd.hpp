@@ -28,9 +28,10 @@
 #include "core/common/associative.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class ADocument;
 
 /// A command for changing the type of an attribute in a component definition.
 class SetComponentAttrTypeCmd final : public ICommand

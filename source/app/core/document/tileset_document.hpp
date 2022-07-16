@@ -23,7 +23,6 @@
 #include "core/common/uuid.hpp"
 #include "core/document/document.hpp"
 #include "core/document/document_delegate.hpp"
-#include "core/fwd.hpp"
 #include "core/tileset/tileset.hpp"
 
 namespace tactile {

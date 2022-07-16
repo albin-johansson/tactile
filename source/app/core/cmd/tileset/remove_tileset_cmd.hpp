@@ -24,9 +24,11 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class DocumentModel;
+class TilesetDocument;
 
 /// Command for removing a tileset from the active map document.
 class RemoveTilesetCmd final : public ICommand

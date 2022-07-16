@@ -21,11 +21,13 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/fwd.hpp"
 #include "core/tool/tool_type.hpp"
 #include "core/tool/tool_visitor.hpp"
 
 namespace tactile {
+
+struct MouseInfo;
+class DocumentModel;
 
 class ATool
 {
