@@ -19,18 +19,25 @@
 
 #pragma once
 
-#include "core/fwd.hpp"
-
 namespace tactile {
+
+class TileLayer;
+class ObjectLayer;
+class GroupLayer;
 
 class ILayerVisitor
 {
  public:
   virtual ~ILayerVisitor() noexcept = default;
 
-  virtual void visit([[maybe_unused]] TileLayer& layer) {};
-  virtual void visit([[maybe_unused]] ObjectLayer& layer) {};
-  virtual void visit([[maybe_unused]] GroupLayer& layer) {};
+  virtual void visit([[maybe_unused]] TileLayer& layer)
+  {}
+
+  virtual void visit([[maybe_unused]] ObjectLayer& layer)
+  {}
+
+  virtual void visit([[maybe_unused]] GroupLayer& layer)
+  {}
 };
 
 class IConstLayerVisitor
@@ -38,9 +45,14 @@ class IConstLayerVisitor
  public:
   virtual ~IConstLayerVisitor() noexcept = default;
 
-  virtual void visit([[maybe_unused]] const TileLayer& layer) {};
-  virtual void visit([[maybe_unused]] const ObjectLayer& layer) {};
-  virtual void visit([[maybe_unused]] const GroupLayer& layer) {};
+  virtual void visit([[maybe_unused]] const TileLayer& layer)
+  {}
+
+  virtual void visit([[maybe_unused]] const ObjectLayer& layer)
+  {}
+
+  virtual void visit([[maybe_unused]] const GroupLayer& layer)
+  {}
 };
 
 }  // namespace tactile

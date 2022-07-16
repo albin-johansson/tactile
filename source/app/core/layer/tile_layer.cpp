@@ -24,7 +24,6 @@
 
 #include "core/common/functional.hpp"
 #include "core/common/math.hpp"
-#include "core/layer/layer_visitor.hpp"
 #include "core/tile_pos.hpp"
 #include "core/util/tiles.hpp"
 #include "misc/assert.hpp"

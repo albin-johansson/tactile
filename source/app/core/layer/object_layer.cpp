@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/layer/layer_visitor.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
