@@ -26,7 +26,8 @@
 
 namespace tactile {
 
-ContextManager::ContextManager(const UUID& rootContextId) : mRootContextId {rootContextId}
+ContextManager::ContextManager(const UUID& rootContextId)
+    : mRootContextId {rootContextId}
 {}
 
 void ContextManager::add_context(Shared<IContext> context)

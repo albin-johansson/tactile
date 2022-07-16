@@ -84,8 +84,15 @@ class ComponentIndex final
 
   [[nodiscard]] auto empty() const -> bool;
 
-  [[nodiscard]] auto begin() const noexcept { return mDefs.begin(); }
-  [[nodiscard]] auto end() const noexcept { return mDefs.end(); }
+  [[nodiscard]] auto begin() const noexcept
+  {
+    return mDefs.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept
+  {
+    return mDefs.end();
+  }
 
  private:
   HashMap<UUID, ComponentDefinition> mDefs;

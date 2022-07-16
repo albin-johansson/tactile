@@ -305,7 +305,10 @@ struct ContextPropertyVisitor final : IContextVisitor
 {
   entt::dispatcher* dispatcher {};
 
-  void visit(const Map& map) override { _show_native_map_properties(map); }
+  void visit(const Map& map) override
+  {
+    _show_native_map_properties(map);
+  }
 
   void visit(const TileLayer& layer) override
   {

@@ -26,7 +26,8 @@
 
 namespace tactile::ui {
 
-ADialog::ADialog(const char* title) : mTitle {title}
+ADialog::ADialog(const char* title)
+    : mTitle {title}
 {
   if (!mTitle) {
     throw TactileError("Invalid null dialog title!");

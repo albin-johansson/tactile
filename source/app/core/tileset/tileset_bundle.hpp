@@ -68,13 +68,30 @@ class TilesetBundle final
 
   [[nodiscard]] auto active_tileset_id() const -> const Maybe<UUID>&;
 
-  [[nodiscard]] auto next_tile_id() const noexcept -> TileID { return mNextTileId; }
+  [[nodiscard]] auto next_tile_id() const noexcept -> TileID
+  {
+    return mNextTileId;
+  }
 
-  [[nodiscard]] auto begin() noexcept { return mRefs.begin(); }
-  [[nodiscard]] auto begin() const noexcept { return mRefs.begin(); }
+  [[nodiscard]] auto begin() noexcept
+  {
+    return mRefs.begin();
+  }
 
-  [[nodiscard]] auto end() noexcept { return mRefs.end(); }
-  [[nodiscard]] auto end() const noexcept { return mRefs.end(); }
+  [[nodiscard]] auto begin() const noexcept
+  {
+    return mRefs.begin();
+  }
+
+  [[nodiscard]] auto end() noexcept
+  {
+    return mRefs.end();
+  }
+
+  [[nodiscard]] auto end() const noexcept
+  {
+    return mRefs.end();
+  }
 
  private:
   HashMap<UUID, TilesetRef> mRefs;

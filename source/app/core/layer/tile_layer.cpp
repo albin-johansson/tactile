@@ -33,7 +33,9 @@
 
 namespace tactile {
 
-TileLayer::TileLayer() : TileLayer {5, 5} {}
+TileLayer::TileLayer()
+    : TileLayer {5, 5}
+{}
 
 TileLayer::TileLayer(const usize rows, const usize columns)
     : mTiles {make_tile_matrix(rows, columns)}

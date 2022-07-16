@@ -29,13 +29,26 @@ class IContextVisitor
  public:
   virtual ~IContextVisitor() noexcept = default;
 
-  virtual void visit([[maybe_unused]] const Map& map) {}
-  virtual void visit([[maybe_unused]] const TileLayer& layer) {}
-  virtual void visit([[maybe_unused]] const ObjectLayer& layer) {}
-  virtual void visit([[maybe_unused]] const GroupLayer& layer) {}
-  virtual void visit([[maybe_unused]] const Object& object) {}
-  virtual void visit([[maybe_unused]] const Tileset& tileset) {}
-  virtual void visit([[maybe_unused]] const Tile& tile) {}
+  virtual void visit([[maybe_unused]] const Map& map)
+  {}
+
+  virtual void visit([[maybe_unused]] const TileLayer& layer)
+  {}
+
+  virtual void visit([[maybe_unused]] const ObjectLayer& layer)
+  {}
+
+  virtual void visit([[maybe_unused]] const GroupLayer& layer)
+  {}
+
+  virtual void visit([[maybe_unused]] const Object& object)
+  {}
+
+  virtual void visit([[maybe_unused]] const Tileset& tileset)
+  {}
+
+  virtual void visit([[maybe_unused]] const Tile& tile)
+  {}
 };
 
 }  // namespace tactile

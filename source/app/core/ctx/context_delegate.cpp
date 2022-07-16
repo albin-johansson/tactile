@@ -23,7 +23,9 @@
 
 namespace tactile {
 
-ContextDelegate::ContextDelegate(const UUID& id) : mId {id} {}
+ContextDelegate::ContextDelegate(const UUID& id)
+    : mId {id}
+{}
 
 void ContextDelegate::set_name(std::string name)
 {

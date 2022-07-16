@@ -59,7 +59,8 @@
 
 namespace tactile {
 
-App::App(AppConfiguration* configuration) : AEventLoop {configuration}
+App::App(AppConfiguration* configuration)
+    : AEventLoop {configuration}
 {
   mConfig = configuration;
 

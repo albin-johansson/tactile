@@ -60,10 +60,16 @@ class TilePos final
   }
 
   /// Sets the row index associated with the position.
-  constexpr void set_row(const int32 row) noexcept { mRow = row; }
+  constexpr void set_row(const int32 row) noexcept
+  {
+    mRow = row;
+  }
 
   /// Sets the column index associated with the position.
-  constexpr void set_col(const int32 column) noexcept { mCol = column; }
+  constexpr void set_col(const int32 column) noexcept
+  {
+    mCol = column;
+  }
 
   /// Creates a new position, offset from this position.
   [[nodiscard]] constexpr auto offset_by(const int32 row,
@@ -97,10 +103,16 @@ class TilePos final
   }
 
   /// Returns the row index of the tile position.
-  [[nodiscard]] constexpr auto row() const noexcept -> int32 { return mRow; }
+  [[nodiscard]] constexpr auto row() const noexcept -> int32
+  {
+    return mRow;
+  }
 
   /// Returns the column index of the tile position.
-  [[nodiscard]] constexpr auto col() const noexcept -> int32 { return mCol; }
+  [[nodiscard]] constexpr auto col() const noexcept -> int32
+  {
+    return mCol;
+  }
 
   /**
    * Returns the raw row index associated with the tile position.

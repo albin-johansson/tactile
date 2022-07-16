@@ -77,9 +77,15 @@ class Tile final : public IContext
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  [[nodiscard]] auto index() const noexcept -> TileIndex { return mIndex; }
+  [[nodiscard]] auto index() const noexcept -> TileIndex
+  {
+    return mIndex;
+  }
 
-  [[nodiscard]] auto source() const noexcept -> const Vector4i& { return mSource; }
+  [[nodiscard]] auto source() const noexcept -> const Vector4i&
+  {
+    return mSource;
+  }
 
  private:
   TileIndex                     mIndex;

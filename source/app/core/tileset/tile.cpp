@@ -28,7 +28,8 @@
 
 namespace tactile {
 
-Tile::Tile(const TileIndex index) : mIndex {index}
+Tile::Tile(const TileIndex index)
+    : mIndex {index}
 {
   mDelegate.set_name(fmt::format("Tile {}", index));
 }

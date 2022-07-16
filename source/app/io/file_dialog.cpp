@@ -41,7 +41,9 @@ constexpr const char* _image_pattern_descriptor = "Image files";
 
 }  // namespace
 
-FileDialog::FileDialog(const char* path) : mPath {path} {}
+FileDialog::FileDialog(const char* path)
+    : mPath {path}
+{}
 
 auto FileDialog::is_okay() const noexcept -> bool
 {

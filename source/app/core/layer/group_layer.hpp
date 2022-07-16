@@ -129,8 +129,15 @@ class GroupLayer final : public ILayer
 
   [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
 
-  [[nodiscard]] auto storage() -> LayerStorage& { return mLayers; }
-  [[nodiscard]] auto storage() const -> const LayerStorage& { return mLayers; }
+  [[nodiscard]] auto storage() -> LayerStorage&
+  {
+    return mLayers;
+  }
+
+  [[nodiscard]] auto storage() const -> const LayerStorage&
+  {
+    return mLayers;
+  }
 
   [[nodiscard]] auto get_type() const -> LayerType override
   {

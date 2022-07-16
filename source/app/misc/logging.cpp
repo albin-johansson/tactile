@@ -61,7 +61,10 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
     // Do nothing
   }
 
-  void clear() { mHistory.clear(); }
+  void clear()
+  {
+    mHistory.clear();
+  }
 
   [[nodiscard]] auto get_entry(const LogLevel filter, usize index)
       -> std::pair<LogLevel, const std::string&>

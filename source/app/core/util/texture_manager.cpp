@@ -32,7 +32,10 @@ namespace {
 
 struct TextureDataDeleter final
 {
-  void operator()(uchar* data) noexcept { stbi_image_free(data); }
+  void operator()(uchar* data) noexcept
+  {
+    stbi_image_free(data);
+  }
 };
 
 using TextureDataPtr = Unique<uchar, TextureDataDeleter>;

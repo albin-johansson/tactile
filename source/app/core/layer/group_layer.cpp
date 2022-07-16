@@ -101,11 +101,24 @@ class LayerQueryVisitor : public IConstLayerVisitor
 class GlobalIndexCalculator final : public IConstLayerVisitor
 {
  public:
-  explicit GlobalIndexCalculator(const UUID& target) : mTarget {target} {}
+  explicit GlobalIndexCalculator(const UUID& target)
+      : mTarget {target}
+  {}
 
-  void visit(const TileLayer& layer) override { check(layer); }
-  void visit(const ObjectLayer& layer) override { check(layer); }
-  void visit(const GroupLayer& layer) override { check(layer); }
+  void visit(const TileLayer& layer) override
+  {
+    check(layer);
+  }
+
+  void visit(const ObjectLayer& layer) override
+  {
+    check(layer);
+  }
+
+  void visit(const GroupLayer& layer) override
+  {
+    check(layer);
+  }
 
   [[nodiscard]] auto get_index() const -> Maybe<usize>
   {
@@ -140,13 +153,29 @@ class GlobalIndexCalculator final : public IConstLayerVisitor
 class FindLayerVisitor final : public ILayerVisitor
 {
  public:
-  explicit FindLayerVisitor(const UUID& target) : mTarget {target} {}
+  explicit FindLayerVisitor(const UUID& target)
+      : mTarget {target}
+  {}
 
-  void visit(TileLayer& layer) override { check(layer); }
-  void visit(ObjectLayer& layer) override { check(layer); }
-  void visit(GroupLayer& layer) override { check(layer); }
+  void visit(TileLayer& layer) override
+  {
+    check(layer);
+  }
 
-  [[nodiscard]] auto found_layer() -> ILayer* { return mLayer; }
+  void visit(ObjectLayer& layer) override
+  {
+    check(layer);
+  }
+
+  void visit(GroupLayer& layer) override
+  {
+    check(layer);
+  }
+
+  [[nodiscard]] auto found_layer() -> ILayer*
+  {
+    return mLayer;
+  }
 
  private:
   UUID    mTarget;
@@ -163,13 +192,29 @@ class FindLayerVisitor final : public ILayerVisitor
 class FindConstLayerVisitor final : public IConstLayerVisitor
 {
  public:
-  explicit FindConstLayerVisitor(const UUID& target) : mTarget {target} {}
+  explicit FindConstLayerVisitor(const UUID& target)
+      : mTarget {target}
+  {}
 
-  void visit(const TileLayer& layer) override { check(layer); }
-  void visit(const ObjectLayer& layer) override { check(layer); }
-  void visit(const GroupLayer& layer) override { check(layer); }
+  void visit(const TileLayer& layer) override
+  {
+    check(layer);
+  }
 
-  [[nodiscard]] auto found_layer() -> const ILayer* { return mLayer; }
+  void visit(const ObjectLayer& layer) override
+  {
+    check(layer);
+  }
+
+  void visit(const GroupLayer& layer) override
+  {
+    check(layer);
+  }
+
+  [[nodiscard]] auto found_layer() -> const ILayer*
+  {
+    return mLayer;
+  }
 
  private:
   UUID          mTarget;
@@ -187,7 +232,8 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
   class Name final : public ILayerVisitor                          \
   {                                                                \
    public:                                                         \
-    explicit Name(const UUID& target) : mTarget {target}           \
+    explicit Name(const UUID& target)                              \
+        : mTarget {target}                                         \
     {}                                                             \
                                                                    \
     void visit(Type& layer) override                               \
@@ -210,7 +256,8 @@ class FindConstLayerVisitor final : public IConstLayerVisitor
   class Const##Name final : public IConstLayerVisitor              \
   {                                                                \
    public:                                                         \
-    explicit Const##Name(const UUID& target) : mTarget {target}    \
+    explicit Const##Name(const UUID& target)                       \
+        : mTarget {target}                                         \
     {}                                                             \
                                                                    \
     void visit(const Type& layer) override                         \
@@ -238,11 +285,25 @@ TACTILE_FIND_LAYER_VISITOR(FindGroupLayerVisitor, GroupLayer);
 class CountingVisitor final : public IConstLayerVisitor
 {
  public:
-  void visit(const TileLayer&) override { ++mCount; }
-  void visit(const ObjectLayer&) override { ++mCount; }
-  void visit(const GroupLayer&) override { ++mCount; }
+  void visit(const TileLayer&) override
+  {
+    ++mCount;
+  }
 
-  [[nodiscard]] auto count() const -> usize { return mCount; }
+  void visit(const ObjectLayer&) override
+  {
+    ++mCount;
+  }
+
+  void visit(const GroupLayer&) override
+  {
+    ++mCount;
+  }
+
+  [[nodiscard]] auto count() const -> usize
+  {
+    return mCount;
+  }
 
  private:
   usize mCount {};
@@ -292,11 +353,20 @@ void GroupLayer::each(const SimpleVisitor& visitor) const
   {
     const SimpleVisitor* func {};  // Pointer to avoid copying the function object
 
-    void visit(const TileLayer& layer) override { (*func)(&layer); }
+    void visit(const TileLayer& layer) override
+    {
+      (*func)(&layer);
+    }
 
-    void visit(const ObjectLayer& layer) override { (*func)(&layer); }
+    void visit(const ObjectLayer& layer) override
+    {
+      (*func)(&layer);
+    }
 
-    void visit(const GroupLayer& layer) override { (*func)(&layer); }
+    void visit(const GroupLayer& layer) override
+    {
+      (*func)(&layer);
+    }
   };
 
   Visitor v;

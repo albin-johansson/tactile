@@ -99,9 +99,20 @@ void _convert_group_layer(const GroupLayer&     layer,
     const ComponentIndex* comps {};
     ir::GroupLayerData*   parent {};
 
-    void visit(const TileLayer& layer) override { handle(layer); }
-    void visit(const ObjectLayer& layer) override { handle(layer); }
-    void visit(const GroupLayer& layer) override { handle(layer); }
+    void visit(const TileLayer& layer) override
+    {
+      handle(layer);
+    }
+
+    void visit(const ObjectLayer& layer) override
+    {
+      handle(layer);
+    }
+
+    void visit(const GroupLayer& layer) override
+    {
+      handle(layer);
+    }
 
     void handle(const ILayer& layer)
     {

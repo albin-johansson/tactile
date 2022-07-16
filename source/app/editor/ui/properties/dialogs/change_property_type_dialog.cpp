@@ -29,7 +29,8 @@
 
 namespace tactile::ui {
 
-ChangePropertyTypeDialog::ChangePropertyTypeDialog() : ADialog {"Change Property Type"}
+ChangePropertyTypeDialog::ChangePropertyTypeDialog()
+    : ADialog {"Change Property Type"}
 {
   set_accept_button_label("Change");
 }

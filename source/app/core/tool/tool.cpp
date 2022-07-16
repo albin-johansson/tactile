@@ -21,19 +21,26 @@
 
 namespace tactile {
 
-void ATool::on_enabled(DocumentModel&, entt::dispatcher&) {}
+void ATool::on_enabled(DocumentModel&, entt::dispatcher&)
+{}
 
-void ATool::on_disabled(DocumentModel&, entt::dispatcher&) {}
+void ATool::on_disabled(DocumentModel&, entt::dispatcher&)
+{}
 
-void ATool::on_entered(DocumentModel&, entt::dispatcher&) {}
+void ATool::on_entered(DocumentModel&, entt::dispatcher&)
+{}
 
-void ATool::on_exited(DocumentModel&, entt::dispatcher&) {}
+void ATool::on_exited(DocumentModel&, entt::dispatcher&)
+{}
 
-void ATool::on_pressed(DocumentModel&, entt::dispatcher&, const MouseInfo&) {}
+void ATool::on_pressed(DocumentModel&, entt::dispatcher&, const MouseInfo&)
+{}
 
-void ATool::on_dragged(DocumentModel&, entt::dispatcher&, const MouseInfo&) {}
+void ATool::on_dragged(DocumentModel&, entt::dispatcher&, const MouseInfo&)
+{}
 
-void ATool::on_released(DocumentModel&, entt::dispatcher&, const MouseInfo&) {}
+void ATool::on_released(DocumentModel&, entt::dispatcher&, const MouseInfo&)
+{}
 
 auto ATool::is_available(const DocumentModel&) const -> bool
 {

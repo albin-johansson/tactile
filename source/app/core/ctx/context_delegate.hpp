@@ -36,7 +36,9 @@ class ContextDelegate final
   TACTILE_DEFAULT_COPY(ContextDelegate);
   TACTILE_DEFAULT_MOVE(ContextDelegate);
 
-  ContextDelegate() : ContextDelegate {make_uuid()} {}
+  ContextDelegate()
+      : ContextDelegate {make_uuid()}
+  {}
 
   void set_name(std::string name);
 

@@ -97,8 +97,15 @@ class ObjectLayer final : public ILayer
     return LayerType::ObjectLayer;
   }
 
-  [[nodiscard]] auto begin() const noexcept { return mObjects.begin(); }
-  [[nodiscard]] auto end() const noexcept { return mObjects.end(); }
+  [[nodiscard]] auto begin() const noexcept
+  {
+    return mObjects.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept
+  {
+    return mObjects.end();
+  }
 
  private:
   LayerDelegate                 mDelegate;

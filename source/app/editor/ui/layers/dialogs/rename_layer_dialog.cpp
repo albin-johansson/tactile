@@ -27,7 +27,8 @@
 
 namespace tactile::ui {
 
-RenameLayerDialog::RenameLayerDialog() : AStringInputDialog {"Rename Layer"}
+RenameLayerDialog::RenameLayerDialog()
+    : AStringInputDialog {"Rename Layer"}
 {
   set_accept_button_label("Rename");
 }

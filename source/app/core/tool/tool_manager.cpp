@@ -45,7 +45,8 @@ struct ToolManager::Data final
 
 TACTILE_DEFINE_MOVE(ToolManager);
 
-ToolManager::ToolManager() : mData {std::make_unique<Data>()}
+ToolManager::ToolManager()
+    : mData {std::make_unique<Data>()}
 {}
 
 ToolManager::~ToolManager() noexcept = default;

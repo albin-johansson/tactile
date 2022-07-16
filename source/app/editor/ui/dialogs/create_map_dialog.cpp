@@ -29,7 +29,8 @@
 
 namespace tactile::ui {
 
-CreateMapDialog::CreateMapDialog() : ADialog {"Create New Map"}
+CreateMapDialog::CreateMapDialog()
+    : ADialog {"Create New Map"}
 {
   set_accept_button_label("Create");
 }

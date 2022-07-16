@@ -72,10 +72,20 @@ class TilesetDocument final : public ADocument
 
   [[nodiscard]] auto get_type() const -> DocumentType override;
 
-  [[nodiscard]] auto get_tileset() -> Shared<Tileset> { return mTileset; }
+  [[nodiscard]] auto get_tileset() -> Shared<Tileset>
+  {
+    return mTileset;
+  }
 
-  [[nodiscard]] auto view_tileset() -> Tileset& { return *mTileset; }
-  [[nodiscard]] auto view_tileset() const -> const Tileset& { return *mTileset; }
+  [[nodiscard]] auto view_tileset() -> Tileset&
+  {
+    return *mTileset;
+  }
+
+  [[nodiscard]] auto view_tileset() const -> const Tileset&
+  {
+    return *mTileset;
+  }
 
  private:
   Shared<Tileset>  mTileset;

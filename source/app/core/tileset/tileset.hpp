@@ -71,29 +71,55 @@ class Tileset final : public IContext
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  [[nodiscard]] auto texture_id() const noexcept -> uint { return mTextureId; }
+  [[nodiscard]] auto texture_id() const noexcept -> uint
+  {
+    return mTextureId;
+  }
 
-  [[nodiscard]] auto texture_path() const -> const fs::path& { return mTexturePath; }
+  [[nodiscard]] auto texture_path() const -> const fs::path&
+  {
+    return mTexturePath;
+  }
 
   [[nodiscard]] auto texture_size() const noexcept -> const Vector2i&
   {
     return mTextureSize;
   }
 
-  [[nodiscard]] auto tile_size() const noexcept -> const Vector2i& { return mTileSize; }
+  [[nodiscard]] auto tile_size() const noexcept -> const Vector2i&
+  {
+    return mTileSize;
+  }
 
-  [[nodiscard]] auto uv_size() const noexcept -> const Vector2f& { return mUvSize; }
+  [[nodiscard]] auto uv_size() const noexcept -> const Vector2f&
+  {
+    return mUvSize;
+  }
 
-  [[nodiscard]] auto row_count() const noexcept -> int32 { return mRowCount; }
-  [[nodiscard]] auto column_count() const noexcept -> int32 { return mColumnCount; }
+  [[nodiscard]] auto row_count() const noexcept -> int32
+  {
+    return mRowCount;
+  }
+
+  [[nodiscard]] auto column_count() const noexcept -> int32
+  {
+    return mColumnCount;
+  }
 
   [[nodiscard]] auto tile_count() const noexcept -> int32
   {
     return row_count() * column_count();
   }
 
-  [[nodiscard]] auto begin() const noexcept { return mMetaTiles.begin(); }
-  [[nodiscard]] auto end() const noexcept { return mMetaTiles.end(); }
+  [[nodiscard]] auto begin() const noexcept
+  {
+    return mMetaTiles.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept
+  {
+    return mMetaTiles.end();
+  }
 
  private:
   ContextDelegate             mContext;

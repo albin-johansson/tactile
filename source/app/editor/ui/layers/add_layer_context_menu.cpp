@@ -27,7 +27,9 @@
 
 namespace tactile::ui {
 
-AddLayerContextMenu::AddLayerContextMenu() : ContextMenu {"AddLayerContextMenu"} {}
+AddLayerContextMenu::AddLayerContextMenu()
+    : ContextMenu {"AddLayerContextMenu"}
+{}
 
 void AddLayerContextMenu::on_update(const DocumentModel&, entt::dispatcher& dispatcher)
 {

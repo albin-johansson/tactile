@@ -26,7 +26,8 @@
 
 namespace tactile {
 
-AddRowCmd::AddRowCmd(Shared<Map> map) : mMap {std::move(map)}
+AddRowCmd::AddRowCmd(Shared<Map> map)
+    : mMap {std::move(map)}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};

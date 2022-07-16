@@ -73,7 +73,8 @@ void _reset_export_preferences(io::PreferenceState& prefs)
 
 }  // namespace
 
-SettingsDialog::SettingsDialog() : ADialog {"Settings"}
+SettingsDialog::SettingsDialog()
+    : ADialog {"Settings"}
 {
   use_apply_button();
 }

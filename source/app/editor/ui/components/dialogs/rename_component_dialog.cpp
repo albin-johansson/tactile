@@ -27,7 +27,8 @@
 
 namespace tactile::ui {
 
-RenameComponentDialog::RenameComponentDialog() : ComponentNameDialog {"Rename Component"}
+RenameComponentDialog::RenameComponentDialog()
+    : ComponentNameDialog {"Rename Component"}
 {
   set_accept_button_label("Rename");
 }

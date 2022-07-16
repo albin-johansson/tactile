@@ -34,7 +34,10 @@ class BucketTool final : public ATool
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Bucket; }
+  [[nodiscard]] auto get_type() const -> ToolType override
+  {
+    return ToolType::Bucket;
+  }
 };
 
 }  // namespace tactile

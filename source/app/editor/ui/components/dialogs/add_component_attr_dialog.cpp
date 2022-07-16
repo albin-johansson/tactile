@@ -29,7 +29,8 @@
 
 namespace tactile::ui {
 
-AddComponentAttrDialog::AddComponentAttrDialog() : AStringInputDialog {"Create Attribute"}
+AddComponentAttrDialog::AddComponentAttrDialog()
+    : AStringInputDialog {"Create Attribute"}
 {
   set_accept_button_label("Create");
   set_input_hint("Attribute name");

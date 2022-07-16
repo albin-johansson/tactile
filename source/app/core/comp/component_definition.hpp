@@ -120,8 +120,15 @@ class ComponentDefinition final : public IElement
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto begin() const noexcept { return mAttributes.begin(); }
-  [[nodiscard]] auto end() const noexcept { return mAttributes.end(); }
+  [[nodiscard]] auto begin() const noexcept
+  {
+    return mAttributes.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept
+  {
+    return mAttributes.end();
+  }
 
  private:
   UUID                            mId {make_uuid()};

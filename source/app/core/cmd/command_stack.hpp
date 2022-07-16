@@ -140,16 +140,28 @@ class CommandStack final
   [[nodiscard]] auto get_redo_text() const -> const char*;
 
   /// Returns the number of commands on the stack.
-  [[nodiscard]] auto size() const noexcept -> usize { return mStack.size(); }
+  [[nodiscard]] auto size() const noexcept -> usize
+  {
+    return mStack.size();
+  }
 
   /// Returns the current command index, if there is one.
-  [[nodiscard]] auto index() const noexcept -> Maybe<usize> { return mIndex; }
+  [[nodiscard]] auto index() const noexcept -> Maybe<usize>
+  {
+    return mIndex;
+  }
 
   /// Returns the clean index, if there is one.
-  [[nodiscard]] auto clean_index() const noexcept -> Maybe<usize> { return mCleanIndex; }
+  [[nodiscard]] auto clean_index() const noexcept -> Maybe<usize>
+  {
+    return mCleanIndex;
+  }
 
   /// Returns the maximum amount of commands that the stack can hold.
-  [[nodiscard]] auto capacity() const noexcept -> usize { return mCapacity; }
+  [[nodiscard]] auto capacity() const noexcept -> usize
+  {
+    return mCapacity;
+  }
 
  private:
   std::deque<Unique<ICommand>> mStack;

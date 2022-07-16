@@ -41,7 +41,9 @@ Tileset::Tileset(const UUID& id, const TilesetInfo& info)
   load_tiles();
 }
 
-Tileset::Tileset(const TilesetInfo& info) : Tileset {make_uuid(), info} {}
+Tileset::Tileset(const TilesetInfo& info)
+    : Tileset {make_uuid(), info}
+{}
 
 void Tileset::load_tiles()
 {

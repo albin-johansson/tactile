@@ -30,7 +30,8 @@
 
 namespace tactile::ui {
 
-CreateTilesetDialog::CreateTilesetDialog() : ADialog {"Create tileset"}
+CreateTilesetDialog::CreateTilesetDialog()
+    : ADialog {"Create tileset"}
 {
   set_accept_button_label("Create");
 }

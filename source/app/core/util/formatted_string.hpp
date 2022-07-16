@@ -43,16 +43,25 @@ class FormattedString final
     mSize = (std::min)(result.size, Capacity);
   }
 
-  [[nodiscard]] auto data() const noexcept -> const char* { return mBuffer.data(); }
+  [[nodiscard]] auto data() const noexcept -> const char*
+  {
+    return mBuffer.data();
+  }
 
   [[nodiscard]] auto view() const noexcept -> std::string_view
   {
     return std::string_view {mBuffer.data(), mSize};
   }
 
-  [[nodiscard]] auto size() const noexcept -> usize { return view().size(); }
+  [[nodiscard]] auto size() const noexcept -> usize
+  {
+    return view().size();
+  }
 
-  [[nodiscard]] constexpr auto capacity() const noexcept -> usize { return Capacity; }
+  [[nodiscard]] constexpr auto capacity() const noexcept -> usize
+  {
+    return Capacity;
+  }
 
  private:
   std::array<char, Capacity + 1> mBuffer;  // NOLINT

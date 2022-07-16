@@ -78,7 +78,10 @@ class ContextManager final
                                       std::string_view name,
                                       AttributeType    type) -> HashMap<UUID, Attribute>;
 
-  [[nodiscard]] auto active_context_id() const -> const UUID& { return mActiveContextId; }
+  [[nodiscard]] auto active_context_id() const -> const UUID&
+  {
+    return mActiveContextId;
+  }
 
  private:
   ContextMap mContexts;

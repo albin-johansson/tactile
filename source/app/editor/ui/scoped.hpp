@@ -35,15 +35,30 @@ struct Scope final
   TACTILE_DEFAULT_COPY(Scope);
   TACTILE_DEFAULT_MOVE(Scope);
 
-  explicit Scope(const void* ptr) { ImGui::PushID(ptr); }
+  explicit Scope(const void* ptr)
+  {
+    ImGui::PushID(ptr);
+  }
 
-  explicit Scope(const char* str) { ImGui::PushID(str); }
+  explicit Scope(const char* str)
+  {
+    ImGui::PushID(str);
+  }
 
-  explicit Scope(const UUID& id) { ImGui::PushID(static_cast<int>(hash(id))); }
+  explicit Scope(const UUID& id)
+  {
+    ImGui::PushID(static_cast<int>(hash(id)));
+  }
 
-  explicit Scope(const int id) { ImGui::PushID(id); }
+  explicit Scope(const int id)
+  {
+    ImGui::PushID(id);
+  }
 
-  ~Scope() { ImGui::PopID(); }
+  ~Scope()
+  {
+    ImGui::PopID();
+  }
 };
 
 struct Disable final
@@ -51,9 +66,15 @@ struct Disable final
   TACTILE_DEFAULT_COPY(Disable);
   TACTILE_DEFAULT_MOVE(Disable);
 
-  explicit Disable(const bool disable = true) { ImGui::BeginDisabled(disable); }
+  explicit Disable(const bool disable = true)
+  {
+    ImGui::BeginDisabled(disable);
+  }
 
-  ~Disable() { ImGui::EndDisabled(); }
+  ~Disable()
+  {
+    ImGui::EndDisabled();
+  }
 };
 
 struct Tooltip final
@@ -61,9 +82,15 @@ struct Tooltip final
   TACTILE_DEFAULT_COPY(Tooltip);
   TACTILE_DEFAULT_MOVE(Tooltip);
 
-  Tooltip() { ImGui::BeginTooltip(); }
+  Tooltip()
+  {
+    ImGui::BeginTooltip();
+  }
 
-  ~Tooltip() { ImGui::EndTooltip(); }
+  ~Tooltip()
+  {
+    ImGui::EndTooltip();
+  }
 };
 
 class StyleVar final
@@ -82,7 +109,10 @@ class StyleVar final
     ImGui::PushStyleVar(index, value);
   }
 
-  ~StyleVar() { pop(); }
+  ~StyleVar()
+  {
+    pop();
+  }
 
   void pop()
   {
@@ -112,7 +142,10 @@ class StyleColor final
     ImGui::PushStyleColor(index, value);
   }
 
-  ~StyleColor() { pop(); }
+  ~StyleColor()
+  {
+    pop();
+  }
 
   void pop()
   {
@@ -131,9 +164,15 @@ struct Group final
   TACTILE_DEFAULT_COPY(Group);
   TACTILE_DEFAULT_MOVE(Group);
 
-  Group() { ImGui::BeginGroup(); }
+  Group()
+  {
+    ImGui::BeginGroup();
+  }
 
-  ~Group() { ImGui::EndGroup(); }
+  ~Group()
+  {
+    ImGui::EndGroup();
+  }
 };
 
 class Child final
@@ -149,9 +188,15 @@ class Child final
       : mOpen {ImGui::BeginChild(id, size, border, flags)}
   {}
 
-  ~Child() { ImGui::EndChild(); }
+  ~Child()
+  {
+    ImGui::EndChild();
+  }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
@@ -163,7 +208,8 @@ class Combo final
   TACTILE_DEFAULT_COPY(Combo);
   TACTILE_DEFAULT_MOVE(Combo);
 
-  Combo(const char* name, const char* current) : mOpen {ImGui::BeginCombo(name, current)}
+  Combo(const char* name, const char* current)
+      : mOpen {ImGui::BeginCombo(name, current)}
   {}
 
   ~Combo()
@@ -173,7 +219,10 @@ class Combo final
     }
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
@@ -196,7 +245,10 @@ class TabBar final
     }
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
@@ -221,7 +273,10 @@ class TabItem final
     }
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
@@ -244,7 +299,10 @@ class Table final
     }
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
@@ -279,12 +337,17 @@ class Popup final
     return Popup {ImGui::BeginPopupContextWindow(name, flags)};
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
 
-  explicit Popup(const bool open) : mOpen {open} {}
+  explicit Popup(const bool open)
+      : mOpen {open}
+  {}
 };
 
 class ListBox final
@@ -304,7 +367,10 @@ class ListBox final
     }
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
@@ -327,7 +393,10 @@ class Menu final
     }
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
@@ -350,7 +419,10 @@ class Modal final
     }
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};
@@ -381,7 +453,10 @@ class Window final
     data.is_hovered = is_hovered();
   }
 
-  ~Window() { ImGui::End(); }
+  ~Window()
+  {
+    ImGui::End();
+  }
 
   [[nodiscard]] auto has_focus(const ImGuiFocusedFlags flags = 0) const -> bool
   {
@@ -408,9 +483,15 @@ class Window final
     return ImGui::IsMouseHoveringRect(pos, max);
   }
 
-  [[nodiscard]] auto is_hovered() const -> bool { return mOpen && contains_mouse(); }
+  [[nodiscard]] auto is_hovered() const -> bool
+  {
+    return mOpen && contains_mouse();
+  }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   const char* mLabel {};
@@ -442,7 +523,10 @@ class TreeNode final
     }
   }
 
-  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
+  [[nodiscard]] auto is_open() const noexcept -> bool
+  {
+    return mOpen;
+  }
 
  private:
   bool mOpen {};

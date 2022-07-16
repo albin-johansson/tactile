@@ -31,7 +31,8 @@
 
 namespace tactile::ui {
 
-RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog {"Rename Property"}
+RenamePropertyDialog::RenamePropertyDialog()
+    : AStringInputDialog {"Rename Property"}
 {
   set_accept_button_label("Rename");
 }

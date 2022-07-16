@@ -54,8 +54,15 @@ class PropertyBundle final
 
   [[nodiscard]] auto empty() const -> bool;
 
-  [[nodiscard]] auto begin() const noexcept { return mProps.begin(); }
-  [[nodiscard]] auto end() const noexcept { return mProps.end(); }
+  [[nodiscard]] auto begin() const noexcept
+  {
+    return mProps.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept
+  {
+    return mProps.end();
+  }
 
  private:
   TreeMap<std::string, Attribute> mProps;

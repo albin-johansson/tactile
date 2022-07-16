@@ -59,17 +59,35 @@ class Object final : public IContext
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  [[nodiscard]] auto get_type() const noexcept -> ObjectType { return mType; }
+  [[nodiscard]] auto get_type() const noexcept -> ObjectType
+  {
+    return mType;
+  }
 
-  [[nodiscard]] auto get_pos() const noexcept -> const Vector2f& { return mPos; }
+  [[nodiscard]] auto get_pos() const noexcept -> const Vector2f&
+  {
+    return mPos;
+  }
 
-  [[nodiscard]] auto get_size() const noexcept -> const Vector2f& { return mSize; }
+  [[nodiscard]] auto get_size() const noexcept -> const Vector2f&
+  {
+    return mSize;
+  }
 
-  [[nodiscard]] auto get_tag() const -> const std::string& { return mTag; }
+  [[nodiscard]] auto get_tag() const -> const std::string&
+  {
+    return mTag;
+  }
 
-  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> { return mMetaId; }
+  [[nodiscard]] auto get_meta_id() const -> Maybe<int32>
+  {
+    return mMetaId;
+  }
 
-  [[nodiscard]] auto is_visible() const noexcept -> bool { return mVisible; }
+  [[nodiscard]] auto is_visible() const noexcept -> bool
+  {
+    return mVisible;
+  }
 
  private:
   ContextDelegate mDelegate;

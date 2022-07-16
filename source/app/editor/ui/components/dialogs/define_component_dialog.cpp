@@ -27,7 +27,8 @@
 
 namespace tactile::ui {
 
-DefineComponentDialog::DefineComponentDialog() : ComponentNameDialog {"Create Component"}
+DefineComponentDialog::DefineComponentDialog()
+    : ComponentNameDialog {"Create Component"}
 {
   set_accept_button_label("Create");
   set_input_hint("Component name");
