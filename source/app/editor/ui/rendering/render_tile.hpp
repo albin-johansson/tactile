@@ -20,12 +20,17 @@
 #pragma once
 
 #include "core/common/identifiers.hpp"
-#include "core/fwd.hpp"
-#include "editor/fwd.hpp"
 
 struct ImVec2;
 
+namespace tactile {
+class Map;
+class TilePos;
+}  // namespace tactile
+
 namespace tactile::ui {
+
+class GraphicsCtx;
 
 void render_tile(GraphicsCtx&   graphics,
                  const Map&     map,

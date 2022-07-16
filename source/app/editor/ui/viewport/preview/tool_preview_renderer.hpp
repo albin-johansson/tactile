@@ -20,9 +20,14 @@
 #pragma once
 
 #include "core/common/functional.hpp"
-#include "core/fwd.hpp"
 #include "core/mouse_info.hpp"
 #include "core/tool/tool_visitor.hpp"
+
+namespace tactile {
+class DocumentModel;
+class Map;
+class TilesetRef;
+}  // namespace tactile
 
 namespace tactile::ui {
 

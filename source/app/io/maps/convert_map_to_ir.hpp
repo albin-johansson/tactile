@@ -19,8 +19,11 @@
 
 #pragma once
 
-#include "core/fwd.hpp"
 #include "io/maps/ir.hpp"
+
+namespace tactile {
+class MapDocument;
+}  // namespace tactile
 
 namespace tactile::io {
 

@@ -22,7 +22,10 @@
 #include <centurion/fwd.hpp>
 #include <entt/fwd.hpp>
 
-#include "core/fwd.hpp"
+namespace tactile {
+class DocumentModel;
+class TilesetRef;
+}  // namespace tactile
 
 namespace tactile::ui {
 

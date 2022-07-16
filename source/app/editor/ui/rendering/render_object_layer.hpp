@@ -20,12 +20,15 @@
 #pragma once
 
 #include <centurion/fwd.hpp>
-#include <entt/fwd.hpp>
 
-#include "core/fwd.hpp"
-#include "editor/fwd.hpp"
+namespace tactile {
+class ObjectLayer;
+class Object;
+}  // namespace tactile
 
 namespace tactile::ui {
+
+class GraphicsCtx;
 
 void render_object(GraphicsCtx& graphics, const Object& object, const cen::color& color);
 

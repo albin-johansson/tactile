@@ -24,7 +24,10 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+
+namespace tactile {
+class Component;
+}  // namespace tactile
 
 namespace tactile::ui {
 

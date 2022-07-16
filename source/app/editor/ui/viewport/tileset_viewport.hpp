@@ -21,7 +21,9 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/fwd.hpp"
+namespace tactile {
+class TilesetDocument;
+}  // namespace tactile
 
 namespace tactile::ui {
 

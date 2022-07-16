@@ -21,8 +21,13 @@
 
 #include <imgui.h>
 
-#include "core/fwd.hpp"
 #include "core/region.hpp"
+
+namespace tactile {
+class Map;
+class Tileset;
+class Viewport;
+}  // namespace tactile
 
 namespace tactile::ui {
 

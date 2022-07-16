@@ -22,8 +22,11 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/ints.hpp"
-#include "core/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
+
+namespace tactile {
+class DocumentModel;
+}  // namespace tactile
 
 namespace tactile::ui {
 
