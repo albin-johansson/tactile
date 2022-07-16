@@ -31,8 +31,8 @@
 #include "core/comp/component_bundle.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_delegate.hpp"
+#include "core/ctx/property_bundle.hpp"
 #include "core/layer/group_layer.hpp"
-#include "core/property_bundle.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tileset_bundle.hpp"
 

@@ -21,8 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/ctx/context_visitor.hpp"
-
 namespace tactile {
 
 void Object::set_pos(const Vector2f& pos)

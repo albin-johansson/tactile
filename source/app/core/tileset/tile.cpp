@@ -23,7 +23,6 @@
 
 #include <fmt/format.h>
 
-#include "core/ctx/context_visitor.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

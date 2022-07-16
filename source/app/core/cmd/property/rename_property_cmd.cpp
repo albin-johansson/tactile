@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "core/ctx/context.hpp"
-#include "core/property_bundle.hpp"
+#include "core/ctx/property_bundle.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

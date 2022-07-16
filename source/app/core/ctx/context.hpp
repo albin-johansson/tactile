@@ -21,10 +21,13 @@
 
 #include <string>  // string
 
+#include "core/ctx/context_visitor.hpp"
 #include "core/element.hpp"
-#include "core/fwd.hpp"
 
 namespace tactile {
+
+class PropertyBundle;
+class ComponentBundle;
 
 /// Interface for all objects that may feature properties and components.
 /// Remember to update IContextVisitor when adding a new context implementation.

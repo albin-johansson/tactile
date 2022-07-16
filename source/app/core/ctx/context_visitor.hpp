@@ -19,9 +19,15 @@
 
 #pragma once
 
-#include "core/fwd.hpp"
-
 namespace tactile {
+
+class Map;
+class TileLayer;
+class ObjectLayer;
+class GroupLayer;
+class Object;
+class Tileset;
+class Tile;
 
 /// An interface for visiting specific context implementations.
 class IContextVisitor

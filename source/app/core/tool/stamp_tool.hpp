@@ -77,11 +77,6 @@ class StampTool final : public ATool
   Maybe<TilePos> mLastChangedPos;
   bool           mRandomMode {};
 
-  void draw_gizmos_normal(const Map&        map,
-                          const TilesetRef& tilesetRef,
-                          IRenderer&        renderer,
-                          const MouseInfo&  mouse) const;
-
   void update_sequence(DocumentModel& model, const TilePos& cursor);
 
   void update_sequence_normal(TileLayer&        layer,
