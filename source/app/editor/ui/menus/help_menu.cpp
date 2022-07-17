@@ -22,6 +22,8 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
@@ -46,22 +48,23 @@ struct HelpMenuState final
 
 void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& state = _get_state();
+  const auto& lang = get_current_language();
+  auto&       state = _get_state();
 
-  if (Menu menu {"Help"}; menu.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...")) {
+  if (Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
+    if (ImGui::MenuItem(lang.action.show_about.c_str())) {
       get_dialogs().about.show();
     }
 
-    state.show_about_imgui = ImGui::MenuItem("About Dear ImGui...");
+    state.show_about_imgui = ImGui::MenuItem(lang.action.about_dear_imgui.c_str());
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_BUG " Report Issue...")) {
+    if (ImGui::MenuItem(lang.action.report_issue.c_str())) {
       cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem("Credits...")) {
+    if (ImGui::MenuItem(lang.action.show_credits.c_str())) {
       get_dialogs().credits.show();
     }
   }

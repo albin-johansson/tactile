@@ -21,6 +21,8 @@
 
 #include <imgui.h>
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
@@ -35,8 +37,10 @@ void update_debug_menu()
   static bool show_demo = false;
   static bool show_style_editor = false;
 
-  if (Menu menu {"Debug"}; menu.is_open()) {
-    show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
+  const auto& lang = get_current_language();
+
+  if (Menu menu {lang.menu.debug.c_str()}; menu.is_open()) {
+    show_metrics = ImGui::MenuItem(lang.action.show_metrics.c_str());
 
     if constexpr (is_debug_build) {
       ImGui::Separator();
@@ -46,7 +50,7 @@ void update_debug_menu()
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Open Persistent File Directory...")) {
+    if (ImGui::MenuItem(lang.action.open_persistent_file_dir.c_str())) {
       io::open_directory(io::persistent_file_dir());
     }
   }

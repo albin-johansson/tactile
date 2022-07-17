@@ -24,17 +24,19 @@
 
 #include "core/event/tileset_events.hpp"
 #include "core/model.hpp"
-#include "editor/ui/icons.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/scoped.hpp"
 
 namespace tactile::ui {
 
 void update_tileset_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  Disable disable {!model.is_tileset_active()};
+  const auto& lang = get_current_language();
 
-  if (Menu menu {"Tileset"}; menu.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Tileset")) {
+  Disable disable {!model.is_tileset_active()};
+  if (Menu menu {lang.menu.tileset.c_str()}; menu.is_open()) {
+    if (ImGui::MenuItem(lang.action.inspect_tileset.c_str())) {
       dispatcher.enqueue<InspectTilesetEvent>();
     }
   }

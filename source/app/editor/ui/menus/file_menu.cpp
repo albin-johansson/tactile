@@ -27,8 +27,9 @@
 #include "core/event/map_events.hpp"
 #include "core/event/misc_events.hpp"
 #include "core/model.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/shortcuts/mappings.hpp"
-#include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
@@ -62,8 +63,10 @@ void _update_map_file_dialog(entt::dispatcher& dispatcher)
 
 void _update_recent_files_menu(entt::dispatcher& dispatcher)
 {
-  if (Menu menu {TAC_ICON_HISTORY " Recent Files"}; menu.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
+  const auto& lang = get_current_language();
+
+  if (Menu menu {lang.menu.recent_files.c_str()}; menu.is_open()) {
+    if (ImGui::MenuItem(lang.action.reopen_last_closed_file.c_str(),
                         nullptr,
                         false,
                         io::is_last_closed_file_valid())) {
@@ -86,7 +89,7 @@ void _update_recent_files_menu(entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear File History",
+    if (ImGui::MenuItem(lang.action.clear_file_history.c_str(),
                         nullptr,
                         false,
                         !history.empty())) {
@@ -99,31 +102,32 @@ void _update_recent_files_menu(entt::dispatcher& dispatcher)
 
 void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& state = _get_state();
+  const auto& lang = get_current_language();
+  auto&       state = _get_state();
 
-  if (Menu menu {"File"}; menu.is_open()) {
+  if (Menu menu {lang.menu.file.c_str()}; menu.is_open()) {
     const auto  hasActiveDocument = model.has_active_document();
     const auto* document = model.active_document();
 
-    if (ImGui::MenuItem(TAC_ICON_FILE " Create Map...", TACTILE_PRIMARY_MOD "+N")) {
+    if (ImGui::MenuItem(lang.action.create_map.c_str(), TACTILE_PRIMARY_MOD "+N")) {
       get_dialogs().create_map.show();
     }
 
-    state.show_map_selector = ImGui::MenuItem(TAC_ICON_OPEN " Open Map...",  //
-                                              TACTILE_PRIMARY_MOD "+O");
+    state.show_map_selector =
+        ImGui::MenuItem(lang.action.open_map.c_str(), TACTILE_PRIMARY_MOD "+O");
 
     _update_recent_files_menu(dispatcher);
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
+    if (ImGui::MenuItem(lang.action.save.c_str(),
                         TACTILE_PRIMARY_MOD "+S",
                         false,
                         document && !document->get_history().is_clean())) {
       dispatcher.enqueue<SaveEvent>();
     }
 
-    if (ImGui::MenuItem(TAC_ICON_SAVE " Save As...",
+    if (ImGui::MenuItem(lang.action.save_as.c_str(),
                         TACTILE_PRIMARY_MOD "+Shift+S",
                         false,
                         hasActiveDocument)) {
@@ -132,7 +136,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Document",
+    if (ImGui::MenuItem(lang.action.close_document.c_str(),
                         nullptr,
                         false,
                         hasActiveDocument)) {
@@ -141,7 +145,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_EXIT " Exit")) {
+    if (ImGui::MenuItem(lang.action.exit.c_str())) {
       dispatcher.enqueue<QuitEvent>();
     }
   }
