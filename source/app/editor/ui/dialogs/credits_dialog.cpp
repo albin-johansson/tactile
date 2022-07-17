@@ -47,7 +47,7 @@ void _row(const char* lib, const char* license)
 CreditsDialog::CreditsDialog()
     : ADialog {"Credits"}
 {
-  set_accept_button_label(nullptr);
+  set_accept_button_label(nothing);
   set_close_button_label("Close");
 }
 

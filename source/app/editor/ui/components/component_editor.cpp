@@ -54,8 +54,8 @@ ComponentEditor::ComponentEditor()
     : ADialog {"Component Editor"}
     , mData {std::make_unique<Data>()}
 {
-  set_accept_button_label(nullptr);
   set_close_button_label("Close");
+  set_accept_button_label(nothing);
 }
 
 ComponentEditor::~ComponentEditor() noexcept = default;

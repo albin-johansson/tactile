@@ -19,9 +19,12 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include <entt/fwd.hpp>
 
 #include "core/common/macros.hpp"
+#include "core/common/maybe.hpp"
 
 namespace tactile {
 class DocumentModel;
@@ -29,23 +32,14 @@ class DocumentModel;
 
 namespace tactile::ui {
 
-/**
- * Serves as the base implementation of all modal dialogs.
- */
+/// Serves as the base implementation of all modal dialogs.
 class ADialog
 {
  public:
   TACTILE_DEFAULT_COPY(ADialog);
   TACTILE_DEFAULT_MOVE(ADialog);
 
-  /**
-   * Creates a dialog.
-   *
-   * \param title the non-null title of the dialog.
-   *
-   * \throws TactileError if the title is null.
-   */
-  explicit ADialog(const char* title);
+  explicit ADialog(std::string title);
 
   virtual ~ADialog() noexcept = default;
 
@@ -121,34 +115,33 @@ class ADialog
    */
   void use_apply_button();
 
+  void set_title(std::string title);
+
   /**
    * Sets the label of the "accept" button.
    *
    * By default, the accept button uses "OK" as its label. However, it is often
-   * more intuitive to use more descriptive verbs as the label, e.g. "Create", "Rename",
-   * etc.
+   * more intuitive to use more descriptive verbs as the label.
    *
-   * \param label the label text;
-   *              a null pointer may be used to indicate that the button will be hidden.
+   * \param label the label text, use an empty optional to hide the button.
    */
-  void set_accept_button_label(const char* label);
+  void set_accept_button_label(Maybe<std::string> label);
 
   /**
    * Sets the label of the "close" button.
    *
    * By default, the accept button uses "Cancel" as its label.
    *
-   * \param label the label text;
-   *              a null pointer may be used to indicate that the button will be hidden.
+   * \param label the label text, use an empty optional to hide the button.
    */
-  void set_close_button_label(const char* label);
+  void set_close_button_label(Maybe<std::string> label);
 
  private:
-  const char* mTitle {};
-  const char* mAcceptButtonLabel {"OK"};
-  const char* mCloseButtonLabel {"Cancel"};
-  bool        mUseApplyButton : 1 {};
-  bool        mShow           : 1 {};
+  std::string        mTitle;
+  Maybe<std::string> mAcceptButtonLabel;
+  Maybe<std::string> mCloseButtonLabel;
+  bool               mUseApplyButton : 1 {};
+  bool               mShow           : 1 {};
 };
 
 }  // namespace tactile::ui
