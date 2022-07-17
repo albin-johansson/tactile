@@ -48,6 +48,10 @@ inline PreferenceState _settings;
 
   proto::Settings cfg;
   if (cfg.ParseFromIstream(&stream)) {
+    if (cfg.has_language()) {
+      result.language = static_cast<Lang>(cfg.language());
+    }
+
     if (cfg.has_theme()) {
       result.theme = static_cast<ui::EditorTheme>(cfg.theme());
     }
@@ -170,6 +174,7 @@ void save_preferences()
 {
   proto::Settings cfg;
 
+  cfg.set_language(static_cast<proto::Lang>(_settings.language));
   cfg.set_theme(static_cast<proto::Theme>(_settings.theme));
   cfg.set_show_grid(_settings.show_grid);
   cfg.set_highlight_active_layer(_settings.highlight_active_layer);
@@ -215,6 +220,7 @@ void save_preferences()
 
 void print_preferences()
 {
+  spdlog::debug("Language... {}", magic_enum::enum_name(_settings.language));
   spdlog::debug("Theme... {}", magic_enum::enum_name(_settings.theme));
   spdlog::debug("Viewport background... {}", _settings.viewport_background.as_rgb());
 
