@@ -29,6 +29,7 @@
 #include <spdlog/spdlog.h>
 
 #include "cfg/platform_specific.hpp"
+#include "editor/lang/language.hpp"
 #include "io/directories.hpp"
 #include "io/persistence/preferences.hpp"
 #include "meta/build.hpp"
@@ -122,6 +123,7 @@ AppConfiguration::AppConfiguration()
   spdlog::debug("OpenGL version... {}", glGetString(GL_VERSION));
   spdlog::debug("OpenGL renderer... {}", glGetString(GL_RENDERER));
 
+  load_languages();
   io::load_preferences();
 
   TACTILE_ASSERT(mOpenGL.has_value());

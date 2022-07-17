@@ -19,27 +19,12 @@
 
 #pragma once
 
-#include <string>  // string
+#include "editor/lang/strings.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
-struct Strings;
+/// Parses a language translation JSON file.
+[[nodiscard]] auto parse_language(const char* path, const Strings& fallback = {})
+    -> Strings;
 
-/// All of the supported languages.
-enum class Lang
-{
-  EN = 0,     ///< American English
-  EN_GB = 1,  ///< British English
-  SV = 2      ///< Swedish
-};
-
-/// Loads all supported translation files.
-void load_languages();
-
-[[nodiscard]] auto get_language(Lang lang) -> const Strings&;
-
-[[nodiscard]] auto get_current_language() -> const Strings&;
-
-[[nodiscard]] auto get_language_name(Lang lang) -> const char*;
-
-}  // namespace tactile
+}  // namespace tactile::io

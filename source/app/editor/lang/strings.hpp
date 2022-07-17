@@ -1,0 +1,182 @@
+/*
+ * This source file is a part of the Tactile map editor.
+ *
+ * Copyright (C) 2022 Albin Johansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#pragma once
+
+#include <string>  // string
+
+namespace tactile {
+
+struct MenuStrings final
+{
+  std::string file;
+  std::string edit;
+  std::string view;
+  std::string map;
+  std::string tileset;
+  std::string help;
+  std::string debug;
+  std::string recent_files;
+  std::string widgets;
+};
+
+struct WindowStrings final
+{
+  std::string layer_dock;
+  std::string tileset_dock;
+  std::string property_dock;
+  std::string component_dock;
+  std::string log_dock;
+  std::string component_editor;
+  std::string settings_dialog;
+  std::string about_tactile;
+  std::string create_new_map;
+};
+
+struct ActionStrings final
+{
+  std::string create_map;
+  std::string open_map;
+  std::string save;
+  std::string save_as;
+  std::string close_document;
+  std::string exit;
+  std::string reopen_last_closed_file;
+  std::string clear_file_history;
+
+  std::string undo;
+  std::string redo;
+
+  std::string stamp_tool;
+  std::string bucket_tool;
+  std::string eraser_tool;
+  std::string object_selection_tool;
+  std::string rectangle_tool;
+  std::string ellipse_tool;
+  std::string point_tool;
+
+  std::string show_component_editor;
+  std::string show_settings;
+
+  std::string center_viewport;
+  std::string toggle_grid;
+  std::string increase_zoom;
+  std::string decrease_zoom;
+  std::string reset_zoom;
+
+  std::string increase_font_size;
+  std::string decrease_font_size;
+  std::string reset_font_size;
+
+  std::string pan_up;
+  std::string pan_down;
+  std::string pan_right;
+  std::string pan_left;
+
+  std::string highlight_layer;
+  std::string toggle_ui;
+
+  std::string inspect_map;
+  std::string inspect_tileset;
+
+  std::string add_tileset;
+  std::string add_row;
+  std::string add_column;
+  std::string remove_row;
+  std::string remove_column;
+  std::string resize_map;
+  std::string fix_invalid_tiles;
+  std::string fix_invalid_tiles_tooltip;
+
+  std::string reset_layout;
+  std::string report_issue;
+
+  std::string show_about;
+  std::string show_credits;
+  std::string show_metrics;
+  std::string open_persistent_file_dir;
+
+  std::string about_dear_imgui;
+};
+
+struct SettingStrings final
+{
+  std::string appearance_tab;
+  std::string behavior_tab;
+  std::string export_tab;
+
+  std::string restore_defaults;
+  std::string restore_last_session;
+  std::string pref_tile_width;
+  std::string pref_tile_height;
+  std::string command_capacity;
+
+  std::string language;
+  std::string theme;
+  std::string viewport_bg_color;
+  std::string window_border;
+  std::string restore_layout;
+  std::string use_default_font;
+  std::string font_size;
+  std::string pref_format;
+  std::string embed_tilesets;
+  std::string indent_output;
+  std::string fold_tile_data;
+};
+
+struct TooltipStrings final
+{
+  std::string fix_invalid_tiles;
+  std::string pref_tile_width;
+  std::string pref_tile_height;
+  std::string command_capacity;
+  std::string restore_layout;
+  std::string use_default_font;
+  std::string pref_format;
+  std::string embed_tilesets;
+  std::string indent_output;
+  std::string fold_tile_data;
+  std::string repository_link;
+};
+
+struct MiscStrings final
+{
+  std::string ok;
+  std::string cancel;
+  std::string apply;
+  std::string create;
+  std::string close;
+
+  std::string license_info;
+  std::string repository_link;
+  std::string font_awesome_credit;
+};
+
+/// Provides translated strings for a single language.
+struct Strings final
+{
+  MenuStrings    menu;
+  WindowStrings  window;
+  ActionStrings  action;
+  SettingStrings setting;
+  TooltipStrings tooltip;
+  MiscStrings    misc;
+};
+
+}  // namespace tactile
