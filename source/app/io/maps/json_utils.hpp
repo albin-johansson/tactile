@@ -46,6 +46,9 @@ void to_json(nlohmann::json& json, const Attribute& value);
 
 void write_json(const nlohmann::json& json, const fs::path& path);
 
+[[nodiscard]] auto try_get(const nlohmann::json& json, const char* key)
+    -> const nlohmann::json*;
+
 [[nodiscard]] auto read_json(const fs::path& path) -> Maybe<nlohmann::json>;
 
 namespace io {

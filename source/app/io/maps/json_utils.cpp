@@ -92,6 +92,16 @@ void write_json(const nlohmann::json& json, const fs::path& path)
   stream << json;
 }
 
+auto try_get(const nlohmann::json& json, const char* key) -> const nlohmann::json*
+{
+  if (const auto iter = json.find(key); iter != json.end()) {
+    return &iter.value();
+  }
+  else {
+    return nullptr;
+  }
+}
+
 auto read_json(const fs::path& path) -> Maybe<nlohmann::json>
 {
   try {
