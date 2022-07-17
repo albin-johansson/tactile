@@ -21,6 +21,7 @@
 
 #include <imgui_internal.h>
 
+#include "editor/constants.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {
@@ -56,6 +57,11 @@ void prepare_vertical_alignment_center(const float count)
 
   const auto cursorPos = ImGui::GetCursorPos();
   ImGui::SetCursorPos(cursorPos + ImVec2 {0, halfRegion.y - (height / 2.0f)});
+}
+
+void right_align_next_item()
+{
+  ImGui::SetNextItemWidth(-min_float);
 }
 
 auto right_align_next_item(const float width) -> float
