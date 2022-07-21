@@ -21,6 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
+#include <imgui_internal.h>
 
 #include "core/event/viewport_events.hpp"
 
@@ -36,6 +37,10 @@ constexpr auto _button_flags = ImGuiButtonFlags_MouseButtonLeft |
 void update_document_viewport_offset(const ImVec2&     viewportSize,
                                      entt::dispatcher& dispatcher)
 {
+  if (ImGui::GetTopMostPopupModal() != nullptr) {
+    return;
+  }
+
   ImGui::InvisibleButton("update_document_viewport_offset", viewportSize, _button_flags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto&    io = ImGui::GetIO();
