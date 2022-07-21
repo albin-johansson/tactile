@@ -60,6 +60,7 @@ find_package(yaml-cpp CONFIG REQUIRED)
 find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
+option(TACTILE_BUILD_WITH_ASAN "Build with AddressSanitizer" OFF)
 
 function(copy_directory_post_build target from to)
   add_custom_command(TARGET ${target} POST_BUILD
@@ -91,6 +92,12 @@ function(tactile_set_compile_options target)
                            )
   endif ()
 endfunction()
+
+if (TACTILE_BUILD_WITH_ASAN MATCHES ON)
+  message(INFO "Building with AddressSanitizer")
+  add_compile_options(-fno-omit-frame-pointer -fsanitize=address)
+  add_link_options(-fno-omit-frame-pointer -fsanitize=address)
+endif ()
 
 add_subdirectory(source/proto)
 add_subdirectory(source/app)
