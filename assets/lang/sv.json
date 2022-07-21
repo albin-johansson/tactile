@@ -19,7 +19,9 @@
     "component-editor": "Komponenteditor",
     "settings-dialog": "Inställningar",
     "about-tactile": "Om Tactile",
-    "create-new-map": "Skapa Ny Karta"
+    "create-new-map": "Skapa Ny Karta",
+    "create-tileset": "Skapa Tilesamling",
+    "credits": "Tredjepartsbibliotek"
   },
   "actions": {
     "create-map": "Skapa Karta...",
@@ -70,7 +72,9 @@
     "show-credits": "Tredjepartsbibliotek...",
     "show-metrics": "Visa Systeminformation...",
     "open-persistent-file-dir": "Öppna Långtidslagringsmapp...",
-    "about-dear-imgui": "Om Dear ImGui..."
+    "about-dear-imgui": "Om Dear ImGui...",
+    "quick-theme": "Tema",
+    "quick-language": "Språk"
   },
   "settings": {
     "behavior-tab": "Beteende",
@@ -114,6 +118,12 @@
     "close": "Stäng",
     "license-info": "Källkoden för detta program är fritt tillgänglig, enligt GPL v3.0.",
     "repository-link": "Källkod: https://www.github.com/albin-johansson/tactile",
-    "font-awesome-credit": "Ikoner från Font Awesome."
+    "font-awesome-credit": "Ikoner från Font Awesome.",
+    "credits-info": "Tactile utvecklas med hjälp av följande open-source bibliotek.",
+    "tile-width": "Tilebredd",
+    "tile-height": "Tilehöjd",
+    "create-tileset-instruction": "Välj en bild som innehåller alla tiles arrangerade enligt ett rutnät.",
+    "select-image": "Välj bild...",
+    "tileset-image-input-hint": "Bildadress"
   }
 }

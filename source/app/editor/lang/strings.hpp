@@ -47,6 +47,8 @@ struct WindowStrings final
   std::string settings_dialog;
   std::string about_tactile;
   std::string create_new_map;
+  std::string create_tileset;
+  std::string credits;
 };
 
 struct ActionStrings final
@@ -113,6 +115,9 @@ struct ActionStrings final
   std::string open_persistent_file_dir;
 
   std::string about_dear_imgui;
+
+  std::string quick_theme;
+  std::string quick_language;
 };
 
 struct SettingStrings final
@@ -166,6 +171,13 @@ struct MiscStrings final
   std::string license_info;
   std::string repository_link;
   std::string font_awesome_credit;
+  std::string credits_info;
+
+  std::string tile_width;
+  std::string tile_height;
+  std::string select_image;
+  std::string create_tileset_instruction;
+  std::string tileset_image_input_hint;
 };
 
 /// Provides translated strings for a single language.

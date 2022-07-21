@@ -33,6 +33,8 @@
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
 #include "editor/constants.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/common/labels.hpp"
@@ -51,10 +53,9 @@ struct ComponentEditor::Data final
 };
 
 ComponentEditor::ComponentEditor()
-    : ADialog {"Component Editor"}
+    : ADialog {get_current_language().window.component_editor}
     , mData {std::make_unique<Data>()}
 {
-  set_close_button_label("Close");
   set_accept_button_label(nothing);
 }
 
@@ -66,8 +67,12 @@ void ComponentEditor::show(const DocumentModel& model)
   const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
-  mData->active_component = !index->empty() ? Maybe<UUID> {index->begin()->first}  //
-                                            : nothing;
+  mData->active_component =
+      !index->empty() ? Maybe<UUID> {index->begin()->first} : nothing;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.component_editor);
+  set_close_button_label(lang.misc.close);
 
   make_visible();
 }

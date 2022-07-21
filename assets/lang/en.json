@@ -19,7 +19,9 @@
     "component-editor": "Component Editor",
     "settings-dialog": "Preferences",
     "about-tactile": "About Tactile",
-    "create-new-map": "Create New Map"
+    "create-new-map": "Create New Map",
+    "create-tileset": "Create Tileset",
+    "credits": "Credits"
   },
   "actions": {
     "create-map": "Create Map...",
@@ -70,7 +72,9 @@
     "show-credits": "Credits...",
     "show-metrics": "Show Metrics...",
     "open-persistent-file-dir": "Open Persistent File Directory...",
-    "about-dear-imgui": "About Dear ImGui..."
+    "about-dear-imgui": "About Dear ImGui...",
+    "quick-theme": "Theme",
+    "quick-language": "Language"
   },
   "settings": {
     "behavior-tab": "Behavior",
@@ -114,6 +118,12 @@
     "close": "Close",
     "license-info": "This tool is open-source software, using the GPL v3.0 license.",
     "repository-link": "Source code: https://www.github.com/albin-johansson/tactile",
-    "font-awesome-credit": "Icons by Font Awesome."
+    "font-awesome-credit": "Icons by Font Awesome.",
+    "credits-info": "Tactile is developed using the following open-source libraries.",
+    "tile-width": "Tile width",
+    "tile-height": "Tile height",
+    "create-tileset-instruction": "Select an image which contains the tiles aligned in a grid.",
+    "select-image": "Select image...",
+    "tileset-image-input-hint": "Source image path"
   }
 }

@@ -31,14 +31,16 @@
 namespace tactile::ui {
 
 AboutDialog::AboutDialog()
-    : ADialog {get_current_language().window.about_tactile}
+    : ADialog {"About Tactile"}
 {
   set_accept_button_label(nothing);
-  set_close_button_label("Close");
 }
 
 void AboutDialog::show()
 {
+  const auto& lang = get_current_language();
+  set_title(lang.window.about_tactile);
+  set_close_button_label(lang.misc.close);
   make_visible();
 }
 

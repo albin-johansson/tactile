@@ -25,10 +25,10 @@
 #include "io/directories.hpp"
 #include "io/maps/json_utils.hpp"  // TODO move
 
+using JSON = nlohmann::json;
+
 namespace tactile::io {
 namespace {
-
-using JSON = nlohmann::json;
 
 void _load(const JSON& json, std::string& string, const char* key)
 {
@@ -68,6 +68,8 @@ void _load_window_strings(const JSON& json, WindowStrings& window)
   _load(json, window.settings_dialog, "settings-dialog");
   _load(json, window.about_tactile, "about-tactile");
   _load(json, window.create_new_map, "create-new-map");
+  _load(json, window.create_tileset, "create-tileset");
+  _load(json, window.credits, "credits");
 }
 
 void _load_action_strings(const JSON& json, ActionStrings& action)
@@ -131,10 +133,13 @@ void _load_action_strings(const JSON& json, ActionStrings& action)
   _load(json, action.report_issue, "report-issue", TAC_ICON_BUG);
 
   _load(json, action.show_about, "show-about", TAC_ICON_ABOUT);
+  _load(json, action.about_dear_imgui, "about-dear-imgui", TAC_ICON_ABOUT);
   _load(json, action.show_credits, "show-credits");
   _load(json, action.show_metrics, "show-metrics", TAC_ICON_METRICS);
   _load(json, action.open_persistent_file_dir, "open-persistent-file-dir");
-  _load(json, action.about_dear_imgui, "about-dear-imgui");
+
+  _load(json, action.quick_theme, "quick-theme", ICON_FA_DROPLET);
+  _load(json, action.quick_language, "quick-language", ICON_FA_LANGUAGE);
 }
 
 void _load_setting_strings(const JSON& json, SettingStrings& setting)
@@ -189,6 +194,13 @@ void _load_misc_strings(const JSON& json, MiscStrings& misc)
   _load(json, misc.license_info, "license-info");
   _load(json, misc.repository_link, "repository-link");
   _load(json, misc.font_awesome_credit, "font-awesome-credit", ICON_FA_FONT_AWESOME);
+  _load(json, misc.credits_info, "credits-info");
+
+  _load(json, misc.tile_width, "tile-width");
+  _load(json, misc.tile_height, "tile-height");
+  _load(json, misc.select_image, "select-image");
+  _load(json, misc.create_tileset_instruction, "create-tileset-instruction");
+  _load(json, misc.tileset_image_input_hint, "tileset-image-input-hint");
 }
 
 }  // namespace

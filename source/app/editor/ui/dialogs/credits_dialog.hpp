@@ -23,9 +23,7 @@
 
 namespace tactile::ui {
 
-/**
- * Provides information about third-party dependencies.
- */
+/// Provides information about third-party dependencies.
 class CreditsDialog final : public ADialog
 {
  public:

@@ -21,6 +21,8 @@
 
 #include <imgui.h>
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/scoped.hpp"
 
 namespace tactile::ui {
@@ -48,18 +50,23 @@ CreditsDialog::CreditsDialog()
     : ADialog {"Credits"}
 {
   set_accept_button_label(nothing);
-  set_close_button_label("Close");
 }
 
 void CreditsDialog::show()
 {
+  const auto& lang = get_current_language();
+
+  set_title(lang.window.credits);
+  set_close_button_label(lang.misc.close);
+
   make_visible();
 }
 
 void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  ImGui::TextUnformatted(
-      "Tactile is developed using the following open-source libraries.");
+  const auto& lang = get_current_language();
+
+  ImGui::TextUnformatted(lang.misc.credits_info.c_str());
   ImGui::Spacing();
 
   if (Table table {"##CreditsTable", 2, _table_flags}; table.is_open()) {
@@ -73,7 +80,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     _row("EnTT", "MIT");
     _row("fmt", "MIT");
     _row("GLEW", "BSD/MIT");
-    _row("glm", "Happy Bunny/MIT"); /* Yes, there is a Happy Bunny license */
+    _row("glm", "Happy Bunny/MIT"); // Yes, there is a Happy Bunny license
     _row("IconFontCppHeaders", "Zlib");
     _row("JSON for Modern C++", "MIT");
     _row("Magic Enum C++", "MIT");
