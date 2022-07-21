@@ -21,6 +21,7 @@
     "about-tactile": "Om Tactile",
     "create-new-map": "Skapa Ny Karta",
     "create-tileset": "Skapa Tilesamling",
+    "resize-map": "Ändra Kartstorlek",
     "credits": "Tredjepartsbibliotek"
   },
   "actions": {
@@ -116,6 +117,8 @@
     "apply": "Applicera",
     "create": "Skapa",
     "close": "Stäng",
+    "rows": "Rader",
+    "columns": "Kolumner",
     "license-info": "Källkoden för detta program är fritt tillgänglig, enligt GPL v3.0.",
     "repository-link": "Källkod: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Ikoner från Font Awesome.",

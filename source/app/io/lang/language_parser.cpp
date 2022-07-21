@@ -69,6 +69,7 @@ void _load_window_strings(const JSON& json, WindowStrings& window)
   _load(json, window.about_tactile, "about-tactile");
   _load(json, window.create_new_map, "create-new-map");
   _load(json, window.create_tileset, "create-tileset");
+  _load(json, window.resize_map, "resize-map");
   _load(json, window.credits, "credits");
 }
 
@@ -190,6 +191,9 @@ void _load_misc_strings(const JSON& json, MiscStrings& misc)
   _load(json, misc.apply, "apply");
   _load(json, misc.create, "create");
   _load(json, misc.close, "close");
+
+  _load(json, misc.rows, "rows");
+  _load(json, misc.columns, "columns");
 
   _load(json, misc.license_info, "license-info");
   _load(json, misc.repository_link, "repository-link");

@@ -48,6 +48,7 @@ struct WindowStrings final
   std::string about_tactile;
   std::string create_new_map;
   std::string create_tileset;
+  std::string resize_map;
   std::string credits;
 };
 
@@ -167,6 +168,9 @@ struct MiscStrings final
   std::string apply;
   std::string create;
   std::string close;
+
+  std::string rows;
+  std::string columns;
 
   std::string license_info;
   std::string repository_link;

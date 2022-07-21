@@ -21,6 +21,7 @@
     "about-tactile": "About Tactile",
     "create-new-map": "Create New Map",
     "create-tileset": "Create Tileset",
+    "resize-map": "Resize Map",
     "credits": "Credits"
   },
   "actions": {
@@ -116,6 +117,8 @@
     "apply": "Apply",
     "create": "Create",
     "close": "Close",
+    "rows": "Rows",
+    "columns": "Columns",
     "license-info": "This tool is open-source software, using the GPL v3.0 license.",
     "repository-link": "Source code: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Icons by Font Awesome.",
