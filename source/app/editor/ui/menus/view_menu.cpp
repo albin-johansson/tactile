@@ -121,6 +121,22 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
+    if (Menu langMenu {lang.action.quick_language.c_str()}; langMenu.is_open()) {
+      if (ImGui::MenuItem("English (US)")) {
+        prefs.language = Lang::EN;
+      }
+
+      if (ImGui::MenuItem("English (GB)")) {
+        prefs.language = Lang::EN_GB;
+      }
+
+      if (ImGui::MenuItem("Svenska")) {
+        prefs.language = Lang::SV;
+      }
+    }
+
+    ImGui::Separator();
+
     if (ImGui::MenuItem(lang.action.center_viewport.c_str(),
                         "Shift+Space",
                         false,

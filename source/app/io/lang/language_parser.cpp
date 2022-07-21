@@ -139,7 +139,7 @@ void _load_action_strings(const JSON& json, ActionStrings& action)
   _load(json, action.open_persistent_file_dir, "open-persistent-file-dir");
 
   _load(json, action.quick_theme, "quick-theme", ICON_FA_DROPLET);
-  _load(json, action.quick_language, "quick-language", ICON_FA_LANGUAGE);
+  _load(json, action.quick_language, "quick-language", ICON_FA_GLOBE);
 }
 
 void _load_setting_strings(const JSON& json, SettingStrings& setting)
