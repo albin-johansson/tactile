@@ -25,6 +25,7 @@
 
 #include <entt/fwd.hpp>
 
+#include "core/common/maybe.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
 namespace tactile::ui {
@@ -40,12 +41,7 @@ class AStringInputDialog : public ADialog
   void show(std::string previous);
 
  protected:
-  /**
-   * Sets the input hint used by the string field.
-   *
-   * \param hint optional hint label; a null pointer disables the input hint.
-   */
-  void set_input_hint(const char* hint);
+  void set_input_hint(Maybe<std::string> hint);
 
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) final;
 
@@ -78,7 +74,7 @@ class AStringInputDialog : public ADialog
   [[nodiscard]] auto previous_input() const -> const std::string&;
 
  private:
-  const char*           mHint {};
+  Maybe<std::string>    mHint;
   std::string           mPrevious;
   std::array<char, 128> mBuffer {};
   bool                  mShouldAcquireFocus {};

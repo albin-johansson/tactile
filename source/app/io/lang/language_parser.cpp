@@ -70,6 +70,7 @@ void _load_window_strings(const JSON& json, WindowStrings& window)
   _load(json, window.create_new_map, "create-new-map");
   _load(json, window.create_tileset, "create-tileset");
   _load(json, window.resize_map, "resize-map");
+  _load(json, window.create_component, "create-component");
   _load(json, window.credits, "credits");
 }
 
@@ -141,6 +142,14 @@ void _load_action_strings(const JSON& json, ActionStrings& action)
 
   _load(json, action.quick_theme, "quick-theme", ICON_FA_DROPLET);
   _load(json, action.quick_language, "quick-language", ICON_FA_GLOBE);
+
+  _load(json, action.create_attribute, "create-attribute");
+  _load(json, action.duplicate_attribute, "duplicate-attribute", TAC_ICON_DUPLICATE);
+  _load(json, action.rename_attribute, "rename-attribute", TAC_ICON_EDIT);
+  _load(json, action.remove_attribute, "remove-attribute", TAC_ICON_REMOVE);
+
+  _load(json, action.rename_component, "rename-component", TAC_ICON_EDIT);
+  _load(json, action.remove_component, "remove-component", TAC_ICON_REMOVE);
 }
 
 void _load_setting_strings(const JSON& json, SettingStrings& setting)
@@ -182,6 +191,8 @@ void _load_tooltip_strings(const JSON& json, TooltipStrings& tooltip)
   _load(json, tooltip.indent_output, "indent-output");
   _load(json, tooltip.fold_tile_data, "fold-tile-data");
   _load(json, tooltip.repository_link, "repository-link");
+  _load(json, tooltip.create_component, "create-component");
+  _load(json, tooltip.show_component_actions, "show-component-actions");
 }
 
 void _load_misc_strings(const JSON& json, MiscStrings& misc)
@@ -195,6 +206,11 @@ void _load_misc_strings(const JSON& json, MiscStrings& misc)
   _load(json, misc.rows, "rows");
   _load(json, misc.columns, "columns");
 
+  _load(json, misc.name, "name");
+  _load(json, misc.type, "type");
+  _load(json, misc.default_value, "default-value");
+  _load(json, misc.component, "component");
+
   _load(json, misc.license_info, "license-info");
   _load(json, misc.repository_link, "repository-link");
   _load(json, misc.font_awesome_credit, "font-awesome-credit", ICON_FA_FONT_AWESOME);
@@ -205,6 +221,10 @@ void _load_misc_strings(const JSON& json, MiscStrings& misc)
   _load(json, misc.select_image, "select-image");
   _load(json, misc.create_tileset_instruction, "create-tileset-instruction");
   _load(json, misc.tileset_image_input_hint, "tileset-image-input-hint");
+
+  _load(json, misc.empty_component, "empty-component");
+  _load(json, misc.map_has_no_components, "map-has-no-components");
+  _load(json, misc.component_name_hint, "component-name-hint");
 }
 
 }  // namespace

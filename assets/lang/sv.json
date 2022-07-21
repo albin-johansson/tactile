@@ -22,6 +22,7 @@
     "create-new-map": "Skapa Ny Karta",
     "create-tileset": "Skapa Tilesamling",
     "resize-map": "Ändra Kartstorlek",
+    "create-component": "Skapa Komponent",
     "credits": "Tredjepartsbibliotek"
   },
   "actions": {
@@ -75,7 +76,13 @@
     "open-persistent-file-dir": "Öppna Långtidslagringsmapp...",
     "about-dear-imgui": "Om Dear ImGui...",
     "quick-theme": "Tema",
-    "quick-language": "Språk"
+    "quick-language": "Språk",
+    "create-attribute": "Skapa Attribut",
+    "duplicate-attribute": "Duplicera Attribut",
+    "rename-attribute": "Ändra Attributnamn",
+    "remove-attribute": "Radera Attribut",
+    "rename-component": "Ändra Komponentnamn",
+    "remove-component": "Radera Komponent"
   },
   "settings": {
     "behavior-tab": "Beteende",
@@ -109,7 +116,9 @@
     "embed-tilesets": "Inkludera tilesamlingsdata i kartfiler",
     "indent-output": "Kontrollerar huruvida filer är indenterade",
     "fold-tile-data": "Gör tile-data lättare för människor att läsa, på bekostnad av filstorlek",
-    "repository-link": "Open the GitHub repository in your browser"
+    "repository-link": "Open the GitHub repository in your browser",
+    "create-component": "Skapa en ny komponent",
+    "show-component-actions": "Visa komponentkommandon"
   },
   "misc": {
     "ok": "OK",
@@ -119,6 +128,10 @@
     "close": "Stäng",
     "rows": "Rader",
     "columns": "Kolumner",
+    "name": "Namn",
+    "type": "Typ",
+    "default-value": "Startvärde",
+    "component": "Komponent",
     "license-info": "Källkoden för detta program är fritt tillgänglig, enligt GPL v3.0.",
     "repository-link": "Källkod: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Ikoner från Font Awesome.",
@@ -127,6 +140,9 @@
     "tile-height": "Tilehöjd",
     "create-tileset-instruction": "Välj en bild som innehåller alla tiles arrangerade enligt ett rutnät.",
     "select-image": "Välj bild...",
-    "tileset-image-input-hint": "Bildadress"
+    "tileset-image-input-hint": "Bildadress",
+    "empty-component": "Denna komponent har inga attributer.",
+    "map-has-no-components": "Denna karta har inga komponenter.",
+    "component-name-hint": "Komponentnamn"
   }
 }

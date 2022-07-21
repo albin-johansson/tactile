@@ -49,6 +49,7 @@ struct WindowStrings final
   std::string create_new_map;
   std::string create_tileset;
   std::string resize_map;
+  std::string create_component;
   std::string credits;
 };
 
@@ -119,6 +120,14 @@ struct ActionStrings final
 
   std::string quick_theme;
   std::string quick_language;
+
+  std::string create_attribute;
+  std::string duplicate_attribute;
+  std::string rename_attribute;
+  std::string remove_attribute;
+
+  std::string rename_component;
+  std::string remove_component;
 };
 
 struct SettingStrings final
@@ -159,6 +168,8 @@ struct TooltipStrings final
   std::string indent_output;
   std::string fold_tile_data;
   std::string repository_link;
+  std::string create_component;
+  std::string show_component_actions;
 };
 
 struct MiscStrings final
@@ -172,6 +183,11 @@ struct MiscStrings final
   std::string rows;
   std::string columns;
 
+  std::string name;
+  std::string type;
+  std::string default_value;
+  std::string component;
+
   std::string license_info;
   std::string repository_link;
   std::string font_awesome_credit;
@@ -182,6 +198,10 @@ struct MiscStrings final
   std::string select_image;
   std::string create_tileset_instruction;
   std::string tileset_image_input_hint;
+
+  std::string empty_component;
+  std::string map_has_no_components;
+  std::string component_name_hint;
 };
 
 /// Provides translated strings for a single language.

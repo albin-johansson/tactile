@@ -22,6 +22,7 @@
     "create-new-map": "Create New Map",
     "create-tileset": "Create Tileset",
     "resize-map": "Resize Map",
+    "create-component": "Create Component",
     "credits": "Credits"
   },
   "actions": {
@@ -75,7 +76,13 @@
     "open-persistent-file-dir": "Open Persistent File Directory...",
     "about-dear-imgui": "About Dear ImGui...",
     "quick-theme": "Theme",
-    "quick-language": "Language"
+    "quick-language": "Language",
+    "create-attribute": "Create Attribute",
+    "duplicate-attribute": "Duplicate Attribute",
+    "rename-attribute": "Rename Attribute",
+    "remove-attribute": "Remove Attribute",
+    "rename-component": "Rename Component",
+    "remove-component": "Remove Component"
   },
   "settings": {
     "behavior-tab": "Behavior",
@@ -109,7 +116,9 @@
     "embed-tilesets": "Embed tileset data in map files",
     "indent-output": "Controls whether save files are indented",
     "fold-tile-data": "Make tile layer data easier for humans to edit, at the expense of space",
-    "repository-link": "Open the GitHub repository in your browser"
+    "repository-link": "Open the GitHub repository in your browser",
+    "create-component": "Create a new component definition",
+    "show-component-actions": "Show component actions"
   },
   "misc": {
     "ok": "OK",
@@ -119,6 +128,10 @@
     "close": "Close",
     "rows": "Rows",
     "columns": "Columns",
+    "name": "Name",
+    "type": "Type",
+    "default-value": "Default",
+    "component": "Component",
     "license-info": "This tool is open-source software, using the GPL v3.0 license.",
     "repository-link": "Source code: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Icons by Font Awesome.",
@@ -127,6 +140,9 @@
     "tile-height": "Tile height",
     "create-tileset-instruction": "Select an image which contains the tiles aligned in a grid.",
     "select-image": "Select image...",
-    "tileset-image-input-hint": "Source image path"
+    "tileset-image-input-hint": "Source image path",
+    "empty-component": "This component has no attributes.",
+    "map-has-no-components": "This map has no components.",
+    "component-name-hint": "Component name"
   }
 }

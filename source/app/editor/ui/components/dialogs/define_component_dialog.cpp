@@ -24,18 +24,23 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/event/component_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
 DefineComponentDialog::DefineComponentDialog()
     : ComponentNameDialog {"Create Component"}
-{
-  set_accept_button_label("Create");
-  set_input_hint("Component name");
-}
+{}
 
 void DefineComponentDialog::show()
 {
+  const auto& lang = get_current_language();
+
+  set_title(lang.window.create_component);
+  set_accept_button_label(lang.misc.create);
+  set_input_hint(lang.misc.component_name_hint);
+
   ComponentNameDialog::show("");
 }
 
