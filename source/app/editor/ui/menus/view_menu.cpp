@@ -99,6 +99,28 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
+    if (Menu themeMenu {lang.action.quick_theme.c_str()}; themeMenu.is_open()) {
+      auto themeItem = [&](const EditorTheme theme) {
+        const auto isCurrent = prefs.theme == theme;
+        if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, isCurrent)) {
+          prefs.theme = theme;
+          apply_theme(ImGui::GetStyle(), theme);
+        }
+      };
+
+      for (const auto theme : light_themes) {
+        themeItem(theme);
+      }
+
+      ImGui::Separator();
+
+      for (const auto theme : dark_themes) {
+        themeItem(theme);
+      }
+    }
+
+    ImGui::Separator();
+
     if (ImGui::MenuItem(lang.action.center_viewport.c_str(),
                         "Shift+Space",
                         false,
