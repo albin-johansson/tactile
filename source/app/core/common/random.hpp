@@ -44,7 +44,7 @@ using RandomEngine = std::mt19937;
 template <typename T>
 [[nodiscard]] auto next_random(const T min, const T max) -> T
 {
-  static auto engine = make_random_engine();
+  thread_local static auto engine = make_random_engine();
 
   if constexpr (std::is_floating_point_v<T>) {
     return std::uniform_real_distribution<T> {min, max}(engine);
