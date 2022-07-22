@@ -138,6 +138,8 @@
     "repository-link": "Källkod: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Ikoner från Font Awesome.",
     "credits-info": "Tactile utvecklas med hjälp av följande open-source bibliotek.",
+    "license": "Licens",
+    "library": "Bibliotek",
     "tile-width": "Tilebredd",
     "tile-height": "Tilehöjd",
     "create-tileset-instruction": "Välj en bild som innehåller alla tiles arrangerade enligt ett rutnät.",

@@ -226,7 +226,10 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.license_info, "license-info");
   load(json, misc.repository_link, "repository-link");
   load(json, misc.font_awesome_credit, "font-awesome-credit", ICON_FA_FONT_AWESOME);
+
   load(json, misc.credits_info, "credits-info");
+  load(json, misc.library, "library");
+  load(json, misc.license, "license");
 
   load(json, misc.tile_width, "tile-width");
   load(json, misc.tile_height, "tile-height");

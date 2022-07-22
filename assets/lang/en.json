@@ -138,6 +138,8 @@
     "repository-link": "Source code: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Icons by Font Awesome.",
     "credits-info": "Tactile is developed using the following open-source libraries.",
+    "license": "License",
+    "library": "Library",
     "tile-width": "Tile width",
     "tile-height": "Tile height",
     "create-tileset-instruction": "Select an image which contains the tiles aligned in a grid.",

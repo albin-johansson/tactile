@@ -194,7 +194,10 @@ struct MiscStrings final
   std::string license_info;
   std::string repository_link;
   std::string font_awesome_credit;
+
   std::string credits_info;
+  std::string license;
+  std::string library;
 
   std::string tile_width;
   std::string tile_height;
