@@ -19,8 +19,11 @@
 
 #include "map_parse_error_dialog.hpp"
 
+#include <fmt/format.h>
 #include <imgui.h>
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/icons.hpp"
 
 namespace tactile::ui {
@@ -33,15 +36,22 @@ MapParseErrorDialog::MapParseErrorDialog()
 
 void MapParseErrorDialog::show(const io::ParseError error)
 {
+  const auto& lang = get_current_language();
+
   mError = error;
+  mCause = fmt::format("{}: {}", lang.misc.cause, io::to_cause(mError.value()));
+
+  set_title(lang.window.map_parse_error);
+
   make_visible();
 }
 
 void MapParseErrorDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  ImGui::TextUnformatted(
-      "Oops, something went wrong when parsing the map! " TAC_ICON_ERROR);
-  ImGui::Text("Cause: %s", io::to_cause(mError.value()).data());
+  const auto& lang = get_current_language();
+
+  ImGui::TextUnformatted(lang.misc.map_parse_error.c_str());
+  ImGui::TextUnformatted(mCause.c_str());
 }
 
 }  // namespace tactile::ui

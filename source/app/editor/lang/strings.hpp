@@ -51,6 +51,7 @@ struct WindowStrings final
   std::string resize_map;
   std::string create_component;
   std::string credits;
+  std::string map_parse_error;
 };
 
 struct ActionStrings final
@@ -188,6 +189,8 @@ struct MiscStrings final
   std::string default_value;
   std::string component;
 
+  std::string cause;
+
   std::string license_info;
   std::string repository_link;
   std::string font_awesome_credit;
@@ -202,17 +205,85 @@ struct MiscStrings final
   std::string empty_component;
   std::string map_has_no_components;
   std::string component_name_hint;
+
+  std::string map_parse_error;
+};
+
+struct ParseErrorStrings final
+{
+  std::string none;
+  std::string unknown;
+
+  std::string could_not_read_file;
+  std::string map_does_not_exist;
+
+  std::string unsupported_map_format;
+  std::string unsupported_map_orientation;
+  std::string unsupported_infinite_map;
+  std::string no_map_width;
+  std::string no_map_height;
+  std::string no_map_tile_width;
+  std::string no_map_tile_height;
+  std::string no_next_layer_id;
+  std::string no_next_object_id;
+
+  std::string invalid_layer_type;
+  std::string no_layer_type;
+  std::string no_tile_layer_data;
+  std::string corrupt_tile_layer_data;
+  std::string unsupported_tile_layer_encoding;
+
+  std::string external_tileset_does_not_exist;
+  std::string unknown_external_tileset_error;
+  std::string no_first_tileset_tile_id;
+  std::string no_tileset_tile_width;
+  std::string no_tileset_tile_height;
+  std::string no_tileset_name;
+  std::string no_tileset_image_path;
+  std::string no_tileset_image_width;
+  std::string no_tileset_image_height;
+  std::string no_tileset_tile_count;
+  std::string no_tileset_column_count;
+  std::string no_tileset_version;
+  std::string no_external_tileset_source;
+  std::string tileset_image_does_not_exist;
+  std::string unsupported_tileset_version;
+
+  std::string corrupt_property_value;
+  std::string no_property_name;
+  std::string no_property_type;
+  std::string unsupported_property_type;
+
+  std::string comp_def_no_name;
+  std::string comp_def_no_attr_name;
+  std::string comp_def_no_attr_type;
+  std::string comp_def_unsupported_attr_type;
+  std::string comp_def_corrupt_attr_value;
+
+  std::string no_component_type;
+  std::string no_component_attr_name;
+  std::string no_component_attr_value;
+  std::string corrupt_component_attr_value;
+
+  std::string no_object_id;
+  std::string no_object_type;
+  std::string unsupported_object_type;
+
+  std::string tile_def_no_id;
+  std::string tile_def_no_anim_frame_tile;
+  std::string tile_def_no_anim_frame_duration;
 };
 
 /// Provides translated strings for a single language.
 struct Strings final
 {
-  MenuStrings    menu;
-  WindowStrings  window;
-  ActionStrings  action;
-  SettingStrings setting;
-  TooltipStrings tooltip;
-  MiscStrings    misc;
+  MenuStrings       menu;
+  WindowStrings     window;
+  ActionStrings     action;
+  SettingStrings    setting;
+  TooltipStrings    tooltip;
+  MiscStrings       misc;
+  ParseErrorStrings parse_error;
 };
 
 }  // namespace tactile

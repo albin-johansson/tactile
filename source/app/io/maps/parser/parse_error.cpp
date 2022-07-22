@@ -21,174 +21,177 @@
 
 #include <magic_enum.hpp>
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::io {
 
 auto to_cause(const ParseError error) -> std::string_view
 {
+  const auto& lang = get_current_language();
   switch (error) {
     case ParseError::None:
-      return "Nothing went wrong!"; /* This case isn't really meant to be used */
+      return lang.parse_error.none;
 
     case ParseError::Unknown:
-      return "An unknown error occurred!";
+      return lang.parse_error.unknown;
 
     case ParseError::CouldNotReadFile:
-      return "Could not read a file!";
+      return lang.parse_error.could_not_read_file;
 
     case ParseError::MapDoesNotExist:
-      return "The map does not exist!";
+      return lang.parse_error.map_does_not_exist;
 
     case ParseError::UnsupportedMapExtension:
-      return "The map features an unsupported file extension!";
+      return lang.parse_error.unsupported_map_format;
 
     case ParseError::UnsupportedMapOrientation:
-      return "The map uses an unsupported tile orientation!";
+      return lang.parse_error.unsupported_map_orientation;
 
     case ParseError::UnsupportedInfiniteMap:
-      return "Infinite are not supported!";
+      return lang.parse_error.unsupported_infinite_map;
 
     case ParseError::NoMapWidth:
-      return "The map features no width attribute!";
+      return lang.parse_error.no_map_width;
 
     case ParseError::NoMapHeight:
-      return "The map features no height attribute!";
+      return lang.parse_error.no_map_height;
 
     case ParseError::NoMapTileWidth:
-      return "The map features no tile width attribute!";
+      return lang.parse_error.no_map_tile_width;
 
     case ParseError::NoMapTileHeight:
-      return "The map features no tile height attribute!";
+      return lang.parse_error.no_map_tile_height;
 
     case ParseError::NoMapNextLayerId:
-      return "The map features no next layer identifier attribute!";
+      return lang.parse_error.no_next_layer_id;
 
     case ParseError::NoMapNextObjectId:
-      return "The map features no next object identifier attribute!";
+      return lang.parse_error.no_next_object_id;
 
     case ParseError::UnsupportedLayerType:
-      return "A layer is of an unsupported type!";
+      return lang.parse_error.invalid_layer_type;
 
     case ParseError::NoLayerId:
-      return "A layer is missing an identifier!";
+      return lang.parse_error.no_next_layer_id;
 
     case ParseError::NoLayerType:
-      return "A layer is missing a type!";
+      return lang.parse_error.no_layer_type;
 
     case ParseError::NoTileLayerData:
-      return "A tile layer has no tile data!";
+      return lang.parse_error.no_tile_layer_data;
 
     case ParseError::CorruptTileLayerData:
-      return "A tile layer has corrupt tile data!";
+      return lang.parse_error.corrupt_tile_layer_data;
 
     case ParseError::UnsupportedTileLayerEncoding:
-      return "A tile layer uses an unsupported tile encoding!";
+      return lang.parse_error.unsupported_tile_layer_encoding;
 
     case ParseError::ExternalTilesetDoesNotExist:
-      return "A referenced external tileset does not exist!";
+      return lang.parse_error.external_tileset_does_not_exist;
 
     case ParseError::UnknownExternalTilesetError:
-      return "Something went wrong when trying to read an external tileset!";
+      return lang.parse_error.unknown_external_tileset_error;
 
     case ParseError::NoTilesetFirstTileId:
-      return "A tileset has no associated first tile attribute!";
+      return lang.parse_error.no_first_tileset_tile_id;
 
     case ParseError::NoTilesetTileWidth:
-      return "A tileset has no tile width attribute!";
+      return lang.parse_error.no_tileset_tile_width;
 
     case ParseError::NoTilesetTileHeight:
-      return "A tileset has no tile height attribute!";
+      return lang.parse_error.no_tileset_tile_height;
 
     case ParseError::NoTilesetName:
-      return "A tileset has no name attribute!";
+      return lang.parse_error.no_tileset_name;
 
     case ParseError::NoTilesetImagePath:
-      return "A tileset has no image path attribute!";
+      return lang.parse_error.no_tileset_image_path;
 
     case ParseError::NoTilesetImageWidth:
-      return "A tileset has no image width attribute!";
+      return lang.parse_error.no_tileset_image_width;
 
     case ParseError::NoTilesetImageHeight:
-      return "A tileset has no image height attribute!";
+      return lang.parse_error.no_tileset_image_height;
 
     case ParseError::NoTilesetTileCount:
-      return "A tileset has no tile count attribute!";
+      return lang.parse_error.no_tileset_tile_count;
 
     case ParseError::NoTilesetColumnCount:
-      return "A tileset has no column count attribute!";
+      return lang.parse_error.no_tileset_column_count;
 
     case ParseError::NoTilesetVersion:
-      return "A tileset has no version attribute!";
+      return lang.parse_error.no_tileset_version;
 
     case ParseError::NoExternalTilesetPath:
-      return "An external tileset reference is missing a source path attribute!";
+      return lang.parse_error.no_external_tileset_source;
 
     case ParseError::TilesetImageDoesNotExist:
-      return "A referenced tileset image does not exist!";
+      return lang.parse_error.tileset_image_does_not_exist;
 
     case ParseError::UnsupportedTilesetVersion:
-      return "A tileset is of an unsupported format version!";
+      return lang.parse_error.unsupported_tileset_version;
 
     case ParseError::CorruptPropertyValue:
-      return "A property value is invalid!";
+      return lang.parse_error.corrupt_property_value;
 
     case ParseError::NoPropertyName:
-      return "A property has no name!";
+      return lang.parse_error.no_property_name;
 
     case ParseError::NoPropertyType:
-      return "A property has no type!";
+      return lang.parse_error.no_property_type;
 
     case ParseError::UnsupportedPropertyType:
-      return "A property uses an unsupported type!";
+      return lang.parse_error.unsupported_property_type;
 
     case ParseError::NoComponentDefName:
-      return "A component definition has no name!";
+      return lang.parse_error.comp_def_no_name;
 
     case ParseError::NoComponentDefAttributeName:
-      return "A component definition attribute has no name!";
+      return lang.parse_error.comp_def_no_attr_name;
 
     case ParseError::NoComponentDefAttributeType:
-      return "A component definition attribute has no type!";
+      return lang.parse_error.comp_def_no_attr_type;
 
     case ParseError::UnsupportedComponentDefAttributeType:
-      return "A component definition attribute is of an unsupported type!";
+      return lang.parse_error.comp_def_unsupported_attr_type;
 
     case ParseError::CorruptComponentDefAttributeValue:
-      return "A component definition attribute has an unsupported value!";
+      return lang.parse_error.comp_def_corrupt_attr_value;
 
     case ParseError::NoComponentType:
-      return "A component has no type!";
+      return lang.parse_error.no_component_type;
 
     case ParseError::NoComponentAttributeName:
-      return "A component attribute has no name!";
+      return lang.parse_error.no_component_attr_name;
 
     case ParseError::NoComponentAttributeValue:
-      return "A component attribute has no value!";
+      return lang.parse_error.no_component_attr_value;
 
     case ParseError::CorruptComponentAttributeValue:
-      return "A component attribute has an invalid value!";
+      return lang.parse_error.corrupt_component_attr_value;
 
     case ParseError::NoObjectId:
-      return "An object has no identifier attribute!";
+      return lang.parse_error.no_object_id;
 
     case ParseError::NoObjectType:
-      return "An object has no type!";
+      return lang.parse_error.no_object_type;
 
     case ParseError::UnsupportedObjectType:
-      return "An object is of an unsupported type!";
+      return lang.parse_error.unsupported_object_type;
 
     case ParseError::NoFancyTileId:
-      return "A tileset tile definition is missing a tile identifier!";
+      return lang.parse_error.tile_def_no_id;
 
     case ParseError::NoAnimationFrameTile:
-      return "A tileset tile definition has an animation frame with no tile identifier!";
+      return lang.parse_error.tile_def_no_anim_frame_tile;
 
     case ParseError::NoAnimationFrameDuration:
-      return "A tileset tile definition has an animation frame with no duration!";
+      return lang.parse_error.tile_def_no_anim_frame_duration;
 
     default:
-      throw TactileError("Invalid parse error!");
+      throw TactileError {"Invalid parse error!"};
   }
 }
 
