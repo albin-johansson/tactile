@@ -129,6 +129,8 @@ struct ActionStrings final
 
   std::string rename_component;
   std::string remove_component;
+
+  std::string clear_log;
 };
 
 struct SettingStrings final
@@ -176,6 +178,13 @@ struct TooltipStrings final
   std::string duplicate_layer;
   std::string move_layer_up;
   std::string move_layer_down;
+
+  std::string log_verbose_msg;
+  std::string log_debug_msg;
+  std::string log_info_msg;
+  std::string log_warn_msg;
+  std::string log_error_msg;
+  std::string log_critical_msg;
 };
 
 struct MiscStrings final
@@ -216,6 +225,15 @@ struct MiscStrings final
 
   std::string map_parse_error;
   std::string map_has_no_layers;
+
+  std::string log_no_messages_match_filter;
+  std::string filter;
+  std::string log_trace_filter;
+  std::string log_debug_filter;
+  std::string log_info_filter;
+  std::string log_warn_filter;
+  std::string log_error_filter;
+  std::string log_critical_filter;
 };
 
 struct ParseErrorStrings final

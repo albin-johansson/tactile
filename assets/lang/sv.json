@@ -83,7 +83,8 @@
     "rename-attribute": "Ändra Attributnamn",
     "remove-attribute": "Radera Attribut",
     "rename-component": "Ändra Komponentnamn",
-    "remove-component": "Radera Komponent"
+    "remove-component": "Radera Komponent",
+    "clear-log": "Rensa Logg"
   },
   "settings": {
     "behavior-tab": "Beteende",
@@ -123,8 +124,14 @@
     "add-new-layer": "Lägg till lager",
     "remove-layer": "Ta bort lager",
     "duplicate-layer": "Duplicera lager",
-    "move-layer-up": "Flytta ner lager",
-    "move-layer-down": "Flytta upp lager"
+    "move-layer-up": "Flytta upp lager",
+    "move-layer-down": "Flytta ner lager",
+    "log-verbose-msg": "Spårningsmeddelande",
+    "log-debug-msg": "Debug-meddelande",
+    "log-info-msg": "Informationsmeddelande",
+    "log-warn-msg": "Varningsmeddelande",
+    "log-error-msg": "Felmeddelande",
+    "log-critical-msg": "Kritiskt meddelande"
   },
   "misc": {
     "ok": "OK",
@@ -154,7 +161,14 @@
     "map-has-no-components": "Denna karta har inga komponenter.",
     "component-name-hint": "Komponentnamn",
     "map-parse-error": "Oops, något gick fel när kartan lästes in!",
-    "map-has-no-layers": "Denna karta har inga lager."
+    "map-has-no-layers": "Denna karta har inga lager.",
+    "log-no-messages-match-filter": "Inga meddelanden matchar det valda filtret.",
+    "log-trace-filter": "Allt",
+    "log-debug-filter": "Debug",
+    "log-info-filter": "Information",
+    "log-warn-filter": "Varningar",
+    "log-error-filter": "Fel",
+    "log-critical-filter": "Kritiska fel"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

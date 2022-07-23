@@ -160,6 +160,8 @@ void load_action_strings(const JSON& json, ActionStrings& action)
 
   load(json, action.rename_component, "rename-component", TAC_ICON_EDIT);
   load(json, action.remove_component, "remove-component", TAC_ICON_REMOVE);
+
+  load(json, action.clear_log, "clear-log", TAC_ICON_CLEAR_HISTORY);
 }
 
 void load_setting_strings(const JSON& json, SettingStrings& setting)
@@ -208,6 +210,13 @@ void load_tooltip_strings(const JSON& json, TooltipStrings& tooltip)
   load(json, tooltip.duplicate_layer, "duplicate-layer");
   load(json, tooltip.move_layer_up, "move-layer-up");
   load(json, tooltip.move_layer_down, "move-layer-down");
+
+  load(json, tooltip.log_verbose_msg, "log-verbose-msg");
+  load(json, tooltip.log_debug_msg, "log-debug-msg");
+  load(json, tooltip.log_info_msg, "log-info-msg");
+  load(json, tooltip.log_warn_msg, "log-warn-msg");
+  load(json, tooltip.log_error_msg, "log-error-msg");
+  load(json, tooltip.log_critical_msg, "log-critical-msg");
 }
 
 void load_misc_strings(const JSON& json, MiscStrings& misc)
@@ -248,6 +257,15 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
 
   load(json, misc.map_parse_error, "map-parse-error", ICON_FA_TRIANGLE_EXCLAMATION);
   load(json, misc.map_has_no_layers, "map-has-no-layers");
+
+  load(json, misc.log_no_messages_match_filter, "log-no-messages-match-filter");
+  load(json, misc.filter, "filter");
+  load(json, misc.log_trace_filter, "log-trace-filter");
+  load(json, misc.log_debug_filter, "log-debug-filter");
+  load(json, misc.log_info_filter, "log-info-filter");
+  load(json, misc.log_warn_filter, "log-warn-filter");
+  load(json, misc.log_error_filter, "log-error-filter");
+  load(json, misc.log_critical_filter, "log-critical-filter");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

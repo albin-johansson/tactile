@@ -83,7 +83,8 @@
     "rename-attribute": "Rename Attribute",
     "remove-attribute": "Remove Attribute",
     "rename-component": "Rename Component",
-    "remove-component": "Remove Component"
+    "remove-component": "Remove Component",
+    "clear-log": "Clear Log"
   },
   "settings": {
     "behavior-tab": "Behavior",
@@ -124,7 +125,13 @@
     "remove-layer": "Remove layer",
     "duplicate-layer": "Duplicate layer",
     "move-layer-up": "Move layer up",
-    "move-layer-down": "Move layer down"
+    "move-layer-down": "Move layer down",
+    "log-verbose-msg": "Verbose message",
+    "log-debug-msg": "Debug message",
+    "log-info-msg": "Info message",
+    "log-warn-msg": "Warning message",
+    "log-error-msg": "Error message",
+    "log-critical-msg": "Critical message"
   },
   "misc": {
     "ok": "OK",
@@ -154,7 +161,15 @@
     "map-has-no-components": "This map has no components.",
     "component-name-hint": "Component name",
     "map-parse-error": "Oops, something went wrong when parsing the map!",
-    "map-has-no-layers": "This map has no layers."
+    "map-has-no-layers": "This map has no layers.",
+    "log-no-messages-match-filter": "No messages match the current filter.",
+    "filter": "Filter",
+    "log-trace-filter": "Everything",
+    "log-debug-filter": "Debug",
+    "log-info-filter": "Information",
+    "log-warn-filter": "Warnings",
+    "log-error-filter": "Errors",
+    "log-critical-filter": "Critical"
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",
