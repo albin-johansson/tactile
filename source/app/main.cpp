@@ -20,6 +20,7 @@
 #include <cstdlib>    // abort, EXIT_SUCCESS
 #include <exception>  // exception
 
+#include <centurion/message_box.hpp>
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
@@ -28,6 +29,21 @@
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
 #include "misc/panic.hpp"
+
+namespace {
+
+void show_crash_message_box(const char* error_msg)
+{
+  cen::message_box::show(
+      "Tactile crashed :(",
+      fmt::format("Error message: {}\nPlease consider submitting a bug "
+                  "report with reproduction steps at "
+                  "https://github.com/albin-johansson/tactile",
+                  error_msg),
+      cen::message_box_type::error);
+}
+
+}  // namespace
 
 auto main(int, char**) -> int
 {
@@ -44,10 +60,12 @@ auto main(int, char**) -> int
     return EXIT_SUCCESS;
   }
   catch (const tactile::TactileError& e) {
+    show_crash_message_box(e.what());
     spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), e.trace());
     std::abort();
   }
   catch (const std::exception& e) {
+    show_crash_message_box(e.what());
     spdlog::critical("Unhandled exception message: '{}'", e.what());
     std::abort();
   }
