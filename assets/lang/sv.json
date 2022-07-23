@@ -119,7 +119,12 @@
     "fold-tile-data": "Gör tile-data lättare för människor att läsa, på bekostnad av filstorlek",
     "repository-link": "Open the GitHub repository in your browser",
     "create-component": "Skapa en ny komponent",
-    "show-component-actions": "Visa komponentkommandon"
+    "show-component-actions": "Visa komponentkommandon",
+    "add-new-layer": "Lägg till lager",
+    "remove-layer": "Ta bort lager",
+    "duplicate-layer": "Duplicera lager",
+    "move-layer-up": "Flytta ner lager",
+    "move-layer-down": "Flytta upp lager"
   },
   "misc": {
     "ok": "OK",
@@ -148,7 +153,8 @@
     "empty-component": "Denna komponent har inga attributer.",
     "map-has-no-components": "Denna karta har inga komponenter.",
     "component-name-hint": "Komponentnamn",
-    "map-parse-error": "Oops, något gick fel när kartan lästes in!"
+    "map-parse-error": "Oops, något gick fel när kartan lästes in!",
+    "map-has-no-layers": "Denna karta har inga lager."
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

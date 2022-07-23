@@ -171,6 +171,11 @@ struct TooltipStrings final
   std::string repository_link;
   std::string create_component;
   std::string show_component_actions;
+  std::string add_new_layer;
+  std::string remove_layer;
+  std::string duplicate_layer;
+  std::string move_layer_up;
+  std::string move_layer_down;
 };
 
 struct MiscStrings final
@@ -210,6 +215,7 @@ struct MiscStrings final
   std::string component_name_hint;
 
   std::string map_parse_error;
+  std::string map_has_no_layers;
 };
 
 struct ParseErrorStrings final

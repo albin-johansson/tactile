@@ -119,7 +119,12 @@
     "fold-tile-data": "Make tile layer data easier for humans to edit, at the expense of space",
     "repository-link": "Open the GitHub repository in your browser",
     "create-component": "Create a new component definition",
-    "show-component-actions": "Show component actions"
+    "show-component-actions": "Show component actions",
+    "add-new-layer": "Add new layer",
+    "remove-layer": "Remove layer",
+    "duplicate-layer": "Duplicate layer",
+    "move-layer-up": "Move layer up",
+    "move-layer-down": "Move layer down"
   },
   "misc": {
     "ok": "OK",
@@ -148,7 +153,8 @@
     "empty-component": "This component has no attributes.",
     "map-has-no-components": "This map has no components.",
     "component-name-hint": "Component name",
-    "map-parse-error": "Oops, something went wrong when parsing the map!"
+    "map-parse-error": "Oops, something went wrong when parsing the map!",
+    "map-has-no-layers": "This map has no layers."
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

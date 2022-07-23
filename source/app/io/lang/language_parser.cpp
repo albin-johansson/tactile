@@ -203,6 +203,11 @@ void load_tooltip_strings(const JSON& json, TooltipStrings& tooltip)
   load(json, tooltip.repository_link, "repository-link");
   load(json, tooltip.create_component, "create-component");
   load(json, tooltip.show_component_actions, "show-component-actions");
+  load(json, tooltip.add_new_layer, "add-new-layer");
+  load(json, tooltip.remove_layer, "remove-layer");
+  load(json, tooltip.duplicate_layer, "duplicate-layer");
+  load(json, tooltip.move_layer_up, "move-layer-up");
+  load(json, tooltip.move_layer_down, "move-layer-down");
 }
 
 void load_misc_strings(const JSON& json, MiscStrings& misc)
@@ -242,6 +247,7 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.component_name_hint, "component-name-hint");
 
   load(json, misc.map_parse_error, "map-parse-error", ICON_FA_TRIANGLE_EXCLAMATION);
+  load(json, misc.map_has_no_layers, "map-has-no-layers");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)
