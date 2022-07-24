@@ -25,6 +25,7 @@
 #include <imgui.h>
 
 #include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
 #include "core/ctx/context_visitor.hpp"
 #include "core/document/tileset_document.hpp"
 #include "core/event/document_events.hpp"
@@ -42,7 +43,6 @@
 #include "editor/lang/strings.hpp"
 #include "editor/ui/common/filename_filter.hpp"
 #include "editor/ui/common/input_widgets.hpp"
-#include "editor/ui/properties/items/property_item_context_menu.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
@@ -51,10 +51,42 @@
 namespace tactile::ui {
 namespace {
 
+struct PropertyItemContextMenuState final
+{
+  bool show_add_dialog         : 1 {};
+  bool show_rename_dialog      : 1 {};
+  bool show_change_type_dialog : 1 {};
+};
+
 inline PropertyItemContextMenuState context_state;
 inline Maybe<std::string>           rename_target;
 inline Maybe<std::string>           change_type_target;
 constinit bool                      is_focused = false;
+
+[[nodiscard]] auto property_item_context_menu(const UUID&                   context_id,
+                                              entt::dispatcher&             dispatcher,
+                                              const std::string&            name,
+                                              PropertyItemContextMenuState& state) -> bool
+{
+  const auto& lang = get_current_language();
+
+  if (auto popup = Popup::for_item("##PropertyItemPopup"); popup.is_open()) {
+    state.show_rename_dialog = ImGui::MenuItem(lang.action.rename_property.c_str());
+    state.show_change_type_dialog =
+        ImGui::MenuItem(lang.action.change_property_type.c_str());
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(lang.action.remove_property.c_str())) {
+      dispatcher.enqueue<RemovePropertyEvent>(context_id, name);
+    }
+
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 
 void prepare_table_row(const char* label)
 {
