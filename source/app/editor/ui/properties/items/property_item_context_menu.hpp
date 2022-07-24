@@ -34,7 +34,7 @@ struct PropertyItemContextMenuState final
   bool show_change_type_dialog {};
 };
 
-auto property_item_context_menu(const UUID&                   contextId,
+auto property_item_context_menu(const UUID&                   context_id,
                                 entt::dispatcher&             dispatcher,
                                 const std::string&            name,
                                 PropertyItemContextMenuState& state) -> bool;

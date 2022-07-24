@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>    // abort, EXIT_SUCCESS
+#include <cstdlib>    // EXIT_SUCCESS, EXIT_FAILURE
 #include <exception>  // exception
 
 #include <centurion/message_box.hpp>
@@ -62,11 +62,16 @@ auto main(int, char**) -> int
   catch (const tactile::TactileError& e) {
     show_crash_message_box(e.what());
     spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), e.trace());
-    std::abort();
+    return EXIT_FAILURE;
   }
   catch (const std::exception& e) {
     show_crash_message_box(e.what());
     spdlog::critical("Unhandled exception message: '{}'", e.what());
-    std::abort();
+    return EXIT_FAILURE;
+  }
+  catch (...) {
+    show_crash_message_box("N/A");
+    spdlog::critical("Unhandled value exception!");
+    return EXIT_FAILURE;
   }
 }

@@ -28,28 +28,35 @@
 #include "core/event/property_events.hpp"
 #include "core/model.hpp"
 #include "core/util/buffers.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/properties/dialogs/property_type_combo.hpp"
 
 namespace tactile::ui {
 
 AddPropertyDialog::AddPropertyDialog()
     : ADialog {"Add Property"}
-{
-  set_accept_button_label("Add");
-}
+{}
 
 void AddPropertyDialog::open(const UUID& contextId)
 {
   mContextId = contextId;
+
   zero_buffer(mNameBuffer);
   mPropertyType = AttributeType::String;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.add_property);
+  set_accept_button_label(lang.misc.add);
+
   make_visible();
 }
 
 void AddPropertyDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
+  const auto& lang = get_current_language();
   ImGui::InputTextWithHint("##Name",
-                           "Unique property name...",
+                           lang.misc.property_name_hint.c_str(),
                            mNameBuffer.data(),
                            sizeof mNameBuffer);
   show_property_type_combo(mPropertyType);

@@ -52,6 +52,9 @@ struct WindowStrings final
   std::string create_component;
   std::string credits;
   std::string map_parse_error;
+  std::string add_property;
+  std::string change_property_type;
+  std::string rename_property;
 };
 
 struct ActionStrings final
@@ -131,6 +134,11 @@ struct ActionStrings final
   std::string remove_component;
 
   std::string clear_log;
+
+  std::string create_property;
+  std::string rename_property;
+  std::string change_property_type;
+  std::string remove_property;
 };
 
 struct SettingStrings final
@@ -194,6 +202,9 @@ struct MiscStrings final
   std::string apply;
   std::string create;
   std::string close;
+  std::string change;
+  std::string add;
+  std::string rename;
 
   std::string rows;
   std::string columns;
@@ -215,6 +226,30 @@ struct MiscStrings final
 
   std::string tile_width;
   std::string tile_height;
+  std::string tile_count;
+  std::string tileset;
+  std::string row_count;
+  std::string column_count;
+  std::string first_tile_id;
+  std::string last_tile_id;
+  std::string embedded;
+  std::string map;
+  std::string tile_layer;
+  std::string object_layer;
+  std::string group_layer;
+
+  std::string opacity;
+  std::string visible;
+
+  std::string rectangle;
+  std::string ellipse;
+  std::string point;
+
+  std::string width;
+  std::string height;
+
+  std::string tag;
+
   std::string select_image;
   std::string create_tileset_instruction;
   std::string tileset_image_input_hint;
@@ -234,6 +269,15 @@ struct MiscStrings final
   std::string log_warn_filter;
   std::string log_error_filter;
   std::string log_critical_filter;
+
+  std::string property_name_hint;
+  std::string type_int;
+  std::string type_float;
+  std::string type_bool;
+  std::string type_string;
+  std::string type_color;
+  std::string type_object;
+  std::string type_path;
 };
 
 struct ParseErrorStrings final

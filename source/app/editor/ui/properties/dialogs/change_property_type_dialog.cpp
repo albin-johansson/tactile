@@ -25,31 +25,38 @@
 #include <imgui.h>
 
 #include "core/event/property_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/properties/dialogs/property_type_combo.hpp"
 
 namespace tactile::ui {
 
 ChangePropertyTypeDialog::ChangePropertyTypeDialog()
     : ADialog {"Change Property Type"}
-{
-  set_accept_button_label("Change");
-}
+{}
 
-void ChangePropertyTypeDialog::show(const UUID&         contextId,
+void ChangePropertyTypeDialog::show(const UUID&         context_id,
                                     std::string         name,
                                     const AttributeType type)
 {
-  mContextId = contextId;
+  mContextId = context_id;
   mPropertyName = std::move(name);
   mCurrentType = type;
   mPreviousType = type;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.change_property_type);
+  set_accept_button_label(lang.misc.change);
+
   make_visible();
 }
 
 void ChangePropertyTypeDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
+  const auto& lang = get_current_language();
+
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Type: ");
+  ImGui::TextUnformatted(lang.misc.type.c_str());
 
   ImGui::SameLine();
   show_property_type_combo(mPreviousType.value(), mCurrentType);

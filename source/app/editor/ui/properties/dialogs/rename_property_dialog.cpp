@@ -28,19 +28,24 @@
 #include "core/ctx/property_bundle.hpp"
 #include "core/event/property_events.hpp"
 #include "core/model.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
 RenamePropertyDialog::RenamePropertyDialog()
     : AStringInputDialog {"Rename Property"}
-{
-  set_accept_button_label("Rename");
-}
+{}
 
-void RenamePropertyDialog::open(const UUID& contextId, std::string previousName)
+void RenamePropertyDialog::open(const UUID& context_id, std::string previous_name)
 {
-  mContextId = contextId;
-  show(std::move(previousName));
+  mContextId = context_id;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.rename_property);
+  set_accept_button_label(lang.misc.rename);
+
+  show(std::move(previous_name));
 }
 
 void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)

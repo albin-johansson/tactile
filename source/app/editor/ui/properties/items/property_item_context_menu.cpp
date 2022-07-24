@@ -23,24 +23,28 @@
 #include <imgui.h>
 
 #include "core/event/property_events.hpp"
-#include "editor/ui/icons.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/scoped.hpp"
 
 namespace tactile::ui {
 
-auto property_item_context_menu(const UUID&                   contextId,
+auto property_item_context_menu(const UUID&                   context_id,
                                 entt::dispatcher&             dispatcher,
                                 const std::string&            name,
                                 PropertyItemContextMenuState& state) -> bool
 {
-  if (auto popup = Popup::for_item("##PropertyItemContext"); popup.is_open()) {
-    state.show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename Property...");
-    state.show_change_type_dialog = ImGui::MenuItem(TAC_ICON_OBJECTS " Change Type...");
+  const auto& lang = get_current_language();
+
+  if (auto popup = Popup::for_item("##PropertyItemPopup"); popup.is_open()) {
+    state.show_rename_dialog = ImGui::MenuItem(lang.action.rename_property.c_str());
+    state.show_change_type_dialog =
+        ImGui::MenuItem(lang.action.change_property_type.c_str());
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Property")) {
-      dispatcher.enqueue<RemovePropertyEvent>(contextId, name);
+    if (ImGui::MenuItem(lang.action.remove_property.c_str())) {
+      dispatcher.enqueue<RemovePropertyEvent>(context_id, name);
     }
 
     return true;

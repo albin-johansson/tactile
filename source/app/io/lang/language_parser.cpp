@@ -82,6 +82,9 @@ void load_window_strings(const JSON& json, WindowStrings& window)
   load(json, window.create_component, "create-component");
   load(json, window.credits, "credits");
   load(json, window.map_parse_error, "map-parse-error");
+  load(json, window.add_property, "add-property");
+  load(json, window.change_property_type, "change-property-type");
+  load(json, window.rename_property, "rename-property");
 }
 
 void load_action_strings(const JSON& json, ActionStrings& action)
@@ -162,6 +165,11 @@ void load_action_strings(const JSON& json, ActionStrings& action)
   load(json, action.remove_component, "remove-component", TAC_ICON_REMOVE);
 
   load(json, action.clear_log, "clear-log", TAC_ICON_CLEAR_HISTORY);
+
+  load(json, action.create_property, "create-property", TAC_ICON_ADD);
+  load(json, action.rename_property, "rename-property", TAC_ICON_EDIT);
+  load(json, action.change_property_type, "change-property-type", TAC_ICON_OBJECTS);
+  load(json, action.remove_property, "remove-property", TAC_ICON_REMOVE);
 }
 
 void load_setting_strings(const JSON& json, SettingStrings& setting)
@@ -226,6 +234,9 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.apply, "apply");
   load(json, misc.create, "create");
   load(json, misc.close, "close");
+  load(json, misc.change, "change");
+  load(json, misc.add, "add");
+  load(json, misc.rename, "rename");
 
   load(json, misc.rows, "rows");
   load(json, misc.columns, "columns");
@@ -247,6 +258,30 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
 
   load(json, misc.tile_width, "tile-width");
   load(json, misc.tile_height, "tile-height");
+  load(json, misc.tile_count, "tile-count");
+  load(json, misc.row_count, "row-count");
+  load(json, misc.column_count, "column-count");
+  load(json, misc.tileset, "tileset");
+  load(json, misc.first_tile_id, "first-tile-id");
+  load(json, misc.last_tile_id, "last-tile-id");
+  load(json, misc.embedded, "embedded");
+  load(json, misc.map, "map");
+  load(json, misc.tile_layer, "tile-layer");
+  load(json, misc.object_layer, "object-layer");
+  load(json, misc.group_layer, "group-layer");
+
+  load(json, misc.opacity, "opacity");
+  load(json, misc.visible, "visible");
+
+  load(json, misc.rectangle, "rectangle");
+  load(json, misc.ellipse, "ellipse");
+  load(json, misc.point, "point");
+
+  load(json, misc.width, "width");
+  load(json, misc.height, "height");
+
+  load(json, misc.tag, "tag");
+
   load(json, misc.select_image, "select-image");
   load(json, misc.create_tileset_instruction, "create-tileset-instruction");
   load(json, misc.tileset_image_input_hint, "tileset-image-input-hint");
@@ -266,6 +301,15 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.log_warn_filter, "log-warn-filter");
   load(json, misc.log_error_filter, "log-error-filter");
   load(json, misc.log_critical_filter, "log-critical-filter");
+
+  load(json, misc.property_name_hint, "property-name-hint");
+  load(json, misc.type_int, "type-int");
+  load(json, misc.type_float, "type-float");
+  load(json, misc.type_bool, "type-bool");
+  load(json, misc.type_string, "type-string");
+  load(json, misc.type_color, "type-color");
+  load(json, misc.type_object, "type-object");
+  load(json, misc.type_path, "type-path");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

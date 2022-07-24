@@ -39,7 +39,7 @@ class ChangePropertyTypeDialog final : public ADialog
 
   ~ChangePropertyTypeDialog() override = default;
 
-  void show(const UUID& contextId, std::string name, AttributeType type);
+  void show(const UUID& context_id, std::string name, AttributeType type);
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
