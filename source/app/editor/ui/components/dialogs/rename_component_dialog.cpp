@@ -24,19 +24,24 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/event/component_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
 RenameComponentDialog::RenameComponentDialog()
     : ComponentNameDialog {"Rename Component"}
-{
-  set_accept_button_label("Rename");
-}
+{}
 
-void RenameComponentDialog::show(std::string previousName, const UUID& componentId)
+void RenameComponentDialog::show(std::string previous_name, const UUID& component_id)
 {
-  mComponentId = componentId;
-  ComponentNameDialog::show(std::move(previousName));
+  mComponentId = component_id;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.rename_component);
+  set_accept_button_label(lang.misc.rename);
+
+  ComponentNameDialog::show(std::move(previous_name));
 }
 
 void RenameComponentDialog::on_accept(entt::dispatcher& dispatcher)

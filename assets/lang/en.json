@@ -26,9 +26,12 @@
     "credits": "Credits",
     "map-parse-error": "Map Parse Error",
     "add-property": "Add Property",
+    "create-attribute": "Create Attribute",
     "change-property-type": "Change Property Type",
     "rename-property": "Rename Property",
-    "rename-layer": "Rename Layer"
+    "rename-layer": "Rename Layer",
+    "rename-component": "Rename Component",
+    "rename-component-attribute": "Rename Component Attribute"
   },
   "actions": {
     "create-map": "Create Map...",
@@ -102,7 +105,10 @@
     "remove-layer": "Remove Layer",
     "toggle-layer-visible": "Toggle Layer Visibility",
     "move-layer-up": "Move Layer Up",
-    "move-layer-down": "Move Layer Down"
+    "move-layer-down": "Move Layer Down",
+    "reset-attached-component": "Reset Attributes",
+    "detach-component": "Remove Component",
+    "component-editor": "Component Editor..."
   },
   "settings": {
     "behavior-tab": "Behavior",
@@ -149,7 +155,8 @@
     "log-info-msg": "Info message",
     "log-warn-msg": "Warning message",
     "log-error-msg": "Error message",
-    "log-critical-msg": "Critical message"
+    "log-critical-msg": "Critical message",
+    "add-component": "Add component"
   },
   "misc": {
     "ok": "OK",
@@ -218,7 +225,11 @@
     "type-string": "String",
     "type-color": "Color",
     "type-object": "Object",
-    "type-path": "Path"
+    "type-path": "Path",
+    "context": "Context",
+    "context-has-no-components": "This context has no components.",
+    "no-available-components": "No available components.",
+    "attribute-name-hint": "Attribute name"
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

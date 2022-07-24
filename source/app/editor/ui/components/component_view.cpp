@@ -25,6 +25,8 @@
 
 #include "core/comp/component.hpp"
 #include "core/event/component_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/icons.hpp"
@@ -33,65 +35,59 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto _header_flags =
+constexpr auto header_flags =
     ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-constexpr auto _table_flags =
+constexpr auto table_flags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
-void _update_attribute_table(const UUID&       contextId,
-                             const Component&  component,
-                             entt::dispatcher& dispatcher)
+void update_attribute_table(const UUID&       context_id,
+                            const Component&  component,
+                            entt::dispatcher& dispatcher)
 {
-  if (Table table {"##AttributeTable", 2, _table_flags}; table.is_open()) {
-    for (const auto& [attrName, attrValue] : component) {
-      const Scope scope {attrName.c_str()};
+  if (Table table {"##AttributeTable", 2, table_flags}; table.is_open()) {
+    for (const auto& [attr_name, attr_value] : component) {
+      const Scope scope {attr_name.c_str()};
 
       ImGui::TableNextRow();
       ImGui::TableNextColumn();
 
       ImGui::AlignTextToFramePadding();
-      ImGui::TextUnformatted(attrName.c_str());
+      ImGui::TextUnformatted(attr_name.c_str());
 
       ImGui::TableNextColumn();
-      if (auto value = input_attribute("##ComponentAttributeTableValue", attrValue)) {
-        dispatcher.enqueue<UpdateAttachedComponentEvent>(contextId,
+      if (auto value = input_attribute("##TableAttribute", attr_value)) {
+        dispatcher.enqueue<UpdateAttachedComponentEvent>(context_id,
                                                          component.definition_id(),
-                                                         attrName,
+                                                         attr_name,
                                                          std::move(*value));
       }
     }
   }
 }
 
-void _update_trailing_button_popup_content(const UUID&       contextId,
-                                           const Component&  component,
-                                           entt::dispatcher& dispatcher)
+void update_trailing_button_popup_content(const UUID&       context_id,
+                                          const Component&  component,
+                                          entt::dispatcher& dispatcher)
 {
-  if (ImGui::MenuItem(TAC_ICON_RESET " Reset Values")) {
-    dispatcher.enqueue<ResetAttachedComponentEvent>(contextId, component.definition_id());
+  const auto& lang = get_current_language();
+
+  if (ImGui::MenuItem(lang.action.reset_attached_component.c_str())) {
+    dispatcher.enqueue<ResetAttachedComponentEvent>(context_id,
+                                                    component.definition_id());
   }
 
   ImGui::Separator();
 
-  {
-    Disable disable;
-    if (ImGui::MenuItem(TAC_ICON_COPY " Copy Component")) {
-      // TODO
-    }
-  }
-
-  ImGui::Separator();
-
-  if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Component")) {
-    dispatcher.enqueue<DetachComponentEvent>(contextId, component.definition_id());
+  if (ImGui::MenuItem(lang.action.detach_component.c_str())) {
+    dispatcher.enqueue<DetachComponentEvent>(context_id, component.definition_id());
   }
 }
 
-auto _update_trailing_button() -> bool
+auto update_trailing_button() -> bool
 {
-  StyleColor button {ImGuiCol_Button, IM_COL32_BLACK_TRANS};
-  StyleColor buttonHovered {ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS};
-  StyleColor buttonActive {ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS};
+  const StyleColor button {ImGuiCol_Button, IM_COL32_BLACK_TRANS};
+  const StyleColor button_hovered {ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS};
+  const StyleColor button_active {ImGuiCol_ButtonActive, IM_COL32_BLACK_TRANS};
 
   right_align_next_item(TAC_ICON_THREE_DOTS);
   const auto pressed = ImGui::SmallButton(TAC_ICON_THREE_DOTS);
@@ -101,30 +97,30 @@ auto _update_trailing_button() -> bool
 
 }  // namespace
 
-void component_view(const UUID&        contextId,
+void component_view(const UUID&        context_id,
                     const Component&   component,
                     const std::string& name,
                     entt::dispatcher&  dispatcher)
 {
   const Scope scope {name.c_str()};
 
-  if (ImGui::CollapsingHeader(name.c_str(), _header_flags)) {
+  if (ImGui::CollapsingHeader(name.c_str(), header_flags)) {
     ImGui::SameLine();
-    if (_update_trailing_button()) {
+    if (update_trailing_button()) {
       ImGui::OpenPopup("##ComponentPopup");
     }
 
     if (auto popup = Popup::for_item("##ComponentPopup"); popup.is_open()) {
-      _update_trailing_button_popup_content(contextId, component, dispatcher);
+      update_trailing_button_popup_content(context_id, component, dispatcher);
     }
 
-    _update_attribute_table(contextId, component, dispatcher);
+    update_attribute_table(context_id, component, dispatcher);
   }
   else {
     // Show a disabled button when collapsed, to avoid having the button disappear
     Disable disable;
     ImGui::SameLine();
-    _update_trailing_button();
+    update_trailing_button();
   }
 }
 

@@ -85,7 +85,10 @@ void load_window_strings(const JSON& json, WindowStrings& window)
   load(json, window.add_property, "add-property");
   load(json, window.change_property_type, "change-property-type");
   load(json, window.rename_property, "rename-property");
+  load(json, window.create_attribute, "create-attribute");
   load(json, window.rename_layer, "rename-layer");
+  load(json, window.rename_component, "rename-component");
+  load(json, window.rename_component_attribute, "rename-component-attribute");
 }
 
 void load_action_strings(const JSON& json, ActionStrings& action)
@@ -182,6 +185,10 @@ void load_action_strings(const JSON& json, ActionStrings& action)
   load(json, action.toggle_layer_visible, "toggle-layer-visible", TAC_ICON_VISIBILITY);
   load(json, action.move_layer_up, "move-layer-up", TAC_ICON_MOVE_UP);
   load(json, action.move_layer_down, "move-layer-down", TAC_ICON_MOVE_DOWN);
+
+  load(json, action.reset_attached_component, "reset-attached-component", TAC_ICON_RESET);
+  load(json, action.detach_component, "detach-component", TAC_ICON_REMOVE);
+  load(json, action.component_editor, "component-editor", TAC_ICON_COMPONENT);
 }
 
 void load_setting_strings(const JSON& json, SettingStrings& setting)
@@ -237,6 +244,7 @@ void load_tooltip_strings(const JSON& json, TooltipStrings& tooltip)
   load(json, tooltip.log_warn_msg, "log-warn-msg");
   load(json, tooltip.log_error_msg, "log-error-msg");
   load(json, tooltip.log_critical_msg, "log-critical-msg");
+  load(json, tooltip.add_component, "add-component");
 }
 
 void load_misc_strings(const JSON& json, MiscStrings& misc)
@@ -323,6 +331,12 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.type_color, "type-color");
   load(json, misc.type_object, "type-object");
   load(json, misc.type_path, "type-path");
+
+  load(json, misc.context, "context");
+  load(json, misc.context_has_no_components, "context-has-no-components");
+  load(json, misc.no_available_components, "no-available-components");
+
+  load(json, misc.attribute_name_hint, "attribute-name-hint");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

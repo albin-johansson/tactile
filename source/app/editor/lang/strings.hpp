@@ -55,7 +55,10 @@ struct WindowStrings final
   std::string add_property;
   std::string change_property_type;
   std::string rename_property;
+  std::string create_attribute;
   std::string rename_layer;
+  std::string rename_component;
+  std::string rename_component_attribute;
 };
 
 struct ActionStrings final
@@ -151,6 +154,10 @@ struct ActionStrings final
   std::string toggle_layer_visible;
   std::string move_layer_up;
   std::string move_layer_down;
+
+  std::string reset_attached_component;
+  std::string detach_component;
+  std::string component_editor;
 };
 
 struct SettingStrings final
@@ -205,6 +212,7 @@ struct TooltipStrings final
   std::string log_warn_msg;
   std::string log_error_msg;
   std::string log_critical_msg;
+  std::string add_component;
 };
 
 struct MiscStrings final
@@ -291,6 +299,12 @@ struct MiscStrings final
   std::string type_color;
   std::string type_object;
   std::string type_path;
+
+  std::string context;
+  std::string context_has_no_components;
+  std::string no_available_components;
+
+  std::string attribute_name_hint;
 };
 
 struct ParseErrorStrings final

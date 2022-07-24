@@ -22,13 +22,15 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/common/identifiers.hpp"
 #include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
+#include "core/util/formatted_string.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/labels.hpp"
@@ -41,67 +43,71 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto _add_component_popup_id = "##AddComponentButtonPopup";
+constexpr auto add_component_popup_id = "##AddComponentButtonPopup";
 
-void _show_add_component_button_popup_content(const ADocument&  document,
-                                              const IContext&   context,
-                                              entt::dispatcher& dispatcher)
+void show_add_component_button_popup_content(const ADocument&  document,
+                                             const IContext&   context,
+                                             entt::dispatcher& dispatcher)
 {
+  const auto& lang = get_current_language();
   const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
   if (index->empty()) {
     Disable disable;
-    ImGui::TextUnformatted("No available components");
+    ImGui::TextUnformatted(lang.misc.no_available_components.c_str());
   }
   else {
     const auto& comps = context.get_comps();
-    for (const auto& [definitionId, definition] : *index) {
-      Disable disableIf {comps.contains(definitionId)};
+    for (const auto& [definition_id, definition] : *index) {
+      Disable disable_if {comps.contains(definition_id)};
 
       if (ImGui::MenuItem(definition.get_name().c_str())) {
-        dispatcher.enqueue<AttachComponentEvent>(context.get_uuid(), definitionId);
+        dispatcher.enqueue<AttachComponentEvent>(context.get_uuid(), definition_id);
       }
     }
   }
 
   ImGui::Separator();
-  if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...")) {
+  if (ImGui::MenuItem(lang.action.component_editor.c_str())) {
     dispatcher.enqueue<OpenComponentEditorEvent>();
   }
 }
 
-void _show_contents(const ADocument& document, entt::dispatcher& dispatcher)
+void show_contents(const ADocument& document, entt::dispatcher& dispatcher)
 {
+  const auto& lang = get_current_language();
   const auto& context = document.get_contexts().active_context();
-  ImGui::Text("Context: %s", context.get_name().c_str());
+
+  const FormattedString indicator {"{}: {}", lang.misc.context, context.get_name()};
+  ImGui::TextUnformatted(indicator.data());
 
   if (Child pane {"##ComponentsChild"}; pane.is_open()) {
     const auto& comps = context.get_comps();
     if (comps.empty()) {
       prepare_vertical_alignment_center(2);
-      centered_label("This context has no components.");
+      centered_label(lang.misc.context_has_no_components.c_str());
     }
     else {
       const auto* index = document.view_component_index();
       TACTILE_ASSERT(index != nullptr);
 
-      for (const auto& [componentId, component] : comps) {
+      for (const auto& [component_id, component] : comps) {
         ImGui::Separator();
 
-        const auto& componentName = index->at(componentId).get_name();
-        component_view(context.get_uuid(), component, componentName, dispatcher);
+        const auto& component_name = index->at(component_id).get_name();
+        component_view(context.get_uuid(), component, component_name, dispatcher);
       }
 
       ImGui::Separator();
     }
 
-    if (centered_button(TAC_ICON_ADD, "Add component")) {
-      ImGui::OpenPopup(_add_component_popup_id);
+    if (centered_button(TAC_ICON_ADD, lang.tooltip.add_component.c_str())) {
+      ImGui::OpenPopup(add_component_popup_id);
     }
 
-    if (Popup popup {_add_component_popup_id}; popup.is_open()) {
-      _show_add_component_button_popup_content(document, context, dispatcher);
+    if (Popup popup {add_component_popup_id}; popup.is_open()) {
+      show_add_component_button_popup_content(document, context, dispatcher);
     }
   }
 }
@@ -116,11 +122,15 @@ void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatc
     return;
   }
 
-  constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+  const auto& lang = get_current_language();
 
-  if (Window dock {"Components", flags, &prefs.show_component_dock}; dock.is_open()) {
+  Window dock {lang.window.component_dock.c_str(),
+               ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
+               &prefs.show_component_dock};
+
+  if (dock.is_open()) {
     const auto& document = model.require_active_document();
-    _show_contents(document, dispatcher);
+    show_contents(document, dispatcher);
   }
 }
 

@@ -26,19 +26,24 @@
 #include "core/comp/component_index.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
 AddComponentAttrDialog::AddComponentAttrDialog()
     : AStringInputDialog {"Create Attribute"}
-{
-  set_accept_button_label("Create");
-  set_input_hint("Attribute name");
-}
+{}
 
-void AddComponentAttrDialog::show(const UUID& componentId)
+void AddComponentAttrDialog::show(const UUID& component_id)
 {
-  mComponentId = componentId;
+  mComponentId = component_id;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.create_attribute);
+  set_input_hint(lang.misc.attribute_name_hint);
+  set_accept_button_label(lang.misc.create);
+
   AStringInputDialog::show("");
 }
 

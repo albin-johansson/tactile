@@ -26,9 +26,12 @@
     "credits": "Tredjepartsbibliotek",
     "map-parse-error": "Kartinläsningsfel",
     "add-property": "Lägg Till Attribut",
+    "create-attribute": "Skapa Attribut",
     "change-property-type": "Ändra Attributtyp",
     "rename-property": "Ändra Attributnamn",
-    "rename-layer": "Ändra Lagernamn"
+    "rename-layer": "Ändra Lagernamn",
+    "rename-component": "Ändra Komponentnamn",
+    "rename-component-attribute": "Ändra Komponentattributnamn"
   },
   "actions": {
     "create-map": "Skapa Karta...",
@@ -102,7 +105,10 @@
     "remove-layer": "Radera Lager",
     "toggle-layer-visible": "Toggla Lagersynlighet",
     "move-layer-up": "Flytta Upp Lager",
-    "move-layer-down": "Flytta Ner Lager"
+    "move-layer-down": "Flytta Ner Lager",
+    "reset-attached-component": "Återställ Attributer",
+    "detach-component": "Ta Bort Komponent",
+    "component-editor": "Komponenteditor..."
   },
   "settings": {
     "behavior-tab": "Beteende",
@@ -149,7 +155,8 @@
     "log-info-msg": "Informationsmeddelande",
     "log-warn-msg": "Varningsmeddelande",
     "log-error-msg": "Felmeddelande",
-    "log-critical-msg": "Kritiskt meddelande"
+    "log-critical-msg": "Kritiskt meddelande",
+    "add-component": "Lägg till komponent"
   },
   "misc": {
     "ok": "OK",
@@ -217,7 +224,11 @@
     "type-string": "Sträng",
     "type-color": "Färg",
     "type-object": "Objekt",
-    "type-path": "Filsökväg"
+    "type-path": "Filsökväg",
+    "context": "Kontext",
+    "context-has-no-components": "Denna kontext har inga komponenter.",
+    "no-available-components": "Inga tillgängliga komponenter.",
+    "attribute-name-hint": "Attributnamn"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

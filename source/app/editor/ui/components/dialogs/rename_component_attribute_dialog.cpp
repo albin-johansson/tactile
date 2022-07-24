@@ -26,21 +26,26 @@
 #include "core/comp/component_index.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
 RenameComponentAttributeDialog::RenameComponentAttributeDialog()
     : AStringInputDialog {"Rename Component Attribute"}
-{
-  set_accept_button_label("Rename");
-  set_input_hint("Attribute name");
-}
+{}
 
-void RenameComponentAttributeDialog::show(std::string previousName,
-                                          const UUID& componentId)
+void RenameComponentAttributeDialog::show(std::string previous_name,
+                                          const UUID& component_id)
 {
-  mComponentId = componentId;
-  AStringInputDialog::show(std::move(previousName));
+  mComponentId = component_id;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.rename_component_attribute);
+  set_accept_button_label(lang.misc.rename);
+  set_input_hint(lang.misc.attribute_name_hint);
+
+  AStringInputDialog::show(std::move(previous_name));
 }
 
 void RenameComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
