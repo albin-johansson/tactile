@@ -27,7 +27,8 @@
     "map-parse-error": "Kartinläsningsfel",
     "add-property": "Lägg Till Attribut",
     "change-property-type": "Ändra Attributtyp",
-    "rename-property": "Ändra Attributnamn"
+    "rename-property": "Ändra Attributnamn",
+    "rename-layer": "Ändra Lagernamn"
   },
   "actions": {
     "create-map": "Skapa Karta...",
@@ -91,7 +92,17 @@
     "create-property": "Skapa Attribut...",
     "rename-property": "Ändra Attributnamn...",
     "change-property-type": "Ändra Attributtyp...",
-    "remove-property": "Radera Attribut"
+    "remove-property": "Radera Attribut",
+    "tile-layer": "Tilelager",
+    "object-layer": "Objektlager",
+    "group-layer": "Grupplager",
+    "inspect-layer": "Inspektera Lager",
+    "rename-layer": "Ändra Lagernamn",
+    "duplicate-layer": "Duplicera Lager",
+    "remove-layer": "Radera Lager",
+    "toggle-layer-visible": "Toggla Lagersynlighet",
+    "move-layer-up": "Flytta Upp Lager",
+    "move-layer-down": "Flytta Ner Lager"
   },
   "settings": {
     "behavior-tab": "Beteende",

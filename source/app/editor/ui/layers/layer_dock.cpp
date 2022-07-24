@@ -34,11 +34,11 @@
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/layers/add_layer_context_menu.hpp"
-#include "editor/ui/layers/views/layer_item.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "io/persistence/preferences.hpp"
+#include "layer_selectable.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {
@@ -128,7 +128,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ListBox list {"##LayerTreeNode", size}; list.is_open()) {
       map.visit_layers([&](const ILayer* layer) {
         if (!layer->get_parent().has_value()) {
-          layer_item_view(document, *layer, dispatcher);
+          layer_selectable(document, *layer, dispatcher);
         }
       });
     }

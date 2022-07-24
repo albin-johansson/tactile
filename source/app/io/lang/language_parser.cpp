@@ -85,6 +85,7 @@ void load_window_strings(const JSON& json, WindowStrings& window)
   load(json, window.add_property, "add-property");
   load(json, window.change_property_type, "change-property-type");
   load(json, window.rename_property, "rename-property");
+  load(json, window.rename_layer, "rename-layer");
 }
 
 void load_action_strings(const JSON& json, ActionStrings& action)
@@ -170,6 +171,17 @@ void load_action_strings(const JSON& json, ActionStrings& action)
   load(json, action.rename_property, "rename-property", TAC_ICON_EDIT);
   load(json, action.change_property_type, "change-property-type", TAC_ICON_OBJECTS);
   load(json, action.remove_property, "remove-property", TAC_ICON_REMOVE);
+
+  load(json, action.tile_layer, "tile-layer", TAC_ICON_TILE_LAYER);
+  load(json, action.object_layer, "object-layer", TAC_ICON_OBJECT_LAYER);
+  load(json, action.group_layer, "group-layer", TAC_ICON_GROUP_LAYER);
+  load(json, action.inspect_layer, "inspect-layer", TAC_ICON_INSPECT);
+  load(json, action.rename_layer, "rename-layer", TAC_ICON_EDIT);
+  load(json, action.duplicate_layer, "duplicate-layer", TAC_ICON_DUPLICATE);
+  load(json, action.remove_layer, "remove-layer", TAC_ICON_REMOVE);
+  load(json, action.toggle_layer_visible, "toggle-layer-visible", TAC_ICON_VISIBILITY);
+  load(json, action.move_layer_up, "move-layer-up", TAC_ICON_MOVE_UP);
+  load(json, action.move_layer_down, "move-layer-down", TAC_ICON_MOVE_DOWN);
 }
 
 void load_setting_strings(const JSON& json, SettingStrings& setting)

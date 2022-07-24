@@ -27,7 +27,8 @@
     "map-parse-error": "Map Parse Error",
     "add-property": "Add Property",
     "change-property-type": "Change Property Type",
-    "rename-property": "Rename Property"
+    "rename-property": "Rename Property",
+    "rename-layer": "Rename Layer"
   },
   "actions": {
     "create-map": "Create Map...",
@@ -91,7 +92,17 @@
     "create-property": "Create Property...",
     "rename-property": "Rename Property...",
     "change-property-type": "Change Property Type...",
-    "remove-property": "Remove Property"
+    "remove-property": "Remove Property",
+    "tile-layer": "Tile Layer",
+    "object-layer": "Object Layer",
+    "group-layer": "Group Layer",
+    "inspect-layer": "Inspect Layer",
+    "rename-layer": "Rename Layer",
+    "duplicate-layer": "Duplicate Layer",
+    "remove-layer": "Remove Layer",
+    "toggle-layer-visible": "Toggle Layer Visibility",
+    "move-layer-up": "Move Layer Up",
+    "move-layer-down": "Move Layer Down"
   },
   "settings": {
     "behavior-tab": "Behavior",

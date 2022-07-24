@@ -55,6 +55,7 @@ struct WindowStrings final
   std::string add_property;
   std::string change_property_type;
   std::string rename_property;
+  std::string rename_layer;
 };
 
 struct ActionStrings final
@@ -139,6 +140,17 @@ struct ActionStrings final
   std::string rename_property;
   std::string change_property_type;
   std::string remove_property;
+
+  std::string tile_layer;
+  std::string object_layer;
+  std::string group_layer;
+  std::string inspect_layer;
+  std::string rename_layer;
+  std::string duplicate_layer;
+  std::string remove_layer;
+  std::string toggle_layer_visible;
+  std::string move_layer_up;
+  std::string move_layer_down;
 };
 
 struct SettingStrings final

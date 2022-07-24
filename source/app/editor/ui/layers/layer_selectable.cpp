@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "layer_item.hpp"
+#include "layer_selectable.hpp"
 
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
@@ -26,6 +26,8 @@
 #include "core/event/layer_events.hpp"
 #include "core/event/property_events.hpp"
 #include "core/util/formatted_string.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
@@ -33,12 +35,12 @@
 namespace tactile::ui {
 namespace {
 
-constexpr int _base_node_flags =
+constexpr int base_node_flags =
     ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |
     ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth |
     ImGuiTreeNodeFlags_SpanFullWidth;
 
-[[nodiscard]] auto _get_icon(const LayerType type) -> const char*
+[[nodiscard]] auto get_icon(const LayerType type) -> const char*
 {
   switch (type) {
     case LayerType::TileLayer:
@@ -51,55 +53,55 @@ constexpr int _base_node_flags =
       return TAC_ICON_GROUP_LAYER;
 
     default:
-      throw TactileError("Failed to recognize layer type!");
+      throw TactileError {"Failed to recognize layer type!"};
   }
 }
 
-void _update_layer_item_popup(const Map&        map,
-                              const ILayer&     layer,
-                              entt::dispatcher& dispatcher)
+void update_layer_popup(const Map& map, const ILayer& layer, entt::dispatcher& dispatcher)
 {
-  if (auto popup = Popup::for_item("##LayerItemPopup"); popup.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Layer")) {
+  const auto& lang = get_current_language();
+
+  if (auto popup = Popup::for_item("##LayerPopup"); popup.is_open()) {
+    if (ImGui::MenuItem(lang.action.inspect_layer.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Layer")) {
+    if (ImGui::MenuItem(lang.action.rename_layer.c_str())) {
       dispatcher.enqueue<OpenRenameLayerDialogEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Layer")) {
+    if (ImGui::MenuItem(lang.action.duplicate_layer.c_str())) {
       dispatcher.enqueue<DuplicateLayerEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Layer")) {
+    if (ImGui::MenuItem(lang.action.remove_layer.c_str())) {
       dispatcher.enqueue<RemoveLayerEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Layer Visibility",
+    if (ImGui::MenuItem(lang.action.toggle_layer_visible.c_str(),
                         nullptr,
                         layer.is_visible())) {
       dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), !layer.is_visible());
     }
 
     if (auto opacity = layer.get_opacity();
-        ImGui::SliderFloat("Opacity", &opacity, 0, 1.0f)) {
+        ImGui::SliderFloat(lang.misc.opacity.c_str(), &opacity, 0, 1.0f)) {
       dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), opacity);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move Layer Up",
+    if (ImGui::MenuItem(lang.action.move_layer_up.c_str(),
                         nullptr,
                         false,
                         map.can_move_layer_up(layer.get_uuid()))) {
       dispatcher.enqueue<MoveLayerUpEvent>(layer.get_uuid());
     }
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move Layer Down",
+    if (ImGui::MenuItem(lang.action.move_layer_down.c_str(),
                         nullptr,
                         false,
                         map.can_move_layer_down(layer.get_uuid()))) {
@@ -108,16 +110,16 @@ void _update_layer_item_popup(const Map&        map,
   }
 }
 
-void _show_group_layer_item(const MapDocument&       document,
-                            const ILayer&            layer,
-                            const ImGuiTreeNodeFlags flags,
-                            entt::dispatcher&        dispatcher)
+void show_group_layer_selectable(const MapDocument&       document,
+                                 const ILayer&            layer,
+                                 const ImGuiTreeNodeFlags flags,
+                                 entt::dispatcher&        dispatcher)
 {
   const auto& map = document.get_map();
 
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-  if (TreeNode treeNode {"##GroupLayerTreeNode", flags, "%s", layer.get_name().c_str()};
-      treeNode.is_open()) {
+  if (TreeNode tree_node {"##GroupLayerTreeNode", flags, "%s", layer.get_name().c_str()};
+      tree_node.is_open()) {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
     if (ImGui::IsItemActivated() ||
@@ -125,11 +127,11 @@ void _show_group_layer_item(const MapDocument&       document,
       dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
     }
 
-    _update_layer_item_popup(map, layer, dispatcher);
+    update_layer_popup(map, layer, dispatcher);
 
     const auto& group = dynamic_cast<const GroupLayer&>(layer);
     for (const auto& child : group.storage()) {
-      layer_item_view(document, *child.get(), dispatcher);
+      layer_selectable(document, *child, dispatcher);
     }
   }
   else {
@@ -140,28 +142,28 @@ void _show_group_layer_item(const MapDocument&       document,
       dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
     }
 
-    _update_layer_item_popup(map, layer, dispatcher);
+    update_layer_popup(map, layer, dispatcher);
   }
 }
 
 }  // namespace
 
-void layer_item_view(const MapDocument& document,
-                     const ILayer&      layer,
-                     entt::dispatcher&  dispatcher)
+void layer_selectable(const MapDocument& document,
+                      const ILayer&      layer,
+                      entt::dispatcher&  dispatcher)
 {
   const auto& map = document.get_map();
 
   const Scope scope {layer.get_uuid()};
 
-  const auto isActiveLayer = map.active_layer_id() == layer.get_uuid();
-  const auto flags = isActiveLayer ? (_base_node_flags | ImGuiTreeNodeFlags_Selected)  //
-                                   : _base_node_flags;
+  const auto is_active_layer = map.active_layer_id() == layer.get_uuid();
+  const auto flags =
+      is_active_layer ? (base_node_flags | ImGuiTreeNodeFlags_Selected) : base_node_flags;
 
-  const FormattedString name {"{} {}", _get_icon(layer.get_type()), layer.get_name()};
+  const FormattedString name {"{} {}", get_icon(layer.get_type()), layer.get_name()};
 
   if (layer.get_type() != LayerType::GroupLayer) {
-    if (ImGui::Selectable(name.data(), isActiveLayer)) {
+    if (ImGui::Selectable(name.data(), is_active_layer)) {
       dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
     }
 
@@ -170,10 +172,10 @@ void layer_item_view(const MapDocument& document,
       dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
     }
 
-    _update_layer_item_popup(map, layer, dispatcher);
+    update_layer_popup(map, layer, dispatcher);
   }
   else {
-    _show_group_layer_item(document, layer, flags, dispatcher);
+    show_group_layer_selectable(document, layer, flags, dispatcher);
   }
 }
 
