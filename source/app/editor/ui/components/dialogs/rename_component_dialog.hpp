@@ -33,7 +33,7 @@ class RenameComponentDialog final : public ComponentNameDialog
  public:
   RenameComponentDialog();
 
-  void show(std::string previousName, const UUID& componentId);
+  void show(std::string previous_name, const UUID& component_id);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
