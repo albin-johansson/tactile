@@ -217,6 +217,7 @@ struct MiscStrings final
   std::string change;
   std::string add;
   std::string rename;
+  std::string empty;
 
   std::string rows;
   std::string columns;

@@ -214,7 +214,7 @@ void update_log_dock()
       centered_label(lang.misc.log_no_messages_match_filter.c_str());
     }
 
-    if (auto popup = Popup::for_window("##LogDockContext"); popup.is_open()) {
+    if (auto popup = Popup::for_window("##LogDockPopup"); popup.is_open()) {
       if (ImGui::MenuItem(lang.action.clear_log.c_str())) {
         clear_log_history();
       }

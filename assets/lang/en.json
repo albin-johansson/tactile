@@ -160,6 +160,7 @@
     "change": "Change",
     "add": "Add",
     "rename": "Rename",
+    "empty": "Empty",
     "rows": "Rows",
     "columns": "Columns",
     "name": "Name",
