@@ -1,11 +1,13 @@
 FormatStyle: google
 Checks: "-*,
          performance-*,
+         portability-*,
 
          bugprone-*,
          -bugprone-easily-swappable-parameters,
          
          readability-*,
+         readability-identifier-naming,
          -readability-identifier-length,
          -readability-uppercase-literal-suffix,
          -readability-magic-numbers,
@@ -29,7 +31,25 @@ Checks: "-*,
          -cppcoreguidelines-pro-bounds-pointer-arithmetic,
          -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
          -cppcoreguidelines-pro-type-vararg,
+         -cppcoreguidelines-pro-type-union-access,
          -cppcoreguidelines-owning-memory,
          -cppcoreguidelines-avoid-goto,
-         -cppcoreguidelines-avoid-c-arrays
+         -cppcoreguidelines-avoid-c-arrays,
+         
+         boost-*,
+         google-*,
+         darwin-*
          "
+CheckOptions:
+  - { key: readability-identifier-naming.ClassCase, value: CamelCase }
+  - { key: readability-identifier-naming.StructCase, value: CamelCase }
+  - { key: readability-identifier-naming.EnumCase, value: CamelCase }
+  - { key: readability-identifier-naming.EnumConstantCase, value: CamelCase }
+  - { key: readability-identifier-naming.MethodCase, value: lower_case }
+  - { key: readability-identifier-naming.FunctionCase, value: lower_case }
+  - { key: readability-identifier-naming.ParameterCase, value: lower_case }
+  - { key: readability-identifier-naming.LocalVariableCase, value: lower_case }
+  - { key: readability-identifier-naming.GlobalVariableCase, value: lower_case }
+  - { key: readability-identifier-naming.StructMemberCase, value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberCase, value: CamelCase }
+  - { key: readability-identifier-naming.ClassMemberPrefix, value: m }
