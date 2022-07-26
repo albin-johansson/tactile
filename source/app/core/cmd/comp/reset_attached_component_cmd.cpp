@@ -64,7 +64,7 @@ void ResetAttachedComponentCmd::redo()
   comps.add(definition.instantiate());
 }
 
-auto ResetAttachedComponentCmd::get_name() const -> const char*
+auto ResetAttachedComponentCmd::get_name() const -> std::string
 {
   return "Reset Component Values";
 }

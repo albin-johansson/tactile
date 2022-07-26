@@ -58,7 +58,7 @@ auto SetObjectNameCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto SetObjectNameCmd::get_name() const -> const char*
+auto SetObjectNameCmd::get_name() const -> std::string
 {
   return "Update Object Name";
 }

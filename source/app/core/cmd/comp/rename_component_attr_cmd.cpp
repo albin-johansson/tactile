@@ -64,7 +64,7 @@ void RenameComponentAttrCmd::redo()
   contexts.on_renamed_component_attr(definition.get_uuid(), mPreviousName, mUpdatedName);
 }
 
-auto RenameComponentAttrCmd::get_name() const -> const char*
+auto RenameComponentAttrCmd::get_name() const -> std::string
 {
   return "Rename Component Attribute";
 }

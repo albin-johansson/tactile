@@ -66,7 +66,7 @@ void DuplicateComponentAttrCmd::redo()
                                  definition.get_attr(*mDuplicatedName));
 }
 
-auto DuplicateComponentAttrCmd::get_name() const -> const char*
+auto DuplicateComponentAttrCmd::get_name() const -> std::string
 {
   return "Duplicate Component Attribute";
 }

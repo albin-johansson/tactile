@@ -51,7 +51,7 @@ void EraserToolCmd::redo()
   }
 }
 
-auto EraserToolCmd::get_name() const -> const char*
+auto EraserToolCmd::get_name() const -> std::string
 {
   return "Eraser Sequence";
 }

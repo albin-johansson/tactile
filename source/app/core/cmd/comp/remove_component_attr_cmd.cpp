@@ -69,7 +69,7 @@ void RemoveComponentAttrCmd::redo()
   contexts.on_removed_component_attr(definition.get_uuid(), mAttributeName);
 }
 
-auto RemoveComponentAttrCmd::get_name() const -> const char*
+auto RemoveComponentAttrCmd::get_name() const -> std::string
 {
   return "Remove Component Attribute";
 }

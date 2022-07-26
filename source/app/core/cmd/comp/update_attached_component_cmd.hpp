@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/attribute.hpp"
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
@@ -46,7 +44,7 @@ class UpdateAttachedComponentCmd final : public ICommand
 
   [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
 
-  [[nodiscard]] auto get_name() const -> const char* override;
+  [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
   Shared<IContext> mContext;

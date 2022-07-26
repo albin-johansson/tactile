@@ -50,7 +50,7 @@ void StampToolCmd::redo()
   apply_sequence(mNewState);
 }
 
-auto StampToolCmd::get_name() const -> const char*
+auto StampToolCmd::get_name() const -> std::string
 {
   return "Stamp Sequence";
 }

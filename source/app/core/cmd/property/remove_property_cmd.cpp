@@ -50,7 +50,7 @@ void RemovePropertyCmd::redo()
   props.remove(mName);
 }
 
-auto RemovePropertyCmd::get_name() const -> const char*
+auto RemovePropertyCmd::get_name() const -> std::string
 {
   return "Remove Property";
 }

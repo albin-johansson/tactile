@@ -51,7 +51,7 @@ void RenameLayerCmd::redo()
   layer.set_name(mNewName);
 }
 
-auto RenameLayerCmd::get_name() const -> const char*
+auto RenameLayerCmd::get_name() const -> std::string
 {
   return "Rename Layer";
 }

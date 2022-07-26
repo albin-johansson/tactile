@@ -62,7 +62,7 @@ auto RemoveColumnCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto RemoveColumnCmd::get_name() const -> const char*
+auto RemoveColumnCmd::get_name() const -> std::string
 {
   return mColumns == 1 ? "Remove Column" : "Remove Columns";
 }

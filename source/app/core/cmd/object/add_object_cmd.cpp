@@ -71,7 +71,7 @@ void AddObjectCmd::redo()
   mDocument->get_contexts().add_context(std::move(object));
 }
 
-auto AddObjectCmd::get_name() const -> const char*
+auto AddObjectCmd::get_name() const -> std::string
 {
   switch (mObjectType) {
     case ObjectType::Point:

@@ -51,7 +51,7 @@ void RenamePropertyCmd::redo()
   props.rename(mOldName, mNewName);
 }
 
-auto RenamePropertyCmd::get_name() const -> const char*
+auto RenamePropertyCmd::get_name() const -> std::string
 {
   return "Rename Property";
 }

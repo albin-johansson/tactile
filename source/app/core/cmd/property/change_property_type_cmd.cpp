@@ -59,7 +59,7 @@ void ChangePropertyTypeCmd::redo()
   props.change_type(mName, mPropertyType);
 }
 
-auto ChangePropertyTypeCmd::get_name() const -> const char*
+auto ChangePropertyTypeCmd::get_name() const -> std::string
 {
   return "Change Property Type";
 }

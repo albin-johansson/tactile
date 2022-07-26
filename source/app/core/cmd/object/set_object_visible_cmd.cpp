@@ -46,7 +46,7 @@ void SetObjectVisibleCmd::redo()
   mObject->set_visible(mNewVisibility);
 }
 
-auto SetObjectVisibleCmd::get_name() const -> const char*
+auto SetObjectVisibleCmd::get_name() const -> std::string
 {
   return mNewVisibility ? "Show Object" : "Hide Object";
 }

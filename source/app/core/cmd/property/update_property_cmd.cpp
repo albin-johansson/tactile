@@ -65,7 +65,7 @@ auto UpdatePropertyCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto UpdatePropertyCmd::get_name() const -> const char*
+auto UpdatePropertyCmd::get_name() const -> std::string
 {
   return "Update Property";
 }

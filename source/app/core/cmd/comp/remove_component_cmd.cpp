@@ -49,7 +49,7 @@ void DetachComponentCmd::redo()
   mComponent = comps.erase(mComponentId);
 }
 
-auto DetachComponentCmd::get_name() const -> const char*
+auto DetachComponentCmd::get_name() const -> std::string
 {
   return "Remove Component";
 }

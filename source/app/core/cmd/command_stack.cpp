@@ -98,7 +98,7 @@ auto CommandStack::can_redo() const -> bool
   return (!mStack.empty() && !mIndex) || (!mStack.empty() && mIndex < mStack.size() - 1);
 }
 
-auto CommandStack::get_undo_text() const -> const char*
+auto CommandStack::get_undo_text() const -> std::string
 {
   TACTILE_ASSERT(can_undo());
 
@@ -106,7 +106,7 @@ auto CommandStack::get_undo_text() const -> const char*
   return cmd->get_name();
 }
 
-auto CommandStack::get_redo_text() const -> const char*
+auto CommandStack::get_redo_text() const -> std::string
 {
   TACTILE_ASSERT(can_redo());
 

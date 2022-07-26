@@ -55,7 +55,7 @@ void AttachComponentCmd::redo()
   comps.add(definition.instantiate());
 }
 
-auto AttachComponentCmd::get_name() const -> const char*
+auto AttachComponentCmd::get_name() const -> std::string
 {
   return "Attach Component";
 }

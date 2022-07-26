@@ -58,7 +58,7 @@ void DuplicateLayerCmd::redo()
   mDocument->get_contexts().add_context(mNewLayer);
 }
 
-auto DuplicateLayerCmd::get_name() const -> const char*
+auto DuplicateLayerCmd::get_name() const -> std::string
 {
   return "Duplicate Layer";
 }

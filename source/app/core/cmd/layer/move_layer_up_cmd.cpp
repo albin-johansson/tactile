@@ -44,7 +44,7 @@ void MoveLayerUpCmd::redo()
   mMap->move_layer_up(mLayerId);
 }
 
-auto MoveLayerUpCmd::get_name() const -> const char*
+auto MoveLayerUpCmd::get_name() const -> std::string
 {
   return "Move Layer Up";
 }

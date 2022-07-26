@@ -62,7 +62,7 @@ auto RemoveRowCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto RemoveRowCmd::get_name() const -> const char*
+auto RemoveRowCmd::get_name() const -> std::string
 {
   return mRows == 1 ? "Remove Row" : "Remove Rows";
 }

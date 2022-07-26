@@ -54,7 +54,7 @@ auto AddColumnCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto AddColumnCmd::get_name() const -> const char*
+auto AddColumnCmd::get_name() const -> std::string
 {
   return mColumns == 1 ? "Add Column" : "Add Columns";
 }

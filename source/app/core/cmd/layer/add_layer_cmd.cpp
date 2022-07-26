@@ -77,7 +77,7 @@ void AddLayerCmd::redo()
   mDocument->get_contexts().add_context(mLayer);
 }
 
-auto AddLayerCmd::get_name() const -> const char*
+auto AddLayerCmd::get_name() const -> std::string
 {
   return "Add Layer";
 }

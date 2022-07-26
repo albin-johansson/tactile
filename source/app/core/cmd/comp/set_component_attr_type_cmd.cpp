@@ -79,7 +79,7 @@ void SetComponentAttrTypeCmd::redo()
                                                             mNewType);
 }
 
-auto SetComponentAttrTypeCmd::get_name() const -> const char*
+auto SetComponentAttrTypeCmd::get_name() const -> std::string
 {
   return "Change Component Attribute Type";
 }

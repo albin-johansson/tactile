@@ -52,7 +52,7 @@ void FixTilesInMapCmd::redo()
   mResult = mMap->fix_tiles();
 }
 
-auto FixTilesInMapCmd::get_name() const -> const char*
+auto FixTilesInMapCmd::get_name() const -> std::string
 {
   return "Fix Tiles In Map";
 }

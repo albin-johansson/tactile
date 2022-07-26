@@ -54,7 +54,7 @@ auto AddRowCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto AddRowCmd::get_name() const -> const char*
+auto AddRowCmd::get_name() const -> std::string
 {
   return mRows == 1 ? "Add Row" : "Add Rows";
 }

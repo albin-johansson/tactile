@@ -52,7 +52,7 @@ void DefineComponentCmd::redo()
   }
 }
 
-auto DefineComponentCmd::get_name() const -> const char*
+auto DefineComponentCmd::get_name() const -> std::string
 {
   return "Create Component Definition";
 }

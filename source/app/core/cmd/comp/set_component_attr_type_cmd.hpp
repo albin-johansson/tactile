@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/attribute.hpp"
@@ -46,7 +44,7 @@ class SetComponentAttrTypeCmd final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> const char* override;
+  [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
   ADocument*               mDocument {};

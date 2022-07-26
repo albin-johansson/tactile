@@ -36,7 +36,7 @@ class EraserToolCmd final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> const char* override;
+  [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
   Shared<Map> mMap;

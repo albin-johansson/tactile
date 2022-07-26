@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <string>  // string
+
 namespace tactile {
 
 class ICommand
@@ -41,7 +43,7 @@ class ICommand
   virtual void redo() = 0;
 
   /// Returns a short human-readable string that describes the command.
-  [[nodiscard]] virtual auto get_name() const -> const char* = 0;
+  [[nodiscard]] virtual auto get_name() const -> std::string = 0;
 
   /**
    * Attempts to merge the supplied command into this command.
@@ -53,8 +55,7 @@ class ICommand
    *
    * Note, this function is only called on the command on top of the command stack.
    *
-   * \param cmd the command that will potentially be merged into *this* command, never
-   * null.
+   * \param cmd a command that will potentially be merged into *this* command, never null.
    *
    * \return `true` if the supplied command was merged into *this* command;
    *         `false` otherwise.

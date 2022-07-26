@@ -134,10 +134,10 @@ class CommandStack final
   [[nodiscard]] auto can_redo() const -> bool;
 
   /// Returns the text associated with the current undoable command.
-  [[nodiscard]] auto get_undo_text() const -> const char*;
+  [[nodiscard]] auto get_undo_text() const -> std::string;
 
   /// Returns the text associated with the current redoable command.
-  [[nodiscard]] auto get_redo_text() const -> const char*;
+  [[nodiscard]] auto get_redo_text() const -> std::string;
 
   /// Returns the number of commands on the stack.
   [[nodiscard]] auto size() const noexcept -> usize

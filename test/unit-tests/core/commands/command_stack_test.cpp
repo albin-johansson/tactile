@@ -13,7 +13,7 @@ struct FooCmd : ICommand
 
   void redo() override {}
 
-  [[nodiscard]] auto get_name() const -> const char* override { return "FooCmd"; }
+  [[nodiscard]] auto get_name() const -> std::string override { return "FooCmd"; }
 };
 
 struct BarCmd : ICommand
@@ -22,7 +22,7 @@ struct BarCmd : ICommand
 
   void redo() override {}
 
-  [[nodiscard]] auto get_name() const -> const char* override { return "BarCmd"; }
+  [[nodiscard]] auto get_name() const -> std::string override { return "BarCmd"; }
 };
 
 }  // namespace

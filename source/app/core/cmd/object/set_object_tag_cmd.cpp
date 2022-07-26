@@ -58,7 +58,7 @@ auto SetObjectTagCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto SetObjectTagCmd::get_name() const -> const char*
+auto SetObjectTagCmd::get_name() const -> std::string
 {
   return "Update Object Tag";
 }

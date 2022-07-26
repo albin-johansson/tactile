@@ -47,7 +47,7 @@ void MoveObjectCmd::redo()
   mObject->set_pos(mUpdatedPos);
 }
 
-auto MoveObjectCmd::get_name() const -> const char*
+auto MoveObjectCmd::get_name() const -> std::string
 {
   return "Move Object";
 }

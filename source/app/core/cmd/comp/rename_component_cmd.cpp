@@ -51,7 +51,7 @@ void RenameComponentCmd::redo()
   mIndex->rename_comp(mComponentId, mUpdatedName);
 }
 
-auto RenameComponentCmd::get_name() const -> const char*
+auto RenameComponentCmd::get_name() const -> std::string
 {
   return "Rename Component";
 }

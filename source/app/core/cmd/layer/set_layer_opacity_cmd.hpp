@@ -37,7 +37,7 @@ class SetLayerOpacityCmd final : public ICommand
 
   [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
 
-  [[nodiscard]] auto get_name() const -> const char* override;
+  [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
   Shared<ILayer> mLayer;

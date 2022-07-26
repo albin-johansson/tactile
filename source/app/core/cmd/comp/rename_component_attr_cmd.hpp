@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/cmd/command.hpp"
 #include "core/common/uuid.hpp"
 
@@ -41,7 +39,7 @@ class RenameComponentAttrCmd final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> const char* override;
+  [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
   ADocument*  mDocument {};

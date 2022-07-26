@@ -56,7 +56,7 @@ auto SetLayerOpacityCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto SetLayerOpacityCmd::get_name() const -> const char*
+auto SetLayerOpacityCmd::get_name() const -> std::string
 {
   return "Set Layer Opacity";
 }

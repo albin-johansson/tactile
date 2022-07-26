@@ -44,7 +44,7 @@ void MoveLayerDownCmd::redo()
   mMap->move_layer_down(mLayerId);
 }
 
-auto MoveLayerDownCmd::get_name() const -> const char*
+auto MoveLayerDownCmd::get_name() const -> std::string
 {
   return "Move Layer Down";
 }

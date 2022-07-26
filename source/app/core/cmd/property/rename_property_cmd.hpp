@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/cmd/command.hpp"
 #include "core/common/memory.hpp"
 
@@ -37,7 +35,7 @@ class RenamePropertyCmd final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> const char* override;
+  [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
   Shared<IContext> mContext;

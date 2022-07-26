@@ -61,7 +61,7 @@ void BucketToolCmd::redo()
   layer.flood(mOrigin, mReplacement, &mPositions);
 }
 
-auto BucketToolCmd::get_name() const -> const char*
+auto BucketToolCmd::get_name() const -> std::string
 {
   return "Bucket Fill";
 }

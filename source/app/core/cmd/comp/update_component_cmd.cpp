@@ -66,7 +66,7 @@ auto UpdateComponentCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto UpdateComponentCmd::get_name() const -> const char*
+auto UpdateComponentCmd::get_name() const -> std::string
 {
   return "Update Component Attribute";
 }

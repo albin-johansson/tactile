@@ -66,7 +66,7 @@ void UndefComponentCmd::redo()
   mRemovedComponents = contexts.on_undef_comp(mComponentId);
 }
 
-auto UndefComponentCmd::get_name() const -> const char*
+auto UndefComponentCmd::get_name() const -> std::string
 {
   return "Remove Component Definition";
 }

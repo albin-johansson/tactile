@@ -78,7 +78,7 @@ void RemoveTilesetCmd::redo()
   mapDocument->get_contexts().erase(mTilesetId);
 }
 
-auto RemoveTilesetCmd::get_name() const -> const char*
+auto RemoveTilesetCmd::get_name() const -> std::string
 {
   return "Remove Tileset";
 }

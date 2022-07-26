@@ -80,7 +80,7 @@ void AddTilesetCmd::redo()
   document->get_contexts().add_context(tileset);
 }
 
-auto AddTilesetCmd::get_name() const -> const char*
+auto AddTilesetCmd::get_name() const -> std::string
 {
   return "Add Tileset";
 }

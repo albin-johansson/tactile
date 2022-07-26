@@ -66,7 +66,7 @@ void ResizeMapCmd::redo()
   mMap->resize(mRows, mCols);
 }
 
-auto ResizeMapCmd::get_name() const -> const char*
+auto ResizeMapCmd::get_name() const -> std::string
 {
   return "Resize Map";
 }

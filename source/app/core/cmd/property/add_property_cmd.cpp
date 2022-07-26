@@ -51,7 +51,7 @@ void AddPropertyCmd::redo()
   props.add(mName, mType);
 }
 
-auto AddPropertyCmd::get_name() const -> const char*
+auto AddPropertyCmd::get_name() const -> std::string
 {
   return "Add Property";
 }

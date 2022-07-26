@@ -53,7 +53,7 @@ void SetLayerVisibilityCmd::redo()
   layer.set_visible(mNewVisibility);
 }
 
-auto SetLayerVisibilityCmd::get_name() const -> const char*
+auto SetLayerVisibilityCmd::get_name() const -> std::string
 {
   return mNewVisibility ? "Show Layer" : "Hide Layer";
 }

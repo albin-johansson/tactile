@@ -56,7 +56,7 @@ void RemoveLayerCmd::redo()
   mDocument->get_contexts().erase(id);
 }
 
-auto RemoveLayerCmd::get_name() const -> const char*
+auto RemoveLayerCmd::get_name() const -> std::string
 {
   return "Remove Layer";
 }

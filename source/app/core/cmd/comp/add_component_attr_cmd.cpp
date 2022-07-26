@@ -62,7 +62,7 @@ void AddComponentAttrCmd::redo()
   contexts.on_new_component_attr(definition.get_uuid(), mName, value);
 }
 
-auto AddComponentAttrCmd::get_name() const -> const char*
+auto AddComponentAttrCmd::get_name() const -> std::string
 {
   return "Create Component Attribute";
 }

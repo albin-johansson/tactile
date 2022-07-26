@@ -59,7 +59,7 @@ auto RenameTilesetCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto RenameTilesetCmd::get_name() const -> const char*
+auto RenameTilesetCmd::get_name() const -> std::string
 {
   return "Rename Tileset";
 }
