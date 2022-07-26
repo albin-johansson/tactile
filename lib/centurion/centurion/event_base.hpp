@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019-2022 Albin Johansson
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #ifndef CENTURION_EVENT_BASE_HPP_
 #define CENTURION_EVENT_BASE_HPP_
 
@@ -11,12 +35,6 @@
 
 namespace cen {
 
-/// \addtogroup event
-/// \{
-
-/**
- * \brief Represents the different event types.
- */
 enum class event_type : uint32
 {
   first_event = SDL_FIRSTEVENT,
@@ -48,6 +66,9 @@ enum class event_type : uint32
   key_down = SDL_KEYDOWN,
   key_up = SDL_KEYUP,
   text_editing = SDL_TEXTEDITING,
+#if SDL_VERSION_ATLEAST(2, 0, 22)
+  text_editing_ext = SDL_TEXTEDITING_EXT,
+#endif  // SDL_VERSION_ATLEAST(2, 0, 22)
   text_input = SDL_TEXTINPUT,
   keymap_changed = SDL_KEYMAPCHANGED,
 
@@ -104,19 +125,6 @@ enum class event_type : uint32
   user = SDL_USEREVENT
 };
 
-/// \name Event type functions
-/// \{
-
-/**
- * \brief Indicates whether an event type is a user event.
- *
- * \details This function considers any event type enumerator in the range [`user`,
- * `last_event`) to be a user event.
- *
- * \param type the event type to check.
- *
- * \return `true` if the event type is reserved for user events; `false` otherwise.
- */
 [[nodiscard]] constexpr auto is_user_event(const event_type type) noexcept -> bool
 {
   const auto raw = to_underlying(type);
@@ -190,6 +198,13 @@ enum class event_type : uint32
 
     case event_type::text_editing:
       return "text_editing";
+
+#if SDL_VERSION_ATLEAST(2, 0, 22)
+
+    case event_type::text_editing_ext:
+      return "text_editing_ext";
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 22)
 
     case event_type::text_input:
       return "text_input";
@@ -323,16 +338,7 @@ inline auto operator<<(std::ostream& stream, const event_type type) -> std::ostr
   return stream << to_string(type);
 }
 
-/// \} End of event type functions
-
-/**
- * \brief The base class of all events.
- *
- * \details This class provides the common API of all events and handles the storage of the
- * underlying SDL event.
- *
- * \tparam T the SDL event type.
- */
+/// The base class of all events.
 template <typename T>
 class event_base
 {
@@ -364,15 +370,7 @@ class event_base
   T mEvent{};
 };
 
-/**
- * \brief Extracts the underlying SDL event from a Centurion event.
- *
- * \tparam T the SDL event type.
- *
- * \param event the event to query.
- *
- * \return a copy of the underlying SDL event.
- */
+/// Extracts the underlying SDL event from a Centurion event.
 template <typename T>
 [[nodiscard]] auto as_sdl_event(const event_base<T>& event) -> SDL_Event;
 
