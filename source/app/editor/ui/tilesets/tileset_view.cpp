@@ -38,29 +38,29 @@
 namespace tactile::ui {
 namespace {
 
-constexpr cen::color _rubber_band_color {0, 0x44, 0xCC, 100};
-constexpr cen::color _grid_color {200, 200, 200, 40};
+constexpr cen::color rubber_band_color {0, 0x44, 0xCC, 100};
+constexpr cen::color grid_color {200, 200, 200, 40};
 
-void _update_viewport_offset(const TilesetRef& tilesetRef,
-                             const ImVec2&     viewportSize,
-                             entt::dispatcher& dispatcher)
+void update_viewport_offset(const TilesetRef& tileset_ref,
+                            const ImVec2&     viewport_size,
+                            entt::dispatcher& dispatcher)
 {
-  const auto&    tileset = tilesetRef.view_tileset();
-  const Vector2f textureSize = tileset.texture_size();
+  const auto&    tileset = tileset_ref.view_tileset();
+  const Vector2f texture_size = tileset.texture_size();
 
-  const Vector2f minOffset {viewportSize.x - textureSize.x,
-                            viewportSize.y - textureSize.y};
-  const Vector2f maxOffset {};
+  const Vector2f min_offset {viewport_size.x - texture_size.x,
+                             viewport_size.y - texture_size.y};
+  const Vector2f max_offset {};
 
-  const auto& limits = tilesetRef.get_viewport().get_limits();
-  if (!limits.has_value() || minOffset != limits->min_offset) {
+  const auto& limits = tileset_ref.get_viewport().get_limits();
+  if (!limits.has_value() || min_offset != limits->min_offset) {
     dispatcher.enqueue<UpdateTilesetViewportLimitsEvent>(tileset.get_uuid(),
-                                                         minOffset,
-                                                         maxOffset);
+                                                         min_offset,
+                                                         max_offset);
   }
 
   ImGui::InvisibleButton("##TilesetViewInvisibleButton",
-                         viewportSize,
+                         viewport_size,
                          ImGuiButtonFlags_MouseButtonLeft |
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
@@ -73,44 +73,44 @@ void _update_viewport_offset(const TilesetRef& tilesetRef,
   }
 }
 
-void _render_selection(GraphicsCtx&  graphics,
-                       const Region& selection,
-                       const ImVec2& min,
-                       const ImVec2& tileSize)
+void render_selection(GraphicsCtx&  graphics,
+                      const Region& selection,
+                      const ImVec2& min,
+                      const ImVec2& tile_size)
 {
   const auto diff = selection.end - selection.begin;
 
-  const auto origin = from_pos(selection.begin) * tileSize;
-  const auto size = from_pos(diff) * tileSize;
+  const auto origin = from_pos(selection.begin) * tile_size;
+  const auto size = from_pos(diff) * tile_size;
 
-  graphics.set_draw_color(_rubber_band_color);
+  graphics.set_draw_color(rubber_band_color);
   graphics.fill_rect(min + origin, size);
 }
 
 }  // namespace
 
 void update_tileset_view(const DocumentModel& model,
-                         const UUID&          tilesetId,
+                         const UUID&          tileset_id,
                          entt::dispatcher&    dispatcher)
 {
   const auto& document = model.require_active_map();
   const auto& map = document.get_map();
 
-  const auto& tilesetRef = map.get_tilesets().get_ref(tilesetId);
-  const auto& tileset = tilesetRef.view_tileset();
-  const auto& viewport = tilesetRef.get_viewport();
+  const auto& tileset_ref = map.get_tilesets().get_ref(tileset_id);
+  const auto& tileset = tileset_ref.view_tileset();
+  const auto& viewport = tileset_ref.get_viewport();
 
   const auto info = get_render_info(viewport, tileset);
-  _update_viewport_offset(tilesetRef, info.canvas_br - info.canvas_tl, dispatcher);
+  update_viewport_offset(tileset_ref, info.canvas_br - info.canvas_tl, dispatcher);
 
   GraphicsCtx graphics {info};
   graphics.set_draw_color(io::get_preferences().viewport_background);
   graphics.clear();
 
   const auto offset = from_vec(viewport.get_offset());
-  const auto tileSize = from_vec(tileset.tile_size());
+  const auto tile_size = from_vec(tileset.tile_size());
 
-  if (const auto selection = rubber_band(offset, tileSize)) {
+  if (const auto selection = rubber_band(offset, tile_size)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
@@ -119,13 +119,13 @@ void update_tileset_view(const DocumentModel& model,
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
   graphics.render_image(tileset.texture_id(), position, from_vec(tileset.texture_size()));
 
-  const auto& selection = tilesetRef.get_selection();
+  const auto& selection = tileset_ref.get_selection();
   if (selection.has_value()) {
-    _render_selection(graphics, *selection, position, tileSize);
+    render_selection(graphics, *selection, position, tile_size);
   }
 
   graphics.set_line_thickness(1);
-  graphics.set_draw_color(_grid_color);
+  graphics.set_draw_color(grid_color);
   graphics.render_translated_grid();
 
   graphics.pop_clip();

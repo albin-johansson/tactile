@@ -30,7 +30,7 @@ class DocumentModel;
 namespace tactile::ui {
 
 void update_tileset_view(const DocumentModel& model,
-                         const UUID&          tilesetId,
+                         const UUID&          tileset_id,
                          entt::dispatcher&    dispatcher);
 
 }  // namespace tactile::ui

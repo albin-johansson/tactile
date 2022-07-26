@@ -189,6 +189,10 @@ void load_action_strings(const JSON& json, ActionStrings& action)
   load(json, action.reset_attached_component, "reset-attached-component", TAC_ICON_RESET);
   load(json, action.detach_component, "detach-component", TAC_ICON_REMOVE);
   load(json, action.component_editor, "component-editor", TAC_ICON_COMPONENT);
+
+  load(json, action.create_tileset, "create-tileset", TAC_ICON_ADD);
+  load(json, action.open_tileset, "open-tileset", TAC_ICON_OPEN);
+  load(json, action.remove_tileset, "remove-tileset", TAC_ICON_REMOVE);
 }
 
 void load_setting_strings(const JSON& json, SettingStrings& setting)

@@ -108,7 +108,11 @@
     "move-layer-down": "Move Layer Down",
     "reset-attached-component": "Reset Attributes",
     "detach-component": "Remove Component",
-    "component-editor": "Component Editor..."
+    "component-editor": "Component Editor...",
+    "create-tileset": "Create New Tileset",
+    "open-tileset": "Open Tileset",
+    "remove-tileset": "Remove Tileset"
+  },
   },
   "settings": {
     "behavior-tab": "Behavior",

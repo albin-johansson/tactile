@@ -108,7 +108,11 @@
     "move-layer-down": "Flytta Ner Lager",
     "reset-attached-component": "Återställ Attributer",
     "detach-component": "Ta Bort Komponent",
-    "component-editor": "Komponenteditor..."
+    "component-editor": "Komponenteditor...",
+    "create-tileset": "Skapa Tilesamling",
+    "open-tileset": "Öppna Tilesamling",
+    "remove-tileset": "Radera Tilesamling"
+  },
   },
   "settings": {
     "behavior-tab": "Beteende",

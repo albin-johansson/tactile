@@ -158,6 +158,12 @@ struct ActionStrings final
   std::string reset_attached_component;
   std::string detach_component;
   std::string component_editor;
+
+  std::string create_tileset;
+  std::string open_tileset;
+  std::string remove_tileset;
+};
+
 };
 
 struct SettingStrings final
