@@ -31,11 +31,11 @@
 namespace tactile {
 
 template <usize Capacity = 128>
-class FormattedString final
+class FmtString final
 {
  public:
   template <typename... Args>
-  explicit FormattedString(const std::string_view fmt, const Args&... args)
+  explicit FmtString(const std::string_view fmt, const Args&... args)
   {
     const auto result =
         fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);

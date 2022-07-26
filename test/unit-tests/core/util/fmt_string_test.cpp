@@ -1,4 +1,4 @@
-#include "core/util/formatted_string.hpp"
+#include "core/util/fmt_string.hpp"
 
 #include <filesystem>  // path
 
@@ -6,9 +6,9 @@
 
 namespace tactile::test {
 
-TEST(FormattedString, NoFormatting)
+TEST(FmtString, NoFormatting)
 {
-  const FormattedString str {"foobar"};
+  const FmtString str {"foobar"};
 
   ASSERT_STREQ("foobar", str.data());
   ASSERT_EQ("foobar", str.view());
@@ -17,22 +17,22 @@ TEST(FormattedString, NoFormatting)
   ASSERT_EQ(128u, str.capacity());
 }
 
-TEST(FormattedString, SimpleFormatting)
+TEST(FmtString, SimpleFormatting)
 {
-  const FormattedString str {"Hello, {}!", "World"};
+  const FmtString str {"Hello, {}!", "World"};
   ASSERT_EQ("Hello, World!", str.view());
 }
 
-TEST(FormattedString, AdvancedFormatting)
+TEST(FmtString, AdvancedFormatting)
 {
   const std::filesystem::path path = "foo/bar.txt";
-  const FormattedString       str {"The answer is {}, here's a path: {}", 42, path};
+  const FmtString             str {"The answer is {}, here's a path: {}", 42, path};
   ASSERT_EQ("The answer is 42, here's a path: \"foo/bar.txt\"", str.view());
 }
 
-TEST(FormattedString, SpareCapacity)
+TEST(FmtString, SpareCapacity)
 {
-  const FormattedString<16> str {"123"};
+  const FmtString<16> str {"123"};
 
   ASSERT_EQ("123", str.view());
   ASSERT_STREQ("123", str.data());
@@ -41,9 +41,9 @@ TEST(FormattedString, SpareCapacity)
   ASSERT_EQ(16u, str.capacity());
 }
 
-TEST(FormattedString, ExactCapacity)
+TEST(FmtString, ExactCapacity)
 {
-  const FormattedString<5> str {"12345"};
+  const FmtString<5> str {"12345"};
 
   ASSERT_EQ("12345", str.view());
   ASSERT_STREQ("12345", str.data());
@@ -52,9 +52,9 @@ TEST(FormattedString, ExactCapacity)
   ASSERT_EQ(5u, str.capacity());
 }
 
-TEST(FormattedString, NotEnoughCapacity)
+TEST(FmtString, NotEnoughCapacity)
 {
-  const FormattedString<4> str {"12345"};
+  const FmtString<4> str {"12345"};
 
   ASSERT_EQ("1234", str.view());
   ASSERT_STREQ("1234", str.data());
@@ -63,9 +63,9 @@ TEST(FormattedString, NotEnoughCapacity)
   ASSERT_EQ(4u, str.capacity());
 }
 
-TEST(FormattedString, FormatArgumentCapacityOverflow)
+TEST(FmtString, FormatArgumentCapacityOverflow)
 {
-  const FormattedString<6> str {"1234{}", "567"};
+  const FmtString<6> str {"1234{}", "567"};
 
   ASSERT_EQ("123456", str.view());
   ASSERT_STREQ("123456", str.data());

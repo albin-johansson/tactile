@@ -25,7 +25,7 @@
 #include "core/document/map_document.hpp"
 #include "core/event/layer_events.hpp"
 #include "core/event/property_events.hpp"
-#include "core/util/formatted_string.hpp"
+#include "core/util/fmt_string.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "editor/ui/icons.hpp"
@@ -160,7 +160,7 @@ void layer_selectable(const MapDocument& document,
   const auto flags =
       is_active_layer ? (base_node_flags | ImGuiTreeNodeFlags_Selected) : base_node_flags;
 
-  const FormattedString name {"{} {}", get_icon(layer.get_type()), layer.get_name()};
+  const FmtString name {"{} {}", get_icon(layer.get_type()), layer.get_name()};
 
   if (layer.get_type() != LayerType::GroupLayer) {
     if (ImGui::Selectable(name.data(), is_active_layer)) {

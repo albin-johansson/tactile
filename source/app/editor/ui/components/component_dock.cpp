@@ -28,7 +28,7 @@
 #include "core/ctx/context_manager.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
-#include "core/util/formatted_string.hpp"
+#include "core/util/fmt_string.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
@@ -79,7 +79,7 @@ void show_contents(const ADocument& document, entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
   const auto& context = document.get_contexts().active_context();
 
-  const FormattedString indicator {"{}: {}", lang.misc.context, context.get_name()};
+  const FmtString indicator {"{}: {}", lang.misc.context, context.get_name()};
   ImGui::TextUnformatted(indicator.data());
 
   if (Child pane {"##ComponentsChild"}; pane.is_open()) {
