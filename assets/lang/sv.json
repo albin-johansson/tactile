@@ -113,7 +113,6 @@
     "open-tileset": "Öppna Tilesamling",
     "remove-tileset": "Radera Tilesamling"
   },
-  },
   "settings": {
     "behavior-tab": "Beteende",
     "appearance-tab": "Utseende",
@@ -232,7 +231,8 @@
     "context": "Kontext",
     "context-has-no-components": "Denna kontext har inga komponenter.",
     "no-available-components": "Inga tillgängliga komponenter.",
-    "attribute-name-hint": "Attributnamn"
+    "attribute-name-hint": "Attributnamn",
+    "map-has-no-tilesets": "Denna karta har inga tilesamlingar."
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

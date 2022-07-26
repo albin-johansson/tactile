@@ -341,6 +341,8 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.no_available_components, "no-available-components");
 
   load(json, misc.attribute_name_hint, "attribute-name-hint");
+
+  load(json, misc.map_has_no_tilesets, "map-has-no-tilesets");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

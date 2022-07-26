@@ -113,7 +113,6 @@
     "open-tileset": "Open Tileset",
     "remove-tileset": "Remove Tileset"
   },
-  },
   "settings": {
     "behavior-tab": "Behavior",
     "appearance-tab": "Appearance",
@@ -233,7 +232,8 @@
     "context": "Context",
     "context-has-no-components": "This context has no components.",
     "no-available-components": "No available components.",
-    "attribute-name-hint": "Attribute name"
+    "attribute-name-hint": "Attribute name",
+    "map-has-no-tilesets": "This map has no tilesets."
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

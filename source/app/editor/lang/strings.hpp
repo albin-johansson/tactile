@@ -164,8 +164,6 @@ struct ActionStrings final
   std::string remove_tileset;
 };
 
-};
-
 struct SettingStrings final
 {
   std::string appearance_tab;
@@ -311,6 +309,8 @@ struct MiscStrings final
   std::string no_available_components;
 
   std::string attribute_name_hint;
+
+  std::string map_has_no_tilesets;
 };
 
 struct ParseErrorStrings final
