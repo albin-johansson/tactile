@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/common/functional.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -56,7 +58,8 @@ auto AddColumnCmd::merge_with(const ICommand* cmd) -> bool
 
 auto AddColumnCmd::get_name() const -> std::string
 {
-  return mColumns == 1 ? "Add Column" : "Add Columns";
+  const auto& lang = get_current_language();
+  return mColumns == 1 ? lang.cmd.add_column : lang.cmd.add_columns;
 }
 
 }  // namespace tactile

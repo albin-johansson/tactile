@@ -234,6 +234,18 @@
     "attribute-name-hint": "Attributnamn",
     "map-has-no-tilesets": "Denna karta har inga tilesamlingar."
   },
+  "commands": {
+    "add-row": "Lägg Till Rad",
+    "add-rows": "Lägg Till Rader",
+    "remove-row": "Radera Rad",
+    "remove-rows": "Radera Rader",
+    "add-column": "Lägg Till Kolumn",
+    "add-columns": "Lägg Till Kolumner",
+    "remove-column": "Radera Kolumn",
+    "remove-columns": "Radera Kolumner",
+    "fix-map-tiles": "Reparera Tiles",
+    "resize-map": "Ändra Kartstorlek"
+  },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",
     "unknown": "Ett okänt fel inträffade",

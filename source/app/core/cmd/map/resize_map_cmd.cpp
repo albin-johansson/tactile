@@ -21,7 +21,8 @@
 
 #include <utility>  // move
 
-#include "core/document/map_document.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -68,7 +69,8 @@ void ResizeMapCmd::redo()
 
 auto ResizeMapCmd::get_name() const -> std::string
 {
-  return "Resize Map";
+  const auto& lang = get_current_language();
+  return lang.cmd.resize_map;
 }
 
 auto ResizeMapCmd::is_lossy_resize() const -> bool

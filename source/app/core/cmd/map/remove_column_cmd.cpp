@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/common/functional.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -64,7 +66,8 @@ auto RemoveColumnCmd::merge_with(const ICommand* cmd) -> bool
 
 auto RemoveColumnCmd::get_name() const -> std::string
 {
-  return mColumns == 1 ? "Remove Column" : "Remove Columns";
+  const auto& lang = get_current_language();
+  return mColumns == 1 ? lang.cmd.remove_column : lang.cmd.remove_columns;
 }
 
 }  // namespace tactile

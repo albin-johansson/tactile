@@ -313,6 +313,20 @@ struct MiscStrings final
   std::string map_has_no_tilesets;
 };
 
+struct CommandStrings final
+{
+  std::string add_row;
+  std::string add_rows;
+  std::string remove_row;
+  std::string remove_rows;
+  std::string add_column;
+  std::string add_columns;
+  std::string remove_column;
+  std::string remove_columns;
+  std::string fix_map_tiles;
+  std::string resize_map;
+};
+
 struct ParseErrorStrings final
 {
   std::string none;
@@ -387,6 +401,7 @@ struct Strings final
   SettingStrings    setting;
   TooltipStrings    tooltip;
   MiscStrings       misc;
+  CommandStrings    cmd;
   ParseErrorStrings parse_error;
 };
 

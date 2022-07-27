@@ -345,6 +345,20 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.map_has_no_tilesets, "map-has-no-tilesets");
 }
 
+void load_command_strings(const JSON& json, CommandStrings& cmd)
+{
+  load(json, cmd.add_row, "add-row");
+  load(json, cmd.add_rows, "add-rows");
+  load(json, cmd.remove_row, "remove-row");
+  load(json, cmd.remove_rows, "remove-rows");
+  load(json, cmd.add_column, "add-columns");
+  load(json, cmd.add_columns, "add-columns");
+  load(json, cmd.remove_column, "remove-columns");
+  load(json, cmd.remove_columns, "remove-columns");
+  load(json, cmd.fix_map_tiles, "fix-map-tiles");
+  load(json, cmd.resize_map, "resize-map");
+}
+
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)
 {
   load(json, err.none, "none");
@@ -441,6 +455,10 @@ auto parse_language(const char* path, const Strings& fallback) -> Strings
 
   if (const auto* misc = try_get(json, "misc")) {
     load_misc_strings(*misc, strings.misc);
+  }
+
+  if (const auto* commands = try_get(json, "commands")) {
+    load_command_strings(*commands, strings.cmd);
   }
 
   if (const auto* err = try_get(json, "parse-errors")) {

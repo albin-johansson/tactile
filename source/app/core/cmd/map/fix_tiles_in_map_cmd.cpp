@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/layer/tile_layer.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -54,7 +56,8 @@ void FixTilesInMapCmd::redo()
 
 auto FixTilesInMapCmd::get_name() const -> std::string
 {
-  return "Fix Tiles In Map";
+  const auto& lang = get_current_language();
+  return lang.cmd.fix_map_tiles;
 }
 
 }  // namespace tactile

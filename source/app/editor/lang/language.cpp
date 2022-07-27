@@ -32,7 +32,7 @@
 namespace tactile {
 namespace {
 
-inline HashMap<Lang, Strings> _languages;
+inline HashMap<Lang, Strings> languages;
 
 }  // namespace
 
@@ -42,20 +42,20 @@ void load_languages()
 
   auto en = io::parse_language("assets/lang/en.json");
 
-  _languages[Lang::SV] = io::parse_language("assets/lang/sv.json", en);
-  _languages[Lang::EN_GB] = io::parse_language("assets/lang/en_GB.json", en);
+  languages[Lang::SV] = io::parse_language("assets/lang/sv.json", en);
+  languages[Lang::EN_GB] = io::parse_language("assets/lang/en_GB.json", en);
 
-  _languages[Lang::EN] = std::move(en);
+  languages[Lang::EN] = std::move(en);
 }
 
 auto get_language(const Lang lang) -> const Strings&
 {
-  return lookup_in(_languages, lang);
+  return lookup_in(languages, lang);
 }
 
 auto get_current_language() -> const Strings&
 {
-  return lookup_in(_languages, io::get_preferences().language);
+  return lookup_in(languages, io::get_preferences().language);
 }
 
 auto get_language_name(const Lang lang) -> const char*
