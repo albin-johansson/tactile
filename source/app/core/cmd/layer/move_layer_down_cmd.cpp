@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -46,7 +48,8 @@ void MoveLayerDownCmd::redo()
 
 auto MoveLayerDownCmd::get_name() const -> std::string
 {
-  return "Move Layer Down";
+  const auto& lang = get_current_language();
+  return lang.cmd.move_layer_down;
 }
 
 }  // namespace tactile

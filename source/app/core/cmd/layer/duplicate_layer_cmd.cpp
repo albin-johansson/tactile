@@ -20,6 +20,8 @@
 #include "duplicate_layer_cmd.hpp"
 
 #include "core/document/map_document.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -60,7 +62,8 @@ void DuplicateLayerCmd::redo()
 
 auto DuplicateLayerCmd::get_name() const -> std::string
 {
-  return "Duplicate Layer";
+  const auto& lang = get_current_language();
+  return lang.cmd.duplicate_layer;
 }
 
 }  // namespace tactile

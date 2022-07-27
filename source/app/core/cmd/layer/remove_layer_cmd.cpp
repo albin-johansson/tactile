@@ -20,6 +20,8 @@
 #include "remove_layer_cmd.hpp"
 
 #include "core/document/map_document.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -58,7 +60,8 @@ void RemoveLayerCmd::redo()
 
 auto RemoveLayerCmd::get_name() const -> std::string
 {
-  return "Remove Layer";
+  const auto& lang = get_current_language();
+  return lang.cmd.remove_layer;
 }
 
 }  // namespace tactile

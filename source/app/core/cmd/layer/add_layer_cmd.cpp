@@ -20,6 +20,8 @@
 #include "add_layer_cmd.hpp"
 
 #include "core/document/map_document.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -79,7 +81,8 @@ void AddLayerCmd::redo()
 
 auto AddLayerCmd::get_name() const -> std::string
 {
-  return "Add Layer";
+  const auto& lang = get_current_language();
+  return lang.cmd.add_layer;
 }
 
 }  // namespace tactile

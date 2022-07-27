@@ -245,7 +245,16 @@
     "remove-column": "Remove Column",
     "remove-columns": "Remove Columns",
     "fix-map-tiles": "Fix Tiles In Map",
-    "resize-map": "Resize Map"
+    "resize-map": "Resize Map",
+    "add-layer": "Add Layer",
+    "remove-layer": "Remove Layer",
+    "duplicate-layer": "Duplicate Layer",
+    "move-layer-up": "Move Layer Up",
+    "move-layer-down": "Move Layer Down",
+    "rename-layer": "Rename Layer",
+    "set-layer-opacity": "Set Layer Opacity",
+    "show-layer": "Show Layer",
+    "hide-layer": "Hide Layer"
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

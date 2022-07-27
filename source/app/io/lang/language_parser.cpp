@@ -357,6 +357,16 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.remove_columns, "remove-columns");
   load(json, cmd.fix_map_tiles, "fix-map-tiles");
   load(json, cmd.resize_map, "resize-map");
+
+  load(json, cmd.add_layer, "add-layer");
+  load(json, cmd.remove_layer, "remove-layer");
+  load(json, cmd.duplicate_layer, "duplicate-layer");
+  load(json, cmd.move_layer_up, "move-layer-up");
+  load(json, cmd.move_layer_down, "move-layer-down");
+  load(json, cmd.rename_layer, "rename-layer");
+  load(json, cmd.set_layer_opacity, "set-layer-opacity");
+  load(json, cmd.show_layer, "show-layer");
+  load(json, cmd.hide_layer, "hide-layer");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -55,7 +57,8 @@ void SetLayerVisibilityCmd::redo()
 
 auto SetLayerVisibilityCmd::get_name() const -> std::string
 {
-  return mNewVisibility ? "Show Layer" : "Hide Layer";
+  const auto& lang = get_current_language();
+  return mNewVisibility ? lang.cmd.show_layer : lang.cmd.hide_layer;
 }
 
 }  // namespace tactile

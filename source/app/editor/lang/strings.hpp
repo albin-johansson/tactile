@@ -325,6 +325,16 @@ struct CommandStrings final
   std::string remove_columns;
   std::string fix_map_tiles;
   std::string resize_map;
+
+  std::string add_layer;
+  std::string remove_layer;
+  std::string duplicate_layer;
+  std::string move_layer_up;
+  std::string move_layer_down;
+  std::string rename_layer;
+  std::string set_layer_opacity;
+  std::string show_layer;
+  std::string hide_layer;
 };
 
 struct ParseErrorStrings final

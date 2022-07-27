@@ -19,6 +19,8 @@
 
 #include "set_layer_opacity_cmd.hpp"
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -58,7 +60,8 @@ auto SetLayerOpacityCmd::merge_with(const ICommand* cmd) -> bool
 
 auto SetLayerOpacityCmd::get_name() const -> std::string
 {
-  return "Set Layer Opacity";
+  const auto& lang = get_current_language();
+  return lang.cmd.set_layer_opacity;
 }
 
 }  // namespace tactile

@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -53,7 +55,8 @@ void RenameLayerCmd::redo()
 
 auto RenameLayerCmd::get_name() const -> std::string
 {
-  return "Rename Layer";
+  const auto& lang = get_current_language();
+  return lang.cmd.rename_layer;
 }
 
 }  // namespace tactile

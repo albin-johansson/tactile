@@ -244,7 +244,16 @@
     "remove-column": "Radera Kolumn",
     "remove-columns": "Radera Kolumner",
     "fix-map-tiles": "Reparera Tiles",
-    "resize-map": "Ändra Kartstorlek"
+    "resize-map": "Ändra Kartstorlek",
+    "add-layer": "Lägg Till Lager",
+    "remove-layer": "Radera Lager",
+    "duplicate-layer": "Duplicera Lager",
+    "move-layer-up": "Flytta Upp Lager",
+    "move-layer-down": "Flytta Ner Lager",
+    "rename-layer": "Ändra Lagernamn",
+    "set-layer-opacity": "Ändra Lageropacitet",
+    "show-layer": "Visa Lager",
+    "hide-layer": "Göm Lager"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",
