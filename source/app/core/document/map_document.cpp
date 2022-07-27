@@ -179,7 +179,7 @@ void MapDocument::set_object_visible(const UUID& objectId, const bool visible)
 void MapDocument::set_object_name(const UUID& objectId, std::string name)
 {
   auto object = get_object(objectId);
-  get_history().exec<SetObjectNameCmd>(std::move(object), std::move(name));
+  get_history().exec<RenameObjectCmd>(std::move(object), std::move(name));
 }
 
 void MapDocument::set_object_tag(const UUID& objectId, std::string tag)

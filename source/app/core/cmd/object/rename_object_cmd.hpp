@@ -26,10 +26,10 @@
 
 namespace tactile {
 
-class SetObjectNameCmd final : public ICommand
+class RenameObjectCmd final : public ICommand
 {
  public:
-  SetObjectNameCmd(Shared<Object> object, std::string name);
+  RenameObjectCmd(Shared<Object> object, std::string name);
 
   void undo() override;
 

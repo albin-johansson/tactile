@@ -21,6 +21,6 @@
 
 #include "core/cmd/object/add_object_cmd.hpp"
 #include "core/cmd/object/move_object_cmd.hpp"
-#include "core/cmd/object/set_object_name_cmd.hpp"
+#include "core/cmd/object/rename_object_cmd.hpp"
 #include "core/cmd/object/set_object_tag_cmd.hpp"
 #include "core/cmd/object/set_object_visible_cmd.hpp"
