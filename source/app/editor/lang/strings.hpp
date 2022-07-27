@@ -335,6 +335,15 @@ struct CommandStrings final
   std::string set_layer_opacity;
   std::string show_layer;
   std::string hide_layer;
+
+  std::string add_point_object;
+  std::string add_rectangle_object;
+  std::string add_ellipse_object;
+  std::string move_object;
+  std::string rename_object;
+  std::string update_object_tag;
+  std::string show_object;
+  std::string hide_object;
 };
 
 struct ParseErrorStrings final

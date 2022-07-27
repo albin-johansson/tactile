@@ -367,6 +367,15 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.set_layer_opacity, "set-layer-opacity");
   load(json, cmd.show_layer, "show-layer");
   load(json, cmd.hide_layer, "hide-layer");
+
+  load(json, cmd.add_point_object, "add-point-object");
+  load(json, cmd.add_rectangle_object, "add-rectangle-object");
+  load(json, cmd.add_ellipse_object, "add-ellipse-object");
+  load(json, cmd.move_object, "move-object");
+  load(json, cmd.rename_object, "rename-object");
+  load(json, cmd.update_object_tag, "update-object-tag");
+  load(json, cmd.show_object, "show-object");
+  load(json, cmd.hide_object, "hide-object");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

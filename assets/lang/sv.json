@@ -253,7 +253,15 @@
     "rename-layer": "Ändra Lagernamn",
     "set-layer-opacity": "Ändra Lageropacitet",
     "show-layer": "Visa Lager",
-    "hide-layer": "Göm Lager"
+    "hide-layer": "Göm Lager",
+    "add-point-object": "Skapa Punkt",
+    "add-rectangle-object": "Skapa Rektangel",
+    "add-ellipse-object": "Skapa Ellips",
+    "move-object": "Flytta Objekt",
+    "rename-object": "Ändra Objektnamn",
+    "update-object-tag": "Ändra Objekttagg",
+    "show-object": "Visa Objekt",
+    "hide-object": "Göm Objekt"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

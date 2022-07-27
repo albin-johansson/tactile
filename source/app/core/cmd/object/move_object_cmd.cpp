@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -49,7 +51,8 @@ void MoveObjectCmd::redo()
 
 auto MoveObjectCmd::get_name() const -> std::string
 {
-  return "Move Object";
+  const auto& lang = get_current_language();
+  return lang.cmd.move_object;
 }
 
 }  // namespace tactile

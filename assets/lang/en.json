@@ -254,7 +254,15 @@
     "rename-layer": "Rename Layer",
     "set-layer-opacity": "Set Layer Opacity",
     "show-layer": "Show Layer",
-    "hide-layer": "Hide Layer"
+    "hide-layer": "Hide Layer",
+    "add-point-object": "Add Point Object",
+    "add-rectangle-object": "Add Rectangle Object",
+    "add-ellipse-object": "Add Ellipse Object",
+    "move-object": "Move Object",
+    "rename-object": "Rename Object",
+    "update-object-tag": "Update Object Tag",
+    "show-object": "Show Object",
+    "hide-object": "Hide Object"
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

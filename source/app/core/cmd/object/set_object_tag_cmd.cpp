@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -60,7 +62,8 @@ auto SetObjectTagCmd::merge_with(const ICommand* cmd) -> bool
 
 auto SetObjectTagCmd::get_name() const -> std::string
 {
-  return "Update Object Tag";
+  const auto& lang = get_current_language();
+  return lang.cmd.update_object_tag;
 }
 
 }  // namespace tactile

@@ -23,6 +23,8 @@
 
 #include "core/document/map_document.hpp"
 #include "core/layer/object_layer.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -73,15 +75,16 @@ void AddObjectCmd::redo()
 
 auto AddObjectCmd::get_name() const -> std::string
 {
+  const auto& lang = get_current_language();
   switch (mObjectType) {
     case ObjectType::Point:
-      return "Add Point Object";
+      return lang.cmd.add_point_object;
 
     case ObjectType::Rect:
-      return "Add Rectangle Object";
+      return lang.cmd.add_rectangle_object;
 
     case ObjectType::Ellipse:
-      return "Add Ellipse Object";
+      return lang.cmd.add_ellipse_object;
 
     default:
       throw TactileError {"Invalid object type!"};
