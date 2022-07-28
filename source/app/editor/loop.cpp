@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-AEventLoop::AEventLoop(AppConfiguration* cfg)
+AEventLoop::AEventLoop(AppCfg* cfg)
     : mCfg {cfg}
 {
   if (!mCfg) {

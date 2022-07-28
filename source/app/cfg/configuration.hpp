@@ -35,10 +35,10 @@
 namespace tactile {
 
 /// Handles the configuration of the application window, OpenGL context, etc.
-class AppConfiguration final
+class AppCfg final
 {
  public:
-  AppConfiguration();
+  AppCfg();
 
   /* Returns the application window */
   [[nodiscard]] auto window() -> cen::window&;

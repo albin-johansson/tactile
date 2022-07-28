@@ -53,8 +53,8 @@ auto main(int, char**) -> int
     spdlog::info("Using persistent file directory {}",
                  tactile::io::persistent_file_dir());
 
-    tactile::AppConfiguration configuration;
-    tactile::App              app {&configuration};
+    tactile::AppCfg cfg;
+    tactile::App    app {&cfg};
     app.start();
 
     return EXIT_SUCCESS;

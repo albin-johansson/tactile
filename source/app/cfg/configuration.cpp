@@ -89,7 +89,7 @@ inline void terminate_handler()
   std::abort();
 }
 
-AppConfiguration::AppConfiguration()
+AppCfg::AppCfg()
 {
   std::set_terminate(&terminate_handler);
 
@@ -132,7 +132,7 @@ AppConfiguration::AppConfiguration()
   mWindow->maximize();
 }
 
-auto AppConfiguration::window() -> cen::window&
+auto AppCfg::window() -> cen::window&
 {
   return mWindow.value();
 }
