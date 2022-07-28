@@ -24,6 +24,8 @@
 #include "core/comp/component.hpp"
 #include "core/comp/component_bundle.hpp"
 #include "core/ctx/context.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -77,7 +79,8 @@ auto UpdateAttachedComponentCmd::merge_with(const ICommand* cmd) -> bool
 
 auto UpdateAttachedComponentCmd::get_name() const -> std::string
 {
-  return "Update Component Attribute";
+  const auto& lang = get_current_language();
+  return lang.cmd.update_comp_attr;
 }
 
 }  // namespace tactile

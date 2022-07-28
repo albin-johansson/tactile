@@ -17,12 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "remove_component_cmd.hpp"
+#include "detach_component_cmd.hpp"
 
 #include <utility>  // move
 
 #include "core/comp/component_bundle.hpp"
 #include "core/ctx/context.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -51,7 +53,8 @@ void DetachComponentCmd::redo()
 
 auto DetachComponentCmd::get_name() const -> std::string
 {
-  return "Remove Component";
+  const auto& lang = get_current_language();
+  return lang.cmd.detach_comp;
 }
 
 }  // namespace tactile

@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/comp/component_index.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -54,7 +56,8 @@ void DefineComponentCmd::redo()
 
 auto DefineComponentCmd::get_name() const -> std::string
 {
-  return "Create Component Definition";
+  const auto& lang = get_current_language();
+  return lang.cmd.define_comp;
 }
 
 }  // namespace tactile

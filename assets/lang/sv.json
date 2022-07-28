@@ -261,7 +261,20 @@
     "rename-object": "Ändra Objektnamn",
     "update-object-tag": "Ändra Objekttagg",
     "show-object": "Visa Objekt",
-    "hide-object": "Göm Objekt"
+    "hide-object": "Göm Objekt",
+    "define-comp": "Definera Komponent",
+    "undef-comp": "Ta Bort Komponentdefinition",
+    "attach-comp": "Lägg Till Komponent",
+    "detach-comp": "Ta Bort Komponent",
+    "rename-comp": "Ändra Komponentnamn",
+    "create-comp-attr": "Skapa Komponentattribut",
+    "remove-comp-attr": "Radera Komponentattribut",
+    "update-comp-attr": "Uppdatera Komponentattribut",
+    "duplicate-comp-attr": "Duplicera Komponentattribut",
+    "update-comp-attr-defaults": "Uppdatera Startvärde för Komponentattribut",
+    "change-comp-attr-type": "Ändra Komponentattributtyp",
+    "rename-comp-attr": "Ändra Komponentattributnamn",
+    "reset-comp": "Återställ Komponent"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

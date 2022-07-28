@@ -344,6 +344,20 @@ struct CommandStrings final
   std::string update_object_tag;
   std::string show_object;
   std::string hide_object;
+
+  std::string define_comp;
+  std::string undef_comp;
+  std::string attach_comp;
+  std::string detach_comp;
+  std::string rename_comp;
+  std::string create_comp_attr;
+  std::string remove_comp_attr;
+  std::string update_comp_attr;
+  std::string duplicate_comp_attr;
+  std::string update_comp_attr_defaults;
+  std::string change_comp_attr_type;
+  std::string rename_comp_attr;
+  std::string reset_comp;
 };
 
 struct ParseErrorStrings final

@@ -19,10 +19,11 @@
 
 #include "attach_component_cmd.hpp"
 
-#include "core/comp/component.hpp"
 #include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -57,7 +58,8 @@ void AttachComponentCmd::redo()
 
 auto AttachComponentCmd::get_name() const -> std::string
 {
-  return "Attach Component";
+  const auto& lang = get_current_language();
+  return lang.cmd.attach_comp;
 }
 
 }  // namespace tactile

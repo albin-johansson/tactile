@@ -24,6 +24,8 @@
 #include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -66,7 +68,8 @@ void ResetAttachedComponentCmd::redo()
 
 auto ResetAttachedComponentCmd::get_name() const -> std::string
 {
-  return "Reset Component Values";
+  const auto& lang = get_current_language();
+  return lang.cmd.reset_comp;
 }
 
 }  // namespace tactile

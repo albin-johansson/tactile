@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/comp/component_index.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -53,7 +55,8 @@ void RenameComponentCmd::redo()
 
 auto RenameComponentCmd::get_name() const -> std::string
 {
-  return "Rename Component";
+  const auto& lang = get_current_language();
+  return lang.cmd.rename_comp;
 }
 
 }  // namespace tactile

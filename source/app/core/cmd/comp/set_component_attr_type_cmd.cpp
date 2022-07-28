@@ -25,6 +25,8 @@
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -81,7 +83,8 @@ void SetComponentAttrTypeCmd::redo()
 
 auto SetComponentAttrTypeCmd::get_name() const -> std::string
 {
-  return "Change Component Attribute Type";
+  const auto& lang = get_current_language();
+  return lang.cmd.change_comp_attr_type;
 }
 
 }  // namespace tactile

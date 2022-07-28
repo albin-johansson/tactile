@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/comp/component_index.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -49,9 +51,9 @@ void UpdateComponentCmd::undo()
 
 void UpdateComponentCmd::redo()
 {
-  auto& component = mIndex->at(mComponentId);
-  mPreviousValue = component.get_attr(mAttributeName);
-  component.update_attr(mAttributeName, mUpdatedValue);
+  auto& definition = mIndex->at(mComponentId);
+  mPreviousValue = definition.get_attr(mAttributeName);
+  definition.update_attr(mAttributeName, mUpdatedValue);
 }
 
 auto UpdateComponentCmd::merge_with(const ICommand* cmd) -> bool
@@ -68,7 +70,8 @@ auto UpdateComponentCmd::merge_with(const ICommand* cmd) -> bool
 
 auto UpdateComponentCmd::get_name() const -> std::string
 {
-  return "Update Component Attribute";
+  const auto& lang = get_current_language();
+  return lang.cmd.update_comp_attr_defaults;
 }
 
 }  // namespace tactile

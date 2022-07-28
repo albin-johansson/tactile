@@ -376,6 +376,20 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.update_object_tag, "update-object-tag");
   load(json, cmd.show_object, "show-object");
   load(json, cmd.hide_object, "hide-object");
+
+  load(json, cmd.define_comp, "define-comp");
+  load(json, cmd.undef_comp, "undef-comp");
+  load(json, cmd.attach_comp, "attach-comp");
+  load(json, cmd.detach_comp, "detach-comp");
+  load(json, cmd.rename_comp, "rename-comp");
+  load(json, cmd.create_comp_attr, "create-comp-attr");
+  load(json, cmd.remove_comp_attr, "remove-comp-attr");
+  load(json, cmd.update_comp_attr, "update-comp-attr");
+  load(json, cmd.duplicate_comp_attr, "duplicate-comp-attr");
+  load(json, cmd.update_comp_attr_defaults, "update-comp-attr-defaults");
+  load(json, cmd.change_comp_attr_type, "change-comp-attr-type");
+  load(json, cmd.rename_comp_attr, "rename-comp-attr");
+  load(json, cmd.reset_comp, "reset-comp");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)
