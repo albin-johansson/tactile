@@ -275,7 +275,12 @@
     "update-comp-attr-defaults": "Update Component Attribute Defaults",
     "change-comp-attr-type": "Change Component Attribute Type",
     "rename-comp-attr": "Rename Component Attribute",
-    "reset-comp": "Reset Component"
+    "reset-comp": "Reset Component",
+    "add-property": "Add Property",
+    "remove-property": "Remove Property",
+    "rename-property": "Rename Property",
+    "update-property": "Update Property",
+    "change-property-type": "Change Property Type"
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

@@ -23,6 +23,8 @@
 
 #include "core/ctx/context.hpp"
 #include "core/ctx/property_bundle.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -52,7 +54,8 @@ void RemovePropertyCmd::redo()
 
 auto RemovePropertyCmd::get_name() const -> std::string
 {
-  return "Remove Property";
+  const auto& lang = get_current_language();
+  return lang.cmd.remove_property;
 }
 
 }  // namespace tactile

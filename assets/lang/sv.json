@@ -274,7 +274,12 @@
     "update-comp-attr-defaults": "Uppdatera Startvärde för Komponentattribut",
     "change-comp-attr-type": "Ändra Komponentattributtyp",
     "rename-comp-attr": "Ändra Komponentattributnamn",
-    "reset-comp": "Återställ Komponent"
+    "reset-comp": "Återställ Komponent",
+    "add-property": "Lägg Till Attribut",
+    "remove-property": "Radera Attribut",
+    "rename-property": "Ändra Attributnamn",
+    "update-property": "Uppdatera Attribut",
+    "change-property-type": "Ändra Attributtyp"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

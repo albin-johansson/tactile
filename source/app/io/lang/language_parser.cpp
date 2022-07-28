@@ -390,6 +390,12 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.change_comp_attr_type, "change-comp-attr-type");
   load(json, cmd.rename_comp_attr, "rename-comp-attr");
   load(json, cmd.reset_comp, "reset-comp");
+
+  load(json, cmd.add_property, "add-property");
+  load(json, cmd.remove_property, "remove-property");
+  load(json, cmd.rename_property, "rename-property");
+  load(json, cmd.update_property, "update-property");
+  load(json, cmd.change_property_type, "change-property-type");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

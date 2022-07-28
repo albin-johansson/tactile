@@ -23,6 +23,8 @@
 
 #include "core/ctx/context.hpp"
 #include "core/ctx/property_bundle.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -67,7 +69,8 @@ auto UpdatePropertyCmd::merge_with(const ICommand* cmd) -> bool
 
 auto UpdatePropertyCmd::get_name() const -> std::string
 {
-  return "Update Property";
+  const auto& lang = get_current_language();
+  return lang.cmd.update_property;
 }
 
 }  // namespace tactile

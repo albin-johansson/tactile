@@ -358,6 +358,12 @@ struct CommandStrings final
   std::string change_comp_attr_type;
   std::string rename_comp_attr;
   std::string reset_comp;
+
+  std::string add_property;
+  std::string remove_property;
+  std::string rename_property;
+  std::string update_property;
+  std::string change_property_type;
 };
 
 struct ParseErrorStrings final
