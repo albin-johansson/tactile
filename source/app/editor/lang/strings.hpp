@@ -368,6 +368,10 @@ struct CommandStrings final
   std::string add_tileset;
   std::string remove_tileset;
   std::string rename_tileset;
+
+  std::string stamp_tool;
+  std::string eraser_tool;
+  std::string bucket_tool;
 };
 
 struct ParseErrorStrings final

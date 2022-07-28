@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/layer/tile_layer.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -52,7 +54,8 @@ void StampToolCmd::redo()
 
 auto StampToolCmd::get_name() const -> std::string
 {
-  return "Stamp Sequence";
+  const auto& lang = get_current_language();
+  return lang.cmd.stamp_tool;
 }
 
 void StampToolCmd::apply_sequence(const TileCache& cache)

@@ -400,6 +400,10 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.add_tileset, "add-tileset");
   load(json, cmd.remove_tileset, "remove-tileset");
   load(json, cmd.rename_tileset, "rename-tileset");
+
+  load(json, cmd.stamp_tool, "stamp-tool");
+  load(json, cmd.eraser_tool, "eraser-tool");
+  load(json, cmd.bucket_tool, "bucket-tool");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

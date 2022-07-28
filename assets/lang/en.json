@@ -283,7 +283,10 @@
     "change-property-type": "Change Property Type",
     "add-tileset": "Add Tileset",
     "remove-tileset": "Remove Tileset",
-    "rename-tileset": "Rename Tileset"
+    "rename-tileset": "Rename Tileset",
+    "stamp-tool": "Stamp Sequence",
+    "eraser-tool": "Eraser Sequence",
+    "bucket-tool": "Bucket Fill"
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

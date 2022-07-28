@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/layer/tile_layer.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -53,7 +55,8 @@ void EraserToolCmd::redo()
 
 auto EraserToolCmd::get_name() const -> std::string
 {
-  return "Eraser Sequence";
+  const auto& lang = get_current_language();
+  return lang.cmd.eraser_tool;
 }
 
 }  // namespace tactile

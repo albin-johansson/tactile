@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/layer/tile_layer.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -63,7 +65,8 @@ void BucketToolCmd::redo()
 
 auto BucketToolCmd::get_name() const -> std::string
 {
-  return "Bucket Fill";
+  const auto& lang = get_current_language();
+  return lang.cmd.bucket_tool;
 }
 
 }  // namespace tactile

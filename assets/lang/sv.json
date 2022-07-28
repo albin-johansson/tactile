@@ -282,7 +282,10 @@
     "change-property-type": "Ändra Attributtyp",
     "add-tileset": "Lägg Till Tilesamling",
     "remove-tileset": "Radera Tilesamling",
-    "rename-tileset": "Ändra Tilesamlingsnamn"
+    "rename-tileset": "Ändra Tilesamlingsnamn",
+    "stamp-tool": "Stämpelsekvens",
+    "eraser-tool": "Suddsekvens",
+    "bucket-tool": "Hinkapplicering"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",
