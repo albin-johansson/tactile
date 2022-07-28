@@ -32,6 +32,7 @@
 #include "editor/ui/common/checkboxes.hpp"
 #include "editor/ui/common/colors.hpp"
 #include "editor/ui/common/tooltips.hpp"
+#include "editor/ui/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/themes.hpp"
@@ -119,6 +120,10 @@ void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
 void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 {
   io::set_preferences(mUiSettings);
+
+  if (mUiSettings.language != mSnapshot.language) {
+    reset_layout();
+  }
 
   if (mUiSettings.command_capacity != mSnapshot.command_capacity) {
     dispatcher.enqueue<SetCommandCapacityEvent>(mUiSettings.command_capacity);
