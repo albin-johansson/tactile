@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/tileset/tileset.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -61,7 +63,8 @@ auto RenameTilesetCmd::merge_with(const ICommand* cmd) -> bool
 
 auto RenameTilesetCmd::get_name() const -> std::string
 {
-  return "Rename Tileset";
+  const auto& lang = get_current_language();
+  return lang.cmd.rename_tileset;
 }
 
 }  // namespace tactile

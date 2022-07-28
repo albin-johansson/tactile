@@ -280,7 +280,10 @@
     "remove-property": "Remove Property",
     "rename-property": "Rename Property",
     "update-property": "Update Property",
-    "change-property-type": "Change Property Type"
+    "change-property-type": "Change Property Type",
+    "add-tileset": "Add Tileset",
+    "remove-tileset": "Remove Tileset",
+    "rename-tileset": "Rename Tileset"
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

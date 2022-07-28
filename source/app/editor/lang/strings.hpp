@@ -364,6 +364,10 @@ struct CommandStrings final
   std::string rename_property;
   std::string update_property;
   std::string change_property_type;
+
+  std::string add_tileset;
+  std::string remove_tileset;
+  std::string rename_tileset;
 };
 
 struct ParseErrorStrings final

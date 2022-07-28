@@ -396,6 +396,10 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.rename_property, "rename-property");
   load(json, cmd.update_property, "update-property");
   load(json, cmd.change_property_type, "change-property-type");
+
+  load(json, cmd.add_tileset, "add-tileset");
+  load(json, cmd.remove_tileset, "remove-tileset");
+  load(json, cmd.rename_tileset, "rename-tileset");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

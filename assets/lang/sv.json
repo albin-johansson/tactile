@@ -31,7 +31,7 @@
     "rename-property": "Ändra Attributnamn",
     "rename-layer": "Ändra Lagernamn",
     "rename-component": "Ändra Komponentnamn",
-    "rename-component-attribute": "Ändra Komponentattributnamn"
+    "rename-component-attribute": "Ändra Komponentattributsnamn"
   },
   "actions": {
     "create-map": "Skapa Karta...",
@@ -273,13 +273,16 @@
     "duplicate-comp-attr": "Duplicera Komponentattribut",
     "update-comp-attr-defaults": "Uppdatera Startvärde för Komponentattribut",
     "change-comp-attr-type": "Ändra Komponentattributtyp",
-    "rename-comp-attr": "Ändra Komponentattributnamn",
+    "rename-comp-attr": "Ändra Komponentattributsnamn",
     "reset-comp": "Återställ Komponent",
     "add-property": "Lägg Till Attribut",
     "remove-property": "Radera Attribut",
     "rename-property": "Ändra Attributnamn",
     "update-property": "Uppdatera Attribut",
-    "change-property-type": "Ändra Attributtyp"
+    "change-property-type": "Ändra Attributtyp",
+    "add-tileset": "Lägg Till Tilesamling",
+    "remove-tileset": "Radera Tilesamling",
+    "rename-tileset": "Ändra Tilesamlingsnamn"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

@@ -34,10 +34,10 @@ class TilesetDocument;
 class AddTilesetCmd final : public ICommand
 {
  public:
-  AddTilesetCmd(DocumentModel*     model,
-                const UUID&        mapId,
-                const UUID&        tilesetId,
-                const TilesetInfo& info);
+  AddTilesetCmd(DocumentModel* model,
+                const UUID&    map_id,
+                const UUID&    tileset_id,
+                TilesetInfo    info);
 
   void undo() override;
 

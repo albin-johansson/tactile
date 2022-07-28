@@ -24,6 +24,8 @@
 #include "core/document/map_document.hpp"
 #include "core/document/tileset_document.hpp"
 #include "core/model.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
@@ -80,7 +82,8 @@ void RemoveTilesetCmd::redo()
 
 auto RemoveTilesetCmd::get_name() const -> std::string
 {
-  return "Remove Tileset";
+  const auto& lang = get_current_language();
+  return lang.cmd.remove_tileset;
 }
 
 }  // namespace tactile

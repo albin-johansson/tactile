@@ -25,19 +25,21 @@
 #include "core/document/map_document.hpp"
 #include "core/document/tileset_document.hpp"
 #include "core/model.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-AddTilesetCmd::AddTilesetCmd(DocumentModel*     model,
-                             const UUID&        mapId,
-                             const UUID&        tilesetId,
-                             const TilesetInfo& info)
+AddTilesetCmd::AddTilesetCmd(DocumentModel* model,
+                             const UUID&    map_id,
+                             const UUID&    tileset_id,
+                             TilesetInfo    info)
     : mModel {model}
-    , mMapId {mapId}
-    , mTilesetId {tilesetId}
-    , mTilesetInfo {info}
+    , mMapId {map_id}
+    , mTilesetId {tileset_id}
+    , mTilesetInfo {std::move(info)}
 {
   if (!mModel) {
     throw TactileError {"Invalid null model!"};
@@ -82,7 +84,8 @@ void AddTilesetCmd::redo()
 
 auto AddTilesetCmd::get_name() const -> std::string
 {
-  return "Add Tileset";
+  const auto& lang = get_current_language();
+  return lang.cmd.add_tileset;
 }
 
 }  // namespace tactile
