@@ -27,11 +27,6 @@
 #include "cfg/protobuf_context.hpp"
 #include "core/common/maybe.hpp"
 
-/**
- * \defgroup cfg Configuration
- * Contains utilities related to the configuration of the application.
- */
-
 namespace tactile {
 
 /// Handles the configuration of the application window, OpenGL context, etc.
@@ -40,7 +35,6 @@ class AppCfg final
  public:
   AppCfg();
 
-  /* Returns the application window */
   [[nodiscard]] auto window() -> cen::window&;
 
  private:
@@ -48,7 +42,7 @@ class AppCfg final
   cen::sdl        mSDL;
   cen::img        mIMG;
 
-  /* Initialization of these members needs to be deferred */
+  /// Initialization of these members needs to be deferred
   Maybe<cen::window>     mWindow;
   Maybe<cen::gl_context> mOpenGL;
   Maybe<ImGuiContext>    mImGui;

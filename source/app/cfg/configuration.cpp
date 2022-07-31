@@ -39,7 +39,7 @@
 namespace tactile {
 namespace {
 
-void _init_sdl_attributes()
+void init_sdl_attributes()
 {
   /* Ensure nearest pixel sampling */
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
@@ -62,7 +62,7 @@ void _init_sdl_attributes()
   cen::gl::set(cen::gl_attribute::double_buffer, 1);
 }
 
-[[nodiscard]] consteval auto _get_window_flags() noexcept -> uint32
+[[nodiscard]] consteval auto get_window_flags() noexcept -> uint32
 {
   auto flags = cen::window::hidden | cen::window::resizable | cen::window::opengl;
 
@@ -75,7 +75,7 @@ void _init_sdl_attributes()
 
 }  // namespace
 
-/* Keep the handler out of the anonymous namespace */
+// Keep the handler out of the anonymous namespace
 inline void terminate_handler()
 {
   try {
@@ -93,22 +93,22 @@ AppCfg::AppCfg()
 {
   std::set_terminate(&terminate_handler);
 
-  _init_sdl_attributes();
+  init_sdl_attributes();
 
-  mWindow.emplace("Tactile", cen::window::default_size(), _get_window_flags());
+  mWindow.emplace("Tactile", cen::window::default_size(), get_window_flags());
   TACTILE_ASSERT(mWindow.has_value());
 
   use_immersive_dark_mode(*mWindow);
 
-  /* This is ugly, but it's necessary to allow macOS builds in different flavours */
+  // This is ugly, but it's necessary to allow macOS builds in different flavours
 #ifdef TACTILE_BUILD_APP_BUNDLE
-  const auto iconPath = find_resource("Tactile.icns");
+  const auto icon_path = find_resource("Tactile.icns");
 #else
-  const auto iconPath =
+  const auto icon_path =
       io::find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
 #endif
 
-  mWindow->set_icon(cen::surface {iconPath.string()});
+  mWindow->set_icon(cen::surface {icon_path.string()});
 
   mOpenGL.emplace(*mWindow);
   mOpenGL->make_current(*mWindow);

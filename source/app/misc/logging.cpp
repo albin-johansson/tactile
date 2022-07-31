@@ -43,9 +43,7 @@ struct LogEntry final
   std::string               msg;
 };
 
-/**
- * Records logged messages, intended to be displayed in the log dock.
- */
+/// Records logged messages, intended to be displayed in the log dock.
 class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_mutex>
 {
  public:

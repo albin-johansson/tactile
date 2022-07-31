@@ -19,7 +19,7 @@
 
 #include "history.hpp"
 
-#include <algorithm>  // find, find_if
+#include <algorithm>  // find
 #include <fstream>    // ifstream, ofstream
 #include <ios>        // ios
 #include <utility>    // move
@@ -36,15 +36,15 @@
 namespace tactile::io {
 namespace {
 
-// constexpr int _format_version = 1;
-constexpr usize _max_size = 10;
+constexpr int   history_format_version [[maybe_unused]] = 1;
+constexpr usize history_max_size = 10;
 
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
-inline Maybe<std::string>      _last_closed_file;
-inline std::deque<std::string> _history;
+inline Maybe<std::string>      history_last_closed_file;
+inline std::deque<std::string> history_entries;
 
-[[nodiscard]] auto _get_file_path() -> const fs::path&
+[[nodiscard]] auto get_file_path() -> const fs::path&
 {
   static const auto path = persistent_file_dir() / "history.bin";
   return path;
@@ -55,18 +55,18 @@ inline std::deque<std::string> _history;
 void load_file_history()
 {
   spdlog::debug("Loading file history...");
-  std::ifstream stream {_get_file_path(), std::ios::in | std::ios::binary};
+  std::ifstream stream {get_file_path(), std::ios::in | std::ios::binary};
 
   proto::History h;
   if (h.ParseFromIstream(&stream)) {
     if (h.has_last_opened_file()) {
-      _last_closed_file = h.last_opened_file();
+      history_last_closed_file = h.last_opened_file();
     }
 
     for (auto file : h.files()) {
       if (fs::exists(file)) {
         spdlog::debug("Loaded '{}' from file history", file);
-        _history.push_back(std::move(file));
+        history_entries.push_back(std::move(file));
       }
     }
   }
@@ -79,16 +79,16 @@ void save_file_history()
 {
   proto::History h;
 
-  if (_last_closed_file) {
-    h.set_last_opened_file(*_last_closed_file);
+  if (history_last_closed_file) {
+    h.set_last_opened_file(*history_last_closed_file);
   }
 
-  for (const auto& path : _history) {
+  for (const auto& path : history_entries) {
     spdlog::debug("Saving '{}' to file history", path);
     h.add_files(path);
   }
 
-  std::ofstream stream {_get_file_path(),
+  std::ofstream stream {get_file_path(),
                         std::ios::out | std::ios::trunc | std::ios::binary};
   if (!h.SerializeToOstream(&stream)) {
     spdlog::error("Failed to save file history!");
@@ -98,18 +98,19 @@ void save_file_history()
 void clear_file_history()
 {
   spdlog::debug("Clearing file history...");
-  _history.clear();
+  history_entries.clear();
 }
 
 void add_file_to_history(const fs::path& path)
 {
   auto converted = convert_to_forward_slashes(path);
-  if (std::find(_history.begin(), _history.end(), converted) == _history.end()) {
+  if (std::find(history_entries.begin(), history_entries.end(), converted) ==
+      history_entries.end()) {
     spdlog::debug("Adding '{}' to history...", converted);
-    _history.push_back(std::move(converted));
+    history_entries.push_back(std::move(converted));
 
-    if (_history.size() > _max_size) {
-      _history.pop_front();
+    if (history_entries.size() > history_max_size) {
+      history_entries.pop_front();
     }
   }
   else {
@@ -119,26 +120,26 @@ void add_file_to_history(const fs::path& path)
 
 void set_last_closed_file(const fs::path& path)
 {
-  _last_closed_file = convert_to_forward_slashes(path);
-  spdlog::trace("Last closed file is now '{}'", *_last_closed_file);
+  history_last_closed_file = convert_to_forward_slashes(path);
+  spdlog::trace("Last closed file is now '{}'", *history_last_closed_file);
 
   add_file_to_history(path);
 }
 
 auto file_history() -> const std::deque<std::string>&
 {
-  return _history;
+  return history_entries;
 }
 
 auto is_last_closed_file_valid() -> bool
 {
-  return _last_closed_file && fs::exists(*_last_closed_file);
+  return history_last_closed_file && fs::exists(*history_last_closed_file);
 }
 
 auto last_closed_file() -> const std::string&
 {
   if (is_last_closed_file_valid()) {
-    return _last_closed_file.value();
+    return history_last_closed_file.value();
   }
   else {
     throw TactileError {"Invalid last closed file!"};
