@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "yaml_utils.hpp"
+#include "yaml.hpp"
 
 #include "core/common/filesystem.hpp"
 #include "misc/panic.hpp"

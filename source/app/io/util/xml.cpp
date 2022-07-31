@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "xml_utils.hpp"
+#include "xml.hpp"
 
 #include <algorithm>  // any_of
 #include <cstring>    // strcmp

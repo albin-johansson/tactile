@@ -25,7 +25,7 @@
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
 #include "io/maps/parser/xml/xml_layer_parser.hpp"
 #include "io/maps/parser/xml/xml_tileset_parser.hpp"
-#include "io/maps/xml_utils.hpp"
+#include "io/util/xml.hpp"
 
 namespace tactile::io {
 namespace {

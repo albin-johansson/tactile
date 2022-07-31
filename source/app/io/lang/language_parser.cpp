@@ -23,7 +23,7 @@
 
 #include "editor/ui/icons.hpp"
 #include "io/directories.hpp"
-#include "io/maps/json_utils.hpp"  // TODO move
+#include "io/util/json.hpp"
 #include "misc/panic.hpp"
 
 using JSON = nlohmann::json;

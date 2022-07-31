@@ -28,7 +28,7 @@
 #include "core/common/filesystem.hpp"
 #include "core/common/maybe.hpp"
 #include "io/maps/ir.hpp"
-#include "io/maps/yaml_utils.hpp"
+#include "io/util/yaml.hpp"
 
 namespace tactile::io {
 namespace {

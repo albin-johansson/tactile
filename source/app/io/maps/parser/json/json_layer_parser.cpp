@@ -23,8 +23,8 @@
 
 #include "core/util/tiles.hpp"
 #include "io/maps/ir.hpp"
-#include "io/maps/json_utils.hpp"
 #include "io/maps/parser/json/json_attribute_parser.hpp"
+#include "io/util/json.hpp"
 
 namespace tactile::io {
 namespace {

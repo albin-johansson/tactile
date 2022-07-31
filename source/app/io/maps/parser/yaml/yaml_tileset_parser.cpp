@@ -27,7 +27,7 @@
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
 #include "io/maps/parser/yaml/yaml_layer_parser.hpp"
-#include "io/maps/yaml_utils.hpp"
+#include "io/util/yaml.hpp"
 
 namespace tactile::io {
 namespace {

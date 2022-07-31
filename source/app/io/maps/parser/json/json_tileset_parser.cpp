@@ -27,9 +27,9 @@
 
 #include "core/common/filesystem.hpp"
 #include "io/maps/ir.hpp"
-#include "io/maps/json_utils.hpp"
 #include "io/maps/parser/json/json_attribute_parser.hpp"
 #include "io/maps/parser/json/json_layer_parser.hpp"
+#include "io/util/json.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::io {

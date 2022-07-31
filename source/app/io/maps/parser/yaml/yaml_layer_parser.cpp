@@ -26,7 +26,7 @@
 #include "core/util/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/yaml/yaml_attribute_parser.hpp"
-#include "io/maps/yaml_utils.hpp"
+#include "io/util/yaml.hpp"
 
 using namespace std::string_literals;
 

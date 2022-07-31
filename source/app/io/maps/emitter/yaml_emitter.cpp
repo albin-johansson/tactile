@@ -32,8 +32,8 @@
 #include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "io/maps/emitter/emit_info.hpp"
-#include "io/maps/yaml_utils.hpp"
 #include "io/persistence/preferences.hpp"
+#include "io/util/yaml.hpp"
 
 namespace tactile::io {
 namespace {

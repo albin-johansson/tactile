@@ -28,9 +28,9 @@
 
 #include "core/common/filesystem.hpp"
 #include "io/maps/emitter/emit_info.hpp"
-#include "io/maps/json_utils.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
+#include "io/util/json.hpp"
 
 namespace tactile::io {
 namespace {

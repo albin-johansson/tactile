@@ -29,7 +29,7 @@
 #include "core/util/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
-#include "io/maps/xml_utils.hpp"
+#include "io/util/xml.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::io {

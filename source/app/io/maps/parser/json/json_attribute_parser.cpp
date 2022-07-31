@@ -26,7 +26,7 @@
 #include <nlohmann/json.hpp>
 
 #include "io/maps/ir.hpp"
-#include "io/maps/json_utils.hpp"
+#include "io/util/json.hpp"
 
 namespace tactile::io {
 namespace {
