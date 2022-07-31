@@ -19,17 +19,15 @@
 
 #pragma once
 
-#include <pugixml.hpp>
-
 #include "io/fwd.hpp"
 #include "io/maps/parser/parse_error.hpp"
+#include "io/util/xml.hpp"
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData)
+[[nodiscard]] auto parse_object(XMLNode objectNode, ir::ObjectData& objectData)
     -> ParseError;
 
-[[nodiscard]] auto parse_layers(pugi::xml_node mapNode, ir::MapData& mapData)
-    -> ParseError;
+[[nodiscard]] auto parse_layers(XMLNode mapNode, ir::MapData& mapData) -> ParseError;
 
 }  // namespace tactile::io

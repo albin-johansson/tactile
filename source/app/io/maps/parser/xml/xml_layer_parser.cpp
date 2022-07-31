@@ -35,10 +35,9 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _collect_layer_nodes(pugi::xml_node mapNode)
-    -> std::vector<pugi::xml_node>
+[[nodiscard]] auto _collect_layer_nodes(XMLNode mapNode) -> std::vector<XMLNode>
 {
-  std::vector<pugi::xml_node> nodes;
+  std::vector<XMLNode> nodes;
 
   for (auto node : mapNode.children()) {
     if (std::strcmp(node.name(), "layer") == 0 ||
@@ -70,8 +69,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_nodes(pugi::xml_node     dataNode,
-                                     ir::TileLayerData& layerData) -> ParseError
+[[nodiscard]] auto _parse_tile_nodes(XMLNode dataNode, ir::TileLayerData& layerData)
+    -> ParseError
 {
   usize index = 0;
   for (const auto tileNode : dataNode.children("tile")) {
@@ -84,8 +83,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_data(pugi::xml_node     layerNode,
-                                    ir::TileLayerData& layerData) -> ParseError
+[[nodiscard]] auto _parse_tile_data(XMLNode layerNode, ir::TileLayerData& layerData)
+    -> ParseError
 {
   const auto data = layerNode.child("data");
 
@@ -118,7 +117,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_layer(pugi::xml_node layerNode,
+[[nodiscard]] auto _parse_tile_layer(XMLNode        layerNode,
                                      ir::LayerData& layerData,
                                      const usize    rows,
                                      const usize    columns) -> ParseError
@@ -164,7 +163,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_object_layer(pugi::xml_node layerNode, ir::LayerData& layerData)
+[[nodiscard]] auto _parse_object_layer(XMLNode layerNode, ir::LayerData& layerData)
     -> ParseError
 {
   auto& objectLayerData = layerData.data.emplace<ir::ObjectLayerData>();
@@ -179,7 +178,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_layer(pugi::xml_node layerNode,
+[[nodiscard]] auto _parse_layer(XMLNode        layerNode,
                                 ir::LayerData& layerData,
                                 const usize    index,
                                 const usize    rows,
@@ -245,7 +244,7 @@ namespace {
 
 }  // namespace
 
-auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData) -> ParseError
+auto parse_object(XMLNode objectNode, ir::ObjectData& objectData) -> ParseError
 {
   if (const auto id = int_attribute(objectNode, "id")) {
     objectData.id = *id;
@@ -282,7 +281,7 @@ auto parse_object(pugi::xml_node objectNode, ir::ObjectData& objectData) -> Pars
   return ParseError::None;
 }
 
-auto parse_layers(pugi::xml_node mapNode, ir::MapData& mapData) -> ParseError
+auto parse_layers(XMLNode mapNode, ir::MapData& mapData) -> ParseError
 {
   usize index = 0;
   for (const auto layerNode : _collect_layer_nodes(mapNode)) {

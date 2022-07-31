@@ -19,8 +19,6 @@
 
 #include "xml_parser.hpp"
 
-#include <pugixml.hpp>
-
 #include "core/common/filesystem.hpp"
 #include "io/maps/parser/xml/xml_attribute_parser.hpp"
 #include "io/maps/parser/xml/xml_layer_parser.hpp"
@@ -30,7 +28,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _validate_map(pugi::xml_node mapNode) -> ParseError
+[[nodiscard]] auto _validate_map(XMLNode mapNode) -> ParseError
 {
   if (string_attribute(mapNode, "orientation") != "orthogonal") {
     return ParseError::UnsupportedMapOrientation;

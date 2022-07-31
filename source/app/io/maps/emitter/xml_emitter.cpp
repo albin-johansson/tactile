@@ -25,19 +25,19 @@
 #include <variant>  // get
 
 #include <fmt/format.h>
-#include <pugixml.hpp>
 #include <spdlog/spdlog.h>
 
 #include "core/common/filesystem.hpp"
 #include "io/maps/emitter/emit_info.hpp"
 #include "io/maps/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
+#include "io/util/xml.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::io {
 namespace {
 
-void _append_properties(pugi::xml_node node, const ir::ContextData& contextData)
+void _append_properties(XMLNode node, const ir::ContextData& contextData)
 {
   if (contextData.properties.empty()) {
     return;
@@ -91,7 +91,7 @@ void _append_properties(pugi::xml_node node, const ir::ContextData& contextData)
   }
 }
 
-void _append_object(pugi::xml_node node, const ir::ObjectData& objectData)
+void _append_object(XMLNode node, const ir::ObjectData& objectData)
 {
   auto objectNode = node.append_child("object");
   objectNode.append_attribute("id").set_value(objectData.id);
@@ -135,7 +135,7 @@ void _append_object(pugi::xml_node node, const ir::ObjectData& objectData)
   _append_properties(objectNode, objectData.context);
 }
 
-void _append_common_layer_attributes(pugi::xml_node node, const ir::LayerData& layerData)
+void _append_common_layer_attributes(XMLNode node, const ir::LayerData& layerData)
 {
   node.append_attribute("id").set_value(layerData.id);
   node.append_attribute("name").set_value(layerData.name.c_str());
@@ -149,7 +149,7 @@ void _append_common_layer_attributes(pugi::xml_node node, const ir::LayerData& l
   }
 }
 
-void _append_tile_layer(pugi::xml_node root, const ir::LayerData& layerData)
+void _append_tile_layer(XMLNode root, const ir::LayerData& layerData)
 {
   const auto& tileLayerData = std::get<ir::TileLayerData>(layerData.data);
 
@@ -193,7 +193,7 @@ void _append_tile_layer(pugi::xml_node root, const ir::LayerData& layerData)
   dataNode.text().set(stream.str().c_str());
 }
 
-void _append_object_layer(pugi::xml_node root, const ir::LayerData& layerData)
+void _append_object_layer(XMLNode root, const ir::LayerData& layerData)
 {
   const auto& objectLayerData = std::get<ir::ObjectLayerData>(layerData.data);
 
@@ -206,7 +206,7 @@ void _append_object_layer(pugi::xml_node root, const ir::LayerData& layerData)
   }
 }
 
-void _append_layer(pugi::xml_node root, const ir::LayerData& layerData)
+void _append_layer(XMLNode root, const ir::LayerData& layerData)
 {
   switch (layerData.type) {
     case LayerType::TileLayer:
@@ -236,7 +236,7 @@ void _append_layer(pugi::xml_node root, const ir::LayerData& layerData)
   }
 }
 
-void _append_fancy_tiles(pugi::xml_node node, const ir::TilesetData& tilesetData)
+void _append_fancy_tiles(XMLNode node, const ir::TilesetData& tilesetData)
 {
   for (const auto& [id, tileData] : tilesetData.fancy_tiles) {
     auto tileNode = node.append_child("tile");
@@ -265,7 +265,7 @@ void _append_fancy_tiles(pugi::xml_node node, const ir::TilesetData& tilesetData
   }
 }
 
-void _append_common_tileset_attributes(pugi::xml_node         node,
+void _append_common_tileset_attributes(XMLNode                node,
                                        const ir::TilesetData& tilesetData,
                                        const fs::path&        dir)
 {
@@ -292,7 +292,7 @@ void _append_common_tileset_attributes(pugi::xml_node         node,
   _append_properties(node, tilesetData.context);
 }
 
-void _append_embedded_tileset(pugi::xml_node         root,
+void _append_embedded_tileset(XMLNode                root,
                               const ir::TilesetData& tilesetData,
                               const fs::path&        dir)
 {
@@ -302,7 +302,7 @@ void _append_embedded_tileset(pugi::xml_node         root,
   _append_common_tileset_attributes(node, tilesetData, dir);
 }
 
-void _append_external_tileset(pugi::xml_node         root,
+void _append_external_tileset(XMLNode                root,
                               const ir::TilesetData& tilesetData,
                               const std::string&     filename)
 {
@@ -327,7 +327,7 @@ void _emit_external_tileset_file(const fs::path&        path,
   document.save(stream);
 }
 
-void _append_tileset(pugi::xml_node         root,
+void _append_tileset(XMLNode                root,
                      const ir::TilesetData& tilesetData,
                      const fs::path&        dir)
 {

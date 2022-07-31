@@ -28,24 +28,22 @@
 
 namespace tactile::io {
 
-[[nodiscard]] auto collect_children(pugi::xml_node source, const char* name)
-    -> std::vector<pugi::xml_node>;
+using XMLNode = pugi::xml_node;
 
-[[nodiscard]] auto has_attribute(pugi::xml_node node, const char* attributeName) -> bool;
+[[nodiscard]] auto collect_children(XMLNode source, const char* name)
+    -> std::vector<XMLNode>;
 
-[[nodiscard]] auto string_attribute(pugi::xml_node node, const char* attributeName)
+[[nodiscard]] auto has_attribute(XMLNode node, const char* attr_name) -> bool;
+
+[[nodiscard]] auto string_attribute(XMLNode node, const char* attr_name)
     -> Maybe<std::string>;
 
-[[nodiscard]] auto int_attribute(pugi::xml_node node, const char* attributeName)
-    -> Maybe<int32>;
+[[nodiscard]] auto int_attribute(XMLNode node, const char* attr_name) -> Maybe<int32>;
 
-[[nodiscard]] auto uint_attribute(pugi::xml_node node, const char* attributeName)
-    -> Maybe<uint32>;
+[[nodiscard]] auto uint_attribute(XMLNode node, const char* attr_name) -> Maybe<uint32>;
 
-[[nodiscard]] auto float_attribute(pugi::xml_node node, const char* attributeName)
-    -> Maybe<float>;
+[[nodiscard]] auto float_attribute(XMLNode node, const char* attr_name) -> Maybe<float>;
 
-[[nodiscard]] auto bool_attribute(pugi::xml_node node, const char* attributeName)
-    -> Maybe<bool>;
+[[nodiscard]] auto bool_attribute(XMLNode node, const char* attr_name) -> Maybe<bool>;
 
 }  // namespace tactile::io

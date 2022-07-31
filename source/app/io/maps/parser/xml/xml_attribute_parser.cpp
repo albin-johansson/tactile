@@ -33,7 +33,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_value(pugi::xml_node node, const char* type, Attribute& value)
+[[nodiscard]] auto _parse_value(XMLNode node, const char* type, Attribute& value)
     -> ParseError
 {
   TACTILE_ASSERT(type);
@@ -79,8 +79,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_property(pugi::xml_node node, ir::ContextData& context)
-    -> ParseError
+[[nodiscard]] auto _parse_property(XMLNode node, ir::ContextData& context) -> ParseError
 {
   std::string propertyName;
 
@@ -105,7 +104,7 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(pugi::xml_node node, ir::ContextData& context) -> ParseError
+auto parse_properties(XMLNode node, ir::ContextData& context) -> ParseError
 {
   for (const auto propertyNode : node.child("properties").children("property")) {
     if (const auto err = _parse_property(propertyNode, context);
