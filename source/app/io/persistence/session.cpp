@@ -28,8 +28,8 @@
 #include "core/document/map_document.hpp"
 #include "core/model.hpp"
 #include "io/directories.hpp"
+#include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "io/map/ir/restore_map_from_ir.hpp"
 #include "io/persistence/proto.hpp"
 
 namespace tactile::io {
@@ -54,7 +54,7 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
     for (const auto& file : session.files()) {
       const auto ir = parse_map(file);
       if (ir.error() == ParseError::None) {
-        restore_map_from_ir(ir, model, textures);
+        map_from_ir(ir, model, textures);
       }
       else {
         spdlog::warn("Failed to restore map from last session!");

@@ -19,14 +19,23 @@
 
 #pragma once
 
-#include "io/map/ir/ir.hpp"
+#include "editor/fwd.hpp"
+#include "io/fwd.hpp"
 
 namespace tactile {
-class MapDocument;
+class DocumentModel;
+class TextureManager;
 }  // namespace tactile
 
 namespace tactile::io {
 
-[[nodiscard]] auto convert_map_to_ir(const MapDocument& document) -> ir::MapData;
+/**
+ * Restores a map document from an intermediate map representation.
+ *
+ * \param data the intermediate representation of the map data.
+ * \param model the target document model.
+ * \param textures the texture manager that will be used.
+ */
+void map_from_ir(const ParseData& data, DocumentModel& model, TextureManager& textures);
 
 }  // namespace tactile::io

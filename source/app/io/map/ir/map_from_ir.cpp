@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "restore_map_from_ir.hpp"
+#include "map_from_ir.hpp"
 
 #include <utility>  // move
 #include <variant>  // get
@@ -281,9 +281,7 @@ void _restore_component_definitions(MapDocument& document, const ir::MapData& ma
 
 }  // namespace
 
-void restore_map_from_ir(const ParseData& data,
-                         DocumentModel&   model,
-                         TextureManager&  textures)
+void map_from_ir(const ParseData& data, DocumentModel& model, TextureManager& textures)
 {
   const auto& mapData = data.data();
 

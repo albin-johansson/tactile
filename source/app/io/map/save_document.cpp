@@ -24,11 +24,11 @@
 
 #include "core/common/filesystem.hpp"
 #include "core/document/map_document.hpp"
-#include "io/map/ir/convert_map_to_ir.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/json_emitter.hpp"
 #include "io/map/emit/xml_emitter.hpp"
 #include "io/map/emit/yaml_emitter.hpp"
+#include "io/map/ir/map_to_ir.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
 
@@ -42,7 +42,7 @@ void save_document(const MapDocument& document)
   const auto path = fs::absolute(document.get_path());
   spdlog::info("Trying to save map to {}", path);
 
-  EmitInfo info {path, convert_map_to_ir(document)};
+  EmitInfo info {path, map_to_ir(document)};
 
   const auto ext = path.extension();
   if (ext == ".yaml" || ext == ".yml") {

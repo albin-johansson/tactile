@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "convert_map_to_ir.hpp"
+#include "map_to_ir.hpp"
 
 #include "core/comp/component_index.hpp"
 #include "core/document/map_document.hpp"
@@ -268,7 +268,7 @@ void _convert_component_definitions(const ComponentIndex& manager, ir::MapData& 
 
 }  // namespace
 
-auto convert_map_to_ir(const MapDocument& document) -> ir::MapData
+auto map_to_ir(const MapDocument& document) -> ir::MapData
 {
   TACTILE_DEBUG_PROFILE_START
   const auto& map = document.get_map();

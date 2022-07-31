@@ -49,8 +49,8 @@
 #include "editor/ui/ui.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
+#include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "io/map/ir/restore_map_from_ir.hpp"
 #include "io/map/save_document.hpp"
 #include "io/persistence/history.hpp"
 #include "io/persistence/preferences.hpp"
@@ -419,7 +419,7 @@ void App::on_open_map(const OpenMapEvent& event)
 
   const auto ir = io::parse_map(event.path);
   if (ir.error() == io::ParseError::None) {
-    restore_map_from_ir(ir, mModel, mTextures);
+    map_from_ir(ir, mModel, mTextures);
     io::add_file_to_history(event.path);
   }
   else {
