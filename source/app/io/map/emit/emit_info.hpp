@@ -19,20 +19,26 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include "core/common/filesystem.hpp"
+#include "io/map/ir/ir.hpp"
 
-#include "core/common/ints.hpp"
-#include "io/map/parse/parse_error.hpp"
+namespace tactile::io {
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+class EmitInfo final
+{
+ public:
+  explicit EmitInfo(fs::path destination, ir::MapData data);
 
-namespace tactile::ui {
+  [[nodiscard]] auto destination_file() const -> const fs::path&;
 
-/// Updates the state of the GUI.
-void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
+  [[nodiscard]] auto destination_dir() const -> const fs::path&;
 
-[[nodiscard]] auto is_editor_focused() -> bool;
+  [[nodiscard]] auto data() const -> const ir::MapData&;
 
-}  // namespace tactile::ui
+ private:
+  fs::path    mDestinationFile;
+  fs::path    mDestinationDir;
+  ir::MapData mData;
+};
+
+}  // namespace tactile::io

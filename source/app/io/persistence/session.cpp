@@ -28,8 +28,8 @@
 #include "core/document/map_document.hpp"
 #include "core/model.hpp"
 #include "io/directories.hpp"
-#include "io/maps/parser/parse_map.hpp"
-#include "io/maps/restore_map_from_ir.hpp"
+#include "io/map/parse/parse_map.hpp"
+#include "io/map/ir/restore_map_from_ir.hpp"
 #include "io/persistence/proto.hpp"
 
 namespace tactile::io {

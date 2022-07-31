@@ -19,20 +19,16 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include <yaml-cpp/yaml.h>
 
-#include "core/common/ints.hpp"
+#include "core/common/filesystem.hpp"
+#include "io/fwd.hpp"
 #include "io/map/parse/parse_error.hpp"
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+namespace tactile::io {
 
-namespace tactile::ui {
+[[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
+                                  ir::MapData&      data,
+                                  const fs::path&   dir) -> ParseError;
 
-/// Updates the state of the GUI.
-void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-[[nodiscard]] auto is_editor_focused() -> bool;
-
-}  // namespace tactile::ui
+}  // namespace tactile::io

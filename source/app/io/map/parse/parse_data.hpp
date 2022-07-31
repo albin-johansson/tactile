@@ -19,20 +19,31 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-#include "core/common/ints.hpp"
+#include "core/common/filesystem.hpp"
+#include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_error.hpp"
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+namespace tactile::io {
 
-namespace tactile::ui {
+class ParseData final
+{
+ public:
+  void set_path(const fs::path& path);
 
-/// Updates the state of the GUI.
-void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void set_error(ParseError error);
 
-[[nodiscard]] auto is_editor_focused() -> bool;
+  [[nodiscard]] auto path() const -> const fs::path&;
 
-}  // namespace tactile::ui
+  [[nodiscard]] auto error() const -> ParseError;
+
+  [[nodiscard]] auto data() -> ir::MapData&;
+
+  [[nodiscard]] auto data() const -> const ir::MapData&;
+
+ private:
+  fs::path    mPath;
+  ir::MapData mData;
+  ParseError  mError {ParseError::None};
+};
+
+}  // namespace tactile::io

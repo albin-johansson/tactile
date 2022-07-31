@@ -23,7 +23,7 @@
 
 #include "core/common/maybe.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
-#include "io/maps/parser/parse_error.hpp"
+#include "io/map/parse/parse_error.hpp"
 
 namespace tactile::ui {
 

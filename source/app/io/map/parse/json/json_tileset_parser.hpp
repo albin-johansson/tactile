@@ -19,20 +19,15 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-#include "core/common/ints.hpp"
+#include "core/common/filesystem.hpp"
+#include "io/fwd.hpp"
 #include "io/map/parse/parse_error.hpp"
+#include "io/util/json.hpp"
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+namespace tactile::io {
 
-namespace tactile::ui {
+[[nodiscard]] auto parse_tilesets(const JSON&     json,
+                                  ir::MapData&    map_data,
+                                  const fs::path& dir) -> ParseError;
 
-/// Updates the state of the GUI.
-void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-[[nodiscard]] auto is_editor_focused() -> bool;
-
-}  // namespace tactile::ui
+}  // namespace tactile::io

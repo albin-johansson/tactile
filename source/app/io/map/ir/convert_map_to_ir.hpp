@@ -19,20 +19,14 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-#include "core/common/ints.hpp"
-#include "io/map/parse/parse_error.hpp"
+#include "io/map/ir/ir.hpp"
 
 namespace tactile {
-class DocumentModel;
+class MapDocument;
 }  // namespace tactile
 
-namespace tactile::ui {
+namespace tactile::io {
 
-/// Updates the state of the GUI.
-void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
+[[nodiscard]] auto convert_map_to_ir(const MapDocument& document) -> ir::MapData;
 
-[[nodiscard]] auto is_editor_focused() -> bool;
-
-}  // namespace tactile::ui
+}  // namespace tactile::io
