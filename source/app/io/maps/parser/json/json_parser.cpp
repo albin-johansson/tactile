@@ -21,8 +21,6 @@
 
 #include <string>  // string
 
-#include <nlohmann/json.hpp>
-
 #include "io/maps/parser/json/json_attribute_parser.hpp"
 #include "io/maps/parser/json/json_layer_parser.hpp"
 #include "io/maps/parser/json/json_tileset_parser.hpp"
@@ -31,7 +29,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _validate_map(const nlohmann::json& json) -> ParseError
+[[nodiscard]] auto _validate_map(const JSON& json) -> ParseError
 {
   if (const auto iter = json.find("orientation");
       iter == json.end() || iter->get<std::string>() != "orthogonal") {
@@ -45,7 +43,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& mapData) -> ParseError
+[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& map_data) -> ParseError
 {
   const auto json = read_json(path);
   if (!json) {
@@ -57,42 +55,42 @@ namespace {
   }
 
   if (const auto width = as_uint(*json, "width")) {
-    mapData.col_count = *width;
+    map_data.col_count = *width;
   }
   else {
     return ParseError::NoMapWidth;
   }
 
   if (const auto height = as_uint(*json, "height")) {
-    mapData.row_count = *height;
+    map_data.row_count = *height;
   }
   else {
     return ParseError::NoMapHeight;
   }
 
   if (const auto tw = as_int(*json, "tilewidth")) {
-    mapData.tile_size.x = *tw;
+    map_data.tile_size.x = *tw;
   }
   else {
     return ParseError::NoMapTileWidth;
   }
 
   if (const auto th = as_int(*json, "tileheight")) {
-    mapData.tile_size.y = *th;
+    map_data.tile_size.y = *th;
   }
   else {
     return ParseError::NoMapTileHeight;
   }
 
   if (const auto id = as_int(*json, "nextlayerid")) {
-    mapData.next_layer_id = *id;
+    map_data.next_layer_id = *id;
   }
   else {
     return ParseError::NoMapNextLayerId;
   }
 
   if (const auto id = as_int(*json, "nextobjectid")) {
-    mapData.next_object_id = *id;
+    map_data.next_object_id = *id;
   }
   else {
     return ParseError::NoMapNextObjectId;
@@ -100,15 +98,15 @@ namespace {
 
   const auto dir = path.parent_path();
 
-  if (const auto err = parse_tilesets(*json, mapData, dir); err != ParseError::None) {
+  if (const auto err = parse_tilesets(*json, map_data, dir); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = parse_layers(*json, mapData); err != ParseError::None) {
+  if (const auto err = parse_layers(*json, map_data); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = parse_properties(*json, mapData.context);
+  if (const auto err = parse_properties(*json, map_data.context);
       err != ParseError::None) {
     return err;
   }

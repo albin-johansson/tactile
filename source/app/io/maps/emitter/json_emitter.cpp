@@ -23,7 +23,6 @@
 #include <variant>  // get
 
 #include <fmt/format.h>
-#include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
 
 #include "core/common/filesystem.hpp"
@@ -35,12 +34,12 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _emit_properties(const ir::ContextData& data) -> nlohmann::json
+[[nodiscard]] auto _emit_properties(const ir::ContextData& data) -> JSON
 {
-  auto array = nlohmann::json::array();
+  auto array = JSON::array();
 
   for (const auto& [name, value] : data.properties) {
-    auto json = nlohmann::json::object();
+    auto json = JSON::object();
 
     json["name"] = name;
     json["type"] = value.type();
@@ -52,9 +51,9 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto _emit_object(const ir::ObjectData& data) -> nlohmann::json
+[[nodiscard]] auto _emit_object(const ir::ObjectData& data) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   json["id"] = data.id;
   json["name"] = data.name;
@@ -90,9 +89,9 @@ namespace {
 
 [[nodiscard]] auto _emit_layer(const ir::LayerData& data,
                                const usize          rows,
-                               const usize          columns) -> nlohmann::json
+                               const usize          columns) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   json["id"] = data.id;
   json["name"] = data.name;
@@ -109,7 +108,7 @@ namespace {
       json["width"] = columns;
       json["height"] = rows;
 
-      auto tiles = nlohmann::json::array();
+      auto tiles = JSON::array();
 
       for (usize row = 0; row < rows; ++row) {
         for (usize col = 0; col < columns; ++col) {
@@ -125,7 +124,7 @@ namespace {
 
       json["type"] = "objectgroup";
 
-      auto objects = nlohmann::json::array();
+      auto objects = JSON::array();
 
       for (const auto& objectData : objectLayerData.objects) {
         objects += _emit_object(objectData);
@@ -139,7 +138,7 @@ namespace {
 
       json["type"] = "group";
 
-      auto layers = nlohmann::json::array();
+      auto layers = JSON::array();
 
       for (const auto& childLayerData : groupLayerData.children) {
         layers += _emit_layer(*childLayerData, rows, columns);
@@ -157,9 +156,9 @@ namespace {
   return json;
 }
 
-[[nodiscard]] auto _emit_layers(const ir::MapData& data) -> nlohmann::json
+[[nodiscard]] auto _emit_layers(const ir::MapData& data) -> JSON
 {
-  auto array = nlohmann::json::array();
+  auto array = JSON::array();
 
   for (const auto& layerData : data.layers) {
     array += _emit_layer(layerData, data.row_count, data.col_count);
@@ -168,13 +167,12 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto _emit_fancy_tile_animation(const ir::MetaTileData& data)
-    -> nlohmann::json
+[[nodiscard]] auto _emit_fancy_tile_animation(const ir::MetaTileData& data) -> JSON
 {
-  auto array = nlohmann::json::array();
+  auto array = JSON::array();
 
   for (const auto& frameData : data.frames) {
-    auto json = nlohmann::json::object();
+    auto json = JSON::object();
 
     json["tileid"] = frameData.local_id;
     json["duration"] = frameData.duration_ms;
@@ -185,10 +183,9 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto _emit_fancy_tile(const TileID id, const ir::MetaTileData& data)
-    -> nlohmann::json
+[[nodiscard]] auto _emit_fancy_tile(const TileID id, const ir::MetaTileData& data) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   json["id"] = id;
 
@@ -197,7 +194,7 @@ namespace {
   }
 
   if (!data.objects.empty()) {
-    auto dummy = nlohmann::json::object();
+    auto dummy = JSON::object();
     dummy["draworder"] = "index";
     dummy["name"] = "";
     dummy["opacity"] = 1;
@@ -206,7 +203,7 @@ namespace {
     dummy["x"] = 0;
     dummy["y"] = 0;
 
-    auto objects = nlohmann::json::array();
+    auto objects = JSON::array();
     for (const auto& objectData : data.objects) {
       objects += _emit_object(objectData);
     }
@@ -222,9 +219,9 @@ namespace {
   return json;
 }
 
-[[nodiscard]] auto _emit_fancy_tiles(const ir::TilesetData& data) -> nlohmann::json
+[[nodiscard]] auto _emit_fancy_tiles(const ir::TilesetData& data) -> JSON
 {
-  auto json = nlohmann::json::array();
+  auto json = JSON::array();
 
   for (const auto& [id, tileData] : data.fancy_tiles) {
     json += _emit_fancy_tile(id, tileData);
@@ -233,7 +230,7 @@ namespace {
   return json;
 }
 
-void _add_common_tileset_attributes(nlohmann::json&        json,
+void _add_common_tileset_attributes(JSON&                  json,
                                     const EmitInfo&        info,
                                     const ir::TilesetData& data)
 {
@@ -263,9 +260,9 @@ void _add_common_tileset_attributes(nlohmann::json&        json,
 }
 
 [[nodiscard]] auto _emit_embedded_tileset(const EmitInfo&        info,
-                                          const ir::TilesetData& data) -> nlohmann::json
+                                          const ir::TilesetData& data) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   json["firstgid"] = data.first_tile;
   _add_common_tileset_attributes(json, info, data);
@@ -273,9 +270,9 @@ void _add_common_tileset_attributes(nlohmann::json&        json,
   return json;
 }
 
-[[nodiscard]] auto _emit_external_tileset(const ir::TilesetData& data) -> nlohmann::json
+[[nodiscard]] auto _emit_external_tileset(const ir::TilesetData& data) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   json["firstgid"] = data.first_tile;
   json["source"] = fmt::format("{}.json", data.name);
@@ -285,7 +282,7 @@ void _add_common_tileset_attributes(nlohmann::json&        json,
 
 void _create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& data)
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
   _add_common_tileset_attributes(json, info, data);
 
   json["type"] = "tileset";
@@ -299,7 +296,7 @@ void _create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& 
 }
 
 [[nodiscard]] auto _emit_tileset(const EmitInfo& info, const ir::TilesetData& data)
-    -> nlohmann::json
+    -> JSON
 {
   if (get_preferences().embed_tilesets) {
     return _emit_embedded_tileset(info, data);
@@ -310,9 +307,9 @@ void _create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& 
   }
 }
 
-[[nodiscard]] auto _emit_tilesets(const EmitInfo& info) -> nlohmann::json
+[[nodiscard]] auto _emit_tilesets(const EmitInfo& info) -> JSON
 {
-  auto json = nlohmann::json::array();
+  auto json = JSON::array();
 
   const auto& data = info.data();
   for (const auto& tilesetData : data.tilesets) {
@@ -326,7 +323,7 @@ void _create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& 
 
 void emit_json_map(const EmitInfo& info)
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   const auto& data = info.data();
 

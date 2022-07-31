@@ -24,22 +24,21 @@
 #include "core/util/tiles.hpp"
 #include "io/maps/ir.hpp"
 #include "io/maps/parser/json/json_attribute_parser.hpp"
-#include "io/util/json.hpp"
 
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_object_layer(const nlohmann::json& json,
-                                       ir::LayerData&        layerData) -> ParseError
+[[nodiscard]] auto _parse_object_layer(const JSON& json, ir::LayerData& layer_data)
+    -> ParseError
 {
-  auto& objectLayerData = layerData.data.emplace<ir::ObjectLayerData>();
+  auto& object_layer_data = layer_data.data.emplace<ir::ObjectLayerData>();
 
   if (const auto iter = json.find("objects"); iter != json.end()) {
-    objectLayerData.objects.reserve(iter->size());
+    object_layer_data.objects.reserve(iter->size());
 
     for (const auto& [_, value] : iter->items()) {
-      auto& objectData = objectLayerData.objects.emplace_back();
-      if (const auto err = parse_object(value, objectData); err != ParseError::None) {
+      auto& object_data = object_layer_data.objects.emplace_back();
+      if (const auto err = parse_object(value, object_data); err != ParseError::None) {
         return err;
       }
     }
@@ -48,11 +47,11 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_layer_data(const nlohmann::json& json,
-                                          TileMatrix&           tiles,
-                                          const usize           columns) -> ParseError
+[[nodiscard]] auto _parse_tile_layer_data(const JSON& json,
+                                          TileMatrix& tiles,
+                                          const usize columns) -> ParseError
 {
-  /* We only support the CSV tile encoding, which is the implicit default */
+  // We only support the CSV tile encoding, which is the implicit default
   if (auto encoding = as_string(json, "encoding")) {
     if (encoding != "csv") {
       return ParseError::UnsupportedTileLayerEncoding;
@@ -83,46 +82,46 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_layer(const nlohmann::json& json,
-                                     ir::LayerData&        layerData,
-                                     const usize           rows,
-                                     const usize           columns) -> ParseError
+[[nodiscard]] auto _parse_tile_layer(const JSON&    json,
+                                     ir::LayerData& layer_data,
+                                     const usize    rows,
+                                     const usize    columns) -> ParseError
 {
-  auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
+  auto& tile_layer_data = layer_data.data.emplace<ir::TileLayerData>();
 
   if (const auto width = as_uint(json, "width")) {
-    tileLayerData.col_count = *width;
+    tile_layer_data.col_count = *width;
 
-    if (tileLayerData.col_count != columns) {
+    if (tile_layer_data.col_count != columns) {
       spdlog::warn("JSON tile layer width does not match map width, '{}' vs '{}'",
-                   tileLayerData.col_count,
+                   tile_layer_data.col_count,
                    columns);
     }
   }
   else {
     spdlog::warn("JSON tile layer has no width information, assuming map width...");
-    tileLayerData.col_count = columns;
+    tile_layer_data.col_count = columns;
   }
 
   if (const auto height = as_uint(json, "height")) {
-    tileLayerData.row_count = *height;
+    tile_layer_data.row_count = *height;
 
-    if (tileLayerData.row_count != rows) {
+    if (tile_layer_data.row_count != rows) {
       spdlog::warn("JSON tile layer height does not match map height, '{}' vs '{}'",
-                   tileLayerData.row_count,
+                   tile_layer_data.row_count,
                    rows);
     }
   }
   else {
     spdlog::warn("JSON tile layer has no height information, assuming map height...");
-    tileLayerData.row_count = rows;
+    tile_layer_data.row_count = rows;
   }
 
-  tileLayerData.tiles =
-      make_tile_matrix(tileLayerData.row_count, tileLayerData.col_count);
+  tile_layer_data.tiles =
+      make_tile_matrix(tile_layer_data.row_count, tile_layer_data.col_count);
 
   if (const auto err =
-          _parse_tile_layer_data(json, tileLayerData.tiles, tileLayerData.col_count);
+          _parse_tile_layer_data(json, tile_layer_data.tiles, tile_layer_data.col_count);
       err != ParseError::None) {
     return err;
   }
@@ -130,56 +129,56 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_layer(const nlohmann::json& json,
-                                ir::LayerData&        layerData,
-                                const usize           index,
-                                const usize           rows,
-                                const usize           columns) -> ParseError
+[[nodiscard]] auto _parse_layer(const JSON&    json,
+                                ir::LayerData& layer_data,
+                                const usize    index,
+                                const usize    rows,
+                                const usize    columns) -> ParseError
 {
-  layerData.index = index;
+  layer_data.index = index;
 
   if (const auto id = as_int(json, "id")) {
-    layerData.id = *id;
+    layer_data.id = *id;
   }
   else {
     return ParseError::NoLayerId;
   }
 
-  layerData.name = as_string(json, "name").value_or("Layer");
-  layerData.opacity = as_float(json, "opacity").value_or(1.0f);
-  layerData.visible = as_bool(json, "visible").value_or(true);
+  layer_data.name = as_string(json, "name").value_or("Layer");
+  layer_data.opacity = as_float(json, "opacity").value_or(1.0f);
+  layer_data.visible = as_bool(json, "visible").value_or(true);
 
   if (auto type = as_string(json, "type")) {
     if (type == "tilelayer") {
-      layerData.type = LayerType::TileLayer;
-      if (const auto err = _parse_tile_layer(json, layerData, rows, columns);
+      layer_data.type = LayerType::TileLayer;
+      if (const auto err = _parse_tile_layer(json, layer_data, rows, columns);
           err != ParseError::None) {
         return err;
       }
     }
     else if (type == "objectgroup") {
-      layerData.type = LayerType::ObjectLayer;
-      if (const auto err = _parse_object_layer(json, layerData);
+      layer_data.type = LayerType::ObjectLayer;
+      if (const auto err = _parse_object_layer(json, layer_data);
           err != ParseError::None) {
         return err;
       }
     }
     else if (type == "group") {
-      layerData.type = LayerType::GroupLayer;
-      auto& groupLayerData = layerData.data.emplace<ir::GroupLayerData>();
+      layer_data.type = LayerType::GroupLayer;
+      auto& group_layer_data = layer_data.data.emplace<ir::GroupLayerData>();
 
-      usize childIndex = 0;
+      usize child_index = 0;
       for (const auto& [_, value] : json.at("layers").items()) {
-        auto& childLayerData =
-            groupLayerData.children.emplace_back(std::make_unique<ir::LayerData>());
+        auto& child_layer_data =
+            group_layer_data.children.emplace_back(std::make_unique<ir::LayerData>());
 
         if (const auto err =
-                _parse_layer(value, *childLayerData, childIndex, rows, columns);
+                _parse_layer(value, *child_layer_data, child_index, rows, columns);
             err != ParseError::None) {
           return err;
         }
 
-        ++childIndex;
+        ++child_index;
       }
     }
     else {
@@ -190,7 +189,7 @@ namespace {
     return ParseError::NoLayerType;
   }
 
-  if (const auto err = parse_properties(json, layerData.context);
+  if (const auto err = parse_properties(json, layer_data.context);
       err != ParseError::None) {
     return err;
   }
@@ -200,36 +199,36 @@ namespace {
 
 }  // namespace
 
-auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> ParseError
+auto parse_object(const JSON& json, ir::ObjectData& object_data) -> ParseError
 {
   if (const auto id = as_int(json, "id")) {
-    objectData.id = *id;
+    object_data.id = *id;
   }
   else {
     return ParseError::NoObjectId;
   }
 
-  objectData.name = as_string(json, "name").value_or("");
-  objectData.tag = as_string(json, "type").value_or("");
+  object_data.name = as_string(json, "name").value_or("");
+  object_data.tag = as_string(json, "type").value_or("");
 
-  objectData.pos.x = as_float(json, "x").value_or(0.0f);
-  objectData.pos.y = as_float(json, "y").value_or(0.0f);
-  objectData.size.x = as_float(json, "width").value_or(0.0f);
-  objectData.size.y = as_float(json, "height").value_or(0.0f);
+  object_data.pos.x = as_float(json, "x").value_or(0.0f);
+  object_data.pos.y = as_float(json, "y").value_or(0.0f);
+  object_data.size.x = as_float(json, "width").value_or(0.0f);
+  object_data.size.y = as_float(json, "height").value_or(0.0f);
 
-  objectData.visible = as_bool(json, "visible").value_or(true);
+  object_data.visible = as_bool(json, "visible").value_or(true);
 
   if (json.contains("point")) {
-    objectData.type = ObjectType::Point;
+    object_data.type = ObjectType::Point;
   }
   else if (json.contains("ellipse")) {
-    objectData.type = ObjectType::Ellipse;
+    object_data.type = ObjectType::Ellipse;
   }
   else {
-    objectData.type = ObjectType::Rect;
+    object_data.type = ObjectType::Rect;
   }
 
-  if (const auto err = parse_properties(json, objectData.context);
+  if (const auto err = parse_properties(json, object_data.context);
       err != ParseError::None) {
     return err;
   }
@@ -237,7 +236,7 @@ auto parse_object(const nlohmann::json& json, ir::ObjectData& objectData) -> Par
   return ParseError::None;
 }
 
-auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseError
+auto parse_layers(const JSON& json, ir::MapData& map_data) -> ParseError
 {
   const auto iter = json.find("layers");
 
@@ -246,14 +245,17 @@ auto parse_layers(const nlohmann::json& json, ir::MapData& mapData) -> ParseErro
     return ParseError::None;
   }
 
-  mapData.layers.reserve(iter->size());
+  map_data.layers.reserve(iter->size());
 
   usize index = 0;
   for (const auto& [key, value] : iter->items()) {
-    auto& layerData = mapData.layers.emplace_back();
+    auto& layer_data = map_data.layers.emplace_back();
 
-    if (const auto err =
-            _parse_layer(value, layerData, index, mapData.row_count, mapData.col_count);
+    if (const auto err = _parse_layer(value,
+                                      layer_data,
+                                      index,
+                                      map_data.row_count,
+                                      map_data.col_count);
         err != ParseError::None) {
       return err;
     }

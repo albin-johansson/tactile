@@ -31,8 +31,7 @@ namespace tactile {
 namespace {
 
 template <typename T>
-[[nodiscard]] auto _as(const nlohmann::json& json, const std::string_view name)
-    -> Maybe<T>
+[[nodiscard]] auto _as(const JSON& json, const std::string_view name) -> Maybe<T>
 {
   const auto iter = json.find(name);
   if (iter != json.end()) {
@@ -45,7 +44,7 @@ template <typename T>
 
 }  // namespace
 
-void to_json(nlohmann::json& json, const Attribute& value)
+void to_json(JSON& json, const Attribute& value)
 {
   switch (value.type()) {
     case AttributeType::String:
@@ -81,7 +80,7 @@ void to_json(nlohmann::json& json, const Attribute& value)
   }
 }
 
-void write_json(const nlohmann::json& json, const fs::path& path)
+void write_json(const JSON& json, const fs::path& path)
 {
   std::ofstream stream {path, std::ios::out | std::ios::trunc};
 
@@ -92,7 +91,7 @@ void write_json(const nlohmann::json& json, const fs::path& path)
   stream << json;
 }
 
-auto try_get(const nlohmann::json& json, const char* key) -> const nlohmann::json*
+auto try_get(const JSON& json, const char* key) -> const JSON*
 {
   if (const auto iter = json.find(key); iter != json.end()) {
     return &iter.value();
@@ -102,12 +101,12 @@ auto try_get(const nlohmann::json& json, const char* key) -> const nlohmann::jso
   }
 }
 
-auto read_json(const fs::path& path) -> Maybe<nlohmann::json>
+auto read_json(const fs::path& path) -> Maybe<JSON>
 {
   try {
     std::ifstream stream {path, std::ios::in};
 
-    nlohmann::json json;
+    JSON json;
     stream >> json;
 
     return json;
@@ -119,28 +118,27 @@ auto read_json(const fs::path& path) -> Maybe<nlohmann::json>
 
 namespace io {
 
-auto as_string(const nlohmann::json& json, const std::string_view name)
-    -> Maybe<std::string>
+auto as_string(const JSON& json, const std::string_view name) -> Maybe<std::string>
 {
   return _as<std::string>(json, name);
 }
 
-auto as_int(const nlohmann::json& json, const std::string_view name) -> Maybe<int32>
+auto as_int(const JSON& json, const std::string_view name) -> Maybe<int32>
 {
   return _as<int32>(json, name);
 }
 
-auto as_uint(const nlohmann::json& json, const std::string_view name) -> Maybe<uint32>
+auto as_uint(const JSON& json, const std::string_view name) -> Maybe<uint32>
 {
   return _as<uint32>(json, name);
 }
 
-auto as_float(const nlohmann::json& json, const std::string_view name) -> Maybe<float>
+auto as_float(const JSON& json, const std::string_view name) -> Maybe<float>
 {
   return _as<float>(json, name);
 }
 
-auto as_bool(const nlohmann::json& json, const std::string_view name) -> Maybe<bool>
+auto as_bool(const JSON& json, const std::string_view name) -> Maybe<bool>
 {
   return _as<bool>(json, name);
 }

@@ -23,15 +23,12 @@
 #include <string_view>  // string_view
 #include <utility>      // move
 
-#include <nlohmann/json.hpp>
-
 #include "io/maps/ir.hpp"
-#include "io/util/json.hpp"
 
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_value(const nlohmann::json&  json,
+[[nodiscard]] auto _parse_value(const JSON&            json,
                                 const std::string_view type,
                                 Attribute&             value) -> ParseError
 {
@@ -57,7 +54,7 @@ namespace {
   else if (type == "color") {
     const auto hex = as_string(json, "value").value();
 
-    /* Empty color properties are not supported, so just assume the default color value */
+    // Empty color properties are not supported, so just assume the default color value
     if (hex.empty()) {
       value.reset_to_default(AttributeType::Color);
     }
@@ -78,19 +75,19 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_property(const nlohmann::json& json,
-                                   ir::ContextData&      contextData) -> ParseError
+[[nodiscard]] auto _parse_property(const JSON& json, ir::ContextData& context_data)
+    -> ParseError
 {
-  std::string propertyName;
+  std::string property_name;
 
   if (auto name = as_string(json, "name")) {
-    propertyName = std::move(*name);
+    property_name = std::move(*name);
   }
   else {
     return ParseError::NoPropertyName;
   }
 
-  auto& value = contextData.properties[std::move(propertyName)];
+  auto& value = context_data.properties[std::move(property_name)];
 
   if (auto type = as_string(json, "type")) {
     if (const auto err = _parse_value(json, *type, value); err != ParseError::None) {
@@ -106,12 +103,12 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(const nlohmann::json& json, ir::ContextData& contextData)
-    -> ParseError
+auto parse_properties(const JSON& json, ir::ContextData& context_data) -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [_, value] : it->items()) {
-      if (const auto err = _parse_property(value, contextData); err != ParseError::None) {
+      if (const auto err = _parse_property(value, context_data);
+          err != ParseError::None) {
         return err;
       }
     }

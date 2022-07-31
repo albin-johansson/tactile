@@ -26,8 +26,6 @@
 #include "io/util/json.hpp"
 #include "misc/panic.hpp"
 
-using JSON = nlohmann::json;
-
 namespace tactile::io {
 namespace {
 

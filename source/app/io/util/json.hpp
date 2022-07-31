@@ -31,6 +31,8 @@
 
 namespace tactile {
 
+using JSON = nlohmann::json;
+
 NLOHMANN_JSON_SERIALIZE_ENUM(AttributeType,
                              {
                                  {AttributeType::String, "string"},
@@ -42,31 +44,26 @@ NLOHMANN_JSON_SERIALIZE_ENUM(AttributeType,
                                  {AttributeType::Path, "file"},
                              })
 
-void to_json(nlohmann::json& json, const Attribute& value);
+void to_json(JSON& json, const Attribute& value);
 
-void write_json(const nlohmann::json& json, const fs::path& path);
+void write_json(const JSON& json, const fs::path& path);
 
-[[nodiscard]] auto try_get(const nlohmann::json& json, const char* key)
-    -> const nlohmann::json*;
+[[nodiscard]] auto try_get(const JSON& json, const char* key) -> const JSON*;
 
-[[nodiscard]] auto read_json(const fs::path& path) -> Maybe<nlohmann::json>;
+[[nodiscard]] auto read_json(const fs::path& path) -> Maybe<JSON>;
 
 namespace io {
 
-[[nodiscard]] auto as_string(const nlohmann::json& json, std::string_view name)
+[[nodiscard]] auto as_string(const JSON& json, std::string_view name)
     -> Maybe<std::string>;
 
-[[nodiscard]] auto as_int(const nlohmann::json& json, std::string_view name)
-    -> Maybe<int32>;
+[[nodiscard]] auto as_int(const JSON& json, std::string_view name) -> Maybe<int32>;
 
-[[nodiscard]] auto as_uint(const nlohmann::json& json, std::string_view name)
-    -> Maybe<uint32>;
+[[nodiscard]] auto as_uint(const JSON& json, std::string_view name) -> Maybe<uint32>;
 
-[[nodiscard]] auto as_float(const nlohmann::json& json, std::string_view name)
-    -> Maybe<float>;
+[[nodiscard]] auto as_float(const JSON& json, std::string_view name) -> Maybe<float>;
 
-[[nodiscard]] auto as_bool(const nlohmann::json& json, std::string_view name)
-    -> Maybe<bool>;
+[[nodiscard]] auto as_bool(const JSON& json, std::string_view name) -> Maybe<bool>;
 
 }  // namespace io
 }  // namespace tactile
