@@ -37,7 +37,7 @@ namespace {
   for (auto tileNode : tilesetNode.children("tile")) {
     TileID tileId {};
 
-    if (const auto id = int_attribute(tileNode, "id")) {
+    if (const auto id = as_int(tileNode, "id")) {
       tileId = *id;
     }
     else {
@@ -49,14 +49,14 @@ namespace {
     for (auto frameNode : tileNode.child("animation").children("frame")) {
       auto& frameData = tileData.frames.emplace_back();
 
-      if (const auto localId = int_attribute(frameNode, "tileid")) {
+      if (const auto localId = as_int(frameNode, "tileid")) {
         frameData.local_id = *localId;
       }
       else {
         return ParseError::NoAnimationFrameTile;
       }
 
-      if (const auto duration = uint_attribute(frameNode, "duration")) {
+      if (const auto duration = as_uint(frameNode, "duration")) {
         frameData.duration_ms = *duration;
       }
       else {
@@ -87,21 +87,21 @@ namespace {
 {
   auto imageNode = tilesetNode.child("image");
 
-  if (const auto width = int_attribute(imageNode, "width")) {
+  if (const auto width = as_int(imageNode, "width")) {
     tilesetData.image_size.x = *width;
   }
   else {
     return ParseError::NoTilesetImageWidth;
   }
 
-  if (const auto height = int_attribute(imageNode, "height")) {
+  if (const auto height = as_int(imageNode, "height")) {
     tilesetData.image_size.y = *height;
   }
   else {
     return ParseError::NoTilesetImageHeight;
   }
 
-  const auto relativePath = string_attribute(imageNode, "source");
+  const auto relativePath = as_string(imageNode, "source");
   if (!relativePath) {
     return ParseError::NoTilesetImagePath;
   }
@@ -121,35 +121,35 @@ namespace {
                                             ir::TilesetData& tilesetData,
                                             const fs::path&  dir) -> ParseError
 {
-  if (auto name = string_attribute(node, "name")) {
+  if (auto name = as_string(node, "name")) {
     tilesetData.name = std::move(*name);
   }
   else {
     return ParseError::NoTilesetName;
   }
 
-  if (const auto tw = int_attribute(node, "tilewidth")) {
+  if (const auto tw = as_int(node, "tilewidth")) {
     tilesetData.tile_size.x = *tw;
   }
   else {
     return ParseError::NoTilesetTileWidth;
   }
 
-  if (const auto th = int_attribute(node, "tileheight")) {
+  if (const auto th = as_int(node, "tileheight")) {
     tilesetData.tile_size.y = *th;
   }
   else {
     return ParseError::NoTilesetTileHeight;
   }
 
-  if (const auto count = int_attribute(node, "tilecount")) {
+  if (const auto count = as_int(node, "tilecount")) {
     tilesetData.tile_count = *count;
   }
   else {
     return ParseError::NoTilesetTileCount;
   }
 
-  if (const auto columns = int_attribute(node, "columns")) {
+  if (const auto columns = as_int(node, "columns")) {
     tilesetData.column_count = *columns;
   }
   else {
@@ -177,9 +177,9 @@ namespace {
                                            ir::TilesetData& tilesetData,
                                            const fs::path&  dir) -> ParseError
 {
-  TACTILE_ASSERT(has_attribute(node, "source"));
+  TACTILE_ASSERT(has_attr(node, "source"));
 
-  const auto relativePath = string_attribute(node, "source").value();
+  const auto relativePath = as_string(node, "source").value();
   const auto sourcePath = fs::weakly_canonical(dir / relativePath);
 
   if (!fs::exists(sourcePath)) {
@@ -199,14 +199,14 @@ namespace {
 auto parse_tileset(XMLNode node, ir::TilesetData& tilesetData, const fs::path& dir)
     -> ParseError
 {
-  if (const auto firstTile = int_attribute(node, "firstgid")) {
+  if (const auto firstTile = as_int(node, "firstgid")) {
     tilesetData.first_tile = *firstTile;
   }
   else {
     return ParseError::NoTilesetFirstTileId;
   }
 
-  if (has_attribute(node, "source")) {
+  if (has_attr(node, "source")) {
     return _parse_external_tileset(node, tilesetData, dir);
   }
   else {

@@ -39,26 +39,26 @@ namespace {
   TACTILE_ASSERT(type);
 
   if (std::strcmp(type, "string") == 0) {
-    value = string_attribute(node, "value").value();
+    value = as_string(node, "value").value();
   }
   else if (std::strcmp(type, "int") == 0) {
-    value = int_attribute(node, "value").value();
+    value = as_int(node, "value").value();
   }
   else if (std::strcmp(type, "float") == 0) {
-    value = float_attribute(node, "value").value();
+    value = as_float(node, "value").value();
   }
   else if (std::strcmp(type, "bool") == 0) {
-    value = bool_attribute(node, "value").value();
+    value = as_bool(node, "value").value();
   }
   else if (std::strcmp(type, "file") == 0) {
-    fs::path path = string_attribute(node, "value").value();
+    fs::path path = as_string(node, "value").value();
     value = std::move(path);
   }
   else if (std::strcmp(type, "object") == 0) {
-    value = object_t {int_attribute(node, "value").value()};
+    value = object_t {as_int(node, "value").value()};
   }
   else if (std::strcmp(type, "color") == 0) {
-    const auto hex = string_attribute(node, "value").value();
+    const auto hex = as_string(node, "value").value();
     if (hex.empty()) {
       value.reset_to_default(AttributeType::Color);
     }
@@ -83,7 +83,7 @@ namespace {
 {
   std::string propertyName;
 
-  if (auto name = string_attribute(node, "name")) {
+  if (auto name = as_string(node, "name")) {
     propertyName = std::move(*name);
   }
   else {

@@ -124,7 +124,7 @@ namespace {
 {
   auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
 
-  if (const auto width = uint_attribute(layerNode, "width")) {
+  if (const auto width = as_uint(layerNode, "width")) {
     tileLayerData.col_count = *width;
 
     if (tileLayerData.col_count != columns) {
@@ -138,7 +138,7 @@ namespace {
     tileLayerData.col_count = columns;
   }
 
-  if (const auto height = uint_attribute(layerNode, "height")) {
+  if (const auto height = as_uint(layerNode, "height")) {
     tileLayerData.row_count = *height;
 
     if (tileLayerData.row_count != rows) {
@@ -186,7 +186,7 @@ namespace {
 {
   layerData.index = index;
 
-  if (const auto id = int_attribute(layerNode, "id")) {
+  if (const auto id = as_int(layerNode, "id")) {
     layerData.id = *id;
   }
   else {
@@ -246,7 +246,7 @@ namespace {
 
 auto parse_object(XMLNode objectNode, ir::ObjectData& objectData) -> ParseError
 {
-  if (const auto id = int_attribute(objectNode, "id")) {
+  if (const auto id = as_int(objectNode, "id")) {
     objectData.id = *id;
   }
   else {

@@ -30,11 +30,11 @@ namespace {
 
 [[nodiscard]] auto _validate_map(XMLNode mapNode) -> ParseError
 {
-  if (string_attribute(mapNode, "orientation") != "orthogonal") {
+  if (as_string(mapNode, "orientation") != "orthogonal") {
     return ParseError::UnsupportedMapOrientation;
   }
 
-  if (bool_attribute(mapNode, "infinite").value_or(false)) {
+  if (as_bool(mapNode, "infinite").value_or(false)) {
     return ParseError::UnsupportedInfiniteMap;
   }
 
@@ -54,42 +54,42 @@ namespace {
     return err;
   }
 
-  if (const auto width = uint_attribute(mapNode, "width")) {
+  if (const auto width = as_uint(mapNode, "width")) {
     data.col_count = *width;
   }
   else {
     return ParseError::NoMapWidth;
   }
 
-  if (const auto height = uint_attribute(mapNode, "height")) {
+  if (const auto height = as_uint(mapNode, "height")) {
     data.row_count = *height;
   }
   else {
     return ParseError::NoMapHeight;
   }
 
-  if (const auto tw = int_attribute(mapNode, "tilewidth")) {
+  if (const auto tw = as_int(mapNode, "tilewidth")) {
     data.tile_size.x = *tw;
   }
   else {
     return ParseError::NoMapTileWidth;
   }
 
-  if (const auto th = int_attribute(mapNode, "tileheight")) {
+  if (const auto th = as_int(mapNode, "tileheight")) {
     data.tile_size.y = *th;
   }
   else {
     return ParseError::NoMapTileHeight;
   }
 
-  if (const auto id = int_attribute(mapNode, "nextlayerid")) {
+  if (const auto id = as_int(mapNode, "nextlayerid")) {
     data.next_layer_id = *id;
   }
   else {
     return ParseError::NoMapNextLayerId;
   }
 
-  if (const auto id = int_attribute(mapNode, "nextobjectid")) {
+  if (const auto id = as_int(mapNode, "nextobjectid")) {
     data.next_object_id = *id;
   }
   else {

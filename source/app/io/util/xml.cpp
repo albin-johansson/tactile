@@ -29,18 +29,7 @@ namespace tactile::io {
 
 using XMLAttr = pugi::xml_attribute;
 
-auto collect_children(XMLNode source, const char* name) -> std::vector<XMLNode>
-{
-  std::vector<XMLNode> children;
-
-  for (auto child : source.children(name)) {
-    children.push_back(child);
-  }
-
-  return children;
-}
-
-auto has_attribute(XMLNode node, const char* attr_name) -> bool
+auto has_attr(XMLNode node, const char* attr_name) -> bool
 {
   TACTILE_ASSERT(attr_name != nullptr);
   return std::any_of(node.attributes_begin(),
@@ -50,7 +39,7 @@ auto has_attribute(XMLNode node, const char* attr_name) -> bool
                      });
 }
 
-auto string_attribute(XMLNode node, const char* attr_name) -> Maybe<std::string>
+auto as_string(XMLNode node, const char* attr_name) -> Maybe<std::string>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -62,7 +51,7 @@ auto string_attribute(XMLNode node, const char* attr_name) -> Maybe<std::string>
   }
 }
 
-auto int_attribute(XMLNode node, const char* attr_name) -> Maybe<int32>
+auto as_int(XMLNode node, const char* attr_name) -> Maybe<int32>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -77,7 +66,7 @@ auto int_attribute(XMLNode node, const char* attr_name) -> Maybe<int32>
   }
 }
 
-auto uint_attribute(XMLNode node, const char* attr_name) -> Maybe<uint32>
+auto as_uint(XMLNode node, const char* attr_name) -> Maybe<uint32>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -92,7 +81,7 @@ auto uint_attribute(XMLNode node, const char* attr_name) -> Maybe<uint32>
   }
 }
 
-auto float_attribute(XMLNode node, const char* attr_name) -> Maybe<float>
+auto as_float(XMLNode node, const char* attr_name) -> Maybe<float>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -107,7 +96,7 @@ auto float_attribute(XMLNode node, const char* attr_name) -> Maybe<float>
   }
 }
 
-auto bool_attribute(XMLNode node, const char* attr_name) -> Maybe<bool>
+auto as_bool(XMLNode node, const char* attr_name) -> Maybe<bool>
 {
   TACTILE_ASSERT(attr_name);
 
