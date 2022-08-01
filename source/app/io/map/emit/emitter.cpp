@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "save_document.hpp"
+#include "emitter.hpp"
 
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
@@ -25,15 +25,13 @@
 #include "core/common/filesystem.hpp"
 #include "core/document/map_document.hpp"
 #include "io/map/emit/emit_info.hpp"
-#include "io/map/emit/emit_map.hpp"
-#include "io/map/emit/godot_emitter.hpp"
 #include "io/map/ir/map_to_ir.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::io {
 
-void save_document(const MapDocument& document)
+void emit_map(const MapDocument& document)
 {
   TACTILE_DEBUG_PROFILE_START
   TACTILE_ASSERT(document.has_path());
@@ -60,22 +58,8 @@ void save_document(const MapDocument& document)
   TACTILE_DEBUG_PROFILE_END("Emitted document")
 }
 
-void export_document_as_godot_scene(const MapDocument& document,
-                                    std::string_view   projectMapDir,
-                                    std::string_view   projectTilesetDir,
-                                    std::string_view   projectImageDir,
-                                    const bool         embedTilesets)
+void emit_map_as_godot_scene(const MapDocument& document, const GodotEmitOptions& options)
 {
-  // TODO validate directories
-
-  TACTILE_PROFILE_START
-  spdlog::info("Exporting map as Godot scene...");
-
-  // FIXME path
-  EmitInfo info {"test.escn", convert_map_to_ir(document)};
-  emit_godot_scene(info);
-
-  TACTILE_PROFILE_END("Exported document as Godot scene")
 }
 
 }  // namespace tactile::io

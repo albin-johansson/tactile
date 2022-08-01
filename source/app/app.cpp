@@ -49,9 +49,9 @@
 #include "editor/ui/ui.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
+#include "io/map/emit/emitter.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "io/map/save_document.hpp"
 #include "io/persistence/history.hpp"
 #include "io/persistence/preferences.hpp"
 #include "io/persistence/session.hpp"
@@ -339,7 +339,7 @@ void App::on_save()
   // TODO ability to save tileset documents
   if (auto* document = active_map_document()) {
     if (document->has_path()) {
-      io::save_document(*document);
+      io::emit_map(*document);
 
       document->get_history().mark_as_clean();
       document->set_name(document->get_path().filename().string());

@@ -17,8 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "godot_emitter.hpp"
-
 #include <fstream>      // ofstream
 #include <ios>          // ios
 #include <string_view>  // string_view
@@ -26,15 +24,18 @@
 #include <fmt/format.h>
 
 #include "io/map/emit/emit_info.hpp"
+#include "io/map/emit/emitter.hpp"
 #include "misc/logging.hpp"
+
+// Reference: https://docs.godotengine.org/en/stable/development/file_formats/tscn.html
 
 namespace tactile::io {
 namespace {}
 
-void emit_godot_scene(const EmitInfo& info)
+void emit_godot_map(const EmitInfo& info)
 {
   spdlog::debug("Saving Godot scene to {}...",
-                absolute(info.destination_file()).string());
+                fs::absolute(info.destination_file()).string());
 
   const auto& data = info.data();
   const usize nResources = data.tilesets.size() + 1;
@@ -54,22 +55,22 @@ void emit_godot_scene(const EmitInfo& info)
   stream << fmt::format(R"([node name="{}" type="Node2D"])",
                         info.destination_file().filename().string());
 
-  auto writeNode = [](const std::string_view name,
-                      const std::string_view type,
-                      const std::string_view parent) {
+  auto write_node = [](std::string_view name,
+                       std::string_view type,
+                       std::string_view parent) {
     return fmt::format(R"([node name="{}" type="{}" parent="{}"])", name, type, parent);
   };
 
   for (const auto& layer : data.layers) {
     switch (layer.type) {
       case LayerType::TileLayer:
-        stream << writeNode(layer.name, "TileMap", ".") << '\n';
+        stream << write_node(layer.name, "TileMap", ".") << '\n';
         break;
 
       case LayerType::ObjectLayer:
         [[fallthrough]];
       case LayerType::GroupLayer:
-        stream << writeNode(layer.name, "Node2D", ".") << '\n';
+        stream << write_node(layer.name, "Node2D", ".") << '\n';
         break;
     }
   }

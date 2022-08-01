@@ -30,7 +30,7 @@
 #include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "io/map/emit/emit_info.hpp"
-#include "io/map/emit/emit_map.hpp"
+#include "io/map/emit/emitter.hpp"
 #include "io/persistence/preferences.hpp"
 #include "io/util/yaml.hpp"
 

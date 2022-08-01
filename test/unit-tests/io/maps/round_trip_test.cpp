@@ -12,7 +12,7 @@
 #include "core/util/texture_manager.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/emit/emit_info.hpp"
-#include "io/map/emit/emit_map.hpp"
+#include "io/map/emit/emitter.hpp"
 #include "io/map/parse/parse_map.hpp"
 
 using namespace std::string_literals;

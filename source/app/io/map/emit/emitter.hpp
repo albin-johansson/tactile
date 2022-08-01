@@ -19,14 +19,34 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include "io/fwd.hpp"
+
+namespace tactile {
+class MapDocument;
+}  // namespace tactile
 
 namespace tactile::io {
 
+struct GodotEmitOptions final
+{
+  std::string project_map_dir;      ///< Path to the map directory.
+  std::string project_tileset_dir;  ///< Path to the tileset directory.
+  std::string project_image_dir;    ///< Path to the image directory.
+  bool        embed_tilesets : 1 {};
+};
+
+/// Emits a map document, inferring the format from the path (or the preferred format)
+void emit_map(const MapDocument& document);
+
+/// Emits a map document as a Godot scene, see options struct for details.
+void emit_map_as_godot_scene(const MapDocument&      document,
+                             const GodotEmitOptions& options);
+
 void emit_json_map(const EmitInfo& info);
-
 void emit_xml_map(const EmitInfo& info);
-
 void emit_yaml_map(const EmitInfo& info);
+void emit_godot_map(const EmitInfo& info);
 
 }  // namespace tactile::io
