@@ -23,6 +23,10 @@
 
 namespace tactile::io {
 
+void emit_json_map(const EmitInfo& info);
+
+void emit_xml_map(const EmitInfo& info);
+
 void emit_yaml_map(const EmitInfo& info);
 
 }  // namespace tactile::io

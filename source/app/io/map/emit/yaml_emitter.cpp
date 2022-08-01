@@ -17,8 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "yaml_emitter.hpp"
-
 #include <fstream>  // ofstream
 #include <ios>      // ios
 #include <sstream>  // stringstream
@@ -32,6 +30,7 @@
 #include "core/common/filesystem.hpp"
 #include "core/common/ints.hpp"
 #include "io/map/emit/emit_info.hpp"
+#include "io/map/emit/emit_map.hpp"
 #include "io/persistence/preferences.hpp"
 #include "io/util/yaml.hpp"
 

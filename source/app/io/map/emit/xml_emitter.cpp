@@ -17,8 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "xml_emitter.hpp"
-
 #include <fstream>  // ofstream
 #include <ios>      // ios
 #include <sstream>  // stringstream
@@ -28,7 +26,9 @@
 #include <spdlog/spdlog.h>
 
 #include "core/common/filesystem.hpp"
+#include "core/common/functional.hpp"
 #include "io/map/emit/emit_info.hpp"
+#include "io/map/emit/emit_map.hpp"
 #include "io/map/tiled_info.hpp"
 #include "io/persistence/preferences.hpp"
 #include "io/util/xml.hpp"
@@ -51,7 +51,7 @@ void append_properties(XMLNode node, const ir::ContextData& context_data)
 
     const auto type = propertyValue.type();
 
-    /* Properties with no type attribute are assumed to be string properties */
+    // Properties with no type attribute are assumed to be string properties
     if (type != AttributeType::String) {
       property_node.append_attribute("type").set_value(stringify(type));
     }
@@ -124,7 +124,7 @@ void append_object(XMLNode node, const ir::ObjectData& object_data)
     object_node.append_attribute("visible").set_value(0);
   }
 
-  /* Objects are assumed to be rectangles unless explicitly told otherwise */
+  // Objects are assumed to be rectangles unless explicitly told otherwise,,
   if (object_data.type == ObjectType::Point) {
     object_node.append_child("point");
   }
@@ -161,8 +161,8 @@ void append_tile_layer(XMLNode root, const ir::LayerData& layer_data)
 
   append_properties(node, layer_data.context);
 
-  auto dataNode = node.append_child("data");
-  dataNode.append_attribute("encoding").set_value("csv");
+  auto data_node = node.append_child("data");
+  data_node.append_attribute("encoding").set_value("csv");
 
   const auto count = tile_layer_data.row_count * tile_layer_data.col_count;
 
@@ -171,26 +171,26 @@ void append_tile_layer(XMLNode root, const ir::LayerData& layer_data)
 
   const auto& prefs = get_preferences();
 
-  for (usize row = 0; row < tile_layer_data.row_count; ++row) {
-    for (usize col = 0; col < tile_layer_data.col_count; ++col) {
-      if (prefs.fold_tile_data && index == 0) {
-        stream << '\n';
-      }
+  invoke_mn(tile_layer_data.row_count,
+            tile_layer_data.col_count,
+            [&](const usize row, const usize col) {
+              if (prefs.fold_tile_data && index == 0) {
+                stream << '\n';
+              }
 
-      stream << tile_layer_data.tiles[row][col];
-      if (index < count - 1u) {
-        stream << ',';
-      }
+              stream << tile_layer_data.tiles[row][col];
+              if (index < count - 1u) {
+                stream << ',';
+              }
 
-      if (prefs.fold_tile_data && (index + 1) % tile_layer_data.col_count == 0) {
-        stream << '\n';
-      }
+              if (prefs.fold_tile_data && (index + 1) % tile_layer_data.col_count == 0) {
+                stream << '\n';
+              }
 
-      ++index;
-    }
-  }
+              ++index;
+            });
 
-  dataNode.text().set(stream.str().c_str());
+  data_node.text().set(stream.str().c_str());
 }
 
 void append_object_layer(XMLNode root, const ir::LayerData& layer_data)
@@ -345,7 +345,7 @@ void append_tileset(XMLNode                root,
 
 void append_root(pugi::xml_document& document, const EmitInfo& info)
 {
-  const auto& mapData = info.data();
+  const auto& map_data = info.data();
   auto        root = document.append_child("map");
 
   root.append_attribute("version").set_value(tiled_xml_format_version);
@@ -355,23 +355,23 @@ void append_root(pugi::xml_document& document, const EmitInfo& info)
   root.append_attribute("renderorder").set_value("right-down");
   root.append_attribute("infinite").set_value(0);
 
-  root.append_attribute("tilewidth").set_value(mapData.tile_size.x);
-  root.append_attribute("tileheight").set_value(mapData.tile_size.y);
+  root.append_attribute("tilewidth").set_value(map_data.tile_size.x);
+  root.append_attribute("tileheight").set_value(map_data.tile_size.y);
 
-  root.append_attribute("width").set_value(mapData.col_count);
-  root.append_attribute("height").set_value(mapData.row_count);
+  root.append_attribute("width").set_value(map_data.col_count);
+  root.append_attribute("height").set_value(map_data.row_count);
 
-  root.append_attribute("nextlayerid").set_value(mapData.next_layer_id);
-  root.append_attribute("nextobjectid").set_value(mapData.next_object_id);
+  root.append_attribute("nextlayerid").set_value(map_data.next_layer_id);
+  root.append_attribute("nextobjectid").set_value(map_data.next_object_id);
 
-  append_properties(root, mapData.context);
+  append_properties(root, map_data.context);
 
-  for (const auto& tilesetData : mapData.tilesets) {
-    append_tileset(root, tilesetData, info.destination_dir());
+  for (const auto& tileset_data : map_data.tilesets) {
+    append_tileset(root, tileset_data, info.destination_dir());
   }
 
-  for (const auto& layerData : mapData.layers) {
-    append_layer(root, layerData);
+  for (const auto& layer_data : map_data.layers) {
+    append_layer(root, layer_data);
   }
 }
 
@@ -386,7 +386,7 @@ void emit_xml_map(const EmitInfo& info)
   pugi::xml_document document;
   append_root(document, info);
 
-  std::ofstream stream {info.destination_file(), std::ios::out};
+  std::ofstream stream {info.destination_file(), std::ios::out | std::ios::trunc};
   document.save(stream, " ");
 }
 
