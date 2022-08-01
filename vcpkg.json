@@ -2,11 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
   "name": "tactile",
   "license": "GPL-3.0",
-  "version-semver": "0.4.0",
+  "version-semver": "0.5.0",
   "maintainers": [
     "albin-johansson"
   ],
-  "builtin-baseline": "98f8d00e89fb6a8019c2045cfa1edbe9d92d3405",
+  "builtin-baseline": "f93ba152d55e1d243160e690bc302ffe8638358e",
   "dependencies": [
     "boost-assert",
     "boost-container",

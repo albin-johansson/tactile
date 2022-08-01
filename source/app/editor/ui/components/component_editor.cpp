@@ -29,10 +29,12 @@
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/components/component_index.hpp"
-#include "core/events/component_events.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/event/component_events.hpp"
 #include "core/model.hpp"
 #include "editor/constants.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/common/labels.hpp"
@@ -51,11 +53,10 @@ struct ComponentEditor::Data final
 };
 
 ComponentEditor::ComponentEditor()
-    : ADialog {"Component Editor"}
+    : ADialog {get_current_language().window.component_editor}
     , mData {std::make_unique<Data>()}
 {
-  set_accept_button_label(nullptr);
-  set_close_button_label("Close");
+  set_accept_button_label(nothing);
 }
 
 ComponentEditor::~ComponentEditor() noexcept = default;
@@ -63,11 +64,15 @@ ComponentEditor::~ComponentEditor() noexcept = default;
 void ComponentEditor::show(const DocumentModel& model)
 {
   const auto& document = model.require_active_document();
-  const auto& index = document.get_component_index();
+  const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
-  mData->active_component = !index->empty() ? Maybe<UUID> {index->begin()->first}  //
-                                            : nothing;
+  mData->active_component =
+      !index->empty() ? Maybe<UUID> {index->begin()->first} : nothing;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.component_editor);
+  set_close_button_label(lang.misc.close);
 
   make_visible();
 }
@@ -75,10 +80,11 @@ void ComponentEditor::show(const DocumentModel& model)
 void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& document = model.require_active_document();
-  const auto& index = document.get_component_index();
+  const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
-  auto& data = *mData;
+  auto&       data = *mData;
+  const auto& lang = get_current_language();
 
   /* Ensure that the active component ID hasn't been invalidated */
   if (data.active_component && !index->contains(*data.active_component)) {
@@ -86,15 +92,15 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   }
 
   if (index->empty()) {
-    ImGui::TextUnformatted("There are no available components for the current map.");
+    ImGui::TextUnformatted(lang.misc.map_has_no_components.c_str());
 
-    if (centered_button(TAC_ICON_ADD, "Create Component")) {
+    if (centered_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
       get_dialogs().define_component.show();
     }
   }
   else {
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Component:");
+    ImGui::TextUnformatted(lang.misc.component.c_str());
     ImGui::SameLine();
 
     if (!data.active_component) {
@@ -114,13 +120,13 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
 
     ImGui::SameLine();
 
-    if (button(TAC_ICON_ADD, "Create Component")) {
+    if (button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
       get_dialogs().define_component.show();
     }
 
     ImGui::SameLine();
 
-    if (button(TAC_ICON_THREE_DOTS, "Show Component Actions")) {
+    if (button(TAC_ICON_THREE_DOTS, lang.tooltip.show_component_actions.c_str())) {
       ImGui::OpenPopup("##ComponentEditorPopup");
     }
 
@@ -147,18 +153,20 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
 void ComponentEditor::show_component_combo_popup(const ADocument&  document,
                                                  entt::dispatcher& dispatcher)
 {
-  auto& data = *mData;
+  auto&       data = *mData;
+  const auto& lang = get_current_language();
+
   if (Popup popup {"##ComponentEditorPopup"}; popup.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Component")) {
+    if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
       const auto  id = data.active_component.value();
-      const auto  index = document.get_component_index();
+      const auto* index = document.view_component_index();
       const auto& name = index->at(id).get_name();
       get_dialogs().rename_component.show(name, id);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Component")) {
+    if (ImGui::MenuItem(lang.action.remove_component.c_str())) {
       dispatcher.enqueue<UndefComponentEvent>(data.active_component.value());
       data.active_component.reset();
     }
@@ -168,17 +176,19 @@ void ComponentEditor::show_component_combo_popup(const ADocument&  document,
 void ComponentEditor::show_component_attributes(const ComponentDefinition& definition,
                                                 entt::dispatcher&          dispatcher)
 {
-  auto& data = *mData;
+  auto&       data = *mData;
+  const auto& lang = get_current_language();
 
   if (definition.empty()) {
-    centered_label("This component has no attributes.");
+    centered_label(lang.misc.empty_component.c_str());
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
     if (Table table {"##ComponentAttributeTable", 3, table_flags}; table.is_open()) {
-      ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch);
-      ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch);
-      ImGui::TableSetupColumn("Default", ImGuiTableColumnFlags_WidthStretch);
+      ImGui::TableSetupColumn(lang.misc.name.c_str(), ImGuiTableColumnFlags_WidthStretch);
+      ImGui::TableSetupColumn(lang.misc.type.c_str(), ImGuiTableColumnFlags_WidthStretch);
+      ImGui::TableSetupColumn(lang.misc.default_value.c_str(),
+                              ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableHeadersRow();
 
       for (const auto& [name, attr] : definition) {
@@ -187,7 +197,7 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
     }
   }
 
-  if (centered_button("Create Attribute")) {
+  if (centered_button(lang.action.create_attribute.c_str())) {
     get_dialogs().add_component_attr.show(*data.active_component);
   }
 }
@@ -197,7 +207,9 @@ void ComponentEditor::show_component_attribute(const UUID&        componentId,
                                                const Attribute&   value,
                                                entt::dispatcher&  dispatcher)
 {
+  const auto& lang = get_current_language();
   auto&       data = *mData;
+
   const Scope scope {name.c_str()};
 
   ImGui::TableNextRow();
@@ -207,19 +219,19 @@ void ComponentEditor::show_component_attribute(const UUID&        componentId,
   ImGui::TextUnformatted(name.c_str());
 
   if (auto popup = Popup::for_item("##ComponentAttributeNameContext"); popup.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Attribute")) {
+    if (ImGui::MenuItem(lang.action.rename_attribute.c_str())) {
       get_dialogs().rename_component_attr.show(name, data.active_component.value());
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Attribute")) {
+    if (ImGui::MenuItem(lang.action.duplicate_attribute.c_str())) {
       dispatcher.enqueue<DuplicateComponentAttrEvent>(componentId, name);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Attribute")) {
+    if (ImGui::MenuItem(lang.action.remove_attribute.c_str())) {
       dispatcher.enqueue<RemoveComponentAttrEvent>(componentId, name);
     }
   }

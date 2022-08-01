@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
-#include "core/events/misc_events.hpp"
-#include "core/events/viewport_events.hpp"
+#include "core/event/misc_events.hpp"
+#include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/viewport.hpp"
 #include "editor/shortcuts/mappings.hpp"
@@ -180,7 +180,8 @@ auto PanRightShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 /* ------------------------------------------------------------------------------------ */
 
-ToggleGridShortcut::ToggleGridShortcut() : AShortcut {cen::scancodes::g, primary_modifier}
+ToggleGridShortcut::ToggleGridShortcut()
+    : AShortcut {cen::scancodes::g, primary_modifier}
 {}
 
 void ToggleGridShortcut::activate(entt::dispatcher&)
@@ -208,7 +209,9 @@ auto ToggleLayerHighlightShortcut::is_enabled(const DocumentModel& model) const 
 
 /* ------------------------------------------------------------------------------------ */
 
-ToggleUiShortcut::ToggleUiShortcut() : AShortcut {cen::scancodes::tab} {}
+ToggleUiShortcut::ToggleUiShortcut()
+    : AShortcut {cen::scancodes::tab}
+{}
 
 void ToggleUiShortcut::activate(entt::dispatcher& dispatcher)
 {

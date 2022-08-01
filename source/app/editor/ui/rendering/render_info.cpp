@@ -24,7 +24,7 @@
 #include <imgui_internal.h>
 
 #include "core/map.hpp"
-#include "core/tilesets/tileset.hpp"
+#include "core/tileset/tileset.hpp"
 #include "core/viewport.hpp"
 #include "editor/ui/conversions.hpp"
 

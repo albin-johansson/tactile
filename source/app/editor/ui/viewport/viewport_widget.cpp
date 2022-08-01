@@ -25,9 +25,9 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/events/map_events.hpp"
-#include "core/events/tool_events.hpp"
-#include "core/events/viewport_events.hpp"
+#include "core/event/map_events.hpp"
+#include "core/event/tool_events.hpp"
+#include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/viewport.hpp"
 #include "editor/shortcuts/mappings.hpp"

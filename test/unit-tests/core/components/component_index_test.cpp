@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/components/component_index.hpp"
+#include "core/comp/component_index.hpp"
 
 #include <gtest/gtest.h>
 
-#include "core/components/component_definition.hpp"
+#include "core/comp/component_definition.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::test {

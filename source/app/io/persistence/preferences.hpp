@@ -25,6 +25,7 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "editor/lang/language.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/themes.hpp"
 
@@ -41,6 +42,7 @@ enum class OverlayPos
 };
 
 inline constexpr auto       def_preferred_format = "YAML";
+inline constexpr auto       def_language = Lang::EN;
 inline constexpr auto       def_viewport_overlay_pos = OverlayPos::BottomRight;
 inline constexpr auto       def_theme = ui::EditorTheme::Nocturnal;
 inline constexpr cen::color def_viewport_bg {0x3C, 0x3C, 0x3C};
@@ -68,6 +70,7 @@ inline constexpr bool def_use_default_font = true;
 struct PreferenceState final
 {
   std::string     preferred_format {def_preferred_format};
+  Lang            language {def_language};
   ui::EditorTheme theme {def_theme};
   cen::color      viewport_background {def_viewport_bg};
   usize           command_capacity {def_command_capacity};

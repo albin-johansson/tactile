@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/tilesets/tileset.hpp"
+#include "core/tileset/tileset.hpp"
 
 #include <gtest/gtest.h>
 
-#include "core/tilesets/tileset_info.hpp"
+#include "core/tileset/tileset_info.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::test {

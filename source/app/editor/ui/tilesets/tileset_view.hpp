@@ -22,12 +22,15 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+
+namespace tactile {
+class DocumentModel;
+}  // namespace tactile
 
 namespace tactile::ui {
 
 void update_tileset_view(const DocumentModel& model,
-                         const UUID&          tilesetId,
+                         const UUID&          tileset_id,
                          entt::dispatcher&    dispatcher);
 
 }  // namespace tactile::ui

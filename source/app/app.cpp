@@ -21,22 +21,19 @@
 
 #include <utility>  // move
 
-#include <boost/stacktrace.hpp>
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
 
 #include "cfg/configuration.hpp"
-#include "core/commands/commands.hpp"
-#include "core/documents/map_document.hpp"
-#include "core/documents/tileset_document.hpp"
-#include "core/events/map_events.hpp"
-#include "core/events/misc_events.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/viewport_events.hpp"
-#include "core/tilesets/tileset_info.hpp"
-#include "core/tools/tool_manager.hpp"
+#include "core/cmd/commands.hpp"
+#include "core/document/map_document.hpp"
+#include "core/document/tileset_document.hpp"
+#include "core/event/map_events.hpp"
+#include "core/event/misc_events.hpp"
+#include "core/event/tileset_events.hpp"
+#include "core/event/viewport_events.hpp"
+#include "core/tileset/tileset_info.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "editor/ui/dialogs/save_as_dialog.hpp"
@@ -46,16 +43,15 @@
 #include "editor/ui/menus/edit_menu.hpp"
 #include "editor/ui/menus/file_menu.hpp"
 #include "editor/ui/menus/map_menu.hpp"
-#include "editor/ui/properties/property_dock.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "editor/ui/tilesets/tileset_dock.hpp"
 #include "editor/ui/ui.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
-#include "io/maps/parser/parse_map.hpp"
-#include "io/maps/restore_map_from_ir.hpp"
-#include "io/maps/save_document.hpp"
+#include "io/map/ir/map_from_ir.hpp"
+#include "io/map/parse/parse_map.hpp"
+#include "io/map/save_document.hpp"
 #include "io/persistence/history.hpp"
 #include "io/persistence/preferences.hpp"
 #include "io/persistence/session.hpp"
@@ -63,7 +59,8 @@
 
 namespace tactile {
 
-App::App(AppConfiguration* configuration) : AEventLoop {configuration}
+App::App(AppCfg* configuration)
+    : AEventLoop {configuration}
 {
   mConfig = configuration;
 
@@ -73,8 +70,6 @@ App::App(AppConfiguration* configuration) : AEventLoop {configuration}
   ui::init_dialogs();
   ui::load_icons(mTextures);
 }
-
-App::~App() noexcept = default;
 
 void App::on_startup()
 {
@@ -373,14 +368,14 @@ void App::on_open_save_as_dialog()
 void App::on_inspect_map()
 {
   if (auto* document = active_map_document()) {
-    document->select_context(document->get_map().get_uuid());
+    document->get_contexts().select(document->get_map().get_uuid());
   }
 }
 
 void App::on_inspect_tileset()
 {
   if (auto* document = active_tileset_document()) {
-    document->select_context(document->view_tileset().get_uuid());
+    document->get_contexts().select(document->view_tileset().get_uuid());
   }
 }
 
@@ -424,7 +419,7 @@ void App::on_open_map(const OpenMapEvent& event)
 
   const auto ir = io::parse_map(event.path);
   if (ir.error() == io::ParseError::None) {
-    restore_map_from_ir(ir, mModel, mTextures);
+    map_from_ir(ir, mModel, mTextures);
     io::add_file_to_history(event.path);
   }
   else {
@@ -847,7 +842,7 @@ void App::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
 void App::on_show_add_property_dialog()
 {
   if (auto* document = active_document()) {
-    const auto& contextId = document->active_context_id();
+    const auto& contextId = document->get_contexts().active_context_id();
     ui::get_dialogs().add_property.open(contextId);
   }
 }
@@ -855,7 +850,7 @@ void App::on_show_add_property_dialog()
 void App::on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)
 {
   if (const auto* document = active_document()) {
-    const auto& contextId = document->active_context_id();
+    const auto& contextId = document->get_contexts().active_context_id();
     ui::get_dialogs().rename_property.open(contextId, event.current_name);
   }
 }
@@ -864,7 +859,7 @@ void App::on_show_change_property_type_dialog(
     const ShowChangePropertyTypeDialogEvent& event)
 {
   if (const auto* document = active_document()) {
-    const auto& contextId = document->active_context_id();
+    const auto& contextId = document->get_contexts().active_context_id();
     ui::get_dialogs().change_property_type.show(contextId,
                                                 event.name,
                                                 event.current_type);
@@ -909,7 +904,7 @@ void App::on_change_property_type(const ChangePropertyTypeEvent& event)
 void App::on_inspect_context(const InspectContextEvent& event)
 {
   if (auto* document = active_document()) {
-    document->select_context(event.context_id);
+    document->get_contexts().select(event.context_id);
   }
 }
 

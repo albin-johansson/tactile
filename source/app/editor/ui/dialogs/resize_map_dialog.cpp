@@ -22,28 +22,49 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/map_events.hpp"
-#include "editor/ui/common/buttons.hpp"
+#include "core/event/map_events.hpp"
+#include "editor/constants.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
-ResizeMapDialog::ResizeMapDialog() : ADialog {"Resize Map"} {}
+ResizeMapDialog::ResizeMapDialog()
+    : ADialog {"Resize Map"}
+{}
 
 void ResizeMapDialog::show(usize nCurrentRows, usize nCurrentColumns)
 {
   mRows = nCurrentRows;
   mColumns = nCurrentColumns;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.resize_map);
+
   make_visible();
 }
 
 void ResizeMapDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
+  const auto& lang = get_current_language();
+
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted(lang.misc.rows.c_str());
+
+  ImGui::SameLine();
+
   auto rows = static_cast<int>(mRows);
-  ImGui::DragInt("Rows", &rows, 1.0f, 1, 10'000);
+  ImGui::SetNextItemWidth(-min_float);
+  ImGui::DragInt("##Rows", &rows, 1.0f, 1, 10'000);
   mRows = static_cast<usize>(rows);
 
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted(lang.misc.columns.c_str());
+
+  ImGui::SameLine();
+
   auto cols = static_cast<int>(mColumns);
-  ImGui::DragInt("Columns", &cols, 1.0f, 1, 10'000);
+  ImGui::DragInt("##Columns", &cols, 1.0f, 1, 10'000);
   mColumns = static_cast<usize>(cols);
 }
 

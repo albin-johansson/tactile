@@ -22,24 +22,30 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/layer_events.hpp"
+#include "core/event/layer_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/icons.hpp"
 
 namespace tactile::ui {
 
-AddLayerContextMenu::AddLayerContextMenu() : ContextMenu {"AddLayerContextMenu"} {}
+AddLayerContextMenu::AddLayerContextMenu()
+    : ContextMenu {"AddLayerContextMenu"}
+{}
 
 void AddLayerContextMenu::on_update(const DocumentModel&, entt::dispatcher& dispatcher)
 {
-  if (ImGui::Selectable(TAC_ICON_TILE_LAYER " Tile layer")) {
+  const auto& lang = get_current_language();
+
+  if (ImGui::Selectable(lang.action.tile_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
   }
 
-  if (ImGui::Selectable(TAC_ICON_OBJECT_LAYER " Object layer")) {
+  if (ImGui::Selectable(lang.action.object_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::ObjectLayer);
   }
 
-  if (ImGui::Selectable(TAC_ICON_GROUP_LAYER " Group layer")) {
+  if (ImGui::Selectable(lang.action.group_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::GroupLayer);
   }
 }

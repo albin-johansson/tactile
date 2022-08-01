@@ -23,19 +23,25 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/events/layer_events.hpp"
+#include "core/event/layer_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
-RenameLayerDialog::RenameLayerDialog() : AStringInputDialog {"Rename Layer"}
-{
-  set_accept_button_label("Rename");
-}
+RenameLayerDialog::RenameLayerDialog()
+    : AStringInputDialog {"Rename Layer"}
+{}
 
 void RenameLayerDialog::show(const UUID& layerId, std::string oldName)
 {
   mTargetId = layerId;
   mOldName = std::move(oldName);
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.rename_layer);
+  set_accept_button_label(lang.misc.rename);
+
   AStringInputDialog::show(*mOldName);
 }
 

@@ -19,11 +19,11 @@
 
 #include "render_map.hpp"
 
-#include "core/documents/map_document.hpp"
-#include "core/layers/group_layer.hpp"
-#include "core/layers/layer_visitor.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/document/map_document.hpp"
+#include "core/layer/group_layer.hpp"
+#include "core/layer/layer_visitor.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_object_layer.hpp"
 #include "editor/ui/rendering/render_tile_layer.hpp"

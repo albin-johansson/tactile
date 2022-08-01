@@ -19,54 +19,59 @@
 
 #include "property_type_combo.hpp"
 
-#include <algorithm>  // find_if
-#include <array>      // array
-#include <cstring>    // strcmp
-#include <utility>    // pair, make_pair
+#include <algorithm>    // find_if
+#include <array>        // array
+#include <string_view>  // string_view
+#include <utility>      // pair, make_pair
 
 #include <imgui.h>
 
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {
 namespace {
 
-constexpr std::array _items {std::make_pair("string", AttributeType::String),
-                             std::make_pair("int", AttributeType::Int),
-                             std::make_pair("float", AttributeType::Float),
-                             std::make_pair("bool", AttributeType::Bool),
-                             std::make_pair("color", AttributeType::Color),
-                             std::make_pair("object", AttributeType::Object),
-                             std::make_pair("path", AttributeType::Path)};
-
-[[nodiscard]] auto _index_from_type(const AttributeType type) -> usize
+[[nodiscard]] auto index_from_type(const auto& items, const AttributeType type) -> usize
 {
-  auto iter = std::find_if(_items.begin(), _items.end(), [=](const auto& pair) {
+  const auto iter = std::find_if(items.begin(), items.end(), [=](const auto& pair) {
     return type == pair.second;
   });
 
-  if (iter != _items.end()) {
-    return static_cast<usize>(iter - _items.begin());
+  if (iter != items.end()) {
+    return static_cast<usize>(iter - items.begin());
   }
   else {
-    throw TactileError("Invalid property type!");
+    throw TactileError {"Invalid property type!"};
   }
 }
 
-void _property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previousType)
+void property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous_type)
 {
-  const auto currentIndex = _index_from_type(out);
-  auto&& [currentName, currentType] = _items.at(currentIndex);
+  const auto& lang = get_current_language();
 
-  if (Combo combo {"##_property_type_combo_impl", currentName}; combo.is_open()) {
-    for (auto&& [name, type] : _items) {
-      Disable disable {previousType == type};
+  using TypeArray = std::array<std::pair<std::string_view, AttributeType>, 7>;
+  const TypeArray items {std::make_pair(lang.misc.type_string, AttributeType::String),
+                         std::make_pair(lang.misc.type_int, AttributeType::Int),
+                         std::make_pair(lang.misc.type_float, AttributeType::Float),
+                         std::make_pair(lang.misc.type_bool, AttributeType::Bool),
+                         std::make_pair(lang.misc.type_color, AttributeType::Color),
+                         std::make_pair(lang.misc.type_object, AttributeType::Object),
+                         std::make_pair(lang.misc.type_path, AttributeType::Path)};
 
-      const auto selected = std::strcmp(currentName, name) == 0;
-      if (ImGui::Selectable(name, selected)) {
+  const auto current_index = index_from_type(items, out);
+  auto&& [current_name, current_type] = items.at(current_index);
+
+  if (Combo combo {"##PropertyTypeCombo", current_name.data()}; combo.is_open()) {
+    for (auto&& [name, type] : items) {
+      Disable disable_if {previous_type == type};
+
+      const auto selected = current_name == name;
+      if (ImGui::Selectable(name.data(), selected)) {
         out = type;
       }
 
@@ -81,12 +86,12 @@ void _property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous
 
 void show_property_type_combo(AttributeType& out)
 {
-  _property_type_combo_impl(out, nothing);
+  property_type_combo_impl(out, nothing);
 }
 
 void show_property_type_combo(const AttributeType previous, AttributeType& out)
 {
-  _property_type_combo_impl(out, previous);
+  property_type_combo_impl(out, previous);
 }
 
 }  // namespace tactile::ui

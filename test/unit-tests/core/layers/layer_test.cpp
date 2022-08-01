@@ -19,9 +19,9 @@
 
 #include <gtest/gtest.h>
 
-#include "core/layers/group_layer.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/group_layer.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 
 namespace tactile::test {
 

@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "io/maps/parser/parse_map.hpp"
+#include "io/map/parse/parse_map.hpp"
 
 namespace tactile::test {
 

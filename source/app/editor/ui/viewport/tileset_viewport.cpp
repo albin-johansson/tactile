@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
-#include "core/documents/tileset_document.hpp"
+#include "core/document/tileset_document.hpp"
 #include "document_viewport_offset_handler.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_info.hpp"

@@ -65,7 +65,7 @@ auto find_resource(const char* resource) -> fs::path
 
 auto widget_ini_path() -> const fs::path&
 {
-  static const auto ini = absolute(find_resource("imgui.ini"));
+  static const auto ini = fs::absolute(find_resource("imgui.ini"));
   return ini;
 }
 

@@ -19,36 +19,36 @@
 
 #include "editor/ui/dialogs/dialog.hpp"
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/scoped.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile::ui {
 
-ADialog::ADialog(const char* title) : mTitle {title}
-{
-  if (!mTitle) {
-    throw TactileError("Invalid null dialog title!");
-  }
-}
+ADialog::ADialog(std::string title)
+    : mTitle {title}
+    , mAcceptButtonLabel {get_current_language().misc.ok}
+    , mCloseButtonLabel {get_current_language().misc.cancel}
+{}
 
 void ADialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (mShow) {
-    ImGui::OpenPopup(mTitle);
+    ImGui::OpenPopup(mTitle.c_str());
     mShow = false;
   }
 
   center_next_window_on_appearance();
 
   constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  if (Modal modal {mTitle, flags}; modal.is_open()) {
+  if (Modal modal {mTitle.c_str(), flags}; modal.is_open()) {
     on_update(model, dispatcher);
 
     ImGui::Spacing();
 
-    if (mCloseButtonLabel && button(mCloseButtonLabel)) {
+    if (mCloseButtonLabel && button(mCloseButtonLabel->c_str())) {
       on_cancel();
       ImGui::CloseCurrentPopup();
     }
@@ -60,7 +60,7 @@ void ADialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
         ImGui::SameLine();
       }
 
-      if (button(mAcceptButtonLabel, nullptr, valid)) {
+      if (button(mAcceptButtonLabel->c_str(), nullptr, valid)) {
         on_accept(dispatcher);
         ImGui::CloseCurrentPopup();
       }
@@ -70,7 +70,7 @@ void ADialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
       if (mCloseButtonLabel || mAcceptButtonLabel) {
         ImGui::SameLine();
       }
-      if (button("Apply", nullptr, valid)) {
+      if (button(get_current_language().misc.apply.c_str(), nullptr, valid)) {
         on_apply(dispatcher);
       }
     }
@@ -87,14 +87,19 @@ void ADialog::use_apply_button()
   mUseApplyButton = true;
 }
 
-void ADialog::set_accept_button_label(const char* label)
+void ADialog::set_title(std::string title)
 {
-  mAcceptButtonLabel = label;
+  mTitle = std::move(title);
 }
 
-void ADialog::set_close_button_label(const char* label)
+void ADialog::set_accept_button_label(Maybe<std::string> label)
 {
-  mCloseButtonLabel = label;
+  mAcceptButtonLabel = std::move(label);
+}
+
+void ADialog::set_close_button_label(Maybe<std::string> label)
+{
+  mCloseButtonLabel = std::move(label);
 }
 
 }  // namespace tactile::ui

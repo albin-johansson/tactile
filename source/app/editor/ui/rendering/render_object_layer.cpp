@@ -26,8 +26,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/layers/object.hpp"
-#include "core/layers/object_layer.hpp"
+#include "core/layer/object.hpp"
+#include "core/layer/object_layer.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "misc/assert.hpp"
 

@@ -23,22 +23,29 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/contexts/context.hpp"
-#include "core/events/property_events.hpp"
+#include "core/ctx/context.hpp"
+#include "core/ctx/context_manager.hpp"
+#include "core/ctx/property_bundle.hpp"
+#include "core/event/property_events.hpp"
 #include "core/model.hpp"
-#include "core/property_bundle.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
-RenamePropertyDialog::RenamePropertyDialog() : AStringInputDialog {"Rename Property"}
-{
-  set_accept_button_label("Rename");
-}
+RenamePropertyDialog::RenamePropertyDialog()
+    : AStringInputDialog {"Rename Property"}
+{}
 
-void RenamePropertyDialog::open(const UUID& contextId, std::string previousName)
+void RenamePropertyDialog::open(const UUID& context_id, std::string previous_name)
 {
-  mContextId = contextId;
-  show(std::move(previousName));
+  mContextId = context_id;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.rename_property);
+  set_accept_button_label(lang.misc.rename);
+
+  show(std::move(previous_name));
 }
 
 void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
@@ -53,7 +60,7 @@ auto RenamePropertyDialog::validate(const DocumentModel& model,
                                     std::string_view     input) const -> bool
 {
   const auto& document = model.require_active_document();
-  const auto& context = document.view_context(document.active_context_id());
+  const auto& context = document.get_contexts().active_context();
   return !input.empty() && !context.get_props().contains(input);
 }
 

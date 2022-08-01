@@ -22,17 +22,18 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/map_events.hpp"
+#include "core/event/map_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "io/persistence/preferences.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {
 
-CreateMapDialog::CreateMapDialog() : ADialog {"Create New Map"}
-{
-  set_accept_button_label("Create");
-}
+CreateMapDialog::CreateMapDialog()
+    : ADialog {"Create Map"}
+{}
 
 void CreateMapDialog::show()
 {
@@ -42,23 +43,29 @@ void CreateMapDialog::show()
   mRows = 5;
   mColumns = 5;
 
+  const auto& lang = get_current_language();
+  set_title(lang.window.create_new_map);
+  set_accept_button_label(lang.misc.create);
+
   make_visible();
 }
 
 void CreateMapDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
+  const auto& lang = get_current_language();
+
   {
-    const char* rowsLabel = "Rows:";
-    const char* columnsLabel = "Columns:";
-    const auto  offset = minimum_offset_to_align(rowsLabel, columnsLabel);
+    const auto& rowsLabel = lang.misc.rows;
+    const auto& columnsLabel = lang.misc.columns;
+    const auto  offset = minimum_offset_to_align(rowsLabel.c_str(), columnsLabel.c_str());
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(rowsLabel);
+    ImGui::TextUnformatted(rowsLabel.c_str());
     ImGui::SameLine(offset);
     ImGui::InputInt("##Rows", &mRows);
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(columnsLabel);
+    ImGui::TextUnformatted(columnsLabel.c_str());
     ImGui::SameLine(offset);
     ImGui::InputInt("##Columns", &mColumns);
   }
@@ -66,17 +73,18 @@ void CreateMapDialog::on_update(const DocumentModel&, entt::dispatcher&)
   ImGui::Separator();
 
   {
-    const char* tileWidthLabel = "Tile width:";
-    const char* tileHeightLabel = "Tile height:";
-    const auto  offset = minimum_offset_to_align(tileWidthLabel, tileHeightLabel);
+    const auto& tileWidthLabel = lang.misc.tile_width;
+    const auto& tileHeightLabel = lang.misc.tile_height;
+    const auto  offset =
+        minimum_offset_to_align(tileWidthLabel.c_str(), tileHeightLabel.c_str());
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(tileWidthLabel);
+    ImGui::TextUnformatted(tileWidthLabel.c_str());
     ImGui::SameLine(offset);
     ImGui::InputInt("##TileWidth", &mTileSize.x);
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(tileHeightLabel);
+    ImGui::TextUnformatted(tileHeightLabel.c_str());
     ImGui::SameLine(offset);
     ImGui::InputInt("##TileHeight", &mTileSize.y);
   }

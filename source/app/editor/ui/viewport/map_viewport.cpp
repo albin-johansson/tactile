@@ -25,15 +25,15 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/events/map_events.hpp"
-#include "core/events/object_events.hpp"
-#include "core/events/property_events.hpp"
-#include "core/events/tool_events.hpp"
-#include "core/events/viewport_events.hpp"
-#include "core/layers/object_layer.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/map_events.hpp"
+#include "core/event/object_events.hpp"
+#include "core/event/property_events.hpp"
+#include "core/event/tool_events.hpp"
+#include "core/event/viewport_events.hpp"
+#include "core/layer/object_layer.hpp"
 #include "core/model.hpp"
-#include "core/tools/tool_manager.hpp"
+#include "core/tool/tool_manager.hpp"
 #include "document_viewport_offset_handler.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/rendering/graphics.hpp"
@@ -42,6 +42,7 @@
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/map_viewport_overlay.hpp"
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
+#include "editor/ui/viewport/preview/tool_preview_renderer.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
 #include "io/persistence/preferences.hpp"
 
@@ -121,8 +122,10 @@ void _draw_cursor_gizmos(GraphicsCtx&              graphics,
     graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
   }
 
+  ToolPreviewRenderer previewRenderer {model, graphics, _make_mouse_info(cursor)};
+
   const auto& tools = document.get_tools();
-  tools.draw_gizmos(model, graphics, _make_mouse_info(cursor));
+  tools.accept(previewRenderer);
 }
 
 void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)

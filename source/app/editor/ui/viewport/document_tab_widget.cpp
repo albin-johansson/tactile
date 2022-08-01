@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/commands/command_stack.hpp"
-#include "core/events/document_events.hpp"
+#include "core/cmd/command_stack.hpp"
+#include "core/event/document_events.hpp"
 #include "core/model.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"

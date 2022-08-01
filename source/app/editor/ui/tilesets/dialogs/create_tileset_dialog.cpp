@@ -22,18 +22,19 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/tileset_events.hpp"
-#include "core/utils/buffers.hpp"
+#include "core/event/tileset_events.hpp"
+#include "core/util/buffers.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile::ui {
 
-CreateTilesetDialog::CreateTilesetDialog() : ADialog {"Create tileset"}
-{
-  set_accept_button_label("Create");
-}
+CreateTilesetDialog::CreateTilesetDialog()
+    : ADialog {"Create Tileset"}
+{}
 
 void CreateTilesetDialog::open()
 {
@@ -43,27 +44,33 @@ void CreateTilesetDialog::open()
   const auto& prefs = io::get_preferences();
   mTileSize = prefs.preferred_tile_size;
 
+  const auto& lang = get_current_language();
+  set_title(lang.window.create_tileset);
+  set_accept_button_label(lang.misc.create);
+
   make_visible();
 }
 
 void CreateTilesetDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
+  const auto& lang = get_current_language();
+
+  ImGui::TextUnformatted(lang.misc.create_tileset_instruction.c_str());
   ImGui::Spacing();
 
-  if (button("Select image...")) {
+  if (button(lang.misc.select_image.c_str())) {
     show_image_file_dialog();
   }
 
   ImGui::SameLine();
   ImGui::InputTextWithHint("##Source",
-                           "Source image path",
+                           lang.misc.tileset_image_input_hint.c_str(),
                            mPathPreviewBuffer.data(),
                            mPathPreviewBuffer.size(),
                            ImGuiInputTextFlags_ReadOnly);
 
-  ImGui::DragInt("Tile width", &mTileSize.x, 1.0f, 1, 10'000);
-  ImGui::DragInt("Tile height", &mTileSize.y, 1.0f, 1, 10'000);
+  ImGui::DragInt(lang.misc.tile_width.c_str(), &mTileSize.x, 1.0f, 1, 10'000);
+  ImGui::DragInt(lang.misc.tile_height.c_str(), &mTileSize.y, 1.0f, 1, 10'000);
 }
 
 void CreateTilesetDialog::on_accept(entt::dispatcher& dispatcher)

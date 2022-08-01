@@ -9,7 +9,7 @@
 
 #include <gtest/gtest.h>
 
-#include "io/maps/parser/parse_map.hpp"
+#include "io/map/parse/parse_map.hpp"
 
 #define YAML_DIR "test-resources/yaml/"
 #define YAML_ERR "test-resources/yaml/errors/"

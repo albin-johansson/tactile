@@ -21,17 +21,19 @@
 
 #include <imgui.h>
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/scoped.hpp"
 
 namespace tactile::ui {
 namespace {
 
-constexpr auto _table_flags = ImGuiTableFlags_RowBg |      //
-                              ImGuiTableFlags_Borders |    //
-                              ImGuiTableFlags_Resizable |  //
-                              ImGuiTableFlags_SizingStretchProp;
+constexpr auto table_flags = ImGuiTableFlags_RowBg |      //
+                             ImGuiTableFlags_Borders |    //
+                             ImGuiTableFlags_Resizable |  //
+                             ImGuiTableFlags_SizingStretchProp;
 
-void _row(const char* lib, const char* license)
+void row(const char* lib, const char* license)
 {
   ImGui::TableNextRow();
 
@@ -44,47 +46,53 @@ void _row(const char* lib, const char* license)
 
 }  // namespace
 
-CreditsDialog::CreditsDialog() : ADialog {"Credits"}
+CreditsDialog::CreditsDialog()
+    : ADialog {"Credits"}
 {
-  set_accept_button_label(nullptr);
-  set_close_button_label("Close");
+  set_accept_button_label(nothing);
 }
 
 void CreditsDialog::show()
 {
+  const auto& lang = get_current_language();
+
+  set_title(lang.window.credits);
+  set_close_button_label(lang.misc.close);
+
   make_visible();
 }
 
 void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  ImGui::TextUnformatted(
-      "Tactile is developed using the following open-source libraries.");
+  const auto& lang = get_current_language();
+
+  ImGui::TextUnformatted(lang.misc.credits_info.c_str());
   ImGui::Spacing();
 
-  if (Table table {"##CreditsTable", 2, _table_flags}; table.is_open()) {
-    ImGui::TableSetupColumn("Library");
-    ImGui::TableSetupColumn("License");
+  if (Table table {"##CreditsTable", 2, table_flags}; table.is_open()) {
+    ImGui::TableSetupColumn(lang.misc.library.c_str());
+    ImGui::TableSetupColumn(lang.misc.license.c_str());
     ImGui::TableHeadersRow();
 
-    _row("Boost", "BSL-1.0");
-    _row("Centurion", "MIT");
-    _row("Dear ImGui", "MIT");
-    _row("EnTT", "MIT");
-    _row("fmt", "MIT");
-    _row("GLEW", "BSD/MIT");
-    _row("glm", "Happy Bunny/MIT"); /* Yes, there is a Happy Bunny license */
-    _row("IconFontCppHeaders", "Zlib");
-    _row("JSON for Modern C++", "MIT");
-    _row("Magic Enum C++", "MIT");
-    _row("Protocol Buffers", "BSD");
-    _row("pugixml", "MIT");
-    _row("SDL2", "Zlib");
-    _row("SDL2_image", "Zlib");
-    _row("spdlog", "MIT");
-    _row("stb_image", "MIT");
-    _row("tinyfiledialogs", "Zlib");
-    _row("yaml-cpp", "MIT");
-    _row("googletest", "BSD");
+    row("Boost", "BSL-1.0");
+    row("Centurion", "MIT");
+    row("Dear ImGui", "MIT");
+    row("EnTT", "MIT");
+    row("fmt", "MIT");
+    row("GLEW", "BSD/MIT");
+    row("glm", "Happy Bunny/MIT");  // Yes, there is a Happy Bunny license
+    row("IconFontCppHeaders", "Zlib");
+    row("JSON for Modern C++", "MIT");
+    row("Magic Enum C++", "MIT");
+    row("Protocol Buffers", "BSD");
+    row("pugixml", "MIT");
+    row("SDL2", "Zlib");
+    row("SDL2_image", "Zlib");
+    row("spdlog", "MIT");
+    row("stb_image", "MIT");
+    row("tinyfiledialogs", "Zlib");
+    row("yaml-cpp", "MIT");
+    row("googletest", "BSD");
   }
 }
 

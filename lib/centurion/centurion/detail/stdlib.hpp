@@ -1,8 +1,29 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019-2022 Albin Johansson
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #ifndef CENTURION_DETAIL_STDLIB_HPP_
 #define CENTURION_DETAIL_STDLIB_HPP_
-
-#include "../common.hpp"
-#include "../features.hpp"
 
 #include <cassert>       // assert
 #include <charconv>      // from_chars
@@ -15,17 +36,18 @@
 #include <system_error>  // errc
 #include <type_traits>   // is_integral_v
 
+#include "../common.hpp"
+#include "../features.hpp"
+
 #if CENTURION_HAS_FEATURE_FORMAT
 
 #include <format>  // format
 
 #endif  // CENTURION_HAS_FEATURE_FORMAT
 
-/// \cond FALSE
-
 namespace cen::detail {
 
-/* Clamps a value in the range [min, max] */
+/// Clamps a value in the range [min, max]
 template <typename T>
 [[nodiscard]] constexpr auto clamp(const T& value,
                                    const T& min,
@@ -95,11 +117,11 @@ template <typename T = int>
   }
 }
 
-/* Returns a string that represents the address of the supplied pointer */
+/// Returns a string that represents the address of the supplied pointer
 [[nodiscard]] inline auto address_of(const void* ptr) -> std::string
 {
 #if CENTURION_HAS_FEATURE_FORMAT
-  return std::format("{}", ptr);
+  return ptr ? std::format("{}", ptr) : std::string{};
 #else
   if (ptr) {
     std::stringstream stream;
@@ -118,7 +140,5 @@ template <typename T = int>
 }
 
 }  // namespace cen::detail
-
-/// \endcond
 
 #endif  // CENTURION_DETAIL_STDLIB_HPP_

@@ -22,117 +22,118 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/events/command_events.hpp"
-#include "core/events/tool_events.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/command_events.hpp"
+#include "core/event/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/tools/tool_type.hpp"
-#include "core/utils/formatted_string.hpp"
+#include "core/tool/tool_type.hpp"
+#include "core/util/fmt_string.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/shortcuts/mappings.hpp"
-#include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 
 namespace tactile::ui {
-namespace {}  // namespace
 
 void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (Menu menu {"Edit"}; menu.is_open()) {
+  const auto& lang = get_current_language();
+
+  if (Menu menu {lang.menu.edit.c_str()}; menu.is_open()) {
     const auto* document = model.active_document();
+    const auto* map_doc = dynamic_cast<const MapDocument*>(document);
 
-    const auto canUndo = document && document->get_history().can_undo();
-    const auto canRedo = document && document->get_history().can_redo();
+    const auto can_undo = document && document->get_history().can_undo();
+    const auto can_redo = document && document->get_history().can_redo();
 
-    const auto undoText =
-        FormattedString {TAC_ICON_UNDO " Undo {}",
-                         canUndo ? document->get_history().get_undo_text() : ""};
-    const auto redoText =
-        FormattedString {TAC_ICON_REDO " Redo {}",
-                         canRedo ? document->get_history().get_redo_text() : ""};
+    const FmtString undo_text {"{} {}",
+                               lang.action.undo,
+                               can_undo ? document->get_history().get_undo_text() : ""};
+    const FmtString redo_text {"{} {}",
+                               lang.action.redo,
+                               can_redo ? document->get_history().get_redo_text() : ""};
 
-    if (ImGui::MenuItem(undoText.data(), TACTILE_PRIMARY_MOD "+Z", false, canUndo)) {
+    if (ImGui::MenuItem(undo_text.data(), TACTILE_PRIMARY_MOD "+Z", false, can_undo)) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (ImGui::MenuItem(redoText.data(), TACTILE_PRIMARY_MOD "+Y", false, canRedo)) {
+    if (ImGui::MenuItem(redo_text.data(), TACTILE_PRIMARY_MOD "+Y", false, can_redo)) {
       dispatcher.enqueue<RedoEvent>();
     }
 
     ImGui::Separator();
 
-    const auto* map = dynamic_cast<const MapDocument*>(document);
-
-    const auto isToolActive = [&](const ToolType tool) {
-      return map && map->get_tools().is_enabled(tool);
+    const auto is_tool_active = [&](const ToolType tool) {
+      return map_doc && map_doc->get_tools().is_enabled(tool);
     };
 
-    const auto isToolPossible = [&](const ToolType tool) {
-      return map && map->get_tools().is_available(model, tool);
+    const auto is_tool_possible = [&](const ToolType tool) {
+      return map_doc && map_doc->get_tools().is_available(model, tool);
     };
 
-    if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp Tool",
+    if (ImGui::MenuItem(lang.action.stamp_tool.c_str(),
                         "S",
-                        isToolActive(ToolType::Stamp),
-                        isToolPossible(ToolType::Stamp))) {
+                        is_tool_active(ToolType::Stamp),
+                        is_tool_possible(ToolType::Stamp))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket Tool",
+    if (ImGui::MenuItem(lang.action.bucket_tool.c_str(),
                         "B",
-                        isToolActive(ToolType::Bucket),
-                        isToolPossible(ToolType::Bucket))) {
+                        is_tool_active(ToolType::Bucket),
+                        is_tool_possible(ToolType::Bucket))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser Tool",
+    if (ImGui::MenuItem(lang.action.eraser_tool.c_str(),
                         "E",
-                        isToolActive(ToolType::Eraser),
-                        isToolPossible(ToolType::Eraser))) {
+                        is_tool_active(ToolType::Eraser),
+                        is_tool_possible(ToolType::Eraser))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_OBJECT_SELECTION " Object Selection Tool",
+    if (ImGui::MenuItem(lang.action.object_selection_tool.c_str(),
                         "Q",
-                        isToolActive(ToolType::ObjectSelection),
-                        isToolPossible(ToolType::ObjectSelection))) {
+                        is_tool_active(ToolType::ObjectSelection),
+                        is_tool_possible(ToolType::ObjectSelection))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_RECTANGLE " Rectangle Tool",
+    if (ImGui::MenuItem(lang.action.rectangle_tool.c_str(),
                         "R",
-                        isToolActive(ToolType::Rectangle),
-                        isToolPossible(ToolType::Rectangle))) {
+                        is_tool_active(ToolType::Rectangle),
+                        is_tool_possible(ToolType::Rectangle))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Rectangle);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_ELLIPSE " Ellipse Tool",
+    if (ImGui::MenuItem(lang.action.ellipse_tool.c_str(),
                         "T",
-                        isToolActive(ToolType::Ellipse),
-                        isToolPossible(ToolType::Ellipse))) {
+                        is_tool_active(ToolType::Ellipse),
+                        is_tool_possible(ToolType::Ellipse))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Ellipse);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_POINT " Point Tool",
+    if (ImGui::MenuItem(lang.action.point_tool.c_str(),
                         "Y",
-                        isToolActive(ToolType::Point),
-                        isToolPossible(ToolType::Point))) {
+                        is_tool_active(ToolType::Point),
+                        is_tool_possible(ToolType::Point))) {
       dispatcher.enqueue<SelectToolEvent>(ToolType::Point);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_COMPONENT " Component Editor...",
+    if (ImGui::MenuItem(lang.action.show_component_editor.c_str(),
                         TACTILE_PRIMARY_MOD "+Shift+C",
                         false,
-                        map != nullptr)) {
+                        document->is_map())) {
       get_dialogs().component_editor.show(model);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", TACTILE_PRIMARY_MOD "+,")) {
+    if (ImGui::MenuItem(lang.action.show_settings.c_str(), TACTILE_PRIMARY_MOD "+,")) {
       get_dialogs().settings.show();
     }
   }

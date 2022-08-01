@@ -33,21 +33,25 @@
 namespace tactile::io {
 namespace {
 
-inline PreferenceState _settings;
+inline PreferenceState current_settings;
 
-[[nodiscard]] auto _get_preference_file_path() -> const fs::path&
+[[nodiscard]] auto get_preference_file_path() -> const fs::path&
 {
   static const auto path = persistent_file_dir() / "settings.bin";
   return path;
 }
 
-[[nodiscard]] auto _parse_preferences(const fs::path& path) -> PreferenceState
+[[nodiscard]] auto parse_preferences(const fs::path& path) -> PreferenceState
 {
   PreferenceState result {};
   std::ifstream   stream {path, std::ios::in | std::ios::binary};
 
   proto::Settings cfg;
   if (cfg.ParseFromIstream(&stream)) {
+    if (cfg.has_language()) {
+      result.language = static_cast<Lang>(cfg.language());
+    }
+
     if (cfg.has_theme()) {
       result.theme = static_cast<ui::EditorTheme>(cfg.theme());
     }
@@ -152,11 +156,11 @@ inline PreferenceState _settings;
 
 void load_preferences()
 {
-  _settings = PreferenceState {};
+  current_settings = PreferenceState {};
 
-  const auto& path = _get_preference_file_path();
+  const auto& path = get_preference_file_path();
   if (fs::exists(path)) {
-    _settings = _parse_preferences(path);
+    current_settings = parse_preferences(path);
   }
   else {
     spdlog::info("Did not find a preferences file, assuming defaults");
@@ -170,43 +174,44 @@ void save_preferences()
 {
   proto::Settings cfg;
 
-  cfg.set_theme(static_cast<proto::Theme>(_settings.theme));
-  cfg.set_show_grid(_settings.show_grid);
-  cfg.set_highlight_active_layer(_settings.highlight_active_layer);
-  cfg.set_window_border(_settings.window_border);
+  cfg.set_language(static_cast<proto::Lang>(current_settings.language));
+  cfg.set_theme(static_cast<proto::Theme>(current_settings.theme));
+  cfg.set_show_grid(current_settings.show_grid);
+  cfg.set_highlight_active_layer(current_settings.highlight_active_layer);
+  cfg.set_window_border(current_settings.window_border);
 
   {
     auto* background = cfg.mutable_viewport_background();
-    background->set_red(_settings.viewport_background.red());
-    background->set_green(_settings.viewport_background.green());
-    background->set_blue(_settings.viewport_background.blue());
-    background->set_alpha(_settings.viewport_background.alpha());
+    background->set_red(current_settings.viewport_background.red());
+    background->set_green(current_settings.viewport_background.green());
+    background->set_blue(current_settings.viewport_background.blue());
+    background->set_alpha(current_settings.viewport_background.alpha());
   }
 
-  cfg.set_command_capacity(_settings.command_capacity);
-  cfg.set_restore_last_session(_settings.restore_last_session);
-  cfg.set_preferred_tile_width(_settings.preferred_tile_size.x);
-  cfg.set_preferred_tile_height(_settings.preferred_tile_size.y);
+  cfg.set_command_capacity(current_settings.command_capacity);
+  cfg.set_restore_last_session(current_settings.restore_last_session);
+  cfg.set_preferred_tile_width(current_settings.preferred_tile_size.x);
+  cfg.set_preferred_tile_height(current_settings.preferred_tile_size.y);
 
-  cfg.set_preferred_format(_settings.preferred_format);
-  cfg.set_embed_tilesets(_settings.embed_tilesets);
-  cfg.set_indent_output(_settings.indent_output);
-  cfg.set_fold_tile_data(_settings.fold_tile_data);
+  cfg.set_preferred_format(current_settings.preferred_format);
+  cfg.set_embed_tilesets(current_settings.embed_tilesets);
+  cfg.set_indent_output(current_settings.indent_output);
+  cfg.set_fold_tile_data(current_settings.fold_tile_data);
 
-  cfg.set_show_tileset_dock(_settings.show_tileset_dock);
-  cfg.set_show_layer_dock(_settings.show_layer_dock);
-  cfg.set_show_property_dock(_settings.show_property_dock);
-  cfg.set_show_log_dock(_settings.show_log_dock);
-  cfg.set_show_component_dock(_settings.show_component_dock);
-  cfg.set_restore_layout(_settings.restore_layout);
+  cfg.set_show_tileset_dock(current_settings.show_tileset_dock);
+  cfg.set_show_layer_dock(current_settings.show_layer_dock);
+  cfg.set_show_property_dock(current_settings.show_property_dock);
+  cfg.set_show_log_dock(current_settings.show_log_dock);
+  cfg.set_show_component_dock(current_settings.show_component_dock);
+  cfg.set_restore_layout(current_settings.restore_layout);
   cfg.set_viewport_overlay_pos(
-      static_cast<proto::OverlayPos>(_settings.viewport_overlay_pos));
-  cfg.set_viewport_overlay_show_fps(_settings.show_viewport_overlay_fps);
+      static_cast<proto::OverlayPos>(current_settings.viewport_overlay_pos));
+  cfg.set_viewport_overlay_show_fps(current_settings.show_viewport_overlay_fps);
 
-  cfg.set_use_default_font(_settings.use_default_font);
-  cfg.set_font_size(_settings.font_size);
+  cfg.set_use_default_font(current_settings.use_default_font);
+  cfg.set_font_size(current_settings.font_size);
 
-  const auto&   path = _get_preference_file_path();
+  const auto&   path = get_preference_file_path();
   std::ofstream stream {path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
     spdlog::error("Failed to save preferences!");
@@ -215,47 +220,49 @@ void save_preferences()
 
 void print_preferences()
 {
-  spdlog::debug("Theme... {}", magic_enum::enum_name(_settings.theme));
-  spdlog::debug("Viewport background... {}", _settings.viewport_background.as_rgb());
+  spdlog::debug("Language... {}", magic_enum::enum_name(current_settings.language));
+  spdlog::debug("Theme... {}", magic_enum::enum_name(current_settings.theme));
+  spdlog::debug("Viewport background... {}",
+                current_settings.viewport_background.as_rgb());
 
-  spdlog::debug("Command capacity... {}", _settings.command_capacity);
-  spdlog::debug("Preferred tile width... {}", _settings.preferred_tile_size.x);
-  spdlog::debug("Preferred tile height... {}", _settings.preferred_tile_size.y);
+  spdlog::debug("Command capacity... {}", current_settings.command_capacity);
+  spdlog::debug("Preferred tile width... {}", current_settings.preferred_tile_size.x);
+  spdlog::debug("Preferred tile height... {}", current_settings.preferred_tile_size.y);
 
-  spdlog::debug("Preferred format... {}", _settings.preferred_format);
+  spdlog::debug("Preferred format... {}", current_settings.preferred_format);
   spdlog::debug("Viewport overlay pos... {}",
-                magic_enum::enum_name(_settings.viewport_overlay_pos));
+                magic_enum::enum_name(current_settings.viewport_overlay_pos));
   spdlog::debug("Show FPS in viewport overlay... {}",
-                _settings.show_viewport_overlay_fps);
+                current_settings.show_viewport_overlay_fps);
 
-  spdlog::debug("Font size... {}", _settings.font_size);
-  spdlog::debug("Use default font... {}", _settings.use_default_font);
+  spdlog::debug("Font size... {}", current_settings.font_size);
+  spdlog::debug("Use default font... {}", current_settings.use_default_font);
 
-  spdlog::debug("Embed tilesets... {}", _settings.embed_tilesets);
-  spdlog::debug("Indent output... {}", _settings.indent_output);
-  spdlog::debug("Fold tile data... {}", _settings.fold_tile_data);
+  spdlog::debug("Embed tilesets... {}", current_settings.embed_tilesets);
+  spdlog::debug("Indent output... {}", current_settings.indent_output);
+  spdlog::debug("Fold tile data... {}", current_settings.fold_tile_data);
 
-  spdlog::debug("Show grid... {}", _settings.show_grid);
-  spdlog::debug("Highlight active layer... {}", _settings.highlight_active_layer);
-  spdlog::debug("Show layer dock... {}", _settings.show_layer_dock);
-  spdlog::debug("Show log dock... {}", _settings.show_log_dock);
-  spdlog::debug("Show tileset dock... {}", _settings.show_tileset_dock);
-  spdlog::debug("Show property dock... {}", _settings.show_property_dock);
-  spdlog::debug("Show component dock... {}", _settings.show_component_dock);
+  spdlog::debug("Show grid... {}", current_settings.show_grid);
+  spdlog::debug("Highlight active layer... {}", current_settings.highlight_active_layer);
+  spdlog::debug("Show layer dock... {}", current_settings.show_layer_dock);
+  spdlog::debug("Show log dock... {}", current_settings.show_log_dock);
+  spdlog::debug("Show tileset dock... {}", current_settings.show_tileset_dock);
+  spdlog::debug("Show property dock... {}", current_settings.show_property_dock);
+  spdlog::debug("Show component dock... {}", current_settings.show_component_dock);
 
-  spdlog::debug("Window border... {}", _settings.window_border);
-  spdlog::debug("Restore layout... {}", _settings.restore_layout);
-  spdlog::debug("Restore last session... {}", _settings.restore_last_session);
+  spdlog::debug("Window border... {}", current_settings.window_border);
+  spdlog::debug("Restore layout... {}", current_settings.restore_layout);
+  spdlog::debug("Restore last session... {}", current_settings.restore_last_session);
 }
 
 void set_preferences(PreferenceState prefs)
 {
-  _settings = std::move(prefs);
+  current_settings = std::move(prefs);
 }
 
 auto get_preferences() -> PreferenceState&
 {
-  return _settings;
+  return current_settings;
 }
 
 }  // namespace tactile::io

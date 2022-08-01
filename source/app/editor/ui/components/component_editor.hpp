@@ -24,9 +24,14 @@
 #include "core/common/macros.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
 #include "editor/fwd.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
+
+namespace tactile {
+class ADocument;
+class Attribute;
+class ComponentDefinition;
+}  // namespace tactile
 
 namespace tactile::ui {
 

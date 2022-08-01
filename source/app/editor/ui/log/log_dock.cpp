@@ -22,6 +22,8 @@
 #include <imgui.h>
 
 #include "core/common/maybe.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
@@ -32,84 +34,80 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-constexpr auto _child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
-                              ImGuiWindowFlags_HorizontalScrollbar |
-                              ImGuiWindowFlags_AlwaysAutoResize;
+constexpr auto window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+constexpr auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
+                             ImGuiWindowFlags_HorizontalScrollbar |
+                             ImGuiWindowFlags_AlwaysAutoResize;
 
-constinit LogLevel _log_filter = LogLevel::debug;
-constinit bool     _is_dock_focused = false;
+constinit LogLevel log_filter = LogLevel::debug;
+constinit bool     is_dock_focused = false;
 
-[[nodiscard]] auto _show_log_level_filter_combo(const LogLevel currentLevel)
+[[nodiscard]] auto show_log_level_filter_combo(const LogLevel current_level)
     -> Maybe<LogLevel>
 {
-  static constexpr auto traceFilter = "Everything";
-  static constexpr auto debugFilter = "Debug";
-  static constexpr auto infoFilter = "Information";
-  static constexpr auto warningFilter = "Warnings";
-  static constexpr auto errorFilter = "Errors";
-  static constexpr auto criticalFilter = "Critical";
+  const auto& lang = get_current_language();
 
-  static const auto comboWidth = ImGui::CalcTextSize(infoFilter).x * 2.0f;
+  static const auto combo_width =
+      ImGui::CalcTextSize(lang.misc.log_info_filter.c_str()).x * 2.0f;
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Filter:");
+  ImGui::TextUnformatted(lang.misc.filter.c_str());
 
   ImGui::SameLine();
 
-  const char* filter = traceFilter;
-  switch (currentLevel) {
+  const char* filter = lang.misc.log_trace_filter.c_str();
+  switch (current_level) {
     case LogLevel::trace:
-      filter = traceFilter;
+      filter = lang.misc.log_trace_filter.c_str();
       break;
 
     case LogLevel::debug:
-      filter = debugFilter;
+      filter = lang.misc.log_debug_filter.c_str();
       break;
 
     case LogLevel::info:
-      filter = infoFilter;
+      filter = lang.misc.log_info_filter.c_str();
       break;
 
     case LogLevel::warn:
-      filter = warningFilter;
+      filter = lang.misc.log_warn_filter.c_str();
       break;
 
     case LogLevel::err:
-      filter = errorFilter;
+      filter = lang.misc.log_error_filter.c_str();
       break;
 
     case LogLevel::critical:
-      filter = criticalFilter;
+      filter = lang.misc.log_critical_filter.c_str();
       break;
 
     default:
       break;
   }
 
-  ImGui::SetNextItemWidth(comboWidth);
-  if (Combo filterCombo {"##LogFilterCombo", filter}; filterCombo.is_open()) {
-    if (ImGui::MenuItem(traceFilter)) {
+  ImGui::SetNextItemWidth(combo_width);
+  if (Combo filter_combo {"##LogFilterCombo", filter}; filter_combo.is_open()) {
+    if (ImGui::MenuItem(lang.misc.log_trace_filter.c_str())) {
       return LogLevel::trace;
     }
 
-    if (ImGui::MenuItem(debugFilter)) {
+    if (ImGui::MenuItem(lang.misc.log_debug_filter.c_str())) {
       return LogLevel::debug;
     }
 
-    if (ImGui::MenuItem(infoFilter)) {
+    if (ImGui::MenuItem(lang.misc.log_info_filter.c_str())) {
       return LogLevel::info;
     }
 
-    if (ImGui::MenuItem(warningFilter)) {
+    if (ImGui::MenuItem(lang.misc.log_warn_filter.c_str())) {
       return LogLevel::warn;
     }
 
-    if (ImGui::MenuItem(errorFilter)) {
+    if (ImGui::MenuItem(lang.misc.log_error_filter.c_str())) {
       return LogLevel::err;
     }
 
-    if (ImGui::MenuItem(criticalFilter)) {
+    if (ImGui::MenuItem(lang.misc.log_critical_filter.c_str())) {
       return LogLevel::critical;
     }
   }
@@ -117,7 +115,7 @@ constinit bool     _is_dock_focused = false;
   return nothing;
 }
 
-[[nodiscard]] auto _color_for_level(const LogLevel level) -> ImVec4
+[[nodiscard]] constexpr auto color_for_level(const LogLevel level) -> ImVec4
 {
   switch (level) {
     case LogLevel::trace:
@@ -139,11 +137,11 @@ constinit bool     _is_dock_focused = false;
       return {1.00f, 0.00f, 0.00f, 1.00f};
 
     default:
-      throw TactileError("Did not recognize log level!");
+      throw TactileError {"Did not recognize log level!"};
   }
 }
 
-void _update_color_legend_hint()
+void update_color_legend_hint()
 {
   ImGui::TextDisabled("(?)");
 
@@ -151,34 +149,35 @@ void _update_color_legend_hint()
     StyleColor bg {ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
     Tooltip    tooltip;
 
-    static const auto verboseColor = _color_for_level(LogLevel::trace);
-    static const auto debugColor = _color_for_level(LogLevel::debug);
-    static const auto infoColor = _color_for_level(LogLevel::info);
-    static const auto warningColor = _color_for_level(LogLevel::warn);
-    static const auto errorColor = _color_for_level(LogLevel::err);
-    static const auto criticalColor = _color_for_level(LogLevel::critical);
+    constexpr auto verbose_color = color_for_level(LogLevel::trace);
+    constexpr auto debug_color = color_for_level(LogLevel::debug);
+    constexpr auto info_color = color_for_level(LogLevel::info);
+    constexpr auto warning_color = color_for_level(LogLevel::warn);
+    constexpr auto error_color = color_for_level(LogLevel::err);
+    constexpr auto critical_color = color_for_level(LogLevel::critical);
 
-    ImGui::TextColored(verboseColor, "Verbose message");
-    ImGui::TextColored(debugColor, "Debug message");
-    ImGui::TextColored(infoColor, "Info message");
-    ImGui::TextColored(warningColor, "Warning message");
-    ImGui::TextColored(errorColor, "Error message");
-    ImGui::TextColored(criticalColor, "Critical message");
+    const auto& lang = get_current_language();
+    ImGui::TextColored(verbose_color, "%s", lang.tooltip.log_verbose_msg.c_str());
+    ImGui::TextColored(debug_color, "%s", lang.tooltip.log_debug_msg.c_str());
+    ImGui::TextColored(info_color, "%s", lang.tooltip.log_info_msg.c_str());
+    ImGui::TextColored(warning_color, "%s", lang.tooltip.log_warn_msg.c_str());
+    ImGui::TextColored(error_color, "%s", lang.tooltip.log_error_msg.c_str());
+    ImGui::TextColored(critical_color, "%s", lang.tooltip.log_critical_msg.c_str());
   }
 }
 
-void _update_log_contents(const LogLevel filter)
+void update_log_contents(const LogLevel filter)
 {
-  StyleColor childBg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+  StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
-  if (Child pane {"##LogPane", {}, true, _child_flags}; pane.is_open()) {
+  if (Child pane {"##LogPane", {}, true, child_flags}; pane.is_open()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(log_size(filter)));
 
     while (clipper.Step()) {
       for (auto i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {
         const auto& [level, str] = get_log_entry(filter, static_cast<usize>(i));
-        const auto color = _color_for_level(level);
+        const auto color = color_for_level(level);
         ImGui::TextColored(color, "%s", str.c_str());
       }
     }
@@ -195,27 +194,28 @@ void update_log_dock()
     return;
   }
 
-  Window dock {"Log", _window_flags, &prefs.show_log_dock};
+  const auto& lang = get_current_language();
 
-  _is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  Window dock {lang.window.log_dock.c_str(), window_flags, &prefs.show_log_dock};
+  is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    if (const auto level = _show_log_level_filter_combo(_log_filter)) {
-      _log_filter = *level;
+    if (const auto level = show_log_level_filter_combo(log_filter)) {
+      log_filter = *level;
     }
 
     ImGui::SameLine();
-    _update_color_legend_hint();
+    update_color_legend_hint();
 
-    if (log_size(_log_filter) != 0u) {
-      _update_log_contents(_log_filter);
+    if (log_size(log_filter) != 0u) {
+      update_log_contents(log_filter);
     }
     else {
-      centered_label("No logged messages match the current filter.");
+      centered_label(lang.misc.log_no_messages_match_filter.c_str());
     }
 
-    if (auto popup = Popup::for_window("##LogDockContext"); popup.is_open()) {
-      if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear Log")) {
+    if (auto popup = Popup::for_window("##LogDockPopup"); popup.is_open()) {
+      if (ImGui::MenuItem(lang.action.clear_log.c_str())) {
         clear_log_history();
       }
     }
@@ -224,7 +224,7 @@ void update_log_dock()
 
 auto is_log_dock_focused() -> bool
 {
-  return _is_dock_focused;
+  return is_dock_focused;
 }
 
 }  // namespace tactile::ui

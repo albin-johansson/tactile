@@ -23,11 +23,13 @@
 
 #include <imgui.h>
 
-#include "core/utils/buffers.hpp"
+#include "core/util/buffers.hpp"
 
 namespace tactile::ui {
 
-AStringInputDialog::AStringInputDialog(const char* title) : ADialog {title} {}
+AStringInputDialog::AStringInputDialog(std::string title)
+    : ADialog {std::move(title)}
+{}
 
 void AStringInputDialog::show(std::string previous)
 {
@@ -37,9 +39,9 @@ void AStringInputDialog::show(std::string previous)
   make_visible();
 }
 
-void AStringInputDialog::set_input_hint(const char* hint)
+void AStringInputDialog::set_input_hint(Maybe<std::string> hint)
 {
-  mHint = hint;
+  mHint = std::move(hint);
 }
 
 void AStringInputDialog::on_update(const DocumentModel&, entt::dispatcher&)
@@ -49,7 +51,7 @@ void AStringInputDialog::on_update(const DocumentModel&, entt::dispatcher&)
     mShouldAcquireFocus = false;
   }
   ImGui::InputTextWithHint("##string_input_dialog_input",
-                           mHint ? mHint : "",
+                           mHint.has_value() ? mHint->c_str() : "",
                            mBuffer.data(),
                            sizeof mBuffer);
 }

@@ -23,8 +23,10 @@
 #include <utility>  // move
 
 #include "colors.hpp"
-#include "core/utils/buffers.hpp"
+#include "core/util/buffers.hpp"
 #include "editor/constants.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/icons.hpp"
@@ -37,7 +39,9 @@ auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
 {
   switch (value.type()) {
     case AttributeType::String: {
-      if (auto updated = input_string_with_hint(id, "Empty", value.as_string())) {
+      const auto& lang = get_current_language();
+      if (auto updated =
+              input_string_with_hint(id, lang.misc.empty.c_str(), value.as_string())) {
         return std::move(updated);
       }
       break;
@@ -88,11 +92,12 @@ auto input_int(const char* id, int value) -> Maybe<int>
   const Scope scope {id};
 
   ImGui::SetNextItemWidth(-min_float);
-  if (ImGui::DragInt("##input_int", &value)) {
+  if (ImGui::DragInt("##Int", &value)) {
     return value;
   }
 
-  lazy_tooltip("##input_int_tooltip", "[int]");
+  const auto& lang = get_current_language();
+  lazy_tooltip("##IntTooltip", lang.misc.type_int.c_str());
 
   return nothing;
 }
@@ -105,17 +110,18 @@ auto input_float(const char* id, float value, const float min, const float max)
   ImGui::SetNextItemWidth(-min_float);
 
   if (min != 0 || max != 0) {
-    if (ImGui::SliderFloat("##input_float", &value, min, max)) {
+    if (ImGui::SliderFloat("##Float", &value, min, max)) {
       return value;
     }
   }
   else {
-    if (ImGui::DragFloat("##input_float", &value)) {
+    if (ImGui::DragFloat("##Float", &value)) {
       return value;
     }
   }
 
-  lazy_tooltip("##input_float_tooltip", "[float]");
+  const auto& lang = get_current_language();
+  lazy_tooltip("##FloatTooltip", lang.misc.type_float.c_str());
 
   return nothing;
 }
@@ -142,7 +148,7 @@ auto input_string_with_hint(const char*                  id,
     ImGui::SetNextItemWidth(-min_float);
   }
 
-  if (ImGui::InputTextWithHint("##input_string_with_hint",
+  if (ImGui::InputTextWithHint("##String",
                                hint ? hint : "",
                                buffer.data(),
                                sizeof buffer,
@@ -151,7 +157,8 @@ auto input_string_with_hint(const char*                  id,
     return create_string_from_buffer(buffer);
   }
 
-  lazy_tooltip("##input_string_tooltip", "[string]");
+  const auto& lang = get_current_language();
+  lazy_tooltip("##StringTooltip", lang.misc.type_string.c_str());
 
   return nothing;
 }
@@ -169,11 +176,12 @@ auto input_bool(const char* id, bool value) -> Maybe<bool>
 {
   const Scope scope {id};
 
-  if (ImGui::Checkbox("##input_bool", &value)) {
+  if (ImGui::Checkbox("##Bool", &value)) {
     return value;
   }
 
-  lazy_tooltip("##input_bool_tooltip", "[bool]");
+  const auto& lang = get_current_language();
+  lazy_tooltip("##BoolTooltip", lang.misc.type_bool.c_str());
 
   return nothing;
 }
@@ -185,7 +193,8 @@ auto input_object(const char* id, object_t value) -> Maybe<object_t>
   // TODO
   ImGui::Text("%i", value);
 
-  lazy_tooltip("##input_object_tooltip", "[object]");
+  const auto& lang = get_current_language();
+  lazy_tooltip("##ObjectTooltip", lang.misc.type_object.c_str());
 
   return nothing;
 }
@@ -198,11 +207,9 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
   const Scope scope {id};
 
   auto arr = color_to_array(value);
-  if (ImGui::ColorEdit4("##input_color", arr.data(), flags)) {
+  if (ImGui::ColorEdit4("##Color", arr.data(), flags)) {
     return cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
   }
-
-  lazy_tooltip("##input_color_tooltip", "[color]");
 
   return nothing;
 }
@@ -220,16 +227,17 @@ auto input_path(const char* id, const fs::path& value) -> Maybe<fs::path>
 
   ImGui::SameLine();
 
-  auto str = value.filename().string();
+  const auto& lang = get_current_language();
+  auto        str = value.filename().string();
 
   ImGui::SetNextItemWidth(-min_float);
-  ImGui::InputTextWithHint("##input_path",
-                           "N/A",
+  ImGui::InputTextWithHint("##Path",
+                           lang.misc.empty.c_str(),
                            str.data(),
                            str.capacity(),
                            ImGuiInputTextFlags_ReadOnly);
 
-  lazy_tooltip("##input_path_tooltip", "[path]");
+  lazy_tooltip("##PathTooltip", lang.misc.type_path.c_str());
 
   return nothing;
 }

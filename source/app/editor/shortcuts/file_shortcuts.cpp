@@ -21,16 +21,18 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/commands/command_stack.hpp"
-#include "core/events/map_events.hpp"
-#include "core/events/misc_events.hpp"
+#include "core/cmd/command_stack.hpp"
+#include "core/event/map_events.hpp"
+#include "core/event/misc_events.hpp"
 #include "core/model.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/ui.hpp"
 
 namespace tactile {
 
-NewMapShortcut::NewMapShortcut() : AShortcut {cen::scancodes::n, primary_modifier} {}
+NewMapShortcut::NewMapShortcut()
+    : AShortcut {cen::scancodes::n, primary_modifier}
+{}
 
 void NewMapShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -39,7 +41,9 @@ void NewMapShortcut::activate(entt::dispatcher& dispatcher)
 
 /* ------------------------------------------------------------------------------------ */
 
-OpenMapShortcut::OpenMapShortcut() : AShortcut {cen::scancodes::o, primary_modifier} {}
+OpenMapShortcut::OpenMapShortcut()
+    : AShortcut {cen::scancodes::o, primary_modifier}
+{}
 
 void OpenMapShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -48,7 +52,9 @@ void OpenMapShortcut::activate(entt::dispatcher& dispatcher)
 
 /* ------------------------------------------------------------------------------------ */
 
-SaveShortcut::SaveShortcut() : AShortcut {cen::scancodes::s, primary_modifier} {}
+SaveShortcut::SaveShortcut()
+    : AShortcut {cen::scancodes::s, primary_modifier}
+{}
 
 void SaveShortcut::activate(entt::dispatcher& dispatcher)
 {

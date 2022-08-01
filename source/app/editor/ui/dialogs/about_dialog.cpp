@@ -22,48 +22,51 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/icons.hpp"
 #include "meta/build.hpp"
 
-#define TAC_URL "https://www.github.com/albin-johansson/tactile"
-#define TAC_LICENSE "GPL v3.0"
-
 namespace tactile::ui {
 
-AboutDialog::AboutDialog() : ADialog {"About Tactile"}
+AboutDialog::AboutDialog()
+    : ADialog {"About Tactile"}
 {
-  set_accept_button_label(nullptr);
-  set_close_button_label("Close");
+  set_accept_button_label(nothing);
 }
 
 void AboutDialog::show()
 {
+  const auto& lang = get_current_language();
+  set_title(lang.window.about_tactile);
+  set_close_button_label(lang.misc.close);
   make_visible();
 }
 
 void AboutDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
+  const auto& lang = get_current_language();
+
   ImGui::TextUnformatted("Tactile " TACTILE_VERSION_STRING
                          " (C) Albin Johansson 2020-2022");
   ImGui::Separator();
 
-  ImGui::TextUnformatted(ICON_FA_SCALE_BALANCED
-                         " This tool is open-source software, using the " TAC_LICENSE
-                         " license.");
+  ImGui::TextUnformatted(lang.misc.license_info.c_str());
 
   ImGui::Spacing();
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(ICON_FA_CODE " Source: " TAC_URL);
+  ImGui::TextUnformatted(lang.misc.repository_link.c_str());
+
   ImGui::SameLine();
-  if (button(TAC_ICON_LINK, "Open the GitHub repository in your browser")) {
-    cen::open_url(TAC_URL);
+  if (button(TAC_ICON_LINK, lang.tooltip.repository_link.c_str())) {
+    cen::open_url("https://www.github.com/albin-johansson/tactile");
   }
 
   ImGui::Spacing();
 
-  ImGui::TextUnformatted(ICON_FA_FONT_AWESOME " Icons by Font Awesome.");
+  ImGui::TextUnformatted(lang.misc.font_awesome_credit.c_str());
 }
 
 }  // namespace tactile::ui

@@ -23,21 +23,27 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/components/component_index.hpp"
-#include "core/events/component_events.hpp"
+#include "core/comp/component_index.hpp"
+#include "core/event/component_events.hpp"
 #include "core/model.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 
 namespace tactile::ui {
 
-AddComponentAttrDialog::AddComponentAttrDialog() : AStringInputDialog {"Create Attribute"}
-{
-  set_accept_button_label("Create");
-  set_input_hint("Attribute name");
-}
+AddComponentAttrDialog::AddComponentAttrDialog()
+    : AStringInputDialog {"Create Attribute"}
+{}
 
-void AddComponentAttrDialog::show(const UUID& componentId)
+void AddComponentAttrDialog::show(const UUID& component_id)
 {
-  mComponentId = componentId;
+  mComponentId = component_id;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.create_attribute);
+  set_input_hint(lang.misc.attribute_name_hint);
+  set_accept_button_label(lang.misc.create);
+
   AStringInputDialog::show("");
 }
 
@@ -45,7 +51,7 @@ auto AddComponentAttrDialog::validate(const DocumentModel&   model,
                                       const std::string_view input) const -> bool
 {
   const auto& document = model.require_active_document();
-  const auto  index = document.get_component_index();
+  const auto* index = document.view_component_index();
   return !input.empty() && index && !index->at(mComponentId).has_attr(input);
 }
 

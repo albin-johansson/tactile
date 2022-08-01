@@ -21,7 +21,10 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/fwd.hpp"
+namespace tactile {
+class DocumentModel;
+class MapDocument;
+}  // namespace tactile
 
 namespace tactile::ui {
 

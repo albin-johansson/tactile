@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "core/common/functional.hpp"
-#include "core/documents/tileset_document.hpp"
+#include "core/document/tileset_document.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "io/persistence/preferences.hpp"
 

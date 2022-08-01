@@ -22,9 +22,9 @@
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/events/all.hpp"
+#include "core/event/all.hpp"
 #include "core/model.hpp"
-#include "core/utils/texture_manager.hpp"
+#include "core/util/texture_manager.hpp"
 #include "editor/loop.hpp"
 
 namespace tactile {
@@ -32,7 +32,7 @@ namespace tactile {
 class ADocument;
 class MapDocument;
 class TilesetDocument;
-class AppConfiguration;
+class AppCfg;
 
 /// Tracks visibility of widgets for the "Toggle UI" feature.
 struct WidgetShowState final
@@ -48,9 +48,7 @@ struct WidgetShowState final
 class App final : AEventLoop
 {
  public:
-  explicit App(AppConfiguration* configuration);
-
-  ~App() noexcept override;
+  explicit App(AppCfg* configuration);
 
   using AEventLoop::start;
 
@@ -66,12 +64,12 @@ class App final : AEventLoop
   void on_event(const cen::event_handler& handler) override;
 
  private:
-  AppConfiguration* mConfig {}; /* Non-owning */
-  entt::dispatcher  mDispatcher;
-  DocumentModel     mModel;
-  TextureManager    mTextures;
-  WidgetShowState   mWidgetShowState;
-  bool              mReloadFonts : 1 {};
+  AppCfg*          mConfig {}; /* Non-owning */
+  entt::dispatcher mDispatcher;
+  DocumentModel    mModel;
+  TextureManager   mTextures;
+  WidgetShowState  mWidgetShowState;
+  bool             mReloadFonts : 1 {};
 
   [[nodiscard]] auto active_document() -> ADocument*;
   [[nodiscard]] auto active_map_document() -> MapDocument*;

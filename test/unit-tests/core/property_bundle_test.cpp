@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/property_bundle.hpp"
+#include "core/ctx/property_bundle.hpp"
 
 #include <gtest/gtest.h>
 

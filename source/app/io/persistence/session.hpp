@@ -19,7 +19,10 @@
 
 #pragma once
 
-#include "core/fwd.hpp"
+namespace tactile {
+class DocumentModel;
+class TextureManager;
+}  // namespace tactile
 
 namespace tactile::io {
 

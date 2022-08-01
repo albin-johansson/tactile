@@ -22,17 +22,17 @@
 #include <centurion/mouse_events.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
-#include <spdlog/spdlog.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/viewport_events.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/tileset_events.hpp"
+#include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/viewport.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/labels.hpp"
-#include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tilesets/tileset_tabs.hpp"
 #include "io/persistence/preferences.hpp"
@@ -40,19 +40,8 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto _window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
-
-struct TilesetDockState final
-{
-  bool has_focus {};
-  bool is_hovered {};
-};
-
-[[nodiscard]] auto _get_state() -> TilesetDockState&
-{
-  static TilesetDockState state;
-  return state;
-}
+constinit bool dock_has_focus = false;
+constinit bool dock_has_hover = false;
 
 }  // namespace
 
@@ -64,11 +53,15 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
     return;
   }
 
-  Window dock {"Tilesets", _window_flags, &prefs.show_tileset_dock};
+  const auto& lang = get_current_language();
 
-  auto& state = _get_state();
-  state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
-  state.is_hovered = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
+  Window dock {lang.window.tileset_dock.c_str(),
+               ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
+               &prefs.show_tileset_dock};
+
+  /* We intentionally do not use the window is_hovered function here */
+  dock_has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  dock_has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
     const auto& document = model.require_active_map();
@@ -76,11 +69,11 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
 
     if (map.get_tilesets().empty()) {
       prepare_vertical_alignment_center(2);
-      centered_label("Current map has no tilesets!");
+      centered_label(lang.misc.map_has_no_tilesets.c_str());
 
       ImGui::Spacing();
 
-      if (centered_button(TAC_ICON_TILESET " Create tileset...")) {
+      if (centered_button(lang.action.add_tileset.c_str())) {
         dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
       }
     }
@@ -90,30 +83,30 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
   }
 }
 
-void tileset_dock_mouse_wheel_event_handler(const TilesetRef&             tilesetRef,
+void tileset_dock_mouse_wheel_event_handler(const TilesetRef&             tileset_ref,
                                             const cen::mouse_wheel_event& event,
                                             entt::dispatcher&             dispatcher)
 {
   constexpr Vector2f scaling {4, 4};
 
-  const auto&    viewport = tilesetRef.get_viewport();
+  const auto&    viewport = tileset_ref.get_viewport();
   const Vector2f precise {event.precise_x(), event.precise_y()};
 
   auto delta = precise * (viewport.get_tile_size() / scaling);
   delta.x = -delta.x;
 
-  dispatcher.enqueue<OffsetTilesetViewportEvent>(tilesetRef.view_tileset().get_uuid(),
+  dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset_ref.view_tileset().get_uuid(),
                                                  delta);
 }
 
 auto is_tileset_dock_focused() -> bool
 {
-  return _get_state().has_focus;
+  return dock_has_focus;
 }
 
 auto is_tileset_dock_hovered() -> bool
 {
-  return _get_state().is_hovered;
+  return dock_has_hover;
 }
 
 }  // namespace tactile::ui

@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class AppConfiguration;
+class AppCfg;
 
 /// Handles the core event loop logic.
 class AEventLoop
@@ -35,7 +35,7 @@ class AEventLoop
   TACTILE_DEFAULT_COPY(AEventLoop);
   TACTILE_DEFAULT_MOVE(AEventLoop);
 
-  explicit AEventLoop(AppConfiguration* cfg);
+  explicit AEventLoop(AppCfg* cfg);
 
   virtual ~AEventLoop() noexcept = default;
 
@@ -47,10 +47,12 @@ class AEventLoop
 
  protected:
   /// Called just before the event loop begins running.
-  virtual void on_startup() {}
+  virtual void on_startup()
+  {}
 
   /// Called immediately after the event loop stops running.
-  virtual void on_shutdown() {}
+  virtual void on_shutdown()
+  {}
 
   /**
    * Called once for each frame before `on_update()`.
@@ -58,7 +60,8 @@ class AEventLoop
    * This function is useful to do tasks that cannot be done between calls to the
    * NewFrame/EndFrame functions of Dear ImGui.
    */
-  virtual void on_pre_update() {}
+  virtual void on_pre_update()
+  {}
 
   /// Called once for each frame.
   virtual void on_update() = 0;
@@ -74,9 +77,9 @@ class AEventLoop
   virtual void on_event(const cen::event_handler& handler) = 0;
 
  private:
-  AppConfiguration* mCfg {}; /* Non-owning */
-  cen::keyboard     mKeyboard;
-  bool              mRunning {};
+  AppCfg*       mCfg {}; /* Non-owning */
+  cen::keyboard mKeyboard;
+  bool          mRunning {};
 
   void poll_events();
 };

@@ -19,10 +19,13 @@
 
 #pragma once
 
-#include "core/fwd.hpp"
-#include "editor/fwd.hpp"
+namespace tactile {
+class MapDocument;
+}  // namespace tactile
 
 namespace tactile::ui {
+
+class GraphicsCtx;
 
 void render_map(GraphicsCtx& graphics, const MapDocument& document);
 

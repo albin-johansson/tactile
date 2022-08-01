@@ -22,32 +22,41 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/contexts/context.hpp"
-#include "core/events/property_events.hpp"
+#include "core/ctx/context.hpp"
+#include "core/ctx/context_manager.hpp"
+#include "core/ctx/property_bundle.hpp"
+#include "core/event/property_events.hpp"
 #include "core/model.hpp"
-#include "core/property_bundle.hpp"
-#include "core/utils/buffers.hpp"
+#include "core/util/buffers.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/properties/dialogs/property_type_combo.hpp"
 
 namespace tactile::ui {
 
-AddPropertyDialog::AddPropertyDialog() : ADialog {"Add Property"}
-{
-  set_accept_button_label("Add");
-}
+AddPropertyDialog::AddPropertyDialog()
+    : ADialog {"Add Property"}
+{}
 
 void AddPropertyDialog::open(const UUID& contextId)
 {
   mContextId = contextId;
+
   zero_buffer(mNameBuffer);
   mPropertyType = AttributeType::String;
+
+  const auto& lang = get_current_language();
+  set_title(lang.window.add_property);
+  set_accept_button_label(lang.misc.add);
+
   make_visible();
 }
 
 void AddPropertyDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
+  const auto& lang = get_current_language();
   ImGui::InputTextWithHint("##Name",
-                           "Unique property name...",
+                           lang.misc.property_name_hint.c_str(),
                            mNameBuffer.data(),
                            sizeof mNameBuffer);
   show_property_type_combo(mPropertyType);
@@ -64,7 +73,7 @@ void AddPropertyDialog::on_accept(entt::dispatcher& dispatcher)
 auto AddPropertyDialog::is_current_input_valid(const DocumentModel& model) const -> bool
 {
   const auto& document = model.require_active_document();
-  const auto& context = document.view_context(document.active_context_id());
+  const auto& context = document.get_contexts().active_context();
   const auto  name = create_string_view_from_buffer(mNameBuffer);
   return !name.empty() && !context.get_props().contains(name);
 }

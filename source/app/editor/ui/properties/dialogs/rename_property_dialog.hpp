@@ -38,7 +38,7 @@ class RenamePropertyDialog final : public AStringInputDialog
 
   ~RenamePropertyDialog() override = default;
 
-  void open(const UUID& contextId, std::string previousName);
+  void open(const UUID& context_id, std::string previous_name);
 
  protected:
   using AStringInputDialog::show;

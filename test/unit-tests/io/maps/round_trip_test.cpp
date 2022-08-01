@@ -9,13 +9,11 @@
 
 #include <gtest/gtest.h>
 
-#include "core/utils/texture_manager.hpp"
-#include "core/utils/tiles.hpp"
-#include "io/maps/emitter/emit_info.hpp"
-#include "io/maps/emitter/json_emitter.hpp"
-#include "io/maps/emitter/xml_emitter.hpp"
-#include "io/maps/emitter/yaml_emitter.hpp"
-#include "io/maps/parser/parse_map.hpp"
+#include "core/util/texture_manager.hpp"
+#include "core/util/tiles.hpp"
+#include "io/map/emit/emit_info.hpp"
+#include "io/map/emit/emit_map.hpp"
+#include "io/map/parse/parse_map.hpp"
 
 using namespace std::string_literals;
 

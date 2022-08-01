@@ -30,14 +30,10 @@ namespace tactile {
 
 using LogLevel = spdlog::level::level_enum;
 
-/**
- * Initializes the logger, this must be called before any logging takes place.
- */
+/// Initializes the logger, this must be called before any logging takes place.
 void init_logger();
 
-/**
- * Clears the entire log history.
- */
+/// Clears the entire log history.
 void clear_log_history();
 
 /**
@@ -50,7 +46,7 @@ void clear_log_history();
  *
  * \throws TactileError if no log entry was found.
  */
-[[nodiscard]] auto get_log_entry(const LogLevel filter, const usize index)
+[[nodiscard]] auto get_log_entry(LogLevel filter, usize index)
     -> std::pair<LogLevel, const std::string&>;
 
 /**

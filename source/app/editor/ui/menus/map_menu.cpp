@@ -22,8 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/events/map_events.hpp"
+#include "core/event/map_events.hpp"
 #include "core/model.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/dialogs/godot_export_dialog.hpp"
@@ -37,49 +39,51 @@ namespace tactile::ui {
 
 void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
+  const auto& lang = get_current_language();
+
   Disable disable {!model.is_map_active()};
-  if (Menu menu {"Map"}; menu.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
+  if (Menu menu {lang.menu.map.c_str()}; menu.is_open()) {
+    if (ImGui::MenuItem(lang.action.inspect_map.c_str())) {
       dispatcher.enqueue<InspectMapEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_TILESET " Add Tileset...", TACTILE_PRIMARY_MOD "+T")) {
+    if (ImGui::MenuItem(lang.action.add_tileset.c_str(), TACTILE_PRIMARY_MOD "+T")) {
       show_tileset_creation_dialog();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Add Row", TACTILE_SECONDARY_MOD "+R")) {
+    if (ImGui::MenuItem(lang.action.add_row.c_str(), TACTILE_SECONDARY_MOD "+R")) {
       dispatcher.enqueue<AddRowEvent>();
     }
 
-    if (ImGui::MenuItem("Add Column", TACTILE_SECONDARY_MOD "+C")) {
+    if (ImGui::MenuItem(lang.action.add_column.c_str(), TACTILE_SECONDARY_MOD "+C")) {
       dispatcher.enqueue<AddColumnEvent>();
     }
 
-    if (ImGui::MenuItem("Remove Row", TACTILE_SECONDARY_MOD "+Shift+R")) {
+    if (ImGui::MenuItem(lang.action.remove_row.c_str(),
+                        TACTILE_SECONDARY_MOD "+Shift+R")) {
       dispatcher.enqueue<RemoveRowEvent>();
     }
 
-    if (ImGui::MenuItem("Remove Column", TACTILE_SECONDARY_MOD "+Shift+C")) {
+    if (ImGui::MenuItem(lang.action.remove_column.c_str(),
+                        TACTILE_SECONDARY_MOD "+Shift+C")) {
       dispatcher.enqueue<RemoveColumnEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_REPAIR " Fix Invalid Tiles")) {
+    if (ImGui::MenuItem(lang.action.fix_invalid_tiles.c_str())) {
       dispatcher.enqueue<FixTilesInMapEvent>();
     }
 
-    lazy_tooltip("##FixInvalidTilesTooltip",
-                 "Repair invalid tile identifiers in all tile layers by setting "
-                 "them to be empty");
+    lazy_tooltip("##FixInvalidTilesTooltip", lang.tooltip.fix_invalid_tiles.c_str());
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Resize Map...")) {
+    if (ImGui::MenuItem(lang.action.resize_map.c_str())) {
       dispatcher.enqueue<OpenResizeMapDialogEvent>();
     }
 

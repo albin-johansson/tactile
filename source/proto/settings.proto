@@ -10,6 +10,13 @@ enum OverlayPos {
   OVERLAY_POS_BOTTOM_RIGHT = 3;
 }
 
+/* Remember to keep these values synced with tactile::Lang! */
+enum Lang {
+  LANG_EN = 0;
+  LANG_EN_GB = 1;
+  LANG_SV = 2;
+}
+
 /* Remember to keep these values synced with tactile::io::EditorTheme! */
 enum Theme {
   THEME_DEAR_DARK = 0;
@@ -37,6 +44,7 @@ message Color {
 
 message Settings {
   optional Theme theme = 1;
+  optional Lang language = 8;
 
   optional int32 preferred_tile_width = 2;
   optional int32 preferred_tile_height = 3;

@@ -32,11 +32,14 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/documents/document.hpp"
-#include "core/fwd.hpp"
-#include "core/tools/tool_type.hpp"
+#include "core/document/document.hpp"
+#include "core/tool/tool_type.hpp"
 
 namespace tactile {
+
+struct TilesetInfo;
+class MapDocument;
+class TilesetDocument;
 
 /// The primary facade between the editor and the underlying core documents.
 class DocumentModel final

@@ -24,12 +24,15 @@
 #include <entt/fwd.hpp>
 
 #include "core/common/uuid.hpp"
-#include "core/fwd.hpp"
+
+namespace tactile {
+class Component;
+}  // namespace tactile
 
 namespace tactile::ui {
 
 /// Shows a view of a single component, attached to a context.
-void component_view(const UUID&        contextId,
+void component_view(const UUID&        context_id,
                     const Component&   component,
                     const std::string& name,
                     entt::dispatcher&  dispatcher);

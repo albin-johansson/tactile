@@ -25,7 +25,7 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "core/events/misc_events.hpp"
+#include "core/event/misc_events.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persistence/preferences.hpp"
 
@@ -38,10 +38,10 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
     auto path = dialog.path();
 
     const auto ext = path.extension();
-    const auto hasValidExtension = ext == ".yaml" || ext == ".yml" || ext == ".json" ||
-                                   ext == ".tmj" || ext == ".tmx" || ext == ".xml";
+    const auto has_valid_extension = ext == ".yaml" || ext == ".yml" || ext == ".json" ||
+                                     ext == ".tmj" || ext == ".tmx" || ext == ".xml";
 
-    if (!hasValidExtension) {
+    if (!has_valid_extension) {
       const auto& format = io::get_preferences().preferred_format;
       spdlog::warn("Invalid file extension '{}', assuming '{}'", ext, format);
 

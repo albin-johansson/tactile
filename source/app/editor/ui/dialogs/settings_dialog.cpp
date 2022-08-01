@@ -23,12 +23,16 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/events/command_events.hpp"
-#include "core/events/misc_events.hpp"
+#include "core/event/command_events.hpp"
+#include "core/event/misc_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
+#include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/checkboxes.hpp"
 #include "editor/ui/common/colors.hpp"
 #include "editor/ui/common/tooltips.hpp"
+#include "editor/ui/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/themes.hpp"
@@ -73,7 +77,8 @@ void _reset_export_preferences(io::PreferenceState& prefs)
 
 }  // namespace
 
-SettingsDialog::SettingsDialog() : ADialog {"Settings"}
+SettingsDialog::SettingsDialog()
+    : ADialog {get_current_language().window.settings_dialog}
 {
   use_apply_button();
 }
@@ -116,6 +121,10 @@ void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 {
   io::set_preferences(mUiSettings);
 
+  if (mUiSettings.language != mSnapshot.language) {
+    reset_layout();
+  }
+
   if (mUiSettings.command_capacity != mSnapshot.command_capacity) {
     dispatcher.enqueue<SetCommandCapacityEvent>(mUiSettings.command_capacity);
   }
@@ -130,69 +139,92 @@ void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 
 void SettingsDialog::update_behavior_tab()
 {
-  if (TabItem item {"Behavior"}; item.is_open()) {
+  const auto& lang = get_current_language();
+
+  if (TabItem item {lang.setting.behavior_tab.c_str()}; item.is_open()) {
     ImGui::Spacing();
-    if (button("Restore Defaults")) {
+
+    if (button(lang.setting.restore_defaults.c_str())) {
       _reset_behavior_preferences(mUiSettings);
       _update_preview_settings(mUiSettings);
     }
+
     ImGui::Spacing();
 
-    checkbox("Restore last session on startup", &mUiSettings.restore_last_session);
+    checkbox(lang.setting.restore_last_session.c_str(),
+             &mUiSettings.restore_last_session);
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Preferred tile width:");
+    ImGui::TextUnformatted(lang.setting.pref_tile_width.c_str());
     ImGui::SameLine();
     ImGui::DragInt("##PreferredTileWidth",
                    &mUiSettings.preferred_tile_size.x,
                    1.0f,
                    1,
                    10'000);
-    lazy_tooltip("##PreferredTileWidthToolTip",
-                 "The suggested tile width when creating maps");
+    lazy_tooltip("##PreferredTileWidthToolTip", lang.tooltip.pref_tile_width.c_str());
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Preferred tile height:");
+    ImGui::TextUnformatted(lang.setting.pref_tile_height.c_str());
     ImGui::SameLine();
     ImGui::DragInt("##PreferredTileHeight",
                    &mUiSettings.preferred_tile_size.y,
                    1.0f,
                    1,
                    10'000);
-    lazy_tooltip("##PreferredTileHeightToolTip",
-                 "The suggested tile height when creating maps");
+    lazy_tooltip("##PreferredTileHeightToolTip", lang.tooltip.pref_tile_height.c_str());
 
     // TODO "RMB with stamp tool works as eraser"
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Command capacity:");
+    ImGui::TextUnformatted(lang.setting.command_capacity.c_str());
     ImGui::SameLine();
     if (auto capacity = static_cast<int>(mUiSettings.command_capacity);
         ImGui::DragInt("##CommandCapacity", &capacity, 1.0f, 10, 1'000)) {
       mUiSettings.command_capacity = static_cast<usize>(capacity);
     }
 
-    lazy_tooltip("##CommandCapacityTooltip",
-                 "The maximum amount of commands that will be stored on the undo stack");
+    lazy_tooltip("##CommandCapacityTooltip", lang.tooltip.command_capacity.c_str());
   }
 }
 
 void SettingsDialog::update_appearance_tab()
 {
-  if (TabItem item {"Appearance"}; item.is_open()) {
+  const auto& lang = get_current_language();
+
+  if (TabItem item {lang.setting.appearance_tab.c_str()}; item.is_open()) {
     ImGui::Spacing();
 
-    if (button("Restore Defaults")) {
+    if (button(lang.setting.restore_defaults.c_str())) {
       _reset_appearance_preferences(mUiSettings);
       _update_preview_settings(mUiSettings);
     }
 
     ImGui::Spacing();
-    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Theme:");
+    ImGui::TextUnformatted(lang.setting.language.c_str());
     ImGui::SameLine();
+    right_align_next_item();
+    if (Combo combo {"##Lang", get_language_name(mUiSettings.language)};
+        combo.is_open()) {
+      if (ImGui::MenuItem(get_language_name(Lang::EN))) {
+        mUiSettings.language = Lang::EN;
+      }
+
+      if (ImGui::MenuItem(get_language_name(Lang::EN_GB))) {
+        mUiSettings.language = Lang::EN_GB;
+      }
+
+      if (ImGui::MenuItem(get_language_name(Lang::SV))) {
+        mUiSettings.language = Lang::SV;
+      }
+    }
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(lang.setting.theme.c_str());
+    ImGui::SameLine();
+    right_align_next_item();
     if (Combo combo {"##Theme", human_readable_name(mUiSettings.theme).data()};
         combo.is_open()) {
       const auto showThemes = [this](auto& themes) {
@@ -209,34 +241,36 @@ void SettingsDialog::update_appearance_tab()
       showThemes(dark_themes);
     }
 
+    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
+
     if (auto arr = color_to_array(mUiSettings.viewport_background);
-        ImGui::ColorEdit3("Viewport background color",
+        ImGui::ColorEdit3(lang.setting.viewport_bg_color.c_str(),
                           arr.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
       const auto color = cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2));
       mUiSettings.viewport_background = color;
     }
 
-    if (ImGui::Checkbox("Window border", &mUiSettings.window_border)) {
+    if (ImGui::Checkbox(lang.setting.window_border.c_str(), &mUiSettings.window_border)) {
       ImGui::GetStyle().WindowBorderSize = mUiSettings.window_border ? 1.0f : 0.0f;
     }
 
-    checkbox("Restore layout",
+    checkbox(lang.setting.restore_layout.c_str(),
              &mUiSettings.restore_layout,
-             "Restore the previous layout of widgets at startup");
+             lang.tooltip.restore_layout.c_str());
 
     ImGui::Spacing();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    checkbox("Use default font",
+    checkbox(lang.setting.use_default_font.c_str(),
              &mUiSettings.use_default_font,
-             "Use the built-in bitmap font (only supports one size)");
+             lang.tooltip.use_default_font.c_str());
 
     {
       Disable disableIf {mUiSettings.use_default_font};
 
       ImGui::AlignTextToFramePadding();
-      ImGui::TextUnformatted("Font size:");
+      ImGui::TextUnformatted(lang.setting.font_size.c_str());
 
       ImGui::SameLine();
       if (ImGui::DragInt("##FontSize",
@@ -254,10 +288,12 @@ void SettingsDialog::update_appearance_tab()
 
 void SettingsDialog::update_export_tab()
 {
-  if (TabItem item {"Export"}; item.is_open()) {
+  const auto& lang = get_current_language();
+
+  if (TabItem item {lang.setting.export_tab.c_str()}; item.is_open()) {
     ImGui::Spacing();
 
-    if (button("Restore Defaults")) {
+    if (button(lang.setting.restore_defaults.c_str())) {
       _reset_export_preferences(mUiSettings);
       _update_preview_settings(mUiSettings);
     }
@@ -265,8 +301,9 @@ void SettingsDialog::update_export_tab()
     ImGui::Spacing();
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Preferred Format:");
+    ImGui::TextUnformatted(lang.setting.pref_format.c_str());
     ImGui::SameLine();
+    right_align_next_item();
     if (Combo format("##PreferredFormat", mUiSettings.preferred_format.c_str());
         format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
@@ -282,21 +319,19 @@ void SettingsDialog::update_export_tab()
       }
     }
 
-    lazy_tooltip(
-        "##PreferredFormatTooltip",
-        "The save file format used if no file extension is specified when saving maps");
+    lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
 
-    checkbox("Embed tilesets",
+    checkbox(lang.setting.embed_tilesets.c_str(),
              &mUiSettings.embed_tilesets,
-             "Embed tileset data in map files");
+             lang.tooltip.embed_tilesets.c_str());
 
-    checkbox("Indent output",
+    checkbox(lang.setting.indent_output.c_str(),
              &mUiSettings.indent_output,
-             "Controls whether or not save files are indented");
+             lang.tooltip.indent_output.c_str());
 
-    checkbox("Fold tile data",
+    checkbox(lang.setting.fold_tile_data.c_str(),
              &mUiSettings.fold_tile_data,
-             "Make tile layer data easier for humans to edit, at the expense of space");
+             lang.tooltip.fold_tile_data.c_str());
   }
 }
 

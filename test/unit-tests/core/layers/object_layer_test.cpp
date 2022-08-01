@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/layers/object_layer.hpp"
+#include "core/layer/object_layer.hpp"
 
 #include <gtest/gtest.h>
 
