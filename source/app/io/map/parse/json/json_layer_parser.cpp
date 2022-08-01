@@ -17,18 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "json_layer_parser.hpp"
-
 #include <spdlog/spdlog.h>
 
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
-#include "io/map/parse/json/json_attribute_parser.hpp"
+#include "io/map/parse/json/json_parser.hpp"
 
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_object_layer(const JSON& json, ir::LayerData& layer_data)
+[[nodiscard]] auto parse_object_layer(const JSON& json, ir::LayerData& layer_data)
     -> ParseError
 {
   auto& object_layer_data = layer_data.data.emplace<ir::ObjectLayerData>();
@@ -47,9 +45,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_layer_data(const JSON& json,
-                                          TileMatrix& tiles,
-                                          const usize columns) -> ParseError
+[[nodiscard]] auto parse_tile_layer_data(const JSON& json,
+                                         TileMatrix& tiles,
+                                         const usize columns) -> ParseError
 {
   // We only support the CSV tile encoding, which is the implicit default
   if (auto encoding = as_string(json, "encoding")) {
@@ -82,10 +80,10 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_layer(const JSON&    json,
-                                     ir::LayerData& layer_data,
-                                     const usize    rows,
-                                     const usize    columns) -> ParseError
+[[nodiscard]] auto parse_tile_layer(const JSON&    json,
+                                    ir::LayerData& layer_data,
+                                    const usize    rows,
+                                    const usize    columns) -> ParseError
 {
   auto& tile_layer_data = layer_data.data.emplace<ir::TileLayerData>();
 
@@ -121,7 +119,7 @@ namespace {
       make_tile_matrix(tile_layer_data.row_count, tile_layer_data.col_count);
 
   if (const auto err =
-          _parse_tile_layer_data(json, tile_layer_data.tiles, tile_layer_data.col_count);
+          parse_tile_layer_data(json, tile_layer_data.tiles, tile_layer_data.col_count);
       err != ParseError::None) {
     return err;
   }
@@ -129,11 +127,11 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_layer(const JSON&    json,
-                                ir::LayerData& layer_data,
-                                const usize    index,
-                                const usize    rows,
-                                const usize    columns) -> ParseError
+[[nodiscard]] auto parse_layer(const JSON&    json,
+                               ir::LayerData& layer_data,
+                               const usize    index,
+                               const usize    rows,
+                               const usize    columns) -> ParseError
 {
   layer_data.index = index;
 
@@ -151,14 +149,14 @@ namespace {
   if (auto type = as_string(json, "type")) {
     if (type == "tilelayer") {
       layer_data.type = LayerType::TileLayer;
-      if (const auto err = _parse_tile_layer(json, layer_data, rows, columns);
+      if (const auto err = parse_tile_layer(json, layer_data, rows, columns);
           err != ParseError::None) {
         return err;
       }
     }
     else if (type == "objectgroup") {
       layer_data.type = LayerType::ObjectLayer;
-      if (const auto err = _parse_object_layer(json, layer_data);
+      if (const auto err = parse_object_layer(json, layer_data);
           err != ParseError::None) {
         return err;
       }
@@ -173,7 +171,7 @@ namespace {
             group_layer_data.children.emplace_back(std::make_unique<ir::LayerData>());
 
         if (const auto err =
-                _parse_layer(value, *child_layer_data, child_index, rows, columns);
+                parse_layer(value, *child_layer_data, child_index, rows, columns);
             err != ParseError::None) {
           return err;
         }
@@ -251,11 +249,8 @@ auto parse_layers(const JSON& json, ir::MapData& map_data) -> ParseError
   for (const auto& [key, value] : iter->items()) {
     auto& layer_data = map_data.layers.emplace_back();
 
-    if (const auto err = _parse_layer(value,
-                                      layer_data,
-                                      index,
-                                      map_data.row_count,
-                                      map_data.col_count);
+    if (const auto err =
+            parse_layer(value, layer_data, index, map_data.row_count, map_data.col_count);
         err != ParseError::None) {
       return err;
     }

@@ -17,8 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "xml_layer_parser.hpp"
-
 #include <cstring>  // strcmp
 #include <string>   // string
 #include <vector>   // vector
@@ -28,7 +26,7 @@
 #include "core/common/string.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
-#include "io/map/parse/xml/xml_attribute_parser.hpp"
+#include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"
 #include "misc/panic.hpp"
 

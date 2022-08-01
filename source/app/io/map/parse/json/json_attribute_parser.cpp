@@ -17,20 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "json_attribute_parser.hpp"
-
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // move
 
 #include "io/map/ir/ir.hpp"
+#include "io/map/parse/json/json_parser.hpp"
 
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_value(const JSON&            json,
-                                const std::string_view type,
-                                Attribute&             value) -> ParseError
+[[nodiscard]] auto parse_value(const JSON&            json,
+                               const std::string_view type,
+                               Attribute&             value) -> ParseError
 {
   if (type == "string") {
     value = as_string(json, "value").value();
@@ -75,7 +74,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_property(const JSON& json, ir::ContextData& context_data)
+[[nodiscard]] auto parse_property(const JSON& json, ir::ContextData& context_data)
     -> ParseError
 {
   std::string property_name;
@@ -90,7 +89,7 @@ namespace {
   auto& value = context_data.properties[std::move(property_name)];
 
   if (auto type = as_string(json, "type")) {
-    if (const auto err = _parse_value(json, *type, value); err != ParseError::None) {
+    if (const auto err = parse_value(json, *type, value); err != ParseError::None) {
       return err;
     }
   }
@@ -107,8 +106,7 @@ auto parse_properties(const JSON& json, ir::ContextData& context_data) -> ParseE
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [_, value] : it->items()) {
-      if (const auto err = _parse_property(value, context_data);
-          err != ParseError::None) {
+      if (const auto err = parse_property(value, context_data); err != ParseError::None) {
         return err;
       }
     }

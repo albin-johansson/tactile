@@ -20,10 +20,25 @@
 #pragma once
 
 #include "core/common/filesystem.hpp"
+#include "io/fwd.hpp"
 #include "io/map/parse/parse_data.hpp"
+#include "io/map/parse/parse_error.hpp"
+#include "io/util/json.hpp"
 
 namespace tactile::io {
 
 [[nodiscard]] auto parse_json_map(const fs::path& path) -> ParseData;
+
+[[nodiscard]] auto parse_tilesets(const JSON&     json,
+                                  ir::MapData&    map_data,
+                                  const fs::path& dir) -> ParseError;
+
+[[nodiscard]] auto parse_layers(const JSON& json, ir::MapData& map_data) -> ParseError;
+
+[[nodiscard]] auto parse_object(const JSON& json, ir::ObjectData& object_data)
+    -> ParseError;
+
+[[nodiscard]] auto parse_properties(const JSON& json, ir::ContextData& context_data)
+    -> ParseError;
 
 }  // namespace tactile::io

@@ -17,14 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "xml_tileset_parser.hpp"
-
 #include <utility>  // move
 
 #include "core/common/filesystem.hpp"
 #include "io/map/ir/ir.hpp"
-#include "io/map/parse/xml/xml_attribute_parser.hpp"
-#include "io/map/parse/xml/xml_layer_parser.hpp"
+#include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"
 #include "misc/assert.hpp"
 

@@ -21,15 +21,12 @@
 
 #include <string>  // string
 
-#include "io/map/parse/json/json_attribute_parser.hpp"
-#include "io/map/parse/json/json_layer_parser.hpp"
-#include "io/map/parse/json/json_tileset_parser.hpp"
 #include "io/util/json.hpp"
 
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _validate_map(const JSON& json) -> ParseError
+[[nodiscard]] auto validate_map(const JSON& json) -> ParseError
 {
   if (const auto iter = json.find("orientation");
       iter == json.end() || iter->get<std::string>() != "orthogonal") {
@@ -43,14 +40,14 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& map_data) -> ParseError
+[[nodiscard]] auto parse_map(const fs::path& path, ir::MapData& map_data) -> ParseError
 {
   const auto json = read_json(path);
   if (!json) {
     return ParseError::CouldNotReadFile;
   }
 
-  if (const auto err = _validate_map(*json); err != ParseError::None) {
+  if (const auto err = validate_map(*json); err != ParseError::None) {
     return err;
   }
 
@@ -121,7 +118,7 @@ auto parse_json_map(const fs::path& path) -> ParseData
   ParseData result;
   result.set_path(path);
 
-  const auto err = _parse_map(path, result.data());
+  const auto err = parse_map(path, result.data());
   result.set_error(err);
 
   return result;

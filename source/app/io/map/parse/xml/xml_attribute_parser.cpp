@@ -17,8 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "xml_attribute_parser.hpp"
-
 #include <cstring>  // strcmp
 #include <string>   // string
 #include <utility>  // move
@@ -27,6 +25,7 @@
 
 #include "core/common/filesystem.hpp"
 #include "io/map/ir/ir.hpp"
+#include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"
 #include "misc/assert.hpp"
 

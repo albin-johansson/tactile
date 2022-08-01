@@ -20,76 +20,73 @@
 #include "xml_parser.hpp"
 
 #include "core/common/filesystem.hpp"
-#include "io/map/parse/xml/xml_attribute_parser.hpp"
-#include "io/map/parse/xml/xml_layer_parser.hpp"
-#include "io/map/parse/xml/xml_tileset_parser.hpp"
 #include "io/util/xml.hpp"
 
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _validate_map(XMLNode mapNode) -> ParseError
+[[nodiscard]] auto validate_map(XMLNode map_node) -> ParseError
 {
-  if (as_string(mapNode, "orientation") != "orthogonal") {
+  if (as_string(map_node, "orientation") != "orthogonal") {
     return ParseError::UnsupportedMapOrientation;
   }
 
-  if (as_bool(mapNode, "infinite").value_or(false)) {
+  if (as_bool(map_node, "infinite").value_or(false)) {
     return ParseError::UnsupportedInfiniteMap;
   }
 
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& data) -> ParseError
+[[nodiscard]] auto parse_map(const fs::path& path, ir::MapData& data) -> ParseError
 {
   pugi::xml_document document;
   if (!document.load_file(path.c_str())) {
     return ParseError::CouldNotReadFile;
   }
 
-  auto mapNode = document.child("map");
+  auto map_node = document.child("map");
 
-  if (const auto err = _validate_map(mapNode); err != ParseError::None) {
+  if (const auto err = validate_map(map_node); err != ParseError::None) {
     return err;
   }
 
-  if (const auto width = as_uint(mapNode, "width")) {
+  if (const auto width = as_uint(map_node, "width")) {
     data.col_count = *width;
   }
   else {
     return ParseError::NoMapWidth;
   }
 
-  if (const auto height = as_uint(mapNode, "height")) {
+  if (const auto height = as_uint(map_node, "height")) {
     data.row_count = *height;
   }
   else {
     return ParseError::NoMapHeight;
   }
 
-  if (const auto tw = as_int(mapNode, "tilewidth")) {
+  if (const auto tw = as_int(map_node, "tilewidth")) {
     data.tile_size.x = *tw;
   }
   else {
     return ParseError::NoMapTileWidth;
   }
 
-  if (const auto th = as_int(mapNode, "tileheight")) {
+  if (const auto th = as_int(map_node, "tileheight")) {
     data.tile_size.y = *th;
   }
   else {
     return ParseError::NoMapTileHeight;
   }
 
-  if (const auto id = as_int(mapNode, "nextlayerid")) {
+  if (const auto id = as_int(map_node, "nextlayerid")) {
     data.next_layer_id = *id;
   }
   else {
     return ParseError::NoMapNextLayerId;
   }
 
-  if (const auto id = as_int(mapNode, "nextobjectid")) {
+  if (const auto id = as_int(map_node, "nextobjectid")) {
     data.next_object_id = *id;
   }
   else {
@@ -98,19 +95,20 @@ namespace {
 
   const auto dir = path.parent_path();
 
-  for (auto tilesetNode : mapNode.children("tileset")) {
-    auto& tilesetData = data.tilesets.emplace_back();
-    if (const auto err = parse_tileset(tilesetNode, tilesetData, dir);
+  for (auto tileset_node : map_node.children("tileset")) {
+    auto& tileset_data = data.tilesets.emplace_back();
+    if (const auto err = parse_tileset(tileset_node, tileset_data, dir);
         err != ParseError::None) {
       return err;
     }
   }
 
-  if (const auto err = parse_layers(mapNode, data); err != ParseError::None) {
+  if (const auto err = parse_layers(map_node, data); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = parse_properties(mapNode, data.context); err != ParseError::None) {
+  if (const auto err = parse_properties(map_node, data.context);
+      err != ParseError::None) {
     return err;
   }
 
@@ -124,7 +122,7 @@ auto parse_xml_map(const fs::path& path) -> ParseData
   ParseData result;
   result.set_path(path);
 
-  const auto err = _parse_map(path, result.data());
+  const auto err = parse_map(path, result.data());
   result.set_error(err);
 
   return result;

@@ -20,10 +20,25 @@
 #pragma once
 
 #include "core/common/filesystem.hpp"
+#include "io/fwd.hpp"
+#include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_data.hpp"
+#include "io/map/parse/parse_error.hpp"
+#include "io/util/xml.hpp"
 
 namespace tactile::io {
 
 [[nodiscard]] auto parse_xml_map(const fs::path& path) -> ParseData;
+
+[[nodiscard]] auto parse_tileset(XMLNode          node,
+                                 ir::TilesetData& tileset_data,
+                                 const fs::path&  dir) -> ParseError;
+
+[[nodiscard]] auto parse_object(XMLNode object_node, ir::ObjectData& object_data)
+    -> ParseError;
+
+[[nodiscard]] auto parse_layers(XMLNode map_node, ir::MapData& map_data) -> ParseError;
+
+[[nodiscard]] auto parse_properties(XMLNode node, ir::ContextData& context) -> ParseError;
 
 }  // namespace tactile::io

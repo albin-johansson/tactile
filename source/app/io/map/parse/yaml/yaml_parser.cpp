@@ -21,9 +21,6 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "io/map/parse/yaml/yaml_attribute_parser.hpp"
-#include "io/map/parse/yaml/yaml_layer_parser.hpp"
-#include "io/map/parse/yaml/yaml_tileset_parser.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile::io {
