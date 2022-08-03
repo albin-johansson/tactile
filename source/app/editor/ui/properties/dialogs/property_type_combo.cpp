@@ -55,13 +55,15 @@ void property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous_
   const auto& lang = get_current_language();
 
   using TypeArray = std::array<std::pair<std::string_view, AttributeType>, 7>;
-  const TypeArray items {std::make_pair(lang.misc.type_string, AttributeType::String),
-                         std::make_pair(lang.misc.type_int, AttributeType::Int),
-                         std::make_pair(lang.misc.type_float, AttributeType::Float),
-                         std::make_pair(lang.misc.type_bool, AttributeType::Bool),
-                         std::make_pair(lang.misc.type_color, AttributeType::Color),
-                         std::make_pair(lang.misc.type_object, AttributeType::Object),
-                         std::make_pair(lang.misc.type_path, AttributeType::Path)};
+  const TypeArray items {
+      std::make_pair(lang.misc.type_string.c_str(), AttributeType::String),
+      std::make_pair(lang.misc.type_int.c_str(), AttributeType::Int),
+      std::make_pair(lang.misc.type_float.c_str(), AttributeType::Float),
+      std::make_pair(lang.misc.type_bool.c_str(), AttributeType::Bool),
+      std::make_pair(lang.misc.type_color.c_str(), AttributeType::Color),
+      std::make_pair(lang.misc.type_object.c_str(), AttributeType::Object),
+      std::make_pair(lang.misc.type_path.c_str(), AttributeType::Path),
+  };
 
   const auto current_index = index_from_type(items, out);
   auto&& [current_name, current_type] = items.at(current_index);
