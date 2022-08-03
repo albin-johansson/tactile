@@ -89,7 +89,7 @@ void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (Menu exportMenu {"Export"}; exportMenu.is_open()) {
+    if (Menu export_menu {"Export As"}; export_menu.is_open()) {
       if (ImGui::MenuItem("Godot Scene...")) {
         get_dialogs().godot_export.open();
       }
