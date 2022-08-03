@@ -87,6 +87,8 @@ void SettingsDialog::show()
 {
   mSnapshot = io::get_preferences();
   mUiSettings = mSnapshot;
+
+  set_title(get_current_language().window.settings_dialog);
   make_visible();
 }
 
