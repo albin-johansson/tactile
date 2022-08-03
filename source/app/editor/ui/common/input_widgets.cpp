@@ -19,10 +19,14 @@
 
 #include "input_widgets.hpp"
 
-#include <array>    // array
-#include <utility>  // move
+#include <array>     // array
+#include <concepts>  // invocable
+#include <utility>   // move
+
+#include <spdlog/spdlog.h>
 
 #include "colors.hpp"
+#include "core/common/filesystem.hpp"
 #include "core/util/buffers.hpp"
 #include "editor/constants.hpp"
 #include "editor/lang/language.hpp"
@@ -34,6 +38,39 @@
 #include "io/file_dialog.hpp"
 
 namespace tactile::ui {
+namespace {
+
+template <std::invocable T>
+[[nodiscard]] auto input_file_path(const char* id, const std::string& text, T&& callback)
+    -> Maybe<fs::path>
+{
+  const Scope scope {id};
+
+  if (button(TAC_ICON_THREE_DOTS)) {
+    if (auto result = callback()) {
+      return std::move(*result);
+    }
+  }
+
+  ImGui::SameLine();
+
+  const auto& lang = get_current_language();
+
+  std::array<char, 256> buffer;  // NOLINT
+  copy_string_into_buffer(buffer, text);
+
+  ImGui::InputTextWithHint("##Path",
+                           lang.misc.empty.c_str(),
+                           buffer.data(),
+                           sizeof buffer,
+                           ImGuiInputTextFlags_ReadOnly);
+
+  lazy_tooltip("##PathTooltip", lang.misc.type_path.c_str());
+
+  return nothing;
+}
+
+}  // namespace
 
 auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
 {
@@ -65,7 +102,7 @@ auto input_attribute(const char* id, const Attribute& value) -> Maybe<Attribute>
       break;
     }
     case AttributeType::Path: {
-      if (auto updated = input_path(id, value.as_path())) {
+      if (auto updated = input_file(id, value.as_path())) {
         return std::move(updated);
       }
       break;
@@ -135,7 +172,7 @@ auto input_string_with_hint(const char*                  id,
 {
   const Scope scope {id};
 
-  std::array<char, 100> buffer;  // NOLINT safely uninitialized
+  std::array<char, 128> buffer;  // NOLINT safely uninitialized
   copy_string_into_buffer(buffer, value);
 
   if (label) {
@@ -214,32 +251,22 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
   return nothing;
 }
 
-auto input_path(const char* id, const fs::path& value) -> Maybe<fs::path>
+auto input_file(const char* id, const fs::path& value) -> Maybe<fs::path>
 {
-  const Scope scope {id};
-
-  if (button(TAC_ICON_THREE_DOTS)) {
+  return input_file_path(id, value.filename().string(), []() -> Maybe<fs::path> {
     auto dialog = io::FileDialog::open_file();
-    if (dialog.is_okay()) {
-      return dialog.path();
-    }
-  }
+    return dialog.is_okay() ? dialog.path() : Maybe<fs::path> {};
+  });
+}
 
-  ImGui::SameLine();
-
-  const auto& lang = get_current_language();
-  auto        str = value.filename().string();
-
-  ImGui::SetNextItemWidth(-min_float);
-  ImGui::InputTextWithHint("##Path",
-                           lang.misc.empty.c_str(),
-                           str.data(),
-                           str.capacity(),
-                           ImGuiInputTextFlags_ReadOnly);
-
-  lazy_tooltip("##PathTooltip", lang.misc.type_path.c_str());
-
-  return nothing;
+auto input_folder(const char* id, const fs::path& value) -> Maybe<fs::path>
+{
+  return input_file_path(id,
+                         to_canonical(value).value_or(value.string()),
+                         []() -> Maybe<fs::path> {
+                           auto dialog = io::FileDialog::open_folder();
+                           return dialog.is_okay() ? dialog.path() : Maybe<fs::path> {};
+                         });
 }
 
 }  // namespace tactile::ui

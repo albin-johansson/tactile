@@ -59,6 +59,8 @@ namespace tactile::ui {
 
 [[nodiscard]] auto input_color(const char* id, cen::color value) -> Maybe<cen::color>;
 
-[[nodiscard]] auto input_path(const char* id, const fs::path& value) -> Maybe<fs::path>;
+[[nodiscard]] auto input_file(const char* id, const fs::path& value) -> Maybe<fs::path>;
+
+[[nodiscard]] auto input_folder(const char* id, const fs::path& value) -> Maybe<fs::path>;
 
 }  // namespace tactile::ui
