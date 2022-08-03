@@ -151,6 +151,7 @@ void append_common_layer_attributes(XMLNode node, const ir::LayerData& layer_dat
 
 void append_tile_layer(XMLNode root, const ir::LayerData& layer_data)
 {
+  const auto& prefs = get_preferences();
   const auto& tile_layer_data = std::get<ir::TileLayerData>(layer_data.data);
 
   auto node = root.append_child("layer");
@@ -167,13 +168,10 @@ void append_tile_layer(XMLNode root, const ir::LayerData& layer_data)
   const auto count = tile_layer_data.row_count * tile_layer_data.col_count;
 
   std::stringstream stream;
-  usize             index = 0;
-
-  const auto& prefs = get_preferences();
 
   invoke_mn(tile_layer_data.row_count,
             tile_layer_data.col_count,
-            [&](const usize row, const usize col) {
+            [&, index = 0ull](const usize row, const usize col) mutable {
               if (prefs.fold_tile_data && index == 0) {
                 stream << '\n';
               }
