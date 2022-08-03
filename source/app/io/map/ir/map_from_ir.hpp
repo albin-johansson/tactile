@@ -32,10 +32,10 @@ namespace tactile::io {
 /**
  * Restores a map document from an intermediate map representation.
  *
- * \param data the intermediate representation of the map data.
+ * \param result the intermediate representation of the map data.
  * \param model the target document model.
  * \param textures the texture manager that will be used.
  */
-void map_from_ir(const ParseData& data, DocumentModel& model, TextureManager& textures);
+void map_from_ir(const ParseResult& result, DocumentModel& model, TextureManager& textures);
 
 }  // namespace tactile::io

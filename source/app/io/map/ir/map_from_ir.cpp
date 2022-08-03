@@ -42,7 +42,7 @@
 #include "core/tileset/tileset_info.hpp"
 #include "core/util/texture_manager.hpp"
 #include "io/map/ir/ir.hpp"
-#include "io/map/parse/parse_data.hpp"
+#include "io/map/parse/parse_result.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::io {
@@ -281,9 +281,9 @@ void restore_component_definitions(MapDocument& document, const ir::MapData& map
 
 }  // namespace
 
-void map_from_ir(const ParseData& data, DocumentModel& model, TextureManager& textures)
+void map_from_ir(const ParseResult& result, DocumentModel& model, TextureManager& textures)
 {
-  const auto& map_data = data.data();
+  const auto& map_data = result.data();
 
   const auto map_id =
       model.add_map(map_data.tile_size, map_data.row_count, map_data.col_count);
@@ -296,7 +296,7 @@ void map_from_ir(const ParseData& data, DocumentModel& model, TextureManager& te
 
   auto& map = document->get_map();
 
-  const auto path = fs::absolute(data.path());
+  const auto path = fs::absolute(result.path());
   document->set_path(path);
   document->set_name(path.filename().string());
 

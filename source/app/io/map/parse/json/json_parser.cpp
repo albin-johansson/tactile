@@ -113,9 +113,9 @@ namespace {
 
 }  // namespace
 
-auto parse_json_map(const fs::path& path) -> ParseData
+auto parse_json_map(const fs::path& path) -> ParseResult
 {
-  ParseData result;
+  ParseResult result;
   result.set_path(path);
 
   const auto err = parse_map(path, result.data());

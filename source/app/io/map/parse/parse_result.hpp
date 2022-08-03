@@ -17,38 +17,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "parse_data.hpp"
+#pragma once
+
+#include "core/common/filesystem.hpp"
+#include "io/map/ir/ir.hpp"
+#include "io/map/parse/parse_error.hpp"
 
 namespace tactile::io {
 
-void ParseData::set_path(const fs::path& path)
+class ParseResult final
 {
-  mPath = fs::absolute(path);
-}
+ public:
+  void set_path(const fs::path& path);
 
-void ParseData::set_error(const ParseError error)
-{
-  mError = error;
-}
+  void set_error(ParseError error);
 
-auto ParseData::path() const -> const fs::path&
-{
-  return mPath;
-}
+  [[nodiscard]] auto path() const -> const fs::path&;
 
-auto ParseData::error() const -> ParseError
-{
-  return mError;
-}
+  [[nodiscard]] auto error() const -> ParseError;
 
-auto ParseData::data() -> ir::MapData&
-{
-  return mData;
-}
+  [[nodiscard]] auto data() -> ir::MapData&;
+  [[nodiscard]] auto data() const -> const ir::MapData&;
 
-auto ParseData::data() const -> const ir::MapData&
-{
-  return mData;
-}
+ private:
+  fs::path    mPath;
+  ir::MapData mData;
+  ParseError  mError {ParseError::None};
+};
 
 }  // namespace tactile::io

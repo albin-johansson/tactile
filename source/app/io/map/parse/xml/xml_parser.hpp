@@ -22,13 +22,13 @@
 #include "core/common/filesystem.hpp"
 #include "io/fwd.hpp"
 #include "io/map/ir/ir.hpp"
-#include "io/map/parse/parse_data.hpp"
 #include "io/map/parse/parse_error.hpp"
+#include "io/map/parse/parse_result.hpp"
 #include "io/util/xml.hpp"
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_xml_map(const fs::path& path) -> ParseData;
+[[nodiscard]] auto parse_xml_map(const fs::path& path) -> ParseResult;
 
 [[nodiscard]] auto parse_tileset(XMLNode          node,
                                  ir::TilesetData& tileset_data,

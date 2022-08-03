@@ -26,7 +26,7 @@ class PreferenceState;
 namespace io {
 class FileDialog;
 class EmitInfo;
-class ParseData;
+class ParseResult;
 }  // namespace io
 
 namespace ir {

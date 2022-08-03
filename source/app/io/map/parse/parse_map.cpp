@@ -32,10 +32,10 @@
 
 namespace tactile::io {
 
-auto parse_map(const fs::path& path) -> ParseData
+auto parse_map(const fs::path& path) -> ParseResult
 {
   spdlog::info("Parsing map {}", path);
-  ParseData result;
+  ParseResult result;
 
   try {
     TACTILE_PROFILE_START

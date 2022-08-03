@@ -20,10 +20,10 @@
 #pragma once
 
 #include "core/common/filesystem.hpp"
-#include "io/map/parse/parse_data.hpp"
+#include "io/map/parse/parse_result.hpp"
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_map(const fs::path& path) -> ParseData;
+[[nodiscard]] auto parse_map(const fs::path& path) -> ParseResult;
 
 }  // namespace tactile::io
