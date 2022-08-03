@@ -56,6 +56,11 @@ auto FileDialog::path() const -> fs::path
   return {mPath};
 }
 
+auto FileDialog::open_folder() -> FileDialog
+{
+  return {tinyfd_selectFolderDialog("Open Folder", nullptr)};
+}
+
 auto FileDialog::open_file() -> FileDialog
 {
   return {tinyfd_openFileDialog("Open File", nullptr, 0, nullptr, "Any file", 0)};

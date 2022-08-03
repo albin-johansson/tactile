@@ -32,6 +32,8 @@ namespace tactile::io {
 class FileDialog final
 {
  public:
+  [[nodiscard]] static auto open_folder() -> FileDialog;
+
   [[nodiscard]] static auto open_file() -> FileDialog;
 
   [[nodiscard]] static auto open_map() -> FileDialog;
