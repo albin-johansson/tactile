@@ -124,7 +124,7 @@ void append_object(XMLNode node, const ir::ObjectData& object_data)
     object_node.append_attribute("visible").set_value(0);
   }
 
-  // Objects are assumed to be rectangles unless explicitly told otherwise,,
+  // Objects are assumed to be rectangles unless explicitly told otherwise
   if (object_data.type == ObjectType::Point) {
     object_node.append_child("point");
   }
