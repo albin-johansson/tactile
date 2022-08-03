@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "core/common/filesystem.hpp"
-
 namespace tactile::test {
 
 TEST(StringUtils, IntegerFromString)
@@ -36,12 +34,6 @@ TEST(StringUtils, FloatFromString)
 
   ASSERT_EQ(78.5, from_string<double>("78.5"));
   ASSERT_EQ(98.0, from_string<double>("98"));
-}
-
-TEST(StringUtils, ConvertToForwardSlashes)
-{
-  const std::filesystem::path source = R"(C:\foo\bar\abc.yaml)";
-  ASSERT_EQ("C:/foo/bar/abc.yaml", convert_to_forward_slashes(source));
 }
 
 }  // namespace tactile::test

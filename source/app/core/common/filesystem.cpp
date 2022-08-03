@@ -20,14 +20,71 @@
 #include "filesystem.hpp"
 
 #include <algorithm>  // replace
+#include <codecvt>    // codecvt_utf8
+#include <cstdlib>    // getenv
+#include <locale>     // wstring_convert
+
+#include "core/common/maybe.hpp"
+#include "meta/build.hpp"
 
 namespace tactile {
+namespace {
+
+[[nodiscard]] auto get_home_prefix() -> const Maybe<fs_string>&
+{
+  // On Unix platforms, HOME is something like '/Users/username'
+  // On Windows, USERPROFILE is something like 'C:\Users\username'
+  static const auto home = to_fs_string(on_windows ? std::getenv("USERPROFILE")  //
+                                                   : std::getenv("HOME"));
+  return home;
+}
+
+}  // namespace
 
 auto convert_to_forward_slashes(const fs::path& path) -> std::string
 {
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');
   return str;
+}
+
+auto has_home_prefix(const fs::path& path) -> bool
+{
+  const auto& prefix = get_home_prefix();
+  if (prefix.has_value()) {
+    fs_string_view view {path.c_str()};
+    return view.starts_with(*prefix);
+  }
+  else {
+    return false;
+  }
+}
+
+auto to_canonical(const fs::path& path) -> Maybe<std::string>
+{
+  if (has_home_prefix(path)) {
+    const auto& prefix = get_home_prefix();
+    return '~' + path.string().substr(prefix->size());
+  }
+  else {
+    return nothing;
+  }
+}
+
+auto to_fs_string(const char* str) -> Maybe<fs_string>
+{
+  if (!str) {
+    return nothing;
+  }
+
+  // Windows is the only platform that we support that uses wchar_t filesystem paths
+#if TACTILE_PLATFORM_WINDOWS
+  using convert_type = std::codecvt_utf8<wchar_t>;
+  std::wstring_convert<convert_type, wchar_t> converter;
+  return converter.from_bytes(str);
+#else
+  return str;
+#endif  // TACTILE_PLATFORM_WINDOWS
 }
 
 }  // namespace tactile
