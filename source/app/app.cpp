@@ -158,6 +158,8 @@ void App::subscribe_to_events()
   d.sink<InspectMapEvent>().connect<&App::on_inspect_map>(this);
   d.sink<InspectTilesetEvent>().connect<&App::on_inspect_tileset>(this);
 
+  d.sink<ExportAsGodotSceneEvent>().connect<&App::on_export_as_godot_scene>(this);
+
   d.sink<ShowNewMapDialogEvent>().connect<&ui::show_map_creation_dialog>();
   d.sink<ShowOpenMapDialogEvent>().connect<&ui::show_map_selector_dialog>();
   d.sink<CreateMapEvent>().connect<&App::on_create_map>(this);
@@ -375,6 +377,23 @@ void App::on_inspect_tileset()
 {
   if (auto* document = active_tileset_document()) {
     document->get_contexts().select(document->view_tileset().get_uuid());
+  }
+}
+
+void App::on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    const io::GodotEmitOptions options {
+        .root_dir = event.root_dir,
+        .project_map_dir = event.map_dir,
+        .project_image_dir = event.image_dir,
+        .project_tileset_dir = event.tileset_dir,
+        .rectangle_node_type = "",
+        .ellipse_node_type = "",
+        .point_node_type = "",
+        .embed_tilesets = event.embed_tilesets,
+    };
+    io::emit_map_as_godot_scene(*document, options);
   }
 }
 

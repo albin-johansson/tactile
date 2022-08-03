@@ -19,115 +19,129 @@
 
 #include "godot_export_dialog.hpp"
 
+#include <utility>  // move
+
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/event/map_events.hpp"
 #include "editor/ui/alignment.hpp"
+#include "editor/ui/common/input_widgets.hpp"
+#include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/persistence/preferences.hpp"
 
 namespace tactile::ui {
 
-GodotExportDialog::GodotExportDialog() : ADialog {"Export As Godot Scene"}
-{
-  set_accept_button_label("Export");
-}
+GodotExportDialog::GodotExportDialog()
+    : ADialog {"Export As Godot Scene"}
+{}
 
 void GodotExportDialog::open()
 {
-  // TODO need to know where the Godot project is on the filesystem
+  mRootDir.clear();
+  mMapDir.clear();
+  mImageDir.clear();
+  mTilesetDir.clear();
 
-  zero_buffer(mProjectPathBuffer);
-  zero_buffer(mImagePathBuffer);
-  zero_buffer(mTilesetPathBuffer);
-  mEmbedTilesets = io::get_preferences().embed_tilesets;
+  mEmbedTilesets = true;
+  //  mEmbedTilesets = io::get_preferences().embed_tilesets;
+
+  set_title("Export As Godot Scene");
+  set_accept_button_label("Export");
+
   make_visible();
 }
 
-void GodotExportDialog::on_update(const DocumentModel& model,
-                                  entt::dispatcher&    dispatcher)
+void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  const char* projectLabel = "Project path:";
-  const char* imageLabel = "Image path:";
-  const char* tilesetLabel = "Tileset path:";
-  const auto  offset = minimum_offset_to_align(projectLabel, imageLabel, tilesetLabel);
+  const auto* root_label = "Godot project folder";
+  const auto* map_label = "Map folder";
+  const auto* image_label = "Image folder";
+  const auto* tileset_label = "Tileset folder";
+
+  const auto offset = minimum_offset_to_align(root_label,  //
+                                              map_label,
+                                              image_label,
+                                              tileset_label);
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(projectLabel);
-  ImGui::SameLine(offset);
-  ImGui::InputTextWithHint("##ProjectPath",
-                           "scenes/maps",
-                           mProjectPathBuffer.data(),
-                           sizeof mProjectPathBuffer);
+  ImGui::TextUnformatted(root_label);
+  lazy_tooltip("##RootDirTooltip", "Root directory of your Godot project.");
 
-  ImGui::SameLine();
-  ImGui::TextUnformatted("(?)");
-  if (ImGui::IsItemHovered()) {
-    ImGui::BeginTooltip();
-    ImGui::TextUnformatted("The path in the Godot project where the maps are stored.");
-    ImGui::EndTooltip();
+  ImGui::SameLine(offset);
+  if (auto root_path = input_folder("##RootDir", mRootDir)) {
+    mRootDir = std::move(*root_path);
   }
 
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(imageLabel);
-  ImGui::SameLine(offset);
-  ImGui::InputTextWithHint("##ImagePath",
-                           "assets/images",
-                           mImagePathBuffer.data(),
-                           sizeof mImagePathBuffer);
+  ImGui::Separator();
 
-  ImGui::SameLine();
-  ImGui::TextUnformatted("(?)");
-  if (ImGui::IsItemHovered()) {
-    ImGui::BeginTooltip();
-    ImGui::TextUnformatted("The path in the Godot project where the images are stored.");
-    ImGui::EndTooltip();
+  {
+    Disable when_root_is_unset {mRootDir.empty()};
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(map_label);
+    lazy_tooltip("##MapDirTooltip",
+                 "Relative path in the Godot project to where maps are stored.");
+
+    ImGui::SameLine(offset);
+    if (const auto map_dir = input_folder("##MapDir", mMapDir)) {
+      mMapDir = fs::relative(*map_dir, mRootDir);
+    }
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(image_label);
+    lazy_tooltip("##ImageDirTooltip",
+                 "Relative path in the Godot project to where images are stored.");
+
+    ImGui::SameLine(offset);
+    if (const auto image_dir = input_folder("##ImageDir", mImageDir)) {
+      mImageDir = fs::relative(*image_dir, mRootDir);
+    }
   }
 
-  ImGui::Spacing();
+  ImGui::Separator();
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Embed tilesets in the map scene:");
+  ImGui::TextUnformatted("Embed tilesets in the map scene");
+
   ImGui::SameLine();
   ImGui::Checkbox("##EmbedTilesets", &mEmbedTilesets);
 
   {
-    Disable whenEmbedded {mEmbedTilesets};
+    Disable when_embedded {mEmbedTilesets};
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(tilesetLabel);
-    ImGui::SameLine(offset);
-    ImGui::InputTextWithHint("##TilesetPath",
-                             "scenes/tilesets",
-                             mTilesetPathBuffer.data(),
-                             sizeof mTilesetPathBuffer);
+    ImGui::TextUnformatted(tileset_label);
+    lazy_tooltip("##TilesetPathTooltip",
+                 "Relative path in the Godot project to where tilesets are stored.");
 
-    ImGui::SameLine();
-    ImGui::TextUnformatted("(?)");
-    if (ImGui::IsItemHovered()) {
-      ImGui::BeginTooltip();
-      ImGui::TextUnformatted(
-          "The path in the Godot project where the tilesets are stored.");
-      ImGui::EndTooltip();
+    ImGui::SameLine(offset);
+    if (auto tileset_dir = input_folder("##TilesetPath", mTilesetDir)) {
+      mTilesetDir = fs::relative(*tileset_dir, mRootDir);
     }
   }
+
+  ImGui::Separator();
+
+  // TODO object types
 }
 
 auto GodotExportDialog::is_current_input_valid(const DocumentModel&) const -> bool
 {
-  return !create_string_view_from_buffer(mProjectPathBuffer).empty() &&
-         !create_string_view_from_buffer(mImagePathBuffer).empty() &&
-         (mEmbedTilesets || !create_string_view_from_buffer(mTilesetPathBuffer).empty());
+  return !mRootDir.empty() && (mEmbedTilesets || !mTilesetDir.empty());
 }
 
 void GodotExportDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<ExportAsGodotSceneEvent>(
-      create_string_from_buffer(mProjectPathBuffer),
-      create_string_from_buffer(mImagePathBuffer),
-      create_string_from_buffer(mTilesetPathBuffer),
-      mEmbedTilesets);
+  ExportAsGodotSceneEvent event {
+      .root_dir = std::move(mRootDir),
+      .map_dir = std::move(mMapDir),
+      .image_dir = std::move(mImageDir),
+      .tileset_dir = std::move(mTilesetDir),
+      .embed_tilesets = mEmbedTilesets,
+  };
+  dispatcher.enqueue<ExportAsGodotSceneEvent>(std::move(event));
 }
 
 }  // namespace tactile::ui

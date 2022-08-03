@@ -74,10 +74,12 @@ struct FixTilesInMapEvent final
 /// Event emitted when the user wants to save a map as a Godot scene.
 struct ExportAsGodotSceneEvent final
 {
-  std::string project_dir;
-  std::string image_dir;
-  std::string tileset_dir;
-  bool embed_tilesets {};
+  fs::path root_dir;
+  fs::path map_dir;
+  fs::path image_dir;
+  fs::path tileset_dir;
+
+  bool embed_tilesets : 1 {};
 };
 
 }  // namespace tactile

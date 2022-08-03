@@ -60,6 +60,20 @@ void emit_map(const MapDocument& document)
 
 void emit_map_as_godot_scene(const MapDocument& document, const GodotEmitOptions& options)
 {
+  TACTILE_DEBUG_PROFILE_START
+
+  // TODO validate directories
+
+  const auto root = fs::absolute(options.root_dir);
+  const auto path = root / options.project_map_dir / "test.escn";
+
+  spdlog::debug("Trying to save map as Godot scene at {}", path);
+
+  // FIXME path
+  EmitInfo info {path, map_to_ir(document)};
+  emit_godot_map(info, options);
+
+  TACTILE_DEBUG_PROFILE_END("Saved map as Godot scene")
 }
 
 }  // namespace tactile::io

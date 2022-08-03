@@ -21,6 +21,7 @@
 
 #include <string>  // string
 
+#include "core/common/filesystem.hpp"
 #include "io/fwd.hpp"
 
 namespace tactile {
@@ -29,11 +30,33 @@ class MapDocument;
 
 namespace tactile::io {
 
+/**
+ * Provides options for the Godot scene emitter.
+ *
+ * Note, all directory arguments will have "res://" prepended to them, i.e. they are
+ * considered to be "project relative".
+ *
+ * There are of course differences in how Godot and Tactile handle tilemaps, so some
+ * transformations have to be made in order to export a Tactile map to be usable within
+ * Godot.
+ *
+ * The major differences include:
+ * - Ellipses are not supported in Godot
+ * - A `TileMap` in Godot is really just a tile layer, so we generate multiple such nodes
+ * - A `TileMap` node in Godot may only have a single associated `TileSet`
+ *
+ * There is no one true way to organize a Godot project, so we let the user specify how
+ * their repository is arranged.
+ */
 struct GodotEmitOptions final
 {
-  std::string project_map_dir;      ///< Path to the map directory.
-  std::string project_tileset_dir;  ///< Path to the tileset directory.
-  std::string project_image_dir;    ///< Path to the image directory.
+  fs::path    root_dir;             ///< Path to the local project directory.
+  fs::path    project_map_dir;      ///< Relative path to the map directory.
+  fs::path    project_image_dir;    ///< Relative path to the image directory.
+  fs::path    project_tileset_dir;  ///< Relative path to the tileset directory.
+  std::string rectangle_node_type;  ///< Godot node used for rectangle objects.
+  std::string ellipse_node_type;    ///< Godot node used for ellipse objects.
+  std::string point_node_type;      ///< Godot node used for point objects.
   bool        embed_tilesets : 1 {};
 };
 
@@ -47,6 +70,6 @@ void emit_map_as_godot_scene(const MapDocument&      document,
 void emit_json_map(const EmitInfo& info);
 void emit_xml_map(const EmitInfo& info);
 void emit_yaml_map(const EmitInfo& info);
-void emit_godot_map(const EmitInfo& info);
+void emit_godot_map(const EmitInfo& info, const GodotEmitOptions& options);
 
 }  // namespace tactile::io

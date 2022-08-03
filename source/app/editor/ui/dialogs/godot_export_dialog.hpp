@@ -19,8 +19,9 @@
 
 #pragma once
 
-#include <array>  // array
+#include <string>  // string
 
+#include "core/common/filesystem.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 
 namespace tactile::ui {
@@ -41,10 +42,17 @@ class GodotExportDialog final : public ADialog
       -> bool override;
 
  private:
-  std::array<char, 128> mProjectPathBuffer {};
-  std::array<char, 128> mImagePathBuffer {};
-  std::array<char, 128> mTilesetPathBuffer {};
-  bool                  mEmbedTilesets {};
+  fs::path mRootDir;
+
+  fs::path mMapDir;
+  fs::path mImageDir;
+  fs::path mTilesetDir;
+
+  std::string mRectangleNodeType;
+  std::string mEllipseNodeType;
+  std::string mPointNodeType;
+
+  bool mEmbedTilesets {};
 };
 
 }  // namespace tactile::ui
