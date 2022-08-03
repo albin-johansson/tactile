@@ -124,8 +124,9 @@ void emit_tile_layer(std::ostream&        stream,
 
   invoke_mn(rows, columns, [&, tile_count](usize row, usize col) {
     const auto index = row * tile_layer.col_count + col;
-    stream << fmt::format((index < tile_count - 1) ? "{}, " : "{}",
-                          tile_layer.tiles[row][col]);
+    const auto tile = tile_layer.tiles[row][col];
+    stream << ((index < tile_count - 1) ? fmt::format("{}, ", tile)
+                                        : fmt::format("{}", tile));
   });
 
   stream << ")\n";
