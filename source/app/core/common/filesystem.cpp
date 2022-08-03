@@ -35,8 +35,8 @@ namespace {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
   static const auto home_env = on_windows ? env_var("USERPROFILE") : env_var("HOME");
-  static const auto home = to_fs_string(home_env ? home_env->c_str() : nullptr);
-  return home;
+  static const auto home_str = home_env ? to_fs_string(home_env->c_str()) : nullptr;
+  return home_str;
 }
 
 }  // namespace
