@@ -55,7 +55,7 @@ void emit_map(const MapDocument& document)
     spdlog::error("Unsupported file extension {}", ext);
   }
 
-  TACTILE_DEBUG_PROFILE_END("Emitted document")
+  TACTILE_DEBUG_PROFILE_END("Saved map")
 }
 
 void emit_map_as_godot_scene(const MapDocument& document, const GodotEmitOptions& options)
