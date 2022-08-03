@@ -21,10 +21,10 @@
 
 #include <algorithm>  // replace
 #include <codecvt>    // codecvt_utf8
-#include <cstdlib>    // getenv
 #include <locale>     // wstring_convert
 
 #include "core/common/maybe.hpp"
+#include "core/util/env.hpp"
 #include "meta/build.hpp"
 
 namespace tactile {
@@ -34,8 +34,8 @@ namespace {
 {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
-  static const auto home = to_fs_string(on_windows ? std::getenv("USERPROFILE")  //
-                                                   : std::getenv("HOME"));
+  static const auto home_env = on_windows ? env_var("USERPROFILE") : env_var("HOME");
+  static const auto home = to_fs_string(home_env ? home_env->c_str() : nullptr);
   return home;
 }
 
