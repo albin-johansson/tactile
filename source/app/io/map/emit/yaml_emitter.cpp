@@ -39,7 +39,7 @@ namespace {
 
 constexpr int tileset_node_version = 1;
 
-void _emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
+void emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
 {
   if (!context.properties.empty()) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
@@ -56,7 +56,7 @@ void _emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
   }
 }
 
-void _emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
+void emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
 {
   if (!context.components.empty()) {
     emitter << YAML::Key << "components" << YAML::BeginSeq;
@@ -67,10 +67,10 @@ void _emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
       emitter << YAML::Key << "type" << YAML::Value << type;
       emitter << YAML::Key << "values" << YAML::BeginSeq;
 
-      for (const auto& [attrName, attrValue] : values) {
+      for (const auto& [attr_name, attr_value] : values) {
         emitter << YAML::BeginMap;
-        emitter << YAML::Key << "name" << YAML::Value << attrName;
-        emitter << YAML::Key << "value" << YAML::Value << attrValue;
+        emitter << YAML::Key << "name" << YAML::Value << attr_name;
+        emitter << YAML::Key << "value" << YAML::Value << attr_value;
         emitter << YAML::EndMap;
       }
 
@@ -82,7 +82,7 @@ void _emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
   }
 }
 
-void _emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
+void emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "id" << YAML::Value << data.id;
@@ -130,13 +130,13 @@ void _emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
     emitter << YAML::Key << "height" << YAML::Value << data.size.y;
   }
 
-  _emit_properties(emitter, data.context);
-  _emit_components(emitter, data.context);
+  emit_properties(emitter, data.context);
+  emit_components(emitter, data.context);
 
   emitter << YAML::EndMap;
 }
 
-void _emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& data)
+void emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& data)
 {
   if (data.objects.empty()) {
     return;
@@ -144,17 +144,17 @@ void _emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& 
 
   emitter << YAML::Key << "objects" << YAML::BeginSeq;
 
-  for (const auto& objectData : data.objects) {
-    _emit_object_data(emitter, objectData);
+  for (const auto& object_data : data.objects) {
+    emit_object_data(emitter, object_data);
   }
 
   emitter << YAML::EndSeq;
 }
 
-void _emit_tile_layer_data(YAML::Emitter&           emitter,
-                           const ir::TileLayerData& data,
-                           const usize              rows,
-                           const usize              columns)
+void emit_tile_layer_data(YAML::Emitter&           emitter,
+                          const ir::TileLayerData& data,
+                          const usize              rows,
+                          const usize              columns)
 {
   const auto& prefs = get_preferences();
 
@@ -184,10 +184,10 @@ void _emit_tile_layer_data(YAML::Emitter&           emitter,
   }
 }
 
-void _emit_layer(YAML::Emitter&       emitter,
-                 const ir::LayerData& data,
-                 const usize          rows,
-                 const usize          columns)
+void emit_layer(YAML::Emitter&       emitter,
+                const ir::LayerData& data,
+                const usize          rows,
+                const usize          columns)
 {
   emitter << YAML::BeginMap;
 
@@ -206,24 +206,24 @@ void _emit_layer(YAML::Emitter&       emitter,
   switch (data.type) {
     case LayerType::TileLayer:
       emitter << YAML::Value << "tile-layer";
-      _emit_tile_layer_data(emitter,
-                            std::get<ir::TileLayerData>(data.data),
-                            rows,
-                            columns);
+      emit_tile_layer_data(emitter,
+                           std::get<ir::TileLayerData>(data.data),
+                           rows,
+                           columns);
       break;
 
     case LayerType::ObjectLayer:
       emitter << YAML::Value << "object-layer";
-      _emit_object_layer_data(emitter, std::get<ir::ObjectLayerData>(data.data));
+      emit_object_layer_data(emitter, std::get<ir::ObjectLayerData>(data.data));
       break;
 
     case LayerType::GroupLayer: {
       emitter << YAML::Value << "group-layer";
       emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-      for (const auto& childLayerData :
+      for (const auto& child_layer_data :
            std::get<ir::GroupLayerData>(data.data).children) {
-        _emit_layer(emitter, *childLayerData, rows, columns);
+        emit_layer(emitter, *child_layer_data, rows, columns);
       }
 
       emitter << YAML::EndSeq;
@@ -231,13 +231,13 @@ void _emit_layer(YAML::Emitter&       emitter,
     }
   }
 
-  _emit_properties(emitter, data.context);
-  _emit_components(emitter, data.context);
+  emit_properties(emitter, data.context);
+  emit_components(emitter, data.context);
 
   emitter << YAML::EndMap;
 }
 
-void _emit_layers(YAML::Emitter& emitter, const ir::MapData& data)
+void emit_layers(YAML::Emitter& emitter, const ir::MapData& data)
 {
   if (data.layers.empty()) {
     return;
@@ -245,28 +245,28 @@ void _emit_layers(YAML::Emitter& emitter, const ir::MapData& data)
 
   emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-  for (const auto& layerData : data.layers) {
-    _emit_layer(emitter, layerData, data.row_count, data.col_count);
+  for (const auto& layer_data : data.layers) {
+    emit_layer(emitter, layer_data, data.row_count, data.col_count);
   }
 
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::MetaTileData& data)
+void emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::MetaTileData& data)
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
 
-  for (const auto& frameData : data.frames) {
+  for (const auto& frame_data : data.frames) {
     emitter << YAML::BeginMap;
-    emitter << YAML::Key << "tile" << YAML::Value << frameData.local_id;
-    emitter << YAML::Key << "duration" << YAML::Value << frameData.duration_ms;
+    emitter << YAML::Key << "tile" << YAML::Value << frame_data.local_id;
+    emitter << YAML::Key << "duration" << YAML::Value << frame_data.duration_ms;
     emitter << YAML::EndMap;
   }
 
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
+void emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
@@ -275,19 +275,19 @@ void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
     emitter << YAML::Key << "id" << YAML::Value << id;
 
     if (!tile.frames.empty()) {
-      _emit_tileset_tile_animation(emitter, tile);
+      emit_tileset_tile_animation(emitter, tile);
     }
 
     if (!tile.objects.empty()) {
       emitter << YAML::Key << "objects" << YAML::BeginSeq;
-      for (const auto& objectData : tile.objects) {
-        _emit_object_data(emitter, objectData);
+      for (const auto& object_data : tile.objects) {
+        emit_object_data(emitter, object_data);
       }
       emitter << YAML::EndSeq;
     }
 
-    _emit_properties(emitter, tile.context);
-    _emit_components(emitter, tile.context);
+    emit_properties(emitter, tile.context);
+    emit_components(emitter, tile.context);
 
     emitter << YAML::EndMap;
   }
@@ -295,9 +295,9 @@ void _emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
   emitter << YAML::EndSeq;
 }
 
-void _emit_tileset_file(const EmitInfo&        info,
-                        const std::string&     filename,
-                        const ir::TilesetData& tileset)
+void emit_tileset_file(const EmitInfo&        info,
+                       const std::string&     filename,
+                       const ir::TilesetData& tileset)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);
@@ -312,29 +312,29 @@ void _emit_tileset_file(const EmitInfo&        info,
   emitter << YAML::Key << "tile-count" << YAML::Value << tileset.tile_count;
   emitter << YAML::Key << "column-count" << YAML::Value << tileset.column_count;
 
-  const auto imagePath = fs::relative(tileset.image_path, info.destination_dir());
+  const auto image_path = fs::relative(tileset.image_path, info.destination_dir());
   emitter << YAML::Key << "image-path" << YAML::Value
-          << convert_to_forward_slashes(imagePath);
+          << convert_to_forward_slashes(image_path);
   emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_size.x;
   emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_size.y;
 
   if (!tileset.fancy_tiles.empty()) {
-    _emit_tileset_tiles(emitter, tileset);
+    emit_tileset_tiles(emitter, tileset);
   }
 
-  _emit_properties(emitter, tileset.context);
-  _emit_components(emitter, tileset.context);
+  emit_properties(emitter, tileset.context);
+  emit_components(emitter, tileset.context);
 
   emitter << YAML::EndMap;
 
   const auto path = info.destination_dir() / filename;
   spdlog::debug("Saving external tileset to {}", path);
 
-  std::ofstream stream {path, std::ios::out};
+  std::ofstream stream {path, std::ios::out | std::ios::trunc};
   stream << emitter.c_str();
 }
 
-void _emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
+void emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
 {
   const auto& data = info.data();
 
@@ -346,7 +346,7 @@ void _emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
 
   for (const auto& tileset : data.tilesets) {
     const auto source = fmt::format("{}.yaml", tileset.name);
-    _emit_tileset_file(info, source, tileset);
+    emit_tileset_file(info, source, tileset);
 
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "first-global-id" << YAML::Value << tileset.first_tile;
@@ -357,9 +357,9 @@ void _emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
   emitter << YAML::EndSeq;
 }
 
-void _emit_component_definition_attribute(YAML::Emitter&     emitter,
-                                          const std::string& name,
-                                          const Attribute&   value)
+void emit_component_definition_attribute(YAML::Emitter&     emitter,
+                                         const std::string& name,
+                                         const Attribute&   value)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;
@@ -372,7 +372,7 @@ void _emit_component_definition_attribute(YAML::Emitter&     emitter,
   emitter << YAML::EndMap;
 }
 
-void _emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
+void emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
 {
   const auto& data = info.data();
 
@@ -390,7 +390,7 @@ void _emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
       emitter << YAML::Key << "attributes" << YAML::BeginSeq;
 
       for (const auto& [attrName, attrValue] : attributes) {
-        _emit_component_definition_attribute(emitter, attrName, attrValue);
+        emit_component_definition_attribute(emitter, attrName, attrValue);
       }
 
       emitter << YAML::EndSeq;
@@ -423,16 +423,16 @@ void emit_yaml_map(const EmitInfo& info)
   emitter << YAML::Key << "next-layer-id" << YAML::Value << data.next_layer_id;
   emitter << YAML::Key << "next-object-id" << YAML::Value << data.next_object_id;
 
-  _emit_component_definitions(emitter, info);
-  _emit_tilesets(emitter, info);
-  _emit_layers(emitter, data);
+  emit_component_definitions(emitter, info);
+  emit_tilesets(emitter, info);
+  emit_layers(emitter, data);
 
-  _emit_properties(emitter, data.context);
-  _emit_components(emitter, data.context);
+  emit_properties(emitter, data.context);
+  emit_components(emitter, data.context);
 
   emitter << YAML::EndMap;
 
-  std::ofstream stream {info.destination_file(), std::ios::out};
+  std::ofstream stream {info.destination_file(), std::ios::out | std::ios::trunc};
   stream << emitter.c_str();
 }
 
