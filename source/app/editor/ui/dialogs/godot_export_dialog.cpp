@@ -44,7 +44,7 @@ void GodotExportDialog::open()
   mImageDir.clear();
   mTilesetDir.clear();
 
-  mEmbedTilesets = true;
+  mEmbedTilesets = false;
   //  mEmbedTilesets = io::get_preferences().embed_tilesets;
 
   set_title("Export As Godot Scene");
@@ -72,6 +72,9 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
   ImGui::SameLine(offset);
   if (auto root_path = input_folder("##RootDir", mRootDir)) {
     mRootDir = std::move(*root_path);
+    mMapDir = ".";
+    mImageDir = ".";
+    mTilesetDir = ".";
   }
 
   ImGui::Separator();
