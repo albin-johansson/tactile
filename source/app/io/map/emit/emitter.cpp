@@ -65,7 +65,7 @@ void emit_map_as_godot_scene(const MapDocument& document, const GodotEmitOptions
   // TODO validate directories
 
   const auto root = fs::absolute(options.root_dir);
-  const auto path = root / options.project_map_dir / "test.escn";
+  const auto path = root / options.project_map_dir / "map.tscn";
 
   spdlog::debug("Trying to save map as Godot scene at {}", path);
 
