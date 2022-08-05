@@ -248,6 +248,7 @@ void convert_tilesets(const MapDocument&    document,
     tileset_data.first_tile = tileset_ref.first_tile();
     tileset_data.tile_size = tileset.tile_size();
     tileset_data.column_count = tileset.column_count();
+    tileset_data.tile_count = tileset.tile_count();
 
     tileset_data.image_path = tileset.texture_path();
     tileset_data.image_size = tileset.texture_size();
