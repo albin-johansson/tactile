@@ -45,8 +45,6 @@ using ExtResource = int32;
 using SubResource = int32;
 using Rect2 = Vector4i;
 
-// TODO decide on strategy: merge tilesets into one `TileSet` OR split tile layers
-
 // A tileset texture.
 struct GodotTexture final
 {
@@ -68,29 +66,12 @@ struct GodotAnimation final
   float                            speed {1.0};
 };
 
-struct GodotTile final
-{
-  int32 encoded_position {};
-  int32 parent_tileset_id {};
-  int32 encoded_tile_id {};
-};
-
-struct GodotTileMap final
-{
-  std::vector<GodotTile> tiles;
-};
-
-// struct GodotTileSet final
-//{
-//   std::vector<GodotTexture> textures;
-// };
-
 /// Tracks different used identifiers
 struct Identifiers final
 {
   int32              next_ext_resource {1};
   int32              next_sub_resource {1};
-  int32              ext_tileset_id;
+  int32              ext_tileset_id {};
   Maybe<SubResource> sprite_frames_id;
 };
 
@@ -99,7 +80,6 @@ struct GodotScene final
   Identifiers                     identifiers;
   std::vector<GodotTexture>       textures;
   HashMap<TileID, GodotAnimation> animations;
-  std::vector<GodotTileMap>       tile_maps;
 };
 
 struct TilesetExportInfo final
@@ -263,11 +243,26 @@ void emit_tileset_file(const ir::MapData&       map,
   }
 }
 
-void emit_tilesets(std::ostream&            stream,
-                   const GodotScene&        scene,
-                   const ir::MapData&       map,
-                   const TilesetExportInfo& info,
-                   const GodotEmitOptions&  options)
+void emit_textures(std::ostream&           stream,
+                   const GodotScene&       scene,
+                   const ir::MapData&      map,
+                   const GodotEmitOptions& options)
+{
+  for (const auto& texture : scene.textures) {
+    const auto& tileset = first_in(map.tilesets, [&](const ir::TilesetData& ts) {
+      return ts.uuid == texture.tileset_uuid;
+    });
+
+    const auto path =
+        convert_to_forward_slashes(get_tileset_image_path(tileset, options));
+    stream << fmt::format(R"([ext_resource path="res://{}" type="Texture" id={}])",
+                          path,
+                          texture.id)
+           << '\n';
+  }
+}
+
+void emit_atlas_textures(std::ostream& stream, const GodotScene& scene)
 {
   for (const auto& [tile_id, animation] : scene.animations) {
     for (const auto& frame : animation.frames) {
@@ -280,43 +275,47 @@ void emit_tilesets(std::ostream&            stream,
                             frame.region.w);
     }
   }
+}
 
-  if (const auto sprite_frames_id = scene.identifiers.sprite_frames_id) {
-    stream << fmt::format("\n[sub_resource type=\"SpriteFrames\" id={}]\n",
-                          *sprite_frames_id);
-    stream << "animations = [\n";
-
-    bool has_emitted_animation = false;
-    for (const auto& [tile_id, animation] : scene.animations) {
-      if (has_emitted_animation) {
-        stream << ",\n {\n";
-      }
-      else {
-        stream << " {\n";
-      }
-
-      stream << "   \"frames\": [";
-      bool has_emitted_frame = false;
-      for (const auto& frame : animation.frames) {
-        if (has_emitted_frame) {
-          stream << ", ";
-        }
-        stream << fmt::format("SubResource( {} )", frame.id);
-        has_emitted_frame = true;
-      }
-      stream << "],\n";
-      stream << "   \"loop\": true,\n";
-      stream << fmt::format("   \"name\": \"{}\",\n", animation.name);
-      stream << fmt::format("   \"speed\": {}\n", animation.speed);
-
-      stream << " }";
-      has_emitted_animation = true;
-    }
-
-    stream << "\n]\n";
+void emit_sprite_frames(std::ostream& stream, const GodotScene& scene)
+{
+  const auto sprite_frames_id = scene.identifiers.sprite_frames_id;
+  if (!sprite_frames_id.has_value()) {
+    return;
   }
 
-  emit_tileset_file(map, info, options);
+  stream << fmt::format("\n[sub_resource type=\"SpriteFrames\" id={}]\n",
+                        *sprite_frames_id);
+  stream << "animations = [\n";
+
+  bool has_emitted_animation = false;
+  for (const auto& [tile_id, animation] : scene.animations) {
+    if (has_emitted_animation) {
+      stream << ",\n {\n";
+    }
+    else {
+      stream << " {\n";
+    }
+
+    stream << R"(   "frames": [)";
+    bool has_emitted_frame = false;
+    for (const auto& frame : animation.frames) {
+      if (has_emitted_frame) {
+        stream << ", ";
+      }
+      stream << fmt::format("SubResource( {} )", frame.id);
+      has_emitted_frame = true;
+    }
+    stream << "],\n";
+    stream << R"(   "loop": true,)" << '\n';
+    stream << fmt::format(R"(   "name": "{}",)", animation.name) << '\n';
+    stream << fmt::format(R"(   "speed": {})", animation.speed) << '\n';
+
+    stream << " }";
+    has_emitted_animation = true;
+  }
+
+  stream << "\n]\n";
 }
 
 void emit_tile_layer_animation_nodes(std::ostream&            stream,
@@ -353,12 +352,15 @@ void emit_tile_layer(std::ostream&            stream,
                      const GodotScene&        scene,
                      const ir::MapData&       map,
                      const ir::LayerData&     layer,
-                     const TilesetExportInfo& info)
+                     const TilesetExportInfo& info,
+                     std::string_view         parent)
 {
   const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
 
   stream << '\n'
-         << fmt::format(R"([node name="{}" type="TileMap" parent="."])", layer.name)
+         << fmt::format(R"([node name="{}" type="TileMap" parent="{}"])",
+                        layer.name,
+                        parent)
          << '\n';
   stream << fmt::format("tile_set = ExtResource( {} )\n",
                         scene.identifiers.ext_tileset_id);
@@ -417,25 +419,82 @@ void emit_tile_layer(std::ostream&            stream,
   emit_tile_layer_animation_nodes(stream, scene, map, tile_layer, layer.name);
 }
 
+void emit_object_layer(std::ostream&        stream,
+                       const GodotScene&    scene,
+                       const ir::MapData&   map,
+                       const ir::LayerData& layer,
+                       std::string_view     parent)
+{
+  stream << '\n'
+         << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
+                        layer.name,
+                        parent)
+         << '\n';
+
+  const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+  for (const auto& object : object_layer.objects) {
+    stream << '\n'
+           << fmt::format(R"([node name="Object {}" type="Node2D" parent="{}"])",
+                          object.id,
+                          layer.name)
+           << '\n';
+  }
+}
+
+void emit_layer(std::ostream&            stream,
+                const GodotScene&        scene,
+                const ir::MapData&       map,
+                const ir::LayerData&     layer,
+                const TilesetExportInfo& info,
+                std::string_view         parent)
+{
+  switch (layer.type) {
+    case LayerType::TileLayer:
+      emit_tile_layer(stream, scene, map, layer, info, parent);
+      break;
+
+    case LayerType::ObjectLayer: {
+      stream << '\n'
+             << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
+                            layer.name,
+                            parent)
+             << '\n';
+
+      const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+      for (const auto& object : object_layer.objects) {
+        stream << '\n'
+               << fmt::format(R"([node name="Object {}" type="Node2D" parent="{}"])",
+                              object.id,
+                              layer.name)
+               << '\n';
+      }
+
+      break;
+    }
+    case LayerType::GroupLayer: {
+      stream << '\n'
+             << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
+                            layer.name,
+                            parent)
+             << '\n';
+
+      const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
+      for (const auto& child_layer : group_layer.children) {
+        emit_layer(stream, scene, map, *child_layer, info, layer.name);
+      }
+
+      break;
+    }
+  }
+}
+
 void emit_layers(std::ostream&            stream,
                  const GodotScene&        scene,
                  const ir::MapData&       map,
                  const TilesetExportInfo& info)
 {
   for (const auto& layer : map.layers) {
-    switch (layer.type) {
-      case LayerType::TileLayer:
-        emit_tile_layer(stream, scene, map, layer, info);
-        break;
-
-      case LayerType::ObjectLayer:
-        [[fallthrough]];
-      case LayerType::GroupLayer:
-        stream << '\n'
-               << fmt::format(R"([node name="{}" type="Node2D" parent="."])", layer.name)
-               << '\n';
-        break;
-    }
+    emit_layer(stream, scene, map, layer, info, ".");
   }
 }
 
@@ -446,12 +505,13 @@ void emit_godot_map(const EmitInfo& info, const GodotEmitOptions& options)
 {
   const auto& map = info.data();
 
-  std::ofstream stream {info.destination_file(), std::ios::out | std::ios::trunc};
-
   const auto export_info = get_tileset_export_info(map);
-  const auto scene = create_godot_scene_data(map);
+  emit_tileset_file(map, export_info, options);
 
+  const auto scene = create_godot_scene_data(map);
   const auto load_steps = map.tilesets.size() + scene.textures.size() + 1;  // FIXME
+
+  std::ofstream stream {info.destination_file(), std::ios::out | std::ios::trunc};
   stream << fmt::format("[gd_scene load_steps={} format=2]\n\n", load_steps);
 
   const auto tileset_file = options.project_tileset_dir / "tileset.tres";
@@ -460,19 +520,10 @@ void emit_godot_map(const EmitInfo& info, const GodotEmitOptions& options)
                         scene.identifiers.ext_tileset_id)
          << '\n';
 
-  for (const auto& texture : scene.textures) {
-    const auto& tileset = first_in(map.tilesets, [&](const ir::TilesetData& t) {
-      return t.uuid == texture.tileset_uuid;
-    });
+  emit_textures(stream, scene, map, options);
+  emit_atlas_textures(stream, scene);
+  emit_sprite_frames(stream, scene);
 
-    const auto path =
-        convert_to_forward_slashes(get_tileset_image_path(tileset, options));
-    stream << fmt::format("[ext_resource path=\"res://{}\" type=\"Texture\" id={}]\n",
-                          path,
-                          texture.id);
-  }
-
-  emit_tilesets(stream, scene, map, export_info, options);
 
   // This is the root node
   stream << '\n'
