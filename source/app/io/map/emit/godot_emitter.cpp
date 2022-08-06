@@ -75,11 +75,18 @@ struct Identifiers final
   Maybe<SubResource> sprite_frames_id;
 };
 
+struct GodotRectangleShape final
+{
+  SubResource id {};
+  Vector2f    extents {};
+};
+
 struct GodotScene final
 {
-  Identifiers                     identifiers;
-  std::vector<GodotTexture>       textures;
-  HashMap<TileID, GodotAnimation> animations;
+  Identifiers                            identifiers;
+  std::vector<GodotTexture>              textures;
+  HashMap<ObjectID, GodotRectangleShape> rectangle_shapes;
+  HashMap<TileID, GodotAnimation>        animations;
 };
 
 struct TilesetExportInfo final
@@ -142,6 +149,19 @@ void create_animation(GodotScene&             scene,
 
     if (!scene.animations.empty()) {
       scene.identifiers.sprite_frames_id = scene.identifiers.next_sub_resource++;
+    }
+  }
+
+  for (const auto& layer : map.layers) {
+    if (layer.type == LayerType::ObjectLayer) {
+      const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+      for (const auto& object : object_layer.objects) {
+        if (object.type == ObjectType::Rect) {
+          auto& shape = scene.rectangle_shapes[object.id];
+          shape.id = scene.identifiers.next_sub_resource++;
+          shape.extents = object.size / 2.0f;
+        }
+      }
     }
   }
 
@@ -318,6 +338,17 @@ void emit_sprite_frames(std::ostream& stream, const GodotScene& scene)
   stream << "\n]\n";
 }
 
+void emit_shapes(std::ostream& stream, const GodotScene& scene)
+{
+  for (const auto& [object_id, shape] : scene.rectangle_shapes) {
+    stream << fmt::format(R"([sub_resource type="RectangleShape2D" id={}])", shape.id)
+           << '\n';
+    stream << fmt::format("extents = Vector2( {}, {} )\n",
+                          shape.extents.x,
+                          shape.extents.y);
+  }
+}
+
 void emit_tile_layer_animation_nodes(std::ostream&            stream,
                                      const GodotScene&        scene,
                                      const ir::MapData&       map,
@@ -419,6 +450,55 @@ void emit_tile_layer(std::ostream&            stream,
   emit_tile_layer_animation_nodes(stream, scene, map, tile_layer, layer.name);
 }
 
+void emit_rectangle_object(std::ostream&         stream,
+                           const GodotScene&     scene,
+                           const ir::ObjectData& object,
+                           std::string_view      object_name,
+                           std::string_view      parent)
+{
+  stream << '\n'
+         << fmt::format(R"([node name="{}" type="Area2D" parent="{}"])",
+                        object_name,
+                        parent)
+         << '\n';
+  stream << fmt::format("position = Vector2( {}, {} )\n",
+                        object.pos.x + object.size.x / 2.0f,
+                        object.pos.y + object.size.y / 2.0f);
+
+  stream
+      << '\n'
+      << fmt::format(
+             R"([node name="CollisionShape2D" type="CollisionShape2D" parent="{}/{}"])",
+             parent,
+             object_name)
+      << '\n';
+  stream << fmt::format("shape = SubResource( {} )\n",
+                        scene.rectangle_shapes.at(object.id).id);
+}
+
+void emit_object(std::ostream&         stream,
+                 const GodotScene&     scene,
+                 const ir::ObjectData& object,
+                 std::string_view      parent)
+{
+  auto object_name = fmt::format("Object {}", object.id);
+
+  if (!object.name.empty()) {
+    object_name += fmt::format(" ('{}')", object.name);
+  }
+
+  if (object.type == ObjectType::Rect) {
+    emit_rectangle_object(stream, scene, object, object_name, parent);
+  }
+  else {
+    stream << '\n'
+           << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
+                          object_name,
+                          parent)
+           << '\n';
+  }
+}
+
 void emit_object_layer(std::ostream&        stream,
                        const GodotScene&    scene,
                        const ir::MapData&   map,
@@ -433,11 +513,7 @@ void emit_object_layer(std::ostream&        stream,
 
   const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
   for (const auto& object : object_layer.objects) {
-    stream << '\n'
-           << fmt::format(R"([node name="Object {}" type="Node2D" parent="{}"])",
-                          object.id,
-                          layer.name)
-           << '\n';
+    emit_object(stream, scene, object, layer.name);
   }
 }
 
@@ -453,24 +529,10 @@ void emit_layer(std::ostream&            stream,
       emit_tile_layer(stream, scene, map, layer, info, parent);
       break;
 
-    case LayerType::ObjectLayer: {
-      stream << '\n'
-             << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
-                            layer.name,
-                            parent)
-             << '\n';
-
-      const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
-      for (const auto& object : object_layer.objects) {
-        stream << '\n'
-               << fmt::format(R"([node name="Object {}" type="Node2D" parent="{}"])",
-                              object.id,
-                              layer.name)
-               << '\n';
-      }
-
+    case LayerType::ObjectLayer:
+      emit_object_layer(stream, scene, map, layer, parent);
       break;
-    }
+
     case LayerType::GroupLayer: {
       stream << '\n'
              << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
@@ -523,7 +585,7 @@ void emit_godot_map(const EmitInfo& info, const GodotEmitOptions& options)
   emit_textures(stream, scene, map, options);
   emit_atlas_textures(stream, scene);
   emit_sprite_frames(stream, scene);
-
+  emit_shapes(stream, scene);
 
   // This is the root node
   stream << '\n'
