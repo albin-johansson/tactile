@@ -31,6 +31,7 @@
 #include "core/common/macros.hpp"
 #include "core/common/math.hpp"
 #include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 
@@ -112,6 +113,8 @@ struct MetaAnimationFrameData final
 
 struct MetaTileData final
 {
+  UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
+
   std::vector<ObjectData>             objects;
   std::vector<MetaAnimationFrameData> frames;
   ContextData                         context;
@@ -119,6 +122,8 @@ struct MetaTileData final
 
 struct TilesetData final
 {
+  UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
+
   std::string name;
   TileID      first_tile {};
 
