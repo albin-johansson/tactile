@@ -78,8 +78,7 @@ struct ExportAsGodotSceneEvent final
   fs::path map_dir;
   fs::path image_dir;
   fs::path tileset_dir;
-
-  bool embed_tilesets : 1 {};
+  usize    polygon_points {};
 };
 
 }  // namespace tactile

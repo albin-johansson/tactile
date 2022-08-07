@@ -9,6 +9,7 @@ You do not have to design your maps any differently to export them as Godot scen
 - In Godot, a `TileMap` (which is really a tile layer) may only feature one associated `TileSet`, so Tactile will merge all tilesets associated with the map into a single `TileSet` definition.
 - Ellipse objects are approximated as polygons.
 - Properties and components are only provided as metadata.
+- Godot tile animations cannot have frame-specific durations, so Tactile always uses the duration of the first frame.
 
 ## Usage
 

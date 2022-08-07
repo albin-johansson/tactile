@@ -388,10 +388,7 @@ void App::on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
         .project_map_dir = event.map_dir,
         .project_image_dir = event.image_dir,
         .project_tileset_dir = event.tileset_dir,
-        .rectangle_node_type = "",
-        .ellipse_node_type = "",
-        .point_node_type = "",
-        .embed_tilesets = event.embed_tilesets,
+        .ellipse_polygon_point_count = event.polygon_points,
     };
     io::emit_map_as_godot_scene(*document, options);
   }

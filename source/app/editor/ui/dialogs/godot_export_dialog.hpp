@@ -43,16 +43,10 @@ class GodotExportDialog final : public ADialog
 
  private:
   fs::path mRootDir;
-
   fs::path mMapDir;
   fs::path mImageDir;
   fs::path mTilesetDir;
-
-  std::string mRectangleNodeType;
-  std::string mEllipseNodeType;
-  std::string mPointNodeType;
-
-  bool mEmbedTilesets {};
+  int      mPolygonPointCount {};
 };
 
 }  // namespace tactile::ui

@@ -29,7 +29,6 @@
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/scoped.hpp"
-#include "io/persistence/preferences.hpp"
 
 namespace tactile::ui {
 
@@ -43,9 +42,7 @@ void GodotExportDialog::open()
   mMapDir.clear();
   mImageDir.clear();
   mTilesetDir.clear();
-
-  mEmbedTilesets = false;
-  //  mEmbedTilesets = io::get_preferences().embed_tilesets;
+  mPolygonPointCount = 16;
 
   set_title("Export As Godot Scene");
   set_accept_button_label("Export");
@@ -101,18 +98,6 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
     if (const auto image_dir = input_folder("##ImageDir", mImageDir)) {
       mImageDir = fs::relative(*image_dir, mRootDir);
     }
-  }
-
-  ImGui::Separator();
-
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Embed tilesets in the map scene");
-
-  ImGui::SameLine();
-  ImGui::Checkbox("##EmbedTilesets", &mEmbedTilesets);
-
-  {
-    Disable when_embedded {mEmbedTilesets};
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tileset_label);
@@ -127,12 +112,18 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
 
   ImGui::Separator();
 
-  // TODO object types
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted("Polygon point approximation count");
+  lazy_tooltip("##PolygonPointsTooltip",
+               "The amount of points used when approximating ellipse object shapes.");
+
+  ImGui::SameLine();
+  ImGui::SliderInt("##PolygonPoints", &mPolygonPointCount, 4, 64);
 }
 
 auto GodotExportDialog::is_current_input_valid(const DocumentModel&) const -> bool
 {
-  return !mRootDir.empty() && (mEmbedTilesets || !mTilesetDir.empty());
+  return !mRootDir.empty();
 }
 
 void GodotExportDialog::on_accept(entt::dispatcher& dispatcher)
@@ -142,7 +133,7 @@ void GodotExportDialog::on_accept(entt::dispatcher& dispatcher)
       .map_dir = std::move(mMapDir),
       .image_dir = std::move(mImageDir),
       .tileset_dir = std::move(mTilesetDir),
-      .embed_tilesets = mEmbedTilesets,
+      .polygon_points = static_cast<usize>(mPolygonPointCount),
   };
   dispatcher.enqueue<ExportAsGodotSceneEvent>(std::move(event));
 }

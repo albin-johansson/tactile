@@ -22,6 +22,7 @@
 #include <string>  // string
 
 #include "core/common/filesystem.hpp"
+#include "core/common/ints.hpp"
 #include "io/fwd.hpp"
 
 namespace tactile {
@@ -50,14 +51,11 @@ namespace tactile::io {
  */
 struct GodotEmitOptions final
 {
-  fs::path    root_dir;             ///< Path to the local project directory.
-  fs::path    project_map_dir;      ///< Relative path to the map directory.
-  fs::path    project_image_dir;    ///< Relative path to the image directory.
-  fs::path    project_tileset_dir;  ///< Relative path to the tileset directory.
-  std::string rectangle_node_type;  ///< Godot node used for rectangle objects.
-  std::string ellipse_node_type;    ///< Godot node used for ellipse objects.
-  std::string point_node_type;      ///< Godot node used for point objects.
-  bool        embed_tilesets : 1 {};
+  fs::path root_dir;                     ///< Path to the local project directory.
+  fs::path project_map_dir;              ///< Relative path to the map directory.
+  fs::path project_image_dir;            ///< Relative path to the image directory.
+  fs::path project_tileset_dir;          ///< Relative path to the tileset directory.
+  usize    ellipse_polygon_point_count;  ///< Amount of points in ellipse approximations.
 };
 
 /// Emits a map document, inferring the format from the path (or the preferred format)
