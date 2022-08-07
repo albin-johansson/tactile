@@ -23,7 +23,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/common/string.hpp"
+#include "core/util/string.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
