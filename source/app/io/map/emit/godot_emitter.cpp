@@ -17,8 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <cmath>        // sin, cos
 #include <fstream>      // ofstream
 #include <ios>          // ios
+#include <numbers>      // pi
 #include <string_view>  // string_view
 #include <utility>      // pair
 #include <vector>       // vector
@@ -470,15 +472,73 @@ void emit_rectangle_object(std::ostream&         stream,
                         object.pos.x + object.size.x / 2.0f,
                         object.pos.y + object.size.y / 2.0f);
 
-  stream
-      << '\n'
-      << fmt::format(
-             R"([node name="CollisionShape2D" type="CollisionShape2D" parent="{}/{}"])",
-             parent,
-             object_name)
-      << '\n';
+  stream << '\n'
+         << fmt::format(R"([node name="Shape" type="CollisionShape2D" parent="{}/{}"])",
+                        parent,
+                        object_name)
+         << '\n';
   stream << fmt::format("shape = SubResource( {} )\n",
                         scene.rectangle_shapes.at(object.id).id);
+}
+
+[[nodiscard]] auto approximate_ellipse_as_polygon(const ir::ObjectData& object)
+    -> std::vector<Vector2f>
+{
+  TACTILE_ASSERT(object.type == ObjectType::Ellipse);
+
+  constexpr usize point_count = 16;  // TODO option?
+  constexpr auto  tau = std::numbers::pi * 2.0;
+
+  std::vector<Vector2f> points;
+  points.reserve(point_count);
+
+  const auto n = static_cast<double>(point_count);
+  const auto radius = object.size / 2.0f;
+
+  for (usize i = 0; i < point_count; ++i) {
+    const auto theta = static_cast<double>(i) / n * tau;
+    const auto x = radius.x * std::cos(theta);
+    const auto y = radius.y * std::sin(theta);
+    points.emplace_back(x, y);
+  }
+
+  return points;
+}
+
+void emit_ellipse_object(std::ostream&         stream,
+                         const GodotScene&     scene,
+                         const ir::ObjectData& object,
+                         std::string_view      object_name,
+                         std::string_view      parent)
+{
+  stream << '\n'
+         << fmt::format(R"([node name="{}" type="Area2D" parent="{}"])",
+                        object_name,
+                        parent)
+         << '\n';
+  stream << fmt::format("position = Vector2( {}, {} )\n",
+                        object.pos.x + object.size.x / 2.0f,
+                        object.pos.y + object.size.y / 2.0f);
+
+  stream << '\n'
+         << fmt::format(R"([node name="Shape" type="CollisionPolygon2D" parent="{}/{}"])",
+                        parent,
+                        object_name)
+         << '\n';
+  stream << "polygon = PoolVector2Array( ";
+
+  const auto points = approximate_ellipse_as_polygon(object);
+
+  bool first = true;
+  for (const auto& point : points) {
+    if (!first) {
+      stream << ", ";
+    }
+    stream << fmt::format("{:.3f}, {:.3f}", point.x, point.y);
+    first = false;
+  }
+
+  stream << " )\n";
 }
 
 void emit_object(std::ostream&         stream,
@@ -494,6 +554,9 @@ void emit_object(std::ostream&         stream,
 
   if (object.type == ObjectType::Rect) {
     emit_rectangle_object(stream, scene, object, object_name, parent);
+  }
+  else if (object.type == ObjectType::Ellipse) {
+    emit_ellipse_object(stream, scene, object, object_name, parent);
   }
   else {
     stream << '\n'
