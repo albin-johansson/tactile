@@ -30,7 +30,7 @@
 #include "io/directories.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "io/persistence/proto.hpp"
+#include "io/persist/proto.hpp"
 
 namespace tactile::io {
 namespace {

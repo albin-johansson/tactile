@@ -26,7 +26,7 @@
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {

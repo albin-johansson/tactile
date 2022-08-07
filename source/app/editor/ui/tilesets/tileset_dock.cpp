@@ -35,7 +35,7 @@
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tilesets/tileset_tabs.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 namespace {

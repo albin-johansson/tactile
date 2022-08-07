@@ -27,7 +27,7 @@
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 namespace {

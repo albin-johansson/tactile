@@ -52,9 +52,9 @@
 #include "io/map/emit/emitter.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "io/persistence/history.hpp"
-#include "io/persistence/preferences.hpp"
-#include "io/persistence/session.hpp"
+#include "io/persist/history.hpp"
+#include "io/persist/preferences.hpp"
+#include "io/persist/session.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

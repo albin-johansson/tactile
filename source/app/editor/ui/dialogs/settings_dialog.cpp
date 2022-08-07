@@ -36,7 +36,7 @@
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/themes.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 namespace {

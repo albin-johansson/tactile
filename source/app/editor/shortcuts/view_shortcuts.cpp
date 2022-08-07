@@ -29,7 +29,7 @@
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/ui.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile {
 

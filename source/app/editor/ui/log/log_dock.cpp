@@ -27,7 +27,7 @@
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 #include "misc/logging.hpp"
 #include "misc/panic.hpp"
 

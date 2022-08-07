@@ -32,7 +32,7 @@
 #include "editor/ui/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 namespace {

@@ -27,7 +27,7 @@
 #include "editor/ui/rendering/graphics.hpp"
 #include "editor/ui/rendering/render_object_layer.hpp"
 #include "editor/ui/rendering/render_tile_layer.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {

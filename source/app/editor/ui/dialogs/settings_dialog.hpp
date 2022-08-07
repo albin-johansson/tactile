@@ -21,7 +21,7 @@
 
 #include "core/common/macros.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 

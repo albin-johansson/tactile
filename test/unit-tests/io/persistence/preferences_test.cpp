@@ -1,4 +1,4 @@
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 #include <gtest/gtest.h>
 

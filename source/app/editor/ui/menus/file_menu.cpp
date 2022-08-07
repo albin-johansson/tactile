@@ -34,7 +34,7 @@
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "io/file_dialog.hpp"
-#include "io/persistence/history.hpp"
+#include "io/persist/history.hpp"
 
 namespace tactile::ui {
 namespace {

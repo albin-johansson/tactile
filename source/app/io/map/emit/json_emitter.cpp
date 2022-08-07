@@ -28,7 +28,7 @@
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 #include "io/util/json.hpp"
 
 namespace tactile::io {

@@ -27,7 +27,7 @@
 
 #include "core/event/misc_events.hpp"
 #include "io/file_dialog.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 

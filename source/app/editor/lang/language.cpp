@@ -26,7 +26,7 @@
 #include "core/common/associative.hpp"
 #include "editor/lang/strings.hpp"
 #include "io/lang/language_parser.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

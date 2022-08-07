@@ -37,7 +37,7 @@
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 #include "layer_selectable.hpp"
 #include "misc/assert.hpp"
 

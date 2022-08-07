@@ -31,7 +31,7 @@
 #include "cfg/platform_specific.hpp"
 #include "editor/lang/language.hpp"
 #include "io/directories.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"

@@ -24,7 +24,7 @@
 #include "core/common/functional.hpp"
 #include "core/document/tileset_document.hpp"
 #include "editor/ui/rendering/graphics.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 

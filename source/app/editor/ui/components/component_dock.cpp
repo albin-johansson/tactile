@@ -37,7 +37,7 @@
 #include "editor/ui/components/component_view.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {

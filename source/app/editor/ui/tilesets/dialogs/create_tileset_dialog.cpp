@@ -28,7 +28,7 @@
 #include "editor/lang/strings.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "io/file_dialog.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 

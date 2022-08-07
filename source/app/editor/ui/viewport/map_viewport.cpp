@@ -44,7 +44,7 @@
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/preview/tool_preview_renderer.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 namespace {
