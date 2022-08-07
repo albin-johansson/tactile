@@ -611,8 +611,11 @@ void emit_layer(std::ostream&        stream,
              << '\n';
 
       const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
+      const auto  parent_path =
+          parent == "." ? layer.name : fmt::format("{}/{}", parent, layer.name);
+
       for (const auto& child_layer : group_layer.children) {
-        emit_layer(stream, scene, map, *child_layer, layer.name);
+        emit_layer(stream, scene, map, *child_layer, parent_path);
       }
 
       break;

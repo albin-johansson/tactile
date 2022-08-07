@@ -22,7 +22,6 @@
 #include "core/comp/component_index.hpp"
 #include "core/document/map_document.hpp"
 #include "core/document/tileset_document.hpp"
-#include "core/layer/layer_visitor.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
@@ -93,48 +92,16 @@ void convert_group_layer(const GroupLayer&     layer,
                          const ComponentIndex* components,
                          ir::GroupLayerData&   data)
 {
-  struct Visitor final : IConstLayerVisitor
-  {
-    usize                 index {0};
-    const ComponentIndex* comps {};
-    ir::GroupLayerData*   parent {};
-    UUID                  parent_id {};
+  data.children.reserve(layer.storage().size());
 
-    void visit(const TileLayer& layer) override
-    {
-      handle(layer);
-    }
+  usize index {0};
+  for (const auto& immediate_child : layer.storage()) {
+    TACTILE_ASSERT(immediate_child->get_parent() == layer.get_uuid());
 
-    void visit(const ObjectLayer& layer) override
-    {
-      handle(layer);
-    }
-
-    void visit(const GroupLayer& layer) override
-    {
-      handle(layer);
-    }
-
-    void handle(const ILayer& layer)
-    {
-      if (layer.get_parent() == parent_id) {
-        auto& layer_data =
-            parent->children.emplace_back(std::make_unique<ir::LayerData>());
-        convert_layer(layer, index, comps, *layer_data);
-        ++index;
-      }
-    }
-  };
-
-  data.children.reserve(layer.layer_count());
-
-  Visitor visitor;
-  visitor.index = 0;
-  visitor.comps = components;
-  visitor.parent = &data;
-  visitor.parent_id = layer.get_uuid();
-
-  layer.each(visitor);
+    auto& layer_data = data.children.emplace_back(std::make_unique<ir::LayerData>());
+    convert_layer(*immediate_child, index, components, *layer_data);
+    ++index;
+  }
 }
 
 void convert_layer(const ILayer&         layer,
