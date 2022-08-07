@@ -62,6 +62,7 @@ void load_menu_strings(const JSON& json, MenuStrings& menu)
   load(json, menu.debug, "debug");
   load(json, menu.recent_files, "recent-files", TAC_ICON_HISTORY);
   load(json, menu.widgets, "widgets");
+  load(json, menu.export_as, "export-as");
 }
 
 void load_window_strings(const JSON& json, WindowStrings& window)
@@ -87,6 +88,7 @@ void load_window_strings(const JSON& json, WindowStrings& window)
   load(json, window.rename_layer, "rename-layer");
   load(json, window.rename_component, "rename-component");
   load(json, window.rename_component_attribute, "rename-component-attribute");
+  load(json, window.export_as_godot_scene, "export-as-godot-scene");
 }
 
 void load_action_strings(const JSON& json, ActionStrings& action)
@@ -191,6 +193,8 @@ void load_action_strings(const JSON& json, ActionStrings& action)
   load(json, action.create_tileset, "create-tileset", TAC_ICON_ADD);
   load(json, action.open_tileset, "open-tileset", TAC_ICON_OPEN);
   load(json, action.remove_tileset, "remove-tileset", TAC_ICON_REMOVE);
+
+  load(json, action.export_as_godot_scene, "export-as-godot-scene");
 }
 
 void load_setting_strings(const JSON& json, SettingStrings& setting)
@@ -247,6 +251,12 @@ void load_tooltip_strings(const JSON& json, TooltipStrings& tooltip)
   load(json, tooltip.log_error_msg, "log-error-msg");
   load(json, tooltip.log_critical_msg, "log-critical-msg");
   load(json, tooltip.add_component, "add-component");
+
+  load(json, tooltip.godot_project_folder, "godot-project-folder");
+  load(json, tooltip.godot_map_folder, "godot-map-folder");
+  load(json, tooltip.godot_image_folder, "godot-image-folder");
+  load(json, tooltip.godot_tileset_folder, "godot-tileset-folder");
+  load(json, tooltip.godot_polygon_points, "godot-polygon-points");
 }
 
 void load_misc_strings(const JSON& json, MiscStrings& misc)
@@ -259,6 +269,7 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.change, "change");
   load(json, misc.add, "add");
   load(json, misc.rename, "rename");
+  load(json, misc.export_, "export");
   load(json, misc.empty, "empty");
 
   load(json, misc.rows, "rows");
@@ -341,6 +352,12 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.attribute_name_hint, "attribute-name-hint");
 
   load(json, misc.map_has_no_tilesets, "map-has-no-tilesets");
+
+  load(json, misc.godot_project_folder_label, "godot-project-folder-label");
+  load(json, misc.godot_map_folder_label, "godot-map-folder-label");
+  load(json, misc.godot_image_folder_label, "godot-image-folder-label");
+  load(json, misc.godot_tileset_folder_label, "godot-tileset-folder-label");
+  load(json, misc.godot_polygon_points_label, "godot-polygon-points-label");
 }
 
 void load_command_strings(const JSON& json, CommandStrings& cmd)

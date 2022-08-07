@@ -8,7 +8,8 @@
     "help": "Help",
     "debug": "Debug",
     "recent-files": "Recent Files",
-    "widgets": "Widgets"
+    "widgets": "Widgets",
+    "export-as": "Export As"
   },
   "windows": {
     "layer-dock": "Layers",
@@ -31,7 +32,8 @@
     "rename-property": "Rename Property",
     "rename-layer": "Rename Layer",
     "rename-component": "Rename Component",
-    "rename-component-attribute": "Rename Component Attribute"
+    "rename-component-attribute": "Rename Component Attribute",
+    "export-as-godot-scene": "Export As Godot Scene"
   },
   "actions": {
     "create-map": "Create Map...",
@@ -111,7 +113,8 @@
     "component-editor": "Component Editor...",
     "create-tileset": "Create New Tileset",
     "open-tileset": "Open Tileset",
-    "remove-tileset": "Remove Tileset"
+    "remove-tileset": "Remove Tileset",
+    "export-as-godot-scene": "Godot Scene..."
   },
   "settings": {
     "behavior-tab": "Behavior",
@@ -159,7 +162,12 @@
     "log-warn-msg": "Warning message",
     "log-error-msg": "Error message",
     "log-critical-msg": "Critical message",
-    "add-component": "Add component"
+    "add-component": "Add component",
+    "godot-project-folder": "Root directory of your Godot project",
+    "godot-map-folder": "Relative path in the Godot project to where the map will be saved",
+    "godot-image-folder": "Relative path in the Godot project to where tileset images will be saved",
+    "godot-tileset-folder": "Relative path in the Godot project to where the tileset resource will be saved",
+    "godot-polygon-points": "The amount of points used when approximating ellipse object shapes"
   },
   "misc": {
     "ok": "OK",
@@ -170,6 +178,7 @@
     "change": "Change",
     "add": "Add",
     "rename": "Rename",
+    "export": "Export",
     "empty": "Empty",
     "rows": "Rows",
     "columns": "Columns",
@@ -233,7 +242,12 @@
     "context-has-no-components": "This context has no components.",
     "no-available-components": "No available components.",
     "attribute-name-hint": "Attribute name",
-    "map-has-no-tilesets": "This map has no tilesets."
+    "map-has-no-tilesets": "This map has no tilesets.",
+    "godot-project-folder-label": "Godot project folder",
+    "godot-map-folder-label": "Map folder",
+    "godot-image-folder-label": "Image folder",
+    "godot-tileset-folder-label": "Tileset folder",
+    "godot-polygon-points-label": "Polygon point approximation count"
   },
   "commands": {
     "add-row": "Add Row",

@@ -25,6 +25,8 @@
 #include <imgui.h>
 
 #include "core/event/map_events.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/common/tooltips.hpp"
@@ -44,27 +46,31 @@ void GodotExportDialog::open()
   mTilesetDir.clear();
   mPolygonPointCount = 16;
 
-  set_title("Export As Godot Scene");
-  set_accept_button_label("Export");
+  const auto& lang = get_current_language();
+  set_title(lang.window.export_as_godot_scene);
+  set_accept_button_label(lang.misc.export_);
+  set_close_button_label(lang.misc.close);
 
   make_visible();
 }
 
 void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
-  const auto* root_label = "Godot project folder";
-  const auto* map_label = "Map folder";
-  const auto* image_label = "Image folder";
-  const auto* tileset_label = "Tileset folder";
+  const auto& lang = get_current_language();
 
-  const auto offset = minimum_offset_to_align(root_label,  //
-                                              map_label,
-                                              image_label,
-                                              tileset_label);
+  const auto& root_label = lang.misc.godot_project_folder_label;
+  const auto& map_label = lang.misc.godot_map_folder_label;
+  const auto& image_label = lang.misc.godot_image_folder_label;
+  const auto& tileset_label = lang.misc.godot_tileset_folder_label;
+
+  const auto offset = minimum_offset_to_align(root_label.c_str(),  //
+                                              map_label.c_str(),
+                                              image_label.c_str(),
+                                              tileset_label.c_str());
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(root_label);
-  lazy_tooltip("##RootDirTooltip", "Root directory of your Godot project.");
+  ImGui::TextUnformatted(root_label.c_str());
+  lazy_tooltip("##RootDirTooltip", lang.tooltip.godot_project_folder.c_str());
 
   ImGui::SameLine(offset);
   if (auto root_path = input_folder("##RootDir", mRootDir)) {
@@ -80,9 +86,8 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
     Disable when_root_is_unset {mRootDir.empty()};
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(map_label);
-    lazy_tooltip("##MapDirTooltip",
-                 "Relative path in the Godot project to where maps are stored.");
+    ImGui::TextUnformatted(map_label.c_str());
+    lazy_tooltip("##MapDirTooltip", lang.tooltip.godot_map_folder.c_str());
 
     ImGui::SameLine(offset);
     if (const auto map_dir = input_folder("##MapDir", mMapDir)) {
@@ -90,9 +95,8 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
     }
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(image_label);
-    lazy_tooltip("##ImageDirTooltip",
-                 "Relative path in the Godot project to where images are stored.");
+    ImGui::TextUnformatted(image_label.c_str());
+    lazy_tooltip("##ImageDirTooltip", lang.tooltip.godot_image_folder.c_str());
 
     ImGui::SameLine(offset);
     if (const auto image_dir = input_folder("##ImageDir", mImageDir)) {
@@ -100,9 +104,8 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
     }
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(tileset_label);
-    lazy_tooltip("##TilesetPathTooltip",
-                 "Relative path in the Godot project to where tilesets are stored.");
+    ImGui::TextUnformatted(tileset_label.c_str());
+    lazy_tooltip("##TilesetPathTooltip", lang.tooltip.godot_tileset_folder.c_str());
 
     ImGui::SameLine(offset);
     if (auto tileset_dir = input_folder("##TilesetPath", mTilesetDir)) {
@@ -113,9 +116,8 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
   ImGui::Separator();
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted("Polygon point approximation count");
-  lazy_tooltip("##PolygonPointsTooltip",
-               "The amount of points used when approximating ellipse object shapes.");
+  ImGui::TextUnformatted(lang.misc.godot_polygon_points_label.c_str());
+  lazy_tooltip("##PolygonPointsTooltip", lang.tooltip.godot_polygon_points.c_str());
 
   ImGui::SameLine();
   ImGui::SliderInt("##PolygonPoints", &mPolygonPointCount, 4, 64);

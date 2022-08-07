@@ -8,7 +8,8 @@
     "help": "Hjälp",
     "debug": "Debug",
     "recent-files": "Nyligen Använda Filer",
-    "widgets": "Fönster"
+    "widgets": "Fönster",
+    "export-as": "Exportera Som"
   },
   "windows": {
     "layer-dock": "Lager",
@@ -31,7 +32,8 @@
     "rename-property": "Ändra Attributnamn",
     "rename-layer": "Ändra Lagernamn",
     "rename-component": "Ändra Komponentnamn",
-    "rename-component-attribute": "Ändra Komponentattributsnamn"
+    "rename-component-attribute": "Ändra Komponentattributsnamn",
+    "export-as-godot-scene": "Exportera Godotscen"
   },
   "actions": {
     "create-map": "Skapa Karta...",
@@ -111,7 +113,8 @@
     "component-editor": "Komponenteditor...",
     "create-tileset": "Skapa Tilesamling",
     "open-tileset": "Öppna Tilesamling",
-    "remove-tileset": "Radera Tilesamling"
+    "remove-tileset": "Radera Tilesamling",
+    "export-as-godot-scene": "Godotscen..."
   },
   "settings": {
     "behavior-tab": "Beteende",
@@ -159,7 +162,12 @@
     "log-warn-msg": "Varningsmeddelande",
     "log-error-msg": "Felmeddelande",
     "log-critical-msg": "Kritiskt meddelande",
-    "add-component": "Lägg till komponent"
+    "add-component": "Lägg till komponent",
+    "godot-project-folder": "Rotmapp för ditt Godotprojekt",
+    "godot-map-folder": "Relativ sökväg i Godotprojektet till platsen där kartan kommer sparas",
+    "godot-image-folder": "Relativ sökväg i Godotprojektet till platsen där tilesamlingsbilder kommer sparas",
+    "godot-tileset-folder": "Relativ sökväg i Godotprojektet till platsen där tilesamlingsresursen kommer sparas",
+    "godot-polygon-points": "Antal punkter som används för att approximera ellipsobjekt"
   },
   "misc": {
     "ok": "OK",
@@ -170,6 +178,7 @@
     "change": "Ändra",
     "add": "Lägg till",
     "rename": "Ändra namn",
+    "export": "Exportera",
     "empty": "Inget",
     "rows": "Rader",
     "columns": "Kolumner",
@@ -232,7 +241,12 @@
     "context-has-no-components": "Denna kontext har inga komponenter.",
     "no-available-components": "Inga tillgängliga komponenter.",
     "attribute-name-hint": "Attributnamn",
-    "map-has-no-tilesets": "Denna karta har inga tilesamlingar."
+    "map-has-no-tilesets": "Denna karta har inga tilesamlingar.",
+    "godot-project-folder-label": "Godotprojektmapp",
+    "godot-map-folder-label": "Kartmapp",
+    "godot-image-folder-label": "Bildmapp",
+    "godot-tileset-folder-label": "Tilesamlingsmapp",
+    "godot-polygon-points-label": "Antal punkter i polygonapproximeringar"
   },
   "commands": {
     "add-row": "Lägg Till Rad",

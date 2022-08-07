@@ -34,6 +34,7 @@ struct MenuStrings final
   std::string debug;
   std::string recent_files;
   std::string widgets;
+  std::string export_as;
 };
 
 struct WindowStrings final
@@ -59,6 +60,7 @@ struct WindowStrings final
   std::string rename_layer;
   std::string rename_component;
   std::string rename_component_attribute;
+  std::string export_as_godot_scene;
 };
 
 struct ActionStrings final
@@ -162,6 +164,8 @@ struct ActionStrings final
   std::string create_tileset;
   std::string open_tileset;
   std::string remove_tileset;
+
+  std::string export_as_godot_scene;
 };
 
 struct SettingStrings final
@@ -217,6 +221,12 @@ struct TooltipStrings final
   std::string log_error_msg;
   std::string log_critical_msg;
   std::string add_component;
+
+  std::string godot_project_folder;
+  std::string godot_map_folder;
+  std::string godot_image_folder;
+  std::string godot_tileset_folder;
+  std::string godot_polygon_points;
 };
 
 struct MiscStrings final
@@ -229,6 +239,7 @@ struct MiscStrings final
   std::string change;
   std::string add;
   std::string rename;
+  std::string export_;
   std::string empty;
 
   std::string rows;
@@ -311,6 +322,12 @@ struct MiscStrings final
   std::string attribute_name_hint;
 
   std::string map_has_no_tilesets;
+
+  std::string godot_project_folder_label;
+  std::string godot_map_folder_label;
+  std::string godot_image_folder_label;
+  std::string godot_tileset_folder_label;
+  std::string godot_polygon_points_label;
 };
 
 struct CommandStrings final

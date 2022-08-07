@@ -19,6 +19,8 @@
 
 #include "editor/ui/dialogs/dialog.hpp"
 
+#include <utility>  // move
+
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
@@ -28,7 +30,7 @@
 namespace tactile::ui {
 
 ADialog::ADialog(std::string title)
-    : mTitle {title}
+    : mTitle {std::move(title)}
     , mAcceptButtonLabel {get_current_language().misc.ok}
     , mCloseButtonLabel {get_current_language().misc.cancel}
 {}
