@@ -98,6 +98,7 @@ void convert_group_layer(const GroupLayer&     layer,
     usize                 index {0};
     const ComponentIndex* comps {};
     ir::GroupLayerData*   parent {};
+    UUID                  parent_id {};
 
     void visit(const TileLayer& layer) override
     {
@@ -116,9 +117,12 @@ void convert_group_layer(const GroupLayer&     layer,
 
     void handle(const ILayer& layer)
     {
-      auto& layer_data = parent->children.emplace_back(std::make_unique<ir::LayerData>());
-      convert_layer(layer, index, comps, *layer_data);
-      ++index;
+      if (layer.get_parent() == parent_id) {
+        auto& layer_data =
+            parent->children.emplace_back(std::make_unique<ir::LayerData>());
+        convert_layer(layer, index, comps, *layer_data);
+        ++index;
+      }
     }
   };
 
@@ -128,6 +132,7 @@ void convert_group_layer(const GroupLayer&     layer,
   visitor.index = 0;
   visitor.comps = components;
   visitor.parent = &data;
+  visitor.parent_id = layer.get_uuid();
 
   layer.each(visitor);
 }
@@ -135,23 +140,23 @@ void convert_group_layer(const GroupLayer&     layer,
 void convert_layer(const ILayer&         layer,
                    const usize           index,
                    const ComponentIndex* components,
-                   ir::LayerData&        data)
+                   ir::LayerData&        layer_data)
 {
   TACTILE_ASSERT(layer.get_meta_id().has_value());
-  data.index = index;
+  layer_data.index = index;
 
-  data.id = layer.get_meta_id().value();
-  data.type = layer.get_type();
-  data.opacity = layer.get_opacity();
-  data.visible = layer.is_visible();
+  layer_data.id = layer.get_meta_id().value();
+  layer_data.type = layer.get_type();
+  layer_data.opacity = layer.get_opacity();
+  layer_data.visible = layer.is_visible();
 
-  data.name = layer.get_name();
+  layer_data.name = layer.get_name();
 
   switch (layer.get_type()) {
     case LayerType::TileLayer: {
       const auto& tile_layer = dynamic_cast<const TileLayer&>(layer);
 
-      auto& tile_layer_data = data.data.emplace<ir::TileLayerData>();
+      auto& tile_layer_data = layer_data.data.emplace<ir::TileLayerData>();
       tile_layer_data.tiles = tile_layer.get_tiles();
       tile_layer_data.row_count = tile_layer.row_count();
       tile_layer_data.col_count = tile_layer.column_count();
@@ -160,19 +165,19 @@ void convert_layer(const ILayer&         layer,
     }
     case LayerType::ObjectLayer: {
       const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
-      auto&       object_layer_data = data.data.emplace<ir::ObjectLayerData>();
+      auto&       object_layer_data = layer_data.data.emplace<ir::ObjectLayerData>();
       convert_object_layer(object_layer, components, object_layer_data);
       break;
     }
     case LayerType::GroupLayer: {
       const auto& group_layer = dynamic_cast<const GroupLayer&>(layer);
-      auto&       group_layer_data = data.data.emplace<ir::GroupLayerData>();
+      auto&       group_layer_data = layer_data.data.emplace<ir::GroupLayerData>();
       convert_group_layer(group_layer, components, group_layer_data);
       break;
     }
   }
 
-  convert_context(layer, components, data.context);
+  convert_context(layer, components, layer_data.context);
 }
 
 void convert_layers(const MapDocument&    document,
