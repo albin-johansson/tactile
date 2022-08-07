@@ -21,8 +21,8 @@
 
 #include <imgui.h>
 
-#include "core/common/functional.hpp"
 #include "core/document/tileset_document.hpp"
+#include "core/util/functional.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 #include "io/persist/preferences.hpp"
 

@@ -20,19 +20,11 @@
 #pragma once
 
 #include <concepts>     // integral, invocable, predicate
-#include <functional>   // reference_wrapper
 #include <type_traits>  // is_invocable_r_v
 
 #include "misc/panic.hpp"
 
 namespace tactile {
-
-template <typename T>
-using Ref = std::reference_wrapper<T>;
-
-/// A concept similar to std::invocable, but with explicit return type
-template <typename T, typename Ret, typename... Args>
-concept Callable = std::is_invocable_r_v<Ret, T, Args...>;
 
 /**
  * Invokes a function object N times.

@@ -26,8 +26,8 @@
 #include <spdlog/spdlog.h>
 
 #include "core/common/fs.hpp"
-#include "core/common/functional.hpp"
 #include "core/util/filesystem.hpp"
+#include "core/util/functional.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"

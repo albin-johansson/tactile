@@ -23,7 +23,6 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/common/functional.hpp"
 #include "core/common/math.hpp"
 #include "core/document/map_document.hpp"
 #include "core/document/tileset_document.hpp"
@@ -31,6 +30,7 @@
 #include "core/layer/tile_layer.hpp"
 #include "core/model.hpp"
 #include "core/tile_pos.hpp"
+#include "core/util/functional.hpp"
 #include "core/util/random.hpp"
 #include "misc/assert.hpp"
 

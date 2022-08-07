@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/functional.hpp"
+#include "core/common/ref.hpp"
 #include "core/mouse_info.hpp"
 #include "core/tool/tool_visitor.hpp"
 
@@ -52,7 +52,7 @@ class ToolPreviewRenderer final : public IToolVisitor
   Ref<GraphicsCtx>         mGraphics;
   MouseInfo                mMouseInfo;
 
-  void render_stamp_normal(const Map& map, const TilesetRef& tilesetRef);
+  void render_stamp_normal(const Map& map, const TilesetRef& tileset_ref);
 };
 
 }  // namespace tactile::ui

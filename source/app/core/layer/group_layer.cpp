@@ -23,10 +23,10 @@
 #include <iterator>   // distance
 #include <utility>    // move
 
-#include "core/common/functional.hpp"
 #include "core/common/maybe.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "core/util/functional.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

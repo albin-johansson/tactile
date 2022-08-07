@@ -26,7 +26,6 @@
 
 #include "core/cmd/command_stack.hpp"
 #include "core/common/fs.hpp"
-#include "core/common/functional.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
@@ -40,6 +39,7 @@
 #include "core/model.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tileset_info.hpp"
+#include "core/util/functional.hpp"
 #include "core/util/texture_manager.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_result.hpp"

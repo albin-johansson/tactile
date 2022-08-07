@@ -21,12 +21,12 @@
 
 #include <gtest/gtest.h>
 
-#include "core/common/functional.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tileset/tileset.hpp"
 #include "core/tileset/tileset_info.hpp"
+#include "core/util/functional.hpp"
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 

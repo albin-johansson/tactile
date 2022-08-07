@@ -25,6 +25,7 @@
 #include "core/tool/ellipse_tool.hpp"
 #include "core/tool/rectangle_tool.hpp"
 #include "core/tool/stamp_tool.hpp"
+#include "core/util/functional.hpp"
 #include "editor/ui/rendering/graphics.hpp"
 
 namespace tactile::ui {
@@ -59,36 +60,36 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
 }
 
 void ToolPreviewRenderer::render_stamp_normal(const Map&        map,
-                                              const TilesetRef& tilesetRef)
+                                              const TilesetRef& tileset_ref)
 {
   auto& graphics = mGraphics.get();
 
-  const auto  layerId = map.active_layer_id().value();
-  const auto& layer = map.view_tile_layer(layerId);
+  const auto  layer_id = map.active_layer_id().value();
+  const auto& layer = map.view_tile_layer(layer_id);
 
-  const auto& selection = tilesetRef.get_selection().value();
-  const auto  selectionSize = selection.end - selection.begin;
-  const auto  offset = selectionSize / TilePos {2, 2};
+  const auto& selection = tileset_ref.get_selection().value();
+  const auto  selection_size = selection.end - selection.begin;
+  const auto  offset = selection_size / TilePos {2, 2};
 
-  const auto& tileset = tilesetRef.view_tileset();
-  const auto  textureId = tileset.texture_id();
+  const auto& tileset = tileset_ref.view_tileset();
+  const auto  texture_id = tileset.texture_id();
   const auto& uv = tileset.uv_size();
 
   const auto origin = graphics.get_origin();
-  const auto gridSize = graphics.get_grid_size();
+  const auto grid_size = graphics.get_grid_size();
 
-  invoke_mn(selectionSize.row(), selectionSize.col(), [&, this](int32 row, int32 col) {
+  invoke_mn(selection_size.row(), selection_size.col(), [&, this](int32 row, int32 col) {
     const TilePos index {row, col};
-    const auto    previewPos = mMouseInfo.position_in_viewport + index - offset;
+    const auto    preview_pos = mMouseInfo.position_in_viewport + index - offset;
 
-    if (layer.is_valid(previewPos)) {
-      const auto realPos = origin + previewPos.as_vec2f() * gridSize;
+    if (layer.is_valid(preview_pos)) {
+      const auto real_pos = origin + preview_pos.as_vec2f() * grid_size;
 
-      const auto uvMin = (selection.begin + index).as_vec2f() * uv;
-      const auto uvMax = uvMin + uv;
+      const auto uv_min = (selection.begin + index).as_vec2f() * uv;
+      const auto uv_max = uv_min + uv;
 
       constexpr uint8 opacity = 150;
-      graphics.render_image(textureId, realPos, gridSize, uvMin, uvMax, opacity);
+      graphics.render_image(texture_id, real_pos, grid_size, uv_min, uv_max, opacity);
     }
   });
 }

@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/common/functional.hpp"
+#include "core/util/functional.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"

@@ -17,34 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "map_test_helpers.hpp"
+#pragma once
 
-#include <gtest/gtest.h>
+#include <functional>  // reference_wrapper
 
-#include "core/map.hpp"
-#include "core/tile_pos.hpp"
-#include "core/util/functional.hpp"
+namespace tactile {
 
-namespace tactile::test {
+template <typename T>
+using Ref = std::reference_wrapper<T>;
 
-void set_all_tiles(TileLayer& layer, const TileID tile)
-{
-  invoke_mn(layer.row_count(), layer.column_count(), [&](usize r, usize c) {
-    layer.set_tile(TilePos::from(r, c), tile);
-  });
-}
-
-void verify_all_tiles_matches(const TileLayer& layer, const TileID tile)
-{
-  invoke_mn(layer.row_count(), layer.column_count(), [&](usize r, usize c) {
-    ASSERT_EQ(tile, layer.tile_at(TilePos::from(r, c)));
-  });
-}
-
-auto add_tile_layer(Map& map) -> TileLayer&
-{
-  const auto layerId = map.add_tile_layer();
-  return map.view_tile_layer(layerId);
-}
-
-}  // namespace tactile::test
+}  // namespace tactile

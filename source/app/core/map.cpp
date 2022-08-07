@@ -23,11 +23,11 @@
 
 #include <fmt/format.h>
 
-#include "core/common/functional.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile_pos.hpp"
+#include "core/util/functional.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

@@ -1,4 +1,4 @@
-#include "core/common/functional.hpp"
+#include "core/util/functional.hpp"
 
 #include <gtest/gtest.h>
 
