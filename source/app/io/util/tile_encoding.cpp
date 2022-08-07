@@ -6,7 +6,7 @@
 
 #include <cppcodec/base64_default_rfc4648.hpp>
 
-#include "core/utils/tiles.hpp"
+#include "core/util/tiles.hpp"
 #include "io/compression.hpp"
 #include "misc/panic.hpp"
 
