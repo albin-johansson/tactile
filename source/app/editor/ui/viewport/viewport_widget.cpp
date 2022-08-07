@@ -30,6 +30,8 @@
 #include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/viewport.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "editor/shortcuts/mappings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
@@ -42,11 +44,10 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto _window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
-constinit bool _has_focus = false;
-constinit bool _mouse_within_window = false;
+constinit bool viewport_has_focus = false;
+constinit bool viewport_contains_mouse = false;
 
-void _update_start_page(entt::dispatcher& dispatcher)
+void update_start_page(entt::dispatcher& dispatcher)
 {
   prepare_vertical_alignment_center(4);
 
@@ -58,12 +59,14 @@ void _update_start_page(entt::dispatcher& dispatcher)
   ImGui::Spacing();
   ImGui::Spacing();
 
-  if (centered_button("Create new map")) {
+  const auto& lang = get_current_language();
+
+  if (centered_button(lang.action.create_map.c_str())) {
     dispatcher.enqueue<ShowNewMapDialogEvent>();
   }
 
   ImGui::Spacing();
-  if (centered_button("Open existing map")) {
+  if (centered_button(lang.action.open_map.c_str())) {
     dispatcher.enqueue<ShowOpenMapDialogEvent>();
   }
 }
@@ -75,9 +78,9 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
   StyleVar padding {ImGuiStyleVar_WindowPadding, {4, 4}};
   remove_tab_bar_from_next_window();
 
-  Window window {"Viewport", _window_flags};
-  _has_focus = window.has_focus();
-  _mouse_within_window = window.is_hovered();
+  Window window {"Viewport", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse};
+  viewport_has_focus = window.has_focus();
+  viewport_contains_mouse = window.is_hovered();
 
   if (window.is_open()) {
     padding.pop();
@@ -96,7 +99,7 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
       }
     }
     else {
-      _update_start_page(dispatcher);
+      update_start_page(dispatcher);
     }
   }
 }
@@ -128,12 +131,12 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport&               vie
 
 auto is_viewport_focused() noexcept -> bool
 {
-  return _has_focus;
+  return viewport_has_focus;
 }
 
 auto is_mouse_within_viewport() noexcept -> bool
 {
-  return _mouse_within_window;
+  return viewport_contains_mouse;
 }
 
 }  // namespace tactile::ui
