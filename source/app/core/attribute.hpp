@@ -27,7 +27,7 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "core/common/ints.hpp"
 
 namespace tactile {
@@ -70,7 +70,8 @@ auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 
 /// Strong type that represents object references.
 enum object_t : int32
-{};
+{
+};
 
 template <typename T>
 concept CAttributeType = std::same_as<T, std::string> ||  //
@@ -102,7 +103,10 @@ class Attribute final
   /// Creates an empty string attribute.
   Attribute() = default;
 
-  explicit Attribute(const AttributeType type) { reset_to_default(type); }
+  explicit Attribute(const AttributeType type)
+  {
+    reset_to_default(type);
+  }
 
   /**
    * Creates a property.

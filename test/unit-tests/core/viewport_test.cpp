@@ -21,7 +21,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/common/functional.hpp"
+#include "core/util/functional.hpp"
 
 namespace tactile::test {
 

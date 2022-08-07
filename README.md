@@ -8,7 +8,7 @@
 
 A tilemap editor that aims to be simple, fast and lightweight.
 
-![Splash](meta/splash/splash-0.3.0.png)
+![Splash](meta/splash/splash-0.4.0.png)
 
 ## Aim
 
@@ -27,7 +27,7 @@ A tilemap editor that aims to be simple, fast and lightweight.
   * Group layers
 * Supports an intuitive and human-readable YAML map format
 * Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
-  * Note that not all Tiled features are supported by Tactile
+* Export maps as Godot scenes (see [godot.md](docs/godot.md))
 * Intuitive mouse tools
   * Tile stamp tool
   * Eraser tool

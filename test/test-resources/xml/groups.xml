@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" infinite="0" tilewidth="32" tileheight="32" width="5" height="5" nextlayerid="15" nextobjectid="1">
+ <layer id="1" name="Tile Layer 1" width="5" height="5">
+  <data encoding="csv">0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</data>
+ </layer>
+ <group id="2" name="Group Layer 1">
+  <layer id="3" name="Tile Layer 2" width="5" height="5">
+   <data encoding="csv">0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</data>
+  </layer>
+  <group id="4" name="Group Layer 2">
+   <layer id="5" name="Tile Layer 3" width="5" height="5">
+    <data encoding="csv">0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</data>
+   </layer>
+   <group id="6" name="Group Layer 3">
+    <layer id="7" name="Tile Layer 4" width="5" height="5">
+     <data encoding="csv">0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</data>
+    </layer>
+   </group>
+  </group>
+ </group>
+</map>

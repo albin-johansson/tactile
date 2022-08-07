@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019-2022 Albin Johansson
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #ifndef CENTURION_MISC_EVENTS_HPP_
 #define CENTURION_MISC_EVENTS_HPP_
 
@@ -19,9 +43,6 @@
 #include "sensor.hpp"
 
 namespace cen {
-
-/// \addtogroup event
-/// \{
 
 class quit_event final : public event_base<SDL_QuitEvent>
 {
@@ -371,7 +392,7 @@ class text_editing_event final : public event_base<SDL_TextEditingEvent>
 
   void set_length(const int32 length) noexcept
   {
-    mEvent.length = detail::clamp(length, 0, 32);
+    mEvent.length = detail::clamp(length, 0, SDL_TEXTEDITINGEVENT_TEXT_SIZE);
   }
 
   [[nodiscard]] auto window_id() const noexcept -> uint32 { return mEvent.windowID; }
@@ -386,7 +407,10 @@ class text_editing_event final : public event_base<SDL_TextEditingEvent>
   [[nodiscard]] auto length() const noexcept -> int32 { return mEvent.length; }
 
  private:
-  void check_length() noexcept { mEvent.length = detail::clamp(mEvent.length, 0, 32); }
+  void check_length() noexcept
+  {
+    mEvent.length = detail::clamp(mEvent.length, 0, SDL_TEXTEDITINGEVENT_TEXT_SIZE);
+  }
 };
 
 template <>
@@ -396,6 +420,42 @@ inline auto as_sdl_event(const event_base<SDL_TextEditingEvent>& event) -> SDL_E
   e.edit = event.get();
   return e;
 }
+
+#if SDL_VERSION_ATLEAST(2, 0, 22)
+
+class text_editing_ext_event final : public event_base<SDL_TextEditingExtEvent>
+{
+ public:
+  text_editing_ext_event() : event_base{event_type::text_editing_ext} {}
+
+  explicit text_editing_ext_event(const SDL_TextEditingExtEvent& event) noexcept
+      : event_base{event}
+  {}
+
+  void set_window_id(const uint32 id) noexcept { mEvent.windowID = id; }
+
+  void set_start(const int32 start) noexcept { mEvent.start = start; }
+
+  void set_length(const int32 length) noexcept { mEvent.length = length; }
+
+  [[nodiscard]] auto window_id() const noexcept -> uint32 { return mEvent.windowID; }
+
+  [[nodiscard]] auto text() const noexcept -> char* { return mEvent.text; }
+
+  [[nodiscard]] auto start() const noexcept -> int32 { return mEvent.start; }
+
+  [[nodiscard]] auto length() const noexcept -> int32 { return mEvent.length; }
+};
+
+template <>
+inline auto as_sdl_event(const event_base<SDL_TextEditingExtEvent>& event) -> SDL_Event
+{
+  SDL_Event e;
+  e.editExt = event.get();
+  return e;
+}
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 22)
 
 class text_input_event final : public event_base<SDL_TextInputEvent>
 {
@@ -517,8 +577,6 @@ inline auto as_sdl_event(const event_base<SDL_UserEvent>& event) -> SDL_Event
   e.user = event.get();
   return e;
 }
-
-/// \} End of group event
 
 }  // namespace cen
 

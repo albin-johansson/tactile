@@ -21,9 +21,9 @@
 
 #include <gtest/gtest.h>
 
-#include "core/common/functional.hpp"
 #include "core/map.hpp"
 #include "core/tile_pos.hpp"
+#include "core/util/functional.hpp"
 
 namespace tactile::test {
 

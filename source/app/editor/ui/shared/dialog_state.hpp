@@ -19,23 +19,24 @@
 
 #pragma once
 
-#include "editor/ui/components/component_editor.hpp"
-#include "editor/ui/components/dialogs/add_component_attr_dialog.hpp"
-#include "editor/ui/components/dialogs/define_component_dialog.hpp"
-#include "editor/ui/components/dialogs/rename_component_attribute_dialog.hpp"
-#include "editor/ui/components/dialogs/rename_component_dialog.hpp"
-#include "editor/ui/dialogs/about_dialog.hpp"
-#include "editor/ui/dialogs/create_map_dialog.hpp"
-#include "editor/ui/dialogs/credits_dialog.hpp"
-#include "editor/ui/dialogs/map_parse_error_dialog.hpp"
-#include "editor/ui/dialogs/resize_map_dialog.hpp"
-#include "editor/ui/dialogs/settings_dialog.hpp"
-#include "editor/ui/layers/add_layer_context_menu.hpp"
-#include "editor/ui/layers/dialogs/rename_layer_dialog.hpp"
-#include "editor/ui/properties/dialogs/add_property_dialog.hpp"
-#include "editor/ui/properties/dialogs/change_property_type_dialog.hpp"
-#include "editor/ui/properties/dialogs/rename_property_dialog.hpp"
-#include "editor/ui/tilesets/dialogs/create_tileset_dialog.hpp"
+#include "editor/ui/comp/component_editor.hpp"
+#include "editor/ui/comp/dialogs/add_component_attr_dialog.hpp"
+#include "editor/ui/comp/dialogs/define_component_dialog.hpp"
+#include "editor/ui/comp/dialogs/rename_component_attribute_dialog.hpp"
+#include "editor/ui/comp/dialogs/rename_component_dialog.hpp"
+#include "editor/ui/dialog/about_dialog.hpp"
+#include "editor/ui/dialog/create_map_dialog.hpp"
+#include "editor/ui/dialog/credits_dialog.hpp"
+#include "editor/ui/dialog/godot_export_dialog.hpp"
+#include "editor/ui/dialog/map_parse_error_dialog.hpp"
+#include "editor/ui/dialog/resize_map_dialog.hpp"
+#include "editor/ui/dialog/settings_dialog.hpp"
+#include "editor/ui/layer/add_layer_context_menu.hpp"
+#include "editor/ui/layer/dialogs/rename_layer_dialog.hpp"
+#include "editor/ui/property/dialogs/add_property_dialog.hpp"
+#include "editor/ui/property/dialogs/change_property_type_dialog.hpp"
+#include "editor/ui/property/dialogs/rename_property_dialog.hpp"
+#include "editor/ui/tileset/dialogs/create_tileset_dialog.hpp"
 
 namespace tactile::ui {
 
@@ -49,6 +50,7 @@ struct DialogState final
   CreateMapDialog     create_map;
   ResizeMapDialog     resize_map;
   MapParseErrorDialog map_parse_error;
+  GodotExportDialog   godot_export;
 
   /* Layers */
   RenameLayerDialog rename_layer;

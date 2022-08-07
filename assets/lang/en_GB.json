@@ -1,0 +1,12 @@
+{
+  "actions": {
+    "center-viewport": "Centre Viewport"
+  },
+  "settings": {
+    "behavior-tab": "Behaviour",
+    "viewport-bg-color": "Viewport background colour"
+  },
+  "misc": {
+    "type-color": "Colour"
+  }
+}

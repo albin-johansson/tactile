@@ -22,15 +22,17 @@
 #include <imgui_internal.h>
 
 #include "core/common/maybe.hpp"
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "io/directories.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 namespace {
 
-constinit Maybe<ImGuiID> _root_id;
+constinit Maybe<ImGuiID> dock_root_id;
 
-void _reset_dock_visibilities()
+void reset_dock_visibilities()
 {
   auto& prefs = io::get_preferences();
   prefs.show_layer_dock = io::def_show_layer_dock;
@@ -46,14 +48,14 @@ void update_dock_space()
 {
   static bool initialized = false;
 
-  _root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+  dock_root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
   if (!initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
       const auto& prefs = io::get_preferences();
 
       if (!prefs.restore_layout || !exists(io::widget_ini_path())) {
-        load_default_layout(_root_id.value(), false);
+        load_default_layout(dock_root_id.value(), false);
       }
 
       initialized = true;
@@ -61,35 +63,36 @@ void update_dock_space()
   }
 }
 
-void load_default_layout(ImGuiID id, const bool resetVisibility)
+void load_default_layout(ImGuiID id, const bool reset_visibility)
 {
   ImGui::DockBuilderRemoveNodeChildNodes(id);
 
-  const auto root = id;
+  const auto& lang = get_current_language();
+  const auto  root = id;
 
-  auto       right = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.20f, nullptr, &id);
-  const auto rightBottom =
-      ImGui::DockBuilderSplitNode(right, ImGuiDir_Down, 0.25f, nullptr, &right);
+  auto       right = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.33f, nullptr, &id);
+  const auto right_bottom =
+      ImGui::DockBuilderSplitNode(right, ImGuiDir_Down, 0.40f, nullptr, &right);
 
   const auto bottom = ImGui::DockBuilderSplitNode(id, ImGuiDir_Down, 0.25f, nullptr, &id);
 
   ImGui::DockBuilderDockWindow("Viewport", root);
-  ImGui::DockBuilderDockWindow("Tilesets", right);
-  ImGui::DockBuilderDockWindow("Properties", right);
-  ImGui::DockBuilderDockWindow("Components", right);
-  ImGui::DockBuilderDockWindow("Layers", rightBottom);
-  ImGui::DockBuilderDockWindow("Log", bottom);
+  ImGui::DockBuilderDockWindow(lang.window.tileset_dock.c_str(), right);
+  ImGui::DockBuilderDockWindow(lang.window.property_dock.c_str(), right);
+  ImGui::DockBuilderDockWindow(lang.window.component_dock.c_str(), right);
+  ImGui::DockBuilderDockWindow(lang.window.layer_dock.c_str(), right_bottom);
+  ImGui::DockBuilderDockWindow(lang.window.log_dock.c_str(), bottom);
 
   ImGui::DockBuilderFinish(id);
 
-  if (resetVisibility) {
-    _reset_dock_visibilities();
+  if (reset_visibility) {
+    reset_dock_visibilities();
   }
 }
 
 void reset_layout()
 {
-  load_default_layout(_root_id.value(), true);
+  load_default_layout(dock_root_id.value(), true);
 }
 
 }  // namespace tactile::ui

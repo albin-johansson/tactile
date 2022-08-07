@@ -65,11 +65,15 @@ target_compile_definitions(${TACTILE_LIB}
                            )
 
 if (MSVC)
-  target_compile_definitions(${TACTILE_LIB} PUBLIC _CRT_SECURE_NO_WARNINGS)
+  target_compile_definitions(${TACTILE_LIB}
+                             PUBLIC
+                             WIN32_LEAN_AND_MEAN
+                             NOMINMAX
+                             )
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
-  message("[Tactile]: Building executable a WIN32 (non-console) executable...")
+  message("[Tactile]: Building executable as WIN32 (non-console) executable...")
   add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
 elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MATCHES ON)
   message("[Tactile]: Building executable as application bundle...")

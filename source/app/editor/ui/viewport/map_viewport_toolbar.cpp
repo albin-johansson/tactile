@@ -23,12 +23,12 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/documents/map_document.hpp"
-#include "core/events/command_events.hpp"
-#include "core/events/tileset_events.hpp"
-#include "core/events/tool_events.hpp"
+#include "core/document/map_document.hpp"
+#include "core/event/command_events.hpp"
+#include "core/event/tileset_events.hpp"
+#include "core/event/tool_events.hpp"
 #include "core/model.hpp"
-#include "core/tools/tool_manager.hpp"
+#include "core/tool/tool_manager.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/windows.hpp"
 #include "editor/ui/icons.hpp"

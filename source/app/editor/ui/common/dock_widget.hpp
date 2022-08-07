@@ -24,7 +24,10 @@
 
 #include "core/common/macros.hpp"
 #include "core/common/memory.hpp"
-#include "core/fwd.hpp"
+
+namespace tactile {
+class DocumentModel;
+}  // namespace tactile
 
 namespace tactile::ui {
 

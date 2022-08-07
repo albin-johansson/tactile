@@ -27,7 +27,7 @@ namespace tactile::ui {
 void update_dock_space();
 
 /// Loads the default layout for a dock space.
-void load_default_layout(ImGuiID id, bool resetVisibility);
+void load_default_layout(ImGuiID id, bool reset_visibility);
 
 /// Resets all dock space widgets to the default layout.
 void reset_layout();

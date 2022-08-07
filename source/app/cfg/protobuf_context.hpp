@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "core/common/macros.hpp"
+
 namespace tactile {
 
 /// Handles the loading and unloading of the Protobuf library.
@@ -28,6 +30,9 @@ class ProtobufContext final
   ProtobufContext();
 
   ~ProtobufContext();
+
+  TACTILE_DELETE_COPY(ProtobufContext);
+  TACTILE_DELETE_MOVE(ProtobufContext);
 };
 
 }  // namespace tactile

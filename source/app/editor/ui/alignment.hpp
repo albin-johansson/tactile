@@ -44,6 +44,8 @@ void center_next_item_horizontally(float width);
  */
 void prepare_vertical_alignment_center(float count = 1);
 
+void right_align_next_item();
+
 /**
  * Prepares the cursor for a right-aligned component.
  *

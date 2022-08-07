@@ -22,12 +22,12 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
-#include "core/documents/tileset_document.hpp"
+#include "core/document/tileset_document.hpp"
 #include "document_viewport_offset_handler.hpp"
-#include "editor/ui/rendering/graphics.hpp"
-#include "editor/ui/rendering/render_info.hpp"
-#include "editor/ui/rendering/render_tileset.hpp"
-#include "io/persistence/preferences.hpp"
+#include "editor/ui/render/graphics.hpp"
+#include "editor/ui/render/render_info.hpp"
+#include "editor/ui/render/render_tileset.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 

@@ -27,20 +27,10 @@ namespace tactile {
 
 using UUID = boost::uuids::uuid;
 
-/**
- * Creates a universally unique identifier (UUID).
- *
- * \return a valid UUID.
- */
+/// Creates a universally unique identifier (UUID).
 [[nodiscard]] auto make_uuid() -> UUID;
 
-/**
- * Hashes a UUID.
- *
- * \param uuid the identifier that will be hashed.
- *
- * \return a hash code.
- */
+/// Hashes a UUID.
 [[nodiscard]] auto hash(const UUID& uuid) -> usize;
 
 }  // namespace tactile

@@ -43,9 +43,7 @@ struct LogEntry final
   std::string               msg;
 };
 
-/**
- * Records logged messages, intended to be displayed in the log dock.
- */
+/// Records logged messages, intended to be displayed in the log dock.
 class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_mutex>
 {
  public:
@@ -61,7 +59,10 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
     // Do nothing
   }
 
-  void clear() { mHistory.clear(); }
+  void clear()
+  {
+    mHistory.clear();
+  }
 
   [[nodiscard]] auto get_entry(const LogLevel filter, usize index)
       -> std::pair<LogLevel, const std::string&>

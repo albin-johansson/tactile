@@ -25,7 +25,7 @@
 #include <spdlog/spdlog.h>
 
 #include "io/directories.hpp"
-#include "io/persistence/preferences.hpp"
+#include "io/persist/preferences.hpp"
 
 namespace tactile::ui {
 namespace {

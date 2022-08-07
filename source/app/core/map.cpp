@@ -23,12 +23,11 @@
 
 #include <fmt/format.h>
 
-#include "core/common/functional.hpp"
-#include "core/contexts/context_visitor.hpp"
-#include "core/layers/layer_visitor.hpp"
-#include "core/layers/object_layer.hpp"
-#include "core/layers/tile_layer.hpp"
+#include "core/layer/layer_visitor.hpp"
+#include "core/layer/object_layer.hpp"
+#include "core/layer/tile_layer.hpp"
 #include "core/tile_pos.hpp"
+#include "core/util/functional.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -42,7 +41,10 @@ void Map::add_row()
 {
   struct AddRowVisitor final : ILayerVisitor
   {
-    void visit(TileLayer& layer) override { layer.add_row(); }
+    void visit(TileLayer& layer) override
+    {
+      layer.add_row();
+    }
   };
 
   ++mRowCount;
@@ -55,7 +57,10 @@ void Map::add_column()
 {
   struct AddColumnVisitor final : ILayerVisitor
   {
-    void visit(TileLayer& layer) override { layer.add_column(); }
+    void visit(TileLayer& layer) override
+    {
+      layer.add_column();
+    }
   };
 
   ++mColCount;
@@ -68,7 +73,10 @@ void Map::remove_row()
 {
   struct RemoveRowVisitor final : ILayerVisitor
   {
-    void visit(TileLayer& layer) override { layer.remove_row(); }
+    void visit(TileLayer& layer) override
+    {
+      layer.remove_row();
+    }
   };
 
   if (mRowCount > 1) {
@@ -86,7 +94,10 @@ void Map::remove_column()
 {
   struct RemoveColumnVisitor final : ILayerVisitor
   {
-    void visit(TileLayer& layer) override { layer.remove_column(); }
+    void visit(TileLayer& layer) override
+    {
+      layer.remove_column();
+    }
   };
 
   if (mColCount > 1) {
@@ -107,7 +118,10 @@ void Map::resize(const usize rows, const usize columns)
     usize new_rows {};
     usize new_cols {};
 
-    void visit(TileLayer& layer) override { layer.resize(new_rows, new_cols); }
+    void visit(TileLayer& layer) override
+    {
+      layer.resize(new_rows, new_cols);
+    }
   };
 
   mRowCount = require_that(rows, [](usize x) { return x > 0; });
