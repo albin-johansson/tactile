@@ -17,9 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/functional.hpp"
-
 #include <gtest/gtest.h>
+
+#include "core/util/functional.hpp"
 
 namespace tactile::test {
 
