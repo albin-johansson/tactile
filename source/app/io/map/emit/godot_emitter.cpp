@@ -241,7 +241,7 @@ void emit_tileset_file(const ir::MapData&       map,
     const auto id = static_cast<int32>(tileset_index) + 1;
     const auto prefix = fmt::format("{}/", id);
 
-    stream << prefix << fmt::format("name = \"{}\"\n", tileset.name);
+    stream << prefix << fmt::format(R"(name = "{}")", tileset.name) << '\n';
     stream << prefix << fmt::format("texture = ExtResource( {} )\n", id);
     stream << prefix << "tex_offset = Vector2( 0, 0 )\n";
     stream << prefix << "modulate = Color( 1, 1, 1, 1 )\n";
@@ -294,7 +294,9 @@ void emit_atlas_textures(std::ostream& stream, const GodotScene& scene)
 {
   for (const auto& [tile_id, animation] : scene.animations) {
     for (const auto& frame : animation.frames) {
-      stream << fmt::format("\n[sub_resource type=\"AtlasTexture\" id={}]\n", frame.id);
+      stream << '\n';
+      stream << fmt::format(R"([sub_resource type="AtlasTexture" id={}])", frame.id)
+             << '\n';
       stream << fmt::format("atlas = ExtResource( {} )\n", animation.texture_id);
       stream << fmt::format("region = Rect2( {}, {}, {}, {} )\n",
                             frame.region.x,
@@ -312,8 +314,9 @@ void emit_sprite_frames(std::ostream& stream, const GodotScene& scene)
     return;
   }
 
-  stream << fmt::format("\n[sub_resource type=\"SpriteFrames\" id={}]\n",
-                        *sprite_frames_id);
+  stream << '\n';
+  stream << fmt::format(R"([sub_resource type="SpriteFrames" id={}])", *sprite_frames_id)
+         << '\n';
   stream << "animations = [\n";
 
   bool has_emitted_animation = false;
@@ -366,11 +369,13 @@ void emit_tile_layer_animation_nodes(std::ostream&            stream,
   invoke_mn(tile_layer.row_count, tile_layer.col_count, [&](usize row, usize col) {
     const auto tile_id = tile_layer.tiles[row][col];
     if (tile_id != empty_tile && scene.animations.contains(tile_id)) {
-      stream << fmt::format(
-          "\n[node name=\"Tile ({}, {})\" type=\"AnimatedSprite\" parent=\"{}\"]\n",
-          row,
-          col,
-          layer_name);
+      stream << '\n'
+             << fmt::format(
+                    R"-([node name="Tile ({}, {})" type="AnimatedSprite" parent="{}"])-",
+                    row,
+                    col,
+                    layer_name)
+             << '\n';
 
       const auto pos = TilePos::from(row, col);
       const auto x = pos.col_to_x(map.tile_size.x);
