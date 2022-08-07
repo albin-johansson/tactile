@@ -127,7 +127,7 @@ void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(lang.action.show_component_editor.c_str(),
                         TACTILE_PRIMARY_MOD "+Shift+C",
                         false,
-                        document->is_map())) {
+                        document && document->is_map())) {
       get_dialogs().component_editor.show(model);
     }
 
