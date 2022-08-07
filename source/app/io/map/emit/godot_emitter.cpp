@@ -116,7 +116,12 @@ void create_animation(GodotScene&             scene,
   auto& animation = scene.animations[tile_id];
   animation.texture_id = texture_id;
   animation.name = fmt::format("Tile {}", tile_id);
-  animation.speed = 1.0f;  // TODO
+  animation.speed = 1;
+
+  // Godot only supports a single speed for animations, so we just use the first frame
+  if (!tile.frames.empty()) {
+    animation.speed = 1'000.0f / static_cast<float>(tile.frames.front().duration_ms);
+  }
 
   for (const auto& frame : tile.frames) {
     const auto pos = TilePos::from_index(frame.local_id, tileset.column_count);
