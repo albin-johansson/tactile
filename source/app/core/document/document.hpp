@@ -22,7 +22,7 @@
 #include <string>  // string
 
 #include "core/attribute.hpp"
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/document/document_type.hpp"

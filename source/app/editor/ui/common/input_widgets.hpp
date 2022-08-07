@@ -25,7 +25,7 @@
 #include <imgui.h>
 
 #include "core/attribute.hpp"
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
 
 namespace tactile::ui {

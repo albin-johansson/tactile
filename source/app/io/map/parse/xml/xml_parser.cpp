@@ -19,7 +19,7 @@
 
 #include "xml_parser.hpp"
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "io/util/xml.hpp"
 
 namespace tactile::io {

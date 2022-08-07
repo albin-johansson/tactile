@@ -23,7 +23,7 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"

@@ -26,8 +26,8 @@
 #include <spdlog/spdlog.h>
 
 #include "colors.hpp"
-#include "core/common/filesystem.hpp"
 #include "core/util/buffers.hpp"
+#include "core/util/filesystem.hpp"
 #include "editor/constants.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"

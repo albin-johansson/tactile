@@ -23,7 +23,7 @@
 #include <iomanip>  // setw
 #include <ios>      // ios
 
-#include "core/common/filesystem.hpp"
+#include "core/util/filesystem.hpp"
 #include "io/persist/preferences.hpp"
 #include "misc/panic.hpp"
 
@@ -31,7 +31,7 @@ namespace tactile {
 namespace {
 
 template <typename T>
-[[nodiscard]] auto _as(const JSON& json, const std::string_view name) -> Maybe<T>
+[[nodiscard]] auto as(const JSON& json, std::string_view name) -> Maybe<T>
 {
   const auto iter = json.find(name);
   if (iter != json.end()) {
@@ -118,29 +118,29 @@ auto read_json(const fs::path& path) -> Maybe<JSON>
 
 namespace io {
 
-auto as_string(const JSON& json, const std::string_view name) -> Maybe<std::string>
+auto as_string(const JSON& json, std::string_view name) -> Maybe<std::string>
 {
-  return _as<std::string>(json, name);
+  return as<std::string>(json, name);
 }
 
-auto as_int(const JSON& json, const std::string_view name) -> Maybe<int32>
+auto as_int(const JSON& json, std::string_view name) -> Maybe<int32>
 {
-  return _as<int32>(json, name);
+  return as<int32>(json, name);
 }
 
-auto as_uint(const JSON& json, const std::string_view name) -> Maybe<uint32>
+auto as_uint(const JSON& json, std::string_view name) -> Maybe<uint32>
 {
-  return _as<uint32>(json, name);
+  return as<uint32>(json, name);
 }
 
-auto as_float(const JSON& json, const std::string_view name) -> Maybe<float>
+auto as_float(const JSON& json, std::string_view name) -> Maybe<float>
 {
-  return _as<float>(json, name);
+  return as<float>(json, name);
 }
 
-auto as_bool(const JSON& json, const std::string_view name) -> Maybe<bool>
+auto as_bool(const JSON& json, std::string_view name) -> Maybe<bool>
 {
-  return _as<bool>(json, name);
+  return as<bool>(json, name);
 }
 
 }  // namespace io

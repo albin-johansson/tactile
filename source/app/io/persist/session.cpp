@@ -24,9 +24,9 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/common/filesystem.hpp"
 #include "core/document/map_document.hpp"
 #include "core/model.hpp"
+#include "core/util/filesystem.hpp"
 #include "io/directories.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"

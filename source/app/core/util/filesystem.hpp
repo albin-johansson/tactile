@@ -19,19 +19,12 @@
 
 #pragma once
 
-#include <filesystem>   // path
-#include <string>       // basic_string, string
-#include <string_view>  // basic_string_view
+#include <string>  // string
 
+#include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
 
 namespace tactile {
-
-namespace fs = std::filesystem;
-
-using fs_char_type = fs::path::value_type;
-using fs_string = std::basic_string<fs_char_type>;
-using fs_string_view = std::basic_string_view<fs_char_type>;
 
 /**
  * Converts a path to a string that is guaranteed to use forward slashes.

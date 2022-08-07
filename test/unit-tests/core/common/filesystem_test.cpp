@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/common/filesystem.hpp"
+#include "core/util/filesystem.hpp"
 
 #include <gtest/gtest.h>
 

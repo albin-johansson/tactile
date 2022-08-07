@@ -23,7 +23,6 @@
 #include <codecvt>    // codecvt_utf8
 #include <locale>     // wstring_convert
 
-#include "core/common/maybe.hpp"
 #include "core/util/env.hpp"
 #include "meta/build.hpp"
 

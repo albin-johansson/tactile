@@ -22,7 +22,7 @@
 #include <deque>   // deque
 #include <string>  // string
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 
 namespace tactile::io {
 

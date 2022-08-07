@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "io/map/parse/parse_result.hpp"
 
 namespace tactile::io {

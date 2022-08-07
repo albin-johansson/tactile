@@ -19,7 +19,7 @@
 
 #include "yaml.hpp"
 
-#include "core/common/filesystem.hpp"
+#include "core/util/filesystem.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::io {

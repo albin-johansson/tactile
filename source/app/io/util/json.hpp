@@ -25,7 +25,7 @@
 #include <nlohmann/json.hpp>
 
 #include "core/attribute.hpp"
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 

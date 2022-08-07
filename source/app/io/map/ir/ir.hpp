@@ -25,7 +25,7 @@
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"

@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"

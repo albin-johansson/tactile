@@ -21,7 +21,7 @@
 
 #include <array>  // array
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "editor/ui/dialogs/dialog.hpp"
 

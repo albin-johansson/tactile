@@ -22,7 +22,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/util/json.hpp"

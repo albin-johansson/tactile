@@ -33,6 +33,7 @@
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 #include "core/tile_pos.hpp"
+#include "core/util/filesystem.hpp"
 #include "core/util/query.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"

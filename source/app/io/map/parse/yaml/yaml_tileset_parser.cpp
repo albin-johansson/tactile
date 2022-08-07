@@ -20,7 +20,7 @@
 #include <string>   // string
 #include <utility>  // move
 
-#include "core/common/filesystem.hpp"
+#include "core/common/fs.hpp"
 #include "core/common/ints.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
