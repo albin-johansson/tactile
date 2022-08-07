@@ -19,25 +19,29 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
-#include "io/fwd.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
+#include "editor/ui/dialog/string_input_dialog.hpp"
 
-namespace tactile {
-class DocumentModel;
-class TextureManager;
-}  // namespace tactile
+namespace tactile::ui {
 
-namespace tactile::io {
+/// Used to change the name of an existing layer.
+class RenameLayerDialog final : public AStringInputDialog
+{
+ public:
+  RenameLayerDialog();
 
-/**
- * Restores a map document from an intermediate map representation.
- *
- * \param result the intermediate representation of the map data.
- * \param model the target document model.
- * \param textures the texture manager that will be used.
- */
-void map_from_ir(const ParseResult& result,
-                 DocumentModel&     model,
-                 TextureManager&    textures);
+  void show(const UUID& layerId, std::string oldName);
 
-}  // namespace tactile::io
+ protected:
+  void on_accept(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
+      -> bool override;
+
+ private:
+  Maybe<UUID>        mTargetId;
+  Maybe<std::string> mOldName;
+};
+
+}  // namespace tactile::ui

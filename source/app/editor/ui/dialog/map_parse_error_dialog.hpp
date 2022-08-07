@@ -19,25 +19,30 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
-#include "io/fwd.hpp"
+#include <string>  // string
 
-namespace tactile {
-class DocumentModel;
-class TextureManager;
-}  // namespace tactile
+#include "core/common/maybe.hpp"
+#include "editor/ui/dialog/dialog.hpp"
+#include "io/map/parse/parse_error.hpp"
 
-namespace tactile::io {
+namespace tactile::ui {
 
 /**
- * Restores a map document from an intermediate map representation.
- *
- * \param result the intermediate representation of the map data.
- * \param model the target document model.
- * \param textures the texture manager that will be used.
+ * Provides information about a failed attempt to parse a map.
  */
-void map_from_ir(const ParseResult& result,
-                 DocumentModel&     model,
-                 TextureManager&    textures);
+class MapParseErrorDialog final : public ADialog
+{
+ public:
+  MapParseErrorDialog();
 
-}  // namespace tactile::io
+  void show(io::ParseError error);
+
+ protected:
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
+
+ private:
+  Maybe<io::ParseError> mError;
+  std::string           mCause;
+};
+
+}  // namespace tactile::ui

@@ -19,25 +19,35 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
-#include "io/fwd.hpp"
+#include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
+#include "editor/ui/dialog/dialog.hpp"
 
-namespace tactile {
-class DocumentModel;
-class TextureManager;
-}  // namespace tactile
-
-namespace tactile::io {
+namespace tactile::ui {
 
 /**
- * Restores a map document from an intermediate map representation.
- *
- * \param result the intermediate representation of the map data.
- * \param model the target document model.
- * \param textures the texture manager that will be used.
+ * Used to change the dimensions of a tilemap.
  */
-void map_from_ir(const ParseResult& result,
-                 DocumentModel&     model,
-                 TextureManager&    textures);
+class ResizeMapDialog final : public ADialog
+{
+ public:
+  TACTILE_DEFAULT_COPY(ResizeMapDialog);
+  TACTILE_DEFAULT_MOVE(ResizeMapDialog);
 
-}  // namespace tactile::io
+  ResizeMapDialog();
+
+  ~ResizeMapDialog() override = default;
+
+  void show(usize nCurrentRows, usize nCurrentColumns);
+
+ protected:
+  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
+
+  void on_accept(entt::dispatcher& dispatcher) override;
+
+ private:
+  usize mRows {};
+  usize mColumns {};
+};
+
+}  // namespace tactile::ui

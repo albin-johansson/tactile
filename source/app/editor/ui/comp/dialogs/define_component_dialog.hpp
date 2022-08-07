@@ -19,25 +19,20 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
-#include "io/fwd.hpp"
+#include "editor/ui/comp/dialogs/component_name_dialog.hpp"
 
-namespace tactile {
-class DocumentModel;
-class TextureManager;
-}  // namespace tactile
+namespace tactile::ui {
 
-namespace tactile::io {
+/// Used to create new component definitions.
+class DefineComponentDialog final : public ComponentNameDialog
+{
+ public:
+  DefineComponentDialog();
 
-/**
- * Restores a map document from an intermediate map representation.
- *
- * \param result the intermediate representation of the map data.
- * \param model the target document model.
- * \param textures the texture manager that will be used.
- */
-void map_from_ir(const ParseResult& result,
-                 DocumentModel&     model,
-                 TextureManager&    textures);
+  void show();
 
-}  // namespace tactile::io
+ protected:
+  void on_accept(entt::dispatcher& dispatcher) override;
+};
+
+}  // namespace tactile::ui

@@ -26,7 +26,7 @@
 #include "core/tool/rectangle_tool.hpp"
 #include "core/tool/stamp_tool.hpp"
 #include "core/util/functional.hpp"
-#include "editor/ui/rendering/graphics.hpp"
+#include "editor/ui/render/graphics.hpp"
 
 namespace tactile::ui {
 

@@ -32,7 +32,7 @@
 #include "core/viewport.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
-#include "editor/shortcuts/mappings.hpp"
+#include "editor/shortcut/mappings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/windows.hpp"

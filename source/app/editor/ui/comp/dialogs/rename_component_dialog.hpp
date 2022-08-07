@@ -19,25 +19,27 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
-#include "io/fwd.hpp"
+#include <string>  // string
 
-namespace tactile {
-class DocumentModel;
-class TextureManager;
-}  // namespace tactile
+#include "core/common/maybe.hpp"
+#include "core/common/uuid.hpp"
+#include "editor/ui/comp/dialogs/component_name_dialog.hpp"
 
-namespace tactile::io {
+namespace tactile::ui {
 
-/**
- * Restores a map document from an intermediate map representation.
- *
- * \param result the intermediate representation of the map data.
- * \param model the target document model.
- * \param textures the texture manager that will be used.
- */
-void map_from_ir(const ParseResult& result,
-                 DocumentModel&     model,
-                 TextureManager&    textures);
+/// Used to change the name of a component definition.
+class RenameComponentDialog final : public ComponentNameDialog
+{
+ public:
+  RenameComponentDialog();
 
-}  // namespace tactile::io
+  void show(std::string previous_name, const UUID& component_id);
+
+ protected:
+  void on_accept(entt::dispatcher& dispatcher) override;
+
+ private:
+  Maybe<UUID> mComponentId;
+};
+
+}  // namespace tactile::ui
