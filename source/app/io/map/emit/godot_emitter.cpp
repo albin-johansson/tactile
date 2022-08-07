@@ -487,7 +487,6 @@ void emit_rectangle_object(std::ostream&         stream,
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
   constexpr usize point_count = 16;  // TODO option?
-  constexpr auto  tau = std::numbers::pi * 2.0;
 
   std::vector<Vector2f> points;
   points.reserve(point_count);
@@ -495,6 +494,7 @@ void emit_rectangle_object(std::ostream&         stream,
   const auto n = static_cast<double>(point_count);
   const auto radius = object.size / 2.0f;
 
+  constexpr auto tau = std::numbers::pi * 2.0;
   for (usize i = 0; i < point_count; ++i) {
     const auto theta = static_cast<double>(i) / n * tau;
     const auto x = radius.x * std::cos(theta);
@@ -506,7 +506,6 @@ void emit_rectangle_object(std::ostream&         stream,
 }
 
 void emit_ellipse_object(std::ostream&         stream,
-                         const GodotScene&     scene,
                          const ir::ObjectData& object,
                          std::string_view      object_name,
                          std::string_view      parent)
@@ -556,7 +555,7 @@ void emit_object(std::ostream&         stream,
     emit_rectangle_object(stream, scene, object, object_name, parent);
   }
   else if (object.type == ObjectType::Ellipse) {
-    emit_ellipse_object(stream, scene, object, object_name, parent);
+    emit_ellipse_object(stream, object, object_name, parent);
   }
   else {
     stream << '\n'
@@ -569,7 +568,6 @@ void emit_object(std::ostream&         stream,
 
 void emit_object_layer(std::ostream&        stream,
                        const GodotScene&    scene,
-                       const ir::MapData&   map,
                        const ir::LayerData& layer,
                        std::string_view     parent)
 {
@@ -598,7 +596,7 @@ void emit_layer(std::ostream&            stream,
       break;
 
     case LayerType::ObjectLayer:
-      emit_object_layer(stream, scene, map, layer, parent);
+      emit_object_layer(stream, scene, layer, parent);
       break;
 
     case LayerType::GroupLayer: {
@@ -615,16 +613,6 @@ void emit_layer(std::ostream&            stream,
 
       break;
     }
-  }
-}
-
-void emit_layers(std::ostream&            stream,
-                 const GodotScene&        scene,
-                 const ir::MapData&       map,
-                 const TilesetExportInfo& info)
-{
-  for (const auto& layer : map.layers) {
-    emit_layer(stream, scene, map, layer, info, ".");
   }
 }
 
@@ -661,7 +649,9 @@ void emit_godot_map(const EmitInfo& info, const GodotEmitOptions& options)
                         info.destination_file().stem().string())
          << '\n';
 
-  emit_layers(stream, scene, map, export_info);
+  for (const auto& layer : map.layers) {
+    emit_layer(stream, scene, map, layer, export_info, ".");
+  }
 }
 
 }  // namespace tactile::io
