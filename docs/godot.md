@@ -4,8 +4,9 @@ It is possible to export maps created using Tactile as Godot scenes. However, ce
 
 ## Limitations
 
-- Tile layers must not reference tiles from more than *one* tileset
-- Ellipse objects are not fully supported, see below for more details
+- In Godot, a `TileMap` (which is really a tile layer) may only feature one associated `TileSet`, so Tactile will merge all tilesets associated with the map into a single `TileSet` definition.
+- Ellipse objects are approximated as polygons.
+- Properties and components are only provided as metadata.
 
 ## Usage
 
@@ -17,11 +18,11 @@ When you export a map as a Godot scene, Tactile will do its best to translate th
 
 ### Tile Layers
 
-Tile layers are exported as `TileMap` nodes. 
+Tile layers are fully supported, and are exported as `TileMap` nodes.
 
 ### Object Layers & Objects
 
-Each object layer is converted to a `Node2D`, all of which have their objects stored as immediate children nodes. Rectangle and ellipse objects are both converted to `Area2D` nodes, with attached `CollisionShape2D` nodes. Rectangle objects naturally use `RectangleShape2D` as the collision shape, whilst ellipses are not directly supported by Godot, so they are assigned `CircleShape2D` shapes instead. The strategy employed by Tactile when translating ellipse objects consists of comparing the width and height, and using the larger of the two as the diameter. Finally, point objects are simply converted to plain `Node2D` nodes.
+Each object layer is exported as a `Node2D` node, which have their objects stored as immediate children nodes. Rectangle and ellipse objects are exported as `Area2D` nodes, with attached `CollisionShape2D` nodes. Rectangle objects naturally use `RectangleShape2D` as the collision shape, whilst ellipses are not directly supported by Godot, so they are approximated as polygons using `CollisionPolygon2D`. Finally, point objects are simply converted to plain `Node2D` nodes.
 
 ### Group Layers
 
