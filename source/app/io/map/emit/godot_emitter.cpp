@@ -207,8 +207,6 @@ void emit_tileset_file(const ir::MapData&       map,
                        const TilesetExportInfo& info,
                        const GodotEmitOptions&  options)
 {
-  // TODO scrap embed tileset option?
-
   const auto load_steps = map.tilesets.size() + 1;  // TODO validate
 
   const auto tileset_file =
@@ -381,8 +379,8 @@ void emit_tile_layer_animation_nodes(std::ostream&            stream,
       stream << fmt::format("position = Vector2( {}, {} )\n", x, y);
       stream << fmt::format("frames = SubResource( {} )\n",
                             scene.identifiers.sprite_frames_id.value());
-      stream << fmt::format("speed_scale = {}\n", 1.0);  // TODO
-      stream << fmt::format("animation = \"Tile {}\"\n", tile_id);
+      stream << "speed_scale = 1.0\n";
+      stream << fmt::format(R"(animation = "Tile {}")", tile_id) << '\n';
       stream << "playing = true\n";
       stream << "centered = false\n";
     }
