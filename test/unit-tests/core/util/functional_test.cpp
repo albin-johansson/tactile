@@ -17,15 +17,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "core/util/functional.hpp"
+
 #include <gtest/gtest.h>
 
-#include "cfg/configuration.hpp"
-#include "misc/logging.hpp"
+namespace tactile::test {
 
-auto main(int argc, char** argv) -> int
+TEST(InvokeN, ZeroInvocations)
 {
-  tactile::init_logger();
-  tactile::AppCfg configuration;
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  bool called = false;
+  invoke_n(0, [&] { called = true; });
+  ASSERT_FALSE(called);
 }
+
+TEST(InvokeN, OneInvocation)
+{
+  int calls = 0;
+  invoke_n(1, [&] { ++calls; });
+  ASSERT_EQ(1, calls);
+}
+
+TEST(InvokeN, SeveralInvocations)
+{
+  int calls = 0;
+  invoke_n(42, [&] { ++calls; });
+  ASSERT_EQ(42, calls);
+}
+
+}  // namespace tactile::test
