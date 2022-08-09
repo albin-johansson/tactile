@@ -2,34 +2,63 @@
 
 Other than the Tiled JSON and XML formats, Tactile supports its own custom YAML map format. If you're familiar with the
 Tiled JSON format, you'll notice many similarities. However, one of the key differences is that the Tactile YAML format
-doesn't support embedded tilesets. All predefined names are in `kebab-case`. All attributes that aren't specified as
-required may be omitted from save files.
+doesn't support embedded tilesets. All predefined names are in `kebab-case`.
+
+All attributes that aren't specified as required may be omitted from save files.
 
 ## Root
 
 The root node in the Tactile YAML format provides general information about the tilemap.
 
-Using a `tile-encoding` other than `plain` leads to the tile data being encoded as a one-dimensional array of 32-bit
-signed integers. The emitter works by first compressing the tile data, unless `tile-compression` is set to `none`, and
-subsequently encodes the tile data. Omitting `tile-encoding` or setting it to `plain` leads to tile layer data to be
-simply stored as a string of integers separated by spaces (potentially formatted with newlines).
+|               Attribute |                        Type                         | Required | Description                           |
+|------------------------:|:---------------------------------------------------:|:--------:|:--------------------------------------|
+|               `version` |                        `int`                        |   Yes    | The version of the YAML map format.   |
+|             `row-count` |                        `int`                        |   Yes    | The number of rows in the tilemap.    |
+|          `column-count` |                        `int`                        |   Yes    | The number of columns in the tilemap. |
+|            `tile-width` |                        `int`                        |   Yes    | The width of tiles in the tilemap.    |
+|           `tile-height` |                        `int`                        |   Yes    | The height of tiles in the tilemap.   |
+|         `next-layer-id` |                        `int`                        |   Yes    | The next available layer ID.          |
+|        `next-object-id` |                        `int`                        |   Yes    | The next available object ID.         |
+|           `tile-format` |                    `TileFormat`                     |    No    |                                       |
+|                `layers` |                      Sequence                       |    No    | A sequence of `Layer` nodes.          |
+|              `tilesets` |                      Sequence                       |    No    | A sequence of `TilesetRef` nodes.     |
+|            `properties` |                      Sequence                       |    No    | A sequence of `Property` nodes.       |
+| `component-definitions` |                      Sequence                       |    No    | A sequence of `ComponentDef` nodes.   |
+|            `components` |                      Sequence                       |    No    | A sequence of `Component` nodes.      |
 
-|               Attribute |           Type           | Required | Description                           |
-|------------------------:|:------------------------:|:--------:|:--------------------------------------|
-|               `version` |          `int`           |   Yes    | The version of the YAML map format.   |
-|             `row-count` |          `int`           |   Yes    | The number of rows in the tilemap.    |
-|          `column-count` |          `int`           |   Yes    | The number of columns in the tilemap. |
-|            `tile-width` |          `int`           |   Yes    | The width of tiles in the tilemap.    |
-|           `tile-height` |          `int`           |   Yes    | The height of tiles in the tilemap.   |
-|         `next-layer-id` |          `int`           |   Yes    | The next available layer ID.          |
-|        `next-object-id` |          `int`           |   Yes    | The next available object ID.         |
-|         `tile-encoding` | One of `plain`, `base64` |    No    | Tile layer data encoding.             |
-|      `tile-compression` |  One of `none`, `zlib`   |    No    | Tile layer data compression mode.     |
-|                `layers` |         Sequence         |    No    | A sequence of `Layer` nodes.          |
-|              `tilesets` |         Sequence         |    No    | A sequence of `TilesetRef` nodes.     |
-|            `properties` |         Sequence         |    No    | A sequence of `Property` nodes.       |
-| `component-definitions` |         Sequence         |    No    | A sequence of `ComponentDef` nodes.   |
-|            `components` |         Sequence         |    No    | A sequence of `Component` nodes.      |
+---
+
+## `TileFormat`
+
+Provides information about the representation of tile layer data.
+
+Using a `encoding` other than `plain` leads to tile layer data being encoded as a one-dimensional array of 32-bit signed
+integers. The tiles are arranged by appending each row after another, starting at the row at index zero (the top
+row in the editor).
+
+The emitter works by first compressing the tile data (unless `compression` is set to `none`), and then encoding the
+possibly compressed data. Omitting `encoding` or setting it to `plain` leads to tile layer data to be simply stored as a
+string of integers separated by spaces (potentially formatted with newlines).
+
+Note, it's not possible to specify a compression strategy whilst using `plain` encoding!
+
+The `zlib-compression-level` attribute directly corresponds to Zlib constants such as `Z_DEFAULT_COMPRESSION` (which
+is `-1`), `Z_BEST_SPEED` (which is `1`), and `Z_BEST_COMPRESSION` (which is `9`). You can use other values in the
+interval `[1, 9]` to request an intermediate compression mode, depending on the tradeoff you want to make.
+
+|                Attribute |                 Type                 | Required | Default | Description                     |
+|-------------------------:|:------------------------------------:|:--------:|:-------:|:--------------------------------|
+|               `encoding` |       One of `plain`, `base64`       |    No    | `plain` | Tile layer data encoding.       |
+|            `compression` |        One of `none`, `zlib`         |    No    | `none`  | The compression algorithm used. |
+| `zlib-compression-level` | Either `-1` or in the range `[1, 9]` |    No    |  `-1`   |                                 |
+
+Example:
+
+```YAML
+encoding: base64
+compression: zlib
+zlib-compression-level: 9
+```
 
 ---
 
@@ -62,9 +91,9 @@ attributes.
 
 ### `TileLayer`
 
-| Attribute |   Type   | Required | Description                                               |
-|----------:|:--------:|:--------:|:----------------------------------------------------------|
-|    `data` | `string` |   Yes    | A string of global tile identifiers, separated by spaces. |
+| Attribute |   Type   | Required | Description                                                   |
+|----------:|:--------:|:--------:|:--------------------------------------------------------------|
+|    `data` | `string` |   Yes    | A string of (potentially compressed) global tile identifiers. |
 
 ### `ObjectLayer`
 
