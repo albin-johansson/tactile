@@ -226,6 +226,7 @@ void convert_tilesets(const MapDocument&    document,
     tileset_data.image_size = tileset.texture_size();
 
     convert_fancy_tiles(tileset, components, tileset_data);
+    convert_context(tileset, components, tileset_data.context);
   }
 }
 
