@@ -199,6 +199,14 @@ auto MapDocument::get_object(const UUID& objectId) -> Shared<Object>
   }
 }
 
+void MapDocument::set_tile_encoding(const TileEncoding encoding)
+{
+}
+
+void MapDocument::set_tile_compression(const TileCompression compression)
+{
+}
+
 void MapDocument::set_component_index(Shared<ComponentIndex> index)
 {
   mDelegate.set_component_index(std::move(index));

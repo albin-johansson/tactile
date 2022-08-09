@@ -104,6 +104,9 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto get_object(const UUID& objectId) -> Shared<Object>;
 
+  void set_tile_encoding(TileEncoding encoding);
+  void set_tile_compression(TileCompression compression);
+
   void set_component_index(Shared<ComponentIndex> index) override;
 
   void set_name(std::string name) override;

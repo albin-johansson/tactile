@@ -23,6 +23,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/compression.hpp"
 
 namespace tactile {
 
@@ -79,6 +80,16 @@ struct ExportAsGodotSceneEvent final
   fs::path image_dir;
   fs::path tileset_dir;
   usize    polygon_points {};
+};
+
+struct SetMapTileCompressionEvent final
+{
+  TileCompression compression {};
+};
+
+struct SetMapTileEncodingEvent final
+{
+  TileEncoding encoding {};
 };
 
 }  // namespace tactile

@@ -218,6 +218,9 @@ void App::subscribe_to_events()
   d.sink<FixTilesInMapEvent>().connect<&App::on_fix_tiles_in_map>(this);
   d.sink<OpenResizeMapDialogEvent>().connect<&App::on_open_resize_map_dialog>(this);
 
+  d.sink<SetMapTileEncodingEvent>().connect<&App::on_set_map_tile_encoding>(this);
+  d.sink<SetMapTileCompressionEvent>().connect<&App::on_set_map_tile_compression>(this);
+
   d.sink<AddLayerEvent>().connect<&App::on_add_layer>(this);
   d.sink<RemoveLayerEvent>().connect<&App::on_remove_layer>(this);
   d.sink<SelectLayerEvent>().connect<&App::on_select_layer>(this);
@@ -749,6 +752,20 @@ void App::on_open_resize_map_dialog()
   if (auto* document = active_map_document()) {
     const auto& map = document->get_map();
     ui::get_dialogs().resize_map.show(map.row_count(), map.column_count());
+  }
+}
+
+void App::on_set_map_tile_encoding(const SetMapTileEncodingEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    document->set_tile_encoding(event.encoding);
+  }
+}
+
+void App::on_set_map_tile_compression(const SetMapTileCompressionEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    document->set_tile_compression(event.compression);
   }
 }
 
