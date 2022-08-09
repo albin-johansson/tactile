@@ -20,7 +20,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
     -> Maybe<ZlibData>
 {
   if (level != Z_DEFAULT_COMPRESSION) {
-    level = std::clamp(Z_BEST_SPEED, level, Z_BEST_COMPRESSION);
+    level = std::clamp(level, Z_BEST_SPEED, Z_BEST_COMPRESSION);
   }
 
   if (!source || source_bytes == 0) {
