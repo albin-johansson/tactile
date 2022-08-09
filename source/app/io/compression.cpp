@@ -1,104 +1,147 @@
 #include "compression.hpp"
 
+#include <algorithm>  // clamp
+
 #include <spdlog/spdlog.h>
 #include <zlib.h>
 
+#include "meta/build.hpp"
+#include "meta/profile.hpp"
 #include "misc/assert.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {
 
-constexpr usize _buffer_size = 32'768;
-
-using ProcessFunction = int (*)(z_stream*, int);
-using EndFunction = int (*)(z_stream*);
-
-[[nodiscard]] auto _process_data(z_stream&       stream,
-                                 ProcessFunction process,
-                                 EndFunction     end,
-                                 const int       flush) -> std::optional<ZlibData>
-{
-  ZlibData out;
-  out.reserve(128);
-
-  Bytef buffer[_buffer_size];
-  int   status {};
-
-  do {
-    stream.next_out = buffer;
-    stream.avail_out = sizeof buffer;
-
-    status = process(&stream, flush);
-
-    if (out.size() < stream.total_out) {
-      const auto count = stream.total_out - out.size();
-      for (usize idx = 0; idx < count; ++idx) {
-        out.push_back(buffer[idx]);
-      }
-    }
-  } while (status == Z_OK);
-
-  end(&stream);
-
-  if (status != Z_STREAM_END) {
-    return std::nullopt;
-  }
-
-  return out;
-}
-
-[[nodiscard]] auto _convert(const ZlibCompressionLevel level) -> int
-{
-  switch (level) {
-    case ZlibCompressionLevel::Default:
-      return Z_DEFAULT_COMPRESSION;
-
-    case ZlibCompressionLevel::BestCompression:
-      return Z_BEST_COMPRESSION;
-
-    case ZlibCompressionLevel::BestSpeed:
-      return Z_BEST_SPEED;
-
-    default:
-      throw TactileError {"Invalid Zlib compression level!"};
-  }
-}
+constexpr usize buffer_size = 32'768;  // About 32 KB for our temporary buffers
 
 }  // namespace
 
-auto compress_with_zlib(const void*                data,
-                        const usize                bytes,
-                        const ZlibCompressionLevel level) -> std::optional<ZlibData>
+auto zlib_compress(const void* source, const usize source_bytes, int level)
+    -> Maybe<ZlibData>
 {
-  TACTILE_ASSERT(data);
-  z_stream stream {};
-
-  if (deflateInit(&stream, _convert(level)) != Z_OK) {
-    spdlog::error("Could not initialize z_stream for data compression!");
-    return std::nullopt;
+  if (level != Z_DEFAULT_COMPRESSION) {
+    level = std::clamp(Z_BEST_SPEED, level, Z_BEST_COMPRESSION);
   }
 
-  stream.next_in = (Bytef*) data;
-  stream.avail_in = static_cast<uInt>(bytes);
+  if (!source || source_bytes == 0) {
+    return nothing;
+  }
 
-  return _process_data(stream, deflate, deflateEnd, Z_FINISH);
+  Bytef temp_buffer[buffer_size];
+
+  z_stream stream {};
+  stream.next_in = (Bytef*) source;
+  stream.avail_in = static_cast<uInt>(source_bytes);
+  stream.next_out = temp_buffer;
+  stream.avail_out = sizeof temp_buffer;
+
+  if (const auto res = deflateInit(&stream, level); res != Z_OK) {
+    spdlog::error("Could not initialize z_stream for compression: {}", zError(res));
+    return nothing;
+  }
+
+  const auto upper_bound = deflateBound(&stream, source_bytes);
+
+  ZlibData dest;
+  dest.reserve(upper_bound);
+
+  auto copy_buffer_to_dest = [&] {
+    const auto written_bytes = buffer_size - stream.avail_out;
+    dest.insert(dest.end(), temp_buffer, temp_buffer + written_bytes);
+  };
+
+  int status {};
+  do {
+    status = deflate(&stream, Z_FINISH);
+
+    if (status == Z_STREAM_END) {
+      copy_buffer_to_dest();
+    }
+    else if (status == Z_OK || status == Z_BUF_ERROR) {
+      // We ran out of space in the output buffer, so reuse it!
+      copy_buffer_to_dest();
+      stream.next_out = temp_buffer;
+      stream.avail_out = sizeof temp_buffer;
+    }
+    else {
+      spdlog::error("Compression error: {}", zError(status));
+      return nothing;
+    }
+  } while (status != Z_STREAM_END);
+
+#if TACTILE_DEBUG
+  uint       pending {};
+  int        pending_bits {};
+  const auto pending_state = deflatePending(&stream, &pending, &pending_bits);
+  TACTILE_ASSERT(pending_state == Z_OK);
+  TACTILE_ASSERT(pending == 0);
+  TACTILE_ASSERT(pending_bits == 0);
+#endif  // TACTILE_DEBUG
+
+  if (const auto res = deflateEnd(&stream); res != Z_OK) {
+    spdlog::error("Could not tear down compression stream: {}", zError(res));
+    return nothing;
+  }
+
+  return dest;
 }
 
-auto decompress_with_zlib(const void* data, const usize bytes) -> std::optional<ZlibData>
+auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<ZlibData>
 {
-  TACTILE_ASSERT(data);
-  z_stream stream {};
-
-  if (inflateInit(&stream) != Z_OK) {
-    spdlog::error("Could not initialize z_stream for data decompression!");
-    return std::nullopt;
+  if (!source || source_bytes == 0) {
+    return nothing;
   }
 
-  stream.next_in = (Bytef*) data;
-  stream.avail_in = static_cast<uInt>(bytes);
+  Bytef temp_buffer[buffer_size];
 
-  return _process_data(stream, inflate, inflateEnd, 0);
+  z_stream stream {};
+  stream.next_in = (Bytef*) source;
+  stream.avail_in = static_cast<uInt>(source_bytes);
+  stream.next_out = temp_buffer;
+  stream.avail_out = sizeof temp_buffer;
+
+  if (inflateInit(&stream) != Z_OK) {
+    return nothing;
+  }
+
+  ZlibData dest;
+  dest.reserve(2048);
+
+  auto copy_buffer_to_dest = [&] {
+    const auto written_bytes = buffer_size - stream.avail_out;
+    dest.insert(dest.end(), temp_buffer, temp_buffer + written_bytes);
+  };
+
+  int status {};
+  do {
+    status = inflate(&stream, Z_FINISH);
+
+    if (status == Z_STREAM_END) {
+      copy_buffer_to_dest();
+    }
+    else if (status == Z_OK || status == Z_BUF_ERROR) {
+      // We ran out of space in the output buffer, so reuse it!
+      copy_buffer_to_dest();
+      stream.next_out = temp_buffer;
+      stream.avail_out = sizeof temp_buffer;
+    }
+    else {
+      spdlog::error("Decompression error: {}", zError(status));
+      return nothing;
+    }
+  } while (status != Z_STREAM_END);
+
+  if (const auto res = inflateEnd(&stream); res != Z_OK) {
+    spdlog::error("Could not tear down decompression stream: {}", zError(res));
+    return nothing;
+  }
+
+  return dest;
+}
+
+auto zlib_decompress(std::span<const uint8> span) -> Maybe<ZlibData>
+{
+  return zlib_decompress(span.data(), span.size_bytes());
 }
 
 }  // namespace tactile
