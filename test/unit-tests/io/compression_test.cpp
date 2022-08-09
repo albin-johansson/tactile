@@ -19,8 +19,8 @@ TEST(Compression, CompressAndDecompress)
     source.push_back(next_random(0, 100));
   }
 
-  const auto compressed = zlib_compress(source).value();
-  const auto decompressed = zlib_decompress(compressed).value();
+  const auto compressed = io::zlib_compress(source).value();
+  const auto decompressed = io::zlib_decompress(compressed).value();
 
   const auto n_items = decompressed.size() / sizeof(int);
   ASSERT_EQ(source.size(), n_items);

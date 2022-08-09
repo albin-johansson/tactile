@@ -9,7 +9,7 @@
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 constexpr usize buffer_size = 32'768;  // About 32 KB for our temporary buffers
@@ -144,4 +144,4 @@ auto zlib_decompress(std::span<const uint8> span) -> Maybe<ZlibData>
   return zlib_decompress(span.data(), span.size_bytes());
 }
 
-}  // namespace tactile
+}  // namespace tactile::io

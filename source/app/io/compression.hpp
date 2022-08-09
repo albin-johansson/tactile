@@ -6,7 +6,7 @@
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 using ZlibData = std::vector<uint8>;
 
@@ -25,4 +25,4 @@ template <typename T>
 
 [[nodiscard]] auto zlib_decompress(std::span<const uint8> span) -> Maybe<ZlibData>;
 
-}  // namespace tactile
+}  // namespace tactile::io
