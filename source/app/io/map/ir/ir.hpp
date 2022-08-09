@@ -32,6 +32,7 @@
 #include "core/common/math.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
+#include "core/compression.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 
@@ -149,6 +150,9 @@ struct MapData
 
   int32 next_layer_id {};
   int32 next_object_id {};
+
+  TileEncoding    encoding {};
+  TileCompression compression {};
 
   TreeMap<std::string, ComponentMap> component_definitions;
 

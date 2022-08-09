@@ -196,6 +196,9 @@ void _validate_basic_map_info(const ir::MapData& source, const ir::MapData& rest
 
   ASSERT_EQ(source.next_object_id, restored.next_object_id);
   ASSERT_EQ(source.next_layer_id, restored.next_layer_id);
+
+  ASSERT_EQ(source.encoding, restored.encoding);
+  ASSERT_EQ(source.compression, restored.compression);
 }
 
 constexpr usize _row_count = 15;
@@ -405,6 +408,9 @@ constexpr usize _col_count = 13;
 
   data.row_count = _row_count;
   data.col_count = _col_count;
+
+  data.encoding = TileEncoding::Base64;
+  data.compression = TileCompression::Zlib;
 
   if (useComponents) {
     data.component_definitions["empty-component"];

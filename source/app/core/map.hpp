@@ -80,6 +80,12 @@ class Map final : public IContext
 
   void set_layer_index(const UUID& id, usize index);
 
+  void set_tile_encoding(TileEncoding encoding);
+  void set_tile_compression(TileCompression compression);
+
+  [[nodiscard]] auto tile_encoding() const -> TileEncoding;
+  [[nodiscard]] auto tile_compression() const -> TileCompression;
+
   [[nodiscard]] auto local_layer_index(const UUID& id) const -> usize;
 
   [[nodiscard]] auto can_move_layer_up(const UUID& id) const -> bool;

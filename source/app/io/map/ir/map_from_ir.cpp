@@ -305,6 +305,8 @@ void map_from_ir(const ParseResult& result,
   map.set_tile_size(map_data.tile_size);
   map.set_next_layer_id(map_data.next_layer_id);
   map.set_next_object_id(map_data.next_object_id);
+  map.set_tile_compression(map_data.compression);
+  map.set_tile_encoding(map_data.encoding);
   map.resize(map_data.row_count, map_data.col_count);
 
   restore_component_definitions(*document, map_data);

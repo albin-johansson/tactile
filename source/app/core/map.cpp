@@ -271,6 +271,26 @@ void Map::set_layer_index(const UUID& id, const usize index)
   mRootLayer.set_layer_index(id, index);
 }
 
+void Map::set_tile_encoding(const TileEncoding encoding)
+{
+  mEncoding = encoding;
+}
+
+void Map::set_tile_compression(const TileCompression compression)
+{
+  mCompression = compression;
+}
+
+auto Map::tile_encoding() const -> TileEncoding
+{
+  return mEncoding;
+}
+
+auto Map::tile_compression() const -> TileCompression
+{
+  return mCompression;
+}
+
 auto Map::local_layer_index(const UUID& id) const -> usize
 {
   return mRootLayer.get_local_index(id);
