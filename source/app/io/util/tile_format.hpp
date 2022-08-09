@@ -7,7 +7,7 @@
 #include "core/common/tiles.hpp"
 #include "core/compression.hpp"
 
-namespace tactile {
+namespace tactile::io {
 
 /**
  * Encodes a tile matrix using Base64.
@@ -45,4 +45,4 @@ namespace tactile {
                                        usize              columns,
                                        TileCompression    compression) -> TileMatrix;
 
-}  // namespace tactile
+}  // namespace tactile::io
