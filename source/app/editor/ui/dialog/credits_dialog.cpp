@@ -76,6 +76,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 
     row("Boost", "BSL-1.0");
     row("Centurion", "MIT");
+    row("cppcodec", "MIT");
     row("Dear ImGui", "MIT");
     row("EnTT", "MIT");
     row("fmt", "MIT");
@@ -92,6 +93,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     row("stb_image", "MIT");
     row("tinyfiledialogs", "Zlib");
     row("yaml-cpp", "MIT");
+    row("Zlib", "Zlib");
     row("googletest", "BSD");
   }
 }
