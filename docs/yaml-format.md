@@ -67,14 +67,14 @@ zlib-compression-level: 9
 
 TODO v2: consider removing `id`
 
-|    Attribute |   Type   | Required | Default | Description                                          |
-|-------------:|:--------:|:--------:|:-------:|:-----------------------------------------------------|
-|       `name` | `string` |   Yes    |   N/A   | The name associated with the layer.                  |
-|         `id` |  `int`   |   Yes    |   N/A   | The unique identifier associated with the layer.     |
-|       `type` | `string` |   Yes    |   N/A   | One of `tile-layer`, `object-layer` or `group-layer` |
-|    `opacity` | `float`  |    No    |  `1.0`  | The opacity of the layer, in the range [0, 1].       |
-|    `visible` |  `bool`  |    No    | `true`  | Whether or not the layer is rendered.                |
-| `properties` | Sequence |    No    |   N/A   | A sequence of `Property` nodes.                      |
+|    Attribute |                         Type                         | Required | Default | Description                                      |
+|-------------:|:----------------------------------------------------:|:--------:|:-------:|:-------------------------------------------------|
+|       `name` |                       `string`                       |   Yes    |   N/A   | The name associated with the layer.              |
+|         `id` |                        `int`                         |   Yes    |   N/A   | The unique identifier associated with the layer. |
+|       `type` | One of `tile-layer`, `object-layer` or `group-layer` |   Yes    |   N/A   |                                                  |
+|    `opacity` |                       `float`                        |    No    |  `1.0`  | The opacity of the layer, in the range [0, 1].   |
+|    `visible` |                        `bool`                        |    No    | `true`  | Whether or not the layer is rendered.            |
+| `properties` |                       Sequence                       |    No    |   N/A   | A sequence of `Property` nodes.                  |
 
 Example:
 
@@ -112,18 +112,18 @@ attributes.
 
 ## `Object`
 
-|    Attribute |   Type   | Required | Default | Description                          |
-|-------------:|:--------:|:--------:|:-------:|:-------------------------------------|
-|         `id` |  `int`   |   Yes    |   N/A   |                                      |
-|       `type` | `string` |   Yes    |   N/A   | One of `point`, `rect` or `ellipse`. |
-|       `name` | `string` |    No    |  `""`   |                                      |
-|        `tag` | `string` |    No    |  `""`   | A user-defined type tag.             |
-|    `visible` |  `bool`  |    No    | `true`  |                                      |
-|          `x` | `float`  |    No    |   `0`   |                                      |
-|          `y` | `float`  |    No    |   `0`   |                                      |
-|      `width` | `float`  |    No    |   `0`   |                                      |
-|     `height` | `float`  |    No    |   `0`   |                                      |
-| `properties` | Sequence |    No    |   N/A   | A sequence of `Property` nodes.      |
+|    Attribute |                Type                 | Required | Default | Description                     |
+|-------------:|:-----------------------------------:|:--------:|:-------:|:--------------------------------|
+|         `id` |                `int`                |   Yes    |   N/A   |                                 |
+|       `type` | One of `point`, `rect` or `ellipse` |   Yes    |   N/A   |                                 |
+|       `name` |              `string`               |    No    |  `""`   |                                 |
+|        `tag` |              `string`               |    No    |  `""`   | A user-defined type tag.        |
+|    `visible` |               `bool`                |    No    | `true`  |                                 |
+|          `x` |               `float`               |    No    |   `0`   |                                 |
+|          `y` |               `float`               |    No    |   `0`   |                                 |
+|      `width` |               `float`               |    No    |   `0`   |                                 |
+|     `height` |               `float`               |    No    |   `0`   |                                 |
+| `properties` |              Sequence               |    No    |   N/A   | A sequence of `Property` nodes. |
 
 Example:
 
@@ -239,11 +239,11 @@ TODO v2: change `tile` to `tile-index`.
 
 ## `ComponentDefAttribute`
 
-| Attribute |   Type    | Required | Description                                                          |
-|----------:|:---------:|:--------:|:---------------------------------------------------------------------|
-|    `name` | `string`  |   Yes    | The name of the attribute.                                           |
-|    `type` | `string`  |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
-| `default` | `variant` |    No    | The default attribute value.                                         |
+| Attribute |                                 Type                                 | Required | Description                  |
+|----------:|:--------------------------------------------------------------------:|:--------:|:-----------------------------|
+|    `name` |                               `string`                               |   Yes    | The name of the attribute.   |
+|    `type` | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |   Yes    |                              |
+| `default` |                              `variant`                               |    No    | The default attribute value. |
 
 Example:
 
@@ -291,11 +291,11 @@ values:
 
 ## `Property`
 
-| Attribute |   Type    | Required | Description                                                          |
-|----------:|:---------:|:--------:|:---------------------------------------------------------------------|
-|    `name` | `string`  |   Yes    | Name that is unique in the scope of "sibling" properties.            |
-|    `type` | `string`  |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
-|   `value` | `variant` |   Yes    | The value of the property.                                           |
+| Attribute |                                 Type                                 | Required | Description                                             |
+|----------:|:--------------------------------------------------------------------:|:--------:|:--------------------------------------------------------|
+|    `name` |                               `string`                               |   Yes    | Name that is unique in the scope of sibling properties. |
+|    `type` | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |   Yes    |                                                         |
+|   `value` |                              `variant`                               |   Yes    | The value of the property.                              |
 
 Note, color properties are always stored using RGBA encoding, with a `#` prefix, e.g. `"#11223344"`.
 
