@@ -24,6 +24,7 @@
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
+#include "io/util/tile_format.hpp"
 #include "io/util/yaml.hpp"
 
 using namespace std::string_literals;
@@ -36,9 +37,9 @@ namespace {
                                ir::LayerData&     layer,
                                usize              index) -> ParseError;
 
-[[nodiscard]] auto parse_tile_layer_data(ir::TileLayerData& layer,
-                                         const usize        columns,
-                                         const std::string& tile_data) -> ParseError
+[[nodiscard]] auto parse_plain_tile_layer_data(ir::TileLayerData& layer,
+                                               const usize        columns,
+                                               const std::string& tile_data) -> ParseError
 {
   usize index = 0;
   for (const auto& token : split(tile_data.c_str(), ' ')) {
@@ -55,14 +56,15 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer(const YAML::Node& node,
-                                    ir::LayerData&    layer_data,
-                                    const usize       rows,
-                                    const usize       columns) -> ParseError
+[[nodiscard]] auto parse_tile_layer(const YAML::Node&  node,
+                                    const ir::MapData& map,
+                                    ir::LayerData&     layer,
+                                    const usize        rows,
+                                    const usize        columns) -> ParseError
 {
-  layer_data.type = LayerType::TileLayer;
+  layer.type = LayerType::TileLayer;
 
-  auto& tile_layer = layer_data.data.emplace<ir::TileLayerData>();
+  auto& tile_layer = layer.data.emplace<ir::TileLayerData>();
   tile_layer.row_count = rows;
   tile_layer.col_count = columns;
   tile_layer.tiles = make_tile_matrix(rows, columns);
@@ -72,11 +74,20 @@ namespace {
     return ParseError::NoTileLayerData;
   }
 
-  std::replace(data.begin(), data.end(), '\n', ' ');
-
-  if (const auto err = parse_tile_layer_data(tile_layer, columns, data);
-      err != ParseError::None) {
-    return err;
+  if (map.tile_format.encoding == TileEncoding::Plain) {
+    std::replace(data.begin(), data.end(), '\n', ' ');
+    if (const auto err = parse_plain_tile_layer_data(tile_layer, columns, data);
+        err != ParseError::None) {
+      return err;
+    }
+  }
+  else if (map.tile_format.encoding == TileEncoding::Base64) {
+    tile_layer.tiles =
+        base64_decode_tiles(data, rows, columns, map.tile_format.compression);
+  }
+  else {
+    // TODO
+    return ParseError::Unknown;
   }
 
   return ParseError::None;
@@ -151,7 +162,7 @@ namespace {
   }
 
   if (type == "tile-layer") {
-    if (const auto err = parse_tile_layer(node, layer, map.row_count, map.col_count);
+    if (const auto err = parse_tile_layer(node, map, layer, map.row_count, map.col_count);
         err != ParseError::None) {
       return err;
     }

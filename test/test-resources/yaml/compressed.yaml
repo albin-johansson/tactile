@@ -1,0 +1,23 @@
+version: 1
+row-count: 3
+column-count: 3
+tile-width: 32
+tile-height: 32
+next-layer-id: 2
+next-object-id: 1
+tile-format:
+  encoding: base64
+  compression: zlib
+  zlib-compression-level: -1
+  endianness: little
+tilesets:
+  - first-global-id: 1
+    path: terrain.yaml
+  - first-global-id: 1026
+    path: outside.yaml
+layers:
+  - name: Ground
+    id: 1
+    type: tile-layer
+    data: eJx7wczAcIGdgWEHNwPDAn4Ghg5hBoYCcQaGCGkGBgd5BgYNZQYGAH81BXQ=
+    uncompressed-size: 2843234

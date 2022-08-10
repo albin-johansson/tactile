@@ -21,7 +21,26 @@
 
 #include <gtest/gtest.h>
 
+#include "io/map/parse/parse_map.hpp"
+
 namespace tactile::test {
+
+TEST(TileFormat, LoadCompressedMap)
+{
+  const auto result = io::parse_map("test-resources/yaml/compressed.yaml");
+  ASSERT_EQ(io::ParseError::None, result.error());
+
+  const auto& map = result.data();
+  ASSERT_EQ(1, map.layers.size());
+
+  const auto& layer = map.layers.front();
+  ASSERT_EQ(LayerType::TileLayer, layer.type);
+
+  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+
+  const TileMatrix expected {{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}};
+  ASSERT_EQ(expected, tile_layer.tiles);
+}
 
 TEST(TileFormat, EncodeDecodeRoundtrip)
 {
