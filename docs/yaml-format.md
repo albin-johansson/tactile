@@ -46,11 +46,12 @@ The `zlib-compression-level` attribute directly corresponds to Zlib constants su
 is `-1`), `Z_BEST_SPEED` (which is `1`), and `Z_BEST_COMPRESSION` (which is `9`). You can use other values in the
 interval `[1, 9]` to request an intermediate compression mode, depending on the tradeoff you want to make.
 
-|                Attribute |                 Type                 | Required | Default | Description                     |
-|-------------------------:|:------------------------------------:|:--------:|:-------:|:--------------------------------|
-|               `encoding` |       One of `plain`, `base64`       |    No    | `plain` | Tile layer data encoding.       |
-|            `compression` |        One of `none`, `zlib`         |    No    | `none`  | The compression algorithm used. |
-| `zlib-compression-level` | Either `-1` or in the range `[1, 9]` |    No    |  `-1`   |                                 |
+|                Attribute |                 Type                 | Required | Default  | Description                                   |
+|-------------------------:|:------------------------------------:|:--------:|:--------:|:----------------------------------------------|
+|               `encoding` |       One of `plain`, `base64`       |    No    | `plain`  | Tile layer data encoding.                     |
+|            `compression` |        One of `none`, `zlib`         |    No    |  `none`  | The compression algorithm used.               |
+| `zlib-compression-level` | Either `-1` or in the range `[1, 9]` |    No    |   `-1`   |                                               |
+|             `endianness` |        One of `little`, `big`        |    No    | `little` | Byte ordering of compressed tile identifiers. |
 
 Example:
 
