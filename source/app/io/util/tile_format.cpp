@@ -4,12 +4,15 @@
 #include <concepts>  // same_as
 #include <span>      // span, as_bytes
 
-#include <cppcodec/base64_default_rfc4648.hpp>
+#include <cppcodec/base64_rfc4648.hpp>
 
+#include "core/util/bits.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/tiles.hpp"
 #include "io/compression.hpp"
 #include "misc/panic.hpp"
+
+using Base64 = cppcodec::base64_rfc4648;
 
 namespace tactile::io {
 namespace {
@@ -19,13 +22,18 @@ static_assert(std::same_as<TileID, int32>);
 
 [[nodiscard]] auto convert_tile_matrix_to_sequence(const TileMatrix& matrix,
                                                    const usize       rows,
-                                                   const usize       columns) -> TileRow
+                                                   const usize       columns) -> ZlibData
 {
-  TileRow seq;
-  seq.reserve(rows * columns);
+  ZlibData seq;
+  seq.reserve(rows * columns * sizeof(TileID));
 
   invoke_mn(rows, columns, [&](const usize row, const usize col) {
-    seq.push_back(matrix[row][col]);
+    const auto tile = matrix[row][col];
+
+    seq.push_back(nth_byte(tile, 0));
+    seq.push_back(nth_byte(tile, 1));
+    seq.push_back(nth_byte(tile, 2));
+    seq.push_back(nth_byte(tile, 3));
   });
 
   return seq;
@@ -47,8 +55,8 @@ static_assert(std::same_as<TileID, int32>);
     const auto d = static_cast<int32>(data[index + 3]);
 
     const TileID tile = std::endian::native == std::endian::little
-                            ? (d << 3) | (c << 2) | (b << 1) | a
-                            : (a << 3) | (b << 2) | (c << 1) | d;
+                            ? (d << 24) | (c << 16) | (b << 8) | a
+                            : (a << 24) | (b << 16) | (c << 8) | d;
 
     const auto [row, col] = to_matrix_coords(i, columns);
     matrix[row][col] = tile;
@@ -65,15 +73,14 @@ auto base64_encode_tiles(const TileMatrix&     tiles,
                          const TileCompression compression) -> std::string
 {
   const auto sequence = convert_tile_matrix_to_sequence(tiles, rows, columns);
-  const auto bytes = std::as_bytes(std::span {sequence});
 
   switch (compression) {
     case TileCompression::None: {
-      return base64::encode(bytes);
+      return Base64::encode(sequence);
     }
     case TileCompression::Zlib: {
-      const auto compressed = zlib_compress(bytes.data(), bytes.size_bytes()).value();
-      return base64::encode(std::as_bytes(std::span {compressed}));
+      const auto compressed = zlib_compress(sequence).value();
+      return Base64::encode(compressed);
     }
     default:
       throw TactileError {"Invalid compression strategy!"};
@@ -85,8 +92,7 @@ auto base64_decode_tiles(const std::string&    tiles,
                          const usize           columns,
                          const TileCompression compression) -> TileMatrix
 {
-  const auto bytes = std::as_bytes(std::span {tiles});
-  const auto decoded_bytes = base64::decode(bytes);
+  const auto decoded_bytes = Base64::decode(tiles.data(), tiles.size());
 
   switch (compression) {
     case TileCompression::None:
