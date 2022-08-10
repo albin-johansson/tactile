@@ -26,7 +26,63 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_map(const fs::path& path, ir::MapData& data) -> ParseError
+[[nodiscard]] auto parse_tile_format(const YAML::Node& node, ir::TileFormatData& format)
+    -> ParseError
+{
+  if (auto encoding = node["encoding"]) {
+    auto encoding_str = encoding.as<std::string>();
+    if (encoding_str == "plain") {
+      format.encoding = TileEncoding::Plain;
+    }
+    else if (encoding_str == "base64") {
+      format.encoding = TileEncoding::Base64;
+    }
+    else {
+      // TODO error
+    }
+  }
+  else {
+    format.encoding = TileEncoding::Plain;
+  }
+
+  if (auto compression = node["compression"]) {
+    auto compression_str = compression.as<std::string>();
+    if (compression_str == "none") {
+      format.compression = TileCompression::None;
+    }
+    else if (compression_str == "zlib") {
+      format.compression = TileCompression::Zlib;
+    }
+    else {
+      // TODO error
+    }
+  }
+  else {
+    format.compression = TileCompression::None;
+  }
+
+  if (auto endianness = node["endianness"]) {
+    auto endianness_str = endianness.as<std::string>();
+    if (endianness_str == "little") {
+      format.endianness = std::endian::little;
+    }
+    else if (endianness_str == "big") {
+      format.endianness = std::endian::big;
+    }
+    else {
+      // TODO error
+    }
+  }
+  else {
+    format.endianness = std::endian::little;
+  }
+
+  read_attribute(node, "zlib-compression-level", format.zlib_compression_level, -1);
+
+  return ParseError::None;
+}
+
+[[nodiscard]] auto parse_map(const fs::path& path, ir::MapData& data) -> ParseError
 {
   const auto node = YAML::LoadFile(path.string());
   if (!node) {
@@ -55,6 +111,13 @@ namespace {
 
   if (!read_attribute(node, "next-object-id", data.next_object_id)) {
     return ParseError::NoMapNextObjectId;
+  }
+
+  if (auto tile_format = node["tile-format"]) {
+    if (const auto err = parse_tile_format(tile_format, data.tile_format);
+        err != ParseError::None) {
+      return err;
+    }
   }
 
   const auto dir = path.parent_path();
@@ -94,7 +157,7 @@ auto parse_yaml_map(const fs::path& path) -> ParseResult
   ParseResult result;
   result.set_path(path);
 
-  const auto error = _parse_map(path, result.data());
+  const auto error = parse_map(path, result.data());
   result.set_error(error);
 
   return result;

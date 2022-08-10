@@ -253,8 +253,11 @@ auto map_to_ir(const MapDocument& document) -> ir::MapData
   data.tile_size = map.tile_size();
   data.next_object_id = map.next_object_id();
   data.next_layer_id = map.next_layer_id();
-  data.compression = map.tile_compression();
-  data.encoding = map.tile_encoding();
+
+  data.tile_format.compression = map.tile_compression();
+  data.tile_format.encoding = map.tile_encoding();
+  data.tile_format.endianness = std::endian::native;
+  data.tile_format.zlib_compression_level = -1;  // TODO store in map
 
   const auto* components = document.view_component_index();
 

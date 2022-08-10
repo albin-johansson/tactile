@@ -26,9 +26,11 @@
  * and height, etc.
  */
 
+#include <string>  // string
+
 #include <gtest/gtest.h>
 
-#include "core/util/texture_manager.hpp"
+#include "core/common/fs.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
@@ -39,7 +41,9 @@ using namespace std::string_literals;
 namespace tactile::test {
 namespace {
 
-void _validate_contexts(const ir::ContextData& source, const ir::ContextData& restored)
+inline std::string current_parser;
+
+void validate_contexts(const ir::ContextData& source, const ir::ContextData& restored)
 {
   ASSERT_EQ(source.properties.size(), restored.properties.size());
   ASSERT_EQ(source.components.size(), restored.components.size());
@@ -52,7 +56,7 @@ void _validate_contexts(const ir::ContextData& source, const ir::ContextData& re
   }
 }
 
-void _validate_objects(const ir::ObjectData& source, const ir::ObjectData& restored)
+void validate_objects(const ir::ObjectData& source, const ir::ObjectData& restored)
 {
   ASSERT_EQ(source.id, restored.id);
   ASSERT_EQ(source.type, restored.type);
@@ -65,78 +69,78 @@ void _validate_objects(const ir::ObjectData& source, const ir::ObjectData& resto
 
   ASSERT_EQ(source.visible, restored.visible);
 
-  _validate_contexts(source.context, restored.context);
+  validate_contexts(source.context, restored.context);
 }
 
-void _validate_object_layers(const ir::ObjectLayerData& source,
-                             const ir::ObjectLayerData& restored)
+void validate_object_layers(const ir::ObjectLayerData& source,
+                            const ir::ObjectLayerData& restored)
 {
   ASSERT_EQ(source.objects.size(), restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
     const auto& sourceObject = source.objects.at(index);
     const auto& restoredObject = restored.objects.at(index);
-    _validate_objects(sourceObject, restoredObject);
+    validate_objects(sourceObject, restoredObject);
   }
 }
 
-void _validate_layers(const ir::LayerData& sourceLayer,
-                      const ir::LayerData& restoredLayer)
+void validate_layers(const ir::LayerData& source_layer,
+                     const ir::LayerData& restored_layer)
 {
-  ASSERT_EQ(sourceLayer.name, restoredLayer.name);
-  ASSERT_EQ(sourceLayer.type, restoredLayer.type);
+  ASSERT_EQ(source_layer.name, restored_layer.name);
+  ASSERT_EQ(source_layer.type, restored_layer.type);
 
-  ASSERT_EQ(sourceLayer.id, restoredLayer.id);
-  ASSERT_EQ(sourceLayer.index, restoredLayer.index);
+  ASSERT_EQ(source_layer.id, restored_layer.id);
+  ASSERT_EQ(source_layer.index, restored_layer.index);
 
-  ASSERT_EQ(sourceLayer.opacity, restoredLayer.opacity);
-  ASSERT_EQ(sourceLayer.visible, restoredLayer.visible);
+  ASSERT_EQ(source_layer.opacity, restored_layer.opacity);
+  ASSERT_EQ(source_layer.visible, restored_layer.visible);
 
-  if (sourceLayer.type == LayerType::TileLayer) {
-    const auto& sourceTileData = std::get<ir::TileLayerData>(sourceLayer.data);
-    const auto& restoredTileData = std::get<ir::TileLayerData>(restoredLayer.data);
+  if (source_layer.type == LayerType::TileLayer) {
+    const auto& sourceTileData = std::get<ir::TileLayerData>(source_layer.data);
+    const auto& restoredTileData = std::get<ir::TileLayerData>(restored_layer.data);
 
     ASSERT_EQ(sourceTileData.row_count, restoredTileData.row_count);
     ASSERT_EQ(sourceTileData.col_count, restoredTileData.col_count);
     ASSERT_EQ(sourceTileData.tiles, restoredTileData.tiles);
   }
-  else if (sourceLayer.type == LayerType::ObjectLayer) {
-    const auto& sourceObjects = std::get<ir::ObjectLayerData>(sourceLayer.data);
-    const auto& restoredObjects = std::get<ir::ObjectLayerData>(restoredLayer.data);
-    _validate_object_layers(sourceObjects, restoredObjects);
+  else if (source_layer.type == LayerType::ObjectLayer) {
+    const auto& sourceObjects = std::get<ir::ObjectLayerData>(source_layer.data);
+    const auto& restoredObjects = std::get<ir::ObjectLayerData>(restored_layer.data);
+    validate_object_layers(sourceObjects, restoredObjects);
   }
-  else if (sourceLayer.type == LayerType::GroupLayer) {
-    const auto& sourceGroup = std::get<ir::GroupLayerData>(sourceLayer.data);
-    const auto& restoredGroup = std::get<ir::GroupLayerData>(restoredLayer.data);
+  else if (source_layer.type == LayerType::GroupLayer) {
+    const auto& sourceGroup = std::get<ir::GroupLayerData>(source_layer.data);
+    const auto& restoredGroup = std::get<ir::GroupLayerData>(restored_layer.data);
 
     ASSERT_EQ(sourceGroup.children.size(), restoredGroup.children.size());
     for (usize index = 0; index < sourceGroup.children.size(); ++index) {
       const auto& sourceChildLayer = sourceGroup.children.at(index);
       const auto& restoredChildLayer = restoredGroup.children.at(index);
-      _validate_layers(*sourceChildLayer, *restoredChildLayer);
+      validate_layers(*sourceChildLayer, *restoredChildLayer);
     }
   }
 
-  _validate_contexts(sourceLayer.context, restoredLayer.context);
+  validate_contexts(source_layer.context, restored_layer.context);
 }
 
-void _validate_layers(const ir::MapData& source, const ir::MapData& restored)
+void validate_layers(const ir::MapData& source, const ir::MapData& restored)
 {
   ASSERT_EQ(source.layers.size(), restored.layers.size());
   for (usize index = 0; index < source.layers.size(); ++index) {
     const auto& sourceLayer = source.layers.at(index);
     const auto& restoredLayer = restored.layers.at(index);
-    _validate_layers(sourceLayer, restoredLayer);
+    validate_layers(sourceLayer, restoredLayer);
   }
 }
 
-void _validate_fancy_tiles(const ir::MetaTileData& source,
-                           const ir::MetaTileData& restored)
+void validate_fancy_tiles(const ir::MetaTileData& source,
+                          const ir::MetaTileData& restored)
 {
   ASSERT_EQ(source.objects.size(), restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
     const auto& sourceObject = source.objects.at(index);
     const auto& restoredObject = restored.objects.at(index);
-    _validate_objects(sourceObject, restoredObject);
+    validate_objects(sourceObject, restoredObject);
   }
 
   ASSERT_EQ(source.frames.size(), restored.frames.size());
@@ -148,10 +152,10 @@ void _validate_fancy_tiles(const ir::MetaTileData& source,
     ASSERT_EQ(sourceFrame.duration_ms, restoredFrame.duration_ms);
   }
 
-  _validate_contexts(source.context, restored.context);
+  validate_contexts(source.context, restored.context);
 }
 
-void _validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
+void validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
 {
   ASSERT_EQ(source.tilesets.size(), restored.tilesets.size());
 
@@ -173,21 +177,21 @@ void _validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
     ASSERT_EQ(sourceTileset.fancy_tiles.size(), restoredTileset.fancy_tiles.size());
     for (const auto& [id, sourceTile] : sourceTileset.fancy_tiles) {
       const auto& restoredTile = restoredTileset.fancy_tiles.at(id);
-      _validate_fancy_tiles(sourceTile, restoredTile);
+      validate_fancy_tiles(sourceTile, restoredTile);
     }
 
-    _validate_contexts(sourceTileset.context, restoredTileset.context);
+    validate_contexts(sourceTileset.context, restoredTileset.context);
   }
 }
 
-void _validate_component_definitions(const ir::MapData& source,
-                                     const ir::MapData& restored)
+void validate_component_definitions(const ir::MapData& source,
+                                    const ir::MapData& restored)
 {
   ASSERT_EQ(source.component_definitions.size(), restored.component_definitions.size());
   ASSERT_EQ(source.component_definitions, restored.component_definitions);
 }
 
-void _validate_basic_map_info(const ir::MapData& source, const ir::MapData& restored)
+void validate_basic_map_info(const ir::MapData& source, const ir::MapData& restored)
 {
   ASSERT_EQ(source.row_count, restored.row_count);
   ASSERT_EQ(source.col_count, restored.col_count);
@@ -197,14 +201,16 @@ void _validate_basic_map_info(const ir::MapData& source, const ir::MapData& rest
   ASSERT_EQ(source.next_object_id, restored.next_object_id);
   ASSERT_EQ(source.next_layer_id, restored.next_layer_id);
 
-  ASSERT_EQ(source.encoding, restored.encoding);
-  ASSERT_EQ(source.compression, restored.compression);
+  if (current_parser == "YAML") {
+    ASSERT_EQ(source.tile_format.encoding, restored.tile_format.encoding);
+    ASSERT_EQ(source.tile_format.compression, restored.tile_format.compression);
+  }
 }
 
-constexpr usize _row_count = 15;
-constexpr usize _col_count = 13;
+constexpr usize row_count = 15;
+constexpr usize col_count = 13;
 
-[[nodiscard]] auto _create_source_ground_layer() -> ir::LayerData
+[[nodiscard]] auto create_source_ground_layer() -> ir::LayerData
 {
   ir::LayerData data;
 
@@ -218,12 +224,12 @@ constexpr usize _col_count = 13;
   data.visible = true;
 
   auto& tileData = data.data.emplace<ir::TileLayerData>();
-  tileData.row_count = _row_count;
-  tileData.col_count = _col_count;
+  tileData.row_count = row_count;
+  tileData.col_count = col_count;
 
-  tileData.tiles = make_tile_matrix(_row_count, _col_count);
-  for (usize row = 0; row < _row_count; ++row) {
-    for (usize col = 0; col < _col_count; ++col) {
+  tileData.tiles = make_tile_matrix(row_count, col_count);
+  for (usize row = 0; row < row_count; ++row) {
+    for (usize col = 0; col < col_count; ++col) {
       tileData.tiles[row][col] = 7;
     }
   }
@@ -234,7 +240,7 @@ constexpr usize _col_count = 13;
   return data;
 }
 
-[[nodiscard]] auto _create_source_group_layer(const bool useComponents) -> ir::LayerData
+[[nodiscard]] auto create_source_group_layer(const bool use_components) -> ir::LayerData
 {
   ir::LayerData data;
 
@@ -263,12 +269,11 @@ constexpr usize _col_count = 13;
     child->visible = true;
 
     auto& tileData = child->data.emplace<ir::TileLayerData>();
-    tileData.row_count = _row_count;
-    tileData.col_count = _col_count;
-    tileData.tiles = make_tile_matrix(_row_count, _col_count);
+    tileData.row_count = row_count;
+    tileData.col_count = col_count;
+    tileData.tiles = make_tile_matrix(row_count, col_count);
 
-    child->context.properties["path"] =
-        std::filesystem::path {"test-resources/exterior.png"};
+    child->context.properties["path"] = fs::path {"test-resources/exterior.png"};
   }
 
   {
@@ -283,11 +288,11 @@ constexpr usize _col_count = 13;
     child->visible = true;
 
     auto& tileData = child->data.emplace<ir::TileLayerData>();
-    tileData.row_count = _row_count;
-    tileData.col_count = _col_count;
-    tileData.tiles = make_tile_matrix(_row_count, _col_count);
+    tileData.row_count = row_count;
+    tileData.col_count = col_count;
+    tileData.tiles = make_tile_matrix(row_count, col_count);
 
-    if (useComponents) {
+    if (use_components) {
       child->context.components["short-component"]["integer"] = 356;
     }
   }
@@ -295,7 +300,7 @@ constexpr usize _col_count = 13;
   return data;
 }
 
-[[nodiscard]] auto _create_source_object_layer(const bool useComponents) -> ir::LayerData
+[[nodiscard]] auto create_source_object_layer(const bool use_components) -> ir::LayerData
 {
   ir::LayerData data;
 
@@ -319,7 +324,7 @@ constexpr usize _col_count = 13;
   point.tag = "point-tag";
   point.visible = true;
 
-  if (useComponents) {
+  if (use_components) {
     point.context.components["empty-component"];
   }
 
@@ -337,7 +342,7 @@ constexpr usize _col_count = 13;
   rect.context.properties["rect-int"] = 3'347;
   rect.context.properties["rect-color"] = cen::colors::hot_pink;
 
-  if (useComponents) {
+  if (use_components) {
     rect.context.components["short-component"]["integer"] = 83;
   }
 
@@ -354,7 +359,7 @@ constexpr usize _col_count = 13;
   return data;
 }
 
-[[nodiscard]] auto _create_source_tileset(const bool useComponents) -> ir::TilesetData
+[[nodiscard]] auto create_source_tileset(const bool use_components) -> ir::TilesetData
 {
   ir::TilesetData data;
 
@@ -386,7 +391,7 @@ constexpr usize _col_count = 13;
 
   data.fancy_tiles[27].context.properties["tile-float"] = 45.3f;
 
-  if (useComponents) {
+  if (use_components) {
     data.fancy_tiles[98].context.components["short-component"]["integer"] = 2'353;
   }
 
@@ -396,7 +401,7 @@ constexpr usize _col_count = 13;
   return data;
 }
 
-[[nodiscard]] auto _create_source_data(const bool useComponents) -> ir::MapData
+[[nodiscard]] auto create_source_data(const bool use_components) -> ir::MapData
 {
   ir::MapData data;
 
@@ -406,13 +411,15 @@ constexpr usize _col_count = 13;
   data.next_layer_id = 5;
   data.next_object_id = 8;
 
-  data.row_count = _row_count;
-  data.col_count = _col_count;
+  data.row_count = row_count;
+  data.col_count = col_count;
 
-  data.encoding = TileEncoding::Base64;
-  data.compression = TileCompression::Zlib;
+  data.tile_format.encoding = TileEncoding::Base64;
+  data.tile_format.compression = TileCompression::Zlib;
+  data.tile_format.endianness = std::endian::little;
+  data.tile_format.zlib_compression_level = 6;
 
-  if (useComponents) {
+  if (use_components) {
     data.component_definitions["empty-component"];
 
     data.component_definitions["short-component"]["integer"] = 42;
@@ -429,29 +436,28 @@ constexpr usize _col_count = 13;
     data.component_definitions["long-component"]["str"] = ""s;
     data.component_definitions["long-component"]["str-v"] = "hello"s;
 
-    data.component_definitions["long-component"]["path"] = std::filesystem::path {};
-    data.component_definitions["long-component"]["path-v"] =
-        std::filesystem::path {"../foo.txt"};
+    data.component_definitions["long-component"]["path"] = fs::path {};
+    data.component_definitions["long-component"]["path-v"] = fs::path {"../foo.txt"};
 
     data.component_definitions["long-component"]["col"] = cen::colors::black;
     data.component_definitions["long-component"]["col-v"] = cen::colors::indigo;
   }
 
-  data.tilesets.push_back(_create_source_tileset(useComponents));
+  data.tilesets.push_back(create_source_tileset(use_components));
 
-  data.layers.push_back(_create_source_ground_layer());
-  data.layers.push_back(_create_source_group_layer(useComponents));
-  data.layers.push_back(_create_source_object_layer(useComponents));
+  data.layers.push_back(create_source_ground_layer());
+  data.layers.push_back(create_source_group_layer(use_components));
+  data.layers.push_back(create_source_object_layer(use_components));
 
   data.context.properties["map-int"] = 123;
   data.context.properties["map-float"] = 56.3f;
   data.context.properties["map-bool"] = false;
   data.context.properties["map-string"] = "foobar"s;
-  data.context.properties["map-file"] = std::filesystem::path {"foo/bar.txt"};
+  data.context.properties["map-file"] = fs::path {"foo/bar.txt"};
   data.context.properties["map-color"] = cen::colors::sea_green;
   data.context.properties["map-object"] = object_t {42};
 
-  if (useComponents) {
+  if (use_components) {
     data.context.components["empty-component"];
     data.context.components["long-component"] =
         data.component_definitions.at("long-component");
@@ -464,8 +470,9 @@ constexpr usize _col_count = 13;
 
 TEST(RoundTrip, YAML)
 {
-  const io::EmitInfo emitter {std::filesystem::absolute("test_map.yaml"),
-                              _create_source_data(true)};
+  current_parser = "YAML";
+
+  const io::EmitInfo emitter {fs::absolute("test_map.yaml"), create_source_data(true)};
   io::emit_yaml_map(emitter);
 
   const auto result = io::parse_map("test_map.yaml");
@@ -474,16 +481,17 @@ TEST(RoundTrip, YAML)
   const auto& source = emitter.data();
   const auto& restored = result.data();
 
-  _validate_basic_map_info(source, restored);
-  _validate_component_definitions(source, restored);
-  _validate_tilesets(source, restored);
-  _validate_layers(source, restored);
+  validate_basic_map_info(source, restored);
+  validate_component_definitions(source, restored);
+  validate_tilesets(source, restored);
+  validate_layers(source, restored);
 }
 
 TEST(RoundTrip, JSON)
 {
-  const io::EmitInfo emitter {std::filesystem::absolute("test_map.json"),
-                              _create_source_data(false)};
+  current_parser = "JSON";
+
+  const io::EmitInfo emitter {fs::absolute("test_map.json"), create_source_data(false)};
   io::emit_json_map(emitter);
 
   const auto result = io::parse_map("test_map.json");
@@ -494,15 +502,16 @@ TEST(RoundTrip, JSON)
   const auto& source = emitter.data();
   const auto& restored = result.data();
 
-  _validate_basic_map_info(source, restored);
-  _validate_tilesets(source, restored);
-  _validate_layers(source, restored);
+  validate_basic_map_info(source, restored);
+  validate_tilesets(source, restored);
+  validate_layers(source, restored);
 }
 
 TEST(RoundTrip, XML)
 {
-  const io::EmitInfo emitter {std::filesystem::absolute("test_map.tmx"),
-                              _create_source_data(false)};
+  current_parser = "XML";
+
+  const io::EmitInfo emitter {fs::absolute("test_map.tmx"), create_source_data(false)};
   io::emit_xml_map(emitter);
 
   const auto result = io::parse_map("test_map.tmx");
@@ -511,9 +520,9 @@ TEST(RoundTrip, XML)
   const auto& source = emitter.data();
   const auto& restored = result.data();
 
-  _validate_basic_map_info(source, restored);
-  _validate_tilesets(source, restored);
-  _validate_layers(source, restored);
+  validate_basic_map_info(source, restored);
+  validate_tilesets(source, restored);
+  validate_layers(source, restored);
 }
 
 }  // namespace tactile::test

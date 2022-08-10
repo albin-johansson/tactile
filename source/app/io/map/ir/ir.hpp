@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <bit>      // endian
 #include <string>   // string
 #include <variant>  // variant
 #include <vector>   // vector
@@ -141,6 +142,14 @@ struct TilesetData final
   ContextData context;
 };
 
+struct TileFormatData final
+{
+  TileEncoding    encoding {TileCompression::None};
+  TileCompression compression {TileCompression::None};
+  std::endian     endianness {std::endian::little};
+  int32           zlib_compression_level {-1};
+};
+
 struct MapData
 {
   usize row_count {};
@@ -151,8 +160,7 @@ struct MapData
   int32 next_layer_id {};
   int32 next_object_id {};
 
-  TileEncoding    encoding {};
-  TileCompression compression {};
+  TileFormatData tile_format;
 
   TreeMap<std::string, ComponentMap> component_definitions;
 
