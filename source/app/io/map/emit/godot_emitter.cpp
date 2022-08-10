@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <algorithm>    // sort
 #include <cmath>        // sin, cos
 #include <fstream>      // ofstream
 #include <ios>          // ios
