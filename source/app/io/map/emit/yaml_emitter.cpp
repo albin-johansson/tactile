@@ -29,9 +29,11 @@
 #include "core/attribute.hpp"
 #include "core/common/ints.hpp"
 #include "core/util/filesystem.hpp"
+#include "io/compression.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/persist/preferences.hpp"
+#include "io/util/tile_format.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile::io {
@@ -151,10 +153,10 @@ void emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& d
   emitter << YAML::EndSeq;
 }
 
-void emit_tile_layer_data(YAML::Emitter&           emitter,
-                          const ir::TileLayerData& data,
-                          const usize              rows,
-                          const usize              columns)
+void emit_plain_tile_layer_data(YAML::Emitter&           emitter,
+                                const ir::TileLayerData& data,
+                                const usize              rows,
+                                const usize              columns)
 {
   const auto& prefs = get_preferences();
 
@@ -184,46 +186,77 @@ void emit_tile_layer_data(YAML::Emitter&           emitter,
   }
 }
 
+[[nodiscard]] auto convert_tiles_to_csv(const ir::TileLayerData& layer) -> std::string
+{
+  std::stringstream stream;
+
+  bool has_emitted_tile = false;
+  for (const auto& row : layer.tiles) {
+    for (const auto tile : row) {
+      if (has_emitted_tile) {
+        stream << ',';
+      }
+
+      stream << tile;
+      has_emitted_tile = true;
+    }
+  }
+
+  return stream.str();
+}
+
 void emit_layer(YAML::Emitter&       emitter,
-                const ir::LayerData& data,
-                const usize          rows,
-                const usize          columns)
+                const ir::MapData&   map,
+                const ir::LayerData& layer)
 {
   emitter << YAML::BeginMap;
 
-  emitter << YAML::Key << "name" << YAML::Value << data.name;
-  emitter << YAML::Key << "id" << YAML::Value << data.id;
+  emitter << YAML::Key << "name" << YAML::Value << layer.name;
+  emitter << YAML::Key << "id" << YAML::Value << layer.id;
 
-  if (data.opacity != 1.0f) {
-    emitter << YAML::Key << "opacity" << YAML::Value << data.opacity;
+  if (layer.opacity != 1.0f) {
+    emitter << YAML::Key << "opacity" << YAML::Value << layer.opacity;
   }
 
-  if (!data.visible) {
-    emitter << YAML::Key << "visible" << YAML::Value << data.visible;
+  if (!layer.visible) {
+    emitter << YAML::Key << "visible" << YAML::Value << layer.visible;
   }
 
   emitter << YAML::Key << "type";
-  switch (data.type) {
-    case LayerType::TileLayer:
+  switch (layer.type) {
+    case LayerType::TileLayer: {
       emitter << YAML::Value << "tile-layer";
-      emit_tile_layer_data(emitter,
-                           std::get<ir::TileLayerData>(data.data),
-                           rows,
-                           columns);
-      break;
 
-    case LayerType::ObjectLayer:
+      const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+
+      if (map.tile_format.encoding == TileEncoding::Plain) {
+        emit_plain_tile_layer_data(emitter, tile_layer, map.row_count, map.col_count);
+      }
+      else {
+        emitter << YAML::Key << "data";
+        emitter << YAML::Value
+                << base64_encode_tiles(tile_layer.tiles,
+                                       tile_layer.row_count,
+                                       tile_layer.col_count,
+                                       map.tile_format.compression);
+      }
+
+      break;
+    }
+    case LayerType::ObjectLayer: {
       emitter << YAML::Value << "object-layer";
-      emit_object_layer_data(emitter, std::get<ir::ObjectLayerData>(data.data));
-      break;
 
+      const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+      emit_object_layer_data(emitter, object_layer);
+      break;
+    }
     case LayerType::GroupLayer: {
       emitter << YAML::Value << "group-layer";
       emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-      for (const auto& child_layer_data :
-           std::get<ir::GroupLayerData>(data.data).children) {
-        emit_layer(emitter, *child_layer_data, rows, columns);
+      const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
+      for (const auto& child_layer_data : group_layer.children) {
+        emit_layer(emitter, map, *child_layer_data);
       }
 
       emitter << YAML::EndSeq;
@@ -231,22 +264,22 @@ void emit_layer(YAML::Emitter&       emitter,
     }
   }
 
-  emit_properties(emitter, data.context);
-  emit_components(emitter, data.context);
+  emit_properties(emitter, layer.context);
+  emit_components(emitter, layer.context);
 
   emitter << YAML::EndMap;
 }
 
-void emit_layers(YAML::Emitter& emitter, const ir::MapData& data)
+void emit_layers(YAML::Emitter& emitter, const ir::MapData& map)
 {
-  if (data.layers.empty()) {
+  if (map.layers.empty()) {
     return;
   }
 
   emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-  for (const auto& layer_data : data.layers) {
-    emit_layer(emitter, layer_data, data.row_count, data.col_count);
+  for (const auto& layer_data : map.layers) {
+    emit_layer(emitter, map, layer_data);
   }
 
   emitter << YAML::EndSeq;
@@ -402,11 +435,36 @@ void emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
   emitter << YAML::EndSeq;
 }
 
+void emit_tile_format(YAML::Emitter& emitter, const ir::TileFormatData& format)
+{
+  if (format.encoding != TileEncoding::Plain) {
+    emitter << YAML::Key << "tile-format" << YAML::BeginMap;
+    emitter << YAML::Key << "encoding" << YAML::Value << format.encoding;
+
+    if (format.compression != TileCompression::None) {
+      emitter << YAML::Key << "compression" << YAML::Value << format.compression;
+    }
+
+    if (format.compression == TileCompression::Zlib &&
+        format.zlib_compression_level != -1) {
+      emitter << YAML::Key << "zlib-compression-level" << YAML::Value
+              << format.zlib_compression_level;
+    }
+
+    if (format.compression != TileCompression::None) {
+      emitter << YAML::Key << "endianness" << YAML::Value
+              << (format.endianness == std::endian::little ? "little" : "big");
+    }
+
+    emitter << YAML::EndMap;
+  }
+}
+
 }  // namespace
 
 void emit_yaml_map(const EmitInfo& info)
 {
-  const auto& data = info.data();
+  const auto& map = info.data();
 
   YAML::Emitter emitter;
   emitter.SetIndent(2);
@@ -414,21 +472,22 @@ void emit_yaml_map(const EmitInfo& info)
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "version" << YAML::Value << 1;
 
-  emitter << YAML::Key << "row-count" << YAML::Value << data.row_count;
-  emitter << YAML::Key << "column-count" << YAML::Value << data.col_count;
+  emitter << YAML::Key << "row-count" << YAML::Value << map.row_count;
+  emitter << YAML::Key << "column-count" << YAML::Value << map.col_count;
 
-  emitter << YAML::Key << "tile-width" << YAML::Value << data.tile_size.x;
-  emitter << YAML::Key << "tile-height" << YAML::Value << data.tile_size.y;
+  emitter << YAML::Key << "tile-width" << YAML::Value << map.tile_size.x;
+  emitter << YAML::Key << "tile-height" << YAML::Value << map.tile_size.y;
 
-  emitter << YAML::Key << "next-layer-id" << YAML::Value << data.next_layer_id;
-  emitter << YAML::Key << "next-object-id" << YAML::Value << data.next_object_id;
+  emitter << YAML::Key << "next-layer-id" << YAML::Value << map.next_layer_id;
+  emitter << YAML::Key << "next-object-id" << YAML::Value << map.next_object_id;
 
+  emit_tile_format(emitter, map.tile_format);
   emit_component_definitions(emitter, info);
   emit_tilesets(emitter, info);
-  emit_layers(emitter, data);
+  emit_layers(emitter, map);
 
-  emit_properties(emitter, data.context);
-  emit_components(emitter, data.context);
+  emit_properties(emitter, map.context);
+  emit_components(emitter, map.context);
 
   emitter << YAML::EndMap;
 

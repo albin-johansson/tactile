@@ -67,4 +67,33 @@ auto operator<<(YAML::Emitter& emitter, const AttributeType type) -> YAML::Emitt
   return emitter << stringify(type);
 }
 
+auto operator<<(YAML::Emitter& emitter, const TileEncoding encoding) -> YAML::Emitter&
+{
+  switch (encoding) {
+    case TileEncoding::Plain:
+      return emitter << "plain";
+
+    case TileEncoding::Base64:
+      return emitter << "base64";
+
+    default:
+      throw TactileError {"Did not recognize tile encoding!"};
+  }
+}
+
+auto operator<<(YAML::Emitter& emitter, const TileCompression compression)
+    -> YAML::Emitter&
+{
+  switch (compression) {
+    case TileCompression::None:
+      return emitter << "none";
+
+    case TileCompression::Zlib:
+      return emitter << "zlib";
+
+    default:
+      throw TactileError {"Did not recognize tile compression!"};
+  }
+}
+
 }  // namespace tactile::io

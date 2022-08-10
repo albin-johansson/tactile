@@ -24,6 +24,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
+#include "core/compression.hpp"
 
 namespace tactile::io {
 
@@ -55,5 +56,9 @@ void read_attribute(const YAML::Node& node, const char* name, T& result, T fallb
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&;
 
 auto operator<<(YAML::Emitter& emitter, AttributeType type) -> YAML::Emitter&;
+
+auto operator<<(YAML::Emitter& emitter, TileEncoding encoding) -> YAML::Emitter&;
+
+auto operator<<(YAML::Emitter& emitter, TileCompression compression) -> YAML::Emitter&;
 
 }  // namespace tactile::io
