@@ -22,10 +22,10 @@
 #include <utility>  // move
 
 #include <entt/signal/dispatcher.hpp>
-#include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
 #include "core/event/misc_events.hpp"
+#include "core/util/fmt.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persist/preferences.hpp"
 

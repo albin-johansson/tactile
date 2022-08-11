@@ -25,10 +25,10 @@
 #include <GL/glew.h>
 #include <SDL.h>
 #include <boost/stacktrace/stacktrace.hpp>
-#include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
 #include "cfg/platform_specific.hpp"
+#include "core/util/fmt.hpp"
 #include "editor/lang/language.hpp"
 #include "io/directories.hpp"
 #include "io/persist/preferences.hpp"
@@ -116,12 +116,11 @@ AppCfg::AppCfg()
   cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 
   if (glewInit() != GLEW_OK) {
-    spdlog::error("Failed to initialize GLEW!");
     throw TactileError {"Failed to initialize GLEW!"};
   }
 
-  spdlog::debug("OpenGL version... {}", glGetString(GL_VERSION));
-  spdlog::debug("OpenGL renderer... {}", glGetString(GL_RENDERER));
+  spdlog::debug("OpenGL version... {}", (const char*) glGetString(GL_VERSION));
+  spdlog::debug("OpenGL renderer... {}", (const char*) glGetString(GL_RENDERER));
 
   load_languages();
   io::load_preferences();

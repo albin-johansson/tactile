@@ -21,9 +21,9 @@
 
 #include <exception>  // exception
 
-#include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
+#include "core/util/fmt.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"

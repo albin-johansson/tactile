@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/fmt_string.hpp"
-
 #include <filesystem>  // path
 
 #include <gtest/gtest.h>
+
+#include "core/util/fmt.hpp"
 
 namespace tactile::test {
 

@@ -28,7 +28,7 @@
 #include "core/ctx/context_manager.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
-#include "core/util/fmt_string.hpp"
+#include "core/util/fmt.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "editor/ui/alignment.hpp"

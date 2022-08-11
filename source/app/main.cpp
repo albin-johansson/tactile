@@ -21,11 +21,11 @@
 #include <exception>  // exception
 
 #include <centurion/message_box.hpp>
-#include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
 #include "app.hpp"
 #include "cfg/configuration.hpp"
+#include "core/util/fmt.hpp"
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
 #include "misc/panic.hpp"

@@ -22,13 +22,13 @@
 #include <sstream>  // stringstream
 #include <string>   // string
 
-#include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
 #include "core/common/ints.hpp"
 #include "core/util/filesystem.hpp"
+#include "core/util/fmt.hpp"
 #include "io/compression.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"

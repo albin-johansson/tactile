@@ -27,7 +27,7 @@
 #include "core/event/tool_events.hpp"
 #include "core/model.hpp"
 #include "core/tool/tool_type.hpp"
-#include "core/util/fmt_string.hpp"
+#include "core/util/fmt.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "editor/shortcut/mappings.hpp"

@@ -25,7 +25,7 @@
 #include "core/document/map_document.hpp"
 #include "core/event/layer_events.hpp"
 #include "core/event/property_events.hpp"
-#include "core/util/fmt_string.hpp"
+#include "core/util/fmt.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "editor/ui/icons.hpp"
