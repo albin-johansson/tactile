@@ -144,7 +144,7 @@ struct TilesetData final
 
 struct TileFormatData final
 {
-  TileEncoding    encoding {TileCompression::None};
+  TileEncoding    encoding {TileEncoding::Plain};
   TileCompression compression {TileCompression::None};
   std::endian     endianness {std::endian::little};
   int32           zlib_compression_level {-1};
