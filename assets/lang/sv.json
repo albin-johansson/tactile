@@ -353,6 +353,11 @@
     "unsupported-object-type": "Minst ett objekt har en typ som inte stöds",
     "tile-def-no-id": "Minst en tiledefinition saknar ett associerat tile-ID",
     "tile-def-no-anim-frame-tile": "Minst en tiledefinition har en animationssteg utan en associerad tile",
-    "tile-def-no-anim-frame-duration": "Minst en tiledefinition har ett animationssteg utan tidslängd"
+    "tile-def-no-anim-frame-duration": "Minst en tiledefinition har ett animationssteg utan tidslängd",
+    "bad-tile-format-encoding": "Kartan använder en kodning av tiledata som inte stöds",
+    "bad-tile-format-compression": "Kartan använder en kompressionsstrategi för tiledata som inte stöds",
+    "bad-tile-format-endianness": "Kartan använder en byteordning för komprimerad tiledata som inte stöds",
+    "bad-zlib-compression-level": "Kartan använder en kompressionsnivå för Zlib som inte stöds, giltiga värden är -1 och [1, 9]",
+    "plain-encoding-with-compression": "Kartan använder oformaterad kodning för tiledata samtidigt som tiledatan är komprimerad"
   }
 }

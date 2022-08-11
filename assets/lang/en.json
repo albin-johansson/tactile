@@ -354,6 +354,11 @@
     "unsupported-object-type": "At least one object is of an unsupported type",
     "tile-def-no-id": "At least one tile definition is missing a tile identifier",
     "tile-def-no-anim-frame-tile": "At least one tile definition has an animation frame with associated tile",
-    "tile-def-no-anim-frame-duration": "At least one tile definition has an animation frame with no duration"
+    "tile-def-no-anim-frame-duration": "At least one tile definition has an animation frame with no duration",
+    "bad-tile-format-encoding": "The map uses an unsupported tile format encoding",
+    "bad-tile-format-compression": "The map uses an unsupported tile format compression strategy",
+    "bad-tile-format-endianness": "The map uses an unsupported tile format endianness",
+    "bad-zlib-compression-level": "The map uses an invalid Zlib compression level, valid values are -1 and [1, 9]",
+    "plain-encoding-with-compression": "Use of unsupported plain tile encoding along with compressed tile data"
   }
 }

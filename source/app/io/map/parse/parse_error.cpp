@@ -190,6 +190,21 @@ auto to_cause(const ParseError error) -> std::string_view
     case ParseError::NoAnimationFrameDuration:
       return lang.parse_error.tile_def_no_anim_frame_duration;
 
+    case ParseError::BadTileFormatEncoding:
+      return lang.parse_error.bad_tile_format_encoding;
+
+    case ParseError::BadTileFormatCompression:
+      return lang.parse_error.bad_tile_format_compression;
+
+    case ParseError::BadTileFormatEndianness:
+      return lang.parse_error.bad_tile_format_endianness;
+
+    case ParseError::BadZlibCompressionLevel:
+      return lang.parse_error.bad_zlib_compression_level;
+
+    case ParseError::PlainEncodingWithCompression:
+      return lang.parse_error.plain_encoding_with_compression;
+
     default:
       throw TactileError {"Invalid parse error!"};
   }

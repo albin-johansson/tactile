@@ -92,7 +92,13 @@ enum class ParseError
 
   NoFancyTileId,
   NoAnimationFrameTile,
-  NoAnimationFrameDuration
+  NoAnimationFrameDuration,
+
+  BadTileFormatEncoding,
+  BadTileFormatCompression,
+  BadTileFormatEndianness,
+  BadZlibCompressionLevel,
+  PlainEncodingWithCompression
 };
 
 /**

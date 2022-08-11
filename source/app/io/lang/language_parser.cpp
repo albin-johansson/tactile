@@ -20,10 +20,12 @@
 #include "language_parser.hpp"
 
 #include <fmt/format.h>
+#include <spdlog/spdlog.h>
 
 #include "editor/ui/icons.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
+#include "meta/build.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::io {
@@ -35,7 +37,11 @@ void load(const JSON& json, std::string& string, const char* key)
     string = *value;
   }
 
+
   if (string.empty()) {
+#if TACTILE_DEBUG
+    spdlog::critical("Found no translation for '{}'", key);
+#endif  // TACTILE_DEBUG
     throw TactileError {"Invalid empty translated string!"};
   }
 }
@@ -484,6 +490,12 @@ void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)
   load(json, err.tile_def_no_id, "tile-def-no-id");
   load(json, err.tile_def_no_anim_frame_tile, "tile-def-no-anim-frame-tile");
   load(json, err.tile_def_no_anim_frame_duration, "tile-def-no-anim-frame-duration");
+
+  load(json, err.bad_tile_format_encoding, "bad-tile-format-encoding");
+  load(json, err.bad_tile_format_compression, "bad-tile-format-compression");
+  load(json, err.bad_tile_format_endianness, "bad-tile-format-endianness");
+  load(json, err.bad_zlib_compression_level, "bad-zlib-compression-level");
+  load(json, err.plain_encoding_with_compression, "plain-encoding-with-compression");
 }
 
 }  // namespace

@@ -454,6 +454,12 @@ struct ParseErrorStrings final
   std::string tile_def_no_id;
   std::string tile_def_no_anim_frame_tile;
   std::string tile_def_no_anim_frame_duration;
+
+  std::string bad_tile_format_encoding;
+  std::string bad_tile_format_compression;
+  std::string bad_tile_format_endianness;
+  std::string bad_zlib_compression_level;
+  std::string plain_encoding_with_compression;
 };
 
 /// Provides translated strings for a single language.
