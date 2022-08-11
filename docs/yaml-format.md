@@ -59,6 +59,7 @@ Example:
 encoding: base64
 compression: zlib
 zlib-compression-level: 9
+endianness: little
 ```
 
 ---
