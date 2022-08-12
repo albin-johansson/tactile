@@ -31,59 +31,54 @@
 #include "misc/panic.hpp"
 
 namespace tactile {
+namespace {
+
+using TileLayerVisitorFunc = Map::TileLayerVisitorFunc;
+
+struct TileLayerVisitor final : ILayerVisitor
+{
+  const TileLayerVisitorFunc* callable {};
+
+  explicit TileLayerVisitor(const TileLayerVisitorFunc& func)
+      : callable {&func}
+  {}
+
+  void visit(TileLayer& layer) override
+  {
+    (*callable)(layer);
+  }
+};
+
+}  // namespace
 
 Map::Map()
 {
   set_name("Map");
 }
 
+void Map::each_tile_layer(const std::function<void(TileLayer&)>& func)
+{
+  TileLayerVisitor visitor {func};
+  mRootLayer.each(visitor);
+}
+
 void Map::add_row()
 {
-  struct AddRowVisitor final : ILayerVisitor
-  {
-    void visit(TileLayer& layer) override
-    {
-      layer.add_row();
-    }
-  };
-
   ++mRowCount;
-
-  AddRowVisitor visitor;
-  mRootLayer.each(visitor);
+  each_tile_layer([](TileLayer& layer) { layer.add_row(); });
 }
 
 void Map::add_column()
 {
-  struct AddColumnVisitor final : ILayerVisitor
-  {
-    void visit(TileLayer& layer) override
-    {
-      layer.add_column();
-    }
-  };
-
   ++mColCount;
-
-  AddColumnVisitor visitor;
-  mRootLayer.each(visitor);
+  each_tile_layer([](TileLayer& layer) { layer.add_column(); });
 }
 
 void Map::remove_row()
 {
-  struct RemoveRowVisitor final : ILayerVisitor
-  {
-    void visit(TileLayer& layer) override
-    {
-      layer.remove_row();
-    }
-  };
-
   if (mRowCount > 1) {
     --mRowCount;
-
-    RemoveRowVisitor visitor;
-    mRootLayer.each(visitor);
+    each_tile_layer([](TileLayer& layer) { layer.remove_row(); });
   }
   else {
     throw TactileError {"Invalid row amount!"};
@@ -92,19 +87,9 @@ void Map::remove_row()
 
 void Map::remove_column()
 {
-  struct RemoveColumnVisitor final : ILayerVisitor
-  {
-    void visit(TileLayer& layer) override
-    {
-      layer.remove_column();
-    }
-  };
-
   if (mColCount > 1) {
     --mColCount;
-
-    RemoveColumnVisitor visitor;
-    mRootLayer.each(visitor);
+    each_tile_layer([](TileLayer& layer) { layer.remove_row(); });
   }
   else {
     throw TactileError {"Invalid column amount!"};
@@ -113,58 +98,33 @@ void Map::remove_column()
 
 void Map::resize(const usize rows, const usize columns)
 {
-  struct ResizeLayerVisitor final : ILayerVisitor
-  {
-    usize new_rows {};
-    usize new_cols {};
+  mRowCount = require_that(rows, [](const usize x) { return x > 0; });
+  mColCount = require_that(columns, [](const usize x) { return x > 0; });
 
-    void visit(TileLayer& layer) override
-    {
-      layer.resize(new_rows, new_cols);
-    }
-  };
-
-  mRowCount = require_that(rows, [](usize x) { return x > 0; });
-  mColCount = require_that(columns, [](usize x) { return x > 0; });
-
-  ResizeLayerVisitor visitor;
-  visitor.new_rows = rows;
-  visitor.new_cols = columns;
-
-  mRootLayer.each(visitor);
+  each_tile_layer([=](TileLayer& layer) { layer.resize(rows, columns); });
 }
 
 auto Map::fix_tiles() -> FixTilesResult
 {
-  struct FixTilesVisitor final : ILayerVisitor
-  {
-    Map*           self {};
-    FixTilesResult result;
+  FixTilesResult result;
 
-    void visit(TileLayer& layer) override
-    {
-      HashMap<TilePos, TileID> previous;
+  each_tile_layer([&, this](TileLayer& layer) {
+    HashMap<TilePos, TileID> previous;
 
-      invoke_mn(self->row_count(),
-                self->column_count(),
-                [&](const usize row, const usize col) {
-                  const auto pos = TilePos::from(row, col);
-                  const auto tileId = layer.tile_at(pos);
-                  if (tileId != empty_tile && !self->mTilesets.is_valid_tile(tileId)) {
-                    previous[pos] = tileId;
-                    layer.set_tile(pos, empty_tile);
-                  }
-                });
+    invoke_mn(row_count(), column_count(), [&](const usize row, const usize col) {
+      const auto pos = TilePos::from(row, col);
+      const auto tile_id = layer.tile_at(pos);
 
-      result[layer.get_uuid()] = std::move(previous);
-    }
-  };
+      if (tile_id != empty_tile && !mTilesets.is_valid_tile(tile_id)) {
+        previous[pos] = tile_id;
+        layer.set_tile(pos, empty_tile);
+      }
+    });
 
-  FixTilesVisitor visitor;
-  visitor.self = this;
-  mRootLayer.each(visitor);
+    result[layer.get_uuid()] = std::move(previous);
+  });
 
-  return visitor.result;
+  return result;
 }
 
 auto Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parentId)

@@ -43,6 +43,7 @@ class Map final : public IContext
 {
  public:
   using VisitorFunc = std::function<void(const ILayer*)>;
+  using TileLayerVisitorFunc = std::function<void(TileLayer&)>;
 
   /// Maps previous invalid tile identifiers in a collection of layers.
   using FixTilesResult = HashMap<UUID, HashMap<TilePos, TileID>>;
@@ -179,6 +180,8 @@ class Map final : public IContext
   int32           mGroupLayerSuffix {1};
   TileEncoding    mEncoding {TileEncoding::Plain};
   TileCompression mCompression {TileCompression::None};
+
+  void each_tile_layer(const TileLayerVisitorFunc& func);
 };
 
 }  // namespace tactile
