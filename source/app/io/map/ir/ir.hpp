@@ -33,7 +33,7 @@
 #include "core/common/math.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/compression.hpp"
+#include "core/layer/tile_format.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 

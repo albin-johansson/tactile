@@ -240,6 +240,14 @@ void convert_component_definitions(const ComponentIndex& manager, ir::MapData& d
   }
 }
 
+void convert_tile_format(const TileFormat& format, ir::TileFormatData& data)
+{
+  data.compression = format.compression();
+  data.encoding = format.encoding();
+  data.endianness = format.endianness();
+  data.zlib_compression_level = format.zlib_compression_level();
+}
+
 }  // namespace
 
 auto map_to_ir(const MapDocument& document) -> ir::MapData
@@ -254,10 +262,7 @@ auto map_to_ir(const MapDocument& document) -> ir::MapData
   data.next_object_id = map.next_object_id();
   data.next_layer_id = map.next_layer_id();
 
-  data.tile_format.compression = map.tile_compression();
-  data.tile_format.encoding = map.tile_encoding();
-  data.tile_format.endianness = std::endian::native;
-  data.tile_format.zlib_compression_level = -1;  // TODO store in map
+  convert_tile_format(map.tile_format(), data.tile_format);
 
   const auto* components = document.view_component_index();
 

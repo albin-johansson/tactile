@@ -24,7 +24,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
-#include "core/compression.hpp"
+#include "core/layer/tile_format.hpp"
 
 namespace tactile::io {
 

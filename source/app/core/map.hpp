@@ -29,11 +29,11 @@
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component_bundle.hpp"
-#include "core/compression.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_delegate.hpp"
 #include "core/ctx/property_bundle.hpp"
 #include "core/layer/group_layer.hpp"
+#include "core/layer/tile_format.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tileset_bundle.hpp"
 
@@ -81,11 +81,8 @@ class Map final : public IContext
 
   void set_layer_index(const UUID& id, usize index);
 
-  void set_tile_encoding(TileEncoding encoding);
-  void set_tile_compression(TileCompression compression);
-
-  [[nodiscard]] auto tile_encoding() const -> TileEncoding;
-  [[nodiscard]] auto tile_compression() const -> TileCompression;
+  [[nodiscard]] auto tile_format() -> TileFormat&;
+  [[nodiscard]] auto tile_format() const -> const TileFormat&;
 
   [[nodiscard]] auto local_layer_index(const UUID& id) const -> usize;
 
@@ -178,8 +175,7 @@ class Map final : public IContext
   int32           mTileLayerSuffix {1};
   int32           mObjectLayerSuffix {1};
   int32           mGroupLayerSuffix {1};
-  TileEncoding    mEncoding {TileEncoding::Plain};
-  TileCompression mCompression {TileCompression::None};
+  TileFormat      mTileFormat;
 
   void each_tile_layer(const TileLayerVisitorFunc& func);
 };

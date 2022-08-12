@@ -23,7 +23,7 @@
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
-#include "core/compression.hpp"
+#include "core/layer/tile_format.hpp"
 
 namespace tactile {
 

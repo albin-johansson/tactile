@@ -279,6 +279,14 @@ void restore_component_definitions(MapDocument& document, const ir::MapData& map
   }
 }
 
+void restore_tile_format(TileFormat& format, const ir::TileFormatData& data)
+{
+  format.set_encoding(data.encoding);
+  format.set_compression(data.compression);
+  format.set_endianness(data.endianness);
+  format.set_zlib_compression_level(data.zlib_compression_level);
+}
+
 }  // namespace
 
 void map_from_ir(const ParseResult& result,
@@ -305,12 +313,10 @@ void map_from_ir(const ParseResult& result,
   map.set_tile_size(map_data.tile_size);
   map.set_next_layer_id(map_data.next_layer_id);
   map.set_next_object_id(map_data.next_object_id);
-  map.set_tile_compression(map_data.tile_format.compression);
-  map.set_tile_encoding(map_data.tile_format.encoding);
   map.resize(map_data.row_count, map_data.col_count);
 
+  restore_tile_format(map.tile_format(), map_data.tile_format);
   restore_component_definitions(*document, map_data);
-
   restore_tilesets(model, textures, document->get_component_index(), map_data);
   restore_layers(*document, map_data);
 

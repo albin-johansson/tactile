@@ -5,7 +5,7 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/tiles.hpp"
-#include "core/compression.hpp"
+#include "core/layer/tile_format.hpp"
 
 namespace tactile::io {
 

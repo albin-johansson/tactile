@@ -25,7 +25,7 @@
 
 namespace tactile::test {
 
-TEST(TileFormat, LoadCompressedMap)
+TEST(TileFormatEncoding, LoadCompressedMap)
 {
   const auto result = io::parse_map("test-resources/yaml/compressed.yaml");
   ASSERT_EQ(io::ParseError::None, result.error());
@@ -42,7 +42,7 @@ TEST(TileFormat, LoadCompressedMap)
   ASSERT_EQ(expected, tile_layer.tiles);
 }
 
-TEST(TileFormat, EncodeDecodeRoundtrip)
+TEST(TileFormatEncoding, EncodeDecodeRoundtrip)
 {
   const TileMatrix source {{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}};
 
