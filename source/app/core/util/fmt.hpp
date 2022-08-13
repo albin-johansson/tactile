@@ -31,29 +31,32 @@
 #include "core/common/fs.hpp"
 #include "core/common/ints.hpp"
 
+namespace fmt {
+
 template <>
-struct fmt::formatter<tactile::fs::path> : fmt::formatter<tactile::fs_string_view>
+struct formatter<tactile::fs::path> : formatter<tactile::fs_string_view>
 {
   auto format(const tactile::fs::path& path, auto& ctx) const
   {
-    return fmt::formatter<tactile::fs_string_view>::format(path.c_str(), ctx);
+    return formatter<tactile::fs_string_view>::format(path.c_str(), ctx);
   }
 };
 
 template <>
-struct fmt::formatter<boost::stacktrace::stacktrace>
-    : fmt::formatter<tactile::fs_string_view>
+struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view>
 {
   auto format(const boost::stacktrace::stacktrace& trace, auto& ctx) const
   {
     std::stringstream stream;
     stream << trace;
-    return fmt::formatter<tactile::fs_string_view>::format(stream.str(), ctx);
+    return formatter<std::string_view>::format(stream.str(), ctx);
   }
 };
 
-static_assert(fmt::is_formattable<tactile::fs::path, char>::value);
-static_assert(fmt::is_formattable<boost::stacktrace::stacktrace, char>::value);
+static_assert(is_formattable<tactile::fs::path, tactile::fs::path::value_type>::value);
+static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
+
+}  // namespace fmt
 
 namespace tactile {
 
