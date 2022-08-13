@@ -26,19 +26,18 @@
 
 namespace tactile {
 
+using Seed = std::random_device::result_type;
+using SeedArray = std::array<Seed, RandomEngine::state_size>;
+
 auto make_random_engine() -> RandomEngine
 {
-  using result_type = std::random_device::result_type;
-
-  constexpr auto n = RandomEngine::state_size;
-
-  std::random_device                                         device;
-  std::array<result_type, (n - 1) / sizeof(result_type) + 1> data {};
+  std::random_device device;
+  SeedArray          data;
 
   std::generate(data.begin(), data.end(), std::ref(device));
   std::seed_seq seeds(data.begin(), data.end());
 
-  return RandomEngine(seeds);
+  return RandomEngine {seeds};
 }
 
 auto next_bool() -> bool
