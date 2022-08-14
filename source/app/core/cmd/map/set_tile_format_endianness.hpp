@@ -19,12 +19,31 @@
 
 #pragma once
 
-#include "core/cmd/map/add_column_cmd.hpp"
-#include "core/cmd/map/add_row_cmd.hpp"
-#include "core/cmd/map/fix_tiles_in_map_cmd.hpp"
-#include "core/cmd/map/remove_column_cmd.hpp"
-#include "core/cmd/map/remove_row_cmd.hpp"
-#include "core/cmd/map/resize_map_cmd.hpp"
-#include "core/cmd/map/set_tile_format_compression.hpp"
-#include "core/cmd/map/set_tile_format_encoding.hpp"
-#include "core/cmd/map/set_tile_format_endianness.hpp"
+#include <bit>  // endian
+
+#include "core/cmd/command.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+
+namespace tactile {
+
+class Map;
+
+class SetTileFormatEndianness final : public ICommand
+{
+ public:
+  SetTileFormatEndianness(Shared<Map> map, std::endian endianness);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto get_name() const -> std::string override;
+
+ private:
+  Shared<Map>        mMap;
+  std::endian        mNewEndianness;
+  Maybe<std::endian> mOldEndianness;
+};
+
+}  // namespace tactile

@@ -163,8 +163,9 @@ class App final : AEventLoop
 
   void on_open_resize_map_dialog();
 
-  void on_set_map_tile_encoding(const SetMapTileEncodingEvent& event);
-  void on_set_map_tile_compression(const SetMapTileCompressionEvent& event);
+  void on_set_tile_format_encoding(const SetTileFormatEncodingEvent& event);
+  void on_set_tile_format_compression(const SetTileFormatCompressionEvent& event);
+  void on_set_tile_format_endianness(const SetTileFormatEndiannessEvent& event);
 
   void on_add_layer(const AddLayerEvent& event);
   void on_remove_layer(const RemoveLayerEvent& event);

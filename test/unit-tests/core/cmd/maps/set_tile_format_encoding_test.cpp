@@ -17,14 +17,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "core/cmd/map/add_column_cmd.hpp"
-#include "core/cmd/map/add_row_cmd.hpp"
-#include "core/cmd/map/fix_tiles_in_map_cmd.hpp"
-#include "core/cmd/map/remove_column_cmd.hpp"
-#include "core/cmd/map/remove_row_cmd.hpp"
-#include "core/cmd/map/resize_map_cmd.hpp"
-#include "core/cmd/map/set_tile_format_compression.hpp"
 #include "core/cmd/map/set_tile_format_encoding.hpp"
-#include "core/cmd/map/set_tile_format_endianness.hpp"
+
+#include <gtest/gtest.h>
+
+#include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
+
+namespace tactile::test {
+
+TEST(SetTileFormatEncoding, Constructor)
+{
+  ASSERT_THROW(SetTileFormatEncoding(nullptr, TileEncoding::Plain), TactileError);
+}
+
+TEST(SetTileFormatEncoding, RedoUndo)
+{
+  auto document = MapBuilder::build().result();
+  auto map = document->get_map_ptr();
+
+  auto& format = map->tile_format();
+  ASSERT_EQ(TileEncoding::Plain, format.encoding());
+
+  SetTileFormatEncoding cmd {map, TileEncoding::Base64};
+
+  cmd.redo();
+  ASSERT_EQ(TileEncoding::Base64, format.encoding());
+
+  cmd.undo();
+  ASSERT_EQ(TileEncoding::Plain, format.encoding());
+}
+
+}  // namespace tactile::test

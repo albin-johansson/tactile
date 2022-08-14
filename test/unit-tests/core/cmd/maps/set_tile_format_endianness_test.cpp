@@ -17,14 +17,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "core/cmd/map/add_column_cmd.hpp"
-#include "core/cmd/map/add_row_cmd.hpp"
-#include "core/cmd/map/fix_tiles_in_map_cmd.hpp"
-#include "core/cmd/map/remove_column_cmd.hpp"
-#include "core/cmd/map/remove_row_cmd.hpp"
-#include "core/cmd/map/resize_map_cmd.hpp"
-#include "core/cmd/map/set_tile_format_compression.hpp"
-#include "core/cmd/map/set_tile_format_encoding.hpp"
 #include "core/cmd/map/set_tile_format_endianness.hpp"
+
+#include <gtest/gtest.h>
+
+#include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
+
+namespace tactile::test {
+
+TEST(SetTileFormatEndianness, Constructor)
+{
+  ASSERT_THROW(SetTileFormatEndianness(nullptr, std::endian::little), TactileError);
+}
+
+TEST(SetTileFormatEndianness, RedoUndo)
+{
+  auto document = MapBuilder::build().result();
+  auto map = document->get_map_ptr();
+
+  auto& format = map->tile_format();
+  ASSERT_EQ(std::endian::native, format.endianness());
+
+  SetTileFormatEndianness cmd {map, std::endian::big};
+
+  cmd.redo();
+  ASSERT_EQ(std::endian::big, format.endianness());
+
+  cmd.undo();
+  ASSERT_EQ(std::endian::native, format.endianness());
+}
+
+}  // namespace tactile::test

@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <bit>  // endian
+
 #include "core/common/fs.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
@@ -82,14 +84,19 @@ struct ExportAsGodotSceneEvent final
   usize    polygon_points {};
 };
 
-struct SetMapTileCompressionEvent final
+struct SetTileFormatCompressionEvent final
 {
   TileCompression compression {};
 };
 
-struct SetMapTileEncodingEvent final
+struct SetTileFormatEncodingEvent final
 {
   TileEncoding encoding {};
+};
+
+struct SetTileFormatEndiannessEvent final
+{
+  std::endian endianness {};
 };
 
 }  // namespace tactile
