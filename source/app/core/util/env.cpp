@@ -19,16 +19,29 @@
 
 #include "env.hpp"
 
-#include <cstdlib>  // envvar
+#include <cstdlib>  // getenv, _dupenv_s, free
+
+#include "meta/build.hpp"
 
 namespace tactile {
 
 auto env_var(const char* var) -> Maybe<std::string>
 {
   if (var) {
+#if TACTILE_PLATFORM_WINDOWS
+    char* temp {};
+    _dupenv_s(&temp, nullptr, var);
+
+    if (temp) {
+      std::string result {temp};
+      std::free(temp);
+      return result;
+    }
+#else
     if (const auto* value = std::getenv(var)) {
       return std::string {value};
     }
+#endif  // TACTILE_PLATFORM_WINDOWS
   }
 
   return nothing;
