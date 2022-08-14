@@ -89,7 +89,7 @@ void Map::remove_column()
 {
   if (mColCount > 1) {
     --mColCount;
-    each_tile_layer([](TileLayer& layer) { layer.remove_row(); });
+    each_tile_layer([](TileLayer& layer) { layer.remove_column(); });
   }
   else {
     throw TactileError {"Invalid column amount!"};
