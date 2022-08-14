@@ -30,15 +30,20 @@
 
 #include "core/common/fs.hpp"
 #include "core/common/ints.hpp"
+#include "meta/build.hpp"
 
 namespace fmt {
 
 template <>
-struct formatter<tactile::fs::path> : formatter<tactile::fs_string_view>
+struct formatter<tactile::fs::path> : formatter<std::string_view>
 {
   auto format(const tactile::fs::path& path, auto& ctx) const
   {
-    return formatter<tactile::fs_string_view>::format(path.c_str(), ctx);
+#if TACTILE_PLATFORM_WINDOWS
+    return formatter<std::string_view>::format(path.string(), ctx);
+#else
+    return formatter<std::string_view>::format(path.c_str(), ctx);
+#endif  // TACTILE_PLATFORM_WINDOWS
   }
 };
 
@@ -53,7 +58,7 @@ struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view>
   }
 };
 
-static_assert(is_formattable<tactile::fs::path, tactile::fs::path::value_type>::value);
+static_assert(is_formattable<tactile::fs::path, char>::value);
 static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
 
 }  // namespace fmt
