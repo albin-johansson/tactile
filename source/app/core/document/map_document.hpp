@@ -106,7 +106,6 @@ class MapDocument final : public ADocument
 
   void set_tile_format_encoding(TileEncoding encoding);
   void set_tile_format_compression(TileCompression compression);
-  void set_tile_format_endianness(std::endian endianness);
 
   void set_component_index(Shared<ComponentIndex> index) override;
 

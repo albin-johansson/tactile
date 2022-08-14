@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <bit>  // endian
-
 #include "core/common/fs.hpp"
 #include "core/common/identifiers.hpp"
 #include "core/common/ints.hpp"
@@ -92,11 +90,6 @@ struct SetTileFormatCompressionEvent final
 struct SetTileFormatEncodingEvent final
 {
   TileEncoding encoding {};
-};
-
-struct SetTileFormatEndiannessEvent final
-{
-  std::endian endianness {};
 };
 
 }  // namespace tactile

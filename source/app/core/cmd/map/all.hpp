@@ -27,4 +27,3 @@
 #include "core/cmd/map/resize_map_cmd.hpp"
 #include "core/cmd/map/set_tile_format_compression.hpp"
 #include "core/cmd/map/set_tile_format_encoding.hpp"
-#include "core/cmd/map/set_tile_format_endianness.hpp"

@@ -220,7 +220,6 @@ void App::subscribe_to_events()
 
   d.sink<SetTileFormatEncodingEvent>().connect<&App::on_set_tile_format_encoding>(this);
   d.sink<SetTileFormatCompressionEvent>().connect<&App::on_set_tile_format_compression>(this);
-  d.sink<SetTileFormatEndiannessEvent>().connect<&App::on_set_tile_format_endianness>(this);
 
   d.sink<AddLayerEvent>().connect<&App::on_add_layer>(this);
   d.sink<RemoveLayerEvent>().connect<&App::on_remove_layer>(this);
@@ -767,13 +766,6 @@ void App::on_set_tile_format_compression(const SetTileFormatCompressionEvent& ev
 {
   if (auto* document = active_map_document()) {
     document->set_tile_format_compression(event.compression);
-  }
-}
-
-void App::on_set_tile_format_endianness(const SetTileFormatEndiannessEvent& event)
-{
-  if (auto* document = active_map_document()) {
-    document->set_tile_format_endianness(event.endianness);
   }
 }
 

@@ -209,11 +209,6 @@ void MapDocument::set_tile_format_compression(const TileCompression compression)
   get_history().exec<SetTileFormatCompression>(mMap, compression);
 }
 
-void MapDocument::set_tile_format_endianness(const std::endian endianness)
-{
-  get_history().exec<SetTileFormatEndianness>(mMap, endianness);
-}
-
 void MapDocument::set_component_index(Shared<ComponentIndex> index)
 {
   mDelegate.set_component_index(std::move(index));
