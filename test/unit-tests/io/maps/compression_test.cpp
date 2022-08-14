@@ -17,22 +17,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "io/util/tile_format.hpp"
-
 #include <gtest/gtest.h>
 
+#include "core/common/tiles.hpp"
 #include "io/map/parse/parse_map.hpp"
 
 namespace tactile::test {
 
-TEST(TileFormatEncoding, EncodeDecodeRoundtrip)
+TEST(CompressedTileData, TactileYAML)
 {
-  const TileMatrix source {{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}};
+  const auto result = io::parse_map("test-resources/yaml/compressed.yaml");
+  ASSERT_EQ(io::ParseError::None, result.error());
 
-  const auto encoded = io::base64_encode_tiles(source, 3, 3, TileCompression::Zlib);
-  const auto decoded = io::base64_decode_tiles(encoded, 3, 3, TileCompression::Zlib);
+  const auto& map = result.data();
+  ASSERT_EQ(1, map.layers.size());
 
-  ASSERT_EQ(source, decoded);
+  const auto& layer = map.layers.front();
+  ASSERT_EQ(LayerType::TileLayer, layer.type);
+
+  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+
+  const TileMatrix expected {{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}};
+  ASSERT_EQ(expected, tile_layer.tiles);
 }
 
 }  // namespace tactile::test
