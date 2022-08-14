@@ -37,7 +37,6 @@ void load(const JSON& json, std::string& string, const char* key)
     string = *value;
   }
 
-
   if (string.empty()) {
 #if TACTILE_DEBUG
     spdlog::critical("Found no translation for '{}'", key);
@@ -378,6 +377,9 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.remove_columns, "remove-columns");
   load(json, cmd.fix_map_tiles, "fix-map-tiles");
   load(json, cmd.resize_map, "resize-map");
+
+  load(json, cmd.set_tile_format_encoding, "set-tile-format-encoding");
+  load(json, cmd.set_tile_format_compression, "set-tile-format-compression");
 
   load(json, cmd.add_layer, "add-layer");
   load(json, cmd.remove_layer, "remove-layer");

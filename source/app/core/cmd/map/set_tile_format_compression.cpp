@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "editor/lang/language.hpp"
+#include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -53,7 +55,8 @@ void SetTileFormatCompression::redo()
 
 auto SetTileFormatCompression::get_name() const -> std::string
 {
-  return "Update Map Tile Compression";
+  const auto& lang = get_current_language();
+  return lang.cmd.set_tile_format_compression;
 }
 
 }  // namespace tactile

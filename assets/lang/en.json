@@ -260,6 +260,8 @@
     "remove-columns": "Remove Columns",
     "fix-map-tiles": "Fix Tiles in Map",
     "resize-map": "Resize Map",
+    "set-tile-format-encoding": "Update Tile Format Encoding",
+    "set-tile-format-compression": "Update Tile Format Compression",
     "add-layer": "Add Layer",
     "remove-layer": "Remove Layer",
     "duplicate-layer": "Duplicate Layer",

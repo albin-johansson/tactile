@@ -259,6 +259,8 @@
     "remove-columns": "Radera Kolumner",
     "fix-map-tiles": "Reparera Tiles",
     "resize-map": "Ändra Kartstorlek",
+    "set-tile-format-encoding": "Ändra Tileformatkodning",
+    "set-tile-format-compression": "Ändra Tileformatkompression",
     "add-layer": "Lägg Till Lager",
     "remove-layer": "Radera Lager",
     "duplicate-layer": "Duplicera Lager",

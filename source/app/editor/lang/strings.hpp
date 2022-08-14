@@ -343,6 +343,9 @@ struct CommandStrings final
   std::string fix_map_tiles;
   std::string resize_map;
 
+  std::string set_tile_format_encoding;
+  std::string set_tile_format_compression;
+
   std::string add_layer;
   std::string remove_layer;
   std::string duplicate_layer;
