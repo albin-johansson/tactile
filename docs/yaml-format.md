@@ -10,21 +10,21 @@ All attributes that aren't specified as required may be omitted from save files.
 
 The root node in the Tactile YAML format provides general information about the tilemap.
 
-|               Attribute |                        Type                         | Required | Description                           |
-|------------------------:|:---------------------------------------------------:|:--------:|:--------------------------------------|
-|               `version` |                        `int`                        |   Yes    | The version of the YAML map format.   |
-|             `row-count` |                        `int`                        |   Yes    | The number of rows in the tilemap.    |
-|          `column-count` |                        `int`                        |   Yes    | The number of columns in the tilemap. |
-|            `tile-width` |                        `int`                        |   Yes    | The width of tiles in the tilemap.    |
-|           `tile-height` |                        `int`                        |   Yes    | The height of tiles in the tilemap.   |
-|         `next-layer-id` |                        `int`                        |   Yes    | The next available layer ID.          |
-|        `next-object-id` |                        `int`                        |   Yes    | The next available object ID.         |
-|           `tile-format` |                    `TileFormat`                     |    No    |                                       |
-|                `layers` |                      Sequence                       |    No    | A sequence of `Layer` nodes.          |
-|              `tilesets` |                      Sequence                       |    No    | A sequence of `TilesetRef` nodes.     |
-|            `properties` |                      Sequence                       |    No    | A sequence of `Property` nodes.       |
-| `component-definitions` |                      Sequence                       |    No    | A sequence of `ComponentDef` nodes.   |
-|            `components` |                      Sequence                       |    No    | A sequence of `Component` nodes.      |
+|               Attribute |     Type     | Required | Description                           |
+|------------------------:|:------------:|:--------:|:--------------------------------------|
+|               `version` |    `int`     |   Yes    | The version of the YAML map format.   |
+|             `row-count` |    `int`     |   Yes    | The number of rows in the tilemap.    |
+|          `column-count` |    `int`     |   Yes    | The number of columns in the tilemap. |
+|            `tile-width` |    `int`     |   Yes    | The width of tiles in the tilemap.    |
+|           `tile-height` |    `int`     |   Yes    | The height of tiles in the tilemap.   |
+|         `next-layer-id` |    `int`     |   Yes    | The next available layer ID.          |
+|        `next-object-id` |    `int`     |   Yes    | The next available object ID.         |
+|           `tile-format` | `TileFormat` |    No    |                                       |
+|                `layers` |   Sequence   |    No    | A sequence of `Layer` nodes.          |
+|              `tilesets` |   Sequence   |    No    | A sequence of `TilesetRef` nodes.     |
+|            `properties` |   Sequence   |    No    | A sequence of `Property` nodes.       |
+| `component-definitions` |   Sequence   |    No    | A sequence of `ComponentDef` nodes.   |
+|            `components` |   Sequence   |    No    | A sequence of `Component` nodes.      |
 
 ---
 
@@ -51,7 +51,9 @@ interval `[1, 9]` to request an intermediate compression mode, depending on the 
 |               `encoding` |       One of `plain`, `base64`       |    No    | `plain`  | Tile layer data encoding.                     |
 |            `compression` |        One of `none`, `zlib`         |    No    |  `none`  | The compression algorithm used.               |
 | `zlib-compression-level` | Either `-1` or in the range `[1, 9]` |    No    |   `-1`   |                                               |
-|             `endianness` |        One of `little`, `big`        |    No    | `little` | Byte ordering of compressed tile identifiers. |
+|             `endianness` |        One of `little`, `big`        | Yes[^1]  | `little` | Byte ordering of compressed tile identifiers. |
+
+[^1]: The `endianness` attribute is only required when a compression strategy is used.
 
 Example:
 
@@ -77,7 +79,7 @@ TODO v2: consider removing `id`
 |    `visible` |                        `bool`                        |    No    | `true`  | Whether or not the layer is rendered.            |
 | `properties` |                       Sequence                       |    No    |   N/A   | A sequence of `Property` nodes.                  |
 
-Example:
+Examples:
 
 ```YAML
 name: foo
@@ -86,6 +88,13 @@ type: tile-layer
 data: |
   1 2 3 4
   5 6 7 8
+```
+
+```YAML
+name: bar
+id: 8
+type: tile-layer
+data: 1 2 3 4 5 6 7 8
 ```
 
 In addition to the layer attributes listed above, each of the three different kinds of layers have additional
