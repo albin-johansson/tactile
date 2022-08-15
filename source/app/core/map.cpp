@@ -127,20 +127,20 @@ auto Map::fix_tiles() -> FixTilesResult
   return result;
 }
 
-auto Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parentId)
+auto Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parent_id)
 
     -> UUID
 {
   const auto id = layer->get_uuid();
 
-  if (parentId) {
-    mRootLayer.add_layer(*parentId, std::move(layer));
+  if (parent_id) {
+    mRootLayer.add_layer(*parent_id, std::move(layer));
   }
   else {
     mRootLayer.add_layer(std::move(layer));
   }
 
-  /* Select the layer if it's the first one to be added */
+  // Select the layer if it's the first one to be added
   if (layer_count() == 1) {
     mActiveLayer = id;
   }
