@@ -51,7 +51,8 @@ interval `[1, 9]` to request an intermediate compression mode, depending on the 
 |               `encoding` |       One of `plain`, `base64`       |    No    | `plain`  | Tile layer data encoding.                     |
 |            `compression` |        One of `none`, `zlib`         |    No    |  `none`  | The compression algorithm used.               |
 | `zlib-compression-level` | Either `-1` or in the range `[1, 9]` |    No    |   `-1`   |                                               |
-|             `endianness` |        One of `little`, `big`        | Yes[^1]  | `little` | Byte ordering of compressed tile identifiers. |
+| `zlib-compression-level` | `int` |    No    |   `-1`   |                                               |
+|             `endianness` |        One of `little`, `big`        | Yes[^1]  | The system endianness | Byte ordering of compressed tile identifiers. |
 
 [^1]: The `endianness` attribute is only required when a compression strategy is used.
 
