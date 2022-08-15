@@ -94,6 +94,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     row("tinyfiledialogs", "Zlib");
     row("yaml-cpp", "MIT");
     row("Zlib", "Zlib");
+    row("zstd", "BSD/GPLv2");
     row("googletest", "BSD");
   }
 }

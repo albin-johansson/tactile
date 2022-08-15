@@ -37,6 +37,7 @@
     "stb",
     "tinyfiledialogs",
     "yaml-cpp",
-    "zlib"
+    "zlib",
+    "zstd"
   ]
 }

@@ -56,6 +56,7 @@ find_package(SDL2-image CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(tinyfiledialogs CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
+find_package(zstd CONFIG REQUIRED)
 
 find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 

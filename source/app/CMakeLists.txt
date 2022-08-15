@@ -48,6 +48,7 @@ target_link_libraries(${TACTILE_LIB}
                       Boost::container
                       Boost::exception
                       spdlog::spdlog
+                      $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
                       )
 
 target_compile_definitions(${TACTILE_LIB}
