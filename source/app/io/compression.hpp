@@ -8,21 +8,34 @@
 
 namespace tactile::io {
 
-using ZlibData = std::vector<uint8>;
+using ByteStream = std::vector<uint8>;
 
 [[nodiscard]] auto zlib_compress(const void* source, usize source_bytes, int level = -1)
-    -> Maybe<ZlibData>;
+    -> Maybe<ByteStream>;
+
+[[nodiscard]] auto zlib_decompress(const void* source, usize source_bytes)
+    -> Maybe<ByteStream>;
+
+[[nodiscard]] auto zstd_compress(const void* source, usize source_bytes)
+    -> Maybe<ByteStream>;
+
+[[nodiscard]] auto zstd_decompress(const void* source, usize source_bytes)
+    -> Maybe<ByteStream>;
+
+[[nodiscard]] auto zlib_decompress(std::span<const uint8> span) -> Maybe<ByteStream>;
+[[nodiscard]] auto zstd_decompress(std::span<const uint8> span) -> Maybe<ByteStream>;
 
 template <typename T>
 [[nodiscard]] auto zlib_compress(const std::vector<T>& vec, const int level = -1)
-    -> Maybe<ZlibData>
+    -> Maybe<ByteStream>
 {
   return zlib_compress(vec.data(), vec.size() * sizeof(T), level);
 }
 
-[[nodiscard]] auto zlib_decompress(const void* source, usize source_bytes)
-    -> Maybe<ZlibData>;
-
-[[nodiscard]] auto zlib_decompress(std::span<const uint8> span) -> Maybe<ZlibData>;
+template <typename T>
+[[nodiscard]] auto zstd_compress(const std::vector<T>& vec) -> Maybe<ByteStream>
+{
+  return zstd_compress(vec.data(), vec.size() * sizeof(T));
+}
 
 }  // namespace tactile::io

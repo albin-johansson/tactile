@@ -22,9 +22,9 @@ static_assert(std::same_as<TileID, int32>);
 
 [[nodiscard]] auto convert_tile_matrix_to_sequence(const TileMatrix& matrix,
                                                    const usize       rows,
-                                                   const usize       columns) -> ZlibData
+                                                   const usize columns) -> ByteStream
 {
-  ZlibData seq;
+  ByteStream seq;
   seq.reserve(rows * columns * sizeof(TileID));
 
   invoke_mn(rows, columns, [&](const usize row, const usize col) {

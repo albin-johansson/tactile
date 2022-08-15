@@ -1,10 +1,13 @@
 #include "compression.hpp"
 
-#include <algorithm>  // clamp
+#include <algorithm>  // clamp, copy_n
+#include <iterator>   // back_inserter
 
 #include <spdlog/spdlog.h>
 #include <zlib.h>
+#include <zstd.h>
 
+#include "core/common/memory.hpp"
 #include "meta/build.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
@@ -16,10 +19,10 @@ using ZlibProcessFun = int (*)(z_stream*, int);
 
 constexpr usize buffer_size = 32'768;  // About 32 KB for our temporary buffers
 
-[[nodiscard]] auto process_chunks(z_stream&      stream,
-                                  ZlibProcessFun process,
-                                  Bytef*         out_buffer,
-                                  ZlibData&      result) -> int
+[[nodiscard]] auto process_zlib_chunks(z_stream&      stream,
+                                       ZlibProcessFun process,
+                                       Bytef*         out_buffer,
+                                       ByteStream&    result) -> int
 {
   const auto copy_written_bytes_in_buffer_to_dest = [&] {
     const auto written_bytes = buffer_size - stream.avail_out;
@@ -53,7 +56,7 @@ constexpr usize buffer_size = 32'768;  // About 32 KB for our temporary buffers
 }  // namespace
 
 auto zlib_compress(const void* source, const usize source_bytes, int level)
-    -> Maybe<ZlibData>
+    -> Maybe<ByteStream>
 {
   if (level != Z_DEFAULT_COMPRESSION) {
     level = std::clamp(level, Z_BEST_SPEED, Z_BEST_COMPRESSION);
@@ -76,10 +79,10 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
     return nothing;
   }
 
-  ZlibData dest;
+  ByteStream dest;
   dest.reserve(deflateBound(&stream, source_bytes));
 
-  if (const auto status = process_chunks(stream, deflate, out_buffer, dest);
+  if (const auto status = process_zlib_chunks(stream, deflate, out_buffer, dest);
       status != Z_STREAM_END) {
     spdlog::error("Compression error: {}", zError(status));
     return nothing;
@@ -102,7 +105,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
   return dest;
 }
 
-auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<ZlibData>
+auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<ByteStream>
 {
   if (!source || source_bytes == 0) {
     return nothing;
@@ -121,10 +124,10 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Zlib
     return nothing;
   }
 
-  ZlibData dest;
+  ByteStream dest;
   dest.reserve(2048);
 
-  if (const auto status = process_chunks(stream, inflate, out_buffer, dest);
+  if (const auto status = process_zlib_chunks(stream, inflate, out_buffer, dest);
       status != Z_STREAM_END) {
     spdlog::error("Decompression error: {}", zError(status));
     return nothing;
@@ -138,9 +141,101 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Zlib
   return dest;
 }
 
-auto zlib_decompress(std::span<const uint8> span) -> Maybe<ZlibData>
+auto zlib_decompress(std::span<const uint8> span) -> Maybe<ByteStream>
 {
   return zlib_decompress(span.data(), span.size_bytes());
+}
+
+auto zstd_compress(const void* source, const usize source_bytes) -> Maybe<ByteStream>
+{
+  if (!source || source_bytes == 0) {
+    return nothing;
+  }
+
+  const auto dest_capacity = ZSTD_compressBound(source_bytes);
+
+  ByteStream dest;
+  dest.resize(dest_capacity);
+
+  const auto written_bytes = ZSTD_compress(dest.data(),
+                                           dest_capacity,
+                                           source,
+                                           source_bytes,
+                                           ZSTD_CLEVEL_DEFAULT);
+
+  if (ZSTD_isError(written_bytes)) {
+    spdlog::error("Could not compress data using zstd: {}",
+                  ZSTD_getErrorName(written_bytes));
+    return nothing;
+  }
+
+  dest.resize(written_bytes);
+  dest.shrink_to_fit();
+
+  return dest;
+}
+
+auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<ByteStream>
+{
+  const auto stream_deleter = [](ZSTD_DStream* ptr) noexcept { ZSTD_freeDStream(ptr); };
+
+  using DStream = Unique<ZSTD_DStream, decltype(stream_deleter)>;
+  DStream stream {ZSTD_createDStream()};
+
+  if (!stream) {
+    spdlog::error("Could not initialize zstd stream for decompression!");
+    return nothing;
+  }
+
+  ZSTD_initDStream(stream.get());
+
+  const auto out_buffer_size = ZSTD_DStreamOutSize();
+
+  ByteStream out_buffer;
+  out_buffer.reserve(out_buffer_size);
+
+  ZSTD_inBuffer  input {.src = source, .size = source_bytes, .pos = 0};
+  ZSTD_outBuffer output {.dst = out_buffer.data(), .size = out_buffer_size, .pos = 0};
+
+  ByteStream result;
+  result.reserve(out_buffer_size);  // Won't be enough, but better than nothing
+
+  const auto copy_output_buffer_to_result = [&] {
+    std::copy_n(out_buffer.data(), output.pos, std::back_inserter(result));
+  };
+
+  usize written_bytes = 0;
+
+  do {
+    // Check if our output buffer is full, in which case we reset and reuse the buffer
+    if (output.pos == output.size) {
+      copy_output_buffer_to_result();
+
+      output.dst = out_buffer.data();
+      output.size = out_buffer_size;
+      output.pos = 0;
+    }
+
+    const auto err = ZSTD_decompressStream(stream.get(), &output, &input);
+    if (ZSTD_isError(err)) {
+      spdlog::error("zstd decompression step failed: {}", ZSTD_getErrorName(err));
+      return nothing;
+    }
+
+    written_bytes += output.pos;
+  } while (input.pos < input.size);
+
+  copy_output_buffer_to_result();
+
+  result.resize(written_bytes);
+  result.shrink_to_fit();
+
+  return result;
+}
+
+auto zstd_decompress(std::span<const uint8> span) -> Maybe<ByteStream>
+{
+  return zstd_decompress(span.data(), span.size_bytes());
 }
 
 }  // namespace tactile::io

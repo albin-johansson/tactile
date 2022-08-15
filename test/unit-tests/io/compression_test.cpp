@@ -1,47 +1,44 @@
 #include "io/compression.hpp"
 
-#include <array>  // array
-#include <bit>    // endian
-
 #include <gtest/gtest.h>
 
 #include "core/util/random.hpp"
-#include "core/util/tiles.hpp"
 
 namespace tactile::test {
+namespace {
 
-TEST(Compression, CompressAndDecompress)
+[[nodiscard]] auto make_bytes() -> io::ByteStream
 {
-  std::vector<int> source;
-  source.reserve(1'000);
+  io::ByteStream bytes;
+  bytes.reserve(42'000);
 
-  for (usize i = 0; i < 1'000; ++i) {
-    source.push_back(next_random(0, 100));
+  for (usize i = 0, capacity = bytes.capacity(); i < capacity; ++i) {
+    bytes.push_back(static_cast<uint8>(next_random('a', 'z')));
   }
+
+  return bytes;
+}
+
+}  // namespace
+
+TEST(Compression, ZlibCompressAndDecompress)
+{
+  const auto source = make_bytes();
 
   const auto compressed = io::zlib_compress(source).value();
   const auto decompressed = io::zlib_decompress(compressed).value();
 
-  const auto n_items = decompressed.size() / sizeof(int);
-  ASSERT_EQ(source.size(), n_items);
+  ASSERT_EQ(source, decompressed);
+}
 
-  std::vector<int> restored;
-  restored.reserve(source.size());
+TEST(Compression, ZstdCompressAndDecompress)
+{
+  const auto source = make_bytes();
 
-  for (usize i = 0; i < n_items; ++i) {
-    const auto index = i * sizeof(int);
+  const auto compressed = io::zstd_compress(source).value();
+  const auto decompressed = io::zstd_decompress(compressed).value();
 
-    const auto a = static_cast<int>(decompressed[index]);
-    const auto b = static_cast<int>(decompressed[index + 1]);
-    const auto c = static_cast<int>(decompressed[index + 2]);
-    const auto d = static_cast<int>(decompressed[index + 3]);
-
-    restored.push_back(std::endian::native == std::endian::little
-                           ? (d << 3) | (c << 2) | (b << 1) | a
-                           : (a << 3) | (b << 2) | (c << 1) | d);
-  }
-
-  ASSERT_EQ(restored, source);
+  ASSERT_EQ(source, decompressed);
 }
 
 }  // namespace tactile::test
