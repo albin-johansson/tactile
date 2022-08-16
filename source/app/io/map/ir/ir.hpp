@@ -31,11 +31,12 @@
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
 #include "core/common/math.hpp"
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/layer/tile_format.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
+#include "core/layer/tile_format.hpp"
 
 namespace tactile::ir {
 
@@ -146,8 +147,9 @@ struct TileFormatData final
 {
   TileEncoding    encoding {TileEncoding::Plain};
   TileCompression compression {TileCompression::None};
-  std::endian     endianness {std::endian::little};
-  int32           zlib_compression_level {-1};
+  std::endian     endianness {std::endian::native};
+  Maybe<int32>    zlib_compression_level {};
+  Maybe<int32>    zstd_compression_level {};
 };
 
 struct MapData

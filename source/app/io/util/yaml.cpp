@@ -91,6 +91,9 @@ auto operator<<(YAML::Emitter& emitter, const TileCompression compression)
     case TileCompression::Zlib:
       return emitter << "zlib";
 
+    case TileCompression::Zstd:
+      return emitter << "zstd";
+
     default:
       throw TactileError {"Did not recognize tile compression!"};
   }

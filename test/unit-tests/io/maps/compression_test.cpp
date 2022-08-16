@@ -24,9 +24,9 @@
 
 namespace tactile::test {
 
-TEST(CompressedTileData, TactileYAML)
+TEST(CompressedTileData, TactileYAMLWithZlib)
 {
-  const auto result = io::parse_map("test-resources/yaml/compressed.yaml");
+  const auto result = io::parse_map("test-resources/yaml/compressed_zlib.yaml");
   ASSERT_EQ(io::ParseError::None, result.error());
 
   const auto& map = result.data();

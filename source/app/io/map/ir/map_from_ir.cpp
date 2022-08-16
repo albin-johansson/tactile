@@ -284,7 +284,14 @@ void restore_tile_format(TileFormat& format, const ir::TileFormatData& data)
   format.set_encoding(data.encoding);
   format.set_compression(data.compression);
   format.set_endianness(data.endianness);
-  format.set_zlib_compression_level(data.zlib_compression_level);
+
+  if (data.zlib_compression_level) {
+    format.set_zlib_compression_level(*data.zlib_compression_level);
+  }
+
+  if (data.zstd_compression_level) {
+    format.set_zstd_compression_level(*data.zstd_compression_level);
+  }
 }
 
 }  // namespace

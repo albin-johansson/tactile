@@ -24,6 +24,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
+#include "core/common/maybe.hpp"
 #include "core/layer/tile_format.hpp"
 
 namespace tactile::io {
@@ -44,6 +45,20 @@ auto read_attribute(const YAML::Node& node, const char* name, T& result) -> bool
 /// Reads an attribute to a destination variable, uses the fallback value on failure.
 template <typename T>
 void read_attribute(const YAML::Node& node, const char* name, T& result, T fallback)
+{
+  if (auto attr = node[name]) {
+    result = attr.as<T>();
+  }
+  else {
+    result = std::move(fallback);
+  }
+}
+
+template <typename T>
+void read_attribute(const YAML::Node& node,
+                    const char*       name,
+                    Maybe<T>&         result,
+                    T                 fallback)
 {
   if (auto attr = node[name]) {
     result = attr.as<T>();

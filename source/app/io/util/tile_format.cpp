@@ -82,6 +82,10 @@ auto base64_encode_tiles(const TileMatrix&     tiles,
       const auto compressed = zlib_compress(sequence).value();
       return Base64::encode(compressed);
     }
+    case TileCompression::Zstd: {
+      const auto compressed = zstd_compress(sequence).value();
+      return Base64::encode(compressed);
+    }
     default:
       throw TactileError {"Invalid compression strategy!"};
   }
@@ -100,6 +104,10 @@ auto base64_decode_tiles(const std::string&    tiles,
 
     case TileCompression::Zlib: {
       const auto decompressed = zlib_decompress(decoded_bytes).value();
+      return restore_tiles(decompressed, rows, columns);
+    }
+    case TileCompression::Zstd: {
+      const auto decompressed = zstd_decompress(decoded_bytes).value();
       return restore_tiles(decompressed, rows, columns);
     }
     default:

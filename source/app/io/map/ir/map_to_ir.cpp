@@ -246,6 +246,7 @@ void convert_tile_format(const TileFormat& format, ir::TileFormatData& data)
   data.encoding = format.encoding();
   data.endianness = format.endianness();
   data.zlib_compression_level = format.zlib_compression_level();
+  data.zstd_compression_level = format.zstd_compression_level();
 }
 
 }  // namespace

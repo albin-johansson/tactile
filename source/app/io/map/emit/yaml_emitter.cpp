@@ -446,9 +446,16 @@ void emit_tile_format(YAML::Emitter& emitter, const ir::TileFormatData& format)
     }
 
     if (format.compression == TileCompression::Zlib &&
+        format.zlib_compression_level.has_value() &&
         format.zlib_compression_level != -1) {
       emitter << YAML::Key << "zlib-compression-level" << YAML::Value
-              << format.zlib_compression_level;
+              << *format.zlib_compression_level;
+    }
+
+    if (format.compression == TileCompression::Zstd &&
+        format.zstd_compression_level.has_value()) {
+      emitter << YAML::Key << "zstd-compression-level" << YAML::Value
+              << *format.zstd_compression_level;
     }
 
     if (format.compression != TileCompression::None) {

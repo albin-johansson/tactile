@@ -53,6 +53,9 @@ namespace {
     else if (compression_str == "zlib") {
       format.compression = TileCompression::Zlib;
     }
+    else if (compression_str == "zstd") {
+      format.compression = TileCompression::Zstd;
+    }
     else {
       return ParseError::BadTileFormatCompression;
     }
