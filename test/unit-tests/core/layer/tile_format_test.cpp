@@ -21,6 +21,7 @@
 
 #include <gtest/gtest.h>
 #include <zlib.h>
+#include <zstd.h>
 
 #include "misc/panic.hpp"
 
@@ -36,6 +37,9 @@ TEST(TileFormat, Defaults)
 
   ASSERT_EQ(-1, Z_DEFAULT_COMPRESSION);
   ASSERT_EQ(-1, format.zlib_compression_level());
+
+  ASSERT_EQ(3, ZSTD_defaultCLevel());
+  ASSERT_EQ(ZSTD_defaultCLevel(), format.zstd_compression_level());
 }
 
 TEST(TileFormat, SetEndianness)
@@ -68,6 +72,7 @@ TEST(TileFormat, CanUseCompressionStrategyWithPlainEncoding)
 
   ASSERT_TRUE(format.can_use_compression_strategy(TileCompression::None));
   ASSERT_FALSE(format.can_use_compression_strategy(TileCompression::Zlib));
+  ASSERT_FALSE(format.can_use_compression_strategy(TileCompression::Zstd));
 }
 
 TEST(TileFormat, CanUseCompressionStrategyWithBase64Encoding)
@@ -77,6 +82,7 @@ TEST(TileFormat, CanUseCompressionStrategyWithBase64Encoding)
 
   ASSERT_TRUE(format.can_use_compression_strategy(TileCompression::None));
   ASSERT_TRUE(format.can_use_compression_strategy(TileCompression::Zlib));
+  ASSERT_TRUE(format.can_use_compression_strategy(TileCompression::Zstd));
 }
 
 TEST(TileFormat, IsValidZlibCompressionLevel)
@@ -99,6 +105,16 @@ TEST(TileFormat, IsValidZlibCompressionLevel)
   for (int level = 1; level <= 9; ++level) {
     ASSERT_TRUE(TileFormat::is_valid_zlib_compression_level(level));
   }
+}
+
+TEST(TileFormat, IsValidZstdCompressionLevel)
+{
+  ASSERT_FALSE(TileFormat::is_valid_zstd_compression_level(ZSTD_minCLevel() - 1));
+  ASSERT_FALSE(TileFormat::is_valid_zstd_compression_level(ZSTD_maxCLevel() + 1));
+
+  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(ZSTD_defaultCLevel()));
+  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(ZSTD_minCLevel()));
+  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(ZSTD_maxCLevel()));
 }
 
 }  // namespace tactile::test

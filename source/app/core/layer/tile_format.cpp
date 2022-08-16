@@ -19,6 +19,9 @@
 
 #include "tile_format.hpp"
 
+#include <zlib.h>
+#include <zstd.h>
+
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -57,6 +60,16 @@ void TileFormat::set_zlib_compression_level(const int level)
   }
 }
 
+void TileFormat::set_zstd_compression_level(const int level)
+{
+  if (is_valid_zstd_compression_level(level)) {
+    mZstdCompressionLevel = level;
+  }
+  else {
+    throw TactileError {"Invalid zstd compression level!"};
+  }
+}
+
 auto TileFormat::encoding() const -> TileEncoding
 {
   return mEncoding;
@@ -77,6 +90,11 @@ auto TileFormat::zlib_compression_level() const -> int
   return mZlibCompressionLevel;
 }
 
+auto TileFormat::zstd_compression_level() const -> int
+{
+  return mZstdCompressionLevel;
+}
+
 auto TileFormat::supports_any_compression() const -> bool
 {
   return mEncoding != TileEncoding::Plain;
@@ -90,7 +108,13 @@ auto TileFormat::can_use_compression_strategy(const TileCompression compression)
 
 auto TileFormat::is_valid_zlib_compression_level(const int level) -> bool
 {
-  return level == -1 || (level >= 1 && level <= 9);
+  return level == Z_DEFAULT_COMPRESSION ||
+         (level >= Z_BEST_SPEED && level <= Z_BEST_COMPRESSION);
+}
+
+auto TileFormat::is_valid_zstd_compression_level(const int level) -> bool
+{
+  return level >= ZSTD_minCLevel() && level <= ZSTD_maxCLevel();
 }
 
 }  // namespace tactile

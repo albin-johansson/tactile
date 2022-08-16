@@ -34,7 +34,8 @@ enum class TileEncoding
 enum class TileCompression
 {
   None,  ///< Apply no compression to tile layer data.
-  Zlib   ///< Compress tile layer data using the Zlib library.
+  Zlib,  ///< Use the Zlib compression library.
+  Zstd   ///< Use the zstd compression library.
 };
 
 /// Describes the tile layer data format used by a map.
@@ -53,6 +54,8 @@ class TileFormat final
 
   void set_zlib_compression_level(int level);
 
+  void set_zstd_compression_level(int level);
+
   [[nodiscard]] auto encoding() const -> TileEncoding;
 
   [[nodiscard]] auto compression() const -> TileCompression;
@@ -60,6 +63,8 @@ class TileFormat final
   [[nodiscard]] auto endianness() const -> std::endian;
 
   [[nodiscard]] auto zlib_compression_level() const -> int;
+
+  [[nodiscard]] auto zstd_compression_level() const -> int;
 
   /// Does the current encoding support tile compression?
   [[nodiscard]] auto supports_any_compression() const -> bool;
@@ -69,11 +74,14 @@ class TileFormat final
 
   [[nodiscard]] static auto is_valid_zlib_compression_level(int level) -> bool;
 
+  [[nodiscard]] static auto is_valid_zstd_compression_level(int level) -> bool;
+
  private:
   TileEncoding    mEncoding {TileEncoding::Plain};
   TileCompression mCompression {TileCompression::None};
   std::endian     mEndianness {std::endian::native};
   int             mZlibCompressionLevel {-1};
+  int             mZstdCompressionLevel {3};
 };
 
 }  // namespace tactile
