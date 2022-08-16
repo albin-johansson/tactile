@@ -29,16 +29,14 @@ namespace tactile::io {
 
 [[nodiscard]] auto parse_json_map(const fs::path& path) -> ParseResult;
 
-[[nodiscard]] auto parse_tilesets(const JSON&     json,
-                                  ir::MapData&    map_data,
-                                  const fs::path& dir) -> ParseError;
-
-[[nodiscard]] auto parse_layers(const JSON& json, ir::MapData& map_data) -> ParseError;
-
-[[nodiscard]] auto parse_object(const JSON& json, ir::ObjectData& object_data)
+[[nodiscard]] auto parse_tilesets(const JSON& json, ir::MapData& map, const fs::path& dir)
     -> ParseError;
 
-[[nodiscard]] auto parse_properties(const JSON& json, ir::ContextData& context_data)
+[[nodiscard]] auto parse_layers(const JSON& json, ir::MapData& map) -> ParseError;
+
+[[nodiscard]] auto parse_object(const JSON& json, ir::ObjectData& object) -> ParseError;
+
+[[nodiscard]] auto parse_properties(const JSON& json, ir::ContextData& context)
     -> ParseError;
 
 }  // namespace tactile::io
