@@ -30,6 +30,7 @@
 #include "io/map/tiled_info.hpp"
 #include "io/persist/preferences.hpp"
 #include "io/util/json.hpp"
+#include "io/util/tile_format.hpp"
 
 namespace tactile::io {
 namespace {
@@ -87,59 +88,99 @@ namespace {
   return json;
 }
 
-[[nodiscard]] auto emit_layer(const ir::LayerData& data,
-                              const usize          rows,
-                              const usize          columns) -> JSON
+void emit_tile_layer(JSON& json, const ir::MapData& map, const ir::LayerData& layer)
+{
+  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+
+  json["type"] = "tilelayer";
+  json["width"] = map.col_count;
+  json["height"] = map.row_count;
+
+  switch (map.tile_format.encoding) {
+    case TileEncoding::Base64: {
+      json["encoding"] = "base64";
+      break;
+    }
+    default:
+      // Do nothing
+      break;
+  }
+
+  switch (map.tile_format.compression) {
+    case TileCompression::Zlib: {
+      json["compression"] = "zlib";
+      break;
+    }
+    case TileCompression::Zstd: {
+      json["compression"] = "zstd";
+      break;
+    }
+    default:
+      // Do nothing
+      break;
+  }
+
+  if (map.tile_format.encoding == TileEncoding::Base64) {
+    json["data"] = base64_encode_tiles(tile_layer.tiles,
+                                       map.row_count,
+                                       map.col_count,
+                                       map.tile_format.compression);
+  }
+  else {
+    auto tiles = JSON::array();
+
+    invoke_mn(map.row_count, map.col_count, [&](const usize row, const usize col) {
+      tiles += tile_layer.tiles[row][col];
+    });
+
+    json["data"] = std::move(tiles);
+  }
+}
+
+void emit_object_layer(JSON& json, const ir::LayerData& layer)
+{
+  const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+
+  json["type"] = "objectgroup";
+
+  auto objects = JSON::array();
+
+  for (const auto& object_data : object_layer.objects) {
+    objects += emit_object(object_data);
+  }
+
+  json["objects"] = std::move(objects);
+}
+
+[[nodiscard]] auto emit_layer(const ir::MapData& map, const ir::LayerData& layer) -> JSON
 {
   auto json = JSON::object();
 
-  json["id"] = data.id;
-  json["name"] = data.name;
-  json["opacity"] = data.opacity;
-  json["visible"] = data.visible;
+  json["id"] = layer.id;
+  json["name"] = layer.name;
+  json["opacity"] = layer.opacity;
+  json["visible"] = layer.visible;
   json["x"] = 0;
   json["y"] = 0;
 
-  switch (data.type) {
-    case LayerType::TileLayer: {
-      const auto& tile_layer_data = std::get<ir::TileLayerData>(data.data);
-
-      json["type"] = "tilelayer";
-      json["width"] = columns;
-      json["height"] = rows;
-
-      auto tiles = JSON::array();
-
-      invoke_mn(rows, columns, [&](const usize row, const usize col) {
-        tiles += tile_layer_data.tiles[row][col];
-      });
-
-      json["data"] = std::move(tiles);
+  switch (layer.type) {
+    case LayerType::TileLayer:
+      emit_tile_layer(json, map, layer);
       break;
-    }
-    case LayerType::ObjectLayer: {
-      const auto& object_layer_data = std::get<ir::ObjectLayerData>(data.data);
 
-      json["type"] = "objectgroup";
-
-      auto objects = JSON::array();
-
-      for (const auto& object_data : object_layer_data.objects) {
-        objects += emit_object(object_data);
-      }
-
-      json["objects"] = std::move(objects);
+    case LayerType::ObjectLayer:
+      emit_object_layer(json, layer);
       break;
-    }
+
     case LayerType::GroupLayer: {
-      const auto& group_layer_data = std::get<ir::GroupLayerData>(data.data);
+      const auto& group_layer_data = std::get<ir::GroupLayerData>(layer.data);
 
       json["type"] = "group";
 
       auto layers = JSON::array();
 
       for (const auto& child_layer_data : group_layer_data.children) {
-        layers += emit_layer(*child_layer_data, rows, columns);
+        layers += emit_layer(map, *child_layer_data);
       }
 
       json["layers"] = std::move(layers);
@@ -147,19 +188,19 @@ namespace {
     }
   }
 
-  if (!data.context.properties.empty()) {
-    json["properties"] = emit_properties(data.context);
+  if (!layer.context.properties.empty()) {
+    json["properties"] = emit_properties(layer.context);
   }
 
   return json;
 }
 
-[[nodiscard]] auto emit_layers(const ir::MapData& data) -> JSON
+[[nodiscard]] auto emit_layers(const ir::MapData& map) -> JSON
 {
   auto array = JSON::array();
 
-  for (const auto& layer_data : data.layers) {
-    array += emit_layer(layer_data, data.row_count, data.col_count);
+  for (const auto& layer : map.layers) {
+    array += emit_layer(map, layer);
   }
 
   return array;
