@@ -92,10 +92,10 @@ const auto cases =
 
 }  // namespace
 
-struct CompressedMapTest : testing::TestWithParam<TestData>
+struct CompressedYamlMapTest : testing::TestWithParam<TestData>
 {};
 
-TEST_P(CompressedMapTest, EmitAndParseMap)
+TEST_P(CompressedYamlMapTest, EmitAndParseMap)
 {
   const auto [path, format_factory] = GetParam();
 
@@ -117,6 +117,6 @@ TEST_P(CompressedMapTest, EmitAndParseMap)
   ASSERT_EQ(test_tiles, tile_layer.tiles);
 }
 
-INSTANTIATE_TEST_SUITE_P(CompressedMapTests, CompressedMapTest, cases);
+INSTANTIATE_TEST_SUITE_P(CompressedYamlMapTests, CompressedYamlMapTest, cases);
 
 }  // namespace tactile::test
