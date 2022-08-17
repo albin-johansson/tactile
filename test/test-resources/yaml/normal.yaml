@@ -63,7 +63,7 @@ layers:
         properties:
           - name: path
             type: file
-            value: /Users/albin-johansson/Documents/GitHub/tactile/test/test-resources/exterior.png
+            value: ../exterior.png
       - name: Details 2
         id: 5
         type: tile-layer
