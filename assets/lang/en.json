@@ -361,6 +361,7 @@
     "bad-tile-format-compression": "The map uses an unsupported tile format compression strategy",
     "bad-tile-format-endianness": "The map uses an unsupported tile format endianness",
     "bad-zlib-compression-level": "The map uses an invalid Zlib compression level, valid values are -1 and [1, 9]",
+    "bad-zstd-compression-level": "The map uses an invalid Zstd compression level",
     "plain-encoding-with-compression": "Use of unsupported plain tile encoding along with compressed tile data"
   }
 }

@@ -97,6 +97,7 @@ enum class ParseError
   BadTileFormatEncoding,
   BadTileFormatCompression,
   BadZlibCompressionLevel,
+  BadZstdCompressionLevel,
   PlainEncodingWithCompression
 };
 

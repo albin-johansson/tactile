@@ -461,6 +461,7 @@ struct ParseErrorStrings final
   std::string bad_tile_format_encoding;
   std::string bad_tile_format_compression;
   std::string bad_zlib_compression_level;
+  std::string bad_zstd_compression_level;
   std::string plain_encoding_with_compression;
 };
 

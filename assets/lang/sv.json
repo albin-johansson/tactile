@@ -360,6 +360,7 @@
     "bad-tile-format-compression": "Kartan använder en kompressionsstrategi för tiledata som inte stöds",
     "bad-tile-format-endianness": "Kartan använder en byteordning för komprimerad tiledata som inte stöds",
     "bad-zlib-compression-level": "Kartan använder en kompressionsnivå för Zlib som inte stöds, giltiga värden är -1 och [1, 9]",
+    "bad-zstd-compression-level": "Kartan använder en kompressionsnivå för Zstd som inte stöds",
     "plain-encoding-with-compression": "Kartan använder oformaterad kodning för tiledata samtidigt som tiledatan är komprimerad"
   }
 }

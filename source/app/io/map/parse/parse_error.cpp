@@ -199,6 +199,9 @@ auto to_cause(const ParseError error) -> std::string_view
     case ParseError::BadZlibCompressionLevel:
       return lang.parse_error.bad_zlib_compression_level;
 
+    case ParseError::BadZstdCompressionLevel:
+      return lang.parse_error.bad_zstd_compression_level;
+
     case ParseError::PlainEncodingWithCompression:
       return lang.parse_error.plain_encoding_with_compression;
 

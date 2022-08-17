@@ -65,6 +65,7 @@ namespace {
   }
 
   read_attribute(node, "zlib-compression-level", format.zlib_compression_level, -1);
+  read_attribute(node, "zstd-compression-level", format.zstd_compression_level, 3);
 
   if (format.encoding == TileEncoding::Plain &&
       format.compression != TileCompression::None) {
@@ -74,6 +75,11 @@ namespace {
   if (const auto level = format.zlib_compression_level;
       level && !TileFormat::is_valid_zlib_compression_level(*level)) {
     return ParseError::BadZlibCompressionLevel;
+  }
+
+  if (const auto level = format.zstd_compression_level;
+      level && !TileFormat::is_valid_zstd_compression_level(*level)) {
+    return ParseError::BadZstdCompressionLevel;
   }
 
   return ParseError::None;
