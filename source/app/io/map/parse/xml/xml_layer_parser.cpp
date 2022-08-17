@@ -27,6 +27,7 @@
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
+#include "io/util/tile_format.hpp"
 #include "io/util/xml.hpp"
 #include "misc/panic.hpp"
 
@@ -81,8 +82,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_data(XMLNode layer_node, ir::TileLayerData& layer)
-    -> ParseError
+[[nodiscard]] auto parse_tile_data(XMLNode            layer_node,
+                                   ir::MapData&       map,
+                                   ir::TileLayerData& tile_layer) -> ParseError
 {
   const auto data = layer_node.child("data");
 
@@ -92,18 +94,44 @@ namespace {
 
   if (const auto* encoding = data.attribute("encoding").as_string(nullptr)) {
     if (std::strcmp(encoding, "csv") == 0) {
+      map.tile_format.encoding = TileEncoding::Plain;
+      map.tile_format.compression = TileCompression::None;
+
       const auto text = data.text();
-      if (const auto error = parse_csv_tiles(text.get(), layer);
+      if (const auto error = parse_csv_tiles(text.get(), tile_layer);
           error != ParseError::None) {
         return error;
       }
+    }
+    else if (std::strcmp(encoding, "base64") == 0) {
+      map.tile_format.encoding = TileEncoding::Base64;
+
+      if (const auto* compression = data.attribute("compression").as_string(nullptr);
+          !compression || std::strcmp(compression, "") == 0) {
+        map.tile_format.compression = TileCompression::None;
+      }
+      else if (std::strcmp(compression, "zlib") == 0) {
+        map.tile_format.compression = TileCompression::Zlib;
+      }
+      else if (std::strcmp(compression, "zstd") == 0) {
+        map.tile_format.compression = TileCompression::Zstd;
+      }
+
+      tile_layer.tiles = base64_decode_tiles(data.text().get(),
+                                             map.row_count,
+                                             map.col_count,
+                                             map.tile_format.compression);
     }
     else {
       return ParseError::UnsupportedTileLayerEncoding;
     }
   }
   else {
-    if (const auto error = parse_tile_nodes(data, layer); error != ParseError::None) {
+    map.tile_format.encoding = TileEncoding::Plain;
+    map.tile_format.compression = TileCompression::None;
+
+    if (const auto error = parse_tile_nodes(data, tile_layer);
+        error != ParseError::None) {
       return error;
     }
   }
@@ -147,7 +175,8 @@ namespace {
 
   tile_layer.tiles = make_tile_matrix(tile_layer.row_count, tile_layer.col_count);
 
-  if (const auto err = parse_tile_data(layer_node, tile_layer); err != ParseError::None) {
+  if (const auto err = parse_tile_data(layer_node, map, tile_layer);
+      err != ParseError::None) {
     return err;
   }
 

@@ -32,6 +32,7 @@
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
 #include "io/persist/preferences.hpp"
+#include "io/util/tile_format.hpp"
 #include "io/util/xml.hpp"
 #include "misc/panic.hpp"
 
@@ -150,35 +151,26 @@ void append_common_layer_attributes(XMLNode node, const ir::LayerData& layer)
   }
 }
 
-void append_tile_layer(XMLNode root, const ir::LayerData& layer)
+void append_csv_tile_layer_data(XMLNode                  data_node,
+                                const ir::MapData&       map,
+                                const ir::TileLayerData& tile_layer)
 {
-  const auto& prefs = get_preferences();
-  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
-
-  auto node = root.append_child("layer");
-  append_common_layer_attributes(node, layer);
-
-  node.append_attribute("width").set_value(tile_layer.col_count);
-  node.append_attribute("height").set_value(tile_layer.row_count);
-
-  append_properties(node, layer.context);
-
-  auto data_node = node.append_child("data");
   data_node.append_attribute("encoding").set_value("csv");
-
-  const auto count = tile_layer.row_count * tile_layer.col_count;
 
   std::stringstream stream;
 
-  invoke_mn(tile_layer.row_count,
-            tile_layer.col_count,
+  const auto& prefs = get_preferences();
+  const auto  tile_count = map.row_count * map.col_count;
+
+  invoke_mn(map.row_count,
+            map.col_count,
             [&, index = 0ull](const usize row, const usize col) mutable {
               if (prefs.fold_tile_data && index == 0) {
                 stream << '\n';
               }
 
               stream << tile_layer.tiles[row][col];
-              if (index < count - 1u) {
+              if (index < tile_count - 1u) {
                 stream << ',';
               }
 
@@ -190,6 +182,64 @@ void append_tile_layer(XMLNode root, const ir::LayerData& layer)
             });
 
   data_node.text().set(stream.str().c_str());
+}
+
+void append_base64_tile_layer_data(XMLNode                  data_node,
+                                   const ir::MapData&       map,
+                                   const ir::TileLayerData& tile_layer)
+{
+  data_node.append_attribute("encoding").set_value("base64");
+
+  switch (map.tile_format.compression) {
+    case TileCompression::None:
+      // Do nothing
+      break;
+
+    case TileCompression::Zlib:
+      data_node.append_attribute("compression").set_value("zlib");
+      break;
+
+    case TileCompression::Zstd:
+      data_node.append_attribute("compression").set_value("zstd");
+      break;
+
+    default:
+      throw TactileError {"Invalid compression strategy!"};
+  }
+
+  const auto tile_data = base64_encode_tiles(tile_layer.tiles,
+                                             tile_layer.row_count,
+                                             tile_layer.col_count,
+                                             map.tile_format.compression);
+  data_node.text().set(tile_data.c_str());
+}
+
+void append_tile_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& layer)
+{
+  const auto& prefs = get_preferences();
+  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+
+  auto node = root.append_child("layer");
+  append_common_layer_attributes(node, layer);
+
+  node.append_attribute("width").set_value(map.col_count);
+  node.append_attribute("height").set_value(map.row_count);
+
+  append_properties(node, layer.context);
+
+  auto data_node = node.append_child("data");
+  switch (map.tile_format.encoding) {
+    case TileEncoding::Plain:
+      append_csv_tile_layer_data(data_node, map, tile_layer);
+      break;
+
+    case TileEncoding::Base64:
+      append_base64_tile_layer_data(data_node, map, tile_layer);
+      break;
+
+    default:
+      throw TactileError {"Invalid tile encoding!"};
+  }
 }
 
 void append_object_layer(XMLNode root, const ir::LayerData& layer)
@@ -205,11 +255,11 @@ void append_object_layer(XMLNode root, const ir::LayerData& layer)
   }
 }
 
-void append_layer(XMLNode root, const ir::LayerData& layer)
+void append_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& layer)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
-      append_tile_layer(root, layer);
+      append_tile_layer(root, map, layer);
       break;
 
     case LayerType::ObjectLayer:
@@ -224,7 +274,7 @@ void append_layer(XMLNode root, const ir::LayerData& layer)
       append_properties(collection, layer.context);
 
       for (const auto& child_layer : group_layer.children) {
-        append_layer(collection, *child_layer);
+        append_layer(collection, map, *child_layer);
       }
 
       break;
@@ -321,7 +371,7 @@ void emit_external_tileset_file(const fs::path&        path,
   append_common_tileset_attributes(root, tileset, dir);
 
   std::ofstream stream {path, std::ios::out};
-  document.save(stream);
+  document.save(stream, " ");
 }
 
 void append_tileset(XMLNode root, const ir::TilesetData& tileset, const fs::path& dir)
@@ -366,7 +416,7 @@ void append_root(pugi::xml_document& document, const EmitInfo& info)
   }
 
   for (const auto& layer : map.layers) {
-    append_layer(root, layer);
+    append_layer(root, map, layer);
   }
 }
 

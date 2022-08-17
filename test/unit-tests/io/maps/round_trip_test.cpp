@@ -511,7 +511,7 @@ TEST(RoundTrip, XML)
 {
   current_parser = "XML";
 
-  const io::EmitInfo emitter {fs::absolute("test_map.tmx"), create_source_data(false)};
+  const io::EmitInfo emitter {"test_map.tmx", create_source_data(false)};
   io::emit_xml_map(emitter);
 
   const auto result = io::parse_map("test_map.tmx");

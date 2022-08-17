@@ -41,7 +41,7 @@ namespace {
 [[nodiscard]] auto parse_map(const fs::path& path, ir::MapData& data) -> ParseError
 {
   pugi::xml_document document;
-  if (!document.load_file(path.c_str())) {
+  if (!document.load_file(path.c_str(), pugi::parse_default | pugi::parse_trim_pcdata)) {
     return ParseError::CouldNotReadFile;
   }
 
