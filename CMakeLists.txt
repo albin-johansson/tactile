@@ -90,6 +90,7 @@ function(tactile_set_compile_options target)
                            -Wextra
                            -Wpedantic
                            -Wconversion
+                           -Wsign-conversion
                            )
   endif ()
 endfunction()
