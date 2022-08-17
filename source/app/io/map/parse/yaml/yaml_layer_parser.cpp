@@ -24,7 +24,7 @@
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
-#include "io/util/tile_format.hpp"
+#include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
 
 using namespace std::string_literals;

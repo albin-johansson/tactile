@@ -32,7 +32,7 @@
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
 #include "io/persist/preferences.hpp"
-#include "io/util/tile_format.hpp"
+#include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
 #include "misc/panic.hpp"
 

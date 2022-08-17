@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "io/util/tile_format.hpp"
+#include "io/util/base64_tiles.hpp"
 
 #include <gtest/gtest.h>
 

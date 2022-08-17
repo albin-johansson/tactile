@@ -33,7 +33,7 @@
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/persist/preferences.hpp"
-#include "io/util/tile_format.hpp"
+#include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile::io {
