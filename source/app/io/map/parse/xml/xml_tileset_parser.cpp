@@ -28,48 +28,47 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_fancy_tiles(XMLNode tilesetNode, ir::TilesetData& tilesetData)
+[[nodiscard]] auto parse_fancy_tiles(XMLNode tileset_node, ir::TilesetData& tileset)
     -> ParseError
 {
-  for (auto tileNode : tilesetNode.children("tile")) {
-    TileID tileId {};
+  for (const auto tile_node : tileset_node.children("tile")) {
+    TileID tile_id {};
 
-    if (const auto id = as_int(tileNode, "id")) {
-      tileId = *id;
+    if (const auto id = as_int(tile_node, "id")) {
+      tile_id = *id;
     }
     else {
       return ParseError::NoFancyTileId;
     }
 
-    auto& tileData = tilesetData.fancy_tiles[tileId];
+    auto& tile = tileset.fancy_tiles[tile_id];
 
-    for (auto frameNode : tileNode.child("animation").children("frame")) {
-      auto& frameData = tileData.frames.emplace_back();
+    for (const auto frame_node : tile_node.child("animation").children("frame")) {
+      auto& frame = tile.frames.emplace_back();
 
-      if (const auto localId = as_int(frameNode, "tileid")) {
-        frameData.local_id = *localId;
+      if (const auto local_id = as_int(frame_node, "tileid")) {
+        frame.local_id = *local_id;
       }
       else {
         return ParseError::NoAnimationFrameTile;
       }
 
-      if (const auto duration = as_uint(frameNode, "duration")) {
-        frameData.duration_ms = *duration;
+      if (const auto duration = as_uint(frame_node, "duration")) {
+        frame.duration_ms = *duration;
       }
       else {
         return ParseError::NoAnimationFrameDuration;
       }
     }
 
-    for (auto objectNode : tileNode.child("objectgroup").children("object")) {
-      auto& objectData = tileData.objects.emplace_back();
-      if (const auto err = parse_object(objectNode, objectData);
-          err != ParseError::None) {
+    for (const auto object_node : tile_node.child("objectgroup").children("object")) {
+      auto& object = tile.objects.emplace_back();
+      if (const auto err = parse_object(object_node, object); err != ParseError::None) {
         return err;
       }
     }
 
-    if (const auto err = parse_properties(tileNode, tileData.context);
+    if (const auto err = parse_properties(tile_node, tile.context);
         err != ParseError::None) {
       return err;
     }
@@ -78,34 +77,34 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_image_info(XMLNode          tilesetNode,
-                                     ir::TilesetData& tilesetData,
-                                     const fs::path&  dir) -> ParseError
+[[nodiscard]] auto parse_image_info(XMLNode          tileset_node,
+                                    ir::TilesetData& tileset,
+                                    const fs::path&  dir) -> ParseError
 {
-  auto imageNode = tilesetNode.child("image");
+  const auto image_node = tileset_node.child("image");
 
-  if (const auto width = as_int(imageNode, "width")) {
-    tilesetData.image_size.x = *width;
+  if (const auto width = as_int(image_node, "width")) {
+    tileset.image_size.x = *width;
   }
   else {
     return ParseError::NoTilesetImageWidth;
   }
 
-  if (const auto height = as_int(imageNode, "height")) {
-    tilesetData.image_size.y = *height;
+  if (const auto height = as_int(image_node, "height")) {
+    tileset.image_size.y = *height;
   }
   else {
     return ParseError::NoTilesetImageHeight;
   }
 
-  const auto relativePath = as_string(imageNode, "source");
-  if (!relativePath) {
+  const auto relative_path = as_string(image_node, "source");
+  if (!relative_path) {
     return ParseError::NoTilesetImagePath;
   }
 
-  auto absolutePath = fs::weakly_canonical(dir / *relativePath);
-  if (fs::exists(absolutePath)) {
-    tilesetData.image_path = std::move(absolutePath);
+  auto absolute_path = fs::weakly_canonical(dir / *relative_path);
+  if (fs::exists(absolute_path)) {
+    tileset.image_path = std::move(absolute_path);
   }
   else {
     return ParseError::TilesetImageDoesNotExist;
@@ -114,100 +113,99 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_common_attributes(XMLNode          node,
-                                            ir::TilesetData& tilesetData,
-                                            const fs::path&  dir) -> ParseError
+[[nodiscard]] auto parse_common_attributes(XMLNode          node,
+                                           ir::TilesetData& tileset,
+                                           const fs::path&  dir) -> ParseError
 {
   if (auto name = as_string(node, "name")) {
-    tilesetData.name = std::move(*name);
+    tileset.name = std::move(*name);
   }
   else {
     return ParseError::NoTilesetName;
   }
 
   if (const auto tw = as_int(node, "tilewidth")) {
-    tilesetData.tile_size.x = *tw;
+    tileset.tile_size.x = *tw;
   }
   else {
     return ParseError::NoTilesetTileWidth;
   }
 
   if (const auto th = as_int(node, "tileheight")) {
-    tilesetData.tile_size.y = *th;
+    tileset.tile_size.y = *th;
   }
   else {
     return ParseError::NoTilesetTileHeight;
   }
 
   if (const auto count = as_int(node, "tilecount")) {
-    tilesetData.tile_count = *count;
+    tileset.tile_count = *count;
   }
   else {
     return ParseError::NoTilesetTileCount;
   }
 
   if (const auto columns = as_int(node, "columns")) {
-    tilesetData.column_count = *columns;
+    tileset.column_count = *columns;
   }
   else {
     return ParseError::NoTilesetColumnCount;
   }
 
-  if (const auto err = _parse_image_info(node, tilesetData, dir);
-      err != ParseError::None) {
+  if (const auto err = parse_image_info(node, tileset, dir); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = _parse_fancy_tiles(node, tilesetData); err != ParseError::None) {
+  if (const auto err = parse_fancy_tiles(node, tileset); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = parse_properties(node, tilesetData.context);
-      err != ParseError::None) {
+  if (const auto err = parse_properties(node, tileset.context); err != ParseError::None) {
     return err;
   }
 
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_external_tileset(XMLNode          node,
-                                           ir::TilesetData& tilesetData,
-                                           const fs::path&  dir) -> ParseError
+[[nodiscard]] auto parse_external_tileset(XMLNode          node,
+                                          ir::TilesetData& tileset,
+                                          const fs::path&  dir) -> ParseError
 {
   TACTILE_ASSERT(has_attr(node, "source"));
 
-  const auto relativePath = as_string(node, "source").value();
-  const auto sourcePath = fs::weakly_canonical(dir / relativePath);
+  const auto relative_path = as_string(node, "source").value();
+  const auto source_path = fs::weakly_canonical(dir / relative_path);
 
-  if (!fs::exists(sourcePath)) {
+  if (!fs::exists(source_path)) {
     return ParseError::ExternalTilesetDoesNotExist;
   }
 
   pugi::xml_document document;
-  if (!document.load_file(sourcePath.c_str())) {
+  if (!document.load_file(source_path.c_str(),
+                          pugi::parse_default | pugi::parse_trim_pcdata)) {
     return ParseError::UnknownExternalTilesetError;
   }
 
-  return _parse_common_attributes(document.child("tileset"), tilesetData, dir);
+  return parse_common_attributes(document.child("tileset"), tileset, dir);
 }
 
 }  // namespace
 
-auto parse_tileset(XMLNode node, ir::TilesetData& tilesetData, const fs::path& dir)
+auto parse_tileset(XMLNode node, ir::TilesetData& tileset, const fs::path& dir)
     -> ParseError
 {
-  if (const auto firstTile = as_int(node, "firstgid")) {
-    tilesetData.first_tile = *firstTile;
+  if (const auto first_tile = as_int(node, "firstgid")) {
+    tileset.first_tile = *first_tile;
   }
   else {
     return ParseError::NoTilesetFirstTileId;
   }
 
   if (has_attr(node, "source")) {
-    return _parse_external_tileset(node, tilesetData, dir);
+    return parse_external_tileset(node, tileset, dir);
   }
   else {
-    return _parse_common_attributes(node, tilesetData, dir);
+    return parse_common_attributes(node, tileset, dir);
   }
 }
 

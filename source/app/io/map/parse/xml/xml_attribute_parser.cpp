@@ -32,7 +32,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _parse_value(XMLNode node, const char* type, Attribute& value)
+[[nodiscard]] auto parse_value(XMLNode node, const char* type, Attribute& value)
     -> ParseError
 {
   TACTILE_ASSERT(type);
@@ -78,23 +78,23 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_property(XMLNode node, ir::ContextData& context) -> ParseError
+[[nodiscard]] auto parse_property(XMLNode node, ir::ContextData& context) -> ParseError
 {
-  std::string propertyName;
+  std::string property_name;
 
   if (auto name = as_string(node, "name")) {
-    propertyName = std::move(*name);
+    property_name = std::move(*name);
   }
   else {
     return ParseError::NoPropertyName;
   }
 
-  auto& value = context.properties[std::move(propertyName)];
+  auto& value = context.properties[std::move(property_name)];
 
-  /* String properties may exclude the type attribute */
+  // String properties may exclude the type attribute
   const char* type = node.attribute("type").as_string("string");
 
-  if (const auto err = _parse_value(node, type, value); err != ParseError::None) {
+  if (const auto err = parse_value(node, type, value); err != ParseError::None) {
     return err;
   }
 
@@ -105,8 +105,8 @@ namespace {
 
 auto parse_properties(XMLNode node, ir::ContextData& context) -> ParseError
 {
-  for (const auto propertyNode : node.child("properties").children("property")) {
-    if (const auto err = _parse_property(propertyNode, context);
+  for (const auto property_node : node.child("properties").children("property")) {
+    if (const auto err = parse_property(property_node, context);
         err != ParseError::None) {
       return err;
     }
