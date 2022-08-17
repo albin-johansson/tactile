@@ -48,9 +48,9 @@ void append_properties(XMLNode node, const ir::ContextData& context)
 
   for (const auto& [property_name, property_value] : context.properties) {
     auto property_node = collection.append_child("property");
-    property_node.append_attribute("name").set_value(property_n§ame.c_str());
+    property_node.append_attribute("name").set_value(property_name.c_str());
 
-    const auto type = propertyValue.type();
+    const auto type = property_value.type();
 
     // Properties with no type attribute are assumed to be string properties
     if (type != AttributeType::String) {
@@ -240,7 +240,7 @@ void append_fancy_tiles(XMLNode node, const ir::TilesetData& tileset)
     auto tile_node = node.append_child("tile");
     tile_node.append_attribute("id").set_value(id);
 
-    if (!tileData.frames.empty()) {
+    if (!tile.frames.empty()) {
       auto animation_node = tile_node.append_child("animation");
 
       for (const auto& frame : tile.frames) {
