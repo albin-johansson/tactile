@@ -22,6 +22,8 @@
 #include <concepts>     // integral
 #include <type_traits>  // make_unsigned_t
 
+#include <SDL.h>
+
 #include "core/common/ints.hpp"
 
 namespace tactile {
@@ -36,6 +38,26 @@ template <std::integral T>
   const auto masked = static_cast<UT>(value) & (UT {0xFF} << offset);
 
   return static_cast<uint8>(masked >> offset);
+}
+
+[[nodiscard]] constexpr auto as_little_endian(const int32 value) noexcept -> int32
+{
+  if constexpr (std::endian::native == std::endian::little) {
+    return value;
+  }
+  else {
+    return static_cast<int32>(SDL_Swap32(static_cast<uint32>(value)));
+  }
+}
+
+[[nodiscard]] constexpr auto as_little_endian(const uint32 value) noexcept -> uint32
+{
+  if constexpr (std::endian::native == std::endian::little) {
+    return value;
+  }
+  else {
+    return SDL_Swap32(value);
+  }
 }
 
 }  // namespace tactile
