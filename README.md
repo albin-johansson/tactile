@@ -16,11 +16,11 @@ A tilemap editor that aims to be simple, fast and lightweight.
 * Workflow optimized for common actions
 * Well documented and high-quality source code
 * Lightweight feel and scalable performance
+* Cross-platform: works on Windows, macOS, and Linux
 
 ## Features
 
-* Great performance thanks to ECS architecture
-* Extensive and intuitive undo & redo support
+* Extensive and intuitive undo/redo support
 * Various layer types
   * Tile layers
   * Object layers
@@ -35,10 +35,14 @@ A tilemap editor that aims to be simple, fast and lightweight.
   * Rectangle tool
   * Ellipse tool
   * Point tool
-* Components (attachable bundles of attributes, otherwise commonly found in game engines)
+* Components (attachable bundles of attributes, as commonly found in game engines)
+* Properties that can be attached to almost anything: maps, layers, objects, tiles, etc.
 * Tile animations
-* Various editor themes
-* Insightful and helpful error messages when things go wrong, e.g. when parsing corrupted maps
+* Tile compression support, using Base64 encoding with either Zlib or Zstd
+* Helpful error messages when things go wrong, e.g. when parsing corrupted maps
+* Language support for American English, British English, and Swedish
+* Various editor themes, both dark and light
+* Easy to install (and uninstall) using the installers bundled along releases
 
 ## Documentation
 
