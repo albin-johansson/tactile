@@ -103,7 +103,6 @@ namespace {
   else if (encoding == "base64") {
     const auto compression = json.at("compression").get<TileCompression>();
 
-    // TODO not ideal if the layers have differing settings
     map.tile_format.encoding = TileEncoding::Base64;
     map.tile_format.compression = compression;
 
