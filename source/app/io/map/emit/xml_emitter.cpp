@@ -216,7 +216,6 @@ void append_base64_tile_layer_data(XMLNode                  data_node,
 
 void append_tile_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& layer)
 {
-  const auto& prefs = get_preferences();
   const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
 
   auto node = root.append_child("layer");
