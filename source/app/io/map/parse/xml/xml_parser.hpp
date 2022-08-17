@@ -34,7 +34,7 @@ namespace tactile::io {
                                  ir::TilesetData& tileset_data,
                                  const fs::path&  dir) -> ParseError;
 
-[[nodiscard]] auto parse_object(XMLNode object_node, ir::ObjectData& object_data)
+[[nodiscard]] auto parse_object(XMLNode object_node, ir::ObjectData& object)
     -> ParseError;
 
 [[nodiscard]] auto parse_layers(XMLNode map_node, ir::MapData& map_data) -> ParseError;

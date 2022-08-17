@@ -33,11 +33,11 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto _collect_layer_nodes(XMLNode mapNode) -> std::vector<XMLNode>
+[[nodiscard]] auto collect_layer_nodes(XMLNode map_node) -> std::vector<XMLNode>
 {
   std::vector<XMLNode> nodes;
 
-  for (auto node : mapNode.children()) {
+  for (auto node : map_node.children()) {
     if (std::strcmp(node.name(), "layer") == 0 ||
         std::strcmp(node.name(), "objectgroup") == 0 ||
         std::strcmp(node.name(), "group") == 0) {
@@ -48,14 +48,14 @@ namespace {
   return nodes;
 }
 
-[[nodiscard]] auto _parse_csv_tiles(const char* csv, ir::TileLayerData& layerData)
+[[nodiscard]] auto parse_csv_tiles(const char* csv, ir::TileLayerData& layer)
     -> ParseError
 {
   usize index {};
   for (const auto& token : split(csv, ',')) {
     if (const auto id = from_string<int32>(token.c_str())) {
-      const auto [row, col] = to_matrix_coords(index, layerData.col_count);
-      layerData.tiles[row][col] = *id;
+      const auto [row, col] = to_matrix_coords(index, layer.col_count);
+      layer.tiles[row][col] = *id;
 
       ++index;
     }
@@ -67,13 +67,13 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_nodes(XMLNode dataNode, ir::TileLayerData& layerData)
+[[nodiscard]] auto parse_tile_nodes(XMLNode data_node, ir::TileLayerData& tile_layer)
     -> ParseError
 {
   usize index = 0;
-  for (const auto tileNode : dataNode.children("tile")) {
-    const auto [row, col] = to_matrix_coords(index, layerData.col_count);
-    layerData.tiles[row][col] = tileNode.attribute("gid").as_int(empty_tile);
+  for (const auto tile_node : data_node.children("tile")) {
+    const auto [row, col] = to_matrix_coords(index, tile_layer.col_count);
+    tile_layer.tiles[row][col] = tile_node.attribute("gid").as_int(empty_tile);
 
     ++index;
   }
@@ -81,33 +81,29 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_data(XMLNode layerNode, ir::TileLayerData& layerData)
+[[nodiscard]] auto parse_tile_data(XMLNode layer_node, ir::TileLayerData& layer)
     -> ParseError
 {
-  const auto data = layerNode.child("data");
+  const auto data = layer_node.child("data");
 
   if (data.empty() || data.text().empty()) {
     return ParseError::NoTileLayerData;
   }
 
-  /* The encoding attribute is optional, if it is missing then the tile data is
-     stored as individual "tile" nodes. */
   if (const auto* encoding = data.attribute("encoding").as_string(nullptr)) {
-    /* The only explicit encoding we support is CSV */
-    if (std::strcmp(encoding, "csv") != 0) {
-      return ParseError::UnsupportedTileLayerEncoding;
-    }
-    else {
+    if (std::strcmp(encoding, "csv") == 0) {
       const auto text = data.text();
-      if (const auto error = _parse_csv_tiles(text.get(), layerData);
+      if (const auto error = parse_csv_tiles(text.get(), layer);
           error != ParseError::None) {
         return error;
       }
     }
+    else {
+      return ParseError::UnsupportedTileLayerEncoding;
+    }
   }
   else {
-    if (const auto error = _parse_tile_nodes(data, layerData);
-        error != ParseError::None) {
+    if (const auto error = parse_tile_nodes(data, layer); error != ParseError::None) {
       return error;
     }
   }
@@ -115,60 +111,57 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_tile_layer(XMLNode        layerNode,
-                                     ir::LayerData& layerData,
-                                     const usize    rows,
-                                     const usize    columns) -> ParseError
+[[nodiscard]] auto parse_tile_layer(XMLNode        layer_node,
+                                    ir::MapData&   map,
+                                    ir::LayerData& layer) -> ParseError
 {
-  auto& tileLayerData = layerData.data.emplace<ir::TileLayerData>();
+  auto& tile_layer = layer.data.emplace<ir::TileLayerData>();
 
-  if (const auto width = as_uint(layerNode, "width")) {
-    tileLayerData.col_count = *width;
+  if (const auto width = as_uint(layer_node, "width")) {
+    tile_layer.col_count = *width;
 
-    if (tileLayerData.col_count != columns) {
+    if (tile_layer.col_count != map.col_count) {
       spdlog::warn("XML tile layer width does not match map width, '{}' vs '{}'",
-                   tileLayerData.col_count,
-                   columns);
+                   tile_layer.col_count,
+                   map.col_count);
     }
   }
   else {
     spdlog::warn("XML tile layer has no width information, assuming map width...");
-    tileLayerData.col_count = columns;
+    tile_layer.col_count = map.col_count;
   }
 
-  if (const auto height = as_uint(layerNode, "height")) {
-    tileLayerData.row_count = *height;
+  if (const auto height = as_uint(layer_node, "height")) {
+    tile_layer.row_count = *height;
 
-    if (tileLayerData.row_count != rows) {
+    if (tile_layer.row_count != map.row_count) {
       spdlog::warn("XML tile layer height does not match map height, '{}' vs '{}'",
-                   tileLayerData.row_count,
-                   rows);
+                   tile_layer.row_count,
+                   map.row_count);
     }
   }
   else {
     spdlog::warn("XML tile layer has no height information, assuming map height...");
-    tileLayerData.row_count = rows;
+    tile_layer.row_count = map.row_count;
   }
 
-  tileLayerData.tiles =
-      make_tile_matrix(tileLayerData.row_count, tileLayerData.col_count);
+  tile_layer.tiles = make_tile_matrix(tile_layer.row_count, tile_layer.col_count);
 
-  if (const auto err = _parse_tile_data(layerNode, tileLayerData);
-      err != ParseError::None) {
+  if (const auto err = parse_tile_data(layer_node, tile_layer); err != ParseError::None) {
     return err;
   }
 
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_object_layer(XMLNode layerNode, ir::LayerData& layerData)
+[[nodiscard]] auto parse_object_layer(XMLNode layer_node, ir::LayerData& layer)
     -> ParseError
 {
-  auto& objectLayerData = layerData.data.emplace<ir::ObjectLayerData>();
+  auto& object_layer = layer.data.emplace<ir::ObjectLayerData>();
 
-  for (const auto objectNode : layerNode.children("object")) {
-    auto& objectData = objectLayerData.objects.emplace_back();
-    if (const auto err = parse_object(objectNode, objectData); err != ParseError::None) {
+  for (const auto object_node : layer_node.children("object")) {
+    auto& object = object_layer.objects.emplace_back();
+    if (const auto err = parse_object(object_node, object); err != ParseError::None) {
       return err;
     }
   }
@@ -176,63 +169,59 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto _parse_layer(XMLNode        layerNode,
-                                ir::LayerData& layerData,
-                                const usize    index,
-                                const usize    rows,
-                                const usize    columns) -> ParseError
+[[nodiscard]] auto parse_layer(XMLNode        layer_node,
+                               ir::MapData&   map,
+                               ir::LayerData& layer,
+                               const usize    index) -> ParseError
 {
-  layerData.index = index;
+  layer.index = index;
 
-  if (const auto id = as_int(layerNode, "id")) {
-    layerData.id = *id;
+  if (const auto id = as_int(layer_node, "id")) {
+    layer.id = *id;
   }
   else {
     return ParseError::NoLayerId;
   }
 
-  layerData.name = layerNode.attribute("name").as_string("Layer");
-  layerData.opacity = layerNode.attribute("opacity").as_float(1.0f);
-  layerData.visible = layerNode.attribute("visible").as_bool(true);
+  layer.name = layer_node.attribute("name").as_string("Layer");
+  layer.opacity = layer_node.attribute("opacity").as_float(1.0f);
+  layer.visible = layer_node.attribute("visible").as_bool(true);
 
-  if (std::strcmp(layerNode.name(), "layer") == 0) {
-    layerData.type = LayerType::TileLayer;
-    if (const auto err = _parse_tile_layer(layerNode, layerData, rows, columns);
+  if (std::strcmp(layer_node.name(), "layer") == 0) {
+    layer.type = LayerType::TileLayer;
+    if (const auto err = parse_tile_layer(layer_node, map, layer);
         err != ParseError::None) {
       return err;
     }
   }
-  else if (std::strcmp(layerNode.name(), "objectgroup") == 0) {
-    layerData.type = LayerType::ObjectLayer;
-    if (const auto err = _parse_object_layer(layerNode, layerData);
-        err != ParseError::None) {
+  else if (std::strcmp(layer_node.name(), "objectgroup") == 0) {
+    layer.type = LayerType::ObjectLayer;
+    if (const auto err = parse_object_layer(layer_node, layer); err != ParseError::None) {
       return err;
     }
   }
-  else if (std::strcmp(layerNode.name(), "group") == 0) {
-    layerData.type = LayerType::GroupLayer;
-    auto& groupData = layerData.data.emplace<ir::GroupLayerData>();
+  else if (std::strcmp(layer_node.name(), "group") == 0) {
+    layer.type = LayerType::GroupLayer;
+    auto& group = layer.data.emplace<ir::GroupLayerData>();
 
-    usize childIndex = 0;
-    for (auto childLayerNode : _collect_layer_nodes(layerNode)) {
-      auto& childLayerData =
-          groupData.children.emplace_back(std::make_unique<ir::LayerData>());
+    usize child_index = 0;
+    for (auto child_node : collect_layer_nodes(layer_node)) {
+      auto& child_layer = group.children.emplace_back(std::make_unique<ir::LayerData>());
 
-      if (const auto err =
-              _parse_layer(childLayerNode, *childLayerData, childIndex, rows, columns);
+      if (const auto err = parse_layer(child_node, map, *child_layer, child_index);
           err != ParseError::None) {
         return err;
       }
 
-      ++childIndex;
+      ++child_index;
     }
   }
   else {
-    /* If we enter this branch, then the layer collection is broken */
-    throw TactileError("Collected invalid layer node!");
+    // If we enter this branch, then the layer collection is broken
+    throw TactileError {"Collected invalid layer node!"};
   }
 
-  if (const auto err = parse_properties(layerNode, layerData.context);
+  if (const auto err = parse_properties(layer_node, layer.context);
       err != ParseError::None) {
     return err;
   }
@@ -242,36 +231,36 @@ namespace {
 
 }  // namespace
 
-auto parse_object(XMLNode objectNode, ir::ObjectData& objectData) -> ParseError
+auto parse_object(XMLNode object_node, ir::ObjectData& object) -> ParseError
 {
-  if (const auto id = as_int(objectNode, "id")) {
-    objectData.id = *id;
+  if (const auto id = as_int(object_node, "id")) {
+    object.id = *id;
   }
   else {
     return ParseError::NoObjectId;
   }
 
-  objectData.name = objectNode.attribute("name").as_string("");
-  objectData.tag = objectNode.attribute("type").as_string("");
+  object.name = object_node.attribute("name").as_string("");
+  object.tag = object_node.attribute("type").as_string("");
 
-  objectData.pos.x = objectNode.attribute("x").as_float(0);
-  objectData.pos.y = objectNode.attribute("y").as_float(0);
-  objectData.size.x = objectNode.attribute("width").as_float(0);
-  objectData.size.y = objectNode.attribute("height").as_float(0);
+  object.pos.x = object_node.attribute("x").as_float(0);
+  object.pos.y = object_node.attribute("y").as_float(0);
+  object.size.x = object_node.attribute("width").as_float(0);
+  object.size.y = object_node.attribute("height").as_float(0);
 
-  objectData.visible = objectNode.attribute("visible").as_bool(true);
+  object.visible = object_node.attribute("visible").as_bool(true);
 
-  if (!objectNode.child("point").empty()) {
-    objectData.type = ObjectType::Point;
+  if (!object_node.child("point").empty()) {
+    object.type = ObjectType::Point;
   }
-  else if (!objectNode.child("ellipse").empty()) {
-    objectData.type = ObjectType::Ellipse;
+  else if (!object_node.child("ellipse").empty()) {
+    object.type = ObjectType::Ellipse;
   }
   else {
-    objectData.type = ObjectType::Rect;
+    object.type = ObjectType::Rect;
   }
 
-  if (const auto err = parse_properties(objectNode, objectData.context);
+  if (const auto err = parse_properties(object_node, object.context);
       err != ParseError::None) {
     return err;
   }
@@ -279,17 +268,13 @@ auto parse_object(XMLNode objectNode, ir::ObjectData& objectData) -> ParseError
   return ParseError::None;
 }
 
-auto parse_layers(XMLNode mapNode, ir::MapData& mapData) -> ParseError
+auto parse_layers(XMLNode map_node, ir::MapData& map) -> ParseError
 {
   usize index = 0;
-  for (const auto layerNode : _collect_layer_nodes(mapNode)) {
-    auto& layerData = mapData.layers.emplace_back();
+  for (const auto layer_node : collect_layer_nodes(map_node)) {
+    auto& layer = map.layers.emplace_back();
 
-    if (const auto err = _parse_layer(layerNode,
-                                      layerData,
-                                      index,
-                                      mapData.row_count,
-                                      mapData.col_count);
+    if (const auto err = parse_layer(layer_node, map, layer, index);
         err != ParseError::None) {
       return err;
     }
