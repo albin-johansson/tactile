@@ -86,8 +86,7 @@ namespace {
         base64_decode_tiles(data, rows, columns, map.tile_format.compression);
   }
   else {
-    // TODO
-    return ParseError::Unknown;
+    return ParseError::UnsupportedTileLayerEncoding;
   }
 
   return ParseError::None;
