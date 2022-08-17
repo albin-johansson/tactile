@@ -495,7 +495,6 @@ void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)
 
   load(json, err.bad_tile_format_encoding, "bad-tile-format-encoding");
   load(json, err.bad_tile_format_compression, "bad-tile-format-compression");
-  load(json, err.bad_tile_format_endianness, "bad-tile-format-endianness");
   load(json, err.bad_zlib_compression_level, "bad-zlib-compression-level");
   load(json, err.plain_encoding_with_compression, "plain-encoding-with-compression");
 }

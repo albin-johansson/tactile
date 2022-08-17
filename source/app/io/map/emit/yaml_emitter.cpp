@@ -458,11 +458,6 @@ void emit_tile_format(YAML::Emitter& emitter, const ir::TileFormatData& format)
               << *format.zstd_compression_level;
     }
 
-    if (format.compression != TileCompression::None) {
-      emitter << YAML::Key << "endianness" << YAML::Value
-              << (format.endianness == std::endian::little ? "little" : "big");
-    }
-
     emitter << YAML::EndMap;
   }
 }

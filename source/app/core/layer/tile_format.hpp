@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <bit>  // endian
-
 namespace tactile {
 
 /// Represents the different supported tile layer data encodings.
@@ -50,8 +48,6 @@ class TileFormat final
 
   void set_compression(TileCompression compression);
 
-  void set_endianness(std::endian endian);
-
   void set_zlib_compression_level(int level);
 
   void set_zstd_compression_level(int level);
@@ -59,8 +55,6 @@ class TileFormat final
   [[nodiscard]] auto encoding() const -> TileEncoding;
 
   [[nodiscard]] auto compression() const -> TileCompression;
-
-  [[nodiscard]] auto endianness() const -> std::endian;
 
   [[nodiscard]] auto zlib_compression_level() const -> int;
 
@@ -79,7 +73,6 @@ class TileFormat final
  private:
   TileEncoding    mEncoding {TileEncoding::Plain};
   TileCompression mCompression {TileCompression::None};
-  std::endian     mEndianness {std::endian::native};
   int             mZlibCompressionLevel {-1};
   int             mZstdCompressionLevel {3};
 };

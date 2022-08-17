@@ -416,7 +416,6 @@ constexpr usize col_count = 13;
 
   data.tile_format.encoding = TileEncoding::Base64;
   data.tile_format.compression = TileCompression::Zlib;
-  data.tile_format.endianness = std::endian::little;
   data.tile_format.zlib_compression_level = 6;
 
   if (use_components) {

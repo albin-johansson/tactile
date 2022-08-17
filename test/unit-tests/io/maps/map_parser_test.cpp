@@ -211,7 +211,6 @@ const auto cases = testing::Values(
 
   with(YAML_ERR "tile-format/bad_tile_format_encoding.yaml", PE::BadTileFormatEncoding),
   with(YAML_ERR "tile-format/bad_tile_format_compression.yaml", PE::BadTileFormatCompression),
-  with(YAML_ERR "tile-format/bad_tile_format_endianness.yaml", PE::BadTileFormatEndianness),
   with(YAML_ERR "tile-format/bad_zlib_compression_level.yaml", PE::BadZlibCompressionLevel),
   with(YAML_ERR "tile-format/plain_encoding_with_compression.yaml", PE::PlainEncodingWithCompression)
 );

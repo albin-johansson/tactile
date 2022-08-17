@@ -196,9 +196,6 @@ auto to_cause(const ParseError error) -> std::string_view
     case ParseError::BadTileFormatCompression:
       return lang.parse_error.bad_tile_format_compression;
 
-    case ParseError::BadTileFormatEndianness:
-      return lang.parse_error.bad_tile_format_endianness;
-
     case ParseError::BadZlibCompressionLevel:
       return lang.parse_error.bad_zlib_compression_level;
 

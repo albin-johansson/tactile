@@ -45,11 +45,6 @@ void TileFormat::set_compression(const TileCompression compression)
   }
 }
 
-void TileFormat::set_endianness(const std::endian endian)
-{
-  mEndianness = endian;
-}
-
 void TileFormat::set_zlib_compression_level(const int level)
 {
   if (is_valid_zlib_compression_level(level)) {
@@ -78,11 +73,6 @@ auto TileFormat::encoding() const -> TileEncoding
 auto TileFormat::compression() const -> TileCompression
 {
   return mCompression;
-}
-
-auto TileFormat::endianness() const -> std::endian
-{
-  return mEndianness;
 }
 
 auto TileFormat::zlib_compression_level() const -> int

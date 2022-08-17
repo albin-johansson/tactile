@@ -1,4 +1,4 @@
-# YAML format
+# Tactile YAML Format
 
 Other than the Tiled JSON and XML formats, Tactile supports its own custom YAML map format. If you're familiar with the
 Tiled JSON format, you'll notice many similarities. However, one of the key differences is that the Tactile YAML format
@@ -34,7 +34,7 @@ Provides information about the representation of tile layer data.
 
 Using a `encoding` other than `plain` leads to tile layer data being encoded as a one-dimensional array of 32-bit signed
 integers. The tiles are arranged by appending each row after another, starting at the row at index zero (the top
-row in the editor).
+row in the editor). Compressed tile identifiers are always stored using little endian byte ordering.
 
 The emitter works by first compressing the tile data (unless `compression` is set to `none`), and then encoding the
 possibly compressed data. Omitting `encoding` or setting it to `plain` leads to tile layer data to be simply stored as a
@@ -46,15 +46,12 @@ The `zlib-compression-level` attribute directly corresponds to Zlib constants su
 is `-1`), `Z_BEST_SPEED` (which is `1`), and `Z_BEST_COMPRESSION` (which is `9`). You can use other values in the
 interval `[1, 9]` to request an intermediate compression mode, depending on the tradeoff you want to make.
 
-|                Attribute |                 Type                 | Required | Default  | Description                                   |
-|-------------------------:|:------------------------------------:|:--------:|:--------:|:----------------------------------------------|
-|               `encoding` |       One of `plain`, `base64`       |    No    | `plain`  | Tile layer data encoding.                     |
-|            `compression` |        One of `none`, `zlib`         |    No    |  `none`  | The compression algorithm used.               |
-| `zlib-compression-level` | Either `-1` or in the range `[1, 9]` |    No    |   `-1`   |                                               |
-| `zlib-compression-level` | `int` |    No    |   `-1`   |                                               |
-|             `endianness` |        One of `little`, `big`        | Yes[^1]  | The system endianness | Byte ordering of compressed tile identifiers. |
-
-[^1]: The `endianness` attribute is only required when a compression strategy is used.
+|                Attribute |                 Type                 | Required |        Default        | Description                                   |
+|-------------------------:|:------------------------------------:|:--------:|:---------------------:|:----------------------------------------------|
+|               `encoding` |       One of `plain`, `base64`       |    No    |        `plain`        | Tile layer data encoding.                     |
+|            `compression` |    One of `none`, `zlib`, `zstd`     |    No    |        `none`         | The compression algorithm used.               |
+| `zlib-compression-level` | Either `-1` or in the range `[1, 9]` |    No    |         `-1`          |                                               |
+| `zstd-compression-level` |                `int`                 |    No    |          `3`          |                                               |
 
 Example:
 
@@ -62,7 +59,6 @@ Example:
 encoding: base64
 compression: zlib
 zlib-compression-level: 9
-endianness: little
 ```
 
 ---

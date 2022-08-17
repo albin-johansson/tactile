@@ -64,22 +64,6 @@ namespace {
     format.compression = TileCompression::None;
   }
 
-  if (auto endianness = node["endianness"]) {
-    auto endianness_str = endianness.as<std::string>();
-    if (endianness_str == "little") {
-      format.endianness = std::endian::little;
-    }
-    else if (endianness_str == "big") {
-      format.endianness = std::endian::big;
-    }
-    else {
-      return ParseError::BadTileFormatEndianness;
-    }
-  }
-  else {
-    format.endianness = std::endian::little;
-  }
-
   read_attribute(node, "zlib-compression-level", format.zlib_compression_level, -1);
 
   if (format.encoding == TileEncoding::Plain &&
@@ -88,7 +72,7 @@ namespace {
   }
 
   if (const auto level = format.zlib_compression_level;
-      level != -1 && (level < 1 || level > 9)) {
+      level && !TileFormat::is_valid_zlib_compression_level(*level)) {
     return ParseError::BadZlibCompressionLevel;
   }
 

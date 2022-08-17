@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include <bit>      // endian
 #include <string>   // string
 #include <variant>  // variant
 #include <vector>   // vector
@@ -147,7 +146,6 @@ struct TileFormatData final
 {
   TileEncoding    encoding {TileEncoding::Plain};
   TileCompression compression {TileCompression::None};
-  std::endian     endianness {std::endian::native};
   Maybe<int32>    zlib_compression_level {};
   Maybe<int32>    zstd_compression_level {};
 };

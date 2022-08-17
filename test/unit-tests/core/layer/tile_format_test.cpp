@@ -33,24 +33,12 @@ TEST(TileFormat, Defaults)
 
   ASSERT_EQ(TileEncoding::Plain, format.encoding());
   ASSERT_EQ(TileCompression::None, format.compression());
-  ASSERT_EQ(std::endian::native, format.endianness());
 
   ASSERT_EQ(-1, Z_DEFAULT_COMPRESSION);
   ASSERT_EQ(-1, format.zlib_compression_level());
 
   ASSERT_EQ(3, ZSTD_defaultCLevel());
   ASSERT_EQ(ZSTD_defaultCLevel(), format.zstd_compression_level());
-}
-
-TEST(TileFormat, SetEndianness)
-{
-  TileFormat format;
-
-  format.set_endianness(std::endian::little);
-  ASSERT_EQ(std::endian::little, format.endianness());
-
-  format.set_endianness(std::endian::big);
-  ASSERT_EQ(std::endian::big, format.endianness());
 }
 
 TEST(TileFormat, SetZlibCompressionLevel)
