@@ -32,7 +32,7 @@ The root node in the Tactile YAML format provides general information about the 
 
 Provides information about the representation of tile layer data.
 
-Using a `encoding` other than `plain` leads to tile layer data being encoded as a one-dimensional array of 32-bit signed
+Using a `encoding` other than `plain` leads to tile layer data being encoded as a one-dimensional array of 32-bit
 integers. The tiles are arranged by appending each row after another, starting at the row at index zero (the top
 row in the editor). Compressed tile identifiers are always stored using little endian byte ordering.
 
