@@ -28,12 +28,20 @@ static_assert(std::same_as<TileID, int32>);
   seq.reserve(rows * columns * sizeof(TileID));
 
   invoke_mn(rows, columns, [&](const usize row, const usize col) {
-    const auto tile = matrix[row][col];
-
-    seq.push_back(nth_byte(tile, 0));
-    seq.push_back(nth_byte(tile, 1));
-    seq.push_back(nth_byte(tile, 2));
-    seq.push_back(nth_byte(tile, 3));
+    // Always store tile identifiers as little endian values
+    const auto tile_id = matrix[row][col];
+    if constexpr (std::endian::native == std::endian::little) {
+      seq.push_back(nth_byte(tile_id, 0));
+      seq.push_back(nth_byte(tile_id, 1));
+      seq.push_back(nth_byte(tile_id, 2));
+      seq.push_back(nth_byte(tile_id, 3));
+    }
+    else {
+      seq.push_back(nth_byte(tile_id, 3));
+      seq.push_back(nth_byte(tile_id, 2));
+      seq.push_back(nth_byte(tile_id, 1));
+      seq.push_back(nth_byte(tile_id, 0));
+    }
   });
 
   return seq;
