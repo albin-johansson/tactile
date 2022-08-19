@@ -62,7 +62,7 @@ void MapDocument::add_column()
 
 void MapDocument::remove_row()
 {
-  get_history().exec<RemoveRowCmd>(mMap);
+  get_history().exec<cmd::RemoveRow>(mMap);
 }
 
 void MapDocument::remove_column()

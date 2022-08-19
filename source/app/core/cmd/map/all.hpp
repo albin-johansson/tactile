@@ -23,7 +23,7 @@
 #include "core/cmd/map/add_row.hpp"
 #include "core/cmd/map/fix_tiles_in_map_cmd.hpp"
 #include "core/cmd/map/remove_column_cmd.hpp"
-#include "core/cmd/map/remove_row_cmd.hpp"
+#include "core/cmd/map/remove_row.hpp"
 #include "core/cmd/map/resize_map_cmd.hpp"
 #include "core/cmd/map/set_tile_format_compression.hpp"
 #include "core/cmd/map/set_tile_format_encoding.hpp"

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "remove_row_cmd.hpp"
+#include "remove_row.hpp"
 
 #include <utility>  // move
 
@@ -26,9 +26,9 @@
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-RemoveRowCmd::RemoveRowCmd(Shared<Map> map)
+RemoveRow::RemoveRow(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
@@ -36,13 +36,13 @@ RemoveRowCmd::RemoveRowCmd(Shared<Map> map)
   }
 }
 
-void RemoveRowCmd::undo()
+void RemoveRow::undo()
 {
   invoke_n(mRows, [this] { mMap->add_row(); });
   mCache.restore_tiles(*mMap);
 }
 
-void RemoveRowCmd::redo()
+void RemoveRow::redo()
 {
   const auto begin = TilePos::from(mMap->row_count() - mRows - 1u, 0u);
   const auto end = TilePos::from(mMap->row_count(), mMap->column_count());
@@ -53,9 +53,9 @@ void RemoveRowCmd::redo()
   invoke_n(mRows, [this] { mMap->remove_row(); });
 }
 
-auto RemoveRowCmd::merge_with(const ICommand* cmd) -> bool
+auto RemoveRow::merge_with(const ICommand* cmd) -> bool
 {
-  if (const auto* other = dynamic_cast<const RemoveRowCmd*>(cmd)) {
+  if (const auto* other = dynamic_cast<const RemoveRow*>(cmd)) {
     mRows += other->mRows;
     mCache.merge_with(other->mCache);
     return true;
@@ -64,10 +64,10 @@ auto RemoveRowCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto RemoveRowCmd::get_name() const -> std::string
+auto RemoveRow::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return mRows == 1 ? lang.cmd.remove_row : lang.cmd.remove_rows;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd
