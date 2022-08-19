@@ -17,25 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "duplicate_layer_cmd.hpp"
+#include "duplicate_layer.hpp"
 
 #include "core/document/map_document.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-DuplicateLayerCmd::DuplicateLayerCmd(MapDocument* document, const UUID& layerId)
+DuplicateLayer::DuplicateLayer(MapDocument* document, const UUID& layer_id)
     : mDocument {document}
-    , mLayerId {layerId}
+    , mLayerId {layer_id}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null map document!"};
   }
 }
 
-void DuplicateLayerCmd::undo()
+void DuplicateLayer::undo()
 {
   auto&      map = mDocument->get_map();
   const auto id = mNewLayer->get_uuid();
@@ -44,7 +44,7 @@ void DuplicateLayerCmd::undo()
   mDocument->get_contexts().erase(id);
 }
 
-void DuplicateLayerCmd::redo()
+void DuplicateLayer::redo()
 {
   auto& map = mDocument->get_map();
 
@@ -60,10 +60,10 @@ void DuplicateLayerCmd::redo()
   mDocument->get_contexts().add_context(mNewLayer);
 }
 
-auto DuplicateLayerCmd::get_name() const -> std::string
+auto DuplicateLayer::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.duplicate_layer;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

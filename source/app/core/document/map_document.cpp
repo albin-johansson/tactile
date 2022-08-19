@@ -90,9 +90,9 @@ void MapDocument::remove_layer(const UUID& layer_id)
   get_history().exec<cmd::RemoveLayer>(this, layer_id);
 }
 
-void MapDocument::duplicate_layer(const UUID& layerId)
+void MapDocument::duplicate_layer(const UUID& layer_id)
 {
-  get_history().exec<DuplicateLayerCmd>(this, layerId);
+  get_history().exec<cmd::DuplicateLayer>(this, layer_id);
 }
 
 void MapDocument::rename_layer(const UUID& layerId, std::string name)

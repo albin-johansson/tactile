@@ -30,10 +30,12 @@ namespace tactile {
 class MapDocument;
 class ILayer;
 
-class DuplicateLayerCmd final : public ICommand
+namespace cmd {
+
+class DuplicateLayer final : public ICommand
 {
  public:
-  DuplicateLayerCmd(MapDocument* document, const UUID& layerId);
+  DuplicateLayer(MapDocument* document, const UUID& layer_id);
 
   void undo() override;
 
@@ -48,4 +50,5 @@ class DuplicateLayerCmd final : public ICommand
   Maybe<usize>   mNewIndex;
 };
 
+}  // namespace cmd
 }  // namespace tactile
