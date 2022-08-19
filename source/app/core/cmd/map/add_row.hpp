@@ -24,12 +24,12 @@
 #include "core/common/memory.hpp"
 #include "core/map.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class AddRowCmd final : public ICommand
+class AddRow final : public ICommand
 {
  public:
-  explicit AddRowCmd(Shared<Map> map);
+  explicit AddRow(Shared<Map> map);
 
   void undo() override;
 
@@ -44,4 +44,4 @@ class AddRowCmd final : public ICommand
   usize       mRows {1};
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

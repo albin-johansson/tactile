@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_row_cmd.hpp"
+#include "add_row.hpp"
 
 #include <utility>  // move
 
@@ -26,9 +26,9 @@
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-AddRowCmd::AddRowCmd(Shared<Map> map)
+AddRow::AddRow(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
@@ -36,19 +36,19 @@ AddRowCmd::AddRowCmd(Shared<Map> map)
   }
 }
 
-void AddRowCmd::undo()
+void AddRow::undo()
 {
   invoke_n(mRows, [this] { mMap->remove_row(); });
 }
 
-void AddRowCmd::redo()
+void AddRow::redo()
 {
   invoke_n(mRows, [this] { mMap->add_row(); });
 }
 
-auto AddRowCmd::merge_with(const ICommand* cmd) -> bool
+auto AddRow::merge_with(const ICommand* cmd) -> bool
 {
-  if (const auto* other = dynamic_cast<const AddRowCmd*>(cmd)) {
+  if (const auto* other = dynamic_cast<const AddRow*>(cmd)) {
     mRows += other->mRows;
     return true;
   }
@@ -56,10 +56,10 @@ auto AddRowCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto AddRowCmd::get_name() const -> std::string
+auto AddRow::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return mRows == 1 ? lang.cmd.add_row : lang.cmd.add_rows;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

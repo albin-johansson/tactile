@@ -52,7 +52,7 @@ void MapDocument::update()
 
 void MapDocument::add_row()
 {
-  get_history().exec<AddRowCmd>(mMap);
+  get_history().exec<cmd::AddRow>(mMap);
 }
 
 void MapDocument::add_column()
