@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_column_cmd.hpp"
+#include "add_column.hpp"
 
 #include <utility>  // move
 
@@ -26,9 +26,9 @@
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-AddColumnCmd::AddColumnCmd(Shared<Map> map)
+AddColumn::AddColumn(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
@@ -36,19 +36,19 @@ AddColumnCmd::AddColumnCmd(Shared<Map> map)
   }
 }
 
-void AddColumnCmd::undo()
+void AddColumn::undo()
 {
   invoke_n(mColumns, [this] { mMap->remove_column(); });
 }
 
-void AddColumnCmd::redo()
+void AddColumn::redo()
 {
   invoke_n(mColumns, [this] { mMap->add_column(); });
 }
 
-auto AddColumnCmd::merge_with(const ICommand* cmd) -> bool
+auto AddColumn::merge_with(const ICommand* cmd) -> bool
 {
-  if (const auto* other = dynamic_cast<const AddColumnCmd*>(cmd)) {
+  if (const auto* other = dynamic_cast<const AddColumn*>(cmd)) {
     mColumns += other->mColumns;
     return true;
   }
@@ -56,10 +56,10 @@ auto AddColumnCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto AddColumnCmd::get_name() const -> std::string
+auto AddColumn::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return mColumns == 1 ? lang.cmd.add_column : lang.cmd.add_columns;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

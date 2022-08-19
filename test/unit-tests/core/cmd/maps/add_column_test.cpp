@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/map/add_column_cmd.hpp"
+#include "core/cmd/map/add_column.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,55 +26,57 @@
 
 namespace tactile::test {
 
-TEST(AddColumnCmd, Constructor)
+TEST(AddColumn, Constructor)
 {
-  ASSERT_THROW(AddColumnCmd {nullptr}, TactileError);
+  ASSERT_THROW(cmd::AddColumn {nullptr}, TactileError);
 }
 
-TEST(AddColumnCmd, RedoUndo)
+TEST(AddColumn, RedoUndo)
 {
-  const usize initialRows = 5;
-  const usize initialCols = 7;
+  const usize initial_rows = 5;
+  const usize initial_cols = 7;
 
-  auto document = test::MapBuilder::build().with_size(initialRows, initialCols).result();
+  auto document =
+      test::MapBuilder::build().with_size(initial_rows, initial_cols).result();
   auto map = document->get_map_ptr();
 
-  AddColumnCmd cmd {map};
+  cmd::AddColumn cmd {map};
   cmd.redo();
 
-  ASSERT_EQ(initialRows, map->row_count());
-  ASSERT_EQ(initialCols + 1, map->column_count());
+  ASSERT_EQ(initial_rows, map->row_count());
+  ASSERT_EQ(initial_cols + 1, map->column_count());
 
   cmd.undo();
 
-  ASSERT_EQ(initialRows, map->row_count());
-  ASSERT_EQ(initialCols, map->column_count());
+  ASSERT_EQ(initial_rows, map->row_count());
+  ASSERT_EQ(initial_cols, map->column_count());
 }
 
-TEST(AddColumnCmd, MergeSupport)
+TEST(AddColumn, MergeSupport)
 {
-  const usize initialRows = 13;
-  const usize initialCols = 5;
+  const usize initial_rows = 13;
+  const usize initial_cols = 5;
 
-  auto document = test::MapBuilder::build().with_size(initialRows, initialCols).result();
+  auto document =
+      test::MapBuilder::build().with_size(initial_rows, initial_cols).result();
   auto map = document->get_map_ptr();
 
-  AddColumnCmd       a {map};
-  const AddColumnCmd b {map};
-  const AddColumnCmd c {map};
+  cmd::AddColumn       a {map};
+  const cmd::AddColumn b {map};
+  const cmd::AddColumn c {map};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));
 
   a.redo();
 
-  ASSERT_EQ(initialRows, map->row_count());
-  ASSERT_EQ(initialCols + 3, map->column_count());
+  ASSERT_EQ(initial_rows, map->row_count());
+  ASSERT_EQ(initial_cols + 3, map->column_count());
 
   a.undo();
 
-  ASSERT_EQ(initialRows, map->row_count());
-  ASSERT_EQ(initialCols, map->column_count());
+  ASSERT_EQ(initial_rows, map->row_count());
+  ASSERT_EQ(initial_cols, map->column_count());
 }
 
 }  // namespace tactile::test

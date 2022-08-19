@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/cmd/map/add_column_cmd.hpp"
+#include "core/cmd/map/add_column.hpp"
 #include "core/cmd/map/add_row_cmd.hpp"
 #include "core/cmd/map/fix_tiles_in_map_cmd.hpp"
 #include "core/cmd/map/remove_column_cmd.hpp"
