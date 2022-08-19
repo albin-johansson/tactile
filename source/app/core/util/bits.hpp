@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <bit>          // endian
 #include <concepts>     // integral
 #include <type_traits>  // make_unsigned_t
 
