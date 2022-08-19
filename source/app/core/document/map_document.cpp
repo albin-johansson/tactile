@@ -67,7 +67,7 @@ void MapDocument::remove_row()
 
 void MapDocument::remove_column()
 {
-  get_history().exec<RemoveColumnCmd>(mMap);
+  get_history().exec<cmd::RemoveColumn>(mMap);
 }
 
 void MapDocument::resize(const usize rows, const usize cols)

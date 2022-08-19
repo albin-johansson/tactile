@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "remove_column_cmd.hpp"
+#include "remove_column.hpp"
 
 #include <utility>  // move
 
@@ -26,9 +26,9 @@
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-RemoveColumnCmd::RemoveColumnCmd(Shared<Map> map)
+RemoveColumn::RemoveColumn(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
@@ -36,13 +36,13 @@ RemoveColumnCmd::RemoveColumnCmd(Shared<Map> map)
   }
 }
 
-void RemoveColumnCmd::undo()
+void RemoveColumn::undo()
 {
   invoke_n(mColumns, [&] { mMap->add_column(); });
   mCache.restore_tiles(*mMap);
 }
 
-void RemoveColumnCmd::redo()
+void RemoveColumn::redo()
 {
   const auto begin = TilePos::from(0u, mMap->column_count() - mColumns - 1u);
   const auto end = TilePos::from(mMap->row_count(), mMap->column_count());
@@ -53,9 +53,9 @@ void RemoveColumnCmd::redo()
   invoke_n(mColumns, [&] { mMap->remove_column(); });
 }
 
-auto RemoveColumnCmd::merge_with(const ICommand* cmd) -> bool
+auto RemoveColumn::merge_with(const ICommand* cmd) -> bool
 {
-  if (const auto* other = dynamic_cast<const RemoveColumnCmd*>(cmd)) {
+  if (const auto* other = dynamic_cast<const RemoveColumn*>(cmd)) {
     mColumns += other->mColumns;
     mCache.merge_with(other->mCache);
     return true;
@@ -64,10 +64,10 @@ auto RemoveColumnCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto RemoveColumnCmd::get_name() const -> std::string
+auto RemoveColumn::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return mColumns == 1 ? lang.cmd.remove_column : lang.cmd.remove_columns;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

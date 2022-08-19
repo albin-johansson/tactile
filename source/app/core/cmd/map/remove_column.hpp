@@ -25,12 +25,12 @@
 #include "core/common/memory.hpp"
 #include "core/map.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class RemoveColumnCmd final : public ICommand
+class RemoveColumn final : public ICommand
 {
  public:
-  explicit RemoveColumnCmd(Shared<Map> map);
+  explicit RemoveColumn(Shared<Map> map);
 
   void undo() override;
 
@@ -46,4 +46,4 @@ class RemoveColumnCmd final : public ICommand
   usize           mColumns {1};
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd
