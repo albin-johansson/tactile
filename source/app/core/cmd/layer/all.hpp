@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/cmd/layer/add_layer_cmd.hpp"
+#include "core/cmd/layer/add_layer.hpp"
 #include "core/cmd/layer/duplicate_layer_cmd.hpp"
 #include "core/cmd/layer/move_layer_down_cmd.hpp"
 #include "core/cmd/layer/move_layer_up_cmd.hpp"

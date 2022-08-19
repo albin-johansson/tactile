@@ -30,10 +30,12 @@ namespace tactile {
 class MapDocument;
 class ILayer;
 
-class AddLayerCmd final : public ICommand
+namespace cmd {
+
+class AddLayer final : public ICommand
 {
  public:
-  AddLayerCmd(MapDocument* document, LayerType type);
+  AddLayer(MapDocument* document, LayerType type);
 
   void undo() override;
 
@@ -47,4 +49,5 @@ class AddLayerCmd final : public ICommand
   Shared<ILayer> mLayer;
 };
 
+}  // namespace cmd
 }  // namespace tactile

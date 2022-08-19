@@ -17,16 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_layer_cmd.hpp"
+#include "add_layer.hpp"
 
 #include "core/document/map_document.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-AddLayerCmd::AddLayerCmd(MapDocument* document, const LayerType type)
+AddLayer::AddLayer(MapDocument* document, const LayerType type)
     : mDocument {document}
     , mLayerType {type}
 {
@@ -35,7 +35,7 @@ AddLayerCmd::AddLayerCmd(MapDocument* document, const LayerType type)
   }
 }
 
-void AddLayerCmd::undo()
+void AddLayer::undo()
 {
   auto&      map = mDocument->get_map();
   const auto id = mLayer->get_uuid();
@@ -43,7 +43,7 @@ void AddLayerCmd::undo()
   mDocument->get_contexts().erase(id);
 }
 
-void AddLayerCmd::redo()
+void AddLayer::redo()
 {
   auto& map = mDocument->get_map();
 
@@ -79,10 +79,10 @@ void AddLayerCmd::redo()
   mDocument->get_contexts().add_context(mLayer);
 }
 
-auto AddLayerCmd::get_name() const -> std::string
+auto AddLayer::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.add_layer;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

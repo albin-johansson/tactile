@@ -82,7 +82,7 @@ void MapDocument::fix_tiles()
 
 void MapDocument::add_layer(const LayerType type)
 {
-  get_history().exec<AddLayerCmd>(this, type);
+  get_history().exec<cmd::AddLayer>(this, type);
 }
 
 void MapDocument::remove_layer(const UUID& layerId)

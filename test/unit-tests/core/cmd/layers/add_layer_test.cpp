@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/layer/add_layer_cmd.hpp"
+#include "core/cmd/layer/add_layer.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,12 +26,12 @@
 
 namespace tactile::test {
 
-TEST(AddLayerCmd, Constructor)
+TEST(AddLayer, Constructor)
 {
-  ASSERT_THROW(AddLayerCmd(nullptr, LayerType::TileLayer), TactileError);
+  ASSERT_THROW(cmd::AddLayer(nullptr, LayerType::TileLayer), TactileError);
 }
 
-TEST(AddLayerCmd, RedoUndo)
+TEST(AddLayer, RedoUndo)
 {
   auto  document = MapBuilder::build().result();
   auto& map = document->get_map();
@@ -40,21 +40,21 @@ TEST(AddLayerCmd, RedoUndo)
   ASSERT_EQ(1, contexts.size());
   ASSERT_TRUE(contexts.contains(map.get_uuid()));
 
-  AddLayerCmd cmd {document.get(), LayerType::TileLayer};
+  cmd::AddLayer cmd {document.get(), LayerType::TileLayer};
 
   cmd.redo();
   ASSERT_EQ(1, map.layer_count());
   ASSERT_EQ(2, contexts.size());
   ASSERT_TRUE(map.active_layer_id().has_value());
 
-  const auto layerId = map.active_layer_id().value();
-  ASSERT_TRUE(contexts.contains(layerId));
+  const auto layer_id = map.active_layer_id().value();
+  ASSERT_TRUE(contexts.contains(layer_id));
 
   cmd.undo();
   ASSERT_EQ(0, map.layer_count());
   ASSERT_EQ(1, contexts.size());
   ASSERT_FALSE(map.active_layer_id().has_value());
-  ASSERT_FALSE(contexts.contains(layerId));
+  ASSERT_FALSE(contexts.contains(layer_id));
 }
 
 }  // namespace tactile::test
