@@ -64,7 +64,7 @@ class MapDocument final : public ADocument
 
   void add_layer(LayerType type);
 
-  void remove_layer(const UUID& layerId);
+  void remove_layer(const UUID& layer_id);
 
   void duplicate_layer(const UUID& layerId);
 

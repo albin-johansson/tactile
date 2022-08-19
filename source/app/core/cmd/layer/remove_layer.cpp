@@ -17,16 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "remove_layer_cmd.hpp"
+#include "remove_layer.hpp"
 
 #include "core/document/map_document.hpp"
 #include "editor/lang/language.hpp"
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-RemoveLayerCmd::RemoveLayerCmd(MapDocument* document, const UUID& layerId)
+RemoveLayer::RemoveLayer(MapDocument* document, const UUID& layer_id)
     : mDocument {document}
 {
   if (!mDocument) {
@@ -34,10 +34,10 @@ RemoveLayerCmd::RemoveLayerCmd(MapDocument* document, const UUID& layerId)
   }
 
   auto& map = mDocument->get_map();
-  mLayer = map.get_layer(layerId);
+  mLayer = map.get_layer(layer_id);
 }
 
-void RemoveLayerCmd::undo()
+void RemoveLayer::undo()
 {
   auto& map = mDocument->get_map();
   map.add_layer(mLayer, mLayer->get_parent());
@@ -47,7 +47,7 @@ void RemoveLayerCmd::undo()
   mIndex.reset();
 }
 
-void RemoveLayerCmd::redo()
+void RemoveLayer::redo()
 {
   auto&      map = mDocument->get_map();
   const auto id = mLayer->get_uuid();
@@ -58,10 +58,10 @@ void RemoveLayerCmd::redo()
   mDocument->get_contexts().erase(id);
 }
 
-auto RemoveLayerCmd::get_name() const -> std::string
+auto RemoveLayer::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.remove_layer;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

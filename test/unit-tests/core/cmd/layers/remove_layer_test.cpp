@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/layer/remove_layer_cmd.hpp"
+#include "core/cmd/layer/remove_layer.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,33 +26,33 @@
 
 namespace tactile::test {
 
-TEST(RemoveLayerCmd, Constructor)
+TEST(RemoveLayer, Constructor)
 {
-  ASSERT_THROW(RemoveLayerCmd(nullptr, make_uuid()), TactileError);
+  ASSERT_THROW(cmd::RemoveLayer(nullptr, make_uuid()), TactileError);
 }
 
-TEST(RemoveLayerCmd, RedoUndo)
+TEST(RemoveLayer, RedoUndo)
 {
-  UUID layerId;
+  UUID layer_id;
 
   auto document = MapBuilder::build()  //
-                      .with_object_layer(&layerId)
+                      .with_object_layer(&layer_id)
                       .result();
 
   auto& map = document->get_map();
   auto& contexts = document->get_contexts();
 
-  ASSERT_TRUE(contexts.contains(layerId));
+  ASSERT_TRUE(contexts.contains(layer_id));
 
-  RemoveLayerCmd cmd {document.get(), layerId};
+  cmd::RemoveLayer cmd {document.get(), layer_id};
 
   cmd.redo();
   ASSERT_EQ(0, map.layer_count());
-  ASSERT_FALSE(contexts.contains(layerId));
+  ASSERT_FALSE(contexts.contains(layer_id));
 
   cmd.undo();
   ASSERT_EQ(1, map.layer_count());
-  ASSERT_TRUE(contexts.contains(layerId));
+  ASSERT_TRUE(contexts.contains(layer_id));
 }
 
 }  // namespace tactile::test

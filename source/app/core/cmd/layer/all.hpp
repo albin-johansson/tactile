@@ -23,7 +23,7 @@
 #include "core/cmd/layer/duplicate_layer_cmd.hpp"
 #include "core/cmd/layer/move_layer_down_cmd.hpp"
 #include "core/cmd/layer/move_layer_up_cmd.hpp"
-#include "core/cmd/layer/remove_layer_cmd.hpp"
+#include "core/cmd/layer/remove_layer.hpp"
 #include "core/cmd/layer/rename_layer_cmd.hpp"
 #include "core/cmd/layer/set_layer_opacity_cmd.hpp"
 #include "core/cmd/layer/set_layer_visibility_cmd.hpp"

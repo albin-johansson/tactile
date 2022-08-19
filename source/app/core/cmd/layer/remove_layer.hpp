@@ -30,10 +30,12 @@ namespace tactile {
 class MapDocument;
 class ILayer;
 
-class RemoveLayerCmd final : public ICommand
+namespace cmd {
+
+class RemoveLayer final : public ICommand
 {
  public:
-  RemoveLayerCmd(MapDocument* document, const UUID& layerId);
+  RemoveLayer(MapDocument* document, const UUID& layer_id);
 
   void undo() override;
 
@@ -47,4 +49,5 @@ class RemoveLayerCmd final : public ICommand
   Maybe<usize>   mIndex;
 };
 
+}  // namespace cmd
 }  // namespace tactile

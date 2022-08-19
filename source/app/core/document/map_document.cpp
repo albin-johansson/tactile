@@ -85,9 +85,9 @@ void MapDocument::add_layer(const LayerType type)
   get_history().exec<cmd::AddLayer>(this, type);
 }
 
-void MapDocument::remove_layer(const UUID& layerId)
+void MapDocument::remove_layer(const UUID& layer_id)
 {
-  get_history().exec<RemoveLayerCmd>(this, layerId);
+  get_history().exec<cmd::RemoveLayer>(this, layer_id);
 }
 
 void MapDocument::duplicate_layer(const UUID& layerId)
