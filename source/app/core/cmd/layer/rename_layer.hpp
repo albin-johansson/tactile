@@ -25,12 +25,12 @@
 #include "core/common/uuid.hpp"
 #include "core/map.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class RenameLayerCmd final : public ICommand
+class RenameLayer final : public ICommand
 {
  public:
-  RenameLayerCmd(Shared<Map> map, const UUID& layerId, std::string name);
+  RenameLayer(Shared<Map> map, const UUID& layer_id, std::string name);
 
   void undo() override;
 
@@ -45,4 +45,4 @@ class RenameLayerCmd final : public ICommand
   Maybe<std::string> mOldName;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

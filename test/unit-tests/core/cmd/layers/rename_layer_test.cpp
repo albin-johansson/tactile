@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/layer/rename_layer_cmd.hpp"
+#include "core/cmd/layer/rename_layer.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,22 +26,22 @@
 
 namespace tactile::test {
 
-TEST(RenameLayerCmd, Constructor)
+TEST(RenameLayer, Constructor)
 {
-  ASSERT_THROW(RenameLayerCmd(nullptr, make_uuid(), ""), TactileError);
+  ASSERT_THROW(cmd::RenameLayer(nullptr, make_uuid(), ""), TactileError);
 }
 
-TEST(RenameLayerCmd, RedoUndo)
+TEST(RenameLayer, RedoUndo)
 {
-  UUID layerId;
+  UUID layer_id;
 
-  auto document = MapBuilder::build().with_tile_layer(&layerId).result();
+  auto document = MapBuilder::build().with_tile_layer(&layer_id).result();
   auto map = document->get_map_ptr();
 
-  auto layer = map->get_layer(layerId);
+  auto layer = map->get_layer(layer_id);
   layer->set_name("barfoo");
 
-  RenameLayerCmd cmd {map, layerId, "foobar"};
+  cmd::RenameLayer cmd {map, layer_id, "foobar"};
 
   cmd.redo();
   ASSERT_EQ("foobar", layer->get_name());

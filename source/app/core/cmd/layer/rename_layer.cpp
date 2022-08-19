@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "rename_layer_cmd.hpp"
+#include "rename_layer.hpp"
 
 #include <utility>  // move
 
@@ -25,11 +25,11 @@
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-RenameLayerCmd::RenameLayerCmd(Shared<Map> map, const UUID& layerId, std::string name)
+RenameLayer::RenameLayer(Shared<Map> map, const UUID& layer_id, std::string name)
     : mMap {std::move(map)}
-    , mLayerId {layerId}
+    , mLayerId {layer_id}
     , mNewName {std::move(name)}
 {
   if (!mMap) {
@@ -37,7 +37,7 @@ RenameLayerCmd::RenameLayerCmd(Shared<Map> map, const UUID& layerId, std::string
   }
 }
 
-void RenameLayerCmd::undo()
+void RenameLayer::undo()
 {
   auto& layer = mMap->view_layer(mLayerId);
 
@@ -45,7 +45,7 @@ void RenameLayerCmd::undo()
   mOldName.reset();
 }
 
-void RenameLayerCmd::redo()
+void RenameLayer::redo()
 {
   auto& layer = mMap->view_layer(mLayerId);
 
@@ -53,10 +53,10 @@ void RenameLayerCmd::redo()
   layer.set_name(mNewName);
 }
 
-auto RenameLayerCmd::get_name() const -> std::string
+auto RenameLayer::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_layer;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd
