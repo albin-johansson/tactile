@@ -23,12 +23,12 @@
 #include "core/common/memory.hpp"
 #include "core/map.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class FixTilesInMapCmd final : public ICommand
+class FixMapTiles final : public ICommand
 {
  public:
-  explicit FixTilesInMapCmd(Shared<Map> map);
+  explicit FixMapTiles(Shared<Map> map);
 
   void undo() override;
 
@@ -41,4 +41,4 @@ class FixTilesInMapCmd final : public ICommand
   Map::FixTilesResult mResult;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

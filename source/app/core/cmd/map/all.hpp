@@ -21,7 +21,7 @@
 
 #include "core/cmd/map/add_column.hpp"
 #include "core/cmd/map/add_row.hpp"
-#include "core/cmd/map/fix_tiles_in_map_cmd.hpp"
+#include "core/cmd/map/fix_map_tiles.hpp"
 #include "core/cmd/map/remove_column.hpp"
 #include "core/cmd/map/remove_row.hpp"
 #include "core/cmd/map/resize_map.hpp"

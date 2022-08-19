@@ -77,7 +77,7 @@ void MapDocument::resize(const usize rows, const usize cols)
 
 void MapDocument::fix_tiles()
 {
-  get_history().exec<FixTilesInMapCmd>(mMap);
+  get_history().exec<cmd::FixMapTiles>(mMap);
 }
 
 void MapDocument::add_layer(const LayerType type)

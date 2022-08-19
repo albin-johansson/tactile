@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/map/fix_tiles_in_map_cmd.hpp"
+#include "core/cmd/map/fix_map_tiles.hpp"
 
 #include <gtest/gtest.h>
 
@@ -27,45 +27,45 @@
 
 namespace tactile::test {
 
-TEST(FixTilesInMapCmd, Constructor)
+TEST(FixMapTiles, Constructor)
 {
-  ASSERT_THROW(FixTilesInMapCmd {nullptr}, TactileError);
+  ASSERT_THROW(cmd::FixMapTiles {nullptr}, TactileError);
 }
 
-TEST(FixTilesInMapCmd, RedoUndo)
+TEST(FixMapTiles, RedoUndo)
 {
-  UUID layerId;
-  UUID tilesetId;
+  UUID layer_id;
+  UUID tileset_id;
 
   auto document = test::MapBuilder::build()  //
                       .with_size(10, 10)
-                      .with_tile_layer(&layerId)
-                      .with_tileset(&tilesetId)
+                      .with_tile_layer(&layer_id)
+                      .with_tileset(&tileset_id)
                       .result();
   auto map = document->get_map_ptr();
 
-  const auto& tilesetRef = map->get_tilesets().get_ref(tilesetId);
+  const auto& tileset_ref = map->get_tilesets().get_ref(tileset_id);
 
-  auto& layer = map->view_tile_layer(layerId);
-  layer.set_tile({2, 4}, tilesetRef.first_tile() - 10);
-  layer.set_tile({0, 0}, tilesetRef.last_tile() + 1);
-  layer.set_tile({0, 1}, tilesetRef.last_tile());
-  layer.set_tile({5, 7}, tilesetRef.first_tile());
+  auto& layer = map->view_tile_layer(layer_id);
+  layer.set_tile({2, 4}, tileset_ref.first_tile() - 10);
+  layer.set_tile({0, 0}, tileset_ref.last_tile() + 1);
+  layer.set_tile({0, 1}, tileset_ref.last_tile());
+  layer.set_tile({5, 7}, tileset_ref.first_tile());
 
-  FixTilesInMapCmd cmd {map};
+  cmd::FixMapTiles cmd {map};
   cmd.redo();
 
   ASSERT_EQ(empty_tile, layer.tile_at({2, 4}));
   ASSERT_EQ(empty_tile, layer.tile_at({0, 0}));
-  ASSERT_EQ(tilesetRef.last_tile(), layer.tile_at({0, 1}));
-  ASSERT_EQ(tilesetRef.first_tile(), layer.tile_at({5, 7}));
+  ASSERT_EQ(tileset_ref.last_tile(), layer.tile_at({0, 1}));
+  ASSERT_EQ(tileset_ref.first_tile(), layer.tile_at({5, 7}));
 
   cmd.undo();
 
-  ASSERT_EQ(tilesetRef.first_tile() - 10, layer.tile_at({2, 4}));
-  ASSERT_EQ(tilesetRef.last_tile() + 1, layer.tile_at({0, 0}));
-  ASSERT_EQ(tilesetRef.last_tile(), layer.tile_at({0, 1}));
-  ASSERT_EQ(tilesetRef.first_tile(), layer.tile_at({5, 7}));
+  ASSERT_EQ(tileset_ref.first_tile() - 10, layer.tile_at({2, 4}));
+  ASSERT_EQ(tileset_ref.last_tile() + 1, layer.tile_at({0, 0}));
+  ASSERT_EQ(tileset_ref.last_tile(), layer.tile_at({0, 1}));
+  ASSERT_EQ(tileset_ref.first_tile(), layer.tile_at({5, 7}));
 }
 
 }  // namespace tactile::test

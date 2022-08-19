@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "fix_tiles_in_map_cmd.hpp"
+#include "fix_map_tiles.hpp"
 
 #include <utility>  // move
 
@@ -26,9 +26,9 @@
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-FixTilesInMapCmd::FixTilesInMapCmd(Shared<Map> map)
+FixMapTiles::FixMapTiles(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
@@ -36,7 +36,7 @@ FixTilesInMapCmd::FixTilesInMapCmd(Shared<Map> map)
   }
 }
 
-void FixTilesInMapCmd::undo()
+void FixMapTiles::undo()
 {
   for (const auto& [layerId, previous] : mResult) {
     auto& layer = mMap->view_tile_layer(layerId);
@@ -49,15 +49,15 @@ void FixTilesInMapCmd::undo()
   mResult.clear();
 }
 
-void FixTilesInMapCmd::redo()
+void FixMapTiles::redo()
 {
   mResult = mMap->fix_tiles();
 }
 
-auto FixTilesInMapCmd::get_name() const -> std::string
+auto FixMapTiles::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.fix_map_tiles;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd
